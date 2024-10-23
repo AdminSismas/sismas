@@ -1,0 +1,25 @@
+<form [formGroup]="informationPropertyForm" (ngSubmit)="onSubmitForm()">
+  <vex-page-layout class="overflow-hidden">
+    <vex-page-layout-content class="content container-fluid p-0 overflow-hidden">
+      <div class="form-content">
+        <div class="form-item">
+          <vex-input 
+            label="Nombre Predio"
+            type="text"
+            idComboInput="nombrePredio"
+          />
+        </div>
+        <div class="form-item buttons">
+          <button color="primary" mat-raised-button type="submit">
+            Guardar
+            <mat-icon svgIcon="mat:save"></mat-icon>
+          </button>
+          <button color="warn" mat-stroked-button type="button">
+            Cerrar
+            <mat-icon svgIcon="mat:close"></mat-icon>
+          </button>
+        </div>
+      </div>
+    </vex-page-layout-content>
+  </vex-page-layout>
+</form>

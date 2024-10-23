@@ -1,0 +1,38 @@
+<div>
+  <div class="flex items-center gap-4 px-6 py-3 border-b border-divider">
+    <mat-icon
+      svgIcon="mat:search"
+      class="text-secondary flex-none"></mat-icon>
+    <input
+      type="text"
+      placeholder="Buscar Error"
+      [formControl]="searchCtrl"
+      class="text-xl font-medium bg-transparent outline-none flex-auto placeholder-secondary" />
+    <button
+      class="flex-none ltr:-mr-2 rtl:-ml-2 text-secondary"
+      type="button"
+      mat-icon-button>
+      <mat-icon svgIcon="mat:settings"></mat-icon>
+    </button>
+  </div>
+
+  <div class="p-4">
+    <div class="font-semibold mb-1 px-2 mb-2">
+      <h1 class="title mt-0 ">Errores de validacion</h1>
+    </div>
+
+    <div class="space-y-1 px-2 py-1 overflow-x-hidden overflow-y-auto" vexFluidHeight fluidHeight=280>
+      @for (error of listErrors; track $index) {
+        <div
+          class="px-2 py-2 hover:bg-hover rounded transition duration-200 ease-out flex items-center gap-4 cursor-pointer select-none"
+          matRipple>
+          <div class="flex-auto text-base font-medium">{{ error }}</div>
+        </div>
+      }
+      <div *ngIf="!listErrors|| listErrors.length <= 0" class="no-data-information">
+        No hay informacion disponible
+      </div>
+    </div>
+  </div>
+
+</div>

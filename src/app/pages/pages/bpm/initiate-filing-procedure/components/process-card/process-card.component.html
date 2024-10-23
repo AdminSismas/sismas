@@ -1,0 +1,38 @@
+<div class="card overflow-hidden min-h-[115px] min-w-[200px] shadow-md">
+  <div
+    (click)="emitSelectProcess($event, bpmTypeProcess)"
+    class="p-4 py-2 text-center"
+    matRipple>
+    <div class="flex items-center container px-0 h-20">
+      <img [src]="URL_ICON_BASE + bpmTypeProcess.icon" class="avatarProcess mx-auto flex bg-transparent to-transparent" alt="" />
+      <span class="items-center text-center min-h-[35px] body-2 leading-none">
+            @if (bpmTypeProcess.name === null || bpmTypeProcess.name === undefined) {
+              {{ NAME_NO_DISPONIBLE }}
+            } @else {
+              {{ bpmTypeProcess.name | truncate: 70 }}
+            }
+            </span>
+    </div>
+    <h5 class="body-2 leading-none mb-1 mt-1 items-center"
+        title="{{ bpmTypeProcess.description }}">
+      @if (bpmTypeProcess.description === null || bpmTypeProcess.description === undefined) {
+        {{ NAME_NO_DISPONIBLE }}
+      } @else {
+        {{ bpmTypeProcess.description | truncate: 70 }}
+      }
+    </h5>
+
+    <button
+      (click)="emitSelectProcess($event, bpmTypeProcess)"
+      class="absolute p-2 top-[-5px] right-[-5px] cursor-pointer"
+      mat-icon-button
+      type="button">
+      <mat-icon
+        *ngIf="bpmTypeProcess?.selectProcess"
+        class="text-amber-600"
+        svgIcon="mat:star"></mat-icon>
+      <mat-icon *ngIf="!bpmTypeProcess?.selectProcess" svgIcon="mat:star_border"></mat-icon>
+    </button>
+  </div>
+</div>
+

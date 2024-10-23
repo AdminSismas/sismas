@@ -1,0 +1,18 @@
+mat-expansion-panel-header.mat-expanded,
+mat-expansion-panel-header.mat-expanded:focus {
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel:not(.mat-expanded),
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {;
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel.mat-expanded
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mdc-dialog .mdc-dialog__content {
+  padding: 15px 5px 15px 5px !important;
+}

@@ -1,0 +1,105 @@
+<vex-page-layout [id]="this.id"
+  mode="card" class="pb-0"
+  *ngIf="isExistDataInformations$ | async">
+  <vex-page-layout-content class="container-fluid px-5 py-3">
+    <div class="card" vexMinFluidHeight fluidHeight=220>
+      <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
+        <div
+          class="rounded-tr rounded-br border-l-3 p-0 m-0 flex flex-col sm:flex-row items-center gap-3">
+          <button
+            class="rounded-full py-2 px-6 title !bg-green-600 !text-white"
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="executeCrudAlfaMain(TYPEOPERATION_CREATE)">
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+              svgIcon="mat:add_circle_outline"></mat-icon>
+            <span>Agregar</span>
+          </button>
+          <button
+            class="rounded-full py-2 px-6 title !bg-amber-600 !text-white"
+            mat-raised-button
+            type="button"
+            (click)="executeCrudAlfaMain(TYPEOPERATION_ADD)">
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+              svgIcon="mat:add"></mat-icon>
+            <span>Crear</span>
+          </button>
+          <button
+            class="rounded-full py-2 px-6 title !bg-orange-600 !text-white"
+            color="warning"
+            mat-raised-button
+            type="button"
+            (click)="executeCrudAlfaMain(TYPEOPERATION_DELETE)">
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+              svgIcon="mat:delete"></mat-icon>
+            <span>Borrar</span>
+          </button>
+          <button
+            class="rounded-full py-2 px-6 title !bg-cyan-600 !text-white"
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="analyzeChangesOperationAlfaMain()">
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+              svgIcon="mat:analytics"></mat-icon>
+            <span>Analizar Cambio</span>
+          </button>
+          <span class="sm:flex-auto xl:flex-1"></span>
+          <button
+            class="rounded-full py-2 title flex-1 items-end xl:max-w-[180px] sm:min-w-[150px] !bg-red-600 !text-white"
+            mat-raised-button
+            type="button"
+            (click)="clearInformationAlfaMain()">
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+              svgIcon="mat:restart_alt"></mat-icon>
+            <span>Reinicia Cambio</span>
+          </button>
+        </div>
+      </div>
+      <div class="w-full container-fluid bg-foreground p-0 py-0 px-0">
+
+      </div>
+      <mat-accordion multi
+        class="w-full flex flex-col justify-between py-3 px-5 classTableAlfaMain accordion-headers-align"
+                     *ngIf="listOperationContentInformation !== null && listOperationContentInformation.length > 0">
+        @for (obj of listOperationContentInformation; track obj; let index = $index) {
+          <mat-expansion-panel [expanded]="index === 0" class="py-0 px-0">
+            <mat-expansion-panel-header
+              class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center">
+              <div class="w-full px-0 py-0 flex text-start items-center">
+                <h4 class="subheading-1 mb-1 mt-1 w-full flex items-center">
+                  <span
+                    @scaleIn
+                    class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10">
+                    <mat-icon svgIcon="mat:description" class="icon-sm"></mat-icon>
+                  </span>
+                  <span @fadeInRight class="block">Manzana o Vereda - {{ obj.npnlike }}</span>
+                </h4>
+
+              </div>
+            </mat-expansion-panel-header>
+            <mat-panel-description class="py-0 px-0 m-0">
+              <vex-table-alfa-main
+                class="w-full flex flex-col justify-between py-0"
+              [contentInformations]="obj.contentInformations"
+              [executionId]="executionId">
+              </vex-table-alfa-main>
+            </mat-panel-description>
+          </mat-expansion-panel>
+        }
+      </mat-accordion>
+
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+<vex-loading-app
+  *ngIf="!(isExistDataInformations$ | async)"
+  #vexSplashScreen
+  idLoading="vexSplashScreen"
+  [showImage]="true"></vex-loading-app>

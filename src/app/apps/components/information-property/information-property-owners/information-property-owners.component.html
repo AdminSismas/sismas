@@ -1,0 +1,191 @@
+<mat-accordion class="flex flex-col py-0 px-0 mb-2" [id]="id">
+  <mat-expansion-panel (opened)="isExpandPanel(expandedComponent = true)"
+                       [expanded]="expandedComponent">
+    <mat-expansion-panel-header
+      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+      <vex-header-cadastral-information-property
+        label="Informacion de los propietarios"
+        icon="mat:people"
+        id="information-owners">
+      </vex-header-cadastral-information-property>
+    </mat-expansion-panel-header>
+    <mat-panel-description class="py-0 px-0" [id]="id+'mat-panel-description-owners'">
+      <div class="flex flex-col w-full">
+        <div class="header-container m-2">
+          @if(typeInformation === 'edition') {
+            <button 
+              color="primary" 
+              mat-raised-button 
+              type="button" 
+              (click)="onClickOpenAddEditModal()"
+            >
+              Nueva
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
+          }
+        </div>
+        <div class="table-container overflow-x-auto w-full">
+          <table mat-table [dataSource]="dataSource" matSort class="w-full">
+            <ng-container matColumnDef="viewDetail">
+              <th
+                *matHeaderCellDef
+                class="uppercase"
+                mat-header-cell
+                mat-sort-header>
+              </th>
+              <td *matCellDef="let row" mat-cell>
+                <div class="flex align-middle text-center content-center items-center">
+                  <button
+                    class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
+                    mat-icon-button title="Detalles" (click)="openInformationPropertyOwner(row)">
+                    <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+                  </button>
+                </div>
+              </td>
+            </ng-container>
+            @for(column of textColumns(); track column) {
+              <ng-container
+                [matColumnDef]="column.property">
+                <th *matHeaderCellDef
+                    class="uppercase"
+                    mat-sort-header
+                    mat-header-cell>
+                  {{ column.label }}
+                </th>
+                <td *matCellDef="let row" mat-cell>
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
+            }
+            <ng-container matColumnDef="actions">
+              <th *matHeaderCellDef mat-header-cell>ACCIONES</th>
+              <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                <button
+                  mat-icon-button
+                  [matMenuTriggerData]="{ infoOwner: row }"
+                  [matMenuTriggerFor]="actionsMenu"
+                  type="button">
+                  <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
+            <tr mat-row @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer" *matRowDef="let row; columns: visibleColumns();"></tr>
+          </table>
+          <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+            <ng-template let-infoOwner="infoOwner" matMenuContent>
+              @for (actionBtn of actionBtns(); track actionBtn.id) {
+                <button mat-menu-item (click)="onClickActionBtn(actionBtn.id, infoOwner)">
+                  <mat-icon [svgIcon]="actionBtn.icon" />
+                  <span>{{ actionBtn.label }}</span>
+                </button>
+              } @empty { 
+                <button mat-menu-item disabled>
+                  <span class="text-center">No options</span>
+                </button>
+              }
+            </ng-template>
+          </mat-menu>
+        </div>
+        <div class="paginator-container flex justify-center">
+          <mat-paginator
+           #paginator
+           [pageSizeOptions]="pageSizeOptions"
+           [length]="totalElements"
+           [pageSize]="pageSize"
+           [pageIndex]="page"
+           (page)="refreshPaginator($event)"
+           class="paginator" />
+        </div>
+        
+      </div>
+
+
+      <!-- <div class="w-full flex flex-col justify-between pt-2"
+           *ngIf="dataList && dataList.length > 0">
+        <div
+          *ngFor="let owner of dataList"
+          class="px-1 py-1 rounded-xl hover:bg-hover transition cursor-pointer relative"
+          matRipple>
+          <div class="pl-2 py-0 border-b flex flex-col gap-1 items-start">
+            @if (owner.individual && owner.individual.fullName) {
+              <h4 class="subheading-1 m-0">{{ owner.individual.fullName }}</h4>
+            } @else {
+              <h4 class="subheading-1 m-0">{{ NAME_NO_DISPONIBLE }}</h4>
+            }
+          </div>
+          <div class="w-full flex flex-col justify-between py-2">
+            <div class="flex justify-between">
+              <div class="flex flex-col gap-1 py-1">
+                <span class="text-black capitalize text-sm">Tipo Derecho</span>
+              </div>
+              <div class="flex flex-col gap-1 py-1">
+                @if (owner?.domRightType) {
+                  <span class="text-sm text-center align-middle">{{ owner.domRightType }}</span>
+                } @else {
+                  <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
+                }
+              </div>
+              <div class="flex flex-col gap-1 py-1">
+                <span class="text-black capitalize text-sm">Fracción</span>
+              </div>
+              <div class="flex flex-col gap-1 py-1">
+                @if (owner?.fractionS) {
+                  <span class="text-sm text-center align-middle">{{ owner.fractionS }}</span>
+                } @else {
+                  <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
+                }
+              </div>
+              <div class="flex flex-col gap-1 py-1">
+                <span class="text-black capitalize text-sm">A partir del</span>
+              </div>
+              <div class="flex flex-col gap-1 py-1">
+                @if (owner?.beginAt) {
+                  <span class="text-sm text-center align-middle">{{ owner.beginAt | date:'mediumDate' }}</span>
+                } @else {
+                  <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
+                }
+              </div>
+              <div class="flex flex-col gap-1">
+                <button color="primary" mat-button type="button"
+                        (click)="openInformationPropertyOwner(owner)">
+                  <mat-icon
+                    class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+                    svgIcon="mat:book"></mat-icon>
+                  <span>Ver Detalle</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full flex flex-col justify-between pt-2"
+           *ngIf="!dataList || dataList?.length === 0">
+        <h2 class="title mb-1 mt-1 w-full flex items-center">
+          <span @fadeInRight class="block">Informacion No disponible</span>
+        </h2>
+      </div> -->
+    </mat-panel-description>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #addEditDialog>
+  <h2 matDialogTitle>{{ addEditDialogContent().title }}</h2>
+  <mat-dialog-content>
+    @defer {
+      <vex-add-edit-information-property-owner />
+    }
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #confirmDialog>
+  <h2 matDialogTitle>Eliminar Dirección</h2>
+  <mat-dialog-content>
+    <p>¿Desea eliminiar la información del propietario?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="flex gap-1 justify-center">
+    <button mat-button matDialogClose mat-raised-button color="primary">Cancelar</button>
+    <button mat-button [matDialogClose]="'delete'" mat-raised-button color="warn">Eliminar</button>
+  </mat-dialog-actions>
+</ng-template>
+

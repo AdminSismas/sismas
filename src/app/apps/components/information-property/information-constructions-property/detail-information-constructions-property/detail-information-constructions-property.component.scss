@@ -1,0 +1,22 @@
+mat-expansion-panel-header.mat-expanded,
+mat-expansion-panel-header.mat-expanded:focus {
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel:not(.mat-expanded),
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {;
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel.mat-expanded
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: var(--mat-expansion-header-expanded-state-height-geo-getion);
+}
+
+mat-grid-tile > div .mat-grid-tile-content {
+  height: var(--mat-expansion-header-expanded-state-height-geo-getion);
+}

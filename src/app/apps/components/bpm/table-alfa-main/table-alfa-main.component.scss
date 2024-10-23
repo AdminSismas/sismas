@@ -1,0 +1,7 @@
+.mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+::ng-deep .classTableAlfaMain div.mat-expansion-panel-body {
+  padding: 0;
+}

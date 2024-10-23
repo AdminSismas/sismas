@@ -1,0 +1,12 @@
+{
+  "/auth/login": {
+    "target": "https://prediosplus.api.cadastre4world.com:5001",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/baunit/*": {
+    "target": "https://prediosplus.api.cadastre4world.com:5001",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

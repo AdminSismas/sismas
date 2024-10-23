@@ -1,0 +1,181 @@
+<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    Editar Dirección
+  </h2>
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content @stagger>
+  @if(isLoading()) {
+    <div @stagger class="grid place-items-center w-full min-h-6 text-center p-5">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <form [formGroup]="informationAddressForm" (ngSubmit)="onSubmitForm()">
+      <vex-page-layout class="overflow-hidden">
+        <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
+          <div class="form-content">
+            <div class="form-content-item">
+              <vex-combox-colletion
+                idComboCollection="domTipoDireccion"
+                label="Tipo de Dirección"
+                formControlNameCombobox="domTipoDireccion"
+                typeDomainName="TipoDireccion"
+                placeholderDomainName="Escoger tipo de dirección"
+              ></vex-combox-colletion>
+            </div>
+            <div class="form-content-item">
+              <vex-input
+                label="Código Postal"
+                type="text"
+                idComboInput="codigoPostal"
+                formControlNameInput="codigoPostal"
+              ></vex-input>
+            </div>
+            <div class="form-content-item">
+              <vex-input
+                label="Nombre Predio"
+                type="text"
+                idComboInput="nombrePredio"
+                formControlNameInput="nombrePredio"
+              ></vex-input>
+            </div>
+            <div class="form-content-item">
+              <mat-slide-toggle 
+                class="mx-2" 
+                labelPosition="before"
+                formControlName="esDireccionPrincipal"
+                color="primary"
+              >Principal</mat-slide-toggle>
+            </div>
+            <div class="form-content-item full">
+              <vex-text-area
+                style="width: 90%;"
+                label="Dirección"
+                idComboInput="direccionTexto"
+                formControlNameInput="direccionTexto"
+              ></vex-text-area>
+            </div>
+          </div>
+          <!-- Principal Fields  -->
+          <mat-accordion class="flex flex-col py-0 px-0 mb-2">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header
+                class="bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+                <div class="w-full px-0 py-0 flex items-center">
+                  <h2 class="title m-0 text-center w-full uppercase">Principal</h2>
+                </div>
+              </mat-expansion-panel-header>
+              <mat-panel-description class="py-0 px-0">
+                <div class="form-inputs">
+                  <div class="form-content-item">
+                    <vex-combox-colletion
+                      cssClasses="w-full"
+                      idComboCollection="domClaseViaPrincipal"
+                      label="Clase de vía principal"
+                      formControlNameCombobox="domClaseViaPrincipal"
+                      typeDomainName="ClaseViaPrincipal"
+                      placeholderDomainName="Escoger clase vía principal"
+                    ></vex-combox-colletion>
+                  </div>
+                  <div class="form-content-item">
+                    <vex-input
+                      cssClasses="w-full"
+                      label="Letra"
+                      type="text"
+                      idComboInput="letraViaPrincipal"
+                      formControlNameInput="letraViaPrincipal"
+                    ></vex-input>
+                  </div>
+                  <div class="form-content-item">
+                    <vex-input
+                      cssClasses="w-full"
+                      label="Valor"
+                      type="text"
+                      idComboInput="valorViaPrincipal"
+                      formControlNameInput="valorViaPrincipal"
+                    ></vex-input>
+                  </div>
+                  <div class="form-content-item">
+                    <vex-combox-colletion
+                      cssClasses="w-full"
+                      idComboCollection="domSectorCiudad"
+                      label="Sector ciudad"
+                      formControlNameCombobox="domSectorCiudad"
+                      typeDomainName="SectorCiudad"
+                      placeholderDomainName="Escoger sector ciudad"
+                    ></vex-combox-colletion>
+                  </div>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <!-- Generadora Fields  -->
+          <mat-accordion class="flex flex-col py-0 px-0 mb-2">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header
+                class="bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+                <div class="w-full px-0 py-0 flex items-center">
+                  <h2 class="title m-0 text-center w-full uppercase">Generadora</h2>
+                </div>
+              </mat-expansion-panel-header>
+              <mat-panel-description class="py-0 px-0">
+                <div class="form-inputs">
+                  <div class="form-content-item">
+                    <vex-input
+                      cssClasses="w-full"
+                      label="Valor"
+                      type="text"
+                      idComboInput="valorViaGeneradora"
+                      formControlNameInput="valorViaGeneradora"
+                    ></vex-input>
+                  </div>
+                  <div class="form-content-item">
+                    <vex-input
+                      cssClasses="w-full"
+                      label="Número Predio"
+                      type="text"
+                      idComboInput="numeroPredio"
+                      formControlNameInput="numeroPredio"
+                    ></vex-input>
+                  </div>
+                  <div class="form-content-item">
+                    <vex-input
+                      cssClasses="w-full"
+                      label="Letra"
+                      type="text"
+                      idComboInput="letraViaGeneradora"
+                      formControlNameInput="letraViaGeneradora"
+                    ></vex-input>
+                  </div>
+                  <div class="form-content-item">
+                    <vex-combox-colletion
+                      cssClasses="w-full"
+                      idComboCollection="domSectorPredio"
+                      label="Sector predio"
+                      formControlNameCombobox="domSectorPredio"
+                      typeDomainName="SectorPredio"
+                      placeholderDomainName="Escoger sector predio"
+                    ></vex-combox-colletion>
+                  </div>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <div class="buttons">
+            <button color="primary" mat-raised-button type="submit">
+              Guardar
+              <mat-icon svgIcon="mat:save"></mat-icon>
+            </button>
+            <button color="warn" mat-stroked-button type="button">
+              Cerrar
+              <mat-icon svgIcon="mat:close"></mat-icon>
+            </button>
+          </div>
+        </vex-page-layout-content>
+      </vex-page-layout>
+    </form>
+  }
+</mat-dialog-content>

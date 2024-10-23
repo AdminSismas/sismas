@@ -1,0 +1,120 @@
+<div class="flex items-center" mat-dialog-title>
+  <h4
+    class="subheading-1 m-0 flex-auto">
+    Propietario {{ owner?.individual?.fullName }}
+  </h4>
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content
+  class="items-start justify-start gap-6 overflow-x-hidden">
+  <div class="flex justify-between py-1">
+    <div class="flex flex-col gap-2">
+      <span class="text-black uppercase text-sm">Tipo interesado </span>
+    </div>
+    <div class="flex flex-col gap-2">
+      @if (owner && owner.individual && owner.individual.domIndividualType) {
+        <h2 class="text-sm">{{ owner.individual.domIndividualType }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-black uppercase text-sm">Tipo Documento</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      @if (owner && owner.individual && owner.individual.domIndividualTypeNumber) {
+        <h2 class="text-sm">{{ owner.individual.domIndividualTypeNumber }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-black uppercase text-sm">Numero</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      @if (owner && owner.individual && owner.individual.number) {
+        <h2 class="text-sm">{{ owner.individual.number }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+  </div>
+  <div class="flex justify-between py-1">
+    <div class="flex flex-col gap-2">
+      <span class="text-black uppercase text-sm">Nombre 1</span>
+      <span class="text-black uppercase text-sm">Apellido 1</span>
+      <span class="text-black uppercase text-sm">Sexo</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      @if (owner && owner.individual && owner.individual.firstName) {
+        <h2 class="text-sm">{{ owner.individual.firstName }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+      @if (owner && owner.individual && owner.individual.lastName) {
+        <h2 class="text-sm">{{ owner.individual.lastName }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+      @if (owner && owner.individual && owner.individual.domIndividualSex) {
+        <h2 class="text-sm">{{ owner.individual.domIndividualSex }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+    <div class="flex flex-col gap-2">
+      <span class="text-black uppercase text-sm">Nombre 2</span>
+      <span class="text-black uppercase text-sm">Apellido 2</span>
+      <span class="text-black uppercase text-sm">Grupo Etnico</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      @if (owner && owner.individual && owner.individual.middleName) {
+        <h2 class="text-sm">{{ owner.individual.middleName }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+      @if (owner && owner.individual && owner.individual.otherLastName) {
+        <h2 class="text-sm">{{ owner.individual.otherLastName }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+      @if (owner && owner.individual && owner.individual.domIndividualEthnicGroup) {
+        <h2 class="text-sm">{{ owner.individual.domIndividualEthnicGroup }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+  </div>
+  <div class="flex justify-between py-1">
+    <div class="flex flex-col gap-2">
+      <span class="text-black uppercase text-sm">Razón social</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      @if (owner && owner.individual && owner.individual.companyName) {
+        <h2 class="text-sm">{{ owner.individual.companyName }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+  </div>
+  <div class="flex justify-between py-1">
+    <div class="flex flex-col gap-2">
+      <span class="text-black uppercase text-sm">Nombre Completo</span>
+    </div>
+    <div class="flex flex-col gap-2">
+      @if (owner && owner.individual && owner.individual.fullName) {
+        <h2 class="text-sm">{{ owner.individual.fullName }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+  </div>
+
+</mat-dialog-content>
