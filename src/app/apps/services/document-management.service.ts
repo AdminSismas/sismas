@@ -10,14 +10,15 @@ import {AttachmentCollection} from '../interfaces/attachment.model';
 })
 export class AttachmentService {
     /* -------------- ATRIBUTOS -------------- */
-    basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment}${environment.proExecution}`;
+    //basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment}${environment.proExecution}`;
+    basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${environment.bpmAttachment.proExecution}`;
 
 
 
     /* -------------- CONSTRUCTRO -------------- */
     constructor(private requestsService: SendGeneralRequestsService) {}
 
-    
+
 
     /* -------------- METODOS -------------- */
     getDataPropertyByAttachment(executionId: string):Observable<AttachmentCollection[]> {

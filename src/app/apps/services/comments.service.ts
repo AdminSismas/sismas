@@ -19,7 +19,7 @@ import { SendGeneralRequestsService } from './general/send-general-requests.serv
 })
 export class CommentsService {
     /* -------------- ATRIBUTOS -------------- */
-    basic_url:string = `${environment.url}:${environment.port}${environment.bpmOperation}${environment.comment}`;
+    basic_url:string = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.bpmOperation.comment}`;
 
     /* -------------- CONSTRUCTRO -------------- */
     constructor(private requestsService: SendGeneralRequestsService) {}
@@ -48,7 +48,7 @@ export class CommentsService {
     private getData(url:string, params:any):Observable<CommentsCollection>{
         return this.requestsService.sendRequestsGetOption(url, {params: params});
     }
-    
+
     private fetchBody(url: string, body: any): Observable<CommentsCollection> {
         return this.requestsService.sendRequestsFetchPostBody(url, body);
     }
