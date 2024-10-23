@@ -1,0 +1,160 @@
+<mat-accordion class="flex flex-col py-0 px-0 mb-2 classInformationAdresses" [id]="id">
+  <mat-expansion-panel
+    (opened)="isExpandPanel(expandedComponent = true)"
+    [expanded]="expandedComponent">
+    <mat-expansion-panel-header
+      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+      <vex-header-cadastral-information-property
+        label="Direcciones"
+        icon="mat:edit_location"
+        id="edit_locationAddresses">
+      </vex-header-cadastral-information-property>
+    </mat-expansion-panel-header>
+    <mat-panel-description class="py-0 px-0 pt-0 pb-0" [id]="id+'mat-panel-description'">
+      <div class="w-full flex flex-col overflow-auto p-0">
+        <div
+          class="px-4 h-16 border-b sticky left-0 flex items-center">
+          @if(typeInformation === 'edition') {
+            <button color="primary" mat-raised-button type="button" (click)="openAddEditAddressInformationPropertyDialog()">
+              Nueva
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
+          }
+          <mat-form-field subscriptSizing="dynamic" class=" pl-1 pr-1 pt-6 pb-6 flex flex-col">
+            <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
+            <input
+              matInput
+              [formControl]="searchCtrl"
+              placeholder="Search Address&hellip;"
+              type="text" />
+          </mat-form-field>
+          <button
+            [matMenuTriggerFor]="columnFilterMenu"
+            class="flex-none"
+            style="margin-left: auto;"
+            mat-icon-button
+            matTooltip="Filter Columns"
+            type="button">
+            <mat-icon svgIcon="mat:filter_list"></mat-icon>
+          </button>
+        </div>
+        <table
+          @stagger
+          [dataSource]="dataSource"
+          class="w-full"
+          mat-table
+          matSort
+          [id]="id+'tableAddresses'">
+
+          <!-- View Map -->
+          <ng-container matColumnDef="detailDirection">
+            <th
+              *matHeaderCellDef
+              class="uppercase"
+              mat-header-cell
+              mat-sort-header>
+            </th>
+            <td *matCellDef="let row" mat-cell>
+              <div class="flex align-middle text-center content-center items-center">
+                <button
+                  (click)="openAddressInformationProperty(row)"
+                  class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
+                  mat-icon-button title="Detalles de la direccion">
+                  <mat-icon class="icon-sm" svgIcon="mat:edit_location"></mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Text Columns -->
+          <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+            <ng-container
+              *ngIf="column.type === 'text'"
+              [matColumnDef]="column.property">
+              <th *matHeaderCellDef
+                  class="uppercase"
+                  mat-header-cell
+                  mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                {{ row[column.property] }}
+              </td>
+            </ng-container>
+          </ng-container>
+
+          <ng-container ></ng-container>
+          
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Actions</th>
+            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+              <button
+                (click)="$event.stopPropagation()"
+                [matMenuTriggerData]="{ basicInformationAddress: row }"
+                [matMenuTriggerFor]="actionsMenu"
+                mat-icon-button
+                type="button">
+                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+          <tr
+            *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            mat-row></tr>
+        </table>
+        <mat-paginator
+          #paginator
+          [pageSizeOptions]="pageSizeOptions"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="page"
+          (page)="refreshInformationPaginator($event)"
+          class="paginator"></mat-paginator>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+  <button
+    (click)="toggleColumnVisibility(column, $event)"
+    *ngFor="let column of columns"
+    class="mat-menu-item block">
+    <mat-checkbox
+      (click)="$event.stopPropagation()"
+      [(ngModel)]="column.visible"
+      color="primary">
+      {{ column.label }}
+    </mat-checkbox>
+  </button>
+</mat-menu>
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-basicInformationAddress="basicInformationAddress" matMenuContent>
+    <button (click)="openAddEditAddressInformationPropertyDialog(basicInformationAddress)" mat-menu-item>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      <span>Editar</span>
+    </button>
+    <button (click)="deleteInformations(basicInformationAddress)" mat-menu-item>
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Eliminar</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<ng-template #confirmDialog>
+  <h2 matDialogTitle>Eliminar Dirección</h2>
+  <mat-dialog-content>
+    <p>Desea eliminiar la dirección?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="flex gap-1 justify-center">
+    <button mat-button matDialogClose mat-raised-button color="primary">Cancelar</button>
+    <button mat-button [matDialogClose]="'delete'" mat-raised-button color="warn">Eliminar</button>
+  </mat-dialog-actions>
+</ng-template>
+

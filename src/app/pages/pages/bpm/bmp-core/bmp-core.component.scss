@@ -1,0 +1,31 @@
+
+.vex-footer {
+  background: var(--vex-toolbar-background);
+  box-shadow: var(--vex-footer-elevation);
+  position: fixed;
+}
+
+.vex-footer-task {
+  width: 100%;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.h-content-card-bpm {
+  height: calc(
+    100% - var(--vex-toolbar-height) - var(--vex-navigation-height)
+  ) !important;
+  min-height: calc(
+    100% - var(--vex-toolbar-height) - var(--vex-navigation-height) - var(--vex-footer-height)
+  ) !important;
+}
+
+
+
+@media (min-width: 1280px) {
+
+  .h-content-body-bpm,
+  .h-content-card-bpm, {
+    margin-top: calc(var(--vex-toolbar-height) + var(--vex-navigation-height));
+  }
+}

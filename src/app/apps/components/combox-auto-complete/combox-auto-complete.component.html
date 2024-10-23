@@ -1,0 +1,18 @@
+<mat-form-field [ngClass]="cssClasses">
+  <mat-label>{{ label }}</mat-label>
+  <input type="text"
+         aria-label="Number"
+         matInput
+         [formControlName]="formControlNameCombobox"
+         [id]="idCombo"
+         placeholder="{{placeholder}}"
+         [matAutocomplete]="auto">
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    @for (option of filteredOptions | async; track option) {
+      <mat-option
+        [value]="option">
+        {{ option }}
+      </mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>

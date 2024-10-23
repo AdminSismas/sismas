@@ -1,0 +1,45 @@
+<div class="card overflow-hidden min-h-[180px] shadow-md">
+  <div
+    (click)="openProtaskE.emit(protaskE)"
+    class="p-4 py-2 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
+    matRipple>
+    <div class="flex items-center container px-0 h-20">
+      <img [src]="URL_ICON_BASE + protaskE.icon" class="avatar h-20 w-20 mx-auto flex bg-transparent to-transparent" alt="" />
+      <span class="items-center text-center min-h-[35px] subheading-1 leading-none">
+            @if (protaskE.proTask === null || protaskE.proTask === undefined || protaskE.proTask.processName == null) {
+              {{ NAME_NO_DISPONIBLE }}
+            } @else {
+              {{ protaskE.proTask.processName | truncate: 70 }}
+            }
+            </span>
+    </div>
+    <h4 class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[30px]"
+        title="{{ protaskE.proTask?.flowName }}">
+      @if (protaskE.proTask === null || protaskE.proTask === undefined || protaskE.proTask.flowName == null) {
+        {{ NAME_NO_DISPONIBLE }}
+      } @else {
+        {{ protaskE.proTask.flowName | truncate: 70 }}
+      }
+    </h4>
+    <h5 class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[20px]"
+        title="{{ protaskE.proTask?.flowName }}">
+      @if (protaskE.proTask === null || protaskE.proTask === undefined || protaskE.proTask.daysBeginS == null) {
+        {{ NAME_NO_DISPONIBLE }}
+      } @else {
+        {{ protaskE.proTask.daysBeginS | truncate: 70 }}
+      }
+    </h5>
+  </div>
+
+  <div
+    (click)="openDetailProtaskE.emit(protaskE.executionId)"
+    class="bg-app-bar p-2 flex items-star justify-items-start cursor-pointer">
+    <mat-icon
+      class="ltr:mr-1 rtl:ml-1 icon-xs ml-1 mr-3 mt-0 mb-0"
+      svgIcon="mat:settings"></mat-icon>
+    <span class="items-star text-center pl-2 pr-2 pt-0 pb-0">
+       {{ 'Detalle Tramite' + SPACE + protaskE.proTask?.flowDetail }}
+      </span>
+  </div>
+</div>
+

@@ -1,0 +1,73 @@
+<div class="flex items-center" mat-dialog-title>
+  <h2
+    class="headline m-0 flex-auto">
+   {{CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE}}
+  </h2>
+
+  <button
+    [matMenuTriggerFor]="settingsMenu"
+    class="text-secondary"
+    mat-icon-button
+    type="button">
+    <mat-icon svgIcon="mat:more_vert"></mat-icon>
+  </button>
+
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+
+<vex-page-layout-content class="container-fluid p-0">
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
+    @for(option of optionschemas; track option) {
+      <mat-tab [label]="option.title">
+        <vex-cadastral-information-property
+          [id]="'Cadastralinformation_' + option.schema"
+          [label]="option.title"
+          [schema]="option.schema"
+          [typeInformation]="typeInformation"
+          [contentInfoSchema]="this.defaults"
+          [showTittle]="false">
+        </vex-cadastral-information-property>
+      </mat-tab>
+    } @empty {
+      <mat-tab label="No Data">
+        <h1 class="text-center">No tabs available.</h1>
+      </mat-tab>
+    }
+  </mat-tab-group>
+</vex-page-layout-content>
+
+<!-- <vex-page-layout-content class="container-fluid p-0" *ngIf="showOnlyOneSchema">
+  <vex-cadastral-information-property
+    [id]="'Cadastralinformation_' + this.optionschemas[0].schema"
+    [label]="this.optionschemas[0].tittle"
+    [schema]="this.optionschemas[0].schema"
+    [typeInformation]="typeInformation"
+    [contentInfoSchema]="this.defaults"
+    [showTittle]="false">
+  </vex-cadastral-information-property>
+</vex-page-layout-content> -->
+
+
+<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+  <button mat-menu-item>
+    <mat-icon svgIcon="mat:print"></mat-icon>
+    <span>Print</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon svgIcon="mat:download"></mat-icon>
+    <span>Export</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon svgIcon="mat:delete"></mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu>

@@ -1,0 +1,22 @@
+.content {
+  container-type: inline-size;
+  container-name: mainContent;
+}
+
+.form-content {
+  @apply flex flex-wrap w-full justify-between;
+  .form-item {
+    --width: 33%;
+    width: var(--width);
+    &.buttons{
+      @apply flex justify-center py-2;
+      width: 100%;
+    }
+  }
+}
+
+@container mainContent (max-width: 500px) {
+  .form-item {
+   --width: 50% !important;
+  }
+}

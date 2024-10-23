@@ -1,0 +1,15 @@
+<mat-form-field class="mainClass" [ngClass]="cssClasses"
+[hideRequiredMarker]="hideRequiredMarker">
+  <mat-label>{{label}}</mat-label>
+  <input
+    type="type"
+    [formControlName]="formControlNameInput" 
+    [id]="idComboInput"
+    matInput />
+  @if(icon) {
+    <mat-icon matIconPrefix [svgIcon]="icon"></mat-icon>
+  }
+  @if (hintValue && hintValue.length > 0) {
+    <mat-hint>{{ hintValue }}</mat-hint>
+  }
+</mat-form-field>

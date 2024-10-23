@@ -1,0 +1,9 @@
+<mat-form-field [ngClass]="cssClasses" [hideRequiredMarker]="hideRequiredMarker"> 
+  @if(label.length > 0) {
+    <mat-label>{{ label }}</mat-label>
+  }
+  <textarea matInput [formControlName]="formControlNameInput" [id]="idTextArea"></textarea>
+  @if (hintValue.length > 0) {
+    <mat-hint>{{ hintValue }}</mat-hint>
+  }
+</mat-form-field>

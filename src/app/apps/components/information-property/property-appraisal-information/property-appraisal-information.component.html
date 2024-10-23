@@ -1,0 +1,210 @@
+<mat-accordion class="flex flex-col py-0 px-0 mb-2 classInformationAppraisal">
+  <mat-expansion-panel
+    (opened)="isExpandPanel(expandedComponent = true)"
+    [expanded]="expandedComponent">
+    <mat-expansion-panel-header
+      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+      <vex-header-cadastral-information-property
+        label="Avaluos"
+        icon="mat:description"
+        id="information-appraisal-property">
+      </vex-header-cadastral-information-property>
+    </mat-expansion-panel-header>
+    <mat-panel-description class="py-0 px-0">
+      <div class="w-full flex flex-col overflow-auto">
+        <div
+          class="px-4 h-16 border-b sticky left-0 flex items-center">
+          <span class="flex-1"></span>
+          <mat-form-field subscriptSizing="dynamic" class=" pl-1 pr-1 pt-6 pb-6 flex flex-col">
+            <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
+            <input
+              matInput
+              [formControl]="searchCtrl"
+              placeholder="Search basic&hellip;"
+              type="text" />
+          </mat-form-field>
+          <span class="flex-1"></span>
+          <button
+            [matMenuTriggerFor]="columnFilterMenu"
+            class="ml-4 flex-none"
+            mat-icon-button
+            matTooltip="Filter Columns"
+            type="button">
+            <mat-icon svgIcon="mat:filter_list"></mat-icon>
+          </button>
+        </div>
+        <table
+          @stagger
+          [dataSource]="dataSource"
+          class="w-full"
+          mat-table
+          matSort>
+
+          <!-- View Map -->
+          <ng-container matColumnDef="viewDetail">
+            <th
+              *matHeaderCellDef
+              class="uppercase"
+              mat-header-cell
+              mat-sort-header>
+            </th>
+            <td *matCellDef="let row" mat-cell>
+              <div class="flex">
+                <button
+                  (click)="$event.stopPropagation()"
+                  class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
+                  mat-icon-button title="Ver Detalle">
+                  <mat-icon class="icon-sm" svgIcon="mat:description"></mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Text Columns -->
+          <ng-container *ngFor="let column of columns; trackBy: trackByProperty;">
+            <ng-container
+              *ngIf="column.type === 'text'"
+              [matColumnDef]="column.property">
+              <th *matHeaderCellDef
+                  [ngClass]="column.cssClassesHead"
+                  class="uppercase text-center"
+                  mat-header-cell
+                  mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td *matCellDef="let row"
+                  [ngClass]="column.cssClasses" mat-cell
+                  class="uppercase">
+                {{ row[column.property] }}
+              </td>
+            </ng-container>
+            <ng-container
+              *ngIf="column.type === 'date'"
+              [matColumnDef]="column.property">
+              <th *matHeaderCellDef
+                  [ngClass]="column.cssClassesHead"
+                  class="uppercase text-center"
+                  mat-header-cell
+                  mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
+                  class="uppercase">
+                {{ row[column.property] | date:'mediumDate' }}
+              </td>
+            </ng-container>
+            <ng-container
+              *ngIf="column.type === 'currency'"
+              [matColumnDef]="column.property">
+              <th *matHeaderCellDef
+                  [ngClass]="column.cssClassesHead"
+                  class="uppercase text-center"
+                  mat-header-cell
+                  mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
+                  class="uppercase">
+                {{ row[column.property] | currency: FORMAT_CURRENCY_COP:'' }}
+              </td>
+            </ng-container>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+            <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+              <button
+                (click)="$event.stopPropagation()"
+                [matMenuTriggerData]="{ customer: row }"
+                [matMenuTriggerFor]="actionsMenu"
+                mat-icon-button
+                type="button">
+                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Header row first group -->
+          <ng-container matColumnDef="header-row-first-group">
+            <th mat-header-cell *matHeaderCellDef
+                [style.text-align]="'center'"
+                [attr.colspan]="2"
+                class="uppercase text-center">
+            </th>
+          </ng-container>
+
+          <!-- Header row second group -->
+          <ng-container matColumnDef="header-row-second-group">
+            <th mat-header-cell
+                *matHeaderCellDef [attr.colspan]="3"
+                [style.text-align]="'center'"
+                class="uppercase text-center">
+              Avalúo catastral
+            </th>
+          </ng-container>
+
+          <!-- Header row third group -->
+          <ng-container matColumnDef="header-row-third-group">
+            <th mat-header-cell
+                *matHeaderCellDef [attr.colspan]="3"
+                [style.text-align]="'center'"
+                class="uppercase text-center">
+              Avalúo comercial
+            </th>
+          </ng-container>
+
+          <!-- Header row third group -->
+          <ng-container matColumnDef="header-row-quartet-group">
+            <th mat-header-cell
+                *matHeaderCellDef [attr.colspan]="1"
+                [style.text-align]="'center'"
+                class="uppercase text-center">
+              Autoavalúo
+            </th>
+          </ng-container>
+
+
+          <tr *matHeaderRowDef="visibleColumnsSecondsRow" mat-header-row></tr>
+          <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+          <tr
+            *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            mat-row></tr>
+        </table>
+        <mat-paginator
+          #paginator
+          [pageSizeOptions]="pageSizeOptions"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="page"
+          (page)="refreshInformationPaginator($event)"
+          class="paginator"></mat-paginator>
+      </div>
+    </mat-panel-description>
+
+  </mat-expansion-panel>
+</mat-accordion>
+
+<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+  <button
+    (click)="toggleColumnVisibility(column, $event)"
+    *ngFor="let column of columns"
+    class="mat-menu-item block">
+    <mat-checkbox
+      (click)="$event.stopPropagation()"
+      [(ngModel)]="column.visible"
+      color="primary">
+      {{ column.label }}
+    </mat-checkbox>
+  </button>
+</mat-menu>
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-customer="customer" matMenuContent>
+    <button (click)="deleteInformations(customer)" mat-menu-item>
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>

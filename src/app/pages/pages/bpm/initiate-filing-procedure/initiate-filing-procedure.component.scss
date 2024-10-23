@@ -1,0 +1,21 @@
+body {
+
+}
+
+.mat-horizontal-stepper-header {
+  display: flex;
+  height: var(--mat-stepper-header-height) !important;
+}
+
+.vex-footer {
+  background: var(--vex-toolbar-background);
+  box-shadow: var(--vex-footer-elevation);
+  position: fixed;
+}
+
+.vex-footer-task {
+  width: 100%;
+  padding-left: 10px!important;
+  padding-right: 10px!important;
+}
+

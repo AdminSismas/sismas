@@ -1,0 +1,22 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthService } from '../../pages/pages/auth/login/services/auth.service';
+
+@Injectable()
+export class TokenInterceptor implements HttpInterceptor {
+  private isRefreshing = false;
+
+  constructor(private authService: AuthService) {
+  }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let token: string | null = this.authService.token;
+    const authReq = request.clone({
+      headers: request.headers.set('Access-Control-Allow-Origin', '*')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + token),
+    });
+    return next.handle(authReq);
+  }
+}

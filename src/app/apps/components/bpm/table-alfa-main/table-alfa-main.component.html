@@ -1,0 +1,124 @@
+<div class="card overflow-auto w-full flex flex-col justify-between py-0 mat-elevation-z5">
+  <table
+    @stagger
+    [dataSource]="dataSource"
+    class="w-full"
+    mat-table
+    matSort>
+
+    <!-- Type Properties Column -->
+    <ng-container matColumnDef="operationType">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header class="pl-1 pr-1"></th>
+      <td *matCellDef="let row"
+          mat-cell
+          class="pl-1 pr-1">
+        <div *ngIf="row['operationType'] === 'CREATE'"
+             class="px-4 py-2 rounded-xl !bg-green-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
+          {{ row['operationType'] }}
+        </div>
+        <div *ngIf="row['operationType'] === 'UPDATE'"
+             class="px-4 py-2 rounded-xl !bg-primary-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
+          {{ row['operationType'] }}
+        </div>
+        <div *ngIf="row['operationType'] === 'DELETE'"
+             class="px-4 py-2 rounded-xl !bg-red-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
+          {{ row['operationType'] }}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- View button basic -->
+    <ng-container matColumnDef="infoProperties">
+      <th
+        *matHeaderCellDef
+        class="uppercase pl-1 pr-1"
+        mat-header-cell
+        mat-sort-header>
+      </th>
+      <td *matCellDef="let row"
+          class="pl-1 pr-1"
+          mat-cell>
+        <div class="flex">
+          <button
+            (click)="openCadastralInformationProperty(row)"
+            class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
+            mat-icon-button title="Consultar informacion predial">
+            <mat-icon class="icon-sm" svgIcon="mat:info"></mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Text Columns -->
+    <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+      <ng-container
+        *ngIf="column.type === 'text'"
+        [matColumnDef]="column.property">
+        <th
+          *matHeaderCellDef
+          class="uppercase pl-1 pr-1"
+          mat-header-cell
+          mat-sort-header>
+          {{ column.label }}
+        </th>
+        <td *matCellDef="let row"
+            [ngClass]="column.cssClasses"
+            mat-cell
+            class="pl-1 pr-1">
+          {{ row[column.property] }}
+        </td>
+      </ng-container>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="actions">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header class="pl-1 pr-1"></th>
+      <td *matCellDef="let row" class="w-10 text-secondary pl-1 pr-1" mat-cell>
+        <button
+          (click)="$event.stopPropagation()"
+          [matMenuTriggerData]="{ row: row }"
+          [matMenuTriggerFor]="actionsMenu"
+          mat-icon-button
+          type="button">
+          <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="visibleColumns"
+        mat-header-row></tr>
+    <tr
+      *matRowDef="let row; columns: visibleColumns"
+      @fadeInUp
+      class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+      mat-row></tr>
+  </table>
+  <div *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0" class="no-data-information">
+    No hay informacion disponible
+  </div>
+  <mat-paginator
+    #paginator
+    [pageSizeOptions]="pageSizeOptions"
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="page"
+    class="sticky left-0"></mat-paginator>
+</div>
+
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-row="row" matMenuContent>
+    <button (click)="viewChanges(row)" mat-menu-item>
+      <mat-icon svgIcon="mat:info"></mat-icon>
+      <span>Ver Cambios</span>
+    </button>
+    <button (click)="edithInformations(row)" mat-menu-item>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      <span>Editar</span>
+    </button>
+    <button (click)="deleteInformations(row)" mat-menu-item>
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Eliminar</span>
+    </button>
+  </ng-template>
+</mat-menu>

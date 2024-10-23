@@ -1,0 +1,188 @@
+<vex-secondary-toolbar current="Formulario">
+  <vex-breadcrumbs
+    [crumbs]="['Apoyo Operación', 'Personas']"
+    class="flex-auto"></vex-breadcrumbs>
+
+  <button class="ml-2" color="primary" mat-icon-button type="button">
+    <mat-icon svgIcon="mat:more_vert"></mat-icon>
+  </button>
+</vex-secondary-toolbar>
+<!-- <vex-in-construction></vex-in-construction>
+-->
+
+
+<vex-page-layout>
+  <vex-page-layout-header
+    class="pb-16 flex flex-col items-start justify-center">
+    <div
+      [class.container]="layoutCtrl.value === 'boxed'"
+      [class.px-6]="layoutCtrl.value === 'fullwidth'"
+      class="w-full flex flex-col sm:flex-row justify-between"></div>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content
+    [class.container]="layoutCtrl.value === 'fullwidth'"
+    [class.px-6]="layoutCtrl.value === 'fullwidth'"
+    class="-mt-6">
+    <div class="card overflow-auto -mt-16">
+      <div
+        class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
+        <!-- seccion de busqueda -->
+        <div class="contet-search">
+          <form [formGroup]="form" class="flex justify-center items-center">
+            <vex-combox-colletion
+              ubscriptSizing="dynamic"
+              idComboCollection="typeNumberDocument"
+              name="selector_document"
+              label="Tipo de documento"
+              typeDomainName="IndividualTypeNumber"
+              placeholderDomainName="Seleccionar tipo documento&hellip;"
+              (stringEventEmitter)="infoSelect($event)"></vex-combox-colletion>
+
+            <mat-form-field subscriptSizing="dynamic">
+              <input
+                matInput
+                [formControl]="document"
+                placeholder="Buscar numero de documento&hellip;"
+                type="text"
+                name="search" />
+            </mat-form-field>
+
+            <button
+              color="primary"
+              aria-label=""
+              type="button"
+              mat-flat-button
+              (click)="search()"
+              name="enviar"
+              class="ml-4 flex-none">
+              buscar
+            </button>
+          </form>
+        </div>
+
+        <span class="flex-1"></span>
+
+        <button
+          [matMenuTriggerFor]="columnFilterMenu"
+          class="ml-4 flex-none"
+          mat-icon-button
+          matTooltip="Filter Columns"
+          type="button">
+          <mat-icon svgIcon="mat:filter_list"></mat-icon>
+        </button>
+
+        <button
+          (click)="createCustomer()"
+          class="ml-4 flex-none"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Add Customer"
+          type="button">
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div>
+
+      <table [dataSource]="dataSource" class="w-full" mat-table matSort>
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="checkbox">
+          <th *matHeaderCellDef mat-header-cell>
+            <mat-checkbox
+              (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              color="primary">
+            </mat-checkbox>
+          </th>
+          <td *matCellDef="let row" class="w-4" mat-cell>
+            <mat-checkbox
+              (change)="$event ? selection.toggle(row) : null"
+              (click)="$event.stopPropagation()"
+              [checked]="selection.isSelected(row)"
+              color="primary">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Text Columns -->
+        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+          <ng-container
+            *ngIf="column.type === 'text'"
+            [matColumnDef]="column.property">
+            <th
+              *matHeaderCellDef
+              class="uppercase"
+              mat-header-cell
+              mat-sort-header>
+              {{ column.label }}
+            </th>
+            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
+          <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+            <button
+              (click)="$event.stopPropagation()"
+              [matMenuTriggerData]="{ customer: row }"
+              [matMenuTriggerFor]="actionsMenu"
+              mat-icon-button
+              type="button">
+              <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+        <tr
+          (click)="updateCustomer(row)"
+          *matRowDef="let row; columns: visibleColumns"
+          class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+          mat-row></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"
+        [pageIndex]="page"
+        [length]="totalElements"
+        class="sticky left-0"
+        (page)="refreshPaginatorNext($event)">
+      </mat-paginator>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+
+<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+  <button
+    (click)="toggleColumnVisibility(column, $event)"
+    *ngFor="let column of columns"
+    class="mat-menu-item block">
+    <mat-checkbox
+      (click)="$event.stopPropagation()"
+      [(ngModel)]="column.visible"
+      color="primary">
+      {{ column.label }}
+    </mat-checkbox>
+  </button>
+</mat-menu>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-customer="customer" matMenuContent>
+    <button (click)="updateCustomer(customer)" mat-menu-item>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      <span>Modify</span>
+    </button>
+    <button (click)="deleteCustomer(customer)" mat-menu-item>
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>
