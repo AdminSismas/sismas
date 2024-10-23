@@ -155,6 +155,10 @@ export class SendGeneralRequestsService {
     return this.http.post<any>(url, "");
   }
 
+  sendDeleteFetch(url: string): Observable<any> {
+    return this.http.delete<any>(url);
+  }
+
   sendRequestsFetchGetBody(url: any, body: any): Observable<any> {
     return this.http.get<any>(url, body);
   }
@@ -162,6 +166,11 @@ export class SendGeneralRequestsService {
   sendRequestsFetchPostBody(url: any, body: any): Observable<any> {
     return this.http.post<any>(url, body);
   }
+
+  sendRequestsUpdatePostBody(url: any, body: any): Observable<any> {
+    return this.http.put<any>(url, body);
+  }
+
   errorNotFound(error: HttpErrorResponse) {
     if (error.status == HttpStatusCode.NotFound) {
       return new Observable<any>((subscriber) => subscriber.complete());

@@ -3,6 +3,7 @@ import { InConstructionComponent } from '../../../../../apps/components/in-const
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { TableWorkflowComponent } from "../../../../../apps/components/table-workflow/table-workflow.component";
 
 @Component({
   selector: 'vex-workflow-procedures',
@@ -11,8 +12,9 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
-  ],
+    VexSecondaryToolbarComponent,
+    TableWorkflowComponent
+],
   templateUrl: './workflow-procedures.component.html',
   styleUrl: './workflow-procedures.component.scss'
 })

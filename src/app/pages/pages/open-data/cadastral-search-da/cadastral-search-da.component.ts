@@ -3,6 +3,8 @@ import { InConstructionComponent } from '../../../../apps/components/in-construc
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { VexPageLayoutHeaderDirective } from "../../../../../@vex/components/vex-page-layout/vex-page-layout-header.directive";
+import { CommentsComponent } from "../../../../apps/components/comments/comments.component";
 
 @Component({
   selector: 'vex-cadastral-search-da',
@@ -11,8 +13,10 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
-  ],
+    VexSecondaryToolbarComponent,
+    VexPageLayoutHeaderDirective,
+    CommentsComponent
+],
   templateUrl: './cadastral-search-da.component.html',
   styleUrl: './cadastral-search-da.component.scss'
 })

@@ -3,6 +3,7 @@ import { InConstructionComponent } from '../../../../../apps/components/in-const
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { TableDomainLadmColComponent } from "../../../../../apps/components/table-domain-ladm-col/table-domain-ladm-col.component";
 
 @Component({
   selector: 'vex-domain-ladm-col',
@@ -11,8 +12,9 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
-  ],
+    VexSecondaryToolbarComponent,
+    TableDomainLadmColComponent
+],
   templateUrl: './domain-ladm-col.component.html',
   styleUrl: './domain-ladm-col.component.scss'
 })

@@ -3,6 +3,7 @@ import { InConstructionComponent } from '../../../../../apps/components/in-const
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { TableProceduresComponent } from "../../../../../apps/components/table-procedures/table-procedures.component";
 
 @Component({
   selector: 'vex-work-progress',
@@ -11,8 +12,9 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
-  ],
+    VexSecondaryToolbarComponent,
+    TableProceduresComponent
+],
   templateUrl: './work-progress.component.html',
   styleUrl: './work-progress.component.scss'
 })

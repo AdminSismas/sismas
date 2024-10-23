@@ -1,0 +1,14 @@
+.alert-menssage {
+  text-align: center;
+  background-color: hsla(0, 79%, 72%, 0.829);
+  color: hsla(0, 43%, 45%, 0.829);
+  border: 1px solid hsla(0, 78%, 73%, 0.829);
+}
+
+.input__100 {
+  vex-combox-colletion {
+    mat-form-field {
+      width: 100% !important;
+    }
+  }
+}

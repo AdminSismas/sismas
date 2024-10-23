@@ -3,6 +3,7 @@ import { InConstructionComponent } from '../../../../apps/components/in-construc
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { DocumnetManagementComponent } from "../../../../apps/components/documnet-management/documnet-management.component";
 
 @Component({
   selector: 'vex-general-maps',
@@ -11,8 +12,9 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
-  ],
+    VexSecondaryToolbarComponent,
+    DocumnetManagementComponent
+],
   templateUrl: './general-maps.component.html',
   styleUrl: './general-maps.component.scss'
 })

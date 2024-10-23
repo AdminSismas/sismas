@@ -93,4 +93,15 @@ export const environment = {
   myWork_tasksPanel:'/myWork/tasks/tasksPanel/',
   bpm_bpmCore:'/bpm/bpm-core/',
   initiate_filing_procedure:'/bpm/initiateFilingProcedure/',
+
+  individualTypeNumber: '/individual/findByNumber',
+  number: 'number',
+  individualNumber: '/individual',
+  domain_domain: '/domain',
+  /* bpmAttachment: '/bpmAttachment',
+  bpmOperation: '/bpmOperation',
+  bpmProcess: '/bpmProcess', */
+  proExecution: '/proExecution/',
+  comment: '/comment/',
+  active: 'active'
 };
