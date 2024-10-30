@@ -14,7 +14,8 @@ import {
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
-  TABLE_ALFA_MAIN_OPERATION_COLUMN, TYPEINFORMATION_EDITION
+  TABLE_ALFA_MAIN_OPERATION_COLUMN, TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -178,7 +179,9 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
           operation?.baunitHead?.baunitIdE,
           operation?.baunitHead,
           this.executionId,
-          LIST_SCHEMAS_CONTROL_CHANGES
+          LIST_SCHEMAS_CONTROL_CHANGES,
+          TYPEINFORMATION_VISUAL
+
         )
       })
       .afterClosed();

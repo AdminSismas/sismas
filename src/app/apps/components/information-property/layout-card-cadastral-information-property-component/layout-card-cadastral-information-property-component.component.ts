@@ -49,6 +49,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   implements OnInit, AfterViewInit
 {
   typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
+  
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
 
@@ -77,6 +78,11 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     );
     //On init of component set type information according to the component
     this.setTypeInformation(0);
+
+
+    if (this.defaults.typeInformation == 'visualization') {
+      this.typeInformation = this.defaults.typeInformation;
+    }
   }
 
   createObjectLayout(schema: string): void {
@@ -116,9 +122,9 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     const { index = -1 } = matTabChangeEvent || {};
     if (index >= 0 && this.optionschemas.length > 0){
       const selectedOptionSchema: ObjectSchema = this.optionschemas[index];
-      if (selectedOptionSchema) {
-        this.setTypeInformation(index);
-      }
+      // if (selectedOptionSchema) {
+      //   this.setTypeInformation(index);
+      // }
     }
   }
 
