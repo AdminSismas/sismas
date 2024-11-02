@@ -60,3 +60,25 @@ export class ContentInformationConstruction {
     return name;
   }
 }
+
+export interface CreateBasicInformationConstruction {
+  domBuiltType?: string;
+  domBuiltUse?: string;
+  unitBuiltCode?: number;
+  unitBuiltLabel?: string;
+  unitBuiltFloors?: number;
+  unitBuiltYear?: number;
+  unitBuiltArea?: number;
+  unitBuiltScore?: number;
+  domTipologiaTipo?: string;
+  unitBuiltValuation?: number;
+  unitBuiltValuationM2?: number;
+  unitBuiltPrivateArea?: number;
+  unitBuiltObservation?: string;
+  hash?: string;
+  createdBy?: string;
+  createdAt?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+  unitBuiltAreaE?: string;
+}

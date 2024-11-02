@@ -156,6 +156,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
 
+ 
+
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
       behavior: 'smooth'

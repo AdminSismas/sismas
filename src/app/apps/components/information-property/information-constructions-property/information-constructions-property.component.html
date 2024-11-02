@@ -14,13 +14,25 @@
       <div class="w-full flex flex-col overflow-auto">
         <div
           class="px-4 h-16 border-b sticky left-0 flex items-center">
-          <span class="flex-1"></span>
+          <!-- <span class="flex-1"></span> -->
+          @if(typeInformation === 'edition') {
+          <button
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="openAddEditConstructionInformationPropertyDialog()"
+           >
+            Nueva
+            <mat-icon svgIcon="mat:add"></mat-icon>
+          </button>
+        }
+
           <mat-form-field subscriptSizing="dynamic" class=" pl-1 pr-1 pt-6 pb-6 flex flex-col">
             <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
             <input
               matInput
               [formControl]="searchCtrl"
-              placeholder="Search Constructions&hellip;"
+              placeholder="Buscar construcciones&hellip;"
               type="text" />
           </mat-form-field>
           <span class="flex-1"></span>
@@ -29,7 +41,7 @@
             [matMenuTriggerFor]="columnFilterMenu"
             class="ml-4 flex-none"
             mat-icon-button
-            matTooltip="Filter Columns"
+            matTooltip="Filtrar columnas"
             type="button">
             <mat-icon svgIcon="mat:filter_list"></mat-icon>
           </button>
@@ -127,10 +139,15 @@
   </button>
 </mat-menu>
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  
   <ng-template let-customer="customer" matMenuContent>
+    <button (click)="editInformations(customer)" mat-menu-item>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      <span>Editar</span>
+    </button>
     <button (click)="deleteInformations(customer)" mat-menu-item>
       <mat-icon svgIcon="mat:delete"></mat-icon>
-      <span>Delete</span>
+      <span>Eliminar</span>
     </button>
   </ng-template>
 </mat-menu>

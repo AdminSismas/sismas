@@ -30,7 +30,7 @@
           <div class="flex justify-between">
             <div class="flex flex-col gap-1">
               <span class="text-black capitalize text-sm">ID</span>
-              <span class="text-black capitalize text-sm">Area</span>
+              <span class="text-black capitalize text-sm">Área</span>
               <span class="text-black capitalize text-sm">Piso</span>
               <span class="text-black capitalize text-sm">Avalúo</span>
             </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="flex flex-col gap-1">
               <span class="text-black capitalize text-sm">Uso</span>
-              <span class="text-black capitalize text-sm">Área</span>
+              <!-- <span class="text-black capitalize text-sm">Área</span> -->
               <span class="text-black capitalize text-sm">Observación</span>
               <span class="text-black capitalize text-sm">Tipologia</span>
             </div>
@@ -96,11 +96,11 @@
               } @else {
                 <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
               }
-              @if (data !== null && data !== undefined && data.unitBuiltPrivateArea) {
+              <!-- @if (data !== null && data !== undefined && data.unitBuiltPrivateArea) {
                 <span class="text-sm">{{ data.unitBuiltPrivateArea }}</span>
               } @else {
                 <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-              }
+              } -->
               @if (data !== null && data !== undefined && data.unitBuiltObservation) {
                 <span class="text-sm">{{ data.unitBuiltObservation }}</span>
               } @else {

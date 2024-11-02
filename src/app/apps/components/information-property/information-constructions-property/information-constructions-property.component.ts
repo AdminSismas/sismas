@@ -50,6 +50,8 @@ import {
 } from './detail-information-constructions-property/detail-information-constructions-property.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/content-info';
+import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from './edit-information-constructions-property/edit-information-constructions-property.component';
+import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -225,8 +227,45 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       .afterClosed();
   }
 
+  openAddEditConstructionInformationPropertyDialog(
+    data?: ContentInformationConstruction
+  ): void {
+    const dialogData: AddEditInformationConstructionI = {
+      type: data ? 'edit' : 'new',
+      basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
+      baunitId: this.baunitId || undefined,
+    };
+    const dialogRef = this.dialog
+      .open(EditInformationConstructionsPropertyComponent, {
+        minWidth: '50%',
+        minHeight: '40%',
+        disableClose: true,
+        data: dialogData,
+      });
+    
+    dialogRef.afterClosed().subscribe((result: any) => {
+      //Update information address object
+      if (result && Array.isArray(this.dataSource?.data)) {
+        const foundAddress = this.dataSource.data.find(
+          (row: any) => +row?.construccionId === +result?.construccionId
+        );
+        if (foundAddress) {
+          Object.keys(foundAddress).forEach((key: string) => {
+            // if (result[key]) {
+            //   foundAddress[key] = result[key];
+            // }
+          });
+        }
+      }
+    });
+  }
+
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
+  }
+
+  editInformations(customer: any): void {
+    console.log(customer);
   }
 
   deleteInformations(customer: any): void {
