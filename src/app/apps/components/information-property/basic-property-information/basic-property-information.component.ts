@@ -111,11 +111,6 @@ export class BasicPropertyInformationComponent implements OnInit {
     return Math.floor(Math.random() * max);
   }
 
-  switchTitle(): string {
-    if (this.propertyUnit) return 'Aspectos Generales Unidad Predial'
-    else  return 'Aspectos Generales Predio'
-  }
-
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
   protected readonly GUION = GUION;
 }

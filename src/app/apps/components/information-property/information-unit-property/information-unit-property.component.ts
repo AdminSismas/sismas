@@ -112,12 +112,11 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   searchData!: SearchData;
 
   @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = true;
+  @Input({ required: true }) expandedComponent: boolean = false;
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-  @Input() propertyUnit: boolean = false;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -235,8 +234,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
           LIST_SCHEMAS_CONTROL_MAIN,
-          undefined,
-          this.propertyUnit
         )
       })
       .afterClosed();

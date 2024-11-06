@@ -35,7 +35,9 @@ export class InformationPropertyService {
     }
     return this.requestsService
       .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(
+        catchError((error) => this.requestsService.errorNotFound(error))
+      );
   }
 
   getBasicInformationPropertyAddresses(
@@ -171,9 +173,9 @@ export class InformationPropertyService {
   /**
    * Create basic information address
    *
-   * @param baunitId 
-   * @param createBasicInformationAddress 
-   * @returns 
+   * @param baunitId
+   * @param createBasicInformationAddress
+   * @returns
    */
   createBasicInformationPropertyAddress(
     baunitId: string,
@@ -191,8 +193,8 @@ export class InformationPropertyService {
 
   /**
    * Delete basic information by direccionId
-   * @param id 
-   * @returns 
+   * @param id
+   * @returns
    */
   deleteBasicInformationPropertyAddress(direccionId: string): Observable<any> {
     const url: string = `${this.basic_url}${envi.ccDireccion}/${direccionId}`;

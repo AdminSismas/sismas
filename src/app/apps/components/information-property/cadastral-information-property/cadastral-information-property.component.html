@@ -45,20 +45,19 @@
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
-      [propertyUnit]="propertyUnit"
       @fadeInUp
     ></vex-basic-property-information>
-    <vex-information-unit-property
-      *ngIf="!propertyUnit"
-      #unitPropertyInformation{{schema}}
-      [id]="'unitPropertyInformation'+ schema"
-      [expandedComponent]="false"
-      [propertyUnit]="true"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      @fadeInUp [typeInformation]="typeInformation"
-    ></vex-information-unit-property>
+    @if (showInformationUnitProperty(baunitCondition)) {
+      <vex-information-unit-property
+        #unitPropertyInformationComponent{{schema}}
+        [id]="'informationUnitProperty'+ schema"
+        [expandedComponent]="false"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        @fadeInUp [typeInformation]="typeInformation"
+      ></vex-information-unit-property>
+    }
     <vex-information-addresses-property
       [id]="'basicInformationpropertyAddresses'+ schema"
       #propertyAddressesComponent{{schema}}
@@ -96,8 +95,8 @@
       @fadeInUp [typeInformation]="typeInformation"
     ></vex-property-appraisal-information>
     <vex-information-zones-property
-      [id]="'informationZonasPropertyComponent'+ schema"
-      #informationZonasPropertyComponent{{schema}}
+      [id]="'informationZonesPropertyComponent'+ schema"
+      #informationZonesPropertyComponent{{schema}}
       [expandedComponent]="false"
       [baunitId]="baunitId"
       [schema]="schema"

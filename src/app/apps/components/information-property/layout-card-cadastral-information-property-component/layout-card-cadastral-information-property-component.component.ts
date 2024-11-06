@@ -22,6 +22,10 @@ import {
   CONSTANT_INFOMATION_PREDIAL_TEMP
 } from '../../../constants/constantLabels';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
+import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
+import { tap, Observable } from 'rxjs';
 
 
 @Component({
@@ -56,15 +60,15 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
     private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>
+    private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>,
+    private informationPropertyService: InformationPropertyService
   ) {}
 
   ngOnInit(): void {
     if (
       this.defaults == null ||
       this.defaults.schemas == null ||
-      this.defaults.typeInformation == null ||
-      this.defaults.propertyUnit == null
+      this.defaults.typeInformation == null
     ) {
       return;
     }
@@ -79,8 +83,6 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     );
     //On init of component set type information according to the component
     this.setTypeInformation(0);
-
-    this.propertyUnit = this.defaults.propertyUnit;
   }
 
   createObjectLayout(schema: string): void {

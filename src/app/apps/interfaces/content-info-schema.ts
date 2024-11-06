@@ -7,20 +7,17 @@ export class ContentInfoSchema {
   schemas?:string[] = [];
   content?: any;
   typeInformation?: TypeInformation
-  propertyUnit?: boolean = false;
 
   constructor(baunitIdE?: string,
               content: any = null,
               executionId: string | null = '',
               schemas: string[] = [],
               typeInformation: TypeInformation = TYPEINFORMATION_VISUAL,
-              propertyUnit: boolean = false
             ) {
     this.content = content;
     this.baunitIdE = baunitIdE;
     this.executionId = executionId;
     this.schemas = schemas;
     this.typeInformation = typeInformation;
-    this.propertyUnit = propertyUnit;
   }
 }
