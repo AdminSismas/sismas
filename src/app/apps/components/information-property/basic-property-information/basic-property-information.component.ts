@@ -112,7 +112,6 @@ export class BasicPropertyInformationComponent implements OnInit {
   }
 
   switchTitle(): string {
-    console.log(this.propertyUnit);
     if (this.propertyUnit) return 'Aspectos Generales Unidad Predial'
     else  return 'Aspectos Generales Predio'
   }

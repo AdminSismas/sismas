@@ -208,9 +208,8 @@
           [length]="totalElements"
           [pageSize]="pageSize"
           [pageIndex]="page"
-          (page)="refreshInformationPaginator($event)"
           class="sticky left-0"
-        ></mat-paginator>
+          ></mat-paginator>
       </div>
 
       <mat-menu
@@ -243,7 +242,6 @@
           matMenuContent
         >
           <button
-            (click)="deleteInformations(customer)"
             mat-menu-item
           >
             <mat-icon svgIcon="mat:delete"></mat-icon>

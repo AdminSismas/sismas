@@ -49,6 +49,7 @@
       @fadeInUp
     ></vex-basic-property-information>
     <vex-information-unit-property
+      *ngIf="!propertyUnit"
       #unitPropertyInformation{{schema}}
       [id]="'unitPropertyInformation'+ schema"
       [expandedComponent]="false"

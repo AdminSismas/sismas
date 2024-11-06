@@ -20,6 +20,7 @@ export const environment = {
   },
   baunit:'/baunit/',
   baunit_npnlike: '/baunit/npnlike',
+  baunit_baunitId: '/baunit/baunitId',
   baunit_attributes: '/baunit/attributes/',
   baunit_attributes_registration: 'matricula',
   baunit_attributes_document: 'individualNumber',

@@ -1,5 +1,5 @@
 export interface BAunitLike {
-  content:          Content[] | [];
+  content:          Baunit[] | [];
   pageable:         Pageable;
   totalElements:    number;
   totalPages:       number;
@@ -12,7 +12,7 @@ export interface BAunitLike {
   empty:            boolean;
 }
 
-export interface Content {
+export interface Baunit {
   propertyRegistryOffice:  string;
   propertyRegistryNumber:  string;
   cadastralNumber:         string;

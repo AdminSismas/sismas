@@ -58,8 +58,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
-import { BaunitChildrenInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
-import { BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
+import { UnitPropertyInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
+import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
 
 
 @Component({
@@ -69,52 +69,40 @@ import { BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-
   animations: [fadeInUp400ms, stagger40ms],
   standalone: true,
   imports: [
-    VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
-    MatButtonToggleModule,
-    ReactiveFormsModule,
-    VexPageLayoutContentDirective,
-    NgIf,
-    MatButtonModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatMenuModule,
-    MatTableModule,
-    MatSortModule,
-    MatCheckboxModule,
-    NgFor,
-    NgClass,
-    MatPaginatorModule,
-    FormsModule,
-    MatDialogModule,
-    MatInputModule,
-    MatTabsModule,
-    MatSelectModule,
     AsyncPipe,
-    VexSecondaryToolbarComponent,
+    DatePipe,
     FluidHeightDirective,
-    AsyncPipe,
     FormsModule,
+    HeaderCadastralInformationPropertyComponent,
     MatAutocompleteModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatMenuModule,
     MatOptionModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatSortModule,
+    MatTableModule,
     MatTabsModule,
-    NgForOf,
+    MatTooltipModule,
+    NgClass,
+    NgFor,
     NgIf,
-    VexHighlightDirective,
     ReactiveFormsModule,
-    VexPageLayoutHeaderDirective,
+    VexBreadcrumbsComponent,
+    VexHighlightDirective,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    MatSlideToggleModule,
-    MatCardModule,
-    HeaderCadastralInformationPropertyComponent,
-    MatExpansionModule,
-    DatePipe
+    VexPageLayoutHeaderDirective,
+    VexSecondaryToolbarComponent,
   ]
 })
 export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
@@ -154,7 +142,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService,
-    private baunitChildrenInformationService: BaunitChildrenInformationService
+    private unitPropertyInformationService: UnitPropertyInformationService
   ) {
   }
 
@@ -165,7 +153,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.propertyUnit);
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
@@ -203,21 +190,29 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
-      this.searchBaunitInformationChildren();
+      this.searchUnitPropertyInformation();
     }
   }
 
-  searchBaunitInformationChildren(): void {
-    if (!this.schema || !this.baunitId) {
+  searchUnitPropertyInformation(): void {
+    console.log(this.baunitId);
+    if (!this.schema || !this.baunitId ) {
       return;
     }
-    this.baunitChildrenInformationService
-      .getBaunitChildrenInformation(1800101010000000108018000n, 0, 20)
+
+    this.unitPropertyInformationService.getBaunitInformation(this.baunitId)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: BAunitLike) =>
-          this.captureInformationSubscribe(result)
+        next: (result: Baunit) =>
+          this.unitPropertyInformationService
+            .getUnitPropertyInformation(result.cadastralNumber, 0, 20)
+            .subscribe({
+              error: () => this.captureInformationSubscribeError(),
+              next: (result2: BAunitLike) =>
+                this.captureInformationSubscribe(result2)
+            })
       });
+
   }
 
   openGeographicViewerMain(data: BaunitHead): void {
@@ -274,91 +269,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     }
   }
 
-  searchPropertiesByRegistration(data: SearchData): void {
-    this.infoTableService.getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
-  }
-
-  searchPropertiesByDocument(data: SearchData): void {
-    this.infoTableService.getDataPropertyByDocument(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
-  }
-
-  searchPropertiesByName(data: SearchData): void {
-    this.infoTableService.getDataPropertyByName(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
-  }
-
-  searchPropertiesByAddress(data: SearchData): void {
-    this.infoTableService.getDataPropertyByAddress(this.generateObjectPageSearchData(data))
-      .subscribe({
-        error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-      });
-  }
-
-  searchNationalPredialNumber(data: SearchData): void {
-    this.infoTableService.getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
-      .subscribe({
-        error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-      });
-  }
-
-  validateRefreshCadastralData(): boolean {
-    if (this.searchData == null) {
-      return false;
-    }
-    let searchData: SearchData = this.searchData;
-
-    if (this.isValidateField(searchData?.registration)) {
-      this.searchPropertiesByRegistration(this.searchData);
-      return true;
-    }
-
-    if (this.isValidateField(searchData?.number) &&
-      this.isValidateField(searchData?.domIndividualTypeNumber)) {
-      this.searchPropertiesByDocument(this.searchData);
-      return true;
-    }
-
-    if (this.isValidateField(searchData?.firstName) &&
-      this.isValidateField(searchData?.lastName)) {
-      this.searchPropertiesByName(this.searchData);
-      return true;
-    }
-
-    if (this.isValidateField(searchData?.textAddress)) {
-      this.searchPropertiesByAddress(this.searchData);
-      return true;
-    }
-
-    if (searchData.sidewalk !== null && searchData.sidewalk !== undefined && searchData.sidewalk.length > 10 ||
-      searchData.block !== null && searchData.block !== undefined && searchData.block.length > 10) {
-      this.searchNationalPredialNumber(this.searchData);
-      return true;
-    }
-    return false;
-  }
-
-  deleteInformations(customer: BaunitHead): void {
-  }
-
   onFilterChange(value: string): void {
     if (!this.dataSource) {
       return;
@@ -390,19 +300,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
-  }
-
-  refreshInformationPaginator(event: PageEvent): void {
-    if (event == null) {
-      return;
-    }
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-
-    const validate: boolean = this.validateRefreshCadastralData();
-    if (!validate) {
-      throw new Error('No fue posible actualizar los datos de la tabla');
-    }
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
