@@ -74,6 +74,7 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
+  @Input() predialUnit: boolean = false;
 
   constructor(private informationPropertyService:InformationPropertyService) {}
 
@@ -108,6 +109,11 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   private getRandomInt(max: number):number {
     return Math.floor(Math.random() * max);
+  }
+
+  swtichTitle(): string {
+    if (this.predialUnit) return 'Aspectos Generales Unidad Predial'
+    else  return 'Aspectos Generales Predio'
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

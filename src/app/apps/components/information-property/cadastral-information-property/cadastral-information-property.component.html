@@ -47,6 +47,16 @@
       [executionId]="executionId"
       @fadeInUp
     ></vex-basic-property-information>
+    <vex-information-unit-property
+      #unitPropertyInformation{{schema}}
+      [id]="'unitPropertyInformation'+ schema"
+      [expandedComponent]="false"
+      [predialUnit]="true"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      @fadeInUp [typeInformation]="typeInformation"
+    ></vex-information-unit-property>
     <vex-information-addresses-property
       [id]="'basicInformationpropertyAddresses'+ schema"
       #propertyAddressesComponent{{schema}}

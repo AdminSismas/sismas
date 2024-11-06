@@ -27,6 +27,7 @@ import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_VISUAL } from '
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
+import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import {
   InformationPropertyOwnersComponent
 } from '../information-property-owners/information-property-owners.component';
@@ -92,7 +93,8 @@ import { environment as envi } from '../../../../../environments/environments';
     InformationConstructionsPropertyComponent,
     InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
-    MatFormFieldModule
+    MatFormFieldModule,
+    InformationUnitPropertyComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -125,7 +127,14 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
+  private baunitChildrenInformationComponent?: ElementRef;
+  @ViewChild(InformationUnitPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+
   private informationZonesPropertyComponent?: ElementRef;
+
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
   @Input({ required: true }) public showTittle: boolean = true;
@@ -139,6 +148,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   idContainer: string = '';
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  npnBaunit?: bigint;
 
   constructor() {
   }

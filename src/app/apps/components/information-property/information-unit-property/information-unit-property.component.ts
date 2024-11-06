@@ -15,7 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgFor, NgForOf, NgIf } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -27,7 +27,7 @@ import { InfoTableService } from 'src/app/apps/services/general/info-table.servi
 import { SearchData } from 'src/app/apps/interfaces/search-data.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -38,21 +38,34 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_PROPERTIES,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL,
 } from 'src/app/apps/constants/constant';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
 import { GeographicViewerComponent } from '../../geographic-viewer/geographic-viewer.component';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi, environment } from 'src/environments/environments';
 import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
 import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatOptionModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { BaunitChildrenInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
+import { BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
 
 
 @Component({
-  selector: 'vex-table-cadastral-search',
-  templateUrl: './table-baunits.component.html',
-  styleUrls: ['./table-baunits.component.scss'],
+  selector: 'vex-information-unit-property',
+  templateUrl: './information-unit-property.html',
+  styleUrls: ['./information-unit-property.scss'],
   animations: [fadeInUp400ms, stagger40ms],
   standalone: true,
   imports: [
@@ -80,14 +93,43 @@ import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../
     MatSelectModule,
     AsyncPipe,
     VexSecondaryToolbarComponent,
-    FluidHeightDirective
+    FluidHeightDirective,
+    AsyncPipe,
+    FormsModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatOptionModule,
+    MatTabsModule,
+    NgForOf,
+    NgIf,
+    VexHighlightDirective,
+    ReactiveFormsModule,
+    VexPageLayoutHeaderDirective,
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
+    MatSlideToggleModule,
+    MatCardModule,
+    HeaderCadastralInformationPropertyComponent,
+    MatExpansionModule,
+    DatePipe
   ]
 })
-export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
+export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
+
+  @Input({ required: true }) id: string = '';
+  @Input({ required: true }) expandedComponent: boolean = true;
+  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) baunitId: string | null | undefined = null;
+  @Input() executionId: string | null | undefined = null;
+  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() predialUnit: boolean = false;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -95,7 +137,6 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   totalElements: number = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -112,7 +153,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     private infoTableService: InfoTableService,
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
-    private baunitService: ValidateInformationBaunitService
+    private baunitService: ValidateInformationBaunitService,
+    private baunitChildrenInformationService: BaunitChildrenInformationService
   ) {
   }
 
@@ -123,6 +165,21 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    if (this.id?.length <= 0 || this.baunitId == null) {
+      return;
+    }
+    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
+    if (
+      this.typeInformation &&
+      this.typeInformation === TYPEINFORMATION_VISUAL
+    ) {
+    }
+
+    this.isExpandPanel(this.expandedComponent);
+    this.searchCtrl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => this.onFilterChange(value));
+
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -137,6 +194,32 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
+  }
+
+  private getRandomInt(max: number): number {
+    return Math.floor(Math.random() * max);
+  }
+
+  isExpandPanel(expandedComponent: boolean): void {
+    if (expandedComponent) {
+      this.searchBaunitInformationChildren();
+    }
+  }
+
+  searchBaunitInformationChildren(): void {
+    if (!this.schema || !this.baunitId) {
+      return;
+    }
+    this.baunitChildrenInformationService
+      .getBaunitChildrenInformation(1800101010000000108018000n, 0, 20)
+      .pipe(
+        tap(resutl => console.log(resutl))
+      )
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: BAunitLike) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   openGeographicViewerMain(data: BaunitHead): void {
@@ -158,7 +241,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
-          LIST_SCHEMAS_CONTROL_MAIN
+          LIST_SCHEMAS_CONTROL_MAIN,
         )
       })
       .afterClosed();
@@ -324,6 +407,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   captureInformationSubscribe(result: InformationPegeable): void {
     this.contentInformation = result;
+    console.log(result);
     this.captureInformationCadastralData();
   }
 
