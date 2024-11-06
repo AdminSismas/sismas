@@ -74,7 +74,7 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() predialUnit: boolean = false;
+  @Input() propertyUnit: boolean = false;
 
   constructor(private informationPropertyService:InformationPropertyService) {}
 
@@ -111,8 +111,9 @@ export class BasicPropertyInformationComponent implements OnInit {
     return Math.floor(Math.random() * max);
   }
 
-  swtichTitle(): string {
-    if (this.predialUnit) return 'Aspectos Generales Unidad Predial'
+  switchTitle(): string {
+    console.log(this.propertyUnit);
+    if (this.propertyUnit) return 'Aspectos Generales Unidad Predial'
     else  return 'Aspectos Generales Predio'
   }
 

@@ -51,6 +51,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
+  propertyUnit: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
@@ -62,7 +63,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     if (
       this.defaults == null ||
       this.defaults.schemas == null ||
-      this.defaults.typeInformation == null
+      this.defaults.typeInformation == null ||
+      this.defaults.propertyUnit == null
     ) {
       return;
     }
@@ -77,6 +79,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     );
     //On init of component set type information according to the component
     this.setTypeInformation(0);
+
+    this.propertyUnit = this.defaults.propertyUnit;
   }
 
   createObjectLayout(schema: string): void {

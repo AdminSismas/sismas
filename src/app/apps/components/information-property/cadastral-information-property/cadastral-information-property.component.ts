@@ -142,6 +142,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @Input() public id: string = '';
   @Input({ required: true }) public schema: string = '';
   @Input({ required: true }) contentInfoSchema!: ContentInfoSchema
+  @Input() propertyUnit: boolean = false;
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;

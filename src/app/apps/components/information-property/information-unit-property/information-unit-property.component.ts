@@ -27,7 +27,7 @@ import { InfoTableService } from 'src/app/apps/services/general/info-table.servi
 import { SearchData } from 'src/app/apps/interfaces/search-data.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -129,7 +129,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-  @Input() predialUnit: boolean = false;
+  @Input() propertyUnit: boolean = false;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -165,6 +165,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log(this.propertyUnit);
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
@@ -212,9 +213,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     }
     this.baunitChildrenInformationService
       .getBaunitChildrenInformation(1800101010000000108018000n, 0, 20)
-      .pipe(
-        tap(resutl => console.log(resutl))
-      )
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: BAunitLike) =>
@@ -242,6 +240,8 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
           LIST_SCHEMAS_CONTROL_MAIN,
+          undefined,
+          this.propertyUnit
         )
       })
       .afterClosed();
@@ -407,7 +407,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   captureInformationSubscribe(result: InformationPegeable): void {
     this.contentInformation = result;
-    console.log(result);
     this.captureInformationCadastralData();
   }
 
