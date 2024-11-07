@@ -9,7 +9,7 @@ import { BasicInformationAddress } from '../../interfaces/information-property/b
 import { CreateBasicInformationAddress, DetailBasicInformationAddress } from '../../interfaces/information-property/detail-basic-information-address';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
-import { ContentInformationConstruction } from '../../interfaces/information-property/content-information-construction';
+import { ContentInformationConstruction, CreateBasicInformationConstruction } from '../../interfaces/information-property/content-information-construction';
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
 import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
 
@@ -168,6 +168,17 @@ export class InformationPropertyService {
     );
   }
 
+  updateBasicInformationPropertyConstruction(
+    id: string,
+    updateBasicInformationConstruction: Partial<ContentInformationConstruction>
+  ): Observable<ContentInformationConstruction> {
+    const url: string = `${this.basic_url}${envi.ccDireccion}${id}`;
+    return this.httpClient.put<ContentInformationConstruction>(
+      url,
+      updateBasicInformationConstruction
+    );
+  }
+
   /**
    * Create basic information address
    *
@@ -179,7 +190,7 @@ export class InformationPropertyService {
     baunitId: string,
     createBasicInformationAddress: CreateBasicInformationAddress,
   ): Observable<DetailBasicInformationAddress> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}`;
+    const url: string = `${this.basic_url}${envi.schemas.temp}${envi.ccDireccion}`;
     const httpParams: HttpParams = new HttpParams()
     .set('baunitId', baunitId);
     return this.httpClient.post<DetailBasicInformationAddress>(
@@ -188,6 +199,21 @@ export class InformationPropertyService {
       { params: httpParams }
     );
   }
+
+  createBasicInformationPropertyConstruction(
+    baunitId: string,
+    createBasicInformationConstruction: CreateBasicInformationConstruction,
+  ): Observable<ContentInformationConstruction> {
+    const url: string = `${this.basic_url}${envi.ccDireccion}`;
+    const httpParams: HttpParams = new HttpParams()
+    .set('baunitId', baunitId);
+    return this.httpClient.post<ContentInformationConstruction>(
+      url,
+      createBasicInformationConstruction,
+      { params: httpParams }
+    );
+  }
+
 
   /**
    * Delete basic information by direccionId

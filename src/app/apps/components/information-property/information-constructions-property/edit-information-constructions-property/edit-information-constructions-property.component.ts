@@ -118,23 +118,29 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           domBuiltType: value?.domBuiltType,
           domBuiltUse: value?.domBuiltUse,
           unitBuiltLabel: value?.unitBuiltLabel,
-          unitBuiltAreaE: value?.unitBuiltAreaE,
+          unitBuiltFloors: value?.unitBuiltFloors,
+          unitBuiltYear: value?.unitBuiltYear,
+          unitBuiltArea: value?.unitBuiltArea,
           domTipologiaTipo: value?.domTipologiaTipo,
+          unitBuiltPrivateArea: value?.unitBuiltPrivateArea,
+          unitBuiltObservation: value?.unitBuiltObservation,
+          
         };
         const baunitId: string = this.addEditInformationData.baunitId || '';
         if (!baunitId) {
           throw new Error('baunitId is not set.')
         }
         // detailBasicInformationConstruction = await lastValueFrom(
-        //   this.informationPropertyService.createBasicInformationPropertyAddress(
+        //   this.informationPropertyService.createBasicInformationPropertyConstruction(
         //     baunitId,
-        //     createBasicInformationConstruction
+        //     createBasicInformationConstruction,
+    
         //   )
         // );
       } else {
         // detailBasicInformationConstruction  = await lastValueFrom(
-        //   this.informationPropertyService.updateBasicInformationPropertyAddress(
-        //     this.detailBasicInformation()?.direccionId as string,
+        //   this.informationPropertyService.updateBasicInformationPropertyConstruction(
+        //     this.detailBasicInformation()?.unitBuiltId?.toString() || '',
         //     { ...value },
         //   )
         // );
@@ -152,21 +158,16 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
    */
   private initForm(): void {
     this.informationConstructionForm = this.fBuilder.group({
-      letraViaPrincipal: this.fBuilder.control(null, [Validators.required]),
-      valorViaPrincipal: this.fBuilder.control(null, [Validators.required]),
-      valorViaGeneradora: this.fBuilder.control(null, [Validators.required]),
-      letraViaGeneradora: this.fBuilder.control(null, [Validators.required]),
-      numeroPredio: this.fBuilder.control(null, [Validators.required]),
-      nombrePredio: this.fBuilder.control(null, [Validators.required]),
-      direccionTexto: this.fBuilder.control(null, [Validators.required]),
-      domTipoDireccion: this.fBuilder.control(null, [Validators.required]),
-      domClaseViaPrincipal: this.fBuilder.control(null, [Validators.required]),
-      domSectorCiudad: this.fBuilder.control(null, [Validators.required]),
-      domSectorPredio: this.fBuilder.control(null, [Validators.required]),
-      codigoPostal: this.fBuilder.control(null, [Validators.required]),
-      esDireccionPrincipal: this.fBuilder.control(false, [Validators.required]),
-      complemento: this.fBuilder.control(null),
-      direccionId: this.fBuilder.control(null, [Validators.required]),
+      domBuiltType: this.fBuilder.control(null, [Validators.required]),
+      domBuiltUse: this.fBuilder.control(null, [Validators.required]),
+      unitBuiltLabel: this.fBuilder.control(null, [Validators.required]),
+      unitBuiltFloors: this.fBuilder.control(null, [Validators.required]),
+      unitBuiltYear: this.fBuilder.control(null, [Validators.required]),
+      unitBuiltArea: this.fBuilder.control(null, [Validators.required]),
+      domTipologiaTipo: this.fBuilder.control(null, [Validators.required]),
+      unitBuiltPrivateArea: this.fBuilder.control(null, [Validators.required]),
+      unitBuiltObservation: this.fBuilder.control(null),
+  
     });
 
     if (this.addEditInformationData.type === 'new') {

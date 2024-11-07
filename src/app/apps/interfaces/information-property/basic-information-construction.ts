@@ -4,10 +4,16 @@ export class BasicInformationConstruction {
     unitBuiltId?: number;
     domBuiltType?: string;
     domBuiltUse?: string;
-    domTipologiaTipo?: string;
     unitBuiltLabel?: string;
-    unitBuiltAreaE?: string;
+    unitBuiltFloors?: number;
+    domBuiltLabel?: string;
+    unitBuiltYear?: number;
+    unitBuiltArea?: number;
+    domTipologiaTipo?: string;
+    unitBuiltPrivateArea?: number;
+    unitBuiltObservation?: string;
     schema?: string;
+
 
 
     constructor(content?: any, schema?: string) {
@@ -16,7 +22,13 @@ export class BasicInformationConstruction {
         this.domBuiltType = content.domBuiltType;
         this.domBuiltUse = content.domBuiltUse;
         this.unitBuiltLabel = content.unitBuiltLabel;
-        this.unitBuiltAreaE = content.unitBuiltAreaE;
+        this.unitBuiltFloors = content.unitBuiltFloors;
+        this.domBuiltLabel = content.domBuiltLabel;
+        this.unitBuiltYear = content.unitBuiltYear;
+        this.unitBuiltArea = content.unitBuiltArea;
+        this.domTipologiaTipo = content.domTipologiaTipo;
+        this.unitBuiltPrivateArea = content.unitBuiltPrivateArea;
+        this.unitBuiltObservation = content.unitBuiltObservation;
         this.schema = schema;
     }
 
