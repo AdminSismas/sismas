@@ -55,12 +55,12 @@ export class CreatePeopleComponent implements OnInit {
 
   form = this.fb.group({
     individualId: [this.defaults?.id || ''],
-    fristName: [this.defaults?.firstName || ''],
+    firstName: [this.defaults?.firstName || ''],
     middleName: [this.defaults?.middleName || ''],
     lastName: [this.defaults?.lastName || ''],
-    othername: [this.defaults?.lastName || ''],
+    otherLastName: [this.defaults?.lastName || ''],
     domIndividualTypeNumber: [this.defaults?.domIndividualTypeNumber || ''],
-    number: [this.defaults?.document || ''],
+    number: [this.defaults?.number || ''],
     companyName: [this.defaults?.companyName || ''],
     domIndividualSex: [this.defaults?.domIndividualSex || ''],
     domIndividualType: [
@@ -116,8 +116,8 @@ export class CreatePeopleComponent implements OnInit {
     }
 
     //validamos que el input de palabra
-    if (this.form.get('fristName')?.value !== '') {
-      let validate = this.validateSingleWord(this.form.get('fristName')?.value);
+    if (this.form.get('firstName')?.value !== '') {
+      let validate = this.validateSingleWord(this.form.get('firstName')?.value);
 
       if (validate) {
         this.menssage.status = true;
@@ -229,8 +229,8 @@ export class CreatePeopleComponent implements OnInit {
   updatePeople() {
     const people = this.form.value;
     //validamos que el input de palabra
-    if (this.form.get('fristName')?.value !== '') {
-      let validate = this.validateSingleWord(this.form.get('fristName')?.value);
+    if (this.form.get('firstName')?.value !== '') {
+      let validate = this.validateSingleWord(this.form.get('firstName')?.value);
 
       if (validate) {
         this.menssage.status = true;
@@ -276,11 +276,19 @@ export class CreatePeopleComponent implements OnInit {
 
     let url_basic = `${environment.url}:${environment.port}${environment.individualNumber}/${this.form.get('individualId')?.value}?baunitId=TESTS`;
 
+    console.log(people)
+
+    people.number = this.defaults.number;
+    people.domIndividualType = this.defaults.domIndividualType;
+
+    console.log(people)
+
     let dataCreate = {
       url: url_basic,
       body: people
     };
-    let resApi = this.peopleServcie.userEdit(dataCreate).subscribe({
+
+    this.peopleServcie.userEdit(dataCreate).subscribe({
       next: (res) => {
         console.log(res);
         this.alertSnakbar.open('Usuario actualizado', 'CLOSE', {
@@ -315,9 +323,9 @@ export class CreatePeopleComponent implements OnInit {
 
   disablesTypePople(): void {
     // validar los tipos de campos segun los valores de los formularios
-    this.form.get('fristName')?.disable();
+    this.form.get('firstName')?.disable();
     this.form.get('middleName')?.disable();
-    this.form.get('othername')?.disable();
+    this.form.get('otherLastName')?.disable();
     this.form.get('domIndividualSex')?.disable();
     this.form.get('lastName')?.disable();
     this.form.get('companyName')?.disable();
@@ -353,7 +361,7 @@ export class CreatePeopleComponent implements OnInit {
     this.form.get('domIndividualType')?.valueChanges.subscribe((type) => {
       /* NOTA: hay que llevarse esta validacion a otra funcion para que podamos validar despues */
       if (type === 'Persona natural') {
-        this.form.get('fristName')?.setValidators(Validators.required);
+        this.form.get('firstName')?.setValidators(Validators.required);
         this.form.get('lastName')?.setValidators(Validators.required);
         this.form.get('number')?.setValidators(Validators.required);
         this.form
@@ -365,10 +373,10 @@ export class CreatePeopleComponent implements OnInit {
           this.form.get('domIndividualType')?.disable();
         }
 
-        this.form.get('fristName')?.enable();
+        this.form.get('firstName')?.enable();
         this.form.get('lastName')?.enable();
         this.form.get('middleName')?.enable();
-        this.form.get('othername')?.enable();
+        this.form.get('otherLastName')?.enable();
         this.form.get('domIndividualEthnicGroup')?.enable();
         this.form.get('domIndividualSex')?.enable();
         this.form.get('companyName')?.disable();
@@ -385,12 +393,12 @@ export class CreatePeopleComponent implements OnInit {
           this.form.get('domIndividualType')?.disable();
         }
 
-        this.form.get('fristName')?.disable();
+        this.form.get('firstName')?.disable();
         this.form.get('lastName')?.disable();
         this.form.get('domIndividualEthnicGroup')?.disable();
         this.form.get('domIndividualSex')?.disable();
         this.form.get('middleName')?.disable();
-        this.form.get('othername')?.disable();
+        this.form.get('otherLastName')?.disable();
       }
       this.form.get('domIndividualType')?.setValidators(Validators.required);
     });
