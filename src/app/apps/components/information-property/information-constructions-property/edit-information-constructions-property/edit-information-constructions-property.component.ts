@@ -19,6 +19,9 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import Swal from 'sweetalert2';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
 
 
 
@@ -46,6 +49,8 @@ export interface AddEditInformationConstructionI {
     TextAreaComponent,
     ComboxColletionComponent,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatOptionModule
   ],
   templateUrl: './edit-information-constructions-property.component.html',
   styleUrl: './edit-information-constructions-property.component.scss'
@@ -66,13 +71,14 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   readonly addEditInformationData = inject<AddEditInformationConstructionI>(MAT_DIALOG_DATA);
 
 
-  
+
   constructor() {
     this.initForm();
   }
 
   ngOnInit(): void {
     this.loadDetailInformationConstruction();
+
   }
 
   /**
@@ -92,19 +98,39 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
         );
       this.detailBasicInformation.set(detailBasicInformationConstruction);
       Object.entries(detailBasicInformationConstruction)
-      .forEach(([key, value]) => {
-        if (this.informationConstructionForm.controls[key]) {
-          this.informationConstructionForm.controls[key].setValue(value);
-        }
-      });
+        .forEach(([key, value]) => {
+          if (this.informationConstructionForm.controls[key]) {
+            this.informationConstructionForm.controls[key].setValue(value);
+          }
+        });
     } catch (e) {
       console.error(e);
     }
+
+
   }
 
   async onSubmitForm(): Promise<void> {
+    console.log('Submitting form with values:', this.informationConstructionForm.value);
     if (this.informationConstructionForm.invalid) {
       this.informationConstructionForm.markAllAsTouched();
+      return;
+    }
+
+    // Confirmación antes de proceder
+    const result = await Swal.fire({
+      title: '¿Está seguro?',
+      text: 'Está a punto de crear una nueva construcción.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, crear',
+      cancelButtonText: 'Cancelar'
+    });
+
+
+    if (!result.isConfirmed) {
       return;
     }
 
@@ -112,7 +138,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
 
     try {
       const value = this.informationConstructionForm.value || {};
-      let detailBasicInformationConstruction: ContentInformationConstruction | undefined; 
+      let detailBasicInformationConstruction: ContentInformationConstruction | undefined;
       if (this.addEditInformationData.type === 'new') {
         const createBasicInformationConstruction: CreateBasicInformationConstruction = {
           domBuiltType: value?.domBuiltType,
@@ -124,34 +150,56 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           domTipologiaTipo: value?.domTipologiaTipo,
           unitBuiltPrivateArea: value?.unitBuiltPrivateArea,
           unitBuiltObservation: value?.unitBuiltObservation,
-          
         };
         const baunitId: string = this.addEditInformationData.baunitId || '';
         if (!baunitId) {
-          throw new Error('baunitId is not set.')
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'baunitId is not set.',
+          });
+          throw new Error('baunitId is not set.');
         }
-        // detailBasicInformationConstruction = await lastValueFrom(
-        //   this.informationPropertyService.createBasicInformationPropertyConstruction(
-        //     baunitId,
-        //     createBasicInformationConstruction,
-    
-        //   )
-        // );
+        detailBasicInformationConstruction = await lastValueFrom(
+          this.informationPropertyService.createBasicInformationPropertyConstruction(
+            68,
+            baunitId,
+            createBasicInformationConstruction,
+          )
+        );
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Creación exitosa',
+          text: 'La información de construcción se ha guardado correctamente.',
+          confirmButtonText: 'OK', confirmButtonColor: '#3f51b5'
+        });
       } else {
-        // detailBasicInformationConstruction  = await lastValueFrom(
-        //   this.informationPropertyService.updateBasicInformationPropertyConstruction(
-        //     this.detailBasicInformation()?.unitBuiltId?.toString() || '',
-        //     { ...value },
-        //   )
-        // );
+          detailBasicInformationConstruction  = await lastValueFrom(
+    this.informationPropertyService.updateBasicInformationPropertyConstruction(
+      this.detailBasicInformation()?.unitBuiltId?.toString() || '',
+      { ...value },
+    )
+  );
+
+
       }
+
       this.dialogRef.close(detailBasicInformationConstruction);
     } catch (e) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: `Ocurrió un error al guardar la información: ${e}`,
+      });
       console.error(e);
     }
 
     this.isLoading.set(false);
   }
+
+
+
 
   /**
    * Init information address form
@@ -167,7 +215,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       domTipologiaTipo: this.fBuilder.control(null, [Validators.required]),
       unitBuiltPrivateArea: this.fBuilder.control(null, [Validators.required]),
       unitBuiltObservation: this.fBuilder.control(null),
-  
+
     });
 
     if (this.addEditInformationData.type === 'new') {

@@ -20,7 +20,7 @@ export class InformationPropertyService {
   basic_url: string = `${envi.url}:${envi.port}`;
   private httpClient = inject(HttpClient);
 
-  constructor(private requestsService: SendGeneralRequestsService) {}
+  constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
 
   getBasicInformationProperty(
     schema: string,
@@ -95,12 +95,14 @@ export class InformationPropertyService {
       catchError((error) => this.requestsService.errorNotFound(error))
     );
   }
-
+  // ${executionId}/${baunitId}
   getDetailBasicInformationPropertyConstructions(
     schema: string,
     id: number | undefined
+
   ): Observable<ContentInformationConstruction> {
-    const url: string = `${this.basic_url}${envi.unitBuilt}/${id}`;
+    const url: string = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
+
     return this.requestsService
       .sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
@@ -190,7 +192,7 @@ export class InformationPropertyService {
     baunitId: string,
     createBasicInformationAddress: CreateBasicInformationAddress,
   ): Observable<DetailBasicInformationAddress> {
-    const url: string = `${this.basic_url}${envi.schemas.temp}${envi.ccDireccion}`;
+    const url: string = `${this.basic_url}${envi.ccDireccion}`;
     const httpParams: HttpParams = new HttpParams()
     .set('baunitId', baunitId);
     return this.httpClient.post<DetailBasicInformationAddress>(
@@ -201,18 +203,19 @@ export class InformationPropertyService {
   }
 
   createBasicInformationPropertyConstruction(
+    executionId: number,
     baunitId: string,
-    createBasicInformationConstruction: CreateBasicInformationConstruction,
+    createBasicInformationConstruction: CreateBasicInformationConstruction
   ): Observable<ContentInformationConstruction> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}`;
-    const httpParams: HttpParams = new HttpParams()
-    .set('baunitId', baunitId);
-    return this.httpClient.post<ContentInformationConstruction>(
+    
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+  
+    return this.http.post<ContentInformationConstruction>(
       url,
-      createBasicInformationConstruction,
-      { params: httpParams }
+      createBasicInformationConstruction
     );
   }
+  
 
 
   /**
@@ -222,6 +225,13 @@ export class InformationPropertyService {
    */
   deleteBasicInformationPropertyAddress(direccionId: string): Observable<any> {
     const url: string = `${this.basic_url}${envi.ccDireccion}/${direccionId}`;
+    const httpParams: HttpParams = new HttpParams()
+    .set('version', '9999999');
+    return this.httpClient.delete(url, { params: httpParams});
+  }
+
+  deleteBasicInformationPropertyConstruction(constructionId: string): Observable<any> {
+    const url: string = `${this.basic_url}${envi.ccDireccion}/${constructionId}`;
     const httpParams: HttpParams = new HttpParams()
     .set('version', '9999999');
     return this.httpClient.delete(url, { params: httpParams});

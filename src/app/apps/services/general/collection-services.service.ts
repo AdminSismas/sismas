@@ -10,7 +10,7 @@ import { DomainCollection } from '../../interfaces/domain-name.model';
 })
 export class CollectionServicesService {
 
-  basic_url:string = `${environment.url}:${environment.port}${environment.domain_domainName}`;
+  basic_url:string = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
   constructor(
     private requestsService: SendGeneralRequestsService
   ) { }
