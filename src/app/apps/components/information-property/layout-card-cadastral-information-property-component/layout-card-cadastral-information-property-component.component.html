@@ -1,7 +1,7 @@
 <div class="flex items-center" mat-dialog-title>
   <h2
     class="headline m-0 flex-auto">
-   {{CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE}}
+   {{CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE + ' - ' + baunitHead?.domBaunitCondition }}
   </h2>
 
   <button
@@ -32,7 +32,9 @@
           [schema]="option.schema"
           [typeInformation]="typeInformation"
           [contentInfoSchema]="this.defaults"
-          [showTittle]="false">
+          [showTittle]="false"
+          [baunitCondition]="baunitHead?.domBaunitCondition"
+        >
         </vex-cadastral-information-property>
       </mat-tab>
     } @empty {

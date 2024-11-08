@@ -1,12 +1,12 @@
 <form (ngSubmit)="save()" [formGroup]="form">
   <div class="flex items-center" mat-dialog-title>
     <h2
-      *ngIf="form.controls.fristName.value || form.controls.lastName.value"
+      *ngIf="form.controls.firstName.value || form.controls.lastName.value"
       class="headline m-0 flex-auto">
-      {{ form.controls.fristName.value + " " + form.controls.lastName.value }}
+      {{ form.controls.firstName.value + " " + form.controls.lastName.value }}
     </h2>
     <h2
-      *ngIf="!form.controls.fristName.value && !form.controls.lastName.value"
+      *ngIf="!form.controls.firstName.value && !form.controls.lastName.value"
       class="headline m-0 flex-auto">
       Crear persona
     </h2>
@@ -70,7 +70,7 @@
     <div class="flex flex-col sm:flex-row">
       <mat-form-field class="flex-auto">
         <mat-label>Nombre</mat-label>
-        <input formControlName="fristName" matInput name="fristName" />
+        <input formControlName="firstName" matInput name="firstName" />
       </mat-form-field>
       <mat-form-field class="flex-auto sm:ml-6">
         <mat-label>segundo nombre</mat-label>
@@ -85,7 +85,7 @@
       </mat-form-field>
       <mat-form-field class="flex-auto sm:ml-6">
         <mat-label>Segundo apellido</mat-label>
-        <input formControlName="othername" matInput name="othername" />
+        <input formControlName="otherLastName" matInput name="otherLastName" />
       </mat-form-field>
     </div>
 

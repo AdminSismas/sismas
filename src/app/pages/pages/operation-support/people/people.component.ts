@@ -360,6 +360,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   search() {
     console.log('consultar');
+    console.log(this.document.value)
     this.onFilterChange(this.document.value);
   }
 }

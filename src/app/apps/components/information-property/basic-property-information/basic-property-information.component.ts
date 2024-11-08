@@ -74,6 +74,7 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
+  @Input() propertyUnit: boolean = false;
 
   constructor(private informationPropertyService:InformationPropertyService) {}
 

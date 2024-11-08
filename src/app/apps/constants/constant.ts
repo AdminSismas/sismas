@@ -420,6 +420,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'basicPropertyInformationComponent'
   },
   {
+    label: 'Información de Unidad Predial',
+    fragment: 'informationUnitPropertyComponent'
+  },
+  {
     label: 'Direcciones',
     fragment: 'informationAddressesPropertyComponent'
   },

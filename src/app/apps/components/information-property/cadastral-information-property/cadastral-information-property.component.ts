@@ -27,6 +27,7 @@ import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_VISUAL } from '
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
+import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import {
   InformationPropertyOwnersComponent
 } from '../information-property-owners/information-property-owners.component';
@@ -92,7 +93,8 @@ import { environment as envi } from '../../../../../environments/environments';
     InformationConstructionsPropertyComponent,
     InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
-    MatFormFieldModule
+    MatFormFieldModule,
+    InformationUnitPropertyComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -101,6 +103,11 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private basicPropertyInformationComponent?: ElementRef;
+  @ViewChild(InformationUnitPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationUnitPropertyComponent?: ElementRef;
   @ViewChild(InformationAddressesPropertyComponent, {
     read: ElementRef,
     static: false
@@ -125,7 +132,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
+
   private informationZonesPropertyComponent?: ElementRef;
+
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
   @Input({ required: true }) public showTittle: boolean = true;
@@ -133,15 +142,13 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @Input() public id: string = '';
   @Input({ required: true }) public schema: string = '';
   @Input({ required: true }) contentInfoSchema!: ContentInfoSchema
+  @Input({ required: true }) public baunitCondition?: string;
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
   idContainer: string = '';
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
-
-  constructor() {
-  }
 
   ngOnInit(): void {
     if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
@@ -160,6 +167,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
       behavior: 'smooth'
     });
+    if (this.baunitCondition)
 
     if (this.id?.length > 0) {
       this.id = this.id + this.getRandomInt(10000) + 'id' + this.getRandomInt(50) + this.schema;
@@ -171,6 +179,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   }
 
   scrollTo(elementName: string) {
+    console.log(elementName);
     const elem: ElementRef<any> | undefined = this[
       elementName as keyof CadastralInformationPropertyComponent
       ] as unknown as ElementRef | undefined;
@@ -197,4 +206,12 @@ export class CadastralInformationPropertyComponent implements OnInit {
     return Math.floor(Math.random() * max);
   }
 
+  showInformationUnitProperty(baunitCondition: string | undefined): boolean {
+    if (
+      baunitCondition === '(Condominio) Matriz' ||
+      baunitCondition === '(Propiedad horizontal) Matriz'
+    ) return true;
+
+    return false;
+  }
 }
