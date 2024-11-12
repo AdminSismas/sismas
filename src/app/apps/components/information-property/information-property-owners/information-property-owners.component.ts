@@ -237,7 +237,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   onClickOpenAddEditModal(data: any): void {
     if (this.addEditDialog) {
       const dialog = this.matDialog.open(AddPropertyOwnerComponent, {
-        width: '80%',
+        width: '35%',
         data: data,
       });
 
