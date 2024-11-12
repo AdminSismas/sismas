@@ -1,24 +1,16 @@
 .form-content {
-    @apply flex flex-wrap gap-1 justify-between w-full pb-4;
-    & > * {
-      width: calc(50% - 0.25rem);
-    }
-    .form-content-item {
-      @apply my-2;
-      width: calc(33% - 0.25rem);
-      &.full {
-        @apply w-full;
-      }
+  @apply flex flex-wrap gap-4 justify-center w-full pb-4;
+
+  .form-content-item {
+    width: 45%; 
+    @apply my-2;
+
+    &.full {
+      width: 100%; 
     }
   }
-  
-  .form-inputs {
-    @apply flex flex-wrap gap-1 justify-between w-full pt-4;
-    & > * {
-      width: calc(50% - 0.25rem);
-    }
-  }
-  
-  .buttons {
-    @apply flex gap-2 justify-end py-2;
-  }
+}
+
+.buttons {
+  @apply flex gap-2 justify-center py-2;
+}

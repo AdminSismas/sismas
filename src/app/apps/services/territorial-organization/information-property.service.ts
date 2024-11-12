@@ -181,6 +181,11 @@ export class InformationPropertyService {
     );
   }
 
+  updateConstruction(executionId: number, baunitId: number, data: any): Observable<any> {
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+    console.log('data', data);
+    return this.http.put(url, data);
+  }
   /**
    * Create basic information address
    *
@@ -235,6 +240,20 @@ export class InformationPropertyService {
     const httpParams: HttpParams = new HttpParams()
     .set('version', '9999999');
     return this.httpClient.delete(url, { params: httpParams});
+  }
+
+  deleteConstruction(baunitId: number, changeLogId: number, unitBuiltId: number): Observable<any> {
+    const url = `${this.basic_url}${envi.unitBuilt}`; 
+
+    const formData = new FormData();
+    
+    formData.append('baunitId', baunitId.toString());
+    formData.append('changeLogId', changeLogId.toString());
+    formData.append('unitBuiltId', unitBuiltId.toString());
+    formData.append('word', 'borrar');
+
+
+    return this.httpClient.delete(url, { body: formData });
   }
 
   private getData(url: string, params: any): Observable<any> {

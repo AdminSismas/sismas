@@ -206,16 +206,30 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
    */
   private initForm(): void {
     this.informationConstructionForm = this.fBuilder.group({
-      domBuiltType: this.fBuilder.control(null, [Validators.required]),
-      domBuiltUse: this.fBuilder.control(null, [Validators.required]),
-      unitBuiltLabel: this.fBuilder.control(null, [Validators.required]),
-      unitBuiltFloors: this.fBuilder.control(null, [Validators.required]),
-      unitBuiltYear: this.fBuilder.control(null, [Validators.required]),
-      unitBuiltArea: this.fBuilder.control(null, [Validators.required]),
-      domTipologiaTipo: this.fBuilder.control(null, [Validators.required]),
-      unitBuiltPrivateArea: this.fBuilder.control(null, [Validators.required]),
-      unitBuiltObservation: this.fBuilder.control(null),
-
+      domBuiltType: [null, Validators.required],
+      domBuiltUse: [null, Validators.required],
+      unitBuiltLabel: [
+        null,
+        [Validators.required, Validators.pattern('^[A-Z]+$')] // Solo letras mayúsculas
+      ],
+      unitBuiltFloors: [
+        null,
+        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números enteros
+      ],
+      unitBuiltYear: [
+        null,
+        [Validators.required, Validators.pattern('^(19|20)\\d{2}$')] // Solo años válidos entre 1900-2099
+      ],
+      unitBuiltArea: [
+        null,
+        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números
+      ],
+      domTipologiaTipo: [null, Validators.required],
+      unitBuiltPrivateArea: [
+        null,
+        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números
+      ],
+      unitBuiltObservation: [null] // No es obligatorio
     });
 
     if (this.addEditInformationData.type === 'new') {

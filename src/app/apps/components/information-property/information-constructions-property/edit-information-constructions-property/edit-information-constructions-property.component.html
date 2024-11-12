@@ -1,120 +1,178 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
-    <h2 class="headline m-0 flex-auto">
-      Editar Construcción
-    </h2>
-    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
-      <mat-icon svgIcon="mat:close"></mat-icon>
-    </button>
-  </div>
-  <mat-divider class="text-border"></mat-divider>
-  <mat-dialog-content>
-    @if(isLoading()) {
-      <div class="grid place-items-center w-full min-h-6 text-center p-5">
-        <mat-spinner></mat-spinner>
-      </div>
-    } @else {
-      <form [formGroup]="informationConstructionForm" (ngSubmit)="onSubmitForm()">
-        <vex-page-layout class="overflow-hidden">
-          <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
-            <div class="form-content">
-              <div class="form-content-item">
-                <vex-combox-colletion
-                  idComboCollection="domBuiltType"
-                  label="Tipo"
-                  formControlNameCombobox="domBuiltType"
-                  typeDomainName="BuiltType"
-                  placeholderDomainName="Escoger tipo"
-                ></vex-combox-colletion>
-              </div>
-
-              <div class="form-content-item">
-                <vex-combox-colletion
-                  idComboCollection="domBuiltUse"
-                  label="Uso"
-                  formControlNameCombobox="domBuiltUse"
-                  typeDomainName="BuiltUse"
-                  placeholderDomainName="Escoger uso"
-                ></vex-combox-colletion>
-              </div>
-
-              <div class="form-content-item">
-                <vex-input
-                  label="ID"
-                  type="text"
-                  idComboInput="unitBuiltLabel"
-                  formControlNameInput="unitBuiltLabel"
-                ></vex-input>
-              </div>
-              <div class="form-content-item">
-                <vex-input
-                  label="Piso"
-                  type="text"
-                  idComboInput="unitBuiltFloors"
-                  formControlNameInput="unitBuiltFloors"
-                ></vex-input>
-              </div>
-
-              <div class="form-content-item">
-                <vex-input
-                  label="Año"
-                  type="text"
-                  idComboInput="unitBuiltYear"
-                  formControlNameInput="unitBuiltYear"
-                ></vex-input>
-              </div>
-
-              <div class="form-content-item">
-                <vex-input
-                  label="Área Total"
-                  type="text"
-                  idComboInput="unitBuiltArea"
-                  formControlNameInput="unitBuiltArea"
-                ></vex-input>
-              </div>
-
-              <div class="form-content-item">
-                <vex-combox-colletion
-                  idComboCollection="domTipologiaTipo"
-                  label="Tipología"
-                  formControlNameCombobox="domTipologiaTipo"
-                  typeDomainName="TipologiaTipo"
-                  placeholderDomainName="Escoger tipología"
-                ></vex-combox-colletion>
-              </div>
-
-              <div class="form-content-item">
-                <vex-input
-                  label="Área Privada"
-                  type="text"
-                  idComboInput="unitBuiltPrivateArea"
-                  formControlNameInput="unitBuiltPrivateArea"
-                ></vex-input>
-              </div>
-
-              <div class="form-content-item">
-                <vex-input
-                  label="Observación"
-                  type="text"
-                  idComboInput="unitBuiltObservation"
-                  formControlNameInput="unitBuiltObservation"
-                ></vex-input>
-              </div>  
-        
-            </div>
-   
+  <h2 class="headline m-0 flex-auto">
+    Nueva Construcción
+  </h2>
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content>
+  @if(isLoading()) {
+    <div class="grid place-items-center w-full min-h-6 text-center p-5">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <form [formGroup]="informationConstructionForm" (ngSubmit)="onSubmitForm()">
+      <vex-page-layout class="overflow-hidden">
+        <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
+          <div class="form-content">
             
-            <div class="buttons">
-              <button color="primary" mat-raised-button type="submit">
-                Guardar
-                <mat-icon svgIcon="mat:save"></mat-icon>
-              </button>
-              <button color="warn" mat-stroked-button type="button">
-                Cerrar
-                <mat-icon svgIcon="mat:close"></mat-icon>
-              </button>
-            </div>
-          </vex-page-layout-content>
-        </vex-page-layout>
-      </form>
-    }
-  </mat-dialog-content>
+           <!-- Tipo de Construcción -->
+           <div class="form-content-item">
+            <p><strong>Tipo de Construcción</strong></p>
+            <vex-combox-colletion
+              idComboCollection="domBuiltType"
+              label="Tipo"
+              formControlNameCombobox="domBuiltType"
+              typeDomainName="BuiltType"
+              placeholderDomainName="Escoger tipo"
+            ></vex-combox-colletion>
+            <mat-error *ngIf="informationConstructionForm.get('domBuiltType')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+          </div>
+
+          <!-- Uso de Construcción -->
+          <div class="form-content-item">
+            <p><strong>Uso de Construcción</strong></p>
+            <vex-combox-colletion
+              idComboCollection="domBuiltUse"
+              label="Uso"
+              formControlNameCombobox="domBuiltUse"
+              typeDomainName="BuiltUse"
+              placeholderDomainName="Escoger uso"
+            ></vex-combox-colletion>
+            <mat-error *ngIf="informationConstructionForm.get('domBuiltUse')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+          </div>
+
+          <!-- ID -->
+          <div class="form-content-item">
+            <p><strong>ID</strong></p>
+            <vex-input
+              label="ID"
+              type="text"
+              idComboInput="unitBuiltLabel"
+              formControlNameInput="unitBuiltLabel"
+            ></vex-input>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltLabel')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltLabel')?.hasError('pattern')">
+              Solo letras mayúsculas son permitidas.
+            </mat-error>
+          </div>
+
+          <!-- Piso -->
+          <div class="form-content-item">
+            <p><strong>Piso</strong></p>
+            <vex-input
+              label="Piso"
+              type="text"
+              idComboInput="unitBuiltFloors"
+              formControlNameInput="unitBuiltFloors"
+            ></vex-input>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltFloors')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltFloors')?.hasError('pattern')">
+              Solo se permiten números enteros.
+            </mat-error>
+          </div>
+
+          <!-- Año -->
+          <div class="form-content-item">
+            <p><strong>Año</strong></p>
+            <vex-input
+              label="Año"
+              type="text"
+              idComboInput="unitBuiltYear"
+              formControlNameInput="unitBuiltYear"
+            ></vex-input>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltYear')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltYear')?.hasError('pattern')">
+              Solo se permiten años entre 1900 y 2099.
+            </mat-error>
+          </div>
+
+          <!-- Área Total -->
+          <div class="form-content-item">
+            <p><strong>Área Total</strong></p>
+            <vex-input
+              label="Área Total"
+              type="text"
+              idComboInput="unitBuiltArea"
+              formControlNameInput="unitBuiltArea"
+            ></vex-input>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltArea')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltArea')?.hasError('pattern')">
+              Solo se permiten números.
+            </mat-error>
+          </div>
+
+          <!-- Tipología -->
+          <div class="form-content-item">
+            <p><strong>Tipología</strong></p>
+            <vex-combox-colletion
+              idComboCollection="domTipologiaTipo"
+              label="Tipología"
+              formControlNameCombobox="domTipologiaTipo"
+              typeDomainName="TipologiaTipo"
+              placeholderDomainName="Escoger tipología"
+            ></vex-combox-colletion>
+            <mat-error *ngIf="informationConstructionForm.get('domTipologiaTipo')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+          </div>
+
+          <!-- Área Privada -->
+          <div class="form-content-item">
+            <p><strong>Área Privada</strong></p>
+            <vex-input
+              label="Área Privada"
+              type="text"
+              idComboInput="unitBuiltPrivateArea"
+              formControlNameInput="unitBuiltPrivateArea"
+            ></vex-input>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltPrivateArea')?.hasError('required')">
+              Este campo es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="informationConstructionForm.get('unitBuiltPrivateArea')?.hasError('pattern')">
+              Solo se permiten números.
+            </mat-error>
+          </div>
+
+          <!-- Observación -->
+          <div class="form-content-item">
+            <p><strong>Observación</strong></p>
+            <vex-input
+              label="Observación"
+              type="text"
+              idComboInput="unitBuiltObservation"
+              formControlNameInput="unitBuiltObservation"
+            ></vex-input>
+          </div>  
+
+        </div>
+
+          <div class="buttons">
+            <button color="primary" mat-raised-button type="submit">
+              Guardar
+              <mat-icon svgIcon="mat:save"></mat-icon>
+            </button>
+            <button color="warn" mat-stroked-button mat-dialog-close type="button">
+              Cerrar
+              <mat-icon svgIcon="mat:close"></mat-icon>
+            </button>
+          </div>
+        </vex-page-layout-content>
+      </vex-page-layout>
+    </form>
+  }
+</mat-dialog-content>

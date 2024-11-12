@@ -17,10 +17,10 @@ export const CONSTANT_NAME_NO_: string = '(NO)';
 export const CONSTANT_NAME_BAUNITID: string = 'BAUNITID';
 export const CONSTANT_NAME_ROOTING: string = 'ROOTING';
 
-export const CONSTANT_INFOMATION_PREDIAL: string = ' Informacion predial catastral ';
-export const CONSTANT_INFOMATION_PREDIAL_MAIN: string = 'Informacion predial catastral vigente';
-export const CONSTANT_INFOMATION_PREDIAL_TEMP: string = 'Informacion predial catastral temporal';
-export const CONSTANT_INFOMATION_PREDIAL_HIST: string = 'Informacion predial catastral historico';
+export const CONSTANT_INFOMATION_PREDIAL: string = ' Información predial catastral ';
+export const CONSTANT_INFOMATION_PREDIAL_MAIN: string = 'Información predial catastral vigente';
+export const CONSTANT_INFOMATION_PREDIAL_TEMP: string = 'Información predial catastral temporal';
+export const CONSTANT_INFOMATION_PREDIAL_HIST: string = 'Información predial catastral historico';
 
 export const CONSTANT_CHANGE_UNITED_PREDIAL: string = ' Cambios unidad predial catastral ';
 
