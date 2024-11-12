@@ -54,30 +54,44 @@ export class AddPropertyOwnerComponent implements OnInit {
     private fb: FormBuilder,
     private rrrightService: RrrightService,
     private peopleService: PeopleService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     console.log(this.defaults)
+    this.secondForm.disable()
   }
 
   close(): void {
     this.dialogRef.close();
   }
 
-  infoSelect( info: string ) {
+  infoSelect(info: string) {
     this.infoDoc = info
   }
 
   searchPerson(): void {
     console.log('Consultar')
-    console.log(this.document.value)
-    console.log(this.infoDoc)
+
     this.peopleService.getPeopleTypeNumber({ number: this.document.value, individualTypeNumber: this.infoDoc })
       .subscribe((res: any) => {
         this.customers = [res];
-      })
 
-    console.log(this.customers)
-  }
+        console.log(res)
+        this.secondForm.enable()
+        this.setFormValue()
+      })
+    }
+
+    setFormValue() {
+      this.secondForm.setValue({
+        firstName: this.customers[0].firstName,
+        middleName: this.customers[0].middleName,
+        lastName: this.customers[0].lastName,
+        otherLastName: this.customers[0].otherLastName,
+        domIndividualSex: this.customers[0].domIndividualSex,
+        domIndividualEthnicGroup: this.customers[0].domIndividualEthnicGroup
+      })
+      console.log(this.secondForm.value)
+    }
 
 }
