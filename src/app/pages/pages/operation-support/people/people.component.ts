@@ -268,7 +268,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
           size: this.pageSize,
           individualTypeNumber: this.infoDoc
         };
-        this.peopleService.getPeopleTypeNumer(obj).subscribe((res: any) => {
+        this.peopleService.getPeopleTypeNumber(obj).subscribe((res: any) => {
           this.customers = [res];
           this.dataSource.data = [res];
         });

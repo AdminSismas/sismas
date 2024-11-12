@@ -38,4 +38,62 @@
       buscar
     </button>
   </form>
+  <form
+    class="w-full grid grid-cols-2 gap-4 grid-flow-row"
+    [formGroup]="secondForm">
+    <mat-form-field >
+      <mat-label>Primer Nombre</mat-label>
+      <input
+        matInput
+        formControlName="firstName"
+        placeholder="Primer Nombre"
+        type="text"
+        name="firstName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Segundo Nombre</mat-label>
+      <input
+        matInput
+        formControlName="middleName"
+        placeholder="Segundo Apellido"
+        type="text"
+        name="middleName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Primer Apellido</mat-label>
+      <input
+        matInput
+        formControlName="lastName"
+        placeholder="Primer Apellido"
+        type="text"
+        name="lastName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Segundo Apellido</mat-label>
+      <input
+        matInput
+        formControlName="otherLastName"
+        placeholder="Segundo Apellido"
+        type="text"
+        name="otherLastName"
+      />
+    </mat-form-field>
+    <vex-combox-colletion
+      idComboCollection="domIndividualSex"
+      label="Dominante Sexo"
+      formControlNameCombobox="domIndividualSex"
+      typeDomainName="IndividualSex"
+      placeholderDomainName="Seleccionar tipo genero&hellip;"
+    ></vex-combox-colletion>
+    <vex-combox-colletion
+      idComboCollection="domIndividualEthnicGroup"
+      label="Dominante Etnico"
+      formControlNameCombobox="domIndividualEthnicGroup"
+      typeDomainName="IndividualEthnicGroup"
+      placeholderDomainName="Seleccionar tipo genero&hellip;"
+    ></vex-combox-colletion>
+  </form>
 </div>

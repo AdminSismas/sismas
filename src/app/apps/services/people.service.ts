@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { SendGeneralRequestsService } from './general/send-general-requests.service';
 import { Observable } from 'rxjs';
@@ -11,7 +11,6 @@ export class PeopleService {
   private url_basic = `${environment.url}:${environment.port}`;
 
   constructor(
-    private http: HttpClient,
     private requestsService: SendGeneralRequestsService
   ) {}
 
@@ -24,7 +23,7 @@ export class PeopleService {
     return this.getData(urlP, paramsR);
   }
 
-  getPeopleTypeNumer(params: any) {
+  getPeopleTypeNumber(params: any) {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', params.number);
     paramsR = paramsR.append(

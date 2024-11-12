@@ -9,6 +9,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
+import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
+import { PeopleService } from 'src/app/apps/services/people.service';
+import { People } from 'src/app/apps/interfaces/people.model';
 
 
 @Component({
@@ -28,18 +31,29 @@ import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
   styleUrl: './add-property-owner.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddPropertyOwnerComponent implements OnInit{
+export class AddPropertyOwnerComponent implements OnInit {
 
-  public form: FormGroup = this.fb.group({
-
+  public form: FormGroup = this.fb.group({})
+  public secondForm: FormGroup = this.fb.group({
+    firstName: ['', Validators.required],
+    middleName: [''],
+    lastName: ['', Validators.required],
+    otherLastName: ['', Validators.required],
+    domIndividualSex: ['', Validators.required],
+    domIndividualEthnicGroup: ['', Validators.required],
   })
+
   public infoDoc: string = 'ID';
   public document = new UntypedFormControl();
+  public customers: People[] = [];
+  public dataSource: People[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
     private dialogRef: MatDialogRef<AddPropertyOwnerComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private rrrightService: RrrightService,
+    private peopleService: PeopleService
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +72,12 @@ export class AddPropertyOwnerComponent implements OnInit{
     console.log('Consultar')
     console.log(this.document.value)
     console.log(this.infoDoc)
+    this.peopleService.getPeopleTypeNumber({ number: this.document.value, individualTypeNumber: this.infoDoc })
+      .subscribe((res: any) => {
+        this.customers = [res];
+      })
+
+    console.log(this.customers)
   }
 
 }

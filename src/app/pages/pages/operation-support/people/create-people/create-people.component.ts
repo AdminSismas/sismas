@@ -201,7 +201,7 @@ export class CreatePeopleComponent implements OnInit {
       let datosClient: any;
       try {
         datosClient = await firstValueFrom(
-          this.peopleServcie.getPeopleTypeNumer(obj)
+          this.peopleServcie.getPeopleTypeNumber(obj)
         );
       } catch (error) {
         console.error(error);
