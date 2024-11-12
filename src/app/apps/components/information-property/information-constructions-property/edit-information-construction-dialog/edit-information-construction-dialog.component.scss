@@ -1,0 +1,16 @@
+.form-content {
+    @apply flex flex-wrap gap-4 justify-center w-full pb-4;
+  
+    .form-content-item {
+      width: 45%; 
+      @apply my-2;
+  
+      &.full {
+        width: 100%; 
+      }
+    }
+  }
+  
+  .buttons {
+    @apply flex gap-2 justify-center py-2;
+  }

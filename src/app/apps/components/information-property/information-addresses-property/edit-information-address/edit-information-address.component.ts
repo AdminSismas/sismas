@@ -73,6 +73,8 @@ export class EditInformationAddressComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDetailInformationAddress();
+
+    console.log('addEditInformationData', this.addEditInformationData.type);
   }
 
   /**

@@ -183,14 +183,14 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
     visible: true
   },
   {
-    label: 'Area',
-    property: 'unitBuiltAreaE',
+    label: 'Area (Mts2)',
+    property: 'unitBuiltArea',
     type: 'text',
     visible: true
   },
   {
     label: 'Tipologia',
-    property: 'typology',
+    property: 'domTipologiaTipo',
     type: 'text',
     visible: true
   }

@@ -71,6 +71,7 @@ export class ComboxColletionComponent implements OnInit {
       result = result.filter(dmc => dmc.inactive === false);
     }
     this.options = result;
+    console.log(this.options);
   }
 
   getRandomInt(max: number) {

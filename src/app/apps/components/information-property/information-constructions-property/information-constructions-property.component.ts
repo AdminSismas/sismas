@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -23,7 +23,7 @@ import {
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
 } from '../../../constants/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -50,6 +50,11 @@ import {
 } from './detail-information-constructions-property/detail-information-constructions-property.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/content-info';
+import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from './edit-information-constructions-property/edit-information-constructions-property.component';
+import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
+import { D } from '@angular/cdk/keycodes';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditInformationConstructionDialogComponent } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -85,7 +90,8 @@ import { TypeInformation } from '../../../interfaces/content-info';
     HeaderCadastralInformationPropertyComponent,
     MatMenuModule,
     MatCheckboxModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDialogModule
   ],
   templateUrl: './information-constructions-property.component.html',
   styleUrl: './information-constructions-property.component.scss'
@@ -113,9 +119,10 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-
+  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
+  
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
+  private snackBar = inject(MatSnackBar);
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
@@ -225,12 +232,91 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       .afterClosed();
   }
 
+  openAddEditConstructionInformationPropertyDialog(
+    data?: ContentInformationConstruction
+  ): void {
+    const dialogData: AddEditInformationConstructionI = {
+      type: data ? 'edit' : 'new',
+      basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
+      baunitId: this.baunitId || undefined,
+    };
+  
+    const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
+      minWidth: '50%',
+      minHeight: '40%',
+      disableClose: true,
+      data: dialogData,
+    });
+  
+    dialogRef.afterClosed().subscribe((result: ContentInformationConstruction) => {
+      if (result) {
+        if (dialogData.type === 'new') {
+        
+          this.dataSource.data = [...this.dataSource.data, result];
+        } else {
+     
+          const index = this.dataSource.data.findIndex((item) => item.unitBuiltId === result.unitBuiltId);
+          if (index !== -1) {
+            this.dataSource.data[index] = result;
+            this.dataSource._updateChangeSubscription();
+          }
+        }
+      }
+    });
+  }
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
   }
 
+  
+  editInformations(customer: any): void {
+    const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
+      width: '600px',
+      data: {
+        ...customer,
+        executionId: this.executionId,
+        baunitId: this.baunitId
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Encuentra el índice de la construcción que se ha editado
+        const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
+  
+        if (index !== -1) {
+          // Actualiza el elemento en dataSource
+          this.dataSource.data[index] = result;
+          
+          // Forzar la actualización de la tabla
+          this.dataSource.data = [...this.dataSource.data];
+        }
+      }
+    });
+  }
+
   deleteInformations(customer: any): void {
-    console.log(customer);
+    const dialogRef = this.dialog.open(this.confirmDialog);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const baunitId = 2282747; // El valor fijo que mencionaste
+        const changeLogId = 68;
+        const unitBuiltId = customer.unitBuiltId;
+        let msg: string = 'Información eliminada con éxito';
+  
+        this.informationPropertyService.deleteConstruction(baunitId, changeLogId, unitBuiltId).subscribe({
+          next: () => {
+            // Elimina el registro de la tabla si la petición fue exitosa
+            this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
+            this.snackBar.open(msg, 'Cerrar', { duration: 2000 });
+          },
+          error: () => {
+            msg = 'No fue posible eliminar la información';
+            this.snackBar.open(msg, 'Cerrar', { duration: 2000 });
+          }
+        });
+      }
+    });
   }
 
   toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {

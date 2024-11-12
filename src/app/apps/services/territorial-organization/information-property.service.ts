@@ -9,7 +9,7 @@ import { BasicInformationAddress } from '../../interfaces/information-property/b
 import { CreateBasicInformationAddress, DetailBasicInformationAddress } from '../../interfaces/information-property/detail-basic-information-address';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
-import { ContentInformationConstruction } from '../../interfaces/information-property/content-information-construction';
+import { ContentInformationConstruction, CreateBasicInformationConstruction } from '../../interfaces/information-property/content-information-construction';
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
 import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
 
@@ -20,7 +20,7 @@ export class InformationPropertyService {
   basic_url: string = `${envi.url}:${envi.port}`;
   private httpClient = inject(HttpClient);
 
-  constructor(private requestsService: SendGeneralRequestsService) {}
+  constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
 
   getBasicInformationProperty(
     schema: string,
@@ -97,12 +97,14 @@ export class InformationPropertyService {
       catchError((error) => this.requestsService.errorNotFound(error))
     );
   }
-
+  // ${executionId}/${baunitId}
   getDetailBasicInformationPropertyConstructions(
     schema: string,
     id: number | undefined
+
   ): Observable<ContentInformationConstruction> {
-    const url: string = `${this.basic_url}${envi.unitBuilt}/${id}`;
+    const url: string = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
+
     return this.requestsService
       .sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
@@ -170,6 +172,22 @@ export class InformationPropertyService {
     );
   }
 
+  updateBasicInformationPropertyConstruction(
+    id: string,
+    updateBasicInformationConstruction: Partial<ContentInformationConstruction>
+  ): Observable<ContentInformationConstruction> {
+    const url: string = `${this.basic_url}${envi.ccDireccion}${id}`;
+    return this.httpClient.put<ContentInformationConstruction>(
+      url,
+      updateBasicInformationConstruction
+    );
+  }
+
+  updateConstruction(executionId: number, baunitId: number, data: any): Observable<any> {
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+    console.log('data', data);
+    return this.http.put(url, data);
+  }
   /**
    * Create basic information address
    *
@@ -191,6 +209,22 @@ export class InformationPropertyService {
     );
   }
 
+  createBasicInformationPropertyConstruction(
+    executionId: number,
+    baunitId: string,
+    createBasicInformationConstruction: CreateBasicInformationConstruction
+  ): Observable<ContentInformationConstruction> {
+    
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+  
+    return this.http.post<ContentInformationConstruction>(
+      url,
+      createBasicInformationConstruction
+    );
+  }
+  
+
+
   /**
    * Delete basic information by direccionId
    * @param id
@@ -201,6 +235,27 @@ export class InformationPropertyService {
     const httpParams: HttpParams = new HttpParams()
     .set('version', '9999999');
     return this.httpClient.delete(url, { params: httpParams});
+  }
+
+  deleteBasicInformationPropertyConstruction(constructionId: string): Observable<any> {
+    const url: string = `${this.basic_url}${envi.ccDireccion}/${constructionId}`;
+    const httpParams: HttpParams = new HttpParams()
+    .set('version', '9999999');
+    return this.httpClient.delete(url, { params: httpParams});
+  }
+
+  deleteConstruction(baunitId: number, changeLogId: number, unitBuiltId: number): Observable<any> {
+    const url = `${this.basic_url}${envi.unitBuilt}`; 
+
+    const formData = new FormData();
+    
+    formData.append('baunitId', baunitId.toString());
+    formData.append('changeLogId', changeLogId.toString());
+    formData.append('unitBuiltId', unitBuiltId.toString());
+    formData.append('word', 'borrar');
+
+
+    return this.httpClient.delete(url, { body: formData });
   }
 
   private getData(url: string, params: any): Observable<any> {
