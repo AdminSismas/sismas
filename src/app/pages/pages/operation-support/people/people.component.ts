@@ -62,29 +62,29 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'vex-people',
   standalone: true,
   imports: [
-    FilterCadastralSearchComponent,
-    ComboxColletionComponent,
-    ComboxAutoCompleteComponent,
-    MatSelectModule,
     ComboboxComponent,
-    InConstructionComponent,
-    MatIconModule,
-    VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent,
-    MatButtonToggleModule,
-    VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexPageLayoutContentDirective,
-    MatFormFieldModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    MatMenuModule,
-    ReactiveFormsModule,
+    ComboxAutoCompleteComponent,
+    ComboxColletionComponent,
     CommonModule,
-    MatTableModule,
+    FilterCadastralSearchComponent,
     FormsModule,
+    InConstructionComponent,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
-    MatButtonModule
+    MatMenuModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    VexBreadcrumbsComponent,
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
+    VexPageLayoutHeaderDirective,
+    VexSecondaryToolbarComponent,
   ],
   templateUrl: './people.component.html',
   styleUrl: './people.component.scss'
@@ -360,7 +360,6 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   search() {
     console.log('consultar');
-    console.log(this.document.value)
     this.onFilterChange(this.document.value);
   }
 }

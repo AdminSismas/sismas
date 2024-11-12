@@ -23,9 +23,6 @@ import {
 } from '../../../constants/constantLabels';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
-import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { tap, Observable } from 'rxjs';
 
 
 @Component({
@@ -53,7 +50,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   implements OnInit, AfterViewInit
 {
   typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
-  
+
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
   propertyUnit: boolean = false;

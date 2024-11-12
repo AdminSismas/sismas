@@ -1,0 +1,41 @@
+<div class="flex items-center flex-col">
+  <h2 class="headline m-0 flex-auto">Agregar nuevo propietario</h2>
+
+  <form
+    class="flex gap-4 w-full"
+    [formGroup]="form"
+    autocomplete="off"
+    (ngSubmit)="searchPerson()"
+  >
+    <vex-combox-colletion
+      ubscriptSizing="dynamic"
+      idComboCollection="typeNumberDocument"
+      name="selector_document"
+      label="Tipo de documento"
+      typeDomainName="IndividualTypeNumber"
+      placeholderDomainName="Seleccionar tipo documento&hellip;"
+      (stringEventEmitter)="infoSelect($event)"
+    >
+    </vex-combox-colletion>
+    <mat-form-field class="w-full">
+      <input
+        matInput
+        [formControl]="document"
+        placeholder="Buscar numero de documento&hellip;"
+        type="text"
+        name="search"
+      />
+    </mat-form-field>
+
+    <button
+      color="primary"
+      aria-label=""
+      type="submit"
+      mat-flat-button
+      name="enviar"
+      class="ml-4 flex-none"
+    >
+      buscar
+    </button>
+  </form>
+</div>

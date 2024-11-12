@@ -43,13 +43,9 @@ import { TypeInformation } from '../../../interfaces/content-info';
   animations: [
     fadeInRight400ms,
     stagger80ms,
-    scaleIn400ms,
-    stagger40ms,
-    fadeInUp400ms,
-    scaleFadeIn400ms
+    scaleIn400ms
   ],
   imports: [
-    HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
     CdkAccordionModule,
     AsyncPipe,

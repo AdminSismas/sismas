@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { HttpParams } from '@angular/common/http';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 import { Baunit, BAunitLike } from '../../interfaces/information-property/baunit-npnlike';
 
 @Injectable({
@@ -44,6 +44,13 @@ export class UnitPropertyInformationService {
 
     return this.requestsService
       .sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+      .pipe(
+        catchError(error => this.requestsService.errorNotFound(error)),
+        tap((result: BAunitLike) => {
+          let new_content = result.content.filter((baUnit: Baunit) => baUnit.cadastralNumber !== npn)
+          result.content = new_content;
+          return result;
+        })
+      );
   }
 }

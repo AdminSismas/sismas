@@ -30,6 +30,7 @@ import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
 import { TypeInformation } from 'src/app/apps/interfaces/content-info';
 import { AddEditInformationPropertyOwnerComponent } from './add-edit-information-property-owner/add-edit-information-property-owner.component';
+import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -122,7 +123,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-  
+
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('addEditDialog', { static: true }) addEditDialog: TemplateRef<any> | undefined;
@@ -190,7 +191,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   /**
    * Load information property
-   * @returns 
+   * @returns
    */
   async loadInformationPropertyOwners(): Promise<void> {
     if (!this.schema || !this.baunitId) {
@@ -233,14 +234,17 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     dialog.afterClosed().subscribe((data: any) => console.log(data));
   }
 
-  onClickOpenAddEditModal(): void {
+  onClickOpenAddEditModal(data: any): void {
     if (this.addEditDialog) {
-      const dialog = this.matDialog.open(this.addEditDialog, {
+      const dialog = this.matDialog.open(AddPropertyOwnerComponent, {
         width: '80%',
+        data: data,
       });
 
       dialog.afterClosed().subscribe((data: any) => console.log(data));
     }
+
+    console.log(data)
   }
 
   onClickActionBtn(id: string, infoOwner: InfoOwnerRowT) {
