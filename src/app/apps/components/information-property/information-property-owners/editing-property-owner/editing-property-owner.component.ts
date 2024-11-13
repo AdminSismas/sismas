@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
+import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
 
 @Component({
   selector: 'vex-editing-property-owner',
@@ -22,7 +23,8 @@ import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    ComboxColletionComponent
   ],
   templateUrl: './editing-property-owner.component.html',
   styleUrl: './editing-property-owner.component.css',
@@ -48,6 +50,8 @@ export class EditingPropertyOwnerComponent {
   }
 
   editRrrightOwnerProperty(): any {
-    console.log(this.form.value)
+    const values = this.form.value
+    values.fraction = values.fraction / 100
+    console.log(values)
   }
 }

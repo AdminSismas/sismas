@@ -13,21 +13,22 @@
       <input
         matInput
         placeholder="Fracción"
-        formtControlName="fraction"
+        formControlName="fraction"
+        min="0"
+        max="100"
+        step="1"
         type="number"
       />
     </mat-form-field>
 
     <!-- Edición tipo de derecho -->
-    <mat-form-field>
-      <mat-label>Tipo Derecho</mat-label>
-      <input
-        matInput
-        placeholder="Tipo Derecho"
-        formtControlName="domRightType"
-        type="text"
-      />
-    </mat-form-field>
+    <vex-combox-colletion
+      idComboCollection="domRightType"
+      label="Tipo derecho"
+      formControlNameCombobox="domRightType"
+      typeDomainName="RightType"
+      placeholderDomainName="Seleccionar tipo derecho&hellip;"
+    ></vex-combox-colletion>
 
     <!-- Edición fecha -->
     <mat-form-field>

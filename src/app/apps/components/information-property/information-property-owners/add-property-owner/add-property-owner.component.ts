@@ -92,11 +92,15 @@ export class AddPropertyOwnerComponent implements OnInit {
 
     console.log(this.customer)
 
+    const values = this.secondForm.value
+
+    values.fraction = values.fraction / 100
+
     const params: postParamsRrright = {
       schema: this.defaults.schema,
       executionId: this.defaults.executionId,
       baunitId: this.defaults.baunitId,
-      params: { ...this.secondForm.value, beginAt: formatBeginAt, individual: { individualId: this.customer!.individualId } }
+      params: { ...values, beginAt: formatBeginAt, individual: { individualId: this.customer!.individualId } }
     }
 
     this.rrrightService.postRrrightOwnerProperty(params)
