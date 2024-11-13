@@ -80,8 +80,8 @@ export class AddPropertyOwnerComponent implements OnInit {
     console.log(this.customer)
 
     const params: postParamsRrright = {
-      domain: 'temp',
-      executionId: '68',
+      schema: this.defaults.schema,
+      executionId: this.defaults.executionId,
       baunitId: this.defaults.baunitId,
       params: { ...this.secondForm.value, beginAt: formatBeginAt, individual: { individualId: this.customer!.individualId } }
     }

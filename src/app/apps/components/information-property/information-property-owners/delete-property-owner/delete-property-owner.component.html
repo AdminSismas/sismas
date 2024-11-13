@@ -1,0 +1,29 @@
+<mat-dialog-content>
+  <h2
+    class="headline m-0 flex-auto text-2xl text-center mb-4 text-slate-800"
+  >
+    ¿Está seguro de que desea eliminar el propietario?
+  </h2>
+
+  <div class="p-4 text-slate-700 flex flex-col gap-6 align-center">
+    <p class="text-base text-center">Se eliminará el propietario de la unidad predial <strong class="text-lg">[PROPIETARIO]</strong></p>
+    <div class="flex justify-center gap-6">
+      <button
+        class="p-4 text-lg"
+        mat-flat-button
+        color="warn"
+        (click)="deleteRrrightOwnerProperty()"
+      >
+        Eliminar
+      </button>
+      <button
+        class="p-4 text-lg"
+        mat-flat-button
+        color="primary"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>

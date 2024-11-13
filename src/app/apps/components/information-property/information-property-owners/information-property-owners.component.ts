@@ -31,8 +31,9 @@ import { lastValueFrom } from 'rxjs';
 import { TypeInformation } from 'src/app/apps/interfaces/content-info';
 import { AddEditInformationPropertyOwnerComponent } from './add-edit-information-property-owner/add-edit-information-property-owner.component';
 import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
+import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 
-export type InfoOwnerRowT = Pick<InfoOwners, 'beginAt' | 'fractionS' | 'domRightType'> &
+export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
 
 @Component({
@@ -61,6 +62,7 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'beginAt' | 'fractionS' | 'domRight
     MatPaginatorModule,
     MatDialogModule,
     AddEditInformationPropertyOwnerComponent,
+    DeletePropertyOwnerComponent
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
@@ -133,6 +135,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   totalElements: number = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  rightIdSelected?: number;
   dataSource: MatTableDataSource<InfoOwnerRowT> =
     new MatTableDataSource<InfoOwnerRowT>([]);
   columns = signal(this.TABLE_COLUMNS);
@@ -207,6 +210,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       );
       const data = infoOwners.map((infoOwner: InfoOwners) => {
         const infoOwnerRow: InfoOwnerRowT = {
+          rightId: infoOwner?.rightId,
           beginAt: infoOwner?.beginAt,
           fractionS: infoOwner?.fractionS,
           domRightType: infoOwner?.domRightType,
@@ -238,7 +242,12 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     if (this.addEditDialog) {
       const dialog = this.matDialog.open(AddPropertyOwnerComponent, {
         width: '45%',
-        data: { ownersData: data.data, baunitId: this.baunitId },
+        data: {
+          ownersData: data.data,
+          baunitId: this.baunitId,
+          schema: this.schema,
+          executionId: this.executionId
+        },
       });
 
       dialog.afterClosed().subscribe((data: any) => console.log(data));
@@ -248,9 +257,17 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   onClickActionBtn(id: string, infoOwner: InfoOwnerRowT) {
+    this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
       if (this.confirmDialog) {
-        const dialog = this.matDialog.open(this.confirmDialog);
+        const dialog = this.matDialog.open(DeletePropertyOwnerComponent, {
+          width: '45%',
+          data: {
+            baunitId: this.baunitId,
+            executionId: this.executionId,
+            rightId: this.rightIdSelected
+          }
+        });
         dialog.afterClosed().subscribe((data: any) => console.log(data));
       }
     }

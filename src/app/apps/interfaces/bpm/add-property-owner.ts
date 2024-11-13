@@ -1,5 +1,5 @@
 export interface postParamsRrright {
-  domain: string,
+  schema: string,
   executionId: string,
   baunitId: string,
   params: NewOwner
@@ -13,8 +13,10 @@ interface NewOwner {
 }
 
 export interface AddPropertyOwnerData {
-  ownersData:     Owners[];
+  ownersData: Owners[];
   baunitId: string;
+  schema: string;
+  executionId: string;
 }
 
 export interface Owners {
@@ -46,4 +48,8 @@ export interface InfoPerson {
   fullName:                 string;
 }
 
-
+export interface DeleteParamsRrright {
+  executionId: string,
+  baunitId: string,
+  rightId: number,
+}
