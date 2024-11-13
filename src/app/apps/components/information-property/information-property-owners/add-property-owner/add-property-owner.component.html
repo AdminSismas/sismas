@@ -1,8 +1,13 @@
-<div class="flex items-center flex-col gap-12 p-8">
-  <h2 class="headline m-0 flex-auto">Agregar nuevo propietario</h2>
+<div class="flex items-center flex-col gap-8 p-8">
+  <h2
+    class="headline m-0 flex-auto"
+    mat-dialog-title
+  >
+    Agregar nuevo propietario
+  </h2>
 
   <form
-    class="flex gap-4 w-full"
+    class="flex gap-4 w-full border-b-[1px] border-gray-400"
     [formGroup]="form"
     autocomplete="off"
     (ngSubmit)="searchPerson()"
@@ -29,72 +34,74 @@
 
     <button
       color="primary"
-      aria-label=""
       type="submit"
       mat-flat-button
       name="enviar"
-      class="ml-4 flex-none"
+      class="ml-4 flex-none p-4 text-lg"
     >
-      buscar
+      Buscar
     </button>
   </form>
-  <br>
   <form
-    class="w-full grid grid-cols-2 gap-4 grid-flow-row"
-    [formGroup]="secondForm">
-    <mat-form-field >
-      <mat-label>Primer Nombre</mat-label>
-      <input
-        matInput
-        formControlName="firstName"
-        placeholder="Primer Nombre"
-        type="text"
-        name="firstName"
-      />
-    </mat-form-field>
+    class="w-full grid grid-cols-3 gap-x-4 grid-flow-row"
+    [formGroup]="secondForm"
+  >
+    @if (customers.length > 0) {
+      <h3 class="text-center text-2xl font-bold col-span-3 mb-6">
+        {{ customers[0].fullName }}
+      </h3>
+    }
     <mat-form-field>
-      <mat-label>Segundo Nombre</mat-label>
+      <mat-label>Fracción</mat-label>
       <input
         matInput
-        formControlName="middleName"
-        placeholder="Segundo Apellido"
-        type="text"
-        name="middleName"
-      />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Primer Apellido</mat-label>
-      <input
-        matInput
-        formControlName="lastName"
-        placeholder="Primer Apellido"
-        type="text"
-        name="lastName"
-      />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Segundo Apellido</mat-label>
-      <input
-        matInput
-        formControlName="otherLastName"
-        placeholder="Segundo Apellido"
-        type="text"
-        name="otherLastName"
+        formControlName="fraction"
+        placeholder="Fracción"
+        type="number"
+        name="fraction"
+        min="0"
+        max="1"
+        step="0.01"
+        required
       />
     </mat-form-field>
     <vex-combox-colletion
-      idComboCollection="domIndividualSex"
-      label="Dominante Sexo"
-      formControlNameCombobox="domIndividualSex"
-      typeDomainName="IndividualSex"
-      placeholderDomainName="Seleccionar tipo genero&hellip;"
+      idComboCollection="domRightType"
+      label="Tipo derecho"
+      formControlNameCombobox="domRightType"
+      typeDomainName="RightType"
+      placeholderDomainName="Seleccionar tipo derecho&hellip;"
     ></vex-combox-colletion>
-    <vex-combox-colletion
-      idComboCollection="domIndividualEthnicGroup"
-      label="Dominante Etnico"
-      formControlNameCombobox="domIndividualEthnicGroup"
-      typeDomainName="IndividualEthnicGroup"
-      placeholderDomainName="Seleccionar tipo genero&hellip;"
-    ></vex-combox-colletion>
+    <mat-form-field>
+      <mat-label>Fracción</mat-label>
+      <input
+        matInput
+        formControlName="createdAt"
+        placeholder="A partir del"
+        type="date"
+        name="createdAt"
+        required
+      />
+    </mat-form-field>
+    <div class="width-full flex justify-center gap-6 col-span-3">
+      <button
+        color="primary"
+        type="submit"
+        mat-flat-button
+        class="p-4 text-lg"
+        (click)="addPropertyOwner()"
+      >
+        Continuar
+      </button>
+      <button
+        color="warn"
+        type="submit"
+        mat-flat-button
+        class="p-4 text-lg"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+    </div>
   </form>
 </div>

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
@@ -35,25 +35,22 @@ export class AddPropertyOwnerComponent implements OnInit {
 
   public form: FormGroup = this.fb.group({})
   public secondForm: FormGroup = this.fb.group({
-    firstName: ['', Validators.required],
-    middleName: [''],
-    lastName: ['', Validators.required],
-    otherLastName: ['', Validators.required],
-    domIndividualSex: ['', Validators.required],
-    domIndividualEthnicGroup: ['', Validators.required],
+    fraction: ['', Validators.required],
+    domRightType: ['', Validators.required],
+    createdAt: ['', Validators.required],
   })
 
   public infoDoc: string = 'ID';
   public document = new UntypedFormControl();
   public customers: People[] = [];
-  public dataSource: People[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
     private dialogRef: MatDialogRef<AddPropertyOwnerComponent>,
     private fb: FormBuilder,
     private rrrightService: RrrightService,
-    private peopleService: PeopleService
+    private peopleService: PeopleService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -76,22 +73,11 @@ export class AddPropertyOwnerComponent implements OnInit {
       .subscribe((res: any) => {
         this.customers = [res];
 
-        console.log(res)
         this.secondForm.enable()
-        this.setFormValue()
-      })
-    }
+    })
+  }
 
-    setFormValue() {
-      this.secondForm.setValue({
-        firstName: this.customers[0].firstName,
-        middleName: this.customers[0].middleName,
-        lastName: this.customers[0].lastName,
-        otherLastName: this.customers[0].otherLastName,
-        domIndividualSex: this.customers[0].domIndividualSex,
-        domIndividualEthnicGroup: this.customers[0].domIndividualEthnicGroup
-      })
-      console.log(this.secondForm.value)
-    }
-
+  addPropertyOwner() {
+    console.log(this.secondForm.value)
+  }
 }
