@@ -53,3 +53,10 @@ export interface DeleteParamsRrright {
   baunitId: string,
   rightId: number,
 }
+
+export interface DeleteDialogData {
+  baunitId: string;
+  executionId: string;
+  rightId: number;
+  fullName: string;
+}

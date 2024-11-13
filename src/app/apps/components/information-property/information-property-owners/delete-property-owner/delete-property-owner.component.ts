@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { DeleteParamsRrright } from 'src/app/apps/interfaces/bpm/add-property-owner';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteDialogData } from 'src/app/apps/interfaces/bpm/add-property-owner';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 
 @Component({
@@ -20,9 +21,10 @@ import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 export class DeletePropertyOwnerComponent {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: DeleteParamsRrright,
+    @Inject(MAT_DIALOG_DATA) public defaults: DeleteDialogData,
     private rrrightService: RrrightService,
     private dialogRef: MatDialogRef<DeletePropertyOwnerComponent>,
+    private snackbar: MatSnackBar,
   ) {}
 
   deleteRrrightOwnerProperty(): void {
@@ -31,6 +33,7 @@ export class DeletePropertyOwnerComponent {
       .subscribe((res: any) => console.log(res))
 
     this.close()
+    this.snackbar.open('Propietario eliminado', 'CLOSE', { duration: 2000 })
   }
 
   close() {

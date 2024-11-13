@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vex-add-property-owner',
@@ -54,6 +55,7 @@ export class AddPropertyOwnerComponent implements OnInit {
     private fb: FormBuilder,
     private rrrightService: RrrightService,
     private peopleService: PeopleService,
+    private snackbar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -88,11 +90,9 @@ export class AddPropertyOwnerComponent implements OnInit {
 
     this.rrrightService.postRrrightOwnerProperty(params)
       .subscribe((res: any) => {
-        console.log(res)
         this.close()
       })
 
-    console.log(params)
-
+    this.snackbar.open('Propietario agregado', 'CLOSE', { duration: 2000 })
   }
 }

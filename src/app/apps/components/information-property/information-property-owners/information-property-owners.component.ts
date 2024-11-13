@@ -265,7 +265,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           data: {
             baunitId: this.baunitId,
             executionId: this.executionId,
-            rightId: this.rightIdSelected
+            rightId: this.rightIdSelected,
+            fullName: infoOwner.fullName
           }
         });
         dialog.afterClosed().subscribe((data: any) => console.log(data));
