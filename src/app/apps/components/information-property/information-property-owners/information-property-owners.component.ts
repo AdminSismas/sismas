@@ -32,6 +32,7 @@ import { TypeInformation } from 'src/app/apps/interfaces/content-info';
 import { AddEditInformationPropertyOwnerComponent } from './add-edit-information-property-owner/add-edit-information-property-owner.component';
 import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
 import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
+import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -128,7 +129,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('addEditDialog', { static: true }) addEditDialog: TemplateRef<any> | undefined;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
 
   page: number = PAGE;
@@ -161,7 +161,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       }
     ];
   });
-  addEditDialogContent = computed<{ title: string}>(() => {
+  addEditDialogContent = computed<{ title: string }>(() => {
     const initialState: any = {
       title: 'Nueva información de propietario'
     };
@@ -171,7 +171,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   private informationPropertyService = inject(InformationPropertyService);
   private matDialog = inject(MatDialog);
 
-  constructor() {}
+  constructor() { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -239,38 +239,43 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   onClickOpenAddEditModal(data: any): void {
-    if (this.addEditDialog) {
-      const dialog = this.matDialog.open(AddPropertyOwnerComponent, {
-        width: '45%',
-        data: {
-          ownersData: data.data,
-          baunitId: this.baunitId,
-          schema: this.schema,
-          executionId: this.executionId
-        },
-      });
-
-      dialog.afterClosed().subscribe((data: any) => console.log(data));
-    }
-
-    console.log(data)
+    this.matDialog.open(AddPropertyOwnerComponent, {
+      width: '45%',
+      data: {
+        ownersData: data.data,
+        baunitId: this.baunitId,
+        schema: this.schema,
+        executionId: this.executionId
+      },
+    }).afterClosed()
+    .subscribe(() => this.loadInformationPropertyOwners());
   }
 
   onClickActionBtn(id: string, infoOwner: InfoOwnerRowT) {
     this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
-      if (this.confirmDialog) {
-        const dialog = this.matDialog.open(DeletePropertyOwnerComponent, {
-          width: '45%',
-          data: {
-            baunitId: this.baunitId,
-            executionId: this.executionId,
-            rightId: this.rightIdSelected,
-            fullName: infoOwner.fullName
-          }
-        });
-        dialog.afterClosed().subscribe((data: any) => console.log(data));
-      }
+      this.matDialog.open(DeletePropertyOwnerComponent, {
+        width: '45%',
+        data: {
+          baunitId: this.baunitId,
+          executionId: this.executionId,
+          rightId: this.rightIdSelected,
+          fullName: infoOwner.fullName
+        }
+      }).afterClosed()
+      .subscribe(() => this.loadInformationPropertyOwners())
+    } else if (id === 'edit') {
+      this.matDialog.open(EditingPropertyOwnerComponent, {
+        width: '45%',
+        data: {
+          rightId: this.rightIdSelected,
+          executionId: this.executionId,
+          baunitId: this.baunitId,
+          number: infoOwner.number,
+          fullName: infoOwner.fullName
+        }
+      }).afterClosed()
+      .subscribe(() => this.loadInformationPropertyOwners())
     }
   }
 

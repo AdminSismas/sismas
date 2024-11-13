@@ -33,7 +33,7 @@ export class DeletePropertyOwnerComponent {
       .subscribe((res: any) => console.log(res))
 
     this.close()
-    this.snackbar.open('Propietario eliminado', 'CLOSE', { duration: 2000 })
+    this.snackbar.open('Propietario eliminado', 'CLOSE', { duration: 4000 })
   }
 
   close() {
