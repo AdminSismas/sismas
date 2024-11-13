@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
@@ -32,7 +32,8 @@ import { People } from 'src/app/apps/interfaces/people.model';
     MatButtonModule,
     MatButtonToggleModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDialogModule
   ],
   templateUrl: './add-property-owner.component.html',
   styleUrl: './add-property-owner.component.css',

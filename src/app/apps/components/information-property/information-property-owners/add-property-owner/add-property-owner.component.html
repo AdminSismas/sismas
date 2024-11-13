@@ -1,13 +1,8 @@
-<div class="flex items-center flex-col gap-8 p-8">
-  <h2
-    class="headline m-0 flex-auto"
-    mat-dialog-title
-  >
-    Agregar nuevo propietario
-  </h2>
+<h2 mat-dialog-title>Agregar nuevo propietario</h2>
+<mat-dialog-content>
 
   <form
-    class="flex gap-4 w-full border-b-[1px] border-gray-400"
+    class="flex py-4 gap-4 w-full border-b-[1px] border-gray-400"
     [formGroup]="form"
     autocomplete="off"
     (ngSubmit)="searchPerson()"
@@ -42,11 +37,11 @@
     </button>
   </form>
   <form
-    class="w-full grid grid-cols-3 gap-x-4 grid-flow-row"
+    class="w-full grid grid-cols-2 gap-x-4 grid-flow-row py-4"
     [formGroup]="secondForm"
   >
     @if (customer?.fullName) {
-      <h3 class="text-center text-2xl font-bold col-span-3 mb-6">
+      <h3 class="text-center text-2xl font-bold col-span-2 mb-6">
         {{ customer!.fullName }}
       </h3>
     }
@@ -69,8 +64,9 @@
       formControlNameCombobox="domRightType"
       typeDomainName="RightType"
       placeholderDomainName="Seleccionar tipo derecho&hellip;"
+      cssClasses="w-full"
     ></vex-combox-colletion>
-    <mat-form-field>
+    <mat-form-field class="col-span-2">
       <mat-label>Fecha creación</mat-label>
       <input
         matInput
@@ -84,7 +80,7 @@
       ></mat-datepicker-toggle>
       <mat-datepicker #beginAt></mat-datepicker>
     </mat-form-field>
-    <div class="width-full flex justify-center gap-6 col-span-3">
+    <div class="width-full flex justify-center gap-6 col-span-2">
       <button
         color="primary"
         type="submit"
@@ -105,4 +101,4 @@
       </button>
     </div>
   </form>
-</div>
+<mat-dialog-content/>

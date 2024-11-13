@@ -1,4 +1,3 @@
-<!-- class="text-2xl font-bold text-center"> -->
 <h2 mat-dialog-title>
   {{ data.fullName }}
 </h2>
@@ -28,10 +27,11 @@
       formControlNameCombobox="domRightType"
       typeDomainName="RightType"
       placeholderDomainName="Seleccionar tipo derecho&hellip;"
+      cssClasses="w-full"
     ></vex-combox-colletion>
 
     <!-- Edición fecha -->
-    <mat-form-field>
+    <mat-form-field class="col-span-2">
       <mat-label>Fecha creación</mat-label>
       <input
         matInput

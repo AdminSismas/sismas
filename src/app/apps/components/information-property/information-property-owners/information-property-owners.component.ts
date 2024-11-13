@@ -240,7 +240,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   onClickOpenAddEditModal(data: any): void {
     this.matDialog.open(AddPropertyOwnerComponent, {
-      width: '45%',
+      width: '35%',
       data: {
         ownersData: data.data,
         baunitId: this.baunitId,
@@ -255,7 +255,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
       this.matDialog.open(DeletePropertyOwnerComponent, {
-        width: '45%',
+        width: '35%',
         data: {
           baunitId: this.baunitId,
           executionId: this.executionId,
@@ -266,7 +266,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
     } else if (id === 'edit') {
       this.matDialog.open(EditingPropertyOwnerComponent, {
-        width: '45%',
+        width: '35%',
         data: {
           rightId: this.rightIdSelected,
           executionId: this.executionId,

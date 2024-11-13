@@ -14,6 +14,7 @@ import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'vex-editing-property-owner',
@@ -49,10 +50,13 @@ export class EditingPropertyOwnerComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditingPropertyOwnerComponent>,
     private snackbar: MatSnackBar,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.form.reset(this.data.rrrightInfo)
+    const formValues = this.data.rrrightInfo
+    formValues!.fraction = formValues!.fraction * 100
+    console.log(formValues)
+    this.form.reset(formValues)
   }
 
   close(): void {
@@ -62,7 +66,13 @@ export class EditingPropertyOwnerComponent implements OnInit {
   editRrrightOwnerProperty(): any {
     const values = this.form.value
     values.fraction = values.fraction / 100
-    values.beginAt = values.beginAt.toISOString().split('T')[0]
+
+    try {
+      values.beginAt = values.beginAt.toISOString().split('T')[0]
+    } catch (e) {
+      values.beginAt = values.beginAt
+    }
+
     values.rightId = this.data.rightId
 
     const { number, indivudualTypeNumber } = this.data
