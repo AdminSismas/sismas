@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DeleteDialogData } from 'src/app/apps/interfaces/bpm/add-property-owner';
+import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 
 @Component({
@@ -21,7 +21,7 @@ import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 export class DeletePropertyOwnerComponent {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: DeleteDialogData,
+    @Inject(MAT_DIALOG_DATA) public defaults: DialogsData,
     private rrrightService: RrrightService,
     private dialogRef: MatDialogRef<DeletePropertyOwnerComponent>,
     private snackbar: MatSnackBar,
@@ -33,7 +33,7 @@ export class DeletePropertyOwnerComponent {
       .subscribe((res: any) => console.log(res))
 
     this.close()
-    this.snackbar.open('Propietario eliminado', 'CLOSE', { duration: 2000 })
+    this.snackbar.open('Propietario eliminado', 'CLOSE', { duration: 4000 })
   }
 
   close() {

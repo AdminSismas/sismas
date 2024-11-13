@@ -1,8 +1,8 @@
-export interface postParamsRrright {
+export interface ParamsRrright {
   schema: string,
   executionId: string,
   baunitId: string,
-  params: NewOwner
+  params: NewOwner | UpdatePropertyOwner
 }
 
 interface NewOwner {
@@ -54,9 +54,28 @@ export interface DeleteParamsRrright {
   rightId: number,
 }
 
-export interface DeleteDialogData {
-  baunitId: string;
-  executionId: string;
+export interface DialogsData {
   rightId: number;
+  executionId: string;
+  baunitId: string;
   fullName: string;
+  number?: string;
+  schema?: string;
+  indivudualTypeNumber?: string;
+  rrrightInfo?: RrrightInfo;
 }
+
+export interface UpdatePropertyOwner {
+  rightId: number;
+  domRightType: string;
+  fraction: number;
+  beginAt: string;
+  individual: { individualId: number };
+}
+
+export interface RrrightInfo {
+  fraction: number;
+  beginAt: string;
+  domRightType: string;
+}
+

@@ -1,0 +1,72 @@
+<h2 mat-dialog-title>
+  {{ data.fullName }}
+</h2>
+<mat-dialog-content>
+  <form
+    [formGroup]="form"
+    class="grid grid-cols-2 gap-4 grid-flow-row py-2"
+  >
+    <!-- Edición fracción -->
+    <mat-form-field>
+      <mat-label>Fracción</mat-label>
+      <input
+        matInput
+        placeholder="Fracción"
+        formControlName="fraction"
+        min="0"
+        max="100"
+        step="1"
+        type="number"
+      />
+    </mat-form-field>
+
+    <!-- Edición tipo de derecho -->
+    <vex-combox-colletion
+      idComboCollection="domRightType"
+      label="Tipo derecho"
+      formControlNameCombobox="domRightType"
+      typeDomainName="RightType"
+      placeholderDomainName="Seleccionar tipo derecho&hellip;"
+      cssClasses="w-full"
+    ></vex-combox-colletion>
+
+    <!-- Edición fecha -->
+    <mat-form-field class="col-span-2">
+      <mat-label>Fecha creación</mat-label>
+      <input
+        matInput
+        [matDatepicker]="beginAt"
+        formControlName="beginAt"
+      />
+      <mat-hint>Formato Fecha: MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="beginAt"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #beginAt></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Botones de acción -->
+    <div class="flex justify-center gap-6 col-span-2">
+      <button
+        color="primary"
+        type="submit"
+        mat-flat-button
+        class="p-6 text-lg"
+        (click)="editRrrightOwnerProperty()"
+      >
+        Guardar
+        <mat-icon svgIcon="mat:save"></mat-icon>
+      </button>
+      <button
+        color="warn"
+        type="submit"
+        mat-flat-button
+        class="p-6 text-lg"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
