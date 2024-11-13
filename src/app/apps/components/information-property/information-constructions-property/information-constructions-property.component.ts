@@ -55,6 +55,7 @@ import { BasicInformationConstruction } from 'src/app/apps/interfaces/informatio
 import { D } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditInformationConstructionDialogComponent } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -302,17 +303,27 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
         const baunitId = 2282747; // El valor fijo que mencionaste
         const changeLogId = 68;
         const unitBuiltId = customer.unitBuiltId;
-        let msg: string = 'Información eliminada con éxito';
   
         this.informationPropertyService.deleteConstruction(baunitId, changeLogId, unitBuiltId).subscribe({
           next: () => {
             // Elimina el registro de la tabla si la petición fue exitosa
             this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
-            this.snackBar.open(msg, 'Cerrar', { duration: 2000 });
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Información eliminada con éxito',
+              icon: 'success',
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#3f51b5'
+            });
           },
           error: () => {
-            msg = 'No fue posible eliminar la información';
-            this.snackBar.open(msg, 'Cerrar', { duration: 2000 });
+            Swal.fire({
+              title: 'Error',
+              text: 'No fue posible eliminar la información',
+              icon: 'error',
+              confirmButtonText: 'Cerrar',
+              confirmButtonColor: '#3f51b5' 
+            });
           }
         });
       }

@@ -151,6 +151,10 @@ export class SendGeneralRequestsService {
       );
   }
 
+  
+
+  
+
   sendRequestsFetchPost(url: string): Observable<any> {
     return this.http.post<any>(url, "");
   }

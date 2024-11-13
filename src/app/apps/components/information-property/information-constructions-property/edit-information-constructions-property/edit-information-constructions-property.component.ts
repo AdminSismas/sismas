@@ -22,6 +22,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import Swal from 'sweetalert2';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -50,7 +53,10 @@ export interface AddEditInformationConstructionI {
     ComboxColletionComponent,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatOptionModule
+    MatOptionModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSelectModule
   ],
   templateUrl: './edit-information-constructions-property.component.html',
   styleUrl: './edit-information-constructions-property.component.scss'
@@ -69,6 +75,56 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   private informationPropertyService = inject(InformationPropertyService);
   private fBuilder = inject(FormBuilder);
   readonly addEditInformationData = inject<AddEditInformationConstructionI>(MAT_DIALOG_DATA);
+  traditionalRatingForm!: FormGroup;
+  typologyRatingForm!: FormGroup;
+
+  armazonOptions: string[] = [
+    'Madera', 'Tapia', 'Prefabricado', 'Ladrillo', 'Bloque', 'Madera inmunizada',
+    'Concreto hasta tres pisos', 'Concreto cuatro o más pisos'
+  ];
+
+  murosOptions: string[] = [
+    'Materiales de desecho', 'Esterilla', 'Bahareque', 'Adobe', 'Tapia', 'Madera',
+    'Concreto Prefabricado', 'Bloque', 'Ladrillo', 'Madera Fina'
+  ];
+
+  cubiertaOptions: string[] = [
+    'Materiales de desecho', 'Zinc', 'Teja de barro', 'Eternit o Teja de barro',
+    'Azotea', 'Aluminio', 'Placas con Eternit'
+  ];
+
+  conservacionOptions: string[] = ['Malo', 'Regular', 'Bueno', 'Excelente'];
+
+  fachadasOptions: string[] = ['Pobre', 'Sencilla', 'Regular', 'Buena', 'Lujosa'];
+
+  murosCubrimientoOptions: string[] = [
+    'Sin cubrimiento', 'Pañete', 'Panel', 'Común', 'Ladrillo prensado', 'Estuco',
+    'Cerámica', 'Panel fino', 'Madera', 'Piedra ornamentada', 'Ladrillo fino',
+    'Mármol lujoso', 'Otros'
+  ];
+
+  pisosOptions: string[] = [
+    'Tierra Pisada', 'Cemento', 'Madera burda', 'Baldosa común de cemento', 'Tablón',
+    'Ladrillo', 'Listón machihembrado', 'Tableta', 'Caucho', 'Acrílico', 'Granito',
+    'Baldosa fina', 'Cerámica', 'Parquet', 'Alfombra', 'Retal de mármol', 'Mármol',
+    'Vinilo Lujo', 'Otros lujos'
+  ];
+
+  // Opciones para Baño
+  banoTamanoOptions: string[] = ['Sin baño', 'Pequeño', 'Mediano', 'Grande'];
+  banoEnchapesOptions: string[] = [
+    'Sin cubrimiento', 'Pañete', 'Baldosa común de cemento', 'Baldosín', 'Cristanac',
+    'Granito', 'Panel fino', 'Cerámica', 'Mármol', 'Enchape lujoso'
+  ];
+  banoMobiliarioOptions: string[] = ['Pobre', 'Sencillo', 'Regular', 'Bueno', 'Lujoso'];
+
+  // Opciones para Cocina
+  cocinaTamanoOptions: string[] = ['Sin cocina', 'Pequeña', 'Mediana', 'Grande'];
+  cocinaEnchapesOptions: string[] = [
+    'Sin cubrimiento', 'Pañete', 'Baldosa común de cemento', 'Baldosín', 'Cristanac',
+    'Granito', 'Panel fino', 'Cerámica', 'Mármol', 'Enchape lujoso'
+  ];
+  cocinaMobiliarioOptions: string[] = ['Pobre', 'Sencillo', 'Regular', 'Bueno', 'Lujoso'];
 
 
 
@@ -80,6 +136,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
     this.loadDetailInformationConstruction();
 
   }
+
 
   /**
    * Load date for detail information selected
@@ -109,6 +166,11 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
 
 
   }
+
+  onSubmitTraditionalForm() {
+
+  };
+
 
   async onSubmitForm(): Promise<void> {
     console.log('Submitting form with values:', this.informationConstructionForm.value);
@@ -175,12 +237,12 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           confirmButtonText: 'OK', confirmButtonColor: '#3f51b5'
         });
       } else {
-          detailBasicInformationConstruction  = await lastValueFrom(
-    this.informationPropertyService.updateBasicInformationPropertyConstruction(
-      this.detailBasicInformation()?.unitBuiltId?.toString() || '',
-      { ...value },
-    )
-  );
+        detailBasicInformationConstruction = await lastValueFrom(
+          this.informationPropertyService.updateBasicInformationPropertyConstruction(
+            this.detailBasicInformation()?.unitBuiltId?.toString() || '',
+            { ...value },
+          )
+        );
 
 
       }
@@ -205,6 +267,34 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
    * Init information address form
    */
   private initForm(): void {
+
+    this.traditionalRatingForm = this.fBuilder.group({
+      // Campos de Estructura
+      structureArmazon: [null],
+      structureMuros: [null],
+      structureCubierta: [null],
+      structureConservacion: [null],
+
+      // Campos de Acabados Principales
+      finishesFachadas: [null],
+      finishesMuros: [null],
+      finishesPisos: [null],
+      finishesConservacion: [null],
+
+      // Campos de Baño
+      bathSize: [null],
+      bathEnchapes: [null],
+      bathMobiliario: [null],
+      bathConservacion: [null],
+
+      // Campos de Cocina
+      kitchenSize: [null],
+      kitchenEnchapes: [null],
+      kitchenMobiliario: [null],
+      kitchenConservacion: [null]
+    });
+
+
     this.informationConstructionForm = this.fBuilder.group({
       domBuiltType: [null, Validators.required],
       domBuiltUse: [null, Validators.required],
