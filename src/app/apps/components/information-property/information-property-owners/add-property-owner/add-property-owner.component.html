@@ -13,19 +13,18 @@
     (ngSubmit)="searchPerson()"
   >
     <vex-combox-colletion
-      ubscriptSizing="dynamic"
       idComboCollection="typeNumberDocument"
       name="selector_document"
       label="Tipo de documento"
       typeDomainName="IndividualTypeNumber"
       placeholderDomainName="Seleccionar tipo documento&hellip;"
-      (stringEventEmitter)="infoSelect($event)"
+      formControlNameCombobox="individualTypeNumber"
     >
     </vex-combox-colletion>
     <mat-form-field class="w-full">
       <input
         matInput
-        [formControl]="document"
+        formControlName="number"
         placeholder="Buscar numero de documento&hellip;"
         type="text"
         name="search"
@@ -46,9 +45,9 @@
     class="w-full grid grid-cols-3 gap-x-4 grid-flow-row"
     [formGroup]="secondForm"
   >
-    @if (customers.length > 0) {
+    @if (customer?.fullName) {
       <h3 class="text-center text-2xl font-bold col-span-3 mb-6">
-        {{ customers[0].fullName }}
+        {{ customer!.fullName }}
       </h3>
     }
     <mat-form-field>
@@ -58,7 +57,6 @@
         formControlName="fraction"
         placeholder="Fracción"
         type="number"
-        name="fraction"
         min="0"
         max="1"
         step="0.01"
@@ -73,15 +71,18 @@
       placeholderDomainName="Seleccionar tipo derecho&hellip;"
     ></vex-combox-colletion>
     <mat-form-field>
-      <mat-label>Fracción</mat-label>
+      <mat-label>Fecha creación</mat-label>
       <input
         matInput
-        formControlName="createdAt"
-        placeholder="A partir del"
-        type="date"
-        name="createdAt"
-        required
+        [matDatepicker]="beginAt"
+        formControlName="beginAt"
       />
+      <mat-hint>Formato Fecha: MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="beginAt"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #beginAt></mat-datepicker>
     </mat-form-field>
     <div class="width-full flex justify-center gap-6 col-span-3">
       <button

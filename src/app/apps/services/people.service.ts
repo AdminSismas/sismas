@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environments';
 import { SendGeneralRequestsService } from './general/send-general-requests.service';
 import { Observable } from 'rxjs';
 import { InformationPegeable } from '../interfaces/information-pegeable.model';
+import { InfoPerson } from '../interfaces/information-property/info-person';
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +24,7 @@ export class PeopleService {
     return this.getData(urlP, paramsR);
   }
 
-  getPeopleTypeNumber(params: any) {
+  getPeopleTypeNumber(params: any): Observable<InfoPerson> {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', params.number);
     paramsR = paramsR.append(
@@ -54,7 +55,7 @@ export class PeopleService {
     return this.fetchBody(url, body);
   }
 
-  private getData(url: string, params: any): Observable<InformationPegeable> {
+  private getData(url: string, params: any): Observable<InfoPerson> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
 
