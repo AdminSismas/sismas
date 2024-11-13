@@ -34,8 +34,8 @@ import { AddPropertyOwnerComponent } from './add-property-owner/add-property-own
 import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 
-export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
-  Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
+export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType' > &
+  Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName' >;
 
 @Component({
   selector: 'vex-information-property-owners',
@@ -217,7 +217,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           domIndividualTypeNumber:
             infoOwner?.individual?.domIndividualTypeNumber || '',
           number: infoOwner?.individual?.number || '',
-          fullName: infoOwner?.individual?.fullName || ''
+          fullName: infoOwner?.individual?.fullName || '',
         };
         return infoOwnerRow;
       });
@@ -248,7 +248,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         executionId: this.executionId
       },
     }).afterClosed()
-    .subscribe(() => this.loadInformationPropertyOwners());
+    .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
   }
 
   onClickActionBtn(id: string, infoOwner: InfoOwnerRowT) {
@@ -263,7 +263,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           fullName: infoOwner.fullName
         }
       }).afterClosed()
-      .subscribe(() => this.loadInformationPropertyOwners())
+      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
     } else if (id === 'edit') {
       this.matDialog.open(EditingPropertyOwnerComponent, {
         width: '45%',
@@ -272,10 +272,17 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           executionId: this.executionId,
           baunitId: this.baunitId,
           number: infoOwner.number,
-          fullName: infoOwner.fullName
+          fullName: infoOwner.fullName,
+          indivudualTypeNumber: infoOwner.domIndividualTypeNumber,
+          schema: this.schema,
+          rrrightInfo: {
+            fraction: infoOwner.fractionS,
+            beginAt: infoOwner.beginAt,
+            domRightType: infoOwner.domRightType
+          }
         }
       }).afterClosed()
-      .subscribe(() => this.loadInformationPropertyOwners())
+      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
     }
   }
 

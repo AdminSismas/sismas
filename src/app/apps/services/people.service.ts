@@ -24,7 +24,7 @@ export class PeopleService {
     return this.getData(urlP, paramsR);
   }
 
-  getPeopleTypeNumber(params: any): Observable<InfoPerson> {
+  getPeopleTypeNumber( params: any ): Observable<InfoPerson> {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', params.number);
     paramsR = paramsR.append(

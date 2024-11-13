@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
 import { catchError, Observable } from 'rxjs';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { DeleteParamsRrright, postParamsRrright } from '../../interfaces/bpm/add-property-owner';
+import { DeleteParamsRrright, ParamsRrright } from '../../interfaces/bpm/changes-property-owner';
 import { InfoPerson } from '../../interfaces/information-property/info-person';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class RrrightService {
       )
   }
 
-  postRrrightOwnerProperty( parameters: postParamsRrright ): Observable<InfoOwners> {
+  postRrrightOwnerProperty( parameters: ParamsRrright ): Observable<InfoOwners> {
     const { schema, executionId, baunitId, params } = parameters;
 
     const url: string = `${this.basic_url}${schema}/${executionId}/${baunitId}`;
@@ -50,6 +50,17 @@ export class RrrightService {
         .set('baunitId', baunitId)
 
     return this.http.delete<void>(url, { params: params })
+      .pipe(
+        catchError(error => this.requestsService.errorNotFound(error))
+      )
+  }
+
+  updatePropertyOwner(parameters: ParamsRrright) {
+    const { executionId, baunitId, schema, params } = parameters
+
+    const url: string = `${this.basic_url}${schema}/${executionId}/${baunitId}`
+
+    return this.http.put(url, params)
       .pipe(
         catchError(error => this.requestsService.errorNotFound(error))
       )

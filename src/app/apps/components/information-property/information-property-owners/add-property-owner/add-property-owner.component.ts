@@ -8,7 +8,7 @@ import { ComboxColletionComponent } from '../../../combox-colletion/combox-colle
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { postParamsRrright, AddPropertyOwnerData } from 'src/app/apps/interfaces/bpm/add-property-owner';
+import { ParamsRrright, AddPropertyOwnerData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'
@@ -96,7 +96,7 @@ export class AddPropertyOwnerComponent implements OnInit {
 
     values.fraction = values.fraction / 100
 
-    const params: postParamsRrright = {
+    const params: ParamsRrright = {
       schema: this.defaults.schema,
       executionId: this.defaults.executionId,
       baunitId: this.defaults.baunitId,
