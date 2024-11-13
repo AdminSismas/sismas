@@ -113,10 +113,12 @@ export class InformationPropertyService {
     unitBuiltId: number | undefined,
     baunitId: number | undefined
   ): Observable<CcCalificacionUB[]> {
-    const url: string = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${schema}/${baunitId}/${unitBuiltId}`;
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+    let params: HttpParams = new HttpParams();
+    params = params.append('unitBuiltId', `${24321}`)
+    const url: string = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
   }
 
   getBasicInformationsAppraisalsProperty(

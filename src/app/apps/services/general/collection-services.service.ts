@@ -3,7 +3,7 @@ import { SendGeneralRequestsService } from './send-general-requests.service';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { DomainCollection } from '../../interfaces/domain-name.model';
+import { DomainCalificationCollection, DomainCollection } from '../../interfaces/domain-name.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { DomainCollection } from '../../interfaces/domain-name.model';
 export class CollectionServicesService {
 
   basic_url:string = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
+  calification_url:string = `${environment.url}:${environment.port}${environment.calificationUB}`;
   constructor(
     private requestsService: SendGeneralRequestsService
   ) { }
@@ -21,6 +22,15 @@ export class CollectionServicesService {
     return this.getData(`${this.basic_url}`,paramsR);
   }
 
+  getCalificationDataDomainName(domainName:string):Observable<DomainCalificationCollection[]> {
+
+    return this.getCalificationData(`${this.calification_url}/${domainName}`);
+  }
+
+  
+  private getCalificationData(url:string):Observable<DomainCalificationCollection[]>{
+    return this.requestsService.sendRequestsGetOption(url, {});
+  }
 
 
   private getData(url:string, params:any):Observable<DomainCollection[]>{
