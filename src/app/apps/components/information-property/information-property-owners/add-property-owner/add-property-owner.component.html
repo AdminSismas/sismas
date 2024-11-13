@@ -1,0 +1,108 @@
+<div class="flex items-center flex-col gap-8 p-8">
+  <h2
+    class="headline m-0 flex-auto"
+    mat-dialog-title
+  >
+    Agregar nuevo propietario
+  </h2>
+
+  <form
+    class="flex gap-4 w-full border-b-[1px] border-gray-400"
+    [formGroup]="form"
+    autocomplete="off"
+    (ngSubmit)="searchPerson()"
+  >
+    <vex-combox-colletion
+      idComboCollection="typeNumberDocument"
+      name="selector_document"
+      label="Tipo de documento"
+      typeDomainName="IndividualTypeNumber"
+      placeholderDomainName="Seleccionar tipo documento&hellip;"
+      formControlNameCombobox="individualTypeNumber"
+    >
+    </vex-combox-colletion>
+    <mat-form-field class="w-full">
+      <input
+        matInput
+        formControlName="number"
+        placeholder="Buscar numero de documento&hellip;"
+        type="text"
+        name="search"
+      />
+    </mat-form-field>
+
+    <button
+      color="primary"
+      type="submit"
+      mat-flat-button
+      name="enviar"
+      class="ml-4 flex-none p-4 text-lg"
+    >
+      Buscar
+    </button>
+  </form>
+  <form
+    class="w-full grid grid-cols-3 gap-x-4 grid-flow-row"
+    [formGroup]="secondForm"
+  >
+    @if (customer?.fullName) {
+      <h3 class="text-center text-2xl font-bold col-span-3 mb-6">
+        {{ customer!.fullName }}
+      </h3>
+    }
+    <mat-form-field>
+      <mat-label>Fracción</mat-label>
+      <input
+        matInput
+        formControlName="fraction"
+        placeholder="Fracción"
+        type="number"
+        min="0"
+        max="1"
+        step="0.01"
+        required
+      />
+    </mat-form-field>
+    <vex-combox-colletion
+      idComboCollection="domRightType"
+      label="Tipo derecho"
+      formControlNameCombobox="domRightType"
+      typeDomainName="RightType"
+      placeholderDomainName="Seleccionar tipo derecho&hellip;"
+    ></vex-combox-colletion>
+    <mat-form-field>
+      <mat-label>Fecha creación</mat-label>
+      <input
+        matInput
+        [matDatepicker]="beginAt"
+        formControlName="beginAt"
+      />
+      <mat-hint>Formato Fecha: MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="beginAt"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #beginAt></mat-datepicker>
+    </mat-form-field>
+    <div class="width-full flex justify-center gap-6 col-span-3">
+      <button
+        color="primary"
+        type="submit"
+        mat-flat-button
+        class="p-4 text-lg"
+        (click)="addPropertyOwner()"
+      >
+        Continuar
+      </button>
+      <button
+        color="warn"
+        type="submit"
+        mat-flat-button
+        class="p-4 text-lg"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

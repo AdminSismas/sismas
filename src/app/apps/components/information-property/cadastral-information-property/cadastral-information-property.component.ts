@@ -23,7 +23,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
+import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
@@ -213,6 +213,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
       baunitCondition === '(Condominio) Matriz' ||
       baunitCondition === '(Propiedad horizontal) Matriz'
     ) return true;
+
+    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de Unidad Predial')
 
     return false;
   }
