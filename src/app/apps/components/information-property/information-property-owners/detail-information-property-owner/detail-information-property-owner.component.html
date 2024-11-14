@@ -106,17 +106,21 @@
   <!-- Vacio -->
   <div></div>
   <!-- Razón Social -->
-  <span class="text-black uppercase text-sm">Razón social:</span>
-  @if (owner && owner.individual && owner.individual.companyName) {
-    <h2 class="text-sm">{{ owner.individual.companyName }}</h2>
-  } @else {
-    <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-  }
+  <div class="flex flex-row gap-6 col-span-2">
+    <span class="text-black uppercase text-sm">Razón social:</span>
+    @if (owner && owner.individual && owner.individual.companyName) {
+      <h2 class="text-sm">{{ owner.individual.companyName }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
   <!-- Nombre Completo -->
-  <span class="text-black uppercase text-sm">Nombre Completo:</span>
-  @if (owner && owner.individual && owner.individual.fullName) {
-    <h2 class="text-sm">{{ owner.individual.fullName }}</h2>
-  } @else {
-    <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-  }
+  <div class="flex flex-row gap-6 col-span-2">
+    <span class="text-black uppercase text-sm">Nombre Completo:</span>
+    @if (owner && owner.individual && owner.individual.fullName) {
+      <h2 class="text-sm">{{ owner.individual.fullName }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
 </mat-dialog-content>
