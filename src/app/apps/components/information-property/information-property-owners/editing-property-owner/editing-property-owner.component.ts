@@ -55,7 +55,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
   ngOnInit(): void {
     const formValues = this.data.rrrightInfo
     formValues!.fraction = formValues!.fraction * 100
-    console.log(formValues)
+    console.log(this.data)
     this.form.reset(formValues)
   }
 
@@ -75,9 +75,9 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
     values.rightId = this.data.rightId
 
-    const { number, indivudualTypeNumber } = this.data
+    const { number, domIndividualEthnicGroup } = this.data.individual
 
-    this.peopleService.getPeopleTypeNumber({ number: number as string, individualTypeNumber: indivudualTypeNumber as string })
+    this.peopleService.getPeopleTypeNumber({ number: number as string, individualTypeNumber: domIndividualEthnicGroup as string })
       .subscribe((res: InfoPerson) => {
         values.individual = { individualId: res.individualId }
         this.rrrightService.updatePropertyOwner({

@@ -34,8 +34,8 @@ import { AddPropertyOwnerComponent } from './add-property-owner/add-property-own
 import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 
-export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType' > &
-  Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName' >;
+export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
+  Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
 
 @Component({
   selector: 'vex-information-property-owners',
@@ -69,6 +69,14 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
   styleUrl: './information-property-owners.component.scss'
 })
 export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit {
+
+  @Input({ required: true }) id: string = '';
+  @Input({ required: true }) expandedComponent: boolean = true;
+  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) baunitId: string | null | undefined = null;
+  @Input() executionId: string | null | undefined = null;
+  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+
   protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = [
     {
       label: 'Detalle',
@@ -120,13 +128,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     }
   ];
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
@@ -136,8 +137,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   rightIdSelected?: number;
-  dataSource: MatTableDataSource<InfoOwnerRowT> =
-    new MatTableDataSource<InfoOwnerRowT>([]);
+  dataSource: MatTableDataSource<InfoOwners> =
+    new MatTableDataSource<InfoOwners>([]);
   columns = signal(this.TABLE_COLUMNS);
   textColumns = computed(() =>
     this.columns().filter((column) => column.type === 'text')
@@ -184,6 +185,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema;
     this.isExpandPanel(this.expandedComponent);
+
+    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition'
   }
 
   isExpandPanel(expandedComponent: boolean): void {
@@ -208,20 +211,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           this.executionId
         )
       );
-      const data = infoOwners.map((infoOwner: InfoOwners) => {
-        const infoOwnerRow: InfoOwnerRowT = {
-          rightId: infoOwner?.rightId,
-          beginAt: infoOwner?.beginAt,
-          fractionS: infoOwner?.fractionS,
-          domRightType: infoOwner?.domRightType,
-          domIndividualTypeNumber:
-            infoOwner?.individual?.domIndividualTypeNumber || '',
-          number: infoOwner?.individual?.number || '',
-          fullName: infoOwner?.individual?.fullName || '',
-        };
-        return infoOwnerRow;
-      });
-      this.dataSource.data = data;
+      this.dataSource.data = infoOwners;
     } catch (e) {
       console.error(e);
     }
@@ -248,10 +238,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         executionId: this.executionId
       },
     }).afterClosed()
-    .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
+      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
   }
 
-  onClickActionBtn(id: string, infoOwner: InfoOwnerRowT) {
+  onClickActionBtn(id: string, infoOwner: InfoOwners) {
     this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
       this.matDialog.open(DeletePropertyOwnerComponent, {
@@ -260,10 +250,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           baunitId: this.baunitId,
           executionId: this.executionId,
           rightId: this.rightIdSelected,
-          fullName: infoOwner.fullName
+          individual: infoOwner.individual
         }
       }).afterClosed()
-      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
+        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
     } else if (id === 'edit') {
       this.matDialog.open(EditingPropertyOwnerComponent, {
         width: '35%',
@@ -271,18 +261,16 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           rightId: this.rightIdSelected,
           executionId: this.executionId,
           baunitId: this.baunitId,
-          number: infoOwner.number,
-          fullName: infoOwner.fullName,
-          indivudualTypeNumber: infoOwner.domIndividualTypeNumber,
           schema: this.schema,
           rrrightInfo: {
             fraction: infoOwner.fractionS,
             beginAt: infoOwner.beginAt,
             domRightType: infoOwner.domRightType
-          }
+          },
+          individual: infoOwner.individual
         }
       }).afterClosed()
-      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
+        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
     }
   }
 
@@ -300,5 +288,9 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   private getRandomInt(max: number): number {
     return Math.floor(Math.random() * max);
+  }
+
+  individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {
+    return column.label === 'Tipo Documento' || column.label === 'Número' || column.label === 'Nombre Completo';
   }
 }

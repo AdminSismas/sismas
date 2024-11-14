@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
+import { DeleteParamsRrright, DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 
 @Component({
@@ -21,7 +21,7 @@ import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 export class DeletePropertyOwnerComponent {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: DialogsData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogsData,
     private rrrightService: RrrightService,
     private dialogRef: MatDialogRef<DeletePropertyOwnerComponent>,
     private snackbar: MatSnackBar,
@@ -29,7 +29,14 @@ export class DeletePropertyOwnerComponent {
 
   deleteRrrightOwnerProperty(): void {
     console.log('Eliminando propietario...')
-    this.rrrightService.deletePropertyOwner(this.defaults)
+
+    const parameters: DeleteParamsRrright = {
+      executionId: this.data.executionId,
+      baunitId: this.data.baunitId,
+      rightId: this.data.rightId
+    }
+
+    this.rrrightService.deletePropertyOwner(parameters)
       .subscribe((res: any) => console.log(res))
 
     this.close()

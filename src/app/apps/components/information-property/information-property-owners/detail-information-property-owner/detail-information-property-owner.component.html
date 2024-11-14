@@ -19,6 +19,8 @@
       <span class="text-black uppercase text-sm">Tipo interesado </span>
     </div>
     <div class="flex flex-col gap-2">
+
+      <!-- Tipo Interesado -->
       @if (owner && owner.individual && owner.individual.domIndividualType) {
         <h2 class="text-sm">{{ owner.individual.domIndividualType }}</h2>
       } @else {
@@ -29,6 +31,8 @@
       <span class="text-black uppercase text-sm">Tipo Documento</span>
     </div>
     <div class="flex flex-col gap-2">
+
+      <!-- Tipo Documento -->
       @if (owner && owner.individual && owner.individual.domIndividualTypeNumber) {
         <h2 class="text-sm">{{ owner.individual.domIndividualTypeNumber }}</h2>
       } @else {
@@ -39,6 +43,8 @@
       <span class="text-black uppercase text-sm">Numero</span>
     </div>
     <div class="flex flex-col gap-2">
+
+      <!-- Numero -->
       @if (owner && owner.individual && owner.individual.number) {
         <h2 class="text-sm">{{ owner.individual.number }}</h2>
       } @else {
@@ -53,16 +59,22 @@
       <span class="text-black uppercase text-sm">Sexo</span>
     </div>
     <div class="flex flex-col gap-2">
+
+      <!-- Nombre 1 -->
       @if (owner && owner.individual && owner.individual.firstName) {
         <h2 class="text-sm">{{ owner.individual.firstName }}</h2>
       } @else {
         <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
       }
+
+      <!--  Apellido 1 -->
       @if (owner && owner.individual && owner.individual.lastName) {
         <h2 class="text-sm">{{ owner.individual.lastName }}</h2>
       } @else {
         <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
       }
+
+      <!-- Sexo -->
       @if (owner && owner.individual && owner.individual.domIndividualSex) {
         <h2 class="text-sm">{{ owner.individual.domIndividualSex }}</h2>
       } @else {
@@ -75,16 +87,22 @@
       <span class="text-black uppercase text-sm">Grupo Etnico</span>
     </div>
     <div class="flex flex-col gap-2">
+
+      <!-- Nombre 2 -->
       @if (owner && owner.individual && owner.individual.middleName) {
         <h2 class="text-sm">{{ owner.individual.middleName }}</h2>
       } @else {
         <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
       }
+
+      <!-- Nombre 2 -->
       @if (owner && owner.individual && owner.individual.otherLastName) {
         <h2 class="text-sm">{{ owner.individual.otherLastName }}</h2>
       } @else {
         <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
       }
+
+      <!-- Grupo Etnico -->
       @if (owner && owner.individual && owner.individual.domIndividualEthnicGroup) {
         <h2 class="text-sm">{{ owner.individual.domIndividualEthnicGroup }}</h2>
       } @else {
@@ -97,6 +115,8 @@
       <span class="text-black uppercase text-sm">Razón social</span>
     </div>
     <div class="flex flex-col gap-2">
+
+      <!-- Razón Social -->
       @if (owner && owner.individual && owner.individual.companyName) {
         <h2 class="text-sm">{{ owner.individual.companyName }}</h2>
       } @else {
@@ -108,6 +128,8 @@
     <div class="flex flex-col gap-2">
       <span class="text-black uppercase text-sm">Nombre Completo</span>
     </div>
+
+    <!-- Nombre Completo -->
     <div class="flex flex-col gap-2">
       @if (owner && owner.individual && owner.individual.fullName) {
         <h2 class="text-sm">{{ owner.individual.fullName }}</h2>
