@@ -176,6 +176,13 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
     console.log('Submitting form with values:', this.informationConstructionForm.value);
     if (this.informationConstructionForm.invalid) {
       this.informationConstructionForm.markAllAsTouched();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, corrige los errores en el formulario para continuar.',
+        confirmButtonColor: '#3f51b5'
+      });
+
       return;
     }
 
@@ -312,12 +319,12 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       ],
       unitBuiltArea: [
         null,
-        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números
+        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')]// Solo números
       ],
       domTipologiaTipo: [null, Validators.required],
       unitBuiltPrivateArea: [
         null,
-        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números
+        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')]// Solo números
       ],
       unitBuiltObservation: [null] // No es obligatorio
     });
