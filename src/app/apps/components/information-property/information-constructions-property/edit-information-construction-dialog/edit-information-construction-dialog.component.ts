@@ -45,15 +45,15 @@ import { MatSelectModule } from '@angular/material/select';
     MatTabsModule,
     MatCardModule,
     MatSelectModule
-  
+
   ],
   templateUrl: './edit-information-construction-dialog.component.html',
   styleUrl: './edit-information-construction-dialog.component.scss'
 })
-export class EditInformationConstructionDialogComponent implements OnInit{
+export class EditInformationConstructionDialogComponent implements OnInit {
   editForm: FormGroup;
   traditionalRatingForm: FormGroup;
-  informationConstructionForm : FormGroup;
+  informationConstructionForm: FormGroup;
   private fBuilder = inject(FormBuilder);
 
   armazonOptions: string[] = [
@@ -110,47 +110,47 @@ export class EditInformationConstructionDialogComponent implements OnInit{
     private dialogRef: MatDialogRef<EditInformationConstructionDialogComponent>,
     private informationPropertyService: InformationPropertyService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    
+
   ) {
-    
+
     this.editForm = this.fb.group({
-      unitBuiltId: [data.unitBuiltId], 
+      unitBuiltId: [data.unitBuiltId],
       domBuiltType: [data.domBuiltType, Validators.required],
       domBuiltUse: [data.domBuiltUse, Validators.required],
       unitBuiltLabel: [
-        data.unitBuiltLabel, 
+        data.unitBuiltLabel,
         [Validators.required, Validators.pattern('^[A-Z]+$')] // Solo letras mayúsculas
       ],
       unitBuiltFloors: [
-        data.unitBuiltFloors, 
+        data.unitBuiltFloors,
         [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números enteros
       ],
       unitBuiltYear: [
-        data.unitBuiltYear, 
+        data.unitBuiltYear,
         [Validators.required, Validators.pattern('^(19|20)\\d{2}$')] // Solo años válidos entre 1900-2099
       ],
       unitBuiltArea: [
-        data.unitBuiltArea, 
+        data.unitBuiltArea,
         [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
       ],
       unitBuiltScore: [data.unitBuiltScore,
-        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
-      ], 
+      [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
+      ],
       domTipologiaTipo: [data.domTipologiaTipo, Validators.required],
       unitBuiltValuation: [data.unitBuiltValuation,
-        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
-      ], 
+      [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
+      ],
       unitBuiltValuationM2: [data.unitBuiltValuationM2,
-        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
+      [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
       ],
       unitBuiltPrivateArea: [
-        data.unitBuiltPrivateArea, 
+        data.unitBuiltPrivateArea,
         [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
       ],
       unitBuiltObservation: [data.unitBuiltObservation] // No es obligatorio
     });
 
-    
+
     this.traditionalRatingForm = this.fBuilder.group({
       // Campos de Estructura
       structureArmazon: [null],
@@ -207,10 +207,20 @@ export class EditInformationConstructionDialogComponent implements OnInit{
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   save(): void {
     if (this.editForm.valid) {
+
+      const formValues = this.editForm.value;
+
+      if (formValues.unitBuiltPrivateArea) {
+        formValues.unitBuiltPrivateArea = formValues.unitBuiltPrivateArea.toString().replace(',', '.');
+      }
+      if (formValues.unitBuiltArea) {
+        formValues.unitBuiltArea = formValues.unitBuiltArea.toString().replace(',', '.');
+      }
+
       Swal.fire({
         title: '¿Estás seguro?',
         text: '¿Deseas guardar los cambios realizados?',
@@ -222,7 +232,7 @@ export class EditInformationConstructionDialogComponent implements OnInit{
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.informationPropertyService.updateConstruction(68, 2282747, this.editForm.value)
+          this.informationPropertyService.updateConstruction(68, 2282747, formValues)
             .subscribe({
               next: () => {
                 Swal.fire({
@@ -231,14 +241,14 @@ export class EditInformationConstructionDialogComponent implements OnInit{
                   confirmButtonColor: '#3f51b5',
                   icon: 'success'
                 });
-                this.dialogRef.close(this.editForm.value);  // Envía el valor actualizado al cerrar el diálogo
+                this.dialogRef.close(formValues);
               },
               error: () => {
                 Swal.fire({
                   title: '¡Error!',
                   text: 'Ha ocurrido un error al guardar los datos.',
                   confirmButtonColor: '#3f51b5',
-                  icon: 'error' 
+                  icon: 'error'
                 });
               }
             });
