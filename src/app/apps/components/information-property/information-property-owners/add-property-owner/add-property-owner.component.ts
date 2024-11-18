@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 import { People } from 'src/app/apps/interfaces/people.model';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-add-property-owner',
@@ -33,7 +34,8 @@ import { People } from 'src/app/apps/interfaces/people.model';
     MatButtonToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule
   ],
   templateUrl: './add-property-owner.component.html',
   styleUrl: './add-property-owner.component.css',
@@ -91,17 +93,11 @@ export class AddPropertyOwnerComponent implements OnInit {
   addPropertyOwner() {
     const formatBeginAt: string = this.secondForm.value.beginAt.toISOString().split('T')[0]
 
-    console.log(this.customer)
-
-    const values = this.secondForm.value
-
-    values.fraction = values.fraction / 100
-
     const params: ParamsRrright = {
       schema: this.defaults.schema,
       executionId: this.defaults.executionId,
       baunitId: this.defaults.baunitId,
-      params: { ...values, beginAt: formatBeginAt, individual: { individualId: this.customer!.individualId } }
+      params: { ...this.secondForm.value, beginAt: formatBeginAt, individual: { individualId: this.customer!.individualId } }
     }
 
     this.rrrightService.postRrrightOwnerProperty(params)
