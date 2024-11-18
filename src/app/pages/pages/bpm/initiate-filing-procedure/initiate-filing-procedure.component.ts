@@ -198,7 +198,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     this.showBpmProcess(false);
     this.baunitIdE = await firstValueFrom(this.baunitIdE$);
     if (!this.baunitIdE || this.baunitIdE?.length <= 0) {
-      this.snackBar.open('Identificador de la unidad predial no valido, por favor revisar.', undefined,
+      this.snackBar.open('Identificador de la unidad predial no válido, por favor revisar.', undefined,
         { duration: 2000 });
       this.returnPanelTask(true);
       return;

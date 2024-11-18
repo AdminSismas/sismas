@@ -2,7 +2,7 @@
   <div class="flex items-center" mat-dialog-title>
     <h2
       class="headline m-0 flex-auto">
-      Busqueda Avanzada
+      Búsqueda Avanzada
     </h2>
 
     <button
@@ -24,15 +24,15 @@
   <mat-divider class="text-border"></mat-divider>
   <mat-dialog-content class="flex flex-col overflow-hidden">
     <mat-tab-group class="overflow-hidden">
-      <!-- Busqueda por multiplex campos -->
+      <!-- Búsqueda por multiplex campos -->
       <mat-tab label="Multiplex Campos" class="overflow-hidden">
         <vex-page-layout class="overflow-hidden">
           <vex-page-layout-content class="container-fluid p-0 overflow-hidden" style="padding-bottom: 0px;">
-            <!--Busqueda por circulo - matricula / matricula -->
+            <!--Búsqueda por círculo - matrícula / matrícula -->
             <div class="flex flex-col sm:flex-row">
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-1"
-                label="Matricula"
+                label="Matrícula"
                 type="text"
                 idComboInput="registrationID"
                 formControlNameInput="registration"
@@ -46,7 +46,7 @@
                 <button mat-icon-button color="primary"> </button>
               </div>
             </div>
-            <!-- Busqueda por documento y tipo -->
+            <!-- Búsqueda por documento y tipo -->
             <div class="flex flex-col sm:flex-row">
               <vex-combox-colletion
                 idComboCollection="typeNumberDocument"
@@ -72,7 +72,7 @@
                 </button>
               </div>
             </div>
-            <!-- Busqueda por nombre y apellidos o en su defecto por nombre de la compania -->
+            <!-- Búsqueda por nombre y apellidos o en su defecto por nombre de la compañía -->
             <div class="flex flex-col sm:flex-row">
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-auto"
@@ -118,7 +118,7 @@
 
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-                label="Nombre Compania"
+                label="Nombre Compañía"
                 type="text"
                 idComboInput="companyNameID"
                 formControlNameInput="companyName"
@@ -132,7 +132,7 @@
                 </button>
               </div>
             </div>
-            <!-- Busqueda por direccion de texto -->
+            <!-- Búsqueda por dirección de texto -->
             <div class="flex flex-col sm:flex-row">
               <!--direccion-->
               <vex-input
@@ -143,7 +143,7 @@
                 formControlNameInput="textAddress"
                 icon="mat:edit_location"
               ></vex-input>
-              <!--boton de busqueda-->
+              <!--boton de búsqueda-->
               <div class="sm:ml-2 sm:mr-2">
                 <button color="primary" mat-raised-button type="button"
                         (click)="searchByAddress()">
@@ -157,7 +157,7 @@
       </mat-tab>
 
 
-      <!-- Busqueda por segregacion de numero predial nacional -->
+      <!-- Búsqueda por segregación de número predial nacional -->
       <mat-tab label="Seleccion Municipal">
         <vex-page-layout>
           <vex-page-layout-content class="container-fluid">

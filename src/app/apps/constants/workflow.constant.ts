@@ -41,14 +41,14 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoWorkflow>[]= [
         cssClasses: ['font-medium']
     },
     {
-        label: 'Valido hasta',
+        label: 'Válido hasta',
         property: 'validToAt',
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
     },
     {
-        label: 'Dias de vencimiento',
+        label: 'Días de vencimiento',
         property: 'dueDays',
         type: 'text',
         visible: true,

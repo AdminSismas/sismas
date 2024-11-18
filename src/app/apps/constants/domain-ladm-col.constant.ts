@@ -13,7 +13,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoDomainLadmCol>[]= [
         cssClasses: ['font-medium']
     },
     {
-        label: 'Codigo',
+        label: 'Código',
         property: 'domainCode',
         type: 'text',
         visible: true,

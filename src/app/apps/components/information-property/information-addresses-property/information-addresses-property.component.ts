@@ -175,7 +175,7 @@ export class InformationAddressesPropertyComponent
 
     dialogRef.afterClosed().subscribe(async (data: any) => {
       if (data === 'delete' && basicInformationAddress.direccionId) {
-        let msg: string = 'Informacion eliminada con éxito';
+        let msg: string = 'Información eliminada con éxito';
         try {
           // await lastValueFrom(
           //   this.informationPropertyService.deleteBasicInformationPropertyAddress(
@@ -261,7 +261,7 @@ export class InformationAddressesPropertyComponent
         disableClose: true,
         data: dialogData,
       });
-    
+
     dialogRef.afterClosed().subscribe((result: any) => {
       //Update information address object
       if (result && Array.isArray(this.dataSource?.data)) {
