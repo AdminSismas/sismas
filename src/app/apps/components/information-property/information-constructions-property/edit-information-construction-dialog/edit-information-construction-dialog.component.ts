@@ -134,7 +134,7 @@ export class EditInformationConstructionDialogComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
       ],
       unitBuiltScore: [data.unitBuiltScore,
-      [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')] // Solo números
+        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números enteros
       ],
       domTipologiaTipo: [data.domTipologiaTipo, Validators.required],
       unitBuiltValuation: [data.unitBuiltValuation,
@@ -205,6 +205,7 @@ export class EditInformationConstructionDialogComponent implements OnInit {
     });
 
 
+
   }
 
   ngOnInit(): void { }
@@ -215,10 +216,19 @@ export class EditInformationConstructionDialogComponent implements OnInit {
       const formValues = this.editForm.value;
 
       if (formValues.unitBuiltPrivateArea) {
-        formValues.unitBuiltPrivateArea = formValues.unitBuiltPrivateArea.toString().replace(',', '.');
+        formValues.unitBuiltPrivateArea = parseFloat(formValues.unitBuiltPrivateArea.toString().replace(',', '.'));
       }
       if (formValues.unitBuiltArea) {
-        formValues.unitBuiltArea = formValues.unitBuiltArea.toString().replace(',', '.');
+        formValues.unitBuiltArea = parseFloat(formValues.unitBuiltArea.toString().replace(',', '.'));
+      }
+      if (formValues.unitBuiltValuation) {
+        formValues.unitBuiltValuation = parseFloat(formValues.unitBuiltValuation.toString().replace(',', '.'));
+      }
+      if (formValues.unitBuiltValuationM2) {
+        formValues.unitBuiltValuationM2 = parseFloat(formValues.unitBuiltValuationM2.toString().replace(',', '.'));
+      }
+      if (formValues.unitBuiltScore) {
+        formValues.unitBuiltScore = parseInt(formValues.unitBuiltScore.toString(), 10);
       }
 
       Swal.fire({
