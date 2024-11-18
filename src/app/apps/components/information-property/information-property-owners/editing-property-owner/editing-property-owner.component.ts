@@ -54,8 +54,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
   ngOnInit(): void {
     const formValues = this.data.rrrightInfo
-    formValues!.fraction = formValues!.fraction * 100
-    console.log(this.data)
+
     this.form.reset(formValues)
   }
 
