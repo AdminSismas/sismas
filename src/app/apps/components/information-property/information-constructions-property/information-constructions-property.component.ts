@@ -272,7 +272,8 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   
   editInformations(customer: any): void {
     const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
-      width: '600px',
+      minWidth: '50%',
+      minHeight: '40%',
       data: {
         ...customer,
         executionId: this.executionId,
