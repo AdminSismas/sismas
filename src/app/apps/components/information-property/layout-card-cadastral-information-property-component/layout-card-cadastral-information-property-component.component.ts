@@ -104,7 +104,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       this.defaults?.baunitIdE === null ||
       this.defaults?.baunitIdE === undefined
     ) {
-      this.snackBar.open('ID no valido no es posible continuar!', 'CLOSE', {
+      this.snackBar.open('ID no válido no es posible continuar!', 'CLOSE', {
         duration: 3000,
         horizontalPosition: 'right'
       });

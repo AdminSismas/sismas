@@ -10,15 +10,13 @@
 Sistema catastral llamado GeoGestion actualmente está creado con el framework angular 17+ y con el template siguiente:
 https://vex.visurel.com/ui/components/overview, obtenido de la siguiente Url: https://themeforest.net/item/daxa-material-design-angular-admin-dashboard-template/50912112
 
-
 # Getting Started
 
 > Actualmente, el código del sistema se encuentra en el repositorio https://github.com/agency-cic/GeoGestion.git, el cual es privado y para poder trabajar sobre este mismo
 > se debe solicitar permisos.
-> 
+>
 > En el momento de descarga del proyecto, se debe ejecutar el siguiente comando `npm install` dicho comando se encargará de instalar los paquetes necesarios para poder
 > ejecutar el aplicativo.
-> 
 
 ## Folder Structure of Proyects APP and Test
 
@@ -526,7 +524,6 @@ Actualmente, esta es la estructura base del proyecto teniendo en cuenta que la c
 
 ![img.png](img.png)
 
-
 ## Installation
 
 > Se recomienda que se tenga instalado los siguientes programas:
@@ -538,7 +535,8 @@ Actualmente, esta es la estructura base del proyecto teniendo en cuenta que la c
 [A detailed instruction on how to install NodeJS is available here.](//docs.npmjs.com/getting-started/installing-node)
 
 ### Instalaccion of Angular-CLI
-Instalaccion de Angular-CLI:
+
+Instalacción de Angular-CLI:
 
 `npm install -g @angular/cli@latest` or `sudo npm install -g @angular/cli@latest`
 
@@ -548,7 +546,7 @@ Para poder correr el aplicativo se debe ejecutar el comando `npm install` para p
 
 ## Start Development Server
 
-Actualmente el proyecto se creo varios script para poder correr el aplicativo entre los cuales estan: 
+Actualmente en el proyecto se crearon varios script para poder correr el aplicativo, entre los cuales estan:
 
 ```json
   "scripts": {
@@ -564,39 +562,38 @@ Actualmente el proyecto se creo varios script para poder correr el aplicativo en
     "e2e": "ng e2e"
   }
 ```
-Para poder correr el proyecto se debe ejecutar el comando `npm run start` para el que aplicativo ejecute y la url que
-se debe colocar en el navegador por defecto seria `http://localhost:4200/`
 
-------------------------------------------------------------------------------------------------------------------------
+Para poder correr el proyecto se debe ejecutar el comando `npm run start` para que el aplicativo se ejecute y
+se debe colocar la siguiente url en el navegador, por defecto seria `http://localhost:4200/`
+
+---
 
 ## Getting Started Login
 
-Actualmente se encuentra un login en el momento de ingresar al aplicativo, dicho login actualmente no es necesario ingresar informacion
+Actualmente se encuentra un login en el momento de ingresar al aplicativo, dicho login actualmente no es necesario ingresar información
 para acceder al aplicativo.
 
 ![img_1.png](img_1.png)
 
-
 ## Getting Started First Component
 
-El primer componente en el cual se esta trabajando se llama busqueda catastral
+El primer componente en el cual se esta trabajando se llama búsqueda catastral
 
 ![img_2.png](img_2.png)
 
-El formulario de busqueda es el siguiente: 
+El formulario de búsqueda es el siguiente:
 
 ![img_3.png](img_3.png)
 
-Actualmente dicho formulario esta solo activo el taq de `Multiplex campos` en el cual se tiene 4 tipos de busqueda.
+Actualmente dicho formulario está solo activo el taq de `Multiplex campos` en el cual se tiene 4 tipos de búsqueda.
 
-Se agrega algunos ejemplos de busqueda:
+Se agrega algunos ejemplos de búsqueda:
 
 ## Examples of test data
 
-|                                                                                Name | Description                                                                                             |
-|------------------------------------------------------------------------------------:|---------------------------------------------------------------------------------------------------------|
-|                                                                         `matricula` | 420-116966                                                                                              |
-|                                                        `tipo documento / documento` | NIT / 860003293                                                                                         | 
-|           `nombre / otros nombres / apellidos / otros apellidos / nombre compania ` | JORGE / ENRIQUE / HINCAPIE / SALAZAR / MUNICI                                                                 |
-|                                                                    `direccionTexto` | C 37 1 509 ESTE Ap 102 To A |
-
+|                                                                      Name | Description                                   |
+| ------------------------------------------------------------------------: | --------------------------------------------- |
+|                                                               `matricula` | 420-116966                                    |
+|                                              `tipo documento / documento` | NIT / 860003293                               |
+| `nombre / otros nombres / apellidos / otros apellidos / nombre compañía ` | JORGE / ENRIQUE / HINCAPIE / SALAZAR / MUNICI |
+|                                                          `direccionTexto` | C 37 1 509 ESTE Ap 102 To A                   |

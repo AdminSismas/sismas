@@ -154,7 +154,7 @@ export class BmpCoreComponent implements OnInit {
   refreshComponentsDynamic(proFlow: ProFlow) {
     if (!proFlow || !proFlow.preform || !proFlow.preform.pathForm) {
       this.activateSnapError(
-        'Error valor invalido, no es posible continuar', 3000);
+        'Error valor inválido, no es posible continuar', 3000);
       return;
     }
     const pathForm = proFlow.preform.pathForm;
@@ -185,7 +185,7 @@ export class BmpCoreComponent implements OnInit {
     if (!this.validations.isValueField(proFlow) && !this.validations.isNotValueFieldZero(proFlow.flowId) ||
       !this.validations.isValueField(proFlow.preform?.pathForm)) {
       this.activateSnapError(
-        'Error valor invalido, no es posible continuar');
+        'Error valor inválido, no es posible continuar');
       return false;
     }
     return true;
@@ -240,7 +240,7 @@ export class BmpCoreComponent implements OnInit {
           error: () => {
             this.activateLoading(true);
             this.activateSnapError(
-              'Error ejecutando servicio validacion de alfa main o validate main, no es posible continuar', 3000);
+              'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar', 3000);
           },
           next: (result: string[]) => {
             if(!result || result.length <= 0) {
@@ -280,7 +280,7 @@ export class BmpCoreComponent implements OnInit {
   captureInformationBpmCore(result: ProTaskE) {
     if (!result || !result.executionId || result.executionId <= 0 || !result.flowId) {
       this.activateSnapError(
-        'Error flowId valor invalido, no es posible continuar', 3000);
+        'Error flowId valor inválido, no es posible continuar', 3000);
       return;
     }
     this.proTaskE_Bpm = result;

@@ -8,7 +8,7 @@ export const CONSTANT_NAME_NEXT: string = 'Siguiente';
 export const CONSTANT_NAME_REGISTER: string = 'Registrar';
 export const CONSTANT_NAME_CONFIRMATION: string = 'Confirmación';
 export const CONSTANT_NAME_BPM: string = 'Bpm';
-export const CONSTANT_FILING_PROCEDURES: string = 'Radicar Tramite';
+export const CONSTANT_FILING_PROCEDURES: string = 'Radicar Trámite';
 export const CONSTANT_NAME_INITIATE_FILING_PROCEDURE: string = 'Iniciar el proceso de radicación';
 export const CONSTANT_NAME_CADASTRAL_NUMBER: string = 'cadastralNumber';
 export const CONSTANT_NAME_ID: string = 'id';
@@ -20,7 +20,7 @@ export const CONSTANT_NAME_ROOTING: string = 'ROOTING';
 export const CONSTANT_INFOMATION_PREDIAL: string = ' Información predial catastral ';
 export const CONSTANT_INFOMATION_PREDIAL_MAIN: string = 'Información predial catastral vigente';
 export const CONSTANT_INFOMATION_PREDIAL_TEMP: string = 'Información predial catastral temporal';
-export const CONSTANT_INFOMATION_PREDIAL_HIST: string = 'Información predial catastral historico';
+export const CONSTANT_INFOMATION_PREDIAL_HIST: string = 'Información predial catastral histórico';
 
 export const CONSTANT_CHANGE_UNITED_PREDIAL: string = ' Cambios unidad predial catastral ';
 

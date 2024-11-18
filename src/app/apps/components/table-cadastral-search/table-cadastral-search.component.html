@@ -4,9 +4,9 @@
     <div
       class="w-full flex flex-col sm:flex-row justify-between px-6">
       <div>
-        <h1 class="title mt-0 mb-1">Busqueda catastral</h1>
+        <h1 class="title mt-0 mb-1">Búsqueda catastral</h1>
         <vex-breadcrumbs
-          [crumbs]="['Mi Trabajo', 'Busqueda catastral']">
+          [crumbs]="['Mi Trabajo', 'Búsqueda catastral']">
         </vex-breadcrumbs>
       </div>
     </div>
@@ -24,7 +24,7 @@
           <mat-icon
             class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
             svgIcon="mat:search"></mat-icon>
-          <span>Busqueda Avanzada</span>
+          <span>Búsqueda Avanzada</span>
         </button>
         <span class="flex-1"></span>
         <mat-form-field subscriptSizing="dynamic" class=" pl-1 pr-1 pt-6 pb-6 flex flex-col">
@@ -161,7 +161,7 @@
           mat-row></tr>
       </table>
       <div *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0" class="no-data-information">
-        No hay informacion disponible
+        No hay información disponible
       </div>
       <mat-paginator
         #paginator

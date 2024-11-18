@@ -180,7 +180,7 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   findParticipant() {
     const info = this.form.value;
     if (!info.typeNumberDocument || !info.numberID) {
-      this.snackbar.open('Ingresar tipo documento o numero de documento', undefined,
+      this.snackbar.open('Ingresar tipo documento o número de documento', undefined,
         { duration: 2000 });
       return;
     }
@@ -215,7 +215,7 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   addParticipantToList() {
     const typeParticipation = this.form.get('typeParticipation')?.value;
     if (!typeParticipation) {
-      this.snackbar.open('Seleccionar tipo de participacion', undefined,
+      this.snackbar.open('Seleccionar tipo de participación', undefined,
         { duration: 2000 });
       return;
     }
