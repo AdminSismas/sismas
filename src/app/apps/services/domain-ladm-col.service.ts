@@ -18,7 +18,7 @@ export class DomainLadmColService {
   constructor(private requestsService: SendGeneralRequestsService) {}
 
 
-  /* -------------- METODOS -------------- */
+  /* -------------- MÉTODOS -------------- */
   getDataPropertyByDomainName(page: PageSortByData):Observable<DomainCollection[]> {
     let paramsDN:HttpParams = new HttpParams();
     paramsDN = paramsDN.append('page', `${page.page}`)

@@ -595,5 +595,5 @@ Se agrega algunos ejemplos de búsqueda:
 | ------------------------------------------------------------------------: | --------------------------------------------- |
 |                                                               `matricula` | 420-116966                                    |
 |                                              `tipo documento / documento` | NIT / 860003293                               |
-| `nombre / otros nombres / apellidos / otros apellidos / nombre compania ` | JORGE / ENRIQUE / HINCAPIE / SALAZAR / MUNICI |
+| `nombre / otros nombres / apellidos / otros apellidos / nombre compañía ` | JORGE / ENRIQUE / HINCAPIE / SALAZAR / MUNICI |
 |                                                          `direccionTexto` | C 37 1 509 ESTE Ap 102 To A                   |
