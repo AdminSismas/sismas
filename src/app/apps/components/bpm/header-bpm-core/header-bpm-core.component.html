@@ -1,34 +1,54 @@
-<div class="px-5 py-4 bg-primary-600/10 flex-none" [id]="idHeader">
-  <div class="toolbar text-default w-full px-6 lg:pl-0 lg:pr-0 flex gap-2 items-center">
+<div
+  class="px-5 py-4 bg-primary-600/10 flex-none"
+  [id]="idHeader"
+>
+  <div
+    class="toolbar text-default w-full px-6 lg:pl-0 lg:pr-0 flex gap-2 items-center"
+  >
     <h1
-      class="subheading-2 font-medium m-0 ltr:pr-3 rtl:pl-3 ltr:border-r rtl:border-l ltr:mr-3 rtl:ml-3 flex-none">
-      <button color="primary" mat-button type="button"
-              (click)="returnPanelTask.emit(true);">
+      class="subheading-2 font-medium m-0 ltr:pr-3 rtl:pl-3 ltr:border-r rtl:border-l ltr:mr-3 rtl:ml-3 flex-none"
+    >
+      <button
+        color="primary"
+        mat-button
+        type="button"
+        (click)="returnPanelTask.emit(true)"
+      >
         <mat-icon
           class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-          svgIcon="mat:archive"></mat-icon>
+          svgIcon="mat:archive"
+        ></mat-icon>
         <span>{{ CONSTANT_NAME_RETURN }}</span>
       </button>
     </h1>
     <vex-breadcrumbs
       class="mr-2"
-      [crumbs]="this.crumbs">
+      [crumbs]="this.crumbs"
+    >
     </vex-breadcrumbs>
-    <button color="secondary" mat-button type="button"
-            class="box bg-app-bar rounded caption min-w-3">
+    <button
+      color="secondary"
+      mat-button
+      type="button"
+      class="box bg-app-bar rounded caption min-w-3"
+    >
       <mat-icon
         class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-        svgIcon="mat:insert_comment"></mat-icon>
+        svgIcon="mat:insert_comment"
+      ></mat-icon>
       <span class="box-text">{{ countComment$ | async }}</span>
     </button>
-    <button color="secondary" mat-button type="button"
-            class="box bg-app-bar rounded caption min-w-3">
+    <button
+      color="secondary"
+      mat-button
+      type="button"
+      class="box bg-app-bar rounded caption min-w-3"
+    >
       <mat-icon
         class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-        svgIcon="mat:attach_file"></mat-icon>
+        svgIcon="mat:attach_file"
+      ></mat-icon>
       <span class="box-text">{{ countAttachment$ | async }}</span>
     </button>
   </div>
 </div>
-
-
