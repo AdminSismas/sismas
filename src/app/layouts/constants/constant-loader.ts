@@ -63,18 +63,18 @@ export const NAVIGATION_LOADER_MY_WORK_2: Array<NavigationLink | NavigationDropd
   },
 ];
 export const NAVIGATION_LOADER_MY_WORK_3: Array<NavigationLink | NavigationDropdown> = [
-  {
-    type: 'link',
-    label: 'Búsqueda catastral',
-    route: '/myWork/cadastralSearch',
-    icon: 'mat:search'
-  },
-  {
-    type: 'link',
-    label: 'Radicar Trámite',
-    route: '/myWork/fileProcedure',
-    icon: 'mat:app_registration'
-  },
+//   {
+//     type: 'link',
+//     label: 'Busqueda catastral',
+//     route: '/myWork/cadastralSearch',
+//     icon: 'mat:search'
+//   },
+//   {
+//     type: 'link',
+//     label: 'Radicar Tramite',
+//     route: '/myWork/fileProcedure',
+//     icon: 'mat:app_registration'
+//   },
 ];
 export const NAVIGATION_LOADER_MY_WORK: Array<NavigationLink | NavigationDropdown> = [
   ...NAVIGATION_LOADER_MY_WORK_1,

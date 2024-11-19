@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { DateTime } from 'luxon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-editing-property-owner',
@@ -29,7 +30,8 @@ import { DateTime } from 'luxon';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    ComboxColletionComponent
+    ComboxColletionComponent,
+    MatDividerModule,
   ],
   templateUrl: './editing-property-owner.component.html',
   styleUrl: './editing-property-owner.component.css',
@@ -54,8 +56,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
   ngOnInit(): void {
     const formValues = this.data.rrrightInfo
-    formValues!.fraction = formValues!.fraction * 100
-    console.log(this.data)
+
     this.form.reset(formValues)
   }
 
