@@ -27,7 +27,7 @@ export class UnitPropertyInformationService {
   }
 
   getUnitPropertyInformation(
-    npn: string, page: number = 0, size: number = 20
+    npn: string, page: number = 0, size: number = 7
   ): Observable<BAunitLike> {
     let url: string = `${this.basic_url}${envi.baunit_npnlike}`;
 
