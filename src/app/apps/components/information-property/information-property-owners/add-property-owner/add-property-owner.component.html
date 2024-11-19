@@ -4,7 +4,7 @@
 
   <p class="px-4"><strong>1 - </strong> Buscar persona</p>
   <form
-    class="flex py-4 gap-4 w-full"
+    class="grid grid-flow-row grid-cols-2 grid-rows-2 py-4 gap-4 w-full"
     [formGroup]="form"
     autocomplete="off"
     (ngSubmit)="searchPerson()"
@@ -17,6 +17,7 @@
       placeholderDomainName="Seleccionar tipo documento&hellip;"
       formControlNameCombobox="individualTypeNumber"
       [hideRequiredMarker]="false"
+      cssClasses="w-full"
     >
     </vex-combox-colletion>
     <mat-form-field class="w-full">
@@ -30,15 +31,17 @@
       />
     </mat-form-field>
 
-    <button
-      color="primary"
-      type="submit"
-      mat-flat-button
-      name="enviar"
-      class="ml-4 flex-none p-4 text-lg"
-    >
+    <div class="w-full flex justify-center flex-row columns col-span-2">
+      <button
+        color="primary"
+        type="submit"
+        mat-flat-button
+        name="enviar"
+        class="ml-4 flex-none p-4 text-lg"
+      >
       Buscar
     </button>
+  </div>
   </form>
   <mat-divider class="border-slate-400"></mat-divider>
   <p class="p-4"><strong>2 - </strong> Agregar detalles del nuevo propietario</p>

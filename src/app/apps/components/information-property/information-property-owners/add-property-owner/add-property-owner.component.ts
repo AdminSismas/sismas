@@ -35,7 +35,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatDividerModule
+    MatDividerModule,
   ],
   templateUrl: './add-property-owner.component.html',
   styleUrl: './add-property-owner.component.css',
