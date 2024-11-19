@@ -15,22 +15,16 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, DatePipe, NgClass, NgFor, NgForOf, NgIf } from '@angular/common';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { InfoTableService } from 'src/app/apps/services/general/info-table.service';
 import { SearchData } from 'src/app/apps/interfaces/search-data.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
 import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
@@ -45,7 +39,6 @@ import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
 import { GeographicViewerComponent } from '../../geographic-viewer/geographic-viewer.component';
 import { environment as envi, environment } from 'src/environments/environments';
 import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
-import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
@@ -56,7 +49,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { UnitPropertyInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
 import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
@@ -69,9 +61,6 @@ import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property
   animations: [fadeInUp400ms, stagger40ms],
   standalone: true,
   imports: [
-    AsyncPipe,
-    DatePipe,
-    FluidHeightDirective,
     FormsModule,
     HeaderCadastralInformationPropertyComponent,
     MatAutocompleteModule,
@@ -97,12 +86,6 @@ import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property
     NgFor,
     NgIf,
     ReactiveFormsModule,
-    VexBreadcrumbsComponent,
-    VexHighlightDirective,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
-    VexSecondaryToolbarComponent,
   ]
 })
 export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
@@ -137,7 +120,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
-    private infoTableService: InfoTableService,
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService,
@@ -194,7 +176,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   }
 
   searchUnitPropertyInformation(): void {
-    console.log(this.baunitId);
     if (!this.schema || !this.baunitId ) {
       return;
     }
@@ -204,7 +185,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
         error: () => this.captureInformationSubscribeError(),
         next: (result: Baunit) =>
           this.unitPropertyInformationService
-            .getUnitPropertyInformation(result.cadastralNumber, 0, 20)
+            .getUnitPropertyInformation(result.cadastralNumber, this.page, this.pageSize)
             .subscribe({
               error: () => this.captureInformationSubscribeError(),
               next: (result2: BAunitLike) =>
@@ -333,5 +314,15 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   isValidateField(value: string | undefined): boolean {
     return value !== null && value !== undefined && value.length >= 1;
+  }
+
+  refreshInformationPaginator(event: PageEvent): void {
+    if (event == null) {
+      return;
+    }
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+
+    this.searchUnitPropertyInformation();
   }
 }
