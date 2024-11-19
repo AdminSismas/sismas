@@ -209,7 +209,8 @@
           [pageSize]="pageSize"
           [pageIndex]="page"
           class="sticky left-0"
-          ></mat-paginator>
+          (page)="refreshInformationPaginator($event)"
+        ></mat-paginator>
       </div>
 
       <mat-menu
@@ -241,9 +242,7 @@
           let-customer="customer"
           matMenuContent
         >
-          <button
-            mat-menu-item
-          >
+          <button mat-menu-item>
             <mat-icon svgIcon="mat:delete"></mat-icon>
             <span>Delete</span>
           </button>

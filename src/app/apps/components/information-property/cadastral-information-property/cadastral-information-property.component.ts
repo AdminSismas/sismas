@@ -1,16 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { InConstructionComponent } from '../../in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexShowdownComponent, VexShowdownSourceDirective } from '@vex/components/vex-showdown';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
 import {
@@ -59,28 +52,16 @@ import { environment as envi } from '../../../../../environments/environments';
   ],
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
-    VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent,
     MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
     MatExpansionModule,
     ReactiveFormsModule,
     MatMenuModule,
-    VexShowdownComponent,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
     MatDividerModule,
     MatDialogContent,
-    VexShowdownSourceDirective,
     MatRippleModule,
-    VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
-    VexPageLayoutContentDirective,
     MatListModule,
     MatRippleModule,
     MatSnackBarModule,
@@ -163,7 +144,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
 
- 
+
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,

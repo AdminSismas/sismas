@@ -29,7 +29,7 @@ export const PAGE_SIZE_SORT: number = 5;
 export const NAME_CODENAME: string = 'codeName';
 export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
-export const STRING_INFORMATION_NOT_FOUND: string = 'Informacion no disponible';
+export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
 
 export const PAGE_OPTION_UNIQUE_7: number = 7;
 export const PAGE_OPTION_UNIQUE: number = 10;
@@ -60,35 +60,35 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Matricula Inmobiliaria',
+    label: 'Matrícula Inmobiliaria',
     property: 'registration',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Numero Predial',
+    label: 'Número Predial',
     property: 'cadastralNumber',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Area Terrreno',
+    label: 'Área Terreno',
     property: 'cadastralArea',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Condicion',
+    label: 'Condición',
     property: 'domBaunitCondition',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Destino Economico',
+    label: 'Destino Económico',
     property: 'domBaunitEconoDesti',
     type: 'text',
     visible: true,
@@ -101,32 +101,32 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     visible: false,
     cssClasses: ['text-secondary', 'font-medium']
   },
-  { label: 'Actions', property: 'actions', type: 'button', visible: true }
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
   {
-    label: 'Matricula Inmobiliaria',
+    label: 'Matrícula Inmobiliaria',
     property: 'registration',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Numero Predial',
+    label: 'Número Predial',
     property: 'cadastralNumber',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Area Terrreno',
+    label: 'Área Terreno',
     property: 'cadastralArea',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
-  { label: 'Actions', property: 'actions', type: 'button', visible: true }
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL: TableColumn<BasicInformationAddress>[] = [
@@ -144,7 +144,7 @@ export const TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL: TableColumn<BasicInformati
     visible: true
   },
   {
-    label: 'Direccion',
+    label: 'Dirección',
     property: 'nombrePredio',
     type: 'text',
     visible: true
@@ -153,7 +153,7 @@ export const TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL: TableColumn<BasicInformati
 export const TABLE_COLUMN_PROPERTIES_ADDRESS: TableColumn<BasicInformationAddress>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL;
 export const TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION: TableColumn<BasicInformationAddress>[] = [
   ...TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL,
-  { label: 'Actions', property: 'actions', type: 'button', visible: true }
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentInformationConstruction>[] = [
@@ -183,13 +183,13 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
     visible: true
   },
   {
-    label: 'Area (Mts2)',
+    label: 'Área (Mts2)',
     property: 'unitBuiltArea',
     type: 'text',
     visible: true
   },
   {
-    label: 'Tipologia',
+    label: 'Tipología',
     property: 'domTipologiaTipo',
     type: 'text',
     visible: true
@@ -197,7 +197,7 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] = [
   ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,
-  { label: 'Actions', property: 'actions', type: 'button', visible: true }
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
@@ -274,7 +274,7 @@ export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>
     cssClasses: ['font-medium']
   },
   {
-    label: 'Despues',
+    label: 'Después',
     property: 'valueAfter',
     type: 'text',
     visible: true,
@@ -436,7 +436,7 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'informationConstructionsPropertyComponent'
   },
   {
-    label: 'Avaluos',
+    label: 'Avalúos',
     fragment: 'propertyAppraisalInformationComponent'
   },
   {
@@ -461,13 +461,13 @@ export const TABLE_COLUMN_BASIC_PRINCIPANTS: TableColumn<ProcessParticipant>[] =
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Participacion',
+    label: 'Participación',
     property: 'bpmParticipation',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
-  { label: 'Actions', property: 'actions', type: 'button', visible: true }
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
@@ -486,35 +486,35 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Matricula Inmobiliaria',
+    label: 'Matrícula Inmobiliaria',
     property: 'registration',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Numero Predial',
+    label: 'Número Predial',
     property: 'cadastralNumber',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Area Terrreno',
+    label: 'Área Terreno',
     property: 'cadastralArea',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Condicion',
+    label: 'Condición',
     property: 'domBaunitCondition',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Destino Economico',
+    label: 'Destino Económico',
     property: 'domBaunitEconoDesti',
     type: 'text',
     visible: true,
@@ -527,5 +527,5 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
     visible: false,
     cssClasses: ['text-secondary', 'font-medium']
   },
-  { label: 'Actions', property: 'actions', type: 'button', visible: true }
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];

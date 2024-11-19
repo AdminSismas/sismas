@@ -193,7 +193,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
 
     if (!this.formCreateDelete.value || !this.formCreateDelete.value.npnLike) {
       this.snackBar.open(
-        'No se puede consultar informacion, con los datos suministrados.',
+        'No se puede consultar información, con los datos suministrados.',
         'CLOSE', { duration: 1000 }
       );
       return;
@@ -224,7 +224,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       addNpnLike, this.executionId, bAunitCondition)
       .then((result: any) => {
         this.snackBar.open(
-          'Se creo una nueva unidad predial.',
+          'Se creó una nueva unidad predial.',
           'CLOSE', { duration: 1000 }
         );
         this.dialogRef.close();
@@ -239,7 +239,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       baunit?.baunitIdE, this.executionId)
       .then((result: any) => {
         this.snackBar.open(
-          'Se creo una nueva unidad predial para actualizar.',
+          'Se creó una nueva unidad predial para actualizar.',
           'CLOSE', { duration: 1000 }
         );
         this.loadPropertiesInformation();
@@ -254,7 +254,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       baunit?.baunitIdE, this.executionId)
       .then((result: any) => {
         this.snackBar.open(
-          'Se creo una nueva unidad predial para eliminar.',
+          'Se creó una nueva unidad predial para eliminar.',
           'CLOSE', { duration: 1000 }
         );
         this.loadPropertiesInformation();

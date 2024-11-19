@@ -18,9 +18,9 @@ export class AttachmentService {
     /* -------------- CONSTRUCTRO -------------- */
     constructor(private requestsService: SendGeneralRequestsService) {}
 
-    
 
-    /* -------------- METODOS -------------- */
+
+    /* -------------- MÉTODOS -------------- */
     getDataPropertyByAttachment(executionId: string):Observable<AttachmentCollection[]> {
         const url = `${this.basic_url}${executionId}`;
         return this.getData(url);

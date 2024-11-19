@@ -3,13 +3,13 @@ import { NavigationDropdown, NavigationLink } from '../../core/navigation/naviga
 export const NAVIGATION_LOADER_MY_WORK_1: Array<NavigationLink | NavigationDropdown> = [
   {
     type: 'link',
-    label: 'Busqueda catastral',
+    label: 'Búsqueda catastral',
     route: '/myWork/cadastralSearch',
     icon: 'mat:search'
   },
   {
     type: 'link',
-    label: 'Radicar Tramite',
+    label: 'Radicar Trámite',
     route: '/myWork/fileProcedure',
     icon: 'mat:app_registration'
   },
@@ -91,7 +91,7 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | Navigat
   },
   {
     type: 'dropdown',
-    label: 'Tramites',
+    label: 'Trámites',
     icon: 'mat:pending',
     children: [
       {
@@ -128,7 +128,7 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | Navigat
   },
   {
     type: 'link',
-    label: 'Analitica de la Operacion',
+    label: 'Analítica de la Operación',
     route: '/operationSupport/operationalAnalytics',
     icon: 'mat:task_alt'
   }
@@ -143,7 +143,7 @@ export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropd
   },
   {
     type: 'link',
-    label: 'Busqueda catastral (DA)',
+    label: 'Búsqueda catastral (DA)',
     route: '/openData/cadastralSearchDA',
     icon: 'mat:app_registration'
   },
@@ -160,7 +160,7 @@ export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropd
       },
       {
         type: 'link',
-        label: 'Alfanumericas',
+        label: 'Alfanuméricas',
         route: '/openData/downloads/alphanumeric',
         routerLinkActiveOptions: { exact: true }
       }
@@ -194,7 +194,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
       },
       {
         type: 'link',
-        label: 'Historico de Servicios',
+        label: 'Histórico de Servicios',
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
@@ -213,7 +213,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
       },
       {
         type: 'link',
-        label: 'Historico de Servicios',
+        label: 'Histórico de Servicios',
         route: '/publicService/ticketOffice/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
@@ -247,19 +247,19 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
       },
       {
         type: 'link',
-        label: 'Mod Economico Terreno',
+        label: 'Mod Económico Terreno',
         route: '/configuration/cadastral/economicModLand',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Economico Construccion',
+        label: 'Mod Económico Construcción',
         route: '/configuration/cadastral/economicModConstruction',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Economico Integral',
+        label: 'Mod Económico Integral',
         route: '/configuration/cadastral/integralEconomicMod',
         routerLinkActiveOptions: { exact: true }
       }
@@ -286,7 +286,7 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
   },
   {
     type: 'dropdown',
-    label: 'Tramites catastrales',
+    label: 'Trámites catastrales',
     icon: 'mat:pending',
     children: [
       {
@@ -309,7 +309,7 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
       },
       {
         type: 'link',
-        label: 'Documentos asociados a tramites',
+        label: 'Documentos asociados a trámites',
         route: '/configuration/cadastralProcedures/documentsAssociatedProcedures',
         routerLinkActiveOptions: { exact: true }
       },

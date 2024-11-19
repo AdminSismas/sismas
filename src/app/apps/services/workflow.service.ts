@@ -16,7 +16,7 @@ export class WorkflowService {
   /* -------------- CONSTRUCTOR -------------- */
   constructor(private requestsService: SendGeneralRequestsService) { }
 
-  /* -------------- METODOS -------------- */
+  /* -------------- MÉTODOS -------------- */
   getDataPropertyByWorkflow(page:PageSortByData):Observable<WorkflowCollection[]> {
     let paramsWF: HttpParams = new HttpParams();
     paramsWF = paramsWF.append('page', `${page.page}`)

@@ -137,7 +137,7 @@ export class NavigationLoaderService {
       },
       {
         type: 'subheading',
-        label: 'Servicio Publico',
+        label: 'Servicio Público',
         children: NAVIGATION_LOADER_PUBLIC_SERVICE
       },
       {
@@ -147,7 +147,7 @@ export class NavigationLoaderService {
       },
       {
         type: 'subheading',
-        label: 'Auditoria',
+        label: 'Auditoría',
         children: NAVIGATION_LOADER_AUDIT
       },
       {
