@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>
-  {{ data.fullName }}
+  {{ data.individual.fullName }}
 </h2>
+<mat-divider></mat-divider>
 <mat-dialog-content>
   <form
     [formGroup]="form"
@@ -14,8 +15,8 @@
         placeholder="Fracción"
         formControlName="fraction"
         min="0"
-        max="100"
-        step="1"
+        max="1"
+        step="0.01"
         type="number"
       />
     </mat-form-field>
