@@ -33,6 +33,8 @@ import { AddEditInformationPropertyOwnerComponent } from './add-edit-information
 import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
 import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Owners } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -172,7 +174,9 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   private informationPropertyService = inject(InformationPropertyService);
   private matDialog = inject(MatDialog);
 
-  constructor() { }
+  constructor(
+    private snakbar: MatSnackBar
+  ) { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -229,6 +233,19 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   onClickOpenAddEditModal(data: any): void {
+
+    const fractions_sum = data.data.reduce((acc: number, owner: Owners) => {
+      const fraction = Number(owner.fractionS)
+      return acc + fraction ;
+    }, 0)
+
+    console.log(fractions_sum)
+
+    if (fractions_sum >= 1) {
+      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 4000 })
+      return;
+    }
+
     this.matDialog.open(AddPropertyOwnerComponent, {
       width: '35%',
       data: {
