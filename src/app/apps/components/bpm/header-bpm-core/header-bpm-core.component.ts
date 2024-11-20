@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { GeneralValidationsService } from '../../../services/validations/general-validations.service';
-import { firstValueFrom, Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { CONSTANT_NAME_RETURN } from '../../../constants/constantLabels';
 import { ProTaskE } from '../../../interfaces/pro-task-e';
@@ -20,7 +20,6 @@ import { filter } from 'rxjs/operators';
     VexBreadcrumbsComponent,
     AsyncPipe,
     MatButtonModule,
-    NgIf
   ],
   templateUrl: './header-bpm-core.component.html',
   styleUrl: './header-bpm-core.component.scss'

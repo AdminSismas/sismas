@@ -1,12 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import {CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
-// recursos de vex
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 
 // recursos de angular material
 import { MatIconModule } from '@angular/material/icon';
@@ -19,10 +14,6 @@ import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-atta
 import { environment } from 'src/environments/environments';
 import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
 
-
-
-
-
 @Component({
   selector: 'vex-view-file-document-management',
   templateUrl: './view-file-document-management.component.html',
@@ -31,14 +22,10 @@ import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
     MatIconModule,
     MatDialogModule,
     MatDividerModule,
     MatTabsModule,
-    NgClass,
     NgFor,
     NgIf
   ],
@@ -110,7 +97,7 @@ export class ViewFileDocumentManagementComponent implements OnInit {
 
 
   /* ------- Meth. Services ------- */
-  
+
 
 
 }
