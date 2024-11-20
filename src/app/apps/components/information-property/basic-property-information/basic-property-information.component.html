@@ -44,7 +44,7 @@
               <span class="text-sm">{{NAME_NO_DISPONIBLE}}</span>
             }
             @if (data !== null && data !== undefined && data.cadastralCreatedAt !== null && data.cadastralCreatedAt){
-              <span class="text-sm">{{data.cadastralCreatedAt | date:'mediumDate'}}</span>
+              <span class="text-sm">{{data.cadastralCreatedAt | date:'dd/MM/yyyy'}}</span>
             } @else {
               <span class="text-sm">{{NAME_NO_DISPONIBLE}}</span>
             }
@@ -59,7 +59,7 @@
               <span class="text-sm">{{NAME_NO_DISPONIBLE}}</span>
             }
             @if (data !== null && data !== undefined && data.cadastralLastEventAt !== null && data.cadastralLastEventAt){
-              <span class="text-sm">{{data.cadastralLastEventAt | date:'mediumDate'}}</span>
+              <span class="text-sm">{{data.cadastralLastEventAt |  date:'dd/MM/yyyy'}}</span>
             } @else {
               <span class="text-sm">{{NAME_NO_DISPONIBLE}}</span>
             }
@@ -112,7 +112,7 @@
               <span class="text-sm">{{NAME_NO_DISPONIBLE}}</span>
             }
             @if (data !== null && data !== undefined && data.updatedAt !== null && data.updatedAt){
-              <span class="text-sm">{{data.updatedAt | date:'mediumDate'}}</span>
+              <span class="text-sm">{{data.updatedAt |  date:'dd/MM/yyyy'}}</span>
             } @else {
               <span class="text-sm">{{NAME_NO_DISPONIBLE}}</span>
             }

@@ -90,7 +90,7 @@
               </th>
               <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
                   class="uppercase">
-                {{ row[column.property] | date:'mediumDate' }}
+                {{ row[column.property] | date:'dd/MM/yyyy' }}
               </td>
             </ng-container>
             <ng-container

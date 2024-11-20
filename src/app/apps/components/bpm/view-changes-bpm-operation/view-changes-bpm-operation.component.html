@@ -71,7 +71,7 @@
             <div class="flex flex-auto text-left justify-start">
               <div class="w-full flex flex-row py-2">
                 <span class="title !text-black uppercase text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Despues:    </span>
-                <span class="uppercase text-sm  "> {{ change.newValue }}</span>
+                <span class="uppercase text-sm  "> {{ change.newValue | date:'dd/MM/yyyy' }}</span>
               </div>
             </div>
           </div>
