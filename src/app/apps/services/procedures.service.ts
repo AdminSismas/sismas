@@ -20,7 +20,7 @@ export class ProceduresService {
     constructor(private requestsService: SendGeneralRequestsService) {}
 
 
-    /* -------------- METODOS -------------- */
+    /* -------------- MÉTODOS -------------- */
     getDataPropertyByProcedures(page: PageProceduresData):Observable<ProceduresCollection[]> {
         let paramsPP:HttpParams = new HttpParams();
         paramsPP = paramsPP.append('page', `${page.page}`)
@@ -29,7 +29,7 @@ export class ProceduresService {
         paramsPP = paramsPP.append('beginAtE',`${page.beginAtE}`)
         paramsPP = paramsPP.append('executionCode',`${page.executionCode}`)
         paramsPP = paramsPP.append('individualNumber',`${page.individualNumber}`)
-        
+
         console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
         return this.getData(`${this.basic_url}?`,paramsPP);
     }

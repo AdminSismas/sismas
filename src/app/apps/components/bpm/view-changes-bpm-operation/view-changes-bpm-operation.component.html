@@ -70,8 +70,8 @@
           <div class="flex justify-between">
             <div class="flex flex-auto text-left justify-start">
               <div class="w-full flex flex-row py-2">
-                <span class="title !text-black uppercase text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Despues:    </span>
-                <span class="uppercase text-sm  "> {{ change.newValue | date:'dd/MM/yyyy' }}</span>
+                <span class="title !text-black uppercase text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Después:    </span>
+                <span class="uppercase text-sm  "> {{ change.newValue }}</span>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@
     <div class="w-full flex flex-col justify-between pt-2"
          *ngIf="!listChanges || listChanges.length <= 0">
       <h2 class="title mb-1 mt-1 w-full flex items-center">
-        <span class="block">Informacion No disponible</span>
+        <span class="block">Información No disponible</span>
       </h2>
     </div>
   </div>

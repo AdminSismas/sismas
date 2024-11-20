@@ -79,12 +79,22 @@
                 >
                   {{ column.label }}
                 </th>
-                <td
-                  *matCellDef="let row"
-                  mat-cell
-                >
-                  {{ row[column.property] }}
-                </td>
+                @if (individualInfo(column)) {
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                  >
+                    {{ row.individual[column.property] }}
+                  </td>
+                 }
+                 @else {
+                   <td
+                     *matCellDef="let row"
+                     mat-cell
+                   >
+                     {{ row[column.property] }}
+                   </td>
+                 }
               </ng-container>
             }
             <ng-container matColumnDef="actions">
@@ -99,7 +109,6 @@
                 class="w-10 text-secondary"
                 mat-cell
               >
-                @if (typeInformation === "edition") {
                   <button
                     mat-icon-button
                     [matMenuTriggerData]="{ infoOwner: row }"
@@ -108,7 +117,6 @@
                   >
                     <mat-icon svgIcon="mat:more_horiz"></mat-icon>
                   </button>
-                }
               </td>
             </ng-container>
             <tr

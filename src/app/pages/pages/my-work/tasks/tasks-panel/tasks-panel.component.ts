@@ -159,7 +159,7 @@ export class TasksPanelComponent implements OnInit {
       }
 
       default: {
-        this.label = 'Informacion No Encontrada';
+        this.label = 'Información No Encontrada';
         state = true;
         break;
       }
@@ -312,7 +312,7 @@ export class TasksPanelComponent implements OnInit {
     this.page = PAGE;
     this.totalElements = 0;
     this.pageSize = PAGE_SIZE_TABLE_CADASTRAL;
-    this.label = 'Informacion No Encontrada';
+    this.label = 'Información No Encontrada';
   }
 
   activateLoading(value: boolean = false) {

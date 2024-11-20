@@ -58,11 +58,10 @@ export interface DialogsData {
   rightId: number;
   executionId: string;
   baunitId: string;
-  fullName: string;
-  number?: string;
   schema?: string;
-  indivudualTypeNumber?: string;
+  fullName: string;
   rrrightInfo?: RrrightInfo;
+  individual: InfoPerson;
 }
 
 export interface UpdatePropertyOwner {

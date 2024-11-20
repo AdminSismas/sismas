@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core'; // √ 
+import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core'; // √
 import { ReactiveFormsModule, FormsModule, UntypedFormControl } from '@angular/forms';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -108,17 +108,17 @@ export class TableDomainLadmColComponent implements OnInit {
     // Aquí tu lógica inicial
     this.dataSource = new MatTableDataSource();
 
-    // se usan los metodos pipe y subscribe para que el valor de la busqueda se actualice en tiempo real
+    // se usan los métodos pipe y subscribe para que el valor de la búsqueda se actualice en tiempo real
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
 
-    // se llama el metodo q usara el serivicoo de la peticion a la API
+    // se llama el método q usara el servicio de la petición a la API
     this.getDataFromDomainLadmService();
   }
 
 
-  // asignar el paginador y la funcionalidad de ordenación a la fuente de datos de la tabla 
+  // asignar el paginador y la funcionalidad de ordenación a la fuente de datos de la tabla
   ngAfterViewInit() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
@@ -132,7 +132,7 @@ export class TableDomainLadmColComponent implements OnInit {
 
 
   /* ------- Meth. HTML ------- */
-  //1 metodo para mostrar las columnas
+  //1 método para mostrar las columnas
   toggleColumnVisibility(column: TableColumn<contentInfoDomainLadmCol>, event: Event) {
     event.stopPropagation();
     event.stopImmediatePropagation();
@@ -140,7 +140,7 @@ export class TableDomainLadmColComponent implements OnInit {
   }
 
 
-  //2 metodo para actualizar la informacion de la tabla
+  //2 método para actualizar la información de la tabla
   refreshInformationpaginator(event: any): void {
     if (event == null) {
       return;
@@ -152,13 +152,13 @@ export class TableDomainLadmColComponent implements OnInit {
   }
 
 
-  //3. metodo para realizar la busqueda de la informacion
+  //3. método para realizar la búsqueda de la información
   trackByProperty<T>(index: number, column: TableColumn<T>) {
     return column.property;
   }
 
 
-  //4. metodo para poner visible las columnas
+  //4. método para poner visible las columnas
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)
@@ -183,16 +183,16 @@ export class TableDomainLadmColComponent implements OnInit {
     const sortBy: string = 'domainName';
     return new PageSortByData(this.page, this.pageSize, sortBy);
   }
-  
+
 
 
   /* ------- Meth. Services ------- */
-  //ser. servicio para realizar la peticion a la API
+  //ser. servicio para realizar la petición a la API
   getDataFromDomainLadmService() {
     this.domainLadmColService.getDataPropertyByDomainName(this.generateObjectPageDomainLadmColData())
     .subscribe({
         next: (result: any) => {
-            this.captureInformationSubscribe(result); // se llama el metodo para que capturar la informacion de la API
+            this.captureInformationSubscribe(result); // se llama el método para que capturar la información de la API
         },
         error: (error) => {
             console.error('Hubo un error al obtener los datos: ', error);
@@ -200,24 +200,24 @@ export class TableDomainLadmColComponent implements OnInit {
         complete: () => {
             console.log('Carga completa de datos');
         }
-    }); 
+    });
   }
 
-  //ser.1 metodo para capturar todo el objeto completo la informacion de la API
+  //ser.1 método para capturar todo el objeto completo la información de la API
   captureInformationSubscribe(data: InformationPegeable) {
-    this.contentInformations = data; 
-    this.captureInformationDomainLadmColData(); 
+    this.contentInformations = data;
+    this.captureInformationDomainLadmColData();
   }
 
-  //ser.2 metodo para capturar el sub objeto content de la informacion de la API
+  //ser.2 método para capturar el sub objeto content de la información de la API
   captureInformationDomainLadmColData() {
     let data: contentInfoDomainLadmCol[];
     if (this.contentInformations != null && this.contentInformations.content != null) {
-      data = this.contentInformations.content.map((row: contentInfoDomainLadmCol) => new contentInfoDomainLadmCol(row)); // se mapea la informacion de la API para mostrarla en la tabla cambiando de tipo de dato
+      data = this.contentInformations.content.map((row: contentInfoDomainLadmCol) => new contentInfoDomainLadmCol(row)); // se mapea la información de la API para mostrarla en la tabla cambiando de tipo de dato
       console.log("data: ", data);
       this.dataSource.data = data;
     }
-    // funcionamiento de paginador, navegacion entre vistas de registros en tabla
+    // funcionamiento de paginador, navegación entre vistas de registros en tabla
     if (this.contentInformations == null) {
       this.page = PAGE;
       return;
@@ -236,5 +236,5 @@ export class TableDomainLadmColComponent implements OnInit {
       this.page = this.contentInformations.pageable.pageNumber;
     }
   }
-  
+
 }

@@ -149,7 +149,7 @@ export class CreatePeopleComponent implements OnInit {
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'Numero de formato NIT no valido';
+        this.menssage.value = 'Número de formato NIT no válido';
         return;
       }
     }
@@ -159,7 +159,7 @@ export class CreatePeopleComponent implements OnInit {
 
     this.menssage.status = false;
 
-    // enviamos los datos para el envio de datos
+    // enviamos los datos para el envío de datos
 
     let url_basic = `${environment.url}:${environment.port}${environment.individualNumber}`;
 
@@ -186,7 +186,7 @@ export class CreatePeopleComponent implements OnInit {
       status: false,
       value: ''
     };
-    //informacion de numero de documento
+    //información de número de documento
     if (
       this.form.get('number')?.value !== '' &&
       this.form.get('domIndividualTypeNumber')?.value !== ''
@@ -261,7 +261,7 @@ export class CreatePeopleComponent implements OnInit {
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'Numero de formato NIT no valido';
+        this.menssage.value = 'Número de formato NIT no válido';
         return;
       }
     }
@@ -322,7 +322,7 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   disablesTypePople(): void {
-    // validar los tipos de campos segun los valores de los formularios
+    // validar los tipos de campos según los valores de los formularios
     this.form.get('firstName')?.disable();
     this.form.get('middleName')?.disable();
     this.form.get('otherLastName')?.disable();
@@ -355,11 +355,11 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   validateTypePople(): void {
-    // validar los tipos de campos segun los valores de los formularios
+    // validar los tipos de campos según los valores de los formularios
     this.clearValidatorsTow();
 
     this.form.get('domIndividualType')?.valueChanges.subscribe((type) => {
-      /* NOTA: hay que llevarse esta validacion a otra funcion para que podamos validar despues */
+      /* NOTA: hay que llevarse esta validación a otra función para que podamos validar después */
       if (type === 'Persona natural') {
         this.form.get('firstName')?.setValidators(Validators.required);
         this.form.get('lastName')?.setValidators(Validators.required);

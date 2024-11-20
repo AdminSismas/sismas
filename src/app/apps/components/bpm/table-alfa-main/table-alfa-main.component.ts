@@ -165,7 +165,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   openCadastralInformationProperty(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
-        'No se puede ver la informacion de la unidad predial, consulte al administrador.',
+        'No se puede ver la información de la unidad predial, consulte al administrador.',
         'CLOSE', { duration: 1000 }
       );
       return;
@@ -210,7 +210,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   edithInformations(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
-        'No se puede ver la informacion de la unidad predial, consulte al administrador.',
+        'No se puede ver la información de la unidad predial, consulte al administrador.',
         'CLOSE', { duration: 1000 }
       );
       return;

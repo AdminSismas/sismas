@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { BasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { BasicInformationAddress } from '../../interfaces/information-property/basic-information-address';
 import { CreateBasicInformationAddress, DetailBasicInformationAddress } from '../../interfaces/information-property/detail-basic-information-address';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
@@ -218,14 +218,26 @@ export class InformationPropertyService {
   ): Observable<ContentInformationConstruction> {
     
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-  
-    return this.http.post<ContentInformationConstruction>(
-      url,
-      createBasicInformationConstruction
-    );
+
+    return this.http
+      .post<ContentInformationConstruction>(url, createBasicInformationConstruction)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = 'Ocurrió un error inesperado.';
+
+          
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message; 
+          } else if (error.error && error.error) {
+            errorMessage = error.error; 
+          }
+
+          return throwError(() => new Error(errorMessage)); 
+        })
+      );
   }
   
-
+  
 
   /**
    * Delete basic information by direccionId

@@ -176,10 +176,15 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
     console.log('Submitting form with values:', this.informationConstructionForm.value);
     if (this.informationConstructionForm.invalid) {
       this.informationConstructionForm.markAllAsTouched();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, corrige los errores en el formulario para continuar.',
+        confirmButtonColor: '#3f51b5'
+      });
       return;
     }
 
-    // Confirmación antes de proceder
     const result = await Swal.fire({
       title: '¿Está seguro?',
       text: 'Está a punto de crear una nueva construcción.',
@@ -190,16 +195,23 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       confirmButtonText: 'Sí, crear',
       cancelButtonText: 'Cancelar'
     });
-
-
+  
     if (!result.isConfirmed) {
       return;
     }
-
+  
     this.isLoading.set(true);
-
+  
     try {
       const value = this.informationConstructionForm.value || {};
+  
+      if (value.unitBuiltPrivateArea) {
+        value.unitBuiltPrivateArea = value.unitBuiltPrivateArea.toString().replace(',', '.');
+      }
+      if (value.unitBuiltArea) {
+        value.unitBuiltArea = value.unitBuiltArea.toString().replace(',', '.');
+      }
+  
       let detailBasicInformationConstruction: ContentInformationConstruction | undefined;
       if (this.addEditInformationData.type === 'new') {
         const createBasicInformationConstruction: CreateBasicInformationConstruction = {
@@ -213,23 +225,27 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           unitBuiltPrivateArea: value?.unitBuiltPrivateArea,
           unitBuiltObservation: value?.unitBuiltObservation,
         };
+  
         const baunitId: string = this.addEditInformationData.baunitId || '';
         if (!baunitId) {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'baunitId is not set.',
+            text: 'baunitId no está definido.',
+            confirmButtonColor: '#3f51b5'
           });
-          throw new Error('baunitId is not set.');
+          throw new Error('baunitId no está definido.');
         }
+  
+
         detailBasicInformationConstruction = await lastValueFrom(
           this.informationPropertyService.createBasicInformationPropertyConstruction(
             68,
             baunitId,
-            createBasicInformationConstruction,
+            createBasicInformationConstruction
           )
         );
-
+        
         Swal.fire({
           icon: 'success',
           title: 'Creación exitosa',
@@ -243,26 +259,31 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
             { ...value },
           )
         );
-
-
       }
-
+  
       this.dialogRef.close(detailBasicInformationConstruction);
     } catch (e) {
+      let errorMessage = 'Ocurrió un error inesperado.';
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      } else if (typeof e === 'string') {
+        errorMessage = e;
+      } else if ((e as Error)?.message) {
+        errorMessage = (e as Error).message;
+      }
+  
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: `Ocurrió un error al guardar la información: ${e}`,
+        text: `Ocurrió un error al guardar la información: ${errorMessage}`,
+        confirmButtonColor: '#3f51b5'
       });
+  
       console.error(e);
     }
-
+  
     this.isLoading.set(false);
   }
-
-
-
-
   /**
    * Init information address form
    */
@@ -312,14 +333,14 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       ],
       unitBuiltArea: [
         null,
-        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números
+        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')]// Solo números
       ],
       domTipologiaTipo: [null, Validators.required],
       unitBuiltPrivateArea: [
         null,
-        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números
+        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')]// Solo números
       ],
-      unitBuiltObservation: [null] // No es obligatorio
+      unitBuiltObservation: [null] 
     });
 
     if (this.addEditInformationData.type === 'new') {

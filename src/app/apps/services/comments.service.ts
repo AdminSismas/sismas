@@ -24,7 +24,7 @@ export class CommentsService {
     /* -------------- CONSTRUCTRO -------------- */
     constructor(private requestsService: SendGeneralRequestsService) {}
 
-    /* -------------- METODOS -------------- */
+    /* -------------- MÉTODOS -------------- */
     getDataPropertyByComments(executionId: string, pegeData: PageCommentsData):Observable<CommentsCollection> {
         let paramsComm:HttpParams = new HttpParams();
         paramsComm = paramsComm.append('page', `${pegeData.NumPage}`)
@@ -44,11 +44,11 @@ export class CommentsService {
     }
 
 
-    /* -------------- METODOS PRIVADOS -------------- */
+    /* -------------- MÉTODOS PRIVADOS -------------- */
     private getData(url:string, params:any):Observable<CommentsCollection>{
         return this.requestsService.sendRequestsGetOption(url, {params: params});
     }
-    
+
     private fetchBody(url: string, body: any): Observable<CommentsCollection> {
         return this.requestsService.sendRequestsFetchPostBody(url, body);
     }

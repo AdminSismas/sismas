@@ -139,7 +139,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       visible: true,
       cssClasses: ['text-secondary', 'font-medium']
     },
-    { label: 'Actions', property: 'actions', type: 'button', visible: true }
+    { label: 'Acciones', property: 'actions', type: 'button', visible: true }
   ];
 
   get visibleColumns() {
