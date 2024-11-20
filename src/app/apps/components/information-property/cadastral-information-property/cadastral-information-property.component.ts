@@ -162,7 +162,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
   }
 
   scrollTo(elementName: string) {
-    console.log(elementName);
     const elem: ElementRef<any> | undefined = this[
       elementName as keyof CadastralInformationPropertyComponent
       ] as unknown as ElementRef | undefined;

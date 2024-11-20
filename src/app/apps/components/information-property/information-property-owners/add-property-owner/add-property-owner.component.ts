@@ -65,7 +65,6 @@ export class AddPropertyOwnerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.defaults)
     this.secondForm.disable()
   }
 

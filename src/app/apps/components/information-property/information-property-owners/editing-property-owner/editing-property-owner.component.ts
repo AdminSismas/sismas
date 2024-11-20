@@ -57,8 +57,6 @@ export class EditingPropertyOwnerComponent implements OnInit {
   ngOnInit(): void {
     const formValues = this.data.rrrightInfo
 
-    console.log(this.data)
-
     this.form.reset(formValues)
   }
 
