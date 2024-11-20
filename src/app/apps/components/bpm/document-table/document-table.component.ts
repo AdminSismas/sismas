@@ -1,37 +1,85 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AttachmentCollection } from 'src/app/apps/interfaces/attachment.model';
-import { UntypedFormControl } from '@angular/forms';
-import { PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/constant';
-import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { AttachmentService } from 'src/app/apps/services/document-management.service';
+import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { Observable } from 'rxjs';
+
+// recursos de vex
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { TableColumn } from '@vex/interfaces/table-column.interface';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { stagger40ms } from '@vex/animations/stagger.animation';
+
+// recursos de angular material
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
+
+// recursos de archivos locales
+import { AttachmentService } from 'src/app/apps/services/document-management.service';
+import { AttachmentCollection } from 'src/app/apps/interfaces/attachment.model';
+import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
+import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { ViewFileDocumentManagementComponent } from '../../view-file-document-management/view-file-document-management.component';
+import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../../constants/attachment.constant';
+import { MatDividerModule } from '@angular/material/divider';
+
+
 
 @Component({
-  selector: 'vex-document-table',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatTableModule
-  ],
   templateUrl: './document-table.component.html',
   styleUrl: './document-table.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'vex-documnet-management',
+  standalone: true,
+  animations: [fadeInUp400ms, stagger40ms],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatTooltipModule,
+    NgClass,
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+  ]
 })
-export class DocumentTableComponent implements OnInit{
+export class DocumentTableComponent implements OnInit {
+  /* ============== ATRIBUTES ============== */
+  numRegister: number = 0;
+  disablePaginator: boolean = true;
 
-  public dataSource!: MatTableDataSource<AttachmentCollection>
-  public searchControl: UntypedFormControl = new UntypedFormControl();
-  public disablePaginator: boolean = true;
+  layoutCtrl = new UntypedFormControl('boxed');
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  dataSource!: MatTableDataSource<AttachmentCollection>;
+  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  contentInformations!: InformationPegeable;
+
 
   @Input()
-  page: number = 0;
+  page:number = PAGE;
   pageSize: number = PAGE_SIZE;
   totalElements: number = 0;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
@@ -40,25 +88,76 @@ export class DocumentTableComponent implements OnInit{
   @ViewChild(MatPaginator, { static: false }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  public dialogRef!: MatDialogRef<DocumentTableComponent>
 
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
+  dialogRef!: MatDialogRef<ViewFileDocumentManagementComponent>;
+
+
+  /* ============== CONSTRUCTOR ============== */
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
-    private attachmentService: AttachmentService
-  ) { }
+    private attachmentService: AttachmentService,
+    private readonly layoutService: VexLayoutService,
+  ) {}
 
+
+
+  /* ============== METHODS ============== */
+  /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
 
-    this.searchControl.valueChanges
+    this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
 
     this.getDataFromDocumentManagementService();
   }
 
+  ngAfterViewInit() {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+
+  /* ------- Meth. HTML ------- */
+  toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    column.visible = !column.visible;
+  }
+
+  refreshInformationpaginator(event: PageEvent): void {
+    if (event == null) {
+      return;
+    }
+
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+  }
+
+
+  trackByProperty<T>(index: number, column: TableColumn<T>) {
+    return column.property;
+  }
+
+
+  get visibleColumns() {
+    return this.columns
+      .filter((column) => column.visible)
+      .map((column) => column.property);
+  }
+
+
+
+  /* ------- Meth. Common ------- */
   onFilterChange(value: string) {
     if (!this.dataSource) {
       return;
@@ -69,14 +168,36 @@ export class DocumentTableComponent implements OnInit{
     this.dataSource.filter = value.trim().toLowerCase();
   }
 
+
   viewPaginator(numRegister: number): void {
     if (numRegister < 3) {
       this.disablePaginator = false;
     }
   }
 
+
+
+  /* ------- Meth. Modal load file ------- */
+  viewFile(metaData: contentInfoAttachment): void {
+    this.dialog
+      .open(ViewFileDocumentManagementComponent, {
+        minWidth:'370px',
+        width:'98%',
+        height: '86%',
+        disableClose: true,
+        data: metaData,
+      });
+
+      this.dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
+
+
+
+  /* ------- Meth. Services ------- */
   getDataFromDocumentManagementService(): void {
-    this.attachmentService.getDataPropertyByAttachment("37").subscribe({
+    this.attachmentService.getDataPropertyByAttachment(this.data.executionId).subscribe({
       next: (data: any) => {
         console.log("Datos recibidos de la API1:", data);
         this.dataSource.data = data;
@@ -89,4 +210,8 @@ export class DocumentTableComponent implements OnInit{
       }
     });
   }
+
+
 }
+
+

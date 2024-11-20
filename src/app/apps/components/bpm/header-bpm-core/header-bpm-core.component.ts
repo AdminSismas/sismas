@@ -10,6 +10,8 @@ import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { CONSTANT_NAME_RETURN } from '../../../constants/constantLabels';
 import { ProTaskE } from '../../../interfaces/pro-task-e';
 import { filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DocumentTableComponent } from '../document-table/document-table.component';
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -42,7 +44,8 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
 
   constructor(
     private validations: GeneralValidationsService,
-    private bpmCoreService: BpmCoreService
+    private bpmCoreService: BpmCoreService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -99,4 +102,15 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   protected readonly CONSTANT_NAME_RETURN = CONSTANT_NAME_RETURN;
+
+  openDialog(type: string): void {
+    if (type === 'documents') {
+      this.dialog.open(DocumentTableComponent, {
+        width: '60%',
+        data: {
+          executionId: this.proTaskE?.executionId
+        }
+      })
+    }
+  }
 }
