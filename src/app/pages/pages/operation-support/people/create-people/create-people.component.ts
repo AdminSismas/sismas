@@ -141,11 +141,9 @@ export class CreatePeopleComponent implements OnInit {
 
     // validamos nit
     if (this.form.get('domIndividualTypeNumber')?.value === 'NIT') {
-      console.log(this.form.get('number')?.value);
       let validate: boolean | null = this.validateNit(
         this.form.get('number')?.value
       );
-      console.log(validate);
 
       if (validate) {
         this.menssage.status = true;
@@ -253,11 +251,9 @@ export class CreatePeopleComponent implements OnInit {
     }
 
     if (this.form.get('domIndividualTypeNumber')?.value === 'NIT') {
-      console.log(this.form.get('number')?.value);
       let validate: boolean | null = this.validateNit(
         this.form.get('number')?.value
       );
-      console.log(validate);
 
       if (validate) {
         this.menssage.status = true;
@@ -276,12 +272,8 @@ export class CreatePeopleComponent implements OnInit {
 
     let url_basic = `${environment.url}:${environment.port}${environment.individualNumber}/${this.form.get('individualId')?.value}?baunitId=TESTS`;
 
-    console.log(people)
-
     people.number = this.defaults.number;
     people.domIndividualType = this.defaults.domIndividualType;
-
-    console.log(people)
 
     let dataCreate = {
       url: url_basic,
@@ -290,7 +282,6 @@ export class CreatePeopleComponent implements OnInit {
 
     this.peopleServcie.userEdit(dataCreate).subscribe({
       next: (res) => {
-        console.log(res);
         this.alertSnakbar.open('Usuario actualizado', 'CLOSE', {
           duration: 3000,
           horizontalPosition: 'right'

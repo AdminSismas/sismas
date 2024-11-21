@@ -1,0 +1,94 @@
+<mat-dialog-content>
+  <header class="flex items-center justify-between">
+    <h2 mat-dialog-title>Comentarios</h2>
+    <button
+      mat-icon-button
+      mat-dialog-close
+      class="text-secondary"
+    >
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </header>
+  <mat-divider class="bg-slate-400"></mat-divider>
+
+  <form
+  class="mt-4"
+  [formGroup]="form">
+    <div class="ltr:ml-10 rtl:mr-10 mt-2">
+      <div
+        *ngFor="let comment of commentsData"
+        class="mt-4"
+      >
+        <ng-container *ngIf="comment">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="body-2 m-0 leading-snug">
+                {{ comment.userFullName }}
+              </h4>
+              <h5 class="caption text-secondary m-0 leading-snug">
+                {{ comment.updatedAt | date: "medium" }}
+              </h5>
+            </div>
+            <button
+              mat-icon-button
+              matIconSuffix
+              type="button"
+              (click)="delelteDataCommentService(comment.commentId ?? 0)"
+              class="rounded-full relative hover:bg-red-200 z-10 mx-6"
+            >
+              <mat-icon
+                class="text-red-500"
+                svgIcon="mat:delete"
+              ></mat-icon>
+            </button>
+          </div>
+
+          <p
+            class="m-0 mt-2 pl-11 caption text-secondary"
+            style="white-space: pre-wrap"
+          >
+            {{ comment.commentText }}
+          </p>
+          <mat-divider class="mx-1 mt-2 mb-6"></mat-divider>
+        </ng-container>
+      </div>
+
+      <div class="m-0 flex items-center">
+        <mat-form-field
+          appearance="outline"
+          class="flex-auto"
+          subscriptSizing="dynamic"
+        >
+          <input
+            matInput
+            placeholder="Escribe un nuevo comentario"
+            formControlName="newCommentText"
+            name="newCommentText"
+          />
+          <button
+            color="primary"
+            mat-button
+            (click)="postDataCommentService()"
+            matIconSuffix
+            type="button"
+            class="rounded-full relative z-10 mx-3"
+          >
+            Enviar
+          </button>
+        </mat-form-field>
+      </div>
+
+      <mat-paginator
+        #paginator
+        *ngIf="!disablePaginator"
+        [length]="totalElements"
+        [pageSize]="NumSize"
+        [pageIndex]="NumPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="refreshPaginator($event)"
+        class="sticky left-0 flex flex-col mt-9"
+      >
+      </mat-paginator>
+    </div>
+  </form>
+</mat-dialog-content>

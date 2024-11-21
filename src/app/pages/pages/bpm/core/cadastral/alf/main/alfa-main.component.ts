@@ -103,6 +103,7 @@ import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-mai
 export class AlfaMainComponent implements OnInit {
 
   public id: string = this.getRandomInt(1234).toString();
+  public mode: number = 1;
   @Input({ required: true }) public executionId: string = '';
 
   isExistDataInformations$: Observable<boolean> = of(false);
@@ -127,6 +128,9 @@ export class AlfaMainComponent implements OnInit {
   ) {
     if (proFlow?.flowId) {
       this.id += proFlow?.flowId;
+    }
+    if (proFlow?.mode) {
+      this.mode = proFlow?.mode;
     }
   }
 
