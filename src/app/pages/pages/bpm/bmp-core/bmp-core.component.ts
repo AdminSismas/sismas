@@ -167,7 +167,7 @@ export class BmpCoreComponent implements OnInit {
           (x: ComponentTemplate) => x.nameComponent.includes(component.name)
         );
         if (listTmp?.length > 0) {
-          listTmp.forEach(x => this.createObjectComponent(x, component.name));
+          listTmp.forEach(x => this.createObjectComponent(x, component));
           listComponents.push(...listTmp);
         }
       });
@@ -307,9 +307,10 @@ export class BmpCoreComponent implements OnInit {
     return;
   }
 
-  createObjectComponent(obj: ComponentTemplate, name: string) {
-    obj.nameComponent = name;
+  createObjectComponent(obj: ComponentTemplate, component: BasicComponentTemplate) {
+    obj.nameComponent = component.name;
     obj.inputs = { 'executionId': this.executionId };
+    this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
       providers: [{ provide: ProFlow, useValue: this.proFlow }],
       parent: this.injector

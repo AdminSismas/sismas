@@ -204,57 +204,68 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: 'cadAlfaMainComponent',
     pathForm : '/core/cadastral/alf/main.html',
-    serviceValidation: 'checkStatusBpmOperation'
+    serviceValidation: 'checkStatusBpmOperation',
+    mode: 1
   },
   {
-    name: 'cadAlfaValidateComponent',
+    name: 'cadAlfaMainComponent',
     pathForm : '/core/cadastral/alf/validate.html',
-    serviceValidation: 'checkStatusBpmOperation'
+    serviceValidation: 'checkStatusBpmOperation',
+    mode: 2
   },
   {
     name: 'cadEcoCommitteeComponent',
     pathForm : '/core/cadastral/eco/comite.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'cadGeoMainComponent',
     pathForm : '/core/cadastral/geo/main.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'cadGeoValidateComponent',
     pathForm : '/core/cadastral/geo/validate.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'cadResMainComponent',
     pathForm : '/core/cadastral/res/main.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'cadResValidateComponent',
     pathForm : '/core/cadastral/res/validate.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'cadSynMainComponent',
     pathForm : '/core/cadastral/syn/main.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'cadVisitComponent',
     pathForm : '/core/cadastral/visita.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'docuMainComponent',
     pathForm : '/core/document/main.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
   {
     name: 'docuValidateComponent',
     pathForm : '/core/document/validate.html',
-    serviceValidation: ''
+    serviceValidation: '',
+    mode: 1
   },
 ];
 

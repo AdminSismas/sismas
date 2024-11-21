@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, computed, effect, inject, Input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, Input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { MatRippleModule } from '@angular/material/core';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
@@ -29,10 +28,11 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
 import { TypeInformation } from 'src/app/apps/interfaces/content-info';
-import { AddEditInformationPropertyOwnerComponent } from './add-edit-information-property-owner/add-edit-information-property-owner.component';
 import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
 import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Owners } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -52,18 +52,13 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     HeaderCadastralInformationPropertyComponent,
     MatCardModule,
     MatRippleModule,
-    NgForOf,
     MatExpansionModule,
     MatIconModule,
-    NgIf,
-    DatePipe,
     MatButtonModule,
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
     MatDialogModule,
-    AddEditInformationPropertyOwnerComponent,
-    DeletePropertyOwnerComponent
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
@@ -132,6 +127,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
 
+  fractions_sum: number = 0;
   page: number = PAGE;
   totalElements: number = 0;
   pageSize: number = PAGE_SIZE;
@@ -172,7 +168,9 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   private informationPropertyService = inject(InformationPropertyService);
   private matDialog = inject(MatDialog);
 
-  constructor() { }
+  constructor(
+    private snakbar: MatSnackBar
+  ) { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -212,6 +210,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         )
       );
       this.dataSource.data = infoOwners;
+      this.fractions_sum = infoOwners.reduce((acc: number, owner: InfoOwners) => {
+        const fraction = Number(owner.fractionS)
+        return acc + fraction ;
+      }, 0)
     } catch (e) {
       console.error(e);
     }
@@ -229,6 +231,11 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   onClickOpenAddEditModal(data: any): void {
+    if (this.fractions_sum >= 1) {
+      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 4000 })
+      return;
+    }
+
     this.matDialog.open(AddPropertyOwnerComponent, {
       width: '35%',
       data: {
@@ -258,6 +265,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       this.matDialog.open(EditingPropertyOwnerComponent, {
         width: '35%',
         data: {
+          fractions_sum: this.fractions_sum - Number(infoOwner.fractionS),
           rightId: this.rightIdSelected,
           executionId: this.executionId,
           baunitId: this.baunitId,

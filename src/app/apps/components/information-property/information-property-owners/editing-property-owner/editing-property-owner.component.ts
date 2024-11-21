@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -38,9 +38,13 @@ import { MatDividerModule } from '@angular/material/divider';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditingPropertyOwnerComponent implements OnInit {
-
   public form: FormGroup = this.fb.group({
-    fraction: [0, Validators.required],
+    fraction: [0, [
+      Validators.required,
+      Validators.max(1),
+      Validators.min(0),
+      this.createFractionValidator()
+    ]],
     domRightType: ['', Validators.required],
     beginAt: [Date(), Validators.required],
   })
@@ -56,7 +60,6 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
   ngOnInit(): void {
     const formValues = this.data.rrrightInfo
-
     this.form.reset(formValues)
   }
 
@@ -65,6 +68,11 @@ export class EditingPropertyOwnerComponent implements OnInit {
   }
 
   editRrrightOwnerProperty(): any {
+    if (this.form.invalid) {
+      this.snackbar.open('El valor de la fracción no es válido', 'CLOSE', { duration: 4000 })
+      return;
+    }
+
     const values = this.form.value
 
     try {
@@ -72,9 +80,6 @@ export class EditingPropertyOwnerComponent implements OnInit {
     } catch (e) {
       values.beginAt = values.beginAt
     }
-
-
-
     values.rightId = this.data.rightId
 
     const { number, domIndividualTypeNumber } = this.data.individual
@@ -92,5 +97,15 @@ export class EditingPropertyOwnerComponent implements OnInit {
           this.close()
         })
       })
+  }
+
+  private createFractionValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const fraction = Number(control.value)
+      if (fraction + this.data!.fractions_sum! > 1 || fraction < 0) {
+        return { 'invalidFraction': true }
+      }
+      return null
+    }
   }
 }
