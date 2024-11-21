@@ -112,13 +112,15 @@
       <mat-icon svgIcon="mat:info"></mat-icon>
       <span>Ver Cambios</span>
     </button>
-    <button (click)="edithInformations(row)" mat-menu-item>
-      <mat-icon svgIcon="mat:edit"></mat-icon>
-      <span>Editar</span>
-    </button>
-    <button (click)="deleteInformations(row)" mat-menu-item>
-      <mat-icon svgIcon="mat:delete"></mat-icon>
-      <span>Eliminar</span>
-    </button>
+    @if (mode === 1) {
+      <button (click)="edithInformations(row)" mat-menu-item>
+        <mat-icon svgIcon="mat:edit"></mat-icon>
+        <span>Editar</span>
+      </button>
+      <button (click)="deleteInformations(row)" mat-menu-item>
+        <mat-icon svgIcon="mat:delete"></mat-icon>
+        <span>Eliminar</span>
+      </button>
+    }
   </ng-template>
 </mat-menu>

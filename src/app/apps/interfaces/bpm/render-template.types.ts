@@ -14,5 +14,6 @@ export interface BasicComponentTemplate {
   name: string;
   pathForm: string;
   serviceValidation: string;
+  mode: number;
 }
 
