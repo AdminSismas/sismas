@@ -17,6 +17,7 @@ import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-pe
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+import { People } from 'src/app/apps/interfaces/people.model';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({

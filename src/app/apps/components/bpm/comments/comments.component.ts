@@ -1,13 +1,8 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
 // recursos de vex
-import { VexPageLayoutComponent } from "../../../../@vex/components/vex-page-layout/vex-page-layout.component";
-import { VexPageLayoutHeaderDirective } from "../../../../@vex/components/vex-page-layout/vex-page-layout-header.directive";
-import { VexBreadcrumbsComponent } from "../../../../@vex/components/vex-breadcrumbs/vex-breadcrumbs.component";
-import { VexPageLayoutContentDirective } from "../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive";
-import { VexDateFormatRelativePipe } from '@vex/pipes/vex-date-format-relative/vex-date-format-relative.pipe';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 // recursos de angular material
@@ -15,39 +10,40 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormControl, UntypedFormArray, UntypedFormControl, FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 // recursos de archivos locales
-import { CommentsService } from '../../services/comments.service';
-import { PageCommentsData } from '../../interfaces/page-comments-data.model';
-import { InformationPegeable } from '../../interfaces/information-pegeable.model';
-import { contentInfoComments } from '../../interfaces/content-info-comments.model';
+import { CommentsService } from 'src/app/apps/services/comments.service';
+import { PageCommentsData } from 'src/app/apps/interfaces/page-comments-data.model';
+import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { contentInfoComments } from 'src/app/apps/interfaces/content-info-comments.model';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 
 @Component({
-    selector: 'vex-comments',
-    standalone: true,
-    templateUrl: './comments.component.html',
-    styleUrl: './comments.component.scss',
-    imports: [
-      CommonModule,
-      FormsModule,
-      ReactiveFormsModule,
-      VexPageLayoutComponent,
-      VexPageLayoutContentDirective,
-      MatIconModule,
-      MatDividerModule,
-      MatPaginatorModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatButtonModule,
-      NgFor,
-      NgIf
-    ]
+  selector: 'vex-comments',
+  standalone: true,
+  templateUrl: './comments.component.html',
+  styleUrl: './comments.component.css',
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatPaginatorModule,
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+  ]
 })
+
 export class CommentsComponent {
   /* ============== ATRIBUTES ============== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -56,8 +52,8 @@ export class CommentsComponent {
   NumSize: number = 5;
   totalElements: number = 0;
   pageSizeOptions: number[] = [5, 10, 20, 30];
+  executionId: string = '';
 
-  executionId: string = "38";
   body: contentInfoComments = {
     commentText: ''
   };
@@ -73,14 +69,16 @@ export class CommentsComponent {
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialog: MatDialog,
     private commentsService: CommentsService,
     private readonly layoutService: VexLayoutService,
     private alertSnakbar: MatSnackBar,
-    private fb: FormBuilder ) {
-      this.form = this.fb.group({
-        newCommentText: [''],
-      });
-    }
+    private fb: FormBuilder) {
+    this.form = this.fb.group({
+      newCommentText: [''],
+    });
+  }
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
@@ -114,6 +112,7 @@ export class CommentsComponent {
   /* ------- Meth. Services ------- */
   getDataFromDocumentManagementService(): void {
     const pageData = this.generateObjectPageCommentsData();
+    this.executionId = this.data.executionId;
     this.commentsService.getDataPropertyByComments(this.executionId, pageData).subscribe({ //this.generateObjectPageCommentsData()
       next: (data: any) => {
         this.captureInformationSubscribe(data);

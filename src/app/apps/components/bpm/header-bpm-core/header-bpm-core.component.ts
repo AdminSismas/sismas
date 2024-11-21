@@ -12,6 +12,7 @@ import { ProTaskE } from '../../../interfaces/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentTableComponent } from '../document-table/document-table.component';
+import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -106,6 +107,13 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   openDialog(type: string): void {
     if (type === 'documents') {
       this.dialog.open(DocumentTableComponent, {
+        width: '60%',
+        data: {
+          executionId: this.proTaskE?.executionId
+        }
+      })
+    } else if (type === 'comments') {
+      this.dialog.open(CommentsComponent, {
         width: '60%',
         data: {
           executionId: this.proTaskE?.executionId

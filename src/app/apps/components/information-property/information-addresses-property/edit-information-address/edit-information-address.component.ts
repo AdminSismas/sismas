@@ -66,15 +66,13 @@ export class EditInformationAddressComponent implements OnInit {
   private informationPropertyService = inject(InformationPropertyService);
   private fBuilder = inject(FormBuilder);
   readonly addEditInformationData = inject<AddEditInformationDataI>(MAT_DIALOG_DATA);
-  
+
   constructor() {
     this.initForm();
   }
 
   ngOnInit(): void {
     this.loadDetailInformationAddress();
-
-    console.log('addEditInformationData', this.addEditInformationData.type);
   }
 
   /**
@@ -114,7 +112,7 @@ export class EditInformationAddressComponent implements OnInit {
 
     try {
       const value = this.informationAddressForm.value || {};
-      let detailBasicInformationAddress: DetailBasicInformationAddress | undefined; 
+      let detailBasicInformationAddress: DetailBasicInformationAddress | undefined;
       if (this.addEditInformationData.type === 'new') {
         const createBasicInformationAddress: CreateBasicInformationAddress = {
           esDireccionPrincipal: value?.esDireccionPrincipal,
