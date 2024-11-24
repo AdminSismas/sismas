@@ -73,7 +73,7 @@ import { SendInfoGeneralService } from '../../../../../apps/services/general/sen
     FooterComponent,
     MatPaginatorModule,
     LoadingAppComponent,
-    FluidHeightDirective
+    FluidHeightDirective,
   ],
   templateUrl: './tasks-panel.component.html',
   styleUrl: './tasks-panel.component.scss'

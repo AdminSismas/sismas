@@ -20,7 +20,9 @@ import {
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
-  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
+  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -50,11 +52,17 @@ import {
 } from './detail-information-constructions-property/detail-information-constructions-property.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/content-info';
-import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from './edit-information-constructions-property/edit-information-constructions-property.component';
-import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
-import { D } from '@angular/cdk/keycodes';
+import {
+  AddEditInformationConstructionI,
+  EditInformationConstructionsPropertyComponent
+} from './edit-information-constructions-property/edit-information-constructions-property.component';
+import {
+  BasicInformationConstruction
+} from 'src/app/apps/interfaces/information-property/basic-information-construction';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditInformationConstructionDialogComponent } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
+import {
+  EditInformationConstructionDialogComponent
+} from './edit-information-construction-dialog/edit-information-construction-dialog.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -103,7 +111,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   contentInformations!: InformationPegeable;
 
   @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
+  @Input({ required: false }) public expandedComponent: boolean = false;
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
@@ -121,7 +129,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
-  
+
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private snackBar = inject(MatSnackBar);
   constructor(
@@ -241,21 +249,21 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
       baunitId: this.baunitId || undefined,
     };
-  
+
     const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
       minWidth: '50%',
       minHeight: '40%',
       disableClose: true,
       data: dialogData,
     });
-  
+
     dialogRef.afterClosed().subscribe((result: ContentInformationConstruction) => {
       if (result) {
         if (dialogData.type === 'new') {
-        
+
           this.dataSource.data = [...this.dataSource.data, result];
         } else {
-     
+
           const index = this.dataSource.data.findIndex((item) => item.unitBuiltId === result.unitBuiltId);
           if (index !== -1) {
             this.dataSource.data[index] = result;
@@ -269,7 +277,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     return column.property;
   }
 
-  
+
   editInformations(customer: any): void {
     const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
       minWidth: '50%',
@@ -280,16 +288,16 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
         baunitId: this.baunitId
       }
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // Encuentra el índice de la construcción que se ha editado
         const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
-  
+
         if (index !== -1) {
           // Actualiza el elemento en dataSource
           this.dataSource.data[index] = result;
-          
+
           // Forzar la actualización de la tabla
           this.dataSource.data = [...this.dataSource.data];
         }
@@ -304,7 +312,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
         const baunitId = 2282747; // El valor fijo que mencionaste
         const changeLogId = 68;
         const unitBuiltId = customer.unitBuiltId;
-  
+
         this.informationPropertyService.deleteConstruction(baunitId, changeLogId, unitBuiltId).subscribe({
           next: () => {
             // Elimina el registro de la tabla si la petición fue exitosa
@@ -323,7 +331,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
               text: 'No fue posible eliminar la información',
               icon: 'error',
               confirmButtonText: 'Cerrar',
-              confirmButtonColor: '#3f51b5' 
+              confirmButtonColor: '#3f51b5'
             });
           }
         });

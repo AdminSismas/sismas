@@ -54,6 +54,9 @@ const baseConfig: VexConfig = {
   footer: {
     visible: true,
     fixed: true
+  },
+  configPanelToggle: {
+    visible: true,
   }
 };
 
@@ -76,6 +79,13 @@ export const vexConfigs: VexConfigs = {
       user: {
         visible: false
       }
+    },
+    footer: {
+      fixed: false,
+      visible: false
+    },
+    configPanelToggle: {
+      visible: false,
     }
   }),
   hermes: mergeDeep(deepClone(baseConfig), {
@@ -97,7 +107,8 @@ export const vexConfigs: VexConfigs = {
       fixed: false
     },
     footer: {
-      fixed: false
+      fixed: false,
+      visible: false
     }
   }),
   ares: mergeDeep(deepClone(baseConfig), {

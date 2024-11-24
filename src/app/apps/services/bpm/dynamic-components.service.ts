@@ -11,6 +11,9 @@ import { VisitaComponent } from '../../../pages/pages/bpm/core/cadastral/visita/
 import { DocumentMainComponent } from '../../../pages/pages/bpm/core/document/main/document-main.component';
 import { DocumentValidateComponent } from '../../../pages/pages/bpm/core/document/validate/document-validate.component';
 import { ComponentTemplate } from '../../interfaces/bpm/render-template.types';
+import {
+  CitationAndNoticeComponent
+} from '../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
 
 @Injectable({
   providedIn: 'root'
@@ -96,6 +99,13 @@ export class DynamicComponentsService {
       component:DocumentValidateComponent,
       loadComponent: () => import('../../../pages/pages/bpm/core/document/validate/document-validate.component').then(
         (m) => m.DocumentValidateComponent
+      ),
+    },
+    {
+      nameComponent: 'citationAndNoticeComponent',
+      component:CitationAndNoticeComponent,
+      loadComponent: () => import('../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component').then(
+        (m) => m.CitationAndNoticeComponent
       ),
     }
   ];

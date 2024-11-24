@@ -83,7 +83,7 @@ export class InformationZonesPropertyComponent implements OnInit {
   zoneBAUnitGeoeconomic: ZoneBAUnit[] = [];
 
   @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
+  @Input({ required: false }) public expandedComponent: boolean = false;
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;

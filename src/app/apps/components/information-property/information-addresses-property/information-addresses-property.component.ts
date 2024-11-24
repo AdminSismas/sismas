@@ -95,7 +95,7 @@ export class InformationAddressesPropertyComponent
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = true;
+  @Input({ required: false }) expandedComponent: boolean = false;
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
@@ -128,7 +128,7 @@ export class InformationAddressesPropertyComponent
   }
 
   ngOnInit() {
-    if (this.id?.length <= 0 || this.baunitId == null) {
+    if (this.id?.length <= 0 || this.baunitId == null || !this.expandedComponent) {
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;

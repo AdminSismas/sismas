@@ -203,13 +203,13 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformati
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: 'cadAlfaMainComponent',
-    pathForm : '/core/cadastral/alf/main.html',
+    pathForm : '/core/cadastral/alf/maincomentad_.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
   },
   {
     name: 'cadAlfaMainComponent',
-    pathForm : '/core/cadastral/alf/validate.html',
+    pathForm : '/core/cadastral/alf/validate.html_',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 2
   },
@@ -265,6 +265,12 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     name: 'docuValidateComponent',
     pathForm : '/core/document/validate.html',
     serviceValidation: '',
+    mode: 1
+  },
+  {
+    name: 'citationAndNoticeComponent',
+    pathForm : '/core/cadastral/alf/main.html',
+    serviceValidation: 'checkStatusBpmOperation',
     mode: 1
   },
 ];

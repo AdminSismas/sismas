@@ -60,6 +60,9 @@ export interface VexConfig {
     visible: boolean;
     fixed: boolean;
   };
+  configPanelToggle: {
+    visible: boolean;
+  };
 }
 
 export type VexConfigs = Record<VexConfigName, VexConfig>;
