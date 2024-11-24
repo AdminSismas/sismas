@@ -47,19 +47,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
       type: 'link',
       id: 'all',
       icon: 'mat:view_headline',
-      label: 'All Contacts'
-    },
-    {
-      type: 'link',
-      id: 'frequently',
-      icon: 'mat:history',
-      label: 'Frequently contacted'
-    },
-    {
-      type: 'link',
-      id: 'starred',
-      icon: 'mat:star',
-      label: 'Starred'
+      label: 'Todos'
     },
     {
       type: 'subheading',
@@ -69,7 +57,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
       type: 'link',
       id: 'family',
       icon: 'mat:label',
-      label: 'Family',
+      label: 'Citación',
       classes: {
         icon: 'text-primary-600'
       }
@@ -78,7 +66,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
       type: 'link',
       id: 'friends',
       icon: 'mat:label',
-      label: 'Friends',
+      label: 'Notificación',
       classes: {
         icon: 'text-green-600'
       }
@@ -87,7 +75,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
       type: 'link',
       id: 'colleagues',
       icon: 'mat:label',
-      label: 'Colleagues',
+      label: 'Aviso',
       classes: {
         icon: 'text-amber-600'
       }
@@ -96,7 +84,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
       type: 'link',
       id: 'business',
       icon: 'mat:label',
-      label: 'Business',
+      label: 'Aviso Fijar',
       classes: {
         icon: 'text-gray-600'
       }
