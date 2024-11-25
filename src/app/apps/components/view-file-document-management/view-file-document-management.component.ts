@@ -39,11 +39,12 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   metadata: contentInfoAttachment;
   properties = MODEL_METADATA_PROPERTIES;
 
-  executionId: string = "37";
+  executionId: string;
+
   idAtachment: number;
   originalFileName: string;
 
-  basic_url: string = `${environment.url}:${environment.port}${environment.bpmAttachment}`;
+  basic_url: string = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
   urlSafe: SafeUrl = '';
 
 
@@ -52,12 +53,13 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     public dialogRef: MatDialogRef<ViewFileDocumentManagementComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: contentInfoAttachment,
-  ) {
-    this.metadata = data;
-    this.idAtachment = this.metadata.id;
-    this.originalFileName = this.metadata.originalFileName;
-  }
+    @Inject(MAT_DIALOG_DATA) public data: { metaData: contentInfoAttachment; executionId: string }
+) {
+  this.metadata = data.metaData; 
+  this.idAtachment = this.metadata.id;
+  this.originalFileName = this.metadata.originalFileName;
+  this.executionId = data.executionId; 
+}
 
 
 
@@ -86,7 +88,8 @@ export class ViewFileDocumentManagementComponent implements OnInit {
 
   /* ------- Meth. Common ------- */
   urlPdfViewer(): SafeUrl {
-    const urlComplete: string = `${this.basic_url}/${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+    console.log('urlComplete: ', urlComplete);
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
   }
 
