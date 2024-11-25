@@ -24,7 +24,7 @@
                             <div>
                                 <h4 class="body-2 m-0 leading-snug">{{ comment.userFullName }}</h4>
                                 <h5 class="caption text-secondary m-0 leading-snug">
-                                {{ comment.updatedAt | date:'medium' }}
+                                {{ comment.updatedAt | date:'dd/MM/yyyy' }}
                                 </h5>
                             </div>
                             <button  mat-icon-button  matIconSuffix type="button" (click)="delelteDataCommentService(comment.commentId ?? 0)" class="rounded-full relative hover:bg-red-200 z-10 mx-6">
