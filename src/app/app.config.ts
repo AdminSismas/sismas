@@ -9,13 +9,14 @@ import {
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { provideIcons } from './core/icons/icons.provider';
 import { provideLuxon } from './core/luxon/luxon.provider';
 import { provideVex } from '@vex/vex.provider';
 import { provideNavigation } from './core/navigation/navigation.provider';
 import { vexConfigs } from '@vex/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
+import { COLOMBIA_DATE_FORMATS } from './helpers/colombia-date-formats';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -86,6 +87,11 @@ export const appConfig: ApplicationConfig = {
           ['link', 'image']
         ]
       }
-    })
+    }),
+
+    { provide: MAT_DATE_LOCALE, useValue: 'es-CO' }, 
+    { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS }, 
+
+  
   ]
 };

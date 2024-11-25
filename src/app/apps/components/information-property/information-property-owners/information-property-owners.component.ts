@@ -33,6 +33,7 @@ import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-pro
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Owners } from 'src/app/apps/interfaces/bpm/changes-property-owner';
+import { CommonModule } from '@angular/common';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -59,6 +60,7 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatMenuModule,
     MatPaginatorModule,
     MatDialogModule,
+    CommonModule
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
