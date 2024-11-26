@@ -13,16 +13,16 @@
           mat-cell
           class="pl-1 pr-1">
         <div *ngIf="row['operationType'] === 'CREATE'"
-             class="px-4 py-2 rounded-xl !bg-green-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-          {{ row['operationType'] }}
+             class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-green-600">
+          Creado
         </div>
         <div *ngIf="row['operationType'] === 'UPDATE'"
-             class="px-4 py-2 rounded-xl !bg-primary-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-          {{ row['operationType'] }}
+             class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-primary-600">
+          Agregado
         </div>
         <div *ngIf="row['operationType'] === 'DELETE'"
-             class="px-4 py-2 rounded-xl !bg-red-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-          {{ row['operationType'] }}
+             class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-red-600">
+          Borrado
         </div>
       </td>
     </ng-container>
@@ -119,7 +119,7 @@
       </button>
       <button (click)="deleteInformations(row)" mat-menu-item>
         <mat-icon svgIcon="mat:delete"></mat-icon>
-        <span>Eliminar</span>
+        <span>Retirar</span>
       </button>
     }
   </ng-template>
