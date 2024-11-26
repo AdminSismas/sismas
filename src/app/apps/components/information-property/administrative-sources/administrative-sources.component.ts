@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
 import { AdministrativeSource } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableModule } from '@angular/material/table';
+import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 
 @Component({
   selector: 'vex-administrative-sources',
@@ -10,12 +11,12 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     MatExpansionModule,
     HeaderCadastralInformationPropertyComponent,
-    MatTableModule
+    MatTableModule,
   ],
   templateUrl: './administrative-sources.component.html',
   styleUrl: './administrative-sources.component.scss'
 })
-export class AdministrativeSourcesComponent implements OnInit {
+export class AdministrativeSourcesComponent {
   @Input() public id: string = '';
   @Input() public expandedComponent: boolean = false;
   @Input() public baunitId?: string | null;
@@ -23,7 +24,34 @@ export class AdministrativeSourcesComponent implements OnInit {
   @Input() public executionId?: string | null;
   @Input() public typeInformation?: string;
 
-  public displayedColumns: string[] = ['domFuenteAdministrativaTipo'];
+  public displayedColumns: string[] = [
+    'domFuenteAdministrativaTipo',
+    'fechaDocumentoFuente',
+    'numeroFuente',
+    'enteEmisor'
+  ];
+
+  public dataSource: AdministrativeSource[] = [];
+
+  constructor(
+    private administrativeSourcesService: AdministrativeSourcesService
+  ) { }
+
+  getDataSource(){
+    if (this.schema === 'temp') {
+      this.administrativeSourcesService.getAdministrativeSourcesTemp(this.baunitId as string, this.executionId as string)
+        .subscribe(data => {
+          this.dataSource = data
+        })
+    }
+    else if (this.schema === 'main') {
+      this.administrativeSourcesService.getAdministrativeSourcesMain(this.baunitId as string)
+        .subscribe(data => {
+          this.dataSource = data
+        })
+    }
+    console.log(this.dataSource)
+  }
 
   public example_data: AdministrativeSource[] = [
     {
@@ -52,12 +80,9 @@ export class AdministrativeSourcesComponent implements OnInit {
     }
   ]
 
-
-  ngOnInit(): void {
-    if (this.id?.length > 0) {
-      return
+  isExpandPanel(expandedComponent: boolean): void {
+    if (expandedComponent) {
+      this.getDataSource();
     }
   }
-
-
 }
