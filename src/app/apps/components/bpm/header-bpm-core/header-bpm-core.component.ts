@@ -82,6 +82,9 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
     if(proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName){
       this.crumbs.push(proTaskE.proTask?.flowDetail)
     }
+    if(proTaskE?.executionId){
+      this.crumbs.push(proTaskE?.executionId.toString())
+    }
     if(proTaskE?.proTask?.flowName){
       this.crumbs.push(proTaskE?.proTask?.flowName)
     }
