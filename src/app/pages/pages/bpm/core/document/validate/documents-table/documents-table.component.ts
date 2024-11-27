@@ -63,7 +63,7 @@ import { SelectionModel } from '@angular/cdk/collections';
     NgFor,
     NgIf,
     ReactiveFormsModule,
-    DocumentValidateComponent,
+    DocumentValidateComponent
   ],
   templateUrl: './documents-table.component.html',
   styleUrl: './documents-table.component.scss'
@@ -193,7 +193,10 @@ export class DocumentsTableComponent {
           width:'98%',
           height: '86%',
           disableClose: true,
-          data: metaData,
+          data: {
+            metaData: metaData,
+            executionId: this.executionId,
+          }
         });
   
         this.dialogRef.afterClosed().subscribe(result => {
