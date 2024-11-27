@@ -309,7 +309,7 @@ export class BmpCoreComponent implements OnInit {
 
   createObjectComponent(obj: ComponentTemplate, component: BasicComponentTemplate) {
     obj.nameComponent = component.name;
-    obj.inputs = { 'executionId': this.executionId };
+    obj.inputs = { 'executionId': this.executionId};
     this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
       providers: [{ provide: ProFlow, useValue: this.proFlow }],
