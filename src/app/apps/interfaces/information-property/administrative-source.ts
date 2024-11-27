@@ -33,6 +33,20 @@ export interface FuentesAdministrativasTipo {
   description: string;
 }
 
+export interface UpdateAdministrativeSource {
+  executionId: string;
+  baunitId: string;
+  params: UpdateAdministrativeSourceParams;
+}
+
+export interface UpdateAdministrativeSourceParams {
+  fuenteAdminId: string;
+  domFuenteAdministrativaTipo: string;
+  fechaDocumentoFuente: Date | string;
+  numeroFuente: string;
+  enteEmisor: string;
+}
+
 export interface DeleteAdministrativeSourceParams {
   baunitId: string;
   changeLogId: string;

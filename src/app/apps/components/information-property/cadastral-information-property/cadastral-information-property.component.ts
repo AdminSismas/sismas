@@ -91,12 +91,13 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private informationUnitPropertyComponent?: ElementRef;
-  @ViewChild(InformationAddressesPropertyComponent, {
+  @ViewChild(AdministrativeSourcesComponent, {
     read: ElementRef,
     static: false
   })
-  private administrativeSoucesComponent?: ElementRef;
-  @ViewChild(AdministrativeSourcesComponent, {
+  private administrativeSourcesComponent?: ElementRef;
+
+  @ViewChild(InformationAddressesPropertyComponent, {
     read: ElementRef,
     static: false
   })

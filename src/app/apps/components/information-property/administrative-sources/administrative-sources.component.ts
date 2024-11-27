@@ -1,13 +1,13 @@
-import { Component, computed, Input, OnInit } from '@angular/core';
+import { Component, computed, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
-import { AdministrativeSource, CreateAdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams } from 'src/app/apps/interfaces/information-property/administrative-source';
+import { AdministrativeSource, CreateAdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, UpdateAdministrativeSource } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableModule } from '@angular/material/table';
 import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -22,7 +22,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   templateUrl: './administrative-sources.component.html',
   styleUrl: './administrative-sources.component.scss'
@@ -34,6 +35,9 @@ export class AdministrativeSourcesComponent implements OnInit {
   @Input() public schema?: string;
   @Input() public executionId?: string | null;
   @Input() public typeInformation?: string;
+
+  @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
+  public selectedFuente?: AdministrativeSource;
 
   public displayedColumns: string[] = [
     'domFuenteAdministrativaTipo',
@@ -121,26 +125,61 @@ export class AdministrativeSourcesComponent implements OnInit {
     }
   }
 
+  deleteFuenteAdministrativa(row: AdministrativeSource) {
+    const params: DeleteAdministrativeSourceParams = {
+      baunitId: this.baunitId as string,
+      changeLogId: this.executionId as string,
+      fuenteAdminId: row.fuenteAdminId as string
+    }
+    this.administrativeSourcesService.deleteAdministrativeSource(params)
+      .subscribe({
+        next: () => {
+          this.snackbar.open('Fuente administrativa eliminada', 'CLOSE', { duration: 4000 })
+          this.getDataSource()
+        },
+        error: (error: any) => {
+          this.snackbar.open('Error al eliminar la fuente administrativa', 'CLOSE', { duration: 4000 })
+        }
+      })
+  }
+
   onClickActionBtn(id: string, row: AdministrativeSource) {
     if (id === 'delete') {
       console.log('Eliminando fuente...')
-      const params: DeleteAdministrativeSourceParams = {
-        baunitId: this.baunitId as string,
-        changeLogId: this.executionId as string,
-        fuenteAdminId: row.fuenteAdminId as string
-      }
-      this.administrativeSourcesService.deleteAdministrativeSource(params)
-        .subscribe({
-          next: () => {
-            this.getDataSource()
-          },
-          error: (error: any) => {
-            this.snackbar.open('Error al eliminar la fuente administrativa', 'CLOSE', { duration: 4000 })
+      this.selectedFuente = row;
+      this.dialog.open(this.confirmDeleteDialog, {
+        width: '40%',
+      }).afterClosed()
+        .subscribe((result: boolean) => {
+          if (result) {
+            this.deleteFuenteAdministrativa(row)
           }
         })
 
     } else if (id === 'edit') {
       console.log('Editando fuente...')
+      const params: UpdateAdministrativeSource = {
+        executionId: this.executionId as string,
+        baunitId: this.baunitId as string,
+        params: {
+          fuenteAdminId: row.fuenteAdminId,
+          domFuenteAdministrativaTipo: row.domFuenteAdministrativaTipo,
+          fechaDocumentoFuente: row.fechaDocumentoFuente,
+          numeroFuente: row.numeroFuente,
+          enteEmisor: row.enteEmisor
+        }
+      }
+
+      this.dialog.open(CreateAdministrativeSourceComponent, {
+        width: '40%',
+        data: params
+      })
+        .afterClosed()
+        .subscribe(() => {
+          setTimeout(() => {
+            this.getDataSource()
+          }, 300)
+        })
     }
   }
 }

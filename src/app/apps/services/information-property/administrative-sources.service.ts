@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment as env } from 'src/environments/environments';
-import { AdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, FuentesAdministrativasTipo } from '../../interfaces/information-property/administrative-source';
+import { AdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, FuentesAdministrativasTipo, UpdateAdministrativeSource } from '../../interfaces/information-property/administrative-source';
 import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
@@ -62,6 +62,20 @@ export class AdministrativeSourcesService {
       .pipe(
         catchError(error => {
           console.log('Error al crear la fuente administrativa')
+          throw error
+        })
+      )
+  }
+
+  /* PUT */
+  updateAdministrativeSource(parameters: UpdateAdministrativeSource): Observable<AdministrativeSource> {
+    const { baunitId, executionId, params } = parameters
+    const url = `${this.base_url}temp/${executionId}/${baunitId}`
+
+    return this.http.put<AdministrativeSource>(url, params)
+      .pipe(
+        catchError(error => {
+          console.log('Error al actualizar la fuente administrativa')
           throw error
         })
       )
