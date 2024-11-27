@@ -1,0 +1,196 @@
+<mat-accordion
+  class="flex flex-col py-0 px-0 mb-2 classAdministrativeSources"
+  [id]="id"
+>
+  <mat-expansion-panel
+    (opened)="isExpandPanel((expandedComponent = true))"
+    [expanded]="expandedComponent"
+  >
+    <mat-expansion-panel-header
+      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
+    >
+      <vex-header-cadastral-information-property
+        label="Fuentes administrativas"
+        icon="mat:source"
+        id="administrativeSources"
+      >
+      </vex-header-cadastral-information-property>
+    </mat-expansion-panel-header>
+    @if (expandedComponent) {
+      <mat-panel-description
+        class="py-0 px-0 pt-0 pb-0 flex flex-col"
+        [id]="id + 'mat-panel-description'"
+      >
+        @if (typeInformation === "edition") {
+          <div class="w-full flex items-center mt-2 pl-4">
+            <button
+              mat-raised-button
+              color="primary"
+              title="Agregar fuente administrativa"
+              (click)="createAdministrativeSource()"
+            >
+              Nueva
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
+          </div>
+        }
+        <table
+          mat-table
+          [dataSource]="dataSource"
+        >
+          <!-- Tipo fuente administrativa -->
+          <ng-container matColumnDef="domFuenteAdministrativaTipo">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Tipo fuente administrativa
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+            >
+              {{ element.domFuenteAdministrativaTipo }}
+            </td>
+          </ng-container>
+
+          <!-- Fecha documento -->
+          <ng-container matColumnDef="fechaDocumentoFuente">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Fecha documento
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+            >
+              {{ element.fechaDocumentoFuente }}
+            </td>
+          </ng-container>
+
+          <!-- Número fuente -->
+          <ng-container matColumnDef="numeroFuente">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Número fuente
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+            >
+              {{ element.numeroFuente }}
+            </td>
+          </ng-container>
+
+          <!-- Ente emisor -->
+          <ng-container matColumnDef="enteEmisor">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Ente emisor
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+            >
+              {{ element.enteEmisor }}
+            </td>
+          </ng-container>
+          <!-- Action Column -->
+          <ng-container matColumnDef="actions">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              mat-sort-header
+              class="uppercase"
+            >
+              Acciones
+            </th>
+            <td
+              *matCellDef="let row"
+              class="w-10 text-secondary"
+              mat-cell
+            >
+              <button
+                (click)="$event.stopPropagation()"
+                [matMenuTriggerData]="{ row: row }"
+                [matMenuTriggerFor]="actionsMenu"
+                mat-icon-button
+                type="button"
+              >
+                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+          ></tr>
+        </table>
+        <mat-menu
+          #actionsMenu="matMenu"
+          xPosition="before"
+          yPosition="below"
+        >
+          <ng-template
+            let-row="row"
+            matMenuContent
+          >
+            @for (actionBtn of actionBtns(); track actionBtn.id) {
+              <button
+                mat-menu-item
+                (click)="onClickActionBtn(actionBtn.id, row)"
+              >
+                <mat-icon [svgIcon]="actionBtn.icon" />
+                <span>{{ actionBtn.label }}</span>
+              </button>
+            } @empty {
+              <button
+                mat-menu-item
+                disabled
+              >
+                <span class="text-center">No options</span>
+              </button>
+            }
+          </ng-template>
+        </mat-menu>
+      </mat-panel-description>
+    }
+  </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #confirmDeleteDialog>
+  <h2 mat-dialog-title>¿Está seguro de eliminar la fuente administrativa?</h2>
+  <mat-divider class="text-border border-slate-400"></mat-divider>
+  <mat-dialog-content class="flex flex-col items-center py-4 lg:px-8">
+    <span class="text-lg">¿Está seguro de eliminar esta fuente administrativa?</span>
+    <strong class="text-lg">{{ selectedFuente?.numeroFuente }}</strong>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="primary"
+      [mat-dialog-close]="true"
+    >
+      Eliminar
+    </button>
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="warn"
+    >
+      Cancelar
+    </button>
+  </mat-dialog-actions>
+</ng-template>

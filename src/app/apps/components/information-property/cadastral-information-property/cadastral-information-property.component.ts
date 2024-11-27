@@ -37,6 +37,7 @@ import { TypeInformation } from '../../../interfaces/content-info';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
+import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -75,7 +76,8 @@ import { environment as envi } from '../../../../../environments/environments';
     InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
     MatFormFieldModule,
-    InformationUnitPropertyComponent
+    InformationUnitPropertyComponent,
+    AdministrativeSourcesComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -89,6 +91,12 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private informationUnitPropertyComponent?: ElementRef;
+  @ViewChild(AdministrativeSourcesComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private administrativeSourcesComponent?: ElementRef;
+
   @ViewChild(InformationAddressesPropertyComponent, {
     read: ElementRef,
     static: false

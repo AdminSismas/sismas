@@ -435,6 +435,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'informationUnitPropertyComponent'
   },
   {
+    label: 'Fuentes Administrativas',
+    fragment: 'administrativeSourcesComponent'
+  },
+  {
     label: 'Direcciones',
     fragment: 'informationAddressesPropertyComponent'
   },

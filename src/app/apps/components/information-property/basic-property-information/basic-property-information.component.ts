@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,10 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -40,7 +36,6 @@ import { environment } from '../../../../../environments/environments';
     scaleFadeIn400ms,
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -49,13 +44,7 @@ import { environment } from '../../../../../environments/environments';
     MatInputModule,
     MatOptionModule,
     MatTabsModule,
-    NgForOf,
-    NgIf,
-    VexHighlightDirective,
     ReactiveFormsModule,
-    VexPageLayoutHeaderDirective,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
     MatSlideToggleModule,
     MatCardModule,
     HeaderCadastralInformationPropertyComponent,
