@@ -7,11 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateFnsAdapter, MatDateFnsModule } from '@angular/material-date-fns-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MY_DATE_FORMATS } from 'src/app/apps/constants/procedures.constant';
 import { MatInputModule } from '@angular/material/input';
-import { es } from 'date-fns/locale';
 import { MatButtonModule } from '@angular/material/button';
 import { AdministrativeSource, CreateAdministrativeSourceParams } from 'src/app/apps/interfaces/information-property/administrative-source';
 
@@ -21,22 +17,12 @@ import { AdministrativeSource, CreateAdministrativeSourceParams } from 'src/app/
   imports: [
     ComboxColletionComponent,
     MatButtonModule,
-    MatDateFnsModule,
     MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-  ],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: DateFnsAdapter,
-      deps: [MAT_DATE_LOCALE]
-    },
-    { provide: MAT_DATE_LOCALE, useValue: es },
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS}
   ],
   templateUrl: './create-administrative-source.component.html',
   styleUrl: './create-administrative-source.component.scss'
