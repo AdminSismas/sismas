@@ -16,7 +16,7 @@
         >
           @if (mode === 1) {
             <button
-              class="rounded-full py-2 px-6 title !bg-green-600 !text-white"
+              class="rounded-full py-2 px-6 title !text-white !bg-primary-600"
               color="primary"
               mat-raised-button
               type="button"
@@ -29,7 +29,7 @@
               <span>Agregar</span>
             </button>
             <button
-              class="rounded-full py-2 px-6 title !bg-amber-600 !text-white"
+              class="rounded-full py-2 px-6 title !text-white !bg-green-600"
               mat-raised-button
               type="button"
               (click)="executeCrudAlfaMain(TYPEOPERATION_ADD)"
@@ -41,7 +41,7 @@
               <span>Crear</span>
             </button>
             <button
-              class="rounded-full py-2 px-6 title !bg-orange-600 !text-white"
+              class="rounded-full py-2 px-6 title !text-white !bg-red-600"
               color="warning"
               mat-raised-button
               type="button"
@@ -73,7 +73,7 @@
           <span class="sm:flex-auto xl:flex-1"></span>
           @if (mode === 1) {
             <button
-              class="rounded-full py-2 title flex-1 items-end xl:max-w-[180px] sm:min-w-[150px] !bg-red-600 !text-white"
+              class="rounded-full py-2 title flex-1 items-end xl:max-w-[180px] sm:min-w-[150px] !text-white !bg-amber-600"
               mat-raised-button
               type="button"
               (click)="clearInformationAlfaMain()"
