@@ -40,6 +40,8 @@ export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PANEL_ASSIGNED_TASKS:string = "assignedTasks";
 export const PANEL_DEVOLUTION_TASKS:string = "returnedTasks";
 export const PANEL_PRIORITIZED_TASKS:string = "prioritizedTasks";
+export const PROCESO_CREAR_DIRECCION:string = "Nueva dirección";
+export const PROCESO_ACTUALIZAR_DIRECCION:string = "Editar dirección";
 
 export const CONSTANT_VALIDATE_CHECK:string = "checkStatusBpmOperation";
 export const CONSTANT_VALIDATE_OTHER:string = "OTHER_CHECK";
