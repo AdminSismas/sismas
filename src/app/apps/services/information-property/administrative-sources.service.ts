@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment as env } from 'src/environments/environments';
-import { AdministrativeSource, CreateAdministrativeSourceParams } from '../../interfaces/information-property/administrative-source';
-import { catchError, Observable } from 'rxjs';
+import { AdministrativeSource, CreateAdministrativeSourceParams, FuentesAdministrativasTipo } from '../../interfaces/information-property/administrative-source';
+import { catchError, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,8 @@ export class AdministrativeSourcesService {
   constructor(
     private http: HttpClient
   ) { }
+
+  /* GET */
 
   getAdministrativeSourcesMain(baunitId: string): Observable<AdministrativeSource[]> {
     const url = `${this.base_url}main/${baunitId}`
@@ -49,6 +51,8 @@ export class AdministrativeSourcesService {
         })
       )
   }
+
+  /* POST */
 
   createAdministrativeSource(params: CreateAdministrativeSourceParams): Observable<AdministrativeSource> {
     const { executionId, baunitId, administrativeSource } = params

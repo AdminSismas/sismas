@@ -18,8 +18,17 @@ export interface CreateAdministrativeSourceParams {
 }
 
 export interface CreateAdministrativeSource {
-  domFuenteAdministrativaTipo: string;
-  fechaDocumentoFuente:        Date | string;
-  numeroFuente:                string;
-  enteEmisor:                  string;
+  domFuenteAdministrativaTipo?: string;
+  fechaDocumentoFuente?:        Date | string;
+  numeroFuente?:                string;
+  enteEmisor?:                  string;
+}
+
+export interface FuentesAdministrativasTipo {
+  domainId:    number;
+  domainName:  string;
+  code:        string;
+  inactive:    boolean;
+  dispname:    string;
+  description: string;
 }

@@ -1,9 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, Input, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
-import { AdministrativeSource } from 'src/app/apps/interfaces/information-property/administrative-source';
+import { AdministrativeSource, CreateAdministrativeSource, CreateAdministrativeSourceParams } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableModule } from '@angular/material/table';
 import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'vex-administrative-sources',
@@ -12,11 +18,15 @@ import { AdministrativeSourcesService } from 'src/app/apps/services/information-
     MatExpansionModule,
     HeaderCadastralInformationPropertyComponent,
     MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatMenuModule
   ],
   templateUrl: './administrative-sources.component.html',
   styleUrl: './administrative-sources.component.scss'
 })
-export class AdministrativeSourcesComponent {
+export class AdministrativeSourcesComponent implements OnInit {
   @Input() public id: string = '';
   @Input() public expandedComponent: boolean = false;
   @Input() public baunitId?: string | null;
@@ -28,16 +38,41 @@ export class AdministrativeSourcesComponent {
     'domFuenteAdministrativaTipo',
     'fechaDocumentoFuente',
     'numeroFuente',
-    'enteEmisor'
+    'enteEmisor',
+    'actions'
   ];
 
   public dataSource: AdministrativeSource[] = [];
 
+  public actionBtns = computed(() => {
+    return [
+      {
+        id: 'edit',
+        label: 'Editar',
+        icon: 'mat:edit'
+      },
+      {
+        id: 'delete',
+        label: 'Eliminar',
+        icon: 'mat:delete'
+      }
+    ]
+  })
+
   constructor(
-    private administrativeSourcesService: AdministrativeSourcesService
+    private administrativeSourcesService: AdministrativeSourcesService,
+    private dialog: MatDialog
   ) { }
 
-  getDataSource(){
+  ngOnInit(): void {
+    console.log(this.typeInformation)
+    if (this.typeInformation !== 'edition') {
+      this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions')
+    }
+  }
+
+  getDataSource() {
+
     if (this.schema === 'temp') {
       this.administrativeSourcesService.getAdministrativeSourcesTemp(this.baunitId as string, this.executionId as string)
         .subscribe(data => {
@@ -50,39 +85,45 @@ export class AdministrativeSourcesComponent {
           this.dataSource = data
         })
     }
-    console.log(this.dataSource)
   }
-
-  public example_data: AdministrativeSource[] = [
-    {
-      "fuenteAdminId": 13,
-      "domFuenteAdministrativaTipo": "(Documento público) Sentencia judicial",
-      "fechaDocumentoFuente": "2023-12-31",
-      "numeroFuente": "SENTC_2023_1234_99999",
-      "enteEmisor": "Juzgado segundo de Garzón unico",
-      "hash": "-1617978730",
-      "createdBy": "test7",
-      "createdAt": "2024-11-25T14:08:45.23842",
-      "updatedBy": "test7",
-      "updatedAt": "2024-11-25T14:08:45.23842"
-    },
-    {
-      "fuenteAdminId": 15,
-      "domFuenteAdministrativaTipo": "(Documento público) Sentencia judicial",
-      "fechaDocumentoFuente": "2023-12-14",
-      "numeroFuente": "SENTC_2023_1234",
-      "enteEmisor": "Juzgado segundo de Garzón",
-      "hash": "1346114377",
-      "createdBy": "test7",
-      "createdAt": "2024-11-25T14:10:24.279511",
-      "updatedBy": "test7",
-      "updatedAt": "2024-11-25T14:10:24.279511"
-    }
-  ]
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
       this.getDataSource();
+    }
+  }
+
+  createAdministrativeSource(): void {
+    this.dialog.open(CreateAdministrativeSourceComponent, {
+      width: '40%',
+      data: {
+        executionId: this.executionId as string,
+        baunitId: this.baunitId as string
+      }
+    })
+      .afterClosed()
+      .subscribe((data: AdministrativeSource) => {
+        setTimeout(() => {
+          this.getDataSource();
+        }, 300)
+      })
+    const params: CreateAdministrativeSourceParams = {
+      executionId: this.executionId as string,
+      baunitId: this.baunitId as string,
+      administrativeSource: {
+        domFuenteAdministrativaTipo: '',
+        fechaDocumentoFuente: '',
+        numeroFuente: '',
+        enteEmisor: ''
+      }
+    }
+  }
+
+  onClickActionBtn(id: string, row: AdministrativeSource) {
+    if (id === 'delete') {
+      console.log('Eliminando fuente...')
+    } else if (id === 'edit') {
+      console.log('Editando fuente...')
     }
   }
 }
