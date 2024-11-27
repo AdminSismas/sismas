@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment as env } from 'src/environments/environments';
-import { AdministrativeSource, CreateAdministrativeSourceParams, FuentesAdministrativasTipo } from '../../interfaces/information-property/administrative-source';
-import { catchError, map, Observable } from 'rxjs';
+import { AdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, FuentesAdministrativasTipo } from '../../interfaces/information-property/administrative-source';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +62,28 @@ export class AdministrativeSourcesService {
       .pipe(
         catchError(error => {
           console.log('Error al crear la fuente administrativa')
+          throw error
+        })
+      )
+  }
+
+  /* DELETE */
+
+  deleteAdministrativeSource(params: DeleteAdministrativeSourceParams): Observable<void> {
+    const { baunitId, changeLogId, fuenteAdminId } = params
+    const url = this.base_url.slice(0, -1)
+
+    const formData = new FormData()
+    formData.append('changeLogId', changeLogId)
+    formData.append('fuenteAdminId', fuenteAdminId)
+    formData.append('baunitId', baunitId)
+
+    return this.http.delete<void>(url, {
+      body: formData
+    })
+      .pipe(
+        catchError(error => {
+          console.log('Error al eliminar la fuente administrativa')
           throw error
         })
       )

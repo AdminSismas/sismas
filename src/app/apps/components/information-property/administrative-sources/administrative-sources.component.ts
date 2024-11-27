@@ -1,7 +1,7 @@
 import { Component, computed, Input, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
-import { AdministrativeSource, CreateAdministrativeSource, CreateAdministrativeSourceParams } from 'src/app/apps/interfaces/information-property/administrative-source';
+import { AdministrativeSource, CreateAdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableModule } from '@angular/material/table';
 import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vex-administrative-sources',
@@ -61,7 +62,8 @@ export class AdministrativeSourcesComponent implements OnInit {
 
   constructor(
     private administrativeSourcesService: AdministrativeSourcesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -122,6 +124,21 @@ export class AdministrativeSourcesComponent implements OnInit {
   onClickActionBtn(id: string, row: AdministrativeSource) {
     if (id === 'delete') {
       console.log('Eliminando fuente...')
+      const params: DeleteAdministrativeSourceParams = {
+        baunitId: this.baunitId as string,
+        changeLogId: this.executionId as string,
+        fuenteAdminId: row.fuenteAdminId as string
+      }
+      this.administrativeSourcesService.deleteAdministrativeSource(params)
+        .subscribe({
+          next: () => {
+            this.getDataSource()
+          },
+          error: (error: any) => {
+            this.snackbar.open('Error al eliminar la fuente administrativa', 'CLOSE', { duration: 4000 })
+          }
+        })
+
     } else if (id === 'edit') {
       console.log('Editando fuente...')
     }

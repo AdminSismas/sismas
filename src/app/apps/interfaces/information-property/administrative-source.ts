@@ -1,5 +1,5 @@
 export interface AdministrativeSource {
-  fuenteAdminId:               number;
+  fuenteAdminId:               string;
   domFuenteAdministrativaTipo: string;
   fechaDocumentoFuente:        Date | string;
   numeroFuente:                string;
@@ -31,4 +31,10 @@ export interface FuentesAdministrativasTipo {
   inactive:    boolean;
   dispname:    string;
   description: string;
+}
+
+export interface DeleteAdministrativeSourceParams {
+  baunitId: string;
+  changeLogId: string;
+  fuenteAdminId: string;
 }
