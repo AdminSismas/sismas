@@ -86,15 +86,21 @@
                   >
                     {{ row.individual[column.property] }}
                   </td>
-                 }
-                 @else {
-                   <td
-                     *matCellDef="let row"
-                     mat-cell
-                   >
-                     {{ row[column.property] }}
-                   </td>
-                 }
+                }
+                @else {
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                  >
+      
+                    @if (column.property === 'beginAt') {
+                      {{ row[column.property] | date:'dd/MM/yyyy' }}
+                    }
+                    @else {
+                      {{ row[column.property] }}
+                    }
+                  </td>
+                }
               </ng-container>
             }
             <ng-container matColumnDef="actions">

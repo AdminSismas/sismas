@@ -185,7 +185,10 @@ export class DocumentTableComponent implements OnInit {
         width:'98%',
         height: '86%',
         disableClose: true,
-        data: metaData,
+        data: {
+          metaData: metaData,
+          executionId: this.data.executionId,
+        }
       });
 
       this.dialogRef.afterClosed().subscribe(result => {
