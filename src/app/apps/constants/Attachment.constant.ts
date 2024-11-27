@@ -49,6 +49,60 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
     },
 ];
 
+export const TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE: TableColumn<contentInfoAttachment>[]= [
+    {
+        label: 'Nombre Archivo',
+        property: 'originalFileName',
+        type: 'text',
+        visible: true,
+        cssClasses: ['font-medium']
+    },
+    {
+        label: 'Peso',
+        property: 'size',
+        type: 'text',
+        visible: true,
+        cssClasses: ['font-medium']
+    },
+    {
+        label: 'Creado Por',
+        property: 'createdBy',
+        type: 'text',
+        visible: true,
+        cssClasses: ['font-medium']
+    },
+    {
+        label: 'Fecha Creación',
+        property: 'createdAt',
+        type: 'date',
+        visible: true,
+        cssClasses: ['font-medium']
+    },
+    {
+        label: 'Aprobado Por',
+        property: 'aprovedBy',
+        type: 'text',
+        visible: true,
+        cssClasses: ['font-medium']
+    },
+    {
+        label: 'Fecha Aprobación',
+        property: 'aprovedAt',
+        type: 'date',
+        visible: true,
+        cssClasses: ['font-medium']
+    },
+    {
+        label: 'Verificar',
+        property: 'select',
+        type: 'checkbox',
+        visible: true, 
+        cssClasses: []
+      },
+];
+
+
+
 export const MODEL_METADATA_PROPERTIES: { label: string; metadata: keyof contentInfoAttachment; type:string }[] = [
     { 
         label: 'Nombre Archivo', 
