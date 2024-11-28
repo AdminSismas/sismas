@@ -74,7 +74,7 @@ export class NavigationLoaderService {
     let listItem: NavigationItem[] = [
       {
         type: 'subheading',
-        label: 'Mi Trabajo',
+        label: 'Mi trabajo',
         children: [
           ...NAVIGATION_LOADER_MY_WORK_1,
           {
@@ -127,17 +127,17 @@ export class NavigationLoaderService {
       },
       {
         type: 'subheading',
-        label: 'Apoyo Operación',
+        label: 'Apoyo operación',
         children: NAVIGATION_LOADER_OPERATION_SUPPORT
       },
       {
         type: 'subheading',
-        label: 'Datos Abiertos',
+        label: 'Datos abiertos',
         children: NAVIGATION_LOADER_OPEN_DATA
       },
       {
         type: 'subheading',
-        label: 'Servicio Público',
+        label: 'Servicio público',
         children: NAVIGATION_LOADER_PUBLIC_SERVICE
       },
       {
@@ -152,7 +152,7 @@ export class NavigationLoaderService {
       },
       {
         type: 'subheading',
-        label: 'Customize Apps',
+        label: 'Customize apps',
         children: [
           {
             type: 'link',

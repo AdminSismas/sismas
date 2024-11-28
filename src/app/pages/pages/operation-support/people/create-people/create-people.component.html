@@ -37,7 +37,7 @@
         name="domIndividualType"
         ubscriptSizing="dynamic"
         idComboCollection="typeNumberDocument"
-        label="tipo de persona"
+        label="Tipo de persona"
         typeDomainName="IndividualType"
         placeholderDomainName="Selecciona el tipo de persona&hellip;"></vex-combox-colletion>
     </div>
@@ -63,7 +63,7 @@
         mat-flat-button
         class="ml-4 flex-none"
         (click)="personRegister()">
-        buscar
+        Buscar
       </button>
     </div>
 
@@ -73,7 +73,7 @@
         <input formControlName="firstName" matInput name="firstName" />
       </mat-form-field>
       <mat-form-field class="flex-auto sm:ml-6">
-        <mat-label>segundo nombre</mat-label>
+        <mat-label>Segundo nombre</mat-label>
         <input formControlName="middleName" matInput name="middleName" />
       </mat-form-field>
     </div>
@@ -91,7 +91,7 @@
 
     <div class="flex flex-col sm:flex-row">
       <mat-form-field class="flex-auto">
-        <mat-label>nombre compañía</mat-label>
+        <mat-label>Nombre compañía</mat-label>
         <input formControlName="companyName" matInput name="companyName" />
       </mat-form-field>
     </div>
@@ -145,16 +145,16 @@
 <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Print</span>
+    <span>Imprimir</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Export</span>
+    <span>Exportar</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Delete</span>
+    <span>Borrar</span>
   </button>
 </mat-menu>
