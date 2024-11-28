@@ -18,6 +18,7 @@
             <!-- Tipo de Documento -->
             <div class="form-content-item">
               <p><strong>Tipo de Documento</strong></p>
+              <div class="p-4">
               <vex-combox-colletion
                 idComboCollection="attachmentType"
                 label="Tipo"
@@ -25,6 +26,7 @@
                 typeDomainName="BpmAttachmentType"
                 placeholderDomainName="Escoger tipo"
               ></vex-combox-colletion>
+            </div>
               <mat-error *ngIf="attachmentForm.get('attachmentType')?.hasError('required')">
                 Este campo es obligatorio.
               </mat-error>
@@ -33,17 +35,20 @@
             <!-- Descripción -->
             <div class="form-content-item">
               <p><strong>Descripción</strong></p>
+               <div class="p-4">
               <vex-input
                 label="Descripción"
                 type="text"
                 idComboInput="description"
                 formControlNameInput="description"
               ></vex-input>
+               </div>
             </div>  
   
             <!-- Campo de archivo adjunto -->
             <div class="col-span-1 md:col-span-2">
               <label class="text-[#666666] text-[15px]">Archivo de anexo</label>
+              <div class="p-4">
               <ngx-dropzone class="mt-3" (change)="onSelect($event)">
                 <ngx-dropzone-label>
                   <div class="flex flex-col items-center text-center">
@@ -57,6 +62,7 @@
                   <ngx-dropzone-label>{{ file.name }} ({{ file.type }})</ngx-dropzone-label>
                 </ngx-dropzone-preview>
               </ngx-dropzone>
+              </div>
             </div>
             
           </div>
