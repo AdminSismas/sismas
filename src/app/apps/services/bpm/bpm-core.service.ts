@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { environment as envi } from '../../../../environments/environments';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { ProTaskE } from '../../interfaces/pro-task-e';
 import { ProFlow } from '../../interfaces/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
 import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,10 @@ export class BpmCoreService {
 
   basic_url: string = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
-  constructor(private requestsService: SendGeneralRequestsService) {
+  constructor(
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
+  ) {
   }
 
   getProTaskCountComment(id: string): Observable<number> {
@@ -43,6 +47,7 @@ export class BpmCoreService {
   }
 
   getNextOperation(executionId: string): Observable<ProTaskE> {
+
     const url: string = `${this.basic_url}${envi.bpmOperation.proExecution_next}${executionId}`;
     return this.requestsService.sendRequestsFetchPost(url);
   }
@@ -70,4 +75,21 @@ export class BpmCoreService {
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
+  clearPropertyBpmOperation(executionId: string, baunitId: string): Observable<void> {
+    const url: string = `${envi.url}:${envi.port}${envi.temporal}${envi.clearBaunit}`
+
+    const formData: FormData = new FormData();
+    formData.append('changeLogId', executionId);
+    formData.append('baunitId', baunitId);
+
+    return this.http.delete<void>(url, {
+      body: formData
+    })
+      .pipe(
+        catchError(error => {
+          console.log('Error al remover la baunit');
+          throw error;
+        })
+      )
+  }
 }
