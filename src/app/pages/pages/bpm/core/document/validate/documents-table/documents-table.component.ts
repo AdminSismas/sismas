@@ -73,14 +73,14 @@ export class DocumentsTableComponent {
     /* ============== ATRIBUTES ============== */
     numRegister: number = 0;
     disablePaginator: boolean = true;
-  
+
     layoutCtrl = new UntypedFormControl('boxed');
     searchCtrl: UntypedFormControl = new UntypedFormControl();
     dataSource!: MatTableDataSource<AttachmentCollection>;
     isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentInformations!: InformationPegeable;
     selection = new SelectionModel<AttachmentCollection>(true, []);
-  
+
 
     @Input()
     page:number = PAGE;
@@ -88,20 +88,20 @@ export class DocumentsTableComponent {
     totalElements: number = 0;
     pageSizeOptions: number[] = PAGE_SIZE_OPTION;
     columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE;
-  
+
     @ViewChild(MatPaginator, { static: false }) paginator?: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
     @Input() executionId!: string;
 
     // @Input({ required: true }) public executionId: string = '';
-  
-  
+
+
     private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  
+
     dialogRef!: MatDialogRef<ViewFileDocumentManagementComponent>;
-  
-  
+
+
     /* ============== CONSTRUCTOR ============== */
     constructor(
       // @Inject(MAT_DIALOG_DATA) public executionId: any,
@@ -109,62 +109,62 @@ export class DocumentsTableComponent {
       private attachmentService: AttachmentService,
       private readonly layoutService: VexLayoutService,
     ) {}
-  
-  
-  
+
+
+
     /* ============== METHODS ============== */
     /* ------- Meth. Lifecycle Hooks ------- */
     ngOnInit(): void {
       this.dataSource = new MatTableDataSource();
-  
+
       this.searchCtrl.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => this.onFilterChange(value));
-  
+
       this.getDataFromDocumentManagementService();
 
 
     }
-  
+
     ngAfterViewInit() {
       if (this.paginator) {
         this.dataSource.paginator = this.paginator;
       }
-  
+
       if (this.sort) {
         this.dataSource.sort = this.sort;
       }
     }
-  
-  
+
+
     /* ------- Meth. HTML ------- */
     toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
       event.stopPropagation();
       event.stopImmediatePropagation();
       column.visible = !column.visible;
     }
-  
+
     refreshInformationpaginator(event: PageEvent): void {
       if (event == null) {
         return;
       }
-  
+
       this.page = event.pageIndex;
       this.pageSize = event.pageSize;
     }
-  
-  
+
+
     trackByProperty<T>(index: number, column: TableColumn<T>) {
       return column.property;
     }
-  
-  
+
+
     get visibleColumns(): string[] {
       return ['action', ...this.columns.filter((c) => c.visible).map((c) => c.property)];
     }
-  
-  
-  
+
+
+
     /* ------- Meth. Common ------- */
     onFilterChange(value: string) {
       if (!this.dataSource) {
@@ -175,16 +175,16 @@ export class DocumentsTableComponent {
       //this.dataSource.filter = value;
       this.dataSource.filter = value.trim().toLowerCase();
     }
-  
-  
+
+
     viewPaginator(numRegister: number): void {
       if (numRegister < 3) {
         this.disablePaginator = false;
       }
     }
-  
-  
-  
+
+
+
     /* ------- Meth. Modal load file ------- */
     viewFile(metaData: contentInfoAttachment): void {
       this.dialog
@@ -198,14 +198,14 @@ export class DocumentsTableComponent {
             executionId: this.executionId,
           }
         });
-  
+
         this.dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
         });
       }
-  
-  
-  
+
+
+
     /* ------- Meth. Services ------- */
     getDataFromDocumentManagementService(): void {
       this.attachmentService.getDataPropertyByAttachment(this.executionId).subscribe({
@@ -213,7 +213,7 @@ export class DocumentsTableComponent {
           console.log("Datos recibidos de la API1 prueba:", data);
           this.dataSource.data = data;
           this.totalElements = data.length;
-  
+
           this.viewPaginator(data.length);
         },
         error: (error) => {
@@ -225,7 +225,7 @@ export class DocumentsTableComponent {
     toggleSelection(row: contentInfoAttachment): void {
       this.selection.toggle(row);
     }
-    
+
     toggleSelectAll(checked: boolean): void {
       if (checked) {
         this.selection.select(...this.dataSource.data);
@@ -233,7 +233,7 @@ export class DocumentsTableComponent {
         this.selection.clear();
       }
     }
-    
+
     isAllSelected(): boolean {
       return this.selection.selected.length === this.dataSource.data.length;
     }
@@ -244,6 +244,6 @@ export class DocumentsTableComponent {
     }
 
 
-  
+
 
 }

@@ -46,7 +46,7 @@ export class AddPropertyOwnerComponent implements OnInit {
   public fractions_sum: number = 0;
 
   public form: FormGroup = this.fb.group({
-    individualTypeNumber: ['', Validators.required],
+    domIndividualTypeNumber: ['', Validators.required],
     number: ['', Validators.required],
   })
   public secondForm: FormGroup = this.fb.group({
@@ -85,7 +85,11 @@ export class AddPropertyOwnerComponent implements OnInit {
   }
 
   searchPerson(): void {
-    this.peopleService.getPeopleTypeNumber(this.form.value)
+    const params = {
+      number: this.form.value.number,
+      individualTypeNumber: this.form.value.domIndividualTypeNumber
+    }
+    this.peopleService.getPeopleTypeNumber(params)
       .subscribe({
         next: (res: InfoPerson) => {
         this.customer = res;
@@ -94,7 +98,7 @@ export class AddPropertyOwnerComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404){
-            this.createPerson()
+            this.createPerson(this.form.value)
           }
         }
       })
@@ -125,13 +129,19 @@ export class AddPropertyOwnerComponent implements OnInit {
     this.snackbar.open('Propietario agregado', 'CLOSE', { duration: 4000 })
   }
 
-  createPerson(): void {
+  createPerson(newCustomer: { number: string; individualTypeNumber: string; }): void {
     this.snackbar.open('Creando usuario', 'CLOSE', { duration: 4000 })
 
-    this.dialog.open(CreatePeopleComponent)
+    this.dialog.open(CreatePeopleComponent, {
+      data: {
+        ...newCustomer,
+        mode: 'create'
+      }
+    })
       .afterClosed()
-      .subscribe((newCustomer) => {
-        console.log(newCustomer)
+      .subscribe((customer: { number: string; individualTypeNumber: string; }) => {
+        console.log(customer)
+        this.form.reset(customer)
       })
   }
 
