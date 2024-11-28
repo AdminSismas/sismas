@@ -54,6 +54,8 @@ import { InformationPersonService } from '../../../../../../apps/services/bpm/in
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
+import { MatDialog } from '@angular/material/dialog';
+import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 
 @Component({
   selector: 'vex-basic-participant-table',
@@ -113,7 +115,8 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   constructor(
     private snackbar: MatSnackBar,
     private readonly layoutService: VexLayoutService,
-    private personService: InformationPersonService
+    private personService: InformationPersonService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -192,9 +195,27 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
             if (error.status == HttpStatusCode.NotFound) {
               this.person = null;
               this.form.get('personCompleted')?.patchValue('');
-              this.snackbar.open('Persona no existe', undefined,
-                { duration: 2000 });
-              return;
+              this.dialog.open(CreatePeopleComponent, {
+                width: '60%',
+                data: {
+                  domIndividualTypeNumber: info.typeNumberDocument,
+                  number: info.numberID,
+                  mode: 'create'
+                }
+              }).afterClosed()
+                .subscribe((result: { number: string; individualTypeNumber: string; }) => {
+                  this.personService.getFindPersonByNumber(result.number, result.individualTypeNumber)
+                    .subscribe({
+                      next: (res: InfoPerson) => this.captureInformationCadastralData(res),
+                      error: (error: HttpErrorResponse) => {
+                        if (error.status == HttpStatusCode.NotFound) {
+                          this.person = null;
+                          this.form.get('personCompleted')?.patchValue('');
+                        }
+                        return throwError(() => error);
+                      }
+                    })
+                })
             }
             return throwError(() => error);
           },

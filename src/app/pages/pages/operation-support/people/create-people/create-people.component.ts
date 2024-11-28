@@ -26,6 +26,10 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environments';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/constant';
+
+interface defaultData extends People {
+  mode: 'create' | 'update';
+}
 @Component({
   selector: 'vex-create-people',
   standalone: true,
@@ -77,7 +81,7 @@ export class CreatePeopleComponent implements OnInit {
   };
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: People | undefined,
+    @Inject(MAT_DIALOG_DATA) public defaults: defaultData | undefined,
     private dialogRef: MatDialogRef<CreatePeopleComponent>,
     private fb: FormBuilder,
     private peopleServcie: PeopleService,
@@ -86,10 +90,15 @@ export class CreatePeopleComponent implements OnInit {
 
   ngOnInit() {
     if (this.defaults) {
-      this.validateTypePople();
-      this.mode = 'update';
+      if (this.defaults.mode === 'update') {
+        this.validateTypePople();
+        this.mode = 'update';
+      } else if (this.defaults.mode === 'create') {
+        this.mode = 'create';
+        this.form.reset(this.defaults)
+      }
     } else {
-      this.defaults = {} as People;
+      this.defaults = {} as defaultData;
     }
     this.disablesTypePople();
     this.form.patchValue(this.defaults);
@@ -171,7 +180,10 @@ export class CreatePeopleComponent implements OnInit {
           duration: 3000,
           horizontalPosition: 'right'
         });
-        this.dialogRef.close();
+        this.dialogRef.close({
+          number: this.form.get('number')?.value,
+          individualTypeNumber: this.form.get('domIndividualTypeNumber')?.value,
+        });
       },
       error: (error) => {
         console.log(error);
