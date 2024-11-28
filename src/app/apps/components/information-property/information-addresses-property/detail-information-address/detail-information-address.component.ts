@@ -25,6 +25,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'vex-detail-information-address',
@@ -48,7 +49,8 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
     MatDialogContent,
     DatePipe,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatFormFieldModule,
   ],
   templateUrl: './detail-information-address.component.html',
   styleUrl: './detail-information-address.component.scss'
