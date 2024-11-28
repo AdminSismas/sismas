@@ -1,0 +1,64 @@
+<mat-dialog-content class="flex flex-col overflow-hidden gap-2">
+  <h2 mat-dialog-title>Crear fuente administrativa</h2>
+  <mat-divider class="text-border border-slate-400"></mat-divider>
+
+  <form [formGroup]="form" class="flex flex-col gap-4 overflow-x-hidden py-4 lg:px-8">
+    <vex-combox-colletion
+      idComboCollection="domFuenteAdministrativaTipo"
+      label="Tipo fuente administrativa"
+      formControlNameCombobox="domFuenteAdministrativaTipo"
+      typeDomainName="FuenteAdministrativaTipo"
+      placeholderDomainName="Escoger tipo de fuente administrativa"
+      cssClasses="w-full"
+    ></vex-combox-colletion>
+    <mat-form-field>
+      <mat-label>Fecha de documento</mat-label>
+      <input
+        matInput
+        [matDatepicker]="fechaDocumentoFuente"
+        formControlName="fechaDocumentoFuente"
+      />
+      <mat-hint>Formato Fecha: DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="fechaDocumentoFuente"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #fechaDocumentoFuente></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Número fuente</mat-label>
+      <input
+        matInput
+        formControlName="numeroFuente"
+        placeholder="Número fuente"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ente emisor</mat-label>
+      <input
+        matInput
+        formControlName="enteEmisor"
+        placeholder="Ente emisor"
+      />
+    </mat-form-field>
+    <div class="flex justify-center gap-6 w-full">
+      <button
+        mat-flat-button
+        mat-dialog-close
+        color="primary"
+        (click)="requestManager()"
+      >
+        {{ data.params ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button
+        mat-flat-button
+        mat-dialog-close
+        color="warn"
+      >
+        Cerrar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
+
+

@@ -192,7 +192,7 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
             if (error.status == HttpStatusCode.NotFound) {
               this.person = null;
               this.form.get('personCompleted')?.patchValue('');
-              this.snackbar.open('Persona No Existe', undefined,
+              this.snackbar.open('Persona no existe', undefined,
                 { duration: 2000 });
               return;
             }

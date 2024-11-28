@@ -91,7 +91,7 @@ export class TasksPanelComponent implements OnInit {
   totalElements: number = 0;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
   typePanel: string | null = null;
-  label: string = 'Tareas Activas';
+  label: string = 'Tareas activas';
 
   searchCtrl: UntypedFormControl = new UntypedFormControl('search');
 
@@ -140,26 +140,26 @@ export class TasksPanelComponent implements OnInit {
 
     switch (this.typePanel) {
       case PANEL_ASSIGNED_TASKS: {
-        this.label = 'Tareas Activas';
+        this.label = 'Tareas activas';
         this.getInformationAssignedTasks();
         state = true;
         break;
       }
       case PANEL_DEVOLUTION_TASKS: {
-        this.label = 'Tareas Devueltas';
+        this.label = 'Tareas devueltas';
         this.getInformationTaskDevolution();
         state = true;
         break;
       }
       case PANEL_PRIORITIZED_TASKS: {
-        this.label = 'Tareas Priorizadas';
+        this.label = 'Tareas priorizadas';
         this.getInformationTaskPriority();
         state = true;
         break;
       }
 
       default: {
-        this.label = 'Información No Encontrada';
+        this.label = 'Información no encontrada';
         state = true;
         break;
       }
@@ -312,7 +312,7 @@ export class TasksPanelComponent implements OnInit {
     this.page = PAGE;
     this.totalElements = 0;
     this.pageSize = PAGE_SIZE_TABLE_CADASTRAL;
-    this.label = 'Información No Encontrada';
+    this.label = 'Información no Encontrada';
   }
 
   activateLoading(value: boolean = false) {

@@ -9,7 +9,7 @@ export const NAVIGATION_LOADER_MY_WORK_1: Array<NavigationLink | NavigationDropd
   },
   {
     type: 'link',
-    label: 'Radicar Trámite',
+    label: 'Radicar trámite',
     route: '/myWork/fileProcedure',
     icon: 'mat:app_registration'
   },
@@ -96,7 +96,7 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | Navigat
     children: [
       {
         type: 'link',
-        label: 'Priorizar Trabajo',
+        label: 'Priorizar trabajo',
         route: '/operationSupport/procedures/prioritizeWork',
         routerLinkActiveOptions: { exact: true }
       },
@@ -128,7 +128,7 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | Navigat
   },
   {
     type: 'link',
-    label: 'Analítica de la Operación',
+    label: 'Analítica de la operación',
     route: '/operationSupport/operationalAnalytics',
     icon: 'mat:task_alt'
   }
@@ -176,25 +176,25 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
     children: [
       {
         type: 'link',
-        label: 'Validar Actos administrativos',
+        label: 'Validar actos administrativos',
         route: '/publicService/citizens/validateAdministrativeActs',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Validar Certificados',
+        label: 'Validar certificados',
         route: '/publicService/citizens/validateCertificates',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Generar Servicios',
+        label: 'Generar servicios',
         route: '/publicService/citizens/generateServices',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Histórico de Servicios',
+        label: 'Histórico de servicios',
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
@@ -207,13 +207,13 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
     children: [
       {
         type: 'link',
-        label: 'Generar Servicios',
+        label: 'Generar servicios',
         route: '/publicService/ticketOffice/generateServices',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Histórico de Servicios',
+        label: 'Histórico de servicios',
         route: '/publicService/ticketOffice/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
@@ -241,25 +241,25 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
       },
       {
         type: 'link',
-        label: 'Servicios y Tarifas',
+        label: 'Servicios y tarifas',
         route: '/configuration/cadastral/servicesRates',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Económico Terreno',
+        label: 'Mod económico terreno',
         route: '/configuration/cadastral/economicModLand',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Económico Construcción',
+        label: 'Mod económico construcción',
         route: '/configuration/cadastral/economicModConstruction',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Económico Integral',
+        label: 'Mod económico integral',
         route: '/configuration/cadastral/integralEconomicMod',
         routerLinkActiveOptions: { exact: true }
       }
@@ -315,7 +315,7 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
       },
       {
         type: 'link',
-        label: 'Formatos de Salida',
+        label: 'Formatos de salida',
         route: '/configuration/cadastralProcedures/outputFormats',
         routerLinkActiveOptions: { exact: true }
       },

@@ -67,7 +67,7 @@ export class SidenavComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userName$ = 'Usuario Activo';
+    this.userName$ = 'Usuario activo';
     this.userPerfil$ = 'Prediador';
   }
 
