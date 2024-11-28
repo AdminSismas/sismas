@@ -1,17 +1,15 @@
-<mat-form-field [ngClass]="cssClasses"
-                [hideRequiredMarker]="hideRequiredMarker">
+<mat-form-field [ngClass]="cssClasses" [hideRequiredMarker]="hideRequiredMarker" class="w-full">
   <mat-label>{{ label }}</mat-label>
   <mat-select
-    [formControlName]="formControlNameCombobox" [id]="idComboCollection"
+    [formControlName]="formControlNameCombobox"
+    [id]="idComboCollection"
     placeholder="{{placeholderDomainName}}"
-    (selectionChange)="returnEvent($event.value)">
-    <mat-option
-      *ngFor="let option of options;"
-      [value]="option.dispname"
-    >{{ option.dispname }}
+    (selectionChange)="returnEvent($event.value)"
+    class="w-full px-4 h-auto" 
+  >
+    <mat-option *ngFor="let option of options;" [value]="option.dispname">
+      {{ option.dispname }}
     </mat-option>
   </mat-select>
-  @if (hintValue && hintValue.length > 0) {
-    <mat-hint>{{ hintValue }}</mat-hint>
-  }
+  <mat-hint *ngIf="hintValue && hintValue.length > 0">{{ hintValue }}</mat-hint>
 </mat-form-field>
