@@ -10,7 +10,7 @@
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
     >
       <vex-header-cadastral-information-property
-        label="Información de los propietarios"
+        label="Propietarios"
         icon="mat:people"
         id="information-owners"
       >
@@ -92,7 +92,7 @@
                     *matCellDef="let row"
                     mat-cell
                   >
-      
+
                     @if (column.property === 'beginAt') {
                       {{ row[column.property] | date:'dd/MM/yyyy' }}
                     }

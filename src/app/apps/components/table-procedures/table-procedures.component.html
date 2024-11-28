@@ -3,7 +3,7 @@
 
         <div class="flex flex-col sm:flex-row sm:gap-4 mt-3 pt-3">
             <mat-form-field class="flex-auto">
-                <mat-label>Fecha Inicio</mat-label>
+                <mat-label>Fecha inicio</mat-label>
                 <input
                     matInput
                     [matDatepicker]="startDatepicker"
@@ -19,7 +19,7 @@
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
-                <mat-label>Fecha Fin</mat-label>
+                <mat-label>Fecha fin</mat-label>
                 <input
                     matInput
                     [matDatepicker]="endDatepicker"
@@ -34,7 +34,7 @@
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
-                <mat-label>Número Radicado</mat-label>
+                <mat-label>Número radicado</mat-label>
                 <input
                     matInput
                     [(ngModel)]="executionCode"
@@ -45,7 +45,7 @@
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
-                <mat-label>Documento Personal</mat-label>
+                <mat-label>Documento personal</mat-label>
                 <input
                     matInput
                     [(ngModel)]="individualNumber"
@@ -72,7 +72,7 @@
                         placeholder="Buscar dominio&hellip;"
                         type="text"/>
                 </mat-form-field>
-    
+
                 <!-- Botón de filtro -->
                 <button
                     [matMenuTriggerFor]="columnFilterMenu"
@@ -97,7 +97,7 @@
                         </td>
                     </ng-container>
 
-                    <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property"> 
+                    <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
                         <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
@@ -107,7 +107,7 @@
                         </td>
                     </ng-container>
                 </ng-container>
-            
+
                 <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
                 <tr mat-row *matRowDef="let element; columns: visibleColumns;" @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"></tr>
             </table>

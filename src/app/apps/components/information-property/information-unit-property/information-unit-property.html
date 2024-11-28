@@ -12,10 +12,11 @@
       <vex-header-cadastral-information-property
         label="Información de Unidades Prediales"
         icon="mat:contacts"
-        id="information-owners"
+        id="information-unit-property"
       >
       </vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
+    @if (expandedComponent) {
     <mat-panel-description
       class="p-0!important"
       [id]="id + 'mat-panel-description-basic'"
@@ -249,5 +250,6 @@
         </ng-template>
       </mat-menu>
     </mat-panel-description>
+    }
   </mat-expansion-panel>
 </mat-accordion>

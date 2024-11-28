@@ -5,19 +5,19 @@
       <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
       <input matInput [formControl]="searchCtrl" placeholder="Buscar archivo…" type="text" />
     </mat-form-field>
-  
+
     <!-- button filter -->
     <button
       [matMenuTriggerFor]="columnFilterMenu"
       mat-icon-button
-      matTooltip="Filtrar Columnas"
+      matTooltip="Filtrar columnas"
       type="button"
       class="ml-4 flex-col"
     >
       <mat-icon matIconPrefix svgIcon="mat:filter_list"></mat-icon>
     </button>
   </div>
-  
+
   <!-- Table -->
   <table @stagger mat-table [dataSource]="dataSource" class="w-full" matSort>
 
@@ -42,7 +42,7 @@
           <mat-checkbox (change)="toggleSelection(row)" [checked]="selection.isSelected(row)"></mat-checkbox>
         </td>
       </ng-container>
-  
+
     <!-- Text Columns -->
     <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
       <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
@@ -65,7 +65,7 @@
           {{ row[column.property] }}
         </td>
       </ng-container>
-  
+
       <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
         <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
@@ -87,7 +87,7 @@
         </td>
       </ng-container>
     </ng-container>
-  
+
     <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
     <tr
       mat-row
@@ -96,7 +96,7 @@
       class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
     ></tr>
   </table>
-  
+
   <!-- Paginator -->
   <mat-paginator
     *ngIf="disablePaginator == true"
@@ -110,7 +110,7 @@
     class="sticky left-0 flex flex-col"
   >
   </mat-paginator>
-  
+
   <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
     <button
       (click)="toggleColumnVisibility(column, $event)"

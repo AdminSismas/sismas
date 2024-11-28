@@ -53,28 +53,28 @@ export const TYPEOPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
-    label: 'Ver Acciones',
+    label: 'Ver acciones',
     property: 'viewMap',
     type: 'button',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Matrícula Inmobiliaria',
+    label: 'Matrícula inmobiliaria',
     property: 'registration',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Número Predial',
+    label: 'Número predial',
     property: 'cadastralNumber',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Área Terreno',
+    label: 'Área terreno',
     property: 'cadastralArea',
     type: 'text',
     visible: true,
@@ -88,7 +88,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Destino Económico',
+    label: 'Destino económico',
     property: 'domBaunitEconoDesti',
     type: 'text',
     visible: true,
@@ -106,21 +106,21 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
 
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
   {
-    label: 'Matrícula Inmobiliaria',
+    label: 'Matrícula inmobiliaria',
     property: 'registration',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Número Predial',
+    label: 'Número predial',
     property: 'cadastralNumber',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Área Terreno',
+    label: 'Área terreno',
     property: 'cadastralArea',
     type: 'text',
     visible: true,
@@ -138,7 +138,7 @@ export const TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL: TableColumn<BasicInformati
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Es Principal',
+    label: 'Es principal',
     property: 'isMainAddress',
     type: 'text',
     visible: true
@@ -183,7 +183,7 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
     visible: true
   },
   {
-    label: 'Área (Mts2)',
+    label: 'Área (mts2)',
     property: 'unitBuiltArea',
     type: 'text',
     visible: true
@@ -427,12 +427,16 @@ export const LIST_EXTRA_COLUMNS_APPRAISAL: string[] = [
 
 export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: string }[] = [
   {
-    label: 'Aspectos Generales Predio',
+    label: 'Aspectos generales',
     fragment: 'basicPropertyInformationComponent'
   },
   {
-    label: 'Información de Unidad Predial',
+    label: 'Información de unidad predial',
     fragment: 'informationUnitPropertyComponent'
+  },
+  {
+    label: 'Fuentes administrativas',
+    fragment: 'administrativeSourcesComponent'
   },
   {
     label: 'Direcciones',
@@ -465,7 +469,7 @@ export const TABLE_COLUMN_BASIC_PRINCIPANTS: TableColumn<ProcessParticipant>[] =
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Nombre Participante',
+    label: 'Nombre participante',
     property: 'fullName',
     type: 'text',
     visible: true,
@@ -497,21 +501,21 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Matrícula Inmobiliaria',
+    label: 'Matrícula inmobiliaria',
     property: 'registration',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Número Predial',
+    label: 'Número predial',
     property: 'cadastralNumber',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Área Terreno',
+    label: 'Área terreno',
     property: 'cadastralArea',
     type: 'text',
     visible: true,
@@ -525,7 +529,7 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
-    label: 'Destino Económico',
+    label: 'Destino económico',
     property: 'domBaunitEconoDesti',
     type: 'text',
     visible: true,
