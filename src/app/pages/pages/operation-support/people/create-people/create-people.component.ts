@@ -182,7 +182,7 @@ export class CreatePeopleComponent implements OnInit {
         });
         this.dialogRef.close({
           number: this.form.get('number')?.value,
-          individualTypeNumber: this.form.get('domIndividualTypeNumber')?.value,
+          domIndividualTypeNumber: this.form.get('domIndividualTypeNumber')?.value,
         });
       },
       error: (error) => {

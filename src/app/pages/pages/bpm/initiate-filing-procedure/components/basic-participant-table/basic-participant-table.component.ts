@@ -40,7 +40,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { filter } from 'rxjs/operators';
@@ -73,7 +72,6 @@ import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/peo
     NgIf,
     NgClass,
     MatMenuModule,
-    VexPageLayoutContentDirective,
     ComboxColletionComponent,
     FluidMinHeightDirective,
     FormsModule,
