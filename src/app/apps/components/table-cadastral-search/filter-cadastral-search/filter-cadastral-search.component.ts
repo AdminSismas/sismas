@@ -38,7 +38,9 @@ import {
   LIST_FORM_CADASTRAL_5,
   LIST_ZONES_RURAL,
   NAME_CODENAME,
-  STRING_INFORMATION_NOT_FOUND
+  STRING_INFORMATION_NOT_FOUND,
+  LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
+  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL
 } from '../../../constants/constant';
 import { Zone } from '../../../interfaces/territorial-organization/zone.model';
 import { Sector } from '../../../interfaces/territorial-organization/sector.model';
@@ -85,6 +87,10 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
 
+  protected readonly LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = LIMPIAR_CAMPOS_SELECCION_MUNICIPAL;
+  protected readonly LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = LIMPIAR_CAMPOS_MULTIPLES_CAMPOS;
+
+
   optionsDeparments: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
   optionsZones: Zone[] = [];
@@ -95,23 +101,29 @@ export class FilterCadastralSearchComponent implements OnInit {
   optionsSidewalks: Sidewalk[] = [];
 
   form: FormGroup = this.fb.group({
+
+    
+    // MUltiple Fields
     registration: this.defaults?.registration ?? '',
-    number: this.defaults?.number ?? '',
     domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
     firstName: this.defaults?.firstName ?? '',
+    otherLastName: this.defaults?.otherLastName ?? '',
+    textAddress: this.defaults?.textAddress ?? '',
+    number: this.defaults?.number ?? '',
     middleName: this.defaults?.middleName ?? '',
     lastName: this.defaults?.lastName ?? '',
-    otherLastName: this.defaults?.otherLastName ?? '',
     companyName: this.defaults?.companyName ?? '',
-    textAddress: this.defaults?.textAddress ?? '',
+    
+    // Municipal Selection
     department: this.defaults?.department ?? '',
     municipality: this.defaults?.municipality ?? '',
     zone: this.defaults?.zone ?? '',
     sector: this.defaults?.sector ?? '',
     community: this.defaults?.community ?? '',
     neighborhood: this.defaults?.neighborhood ?? '',
+    sidewalk: this.defaults?.sidewalk ?? '',
     block: this.defaults?.block ?? '',
-    sidewalk: this.defaults?.sidewalk ?? ''
+
   });
 
   filteredOptionsDepartments$: Observable<Department[]> | undefined;
@@ -183,6 +195,47 @@ export class FilterCadastralSearchComponent implements OnInit {
       'CLOSE', 'end'
     );
   }
+
+  public clearFormFields(value:any){
+    console.log('value',value?.tab?.textLabel )
+
+    if(value?.tab?.textLabel === 'Seleccion Municipal'){
+      this.clearMultipleFields()
+    }
+    
+    if(value?.tab?.textLabel === 'Multiplex Campos'){
+      this.clearMunicipalSelection()
+    }
+  }
+
+  public clearMunicipalSelection(){
+    this.department?.reset();
+    this.municipality?.reset();
+    this.zone?.reset();
+    this.sector?.reset();
+    this.community?.reset();
+    this.number?.reset();
+    this.neighborhood?.reset();
+    this.sidewalk?.reset();
+    this.block?.reset();
+
+  }
+
+  public clearMultipleFields(){
+    this.registration?.reset();
+    this.domIndividualTypeNumber?.reset();
+    this.firstName?.reset();
+    this.otherLastName?.reset();
+    this.textAddress?.reset();
+    this.number?.reset();
+    this.middleName?.reset();
+    this.lastName?.reset();
+    this.companyName?.reset();
+
+
+  }
+
+
 
   validateFilterSearchCadastral(): any {
     const searchData = this.form.value;
@@ -559,4 +612,76 @@ export class FilterCadastralSearchComponent implements OnInit {
     if (this.optionsSidewalks?.length > 0) this.captureSidewalksInformation([], null);
     if (this.optionsBlocks?.length > 0) this.captureBlocksInformation([], null);
   }
+
+
+  get registration(){
+    return this.form.get('registration');
+  }
+
+  get domIndividualTypeNumber(){
+    return this.form.get('domIndividualTypeNumber');
+  }
+
+  get firstName(){
+    return this.form.get('firstName');
+  }
+
+  get otherLastName(){
+    return this.form.get('otherLastName');
+  }
+
+  get textAddress(){
+    return this.form.get('textAddress');
+  }
+
+  get number(){
+    return this.form.get('number');
+  }
+
+  get middleName(){
+    return this.form.get('middleName');
+  }
+
+  get lastName(){
+    return this.form.get('lastName');
+  }
+
+  get companyName(){
+    return this.form.get('companyName');
+  }
+
+  get department(){
+    return this.form.get('department');
+  }
+
+  get municipality(){
+    return this.form.get('municipality');
+  }
+
+  get zone(){
+    return this.form.get('zone');
+  }
+
+  get sector(){
+    return this.form.get('sector');
+  }
+
+  get community(){
+    return this.form.get('community');
+  }
+
+  get neighborhood(){
+    return this.form.get('neighborhood');
+  }
+
+  get sidewalk(){
+    return this.form.get('sidewalk');
+  }
+  
+
+  get block(){
+    return this.form.get('block');
+  }
+
+
 }

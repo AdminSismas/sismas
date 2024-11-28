@@ -45,6 +45,8 @@ export const PROCESO_ACTUALIZAR_DIRECCION:string = "Editar dirección";
 
 export const CONSTANT_VALIDATE_CHECK:string = "checkStatusBpmOperation";
 export const CONSTANT_VALIDATE_OTHER:string = "OTHER_CHECK";
+export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL:string = "Seleccion Municipal";
+export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS:string = "Multiplex Campos";
 
 export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
