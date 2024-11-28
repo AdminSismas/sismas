@@ -6,7 +6,7 @@ export const PAGE_SIZE: number = 5;
 export const PAGE_SIZE_OPTION: number[] = [5, 10, 20, 50];
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
     {
-        label: 'Nombre Archivo',
+        label: 'Nombre archivo',
         property: 'originalFileName',
         type: 'text',
         visible: true,
@@ -20,28 +20,28 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
         cssClasses: ['font-medium']
     },
     {
-        label: 'Creado Por',
+        label: 'Creado por',
         property: 'createdBy',
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
     },
     {
-        label: 'Fecha Creación',
+        label: 'Fecha creación',
         property: 'createdAt',
         type: 'date',
         visible: true,
         cssClasses: ['font-medium']
     },
     {
-        label: 'Aprobado Por',
+        label: 'Aprobado por',
         property: 'aprovedBy',
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
     },
     {
-        label: 'Fecha Aprobación',
+        label: 'Fecha aprobación',
         property: 'aprovedAt',
         type: 'date',
         visible: true,
@@ -51,7 +51,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
 
 export const TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE: TableColumn<contentInfoAttachment>[]= [
     {
-        label: 'Nombre Archivo',
+        label: 'Nombre archivo',
         property: 'originalFileName',
         type: 'text',
         visible: true,
@@ -65,28 +65,28 @@ export const TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE: TableColumn<contentInfoA
         cssClasses: ['font-medium']
     },
     {
-        label: 'Creado Por',
+        label: 'Creado por',
         property: 'createdBy',
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
     },
     {
-        label: 'Fecha Creación',
+        label: 'Fecha creación',
         property: 'createdAt',
         type: 'date',
         visible: true,
         cssClasses: ['font-medium']
     },
     {
-        label: 'Aprobado Por',
+        label: 'Aprobado por',
         property: 'aprovedBy',
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
     },
     {
-        label: 'Fecha Aprobación',
+        label: 'Fecha aprobación',
         property: 'aprovedAt',
         type: 'date',
         visible: true,
@@ -96,7 +96,7 @@ export const TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE: TableColumn<contentInfoA
         label: 'Verificar',
         property: 'select',
         type: 'checkbox',
-        visible: true, 
+        visible: true,
         cssClasses: []
       },
 ];
@@ -104,34 +104,34 @@ export const TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE: TableColumn<contentInfoA
 
 
 export const MODEL_METADATA_PROPERTIES: { label: string; metadata: keyof contentInfoAttachment; type:string }[] = [
-    { 
-        label: 'Nombre Archivo', 
-        metadata: 'originalFileName', 
+    {
+        label: 'Nombre archivo',
+        metadata: 'originalFileName',
         type: 'text',
     },
-    { 
-        label: 'Peso', 
-        metadata: 'size', 
+    {
+        label: 'Peso',
+        metadata: 'size',
         type: 'text',
     },
-    { 
-        label: 'Creado Por', 
-        metadata: 'createdBy', 
+    {
+        label: 'Creado por',
+        metadata: 'createdBy',
         type: 'text',
     },
-    { 
-        label: 'Fecha Creación', 
-        metadata: 'createdAt', 
+    {
+        label: 'Fecha creación',
+        metadata: 'createdAt',
         type: 'date',
     },
-    { 
-        label: 'Aprobado Por', 
-        metadata: 'aprovedBy', 
+    {
+        label: 'Aprobado por',
+        metadata: 'aprovedBy',
         type: 'text',
     },
-    { 
-        label: 'Fecha Aprobación', 
-        metadata: 'aprovedAt', 
+    {
+        label: 'Fecha aprobación',
+        metadata: 'aprovedAt',
         type: 'date',
     },
 ];

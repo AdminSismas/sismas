@@ -202,7 +202,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       baunitCondition === '(Propiedad horizontal) Matriz'
     ) return true;
 
-    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de Unidad Predial')
+    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial')
 
     return false;
   }
