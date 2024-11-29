@@ -49,4 +49,6 @@ export interface CreateBasicInformationAddress {
   domClaseViaPrincipal: string;
   domSectorCiudad: string;
   domSectorPredio: string;
+  direccionTexto: string;
+
 }
