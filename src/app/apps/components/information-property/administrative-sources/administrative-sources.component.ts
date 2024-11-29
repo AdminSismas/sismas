@@ -71,7 +71,6 @@ export class AdministrativeSourcesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.typeInformation)
     if (this.typeInformation !== 'edition') {
       this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions')
     }
