@@ -1,11 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface EditBasicPropertyInputs {
   name: string;
@@ -76,7 +78,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     },
     {
       name: 'cadastralRegistryNumberTemp',
-      label: 'Número temporal de registro',
+      label: 'Número de registro temporal',
       collection: false,
       type: 'text',
       placeholder: 'Número temporal de registro'
@@ -120,25 +122,44 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: BasicInformationProperty,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private informationPropretyService: InformationPropertyService,
+    private dialogRef: MatDialogRef<EditBasicPropertyInformationComponent>,
+    private snackbar: MatSnackBar
   ) { }
 
   public form: FormGroup = this.fb.group({
     "propertyRegistryOffice": ['', Validators.required],
     "propertyRegistryNumber": ['', Validators.required],
-    "propertyRegistryArea": ['', Validators.required],
-    "cadastralArea": ['', Validators.required],
+    "propertyRegistryArea": ['', Validators.min(0)],
+    "cadastralArea": ['', [Validators.required,Validators.min(0)]],
     "cadastralNumber": ['', Validators.required],
     "cadastralLastNumber": ['', Validators.required],
     "cadastralRegistryNumberTemp": ['', Validators.required],
-    "cadastralRegistryNumber": ['', Validators.required],
+    "cadastralRegistryNumber": [''],
     "domBaunitType": ['', Validators.required],
     "domBaunitCondition": ['', Validators.required],
     "domBaunitEconoDesti": ['', Validators.required],
-    "domBaunitProcessType": ['', Validators.required]
+    "domBaunitProcessType": ['']
   })
 
   ngOnInit(): void {
     this.form.reset(this.data);
+  }
+
+  editBasicInformationProperty() {
+    this.informationPropretyService.updateBasicInformationProperty(
+      this.data.executionId as string,
+      this!.data!.baunitIdE as string,
+      this.form.value
+    )
+    .subscribe({
+      next: (data: BasicInformationProperty) => {
+        this.snackbar.open('Se ha actualizado los aspectos generales del predio', 'CLOSE', {
+          duration: 4000,
+        });
+        this.dialogRef.close(data)
+      }
+    })
   }
 }

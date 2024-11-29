@@ -105,8 +105,14 @@ export class BasicPropertyInformationComponent implements OnInit {
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
       width: '60%',
-      data: this.data
-    })
+      data: { executionId: this.executionId ,...this.data }
+    }).afterClosed()
+      .subscribe({
+        next: (result: BasicInformationProperty) => {
+          console.log(result);
+          setTimeout(() => this.data = result, 300);
+        }
+      })
   }
 
   private getRandomInt(max: number):number {
