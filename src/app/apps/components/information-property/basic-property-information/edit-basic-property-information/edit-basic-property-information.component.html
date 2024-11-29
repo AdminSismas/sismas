@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Editar aspectos generales</h2>
+<mat-divider class="text-border border-slate-400"></mat-divider>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="grid grid-flow-row grid-cols-2 gap-y-2">
+    @for (input of inputs; track input.name) {
+      @if (input.collection) {
+        <vex-combox-colletion
+          [label]="input.label"
+          [formControlNameCombobox]="input.name"
+          [typeDomainName]="input.type"
+          [placeholderDomainName]="input.placeholder"
+          [idComboCollection]="input.name"
+        ></vex-combox-colletion>
+      }
+    }
+  </form>
+</mat-dialog-content>
