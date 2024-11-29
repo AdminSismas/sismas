@@ -100,8 +100,8 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     type: 'empty-row',
     visible: false,
     cssClasses: ['text-secondary', 'font-medium']
-  },
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  }
+  // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
