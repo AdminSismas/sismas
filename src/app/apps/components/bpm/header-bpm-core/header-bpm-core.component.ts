@@ -69,6 +69,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
       .subscribe((result: ProTaskE) => {
         this.chargerCrumbs(result);
       });
+      console.log('flujo actual:', this.crumbs)
   }
 
   ngOnChanges(changes: SimpleChanges) {

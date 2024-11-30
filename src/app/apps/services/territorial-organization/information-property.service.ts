@@ -116,7 +116,7 @@ export class InformationPropertyService {
     baunitId: number | undefined
   ): Observable<CcCalificacionUB[]> {
     let params: HttpParams = new HttpParams();
-    params = params.append('unitBuiltId', `${24321}`)
+    params = params.append('unitBuiltId', `${unitBuiltId}`); 
     const url: string = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
@@ -212,7 +212,7 @@ export class InformationPropertyService {
   }
 
   createBasicInformationPropertyConstruction(
-    executionId: number,
+    executionId: string,
     baunitId: string,
     createBasicInformationConstruction: CreateBasicInformationConstruction
   ): Observable<ContentInformationConstruction> {
@@ -258,7 +258,7 @@ export class InformationPropertyService {
     return this.httpClient.delete(url, { params: httpParams});
   }
 
-  deleteConstruction(baunitId: number, changeLogId: number, unitBuiltId: number): Observable<any> {
+  deleteConstruction(baunitId: string, changeLogId: string, unitBuiltId: number): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}`; 
 
     const formData = new FormData();

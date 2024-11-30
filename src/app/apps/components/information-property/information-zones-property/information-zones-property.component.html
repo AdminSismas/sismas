@@ -11,282 +11,203 @@
       </vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
     <mat-panel-description class="py-0 px-0">
-      <div class="w-full container-fluid bg-foreground p-0 py-0 px-0">
-        <!--  ZONAS FÍSICAS RURAL   -->
-        <div class="pl-2 py-0 border-b flex flex-col gap-1 items-start"
-             *ngIf="zoneBAUnitRural !== null && zoneBAUnitRural.length > 0">
-          <h4 class="subheading-2 m-0">Zona física rural</h4>
-        </div>
-        <mat-accordion class="w-full flex flex-col justify-between py-2"
-                       *ngIf="zoneBAUnitRural !== null">
-          @for (item of zoneBAUnitRural; track item; let index = $index) {
-            <mat-expansion-panel>
-              <mat-expansion-panel-header
-                class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center">
-                <div class="w-full px-0 py-0 flex text-start items-center">
-                  <h4 class="subheading-1 m-0 text-center w-full uppercase">
-                    Código - {{ item.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode }}
-                  </h4>
-                </div>
-              </mat-expansion-panel-header>
-              <mat-panel-description class="py-0 px-0">
-                <div class="w-full flex flex-col justify-between py-2">
-                  <div class="flex justify-between">
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Área</span>
-                      <span class="text-black capitalize text-sm">Disponibilidad agua</span>
-                      <span class="text-black capitalize text-sm">Uso actual del suelo</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.baUnitZonaArea) {
-                        <span class="text-sm text-center align-middle">{{ item.baUnitZonaArea }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaRu && item.ccZonaHomoFisicaRu.domDisponibilidadAgua) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaRu.domDisponibilidadAgua }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaRu && item.ccZonaHomoFisicaRu.domUsoSueloRural) {
-                        <span class="text-sm text-center align-middle">
-                            {{ item.ccZonaHomoFisicaRu.domUsoSueloRural }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Código</span>
-                      <span class="text-black capitalize text-sm">Influencial vial</span>
-                      <span class="text-black capitalize text-sm">Norma uso del suelo</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.ccZonaHomoFisicaRu && item.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaRu && item.ccZonaHomoFisicaRu.domInfluenciaVialRural) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaRu.domInfluenciaVialRural }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaRu && item.ccZonaHomoFisicaRu.normaUsoSuelo) {
-                        <span
-                          class="text-sm text-center align-middle">
-                            {{ item.ccZonaHomoFisicaRu.normaUsoSuelo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Vigencia</span>
-                      <span class="text-black capitalize text-sm"></span>
-                      <span class="text-black capitalize text-sm"></span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.ccZonaHomoFisicaRu && item.ccZonaHomoFisicaRu.vigencia) {
-                        <span class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaRu.vigencia }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      <span class="text-sm text-center align-middle"></span>
-                      <span class="text-sm text-center align-middle"></span>
-                    </div>
-                  </div>
-                </div>
-              </mat-panel-description>
-            </mat-expansion-panel>
-          }
-        </mat-accordion>
 
-        <!--  ZONAS FÍSICAS URBANAS   -->
-        <div class="pl-2 py-0 border-b flex flex-col gap-1 items-start"
-             *ngIf="zoneBAUnitUrban !== null && zoneBAUnitUrban.length > 0">
-          <h4 class="subheading-2 m-0">Zona física urbana</h4>
+      <!-- Flex container to hold both tables in one row -->
+      <div class="flex w-full justify-between">
+
+        <!-- First Table (First Column) -->
+        <div class="flex flex-col w-[48%]">
+          <!-- Title for the First Table -->
+          <div class="header-container m-2 flex items-center justify-between">
+            <span class="font-bold text-xl">Zonas Físicas</span>
+            @if (typeInformation === "edition") {
+              <button
+                color="primary"
+                mat-raised-button
+                type="button"
+                (click)="onClickOpenAddEditModal(dataSource)"
+              >
+                Nueva
+                <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+            }
+          </div>
+          
+          <div class="table-container overflow-x-auto w-full">
+            <table mat-table [dataSource]="dataSource" matSort class="w-full">
+              <ng-container matColumnDef="viewDetail">
+                <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header></th>
+                <td *matCellDef="let row" mat-cell>
+                  <div class="flex align-middle text-center content-center items-center">
+                    <button
+                      class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
+                      mat-icon-button
+                      title="Detalles"
+                      (click)="openInformationPropertyOwner(row)"
+                    >
+                      <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+              @for (column of textColumns(); track column) {
+                <ng-container [matColumnDef]="column.property">
+                  <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
+                    {{ column.label }}
+                  </th>
+                  <td *matCellDef="let row" mat-cell>
+                    @if (column.property === 'beginAt') {
+                      {{ row[column.property] | date:'dd/MM/yyyy' }}
+                    }
+                    @else {
+                      {{ row[column.property] }}
+                    }
+                  </td>
+                </ng-container>
+              }
+              <ng-container matColumnDef="actions">
+                <th *matHeaderCellDef mat-header-cell> ACCIONES </th>
+                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerData]="{ infoOwner: row }"
+                    [matMenuTriggerFor]="actionsMenu"
+                    type="button"
+                  >
+                    <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
+              <tr mat-row @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer" *matRowDef="let row; columns: visibleColumns()"></tr>
+            </table>
+            <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+              <ng-template let-infoOwner="infoOwner" matMenuContent>
+                @for (actionBtn of actionBtns(); track actionBtn.id) {
+                  <button mat-menu-item (click)="onClickActionBtn(actionBtn.id, infoOwner)">
+                    <mat-icon [svgIcon]="actionBtn.icon" />
+                    <span>{{ actionBtn.label }}</span>
+                  </button>
+                } @empty {
+                  <button mat-menu-item disabled>
+                    <span class="text-center">No options</span>
+                  </button>
+                }
+              </ng-template>
+            </mat-menu>
+          </div>
+          <div class="paginator-container flex justify-center">
+            <mat-paginator
+              #paginator
+              [pageSizeOptions]="pageSizeOptions"
+              [length]="totalElements"
+              [pageSize]="pageSize"
+              [pageIndex]="page"
+              (page)="refreshPaginator($event)"
+              class="paginator"
+            />
+          </div>
         </div>
 
-        <mat-accordion class="w-full flex flex-col justify-between py-2"
-                       *ngIf="zoneBAUnitUrban !== null && zoneBAUnitUrban.length > 0">
-          @for (item of zoneBAUnitUrban; track item; let index = $index) {
-            <mat-expansion-panel>
-              <mat-expansion-panel-header
-                class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center">
-                <div class="w-full px-0 py-0 flex text-start items-center">
-                  <h4 class="subheading-1 m-0 text-center w-full uppercase">
-                    Código - {{ item.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode }}
-                  </h4>
-                </div>
-              </mat-expansion-panel-header>
-              <mat-panel-description class="py-0 px-0">
-                <div class="w-full flex flex-col justify-between py-2">
-                  <div class="flex justify-between">
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Área</span>
-                      <span class="text-black capitalize text-sm">Topografía</span>
-                      <span class="text-black capitalize text-sm">Uso actual del suelo</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.baUnitZonaArea) {
-                        <span class="text-sm text-center align-middle">{{ item.baUnitZonaArea }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.domTopografiaZonaTipo) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaUr.domTopografiaZonaTipo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.domUsoSueloUrbanoTipo) {
-                        <span class="text-sm text-center align-middle">
-                            {{ item.ccZonaHomoFisicaUr.domUsoSueloUrbanoTipo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Código</span>
-                      <span class="text-black capitalize text-sm">Influencial vial</span>
-                      <span class="text-black capitalize text-sm">Norma uso del suelo</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.zonaHomoFisicaUrCode) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaUr.zonaHomoFisicaUrCode }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.domInfluenciaVialUrbanaTipo) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaUr.domInfluenciaVialUrbanaTipo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.normaUsoSuelo) {
-                        <span
-                          class="text-sm text-center align-middle">
-                            {{ item.ccZonaHomoFisicaUr.normaUsoSuelo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Vigencia</span>
-                      <span class="text-black capitalize text-sm">Servicios públicos</span>
-                      <span class="text-black capitalize text-sm">Tipificación construcción</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.vigencia) {
-                        <span class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaUr.vigencia }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.domServiciosPublicosTipo) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoFisicaUr.domServiciosPublicosTipo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoFisicaUr && item.ccZonaHomoFisicaUr.domTipificacionConstruccionTipo) {
-                        <span
-                          class="text-sm text-center align-middle">
-                            {{ item.ccZonaHomoFisicaUr.domTipificacionConstruccionTipo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
-                  </div>
-                </div>
-              </mat-panel-description>
-            </mat-expansion-panel>
-          }
-        </mat-accordion>
+        <!-- Divider -->
+        <div class="border-l-2 border-gray-300"></div>
 
-        <!--  ZONAS GEOECONOMICA   -->
-        <div class="pl-2 py-0 border-b flex flex-col gap-1 items-start"
-             *ngIf="zoneBAUnitGeoeconomic !== null">
-          <h4 class="subheading-2 m-0">Zona física geoeconómica</h4>
-        </div>
-        <mat-accordion class="w-full flex flex-col justify-between py-2"
-                       *ngIf="zoneBAUnitGeoeconomic !== null">
-          @for (item of zoneBAUnitGeoeconomic; track item; let index = $index) {
-            <mat-expansion-panel>
-              <mat-expansion-panel-header
-                class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center">
-                <div class="w-full px-0 py-0 flex text-start items-center">
-                  <h4 class="subheading-1 m-0 text-center w-full uppercase">
-                    Código - {{ item.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode }}
-                  </h4>
-                </div>
-              </mat-expansion-panel-header>
-              <mat-panel-description class="py-0 px-0">
-                <div class="w-full flex flex-col justify-between py-2">
-                  <div class="flex justify-between">
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Área</span>
-                      <span class="text-black capitalize text-sm">Valor</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.baUnitZonaArea) {
-                        <span class="text-sm text-center align-middle">{{ item.baUnitZonaArea }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.baUnitZonaValor) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.baUnitZonaValor }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Código</span>
-                      <span class="text-black capitalize text-sm">Zona</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.ccZonaHomoGeoEconomica && item.ccZonaHomoGeoEconomica.zonaHomoGeoEconomicaCode) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoGeoEconomica.zonaHomoGeoEconomicaCode }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoGeoEconomica && item.ccZonaHomoGeoEconomica.zonaHomoGeoEconomicaObs) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoGeoEconomica.zonaHomoGeoEconomicaObs }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      <span class="text-black capitalize text-sm">Vigencia</span>
-                      <span class="text-black capitalize text-sm">Uso suelo</span>
-                    </div>
-                    <div class="flex flex-col gap-1 py-1">
-                      @if (item && item.ccZonaHomoGeoEconomica && item.ccZonaHomoGeoEconomica.vigencia) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoGeoEconomica.vigencia }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                      @if (item && item.ccZonaHomoGeoEconomica && item.ccZonaHomoGeoEconomica.suelo) {
-                        <span
-                          class="text-sm text-center align-middle">{{ item.ccZonaHomoGeoEconomica.suelo }}</span>
-                      } @else {
-                        <span class="text-sm text-center align-middle">{{ NAME_NO_DISPONIBLE }}</span>
-                      }
-                    </div>
+        <!-- Second Table (Second Column) -->
+        <div class="flex flex-col w-[48%]">
+          <!-- Title for the Second Table -->
+          <div class="header-container m-2 flex items-center justify-between">
+            <span class="font-bold text-xl">Zonas Geoeconómicas</span>
+            @if (typeInformation === "edition") {
+              <button
+                color="primary"
+                mat-raised-button
+                type="button"
+                (click)="onClickOpenAddEditModal(dataSource)"
+              >
+                Nueva
+                <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+            }
+          </div>
+          
+          <div class="table-container overflow-x-auto w-full">
+            <table mat-table [dataSource]="dataSource" matSort class="w-full">
+              <ng-container matColumnDef="viewDetail">
+                <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header></th>
+                <td *matCellDef="let row" mat-cell>
+                  <div class="flex align-middle text-center content-center items-center">
+                    <button
+                      class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
+                      mat-icon-button
+                      title="Detalles"
+                      (click)="openInformationPropertyOwner(row)"
+                    >
+                      <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+                    </button>
                   </div>
-                </div>
-              </mat-panel-description>
-            </mat-expansion-panel>
-          }
-        </mat-accordion>
-      </div>
+                </td>
+              </ng-container>
+              @for (column of textColumns(); track column) {
+                <ng-container [matColumnDef]="column.property">
+                  <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
+                    {{ column.label }}
+                  </th>
+                  <td *matCellDef="let row" mat-cell>
+                    @if (column.property === 'beginAt') {
+                      {{ row[column.property] | date:'dd/MM/yyyy' }}
+                    }
+                    @else {
+                      {{ row[column.property] }}
+                    }
+                  </td>
+                </ng-container>
+              }
+              <ng-container matColumnDef="actions">
+                <th *matHeaderCellDef mat-header-cell> ACCIONES </th>
+                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerData]="{ infoOwner: row }"
+                    [matMenuTriggerFor]="actionsMenu"
+                    type="button"
+                  >
+                    <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
+              <tr mat-row @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer" *matRowDef="let row; columns: visibleColumns()"></tr>
+            </table>
+            <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+              <ng-template let-infoOwner="infoOwner" matMenuContent>
+                @for (actionBtn of actionBtns(); track actionBtn.id) {
+                  <button mat-menu-item (click)="onClickActionBtn(actionBtn.id, infoOwner)">
+                    <mat-icon [svgIcon]="actionBtn.icon" />
+                    <span>{{ actionBtn.label }}</span>
+                  </button>
+                } @empty {
+                  <button mat-menu-item disabled>
+                    <span class="text-center">No options</span>
+                  </button>
+                }
+              </ng-template>
+            </mat-menu>
+          </div>
+          <div class="paginator-container flex justify-center">
+            <mat-paginator
+              #paginator
+              [pageSizeOptions]="pageSizeOptions"
+              [length]="totalElements"
+              [pageSize]="pageSize"
+              [pageIndex]="page"
+              (page)="refreshPaginator($event)"
+              class="paginator"
+            />
+          </div>
+        </div>
+
+      </div> 
+
     </mat-panel-description>
   </mat-expansion-panel>
 </mat-accordion>
-
