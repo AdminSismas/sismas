@@ -127,6 +127,7 @@ export class EditInformationAddressComponent implements OnInit {
     this.isLoading.set(true);
 
     try {
+      this.blockPrimaryAddressField();
       const value = this.informationAddressForm.value || {};
       let detailBasicInformationAddress: DetailBasicInformationAddress | undefined;
       if (this.addEditInformationData.type === 'new') {
@@ -143,9 +144,10 @@ export class EditInformationAddressComponent implements OnInit {
         }
 
         createBasicInformationAddress.domTipoDireccion = value?.domTipoDireccion;
-        createBasicInformationAddress.esDireccionPrincipal = value?.esDireccionPrincipal;
+        createBasicInformationAddress.esDireccionPrincipal = this.esDireccionPrincipal?.value;
         createBasicInformationAddress.codigoPostal = value?.codigoPostal;
-        createBasicInformationAddress.numeroPredio = value?.numeroPredio;
+        createBasicInformationAddress.nombrePredio = value?.nombrePredio;
+        createBasicInformationAddress.complemento = '';
 
         const baunitId: string = this.addEditInformationData.baunitId || '';
         if (!baunitId) {
@@ -157,14 +159,36 @@ export class EditInformationAddressComponent implements OnInit {
             createBasicInformationAddress
           )
         );
+        this.informationPropertyService.reloadTableSet(true);
       } else {
+        this.blockPrimaryAddressField();
+        const value = this.informationAddressForm.value || {};
+        let createBasicInformationAddress = this.generateModelDirecctionModel(value);
+
+        if(value?.domTipoDireccion === 'Estructurada'){
+
+          createBasicInformationAddress = this.filterValueAddreStructuredModel(value);
+
+        }else if(value?.domTipoDireccion === 'No estructurada'){
+
+          createBasicInformationAddress = this.filterValueAddreDontStructuredModel(value);
+        }
+
+        createBasicInformationAddress.domTipoDireccion = value?.domTipoDireccion;
+        createBasicInformationAddress.esDireccionPrincipal = this.esDireccionPrincipal?.value;
+        createBasicInformationAddress.codigoPostal = value?.codigoPostal;
+        createBasicInformationAddress.nombrePredio = value?.nombrePredio;
+        createBasicInformationAddress.complemento = '';
+
+
         detailBasicInformationAddress  = await lastValueFrom(
           this.informationPropertyService.updateBasicInformationPropertyAddress(
             this.detailBasicInformation()?.direccionId as string,
-            { ...value },
+            createBasicInformationAddress
           )
         );
       }
+      this.informationPropertyService.reloadTableSet(true);
       this.dialogRef.close(detailBasicInformationAddress);
     } catch (e) {
       console.error(e);
@@ -173,6 +197,9 @@ export class EditInformationAddressComponent implements OnInit {
     this.isLoading.set(false);
   }
 
+
+ 
+// PROCESO CREAR MODELO DE DATOS CreateBasicInformationAddress
   public generateModelDirecction(value:any):CreateBasicInformationAddress{
     const createBasicInformationAddress: CreateBasicInformationAddress = {
 
@@ -209,7 +236,7 @@ export class EditInformationAddressComponent implements OnInit {
         domTipoDireccion:'',
         esDireccionPrincipal:false,
         codigoPostal:'',
-        numeroPredio:'',
+        nombrePredio:'',
 
           // PRINCIPAL
       domClaseViaPrincipal:value?.domClaseViaPrincipal,
@@ -221,7 +248,7 @@ export class EditInformationAddressComponent implements OnInit {
       letraViaGeneradora:value?.letraViaGeneradora,
       valorViaGeneradora:value?.valorViaGeneradora,
       complemento:value?.complemento,
-      nombrePredio:value?.nombrePredio,
+      numeroPredio:value?.numeroPredio,
       domSectorPredio:value?.domSectorPredio,
 
           // campo bloqueado
@@ -232,31 +259,123 @@ export class EditInformationAddressComponent implements OnInit {
 
   public filterValueAddreDontStructured(value:any):CreateBasicInformationAddress{
     const dontStructutred: CreateBasicInformationAddress = {
-
+  
       // campos BASE Informacion permanente
         domTipoDireccion:'',
         esDireccionPrincipal:false,
         codigoPostal:'',
-        numeroPredio:'',
-
+        nombrePredio:'',
+        
+  
       // PRINCIPAL // campo bloqueado
       domClaseViaPrincipal:'',
       letraViaPrincipal:'',
       valorViaPrincipal:'',
       domSectorCiudad:'',
-
+  
       // GENERADORA // campo bloqueado
       letraViaGeneradora:'',
       valorViaGeneradora:'',
       complemento:'',
-      nombrePredio:'',
       domSectorPredio:'',
-
+      numeroPredio:'',
+  
           
       direccionTexto: value?.direccionTexto
     };
     return dontStructutred
   }
+  // PROCESO CREAR /FIN
+
+// PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress 
+public generateModelDirecctionModel(value:any):DetailBasicInformationAddress{
+  const createBasicInformationAddress: DetailBasicInformationAddress = {
+
+    // campos BASE
+    domTipoDireccion:'',
+    esDireccionPrincipal:false,
+    codigoPostal:'',
+    nombrePredio:'',
+
+    direccionTexto: '',
+    
+     // PRINCIPAL
+     domClaseViaPrincipal:'',
+     letraViaPrincipal:'',
+     valorViaPrincipal:'',
+     domSectorCiudad:'',
+
+     // GENERADORA
+     letraViaGeneradora:'',
+     valorViaGeneradora:'',
+     complemento:'',
+     domSectorPredio:'',
+     numeroPredio:'',
+
+  
+  };
+  return createBasicInformationAddress
+}
+
+public filterValueAddreStructuredModel(value:any):DetailBasicInformationAddress{
+  const structutred: DetailBasicInformationAddress = {
+
+    // campos BASE
+      domTipoDireccion:'',
+      esDireccionPrincipal:false,
+      codigoPostal:'',
+      nombrePredio:'',
+
+        // PRINCIPAL
+    domClaseViaPrincipal:value?.domClaseViaPrincipal,
+    letraViaPrincipal:value?.letraViaPrincipal,
+    valorViaPrincipal:value?.valorViaPrincipal,
+    domSectorCiudad:value?.valorViaPrincipal,
+
+    // GENERADORA
+    letraViaGeneradora:value?.letraViaGeneradora,
+    valorViaGeneradora:value?.valorViaGeneradora,
+    complemento:value?.complemento,
+    domSectorPredio:value?.domSectorPredio,
+    numeroPredio:value?.numeroPredio,
+    
+
+        // campo bloqueado
+        direccionTexto: ''
+  };
+  return structutred
+}
+
+public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddress{
+  const dontStructutred: DetailBasicInformationAddress = {
+
+    // campos BASE Informacion permanente
+      domTipoDireccion:'',
+      esDireccionPrincipal:false,
+      codigoPostal:'',
+      nombrePredio:'',
+
+    // PRINCIPAL // campo bloqueado
+    domClaseViaPrincipal:'',
+    letraViaPrincipal:'',
+    valorViaPrincipal:'',
+    domSectorCiudad:'',
+
+    // GENERADORA // campo bloqueado
+    letraViaGeneradora:'',
+    valorViaGeneradora:'',
+    complemento:'',
+    numeroPredio:'',
+    domSectorPredio:'',
+
+        
+    direccionTexto: value?.direccionTexto
+  };
+  return dontStructutred
+}
+
+// PROCESO ACTUALIZAR /FIN
+
 
   /**
    * Init information address form
@@ -289,6 +408,8 @@ export class EditInformationAddressComponent implements OnInit {
       
     });
     this.esDireccionPrincipal?.setValue(false);//VALOR por defecto
+    this.complemento?.disable();//VALOR por defecto
+
 
     if (this.addEditInformationData.type === 'new') {
       const names: string[] = ['direccionId'];
@@ -301,18 +422,19 @@ export class EditInformationAddressComponent implements OnInit {
     }
   }
   public blockPrimaryAddressField(){
-    console.log(this.addEditInformationData,'VARIABLE DE VERIFICACION');
       if(this.addEditInformationData.hasMainAddress){
 
         if(this.addEditInformationData && 
               (this.addEditInformationData?.basicInformationAddress &&
               this.addEditInformationData?.basicInformationAddress?.esDireccionPrincipal === true)){
                 this.esDireccionPrincipal?.enable(); 
-            }else if(this.addEditInformationData?.basicInformationAddress &&
-              this.addEditInformationData?.basicInformationAddress?.esDireccionPrincipal === false){
-              this.esDireccionPrincipal?.disable(); 
+              }else if(this.addEditInformationData?.basicInformationAddress &&
+                this.addEditInformationData?.basicInformationAddress?.esDireccionPrincipal === false){
+                  this.esDireccionPrincipal?.disable(); 
+                  this.esDireccionPrincipal?.setValue(false);//VALOR por defecto
             }else{
               this.esDireccionPrincipal?.disable(); 
+              this.esDireccionPrincipal?.setValue(false);//VALOR por defecto
             }
         }else{
           this.esDireccionPrincipal?.enable(); 

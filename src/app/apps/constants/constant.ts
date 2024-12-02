@@ -50,6 +50,7 @@ export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS:string = "Multiplex Campos";
 
 export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
+export const EVIRONMENT_CC_DIRECCION: string = '/ccDireccion';
 
 export const TYPEOPERATION_ADD: TypeOperationAlfaMain = 'ADD' ;
 export const TYPEOPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
@@ -105,7 +106,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     visible: false,
     cssClasses: ['text-secondary', 'font-medium']
   },
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [

@@ -1,6 +1,6 @@
 export class DetailBasicInformationAddress {
   direccionId?: string;
-  esDireccionPrincipal?: string;
+  esDireccionPrincipal?: any;
   codigoPostal?: string;
   valorViaPrincipal?: string;
   letraViaPrincipal?: string;
