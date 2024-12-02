@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, Subject, throwError } from 'rxjs';
 import { BasicInformationProperty, UpdateBasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -12,15 +12,24 @@ import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { ContentInformationConstruction, CreateBasicInformationConstruction } from '../../interfaces/information-property/content-information-construction';
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
 import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
+import { EVIRONMENT_CC_DIRECCION } from '../../constants/constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InformationPropertyService {
   basic_url: string = `${envi.url}:${envi.port}`;
+  public ccAddress:string = EVIRONMENT_CC_DIRECCION
   private httpClient = inject(HttpClient);
 
-  constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) { }
+  reloadTable$ = new Subject<boolean>();
+  reloadTableStarted$: Observable<boolean> = this.reloadTable$.asObservable();
+
+  constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
+
+  public reloadTableSet(value:boolean):void{
+    this.reloadTable$.next(value);
+  }
 
   getBasicInformationProperty(
     schema: string,
@@ -214,7 +223,7 @@ export class InformationPropertyService {
     baunitId: string,
     createBasicInformationAddress: CreateBasicInformationAddress,
   ): Observable<DetailBasicInformationAddress> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}`;
+    const url: string = `${this.basic_url}${this.ccAddress}`;
     const httpParams: HttpParams = new HttpParams()
       .set('baunitId', baunitId);
     return this.httpClient.post<DetailBasicInformationAddress>(
@@ -258,10 +267,10 @@ export class InformationPropertyService {
    * @returns
    */
   deleteBasicInformationPropertyAddress(direccionId: string): Observable<any> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}/${direccionId}`;
-    const httpParams: HttpParams = new HttpParams()
-      .set('version', '9999999');
-    return this.httpClient.delete(url, { params: httpParams });
+    const url: string = `${this.basic_url}${envi.ccDireccion}${direccionId}`;
+    const httpParams: HttpParams = new HttpParams().set('version', '99999');
+    
+    return this.httpClient.delete(url, { params: httpParams});
   }
 
   deleteBasicInformationPropertyConstruction(constructionId: string): Observable<any> {

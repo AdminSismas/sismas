@@ -50,6 +50,7 @@ export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS:string = "Multiplex Campos";
 
 export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
+export const EVIRONMENT_CC_DIRECCION: string = '/ccDireccion';
 
 export const TYPEOPERATION_ADD: TypeOperationAlfaMain = 'ADD' ;
 export const TYPEOPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
