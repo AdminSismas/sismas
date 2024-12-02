@@ -107,6 +107,7 @@ export class InformationAddressesPropertyComponent
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  public hasMainAddress:boolean = false;
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
@@ -221,9 +222,23 @@ export class InformationAddressesPropertyComponent
       .getBasicInformationPropertyAddresses(this.schema, this.baunitId)
       .subscribe({
         error: (err: any) => this.captureInformationSubscribeError(err),
-        next: (result: BasicInformationAddress[]) =>
+        next: (result: BasicInformationAddress[]) =>{
+          this.filterAddressMain(result);
           this.captureInformationSubscribe(result)
+        }
       });
+  }
+
+  public filterAddressMain(result: BasicInformationAddress[]){
+    const direccionesPrincipales = result.filter(d => d.esDireccionPrincipal);
+  
+    // Verifica que solo haya una dirección con "esDireccionPrincipal"
+    if (direccionesPrincipales.length === 0) {
+      this.hasMainAddress = false;  // Desbloquea
+    } else {
+      this.hasMainAddress = true;  // Bloquea
+    }
+
   }
 
   captureInformationSubscribeError(err: any): void {
@@ -253,6 +268,7 @@ export class InformationAddressesPropertyComponent
       type: data ? 'edit' : 'new',
       basicInformationAddress: data ? new BasicInformationAddress(data, this.schema) : undefined,
       baunitId: this.baunitId || undefined,
+      hasMainAddress: this.hasMainAddress
     };
     const dialogRef = this.dialog
       .open(EditInformationAddressComponent, {

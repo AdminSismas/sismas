@@ -23,6 +23,8 @@ import { InformationPropertyService } from '../../../services/territorial-organi
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
 import { GUION, NAME_NO_DISPONIBLE } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
+import { MatDialog } from '@angular/material/dialog';
+import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -64,8 +66,12 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() propertyUnit: boolean = false;
+  @Input() typeInformation: string = 'visualization';
 
-  constructor(private informationPropertyService:InformationPropertyService) {}
+  constructor(
+    private informationPropertyService:InformationPropertyService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     if (this.id?.length <= 0 || this.baunitId == null) {
@@ -94,6 +100,19 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   captureInformationSubscribe(result: BasicInformationProperty): void {
     this.data = result;
+  }
+
+  editBasicInformationProperty(): void {
+    this.dialog.open(EditBasicPropertyInformationComponent, {
+      width: '60%',
+      data: { executionId: this.executionId ,...this.data }
+    }).afterClosed()
+      .subscribe({
+        next: (result: BasicInformationProperty) => {
+          console.log(result);
+          setTimeout(() => this.data = result, 300);
+        }
+      })
   }
 
   private getRandomInt(max: number):number {

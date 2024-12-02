@@ -232,7 +232,10 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   updateCustomer(customer: People) {
     this.dialog
       .open(CreatePeopleComponent, {
-        data: customer
+        data: {
+          ...customer,
+          mode: 'update'
+        }
       })
       .afterClosed()
       .subscribe((updatedCustomer) => {

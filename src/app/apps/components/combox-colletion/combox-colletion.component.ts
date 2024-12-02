@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { NgClass, NgForOf } from '@angular/common';
+import { CommonModule, NgClass, NgForOf } from '@angular/common';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { CollectionServicesService } from '../../services/general/collection-services.service';
 import { DomainCalificationCollection, DomainCollection } from '../../interfaces/domain-name.model';
@@ -18,7 +18,8 @@ import { MatTableModule } from '@angular/material/table';
     NgForOf,
     ReactiveFormsModule,
     MatTableModule,
-    NgClass
+    NgClass,
+    CommonModule
   ],
   templateUrl: './combox-colletion.component.html',
   styleUrl: './combox-colletion.component.scss',

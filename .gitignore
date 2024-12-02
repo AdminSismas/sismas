@@ -48,3 +48,6 @@ Thumbs.db
 
 /ARCHIVE/*
 .vscode/settings.json
+
+# script
+/script
