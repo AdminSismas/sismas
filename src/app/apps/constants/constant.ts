@@ -105,7 +105,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     type: 'empty-row',
     visible: false,
     cssClasses: ['text-secondary', 'font-medium']
-  },
+  }
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
