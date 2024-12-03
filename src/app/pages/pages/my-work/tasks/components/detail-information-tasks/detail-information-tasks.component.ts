@@ -19,6 +19,8 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
 import { NAME_NO_DISPONIBLE } from 'src/app/apps/constants/constant';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'vex-detail-information-property-owner',
@@ -32,13 +34,15 @@ import { NAME_NO_DISPONIBLE } from 'src/app/apps/constants/constant';
     scaleFadeIn400ms,
   ],
   imports: [
+    CommonModule,
     MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
     MatDividerModule,
     MatIconModule,
     MatMenuModule,
-    MatDialogContent
+    MatDialogContent,
+    MatExpansionModule
   ],
   templateUrl: './detail-information-tasks.component.html'
 })
