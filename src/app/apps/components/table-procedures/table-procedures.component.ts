@@ -80,6 +80,10 @@ export class TableProceduresComponent {
   beginAtE!: Date;
   executionCode: string = '';
   individualNumber: string = '';
+  disabledEndDate: boolean = false;
+
+
+
 
   @Input()
   page:number = PAGE;
@@ -208,11 +212,12 @@ export class TableProceduresComponent {
   /* ------- Meth. Services ------- */
   getDataFromProceduresService() {
     const data = this.objectParameters();
-    this.proceduresService.getDataPropertyByProcedures(data)
+    console.log(data);
+    this.proceduresService.getFilterTableProcedureService(data)
     .subscribe({
       next: (result: any) => {
           console.log("datos de api: ", result);
-          this.captureInformationSubscribe(result);
+          // this.captureInformationSubscribe(result);
       },
       error: (error) => {
           this.alertSnakbar.open('Hubo un error, verifique la información de los filtros', 'Close', {

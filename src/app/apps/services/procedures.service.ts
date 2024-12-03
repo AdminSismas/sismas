@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environments";
 import { SendGeneralRequestsService } from './general/send-general-requests.service';
-import { HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { PageProceduresData } from "../interfaces/page-procedures-data.model";
 import { Observable } from "rxjs";
 import { ProceduresCollection } from "../interfaces/procedures-progress.model";
@@ -17,7 +17,7 @@ export class ProceduresService {
     basic_url:string = `${environment.url}:${environment.port}${environment.bpmOperation}${environment.proExecution}${environment.active}`;
 
     /* -------------- CONSTRUCTRO -------------- */
-    constructor(private requestsService: SendGeneralRequestsService) {}
+    constructor(private requestsService: SendGeneralRequestsService,private http: HttpClient) {}
 
 
     /* -------------- MÉTODOS -------------- */
@@ -40,5 +40,18 @@ export class ProceduresService {
     }
 
 
+    public getFilterTableProcedureService(page: PageProceduresData):Observable<ProceduresCollection[]>{
+        let paramsR:HttpParams = new HttpParams();
+        const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
+            console.log(urlComplete,'URLS RUTA');  
+            console.log(this.basic_url,'baseUrl')                             
+       return  this.http.get<any>(urlComplete);
+    //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
+
+    }
+
+    async sendRequestsFetchGetAsync(url: string) {
+        return this.http.get<any>(url);
+      }
 
 }

@@ -47,12 +47,13 @@
             <mat-form-field class="flex-auto">
                 <mat-label>Documento personal</mat-label>
                 <input
+                disabled
                     matInput
                     [(ngModel)]="individualNumber"
                     placeholder="Ingresa el número de documento&hellip;"
                     inputmode="numeric"
                     pattern="\d*"
-                    (input)="validateNumber($event)"/>
+                    (input)="validateNumber($event)"  />
             </mat-form-field>
 
             <button class="mt-1" color="primary" mat-raised-button type="button" (click)="onSearch()">
