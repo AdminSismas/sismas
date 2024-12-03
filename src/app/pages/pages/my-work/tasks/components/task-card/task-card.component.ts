@@ -7,6 +7,11 @@ import { NgIf } from '@angular/common';
 import { TruncatePipe } from '../../../../../../apps/pipes/truncate-pipe.pipe';
 import { NAME_NO_DISPONIBLE, SPACE } from '../../../../../../apps/constants/constant';
 import { environment as envi } from '../../../../../../../environments/environments';
+import { MatDialog } from '@angular/material/dialog';
+import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
+import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'vex-task-card',
@@ -30,7 +35,12 @@ export class TaskCardComponent implements OnInit {
 
   URL_ICON_BASE: string = `${envi.ulr_icon_base}`;
 
-  constructor() {
+  public taskOne:TaskResponseModel= new TaskResponseModel();
+
+  constructor(
+    private dialog: MatDialog,
+    private tasksPanelService: TasksPanelService
+  ) {
   }
 
   ngOnInit() {
@@ -44,6 +54,31 @@ export class TaskCardComponent implements OnInit {
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
+
+  seeTaskProperty(value:TaskResponseModel,taskId:number):void {
+    this.dialog.open(DetailInformationTasksComponent, {
+      width: '50%',
+      // minWidth:'370px',
+      //   width:'98%',
+      //   height: '86%',
+      data: { taskId: taskId ,value }
+    });
+  }
+
+  
+  
+  
+  
+  viewDetallyTask(value:any){
+    this.tasksPanelService.viewTaskId(
+      value.executionId)
+      .subscribe( result => {
+        this.taskOne = result;
+          this.seeTaskProperty(this.taskOne,value.executionId)
+        
+      });
+  }
+
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
   protected readonly SPACE = SPACE;
