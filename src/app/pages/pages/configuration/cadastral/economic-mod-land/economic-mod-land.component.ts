@@ -1,21 +1,46 @@
 import { Component } from '@angular/core';
-import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { DynamicFormsComponent } from 'src/app/apps/components/dynamic-forms/dynamic-forms.component';
+import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
+import { FormGroup, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { PhysicalZoneComponent } from './physical-zone/physical-zone.component';
 
 @Component({
   selector: 'vex-economic-mod-land',
   standalone: true,
   imports: [
-    InConstructionComponent,
+    /* Material Modules */
+    MatButtonModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
+    MatTabsModule,
+
+    /* Vex Components */
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
+    VexSecondaryToolbarComponent,
+
+    /* Custom Components */
+    PhysicalZoneComponent
   ],
   templateUrl: './economic-mod-land.component.html',
   styleUrl: './economic-mod-land.component.scss'
 })
 export class EconomicModLandComponent {
 
+  public inputs: JSONInput[] = [
+
+  ]
+
+  public form: FormGroup = new FormGroup({})
+
+  submitForm(): void {
+    console.log(this.form.value)
+  }
 }
