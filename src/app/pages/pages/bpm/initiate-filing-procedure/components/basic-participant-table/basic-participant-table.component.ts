@@ -40,7 +40,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { filter } from 'rxjs/operators';
@@ -54,6 +53,8 @@ import { InformationPersonService } from '../../../../../../apps/services/bpm/in
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
+import { MatDialog } from '@angular/material/dialog';
+import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 
 @Component({
   selector: 'vex-basic-participant-table',
@@ -71,7 +72,6 @@ import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid
     NgIf,
     NgClass,
     MatMenuModule,
-    VexPageLayoutContentDirective,
     ComboxColletionComponent,
     FluidMinHeightDirective,
     FormsModule,
@@ -113,7 +113,8 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   constructor(
     private snackbar: MatSnackBar,
     private readonly layoutService: VexLayoutService,
-    private personService: InformationPersonService
+    private personService: InformationPersonService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -192,9 +193,27 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
             if (error.status == HttpStatusCode.NotFound) {
               this.person = null;
               this.form.get('personCompleted')?.patchValue('');
-              this.snackbar.open('Persona no existe', undefined,
-                { duration: 2000 });
-              return;
+              this.dialog.open(CreatePeopleComponent, {
+                width: '60%',
+                data: {
+                  domIndividualTypeNumber: info.typeNumberDocument,
+                  number: info.numberID,
+                  mode: 'create'
+                }
+              }).afterClosed()
+                .subscribe((result: { number: string; individualTypeNumber: string; }) => {
+                  this.personService.getFindPersonByNumber(result.number, result.individualTypeNumber)
+                    .subscribe({
+                      next: (res: InfoPerson) => this.captureInformationCadastralData(res),
+                      error: (error: HttpErrorResponse) => {
+                        if (error.status == HttpStatusCode.NotFound) {
+                          this.person = null;
+                          this.form.get('personCompleted')?.patchValue('');
+                        }
+                        return throwError(() => error);
+                      }
+                    })
+                })
             }
             return throwError(() => error);
           },

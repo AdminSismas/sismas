@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { catchError, Observable, throwError } from 'rxjs';
-import { BasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
+import { BasicInformationProperty, UpdateBasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { BasicInformationAddress } from '../../interfaces/information-property/basic-information-address';
@@ -20,7 +20,7 @@ export class InformationPropertyService {
   basic_url: string = `${envi.url}:${envi.port}`;
   private httpClient = inject(HttpClient);
 
-  constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
+  constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) { }
 
   getBasicInformationProperty(
     schema: string,
@@ -116,7 +116,7 @@ export class InformationPropertyService {
     baunitId: number | undefined
   ): Observable<CcCalificacionUB[]> {
     let params: HttpParams = new HttpParams();
-    params = params.append('unitBuiltId', `${unitBuiltId}`); 
+    params = params.append('unitBuiltId', `${unitBuiltId}`);
     const url: string = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
@@ -216,6 +216,19 @@ export class InformationPropertyService {
     console.log('data', data);
     return this.http.put(url, data);
   }
+
+  updateBasicInformationProperty(executionId: string, baunitId: string, body: UpdateBasicInformationProperty): Observable<BasicInformationProperty> {
+
+    const url = `${this.basic_url}${envi.baunit}temp/${executionId}/${baunitId}`;
+
+    return this.http.put<BasicInformationProperty>(url, body)
+      .pipe(
+        catchError(error => {
+          console.log('Error en la edición de los aspectos generales del predio')
+          throw error;
+        })
+      )
+  }
   /**
    * Create basic information address
    *
@@ -229,7 +242,7 @@ export class InformationPropertyService {
   ): Observable<DetailBasicInformationAddress> {
     const url: string = `${this.basic_url}${envi.ccDireccion}`;
     const httpParams: HttpParams = new HttpParams()
-    .set('baunitId', baunitId);
+      .set('baunitId', baunitId);
     return this.httpClient.post<DetailBasicInformationAddress>(
       url,
       createBasicInformationAddress,
@@ -242,7 +255,7 @@ export class InformationPropertyService {
     baunitId: string,
     createBasicInformationConstruction: CreateBasicInformationConstruction
   ): Observable<ContentInformationConstruction> {
-    
+
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
 
     return this.http
@@ -251,19 +264,19 @@ export class InformationPropertyService {
         catchError((error: HttpErrorResponse) => {
           let errorMessage = 'Ocurrió un error inesperado.';
 
-          
+
           if (error.error && error.error.message) {
-            errorMessage = error.error.message; 
+            errorMessage = error.error.message;
           } else if (error.error && error.error) {
-            errorMessage = error.error; 
+            errorMessage = error.error;
           }
 
-          return throwError(() => new Error(errorMessage)); 
+          return throwError(() => new Error(errorMessage));
         })
       );
   }
-  
-  
+
+
 
   /**
    * Delete basic information by direccionId
@@ -273,22 +286,22 @@ export class InformationPropertyService {
   deleteBasicInformationPropertyAddress(direccionId: string): Observable<any> {
     const url: string = `${this.basic_url}${envi.ccDireccion}/${direccionId}`;
     const httpParams: HttpParams = new HttpParams()
-    .set('version', '9999999');
-    return this.httpClient.delete(url, { params: httpParams});
+      .set('version', '9999999');
+    return this.httpClient.delete(url, { params: httpParams });
   }
 
   deleteBasicInformationPropertyConstruction(constructionId: string): Observable<any> {
     const url: string = `${this.basic_url}${envi.ccDireccion}/${constructionId}`;
     const httpParams: HttpParams = new HttpParams()
-    .set('version', '9999999');
-    return this.httpClient.delete(url, { params: httpParams});
+      .set('version', '9999999');
+    return this.httpClient.delete(url, { params: httpParams });
   }
 
   deleteConstruction(baunitId: string, changeLogId: string, unitBuiltId: number): Observable<any> {
-    const url = `${this.basic_url}${envi.unitBuilt}`; 
+    const url = `${this.basic_url}${envi.unitBuilt}`;
 
     const formData = new FormData();
-    
+
     formData.append('baunitId', baunitId.toString());
     formData.append('changeLogId', changeLogId.toString());
     formData.append('unitBuiltId', unitBuiltId.toString());

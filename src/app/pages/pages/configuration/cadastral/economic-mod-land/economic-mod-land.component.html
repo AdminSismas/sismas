@@ -1,13 +1,39 @@
 <vex-secondary-toolbar current="Formulario">
   <vex-breadcrumbs
-    [crumbs]="['Configuración','Catastral', 'Mod económico terreno']"
-    class="flex-auto"></vex-breadcrumbs>
+    [crumbs]="['Configuración', 'Catastral', 'Mod económico terreno']"
+    class="flex-auto"
+  ></vex-breadcrumbs>
 
-  <button class="ml-2" color="primary" mat-icon-button type="button">
+  <button
+    class="ml-2"
+    color="primary"
+    mat-icon-button
+    type="button"
+  >
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
   </button>
 </vex-secondary-toolbar>
-<vex-in-construction></vex-in-construction>
 
+<mat-tab-group class="w-full h-full">
+  <mat-tab label="Urbana">
+    <div class="w-full h-full flex flex-col p-4 justify-center items-center">
+      <physical-zone>
 
-
+      </physical-zone>
+      <button
+      mat-flat-button
+      color="primary"
+      (click)="submitForm()">Enviar</button>
+    </div>
+  </mat-tab>
+  <mat-tab label="Rural">
+    <div class="w-full h-full flex justify-center items-center">
+      <h2>Aquí estará el formulario de la zona Rural</h2>
+    </div>
+  </mat-tab>
+  <mat-tab label="Geoecónomica">
+    <div class="w-full h-full flex justify-center items-center">
+      <h2>Aquí estará el formulario de la zona Geoeconomica</h2>
+    </div>
+  </mat-tab>
+</mat-tab-group>

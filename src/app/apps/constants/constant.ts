@@ -40,9 +40,13 @@ export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PANEL_ASSIGNED_TASKS:string = "assignedTasks";
 export const PANEL_DEVOLUTION_TASKS:string = "returnedTasks";
 export const PANEL_PRIORITIZED_TASKS:string = "prioritizedTasks";
+export const PROCESO_CREAR_DIRECCION:string = "Nueva dirección";
+export const PROCESO_ACTUALIZAR_DIRECCION:string = "Editar dirección";
 
 export const CONSTANT_VALIDATE_CHECK:string = "checkStatusBpmOperation";
 export const CONSTANT_VALIDATE_OTHER:string = "OTHER_CHECK";
+export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL:string = "Seleccion Municipal";
+export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS:string = "Multiplex Campos";
 
 export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
@@ -100,8 +104,8 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     type: 'empty-row',
     visible: false,
     cssClasses: ['text-secondary', 'font-medium']
-  },
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  }
+  // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [

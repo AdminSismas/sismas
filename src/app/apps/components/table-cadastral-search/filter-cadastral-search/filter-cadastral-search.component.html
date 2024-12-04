@@ -23,7 +23,7 @@
   </div>
   <mat-divider class="text-border"></mat-divider>
   <mat-dialog-content class="flex flex-col overflow-hidden">
-    <mat-tab-group class="overflow-hidden">
+    <mat-tab-group class="overflow-hidden" (selectedTabChange)="clearFormFields($event)">
       <!-- Búsqueda por multiplex campos -->
       <mat-tab label="Múltiples campos" class="overflow-hidden">
         <vex-page-layout class="overflow-hidden">
