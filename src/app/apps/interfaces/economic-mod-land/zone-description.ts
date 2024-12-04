@@ -1,4 +1,5 @@
 import { Observable } from "rxjs";
+import { JSONInput } from "../dynamic-forms";
 
 export interface UrbanZone {
   zonaHomoFisicaUrId:              number;
@@ -39,4 +40,15 @@ export interface GeoEconomicZone {
 
 export interface ZoneServices {
   getZones: (divpolLv1: string, divpolLv2: string) => Observable<UrbanZone[] | RuralZone[] | GeoEconomicZone[]>;
+}
+
+export interface CreateZoneData {
+  params: CreateZoneParams;
+  inputs: JSONInput[];
+}
+
+interface CreateZoneParams {
+  title: string;
+  divpolLv1: string;
+  divpolLv2: string;
 }

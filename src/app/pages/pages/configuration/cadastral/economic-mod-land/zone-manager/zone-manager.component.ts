@@ -16,7 +16,7 @@ import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/consta
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import { GEOECONOMICA_COLUMNS, RURAL_COLUMNS, URBAN_COLUMNS } from '../zone-constants';
+import { GEOECONOMICA_COLUMNS, getZoneParams, RURAL_COLUMNS, URBAN_COLUMNS } from '../zone-constants';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
 import { GeoEconomicZone, RuralZone, UrbanZone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
@@ -61,6 +61,10 @@ export class ZoneManagerComponent implements OnInit {
   // public dataSource = dataSource;
   public columns: { name: string, title: string }[] = URBAN_COLUMNS;
   public displayedColumns: string[] = [];
+  public divpolLv1: string = '';
+  public divpolLv2: string = '';
+  public gettedZones: boolean = false;
+
   private activeService: ZoneServices = this.urbanZoneService;
 
   @ViewChild('searchDialog', { static: true }) searchDialog!: TemplateRef<any>;
@@ -74,7 +78,7 @@ export class ZoneManagerComponent implements OnInit {
     private fb: FormBuilder,
     private urbanZoneService: UrbanZoneService,
     private ruralZoneService: RuralZoneService,
-    private geoeconomicZoneService: GeoeconomicZoneService
+    private geoeconomicZoneService: GeoeconomicZoneService,
   ) { }
 
   ngOnInit(): void {
@@ -164,12 +168,18 @@ export class ZoneManagerComponent implements OnInit {
   }
 
   getZones(): void {
+    if (this.form.invalid) return;
+
+    this.dialog.closeAll();
+
     const { department, municipality } = this.form.value
 
-    const divpolLv1 = department.slice(0, 2)
-    const divpolLv2 = municipality.slice(0, 3)
+    this.divpolLv1 = department.slice(0, 2)
+    this.divpolLv2 = municipality.slice(0, 3)
 
-    this.activeService.getZones(divpolLv1, divpolLv2)
+    this.gettedZones = true;
+
+    this.activeService.getZones(this.divpolLv1, this.divpolLv2)
       .subscribe({
         next: ((result: UrbanZone[] | RuralZone[] | GeoEconomicZone[]) => this.dataSource.data = result)
       })
@@ -180,17 +190,13 @@ export class ZoneManagerComponent implements OnInit {
     this.dialog.open(CreateZoneComponent, {
       width: '60%',
       data: {
-        title: this.stringCreateZone(this.typeZone),
-        inputs: [
-        {
-          name: 'nombre',
-          label: 'Nombre',
-          placeholder: 'Escribir nombre ...',
-          element: 'input',
-          type: 'text',
-          validators: [Validators.required],
-        }
-      ]}
+        params: {
+          title: this.stringCreateZone(this.typeZone),
+          divpolLv1: this.divpolLv1,
+          divpolLv2: this.divpolLv2
+        },
+        inputs: getZoneParams(this.typeZone)
+      }
     })
   }
 

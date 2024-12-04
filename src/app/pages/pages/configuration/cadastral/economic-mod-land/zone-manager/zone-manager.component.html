@@ -8,14 +8,16 @@
       Buscar zonas {{ typeZone }}
       <mat-icon svgIcon="mat:search"></mat-icon>
     </button>
-    <button
-      mat-flat-button
-      color="accent"
-      (click)="createZone()"
-    >
-      Crear zona {{ stringCreateZone(typeZone) }}
-      <mat-icon svgIcon="mat:add"></mat-icon>
-    </button>
+    @if (gettedZones) {
+      <button
+        mat-flat-button
+        color="accent"
+        (click)="createZone()"
+      >
+        Crear zona {{ stringCreateZone(typeZone) }}
+        <mat-icon svgIcon="mat:add"></mat-icon>
+      </button>
+    }
   </section>
   @if (dataSource.data.length > 0) {
     <table
@@ -136,7 +138,6 @@
             (click)="getZones()"
             color="primary"
             mat-flat-button
-            mat-dialog-close
           >
             Buscar
           </button>
