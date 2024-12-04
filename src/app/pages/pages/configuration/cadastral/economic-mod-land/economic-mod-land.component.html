@@ -17,17 +17,23 @@
 <mat-tab-group class="w-full h-full">
   <mat-tab label="Urbana">
     <div class="w-full h-full">
-      <physical-zone></physical-zone>
+      <physical-zone
+        typeZone="urbanas"
+      ></physical-zone>
     </div>
   </mat-tab>
   <mat-tab label="Rural">
-    <div class="w-full h-full flex justify-center items-center">
-      <h2>Aquí estará el formulario de la zona Rural</h2>
+    <div class="w-full h-full">
+      <physical-zone
+        typeZone="rurales"
+      ></physical-zone>
     </div>
   </mat-tab>
-  <mat-tab label="Geoecónomica">
-    <div class="w-full h-full flex justify-center items-center">
-      <h2>Aquí estará el formulario de la zona Geoeconomica</h2>
+  <mat-tab label="Geoeconómica">
+    <div class="w-full h-full">
+      <physical-zone
+        typeZone="geoeconómicas"
+      ></physical-zone>
     </div>
   </mat-tab>
 </mat-tab-group>

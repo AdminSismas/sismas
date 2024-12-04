@@ -23,7 +23,7 @@ export const environment = {
   bAUnitDelete:'BAUnitDelete',
   baunits:'/baunits',
   bAUnitUpdate:'BAUnitUpdate',
-  
+
   baUnitZona_baunitId:'/baUnitZona/baunitId',
   bpmAttachment:{
     count:'/count',
@@ -61,6 +61,7 @@ export const environment = {
   comment: '/comment/',
   compare_temp: '/compare/temp/',
   /* ------ D ------ */
+  divpol: '/divpol',
   domain_domain: '/domain',
   domain_domainName: '/domain/name',
   /* ------ E ------ */
@@ -117,6 +118,7 @@ export const environment = {
   temporal:'/temporal/',
   /* ------ U ------ */
   ulr_icon_base:'assets/img/icons/cadastral-logos/128x128/',
+  urban_zones: '/ccZonaHomoFisicaUr',
   url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   url: 'https://prediosplus.api.cadastre4world.com',
   unitBuild:'/unitBuild',

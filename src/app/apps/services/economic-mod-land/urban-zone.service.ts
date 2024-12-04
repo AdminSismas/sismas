@@ -1,0 +1,33 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment as envi } from 'src/environments/environments';
+import { UrbanZone } from '../../interfaces/economic-mod-land/zone-description';
+import { catchError, Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UrbanZoneService {
+
+  public base_url: string = `${envi.url}:${envi.port}${envi.urban_zones}`
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getUrbanZones(divpolLv1: string, divpolLv2: string): Observable<UrbanZone[]> {
+    const url = `${this.base_url}${envi.divpol}`
+
+    let params = new HttpParams()
+    params = params.append('divpolLv1', divpolLv1)
+    params = params.append('divpolLv2', divpolLv2)
+
+    return this.http.get<UrbanZone[]>(url, { params })
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error consultando zonas urbanas')
+          throw error
+        })
+      )
+  }
+}

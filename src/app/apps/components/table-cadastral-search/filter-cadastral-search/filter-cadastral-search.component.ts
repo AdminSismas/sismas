@@ -56,7 +56,6 @@ import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
   styleUrls: ['./filter-cadastral-search.component.scss'],
   standalone: true,
   imports: [
-    AsyncPipe,
     ComboxColletionComponent,
     InputComponent,
     MatAutocompleteModule,

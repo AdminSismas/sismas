@@ -1,5 +1,5 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,11 +12,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { map, Observable, startWith } from 'rxjs';
-import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
+import {URBAN_COLUMNS } from '../zone-constants';
+import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
+import { UrbanZone } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 
 @Component({
   selector: 'physical-zone',
@@ -52,73 +54,21 @@ export class PhysicalZoneComponent implements OnInit {
     municipality: ['', Validators.required]
   })
   public STRING_INFORMATION_NOT_FOUND: string = STRING_INFORMATION_NOT_FOUND;
-  // public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-  public dataSource = [
-    {
-      "zonaHomoFisicaUrId": 2,
-      "zonaHomoFisicaUrCode": "102",
-      "domTopografiaZonaTipo": "Plano",
-      "domInfluenciaVialUrbanaTipo": "Pavimentadas",
-      "domServiciosPublicosTipo": "Servicios_Basicos_Completos",
-      "domUsoSueloUrbanoTipo": "Residencial",
-      "normaUsoSuelo": "POR DEFINIR",
-      "domTipificacionConstruccionTipo": "Residencial_5_Medio_Alto",
-      "vigencia": 2023,
-      "divpolLv1": "18",
-      "divpolLv2": "001"
-    },
-    {
-      "zonaHomoFisicaUrId": 4,
-      "zonaHomoFisicaUrCode": "101",
-      "domTopografiaZonaTipo": "Inclinado",
-      "domInfluenciaVialUrbanaTipo": "Pavimentadas",
-      "domServiciosPublicosTipo": "Servicios_Basicos_Completos",
-      "domUsoSueloUrbanoTipo": "Residencial",
-      "normaUsoSuelo": "POR DEFINIR TEST UPDATE",
-      "domTipificacionConstruccionTipo": "Residencial_5_Medio_Alto",
-      "vigencia": 2023,
-      "divpolLv1": "18",
-      "divpolLv2": "001"
-    },
-    {
-      "zonaHomoFisicaUrId": 3,
-      "zonaHomoFisicaUrCode": "103",
-      "domTopografiaZonaTipo": "Plano",
-      "domInfluenciaVialUrbanaTipo": "Pavimentadas",
-      "domServiciosPublicosTipo": "Servicios_Basicos_Completos",
-      "domUsoSueloUrbanoTipo": "Residencial",
-      "normaUsoSuelo": "POR DEFINIR",
-      "domTipificacionConstruccionTipo": "Residencial_5_Medio_Alto",
-      "vigencia": 2023,
-      "divpolLv1": "18",
-      "divpolLv2": "001"
-    }
-  ]
-  public columns: { name: string, title: string }[] = [
-    {
-      name: 'zonaHomoFisicaUrCode',
-      title: 'Código'
-    },
-    {
-      name: 'domUsoSueloUrbanoTipo',
-      title: 'Uso de suelo'
-    },
-    {
-      name: 'vigencia',
-      title: 'Vigencia'
-    }
-  ]
+  public dataSource: MatTableDataSource<UrbanZone> = new MatTableDataSource<UrbanZone>();
+  // public dataSource = dataSource;
+  public columns: { name: string, title: string }[] = URBAN_COLUMNS;
   public displayedColumns: string[] = this.columns.map((column) => column.name);
-
 
   @ViewChild('searchDialog', { static: true }) searchDialog!: TemplateRef<any>;
   optionsMunicipalities: Municipality[] = [];
 
+  @Input({ required: true }) public typeZone: string = 'urbanas';
 
   constructor(
     private territorialOrganizationService: TerritorialOrganizationService,
     private dialog: MatDialog,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private urbanZoneService: UrbanZoneService
   ) { }
 
   ngOnInit(): void {
@@ -187,8 +137,18 @@ export class PhysicalZoneComponent implements OnInit {
       ));
   }
 
-  searchZone() {
-    console.log('Searching ...')
-    console.log(this.form.value)
+  getZones(): void {
+    const { department, municipality } = this.form.value
+
+    const divpolLv1 = department.replaceAll(' ', '').split('-')[0]
+    const divpolLv2 = municipality.replaceAll(' ', '').split('-')[0]
+
+    if (this.typeZone === 'urbanas'){
+      this.urbanZoneService.getUrbanZones(divpolLv1, divpolLv2)
+        .subscribe({
+          next: ((result: UrbanZone[]) => this.dataSource.data = result)
+        })
+    }
+
   }
 }
