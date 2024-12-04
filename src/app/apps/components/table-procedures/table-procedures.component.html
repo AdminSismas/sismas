@@ -21,6 +21,7 @@
             <mat-form-field class="flex-auto">
                 <mat-label>Fecha fin</mat-label>
                 <input
+                disabled
                     matInput
                     [matDatepicker]="endDatepicker"
                     placeholder="Escriba o seleccione&hellip;"
@@ -34,8 +35,9 @@
             </mat-form-field>
 
             <mat-form-field class="flex-auto">
-                <mat-label>Número radicado</mat-label>
+                <mat-label>Executing ID</mat-label>
                 <input
+                disabled
                     matInput
                     [(ngModel)]="executionCode"
                     placeholder="Ingresa el número de radicado&hellip;"
@@ -47,7 +49,6 @@
             <mat-form-field class="flex-auto">
                 <mat-label>Documento personal</mat-label>
                 <input
-                disabled
                     matInput
                     [(ngModel)]="individualNumber"
                     placeholder="Ingresa el número de documento&hellip;"

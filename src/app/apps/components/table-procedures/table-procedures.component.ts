@@ -78,7 +78,7 @@ export class TableProceduresComponent {
 
   beginAt!: Date;
   beginAtE!: Date;
-  executionCode: string = '';
+  executionCode: string = '0';
   individualNumber: string = '';
   disabledEndDate: boolean = false;
 
@@ -118,7 +118,7 @@ export class TableProceduresComponent {
     
     this.beginAt = new Date();
     this.executionCode = '0';
-    //this.getDataFromProceduresService();
+    this.getDataFromProceduresService();
   }
 
 
@@ -212,12 +212,10 @@ export class TableProceduresComponent {
   /* ------- Meth. Services ------- */
   getDataFromProceduresService() {
     const data = this.objectParameters();
-    console.log(data);
     this.proceduresService.getFilterTableProcedureService(data)
     .subscribe({
       next: (result: any) => {
-          console.log("datos de api: ", result);
-          // this.captureInformationSubscribe(result);
+          this.captureInformationSubscribe(result);
       },
       error: (error) => {
           this.alertSnakbar.open('Hubo un error, verifique la información de los filtros', 'Close', {
@@ -245,7 +243,6 @@ export class TableProceduresComponent {
             name: row.process?.name,
             processName: row.process?.name
         }));
-        console.log("data: ", data);
         this.dataSource.data = data;
     }
 
