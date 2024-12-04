@@ -1,12 +1,22 @@
-<div class="p-4 flex flex-col items-center gap-2 w-full h-full">
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="searchZones()"
-  >
-    Buscar zonas {{ typeZone }}
-    <mat-icon svgIcon="mat:search"></mat-icon>
-  </button>
+<main class="p-4 w-full h-full">
+  <section class="flex justify-around py-2 px-4">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="searchZones()"
+    >
+      Buscar zonas {{ typeZone }}
+      <mat-icon svgIcon="mat:search"></mat-icon>
+    </button>
+    <button
+      mat-flat-button
+      color="accent"
+      (click)="createZone()"
+    >
+      Crear zona {{ stringCreateZone(typeZone) }}
+      <mat-icon svgIcon="mat:add"></mat-icon>
+    </button>
+  </section>
   @if (dataSource.data.length > 0) {
     <table
       mat-table
@@ -40,10 +50,13 @@
       ></tr>
     </table>
   }
-</div>
+</main>
 
 <ng-template #searchDialog>
-  <h2 mat-dialog-title>Buscar zonas {{ typeZone !== 'geoeconómicas' ? 'físicas ' + typeZone :  typeZone }}</h2>
+  <h2 mat-dialog-title>
+    Buscar zonas
+    {{ typeZone !== "geoeconómicas" ? "físicas " + typeZone : typeZone }}
+  </h2>
   <mat-divider class="border-slate-400 my-2"></mat-divider>
   <mat-dialog-content>
     <vex-page-layout>

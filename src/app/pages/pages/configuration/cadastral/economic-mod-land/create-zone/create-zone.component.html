@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Crear zona {{ data.title }}</h2>
+<mat-divider class="border-slate-400"></mat-divider>
+<mat-dialog-content>
+  <dynamic-forms
+    [inputs]="inputs"
+    (formReady)="form = $event"
+  ></dynamic-forms>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="submitForm()"
+  >
+    Crear
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    mat-dialog-close
+  >
+    Cancelar
+  </button>
+</mat-dialog-actions>

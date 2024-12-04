@@ -21,6 +21,7 @@ import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-
 import { GeoEconomicZone, RuralZone, UrbanZone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
+import { CreateZoneComponent } from '../create-zone/create-zone.component';
 
 @Component({
   selector: 'zone-manager',
@@ -173,5 +174,34 @@ export class ZoneManagerComponent implements OnInit {
         next: ((result: UrbanZone[] | RuralZone[] | GeoEconomicZone[]) => this.dataSource.data = result)
       })
 
+  }
+
+  createZone(): void {
+    this.dialog.open(CreateZoneComponent, {
+      width: '60%',
+      data: {
+        title: this.stringCreateZone(this.typeZone),
+        inputs: [
+        {
+          name: 'nombre',
+          label: 'Nombre',
+          placeholder: 'Escribir nombre ...',
+          element: 'input',
+          type: 'text',
+          validators: [Validators.required],
+        }
+      ]}
+    })
+  }
+
+  stringCreateZone(typeZone: string): string {
+    switch (typeZone) {
+      case 'geoeconómicas':
+        return 'geoeconómica'
+      case 'rurales':
+        return 'física rural'
+      default:
+        return 'física urbana'
+    }
   }
 }
