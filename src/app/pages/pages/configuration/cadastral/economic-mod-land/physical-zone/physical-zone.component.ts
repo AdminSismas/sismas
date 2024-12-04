@@ -6,7 +6,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { map, Observable, startWith } from 'rxjs';
@@ -28,7 +30,9 @@ import { TerritorialOrganizationService } from 'src/app/apps/services/territoria
     MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
+    MatTableModule,
     /* Vex Components */
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
@@ -38,7 +42,7 @@ import { TerritorialOrganizationService } from 'src/app/apps/services/territoria
   templateUrl: './physical-zone.component.html',
   styles: ``
 })
-export class PhysicalZoneComponent  implements OnInit {
+export class PhysicalZoneComponent implements OnInit {
 
   public filteredOptionsDepartments$: Observable<Department[]> | undefined;
   public filteredOptionsMunicipalities$: Observable<Municipality[]> | undefined;
@@ -48,14 +52,74 @@ export class PhysicalZoneComponent  implements OnInit {
     municipality: ['', Validators.required]
   })
   public STRING_INFORMATION_NOT_FOUND: string = STRING_INFORMATION_NOT_FOUND;
+  // public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  public dataSource = [
+    {
+      "zonaHomoFisicaUrId": 2,
+      "zonaHomoFisicaUrCode": "102",
+      "domTopografiaZonaTipo": "Plano",
+      "domInfluenciaVialUrbanaTipo": "Pavimentadas",
+      "domServiciosPublicosTipo": "Servicios_Basicos_Completos",
+      "domUsoSueloUrbanoTipo": "Residencial",
+      "normaUsoSuelo": "POR DEFINIR",
+      "domTipificacionConstruccionTipo": "Residencial_5_Medio_Alto",
+      "vigencia": 2023,
+      "divpolLv1": "18",
+      "divpolLv2": "001"
+    },
+    {
+      "zonaHomoFisicaUrId": 4,
+      "zonaHomoFisicaUrCode": "101",
+      "domTopografiaZonaTipo": "Inclinado",
+      "domInfluenciaVialUrbanaTipo": "Pavimentadas",
+      "domServiciosPublicosTipo": "Servicios_Basicos_Completos",
+      "domUsoSueloUrbanoTipo": "Residencial",
+      "normaUsoSuelo": "POR DEFINIR TEST UPDATE",
+      "domTipificacionConstruccionTipo": "Residencial_5_Medio_Alto",
+      "vigencia": 2023,
+      "divpolLv1": "18",
+      "divpolLv2": "001"
+    },
+    {
+      "zonaHomoFisicaUrId": 3,
+      "zonaHomoFisicaUrCode": "103",
+      "domTopografiaZonaTipo": "Plano",
+      "domInfluenciaVialUrbanaTipo": "Pavimentadas",
+      "domServiciosPublicosTipo": "Servicios_Basicos_Completos",
+      "domUsoSueloUrbanoTipo": "Residencial",
+      "normaUsoSuelo": "POR DEFINIR",
+      "domTipificacionConstruccionTipo": "Residencial_5_Medio_Alto",
+      "vigencia": 2023,
+      "divpolLv1": "18",
+      "divpolLv2": "001"
+    }
+  ]
+  public columns: { name: string, title: string }[] = [
+    {
+      name: 'zonaHomoFisicaUrCode',
+      title: 'Código'
+    },
+    {
+      name: 'domUsoSueloUrbanoTipo',
+      title: 'Uso de suelo'
+    },
+    {
+      name: 'vigencia',
+      title: 'Vigencia'
+    }
+  ]
+  public displayedColumns: string[] = this.columns.map((column) => column.name);
+
+
   @ViewChild('searchDialog', { static: true }) searchDialog!: TemplateRef<any>;
   optionsMunicipalities: Municipality[] = [];
 
-  constructor (
+
+  constructor(
     private territorialOrganizationService: TerritorialOrganizationService,
     private dialog: MatDialog,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadDepartmentalInformation()
@@ -64,8 +128,8 @@ export class PhysicalZoneComponent  implements OnInit {
   loadDepartmentalInformation() {
     this.territorialOrganizationService.getDataDeparments()
       .subscribe({
-          next: (result: Department[]) => this.captureDepartmentInformation(result)
-        }
+        next: (result: Department[]) => this.captureDepartmentInformation(result)
+      }
       );
   }
 
@@ -80,7 +144,7 @@ export class PhysicalZoneComponent  implements OnInit {
       ));
   }
 
-  createZone() {
+  searchZones() {
     this.dialog.open(this.searchDialog,
       {
         width: '30%',
@@ -101,8 +165,8 @@ export class PhysicalZoneComponent  implements OnInit {
     }
     this.territorialOrganizationService.getDataMunicipalities(dpto)
       .subscribe({
-          next: (result: Municipality[]) => this.captureMunicipalityInformation(result, skipPreloadedValues)
-        }
+        next: (result: Municipality[]) => this.captureMunicipalityInformation(result, skipPreloadedValues)
+      }
       );
   }
 
