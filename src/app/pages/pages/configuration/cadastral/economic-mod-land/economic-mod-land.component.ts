@@ -9,7 +9,7 @@ import { DynamicFormsComponent } from 'src/app/apps/components/dynamic-forms/dyn
 import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
 import { FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { PhysicalZoneComponent } from './physical-zone/physical-zone.component';
+import { ZoneManagerComponent } from './zone-manager/zone-manager.component';
 
 @Component({
   selector: 'vex-economic-mod-land',
@@ -27,7 +27,7 @@ import { PhysicalZoneComponent } from './physical-zone/physical-zone.component';
     VexSecondaryToolbarComponent,
 
     /* Custom Components */
-    PhysicalZoneComponent
+    ZoneManagerComponent
   ],
   templateUrl: './economic-mod-land.component.html',
   styleUrl: './economic-mod-land.component.scss'

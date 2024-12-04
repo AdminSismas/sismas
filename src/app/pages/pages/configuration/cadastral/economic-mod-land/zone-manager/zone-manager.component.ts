@@ -23,7 +23,7 @@ import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 
 @Component({
-  selector: 'physical-zone',
+  selector: 'zone-manager',
   standalone: true,
   imports: [
     AsyncPipe,
@@ -43,10 +43,10 @@ import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/
     /* Custom Components */
     // DynamicFormsComponent,
   ],
-  templateUrl: './physical-zone.component.html',
+  templateUrl: './zone-manager.component.html',
   styles: ``
 })
-export class PhysicalZoneComponent implements OnInit {
+export class ZoneManagerComponent implements OnInit {
 
   public filteredOptionsDepartments$: Observable<Department[]> | undefined;
   public filteredOptionsMunicipalities$: Observable<Municipality[]> | undefined;
