@@ -1,3 +1,5 @@
+import { Observable } from "rxjs";
+
 export interface UrbanZone {
   zonaHomoFisicaUrId:              number;
   zonaHomoFisicaUrCode:            string;
@@ -33,4 +35,8 @@ export interface GeoEconomicZone {
   divpolLv2:                string;
   suelo:                    string;
   valorLabel:               string;
+}
+
+export interface ZoneServices {
+  getZones: (divpolLv1: string, divpolLv2: string) => Observable<UrbanZone[] | RuralZone[] | GeoEconomicZone[]>;
 }

@@ -15,7 +15,7 @@ export class UrbanZoneService {
     private http: HttpClient
   ) { }
 
-  getUrbanZones(divpolLv1: string, divpolLv2: string): Observable<UrbanZone[]> {
+  getZones(divpolLv1: string, divpolLv2: string): Observable<UrbanZone[]> {
     const url = `${this.base_url}${envi.divpol}`
 
     let params = new HttpParams()

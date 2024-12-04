@@ -68,6 +68,7 @@ export const environment = {
   /* ------ F ------ */
   administrativeSource: '/fuenteadmin/',
   /* ------ G ------ */
+  geoeconomic_zones: '/ccZonaHomoGeoEconomica',
   /* ------ H ------ */
   /* ------ I ------ */
   individual_findByNumber:'/individual/findByNumber',
@@ -108,6 +109,7 @@ export const environment = {
   refresh_navigation:'/myWork/cadastralSearch',
   root:'/',
   rrright:'/rrright/',
+  rural_zones: '/ccZonaHomoFisicaRu',
   /* ------ S ------ */
   schemas: {
     main: 'main',

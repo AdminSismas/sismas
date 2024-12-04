@@ -13,6 +13,32 @@ export const URBAN_COLUMNS = [
   }
 ]
 
-export const RURAL_COLUMNS = []
+export const RURAL_COLUMNS = [
+  {
+    name: 'zonaHomoFisicaRuCode',
+    title: 'Código'
+  },
+  {
+    name: 'normaUsoSuelo',
+    title: 'Uso de suelo'
+  },
+  {
+    name: 'vigencia',
+    title: 'Vigencia'
+  }
+]
 
-export const GEOECONOMICA_COLUMNS = []
+export const GEOECONOMICA_COLUMNS = [
+  {
+    name: 'zonaHomoGeoEconomicaCode',
+    title: 'Código'
+  },
+  {
+    name: 'valorLabel',
+    title: 'Valor'
+  },
+  {
+    name: 'vigencia',
+    title: 'Vigencia'
+  }
+]

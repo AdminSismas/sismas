@@ -16,9 +16,11 @@ import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/consta
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import {URBAN_COLUMNS } from '../zone-constants';
+import { GEOECONOMICA_COLUMNS, RURAL_COLUMNS, URBAN_COLUMNS } from '../zone-constants';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
-import { UrbanZone } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import { GeoEconomicZone, RuralZone, UrbanZone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
+import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 
 @Component({
   selector: 'physical-zone',
@@ -54,10 +56,11 @@ export class PhysicalZoneComponent implements OnInit {
     municipality: ['', Validators.required]
   })
   public STRING_INFORMATION_NOT_FOUND: string = STRING_INFORMATION_NOT_FOUND;
-  public dataSource: MatTableDataSource<UrbanZone> = new MatTableDataSource<UrbanZone>();
+  public dataSource: MatTableDataSource<UrbanZone | RuralZone | GeoEconomicZone> = new MatTableDataSource<UrbanZone | RuralZone | GeoEconomicZone>();
   // public dataSource = dataSource;
   public columns: { name: string, title: string }[] = URBAN_COLUMNS;
-  public displayedColumns: string[] = this.columns.map((column) => column.name);
+  public displayedColumns: string[] = [];
+  private activeService: ZoneServices = this.urbanZoneService;
 
   @ViewChild('searchDialog', { static: true }) searchDialog!: TemplateRef<any>;
   optionsMunicipalities: Municipality[] = [];
@@ -68,11 +71,33 @@ export class PhysicalZoneComponent implements OnInit {
     private territorialOrganizationService: TerritorialOrganizationService,
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private urbanZoneService: UrbanZoneService
+    private urbanZoneService: UrbanZoneService,
+    private ruralZoneService: RuralZoneService,
+    private geoeconomicZoneService: GeoeconomicZoneService
   ) { }
 
   ngOnInit(): void {
     this.loadDepartmentalInformation()
+
+    this.selectService()
+    this.displayedColumns = this.columns.map((column) => column.name);
+  }
+
+  selectService(): void {
+    switch (this.typeZone) {
+      case 'urbanas':
+        this.activeService = this.urbanZoneService;
+        this.columns = URBAN_COLUMNS;
+        break;
+      case 'rurales':
+        this.activeService = this.ruralZoneService;
+        this.columns = RURAL_COLUMNS;
+        break;
+      case 'geoeconómicas':
+        this.activeService = this.geoeconomicZoneService;
+        this.columns = GEOECONOMICA_COLUMNS;
+        break;
+    }
   }
 
   loadDepartmentalInformation() {
@@ -140,15 +165,13 @@ export class PhysicalZoneComponent implements OnInit {
   getZones(): void {
     const { department, municipality } = this.form.value
 
-    const divpolLv1 = department.replaceAll(' ', '').split('-')[0]
-    const divpolLv2 = municipality.replaceAll(' ', '').split('-')[0]
+    const divpolLv1 = department.slice(0, 2)
+    const divpolLv2 = municipality.slice(0, 3)
 
-    if (this.typeZone === 'urbanas'){
-      this.urbanZoneService.getUrbanZones(divpolLv1, divpolLv2)
-        .subscribe({
-          next: ((result: UrbanZone[]) => this.dataSource.data = result)
-        })
-    }
+    this.activeService.getZones(divpolLv1, divpolLv2)
+      .subscribe({
+        next: ((result: UrbanZone[] | RuralZone[] | GeoEconomicZone[]) => this.dataSource.data = result)
+      })
 
   }
 }
