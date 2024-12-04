@@ -110,6 +110,8 @@ export class InformationZonesPropertyComponent implements OnInit {
   zoneBAUnitUrban: ZoneBAUnit[] = [];
   zoneBAUnitGeoeconomic: ZoneBAUnit[] = [];
 
+
+
   dataSourcePhysicalZones: MatTableDataSource<ZoneBAUnit> = new MatTableDataSource<ZoneBAUnit>([]); // Zona Física
   dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnit> = new MatTableDataSource<ZoneBAUnit>([]); // Zona Geoeconómica
 
@@ -129,7 +131,7 @@ export class InformationZonesPropertyComponent implements OnInit {
     },
     {
       label: 'Código',
-      property: 'codigo',
+      property: 'getZoneCode',
       type: 'text',
       visible: true
     },
@@ -141,7 +143,7 @@ export class InformationZonesPropertyComponent implements OnInit {
     },
     {
       label: 'Vigencia',
-      property: 'vigencia',
+      property: 'getZonevalidity',
       type: 'text',
       visible: true
     },
@@ -160,21 +162,23 @@ export class InformationZonesPropertyComponent implements OnInit {
 
   fractions_sum: number = 0;
   page: number = PAGE;
-  totalElements: number = 0;
+  page2: number = PAGE;
+  totalPhysicalElements: number = 0;
+  totalGeoElements: number = 0;
   pageSize: number = PAGE_SIZE;
+  pageSize2: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  pageSizeOptions2: number[] = PAGE_SIZE_OPTION;
   rightIdSelected?: number;
-  dataSource: MatTableDataSource< ZoneBAUnit> =
-    new MatTableDataSource< ZoneBAUnit>([]);
+  dataSource: MatTableDataSource<ZoneBAUnit> =
+    new MatTableDataSource<ZoneBAUnit>([]);
   columns = signal(this.TABLE_COLUMNS);
   textColumns = computed(() =>
     this.columns().filter((column) => column.type === 'text')
   );
-  visibleColumns = computed(() => {
-    return this.TABLE_COLUMNS.filter((column) => column.visible).map(
-      (column) => column.property
-    );
-  });
+ visibleColumns(): string[] {
+  return ['viewDetail', 'zoneCodeColumn', 'baUnitZonaArea', 'zoneValidityColumn', 'actions']; 
+}
   actionBtns = computed(() => {
     return [
       {
@@ -213,16 +217,60 @@ export class InformationZonesPropertyComponent implements OnInit {
   ) {
   }
 
+  getZoneCode(row: ZoneBAUnit): string {
+    if (row.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode) {
+      return row.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode.toString();
+    } else if (row.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode) {
+      return row.ccZonaHomoFisicaUr.zonaHomoFisicaUrCode;
+    }
+    return NAME_NO_DISPONIBLE;
+  }
+
+  getZonevalidity(row: ZoneBAUnit): string {
+    if (row.ccZonaHomoFisicaRu?.vigencia) {
+      return row.ccZonaHomoFisicaRu.vigencia.toString();
+    } else if (row.ccZonaHomoFisicaUr?.vigencia) {
+      return row.ccZonaHomoFisicaUr.vigencia.toString();
+    }
+    return NAME_NO_DISPONIBLE;
+  }
+
+  getGeoeconomicZoneCode(row: ZoneBAUnit): string {
+    if (row.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode) {
+      return row.ccZonaHomoGeoEconomica.zonaHomoGeoEconomicaCode.toString();
+    }
+    return NAME_NO_DISPONIBLE;
+  }
+
+
+  getGeoeconomicZoneValidity(row: ZoneBAUnit): string {
+    if (row.ccZonaHomoGeoEconomica?.vigencia) {
+      return row.ccZonaHomoGeoEconomica.vigencia.toString();
+    }
+    return NAME_NO_DISPONIBLE;
+  }
+
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
     this.dataSource.sort = this.sort || null;
   }
 
-  refreshPaginator(pageEvent: PageEvent): void {
-    const { pageIndex, pageSize } = pageEvent || {};
-    this.page = pageIndex ?? PAGE;
-    this.pageSize = pageSize ?? PAGE_SIZE;
+  refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
+    const { pageIndex, pageSize } = pageEvent;
+  
+    if (paginatorId === 'paginator1') {
+      this.page = pageIndex;
+      this.pageSize = pageSize;
+    }
+  
+    if (paginatorId === 'paginator2') {
+      this.page2 = pageIndex;
+      this.pageSize2 = pageSize;
+    }
   }
+
+
 
   ngOnInit() {
     if (this.id?.length <= 0 || this.baunitId == null) {
@@ -230,11 +278,14 @@ export class InformationZonesPropertyComponent implements OnInit {
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     this.isExpandPanel(this.expandedComponent);
+
+    console.log(this.dataSource); 
   }
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
       this.searchInformationsZonesProperty();
+      this.searchInformationsGeoeconomicZonesProperty();
     }
   }
 
@@ -242,7 +293,7 @@ export class InformationZonesPropertyComponent implements OnInit {
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.informationPropertyService.getBasicInformationPropertyZones(
+    this.informationPropertyService.getByBauniFisica(
       this.baunitId, this.schema, this.executionId)
       .subscribe({
         error: (err: any) => this.captureInformationSubscribeError(err),
@@ -250,6 +301,20 @@ export class InformationZonesPropertyComponent implements OnInit {
       });
     return true;
   }
+
+  searchInformationsGeoeconomicZonesProperty(): boolean {
+    if (!this.schema || !this.baunitId) {
+      return false;
+    }
+    this.informationPropertyService.getByBauniEcono(
+      this.baunitId, this.schema, this.executionId)
+      .subscribe({
+        error: (err: any) => this.captureInformationSubscribeError(err),
+        next: (result: ZoneBAUnit[]) => this.captureGeoeconomicInformationSubscribe(result)
+      });
+    return true;
+  }
+
 
   openInformationPropertyOwner(zone:  ZoneBAUnit): void {
     const dialog = this.matDialog
@@ -277,6 +342,14 @@ export class InformationZonesPropertyComponent implements OnInit {
     this.zoneBAUnitUrban = this.filterByObject(result, 'ccZonaHomoFisicaUr');
     this.zoneBAUnitGeoeconomic = this.filterByObject(result,'ccZonaHomoGeoEconomica');
     this.dataSource.data = this.zoneBAUnit;
+  }
+
+  captureGeoeconomicInformationSubscribe(result: ZoneBAUnit[]): void {
+    this.zoneBAUnit = result;
+    this.zoneBAUnitRural = this.filterByObject(result, 'ccZonaHomoFisicaRu');
+    this.zoneBAUnitUrban = this.filterByObject(result, 'ccZonaHomoFisicaUr');
+    this.zoneBAUnitGeoeconomic = this.filterByObject(result,'ccZonaHomoGeoEconomica');
+    this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
   }
 
   private getRandomInt(max: number): number {

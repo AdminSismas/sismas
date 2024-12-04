@@ -156,6 +156,32 @@ export class InformationPropertyService {
     );
   }
 
+  getByBauniFisica(
+    id: string,
+    schema: string,
+    executionId: string | null | undefined = null
+  ): Observable<ZoneBAUnit[]> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${id}`);
+    let url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
+
+  getByBauniEcono(
+    id: string,
+    schema: string,
+    executionId: string | null | undefined = null
+  ): Observable<ZoneBAUnit[]> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${id}`);
+    let url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
+
   /**
    * Update basic information address
    *
