@@ -261,10 +261,10 @@ export const CADASTRE_CHANGE_LOG_PARAMS: JSONInput[] = [
 
 export function getZoneParams(typeZone: string): JSONInput[] {
   switch (typeZone) {
-    case 'rurales':
+    case 'rural':
       return RURAL_PARAMS
 
-    case 'geoeconómicas':
+    case 'geoeconómica':
       return GEOECONOMIC_PARAMS
 
     default:

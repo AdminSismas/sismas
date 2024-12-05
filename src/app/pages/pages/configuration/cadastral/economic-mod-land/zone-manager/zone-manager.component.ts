@@ -59,7 +59,6 @@ export class ZoneManagerComponent implements OnInit {
       }
     ]
   })
-  public title: string = '';
   public zonesCode: string = '';
 
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
@@ -89,14 +88,14 @@ export class ZoneManagerComponent implements OnInit {
     this.dialog.open(CreateZoneComponent, {
       width: '60%',
       data: {
-        title: this.title,
+        title: this.typeZone,
         inputs: getZoneParams(this.typeZone)
       }
     }).afterClosed()
       .subscribe({
         next: (result: any) => this.createZone(result),
         error: (error: any) => {
-          this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
+          this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
           })
           throw error
@@ -109,7 +108,7 @@ export class ZoneManagerComponent implements OnInit {
       width: '60%',
       data: {
         params: {
-          title: this.title,
+          title: this.typeZone,
           divpolLv1: this.divpolLv1,
           divpolLv2: this.divpolLv2
         },
@@ -120,7 +119,7 @@ export class ZoneManagerComponent implements OnInit {
       .subscribe({
         next: (result: any) => this.editZone(result, row),
         error: (error: any) => {
-          this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
+          this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
           })
           throw error
@@ -153,14 +152,14 @@ export class ZoneManagerComponent implements OnInit {
           this.service.createZone(params)
             .subscribe({
               next: () => {
-                this.snackbar.open(`Se ha creado la zona ${this.title}`, 'Cerrar', {
+                this.snackbar.open(`Se ha creado la zona ${this.typeZone}`, 'Cerrar', {
                   duration: 4000
                 })
 
                 this.refreshServices.triggerRefresh()
               },
               error: (error: any) => {
-                this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
+                this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
                   duration: 4000
                 })
                 throw error
@@ -168,7 +167,7 @@ export class ZoneManagerComponent implements OnInit {
             })
         },
         error: (error: any) => {
-          this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
+          this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
           })
           throw error;
@@ -224,11 +223,20 @@ export class ZoneManagerComponent implements OnInit {
     }).afterClosed()
       .subscribe({
         next: (result: any) => {
-          params.cadastreChangeLog = {
-            ...result,
-            beginAt: result.beginAt.toISOString().split('T')[0],
-            resolutionAt: result.resolutionAt.toISOString().split('T')[0],
-            rootingAt: result.rootingAt.toISOString().split('T')[0]
+          try {
+            params.cadastreChangeLog = {
+              ...result,
+              beginAt: result.beginAt.toISOString().split('T')[0],
+              resolutionAt: result.resolutionAt.toISOString().split('T')[0],
+              rootingAt: result.rootingAt.toISOString().split('T')[0]
+            }
+          } catch {
+            params.cadastreChangeLog = params.cadastreChangeLog = {
+              ...result,
+              beginAt: row.cadastreChangeLog.beginAt,
+              resolutionAt: row.cadastreChangeLog.resolutionAt,
+              rootingAt: row.cadastreChangeLog.rootingAt
+            }
           }
           console.log(params.cadastreChangeLog)
 
