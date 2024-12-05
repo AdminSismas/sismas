@@ -12,6 +12,9 @@ import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { ContentInformationConstruction, CreateBasicInformationConstruction } from '../../interfaces/information-property/content-information-construction';
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
 import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
+import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
+import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
+import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +64,8 @@ export class InformationPropertyService {
       .sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
+
+
 
   getInformationPropertyOwners(
     schema: string,
@@ -180,6 +185,54 @@ export class InformationPropertyService {
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
+  }
+
+  getByDivPolUrbana(): Observable<UrbanPhysicalZone> {
+
+    const divpolLv1 = 18;
+    const divpolLv2 = '001'; 
+    let params: HttpParams = new HttpParams();
+    params = params.append('divpolLv1', `${divpolLv1}`);
+    params = params.append('divpolLv2', `${divpolLv2}`);
+    let url: string = `${this.basic_url}/${'ccZonaHomoFisicaUr'}/${'divpol'}`;
+
+    console.log('url', url);
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+
+  }
+
+  getByDivPolRural(): Observable<RuralPhysicalZone> {
+
+    const divpolLv1 = 18;
+    const divpolLv2 = '001'; 
+    let params: HttpParams = new HttpParams();
+    params = params.append('divpolLv1', `${divpolLv1}`);
+    params = params.append('divpolLv2', `${divpolLv2}`);
+    let url: string = `${this.basic_url}/${'ccZonaHomoFisicaRu'}/${'divpol'}`;
+
+    console.log('url', url);
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+
+  }
+
+  getByDivPolGeoeconomica(): Observable<GeoEconomicZone> {
+
+    const divpolLv1 = 18;
+    const divpolLv2 = '001'; 
+    let params: HttpParams = new HttpParams();
+    params = params.append('divpolLv1', `${divpolLv1}`);
+    params = params.append('divpolLv2', `${divpolLv2}`);
+    let url: string = `${this.basic_url}/${'ccZonaHomoGeoEconomica'}/${'divpol'}`;
+
+    console.log('url', url);
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+
   }
 
   /**

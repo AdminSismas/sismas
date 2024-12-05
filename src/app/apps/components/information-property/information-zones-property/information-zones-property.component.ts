@@ -53,6 +53,8 @@ import { EditingPropertyOwnerComponent } from '../information-property-owners/ed
 import { InformationZonesService } from './services/information-zones.service';
 import { DetailInformationPropertyZonesComponent } from './detail-information-property-zones/detail-information-property-zones.component';
 import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
+import { AddEditInformatizonZonesPropertyComponent } from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
+import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 
 @Component({
   selector: 'vex-information-zones-property',
@@ -159,7 +161,7 @@ export class InformationZonesPropertyComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
-
+  dataBasicInformation!:BasicInformationProperty;
   fractions_sum: number = 0;
   page: number = PAGE;
   page2: number = PAGE;
@@ -210,10 +212,8 @@ export class InformationZonesPropertyComponent implements OnInit {
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
   constructor(
-    private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
-    private snackbar: MatSnackBar,
-    private informationZonesService: InformationZonesService
+
   ) {
   }
 
@@ -250,6 +250,42 @@ export class InformationZonesPropertyComponent implements OnInit {
     return NAME_NO_DISPONIBLE;
   }
 
+  searchBasicInformationProperty():void {
+    if(!this.schema || !this.baunitId) {
+      return;
+    }
+
+    this.informationPropertyService.getBasicInformationProperty(
+      this.schema , this.baunitId, this.executionId)
+      .subscribe({
+        error: (err: any) => this.captureInformationSubscribeError(err),
+        next: (result: BasicInformationProperty) => this.captureBasicInformationSubscribe(result)
+      });
+  }
+
+  captureBasicInformationSubscribe(result: BasicInformationProperty): void {
+    this.dataBasicInformation = result;
+    console.log(this.dataBasicInformation.cadastralNumberFormat);
+  }
+
+  determinePropertyType(): string {
+    if (!this.dataBasicInformation || !this.dataBasicInformation.cadastralNumberFormat) {
+      return ''; 
+    }
+  
+    const typeCode = this.dataBasicInformation.cadastralNumberFormat.substring(7, 9);
+  
+
+    console.log('typeCode', typeCode);
+    if (typeCode === '00') {
+      return 'Rural';
+    } else if (typeCode === '01') {
+      return 'Urbano';
+    } else {
+      return 'Otros';
+    }
+  }
+
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -279,13 +315,14 @@ export class InformationZonesPropertyComponent implements OnInit {
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     this.isExpandPanel(this.expandedComponent);
 
-    console.log(this.dataSource); 
   }
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
       this.searchInformationsZonesProperty();
       this.searchInformationsGeoeconomicZonesProperty();
+      this.searchBasicInformationProperty();
+   
     }
   }
 
@@ -316,15 +353,30 @@ export class InformationZonesPropertyComponent implements OnInit {
   }
 
 
-  openInformationPropertyOwner(zone:  ZoneBAUnit): void {
+  openInformationPropertyZone (zone: ZoneBAUnit, zoneType: string): void {
+    
+    if(zoneType === 'physical') {
+      const propertyType = this.determinePropertyType();
     const dialog = this.matDialog
       .open(DetailInformationPropertyZonesComponent, {
         minWidth: '50%',
         minHeight: '40%',
         disableClose: true,
-        data: zone
+        data: { zone, propertyType }
       });
     dialog.afterClosed().subscribe((data: any) => console.log(data));
+    
+    } else {
+      const dialog = this.matDialog
+      .open(DetailInformationPropertyZonesComponent, {
+        minWidth: '50%',
+        minHeight: '40%',
+        disableClose: true,
+        data: { zone, propertyType: 'Geoeconómica' }
+      });
+      dialog.afterClosed().subscribe((data: any) => console.log(data));
+    }
+    
   }
 
 
@@ -364,78 +416,27 @@ export class InformationZonesPropertyComponent implements OnInit {
     return object && object[key] !== null && object[key] !== undefined && object[key] != '';
   }
 
-  async loadInformationPropertyOwners(): Promise<void> {
-    if (!this.schema || !this.baunitId) {
-      return;
-    }
-    try {
-      const infoOwners: InfoOwners[] = await lastValueFrom(
-        this.informationPropertyService.getInformationPropertyOwners(
-          this.schema,
-          this.baunitId,
-          this.executionId
-        )
-      );
-      // this.dataSource.data = infoOwners;
-      this.fractions_sum = infoOwners.reduce((acc: number, owner: InfoOwners) => {
-        const fraction = Number(owner.fractionS)
-        return acc + fraction ;
-      }, 0)
-    } catch (e) {
-      console.error(e);
-    }
-  }
 
-  onClickActionBtn(id: string, infoOwner: InfoOwners) {
-    this.rightIdSelected = infoOwner.rightId;
-    if (id === 'delete') {
-      this.matDialog.open(DeletePropertyOwnerComponent, {
-        width: '35%',
-        data: {
-          baunitId: this.baunitId,
-          executionId: this.executionId,
-          rightId: this.rightIdSelected,
-          individual: infoOwner.individual
-        }
-      }).afterClosed()
-        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
-    } else if (id === 'edit') {
-      this.matDialog.open(EditingPropertyOwnerComponent, {
-        width: '35%',
-        data: {
-          fractions_sum: this.fractions_sum - Number(infoOwner.fractionS),
-          rightId: this.rightIdSelected,
-          executionId: this.executionId,
-          baunitId: this.baunitId,
-          schema: this.schema,
-          rrrightInfo: {
-            fraction: infoOwner.fractionS,
-            beginAt: infoOwner.beginAt,
-            domRightType: infoOwner.domRightType
-          },
-          individual: infoOwner.individual
-        }
-      }).afterClosed()
-        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
+  onClickActionBtn(id: string, zone: ZoneBAUnit): void {
+    if (id === 'edit') {
+      this.onClickOpenAddEditModal(zone);
     }
+    if (id === 'delete') {
+     
+    }
+
   }
 
   onClickOpenAddEditModal(data: any): void {
-    if (this.fractions_sum >= 1) {
-      this.snackbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 4000 })
-      return;
-    }
 
-    this.matDialog.open(AddPropertyOwnerComponent, {
-      width: '35%',
-      data: {
-        ownersData: data.data,
-        baunitId: this.baunitId,
-        schema: this.schema,
-        executionId: this.executionId
-      },
+    this.matDialog.open(AddEditInformatizonZonesPropertyComponent, {
+      minWidth: '60%',
+      minHeight: '70%',
+      disableClose: true,
+      data: data,
     }).afterClosed()
-      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
+      .subscribe(() => setTimeout(() => this.searchInformationsZonesProperty(), 200));
+
   }
 
 

@@ -1,1 +1,67 @@
-<p>add-edit-informatizon-zones-property works!</p>
+
+<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">
+        {{data ? 'Crear' : 'Editar'}} Zona
+    </h2>
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+
+
+  <mat-divider class="text-border"></mat-divider>
+  <mat-dialog-content>
+    <form [formGroup]="zoneBAUnitForm">
+        <vex-page-layout class="overflow-hidden">
+        <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
+
+            <div class="form-content">
+
+                <div class="form-content-item">
+                    <p><strong>Área</strong></p>
+                    <vex-input
+                    label="Área"
+                    type="text"
+                    idComboInput="baUnitZonaArea"
+                    formControlNameInput="baUnitZonaArea"
+                  ></vex-input>
+                  <mat-error *ngIf="zoneBAUnitForm.controls['baUnitZonaArea'].hasError('required')">
+                    El área es obligatorio.
+                  </mat-error>
+                  </div>
+
+                  <div class="form-content-item">
+                    <p><strong>Valor</strong></p>
+                    <vex-input
+                    label="Valor"
+                    type="text"
+                    idComboInput="baUnitZonaValor"
+                    formControlNameInput="baUnitZonaValor"
+                  ></vex-input>
+                  <mat-error *ngIf="zoneBAUnitForm.controls['baUnitZonaValor'].hasError('required')">
+                    El valor es obligatorio.
+                  </mat-error>
+                  </div>
+
+                
+        
+        <div class="buttons">
+            <button color="primary" mat-raised-button type="submit">
+              Guardar
+              <mat-icon svgIcon="mat:save"></mat-icon>
+            </button>
+            <button color="warn" mat-stroked-button mat-dialog-close type="button">
+              Cerrar
+              <mat-icon svgIcon="mat:close"></mat-icon>
+            </button>
+          </div>
+
+            </div>
+        </vex-page-layout-content>
+        </vex-page-layout>
+    
+      </form>
+
+
+  </mat-dialog-content>
+
