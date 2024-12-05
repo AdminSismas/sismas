@@ -3,6 +3,7 @@
 <mat-dialog-content>
   <dynamic-forms
     [inputs]="inputs"
+    [initValues]="data.data"
     (formReady)="form = $event"
   ></dynamic-forms>
 </mat-dialog-content>

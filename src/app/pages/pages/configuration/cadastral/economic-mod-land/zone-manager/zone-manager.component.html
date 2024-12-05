@@ -1,201 +1,94 @@
 <main class="p-4 w-full h-full bg-white">
-  <section class="flex justify-around py-2 px-4">
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="searchZones()"
-    >
-      Buscar zonas {{ typeZone }}
-      <mat-icon svgIcon="mat:search"></mat-icon>
-    </button>
-    @if (gettedZones) {
-      <button
-        mat-flat-button
-        color="accent"
-        (click)="openDialogCreateZone()"
-      >
-        Crear zona {{ title }}
-        <mat-icon svgIcon="mat:add"></mat-icon>
-      </button>
-    }
-  </section>
-  @if (dataSource.data.length > 0) {
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      class="w-full"
-    >
-      @for (column of columns; track $index) {
-        <ng-container [matColumnDef]="column.name">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-          >
-            {{ column.title }}
-          </th>
-          <td
-            mat-cell
-            *matCellDef="let element"
-          >
-            {{ element[column.name] }}
-          </td>
-        </ng-container>
-      }
-      <ng-container matColumnDef="actions">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="openDialogCreateZone()"
+  >
+    Crear zona {{ title }}
+    <mat-icon svgIcon="mat:add"></mat-icon>
+  </button>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="w-full"
+  >
+    @for (column of columns; track $index) {
+      <ng-container [matColumnDef]="column.name">
         <th
-          *matHeaderCellDef
           mat-header-cell
+          *matHeaderCellDef
         >
-          Acciones
+          {{ column.title }}
         </th>
         <td
-          *matCellDef="let row"
-          class="w-10 text-secondary"
           mat-cell
+          *matCellDef="let element"
         >
-          <button
-            (click)="$event.stopPropagation()"
-            [matMenuTriggerData]="{ row: row }"
-            [matMenuTriggerFor]="actionsMenu"
-            mat-icon-button
-            type="button"
-          >
-            <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-          </button>
+          {{ element[column.name] }}
         </td>
       </ng-container>
-
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns"
-      ></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-      ></tr>
-    </table>
-    <mat-menu
-      #actionsMenu="matMenu"
-      xPosition="before"
-      yPosition="below"
-    >
-      <ng-template
-        let-row="row"
-        matMenuContent
+    }
+    <ng-container matColumnDef="actions">
+      <th
+        *matHeaderCellDef
+        mat-header-cell
       >
-        @for (actionBtn of actionBtns(); track actionBtn.id) {
-          <button
-            mat-menu-item
-            (click)="onClickActionBtn(actionBtn.id, row)"
-          >
-            <mat-icon [svgIcon]="actionBtn.icon" />
-            <span>{{ actionBtn.label }}</span>
-          </button>
-        } @empty {
-          <button
-            mat-menu-item
-            disabled
-          >
-            <span class="text-center">No options</span>
-          </button>
-        }
-      </ng-template>
-    </mat-menu>
-  }
-</main>
-
-<ng-template #searchDialog>
-  <h2 mat-dialog-title>
-    Buscar zonas
-    {{ typeZone !== "geoeconómicas" ? "físicas " + typeZone : typeZone }}
-  </h2>
-  <mat-divider class="border-slate-400 my-2"></mat-divider>
-  <mat-dialog-content>
-    <vex-page-layout>
-      <vex-page-layout-content class="container-fluid">
-        <form
-          [formGroup]="form"
-          class="flex justify-between sm:flex-row"
+        Acciones
+      </th>
+      <td
+        *matCellDef="let row"
+        class="w-10 text-secondary"
+        mat-cell
+      >
+        <button
+          (click)="$event.stopPropagation()"
+          [matMenuTriggerData]="{ row: row }"
+          [matMenuTriggerFor]="actionsMenu"
+          mat-icon-button
+          type="button"
         >
-          <!-- Campo departamento -->
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Departamento</mat-label>
-            <input
-              type="text"
-              aria-label="Number"
-              matInput
-              formControlName="department"
-              placeholder="Seleccione un departamento"
-              [matAutocomplete]="autoDepartment"
-            />
-            <mat-autocomplete
-              autoActiveFirstOption
-              #autoDepartment="matAutocomplete"
-              [panelWidth]="350"
-              (optionSelected)="
-                loadMunicipalitiesInformation($event.option.value, true)
-              "
-            >
-              @for (
-                option of filteredOptionsDepartments$ | async;
-                track option.divpolLvl1Code
-              ) {
-                <mat-option [value]="option.codeName">
-                  {{ option.codeName }}
-                </mat-option>
-              } @empty {
-                <mat-option>
-                  {{ STRING_INFORMATION_NOT_FOUND }}
-                </mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
+          <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-          <!-- Campo municipio -->
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Municipio</mat-label>
-            <input
-              type="text"
-              aria-label="Number"
-              matInput
-              formControlName="municipality"
-              placeholder="Seleccione un municipio&hellip;"
-              [matAutocomplete]="autoMunicipality"
-            />
-            <mat-autocomplete
-              autoActiveFirstOption
-              #autoMunicipality="matAutocomplete"
-              [panelWidth]="350"
-            >
-              @for (
-                option of filteredOptionsMunicipalities$ | async;
-                track option.divpolLvl2Code
-              ) {
-                <mat-option [value]="option.codeName">
-                  {{ option.codeName }}
-                </mat-option>
-              } @empty {
-                <mat-option>
-                  {{ STRING_INFORMATION_NOT_FOUND }}
-                </mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-        </form>
-
-        <mat-dialog-actions align="center">
-          <button
-            (click)="getZones()"
-            color="primary"
-            mat-flat-button
-          >
-            Buscar
-          </button>
-        </mat-dialog-actions>
-      </vex-page-layout-content>
-    </vex-page-layout>
-  </mat-dialog-content>
-</ng-template>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
+  </table>
+  <mat-menu
+    #actionsMenu="matMenu"
+    xPosition="before"
+    yPosition="below"
+  >
+    <ng-template
+      let-row="row"
+      matMenuContent
+    >
+      @for (actionBtn of actionBtns(); track actionBtn.id) {
+        <button
+          mat-menu-item
+          (click)="onClickActionBtn(actionBtn.id, row)"
+        >
+          <mat-icon [svgIcon]="actionBtn.icon" />
+          <span>{{ actionBtn.label }}</span>
+        </button>
+      } @empty {
+        <button
+          mat-menu-item
+          disabled
+        >
+          <span class="text-center">No options</span>
+        </button>
+      }
+    </ng-template>
+  </mat-menu>
+</main>
 
 <ng-template #confirmDeleteDialog>
   <h2 mat-dialog-title>¿Está seguro de eliminar la zona?</h2>

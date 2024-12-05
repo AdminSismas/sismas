@@ -34,6 +34,7 @@ import { JSONInput } from '../../interfaces/dynamic-forms';
 export class DynamicFormsComponent implements OnInit{
 
   @Input({ required: true }) public inputs: JSONInput[] = []
+  @Input() public initValues: any = {}
 
   public form: FormGroup = new FormGroup({})
   public options$: { [key: string]: Observable<string[]> | undefined } = {}
@@ -57,6 +58,12 @@ export class DynamicFormsComponent implements OnInit{
         )
       }
     })
+
+    if (this.initValues) {
+      console.log('initValues', this.initValues)
+      console.log('form', this.form.value)
+      this.form.reset(this.initValues)
+    }
   }
 
   private createForm (): void {

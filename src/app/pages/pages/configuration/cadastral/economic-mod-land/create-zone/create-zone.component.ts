@@ -35,6 +35,8 @@ export class CreateZoneComponent implements OnInit {
     this.inputs = this.data.inputs
   }
 
+
+
   submitForm(): void {
     if (this.form.invalid) return;
     this.dialogRef.close(this.form.value)

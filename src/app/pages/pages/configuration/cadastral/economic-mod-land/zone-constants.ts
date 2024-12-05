@@ -37,8 +37,8 @@ export const GEOECONOMICA_COLUMNS = [
     title: 'Código'
   },
   {
-    name: 'valorLabel',
-    title: 'Valor'
+    name: 'suelo',
+    title: 'Suelo'
   },
   {
     name: 'vigencia',
@@ -72,17 +72,9 @@ const RURAL_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
-    name: 'changeLogId',
-    label: 'Historial de cambios',
-    type: 'text',
-    placeholder: 'Escribir historial de cambios',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
     name: 'domDisponibilidadAgua',
     label: 'Disponibilidad de agua',
-    type: 'DisponibilidadAguaTipo',
+    type: 'DisponibilidadAgua',
     placeholder: 'Seleccionar disponibilidad de agua',
     element: 'collection',
     validators: [Validators.required]
@@ -90,7 +82,7 @@ const RURAL_PARAMS: JSONInput[] = [
   {
     name: 'domInfluenciaVialRural',
     label: 'Influencia vial',
-    type: 'InfluenciaVialRuralTipo',
+    type: 'InfluenciaVialRural',
     placeholder: 'Seleccionar influencia vial',
     element: 'collection',
     validators: [Validators.required]
@@ -98,7 +90,7 @@ const RURAL_PARAMS: JSONInput[] = [
   {
     name: 'domUsoSueloRural',
     label: 'Uso de suelo',
-    type: 'UsoSueloRuralTipo',
+    type: 'UsoSueloRural',
     placeholder: 'Seleccionar uso de suelo',
     element: 'collection',
     validators: [Validators.required]
@@ -127,14 +119,6 @@ const URBAN_PARAMS: JSONInput[] = [
     label: 'Vigencia',
     type: 'number',
     placeholder: 'Escribir vigencia',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
-    name: 'changeLogId',
-    label: 'Historial de cambios',
-    type: 'text',
-    placeholder: 'Escribir historial de cambios',
     element: 'input',
     validators: [Validators.required]
   },
@@ -202,14 +186,6 @@ const GEOECONOMIC_PARAMS: JSONInput[] = [
     label: 'Vigencia',
     type: 'number',
     placeholder: 'Escribir vigencia',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
-    name: 'changeLogId',
-    label: 'Historial de cambios',
-    type: 'text',
-    placeholder: 'Escribir historial de cambios',
     element: 'input',
     validators: [Validators.required]
   },

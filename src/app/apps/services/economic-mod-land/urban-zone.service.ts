@@ -43,6 +43,19 @@ export class UrbanZoneService implements ZoneServices {
       )
   }
 
+  updateZone(params: any): Observable<UrbanZone> {
+    const id: string = params.zonaHomoFisicaUrId || params.zonaHomoFisicaRuId || params.zonaHomoGeoEconomicaId
+    const url: string = `${this.base_url}/${id}`
+
+    return this.http.put<UrbanZone>(url, params)
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error actualizando zona física urbana')
+          throw error
+        })
+      )
+  }
+
   deleteZone(version: string, id: string): Observable<void> {
     const url: string = `${this.base_url}/${id}`
     const params = new HttpParams()
