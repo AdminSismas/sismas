@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { MatInputModule } from '@angular/material/input';
@@ -52,6 +52,7 @@ import { Commune } from '../../../interfaces/territorial-organization/commune.mo
 import { NationalPredialNumber } from '../../../interfaces/national-predial-number';
 import { divideNpn } from '../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
+import { maxLengthValidator } from 'src/app/apps/validation-form/validation-general';
 
 @Component({
   selector: 'vex-filter-cadastral-search',
@@ -101,6 +102,21 @@ export class FilterCadastralSearchComponent implements OnInit {
   optionsSidewalks: Sidewalk[] = [];
 
   form: FormGroup = this.fb.group({
+
+
+    // National Property Number,
+    dpto: [this.defaults?.dpto ?? '',[Validators.min(2),Validators.pattern(/^\d+$/)]],
+    mpio: [this.defaults?.mpio ?? '',[Validators.maxLength(2),]],
+    zonas: [this.defaults?.zonas ?? '',[Validators.required,]],
+    sectorb: [this.defaults?.sectorb ?? '',[Validators.required,]],
+    comuna: [this.defaults?.comuna ?? '',[Validators.required,]],
+    barrio: [this.defaults?.barrio ?? '',[Validators.required,]],
+    manVer: [this.defaults?.manVer ?? '',[Validators.required,]],
+    terreno: [this.defaults?.terreno ?? '',[Validators.required,]],
+    condicion: [this.defaults?.condicion ?? '',[Validators.required,]],
+    edificio: [this.defaults?.edificio ?? '',[Validators.required,]],
+    piso: [this.defaults?.piso ?? '',[Validators.required,]],
+    unidadPredial: [this.defaults?.unidadPredial ?? '',[Validators.required,]],
 
     
     // MUltiple Fields
@@ -251,6 +267,10 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.snackBar.open(
       msg, action, { duration: 3000, horizontalPosition: position }
     );
+  }
+
+  searchNationalPropertyNumber(){
+    console.log(this.form)
   }
 
   searchMunicipalSelection() {
@@ -613,6 +633,54 @@ export class FilterCadastralSearchComponent implements OnInit {
     if (this.optionsBlocks?.length > 0) this.captureBlocksInformation([], null);
   }
 
+// formulario nuevo
+
+
+get dpto(){
+  return this.form.get('dpto');
+}
+
+get mpio(){
+  return this.form.get('mpio');
+}
+
+get zonas(){
+  return this.form.get('zonas');
+}
+
+get sectorb(){
+  return this.form.get('sectorb');
+}
+
+get comuna(){
+  return this.form.get('comuna');
+}
+
+get barrio(){
+  return this.form.get('barrio');
+}
+
+get terreno(){
+  return this.form.get('terreno');
+}
+
+get condicion(){
+  return this.form.get('condicion');
+}
+
+get edificio(){
+  return this.form.get('edificio');
+}
+
+get piso(){
+  return this.form.get('piso');
+}
+
+get unidadPredial(){
+  return this.form.get('unidadPredial');
+}
+
+//  
 
   get registration(){
     return this.form.get('registration');

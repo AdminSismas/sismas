@@ -24,6 +24,180 @@
   <mat-divider class="text-border"></mat-divider>
   <mat-dialog-content class="flex flex-col overflow-hidden">
     <mat-tab-group class="overflow-hidden" (selectedTabChange)="clearFormFields($event)">
+
+ <!-- Búsqueda por segregación de número predial nacional -->
+ <mat-tab label="Numero Predial Nacional">
+  <vex-page-layout class="overflow-hidden">
+    <vex-page-layout>
+      <vex-page-layout-content class="container-fluid">
+        <div class="flex flex-col sm:flex-row">
+
+          <!-- Campo departamento -->
+          <div class="form-content-item" >
+                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                  <mat-label>Departamento</mat-label>
+                  <input type="text"
+                         aria-label="Number"
+                         maxlength="2"
+                         matInput
+                         formControlName="dpto"
+                         placeholder="Departamento">
+                 
+                </mat-form-field>
+                 <!-- Validaciones -->
+                 <mat-error *ngIf="dpto?.hasError('pattern')">
+                  Solo se permiten números
+                 </mat-error>
+                 <mat-error  *ngIf="dpto?.hasError('maxLengthExceeded')">
+                  Solo se puede tener 2 caracteres.
+                 </mat-error>
+             </div>
+          
+
+          <!-- Campo municipio -->
+         <!-- Campo barrio -->
+         <div class="form-content-item" >
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Municipío</mat-label>
+            <input type="text"
+                  aria-label="Number"
+                  matInput
+                  formControlName="mpio"
+                  placeholder="Municipío">
+          </mat-form-field>
+           <mat-error style="margin-left: 27px;" *ngIf="mpio?.touched && mpio?.hasError('required')">Este campo es obligatorio.</mat-error>
+        
+          <mat-error *ngIf="mpio?.hasError('maxLength')">
+            Solo se puede tener 2 caracteres.
+           </mat-error>
+         </div>
+
+          <!-- Campo zona -->
+         <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+          <mat-label>Zonas</mat-label>
+          <input type="text"
+                 aria-label="Number"
+                 matInput
+                 formControlName="zonas"
+                 placeholder="Zona&hellip;"
+                 [matAutocomplete]="autoSidewalk">
+        </mat-form-field>
+
+          <!-- Campo sector -->
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Sector</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="sectorb"
+                     placeholder="Sector"
+                     [matAutocomplete]="autoBlock">
+            </mat-form-field>
+
+              <!-- Campo Comuna -->
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Comuna</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="comuna"
+                     placeholder="Comuna"
+                     [matAutocomplete]="autoBlock">
+            </mat-form-field>
+
+              <!-- Campo Barrio -->
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Barrio</mat-label>
+            <input type="text"
+                   aria-label="Number"
+                   matInput
+                   formControlName="barrio"
+                   placeholder="Barrio"
+                   [matAutocomplete]="autoBlock">
+          </mat-form-field>
+
+        </div> <!-- ************SECCIOON 1 X6 -->
+
+        <br>
+
+        <div class="flex flex-col sm:flex-row">
+    
+
+       
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Man/ver</mat-label>
+            <input type="text"
+                   aria-label="Number"
+                   matInput
+                   formControlName="manVer"
+                   placeholder="Man/ver"
+                   [matAutocomplete]="autoBlock">
+          </mat-form-field>
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Terreno</mat-label>
+            <input type="text"
+                   aria-label="Number"
+                   matInput
+                   formControlName="terreno"
+                   placeholder="Terreno"
+                   [matAutocomplete]="autoBlock">
+          </mat-form-field>
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Condición</mat-label>
+            <input type="text"
+                   aria-label="Number"
+                   matInput
+                   formControlName="condicion"
+                   placeholder="Condición">
+          </mat-form-field>
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Edificio</mat-label>
+            <input type="text"
+                   aria-label="Number"
+                   matInput
+                   formControlName="edificio"
+                   placeholder="Edificio"
+                   [matAutocomplete]="autoBlock">
+          </mat-form-field>
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Piso</mat-label>
+            <input type="text"
+                   aria-label="Number"
+                   matInput
+                   formControlName="piso"
+                   placeholder="Piso"
+                   [matAutocomplete]="autoBlock">
+          </mat-form-field>
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Unidad Predial</mat-label>
+            <input type="text"
+                   aria-label="Number"
+                   matInput
+                   formControlName="unidadPredial"
+                   placeholder="Unidad predial"
+                   [matAutocomplete]="autoBlock">
+          </mat-form-field>
+
+
+        </div>
+
+        <mat-dialog-actions align="center">
+          <button
+            (click)="searchNationalPropertyNumber()"
+            color="primary"
+            mat-flat-button
+            [disabled]="!form.valid"
+            type="primary">
+            Buscar
+          </button>
+        </mat-dialog-actions>
+
+      </vex-page-layout-content>
+    </vex-page-layout>
+  </vex-page-layout>
+ </mat-tab>
+
+
       <!-- Búsqueda por multiplex campos -->
       <mat-tab label="Múltiples campos" class="overflow-hidden">
         <vex-page-layout class="overflow-hidden">
