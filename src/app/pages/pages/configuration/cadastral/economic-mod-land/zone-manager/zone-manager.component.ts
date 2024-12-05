@@ -18,10 +18,11 @@ import { Municipality } from 'src/app/apps/interfaces/territorial-organization/m
 import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { GEOECONOMICA_COLUMNS, getZoneParams, RURAL_COLUMNS, URBAN_COLUMNS } from '../zone-constants';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
-import { GeoEconomicZone, RuralZone, UrbanZone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import { GeoEconomicZone, RuralZone, UrbanZone, Zone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { CreateZoneComponent } from '../create-zone/create-zone.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'zone-manager',
@@ -79,6 +80,7 @@ export class ZoneManagerComponent implements OnInit {
     private urbanZoneService: UrbanZoneService,
     private ruralZoneService: RuralZoneService,
     private geoeconomicZoneService: GeoeconomicZoneService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -128,7 +130,6 @@ export class ZoneManagerComponent implements OnInit {
     this.dialog.open(this.searchDialog,
       {
         width: '30%',
-        data: {}
       }
     )
   }
@@ -186,7 +187,7 @@ export class ZoneManagerComponent implements OnInit {
 
   }
 
-  createZone(): void {
+  openDialogCreateZone(): void {
     this.dialog.open(CreateZoneComponent, {
       width: '60%',
       data: {
@@ -197,7 +198,44 @@ export class ZoneManagerComponent implements OnInit {
         },
         inputs: getZoneParams(this.typeZone)
       }
-    })
+    }).afterClosed()
+      .subscribe({
+        next: (result: any) => {
+          const params: Zone = {
+            divpolLv1: this.divpolLv1,
+            divpolLv2: this.divpolLv2,
+            cadastreChangeLog: { changeLogId: result.changeLogId },
+            ...result
+          }
+          this.createZone(params)
+          this.getZones()
+        }
+        ,
+        error: (error: any) => {
+          this.snackBar.open(`Error al crear la zona ${this.stringCreateZone(this.typeZone)}`, 'Cerrar', {
+            duration: 4000
+          })
+          throw error
+        }
+      })
+  }
+
+  createZone(params: Zone): void {
+    this.activeService.createZone(params)
+      .subscribe({
+        next: (result: Zone) => {
+          this.snackBar.open(`Se ha creado la zona ${this.stringCreateZone(this.typeZone)}`, 'Cerrar', {
+            duration: 4000
+          })
+          console.log(result)
+        },
+        error: (error: any) => {
+          this.snackBar.open(`Error al crear la zona ${this.stringCreateZone(this.typeZone)}`, 'Cerrar', {
+            duration: 4000
+          })
+          throw error
+        }
+      })
   }
 
   stringCreateZone(typeZone: string): string {

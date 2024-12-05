@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
-import { RuralZone } from '../../interfaces/economic-mod-land/zone-description';
+import { RuralZone, Zone } from '../../interfaces/economic-mod-land/zone-description';
 import { environment as envi } from 'src/environments/environments';
 
 @Injectable({
@@ -26,6 +26,18 @@ export class RuralZoneService {
       .pipe(
         catchError((error: any) => {
           console.log('Error consultando zonas urbanas')
+          throw error
+        })
+      )
+  }
+
+  createZone(params: Zone): Observable<RuralZone> {
+    const url: string = `${this.base_url}`
+
+    return this.http.post<RuralZone>(url, params)
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error creando zona física rural')
           throw error
         })
       )

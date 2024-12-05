@@ -33,12 +33,10 @@ export class CreateZoneComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputs = this.data.inputs
-    console.log('divpolLv1',this.data.params.divpolLv1)
-    console.log('divpolLv2',this.data.params.divpolLv2)
   }
 
   submitForm(): void {
-    console.log(this.form.value)
-    this.dialogRef.close()
+    if (this.form.invalid) return;
+    this.dialogRef.close(this.form.value)
   }
 }

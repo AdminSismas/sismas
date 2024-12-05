@@ -80,22 +80,6 @@ const RURAL_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
-    name: 'divpolLv1',
-    label: 'Departamento',
-    type: 'text',
-    placeholder: 'Escribir departamento',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
-    name: 'divpolLv2',
-    label: 'Municipio',
-    type: 'text',
-    placeholder: 'Escribir municipio',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
     name: 'domDisponibilidadAgua',
     label: 'Disponibilidad de agua',
     type: 'DisponibilidadAguaTipo',
@@ -151,22 +135,6 @@ const URBAN_PARAMS: JSONInput[] = [
     label: 'Historial de cambios',
     type: 'text',
     placeholder: 'Escribir historial de cambios',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
-    name: 'divpolLv1',
-    label: 'Departamento',
-    type: 'text',
-    placeholder: 'Escribir departamento',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
-    name: 'divpolLv2',
-    label: 'Municipio',
-    type: 'text',
-    placeholder: 'Escribir municipio',
     element: 'input',
     validators: [Validators.required]
   },
@@ -245,22 +213,6 @@ const GEOECONOMIC_PARAMS: JSONInput[] = [
     element: 'input',
     validators: [Validators.required]
   },
-  {
-    name: 'divpolLv1',
-    label: 'Departamento',
-    type: 'text',
-    placeholder: 'Escribir departamento',
-    element: 'input',
-    validators: [Validators.required]
-  },
-  {
-    name: 'divpolLv2',
-    label: 'Municipio',
-    type: 'text',
-    placeholder: 'Escribir municipio',
-    element: 'input',
-    validators: [Validators.required]
-  }
 ]
 
 export function getZoneParams(typeZone: string): JSONInput[] {
