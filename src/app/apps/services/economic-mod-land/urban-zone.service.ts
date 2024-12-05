@@ -43,8 +43,9 @@ export class UrbanZoneService implements ZoneServices {
       )
   }
 
-  updateZone(params: any): Observable<UrbanZone> {
-    const id: string = params.zonaHomoFisicaUrId || params.zonaHomoFisicaRuId || params.zonaHomoGeoEconomicaId
+  updateZone(params: UrbanZone): Observable<UrbanZone> {
+    const id = params.zonaHomoFisicaUrId
+
     const url: string = `${this.base_url}/${id}`
 
     return this.http.put<UrbanZone>(url, params)

@@ -43,8 +43,8 @@ export class GeoeconomicZoneService implements ZoneServices {
       )
   }
 
-  updateZone(params: any): Observable<GeoEconomicZone> {
-    const id: string = params.zonaHomoFisicaUrId || params.zonaHomoFisicaRuId || params.zonaHomoGeoEconomicaId
+  updateZone(params: GeoEconomicZone): Observable<GeoEconomicZone> {
+    const id = params.zonaHomoGeoEconomicaId
     const url: string = `${this.base_url}/${id}`
 
     return this.http.put<GeoEconomicZone>(url, params)

@@ -25,6 +25,7 @@ export class CreateZoneComponent implements OnInit {
 
   public form: FormGroup = new FormGroup({})
   public inputs: JSONInput[] = []
+  public actionLabel: string = 'Crear'
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: CreateZoneData,
@@ -33,9 +34,11 @@ export class CreateZoneComponent implements OnInit {
 
   ngOnInit(): void {
     this.inputs = this.data.inputs
+
+    if (this.data.data) {
+      this.actionLabel = 'Editar'
+    }
   }
-
-
 
   submitForm(): void {
     if (this.form.invalid) return;

@@ -121,7 +121,7 @@ export class ZoneManagerComponent implements OnInit {
       }
     }).afterClosed()
       .subscribe({
-        next: (result: any) => this.editZone(result),
+        next: (result: any) => this.editZone(result, row),
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
             duration: 4000
@@ -140,70 +140,68 @@ export class ZoneManagerComponent implements OnInit {
       ...result
     }
     this.service.createZone(params)
-        .subscribe({
-          next: (result: Zone) => {
-            this.snackbar.open(`Se ha creado la zona ${this.title}`, 'Cerrar', {
-              duration: 4000
-            })
-            console.log(result)
-          },
-          error: (error: any) => {
-            this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
-              duration: 4000
-            })
-            throw error
-          }
-        })
-    }
-
-    onClickActionBtn(id: string, row: any) {
-      if (id === 'delete') {
-        console.log('Eliminando zona...')
-        this.zonesCode = row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode
-        this.dialog.open(this.confirmDeleteDialog, { width: '40%' })
-          .afterClosed()
-          .subscribe((result: boolean) => {
-            if (result) {
-              this.deleteZone(row)
-            }
+      .subscribe({
+        next: (result: Zone) => {
+          this.snackbar.open(`Se ha creado la zona ${this.title}`, 'Cerrar', {
+            duration: 4000
           })
+          console.log(result)
+        },
+        error: (error: any) => {
+          this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
+            duration: 4000
+          })
+          throw error
+        }
+      })
+  }
 
-      } else if (id === 'edit') {
-        console.log('Editando zona...')
-        this.openDialogEditZone(row)
-      }
-    }
-
-    deleteZone(row: any) {
-      const id: string = row.zonaHomoFisicaUrId || row.zonaHomoFisicaRuId || row.zonaHomoGeoEconomicaId
-      this.service.deleteZone('99999', id)
-        .subscribe({
-          next: () => {
-            this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 4000 })
-          },
-          error: (error: any) => {
-            this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 4000 })
+  onClickActionBtn(id: string, row: any) {
+    if (id === 'delete') {
+      console.log('Eliminando zona...')
+      this.zonesCode = row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode
+      this.dialog.open(this.confirmDeleteDialog, { width: '40%' })
+        .afterClosed()
+        .subscribe((result: boolean) => {
+          if (result) {
+            this.deleteZone(row)
           }
         })
-    }
 
-    editZone(row: any) {
-      if (!row) return
-      const params = {
-        divpolLv1: this.divpolLv1,
-        divpolLv2: this.divpolLv2,
-        cadastreChangeLog: { changeLogId: 2 },
-        ...row
-      }
-      this.service.updateZone(params)
-        .subscribe({
-          next: () => {
-            this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 })
-          },
-          error: (error: any) => {
-            this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 })
-            throw error
-          }
-        })
+    } else if (id === 'edit') {
+      console.log('Editando zona...')
+      this.openDialogEditZone(row)
     }
   }
+
+  deleteZone(row: any) {
+    const id: string = row.zonaHomoFisicaUrId || row.zonaHomoFisicaRuId || row.zonaHomoGeoEconomicaId
+    this.service.deleteZone('99999', id)
+      .subscribe({
+        next: () => {
+          this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 4000 })
+        },
+        error: (error: any) => {
+          this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 4000 })
+        }
+      })
+  }
+
+  editZone(result: any, row: any) {
+    if (!result) return
+    const params = {
+      ...row,
+      ...result
+    }
+    this.service.updateZone(params)
+      .subscribe({
+        next: () => {
+          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 })
+        },
+        error: (error: any) => {
+          this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 })
+          throw error
+        }
+      })
+  }
+}

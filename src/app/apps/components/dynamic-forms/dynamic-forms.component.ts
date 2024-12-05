@@ -60,8 +60,6 @@ export class DynamicFormsComponent implements OnInit{
     })
 
     if (this.initValues) {
-      console.log('initValues', this.initValues)
-      console.log('form', this.form.value)
       this.form.reset(this.initValues)
     }
   }

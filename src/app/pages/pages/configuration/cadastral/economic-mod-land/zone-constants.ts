@@ -123,7 +123,7 @@ const URBAN_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
-    name: 'fkTopografiaZonaTipo',
+    name: 'domTopografiaZonaTipo',
     label: 'Tipo de topografía',
     type: 'TopografiaZonaTipo',
     placeholder: 'Seleccionar tipo de topografia',
@@ -131,7 +131,7 @@ const URBAN_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
-    name: 'fkInfluenciaVialUrbanaTipo',
+    name: 'domInfluenciaVialUrbanaTipo',
     label: 'Influencia vial',
     type: 'InfluenciaVialUrbanaTipo',
     placeholder: 'Seleccionar influencia vial',
@@ -139,7 +139,7 @@ const URBAN_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
-    name: 'fkServiciosPublicosTipo',
+    name: 'domServiciosPublicosTipo',
     label: 'Servicios públicos',
     type: 'ServiciosPublicosTipo',
     placeholder: 'Seleccionar servicios públicos',
@@ -147,7 +147,7 @@ const URBAN_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
-    name: 'fkUsoSueloUrbanoTipo',
+    name: 'domUsoSueloUrbanoTipo',
     label: 'Uso de suelo',
     type: 'UsoSueloUrbanoTipo',
     placeholder: 'Seleccionar uso de suelo',
@@ -155,7 +155,7 @@ const URBAN_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
-    name: 'fkTipificacionConstruccionTipo',
+    name: 'domTipificacionConstruccionTipo',
     label: 'Tipo de construcción',
     type: 'TipificacionConstruccionTipo',
     placeholder: 'Seleccionar tipo de construcción',
