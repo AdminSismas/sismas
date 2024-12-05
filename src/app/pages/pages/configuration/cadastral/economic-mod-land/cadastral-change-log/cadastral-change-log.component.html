@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Crear zona {{ data.title }}</h2>
+<h2 mat-dialog-title>Registro de cambio</h2>
 <mat-divider class="border-slate-400"></mat-divider>
 <mat-dialog-content>
   <dynamic-forms
-    [inputs]="inputs"
+    [inputs]="data.inputs"
     [initValues]="data.data"
     (formReady)="form = $event"
   ></dynamic-forms>
@@ -13,7 +13,7 @@
     color="primary"
     (click)="submitForm()"
   >
-    {{ actionLabel }}
+    Registrar
   </button>
   <button
     mat-flat-button

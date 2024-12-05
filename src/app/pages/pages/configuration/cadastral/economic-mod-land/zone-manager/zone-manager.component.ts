@@ -9,13 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { getZoneParams } from '../zone-constants';
-import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
 import { Zone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
-import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
-import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { CreateZoneComponent } from '../create-zone/create-zone.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
+import { CadastralChangeLogComponent } from '../cadastral-change-log/cadastral-change-log.component';
+import { CADASTRE_CHANGE_LOG_PARAMS } from '../zone-constants';
+import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 
 @Component({
   selector: 'zone-manager',
@@ -76,7 +76,8 @@ export class ZoneManagerComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private refreshServices: RefreshService
   ) { }
 
   ngOnInit(): void {
@@ -88,11 +89,7 @@ export class ZoneManagerComponent implements OnInit {
     this.dialog.open(CreateZoneComponent, {
       width: '60%',
       data: {
-        params: {
-          title: this.title,
-          divpolLv1: this.divpolLv1,
-          divpolLv2: this.divpolLv2
-        },
+        title: this.title,
         inputs: getZoneParams(this.typeZone)
       }
     }).afterClosed()
@@ -136,22 +133,45 @@ export class ZoneManagerComponent implements OnInit {
     const params: Zone = {
       divpolLv1: this.divpolLv1,
       divpolLv2: this.divpolLv2,
-      cadastreChangeLog: { changeLogId: 2 },
       ...result
     }
-    this.service.createZone(params)
+
+    this.dialog.open(CadastralChangeLogComponent, {
+      width: '60%',
+      data: { inputs: CADASTRE_CHANGE_LOG_PARAMS }
+    }).afterClosed()
       .subscribe({
-        next: (result: Zone) => {
-          this.snackbar.open(`Se ha creado la zona ${this.title}`, 'Cerrar', {
-            duration: 4000
-          })
-          console.log(result)
+        next: (result: any) => {
+          params.cadastreChangeLog = {
+            ...result,
+            beginAt: result.beginAt.toISOString().split('T')[0],
+            resolutionAt: result.resolutionAt.toISOString().split('T')[0],
+            rootingAt: result.rootingAt.toISOString().split('T')[0]
+          }
+          console.log(params.cadastreChangeLog)
+
+          this.service.createZone(params)
+            .subscribe({
+              next: () => {
+                this.snackbar.open(`Se ha creado la zona ${this.title}`, 'Cerrar', {
+                  duration: 4000
+                })
+
+                this.refreshServices.triggerRefresh()
+              },
+              error: (error: any) => {
+                this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
+                  duration: 4000
+                })
+                throw error
+              }
+            })
         },
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
             duration: 4000
           })
-          throw error
+          throw error;
         }
       })
   }
@@ -180,9 +200,11 @@ export class ZoneManagerComponent implements OnInit {
       .subscribe({
         next: () => {
           this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 4000 })
+          this.refreshServices.triggerRefresh()
         },
         error: (error: any) => {
           this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 4000 })
+          throw error
         }
       })
   }
@@ -193,10 +215,34 @@ export class ZoneManagerComponent implements OnInit {
       ...row,
       ...result
     }
-    this.service.updateZone(params)
+    this.dialog.open(CadastralChangeLogComponent, {
+      width: '60%',
+      data: {
+        inputs: CADASTRE_CHANGE_LOG_PARAMS,
+        data: params.cadastreChangeLog
+      }
+    }).afterClosed()
       .subscribe({
-        next: () => {
-          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 })
+        next: (result: any) => {
+          params.cadastreChangeLog = {
+            ...result,
+            beginAt: result.beginAt.toISOString().split('T')[0],
+            resolutionAt: result.resolutionAt.toISOString().split('T')[0],
+            rootingAt: result.rootingAt.toISOString().split('T')[0]
+          }
+          console.log(params.cadastreChangeLog)
+
+          this.service.updateZone(params)
+            .subscribe({
+              next: () => {
+                this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 })
+                this.refreshServices.triggerRefresh()
+              },
+              error: (error: any) => {
+                this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 })
+                throw error
+              }
+            })
         },
         error: (error: any) => {
           this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 })

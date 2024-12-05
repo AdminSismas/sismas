@@ -12,7 +12,7 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { AsyncPipe } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { startWith, map, Observable } from 'rxjs';
+import { startWith, map, Observable, takeUntil, Subject } from 'rxjs';
 import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
@@ -23,6 +23,7 @@ import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
 import { URBAN_COLUMNS, RURAL_COLUMNS, GEOECONOMICA_COLUMNS } from './zone-constants';
 import { MatTableDataSource } from '@angular/material/table';
+import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 
 @Component({
   selector: 'vex-economic-mod-land',
@@ -81,12 +82,15 @@ export class EconomicModLandComponent implements OnInit{
     geoeconomic: GEOECONOMICA_COLUMNS
   };
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private fb: FormBuilder,
     private territorialOrganizationService: TerritorialOrganizationService,
     public urbanZoneService: UrbanZoneService,
     public ruralZoneService: RuralZoneService,
-    public geoeconomicZoneService: GeoeconomicZoneService
+    public geoeconomicZoneService: GeoeconomicZoneService,
+    private refreshService: RefreshService
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +100,12 @@ export class EconomicModLandComponent implements OnInit{
       this.displayedColumns[key as keyof DisplayedColumns] = this.columns[key as keyof Columns].map((column) => column.name);
       this.displayedColumns[key as keyof DisplayedColumns].push('actions')
     })
+
+    this.refreshService.refresh$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.getZones()
+      })
   }
 
   loadDepartmentalInformation() {

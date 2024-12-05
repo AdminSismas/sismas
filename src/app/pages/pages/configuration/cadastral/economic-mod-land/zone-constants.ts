@@ -191,6 +191,74 @@ const GEOECONOMIC_PARAMS: JSONInput[] = [
   },
 ]
 
+export const CADASTRE_CHANGE_LOG_PARAMS: JSONInput[] = [
+  {
+    name: 'changeLogId',
+    label: 'Identificador de registro',
+    type: 'number',
+    placeholder: 'Escribir identificador de registro',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
+    name: 'resolution',
+    label: 'Resolución',
+    type: 'text',
+    placeholder: 'Escribir resolución',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
+    name: 'resolutionAt',
+    label: 'Fecha de resolución',
+    type: 'date',
+    placeholder: 'Escribir fecha de resolución',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
+    name: 'rooting',
+    label: 'Radicado',
+    type: 'text',
+    placeholder: 'Escribir raíz',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
+    name: 'rootingAt',
+    label: 'Fecha de radicación',
+    type: 'date',
+    placeholder: 'Escribir fecha de raíz',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
+    name: 'validity',
+    label: 'Validez',
+    type: 'number',
+    placeholder: 'Escribir validez',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
+    name: 'beginAt',
+    label: 'Fecha de inicio',
+    type: 'date',
+    placeholder: 'Escribir fecha de inicio',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
+    name: 'domCadastreChangeTypeDescription',
+    label: 'Descripción',
+    type: 'text',
+    placeholder: 'Escribir descripción',
+    element: 'input',
+    validators: [Validators.required]
+  },
+]
+
+
 export function getZoneParams(typeZone: string): JSONInput[] {
   switch (typeZone) {
     case 'rurales':

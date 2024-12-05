@@ -14,6 +14,7 @@ export interface UrbanZone {
   vigencia: number;
   divpolLv1: string;
   divpolLv2: string;
+  cadastreChangeLog?: CadastreChangeLog;
 }
 
 export interface RuralZone {
@@ -26,6 +27,7 @@ export interface RuralZone {
   vigencia: number;
   divpolLv1: string;
   divpolLv2: string;
+  cadastreChangeLog?: CadastreChangeLog;
 }
 
 export interface GeoEconomicZone {
@@ -37,6 +39,18 @@ export interface GeoEconomicZone {
   divpolLv2: string;
   suelo: string;
   valorLabel: string;
+  cadastreChangeLog?: CadastreChangeLog;
+}
+
+export interface CadastreChangeLog {
+  changeLogId: number;
+  resolution: string;
+  resolutionAt: string;
+  rooting: string;
+  rootingAt: string;
+  validity: number;
+  beginAt: string;
+  domCadastreChangeTypeDescription: string;
 }
 
 export type Zone = UrbanZone | RuralZone | GeoEconomicZone;
@@ -49,15 +63,9 @@ export interface ZoneServices {
 }
 
 export interface CreateZoneData {
-  params: CreateZoneParams;
+  title: string;
   inputs: JSONInput[];
   data?: { [key: string]: any };
-}
-
-interface CreateZoneParams {
-  title: string;
-  divpolLv1: string;
-  divpolLv2: string;
 }
 
 export interface DataSourceZoneManager {
@@ -77,3 +85,5 @@ export interface DisplayedColumns {
   rural: string[];
   geoeconomic: string[];
 }
+
+
