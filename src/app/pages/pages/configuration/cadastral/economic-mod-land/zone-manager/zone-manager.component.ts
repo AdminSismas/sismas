@@ -107,11 +107,7 @@ export class ZoneManagerComponent implements OnInit {
     this.dialog.open(CreateZoneComponent, {
       width: '60%',
       data: {
-        params: {
-          title: this.typeZone,
-          divpolLv1: this.divpolLv1,
-          divpolLv2: this.divpolLv2
-        },
+        title: `${this.typeZone} ${row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode}`,
         inputs: getZoneParams(this.typeZone),
         data: row
       }
