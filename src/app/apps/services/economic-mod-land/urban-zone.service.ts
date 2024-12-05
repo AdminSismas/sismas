@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment as envi } from 'src/environments/environments';
-import { UrbanZone, Zone } from '../../interfaces/economic-mod-land/zone-description';
+import { UrbanZone, Zone, ZoneServices } from '../../interfaces/economic-mod-land/zone-description';
 import { catchError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UrbanZoneService {
+export class UrbanZoneService implements ZoneServices {
 
   public base_url: string = `${envi.url}:${envi.port}${envi.urban_zones}`
 
@@ -38,6 +38,20 @@ export class UrbanZoneService {
       .pipe(
         catchError((error: any) => {
           console.log('Error creando zona física urbana')
+          throw error
+        })
+      )
+  }
+
+  deleteZone(version: string, id: string): Observable<void> {
+    const url: string = `${this.base_url}/${id}`
+    const params = new HttpParams()
+      .set('version', version)
+
+    return this.http.delete<void>(url, { params })
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error eliminando zona física urbana')
           throw error
         })
       )

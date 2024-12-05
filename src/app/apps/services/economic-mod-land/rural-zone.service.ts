@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
-import { RuralZone, Zone } from '../../interfaces/economic-mod-land/zone-description';
+import { RuralZone, Zone, ZoneServices } from '../../interfaces/economic-mod-land/zone-description';
 import { environment as envi } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RuralZoneService {
+export class RuralZoneService implements ZoneServices{
 
   public base_url: string = `${envi.url}:${envi.port}${envi.rural_zones}`
 
@@ -38,6 +38,20 @@ export class RuralZoneService {
       .pipe(
         catchError((error: any) => {
           console.log('Error creando zona física rural')
+          throw error
+        })
+      )
+  }
+
+  deleteZone(version: string, id: string): Observable<void> {
+    const url: string = `${this.base_url}/${id}`
+    const params = new HttpParams()
+      .set('version', version)
+
+    return this.http.delete<void>(url, { params })
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error eliminando zona física urbana')
           throw error
         })
       )

@@ -1,4 +1,4 @@
-<main class="p-4 w-full h-full">
+<main class="p-4 w-full h-full bg-white">
   <section class="flex justify-around py-2 px-4">
     <button
       mat-flat-button
@@ -14,7 +14,7 @@
         color="accent"
         (click)="openDialogCreateZone()"
       >
-        Crear zona {{ stringCreateZone(typeZone) }}
+        Crear zona {{ title }}
         <mat-icon svgIcon="mat:add"></mat-icon>
       </button>
     }
@@ -41,6 +41,29 @@
           </td>
         </ng-container>
       }
+      <ng-container matColumnDef="actions">
+        <th
+          *matHeaderCellDef
+          mat-header-cell
+        >
+          Acciones
+        </th>
+        <td
+          *matCellDef="let row"
+          class="w-10 text-secondary"
+          mat-cell
+        >
+          <button
+            (click)="$event.stopPropagation()"
+            [matMenuTriggerData]="{ row: row }"
+            [matMenuTriggerFor]="actionsMenu"
+            mat-icon-button
+            type="button"
+          >
+            <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
       <tr
         mat-header-row
@@ -51,6 +74,33 @@
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>
+    <mat-menu
+      #actionsMenu="matMenu"
+      xPosition="before"
+      yPosition="below"
+    >
+      <ng-template
+        let-row="row"
+        matMenuContent
+      >
+        @for (actionBtn of actionBtns(); track actionBtn.id) {
+          <button
+            mat-menu-item
+            (click)="onClickActionBtn(actionBtn.id, row)"
+          >
+            <mat-icon [svgIcon]="actionBtn.icon" />
+            <span>{{ actionBtn.label }}</span>
+          </button>
+        } @empty {
+          <button
+            mat-menu-item
+            disabled
+          >
+            <span class="text-center">No options</span>
+          </button>
+        }
+      </ng-template>
+    </mat-menu>
   }
 </main>
 
@@ -145,4 +195,30 @@
       </vex-page-layout-content>
     </vex-page-layout>
   </mat-dialog-content>
+</ng-template>
+
+<ng-template #confirmDeleteDialog>
+  <h2 mat-dialog-title>¿Está seguro de eliminar la zona?</h2>
+  <mat-divider class="text-border border-slate-400"></mat-divider>
+  <mat-dialog-content class="flex flex-col items-center py-4 lg:px-8">
+    <span class="text-lg">¿Está seguro de eliminar esta zona?</span>
+    <strong class="text-lg">{{ zonesCode }}</strong>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="primary"
+      [mat-dialog-close]="true"
+    >
+      Eliminar
+    </button>
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="warn"
+    >
+      Cancelar
+    </button>
+  </mat-dialog-actions>
 </ng-template>

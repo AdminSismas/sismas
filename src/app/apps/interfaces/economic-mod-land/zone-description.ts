@@ -43,6 +43,7 @@ export type Zone = UrbanZone | RuralZone | GeoEconomicZone;
 export interface ZoneServices {
   getZones: (divpolLv1: string, divpolLv2: string) => Observable<UrbanZone[] | RuralZone[] | GeoEconomicZone[]>;
   createZone: (params: Zone) => Observable<Zone>;
+  deleteZone: (version: string, id: string) => Observable<void>;
 }
 
 export interface CreateZoneData {

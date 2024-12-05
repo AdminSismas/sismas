@@ -1,5 +1,5 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, computed, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,7 @@ import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { CreateZoneComponent } from '../create-zone/create-zone.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'zone-manager',
@@ -38,6 +39,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatMenuModule,
     MatTableModule,
     /* Vex Components */
     VexPageLayoutComponent,
@@ -53,23 +55,40 @@ export class ZoneManagerComponent implements OnInit {
   public filteredOptionsDepartments$: Observable<Department[]> | undefined;
   public filteredOptionsMunicipalities$: Observable<Municipality[]> | undefined;
   public optionsDeparments: Department[] = [];
+  public optionsMunicipalities: Municipality[] = [];
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
     municipality: ['', Validators.required]
   })
+  public title: string = '';
   public STRING_INFORMATION_NOT_FOUND: string = STRING_INFORMATION_NOT_FOUND;
-  public dataSource: MatTableDataSource<UrbanZone | RuralZone | GeoEconomicZone> = new MatTableDataSource<UrbanZone | RuralZone | GeoEconomicZone>();
-  // public dataSource = dataSource;
+  public dataSource: MatTableDataSource<Zone> = new MatTableDataSource<Zone>();
   public columns: { name: string, title: string }[] = URBAN_COLUMNS;
   public displayedColumns: string[] = [];
   public divpolLv1: string = '';
   public divpolLv2: string = '';
   public gettedZones: boolean = false;
+  public actionBtns = computed(() => {
+    return [
+      {
+        id: 'edit',
+        label: 'Editar',
+        icon: 'mat:edit'
+      },
+      {
+        id: 'delete',
+        label: 'Eliminar',
+        icon: 'mat:delete'
+      }
+    ]
+  })
+  public zonesCode: string = '';
 
   private activeService: ZoneServices = this.urbanZoneService;
 
   @ViewChild('searchDialog', { static: true }) searchDialog!: TemplateRef<any>;
-  optionsMunicipalities: Municipality[] = [];
+  @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
+  @ViewChild('actionsMenu', { static: true }) actionsMenu!: TemplateRef<any>;
 
   @Input({ required: true }) public typeZone: string = 'urbanas';
 
@@ -80,7 +99,7 @@ export class ZoneManagerComponent implements OnInit {
     private urbanZoneService: UrbanZoneService,
     private ruralZoneService: RuralZoneService,
     private geoeconomicZoneService: GeoeconomicZoneService,
-    private snackBar: MatSnackBar
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -88,23 +107,7 @@ export class ZoneManagerComponent implements OnInit {
 
     this.selectService()
     this.displayedColumns = this.columns.map((column) => column.name);
-  }
-
-  selectService(): void {
-    switch (this.typeZone) {
-      case 'urbanas':
-        this.activeService = this.urbanZoneService;
-        this.columns = URBAN_COLUMNS;
-        break;
-      case 'rurales':
-        this.activeService = this.ruralZoneService;
-        this.columns = RURAL_COLUMNS;
-        break;
-      case 'geoeconómicas':
-        this.activeService = this.geoeconomicZoneService;
-        this.columns = GEOECONOMICA_COLUMNS;
-        break;
-    }
+    this.displayedColumns.push('actions')
   }
 
   loadDepartmentalInformation() {
@@ -125,15 +128,6 @@ export class ZoneManagerComponent implements OnInit {
         (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
       ));
   }
-
-  searchZones() {
-    this.dialog.open(this.searchDialog,
-      {
-        width: '30%',
-      }
-    )
-  }
-
   loadMunicipalitiesInformation(codeName: string, skipPreloadedValues: boolean | null) {
     if (codeName?.length <= 0) {
       return;
@@ -168,6 +162,26 @@ export class ZoneManagerComponent implements OnInit {
       ));
   }
 
+  selectService(): void {
+    switch (this.typeZone) {
+      case 'urbanas':
+        this.activeService = this.urbanZoneService;
+        this.columns = URBAN_COLUMNS;
+        this.title = 'urbana'
+        break;
+      case 'rurales':
+        this.activeService = this.ruralZoneService;
+        this.columns = RURAL_COLUMNS;
+        this.title = 'física'
+        break;
+      case 'geoeconómicas':
+        this.activeService = this.geoeconomicZoneService;
+        this.columns = GEOECONOMICA_COLUMNS;
+        this.title = 'geoeconómica'
+        break;
+    }
+  }
+
   getZones(): void {
     if (this.form.invalid) return;
 
@@ -187,12 +201,16 @@ export class ZoneManagerComponent implements OnInit {
 
   }
 
+  searchZones() {
+    this.dialog.open(this.searchDialog, { width: '30%' })
+  }
+
   openDialogCreateZone(): void {
     this.dialog.open(CreateZoneComponent, {
       width: '60%',
       data: {
         params: {
-          title: this.stringCreateZone(this.typeZone),
+          title: this.title,
           divpolLv1: this.divpolLv1,
           divpolLv2: this.divpolLv2
         },
@@ -212,7 +230,7 @@ export class ZoneManagerComponent implements OnInit {
         }
         ,
         error: (error: any) => {
-          this.snackBar.open(`Error al crear la zona ${this.stringCreateZone(this.typeZone)}`, 'Cerrar', {
+          this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
             duration: 4000
           })
           throw error
@@ -224,13 +242,13 @@ export class ZoneManagerComponent implements OnInit {
     this.activeService.createZone(params)
       .subscribe({
         next: (result: Zone) => {
-          this.snackBar.open(`Se ha creado la zona ${this.stringCreateZone(this.typeZone)}`, 'Cerrar', {
+          this.snackbar.open(`Se ha creado la zona ${this.title}`, 'Cerrar', {
             duration: 4000
           })
           console.log(result)
         },
         error: (error: any) => {
-          this.snackBar.open(`Error al crear la zona ${this.stringCreateZone(this.typeZone)}`, 'Cerrar', {
+          this.snackbar.open(`Error al crear la zona ${this.title}`, 'Cerrar', {
             duration: 4000
           })
           throw error
@@ -238,14 +256,34 @@ export class ZoneManagerComponent implements OnInit {
       })
   }
 
-  stringCreateZone(typeZone: string): string {
-    switch (typeZone) {
-      case 'geoeconómicas':
-        return 'geoeconómica'
-      case 'rurales':
-        return 'física rural'
-      default:
-        return 'física urbana'
+  onClickActionBtn(id: string, row: any) {
+    if (id === 'delete') {
+      console.log('Eliminando zona...')
+      this.zonesCode = row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode
+      this.dialog.open(this.confirmDeleteDialog, { width: '40%' })
+        .afterClosed()
+        .subscribe((result: boolean) => {
+          if (result) {
+            this.deleteZone(row)
+          }
+        })
+
+    } else if (id === 'edit') {
+      console.log('Editando zona...')
     }
+  }
+
+  deleteZone(row: any) {
+    const id: string = row.zonaHomoFisicaUrId || row.zonaHomoFisicaRuId || row.zonaHomoGeoEconomicaId
+    this.activeService.deleteZone('99999', id)
+      .subscribe({
+        next: () => {
+          this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 4000 })
+          this.getZones()
+        },
+        error: (error: any) => {
+          this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 4000 })
+        }
+      })
   }
 }

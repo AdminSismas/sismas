@@ -42,4 +42,18 @@ export class GeoeconomicZoneService implements ZoneServices {
         })
       )
   }
+
+  deleteZone(version: string, id: string): Observable<void> {
+    const url: string = `${this.base_url}/${id}`
+    const params = new HttpParams()
+      .set('version', version)
+
+    return this.http.delete<void>(url, { params })
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error eliminando zona física urbana')
+          throw error
+        })
+      )
+  }
 }
