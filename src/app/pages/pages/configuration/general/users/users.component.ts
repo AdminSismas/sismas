@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,6 +15,7 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { filter, Observable, ReplaySubject } from 'rxjs';
+import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
 import { Content, User } from 'src/app/apps/interfaces/users/user';
 import { UserService } from 'src/app/apps/services/users/user.service';
 
@@ -19,9 +23,12 @@ import { UserService } from 'src/app/apps/services/users/user.service';
   selector: 'vex-users',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
     /* Material */
     MatIconModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatTableModule,
     MatPaginatorModule,
     MatMenuModule,
@@ -29,9 +36,9 @@ import { UserService } from 'src/app/apps/services/users/user.service';
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
     VexPageLayoutComponent,
-    VexPageLayoutContentDirective
+    VexPageLayoutContentDirective,
     /* Custom */
-
+    ComboxColletionComponent
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
@@ -42,6 +49,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
   public subject$: ReplaySubject<User> = new ReplaySubject<User>(1);
   public data$: Observable<User> = this.subject$.asObservable();
 
+  public form: FormGroup = this.fb.group({
+    'domIndividualTypeNumber': ['', Validators.required],
+    'number': ['', Validators.required],
+  })
   public columns: { name: string, label: string }[] = [
     {
       name: 'username',
@@ -71,6 +82,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   constructor(
+    private fb: FormBuilder,
     private userService: UserService,
     private readonly layoutSerices: VexLayoutService,
     private snackbar: MatSnackBar
@@ -118,6 +130,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
       return value ? 'Activo' : 'Inactivo';
     }
     return value;
+  }
+
+  searchUser() {
+    console.log('searchUser');
   }
 
   openDialogAddUser(): void {

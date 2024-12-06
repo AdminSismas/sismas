@@ -17,15 +17,50 @@
 
 <vex-page-layout>
   <vex-page-layout-content>
-    <button
-      mat-raised-button
-      color="primary"
-      class="mb-4"
-      (click)="openDialogAddUser()"
-    >
-    Nuevo Usuario
-    <mat-icon svgIcon="mat:add"></mat-icon>
-  </button>
+    <section class="w-full flex items-start justify-between">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openDialogAddUser()"
+      >
+        Nuevo Usuario
+        <mat-icon svgIcon="mat:add"></mat-icon>
+      </button>
+      <form
+        [formGroup]="form"
+        class="flex gap-2 items-start max-w-[50%]"
+      >
+        <vex-combox-colletion
+          formControlNameCombobox="domIndividualTypeNumber"
+          ubscriptSizing="dynamic"
+          idComboCollection="typeNumberDocument"
+          label="Tipo de documento"
+          typeDomainName="IndividualTypeNumber"
+          placeholderDomainName="Seleccionar tipo documento&hellip;"
+          cssClasses="w-2/5"
+        ></vex-combox-colletion>
+        <mat-form-field>
+          <mat-label>Número de documento</mat-label>
+          <input
+            matInput
+            placeholder="Número de documento"
+            formControlName="number"
+            type="text"
+            class="w-2/5"
+          />
+        </mat-form-field>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="form.invalid"
+          (click)="searchUser()"
+        >
+          Buscar
+          <mat-icon svgIcon="mat:search"></mat-icon>
+        </button>
+      </form>
+    </section>
     <table
       mat-table
       [dataSource]="dataSource"
@@ -82,7 +117,6 @@
       [pageSize]="pageSize"
       [pageIndex]="page"
     >
-
     </mat-paginator>
   </vex-page-layout-content>
 </vex-page-layout>
