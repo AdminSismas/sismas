@@ -57,6 +57,7 @@ import { maxLengthValidator } from 'src/app/apps/validation-form/validation-gene
   styleUrls: ['./filter-cadastral-search.component.scss'],
   standalone: true,
   imports: [
+    AsyncPipe,
     ComboxColletionComponent,
     InputComponent,
     MatAutocompleteModule,
