@@ -4,7 +4,7 @@ import { SendGeneralRequestsService } from '../general/send-general-requests.ser
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ProTaskE } from '../../interfaces/pro-task-e';
 
 @Injectable({
@@ -18,7 +18,9 @@ export class TasksPanelService {
   listProtaskE$ = this._listProtaskE.asObservable();
 
   constructor(
-    private requestsService: SendGeneralRequestsService) {
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
+  ) {
     this.getChargerProTaskCount();
   }
 
@@ -31,6 +33,7 @@ export class TasksPanelService {
 
   getProTaskCount(): Observable<ProTaskE> {
     const url: string = `${this.basic_url}${envi.bpmOperation.proTask_count}`;
+    
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
@@ -63,5 +66,12 @@ export class TasksPanelService {
     return this.requestsService.sendRequestsGetOption(url, { params: params })
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
+
+  viewTaskId(taskId: number): Observable<any> {
+    const urlTask: string = `${this.basic_url}${envi.bpmOperation.proExecution}${taskId}`;
+    console.log(urlTask);
+    return this.http.get<any>(urlTask);
+  }
+
 
 }

@@ -330,6 +330,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
             this.router.navigate([`${environment.bpm_bpmCore}`, proTaskE.executionId])
               .then(() => {
               });
+              this.infoGeneralService.setInfoProTaskE(proTaskE);
 
 
               

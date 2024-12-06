@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { environment as envi } from '../../../../environments/environments';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, ReplaySubject } from 'rxjs';
 import { ProTaskE } from '../../interfaces/pro-task-e';
 import { ProFlow } from '../../interfaces/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
@@ -12,6 +12,8 @@ import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
 })
 export class BpmCoreService {
 
+  private proTaskSubject = new ReplaySubject<ProTaskE>(1);
+  proTask$ = this.proTaskSubject.asObservable();
   basic_url: string = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
   constructor(private requestsService: SendGeneralRequestsService) {
@@ -68,6 +70,10 @@ export class BpmCoreService {
   viewChangesBpmOperationTemp(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     let url: string = `${envi.url}:${envi.port}${envi.compare_temp}${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url);
+  }
+
+  updateProTask(proTaskE: ProTaskE) {
+    this.proTaskSubject.next(proTaskE);
   }
 
 }
