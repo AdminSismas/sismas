@@ -47,11 +47,11 @@
 
           <div class="form-content-item" *ngIf="data.propertyType === 'Urbano'">
             <p><strong>Zona Física Urbana</strong></p>
-            <mat-form-field floatLabel="always">
+            <mat-form-field floatLabel="always" style="width: 100%; max-width: 500px;">
               <mat-label>Seleccionar Zona Urbana</mat-label>
-              <mat-select formControlName="ccZonaHomoFisicaUr">
+              <mat-select formControlName="ccZonaHomoFisicaUr" [compareWith]="compareZones">
                 <mat-option *ngFor="let zone of divPolUrbana" [value]="zone">
-                  {{ zone.zonaHomoFisicaUrCode }} - {{ zone.domTopografiaZonaTipo }}
+                  {{ zone.zonaHomoFisicaUrCode }} - {{ zone.domTipificacionConstruccionTipo }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -64,7 +64,7 @@
             <p><strong>Zona Física Rural</strong></p>
             <mat-form-field floatLabel="always">
               <mat-label>Seleccionar Zona Rural</mat-label>
-              <mat-select formControlName="ccZonaHomoFisicaRu">
+              <mat-select formControlName="ccZonaHomoFisicaRu" [compareWith]="compareZones">
                 <mat-option *ngFor="let zone of divPolRural" [value]="zone">
                   {{ zone.zonaHomoFisicaRuCode }}
                 </mat-option>
@@ -79,7 +79,7 @@
             <p><strong>Zona Geo-económica</strong></p>
             <mat-form-field floatLabel="always">
               <mat-label>Seleccionar Zona Geo-económica</mat-label>
-              <mat-select formControlName="ccZonaHomoGeoEconomica">
+              <mat-select formControlName="ccZonaHomoGeoEconomica" [compareWith]="compareZones">
                 <mat-option *ngFor="let zone of divPolGeoeconomica" [value]="zone">
                   {{ zone.zonaHomoGeoEconomicaCode }}
                 </mat-option>

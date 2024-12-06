@@ -107,6 +107,10 @@ export class AddEditInformatizonZonesPropertyComponent {
     
   }
 
+  compareZones(zone1: any, zone2: any): boolean {
+    return zone1 && zone2 ? zone1.zonaHomoFisicaUrCode === zone2.zonaHomoFisicaUrCode : zone1 === zone2;
+  }
+
 
   private initializeForm(): void {
   
