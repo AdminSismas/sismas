@@ -128,45 +128,25 @@ export class ZoneManagerComponent implements OnInit {
     const params: Zone = {
       divpolLv1: this.divpolLv1,
       divpolLv2: this.divpolLv2,
+      cadastreChangeLog: {
+        changeLogId: 2
+      },
       ...result
     }
-
-    this.dialog.open(CadastralChangeLogComponent, {
-      width: '60%',
-      data: { inputs: CADASTRE_CHANGE_LOG_PARAMS }
-    }).afterClosed()
+    this.service.createZone(params)
       .subscribe({
-        next: (result: any) => {
-          params.cadastreChangeLog = {
-            ...result,
-            beginAt: result.beginAt.toISOString().split('T')[0],
-            resolutionAt: result.resolutionAt.toISOString().split('T')[0],
-            rootingAt: result.rootingAt.toISOString().split('T')[0]
-          }
-          console.log(params.cadastreChangeLog)
+        next: () => {
+          this.snackbar.open(`Se ha creado la zona ${this.typeZone}`, 'Cerrar', {
+            duration: 4000
+          })
 
-          this.service.createZone(params)
-            .subscribe({
-              next: () => {
-                this.snackbar.open(`Se ha creado la zona ${this.typeZone}`, 'Cerrar', {
-                  duration: 4000
-                })
-
-                this.refreshServices.triggerRefresh()
-              },
-              error: (error: any) => {
-                this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
-                  duration: 4000
-                })
-                throw error
-              }
-            })
+          this.refreshServices.triggerRefresh()
         },
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
           })
-          throw error;
+          throw error
         }
       })
   }
@@ -208,45 +188,14 @@ export class ZoneManagerComponent implements OnInit {
     if (!result) return
     const params = {
       ...row,
-      ...result
+      ...result,
     }
-    this.dialog.open(CadastralChangeLogComponent, {
-      width: '60%',
-      data: {
-        inputs: CADASTRE_CHANGE_LOG_PARAMS,
-        data: params.cadastreChangeLog
-      }
-    }).afterClosed()
-      .subscribe({
-        next: (result: any) => {
-          try {
-            params.cadastreChangeLog = {
-              ...result,
-              beginAt: result.beginAt.toISOString().split('T')[0],
-              resolutionAt: result.resolutionAt.toISOString().split('T')[0],
-              rootingAt: result.rootingAt.toISOString().split('T')[0]
-            }
-          } catch {
-            params.cadastreChangeLog = params.cadastreChangeLog = {
-              ...result,
-              beginAt: row.cadastreChangeLog.beginAt,
-              resolutionAt: row.cadastreChangeLog.resolutionAt,
-              rootingAt: row.cadastreChangeLog.rootingAt
-            }
-          }
-          console.log(params.cadastreChangeLog)
 
-          this.service.updateZone(params)
-            .subscribe({
-              next: () => {
-                this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 })
-                this.refreshServices.triggerRefresh()
-              },
-              error: (error: any) => {
-                this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 })
-                throw error
-              }
-            })
+    this.service.updateZone(params)
+      .subscribe({
+        next: () => {
+          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 })
+          this.refreshServices.triggerRefresh()
         },
         error: (error: any) => {
           this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 })
