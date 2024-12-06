@@ -174,6 +174,14 @@ const GEOECONOMIC_PARAMS: JSONInput[] = [
     validators: [Validators.required]
   },
   {
+    name: 'suelo',
+    label: 'Suelo',
+    type: 'text',
+    placeholder: 'Escribir tipo de suelo',
+    element: 'input',
+    validators: [Validators.required]
+  },
+  {
     name: 'zonaHomoGeoEconomicaObs',
     label: 'Observaciones',
     type: 'text',
