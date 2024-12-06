@@ -108,7 +108,18 @@ export class AddEditInformatizonZonesPropertyComponent {
   }
 
   compareZones(zone1: any, zone2: any): boolean {
-    return zone1 && zone2 ? zone1.zonaHomoFisicaUrCode === zone2.zonaHomoFisicaUrCode : zone1 === zone2;
+    if (zone1 && zone2) {
+      if (zone1.zonaHomoFisicaUrCode && zone2.zonaHomoFisicaUrCode) {
+        return zone1.zonaHomoFisicaUrCode === zone2.zonaHomoFisicaUrCode;
+      }
+      if (zone1.zonaHomoFisicaRuCode && zone2.zonaHomoFisicaRuCode) {
+        return zone1.zonaHomoFisicaRuCode === zone2.zonaHomoFisicaRuCode;
+      }
+      if (zone1.zonaHomoGeoEconomicaCode && zone2.zonaHomoGeoEconomicaCode) {
+        return zone1.zonaHomoGeoEconomicaCode === zone2.zonaHomoGeoEconomicaCode;
+      }
+    }
+    return false;
   }
 
 
