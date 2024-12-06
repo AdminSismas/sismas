@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,6 +17,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { filter, Observable, ReplaySubject } from 'rxjs';
 import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
 import { Content, User } from 'src/app/apps/interfaces/users/user';
+import { PeopleService } from 'src/app/apps/services/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 
 @Component({
@@ -48,9 +49,23 @@ export class UsersComponent implements OnInit, AfterViewInit {
   public isDesktop$: Observable<boolean> = this.layoutSerices.isDesktop$;
   public subject$: ReplaySubject<User> = new ReplaySubject<User>(1);
   public data$: Observable<User> = this.subject$.asObservable();
+  public actionBtns = computed(() => {
+    return [
+      {
+        name: 'edit',
+        label: 'Editar',
+        icon: 'mat:edit'
+      },
+      {
+        name: 'delete',
+        label: 'Eliminar',
+        icon: 'mat:delete'
+      }
+    ]
+  })
 
   public form: FormGroup = this.fb.group({
-    'domIndividualTypeNumber': ['', Validators.required],
+    'individualTypeNumber': ['', Validators.required],
     'number': ['', Validators.required],
   })
   public columns: { name: string, label: string }[] = [
@@ -85,6 +100,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private userService: UserService,
     private readonly layoutSerices: VexLayoutService,
+    private peopleService: PeopleService,
     private snackbar: MatSnackBar
   ) { }
 
@@ -133,11 +149,30 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   searchUser() {
-    console.log('searchUser');
+
+    this.peopleService.getPeopleTypeNumber(this.form.value)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (error) => {
+          this.snackbar.open('Error al obtener usuarios', 'CLOSE', {
+            duration: 4000,
+          });
+          throw error;
+        }
+      })
   }
 
   openDialogAddUser(): void {
     console.log('openDialogAddUser');
   }
 
+  actionMenuHandler(action: string, row: User) {
+    if (action === 'edit') {
+      console.log('editing....')
+    } else if (action === 'delete') {
+      console.log('deleting....')
+    }
+  }
 }

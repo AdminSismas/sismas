@@ -28,28 +28,28 @@
       </button>
       <form
         [formGroup]="form"
-        class="flex gap-2 items-start max-w-[50%]"
+        class="grid gap-x-2 grid-cols-[1fr_1fr_20%] max-w-[50%]"
       >
         <vex-combox-colletion
-          formControlNameCombobox="domIndividualTypeNumber"
+          formControlNameCombobox="individualTypeNumber"
           ubscriptSizing="dynamic"
           idComboCollection="typeNumberDocument"
           label="Tipo de documento"
           typeDomainName="IndividualTypeNumber"
           placeholderDomainName="Seleccionar tipo documento&hellip;"
-          cssClasses="w-2/5"
+          cssClasses="w-full"
         ></vex-combox-colletion>
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Número de documento</mat-label>
           <input
             matInput
             placeholder="Número de documento"
             formControlName="number"
             type="text"
-            class="w-2/5"
           />
         </mat-form-field>
         <button
+          class="w-full"
           mat-flat-button
           color="primary"
           type="submit"
@@ -97,6 +97,8 @@
             mat-icon-button
             color="primary"
             type="button"
+            [matMenuTriggerData]="{ row: element }"
+            [matMenuTriggerFor]="actionsMenu"
           >
             <mat-icon svgIcon="mat:more_horiz"></mat-icon>
           </button>
@@ -111,6 +113,26 @@
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>
+    <mat-menu
+      #actionsMenu="matMenu"
+      xPosition="before"
+      yPosition="below"
+    >
+      <ng-template
+        let-row="row"
+        matMenuContent
+      >
+        @for (action of actionBtns(); track action.name) {
+          <button
+            (click)="actionMenuHandler(action.name, row)"
+            mat-menu-item
+          >
+            <mat-icon svgIcon="{{ action.icon }}"></mat-icon>
+            {{ action.label }}
+          </button>
+        }
+      </ng-template>
+    </mat-menu>
     <mat-paginator
       [pageSizeOptions]="pageSizeOptions"
       [length]="totalElements"
