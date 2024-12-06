@@ -139,6 +139,12 @@ export class InformationAddressesPropertyComponent
     ) {
     }
 
+    this.informationPropertyService.reloadTableStarted$.subscribe(value=>{
+      if(value){
+        this.searchBasicInformationPropertyAddresses();
+      }
+    })
+
     this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -178,11 +184,11 @@ export class InformationAddressesPropertyComponent
       if (data === 'delete' && basicInformationAddress.direccionId) {
         let msg: string = 'Información eliminada con éxito';
         try {
-          // await lastValueFrom(
-          //   this.informationPropertyService.deleteBasicInformationPropertyAddress(
-          //     basicInformationAddress.direccionId
-          //   )
-          // );
+          await lastValueFrom(
+            this.informationPropertyService.deleteBasicInformationPropertyAddress(
+              basicInformationAddress.direccionId
+            )
+          );
           this.dataSource.data = this.dataSource.data.filter((row: BasicInformationAddress) => {
             return row.direccionId !== basicInformationAddress.direccionId;
           });
