@@ -8,22 +8,19 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '../../../interfaces/search-data.model';
 import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
 import { ComboxColletionComponent } from '../../combox-colletion/combox-colletion.component';
 import { InputComponent } from '../../input/input.component';
-import { ComboboxComponent } from '../../combobox/combobox.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ComboxAutoCompleteComponent } from '../../combox-auto-complete/combox-auto-complete.component';
 import {
   TerritorialOrganizationService
 } from '../../../services/territorial-organization/territorial-organization.service';
@@ -59,28 +56,22 @@ import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
   styleUrls: ['./filter-cadastral-search.component.scss'],
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    MatDialogModule,
-    NgFor,
-    NgIf,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTabsModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
-    MatSelectModule,
-    MatTooltipModule,
     ComboxColletionComponent,
     InputComponent,
-    ComboboxComponent,
     MatAutocompleteModule,
-    AsyncPipe,
-    ComboxAutoCompleteComponent
+    MatButtonModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
   ]
 })
 export class FilterCadastralSearchComponent implements OnInit {
@@ -102,7 +93,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
 
-    
+
     // MUltiple Fields
     registration: this.defaults?.registration ?? '',
     domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
@@ -113,7 +104,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     middleName: this.defaults?.middleName ?? '',
     lastName: this.defaults?.lastName ?? '',
     companyName: this.defaults?.companyName ?? '',
-    
+
     // Municipal Selection
     department: this.defaults?.department ?? '',
     municipality: this.defaults?.municipality ?? '',
@@ -202,7 +193,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     if(value?.tab?.textLabel === 'Seleccion Municipal'){
       this.clearMultipleFields()
     }
-    
+
     if(value?.tab?.textLabel === 'Multiplex Campos'){
       this.clearMunicipalSelection()
     }
@@ -677,7 +668,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   get sidewalk(){
     return this.form.get('sidewalk');
   }
-  
+
 
   get block(){
     return this.form.get('block');
