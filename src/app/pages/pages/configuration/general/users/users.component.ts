@@ -57,7 +57,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     },
     {
       name: 'enabled',
-      label: 'Activo',
+      label: 'Estado',
     }
   ]
   public dataSource: MatTableDataSource<Content> = new MatTableDataSource<Content>();
@@ -111,6 +111,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
+  }
+
+  showTableValue(value: any, key: string): string {
+    if (key === 'enabled') {
+      return value ? 'Activo' : 'Inactivo';
+    }
+    return value;
   }
 
   openDialogAddUser(): void {

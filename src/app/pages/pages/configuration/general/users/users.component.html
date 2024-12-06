@@ -43,7 +43,7 @@
             mat-cell
             *matCellDef="let element"
           >
-            {{ element.username }}
+            {{ showTableValue(element[column.name], column.name) }}
           </td>
         </ng-container>
       }
