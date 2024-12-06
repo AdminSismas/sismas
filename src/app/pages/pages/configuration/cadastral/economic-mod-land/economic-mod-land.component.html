@@ -14,26 +14,131 @@
   </button>
 </vex-secondary-toolbar>
 
-<mat-tab-group class="w-full h-full">
-  <mat-tab label="Urbana">
-    <div class="w-full h-full flex flex-col p-4 justify-center items-center">
-      <physical-zone>
+<vex-page-layout>
+  <vex-page-layout-content class="container-fluid">
+    <section class="w-full flex items-center justify-center">
+      <form
+        [formGroup]="form"
+        class="flex justify-between sm:flex-row"
+      >
+        <!-- Campo departamento -->
+        <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+          <mat-label>Departamento</mat-label>
+          <input
+            type="text"
+            aria-label="Number"
+            matInput
+            formControlName="department"
+            placeholder="Seleccione un departamento"
+            [matAutocomplete]="autoDepartment"
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #autoDepartment="matAutocomplete"
+            [panelWidth]="350"
+            (optionSelected)="
+              loadMunicipalitiesInformation($event.option.value, true)
+            "
+          >
+            @for (
+              option of filteredOptionsDepartments$ | async;
+              track option.divpolLvl1Code
+            ) {
+              <mat-option [value]="option.codeName">
+                {{ option.codeName }}
+              </mat-option>
+            } @empty {
+              <mat-option>
+                {{ STRING_INFORMATION_NOT_FOUND }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
 
-      </physical-zone>
-      <button
-      mat-flat-button
-      color="primary"
-      (click)="submitForm()">Enviar</button>
-    </div>
-  </mat-tab>
-  <mat-tab label="Rural">
-    <div class="w-full h-full flex justify-center items-center">
-      <h2>Aquí estará el formulario de la zona Rural</h2>
-    </div>
-  </mat-tab>
-  <mat-tab label="Geoecónomica">
-    <div class="w-full h-full flex justify-center items-center">
-      <h2>Aquí estará el formulario de la zona Geoeconomica</h2>
-    </div>
-  </mat-tab>
-</mat-tab-group>
+        <!-- Campo municipio -->
+        <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+          <mat-label>Municipio</mat-label>
+          <input
+            type="text"
+            aria-label="Number"
+            matInput
+            formControlName="municipality"
+            placeholder="Seleccione un municipio&hellip;"
+            [matAutocomplete]="autoMunicipality"
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #autoMunicipality="matAutocomplete"
+            [panelWidth]="350"
+          >
+            @for (
+              option of filteredOptionsMunicipalities$ | async;
+              track option.divpolLvl2Code
+            ) {
+              <mat-option [value]="option.codeName">
+                {{ option.codeName }}
+              </mat-option>
+            } @empty {
+              <mat-option>
+                {{ STRING_INFORMATION_NOT_FOUND }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <div>
+        <button
+          (click)="getZones()"
+          color="primary"
+          mat-flat-button
+        >
+          Buscar
+        </button>
+        <div class="h-5 w-full"></div>
+      </div>
+    </section>
+    @if (gettedZones) {
+      <mat-tab-group class="w-full h-full">
+        <mat-tab label="Urbana">
+          <div class="w-full h-full">
+            <zone-manager
+              typeZone="urbana"
+              [service]="urbanZoneService"
+              [divpolLv1]="divpolLv1"
+              [divpolLv2]="divpolLv2"
+              [dataSource]="dataSource.urban"
+              [columns]="columns.urban"
+              [displayedColumns]="displayedColumns.urban"
+            ></zone-manager>
+          </div>
+        </mat-tab>
+        <mat-tab label="Rural">
+          <div class="w-full h-full">
+            <zone-manager
+              typeZone="rural"
+              [service]="ruralZoneService"
+              [divpolLv1]="divpolLv1"
+              [divpolLv2]="divpolLv2"
+              [dataSource]="dataSource.rural"
+              [columns]="columns.rural"
+              [displayedColumns]="displayedColumns.rural"
+            ></zone-manager>
+          </div>
+        </mat-tab>
+        <mat-tab label="Geoeconómica">
+          <div class="w-full h-full">
+            <zone-manager
+              typeZone="geoeconómica"
+              [service]="geoeconomicZoneService"
+              [divpolLv1]="divpolLv1"
+              [divpolLv2]="divpolLv2"
+              [dataSource]="dataSource.geoeconomic"
+              [columns]="columns.geoeconomic"
+              [displayedColumns]="displayedColumns.geoeconomic"
+            ></zone-manager>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    }
+  </vex-page-layout-content>
+</vex-page-layout>
