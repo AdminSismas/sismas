@@ -1,8 +1,8 @@
 import { Component, DestroyRef, inject, Input, ViewChild } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { Observable } from 'rxjs';
+import { debounceTime, Observable, switchMap, tap } from 'rxjs';
 
 // recursos de vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -35,6 +35,8 @@ import { PageProceduresData } from '../../interfaces/page-procedures-data.model'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSort } from '@angular/material/sort';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
+import { error } from 'console';
+import { asyncValidation, dateComparisonValidator } from './validate-form/validate-form-utils';
 
 
 
@@ -65,7 +67,8 @@ import { InformationPegeable } from '../../interfaces/information-pegeable.model
         FormsModule,
         NgFor,
         NgClass,
-        NgIf
+        NgIf,
+        ReactiveFormsModule
     ]
 })
 export class TableProceduresComponent {
@@ -75,15 +78,15 @@ export class TableProceduresComponent {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   layoutCtrl = new UntypedFormControl('boxed');
   contentInformations!: InformationPegeable;
+  private fBuilder = inject(FormBuilder);
+  informationAddressForm!: FormGroup;
+  seeInfo:boolean= false;
+  textInfo:string = 'Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem';
 
-  beginAt!: Date;
-  beginAtE!: Date;
-  executionCode: string = '0';
-  individualNumber: string = '';
-  disabledEndDate: boolean = false;
-
-
-
+  // beginAt!: Date;
+  // beginAtE!: Date;
+  // executionCode: string = '';
+  // individualNumber: string = '';
 
   @Input()
   page:number = PAGE;
@@ -116,12 +119,19 @@ export class TableProceduresComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
     
-    this.beginAt = new Date();
-    this.executionCode = '0';
-    this.getDataFromProceduresService();
+    // this.beginAt = new Date();
+    // this.executionCode = '0';
+    this.initForm();
+    this.beginAtgreaterThanDate();
+    this.executionCodeValidate();
+
+    this.individualNumberPartValid();
+  
+    //this.getDataFromProceduresService();
   }
 
 
+ 
   /* ------- Meth. HTML ------- */
   toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
     event.stopPropagation();
@@ -167,18 +177,94 @@ export class TableProceduresComponent {
   }
 
 
+ 
 
+  public beginAtgreaterThanDate(){
+
+    this.beginAtForm?.valueChanges.pipe(
+      debounceTime(100),  // Espera 500 ms después del último cambio
+      tap(value => {
+
+        const beginAtComparation = new Date(this.beginAtForm?.value);
+        const beginAtEComparation = new Date(this.beginAtEForm?.value);
+
+        if(beginAtComparation > beginAtEComparation ){
+          this.beginAtForm?.setErrors({ dateComparison: true });
+        }else{
+          this.beginAtForm?.setErrors(null);
+        }
+        // Aquí podrías realizar una llamada HTTP o cualquier otra operación
+        console.log(value, 'executoingCode');
+   
+      }))
+    .subscribe(data=>{
+      console.log(data, 'executoingCode');
+    })
+  }
+
+  public executionCodeValidate(){
+    this.executionCodeForm?.valueChanges.pipe(
+      debounceTime(300),  // Espera 500 ms después del último cambio
+      tap(value => {
+        if(value !== '' && value !== 0  && value !== null){
+
+            this.individualNumberPartForm?.disable()
+            this.individualNumberPartForm?.reset()
+            this.seeInfo = true;
+
+          }else{
+          this.individualNumberPartForm?.enable()
+            this.individualNumberPartForm?.reset()
+            this.seeInfo = false;
+        }
+   
+      }))
+    .subscribe()
+  }
+
+
+  public individualNumberPartValid(){
+    this.individualNumberPartForm?.valueChanges.pipe(
+      debounceTime(300),  // Espera 500 ms después del último cambio
+      tap(value => {
+        if(value !== '' && value !== 0  && value !== null){
+
+            this.executionCodeForm?.disable()
+            this.executionCodeForm?.reset()
+            this.seeInfo = true;
+
+          }else{
+          this.executionCodeForm?.enable()
+            this.executionCodeForm?.reset()
+            this.seeInfo = false;
+        }
+   
+      }))
+    .subscribe()
+  }
 
   /* ------- Meth. Common ------- */
   objectParameters(): PageProceduresData {
-    return new PageProceduresData(
-      this.page,
-      this.pageSize,
-      this.formatDate(this.beginAt),
-      this.formatDate(this.beginAtE),
-      this.executionCode,
-      this.individualNumber
-    )
+    let beginAtETrans = new Date();
+
+    if(this.beginAtEForm?.value === null){
+      // this.beginAtE?.setValue(new Date())
+       beginAtETrans = new Date()
+    }else{
+      beginAtETrans = new Date(this.beginAtEForm?.value)
+    }
+    const beginAtTrans = new Date(this.beginAtForm?.value)
+
+    const formValue: PageProceduresData =  {
+      page: this.page,
+      size: this.pageSize,
+      beginAt: this.formatDate(beginAtTrans),
+      beginAtE: this.formatDate(beginAtETrans),
+      executionCode: this.executionCodeForm?.value,
+      individualNumber: this.individualNumberPartForm?.value,
+    }
+    
+    return formValue;
   }
 
   onFilterChange(value: string) {
@@ -204,17 +290,48 @@ export class TableProceduresComponent {
     return value < 10 ? `0${value}` : value.toString();
   }
 
+/**
+   * Init information address form
+   */
+private initForm(): void {
+  this.informationAddressForm = this.fBuilder.group({
+    // beginAtForm: this.fBuilder.control(null),
+    // beginAtEForm: this.fBuilder.control(null),
+    // executionCodeForm: this.fBuilder.control(0, []), // Solo letras y permite espacio
+    // individualNumberPartForm: this.fBuilder.control( null, []),
+    beginAt: [null],
+    beginAtE: [null],
+    executionCode: [0,[]],
+    individualNumberPart: [null,[]]
+  },
+  {
+    // Aplica el validador a nivel de formulario
+    validators: dateComparisonValidator('beginAtForm', 'beginAtEForm'),
+  }
+);
+  this.beginAtEForm?.setValue(new Date());
 
-  /* ------- Meth. Modal load file ------- */
 
+  // if (this.addEditInformationData.type === 'new') {
+  //   const names: string[] = ['direccionId'];
+  //   names.forEach((name: string) => {
+  //     if (this.informationAddressForm.controls[name]) {
+  //       this.informationAddressForm.controls[name].clearValidators();
+  //       this.informationAddressForm.controls[name].updateValueAndValidity();
+  //     }
+  //   })
+  // }
+}
 
 
   /* ------- Meth. Services ------- */
   getDataFromProceduresService() {
+
     const data = this.objectParameters();
     this.proceduresService.getFilterTableProcedureService(data)
     .subscribe({
       next: (result: any) => {
+          console.log("datos de api: ", result);
           this.captureInformationSubscribe(result);
       },
       error: (error) => {
@@ -243,6 +360,7 @@ export class TableProceduresComponent {
             name: row.process?.name,
             processName: row.process?.name
         }));
+        console.log("data: ", data);
         this.dataSource.data = data;
     }
 
@@ -263,5 +381,18 @@ export class TableProceduresComponent {
     if (this.contentInformations.pageable.pageNumber != null) {
         this.page = this.contentInformations.pageable.pageNumber;
     }
+  }
+
+  get beginAtForm(){
+    return this.informationAddressForm.get('beginAtForm')
+  }
+  get beginAtEForm(){
+    return this.informationAddressForm.get('beginAtEForm')
+  }
+  get executionCodeForm(){
+    return this.informationAddressForm.get('executionCodeForm')
+  }
+  get individualNumberPartForm(){
+    return this.informationAddressForm.get('individualNumberPartForm')
   }
 }
