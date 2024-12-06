@@ -55,6 +55,7 @@ import { DetailInformationPropertyZonesComponent } from './detail-information-pr
 import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { AddEditInformatizonZonesPropertyComponent } from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
+import { DeleteInformationZonesPropertyComponent } from './delete-information-zones-property/delete-information-zones-property.component';
 
 @Component({
   selector: 'vex-information-zones-property',
@@ -114,9 +115,6 @@ export class InformationZonesPropertyComponent implements OnInit {
 
 
 
-  dataSourcePhysicalZones: MatTableDataSource<ZoneBAUnit> = new MatTableDataSource<ZoneBAUnit>([]); // Zona Física
-  dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnit> = new MatTableDataSource<ZoneBAUnit>([]); // Zona Geoeconómica
-
   @Input({ required: true }) id: string = '';
   @Input({ required: true }) public expandedComponent: boolean = true;
   @Input({ required: true }) schema: string = `${environment.schemas.main}`;
@@ -159,8 +157,11 @@ export class InformationZonesPropertyComponent implements OnInit {
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator2?: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort2?: MatSort;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
+  
   dataBasicInformation!:BasicInformationProperty;
   fractions_sum: number = 0;
   page: number = PAGE;
@@ -178,6 +179,14 @@ export class InformationZonesPropertyComponent implements OnInit {
   textColumns = computed(() =>
     this.columns().filter((column) => column.type === 'text')
   );
+
+  dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnit> =
+    new MatTableDataSource<ZoneBAUnit>([]);
+  columnsGeoeconomicZones = signal(this.TABLE_COLUMNS);
+  textColumnsGeoeconomicZones = computed(() =>
+    this.columnsGeoeconomicZones().filter((column) => column.type === 'text')
+  );
+  
  visibleColumns(): string[] {
   return ['viewDetail', 'zoneCodeColumn', 'baUnitZonaArea', 'zoneValidityColumn', 'actions']; 
 }
@@ -213,6 +222,7 @@ export class InformationZonesPropertyComponent implements OnInit {
 
   constructor(
     private readonly layoutService: VexLayoutService,
+   
 
   ) {
   }
@@ -279,17 +289,18 @@ export class InformationZonesPropertyComponent implements OnInit {
     console.log('typeCode', typeCode);
     if (typeCode === '00') {
       return 'Rural';
-    } else if (typeCode === '01') {
+    } else  {
       return 'Urbano';
-    } else {
-      return 'Otros';
-    }
+    } 
   }
 
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
     this.dataSource.sort = this.sort || null;
+
+    this.dataSourceGeoeconomicZones.paginator = this.paginator2 || null; 
+  this.dataSourceGeoeconomicZones.sort = this.sort2 || null; 
   }
 
   refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
@@ -314,6 +325,8 @@ export class InformationZonesPropertyComponent implements OnInit {
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     this.isExpandPanel(this.expandedComponent);
+
+   console.log()
 
   }
 
@@ -379,8 +392,6 @@ export class InformationZonesPropertyComponent implements OnInit {
     
   }
 
-
-
   captureInformationSubscribeError(err: any): void {
     this.zoneBAUnit = [];
     this.zoneBAUnitRural = [];
@@ -422,6 +433,44 @@ export class InformationZonesPropertyComponent implements OnInit {
       this.onClickOpenAddEditModal(zone);
     }
     if (id === 'delete') {
+
+
+
+      this.matDialog.open(DeleteInformationZonesPropertyComponent , {
+        minWidth: '60%',
+        minHeight: '70%',
+        disableClose: true,
+          data: {
+        zone,
+        baunitId: this.baunitId,
+        baUnitZonaId: zone.baUnitZonaId  
+      },
+      }).afterClosed()
+        .subscribe(() => setTimeout(() => this.searchInformationsZonesProperty(), 200));
+     
+    }
+
+  }
+
+  onClickGeoconomicActionBtn(id: string, zone: ZoneBAUnit): void {
+    if (id === 'edit') {
+      this.onClickOpenGeoconomicAddEditModal(zone);
+    }
+    if (id === 'delete') {
+
+
+
+      this.matDialog.open(DeleteInformationZonesPropertyComponent , {
+        minWidth: '60%',
+        minHeight: '70%',
+        disableClose: true,
+          data: {
+        zone,
+        baunitId: this.baunitId,
+        baUnitZonaId: zone.baUnitZonaId  
+      },
+      }).afterClosed()
+        .subscribe(() => setTimeout(() => this.searchInformationsGeoeconomicZonesProperty(), 200));
      
     }
 
@@ -429,13 +478,38 @@ export class InformationZonesPropertyComponent implements OnInit {
 
   onClickOpenAddEditModal(data: any): void {
 
+    const propertyType = this.determinePropertyType();
+
+    const isEdit = data && data.baUnitZonaId;
+
+    console.log(this.baunitId);
+
     this.matDialog.open(AddEditInformatizonZonesPropertyComponent, {
       minWidth: '60%',
       minHeight: '70%',
       disableClose: true,
-      data: data,
+      data: {zone: data, baunitId: this.baunitId, isEdit, propertyType},
     }).afterClosed()
       .subscribe(() => setTimeout(() => this.searchInformationsZonesProperty(), 200));
+
+  }
+
+  
+  onClickOpenGeoconomicAddEditModal(data: any): void {
+
+    const propertyType = 'Geoeconomica';
+
+    const isEdit = data && data.baUnitZonaId;
+
+    console.log(this.baunitId);
+
+    this.matDialog.open(AddEditInformatizonZonesPropertyComponent, {
+      minWidth: '60%',
+      minHeight: '70%',
+      disableClose: true,
+      data: {zone: data, baunitId: this.baunitId, isEdit, propertyType},
+    }).afterClosed()
+      .subscribe(() => setTimeout(() => this.searchInformationsGeoeconomicZonesProperty(), 200));
 
   }
 

@@ -186,24 +186,24 @@ export class InformationPropertyService {
       catchError((error) => this.requestsService.errorNotFound(error))
     );
   }
-
-  getByDivPolUrbana(): Observable<UrbanPhysicalZone> {
-
+  getByDivPolUrbana(): Observable<UrbanPhysicalZone[]> {
     const divpolLv1 = 18;
-    const divpolLv2 = '001'; 
+    const divpolLv2 = '001';
+    
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
+    
     let url: string = `${this.basic_url}/${'ccZonaHomoFisicaUr'}/${'divpol'}`;
-
+  
     console.log('url', url);
+    
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
-
   }
 
-  getByDivPolRural(): Observable<RuralPhysicalZone> {
+  getByDivPolRural(): Observable<RuralPhysicalZone[]> {
 
     const divpolLv1 = 18;
     const divpolLv2 = '001'; 
@@ -219,7 +219,7 @@ export class InformationPropertyService {
 
   }
 
-  getByDivPolGeoeconomica(): Observable<GeoEconomicZone> {
+  getByDivPolGeoeconomica(): Observable<GeoEconomicZone[]> {
 
     const divpolLv1 = 18;
     const divpolLv2 = '001'; 
@@ -233,6 +233,31 @@ export class InformationPropertyService {
       catchError((error) => this.requestsService.errorNotFound(error))
     );
 
+  }
+
+  createBAUnitZones(body: any, baunitId: number, validityValuation: number): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${baunitId}`);
+    params = params.append('validityValuation', `${validityValuation}`);
+    const url = `${this.basic_url}/${'baUnitZona'}`;
+    return this.http.post(url, body, { params: params });
+  }
+
+  updateBAUnitZones(baUnitZonaId: number, body: any, baunitId: number, validityValuation: number): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${baunitId}`);
+    params = params.append('validityValuation', `${validityValuation}`);
+    const url = `${this.basic_url}/${'baUnitZona'}/${baUnitZonaId}`;
+    return this.http.put(url, body, { params: params });
+  }
+
+  deleteBAUnitZones(baUnitZonaId:number, baunitId: number, validityValuation: number, version: number): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${baunitId}`);
+    params = params.append('validityValuation', `${validityValuation}`);
+    params = params.append('version', `${version}`);
+    const url = `${this.basic_url}/${'baUnitZona'}/${baUnitZonaId}`;
+    return this.http.delete(url, { params: params });
   }
 
   /**

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -20,6 +20,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { RuralPhysicalZone } from 'src/app/apps/interfaces/information-property/rural-physical-zone';
+import { UrbanPhysicalZone } from 'src/app/apps/interfaces/information-property/urban-physical-zone';
+import Swal from 'sweetalert2';
+import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/geo-economic-zone';
 
 @Component({
   selector: 'vex-add-edit-informatizon-zones-property',
@@ -56,115 +60,197 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
 export class AddEditInformatizonZonesPropertyComponent {
 
   zoneBAUnitForm!: FormGroup;
-  isRural: boolean = false;
+
+  divPolUrbana: UrbanPhysicalZone[] = [];
+  divPolRural: RuralPhysicalZone[] = [];
+  divPolGeoeconomica: GeoEconomicZone[] = [];
+
+
+  isEdit: boolean = false;   
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEditInformatizonZonesPropertyComponent>,
     private informationPropertyService: InformationPropertyService,
-    @Inject(MAT_DIALOG_DATA) public data: ZoneBAUnit
+    @Inject(MAT_DIALOG_DATA) public data: {zone: ZoneBAUnit, baunitId: number, isEdit: boolean, propertyType: string} 
   ) {}
 
   ngOnInit(): void {
+    this.isEdit = this.data.isEdit;
     this.initializeForm();
-    this.getByDivPolUrbana();
-    this.getByDivPolRural();
-    this.getByDivPolGeoeconomica();
+    
+
+    switch (this.data.propertyType) {
+      case 'Urbano':
+        this.getByDivPolUrbana();
+        break;
+      case 'Rural':
+        this.getByDivPolRural();
+        break;
+      case 'Geoeconomica':
+        this.getByDivPolGeoeconomica();
+        break;
+    }
+  
+    // const selectedZone = this.zoneBAUnitForm.controls['ccZonaHomoFisicaUr'].value;
+    if (this.data.zone) {
+      this.zoneBAUnitForm.patchValue({
+        baUnitZonaId: this.data.zone.baUnitZonaId,
+        baUnitZonaArea: this.data.zone.baUnitZonaArea,
+        ccZonaHomoFisicaUr: this.data.zone.ccZonaHomoFisicaUr,
+        ccZonaHomoFisicaRu: this.data.zone.ccZonaHomoFisicaRu,
+        ccZonaHomoGeoEconomica: this.data.zone.ccZonaHomoGeoEconomica,
+        baUnitZonaValor: this.data.zone.baUnitZonaValor,
+      });
+    }
+
+    
   }
 
 
   private initializeForm(): void {
+  
     this.zoneBAUnitForm = this.fb.group({
-      baUnitZonaId: [this.data?.baUnitZonaId || null],
-      baUnitZonaArea: [this.data?.baUnitZonaArea || '', [Validators.required]],
-      ccZonaHomoFisicaRu: this.fb.group({
-        zonaHomoFisicaRuId: [this.data?.ccZonaHomoFisicaRu?.zonaHomoFisicaRuId || null],
-        zonaHomoFisicaRuCode: [this.data?.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode || '', [Validators.required]],
-        domDisponibilidadAgua: [this.data?.ccZonaHomoFisicaRu?.domDisponibilidadAgua || null],
-        domInfluenciaVialRural: [this.data?.ccZonaHomoFisicaRu?.domInfluenciaVialRural || null],
-        domUsoSueloRural: [this.data?.ccZonaHomoFisicaRu?.domUsoSueloRural || null],
-        normaUsoSuelo: [this.data?.ccZonaHomoFisicaRu?.normaUsoSuelo || '', [Validators.required]],
-        vigencia: [this.data?.ccZonaHomoFisicaRu?.vigencia || null],
-        divpolLv1: [this.data?.ccZonaHomoFisicaRu?.divpolLv1 || '', [Validators.required]],
-        divpolLv2: [this.data?.ccZonaHomoFisicaRu?.divpolLv2 || '', [Validators.required]],
-      }),
-      ccZonaHomoFisicaUr: this.fb.group({
-        zonaHomoFisicaUrId: [this.data?.ccZonaHomoFisicaUr?.zonaHomoFisicaUrId || null],
-        zonaHomoFisicaUrCode: [this.data?.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode || '', [Validators.required]],
-        domTopografiaZonaTipo: [this.data?.ccZonaHomoFisicaUr?.domTopografiaZonaTipo || ''],
-        domInfluenciaVialUrbanaTipo: [this.data?.ccZonaHomoFisicaUr?.domInfluenciaVialUrbanaTipo || ''],
-        domServiciosPublicosTipo: [this.data?.ccZonaHomoFisicaUr?.domServiciosPublicosTipo || ''],
-        domUsoSueloUrbanoTipo: [this.data?.ccZonaHomoFisicaUr?.domUsoSueloUrbanoTipo || ''],
-        normaUsoSuelo: [this.data?.ccZonaHomoFisicaUr?.normaUsoSuelo || ''],
-        domTipificacionConstruccionTipo: [this.data?.ccZonaHomoFisicaUr?.domTipificacionConstruccionTipo || ''],
-        vigencia: [this.data?.ccZonaHomoFisicaUr?.vigencia || null],
-        divpolLv1: [this.data?.ccZonaHomoFisicaUr?.divpolLv1 || ''],
-        divpolLv2: [this.data?.ccZonaHomoFisicaUr?.divpolLv2 || ''],
-      }),
-      ccZonaHomoGeoEconomica: this.fb.group({
-        zonaHomoGeoEconomicaId: [this.data?.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaId || null],
-        zonaHomoGeoEconomicaCode: [this.data?.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode || '', [Validators.required]],
-        zonaHomoGeoEconomicaObs: [this.data?.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaObs || ''],
-        vigencia: [this.data?.ccZonaHomoGeoEconomica?.vigencia || null],
-        divpolLv1: [this.data?.ccZonaHomoGeoEconomica?.divpolLv1 || ''],
-        divpolLv2: [this.data?.ccZonaHomoGeoEconomica?.divpolLv2 || ''],
-        suelo: [this.data?.ccZonaHomoGeoEconomica?.suelo || ''],
-        valorLabel: [this.data?.ccZonaHomoGeoEconomica?.valorLabel || '']
-      }),
-      baUnitZonaValor: [this.data?.baUnitZonaValor || '', [Validators.required]],
-      isRural: [this.isRural]
+      baUnitZonaId: [this.data.zone?.baUnitZonaId || null],
+      baUnitZonaArea: [this.data.zone?.baUnitZonaArea || '', [Validators.required, this.numberValidator]],
+      ccZonaHomoFisicaUr: [this.data.zone?.ccZonaHomoFisicaUr || null],
+      ccZonaHomoFisicaRu: [this.data.zone?.ccZonaHomoFisicaRu || null],
+      ccZonaHomoGeoEconomica: [this.data.zone?.ccZonaHomoGeoEconomica || null],
+      baUnitZonaValor: [this.data.zone?.baUnitZonaValor || '', [Validators.required, this.numberValidator]],
     });
 
-    this.zoneBAUnitForm.get('isRural')?.valueChanges.subscribe((value: boolean) => {
-      this.isRural = value;
-      this.toggleZones(value); 
-    });
-
- 
-    this.toggleZones(this.isRural);
+  
+    this.updateValidators();
   }
 
-  toggleZones(isRural: boolean) {
-    const ccZonaHomoFisicaRu = this.zoneBAUnitForm.get('ccZonaHomoFisicaRu');
-    const ccZonaHomoFisicaUr = this.zoneBAUnitForm.get('ccZonaHomoFisicaUr');
-  
-    if (isRural) {
-     
-      ccZonaHomoFisicaRu?.enable();
-      ccZonaHomoFisicaUr?.disable();
-    } else {
-    
-      ccZonaHomoFisicaRu?.disable();
-      ccZonaHomoFisicaUr?.enable();
+  private updateValidators(): void {
+    const zonaFisica = this.zoneBAUnitForm.controls['ccZonaHomoFisicaUr'];
+    const zonaRural = this.zoneBAUnitForm.controls['ccZonaHomoFisicaRu'];
+    const zonaGeoEconomica = this.zoneBAUnitForm.controls['ccZonaHomoGeoEconomica'];
+
+    switch (this.data.propertyType) {
+      case 'Urbano':
+        zonaFisica.setValidators([Validators.required]);
+        zonaRural.setValidators([]);
+        zonaGeoEconomica.setValidators([]);
+        break;
+      case 'Rural':
+        zonaFisica.setValidators([]);
+        zonaRural.setValidators([Validators.required]);
+        zonaGeoEconomica.setValidators([]);
+        break;
+      case 'Geoeconomica':
+        zonaFisica.setValidators([]);
+        zonaRural.setValidators([]);
+        zonaGeoEconomica.setValidators([Validators.required]);
+        break;
+      default:
+        break;
     }
   }
+
+  numberValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const value = control.value?.toString().replace(',', '.'); 
+    if (!/^\d+(\.\d+)?$/.test(value)) { 
+      return { 'invalidNumber': true };
+    }
+    return null;
+  }
+
 
   onSave(): void {
-    if (this.zoneBAUnitForm && this.zoneBAUnitForm.valid) {
-      this.dialogRef.close(this.zoneBAUnitForm.value);
+    if (this.zoneBAUnitForm.valid) {
+      const formValue = this.zoneBAUnitForm.value;
+      
+   
+      formValue.baUnitZonaArea = formValue.baUnitZonaArea.toString().replace(',', '.');
+      formValue.baUnitZonaValor = formValue.baUnitZonaValor.toString().replace(',', '.');
+  
+     
+      let selectedZone = null;
+      let requestBody: any = {
+        baUnitZonaArea: formValue.baUnitZonaArea,
+        baUnitZonaValor: formValue.baUnitZonaValor,
+      };
+  
+  
+      switch (this.data.propertyType) {
+        case 'Urbano':
+          selectedZone = formValue.ccZonaHomoFisicaUr;
+          requestBody.ccZonaHomoFisicaUr = selectedZone;
+          requestBody.ccZonaHomoFisicaRu = null;
+          requestBody.ccZonaHomoGeoEconomica = null;
+          break;
+  
+        case 'Rural':
+          selectedZone = formValue.ccZonaHomoFisicaRu;
+          requestBody.ccZonaHomoFisicaRu = selectedZone;
+          requestBody.ccZonaHomoFisicaUr = null;
+          requestBody.ccZonaHomoGeoEconomica = null;
+          break;
+  
+        case 'Geoeconomica':
+          selectedZone = formValue.ccZonaHomoGeoEconomica;
+          requestBody.ccZonaHomoGeoEconomica = selectedZone;
+          requestBody.ccZonaHomoFisicaUr = null;
+          requestBody.ccZonaHomoFisicaRu = null;
+          break;
+  
+        default:
+         
+          console.error('Tipo de propiedad no reconocido');
+          return;
+      }
+  
+   
+      if (selectedZone && selectedZone.cadastreChangeLog) {
+        selectedZone.cadastreChangeLog = null;
+      }
+  
+     
+      if (this.isEdit) {
+        this.informationPropertyService.updateBAUnitZones(formValue.baUnitZonaId, requestBody, this.data.baunitId, 2024)
+          .subscribe(response => {
+            console.log("Zona editada con éxito", response);
+            this.dialogRef.close(response);
+          });
+      } else {
+        this.informationPropertyService.createBAUnitZones(requestBody, this.data.baunitId, 2024)
+          .subscribe(response => {
+            console.log("Zona creada con éxito", response);
+            this.dialogRef.close(response);
+          });
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, asegúrese de que los campos sean válidos y contengan solo números.',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3f51b5',
+      });
     }
-  }
-
-
-  onCancel(): void {
-    this.dialogRef.close();
   }
 
   getByDivPolUrbana(): void {
-    this.informationPropertyService.getByDivPolUrbana().subscribe((result) => {
-      console.log(result);
+    this.informationPropertyService.getByDivPolUrbana().subscribe((result: UrbanPhysicalZone[]) => {
+      this.divPolUrbana = result;  
+      console.log(this.divPolUrbana);  
+
     });
   }
   
   
   getByDivPolRural(): void {
     this.informationPropertyService.getByDivPolRural().subscribe((result) => {
-      console.log(result);
+      this.divPolRural = result;
+      console.log(this.divPolRural);
     });
   }
 
   getByDivPolGeoeconomica(): void {
     this.informationPropertyService.getByDivPolGeoeconomica().subscribe((result) => {
+      this.divPolGeoeconomica = result;
       console.log(result);
     });
   }
