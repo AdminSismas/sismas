@@ -1,64 +1,131 @@
 <div class="flex items-center" mat-dialog-title>
-    <h4 class="subheading-1 m-0 flex-auto">
-      CÓDIGO - {{ zone?.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode || NAME_NO_DISPONIBLE }}
-    </h4>
-    <button
-      class="text-secondary"
-      mat-dialog-close
-      mat-icon-button
-      type="button"
-    >
-      <mat-icon svgIcon="mat:close"></mat-icon>
-    </button>
-  </div>
-  <mat-divider class="text-border"></mat-divider>
-  <mat-dialog-content
-    class="grid grid-flow-row gap-y-4 gap-x-6 grid-cols-2 overflow-x-hidden lg:px-8"
+  <h4 class="subheading-1 m-0 flex-auto">
+    CÓDIGO - 
+    <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralCode">
+      {{ data.zone.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode || NAME_NO_DISPONIBLE }}
+    </ng-container>
+    <ng-template #ruralCode>
+      <ng-container *ngIf="data.propertyType === 'Geoeconómica'; else finalCode">
+        {{ data.zone.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode || NAME_NO_DISPONIBLE }}
+      </ng-container>
+      <ng-template #finalCode>
+        {{ data.zone.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode || NAME_NO_DISPONIBLE }}
+      </ng-template>
+    </ng-template>
+  </h4>
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
   >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content
+  class="grid grid-flow-row gap-y-4 gap-x-6 grid-cols-2 overflow-x-hidden lg:px-8"
+>
+  <!-- Topografía -->
+  <div class="flex flex-row gap-4" *ngIf="data.propertyType !== 'Geoeconómica'">
+    <span class="text-black uppercase text-sm">Topografía:</span>
+    <h2 class="text-sm">
+      <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralTemplate">
+        {{ data.zone.ccZonaHomoFisicaUr?.domTopografiaZonaTipo || NAME_NO_DISPONIBLE }}
+      </ng-container>
+      <ng-template #ruralTemplate>
+        {{ NAME_NO_DISPONIBLE }}
+      </ng-template>
+    </h2>
+  </div>
+
+  <!-- Uso actual del suelo -->
+  <div class="flex flex-row gap-4" *ngIf="data.propertyType !== 'Geoeconómica'">
+    <span class="text-black uppercase text-sm">Uso actual del suelo:</span>
+    <h2 class="text-sm">
+      <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralUsoSuelo">
+        {{ data.zone.ccZonaHomoFisicaUr?.domUsoSueloUrbanoTipo || NAME_NO_DISPONIBLE }}
+      </ng-container>
+      <ng-template #ruralUsoSuelo>
+        {{ data.zone.ccZonaHomoFisicaRu?.domUsoSueloRural || NAME_NO_DISPONIBLE }}
+      </ng-template>
+    </h2>
+  </div>
+
+  <!-- Influencia vial -->
+  <div class="flex flex-row gap-4" *ngIf="data.propertyType !== 'Geoeconómica'">
+    <span class="text-black uppercase text-sm">Influencia vial:</span>
+    <h2 class="text-sm">
+      <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralInfluencia">
+        {{ data.zone.ccZonaHomoFisicaUr?.domInfluenciaVialUrbanaTipo || NAME_NO_DISPONIBLE }}
+      </ng-container>
+      <ng-template #ruralInfluencia>
+        {{ data.zone.ccZonaHomoFisicaRu?.domInfluenciaVialRural || NAME_NO_DISPONIBLE }}
+      </ng-template>
+    </h2>
+  </div>
+
+  <!-- Norma uso del suelo -->
+  <div class="flex flex-row gap-4" *ngIf="data.propertyType !== 'Geoeconómica'">
+    <span class="text-black uppercase text-sm">Norma uso del suelo:</span>
+    <h2 class="text-sm">
+      <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralNormaUsoSuelo">
+        {{ data.zone.ccZonaHomoFisicaUr?.normaUsoSuelo || NAME_NO_DISPONIBLE }}
+      </ng-container>
+      <ng-template #ruralNormaUsoSuelo>
+        {{ data.zone.ccZonaHomoFisicaRu?.normaUsoSuelo || NAME_NO_DISPONIBLE }}
+      </ng-template>
+    </h2>
+  </div>
+
+  <!-- Servicios públicos -->
+  <div class="flex flex-row gap-4" *ngIf="data.propertyType !== 'Geoeconómica'">
+    <span class="text-black uppercase text-sm">Servicios públicos:</span>
+    <h2 class="text-sm">
+      <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralServicios">
+        {{ data.zone.ccZonaHomoFisicaUr?.domServiciosPublicosTipo || NAME_NO_DISPONIBLE }}
+      </ng-container>
+      <ng-template #ruralServicios>
+        {{ data.zone.ccZonaHomoFisicaRu?.domDisponibilidadAgua || NAME_NO_DISPONIBLE }}
+      </ng-template>
+    </h2>
+  </div>
+
+  <!-- Tipificación construcción -->
+  <div class="flex flex-row gap-4" *ngIf="data.propertyType !== 'Geoeconómica'">
+    <span class="text-black uppercase text-sm">Tipificación construcción:</span>
+    <h2 class="text-sm">
+      <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralTipificacion">
+        {{ data.zone.ccZonaHomoFisicaUr?.domTipificacionConstruccionTipo || NAME_NO_DISPONIBLE }}
+      </ng-container>
+      <ng-template #ruralTipificacion>
+        {{ NAME_NO_DISPONIBLE }}
+      </ng-template>
+    </h2>
+  </div>
+
+  <!-- Para Geoeconómica -->
+  <div class="flex flex-col gap-4" *ngIf="data.propertyType === 'Geoeconómica'">
     <div class="flex flex-row gap-4">
-      <span class="text-black uppercase text-sm">Topografía:</span>
+      <span class="text-black uppercase text-sm">Observaciones:</span>
       <h2 class="text-sm">
-        {{ zone?.ccZonaHomoFisicaUr?.domTopografiaZonaTipo || NAME_NO_DISPONIBLE }}
+        {{ data.zone.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaObs || NAME_NO_DISPONIBLE }}
       </h2>
     </div>
-
+  
     <div class="flex flex-row gap-4">
-        <span class="text-black uppercase text-sm">Uso actual del suelo:</span>
-        <h2 class="text-sm">
-          {{ zone?.ccZonaHomoFisicaUr?.domUsoSueloUrbanoTipo || NAME_NO_DISPONIBLE }}
-        </h2>
-      </div>
+      <span class="text-black uppercase text-sm">Tipo de suelo:</span>
+      <h2 class="text-sm">
+        {{ data.zone.ccZonaHomoGeoEconomica?.suelo || NAME_NO_DISPONIBLE }}
+      </h2>
+    </div>
+  
+    <div class="flex flex-row gap-4">
+      <span class="text-black uppercase text-sm">Valor del suelo:</span>
+      <h2 class="text-sm">
+        {{ data.zone.ccZonaHomoGeoEconomica?.valorLabel || NAME_NO_DISPONIBLE }}
+      </h2>
+    </div>
+  </div>
 
-
-      <div class="flex flex-row gap-4">
-        <span class="text-black uppercase text-sm">Influencia vial:</span>
-        <h2 class="text-sm">
-          {{ zone?.ccZonaHomoFisicaUr?.domInfluenciaVialUrbanaTipo || NAME_NO_DISPONIBLE }}
-        </h2>
-      </div>
-
-      <div class="flex flex-row gap-4">
-        <span class="text-black uppercase text-sm">Norma uso del suelo:</span>
-        <h2 class="text-sm">
-          {{ zone?.ccZonaHomoFisicaUr?.normaUsoSuelo || NAME_NO_DISPONIBLE }}
-        </h2>
-      </div>
-
-      <div class="flex flex-row gap-4">
-        <span class="text-black uppercase text-sm">Servicios públicos:</span>
-        <h2 class="text-sm">
-          {{ zone?.ccZonaHomoFisicaUr?.domServiciosPublicosTipo || NAME_NO_DISPONIBLE }}
-        </h2>
-      </div>
-
-      <div class="flex flex-row gap-4">
-        <span class="text-black uppercase text-sm">Tipificación construcción:</span>
-        <h2 class="text-sm">
-          {{ zone?.ccZonaHomoFisicaUr?.domTipificacionConstruccionTipo || NAME_NO_DISPONIBLE }}
-        </h2>
-      </div>
-
-
-
-
-  </mat-dialog-content>
+</mat-dialog-content>

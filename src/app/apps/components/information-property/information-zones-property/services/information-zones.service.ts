@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GeoEconomicZoneInfo, PhysicalZoneInfo } from 'src/app/apps/interfaces/information-property/info-zones';
+import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { SendGeneralRequestsService } from 'src/app/apps/services/general/send-general-requests.service';
 import { environment as envi } from 'src/environments/environments';
 
@@ -16,7 +17,7 @@ export class InformationZonesService {
 
   constructor(private requestsService: SendGeneralRequestsService) { }
 
-  getByBauniFisica(baunitId: number): Observable<PhysicalZoneInfo> {
+  getByBauniFisica(baunitId: number): Observable<ZoneBAUnit> {
     const url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('baunitId', `${baunitId}`);
