@@ -332,6 +332,11 @@ export class InitiateFilingProcedureComponent implements OnInit {
               });
               this.infoGeneralService.setInfoProTaskE(proTaskE);
 
+
+              
+
+
+
             this.snackBar.open(
               `Radicado Exitoso, Identificador: ${proTaskE?.executionId}`,
               'CLOSE',

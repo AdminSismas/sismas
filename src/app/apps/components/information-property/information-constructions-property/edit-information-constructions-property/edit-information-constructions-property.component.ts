@@ -32,6 +32,7 @@ export interface AddEditInformationConstructionI {
   type: 'edit' | 'new';
   basicInformationConstruction: BasicInformationConstruction | undefined;
   baunitId: string | undefined;
+  executionId: string | undefined;
 }
 
 @Component({
@@ -77,6 +78,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   readonly addEditInformationData = inject<AddEditInformationConstructionI>(MAT_DIALOG_DATA);
   traditionalRatingForm!: FormGroup;
   typologyRatingForm!: FormGroup;
+  executionId: string | undefined;
 
   armazonOptions: string[] = [
     'Madera', 'Tapia', 'Prefabricado', 'Ladrillo', 'Bloque', 'Madera inmunizada',
@@ -133,6 +135,8 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.executionId = this.addEditInformationData.executionId;
+    console.log('Execution ID:', this.executionId);
     this.loadDetailInformationConstruction();
 
   }
@@ -240,7 +244,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
 
         detailBasicInformationConstruction = await lastValueFrom(
           this.informationPropertyService.createBasicInformationPropertyConstruction(
-            68,
+            this.executionId || '',
             baunitId,
             createBasicInformationConstruction
           )
