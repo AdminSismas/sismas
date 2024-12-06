@@ -39,23 +39,6 @@ export class AuthService {
     }
   }
 
-  // decodeToken(token: string) {
-  //   const decoded: any = jwt_decode(token);
-  //   console.log(decoded); 
-  //   return decoded;
-  // }
-
-  // decodeToken(token: string, secret: string) {
-  //   try {
-     
-  //     const decoded = jwt.verify(token, secret);
-  //     console.log(decoded); 
-  //     return decoded;
-  //   } catch (error) {
-  //     console.error('Token inválido o expirado');
-  //     return null;
-  //   }
-  // }
 
   refreshToken() {
     const httpOptions = {
@@ -81,7 +64,12 @@ export class AuthService {
 
   logout(): void {
     this._token = null;
-    sessionStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    sessionStorage.removeItem('token');  
+    this.router.navigate(['/login']).then(() => {
+      window.history.pushState(null, '', window.location.href);
+      window.onpopstate = function () {
+        window.history.pushState(null, '', window.location.href);
+      };
+    });
   }
 }
