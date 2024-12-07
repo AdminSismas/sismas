@@ -37,6 +37,7 @@ import { MatSort } from '@angular/material/sort';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { error } from 'console';
 import { asyncValidation, dateComparisonValidator } from './validate-form/validate-form-utils';
+import { InputComponent } from '../input/input.component';
 
 
 
@@ -68,7 +69,8 @@ import { asyncValidation, dateComparisonValidator } from './validate-form/valida
         NgFor,
         NgClass,
         NgIf,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        InputComponent
     ]
 })
 export class TableProceduresComponent {
@@ -224,18 +226,19 @@ export class TableProceduresComponent {
 
 
   public individualNumberPartValid(){
+    
     this.individualNumberPartForm?.valueChanges.pipe(
       debounceTime(300),  // Espera 500 ms después del último cambio
       tap(value => {
         if(value !== '' && value !== 0  && value !== null){
 
-            this.executionCodeForm?.disable()
-            this.executionCodeForm?.reset()
+            // this.executionCodeForm?.disable()
+            // this.executionCodeForm?.reset()
             this.seeInfo = true;
 
           }else{
-          this.executionCodeForm?.enable()
-            this.executionCodeForm?.reset()
+          // this.executionCodeForm?.enable()
+          //   this.executionCodeForm?.reset()
             this.seeInfo = false;
         }
    
@@ -299,10 +302,10 @@ private initForm(): void {
     // beginAtEForm: this.fBuilder.control(null),
     // executionCodeForm: this.fBuilder.control(0, []), // Solo letras y permite espacio
     // individualNumberPartForm: this.fBuilder.control( null, []),
-    beginAt: [null],
-    beginAtE: [null],
-    executionCode: [0,[]],
-    individualNumberPart: [null,[]]
+    beginAtForm: [null],
+    beginAtEForm: [null],
+    executionCodeForm: [0,[]],
+    individualNumberPartForm: [null,[]]
   },
   {
     // Aplica el validador a nivel de formulario
