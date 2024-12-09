@@ -66,6 +66,8 @@ export class UserService {
   createUser(params: CreateUserParams): Observable<string> {
     const url: string = `${this.base_url}`
 
-    return this.http.post<string>(url, params)
+    return this.http.post(url, params, {
+      responseType: 'text'
+    })
   }
 }
