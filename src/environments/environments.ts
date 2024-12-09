@@ -58,6 +58,7 @@ export const environment = {
   changeLog:'/changeLog/',
   check:'/check',
   clearChangelog:'clearChangelog',
+  clearBaunit: 'clearBAUnit',
   comment: '/comment/',
   compare_temp: '/compare/temp/',
   /* ------ D ------ */
