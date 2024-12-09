@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, computed, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,8 +15,8 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { filter, Observable, ReplaySubject } from 'rxjs';
-import { Content, TableData, User } from 'src/app/apps/interfaces/users/user';
+import { Observable, ReplaySubject } from 'rxjs';
+import { Content, User } from 'src/app/apps/interfaces/users/user';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   })
 
   public columns: { name: string, label: string }[] = USER_COLUMNS;
-  public dataSource: MatTableDataSource<TableData> = new MatTableDataSource<TableData>();
+  public dataSource: MatTableDataSource<Content> = new MatTableDataSource<Content>();
   public displayedColumns: string[] = [];
   public totalElements: number = 0;
   public page: number = 0;
@@ -102,7 +102,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.userService.getUsers(page, size)
       .subscribe({
         next: (data: User) => {
-          this.formatDataSource(data)
+          this.dataSourceFormat(data);
           this.totalElements = data.totalElements;
           this.page = page;
           this.pageSize = size;
@@ -116,21 +116,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
       })
   }
 
-  formatDataSource(data: User): void {
-    let dataSource: TableData[];
-    if (data != null && data.content.length > 0) {
-      dataSource = data.content.map((row: Content) => {
-        return {
-          fullName: row.individual.fullName,
-          username: row.username,
-          email: row.email,
-          role: row.role,
-          enabled: row.enabled
-        }
-      })
-      this.dataSource.data = dataSource;
-
-    }
+  dataSourceFormat(data: User): void {
+    this.dataSource.data = data.content.map((row: Content) => {
+      return {
+        ...row,
+        fullName: row.individual.fullName
+      }
+    });
   }
 
   pageEvent(pageEvent: PageEvent): void {
