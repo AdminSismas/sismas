@@ -10,7 +10,7 @@ import { DynamicFormsComponent } from 'src/app/apps/components/dynamic-forms/dyn
 import { CREATE_USER_INPUTS, SEARCH_INPUTS } from 'src/app/apps/constants/users.constants';
 import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { Content, CreateUserDialogData, CreateUserParams, User } from 'src/app/apps/interfaces/users/user';
+import { Content, CreateOutput, CreateUserDialogData, CreateUserParams, User } from 'src/app/apps/interfaces/users/user';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
@@ -82,9 +82,38 @@ export class CreateUsersComponent implements OnInit {
     this.peopleService.getPeopleTypeNumber({ number, individualTypeNumber })
       .subscribe({
         next: (result: InfoPerson) => {
-          this.individualFinded = result
-          this.searchFormDisabled = true
-          this.newUserFormDisabled = false
+          this.individualValidator(result.individualId)
+            .subscribe((resultValidation: boolean) => {
+              console.log(resultValidation)
+              if (!resultValidation) {
+                this.individualFinded = result
+                this.searchFormDisabled = true
+                this.newUserFormDisabled = false
+              } else {
+                this.snackbar.open('El individuo ya tiene un usuario asociado', 'CLOSE', { duration: 4000 })
+              }
+            })
+        },
+        error: (error: any) => {
+          if (error.status === 404) {
+            this.snackbar.open('Creando persona', 'CLOSE', { duration: 4000 })
+            this.dialog.open(CreatePeopleComponent, {
+              data: {
+                number: this.searchForm!.value.number,
+                domIndividualTypeNumber: this.searchForm!.value.individualTypeNumber,
+                mode: 'create'
+              }
+            }).afterClosed()
+              .subscribe({
+                next: (result: any) => {
+                  console.log(result)
+                },
+                error: (error: any) => {
+                  this.snackbar.open('Error al crear el individuo', 'CLOSE', { duration: 4000 })
+                  throw error
+                }
+              })
+          }
         }
       })
   }
@@ -157,6 +186,19 @@ export class CreateUsersComponent implements OnInit {
       }))
   }
 
+  individualValidator(individualId: number): Observable<boolean> {
+    return this.userService.existIndividual(individualId)
+      .pipe(map((result: boolean) => {
+        if (!result) {
+          this.newUserForm?.get('individualId')?.setErrors({ individualIdExists: true })
+          return false
+        }
+
+        return true
+      }))
+
+  }
+
   createUserService(): void {
     const params: CreateUserParams = {
       username: this.newUserForm!.value.username,
@@ -168,7 +210,7 @@ export class CreateUsersComponent implements OnInit {
 
     this.userService.createUser(params)
       .subscribe({
-        next: (result: string) => {
+        next: (result: CreateOutput) => {
           this.snackbar.open('Usuario creado', 'CLOSE', { duration: 4000 })
           this.dialogRef.close(result)
         },

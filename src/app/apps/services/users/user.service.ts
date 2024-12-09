@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
-import { Content, CreateUserParams, User } from '../../interfaces/users/user';
+import { Content, CreateOutput, CreateUserParams, User } from '../../interfaces/users/user';
 
 @Injectable({
   providedIn: 'root'
@@ -63,12 +63,25 @@ export class UserService {
 
   }
 
-  createUser(params: CreateUserParams): Observable<string> {
+  existIndividual(individualId: number): Observable<boolean> {
+    const url: string = `${this.base_url}${envi.bpm_individual_exists}${individualId}`
+
+    return this.http.get<boolean>(url)
+      .pipe(
+        catchError((error: any) => {
+          if (error.status === 404) {
+            return of(false)
+          }
+          console.log('Error en la verificación de la información del individuo')
+          throw error;
+        })
+      )
+  }
+
+  createUser(params: CreateUserParams): Observable<CreateOutput> {
     const url: string = `${this.base_url}`
 
-    return this.http.post(url, params, {
-      responseType: 'text'
-    })
+    return this.http.post<CreateOutput>(url, params)
   }
 
   updateUser(userId: number, email: string): Observable<Content> {

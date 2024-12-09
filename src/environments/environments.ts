@@ -28,6 +28,7 @@ export const environment = {
   bpm_users:'/bpmUser',
   bpm_username_exists: '/exists/username/',
   bpm_email_exists: '/exists/email/',
+  bpm_individual_exists: '/exists/individual/',
   bpmAttachment:{
     count:'/count',
     proExecution:'proExecution/',

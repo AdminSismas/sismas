@@ -101,3 +101,9 @@ export interface CreateUserParams {
     individualId: number;
   }
 }
+
+export interface CreateOutput {
+  username: string;
+  email: string;
+  tempPassword: string;
+}
