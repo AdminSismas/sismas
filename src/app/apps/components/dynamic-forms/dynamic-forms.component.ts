@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { map, Observable, startWith } from 'rxjs';
@@ -21,12 +21,15 @@ import { JSONInput } from '../../interfaces/dynamic-forms';
   imports: [
     AsyncPipe,
     ReactiveFormsModule,
-    MatInputModule,
+    NgClass,
+    /* Material */
+    MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    /* Custom */
     ComboxColletionComponent,
-    MatAutocompleteModule
   ],
   templateUrl: './dynamic-forms.component.html',
   styles: ``
@@ -35,6 +38,7 @@ export class DynamicFormsComponent implements OnInit{
 
   @Input({ required: true }) public inputs: JSONInput[] = []
   @Input() public initValues: any = {}
+  @Input() public className: string = '';
 
   public form: FormGroup = new FormGroup({})
   public options$: { [key: string]: Observable<string[]> | undefined } = {}
@@ -79,4 +83,20 @@ export class DynamicFormsComponent implements OnInit{
     })
   }
 
+  cssClassesForm(cssClasses: string): string {
+    if (cssClasses) {
+      return cssClasses
+    } else {
+      return 'w-full h-full grid grid-cols-2 grid-flow-row gap-x-4'
+    }
+  }
+
+
+  cssClassesInput(cssClasses: string | undefined): string {
+    if (cssClasses) {
+      return cssClasses
+    } else {
+      return 'w-full h-full'
+    }
+  }
 }

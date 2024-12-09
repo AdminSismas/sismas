@@ -86,4 +86,6 @@ export interface Sort {
   unsorted: boolean;
 }
 
+export interface CreateUserDialogData  {
 
+}

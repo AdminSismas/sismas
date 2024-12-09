@@ -17,50 +17,15 @@
 
 <vex-page-layout>
   <vex-page-layout-content>
-    <section class="w-full flex items-start justify-between">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="openDialogAddUser()"
-      >
-        Nuevo Usuario
-        <mat-icon svgIcon="mat:add"></mat-icon>
-      </button>
-      <form
-        [formGroup]="form"
-        class="grid gap-x-2 grid-cols-[1fr_1fr_20%] max-w-[50%]"
-      >
-        <vex-combox-colletion
-          formControlNameCombobox="individualTypeNumber"
-          ubscriptSizing="dynamic"
-          idComboCollection="typeNumberDocument"
-          label="Tipo de documento"
-          typeDomainName="IndividualTypeNumber"
-          placeholderDomainName="Seleccionar tipo documento&hellip;"
-          cssClasses="w-full"
-        ></vex-combox-colletion>
-        <mat-form-field class="w-full">
-          <mat-label>Número de documento</mat-label>
-          <input
-            matInput
-            placeholder="Número de documento"
-            formControlName="number"
-            type="text"
-          />
-        </mat-form-field>
-        <button
-          class="w-full"
-          mat-flat-button
-          color="primary"
-          type="submit"
-          [disabled]="form.invalid"
-          (click)="searchUser()"
-        >
-          Buscar
-          <mat-icon svgIcon="mat:search"></mat-icon>
-        </button>
-      </form>
-    </section>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openDialogAddUser()"
+      class="mb-4"
+    >
+      Nuevo Usuario
+      <mat-icon svgIcon="mat:add"></mat-icon>
+    </button>
     <table
       mat-table
       [dataSource]="dataSource"

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Crear usuario</h2>
+<mat-divider class="border-slate-400"></mat-divider>
+<mat-dialog-content>
+  <section class="w-full flex gap-2">
+    <dynamic-forms
+      class="w-full flex gap-2"
+      [inputs]="searchInputs"
+      (formReady)="searchForm = $event"
+      className="w-full flex gap-2"
+    ></dynamic-forms>
+    <button
+      #searchButton
+      mat-flat-button
+      color="primary"
+      class="max-w-fit min-w-24"
+      (click)="searchIndividual()"
+    >
+      Buscar
+      <mat-icon svgIcon="mat:search"></mat-icon>
+    </button>
+  </section>
+  <mat-divider class="border-slate-300"></mat-divider>
+</mat-dialog-content>
