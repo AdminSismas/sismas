@@ -82,6 +82,14 @@
         *matRowDef="let row; columns: displayedColumns"
       ></tr>
     </table>
+    <mat-paginator
+      [pageSizeOptions]="pageSizeOptions"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="page"
+      (page)="pageEvent($event)"
+    >
+    </mat-paginator>
     <mat-menu
       #actionsMenu="matMenu"
       xPosition="before"
@@ -102,13 +110,5 @@
         }
       </ng-template>
     </mat-menu>
-    <mat-paginator
-      [pageSizeOptions]="pageSizeOptions"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageIndex]="page"
-      (page)="pageEvent($event)"
-    >
-    </mat-paginator>
   </vex-page-layout-content>
 </vex-page-layout>
