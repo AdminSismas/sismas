@@ -1,8 +1,8 @@
 import { Component, DestroyRef, inject, Input, ViewChild } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { Observable } from 'rxjs';
+import { debounceTime, Observable, tap } from 'rxjs';
 
 // recursos de vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -36,6 +36,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSort } from '@angular/material/sort';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { ProcedureWorkFinishedService } from '../../services/procedure-work-finished.service';
+import { InputComponent } from '../input/input.component';
 @Component({
   selector: 'vex-table-work-finished',
   standalone: true, 
@@ -55,10 +56,11 @@ import { ProcedureWorkFinishedService } from '../../services/procedure-work-fini
     MatCheckboxModule,
     MatButtonModule,
     CommonModule,
-    FormsModule,
     NgFor,
     NgClass,
-    NgIf
+    NgIf,
+    InputComponent,
+    FormsModule
   ],
  
 })
@@ -76,6 +78,9 @@ beginAtE!: Date;
 executionCode: string = '0';
 individualNumber: string = '';
 disabledEndDate: boolean = false;
+private fBuilder = inject(FormBuilder);
+informationFinished!: FormGroup;
+seeInfo:boolean= false;
 
 @Input()
   page:number = PAGE;
@@ -104,44 +109,94 @@ disabledEndDate: boolean = false;
    /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
+    console.log('componente');
     this.dataSource = new MatTableDataSource();
-    this.searchCtrl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => this.onFilterChange(value));
+    // this.searchCtrl.valueChanges
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe((value) => this.onFilterChange(value));
     
     // this.beginAt = new Date();
     this.beginAtE = new Date('13/01/2024');
     this.executionCode = '0';
-    this.getDataFromProceduresService();
+    // this.getDataFromProceduresService();
+    this.initForm();
+    this.executionCodeValidate();
+    this.individualNumberPartValid();
   }
 
+  /**
+   * Init information address form
+   */
+private initForm(): void {
+  this.informationFinished = this.fBuilder.group({
+    beginAtForm: this.fBuilder.control(null),
+    beginAtEForm: this.fBuilder.control(null),
+    executionCodeForm: this.fBuilder.control(0, []), // Solo letras y permite espacio
+    individualNumberPartForm: this.fBuilder.control( null, []),
+  
+  },
+  // {
+  //   // Aplica el validador a nivel de formulario
+  //   validators: dateComparisonValidator('beginAt', 'beginAtE'),
+  // }
+);
+  // this.beginAtE?.setValue(new Date());
+}
+
+
     /* ------- Meth. HTML ------- */
-    toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      column.visible = !column.visible;
-    }
+    // toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
+    //   event.stopPropagation();
+    //   event.stopImmediatePropagation();
+    //   column.visible = !column.visible;
+    // }
   
-    trackByProperty<T>(index: number, column: TableColumn<T>) {
-      return column.property;
-    }
+    // trackByProperty<T>(index: number, column: TableColumn<T>) {
+    //   return column.property;
+    // }
 
+    public executionCodeValidate(){
+      this.executionCodeForm?.valueChanges.pipe(
+        debounceTime(300),  // Espera 500 ms después del último cambio
+        tap(value => {
 
-    get visibleColumns() {
-      return this.columns
-        .filter((column) => column.visible)
-        .map((column) => column.property);
+          console.log(value);
+          if(value !== '' && value !== 0  && value !== null){
+  
+              this.individualNumberPartForm?.disable();
+              // this.individualNumberPartForm?.reset();
+              // this.seeInfo = true;
+  
+            }else{
+            this.individualNumberPartForm?.enable();
+              // this.individualNumberPartForm?.reset();
+              // this.seeInfo = false;
+          }
+     
+        }))
+      .subscribe()
     }
   
-    refreshInformationpaginator(event: any): void {
-      if (event == null) {
-        return;
-      }
-      this.page = event.pageIndex;
-      this.pageSize = event.pageSize;
-  
-      this.getDataFromProceduresService();
+    public individualNumberPartValid(){
+      this.individualNumberPartForm?.valueChanges.pipe(
+        debounceTime(300),  // Espera 300 ms después del último cambio
+        tap(value => {
+          if(value !== '' && value !== 0 && value !== null){
+            // Deshabilitar el campo sin resetear su valor
+            this.executionCodeForm?.disable();
+            // this.seeInfo = true;
+          } else {
+            // Habilitar el campo sin resetear su valor
+            this.executionCodeForm?.enable();
+            // this.seeInfo = false;
+          }
+        })
+      ).subscribe();
     }
+  
+
+  
+   
   
     onSearch():void {
       this.getDataFromProceduresService();
@@ -261,6 +316,17 @@ disabledEndDate: boolean = false;
     }
   
 
-
+    get beginAtForm(){
+      return this.informationFinished.get('beginAtForm')
+    }
+    get beginAtEForm(){
+      return this.informationFinished.get('beginAtEForm')
+    }
+    get executionCodeForm(){
+      return this.informationFinished.get('executionCodeForm')
+    }
+    get individualNumberPartForm(){
+      return this.informationFinished.get('individualNumberPartForm')
+    }
 
 }
