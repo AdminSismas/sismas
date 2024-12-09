@@ -57,11 +57,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
         name: 'edit',
         label: 'Editar',
         icon: 'mat:edit'
-      },
-      {
-        name: 'delete',
-        label: 'Eliminar',
-        icon: 'mat:delete'
       }
     ]
   })
