@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -101,18 +101,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.getUsers()
-      .subscribe({
-        next: (data: User) => {
-          this.dataSource.data = data.content;
-        },
-        error: (error: any) => {
-          this.snackbar.open('Error al obtener usuarios', 'CLOSE', {
-            duration: 4000,
-          });
-          throw error;
-        }
-      })
+    this.getUsers()
 
     this.displayedColumns = this.columns.map((column) => column.name);
     this.displayedColumns.push('actions');
@@ -131,10 +120,31 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
+  }
+
+  getUsers(page: number = 0, size: number = 10): void {
+    this.userService.getUsers(page, size)
+      .subscribe({
+        next: (data: User) => {
+          this.dataSource.data = data.content;
+          this.totalElements = data.totalElements;
+          this.page = page;
+          this.pageSize = size;
+        },
+        error: (error: any) => {
+          this.snackbar.open('Error al obtener usuarios', 'CLOSE', {
+            duration: 4000,
+          });
+          throw error;
+        }
+      })
+  }
+
+  pageEvent(pageEvent: PageEvent): void {
+    this.getUsers(pageEvent.pageIndex, pageEvent.pageSize)
   }
 
   showTableValue(value: any, key: string): string {
@@ -146,9 +156,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   openDialogAddUser(): void {
     console.log('openDialogAddUser');
-    this.dialog.open(CreateUsersComponent, {
-      width: '60%'
-    })
+    this.dialog.open(CreateUsersComponent)
+      .afterClosed()
+      .subscribe((result: User) => {
+        console.log(result)
+        setTimeout(this.getUsers, 300)
+      })
   }
 
   actionMenuHandler(action: string, row: User) {

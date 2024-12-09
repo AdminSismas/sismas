@@ -103,6 +103,7 @@
       [length]="totalElements"
       [pageSize]="pageSize"
       [pageIndex]="page"
+      (page)="pageEvent($event)"
     >
     </mat-paginator>
   </vex-page-layout-content>

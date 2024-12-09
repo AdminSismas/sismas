@@ -1,3 +1,5 @@
+import { StringMap } from "quill";
+
 export interface User {
   content:          Content[];
   pageable:         Pageable;
@@ -88,4 +90,12 @@ export interface Sort {
 
 export interface CreateUserDialogData  {
 
+}
+
+export interface CreateUserParams {
+  username: string;
+  email: string;
+  individual: {
+    individualId: number;
+  }
 }

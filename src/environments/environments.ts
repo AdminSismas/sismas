@@ -26,6 +26,8 @@ export const environment = {
   baUnitZona_baunitId:'/baUnitZona/baunitId',
   bpm_bpmCore:'/bpm/bpm-core/',
   bpm_users:'/bpmUser',
+  bpm_username_exists: '/exists/username/',
+  bpm_email_exists: '/exists/email/',
   bpmAttachment:{
     count:'/count',
     proExecution:'proExecution/',

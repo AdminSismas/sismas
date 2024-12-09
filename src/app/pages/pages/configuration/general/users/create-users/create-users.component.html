@@ -3,7 +3,7 @@
 <mat-dialog-content>
   <section class="w-full flex gap-2">
     <dynamic-forms
-      class="w-full flex gap-2"
+      class="w-full"
       [inputs]="searchInputs"
       (formReady)="searchForm = $event"
       className="w-full flex gap-2"
@@ -20,4 +20,29 @@
     </button>
   </section>
   <mat-divider class="border-slate-300"></mat-divider>
+  <section class="pt-4">
+    <dynamic-forms
+      [inputs]="createUserInputs"
+      (formReady)="newUserForm = $event"
+      [disabled]="newUserFormDisabled"
+    ></dynamic-forms>
+  </section>
 </mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="createUser()"
+  >
+    Crear
+    <mat-icon svgIcon="mat:add"></mat-icon>
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    mat-dialog-close
+  >
+    Cancelar
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</mat-dialog-actions>

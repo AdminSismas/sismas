@@ -21,5 +21,20 @@ export const SEARCH_INPUTS: JSONInput[] = [
 ]
 
 export const CREATE_USER_INPUTS: JSONInput[] = [
-
+  {
+    name: 'username',
+    label: 'Usuario',
+    element: 'input',
+    type: 'text',
+    validators: [Validators.required],
+    placeholder: 'Escribir nombre de usuario'
+  },
+  {
+    name: 'email',
+    label: 'Correo electrónico',
+    element: 'input',
+    type: 'text',
+    validators: [Validators.required, Validators.email],
+    placeholder: 'Escribir correo electrónico'
+  }
 ]
