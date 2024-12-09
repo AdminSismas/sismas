@@ -1,8 +1,8 @@
-import { Component, DestroyRef, inject, Input, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { debounceTime, Observable, tap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, Subscription, tap } from 'rxjs';
 
 // recursos de vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -37,6 +37,7 @@ import { MatSort } from '@angular/material/sort';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { ProcedureWorkFinishedService } from '../../services/procedure-work-finished.service';
 import { InputComponent } from '../input/input.component';
+import { dateComparisonValidator } from './validations-form/validation-form-general';
 @Component({
   selector: 'vex-table-work-finished',
   standalone: true, 
@@ -60,27 +61,25 @@ import { InputComponent } from '../input/input.component';
     NgClass,
     NgIf,
     InputComponent,
-    FormsModule
+    FormsModule,
   ],
  
 })
-export class TableWorkFinishedComponent {
+export class TableWorkFinishedComponent implements OnInit ,OnDestroy  {
 /* ============== ATRIBUTES ============== */
 dataSource!: MatTableDataSource<ProceduresCollection>;
 searchCtrl: UntypedFormControl = new UntypedFormControl();
 isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 layoutCtrl = new UntypedFormControl('boxed');
 contentInformations!: InformationPegeable;
-
-
-beginAt!: Date;
-beginAtE!: Date;
-executionCode: string = '0';
-individualNumber: string = '';
 disabledEndDate: boolean = false;
 private fBuilder = inject(FormBuilder);
 informationFinished!: FormGroup;
 seeInfo:boolean= false;
+seeInfoDocument:boolean= false;
+
+// Array para almacenar las suscripciones
+private subscriptions: Subscription  | undefined[] = [];
 
 @Input()
   page:number = PAGE;
@@ -116,12 +115,19 @@ seeInfo:boolean= false;
     //   .subscribe((value) => this.onFilterChange(value));
     
     // this.beginAt = new Date();
-    this.beginAtE = new Date('13/01/2024');
-    this.executionCode = '0';
     // this.getDataFromProceduresService();
     this.initForm();
     this.executionCodeValidate();
     this.individualNumberPartValid();
+
+    this.beginAtEForm?.setValue(new Date()) 
+    this.executionCodeForm?.setValue(0);
+  }
+
+   // Método para cancelar todas las suscripciones
+   ngOnDestroy() {
+    // Cancelamos todas las suscripciones al destruir el componente
+    console.log('Todas las suscripciones han sido canceladas');
   }
 
   /**
@@ -130,34 +136,53 @@ seeInfo:boolean= false;
 private initForm(): void {
   this.informationFinished = this.fBuilder.group({
     beginAtForm: this.fBuilder.control(null),
-    beginAtEForm: this.fBuilder.control(null),
-    executionCodeForm: this.fBuilder.control(0, []), // Solo letras y permite espacio
-    individualNumberPartForm: this.fBuilder.control( null, []),
+    beginAtEForm: this.fBuilder.control(null,[Validators.required]),
+    executionCodeForm: this.fBuilder.control(0, [Validators.pattern(/^[0-9]*$/)]), // Solo letras y permite espacio
+    individualNumberPartForm: this.fBuilder.control( null, [Validators.pattern(/^[0-9]*$/)]),
   
   },
-  // {
-  //   // Aplica el validador a nivel de formulario
-  //   validators: dateComparisonValidator('beginAt', 'beginAtE'),
-  // }
+  {
+    // Aplica el validador a nivel de formulario
+    validators: dateComparisonValidator('beginAtForm', 'beginAtEForm'),
+  }
 );
   // this.beginAtE?.setValue(new Date());
 }
 
 
     /* ------- Meth. HTML ------- */
-    // toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
-    //   event.stopPropagation();
-    //   event.stopImmediatePropagation();
-    //   column.visible = !column.visible;
-    // }
+    toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      column.visible = !column.visible;
+    }
   
-    // trackByProperty<T>(index: number, column: TableColumn<T>) {
-    //   return column.property;
-    // }
+    trackByProperty<T>(index: number, column: TableColumn<T>) {
+      return column.property;
+    }
+
+    get visibleColumns() {
+      return this.columns
+        .filter((column) => column.visible)
+        .map((column) => column.property);
+    }
+  
+    refreshInformationpaginator(event: any): void {
+      if (event == null) {
+        return;
+      }
+      this.page = event.pageIndex;
+      this.pageSize = event.pageSize;
+  
+      this.getDataFromProceduresService();
+    }
+  
 
     public executionCodeValidate(){
-      this.executionCodeForm?.valueChanges.pipe(
+       this.executionCodeForm?.valueChanges.pipe(
+     
         debounceTime(300),  // Espera 500 ms después del último cambio
+        distinctUntilChanged(), // Solo emite cuando el valor cambia
         tap(value => {
 
           console.log(value);
@@ -165,30 +190,33 @@ private initForm(): void {
   
               this.individualNumberPartForm?.disable();
               // this.individualNumberPartForm?.reset();
-              // this.seeInfo = true;
+              this.seeInfo = true;
   
             }else{
             this.individualNumberPartForm?.enable();
               // this.individualNumberPartForm?.reset();
-              // this.seeInfo = false;
+              this.seeInfo = false;
           }
      
         }))
-      .subscribe()
+      .subscribe();
+
     }
   
     public individualNumberPartValid(){
       this.individualNumberPartForm?.valueChanges.pipe(
         debounceTime(300),  // Espera 300 ms después del último cambio
+        distinctUntilChanged(), // Solo emite cuando el valor cambia
+        
         tap(value => {
           if(value !== '' && value !== 0 && value !== null){
             // Deshabilitar el campo sin resetear su valor
             this.executionCodeForm?.disable();
-            // this.seeInfo = true;
+            this.seeInfoDocument = true;
           } else {
             // Habilitar el campo sin resetear su valor
             this.executionCodeForm?.enable();
-            // this.seeInfo = false;
+            this.seeInfoDocument = false;
           }
         })
       ).subscribe();
@@ -221,15 +249,39 @@ private initForm(): void {
   
     /* ------- Meth. Common ------- */
     objectParameters(): PageProceduresData {
-      return new PageProceduresData(
-        this.page,
-        this.pageSize,
-        this.formatDate(this.beginAt),
-        this.formatDate(this.beginAtE),
-        this.executionCode,
-        this.individualNumber
-      )
+      let beginAtETrans = new Date();
+
+    if(this.beginAtForm?.value === null){
+      // this.beginAtE?.setValue(new Date())
+       beginAtETrans = new Date()
+    }else{
+      beginAtETrans = new Date(this.beginAtForm?.value)
     }
+    const beginAtTrans = new Date(this.beginAtForm?.value)
+
+
+    if(this.executionCodeForm?.value === null){
+      // this.beginAtE?.setValue(new Date())
+      this.executionCodeForm?.setValue(0); 
+    }
+
+    if(this.individualNumberPartForm?.value === null){
+      // this.beginAtE?.setValue(new Date())
+      this.individualNumberPartForm?.setValue(''); 
+    }
+
+    const formValue: PageProceduresData =  {
+      page: this.page,
+      size: this.pageSize,
+      beginAt: this.formatDate(beginAtTrans),
+      beginAtE: this.formatDate(beginAtETrans),
+      executionCode: this.executionCodeForm?.value,
+      individualNumber: this.individualNumberPartForm?.value,
+    }
+    
+    return formValue;
+  }
+
   
     onFilterChange(value: string) {
       if (!this.dataSource) {
@@ -262,9 +314,12 @@ private initForm(): void {
     /* ------- Meth. Services ------- */
     getDataFromProceduresService() {
       const data = this.objectParameters();
-      this.proceduresService.getDataPropertyByWorkFinishedProcedures(data)
+      console.log(data);
+      console.log(this.informationFinished)
+      this.proceduresService.getFilterTableProcedureService(data)
       .subscribe({
         next: (result: any) => {
+          console.log(result, 'respouesta servicio')
             this.captureInformationSubscribe(result);
         },
         error: (error) => {

@@ -1,70 +1,186 @@
-<form [formGroup]="informationFinished">
-  <vex-page-layout class="overflow-hidden">
-    <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
-      <div class="form-content mt-3 pt-3">
-        <!-- Contenedor de campos en línea horizontal usando Flexbox de Angular Material -->
-       
-        
-          <vex-page-layout class="overflow-hidden">
-            <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
-              <div class="form-content mt-3 pt-3">
-                <!-- Contenedor de campos en línea horizontal usando Flexbox de Angular Material -->
-                <div class="mat-row" style="display: flex; gap: 1rem; flex-wrap: wrap;"> 
-        
-                  <!-- Campo: Preuba -->
-                  <div class="mat-col">
-                    <mat-form-field appearance="fill" class="w-100">
-                      <mat-label>Preuba</mat-label>
-                      <input matInput formControlName="beginAtForm" id="beginAtForm" type="text">
-                      <mat-error *ngIf="beginAtForm?.hasError('required')">Este campo es obligatorio</mat-error>
-                    </mat-form-field>
-                  </div>
-        
-                  <!-- Campo: Prueba -->
-                  <div class="mat-col">
-                    <mat-form-field appearance="fill" class="w-100">
-                      <mat-label>Prueba</mat-label>
-                      <input matInput formControlName="beginAtEForm" id="beginAtEForm" type="text">
-                      <mat-error *ngIf="beginAtEForm?.hasError('required')">Este campo es obligatorio</mat-error>
-                    </mat-form-field>
-                  </div>
-        
-                  <!-- Campo: Valor -->
-                  <div class="mat-col">
-                    <mat-form-field appearance="fill" class="w-100">
-                      <mat-label>Valor</mat-label>
-                      <input matInput formControlName="executionCodeForm" id="executionCodeForm" type="text">
-                      <mat-error *ngIf="executionCodeForm?.hasError('required')">Este campo es obligatorio</mat-error>
-                    </mat-form-field>
-                  </div>
-        
-                  <!-- Campo: Valor -->
-                  <div class="mat-col">
-                    <mat-form-field appearance="fill" class="w-100">
-                      <mat-label>Valor</mat-label>
-                      <input matInput formControlName="individualNumberPartForm" id="individualNumberPartForm" type="text">
-                      <mat-error *ngIf="individualNumberPartForm?.hasError('required')">Este campo es obligatorio</mat-error>
-                    </mat-form-field>
-                  </div>
-        
-                </div>
-        
-                <!-- Botón de búsqueda en la misma línea -->
-                <div class="buttons mt-3">
-                  <button color="primary" mat-raised-button type="submit">
-                    Buscar
-                    <mat-icon svgIcon="mat:save"></mat-icon>
-                  </button>
-                </div>
+<vex-page-layout>
+  <form [formGroup]="informationFinished">
+      <vex-page-layout-content class="px-5 -mt-6">
+
+          <div class="flex flex-col sm:flex-row sm:gap-4 mt-3 pt-3">
+              <div class="form-content-item" >
+                  <mat-form-field class="flex-auto">
+                      <mat-label>Fecha inicio</mat-label>
+                      <input
+                          matInput
+                          [matDatepicker]="startDatepicker"
+                          placeholder="Escriba o seleccione&hellip;"
+                          formControlName="beginAtForm"/>
+                      <mat-datepicker-toggle
+                          [for]="startDatepicker"
+                          matIconSuffix></mat-datepicker-toggle>
+                      <!-- <mat-hint>Formato Fecha: dd/mm/yyyy</mat-hint> -->
+                      <mat-datepicker #startDatepicker></mat-datepicker>
+                      <mat-error *ngIf="beginAtForm?.hasError('dateComparison')">
+                        La fecha debe ser menor a la fecha  fin
+                      </mat-error>
+                  </mat-form-field>
+               
+
+                <!-- <div *ngIf="myForm.get('endDate')?.hasError('dateComparison') && myForm.get('endDate')?.touched" class="error-message">
+                  The end date must be greater than or equal to the start date.
+                </div> -->
+
               </div>
-            </vex-page-layout-content>
-          </vex-page-layout>
-        
-        
+              <mat-form-field class="flex-auto">
+                  <mat-label>Fecha fin</mat-label>
+                  <input
+                      matInput
+                      [matDatepicker]="endDatepicker"
+                      placeholder="Escriba o seleccione&hellip;"
+                      formControlName="beginAtEForm"/>
+                  <mat-datepicker-toggle
+                      [for]="endDatepicker"
+                      matIconSuffix></mat-datepicker-toggle>
+                  <!-- <mat-hint>Formato Fecha: dd/mm/yyyy</mat-hint> -->
+                  <mat-datepicker #endDatepicker></mat-datepicker>
+                     <!-- Validaciones -->
+                     <mat-error *ngIf="beginAtEForm?.touched && beginAtEForm?.hasError('required')">Este campo es obligatorio.</mat-error>
+                     <mat-error *ngIf="beginAtEForm?.hasError('dateComparison')">
+                       La fecha debe ser menor a la fecha  fin.
+                     </mat-error>
+                    </mat-form-field>
+                <div>
 
-      </div>
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Número radicado</mat-label>
+                        <input
+                            matInput
+                            formControlName="executionCodeForm"
+                            placeholder="Ingresa el número de radicado&hellip;"
+                            inputmode="numeric"
+                            />
+                        </mat-form-field>
+                        <br>
+                        <mat-error *ngIf="beginAtEForm?.touched && beginAtEForm?.hasError('required')">Este campo es obligatorio.</mat-error>
+                        <mat-error *ngIf="executionCodeForm?.hasError('pattern')">Solo se permite valores númerios.</mat-error>
+                </div>
+              <span
+                style="z-index: 1000;" 
+                data-balloon-length="medium" 
+                aria-label="Cuando buscas por el campo Radicado no puedes buscar por Documento"
+                data-balloon-pos="up"
+                  *ngIf="seeInfo"
+                  >
+                  <mat-icon  svgIcon="mat:info" ></mat-icon>
+                  
+                </span>
 
-    
-    </vex-page-layout-content>
-  </vex-page-layout>
-</form>
+                <span
+                style="z-index: 1000;" 
+                data-balloon-length="medium" 
+                aria-label="Cuando buscas por el campo Documento no puedes buscar por Radicado"
+                data-balloon-pos="up"
+                  *ngIf="seeInfoDocument"
+                  >
+                  <mat-icon  svgIcon="mat:info" ></mat-icon>
+                  
+                </span>
+                <div>
+                    <mat-form-field class="flex-auto">
+                        <mat-label>Documento personal</mat-label>
+                        <input
+                            matInput
+                            formControlName="individualNumberPartForm"
+                            placeholder="Ingresa el número de documento&hellip;"
+                            inputmode="numeric"
+                            />
+                    </mat-form-field>
+                    <br>
+                    <mat-error *ngIf="individualNumberPartForm?.hasError('pattern')">Solo se permite valores númerios.</mat-error>
+
+                </div>
+
+              <button class="mt-1" color="primary" mat-raised-button type="button" [disabled]="!informationFinished.valid" (click)="onSearch()">
+                  <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+              </button>
+          </div>
+
+          <div class="card overflow-auto mt-8"> <!-- mt-16 -->
+            <div class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center">
+                <span class="flex-1"></span>
+                <!-- Campo de búsqueda -->
+                <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-6 pb-6 flex flex-col">
+                    <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
+                    <input
+                        matInput
+                        [formControl]="searchCtrl"
+                        placeholder="Buscar dominio&hellip;"
+                        type="text"/>
+                </mat-form-field>
+
+                <!-- Botón de filtro -->
+                <button
+                    [matMenuTriggerFor]="columnFilterMenu"
+                    mat-icon-button
+                    matTooltip="Filter Columns"
+                    type="button"
+                    class="ml-4 flex-col">
+                    <mat-icon svgIcon="mat:filter_list"></mat-icon>
+                </button>
+            </div>
+
+            <!-- Tabla de dominios -->
+            <table @stagger mat-table [dataSource]="dataSource" class="w-full " matSort>
+                <!-- Text Columns -->
+                <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+                    <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
+                        <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+                            {{ column.label }}
+                        </th>
+                        <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                            {{ row[column.property] }}
+                        </td>
+                    </ng-container>
+
+                    <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
+                        <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+                            {{ column.label }}
+                        </th>
+                        <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                            <mat-icon matIconPrefix *ngIf="column.property === 'originalFileName'" svgIcon="mat:picture_as_pdf" class="w-5 h-5 p-0 items-center justify-center text-red-600"></mat-icon>
+                            {{ row[column.property] | date:'YYYY-MM-dd' }}
+                        </td>
+                    </ng-container>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
+                <tr mat-row *matRowDef="let element; columns: visibleColumns;" @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"></tr>
+            </table>
+
+            <!-- Paginador -->
+            <mat-paginator
+                #paginator
+                [class.hidden]="!(isDesktop$ | async)"
+                [pageSizeOptions]="pageSizeOptions"
+                [length]="totalElements"
+                [pageSize]="pageSize"
+                [pageIndex]="page"
+                (page)="refreshInformationpaginator($event)"
+                class="sticky left-0 flex flex-col">
+            </mat-paginator>
+        </div>
+
+
+      </vex-page-layout-content>
+  </form>
+</vex-page-layout>
+
+<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+  <button
+      (click)="toggleColumnVisibility(column, $event)"
+    *ngFor="let column of columns"
+      class="mat-menu-item block">
+      <mat-checkbox
+          (click)="$event.stopPropagation()"
+          [(ngModel)]="column.visible"
+          color="primary">
+          {{ column.label }}
+      </mat-checkbox>
+  </button>
+</mat-menu>
