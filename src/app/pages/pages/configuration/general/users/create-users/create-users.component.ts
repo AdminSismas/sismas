@@ -1,6 +1,6 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,7 @@ import { DynamicFormsComponent } from 'src/app/apps/components/dynamic-forms/dyn
 import { CREATE_USER_INPUTS, SEARCH_INPUTS } from 'src/app/apps/constants/users.constants';
 import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { CreateUserDialogData, CreateUserParams, User } from 'src/app/apps/interfaces/users/user';
+import { Content, CreateUserDialogData, CreateUserParams, User } from 'src/app/apps/interfaces/users/user';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
@@ -31,7 +31,7 @@ import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/peo
   templateUrl: './create-users.component.html',
   styles: ``
 })
-export class CreateUsersComponent {
+export class CreateUsersComponent implements OnInit {
 
   public searchInputs: JSONInput[] = SEARCH_INPUTS;
   public createUserInputs: JSONInput[] = CREATE_USER_INPUTS;
@@ -40,8 +40,8 @@ export class CreateUsersComponent {
   public newUserForm?: FormGroup;
   public individualFinded?: InfoPerson | undefined;
   public newUserFormDisabled: boolean = true;
-
-  @ViewChild('searchButton', { static: true }) searchButton!: MatButton;
+  public searchFormDisabled: boolean = false;
+  public initValuesSearchForm?: { number: string; individualTypeNumber: string; };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: CreateUserDialogData,
@@ -51,6 +51,25 @@ export class CreateUsersComponent {
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<CreateUsersComponent>
   ) { }
+
+  ngOnInit(): void {
+    if (this.data.mode === 'edit') {
+      this.newUserFormDisabled = false
+      this.newUserForm?.reset(this.data)
+      this.initValuesSearchForm = {
+        number: this.data.individual.number,
+        individualTypeNumber: this.data.individual.domIndividualTypeNumber
+      }
+      this.searchFormDisabled = true
+    }
+  }
+
+  actionBtnLabel(): string {
+    if (this.data.mode === 'create') {
+      return 'Crear'
+    }
+    return 'Editar'
+  }
 
   searchIndividual(): void {
     if (this.searchForm!.invalid) {
@@ -64,12 +83,8 @@ export class CreateUsersComponent {
       .subscribe({
         next: (result: InfoPerson) => {
           this.individualFinded = result
-          this.searchForm?.disable()
-          this.searchButton.disabled = true
-          console.log(this.newUserFormDisabled)
+          this.searchFormDisabled = true
           this.newUserFormDisabled = false
-          console.log(this.newUserFormDisabled)
-
         }
       })
   }
@@ -94,6 +109,14 @@ export class CreateUsersComponent {
         }
       })
 
+  }
+
+  actionBtn(): void {
+    if (this.data.mode === 'create') {
+      this.createUser()
+    } else if (this.data.mode === 'edit') {
+      this.editUser()
+    }
   }
 
   createUser(): void {
@@ -147,11 +170,40 @@ export class CreateUsersComponent {
       .subscribe({
         next: (result: string) => {
           this.snackbar.open('Usuario creado', 'CLOSE', { duration: 4000 })
-          console.log('Hasta aquí no hay error')
           this.dialogRef.close(result)
         },
         error: (error: any) => {
           this.snackbar.open('Error al crear el usuario', 'CLOSE', { duration: 4000 })
+          this.dialogRef.close()
+          throw error
+        }
+      })
+  }
+
+  editUser(): void {
+    console.log('Editando usuario ...')
+    if (this.newUserForm!.invalid) {
+      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CLOSE', { duration: 4000 })
+      return
+    }
+
+    this.userService.existEmail(this.newUserForm!.value.email)
+      .subscribe((result: boolean) => {
+        if (!result) {
+          this.editUserService()
+        }
+      })
+  }
+
+  editUserService(): void {
+    this.userService.updateUser(this.data.userId!, this.newUserForm!.value.email)
+      .subscribe({
+        next: (result: Content) => {
+          this.snackbar.open('Usuario actualizado', 'CLOSE', { duration: 4000 })
+          this.dialogRef.close(result)
+        },
+        error: (error: any) => {
+          this.snackbar.open('Error al actualizar el usuario', 'CLOSE', { duration: 4000 })
           this.dialogRef.close()
           throw error
         }

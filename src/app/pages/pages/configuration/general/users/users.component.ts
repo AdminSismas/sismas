@@ -156,17 +156,36 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   openDialogAddUser(): void {
     console.log('openDialogAddUser');
-    this.dialog.open(CreateUsersComponent)
+    this.dialog.open(CreateUsersComponent, {
+      data: {
+        mode: 'create'
+      }
+    })
       .afterClosed()
       .subscribe((result: User) => {
         console.log(result)
-        setTimeout(this.getUsers, 300)
+        setTimeout(() =>{
+          this.getUsers(this.page, this.pageSize)
+        } , 300)
       })
   }
 
   actionMenuHandler(action: string, row: User) {
     if (action === 'edit') {
       console.log('editing....')
+      this.dialog.open(CreateUsersComponent, {
+        data: {
+          ...row,
+          mode: 'edit'
+        }
+      })
+        .afterClosed()
+        .subscribe((result: User) => {
+          console.log(result)
+          setTimeout(() =>{
+            this.getUsers(this.page, this.pageSize)
+          } , 300)
+        })
     } else if (action === 'delete') {
       console.log('deleting....')
     }

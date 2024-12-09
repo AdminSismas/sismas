@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
-import { CreateUserParams, User } from '../../interfaces/users/user';
+import { Content, CreateUserParams, User } from '../../interfaces/users/user';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +69,21 @@ export class UserService {
     return this.http.post(url, params, {
       responseType: 'text'
     })
+  }
+
+  updateUser(userId: number, email: string): Observable<Content> {
+    const url: string = `${this.base_url}/${userId}`
+
+    const params: HttpParams = new HttpParams()
+      .set('email', email)
+
+    return this.http.put<Content>(url, params)
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error en la actualización del usuario')
+          throw error;
+        })
+      )
+
   }
 }
