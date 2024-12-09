@@ -107,3 +107,11 @@ export interface CreateOutput {
   email: string;
   tempPassword: string;
 }
+
+export interface TableData {
+  fullName: string;
+  username: string;
+  email: string;
+  role: string;
+  enabled: boolean;
+}

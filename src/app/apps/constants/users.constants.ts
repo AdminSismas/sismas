@@ -1,6 +1,29 @@
 import { Validators } from "@angular/forms";
 import { JSONInput } from "../interfaces/dynamic-forms";
 
+export const USER_COLUMNS: { name: string; label: string }[] = [
+  {
+    name: 'fullName',
+    label: 'Nombre'
+  },
+  {
+    name: 'username',
+    label: 'Usuario',
+  },
+  {
+    name: 'email',
+    label: 'Correo electrónico',
+  },
+  {
+    name: 'role',
+    label: 'Rol',
+  },
+  {
+    name: 'enabled',
+    label: 'Estado',
+  }
+]
+
 export const SEARCH_INPUTS: JSONInput[] = [
   {
     name: 'individualTypeNumber',

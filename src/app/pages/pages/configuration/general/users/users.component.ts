@@ -16,15 +16,18 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { filter, Observable, ReplaySubject } from 'rxjs';
-import { Content, User } from 'src/app/apps/interfaces/users/user';
+import { Content, TableData, User } from 'src/app/apps/interfaces/users/user';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
+import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'vex-users',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     /* Material */
     MatIconModule,
@@ -48,7 +51,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   public isDesktop$: Observable<boolean> = this.layoutSerices.isDesktop$;
   public subject$: ReplaySubject<User> = new ReplaySubject<User>(1);
-  public data$: Observable<User> = this.subject$.asObservable();
   public actionBtns = computed(() => {
     return [
       {
@@ -64,25 +66,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
     ]
   })
 
-  public columns: { name: string, label: string }[] = [
-    {
-      name: 'username',
-      label: 'Usuario',
-    },
-    {
-      name: 'email',
-      label: 'Correo electrónico',
-    },
-    {
-      name: 'role',
-      label: 'Rol',
-    },
-    {
-      name: 'enabled',
-      label: 'Estado',
-    }
-  ]
-  public dataSource: MatTableDataSource<Content> = new MatTableDataSource<Content>();
+  public columns: { name: string, label: string }[] = USER_COLUMNS;
+  public dataSource: MatTableDataSource<TableData> = new MatTableDataSource<TableData>();
   public displayedColumns: string[] = [];
   public totalElements: number = 0;
   public page: number = 0;
@@ -105,18 +90,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
     this.displayedColumns = this.columns.map((column) => column.name);
     this.displayedColumns.push('actions');
-
-    this.data$.pipe(filter<User>(Boolean)).subscribe((dataList) => {
-      let data: Content[];
-      if (dataList != null && dataList.content.length > 0) {
-        this.totalElements = dataList.content.length;
-        data = dataList.content;
-        this.dataSource.data = data;
-      } else {
-        this.totalElements = 0;
-        this.dataSource.data = [];
-      }
-    });
   }
 
   ngAfterViewInit(): void {
@@ -129,7 +102,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.userService.getUsers(page, size)
       .subscribe({
         next: (data: User) => {
-          this.dataSource.data = data.content;
+          this.formatDataSource(data)
           this.totalElements = data.totalElements;
           this.page = page;
           this.pageSize = size;
@@ -141,6 +114,23 @@ export class UsersComponent implements OnInit, AfterViewInit {
           throw error;
         }
       })
+  }
+
+  formatDataSource(data: User): void {
+    let dataSource: TableData[];
+    if (data != null && data.content.length > 0) {
+      dataSource = data.content.map((row: Content) => {
+        return {
+          fullName: row.individual.fullName,
+          username: row.username,
+          email: row.email,
+          role: row.role,
+          enabled: row.enabled
+        }
+      })
+      this.dataSource.data = dataSource;
+
+    }
   }
 
   pageEvent(pageEvent: PageEvent): void {

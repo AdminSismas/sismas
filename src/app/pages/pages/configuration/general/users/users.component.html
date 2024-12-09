@@ -43,7 +43,11 @@
             mat-cell
             *matCellDef="let element"
           >
-            {{ showTableValue(element[column.name], column.name) }}
+            {{
+              column.name !== "fullName"
+                ? showTableValue(element[column.name], column.name)
+                : (element[column.name] | titlecase)
+            }}
           </td>
         </ng-container>
       }
