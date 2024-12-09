@@ -30,6 +30,7 @@ export class BasicInformationProperty {
   baunitIdE?: string;
   propertyRegistryAreaE?: string;
   cadastralAreaE?: string;
+  executionId?: string;
 
 
   constructor(content?: any) {
@@ -65,5 +66,22 @@ export class BasicInformationProperty {
     this.baunitIdE = content?.baunitIdE || '';
     this.propertyRegistryAreaE = content?.propertyRegistryAreaE || '';
     this.cadastralAreaE = content?.cadastralAreaE || '';
+    this.executionId = content?.executionId || '';
   }
 }
+
+export interface UpdateBasicInformationProperty {
+  propertyRegistryOffice:      string;
+  propertyRegistryNumber:      string;
+  propertyRegistryArea:        number;
+  cadastralArea:               number;
+  cadastralNumber:             string;
+  cadastralLastNumber:         string;
+  cadastralRegistryNumberTemp: string;
+  cadastralRegistryNumber:     null;
+  domBaunitType:               string;
+  domBaunitCondition:          string;
+  domBaunitEconoDesti:         string;
+  domBaunitProcessType:        null;
+}
+

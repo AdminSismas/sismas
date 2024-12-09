@@ -160,7 +160,7 @@
           </ng-container>
 
           <!-- Action Column -->
-          <ng-container matColumnDef="actions">
+          <!-- <ng-container matColumnDef="actions">
             <th
               *matHeaderCellDef
               mat-header-cell
@@ -182,7 +182,7 @@
                 <mat-icon svgIcon="mat:more_horiz"></mat-icon>
               </button>
             </td>
-          </ng-container>
+          </ng-container> -->
 
           <tr
             *matHeaderRowDef="visibleColumns"
@@ -214,7 +214,7 @@
         ></mat-paginator>
       </div>
 
-      <mat-menu
+      <!-- <mat-menu
         #columnFilterMenu="matMenu"
         xPosition="before"
         yPosition="below"
@@ -232,9 +232,9 @@
             {{ column.label }}
           </mat-checkbox>
         </button>
-      </mat-menu>
+      </mat-menu> -->
 
-      <mat-menu
+      <!-- <mat-menu
         #actionsMenu="matMenu"
         xPosition="before"
         yPosition="below"
@@ -248,7 +248,7 @@
             <span>Delete</span>
           </button>
         </ng-template>
-      </mat-menu>
+      </mat-menu> -->
     </mat-panel-description>
     }
   </mat-expansion-panel>

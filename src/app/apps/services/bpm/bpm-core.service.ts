@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { environment as envi } from '../../../../environments/environments';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, ReplaySubject } from 'rxjs';
 import { ProTaskE } from '../../interfaces/pro-task-e';
 import { ProFlow } from '../../interfaces/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
@@ -13,6 +13,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BpmCoreService {
 
+  private proTaskSubject = new ReplaySubject<ProTaskE>(1);
+  proTask$ = this.proTaskSubject.asObservable();
   basic_url: string = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
   constructor(
@@ -75,21 +77,8 @@ export class BpmCoreService {
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
-  clearPropertyBpmOperation(executionId: string, baunitId: string): Observable<void> {
-    const url: string = `${envi.url}:${envi.port}${envi.temporal}${envi.clearBaunit}`
-
-    const formData: FormData = new FormData();
-    formData.append('changeLogId', executionId);
-    formData.append('baunitId', baunitId);
-
-    return this.http.delete<void>(url, {
-      body: formData
-    })
-      .pipe(
-        catchError(error => {
-          console.log('Error al remover la baunit');
-          throw error;
-        })
-      )
+  updateProTask(proTaskE: ProTaskE) {
+    this.proTaskSubject.next(proTaskE);
   }
+
 }

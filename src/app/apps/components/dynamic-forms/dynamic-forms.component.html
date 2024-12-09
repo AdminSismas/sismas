@@ -1,0 +1,63 @@
+@if (form) {
+  <form
+    [formGroup]="form"
+    class="w-full h-full grid grid-cols-2 grid-flow-row gap-x-4"
+  >
+    @for (input of inputs; track input.name) {
+      @if (input.element === "collection") {
+        <vex-combox-colletion
+          [label]="input.label"
+          [formControlNameCombobox]="input.name"
+          [typeDomainName]="input.type"
+          placeholderDomainName="{{ input.placeholder }}&hellip;"
+          [idComboCollection]="input.name"
+          cssClasses="w-full"
+        ></vex-combox-colletion>
+      } @else if (input.element === "autocomplete") {
+        <mat-form-field>
+          <mat-label>{{ input.label }}</mat-label>
+          <input
+            matInput
+            placeholder="{{ input.placeholder }}&hellip;"
+            [formControlName]="input.name"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            @for (option of options$[input.name] | async; track option) {
+              <mat-option [value]="option">
+                {{ option }}
+              </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      } @else if (input.element === "input") {
+        @if (input.type === "date") {
+          <mat-form-field>
+            <mat-label>{{ input.label }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              placeholder="{{ input.placeholder }}&hellip;"
+              [formControlName]="input.name"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        } @else {
+          <mat-form-field>
+            <mat-label>{{ input.label }}</mat-label>
+            <input
+              matInput
+              [type]="input.type"
+              placeholder="{{ input.placeholder }}&hellip;"
+              [formControlName]="input.name"
+            />
+          </mat-form-field>
+        }
+      }
+    }
+  </form>
+}

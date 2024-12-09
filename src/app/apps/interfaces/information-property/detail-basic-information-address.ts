@@ -1,6 +1,6 @@
 export class DetailBasicInformationAddress {
   direccionId?: string;
-  esDireccionPrincipal?: string;
+  esDireccionPrincipal?: any;
   codigoPostal?: string;
   valorViaPrincipal?: string;
   letraViaPrincipal?: string;
@@ -49,4 +49,6 @@ export interface CreateBasicInformationAddress {
   domClaseViaPrincipal: string;
   domSectorCiudad: string;
   domSectorPredio: string;
+  direccionTexto: string;
+
 }
