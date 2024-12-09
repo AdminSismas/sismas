@@ -81,4 +81,18 @@ export class BpmCoreService {
     this.proTaskSubject.next(proTaskE);
   }
 
+  clearPropertyBpmOperation(executionId: string, baunitId: string): Observable<void> {
+    const url: string = `${envi.url}:${envi.port}${envi.temporal}${envi.clearBaunit}`;
+    const formData: FormData = new FormData();
+    formData.append('changeLogId', executionId);
+    formData.append('baunitId', baunitId);
+    return this.http.delete<void>(url, {
+      body: formData
+    })
+      .pipe(catchError(error => {
+        console.log('Error al remover la baunit');
+        throw error;
+      }));
+    }
+
 }
