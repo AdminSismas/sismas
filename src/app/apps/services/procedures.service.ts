@@ -54,4 +54,12 @@ export class ProceduresService {
         return this.http.get<any>(url);
       }
 
+      viewDetailIdProcedures(taskId: number): Observable<any> {
+        const urlProcedure =`${environment.url}:${environment.port}${environment.bpmOperation.value}proExecution/`
+        
+        const urlTask: string = `${urlProcedure}${taskId}`;
+        return this.http.get<any>(urlTask);
+      }
+    
+
 }

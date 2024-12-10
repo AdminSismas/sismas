@@ -38,6 +38,9 @@ import { InformationPegeable } from '../../interfaces/information-pegeable.model
 import { error } from 'console';
 import { asyncValidation, dateComparisonValidator } from './validate-form/validate-form-utils';
 import { InputComponent } from '../input/input.component';
+import { TaskResponseModel } from '../../interfaces/task-response.model';
+import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -103,9 +106,11 @@ export class TableProceduresComponent {
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  public procedureDetail:TaskResponseModel= new TaskResponseModel();
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
+    private dialog: MatDialog,
     private proceduresService: ProceduresService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
@@ -216,6 +221,20 @@ private initForm(): void {
 
   public informationDetail(value:any){
     console.log(value, 'Registro de la tabla');
+    this.proceduresService.viewDetailIdProcedures(
+      +value.executionCode)
+      .subscribe( result => {
+        this.procedureDetail = result;
+          this.seeTaskProperty(this.procedureDetail,+value.executionCode)
+        
+      });
+  }
+
+  seeTaskProperty(value:TaskResponseModel,taskId:number):void {
+    this.dialog.open(DetailInformationTasksComponent, {
+      width: '50%',
+      data: { taskId: taskId ,value }
+    });
   }
 
  
