@@ -7,6 +7,8 @@ export const environment = {
     extentByCodigoData:'extentByCodigoData'
   },
   active: 'active',
+  finish: 'finished',
+
   apiUrlToken:'/token/authenticate',
   auth_login:'/auth/login',
   /* ------ B ------ */

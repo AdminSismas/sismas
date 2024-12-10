@@ -41,8 +41,8 @@ export class ProcedureWorkFinishedService {
 
     public getFilterTableProcedureService(page: PageProceduresData):Observable<ProceduresCollection[]>{
       let paramsR:HttpParams = new HttpParams();
-      const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
-          console.log(urlComplete,'URLS RUTA');  
+      const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.finish}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
+      console.log(urlComplete,'URLS RUTA');  
           console.log(this.basic_url,'baseUrl')                             
      return  this.http.get<any>(urlComplete);
   //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
@@ -51,6 +51,14 @@ export class ProcedureWorkFinishedService {
 
       async sendRequestsFetchGetAsync(url: string) {
         return this.http.get<any>(url);
+      }
+
+      public viewDetailIdProceduresFininsh(idProcedure:number){
+        let paramsR:HttpParams = new HttpParams();
+        const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}`;
+            console.log(urlComplete,'URLS RUTA');  
+            console.log(this.basic_url,'baseUrl')                             
+       return  this.http.get<any>(urlComplete + idProcedure);
       }
 
 }

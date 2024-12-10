@@ -62,7 +62,7 @@
                 </div>
               <span
                 style="z-index: 1000;" 
-                data-balloon-length="medium" 
+                data-balloon-length="large" 
                 aria-label="Cuando buscas por el campo Radicado no puedes buscar por Documento"
                 data-balloon-pos="up"
                   *ngIf="seeInfo"
@@ -73,7 +73,7 @@
 
                 <span
                 style="z-index: 1000;" 
-                data-balloon-length="medium" 
+                data-balloon-length="large" 
                 aria-label="Cuando buscas por el campo Documento no puedes buscar por Radicado"
                 data-balloon-pos="up"
                   *ngIf="seeInfoDocument"
@@ -127,6 +127,20 @@
 
             <!-- Tabla de dominios -->
             <table @stagger mat-table [dataSource]="dataSource" class="w-full " matSort>
+
+
+                 <!-- View button basic -->
+                 <ng-container matColumnDef="detailDirection">
+                    <th mat-header-cell *matHeaderCellDef> Detalle </th> <!-- Encabezado -->
+                    <td mat-cell *matCellDef="let row">
+                      <button
+                        (click)="informationDetail(row)"
+                        mat-icon-button 
+                        title="Detalle del tramite">
+                        <mat-icon class="icon-sm" svgIcon="mat:remove_red_eye"></mat-icon>
+                      </button>
+                    </td>
+                </ng-container>
                 <!-- Text Columns -->
                 <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
                     <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">

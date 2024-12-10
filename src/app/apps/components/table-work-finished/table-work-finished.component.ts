@@ -27,17 +27,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 // recursos de archivos locales
 import { contentInfoAttachment } from '../../interfaces/content-info-attachment.model';
 import { contentInfoProcedures } from '../../interfaces/content-info-procedures.model';
-import { MY_DATE_FORMATS, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../constants/procedures.constant';
+import { MY_DATE_FORMATS, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES, TABLE_COLUMN_PROPERTIES_FINISHED } from '../../constants/procedures.constant';
 import { ProceduresCollection } from '../../interfaces/procedures-progress.model';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProceduresService } from '../../services/procedures.service';
 import { PageProceduresData } from '../../interfaces/page-procedures-data.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { ProcedureWorkFinishedService } from '../../services/procedure-work-finished.service';
 import { InputComponent } from '../input/input.component';
 import { dateComparisonValidator } from './validations-form/validation-form-general';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskResponseModel } from '../../interfaces/task-response.model';
+import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 @Component({
   selector: 'vex-table-work-finished',
   standalone: true, 
@@ -56,12 +59,17 @@ import { dateComparisonValidator } from './validations-form/validation-form-gene
     MatDatepickerModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatIconModule ,
+    MatSortModule,
+    MatTableModule,
     CommonModule,
+    FormsModule,
+    MatDatepickerModule,
     NgFor,
     NgClass,
     NgIf,
-    InputComponent,
-    FormsModule,
+    ReactiveFormsModule,
+    InputComponent
   ],
  
 })
@@ -77,6 +85,7 @@ private fBuilder = inject(FormBuilder);
 informationFinished!: FormGroup;
 seeInfo:boolean= false;
 seeInfoDocument:boolean= false;
+public procedureDetail:TaskResponseModel= new TaskResponseModel();
 
 // Array para almacenar las suscripciones
 private subscriptions: Subscription  | undefined[] = [];
@@ -86,7 +95,7 @@ private subscriptions: Subscription  | undefined[] = [];
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements: number = 0;
-  columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES;
+  columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_FINISHED;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -96,6 +105,7 @@ private subscriptions: Subscription  | undefined[] = [];
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
+    private dialog: MatDialog,
     private proceduresService: ProcedureWorkFinishedService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
@@ -122,6 +132,12 @@ private subscriptions: Subscription  | undefined[] = [];
 
     this.beginAtEForm?.setValue(new Date()) 
     this.executionCodeForm?.setValue(0);
+    this.onSearch();
+
+    // Validacion de fechas
+    this.beginAtgreaterThanDate();
+    this.beginAtEFormGreaterThanDate();
+
   }
 
    // Método para cancelar todas las suscripciones
@@ -173,8 +189,73 @@ private initForm(): void {
       }
       this.page = event.pageIndex;
       this.pageSize = event.pageSize;
+      const data = this.objectParameters();
+      this.getDataFromProceduresService(data);
+    }
+
+    public informationDetail(value:any){
+      console.log(value, 'Registro de la tabla');
+
+      this.proceduresService.viewDetailIdProceduresFininsh(
+        +value.executionCode)
+        .subscribe( result => {
+          this.procedureDetail = result;
+            this.seeTaskProperty(this.procedureDetail,+value.executionCode)
+          
+        });
+    }
   
-      this.getDataFromProceduresService();
+    seeTaskProperty(value:TaskResponseModel,taskId:number):void {
+      this.dialog.open(DetailInformationTasksComponent, {
+        width: '50%',
+        data: { taskId: taskId ,value }
+      });
+    }
+
+
+    public beginAtgreaterThanDate(){
+
+      this.beginAtForm?.valueChanges.pipe(
+        debounceTime(100),  // Espera 500 ms después del último cambio
+        distinctUntilChanged(),
+        tap(value => {
+  
+          const beginAtComparation = new Date(this.beginAtForm?.value);
+          const beginAtEComparation = new Date(this.beginAtEForm?.value);
+  
+          if(beginAtComparation > beginAtEComparation ){
+            this.beginAtForm?.setErrors({ dateComparison: true });
+          }else{
+            this.beginAtForm?.setErrors(null);
+          }
+          // Aquí podrías realizar una llamada HTTP o cualquier otra operación
+          console.log(value, 'executoingCode');
+     
+        }))
+      .subscribe(data=>{
+        console.log(data, 'executoingCode');
+      })
+    }
+
+    public beginAtEFormGreaterThanDate(){
+
+      this.beginAtEForm?.valueChanges.pipe(
+        debounceTime(100),  // Espera 500 ms después del último cambio
+        distinctUntilChanged(),
+        tap(value => {
+  
+          const beginAtComparation = new Date(this.beginAtForm?.value);
+          const beginAtEComparation = new Date(this.beginAtEForm?.value);
+  
+          if(beginAtComparation > beginAtEComparation ){
+            this.beginAtEForm?.setErrors({ dateComparison: true });
+          }else{
+            this.beginAtEForm?.setErrors(null);
+          }
+      
+     
+        }))
+      .subscribe()
     }
   
 
@@ -202,7 +283,7 @@ private initForm(): void {
       .subscribe();
 
     }
-  
+
     public individualNumberPartValid(){
       this.individualNumberPartForm?.valueChanges.pipe(
         debounceTime(300),  // Espera 300 ms después del último cambio
@@ -223,11 +304,25 @@ private initForm(): void {
     }
   
 
+    public defaultTableData(){
+      const formValue: PageProceduresData =  {
+        page: this.page,
+        size: this.pageSize,
+        beginAt: '',
+        beginAtE: this.formatDate(new Date()),
+        executionCode: '0',
+        individualNumber: '',
+      }
+      
+       this.getDataFromProceduresService(formValue);
+    }
+  
   
    
   
     onSearch():void {
-      this.getDataFromProceduresService();
+      const data = this.objectParameters();
+      this.getDataFromProceduresService(data);
     }
   
     validateDate(event: any): void {
@@ -312,8 +407,8 @@ private initForm(): void {
   
   
     /* ------- Meth. Services ------- */
-    getDataFromProceduresService() {
-      const data = this.objectParameters();
+    getDataFromProceduresService(data:PageProceduresData) {
+      
       console.log(data);
       console.log(this.informationFinished)
       this.proceduresService.getFilterTableProcedureService(data)
