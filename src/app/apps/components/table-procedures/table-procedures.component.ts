@@ -136,7 +136,7 @@ export class TableProceduresComponent {
     this.executionCodeValidate();
     this.individualNumberPartValid();
   
-    //this.getDataFromProceduresService();
+    this.defaultTableData();
   }
 
   /**
@@ -197,12 +197,26 @@ private initForm(): void {
     }
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
+    const data = this.objectParameters();
+    this.getDataFromProceduresService(data);
+  }
 
-    this.getDataFromProceduresService();
+  public defaultTableData(){
+    const formValue: PageProceduresData =  {
+      page: this.page,
+      size: this.pageSize,
+      beginAt: '12/01/2024',
+      beginAtE: '',
+      executionCode: '0',
+      individualNumber: '',
+    }
+     
+     this.getDataFromProceduresService(formValue);
   }
 
   onSearch():void {
-    this.getDataFromProceduresService();
+    const data = this.objectParameters();
+    this.getDataFromProceduresService(data);
   }
 
   validateDate(event: any): void {
@@ -400,10 +414,8 @@ private initForm(): void {
 
 
   /* ------- Meth. Services ------- */
-  getDataFromProceduresService() {
-
-    const data = this.objectParameters();
-    this.proceduresService.getFilterTableEjecutionService(data)
+  getDataFromProceduresService(value:PageProceduresData) {
+    this.proceduresService.getFilterTableEjecutionService(value)
     .subscribe({
       next: (result: any) => {
           console.log("datos de api: ", result);
