@@ -125,6 +125,7 @@ export class BmpCoreComponent implements OnInit {
   }
 
   async ngOnInit() {
+    
     this.activateLoading();
     this.executionId = await firstValueFrom(this.executionId$);
     this.proFlow = await firstValueFrom(this._proFlow$);
