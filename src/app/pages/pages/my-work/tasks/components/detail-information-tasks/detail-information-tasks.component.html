@@ -1,0 +1,133 @@
+<div
+  class="flex items-center"
+  mat-dialog-title
+>
+  <h4 class="subheading-1 m-0 flex-auto">
+    Detalles de la tarea
+   
+  </h4>
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+
+<mat-divider class="text-border"></mat-divider>
+
+<mat-panel-title>
+  <mat-dialog-content
+    class="grid grid-flow-row gap-y-4 gap-x-6 grid-cols-2 overflow-x-hidden lg:px-8"
+  >
+    <!--processName -->
+    <div class="flex flex-row gap-4">
+      <span class="text-black  text-sm">Nombre del proceso</span>
+      
+      @if (data && data.value && data.value.processName) {
+        <h2 class="text-sm">{{ data.value.processName  }}</h2>
+      } @else {
+        <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+      }
+    </div>
+  <!-- Nombre 1 -->
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Categoria del proceso:</span>
+    @if (data && data.value && data.value.bpmProcessCategory) {
+      <h2 class="text-sm">{{ data.value.bpmProcessCategory }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Prioridad:</span>
+    @if (data && data.value && data.value.bpmPriority) {
+      <h2 class="text-sm">{{ data.value.bpmPriority }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Fecha de inicio del proceso:</span>
+    @if (data && data.value && data.value.beginAt) {
+      <h2 class="text-sm">{{ data.value.beginAt | date: "dd/MM/yyyy hh:mm:ss a" }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Fecha final de ejecucion del proceso:</span>
+    @if (data && data.value && data.value.finishAt) {
+      <h2 class="text-sm">{{ data.value.finishAt | date: "dd/MM/yyyy hh:mm:ss a" }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Nombre del usuario que atendio la ultima acción del proceso:</span>
+    @if (data && data.value && data.value.lastUpdateBy) {
+      <h2 class="text-sm">{{ data.value.lastUpdateBy }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Fecha de la ultima acción del proceso:</span>
+    @if (data && data.value && data.value.lastUpdateAt) {
+      <h2 class="text-sm">{{ data.value.lastUpdateAt | date: "dd/MM/yyyy hh:mm:ss a" }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Fecha que inicio la ultima suspensión del proceso:</span>
+    @if (data && data.value && data.value.suspensionStartAt) {
+      <h2 class="text-sm">{{ data.value.suspensionStartAt }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Dias acumulados suspendidos:</span>
+    @if (data && data.value && data.value.suspendedDays) {
+      <h2 class="text-sm">{{ data.value.suspendedDays }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Fecha esperado de finalización del proceso:</span>
+    @if (data && data.value && data.value.dueDate) {
+      <h2 class="text-sm">{{ data.value.dueDate | date: "dd/MM/yyyy hh:mm:ss a" }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+  <div class="flex flew-row gap-4">
+    <span class="text-black  text-sm">Descripcion del proceso</span>
+    @if (data && data.value && data.value.process && data.value.process.description) {
+      <h2 class="text-sm">{{ data.value.process.description }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+
+  </mat-dialog-content>
+</mat-panel-title>
