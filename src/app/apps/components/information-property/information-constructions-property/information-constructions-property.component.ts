@@ -240,6 +240,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       type: data ? 'edit' : 'new',
       basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
       baunitId: this.baunitId || undefined,
+      executionId: this.executionId || undefined
     };
   
     const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
@@ -283,14 +284,12 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Encuentra el índice de la construcción que se ha editado
         const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
   
         if (index !== -1) {
-          // Actualiza el elemento en dataSource
+         
           this.dataSource.data[index] = result;
-          
-          // Forzar la actualización de la tabla
+        
           this.dataSource.data = [...this.dataSource.data];
         }
       }
@@ -301,13 +300,13 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     const dialogRef = this.dialog.open(this.confirmDialog);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const baunitId = 2282747; // El valor fijo que mencionaste
-        const changeLogId = 68;
-        const unitBuiltId = customer.unitBuiltId;
-  
-        this.informationPropertyService.deleteConstruction(baunitId, changeLogId, unitBuiltId).subscribe({
+        let baunitId = this.baunitId ?? '';
+        let executionId = this.executionId ?? '';
+        let unitBuiltId = customer.unitBuiltId;
+
+        this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
           next: () => {
-            // Elimina el registro de la tabla si la petición fue exitosa
+      
             this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
             Swal.fire({
               title: '¡Éxito!',

@@ -242,7 +242,7 @@ export class EditInformationConstructionDialogComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.informationPropertyService.updateConstruction(68, 2282747, formValues)
+          this.informationPropertyService.updateConstruction(this.data.executionId, this.data.baunitId, formValues)
             .subscribe({
               next: () => {
                 Swal.fire({

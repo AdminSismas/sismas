@@ -13,6 +13,9 @@ import { ContentInformationConstruction, CreateBasicInformationConstruction } fr
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
 import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
 import { EVIRONMENT_CC_DIRECCION } from '../../constants/constant';
+import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
+import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
+import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +74,8 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
+
+
   getInformationPropertyOwners(
     schema: string,
     id: string,
@@ -125,7 +130,7 @@ export class InformationPropertyService {
     baunitId: number | undefined
   ): Observable<CcCalificacionUB[]> {
     let params: HttpParams = new HttpParams();
-    params = params.append('unitBuiltId', `${24321}`)
+    params = params.append('unitBuiltId', `${unitBuiltId}`);
     const url: string = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
@@ -163,6 +168,105 @@ export class InformationPropertyService {
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
+  }
+
+  getByBauniFisica(
+    id: string,
+    schema: string,
+    executionId: string | null | undefined = null
+  ): Observable<ZoneBAUnit[]> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${id}`);
+    let url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
+
+  getByBauniEcono(
+    id: string,
+    schema: string,
+    executionId: string | null | undefined = null
+  ): Observable<ZoneBAUnit[]> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${id}`);
+    let url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
+  getByDivPolUrbana(): Observable<UrbanPhysicalZone[]> {
+    const divpolLv1 = 18;
+    const divpolLv2 = '001';
+    
+    let params: HttpParams = new HttpParams();
+    params = params.append('divpolLv1', `${divpolLv1}`);
+    params = params.append('divpolLv2', `${divpolLv2}`);
+    
+    let url: string = `${this.basic_url}/${'ccZonaHomoFisicaUr'}/${'divpol'}`;
+  
+    console.log('url', url);
+    
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
+
+  getByDivPolRural(): Observable<RuralPhysicalZone[]> {
+
+    const divpolLv1 = 18;
+    const divpolLv2 = '001'; 
+    let params: HttpParams = new HttpParams();
+    params = params.append('divpolLv1', `${divpolLv1}`);
+    params = params.append('divpolLv2', `${divpolLv2}`);
+    let url: string = `${this.basic_url}/${'ccZonaHomoFisicaRu'}/${'divpol'}`;
+
+    console.log('url', url);
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+
+  }
+
+  getByDivPolGeoeconomica(): Observable<GeoEconomicZone[]> {
+
+    const divpolLv1 = 18;
+    const divpolLv2 = '001'; 
+    let params: HttpParams = new HttpParams();
+    params = params.append('divpolLv1', `${divpolLv1}`);
+    params = params.append('divpolLv2', `${divpolLv2}`);
+    let url: string = `${this.basic_url}/${'ccZonaHomoGeoEconomica'}/${'divpol'}`;
+
+    console.log('url', url);
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+
+  }
+
+  createBAUnitZones(body: any, baunitId: number, validityValuation: number): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${baunitId}`);
+    params = params.append('validityValuation', `${validityValuation}`);
+    const url = `${this.basic_url}/${'baUnitZona'}`;
+    return this.http.post(url, body, { params: params });
+  }
+
+  updateBAUnitZones(baUnitZonaId: number, body: any, baunitId: number, validityValuation: number): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${baunitId}`);
+    params = params.append('validityValuation', `${validityValuation}`);
+    const url = `${this.basic_url}/${'baUnitZona'}/${baUnitZonaId}`;
+    return this.http.put(url, body, { params: params });
+  }
+
+  deleteBAUnitZones(baUnitZonaId:number, baunitId: number, validityValuation: number, version: number): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('baunitId', `${baunitId}`);
+    params = params.append('validityValuation', `${validityValuation}`);
+    params = params.append('version', `${version}`);
+    const url = `${this.basic_url}/${'baUnitZona'}/${baUnitZonaId}`;
+    return this.http.delete(url, { params: params });
   }
 
   /**
@@ -234,7 +338,7 @@ export class InformationPropertyService {
   }
 
   createBasicInformationPropertyConstruction(
-    executionId: number,
+    executionId: string,
     baunitId: string,
     createBasicInformationConstruction: CreateBasicInformationConstruction
   ): Observable<ContentInformationConstruction> {
@@ -280,7 +384,7 @@ export class InformationPropertyService {
     return this.httpClient.delete(url, { params: httpParams });
   }
 
-  deleteConstruction(baunitId: number, changeLogId: number, unitBuiltId: number): Observable<any> {
+  deleteConstruction(baunitId: string, changeLogId: string, unitBuiltId: number): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}`;
 
     const formData = new FormData();
