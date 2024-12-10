@@ -136,9 +136,7 @@ private subscriptions: Subscription  | undefined[] = [];
     this.executionCodeValidate();
     this.individualNumberPartValid();
 
-    this.beginAtEForm?.setValue(new Date()) 
-    this.executionCodeForm?.setValue(0);
-    this.onSearch();
+    this.defaultTableData();
 
     // Validacion de fechas
     this.beginAtgreaterThanDate();
@@ -157,8 +155,8 @@ private subscriptions: Subscription  | undefined[] = [];
    */
 private initForm(): void {
   this.informationEjecution = this.fBuilder.group({
-    beginAtForm: this.fBuilder.control(null),
-    beginAtEForm: this.fBuilder.control(null,[Validators.required]),
+    beginAtForm: this.fBuilder.control(null,[Validators.required]),
+    beginAtEForm: this.fBuilder.control(null),
     executionCodeForm: this.fBuilder.control(0, [Validators.pattern(/^[0-9]*$/)]), // Solo letras y permite espacio
     individualNumberPartForm: this.fBuilder.control( null, [Validators.pattern(/^[0-9]*$/)]),
   
@@ -314,16 +312,19 @@ private initForm(): void {
   
 
     public defaultTableData(){
-      const formValue: PageProceduresData =  {
-        page: this.page,
-        size: this.pageSize,
-        beginAt: '',
-        beginAtE: this.formatDate(new Date()),
-        executionCode: '0',
-        individualNumber: '',
-      }
-      
-       this.getDataFromProceduresService(formValue);
+    this.executionCodeForm?.setValue(0); 
+
+    this.individualNumberPartForm?.setValue(''); 
+    const formValue: PageProceduresData =  {
+      page: this.page,
+      size: this.pageSize,
+      beginAt: '13/01/2024',
+      beginAtE: '',
+      executionCode: this.executionCodeForm?.value,
+      individualNumber: '',
+    }
+    
+    this.getDataFromProceduresService(formValue);
     }
   
   
@@ -353,14 +354,13 @@ private initForm(): void {
   
     /* ------- Meth. Common ------- */
     objectParameters(): PageProceduresData {
-      let beginAtETrans = new Date();
+      let beginAtETrans = '';
 
     if(this.beginAtForm?.value === null){
       // this.beginAtE?.setValue(new Date())
-       beginAtETrans = new Date()
-    }else{
-      beginAtETrans = new Date(this.beginAtForm?.value)
+       beginAtETrans = ''
     }
+
     const beginAtTrans = new Date(this.beginAtForm?.value)
 
 
@@ -378,7 +378,7 @@ private initForm(): void {
       page: this.page,
       size: this.pageSize,
       beginAt: this.formatDate(beginAtTrans),
-      beginAtE: this.formatDate(beginAtETrans),
+      beginAtE: beginAtETrans ? this.formatDate(new Date('13/01/2024')) : '' ,
       executionCode: this.executionCodeForm?.value,
       individualNumber: this.individualNumberPartForm?.value,
     }
