@@ -23,14 +23,17 @@ export const environment = {
   bAUnitDelete:'BAUnitDelete',
   baunits:'/baunits',
   bAUnitUpdate:'BAUnitUpdate',
-
   baUnitZona_baunitId:'/baUnitZona/baunitId',
+  bpm_bpmCore:'/bpm/bpm-core/',
+  bpm_users:'/bpmUser',
+  bpm_username_exists: '/exists/username/',
+  bpm_email_exists: '/exists/email/',
+  bpm_individual_exists: '/exists/individual/',
   bpmAttachment:{
     count:'/count',
     proExecution:'proExecution/',
     value: '/bpmAttachment/',
   },
-  bpm_bpmCore:'/bpm/bpm-core/',
   bpmOperation:{
     comment:'comment/',
     count: '/count',

@@ -21,7 +21,7 @@ import { Columns, DataSourceZoneManager, DisplayedColumns, GeoEconomicZone, Rura
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
-import { URBAN_COLUMNS, RURAL_COLUMNS, GEOECONOMICA_COLUMNS } from './zone-constants';
+import { URBAN_COLUMNS, RURAL_COLUMNS, GEOECONOMICA_COLUMNS } from '../../../../../apps/constants/zone.constants';
 import { MatTableDataSource } from '@angular/material/table';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 

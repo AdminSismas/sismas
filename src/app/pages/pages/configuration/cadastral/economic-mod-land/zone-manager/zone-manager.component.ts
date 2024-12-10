@@ -8,13 +8,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { getZoneParams } from '../zone-constants';
+import { getZoneParams } from '../../../../../../apps/constants/zone.constants';
 import { Zone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { CreateZoneComponent } from '../create-zone/create-zone.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { CadastralChangeLogComponent } from '../cadastral-change-log/cadastral-change-log.component';
-import { CADASTRE_CHANGE_LOG_PARAMS } from '../zone-constants';
+import { CADASTRE_CHANGE_LOG_PARAMS } from '../../../../../../apps/constants/zone.constants';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 
 @Component({
