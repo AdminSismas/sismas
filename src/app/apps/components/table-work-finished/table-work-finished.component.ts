@@ -220,10 +220,10 @@ private initForm(): void {
         distinctUntilChanged(),
         tap(value => {
   
-          const beginAtComparation = new Date(this.beginAtForm?.value);
-          const beginAtEComparation = new Date(this.beginAtEForm?.value);
+          const beginAtComparation = this.beginAtForm?.value ? new Date(this.beginAtForm?.value): null ;
+          const beginAtEComparation = this.beginAtEForm?.value ? new Date(this.beginAtEForm?.value) : null ;
   
-          if(beginAtComparation > beginAtEComparation ){
+          if (beginAtComparation && beginAtEComparation && new Date(beginAtEComparation) < new Date(beginAtComparation)){
             this.beginAtForm?.setErrors({ dateComparison: true });
           }else{
             this.beginAtForm?.setErrors(null);
@@ -244,10 +244,10 @@ private initForm(): void {
         distinctUntilChanged(),
         tap(value => {
   
-          const beginAtComparation = new Date(this.beginAtForm?.value);
-          const beginAtEComparation = new Date(this.beginAtEForm?.value);
+          const beginAtComparation = this.beginAtForm?.value ? new Date(this.beginAtForm?.value): null ;
+          const beginAtEComparation = this.beginAtEForm?.value ? new Date(this.beginAtEForm?.value) : null ;
   
-          if(beginAtComparation > beginAtEComparation ){
+          if (beginAtComparation && beginAtEComparation && new Date(beginAtEComparation) < new Date(beginAtComparation)){
             this.beginAtEForm?.setErrors({ dateComparison: true });
           }else{
             this.beginAtEForm?.setErrors(null);
