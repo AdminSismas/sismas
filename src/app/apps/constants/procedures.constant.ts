@@ -6,12 +6,20 @@ export const PAGE_SIZE: number = 10;
 export const PAGE_SIZE_OPTION: number[] = [5, 10, 20, 50];
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[]= [
     {
+        label: 'Detalle',
+        property: 'detailDirection',
+        type: 'button',
+        visible: true,
+        cssClasses: ['text-secondary']
+      },
+    {
         label: 'Radicado',
         property: 'executionCode',
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
     },
+   
     {
         label: 'Clase',
         property: 'bpmProcessCategory',
@@ -46,7 +54,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[]= [
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
-    }
+    },
 ]
 
 
