@@ -1,27 +1,42 @@
-<div class="card overflow-auto w-full flex flex-col justify-between py-0 mat-elevation-z5">
+<div
+  class="card overflow-auto w-full flex flex-col justify-between py-0 mat-elevation-z5"
+>
   <table
     @stagger
     [dataSource]="dataSource"
     class="w-full"
     mat-table
-    matSort>
-
+    matSort
+  >
     <!-- Type Properties Column -->
     <ng-container matColumnDef="operationType">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="pl-1 pr-1"></th>
-      <td *matCellDef="let row"
-          mat-cell
-          class="pl-1 pr-1">
-        <div *ngIf="row['operationType'] === 'CREATE'"
-             class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-green-600">
+      <th
+        *matHeaderCellDef
+        mat-header-cell
+        mat-sort-header
+        class="pl-1 pr-1"
+      ></th>
+      <td
+        *matCellDef="let row"
+        mat-cell
+        class="pl-1 pr-1"
+      >
+        <div
+          *ngIf="row['operationType'] === 'CREATE'"
+          class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-green-600"
+        >
           Creado
         </div>
-        <div *ngIf="row['operationType'] === 'UPDATE'"
-             class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-primary-600">
+        <div
+          *ngIf="row['operationType'] === 'UPDATE'"
+          class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-primary-600"
+        >
           Agregado
         </div>
-        <div *ngIf="row['operationType'] === 'DELETE'"
-             class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-red-600">
+        <div
+          *ngIf="row['operationType'] === 'DELETE'"
+          class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-red-600"
+        >
           Borrado
         </div>
       </td>
@@ -33,17 +48,24 @@
         *matHeaderCellDef
         class="uppercase pl-1 pr-1"
         mat-header-cell
-        mat-sort-header>
-      </th>
-      <td *matCellDef="let row"
-          class="pl-1 pr-1"
-          mat-cell>
+        mat-sort-header
+      ></th>
+      <td
+        *matCellDef="let row"
+        class="pl-1 pr-1"
+        mat-cell
+      >
         <div class="flex">
           <button
             (click)="openCadastralInformationProperty(row)"
             class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
-            mat-icon-button title="Consultar información predial">
-            <mat-icon class="icon-sm" svgIcon="mat:info"></mat-icon>
+            mat-icon-button
+            title="Consultar información predial"
+          >
+            <mat-icon
+              class="icon-sm"
+              svgIcon="mat:info"
+            ></mat-icon>
           </button>
         </div>
       </td>
@@ -53,18 +75,22 @@
     <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
       <ng-container
         *ngIf="column.type === 'text'"
-        [matColumnDef]="column.property">
+        [matColumnDef]="column.property"
+      >
         <th
           *matHeaderCellDef
           class="uppercase pl-1 pr-1"
           mat-header-cell
-          mat-sort-header>
+          mat-sort-header
+        >
           {{ column.label }}
         </th>
-        <td *matCellDef="let row"
-            [ngClass]="column.cssClasses"
-            mat-cell
-            class="pl-1 pr-1">
+        <td
+          *matCellDef="let row"
+          [ngClass]="column.cssClasses"
+          mat-cell
+          class="pl-1 pr-1"
+        >
           {{ row[column.property] }}
         </td>
       </ng-container>
@@ -72,28 +98,44 @@
 
     <!-- Action Column -->
     <ng-container matColumnDef="actions">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="pl-1 pr-1"></th>
-      <td *matCellDef="let row" class="w-10 text-secondary pl-1 pr-1" mat-cell>
+      <th
+        *matHeaderCellDef
+        mat-header-cell
+        mat-sort-header
+        class="pl-1 pr-1"
+      ></th>
+      <td
+        *matCellDef="let row"
+        class="w-10 text-secondary pl-1 pr-1"
+        mat-cell
+      >
         <button
           (click)="$event.stopPropagation()"
           [matMenuTriggerData]="{ row: row }"
           [matMenuTriggerFor]="actionsMenu"
           mat-icon-button
-          type="button">
+          type="button"
+        >
           <mat-icon svgIcon="mat:more_horiz"></mat-icon>
         </button>
       </td>
     </ng-container>
 
-    <tr *matHeaderRowDef="visibleColumns"
-        mat-header-row></tr>
+    <tr
+      *matHeaderRowDef="visibleColumns"
+      mat-header-row
+    ></tr>
     <tr
       *matRowDef="let row; columns: visibleColumns"
       @fadeInUp
       class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-      mat-row></tr>
+      mat-row
+    ></tr>
   </table>
-  <div *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0" class="no-data-information">
+  <div
+    *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0"
+    class="no-data-information"
+  >
     No hay información disponible
   </div>
   <mat-paginator
@@ -102,25 +144,67 @@
     [length]="totalElements"
     [pageSize]="pageSize"
     [pageIndex]="page"
-    class="sticky left-0"></mat-paginator>
+    class="sticky left-0"
+  ></mat-paginator>
 </div>
 
-
-<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
-  <ng-template let-row="row" matMenuContent>
-    <button (click)="viewChanges(row)" mat-menu-item>
+<mat-menu
+  #actionsMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
+  <ng-template
+    let-row="row"
+    matMenuContent
+  >
+    <button
+      (click)="viewChanges(row)"
+      mat-menu-item
+    >
       <mat-icon svgIcon="mat:info"></mat-icon>
       <span>Ver cambios</span>
     </button>
     @if (mode === 1) {
-      <button (click)="edithInformations(row)" mat-menu-item>
+      <button
+        (click)="edithInformations(row)"
+        mat-menu-item
+      >
         <mat-icon svgIcon="mat:edit"></mat-icon>
         <span>Editar</span>
       </button>
-      <button (click)="deleteInformations(row)" mat-menu-item>
+      <button
+        (click)="deleteInformations(row)"
+        mat-menu-item
+      >
         <mat-icon svgIcon="mat:delete"></mat-icon>
         <span>Retirar</span>
       </button>
     }
   </ng-template>
 </mat-menu>
+
+<ng-template #confirmDeleteDialog>
+  <h2 mat-dialog-title>Confirmar eliminación</h2>
+  <mat-divider class="text-border border-slate-400"></mat-divider>
+  <mat-dialog-content class="flex flex-col items-center py-4 lg:px-8">
+    <span class="text-lg">¿Está seguro de remover esta unidad predial?</span>
+    <strong class="text-lg">{{ npnRemoving }}</strong>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="primary"
+      [mat-dialog-close]="true"
+    >
+      Remover
+    </button>
+    <button
+      mat-flat-button
+      [mat-dialog-close]="true"
+      color="warn"
+    >
+      Cancelar
+    </button>
+  </mat-dialog-actions>
+</ng-template>

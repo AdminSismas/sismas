@@ -60,7 +60,6 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
     MatDialogActions,
     MatIconModule,
     MatInputModule,
-    QuillEditorComponent,
     MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
