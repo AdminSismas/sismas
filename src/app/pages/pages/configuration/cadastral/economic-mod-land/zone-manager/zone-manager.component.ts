@@ -13,9 +13,8 @@ import { Zone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zo
 import { CreateZoneComponent } from '../create-zone/create-zone.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { CadastralChangeLogComponent } from '../cadastral-change-log/cadastral-change-log.component';
-import { CADASTRE_CHANGE_LOG_PARAMS } from '../zone-constants';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
+import { EconomicZoneComponent } from '../economic-zone/economic-zone.component';
 
 @Component({
   selector: 'zone-manager',
@@ -34,7 +33,7 @@ import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-
     MatTableModule,
     /* Vex Components */
     /* Custom Components */
-    // DynamicFormsComponent,
+    EconomicZoneComponent
   ],
   templateUrl: './zone-manager.component.html',
   styles: ``
@@ -64,7 +63,7 @@ export class ZoneManagerComponent implements OnInit {
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
   @ViewChild('actionsMenu', { static: true }) actionsMenu!: TemplateRef<any>;
 
-  @Input({ required: true }) public typeZone: string = 'urbanas';
+  @Input({ required: true }) public typeZone: 'urbana' | 'rural' | 'geoeconómica' = 'urbana';
   @Input({ required: true }) public service!: ZoneServices
   @Input({ required: true }) public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   @Input({ required: true }) public columns: { name: string, title: string }[] = [];

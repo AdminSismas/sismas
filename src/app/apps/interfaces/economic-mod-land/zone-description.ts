@@ -86,4 +86,10 @@ export interface DisplayedColumns {
   geoeconomic: string[];
 }
 
+export interface GeoEconomicZoneDetails {
+  zonaGEcoValorId: number;
+  vigencia:        number;
+  valor:           number;
+}
+
 
