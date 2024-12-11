@@ -89,7 +89,7 @@ export const environment = {
   /* ------ O ------ */
   operations:'/operations',
   /* ------ P ------ */
-  port: '5001',
+  port: '5002',
   post_path_viewer:'rest/config/setParams',
   production: false,
   proExecution: '/proExecution/',

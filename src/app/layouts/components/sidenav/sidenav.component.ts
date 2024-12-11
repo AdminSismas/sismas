@@ -15,6 +15,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 
 @Component({
   selector: 'vex-sidenav',
@@ -33,6 +35,9 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
   ]
 })
 export class SidenavComponent implements OnInit {
+
+  user: UserDetails | null = null;
+  
   @Input() collapsed: boolean = false;
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
   title$ = this.configService.config$.pipe(
@@ -55,20 +60,19 @@ export class SidenavComponent implements OnInit {
 
   items$: Observable<NavigationItem[]> = this.navigationService.items$;
 
-  userName$?: string
-  userPerfil$?: string
+  
 
   constructor(
     private navigationService: NavigationService,
     private layoutService: VexLayoutService,
     private configService: VexConfigService,
     private readonly popoverService: VexPopoverService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private userService: UserService
   ) {}
 
-  ngOnInit() {
-    this.userName$ = 'Usuario activo';
-    this.userPerfil$ = 'Prediador';
+  ngOnInit(): void {
+    this.user = this.userService.getUser();  
   }
 
   collapseOpenSidenav() {

@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { environment } from '../../../../../environments/environments';
 import { AuthService } from './services/auth.service';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'vex-login',
@@ -46,7 +48,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
     private snackbar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService  
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -57,17 +60,31 @@ export class LoginComponent {
   send() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
-      
+
       this.authService.login(email, password).subscribe(
         (response: any) => {
           if (response && response.token) {
             this.authService.saveToken(response.token);
-            this.router.navigate([`${environment.myWork_cadastralSearch}`])
-              .then(() => {
-                this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
+
+            // Decodificar el token y obtener los datos del usuario
+            this.authService.getUserData()?.subscribe(
+              (userData) => {
+                const user = new UserDetails(userData);
+                this.userService.setUser(user);  // Guardamos el usuario en el servicio
+
+                this.router.navigate([`${environment.myWork_cadastralSearch}`])
+                  .then(() => {
+                    this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
+                      duration: 5000
+                    });
+                  });
+              },
+              (error) => {
+                this.snackbar.open('Error al obtener los datos del usuario.', 'Error', {
                   duration: 5000
                 });
-              });
+              }
+            );
           } else {
             this.snackbar.open('Credenciales incorrectas. Intenta nuevamente.', 'Error', {
               duration: 5000
@@ -86,6 +103,7 @@ export class LoginComponent {
       });
     }
   }
+
   toggleVisibility() {
     if (this.visible) {
       this.inputType = 'password';

@@ -4,7 +4,7 @@ export const environment = {
   url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   post_path_viewer:'rest/config/setParams',
   query_parameters_page:'../../#/context/prediosplus/11/',
-  port: '5001',
+  port: '5002',
   apiUrlToken:'/token/authenticate',
   ulr_icon_base:'assets/img/icons/cadastral-logos/128x128/',
   schemas: {
