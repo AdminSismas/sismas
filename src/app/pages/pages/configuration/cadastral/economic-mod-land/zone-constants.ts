@@ -1,6 +1,8 @@
 import { Validators } from "@angular/forms"
 import { JSONInput } from "src/app/apps/interfaces/dynamic-forms"
 
+export const NO_DETAILS_DATA: string = 'No hay detalles disponibles';
+
 export const URBAN_COLUMNS = [
   {
     name: 'zonaHomoFisicaUrCode',

@@ -1,10 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { GEOECONOMICA_COLUMNS } from '../zone-constants';
-import { GeoEconomicZoneDetails } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import { GEOECONOMICA_COLUMNS, NO_DETAILS_DATA } from '../zone-constants';
+import { GeoEconomicZone, GeoEconomicZoneDetails } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { ZoneServices } from '../../../../../../apps/interfaces/economic-mod-land/zone-description';
+import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'economic-zone',
@@ -19,6 +22,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule,
     /* Material */
+    MatDividerModule,
     MatTableModule,
     MatIconModule,
     /* Vex */
@@ -33,24 +37,37 @@ export class EconomicZoneComponent implements OnInit {
   public columns: { name: string, title: string }[] = GEOECONOMICA_COLUMNS
   public displayColumns: string[] = [];
   public columnsToDisplayWithExpand: string[] = [];
-  public expandedElement?: GeoEconomicZoneDetails | null;
+  public expandedElement?: GeoEconomicZone | null;
+  public NO_DETAILS_DATA: string = NO_DETAILS_DATA;
 
-  constructor() { }
+  constructor(
+    private geoEconomicZoneService: GeoeconomicZoneService,
+  ) { }
 
   ngOnInit(): void {
     this.displayColumns = this.columns.map((column) => column.name);
     this.columnsToDisplayWithExpand = [...this.displayColumns, 'expand']
   }
 
-  expandRow(row: any): void {
-    if (this.expandedElement === row) {
-      console.log('Colapsando')
-      this.expandedElement = null;
-    } else {
-      console.log('Expandiendo')
-      this.expandedElement = row;
-    }
-
+expandRow(row: GeoEconomicZone): void {
+  if (this.expandedElement === row) {
+    this.expandedElement = null;
+    return;
   }
 
+  this.expandedElement = row;
+
+  this.geoEconomicZoneService.getValues(row.zonaHomoGeoEconomicaId)
+    .subscribe({
+      next: (values: GeoEconomicZoneDetails) => {
+        const index: number = this.dataSource.data.indexOf(row);
+        this.dataSource.data[index].details = values;
+        this.dataSource.data = [...this.dataSource.data];
+      },
+      error: (error) => {
+        console.error('Error al cargar los detalles:', error);
+        this.expandedElement = null;
+      }
+    });
+  }
 }
