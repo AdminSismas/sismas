@@ -28,10 +28,17 @@ export class InformationPropertyService {
   reloadTable$ = new Subject<boolean>();
   reloadTableStarted$: Observable<boolean> = this.reloadTable$.asObservable();
 
+  showOptionsPerson$ = new Subject<boolean>();
+  showOptionsPersonStarted$: Observable<boolean> = this.showOptionsPerson$.asObservable();
+
   constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
 
   public reloadTableSet(value:boolean):void{
     this.reloadTable$.next(value);
+  }
+
+  public showOptionsPersonSet(value:boolean):void{
+    this.showOptionsPerson$.next(value);
   }
 
   getBasicInformationProperty(

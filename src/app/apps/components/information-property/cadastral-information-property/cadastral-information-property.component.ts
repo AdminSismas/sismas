@@ -38,6 +38,7 @@ import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -139,6 +140,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
 
+   constructor(private informationPropertyService: InformationPropertyService){ }
+
+  
+
   ngOnInit(): void {
     if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
       return;
@@ -147,6 +152,11 @@ export class CadastralInformationPropertyComponent implements OnInit {
     if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
       return;
     }
+
+    this.informationPropertyService.showOptionsPersonStarted$.subscribe(value=>{
+      console.log(value);
+      console.log(value,'bandera para validar y oculatar ');
+    })
 
     this.baunitHead = this.contentInfoSchema.content
     this.baunitId = this.baunitHead.baunitIdE;

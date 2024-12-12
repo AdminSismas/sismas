@@ -54,6 +54,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
   propertyUnit: boolean = false;
+  dataFlag: string = '';
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
@@ -66,7 +68,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     if (
       this.defaults == null ||
       this.defaults.schemas == null ||
-      this.defaults.typeInformation == null
+      this.defaults.typeInformation == null ||
+      this.defaults.flagData == null
     ) {
       return;
     }
@@ -85,6 +88,14 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
 
     if (this.defaults.typeInformation == 'visualization') {
       this.typeInformation = this.defaults.typeInformation;
+    }
+
+    if(this.defaults.flagData !== ''){
+        this.dataFlag = this.defaults.flagData;
+        console.log(this.defaults.flagData,'bandera para validar y ocultar ');
+        if(this.defaults.flagData === 'openDataFlag'){
+          this.informationPropertyService.showOptionsPersonSet(true);
+        }
     }
   }
 
