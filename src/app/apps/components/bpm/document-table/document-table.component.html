@@ -1,16 +1,14 @@
-<mat-dialog-content>
-  <header class="flex items-center justify-between">
-    <h2 mat-dialog-title>Documentos</h2>
-    <button
-      mat-dialog-close
-      class="text-secondary"
-      mat-icon-button
-      type="button"
-    >
-      <mat-icon svgIcon="mat:close"></mat-icon>
-    </button>
-  </header>
-  <mat-divider></mat-divider>
+<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    Documentos
+  </h2>
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+  <mat-dialog-content>
+
   <div class="card overflow-auto">
     <div
       class="bg-app-bar mt-4 px-4 h-16 border-b sticky left-0 flex items-center"
@@ -122,12 +120,13 @@
             [ngClass]="column.cssClasses"
             mat-cell
           >
-            <mat-icon
-              matIconPrefix
-              *ngIf="column.property === 'originalFileName'"
-              svgIcon="mat:picture_as_pdf"
-              class="w-5 h-5 p-0 items-center justify-center text-red-600"
-            ></mat-icon>
+          <mat-icon
+          matIconPrefix
+          *ngIf="column.property === 'originalFileName'"
+          [svgIcon]="getFileTypeIcon(row)"
+          [ngClass]="getFileIconColor(row)"  
+          class="w-5 h-5 p-0 items-center justify-center"
+        ></mat-icon>
             {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
           </td>
         </ng-container>
