@@ -1,13 +1,17 @@
+// Angular framework
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { GEOECONOMICA_COLUMNS, NO_DETAILS_DATA } from '../zone-constants';
-import { GeoEconomicZone, GeoEconomicZoneDetails } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { ZoneServices } from '../../../../../../apps/interfaces/economic-mod-land/zone-description';
-import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
+import { Component, Input, OnInit } from '@angular/core';
+
+// Material
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
+// Custom
+import { GEOECONOMICA_COLUMNS, NO_DETAILS_DATA } from '../../../../constants/zone-constants';
+import { GeoEconomicZone, GeoEconomicZoneDetails } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 
 @Component({
   selector: 'economic-zone',
