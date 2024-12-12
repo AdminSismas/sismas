@@ -1,6 +1,5 @@
 import { LayoutComponent } from './layouts/layout/layout.component';
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
-import { AuthGuard } from './pages/pages/auth/login/services/auth.guard';
 
 export const appRoutes: VexRoutes = [
   {
@@ -30,38 +29,31 @@ export const appRoutes: VexRoutes = [
     children: [
       {
         path: 'myWork',
-        loadChildren: () => import('./pages/pages/my-work/my-work.routes'),
-        canActivate: [AuthGuard]  
+        loadChildren: () => import('./pages/pages/my-work/my-work.routes')
       },
       {
         path: 'operationSupport',
-        loadChildren: () => import('./pages/pages/operation-support/operation-support-routing.module'),
-        canActivate: [AuthGuard]  
+        loadChildren: () => import('./pages/pages/operation-support/operation-support-routing.module')
       },
       {
         path: 'openData',
-        loadChildren: () => import('./pages/pages/open-data/open-data-routing.module'),
-        canActivate: [AuthGuard]  
+        loadChildren: () => import('./pages/pages/open-data/open-data-routing.module')
       },
       {
         path: 'publicService',
-        loadChildren: () => import('./pages/pages/public-service/public-service-routing.module'),
-        canActivate: [AuthGuard]  
+        loadChildren: () => import('./pages/pages/public-service/public-service-routing.module')
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./pages/pages/configuration/configuration-routing.module'),
-        canActivate: [AuthGuard]  
+        loadChildren: () => import('./pages/pages/configuration/configuration-routing.module')
       },
       {
         path: 'audit',
-        loadChildren: () => import('./pages/pages/audit/audit-routing.module'),
-        canActivate: [AuthGuard] 
+        loadChildren: () => import('./pages/pages/audit/audit-routing.module')
       },
       {
         path: 'bpm',
-        loadChildren: () => import('./pages/pages/bpm/bpm-routing'),
-        canActivate: [AuthGuard]  
+        loadChildren: () => import('./pages/pages/bpm/bpm-routing')
       },
       {
         path: '**',
