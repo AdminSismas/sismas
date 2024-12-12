@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'vex-group-dialog',
@@ -24,23 +24,33 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class GroupDialogComponent {
 
+  groupForm!: FormGroup;
   group: Group;
 
   constructor(
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<GroupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Group
   ) {
     this.group = data ? new Group(data) : new Group({ groupId: null, name: '', description: '' });
+    this.createForm();
   }
 
-  // Cerrar el modal y pasar el objeto grupo
+  private createForm() {
+    this.groupForm = this.fb.group({
+      name: [this.group.name, [Validators.required]],
+      description: [this.group.description, [Validators.required]]
+    });
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  // Confirmar y pasar el grupo creado o editado
   onSave(): void {
-    this.dialogRef.close(this.group);
+    if (this.groupForm.valid) {
+      this.dialogRef.close(this.groupForm.value);
+    }
   }
 
 }

@@ -15,10 +15,10 @@ export class WorkgroupsService {
   constructor(private http: HttpClient) {}
 
 
-  getAll(): Observable<any> {
+  getAll(page: number, size: number): Observable<any> {
     let params = {
-        page: 0,
-        size: 10,
+        page: page,
+        size: size,
         sortBy: 'name',
         };
 
@@ -32,7 +32,7 @@ export class WorkgroupsService {
 
 
   update(group: Group): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/groups/${group.groupId}`, group);
+    return this.http.put<any>(`${this.apiUrl}/${group.groupId}`, group);
   }
 
   delete(groupId: number): Observable<any> {

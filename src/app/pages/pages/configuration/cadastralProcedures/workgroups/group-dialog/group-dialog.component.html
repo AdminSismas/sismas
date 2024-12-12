@@ -1,18 +1,30 @@
 <h1 mat-dialog-title class="dialog-title">
-    {{ group.groupId ? 'Editar Grupo' : 'Nuevo Grupo' }}
-  </h1>
-  <div mat-dialog-content class="dialog-content">
+  {{ group.groupId ? 'Editar Grupo' : 'Nuevo Grupo' }}
+</h1>
+
+<div mat-dialog-content class="dialog-content">
+  <form [formGroup]="groupForm" novalidate>
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Nombre</mat-label>
-      <input matInput [(ngModel)]="group.name" required />
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="groupForm.controls['name'].invalid && (groupForm.controls['name'].dirty || groupForm.controls['name'].touched)">
+        El nombre es obligatorio.
+      </mat-error>
     </mat-form-field>
-  
+
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Descripción</mat-label>
-      <textarea matInput [(ngModel)]="group.description" required></textarea>
+      <textarea matInput formControlName="description" required></textarea>
+      <mat-error *ngIf="groupForm.controls['description'].invalid && (groupForm.controls['description'].dirty || groupForm.controls['description'].touched)">
+        La descripción es obligatoria.
+      </mat-error>
     </mat-form-field>
-  </div>
-  <div mat-dialog-actions class="dialog-actions">
-    <button mat-button class="btn-cancel" (click)="onNoClick()">Cancelar</button>
-    <button mat-raised-button color="primary" class="btn-save" (click)="onSave()">Guardar</button>
-  </div>
+  </form>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button class="btn-cancel" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" class="btn-save" (click)="onSave()" [disabled]="groupForm.invalid">
+    Guardar
+  </button>
+</div>

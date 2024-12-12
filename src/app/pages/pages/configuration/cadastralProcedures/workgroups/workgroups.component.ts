@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vex-workgroups',
@@ -56,7 +57,8 @@ export class WorkgroupsComponent {
 
   constructor(
     private workgroupsService: WorkgroupsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +67,7 @@ export class WorkgroupsComponent {
 
   // Método para obtener los grupos
   getWorkgroups(): void {
-    this.workgroupsService.getAll().subscribe((data) => {
+    this.workgroupsService.getAll(this.page, this.pageSize).subscribe((data) => {
       this.dataSource.data = data.content.map((item: any) => new Group(item));
       this.totalElements = data.totalElements; // Establecer el número total de elementos
     });
@@ -89,17 +91,21 @@ export class WorkgroupsComponent {
     });
   }
 
-  // Método para crear un grupo
   createGroup(group: Group): void {
     this.workgroupsService.create(group).subscribe(() => {
       this.getWorkgroups();  // Recargar la lista de grupos
+      this.showSnackBar('Grupo creado con éxito'); // Mostrar mensaje de éxito
+    }, error => {
+      this.showSnackBar('Error al crear el grupo'); // Mostrar mensaje de error en caso de fallo
     });
   }
 
-  // Método para editar un grupo
   editGroup(group: Group): void {
     this.workgroupsService.update(group).subscribe(() => {
       this.getWorkgroups();  // Recargar la lista de grupos
+      this.showSnackBar('Grupo editado con éxito'); // Mostrar mensaje de éxito
+    }, error => {
+      this.showSnackBar('Error al editar el grupo'); // Mostrar mensaje de error en caso de fallo
     });
   }
 
@@ -107,9 +113,8 @@ export class WorkgroupsComponent {
   onPageChange(event: any): void {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.getWorkgroups();
+    this.getWorkgroups(); // Llamar al método de obtención de grupos con los parámetros actualizados
   }
-
   // Método de búsqueda
   onSearchChange(): void {
     if (this.searchTerm.trim() === '') {
@@ -117,6 +122,14 @@ export class WorkgroupsComponent {
     } else {
       this.dataSource.filter = this.searchTerm.trim().toLowerCase();
     }
+  }
+
+  private showSnackBar(message: string): void {
+    this.snackBar.open(message, 'OK', {
+      duration: 3000,
+      horizontalPosition: 'center',  
+      verticalPosition: 'bottom',  
+    });
   }
 
 }
