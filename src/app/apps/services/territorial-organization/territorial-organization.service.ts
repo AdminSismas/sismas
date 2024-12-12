@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Department } from '../../interfaces/territorial-organization/department.model';
 import { Municipality } from '../../interfaces/territorial-organization/municipality.model';
 import { Township } from '../../interfaces/territorial-organization/township.model';
@@ -21,6 +21,7 @@ export class TerritorialOrganizationService {
   basic_url: string = `${environment.url}:${environment.port}`;
 
   constructor(
+    private http: HttpClient,
     private requestsService: SendGeneralRequestsService
   ) {
   }
@@ -85,6 +86,16 @@ export class TerritorialOrganizationService {
     const url: string = `${this.basic_url}${environment.qbaunit_ccvereda}`;
     return this.getData(url, paramsMun);
   }
+
+
+  advancedSearch(valueUrlo: string): Observable<any[]> {
+    let paramsMun: HttpParams = new HttpParams();
+    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=1800101040000030600069&page=0&size=4`;
+    // const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${valueUrlo}&page=0&size=20`;
+    // return this.getData(url, paramsMun);
+    return this.http.get<any>(url)
+  }
+
 
   private getData(url: string, params: any): Observable<any[]> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });

@@ -26,7 +26,7 @@
     <mat-tab-group class="overflow-hidden" (selectedTabChange)="clearFormFields($event)">
 
  <!-- Búsqueda por segregación de número predial nacional -->
- <mat-tab label="Numero Predial Nacional">
+ <mat-tab label="Número Predial Nacional">
   <vex-page-layout class="overflow-hidden">
     <vex-page-layout>
       <vex-page-layout-content class="container-fluid">
@@ -48,16 +48,16 @@
                  <mat-error *ngIf="dpto?.hasError('pattern')">
                   Solo se permiten números
                  </mat-error>
-                 <mat-error  *ngIf="dpto?.hasError('maxLengthExceeded')">
-                  Solo se puede tener 2 caracteres.
-                 </mat-error>
+                  <mat-error *ngIf="dpto?.hasError('maxlength')">
+                  Solo permite 2 caracteres
+                </mat-error>
              </div>
           
 
           <!-- Campo municipio -->
-         <!-- Campo barrio -->
+        
          <div class="form-content-item" >
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+          <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
             <mat-label>Municipío</mat-label>
             <input type="text"
                   aria-label="Number"
@@ -65,129 +65,233 @@
                   formControlName="mpio"
                   placeholder="Municipío">
           </mat-form-field>
-           <mat-error style="margin-left: 27px;" *ngIf="mpio?.touched && mpio?.hasError('required')">Este campo es obligatorio.</mat-error>
-        
-          <mat-error *ngIf="mpio?.hasError('maxLength')">
-            Solo se puede tener 2 caracteres.
+           <!-- Validaciones -->
+           <mat-error *ngIf="mpio?.hasError('pattern')">
+            Solo se permiten números
+           </mat-error>
+           <mat-error *ngIf="mpio?.hasError('maxlength')">
+            Solo permite 3 caracteres
            </mat-error>
          </div>
 
           <!-- Campo zona -->
-         <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-          <mat-label>Zonas</mat-label>
-          <input type="text"
-                 aria-label="Number"
-                 matInput
-                 formControlName="zonas"
-                 placeholder="Zona&hellip;"
-                 [matAutocomplete]="autoSidewalk">
-        </mat-form-field>
+          <div class="form-content-item" >
+            <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+             <mat-label>Zonas</mat-label>
+             <input type="text"
+                    aria-label="Number"
+                    matInput
+                    formControlName="zonas"
+                    placeholder="Zona&hellip;"
+                    >
+           </mat-form-field>
+             <!-- Validaciones -->
+             <mat-error *ngIf="zonas?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="zonas?.hasError('maxlength')">
+                Solo permite 2 caracteres
+              </mat-error>
+
+          </div>
+
 
           <!-- Campo sector -->
-            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+          <div class="form-content-item" >
+            <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
               <mat-label>Sector</mat-label>
               <input type="text"
                      aria-label="Number"
                      matInput
                      formControlName="sectorb"
                      placeholder="Sector"
-                     [matAutocomplete]="autoBlock">
+                     >
             </mat-form-field>
+             <!-- Validaciones -->
+             <mat-error *ngIf="sectorb?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="sectorb?.hasError('maxlength')">
+                Solo permite 2 caracteres
+              </mat-error>
+
+
+          </div>
 
               <!-- Campo Comuna -->
-            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-              <mat-label>Comuna</mat-label>
-              <input type="text"
-                     aria-label="Number"
-                     matInput
-                     formControlName="comuna"
-                     placeholder="Comuna"
-                     [matAutocomplete]="autoBlock">
-            </mat-form-field>
+              <div class="form-content-item" >
+                <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+                  <mat-label>Comuna</mat-label>
+                  <input type="text"
+                         aria-label="Number"
+                         matInput
+                         formControlName="comuna"
+                         placeholder="Comuna"
+                         >
+                </mat-form-field>
+                <!-- Validaciones -->
+             <mat-error *ngIf="comuna?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="comuna?.hasError('maxlength')">
+                Solo permite 2 caracteres
+              </mat-error>
+
+              </div>
 
               <!-- Campo Barrio -->
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Barrio</mat-label>
-            <input type="text"
-                   aria-label="Number"
-                   matInput
-                   formControlName="barrio"
-                   placeholder="Barrio"
-                   [matAutocomplete]="autoBlock">
-          </mat-form-field>
+              <div class="form-content-item" >
+                <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+                  <mat-label>Barrio</mat-label>
+                  <input type="text"
+                         aria-label="Number"
+                         matInput
+                         formControlName="barrio"
+                         placeholder="Barrio"
+                         >
+                </mat-form-field>
+                <mat-error *ngIf="barrio?.hasError('pattern')">
+                  Solo se permiten números
+                 </mat-error>
+                  <mat-error *ngIf="barrio?.hasError('maxlength')">
+                  Solo permite 2 caracteres
+                </mat-error>
+
+              </div>
 
         </div> <!-- ************SECCIOON 1 X6 -->
 
         <br>
 
         <div class="flex flex-col sm:flex-row">
-    
-
        
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Man/ver</mat-label>
-            <input type="text"
-                   aria-label="Number"
-                   matInput
-                   formControlName="manVer"
-                   placeholder="Man/ver"
-                   [matAutocomplete]="autoBlock">
-          </mat-form-field>
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Terreno</mat-label>
-            <input type="text"
-                   aria-label="Number"
-                   matInput
-                   formControlName="terreno"
-                   placeholder="Terreno"
-                   [matAutocomplete]="autoBlock">
-          </mat-form-field>
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Condición</mat-label>
-            <input type="text"
-                   aria-label="Number"
-                   matInput
-                   formControlName="condicion"
-                   placeholder="Condición">
-          </mat-form-field>
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Edificio</mat-label>
-            <input type="text"
-                   aria-label="Number"
-                   matInput
-                   formControlName="edificio"
-                   placeholder="Edificio"
-                   [matAutocomplete]="autoBlock">
-          </mat-form-field>
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Piso</mat-label>
-            <input type="text"
-                   aria-label="Number"
-                   matInput
-                   formControlName="piso"
-                   placeholder="Piso"
-                   [matAutocomplete]="autoBlock">
-          </mat-form-field>
-          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-            <mat-label>Unidad Predial</mat-label>
-            <input type="text"
-                   aria-label="Number"
-                   matInput
-                   formControlName="unidadPredial"
-                   placeholder="Unidad predial"
-                   [matAutocomplete]="autoBlock">
-          </mat-form-field>
+          <div class="form-content-item" >
+             <!-- Campo Man/ver -->
+             <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+              <mat-label>Man/ver</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="manVer"
+                     placeholder="Man/ver"
+                     >
+            </mat-form-field>
+            <mat-error *ngIf="manVer?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="manVer?.hasError('maxlength')">
+                Solo permite 4 caracteres
+              </mat-error>
+
+          </div>
+
+          <div class="form-content-item" >
+            <!-- Campo Terreno -->
+            <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+              <mat-label>Terreno</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="terreno"
+                     placeholder="Terreno"
+                     >
+            </mat-form-field>
+            <mat-error *ngIf="terreno?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="terreno?.hasError('maxlength')">
+                Solo permite 4 caracteres
+              </mat-error>
+          </div>
+
+          <div class="form-content-item" >
+            <!-- Campo Condición -->
+            <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+              <mat-label>Condición</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="condicion"
+                     placeholder="Condición">
+            </mat-form-field>
+            <mat-error *ngIf="condicion?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="condicion?.hasError('maxlength')">
+                Solo permite 1 caracteres
+              </mat-error>
+          </div>
+
+          <div class="form-content-item" >
+            <!-- Campo Edificio -->
+            <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+              <mat-label>Edificio</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="edificio"
+                     placeholder="Edificio"
+                     >
+            </mat-form-field>
+            <mat-error *ngIf="edificio?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="edificio?.hasError('maxlength')">
+                Solo permite 2 caracteres
+              </mat-error>
+          </div>
+
+          <div class="form-content-item" >
+            <!-- Campo Piso -->
+            <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+              <mat-label>Piso</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="piso"
+                     placeholder="Piso"
+                     >
+            </mat-form-field>
+            <mat-error *ngIf="piso?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="piso?.hasError('maxlength')">
+                Solo permite 2 caracteres
+              </mat-error>
+
+          </div>
+
+          <div class="form-content-item" >
+             <!-- Campo Unidad Predial -->
+             <mat-form-field class="sm:ml-1 sm:mr-1 flex-1">
+              <mat-label>Unidad Predial</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     formControlName="unidadPredial"
+                     placeholder="Unidad predial"
+                     >
+            </mat-form-field>
+            <mat-error *ngIf="unidadPredial?.hasError('pattern')">
+              Solo se permiten números
+             </mat-error>
+              <mat-error *ngIf="unidadPredial?.hasError('maxlength')">
+                Solo permite 4 caracteres
+              </mat-error>
+
+          </div>
 
 
         </div>
 
         <mat-dialog-actions align="center">
           <button
-            (click)="searchNationalPropertyNumber()"
+            (click)="sendInformationTable()"
             color="primary"
             mat-flat-button
-            [disabled]="!form.valid"
+            [disabled]=""
             type="primary">
+            <!-- !form.valid -->
             Buscar
           </button>
         </mat-dialog-actions>
@@ -516,7 +620,8 @@
                        matInput
                        formControlName="block"
                        placeholder="Seleccione una manzana&hellip;"
-                       [matAutocomplete]="autoBlock">
+                       [matAutocomplete]="autoBlock"
+                       >
                 <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">
                   @for (option of filteredOptionsBlocks$ | async; track option.codigoManzana;) {
                     <mat-option

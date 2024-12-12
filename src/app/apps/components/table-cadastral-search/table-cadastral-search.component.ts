@@ -295,8 +295,43 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       this.searchNationalPredialNumber(this.searchData);
       return true;
     }
+
+    if (searchData) {
+      this.formatFieldValue(this.searchData);
+      return true;
+    }
     return false;
   }
+
+  formatFieldValue(value:SearchData) {
+    const formattedValues = [
+     value.dpto,
+     value.mpio,
+     value.zonas,
+     value.sectorb,
+     value.comuna,
+     value.barrio,
+     value.manVer,
+     value.terreno,
+     value.condicion,
+     value.edificio,
+     value.piso,
+     value.unidadPredial
+    ];
+    
+    const result = formattedValues.join(''); // Une sin espacios
+    this.searValueData(result);
+  }
+
+  searValueData(data: string): void {
+    console.log(data);
+    this.baunitService.advancedSearch(data)
+    .subscribe(value=>{
+      console.log(value);
+      this.captureInformationSubscribe(value)
+    });
+  }
+
 
   deleteInformations(customer: BaunitHead): void {
   }
