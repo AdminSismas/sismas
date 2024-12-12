@@ -11,18 +11,21 @@ import { HttpParams } from '@angular/common/http';
 })
 export class WorkflowService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url:string = `${environment.url}:${environment.port}${environment.bpmProcess}`;
+  basic_url:string = `${environment.url}:${environment.port}${environment.bpmProcess.value}`;
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(private requestsService: SendGeneralRequestsService) { }
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByWorkflow(page:PageSortByData):Observable<WorkflowCollection[]> {
+    const url: string = `${this.basic_url}`
+
     let paramsWF: HttpParams = new HttpParams();
     paramsWF = paramsWF.append('page', `${page.page}`)
     paramsWF = paramsWF.append('size', `${page.size}`)
     paramsWF = paramsWF.append('sortBy', `${page.sortBy}`)
-    return this.getData(`${this.basic_url}`, paramsWF);
+
+    return this.getData(url, paramsWF);
   }
 
   private getData(url:string, params:any):Observable<WorkflowCollection[]> {

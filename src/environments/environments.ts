@@ -23,7 +23,6 @@ export const environment = {
   bAUnitDelete:'BAUnitDelete',
   baunits:'/baunits',
   bAUnitUpdate:'BAUnitUpdate',
-
   baUnitZona_baunitId:'/baUnitZona/baunitId',
   bpmAttachment:{
     count:'/count',

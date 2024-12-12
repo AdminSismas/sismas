@@ -6,10 +6,8 @@ import { Observable } from 'rxjs';
 
 // recursos de vex
 import { VexPageLayoutComponent } from "../../../../@vex/components/vex-page-layout/vex-page-layout.component";
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { VexPageLayoutContentDirective } from "../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive";
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
@@ -37,10 +35,6 @@ import { PageSortByData } from '../../interfaces/page-sortBy-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../constants/workflow.constant';
 
-
-
-
-
 @Component({
   selector: 'vex-table-workflow',
   templateUrl: './table-workflow.component.html',
@@ -50,8 +44,6 @@ import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../.
   imports: [
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
     MatIconModule,
     MatInputModule,
     MatCheckboxModule,
@@ -107,8 +99,8 @@ export class TableWorkflowComponent implements OnInit {
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
-    
-    this.getDataFromWorkflowService();  
+
+    this.getDataFromWorkflowService();
   }
 
   ngAfterViewInit() {
@@ -181,12 +173,12 @@ export class TableWorkflowComponent implements OnInit {
       complete: () => {
         console.log('Carga completa de datos');
       }
-    }); 
+    });
   }
 
   captureInformationSubscribe(data: InformationPegeable) {
-    this.contentInformations = data; 
-    this.captureInformationWorkflowData(); 
+    this.contentInformations = data;
+    this.captureInformationWorkflowData();
   }
 
   captureInformationWorkflowData() {
@@ -196,7 +188,7 @@ export class TableWorkflowComponent implements OnInit {
       console.log("data: ", data);
       this.dataSource.data = data;
     }
-    
+
     if (this.contentInformations == null) {
       this.page = PAGE;
       return;
