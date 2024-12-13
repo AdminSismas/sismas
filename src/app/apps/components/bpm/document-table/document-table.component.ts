@@ -149,11 +149,9 @@ export class DocumentTableComponent implements OnInit {
   }
 
 
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
-  }
+ get visibleColumns(): string[] {
+      return ['action', ...this.columns.filter((c) => c.visible).map((c) => c.property)];
+    }
 
 
 
@@ -181,8 +179,8 @@ export class DocumentTableComponent implements OnInit {
   viewFile(metaData: contentInfoAttachment): void {
     this.dialog
       .open(ViewFileDocumentManagementComponent, {
-        minWidth:'370px',
-        width:'98%',
+        minWidth: '370px',
+        width: '98%',
         height: '86%',
         disableClose: true,
         data: {
@@ -191,10 +189,10 @@ export class DocumentTableComponent implements OnInit {
         }
       });
 
-      this.dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    }
+    this.dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
 
 
@@ -212,6 +210,115 @@ export class DocumentTableComponent implements OnInit {
         console.error('Error al obtener los datos:', error);
       }
     });
+  }
+
+  getFileIcon(row: any): string {
+    const fileExtension = this.getFileExtension(row.originalFileName);
+
+    switch (fileExtension) {
+      case 'pdf':
+      case 'txt':
+      case 'png':
+      case 'jpeg':
+      case 'jpg':
+      case 'gif':
+      case 'bmp':
+        return 'mat:visibility'; 
+
+      case 'doc':
+      case 'docx':
+      case 'xlsx':
+      case 'xls':
+      case 'zip':
+      case 'rar':
+        return 'mat:cloud_download';  
+      default:
+        return 'mat:visibility'; 
+    }
+  }
+
+  getMatTooltip(row: any): string {
+    const fileExtension = this.getFileExtension(row.originalFileName);
+
+    switch (fileExtension) {
+      case 'pdf':
+      case 'txt':
+      case 'png':
+      case 'jpeg':
+      case 'jpg':
+      case 'gif':
+      case 'bmp':
+        return 'Ver archivo';  
+
+      case 'doc':
+      case 'docx':
+      case 'xlsx':
+      case 'xls':
+      case 'zip':
+      case 'rar':
+        return 'Descargar archivo'; 
+
+      default:
+        return 'Ver archivo';  
+    }
+  }
+
+  getFileTypeIcon(row: any): string {
+    const fileExtension = this.getFileExtension(row.originalFileName);
+    switch (fileExtension) {
+      case 'pdf':
+        return 'mat:picture_as_pdf'; // Icono de PDF
+      case 'txt':
+      case 'doc':
+      case 'docx':
+      case 'xlsx':
+      case 'xls':
+        return 'mat:description'; // Icono de documento
+      case 'png':
+      case 'jpeg':
+      case 'jpg':
+      case 'gif':
+      case 'bmp':
+        return 'mat:photo'; // Icono de imagen
+      case 'zip':
+      case 'rar':
+        return 'mat:folder'; // Icono de descarga
+      default:
+        return 'mat:attachment'; // Icono por defecto
+    }
+  }
+
+  getFileIconColor(row: any): string {
+    const fileExtension = this.getFileExtension(row.originalFileName);
+    
+    // Colores para diferentes tipos de archivo
+    switch (fileExtension) {
+      case 'pdf':
+        return 'text-red-600';  // Rojo para PDF
+      case 'txt':
+      case 'doc':
+      case 'docx':
+      case 'xlsx':
+      case 'xls':
+        return 'text-blue-600';  // Azul para documentos
+      case 'png':
+      case 'jpeg':
+      case 'jpg':
+      case 'gif':
+      case 'bmp':
+        return 'text-green-600';  // Verde para imágenes
+      case 'zip':
+      case 'rar':
+        return 'text-yellow-600';  // Amarillo para archivos comprimidos
+      default:
+        return 'text-gray-600';  // Gris por defecto
+    }
+  }
+
+
+  // Función para obtener la extensión del archivo
+  getFileExtension(fileName: string): string {
+    return fileName.split('.').pop()?.toLowerCase() || '';
   }
 
 

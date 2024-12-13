@@ -7,6 +7,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  TemplateRef,
   ViewChild
 } from '@angular/core';
 import {
@@ -31,7 +32,7 @@ import { InformationPegeable } from '../../../interfaces/information-pegeable.mo
 import { SearchData } from '../../../interfaces/search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatMenuModule } from '@angular/material/menu';
@@ -47,6 +48,7 @@ import {
 } from '../show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -62,7 +64,9 @@ import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/
     NgForOf,
     NgIf,
     NgClass,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule,
+    MatDividerModule
   ],
   templateUrl: './table-alfa-main.component.html',
   styleUrl: './table-alfa-main.component.scss'
@@ -79,17 +83,19 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   searchData!: SearchData;
 
-  page = PAGE;
-  totalElements: number = 0;
-  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
-  dataSource!: MatTableDataSource<Operation>;
+  public page = PAGE;
+  public totalElements: number = 0;
+  public pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
+  public pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
+  public dataSource!: MatTableDataSource<Operation>;
+  public npnRemoving?: string;
 
   _contentInformations$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(0);
   contentInformations$: Observable<InformationPegeable> = this._contentInformations$.asObservable();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('confirmDeleteDialog', { static: true}) confirmDeleteDialog!: TemplateRef<any>;
 
   constructor(
     private dialog: MatDialog,
@@ -233,7 +239,17 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   deleteInformations(operation: Operation): void {
-    console.log("Borrando registro !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    this.npnRemoving = operation.npnlike;
+    this.dialog.open(this.confirmDeleteDialog, {
+      width: '40%'
+    }).afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.bpmCoreService.clearPropertyBpmOperation(this.executionId, operation.baunitHead!.baunitIdE as string)
+            .subscribe(data => console.log(data));
+        }
+      })
+
   }
 
   openDifferenceChangesProperty(result: DifferenceChanges[],

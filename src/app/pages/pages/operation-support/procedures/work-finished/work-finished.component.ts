@@ -3,6 +3,7 @@ import { InConstructionComponent } from '../../../../../apps/components/in-const
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { TableWorkFinishedComponent } from 'src/app/apps/components/table-work-finished/table-work-finished.component';
 
 @Component({
   selector: 'vex-work-finished',
@@ -11,7 +12,8 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
+    VexSecondaryToolbarComponent,
+    TableWorkFinishedComponent
   ],
   templateUrl: './work-finished.component.html',
   styleUrl: './work-finished.component.scss'

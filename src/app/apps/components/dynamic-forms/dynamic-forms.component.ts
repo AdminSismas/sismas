@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { map, Observable, startWith } from 'rxjs';
@@ -21,20 +21,25 @@ import { JSONInput } from '../../interfaces/dynamic-forms';
   imports: [
     AsyncPipe,
     ReactiveFormsModule,
-    MatInputModule,
+    NgClass,
+    /* Material */
+    MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    /* Custom */
     ComboxColletionComponent,
-    MatAutocompleteModule
   ],
   templateUrl: './dynamic-forms.component.html',
   styles: ``
 })
-export class DynamicFormsComponent implements OnInit{
+export class DynamicFormsComponent implements OnInit, OnChanges {
 
   @Input({ required: true }) public inputs: JSONInput[] = []
   @Input() public initValues: any = {}
+  @Input() public className: string = '';
+  @Input() public disabled: boolean = false;
 
   public form: FormGroup = new FormGroup({})
   public options$: { [key: string]: Observable<string[]> | undefined } = {}
@@ -47,6 +52,10 @@ export class DynamicFormsComponent implements OnInit{
 
   ngOnInit(): void {
     this.createForm()
+
+    if (this.disabled) {
+      this.form.disable()
+    }
 
     this.inputs.forEach((input: JSONInput) => {
       if (input.element === 'autocomplete') {
@@ -61,6 +70,16 @@ export class DynamicFormsComponent implements OnInit{
 
     if (this.initValues) {
       this.form.reset(this.initValues)
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['disabled'] && this.form) {
+      if (changes['disabled'].currentValue) {
+        this.form.disable();
+      } else {
+        this.form.enable();
+      }
     }
   }
 
@@ -79,4 +98,20 @@ export class DynamicFormsComponent implements OnInit{
     })
   }
 
+  cssClassesForm(cssClasses: string): string {
+    if (cssClasses) {
+      return cssClasses
+    } else {
+      return 'w-full h-full grid grid-cols-2 grid-flow-row gap-x-4'
+    }
+  }
+
+
+  cssClassesInput(cssClasses: string | undefined): string {
+    if (cssClasses) {
+      return cssClasses
+    } else {
+      return 'w-full h-full'
+    }
+  }
 }

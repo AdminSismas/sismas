@@ -51,6 +51,9 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
+    console.log('HeaderBpmCoreComponent', this.id, this.proTaskE);
+
     if (!this.id || this.id?.length <= 0 || !this.proTaskE) {
       return;
     }
@@ -75,6 +78,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes["proTaskE"] && this.proTaskE) {
       this._crumbs$.next(this.proTaskE);
+      this.chargerCrumbs(this.proTaskE);
     }
   }
 
@@ -111,7 +115,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   openDialog(type: string): void {
     if (type === 'documents') {
       this.dialog.open(DocumentTableComponent, {
-        width: '60%',
+        width: '80%',
         data: {
           executionId: this.proTaskE?.executionId
         }
