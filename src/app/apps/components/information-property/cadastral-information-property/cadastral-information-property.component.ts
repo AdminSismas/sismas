@@ -38,6 +38,7 @@ import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -138,6 +139,11 @@ export class CadastralInformationPropertyComponent implements OnInit {
   idContainer: string = '';
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  public viewProperties:boolean = false;
+
+   constructor(private informationPropertyService: InformationPropertyService){ }
+
+  
 
   ngOnInit(): void {
     if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
@@ -147,6 +153,13 @@ export class CadastralInformationPropertyComponent implements OnInit {
     if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
       return;
     }
+    this.informationPropertyService.showOptionsPersonStarted$
+    .subscribe(value2=>{
+      if(value2){
+        this.viewProperties = value2;
+        this.removeItem('Propietarios');
+      }
+    })
 
     this.baunitHead = this.contentInfoSchema.content
     this.baunitId = this.baunitHead.baunitIdE;
@@ -167,6 +180,12 @@ export class CadastralInformationPropertyComponent implements OnInit {
       this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
       this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
     }
+  }
+   // Método para eliminar el objeto con la etiqueta "Propietarios"
+   removeItem(labelToRemove: string): void {
+    this.navigationItems = this.navigationItems.filter(
+      (item) => item.label !== labelToRemove
+    );
   }
 
   scrollTo(elementName: string) {

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { catchError, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, Subject, throwError } from 'rxjs';
 import { BasicInformationProperty, UpdateBasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -28,10 +28,17 @@ export class InformationPropertyService {
   reloadTable$ = new Subject<boolean>();
   reloadTableStarted$: Observable<boolean> = this.reloadTable$.asObservable();
 
+  showOptionsPerson$ = new BehaviorSubject<boolean>(false);
+  showOptionsPersonStarted$: Observable<boolean> = this.showOptionsPerson$.asObservable();
+
   constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
 
   public reloadTableSet(value:boolean):void{
     this.reloadTable$.next(value);
+  }
+
+  public showOptionsPersonSet(value:boolean):void{
+    this.showOptionsPerson$.next(value);
   }
 
   getBasicInformationProperty(

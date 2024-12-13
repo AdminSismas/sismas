@@ -1,7 +1,7 @@
-import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, DestroyRef, inject, Inject } from '@angular/core';
 
+
+// LIBRERIAS NATIVAS
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
@@ -14,48 +14,37 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SearchData } from '../../../interfaces/search-data.model';
-import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { ComboxColletionComponent } from '../../combox-colletion/combox-colletion.component';
-import { InputComponent } from '../../input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
+
+// RECURSOS PERSONALES
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {
-  TerritorialOrganizationService
-} from '../../../services/territorial-organization/territorial-organization.service';
-import { Department } from '../../../interfaces/territorial-organization/department.model';
-import { Municipality } from '../../../interfaces/territorial-organization/municipality.model';
-import {
-  LIST_FORM_CADASTRAL_0,
-  LIST_FORM_CADASTRAL_1,
-  LIST_FORM_CADASTRAL_2,
-  LIST_FORM_CADASTRAL_3,
-  LIST_FORM_CADASTRAL_4,
-  LIST_FORM_CADASTRAL_5,
-  LIST_ZONES_RURAL,
-  NAME_CODENAME,
-  STRING_INFORMATION_NOT_FOUND,
-  LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
-  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL
-} from '../../../constants/constant';
-import { Zone } from '../../../interfaces/territorial-organization/zone.model';
-import { Sector } from '../../../interfaces/territorial-organization/sector.model';
+import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { InputComponent } from 'src/app/apps/components/input/input.component';
+import { LIMPIAR_CAMPOS_MULTIPLES_CAMPOS, LIMPIAR_CAMPOS_SELECCION_MUNICIPAL, LIST_FORM_CADASTRAL_0, LIST_FORM_CADASTRAL_1, LIST_FORM_CADASTRAL_2, LIST_FORM_CADASTRAL_3, LIST_FORM_CADASTRAL_4, LIST_FORM_CADASTRAL_5, LIST_ZONES_RURAL, NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
+import { CONSTANT_NAME_ID } from 'src/app/apps/constants/constantLabels';
+import { Sidewalk } from 'src/app/apps/interfaces/territorial-organization/sidewalk.model';
+import { Neighborhood } from 'src/app/apps/interfaces/territorial-organization/neighborhood.model';
+import { Commune } from 'src/app/apps/interfaces/territorial-organization/commune.model';
+import { Sector } from 'src/app/apps/interfaces/territorial-organization/sector.model';
+import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
+import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
+import { NationalPredialNumber } from 'src/app/apps/interfaces/national-predial-number';
+import { SearchData } from 'src/app/apps/interfaces/search-data.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Neighborhood } from '../../../interfaces/territorial-organization/neighborhood.model';
-import { Block } from '../../../interfaces/territorial-organization/block.model';
-import { Sidewalk } from '../../../interfaces/territorial-organization/sidewalk.model';
-import { Commune } from '../../../interfaces/territorial-organization/commune.model';
-import { NationalPredialNumber } from '../../../interfaces/national-predial-number';
-import { divideNpn } from '../../../utils/divide-national-predial-number';
-import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
-import { maxLengthValidator } from 'src/app/apps/validation-form/validation-general';
 import { CharacterValidateService } from 'src/app/apps/services/character-validate.service';
+import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
+import { Zone } from 'src/app/apps/interfaces/territorial-organization/zone.model';
+import { divideNpn } from 'src/app/apps/utils/divide-national-predial-number';
+import { Block } from 'src/app/apps/interfaces/territorial-organization/block.model';
+
+
 
 @Component({
-  selector: 'vex-filter-cadastral-search',
-  templateUrl: './filter-cadastral-search.component.html',
-  styleUrls: ['./filter-cadastral-search.component.scss'],
+  selector: 'vex-filter-cadastral-search-da',
   standalone: true,
   imports: [
     CommonModule,
@@ -79,10 +68,11 @@ import { CharacterValidateService } from 'src/app/apps/services/character-valida
     NgFor,
     NgClass,
     NgIf
-  ]
+  ],
+  templateUrl: './filter-cadastral-search-da.component.html',
+  styleUrl: './filter-cadastral-search-da.component.scss'
 })
-export class FilterCadastralSearchComponent implements OnInit {
-
+export class FilterCadastralSearchDaComponent {
   protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
 
   protected readonly LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = LIMPIAR_CAMPOS_SELECCION_MUNICIPAL;
@@ -153,7 +143,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: SearchData | undefined,
-    private dialogRef: MatDialogRef<FilterCadastralSearchComponent>,
+    private dialogRef: MatDialogRef<FilterCadastralSearchDaComponent>,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
@@ -261,17 +251,18 @@ export class FilterCadastralSearchComponent implements OnInit {
     console.log('value',value?.tab?.textLabel )
 
     if(value?.tab?.textLabel === 'Seleccion Municipal'){
-      this.clearMultipleFields()
+      this.formatFieldValue()
+      this.clearMunicipalSelection();
     }
 
     if(value?.tab?.textLabel === 'Multiplex Campos'){
-      this.clearMunicipalSelection()
+      this.clearMunicipalSelection();
+      this.formatFieldValue();
     }
 
     if(value?.tab?.textLabel === 'Numero Predial Nacional'){
       this.clearMunicipalSelection();
-      this.formatFieldValue();
-
+      this.clearMultipleFields();
     }
   }
 
