@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { ZoneManagerComponent } from './zone-manager/zone-manager.component';
+import { ZoneManagerComponent } from '../../../../../apps/components/configuration/economic-mod-land/zone-manager/zone-manager.component';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { AsyncPipe } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -21,7 +21,7 @@ import { Columns, DataSourceZoneManager, DisplayedColumns, GeoEconomicZone, Rura
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
-import { URBAN_COLUMNS, RURAL_COLUMNS, GEOECONOMICA_COLUMNS } from './zone-constants';
+import { URBAN_COLUMNS, RURAL_COLUMNS, GEOECONOMICA_COLUMNS } from '../../../../../apps/constants/zone-constants';
 import { MatTableDataSource } from '@angular/material/table';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 
