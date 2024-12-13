@@ -67,7 +67,7 @@
             </div>
             <div class="flex gap-4 items-center">
               <strong>Valor:</strong>
-              <span>{{ value.valor }}</span>
+              <span>{{ value.valor | number:'1.0-0' }}</span>
             </div>
             <mat-divider class="col-span-3 my-2"></mat-divider>
           </section>
