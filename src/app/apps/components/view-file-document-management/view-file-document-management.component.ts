@@ -4,7 +4,7 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 // recursos de angular material
-import { MatIconModule } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -27,54 +27,92 @@ import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
     MatDividerModule,
     MatTabsModule,
     NgFor,
-    NgIf
+    NgIf,
+    MatIconModule,
   ],
 })
 
 
 
 export class ViewFileDocumentManagementComponent implements OnInit {
-  /* ============== ATRIBUTES ============== */
-  showMetadataView:boolean = false;
+  showMetadataView: boolean = false;
   metadata: contentInfoAttachment;
   properties = MODEL_METADATA_PROPERTIES;
 
   executionId: string;
-
   idAtachment: number;
   originalFileName: string;
 
   basic_url: string = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
   urlSafe: SafeUrl = '';
+  fileType: string = '';
+  fileContent: string = '';  // Almacenar el contenido del archivo .txt
 
-
-
-  /* ============== CONSTRUCTOR ============== */
   constructor(
     private sanitizer: DomSanitizer,
     public dialogRef: MatDialogRef<ViewFileDocumentManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { metaData: contentInfoAttachment; executionId: string }
-) {
-  this.metadata = data.metaData; 
-  this.idAtachment = this.metadata.id;
-  this.originalFileName = this.metadata.originalFileName;
-  this.executionId = data.executionId; 
-}
-
-
-
-  /* ============== METHODS ============== */
-  /* ------- Meth. Lifecycle Hooks ------- */
-  ngOnInit(): void {
-    this.urlSafe = this.urlPdfViewer();
+  ) {
+    this.metadata = data.metaData;
+    this.idAtachment = this.metadata.id;
+    this.originalFileName = this.metadata.originalFileName;
+    this.executionId = data.executionId;
   }
 
+  ngOnInit(): void {
+    this.urlSafe = this.urlPdfViewer();
+    this.fileType = this.getFileType(this.originalFileName);
 
+    if (this.fileType === 'txt') {
+      this.loadTextFile();
+    }
 
-  /* ------- Meth. HTML ------- */
+    if (this.fileType === 'xlsx' || this.fileType === 'docx' || this.fileType === 'zip' || this.fileType === 'rar' || this.fileType === 'dwg' || this.fileType === 'shp') {
+      this.downloadFile();
+    }
+  }
+
+  // Método para identificar el tipo de archivo
+  getFileType(fileName: string): string {
+    const extension = fileName.split('.').pop()?.toLowerCase();
+    if (['pdf'].includes(extension!)) return 'pdf';
+    if (['jpg', 'jpeg', 'png', 'bmp', 'tiff', 'gif'].includes(extension!)) return 'image';
+    if (['txt'].includes(extension!)) return 'txt';
+    if (['xlsx'].includes(extension!)) return 'xlsx';
+    if (['docx'].includes(extension!)) return 'docx';
+    if (['zip', 'rar'].includes(extension!)) return 'zip';
+    if (['dwg', 'shp'].includes(extension!)) return 'dwg';
+    return 'unknown';
+  }
+
+  // Método para mostrar el visor de PDF
+  urlPdfViewer(): SafeUrl {
+    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
+  }
+
+  // Método para cargar el archivo de texto (.txt)
+  loadTextFile(): void {
+    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+    fetch(urlComplete)
+      .then(response => response.text())
+      .then(text => {
+        this.fileContent = text;  // Guardamos el contenido del archivo .txt
+      })
+      .catch(err => console.error('Error al cargar el archivo de texto', err));
+  }
+
+  // Método para descargar el archivo
+  downloadFile(): void {
+    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+    const a = document.createElement('a');
+    a.href = urlComplete;
+    a.download = this.originalFileName;
+    a.click();
+  }
+
   switchViewDocMetaData(): void {
     this.showMetadataView = !this.showMetadataView;
-
     if (this.showMetadataView) {
       this.dialogRef.updateSize('98%', 'auto');
       this.dialogRef.updatePosition({ top: '5%' });
@@ -83,24 +121,4 @@ export class ViewFileDocumentManagementComponent implements OnInit {
       this.dialogRef.updatePosition({ top: '5%' });
     }
   }
-
-
-
-  /* ------- Meth. Common ------- */
-  urlPdfViewer(): SafeUrl {
-    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
-    console.log('urlComplete: ', urlComplete);
-    return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
-  }
-
-
-
-  /* ------- Meth. Modal load file ------- */
-
-
-
-  /* ------- Meth. Services ------- */
-
-
-
 }
