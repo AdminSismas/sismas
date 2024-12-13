@@ -1,15 +1,20 @@
+// Angular framework
 import { Component } from '@angular/core';
-import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
-import { MatIconModule } from '@angular/material/icon';
+
+// Vex
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+
+// Material
+import { MatIconModule } from '@angular/material/icon';
+
+// Custom
 import { TableWorkflowComponent } from "../../../../../apps/components/table-workflow/table-workflow.component";
 
 @Component({
   selector: 'vex-workflow-procedures',
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
