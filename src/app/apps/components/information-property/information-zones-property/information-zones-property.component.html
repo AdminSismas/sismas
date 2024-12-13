@@ -18,19 +18,12 @@
           <!-- Title for the First Table -->
           <div class="header-container m-2 flex items-center justify-between">
             <span class="font-bold text-xl">Zonas Físicas</span>
-            @if (typeInformation === "edition") {
-              <button
-                color="primary"
-                mat-raised-button
-                type="button"
-                (click)="onClickOpenAddEditModal(dataSource)"
-              >
-                Nueva
-                <mat-icon svgIcon="mat:add"></mat-icon>
-              </button>
-            }
+            <button *ngIf="typeInformation === 'edition'" mat-raised-button color="primary" type="button" (click)="onClickOpenAddEditModal(dataSource)">
+              Nueva
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
           </div>
-          
+
           <div class="table-container overflow-x-auto w-full">
             <table mat-table [dataSource]="dataSource" matSort class="w-full">
               <ng-container matColumnDef="viewDetail">
@@ -41,30 +34,49 @@
                       class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
                       mat-icon-button
                       title="Detalles"
-                      (click)="openInformationPropertyOwner(row)"
+                      (click)="openInformationPropertyZone(row, 'physical')"
                     >
                       <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
                     </button>
                   </div>
                 </td>
               </ng-container>
-              @for (column of textColumns(); track column) {
+
+        
+              <ng-container matColumnDef="zoneCodeColumn">
+                <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
+                  Código
+                </th>
+                <td *matCellDef="let row" mat-cell>
+                  {{ getZoneCode(row) }}
+                </td>
+              </ng-container>
+
+        
+              <ng-container matColumnDef="zoneValidityColumn">
+                <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
+                  Vigencia
+                </th>
+                <td *matCellDef="let row" mat-cell>
+                  {{ getZonevalidity(row) }}
+                </td>
+              </ng-container>
+
+         
+              <ng-container *ngFor="let column of textColumns()">
                 <ng-container [matColumnDef]="column.property">
                   <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
                     {{ column.label }}
                   </th>
                   <td *matCellDef="let row" mat-cell>
-                    @if (column.property === 'beginAt') {
-                      {{ row[column.property] | date:'dd/MM/yyyy' }}
-                    }
-                    @else {
-                      {{ row[column.property] }}
-                    }
+                    {{ row[column.property] }}
                   </td>
                 </ng-container>
-              }
+              </ng-container>
+
+              <!-- Actions Column -->
               <ng-container matColumnDef="actions">
-                <th *matHeaderCellDef mat-header-cell> ACCIONES </th>
+                <th *matHeaderCellDef mat-header-cell></th>
                 <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
                   <button
                     mat-icon-button
@@ -76,60 +88,55 @@
                   </button>
                 </td>
               </ng-container>
+
               <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
               <tr mat-row @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer" *matRowDef="let row; columns: visibleColumns()"></tr>
             </table>
+
             <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
               <ng-template let-infoOwner="infoOwner" matMenuContent>
-                @for (actionBtn of actionBtns(); track actionBtn.id) {
-                  <button mat-menu-item (click)="onClickActionBtn(actionBtn.id, infoOwner)">
-                    <mat-icon [svgIcon]="actionBtn.icon" />
-                    <span>{{ actionBtn.label }}</span>
-                  </button>
-                } @empty {
-                  <button mat-menu-item disabled>
-                    <span class="text-center">No options</span>
-                  </button>
-                }
+                <button *ngFor="let actionBtn of actionBtns()" mat-menu-item (click)="onClickActionBtn(actionBtn.id, infoOwner)">
+                  <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
+                  <span>{{ actionBtn.label }}</span>
+                </button>
+                <button mat-menu-item disabled *ngIf="actionBtns().length === 0">
+                  <span class="text-center">No options</span>
+                </button>
               </ng-template>
             </mat-menu>
           </div>
+
           <div class="paginator-container flex justify-center">
             <mat-paginator
-              #paginator
-              [pageSizeOptions]="pageSizeOptions"
-              [length]="totalElements"
-              [pageSize]="pageSize"
-              [pageIndex]="page"
-              (page)="refreshPaginator($event)"
-              class="paginator"
-            />
+            #paginator1
+            [pageSizeOptions]="pageSizeOptions"
+            [length]="totalPhysicalElements"
+            [pageSize]="pageSize"
+            [pageIndex]="page"
+            (page)="refreshPaginator($event, 'paginator1')"
+            class="paginator"
+          />
           </div>
+
+          
         </div>
 
-        <!-- Divider -->
         <div class="border-l-2 border-gray-300"></div>
 
-        <!-- Second Table (Second Column) -->
+         <!-- Second Table -->
+
         <div class="flex flex-col w-[48%]">
-          <!-- Title for the Second Table -->
           <div class="header-container m-2 flex items-center justify-between">
             <span class="font-bold text-xl">Zonas Geoeconómicas</span>
-            @if (typeInformation === "edition") {
-              <button
-                color="primary"
-                mat-raised-button
-                type="button"
-                (click)="onClickOpenAddEditModal(dataSource)"
-              >
-                Nueva
-                <mat-icon svgIcon="mat:add"></mat-icon>
-              </button>
-            }
+            <button *ngIf="typeInformation === 'edition'" mat-raised-button color="primary" type="button" (click)="onClickOpenGeoconomicAddEditModal(dataSourceGeoeconomicZones)">
+              Nueva
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
           </div>
-          
+        
           <div class="table-container overflow-x-auto w-full">
-            <table mat-table [dataSource]="dataSource" matSort class="w-full">
+            <table mat-table [dataSource]="dataSourceGeoeconomicZones" matSort class="w-full">
+              <!-- Detalles -->
               <ng-container matColumnDef="viewDetail">
                 <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header></th>
                 <td *matCellDef="let row" mat-cell>
@@ -138,73 +145,89 @@
                       class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
                       mat-icon-button
                       title="Detalles"
-                      (click)="openInformationPropertyOwner(row)"
+                      (click)="openInformationPropertyZone(row, 'geoeconomic')"
                     >
                       <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
                     </button>
                   </div>
                 </td>
               </ng-container>
-              @for (column of textColumns(); track column) {
+        
+              <!-- Código -->
+              <ng-container matColumnDef="zoneCodeColumn">
+                <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
+                  Código
+                </th>
+                <td *matCellDef="let row" mat-cell>
+                  {{ getGeoeconomicZoneCode(row) }}
+                </td>
+              </ng-container>
+        
+              <!-- Vigencia -->
+              <ng-container matColumnDef="zoneValidityColumn">
+                <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
+                  Vigencia
+                </th>
+                <td *matCellDef="let row" mat-cell>
+                  {{ getGeoeconomicZoneValidity(row) }}
+                </td>
+              </ng-container>
+        
+              <!-- Columnas dinámicas -->
+              <ng-container *ngFor="let column of textColumns()">
                 <ng-container [matColumnDef]="column.property">
                   <th *matHeaderCellDef class="uppercase" mat-sort-header mat-header-cell>
                     {{ column.label }}
                   </th>
                   <td *matCellDef="let row" mat-cell>
-                    @if (column.property === 'beginAt') {
-                      {{ row[column.property] | date:'dd/MM/yyyy' }}
-                    }
-                    @else {
-                      {{ row[column.property] }}
-                    }
+                    {{ row[column.property] }}
                   </td>
                 </ng-container>
-              }
+              </ng-container>
+        
+              <!-- Acciones -->
               <ng-container matColumnDef="actions">
-                <th *matHeaderCellDef mat-header-cell> ACCIONES </th>
+                <th *matHeaderCellDef mat-header-cell></th>
                 <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-                  <button
-                    mat-icon-button
-                    [matMenuTriggerData]="{ infoOwner: row }"
-                    [matMenuTriggerFor]="actionsMenu"
-                    type="button"
-                  >
+                  <button mat-icon-button [matMenuTriggerData]="{ infoOwner: row }" [matMenuTriggerFor]="actionsGeoconomicMenu" type="button">
                     <mat-icon svgIcon="mat:more_horiz"></mat-icon>
                   </button>
                 </td>
               </ng-container>
+        
               <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
               <tr mat-row @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer" *matRowDef="let row; columns: visibleColumns()"></tr>
             </table>
-            <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+        
+            <mat-menu #actionsGeoconomicMenu="matMenu" xPosition="before" yPosition="below">
               <ng-template let-infoOwner="infoOwner" matMenuContent>
-                @for (actionBtn of actionBtns(); track actionBtn.id) {
-                  <button mat-menu-item (click)="onClickActionBtn(actionBtn.id, infoOwner)">
-                    <mat-icon [svgIcon]="actionBtn.icon" />
-                    <span>{{ actionBtn.label }}</span>
-                  </button>
-                } @empty {
-                  <button mat-menu-item disabled>
-                    <span class="text-center">No options</span>
-                  </button>
-                }
+                <button *ngFor="let actionBtn of actionBtns()" mat-menu-item (click)="onClickGeoconomicActionBtn(actionBtn.id, infoOwner)">
+                  <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
+                  <span>{{ actionBtn.label }}</span>
+                </button>
+                <button mat-menu-item disabled *ngIf="actionBtns().length === 0">
+                  <span class="text-center">No options</span>
+                </button>
               </ng-template>
             </mat-menu>
           </div>
+        
           <div class="paginator-container flex justify-center">
             <mat-paginator
-              #paginator
-              [pageSizeOptions]="pageSizeOptions"
-              [length]="totalElements"
-              [pageSize]="pageSize"
-              [pageIndex]="page"
-              (page)="refreshPaginator($event)"
-              class="paginator"
-            />
+            #paginator2
+            [pageSizeOptions]="pageSizeOptions2"
+            [length]="totalGeoElements"
+            [pageSize]="pageSize2"
+            [pageIndex]="page2"
+            (page)="refreshPaginator($event, 'paginator2')"
+            class="paginator"
+          />
           </div>
         </div>
 
-      </div> 
+        
+
+      </div>
 
     </mat-panel-description>
   </mat-expansion-panel>

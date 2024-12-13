@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { MatInputModule } from '@angular/material/input';
@@ -8,7 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -49,6 +49,8 @@ import { Commune } from '../../../interfaces/territorial-organization/commune.mo
 import { NationalPredialNumber } from '../../../interfaces/national-predial-number';
 import { divideNpn } from '../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
+import { maxLengthValidator } from 'src/app/apps/validation-form/validation-general';
+import { CharacterValidateService } from 'src/app/apps/services/character-validate.service';
 
 @Component({
   selector: 'vex-filter-cadastral-search',
@@ -56,6 +58,8 @@ import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
   styleUrls: ['./filter-cadastral-search.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
+    AsyncPipe,
     ComboxColletionComponent,
     InputComponent,
     MatAutocompleteModule,
@@ -72,6 +76,9 @@ import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
     ReactiveFormsModule,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
+    NgFor,
+    NgClass,
+    NgIf
   ]
 })
 export class FilterCadastralSearchComponent implements OnInit {
@@ -94,6 +101,21 @@ export class FilterCadastralSearchComponent implements OnInit {
   form: FormGroup = this.fb.group({
 
 
+    // National Property Number,
+    dpto: [this.defaults?.dpto ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
+    mpio: [this.defaults?.mpio ?? '',[Validators.maxLength(3),Validators.pattern(/^\d+$/)]],
+    zonas: [this.defaults?.zonas ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
+    sectorb: [this.defaults?.sectorb ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
+    comuna: [this.defaults?.comuna ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
+    barrio: [this.defaults?.barrio ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
+    manVer: [this.defaults?.manVer ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
+    terreno: [this.defaults?.terreno ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
+    condicion: [this.defaults?.condicion ?? '',[Validators.maxLength(1),Validators.pattern(/^\d+$/)]],
+    edificio: [this.defaults?.edificio ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
+    piso: [this.defaults?.piso ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
+    unidadPredial: [this.defaults?.unidadPredial ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
+
+    
     // MUltiple Fields
     registration: this.defaults?.registration ?? '',
     domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
@@ -134,11 +156,13 @@ export class FilterCadastralSearchComponent implements OnInit {
     private dialogRef: MatDialogRef<FilterCadastralSearchComponent>,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private territorialOrganizationService: TerritorialOrganizationService
+    private territorialOrganizationService: TerritorialOrganizationService,
+    private fieldFormatterService: CharacterValidateService
   ) {
   }
 
   ngOnInit() {
+    console.log(this.defaults,'valor de retorno')
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -169,6 +193,53 @@ export class FilterCadastralSearchComponent implements OnInit {
     );
   }
 
+  formatFieldValue() {
+    
+      this.dpto?.reset();
+      this.mpio?.reset();
+      this.zonas?.reset();
+      this.sectorb?.reset();
+      this.comuna?.reset();
+      this.barrio?.reset();
+      this.manVer?.reset();
+      this.terreno?.reset();
+      this.condicion?.reset();
+      this.edificio?.reset();
+      this.piso?.reset();
+      this.unidadPredial?.reset();
+  }
+
+  
+
+  public sendInformationTable() {
+    const searchData = this.validateFilterSearchCadastral();
+    const searchDataFiltered: SearchData = new SearchData(searchData);
+
+    searchDataFiltered.dpto = this.fieldFormatterService.formatField(this.dpto?.value, 2);
+    searchDataFiltered.mpio = this.fieldFormatterService.formatField(this.mpio?.value, 3);
+    searchDataFiltered.zonas = this.fieldFormatterService.formatField(this.zonas?.value, 2);
+    searchDataFiltered.sectorb = this.fieldFormatterService.formatField(this.sectorb?.value, 2);
+    searchDataFiltered.comuna =  this.fieldFormatterService.formatField(this.comuna?.value, 2);
+    searchDataFiltered.barrio = this.fieldFormatterService.formatField(this.barrio?.value, 2);
+    searchDataFiltered.manVer = this.fieldFormatterService.formatField(this.manVer?.value, 4);
+    searchDataFiltered.terreno = this.fieldFormatterService.formatField(this.terreno?.value, 4);
+    searchDataFiltered.condicion =  this.fieldFormatterService.formatField(this.condicion?.value, 1);
+    searchDataFiltered.edificio =  this.fieldFormatterService.formatField(this.edificio?.value, 2);
+    searchDataFiltered.piso = this.fieldFormatterService.formatField(this.piso?.value, 2);
+    searchDataFiltered.unidadPredial = this.fieldFormatterService.formatField(this.unidadPredial?.value, 4);
+
+    if (searchDataFiltered) {
+      this.dialogRef.close(searchDataFiltered);
+      return;
+    }
+
+    this.openSnackbar(
+      'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
+      'CLOSE', 'end'
+    );
+    console.log(searchDataFiltered);
+  }
+
   searchByName() {
     const searchData = this.validateFilterSearchCadastral();
     this.dialogRef.close(searchData);
@@ -196,6 +267,12 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     if(value?.tab?.textLabel === 'Multiplex Campos'){
       this.clearMunicipalSelection()
+    }
+
+    if(value?.tab?.textLabel === 'Numero Predial Nacional'){
+      this.clearMunicipalSelection();
+      this.formatFieldValue();
+
     }
   }
 
@@ -243,6 +320,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       msg, action, { duration: 3000, horizontalPosition: position }
     );
   }
+
 
   searchMunicipalSelection() {
     const searchData = this.validateFilterSearchCadastral();
@@ -604,6 +682,54 @@ export class FilterCadastralSearchComponent implements OnInit {
     if (this.optionsBlocks?.length > 0) this.captureBlocksInformation([], null);
   }
 
+// formulario nuevo
+
+
+get dpto(){
+  return this.form.get('dpto');
+}
+
+get mpio(){
+  return this.form.get('mpio');
+}
+
+get zonas(){
+  return this.form.get('zonas');
+}
+
+get sectorb(){
+  return this.form.get('sectorb');
+}
+
+get comuna(){
+  return this.form.get('comuna');
+}
+
+get barrio(){
+  return this.form.get('barrio');
+}
+
+get terreno(){
+  return this.form.get('terreno');
+}
+
+get condicion(){
+  return this.form.get('condicion');
+}
+
+get edificio(){
+  return this.form.get('edificio');
+}
+
+get piso(){
+  return this.form.get('piso');
+}
+
+get unidadPredial(){
+  return this.form.get('unidadPredial');
+}
+
+//  
 
   get registration(){
     return this.form.get('registration');
@@ -651,6 +777,10 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   get zone(){
     return this.form.get('zone');
+  }
+
+  get manVer(){
+    return this.form.get('manVer');
   }
 
   get sector(){

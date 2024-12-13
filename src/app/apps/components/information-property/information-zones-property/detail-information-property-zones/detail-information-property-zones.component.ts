@@ -12,6 +12,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from 'src/app/apps/constants/constant';
 import { PhysicalZoneInfo } from 'src/app/apps/interfaces/information-property/info-zones';
+import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
 
 @Component({
   selector: 'vex-detail-information-property-zones',
@@ -40,17 +41,18 @@ import { PhysicalZoneInfo } from 'src/app/apps/interfaces/information-property/i
 export class DetailInformationPropertyZonesComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public zone: PhysicalZoneInfo | undefined,
+    @Inject(MAT_DIALOG_DATA) public data: { zone: ZoneBAUnit, propertyType: string},
     private dialogRef: MatDialogRef<DetailInformationPropertyZonesComponent>,
     private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit() {
-    if (this.zone === null || this.zone === undefined) {
+    if (this.data.zone === null || this.data.zone === undefined) {
       this.close();
     }
-    console.log('zone', this.zone);
+    console.log('zone', this.data.zone);
+    console.log('Tipo de predio:', this.data.propertyType);
 
     this.cdr.detectChanges();
   }
