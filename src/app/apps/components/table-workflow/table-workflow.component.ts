@@ -1,39 +1,41 @@
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ReactiveFormsModule, FormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
 
 // recursos de vex
-import { VexPageLayoutComponent } from "../../../../@vex/components/vex-page-layout/vex-page-layout.component";
-import { VexPageLayoutContentDirective } from "../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive";
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
+import { TableColumn } from '@vex/interfaces/table-column.interface';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { VexPageLayoutComponent } from "../../../../@vex/components/vex-page-layout/vex-page-layout.component";
+import { VexPageLayoutContentDirective } from "../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive";
 
 // recursos de angular material
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // recursos de archivos locales
-import { WorkflowCollection } from '../../interfaces/workflow.model';
 import { contentInfoWorkflow } from '../../interfaces/content-info-workflow.model';
-
-import { WorkflowService } from '../../services/workflow.service';
-import { PageSortByData } from '../../interfaces/page-sortBy-data.model';
+import { CreateWorkflowComponent } from '../workflow/create-workflow/create-workflow.component';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../constants/workflow.constant';
+import { PageSortByData } from '../../interfaces/page-sortBy-data.model';
+import { CreateWorkflowParams, WorkflowCollection } from '../../interfaces/workflow.model';
+import { WorkflowService } from '../../services/workflow.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vex-table-workflow',
@@ -72,7 +74,7 @@ export class TableWorkflowComponent implements OnInit {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   @Input()
-  page:number = PAGE;
+  page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements: number = 0;
@@ -89,7 +91,9 @@ export class TableWorkflowComponent implements OnInit {
   constructor(
     private workflowService: WorkflowService,
     private readonly layoutService: VexLayoutService,
-  ) {}
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
+  ) { }
 
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */
@@ -137,8 +141,8 @@ export class TableWorkflowComponent implements OnInit {
 
   get visibleColumns() {
     return ['icon', ...this.columns
-    .filter((column) => column.visible)
-    .map((column) => column.property)];
+      .filter((column) => column.visible)
+      .map((column) => column.property)];
   }
 
 
@@ -162,18 +166,18 @@ export class TableWorkflowComponent implements OnInit {
   getDataFromWorkflowService() {
     const paramsWF: PageSortByData = this.generateObjectPageWorkflowData();
     this.workflowService.getDataPropertyByWorkflow(paramsWF)
-    .subscribe({
-      next: (result: any) => {
-        console.log("datos de api: ", result);
-        this.captureInformationSubscribe(result);
-      },
-      error: (error) => {
-        console.error('Hubo un error al obtener los datos: ', error);
-      },
-      complete: () => {
-        console.log('Carga completa de datos');
-      }
-    });
+      .subscribe({
+        next: (result: any) => {
+          console.log("datos de api: ", result);
+          this.captureInformationSubscribe(result);
+        },
+        error: (error) => {
+          console.error('Hubo un error al obtener los datos: ', error);
+        },
+        complete: () => {
+          console.log('Carga completa de datos');
+        }
+      });
   }
 
   captureInformationSubscribe(data: InformationPegeable) {
@@ -206,5 +210,42 @@ export class TableWorkflowComponent implements OnInit {
     if (this.contentInformations.pageable.pageNumber != null) {
       this.page = this.contentInformations.pageable.pageNumber;
     }
+  }
+
+  openCreateWorkflowDialog() {
+    this.dialog.open(CreateWorkflowComponent)
+      .afterClosed()
+      .subscribe((result: { result: boolean, data: CreateWorkflowParams }) => {
+        if (!result.result) return;
+        this.createWorkflow(result.data);
+      })
+  }
+
+  createWorkflow(params: CreateWorkflowParams) {
+    if (params.validBeginAt != null) {
+      params.validBeginAt = new Date(params.validBeginAt).toISOString().split('T')[0];
+    }
+
+    if (params.validToAt != null) {
+      params.validToAt = new Date(params.validToAt).toISOString().split('T')[0];
+    }
+
+    Object.keys(params).forEach((key) => {
+      if (params[key as keyof CreateWorkflowParams] === null) {
+        params[key as keyof CreateWorkflowParams] = '';
+      }
+    });
+
+    this.workflowService.createWorkflow(params)
+      .subscribe({
+        next: (result: WorkflowCollection) => {
+          console.log("result: ", result);
+          this.getDataFromWorkflowService();
+          this.snackbar.open('Flujo de trabajo creado', 'CLOSE', { duration: 4000 });
+        },
+        error: () => {
+          this.snackbar.open('Hubo un error al crear el flujo de trabajo', 'CLOSE', { duration: 4000 });
+        },
+      });
   }
 }
