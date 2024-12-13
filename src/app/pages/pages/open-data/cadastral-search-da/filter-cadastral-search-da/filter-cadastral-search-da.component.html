@@ -251,44 +251,67 @@
           <!--Búsqueda por círculo - matrícula / matrícula -->
           <br>
           <div class="flex flex-col sm:flex-row">
-              <div class="form-content-item" >
-                <vex-input
+                <!-- <vex-input
                   cssClasses="sm:ml-2 sm:mr-2 flex-1"
                   label="Matrícula"
                   type="text"
                   idComboInput="registrationID"
                   formControlNameInput="registration"
                   icon="mat:assignment"
-                ></vex-input>
+                  matIconSuffix
+                ></vex-input> -->
+                
+              <mat-form-field>
+                <mat-label>Matrícula</mat-label>
+                <input 
+                cssClasses="sm:ml-2 sm:mr-2 flex-1"
+                label="Matrícula"
+                type="text"
+                idComboInput="registrationID"
+                formControlNameInput="registration"
+                matInput 
+                placeholder="Matrícula&hellip;"/>
+                <mat-icon matIconSuffix svgIcon="mat:assignment"></mat-icon>
+              </mat-form-field>
                
                   <button color="primary" mat-raised-button type="button"
                           (click)="searchRegistrationNumber()">
-                    <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+                    <mat-icon matIconSuffix svgIcon="mat:search"></mat-icon>
+                    Buscar
                   </button>
                   <button mat-icon-button color="primary"> </button>
-                
-              </div>
-              <div class="form-content-item" >
-
+              
+            </div>
+              <div class="flex flex-col sm:flex-row">
                   <!--direccion-->
-                  <vex-input
+                  <!-- <vex-input
                     cssClasses="sm:ml-2 sm:mr-2 flex-col"
                     label="Dirección"
                     type="text"
                     idComboInput="textAddressID"
                     formControlNameInput="textAddress"
                     icon="mat:edit_location"
-                  ></vex-input>
+                  ></vex-input> -->
+                  <mat-form-field>
+                    <mat-label>Dirección</mat-label>
+                    <input 
+                    cssClasses="sm:ml-2 sm:mr-2 flex-1"
+                    label="Dirección"
+                    type="text"
+                    idComboInput="textAddressID"
+                    formControlNameInput="textAddress"
+                    matInput 
+                    placeholder="Dirección&hellip;"/>
+                    <mat-icon matIconSuffix svgIcon="mat:edit_location"></mat-icon>
+                  </mat-form-field>
                   <!--boton de búsqueda-->
                   
                     <button color="primary" mat-raised-button type="button"
                             (click)="searchByAddress()">
                       <mat-icon svgIcon="mat:search"></mat-icon>Buscar
                     </button>
-                 
 
-              </div>
-          </div>
+             </div>
           <!-- Búsqueda por documento y tipo -->
           <!-- <div class="flex flex-col sm:flex-row">
             <vex-combox-colletion
