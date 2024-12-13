@@ -28,16 +28,4 @@ export class WorkflowCollection {
   }
 }
 
-export interface CreateWorkflowParams {
-  name: string;
-  description: string;
-  bpmProcessCategory: string;
-  key: string;
-  version: string;
-  resource: string;
-  image: string;
-  validBeginAt: string | null;
-  validToAt: string | null;
-  rev: string;
-}
 

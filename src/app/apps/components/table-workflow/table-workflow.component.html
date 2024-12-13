@@ -9,7 +9,8 @@
             mat-raised-button
             color="primary"
             (click)="openCreateWorkflowDialog()"
-          >Crear
+          >
+            Crear
             <mat-icon svgIcon="mat:add"></mat-icon>
           </button>
         </div>
@@ -90,6 +91,28 @@
             </ng-container>
           </ng-container>
 
+          <ng-container matColumnDef="actions">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+            >
+              Acciones
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let row"
+            >
+              <button
+                mat-icon-button
+                color="primary"
+                [matMenuTriggerFor]="menu"
+                [matMenuTriggerData]="{ row: row }"
+              >
+                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
           <tr
             mat-header-row
             *matHeaderRowDef="visibleColumns"
@@ -137,4 +160,23 @@
       {{ column.label }}
     </mat-checkbox>
   </button>
+</mat-menu>
+
+<mat-menu
+  #menu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
+  <ng-template
+    let-row="row"
+    matMenuContent
+  >
+    <button
+      mat-menu-item
+      (click)="openEditWorkflowDialog(row)"
+      color="primary"
+    >
+      Editar
+    </button>
+  </ng-template>
 </mat-menu>

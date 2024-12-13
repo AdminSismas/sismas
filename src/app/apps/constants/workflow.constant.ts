@@ -55,8 +55,23 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoWorkflow>[]= [
         type: 'text',
         visible: true,
         cssClasses: ['font-medium']
-    }
+    },
 ]
+
+const workflow: any = {
+  "processId": 1,
+  "bpmProcessCategory": "M_PRIMERA",
+  "name": "Cambio de propietario",
+  "description": "Las que ocurran respecto del cambio de propietario, poseedor u ocupante y no afecta el avalúo catastral.",
+  "key": "PRC_001",
+  "version": "1",
+  "resource": null,
+  "image": "https://elasticbeanstalk-us-east-1-243227624769.s3.amazonaws.com/images/AspectoJuridico.png",
+  "validBeginAt": "2023-01-11",
+  "validToAt": "2026-07-12",
+  "dueDays": 5,
+  "icon": "camb_juridico_01.png"
+}
 
 export const WORKFLOW_INPUTS: JSONInput[] = [
   {
@@ -132,11 +147,11 @@ export const WORKFLOW_INPUTS: JSONInput[] = [
     element: 'input'
   },
   {
-    label: 'REV',
-    name: 'rev',
-    type: 'text',
-    placeholder: 'REV',
-    validators: [],
+    label: 'Dias de vencimiento',
+    name: 'dueDays',
+    type: 'number',
+    placeholder: 'Dias de vencimiento',
+    validators: [Validators.required],
     element: 'input'
-  }
+  },
 ]

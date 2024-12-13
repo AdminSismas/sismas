@@ -33,7 +33,7 @@ import { CreateWorkflowComponent } from '../workflow/create-workflow/create-work
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../constants/workflow.constant';
 import { PageSortByData } from '../../interfaces/page-sortBy-data.model';
-import { CreateWorkflowParams, WorkflowCollection } from '../../interfaces/workflow.model';
+import { WorkflowCollection } from '../../interfaces/workflow.model';
 import { WorkflowService } from '../../services/workflow.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -140,9 +140,12 @@ export class TableWorkflowComponent implements OnInit {
   }
 
   get visibleColumns() {
-    return ['icon', ...this.columns
+    let columns = ['icon', ...this.columns
       .filter((column) => column.visible)
       .map((column) => column.property)];
+
+    columns.push('actions');
+    return columns;
   }
 
 
@@ -188,7 +191,8 @@ export class TableWorkflowComponent implements OnInit {
   captureInformationWorkflowData() {
     let data: contentInfoWorkflow[];
     if (this.contentInformations != null && this.contentInformations.content != null) {
-      data = this.contentInformations.content.map((row: contentInfoWorkflow) => new contentInfoWorkflow(row));
+      // data = this.contentInformations.content.map((row: contentInfoWorkflow) => new contentInfoWorkflow(row));
+      data = this.contentInformations.content;
       console.log("data: ", data);
       this.dataSource.data = data;
     }
@@ -213,15 +217,19 @@ export class TableWorkflowComponent implements OnInit {
   }
 
   openCreateWorkflowDialog() {
-    this.dialog.open(CreateWorkflowComponent)
+    this.dialog.open(CreateWorkflowComponent,{
+      data: {
+        mode: 'create'
+      }
+    })
       .afterClosed()
-      .subscribe((result: { result: boolean, data: CreateWorkflowParams }) => {
+      .subscribe((result: { result: boolean, data: WorkflowCollection }) => {
         if (!result.result) return;
         this.createWorkflow(result.data);
       })
   }
 
-  createWorkflow(params: CreateWorkflowParams) {
+  createWorkflow(params: WorkflowCollection) {
     if (params.validBeginAt != null) {
       params.validBeginAt = new Date(params.validBeginAt).toISOString().split('T')[0];
     }
@@ -229,12 +237,6 @@ export class TableWorkflowComponent implements OnInit {
     if (params.validToAt != null) {
       params.validToAt = new Date(params.validToAt).toISOString().split('T')[0];
     }
-
-    Object.keys(params).forEach((key) => {
-      if (params[key as keyof CreateWorkflowParams] === null) {
-        params[key as keyof CreateWorkflowParams] = '';
-      }
-    });
 
     this.workflowService.createWorkflow(params)
       .subscribe({
@@ -245,6 +247,32 @@ export class TableWorkflowComponent implements OnInit {
         },
         error: () => {
           this.snackbar.open('Hubo un error al crear el flujo de trabajo', 'CLOSE', { duration: 4000 });
+        },
+      });
+  }
+
+  openEditWorkflowDialog(row: WorkflowCollection) {
+    this.dialog.open(CreateWorkflowComponent, {
+      data: {
+        initValues: row,
+        mode: 'edit'
+      }
+    }).afterClosed()
+      .subscribe((result: { result: boolean, data: WorkflowCollection }) => {
+        if (!result.result) return;
+        this.editWorkFlow(result.data);
+      })
+  }
+
+  editWorkFlow(params: WorkflowCollection) {
+    this.workflowService.updateWorkflow(params)
+      .subscribe({
+        next: (result: WorkflowCollection) => {
+          this.getDataFromWorkflowService();
+          this.snackbar.open('Flujo de trabajo actualizado', 'CLOSE', { duration: 4000 });
+        },
+        error: () => {
+          this.snackbar.open('Hubo un error al actualizar el flujo de trabajo', 'CLOSE', { duration: 4000 });
         },
       });
   }

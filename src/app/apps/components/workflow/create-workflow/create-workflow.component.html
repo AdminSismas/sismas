@@ -1,5 +1,5 @@
 <h2 mat-dialog-title class="sticky top-0 flex justify-between items-center">
-  <span>Crear nuevo flujo de trabajo</span>
+  <span>{{ labelAction() }} flujo de trabajo</span>
   <button
     mat-icon-button
     mat-dialog-close
@@ -12,6 +12,7 @@
   <dynamic-forms
     [inputs]="WORKFLOW_INPUTS"
     (formReady)="form = $event"
+    [initValues]="data.initValues"
   ></dynamic-forms>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
@@ -20,7 +21,7 @@
     color="primary"
     (click)="onSubmit()"
   >
-    Crear
+    {{ labelAction() }}
   </button>
   <button
     mat-raised-button
