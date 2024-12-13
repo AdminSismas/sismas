@@ -1,17 +1,29 @@
+// Angular framework
 import { Component } from '@angular/core';
-import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
-import { MatIconModule } from '@angular/material/icon';
+
+// Vex
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+
+// Material
+import { MatIconModule } from '@angular/material/icon';
+import { TableDigitalizedSignaturesComponent } from 'src/app/apps/components/configuration/digitalized-signatures/table-digitalized-signatures.component';
+
+// Custom
 
 @Component({
   selector: 'vex-digitalized-signatures',
   standalone: true,
   imports: [
-    InConstructionComponent,
-    MatIconModule,
+    // Vex
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
+    VexSecondaryToolbarComponent,
+
+    // Material
+    MatIconModule,
+
+    // Custom
+    TableDigitalizedSignaturesComponent
   ],
   templateUrl: './digitalized-signatures.component.html',
   styleUrl: './digitalized-signatures.component.scss'
