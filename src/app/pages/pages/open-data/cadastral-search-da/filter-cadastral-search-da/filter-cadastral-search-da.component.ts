@@ -152,7 +152,6 @@ export class FilterCadastralSearchDaComponent {
   }
 
   ngOnInit() {
-    console.log(this.defaults,'valor de retorno')
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
