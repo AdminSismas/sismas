@@ -40,6 +40,7 @@ export interface GeoEconomicZone {
   suelo: string;
   valorLabel: string;
   cadastreChangeLog?: CadastreChangeLog;
+  details?: GeoEconomicZoneDetails
 }
 
 export interface CadastreChangeLog {
@@ -60,6 +61,7 @@ export interface ZoneServices {
   createZone: (params: Zone) => Observable<Zone>;
   deleteZone: (version: string, id: string) => Observable<void>;
   updateZone: (params: any) => Observable<Zone>;
+  getValues?: (id: string) => Observable<GeoEconomicZoneDetails>;
 }
 
 export interface CreateZoneData {
@@ -84,6 +86,12 @@ export interface DisplayedColumns {
   urban: string[];
   rural: string[];
   geoeconomic: string[];
+}
+
+export interface GeoEconomicZoneDetails {
+  zonaGEcoValorId: number;
+  vigencia:        number;
+  valor:           number;
 }
 
 
