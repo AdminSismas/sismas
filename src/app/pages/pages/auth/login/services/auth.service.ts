@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environments';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 
@@ -95,8 +95,15 @@ export class AuthService {
     const decodedToken = this.getDecodedToken();
     if (decodedToken && decodedToken.sub) {
       const username = decodedToken.sub;
-      return this.http.get<any>(`${this.userUrl}${username}`);
+      console.log('Haciendo solicitud para obtener el usuario', username); 
+      return this.http.get<any>(`${this.userUrl}${username}`).pipe(
+        catchError(err => {
+          console.error('Error al obtener el usuario', err);
+          return throwError(() => err);
+        })
+      );
     }
+    console.error('Token no disponible o no decodificado');
     return null;
   }
 }

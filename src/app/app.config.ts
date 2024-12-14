@@ -4,6 +4,7 @@ import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi
 } from '@angular/common/http';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
@@ -17,7 +18,8 @@ import { provideNavigation } from './core/navigation/navigation.provider';
 import { vexConfigs } from '@vex/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
 import { COLOMBIA_DATE_FORMATS } from './helpers/colombia-date-formats';
-import { AuthInterceptor } from './pages/pages/auth/login/services/auth.interceptor';
+import { authInterceptor } from './pages/pages/auth/login/services/auth.interceptor';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,7 +38,8 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideHttpClient(
-      withInterceptorsFromDi(),  
+      withInterceptorsFromDi(),
+      withInterceptors([authInterceptor])
     ),
     provideVex({
       config: vexConfigs.poseidon,
@@ -65,7 +68,6 @@ export const appConfig: ApplicationConfig = {
       }
     }),
     { provide: MAT_DATE_LOCALE, useValue: 'es-CO' },
-    { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS },
-    AuthInterceptor, 
+    { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS }
   ]
 };
