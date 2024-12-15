@@ -1,5 +1,5 @@
-<div @stagger class="max-w-3xs w-full">
-  <div class="h-14 mb-6 flex px-6 sm:px-0 flex items-center">
+<div @stagger class="max-w-3xs w-full" [id]="id">
+  <div class="h-14 mb-6 flex px-6 sm:px-0 flex items-center" [id]="id + 'container-emmit'">
     <button
       (click)="openAddNew.emit()"
       class="flex-auto"
@@ -13,7 +13,7 @@
     </button>
   </div>
 
-  <div class="px-6 sm:px-0">
+  <div class="px-6 sm:px-0" [id]="id + 'container'">
     <ng-container *ngFor="let item of items">
       <a
         (click)="setFilter(item.id)"

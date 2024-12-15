@@ -44,7 +44,8 @@ export const environment = {
     proTask_count:'proTask/count',
     comment:'comment/',
     count: '/count',
-    startProcess:'startProcess'
+    startProcess:'startProcess',
+    participation:'participation/',
   },
   bpmAttachment:{
     value: '/bpmAttachment/',

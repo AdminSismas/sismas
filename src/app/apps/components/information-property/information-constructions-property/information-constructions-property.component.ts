@@ -63,7 +63,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   EditInformationConstructionDialogComponent
 } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
-import Swal from 'sweetalert2';
+import swAlert from 'sweetalert2';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -317,7 +317,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
           next: () => {
             // Elimina el registro de la tabla si la petición fue exitosa
             this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
-            Swal.fire({
+            swAlert.fire({
               title: '¡Éxito!',
               text: 'Información eliminada con éxito',
               icon: 'success',
@@ -326,7 +326,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
             });
           },
           error: () => {
-            Swal.fire({
+            swAlert.fire({
               title: 'Error',
               text: 'No fue posible eliminar la información',
               icon: 'error',

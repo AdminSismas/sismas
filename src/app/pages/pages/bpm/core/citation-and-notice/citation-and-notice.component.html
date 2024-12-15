@@ -1,4 +1,4 @@
-<div class="w-full h-full flex flex-col">
+<div class="w-full h-full flex flex-col" [id]="this.id">
   <div class="px-2 pt-2 pb-4 bg-primary-600/10 flex-none">
     <div class="flex items-center container-fluid px-0">
       <button
@@ -25,7 +25,7 @@
           class="text-secondary flex-none"
           svgIcon="mat:search"></mat-icon>
         <input
-          [formControl]="searchCtrl"
+          [formControl]="searchStr"
           class="border-0 h-12 outline-none ltr:pl-4 rtl:pr-4 placeholder:text-secondary bg-foreground flex-auto"
           placeholder="Buscar Citación, notificación..."
           type="text" />
@@ -37,19 +37,28 @@
     <mat-drawer-container class="bg-transparent flex-auto flex">
       <mat-drawer-content class="p-6 pt-0 flex-auto flex items-start">
         <vex-citation-notice-table-menu
+          [id]="executionId + 'Menu2Notificacion'"
           (filterChange)="setData($event)"
-          (openAddNew)="openContact()"
+          (openAddNew)="openDetailProcessParticipant()"
           class="hidden sm:block ltr:mr-6 rtl:ml-6">
         </vex-citation-notice-table-menu>
-
         <div class="card h-full overflow-hidden flex-auto">
-          <vex-citation-notice-table
-            (openContact)="openContact($event)"
+          <vex-citation-notice-grid
+            [id]="executionId + 'TableNotificacionGridv2'"
+            [executionId]="executionId"
+            (openDetailProcessParticipant)="openDetailProcessParticipant($event)"
             (toggleStar)="toggleStar($event)"
-            [columns]="tableColumns"
-            [data]="tableData"
+            [typeProcess]="typeProcess"
+            [searchCtrl]="searchStr$ | async">
+          </vex-citation-notice-grid>
+          <!--<vex-citation-notice-table
+            [id]="executionId + 'TableNotificacion1R2bnv2'"
+            [executionId]="executionId"
+            (openDetailProcessParticipant)="openDetailProcessParticipant($event)"
+            (toggleStar)="toggleStar($event)"
+            [typeProcess]="typeProcess"
             [searchStr]="searchStr$ | async">
-          </vex-citation-notice-table>
+          </vex-citation-notice-table>-->
         </div>
       </mat-drawer-content>
     </mat-drawer-container>

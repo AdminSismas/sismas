@@ -5,26 +5,11 @@ import { MatRippleModule } from '@angular/material/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Contact } from '../../../../../../apps/interfaces/bpm/contact.interface';
-import { contactsData } from '../../../../../../../static-data/contacts';
-import { CitationAndNoticeTableComponent } from '../citation-and-notice-table/citation-and-notice-table.component';
+import {
+  ProcessParticipantTableMenu,
+  TypeProcessParticipant
+} from '../../../../../../apps/interfaces/bpm/info-participants.interface';
 
-export interface ContactsTableMenu {
-  type: 'link' | 'subheading';
-  id?:
-    | 'frequently'
-    | 'starred'
-    | 'all'
-    | 'family'
-    | 'friends'
-    | 'colleagues'
-    | 'business';
-  icon?: string;
-  label: string;
-  classes?: {
-    icon?: string;
-  };
-}
 
 @Component({
   selector: 'vex-citation-notice-table-menu',
@@ -42,12 +27,14 @@ export interface ContactsTableMenu {
   ]
 })
 export class CitationAndNoticeTableMenuComponent implements OnInit {
-  @Input() items: ContactsTableMenu[] = [
+
+  @Input({ required: true }) id: string = '';
+  @Input() items: ProcessParticipantTableMenu[] = [
     {
       type: 'link',
       id: 'all',
       icon: 'mat:view_headline',
-      label: 'Todos'
+      label: 'Consolidado'
     },
     {
       type: 'subheading',
@@ -55,74 +42,69 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
     },
     {
       type: 'link',
-      id: 'family',
+      id: 'citation',
       icon: 'mat:label',
-      label: 'Citación',
+      label: 'Citar',
       classes: {
         icon: 'text-primary-600'
       }
     },
     {
       type: 'link',
-      id: 'friends',
+      id: 'notification',
       icon: 'mat:label',
-      label: 'Notificación',
+      label: 'Notificar',
       classes: {
         icon: 'text-green-600'
       }
     },
     {
       type: 'link',
-      id: 'colleagues',
+      id: 'notice',
       icon: 'mat:label',
-      label: 'Aviso',
+      label: 'Avisos',
       classes: {
         icon: 'text-amber-600'
       }
-    },
-    {
-      type: 'link',
-      id: 'business',
-      icon: 'mat:label',
-      label: 'Aviso Fijar',
-      classes: {
-        icon: 'text-gray-600'
-      }
     }
   ];
-
-  @Output() filterChange = new EventEmitter<Contact[]>();
+  @Output() filterChange = new EventEmitter<TypeProcessParticipant['type']>();
   @Output() openAddNew = new EventEmitter<void>();
 
-  activeCategory: ContactsTableMenu['id'] = 'all';
+  activeCategory: ProcessParticipantTableMenu['id'] = 'all';
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.id?.length <= 0 ) {
+      return;
+    }
+    this.id = this.id + this.getRandomInt(10000) + 'Menu';
 
-  setFilter(category: ContactsTableMenu['id']) {
+  }
+
+  setFilter(category: ProcessParticipantTableMenu['id']) {
     this.activeCategory = category;
-
-    if (category === 'starred') {
-      return this.filterChange.emit(contactsData.filter((c) => c.starred));
-    }
-
     if (category === 'all') {
-      return this.filterChange.emit(contactsData);
+      return this.filterChange.emit('ALL');
     }
-
-    if (
-      category === 'frequently' ||
-      category === 'family' ||
-      category === 'friends' ||
-      category === 'colleagues' ||
-      category === 'business'
-    ) {
-      return this.filterChange.emit([]);
+    if (category === 'citation') {
+      return this.filterChange.emit('CITADO');
+    }
+    if (category === 'notification') {
+      return this.filterChange.emit('NOTIFICADO');
+    }
+    if (category === 'notice') {
+      return this.filterChange.emit('AVISO');
     }
   }
 
-  isActive(category: ContactsTableMenu['id']) {
+  isActive(category: ProcessParticipantTableMenu['id']) {
     return this.activeCategory === category;
+  }
+
+  getRandomInt(max: number):number {
+    return Math.floor(Math.random() * max);
   }
 }

@@ -9,6 +9,7 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
+import { ProcessUser } from '../interfaces/bpm/process-user';
 
 export const GUION: string = ' - ';
 export const SPACE: string = ' ';
@@ -37,17 +38,17 @@ export const PAGE_SIZE_OPTION: number[] = [5, PAGE_OPTION_UNIQUE_7, PAGE_OPTION_
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 
-export const PANEL_ASSIGNED_TASKS:string = "assignedTasks";
-export const PANEL_DEVOLUTION_TASKS:string = "returnedTasks";
-export const PANEL_PRIORITIZED_TASKS:string = "prioritizedTasks";
+export const PANEL_ASSIGNED_TASKS: string = 'assignedTasks';
+export const PANEL_DEVOLUTION_TASKS: string = 'returnedTasks';
+export const PANEL_PRIORITIZED_TASKS: string = 'prioritizedTasks';
 
-export const CONSTANT_VALIDATE_CHECK:string = "checkStatusBpmOperation";
-export const CONSTANT_VALIDATE_OTHER:string = "OTHER_CHECK";
+export const CONSTANT_VALIDATE_CHECK: string = 'checkStatusBpmOperation';
+export const CONSTANT_VALIDATE_OTHER: string = 'OTHER_CHECK';
 
 export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
 
-export const TYPEOPERATION_ADD: TypeOperationAlfaMain = 'ADD' ;
+export const TYPEOPERATION_ADD: TypeOperationAlfaMain = 'ADD';
 export const TYPEOPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
 export const TYPEOPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
 
@@ -203,76 +204,76 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformati
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: 'cadAlfaMainComponent',
-    pathForm : '/core/cadastral/alf/maincomentad_.html',
+    pathForm: '/core/cadastral/alf/maincomentad_.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
   },
   {
     name: 'cadAlfaMainComponent',
-    pathForm : '/core/cadastral/alf/validate.html_',
+    pathForm: '/core/cadastral/alf/validate.html_',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 2
   },
   {
     name: 'cadEcoCommitteeComponent',
-    pathForm : '/core/cadastral/eco/comite.html',
+    pathForm: '/core/cadastral/eco/comite.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadGeoMainComponent',
-    pathForm : '/core/cadastral/geo/main.html',
+    pathForm: '/core/cadastral/geo/main.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadGeoValidateComponent',
-    pathForm : '/core/cadastral/geo/validate.html',
+    pathForm: '/core/cadastral/geo/validate.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadResMainComponent',
-    pathForm : '/core/cadastral/res/main.html',
+    pathForm: '/core/cadastral/res/main.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadResValidateComponent',
-    pathForm : '/core/cadastral/res/validate.html',
+    pathForm: '/core/cadastral/res/validate.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadSynMainComponent',
-    pathForm : '/core/cadastral/syn/main.html',
+    pathForm: '/core/cadastral/syn/main.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadVisitComponent',
-    pathForm : '/core/cadastral/visita.html',
+    pathForm: '/core/cadastral/visita.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'docuMainComponent',
-    pathForm : '/core/document/main.html',
+    pathForm: '/core/document/main.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'docuValidateComponent',
-    pathForm : '/core/document/validate.html',
+    pathForm: '/core/document/validate.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'citationAndNoticeComponent',
-    pathForm : '/core/cadastral/alf/main.html',
+    pathForm: '/core/cadastral/alf/main.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
-  },
+  }
 ];
 
 export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>[] = [
@@ -300,16 +301,16 @@ export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>
 ];
 
 
-export const NAME_VALIDITYVALUATIO: string =  'validityValuation';
-export const NAME_CADASTRALVALUATIONA: string =  'cadastralValuationAt';
-export const NAME_CADASTRALVALUATION: string =  'cadastralValuation';
-export const NAME_CADASTRALVALUATIONLAND: string =  'cadastralValuationLand';
-export const NAME_CADASTRALVALUATIONUNITS: string =  'cadastralValuationUnits';
-export const NAME_COMMERCIALVALUATION: string =  'commercialValuation';
-export const NAME_COMMERCIALVALUATIONLAND: string =  'commercialValuationLand';
+export const NAME_VALIDITYVALUATIO: string = 'validityValuation';
+export const NAME_CADASTRALVALUATIONA: string = 'cadastralValuationAt';
+export const NAME_CADASTRALVALUATION: string = 'cadastralValuation';
+export const NAME_CADASTRALVALUATIONLAND: string = 'cadastralValuationLand';
+export const NAME_CADASTRALVALUATIONUNITS: string = 'cadastralValuationUnits';
+export const NAME_COMMERCIALVALUATION: string = 'commercialValuation';
+export const NAME_COMMERCIALVALUATIONLAND: string = 'commercialValuationLand';
 export const NAME_COMMERCIALVALUATIONUNITS: string = 'commercialValuationUnits';
-export const NAME_SELFVALUATIONVALUE: string =  'selfValuationValue';
-export const DOMAIN_COLLETION_BPMPROCESSCATEGORY: string =  'BpmProcessCategory';
+export const NAME_SELFVALUATIONVALUE: string = 'selfValuationValue';
+export const DOMAIN_COLLETION_BPMPROCESSCATEGORY: string = 'BpmProcessCategory';
 
 
 export const LIST_GRID_APPRAISAL_1: string[] = [
@@ -339,7 +340,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'date',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Total',
@@ -347,7 +348,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Terreno',
@@ -355,7 +356,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Construcciones',
@@ -363,7 +364,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'text',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Total',
@@ -371,7 +372,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'text',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Terreno',
@@ -379,7 +380,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'text',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Construcciones',
@@ -387,7 +388,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'text',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Total',
@@ -396,12 +397,12 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     visible: true,
     cssClassesHead: ['pl-1'],
     cssClasses: ['font-medium', 'pl-1']
-  },
+  }
 ];
 
 export const LIST_SCHEMAS_CONTROL_MAIN: string[] = [`${environment.schemas.main}`];
 export const LIST_SCHEMAS_CONTROL_TEMP: string[] = [`${environment.schemas.temp}`];
-export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`,`${environment.schemas.main}`];
+export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`, `${environment.schemas.main}`];
 export const LIST_ZONES_RURAL: string[] = ['00'];
 export const LIST_FORM_CADASTRAL_0: string[] = [
   'municipality', 'zone', 'sector', 'community', 'neighborhood', 'block', 'sidewalk'
@@ -428,7 +429,7 @@ export const LIST_FORM_CADASTRAL_5: string[] = [
 ];
 
 export const LIST_EXTRA_COLUMNS_APPRAISAL: string[] = [
-  'header-row-first-group', 'header-row-second-group', 'header-row-third-group','header-row-quartet-group'
+  'header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-quartet-group'
 ];
 
 export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: string }[] = [
@@ -545,4 +546,56 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+];
+
+export const TABLE_CITATION_NOTICE_COLUMN: TableColumn<ProcessParticipant>[] = [
+  {
+    label: '',
+    property: 'selected',
+    type: 'checkbox',
+    visible: true
+  },
+  {
+    label: '',
+    property: 'imageSrc',
+    type: 'image',
+    visible: true,
+    cssClasses: ['min-w-9']
+  },
+  {
+    label: 'Nombre',
+    property: 'fullName',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Documento',
+    property: 'individualNumber',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary']
+  },
+  {
+    label: 'Fecha',
+    property: 'individualUpdatedAt',
+    type: 'date',
+    visible: true,
+    cssClasses: ['text-secondary']
+  },
+  {
+    label: 'En calidad de',
+    property: 'bpmParticipation',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary']
+  },
+  {
+    label: 'Estados',
+    property: 'typeProcessParticipant',
+    type: 'button',
+    visible: true,
+    cssClasses: ['text-secondary', 'w-10']
+  },
+  { label: 'Acciones', property: 'menu', type: 'button', visible: true }
 ];

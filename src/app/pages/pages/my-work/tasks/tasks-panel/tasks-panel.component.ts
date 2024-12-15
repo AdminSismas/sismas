@@ -241,9 +241,9 @@ export class TasksPanelComponent implements OnInit {
   orderByInformationSubscribe() {
     let data: ProTaskE[];
     if (this.contentInformations?.content != null) {
-      this.listProTasksE = this.contentInformations.content;
       data = this.contentInformations.content;
       data = data.map((row: ProTaskE) => new ProTaskE(row));
+      this.listProTasksE = data;
       this.listProTasksECards = data;
 
       if (this.contentInformations == null) {

@@ -1,7 +1,9 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
@@ -13,10 +15,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import {
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
-  MatFormFieldDefaultOptions
-} from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 import { stagger20ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
@@ -24,9 +23,31 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
-import { Contact } from '../../../../../../apps/interfaces/bpm/contact.interface';
+import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
+import { SelectionModel } from '@angular/cdk/collections';
+import { PageSearchData } from '../../../../../../apps/interfaces/page-search-data.model';
+import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
+import { InformationPegeable } from '../../../../../../apps/interfaces/information-pegeable.model';
+import {
+  PAGE,
+  PAGE_SIZE_OPTION,
+  PAGE_SIZE_TABLE_UNIQUE,
+  TABLE_CITATION_NOTICE_COLUMN
+} from '../../../../../../apps/constants/constant';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UntypedFormControl } from '@angular/forms';
+import { filter } from 'rxjs/operators';
+import { Observable, ReplaySubject } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ParticipantsProcessService } from '../../../../../../apps/services/bpm/core/participants-process.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'vex-citation-notice-table',
@@ -49,52 +70,97 @@ import { Contact } from '../../../../../../apps/interfaces/bpm/contact.interface
     NgFor,
     NgIf,
     NgClass,
-    MatCheckboxModule,
     MatButtonModule,
+    MatTooltipModule,
     MatIconModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatTableModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatInputModule,
+    MatTabsModule,
+    MatSelectModule,
+    FluidHeightDirective,
+    DatePipe
   ]
 })
-export class CitationAndNoticeTableComponent<T> implements OnInit, OnChanges, AfterViewInit {
+export class CitationAndNoticeTableComponent implements OnInit, OnChanges, AfterViewInit {
 
-  @Input({ required: true }) data!: T[];
-  @Input({ required: true }) columns!: TableColumn<T>[];
-  @Input() pageSize = 20;
-  @Input() pageSizeOptions = [10, 20, 50];
+  @Input({ required: true }) public id: string | undefined = '';
+  @Input({ required: true }) executionId!: string;
+  @Input({ required: true }) typeProcess: string | undefined = '';
   @Input() searchStr: string = '';
+  @Input()
+  columns: TableColumn<ProcessParticipant>[] = TABLE_CITATION_NOTICE_COLUMN;
 
-  @Output() toggleStar = new EventEmitter<Contact['id']>();
-  @Output() openContact = new EventEmitter<Contact['id']>();
+  totalElements: number = 0;
+  page = PAGE;
+  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
 
-  visibleColumns: Array<keyof T | string> = [];
-  dataSource = new MatTableDataSource<T>();
+  @Output() toggleStar = new EventEmitter<ProcessParticipant['participationId']>();
+  @Output() openDetailProcessParticipant = new EventEmitter<ProcessParticipant['participationId']>();
+  @Output() changePageSearchData = new EventEmitter<PageSearchData>();
 
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
+  dataSource!: MatTableDataSource<ProcessParticipant>;
+  selection: SelectionModel<ProcessParticipant> = new SelectionModel<ProcessParticipant>(true, []);
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+
+  _dataContentInformations$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(1);
+  dataContentInformations$: Observable<InformationPegeable> = this._dataContentInformations$.asObservable();
+
+  isExistDataInformations: boolean = false;
+  contentInformations!: InformationPegeable;
+
+  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
-  constructor() {
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
+  constructor(
+    private dialog: MatDialog,
+    private readonly layoutService: VexLayoutService,
+    private snackbar: MatSnackBar,
+    private participantsProcess: ParticipantsProcessService
+  ) {
   }
 
   ngOnInit() {
+    if (this.id != null && this.id?.length > 0) {
+      this.id = this.id + this.getRandomInt(10000);
+    } else {
+      this.id = this.getRandomInt(10000).toString();
+    }
     this.dataSource = new MatTableDataSource();
+    this.searchCtrl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => this.onFilterChange(value));
+
+    this.dataContentInformations$.pipe(filter<InformationPegeable>(Boolean))
+      .subscribe((result) => {
+        this.captureInformationSubscribe(result);
+      });
+  }
+
+  onFilterChange(value: string): void {
+    if (!this.dataSource) {
+      return;
+    }
+    this.dataSource.filter = (value || '').trim().toLowerCase();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['columns']) {
-      this.visibleColumns = this.columns.map((column) => column.property);
+    if (changes['typeProcess']) {
+      if (this.typeProcess == 'ALL') {
+        this.getInformationAssignedTasks();
+      }
     }
-
-    if (changes['data']) {
-      this.dataSource.data = this.data;
-    }
-
-    if (changes['searchStr']) {
-      this.dataSource.filter = (this.searchStr || '').trim().toLowerCase();
-    }
+    console.log(changes);
   }
 
-  emitToggleStar(event: Event, id: Contact['id']) {
+  emitToggleStar(event: Event, id: ProcessParticipant['participationId']) {
     event.stopPropagation();
     this.toggleStar.emit(id);
   }
@@ -106,6 +172,83 @@ export class CitationAndNoticeTableComponent<T> implements OnInit, OnChanges, Af
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
+  }
+
+  masterToggle(): void {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row) => this.selection.select(row));
+  }
+
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  getInformationAssignedTasks() {
+    this.participantsProcess.getParticipantsProcess(this.generateObjectPageSearchData(), this.executionId)
+      .subscribe(
+        {
+          error: (err: any) => this.captureInformationSubscribeError(),
+          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
+        }
+      );
+  }
+
+  captureInformationSubscribeError(): void {
+    this.isExistDataInformations = false;
+    this.contentInformations = new InformationPegeable();
+  }
+
+  captureInformationSubscribe(result: InformationPegeable): void {
+    this.isExistDataInformations = true;
+    this.contentInformations = result;
+    this.captureInformationData();
+  }
+
+  captureInformationData(): void {
+    let data: ProcessParticipant[];
+    if (this.contentInformations?.content != null) {
+      data = this.contentInformations.content;
+      data = data.map((row: ProcessParticipant) => new ProcessParticipant(row));
+      this.dataSource.data = data;
+    }
+
+    if (this.contentInformations == null) {
+      this.page = PAGE;
+      return;
+    }
+
+    if (this.contentInformations.totalElements) {
+      this.totalElements = this.contentInformations.totalElements;
+    }
+
+    if (this.contentInformations.pageable == null) {
+      this.page = PAGE;
+      return;
+    }
+
+    if (this.contentInformations.pageable.pageNumber != null) {
+      this.page = this.contentInformations.pageable.pageNumber;
+    }
+  }
+
+  generateObjectPageSearchData(): PageSearchData {
+    return new PageSearchData(this.page, this.pageSize, null);
+  }
+
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+  }
+
+  trackByProperty<T>(index: number, column: TableColumn<T>): string {
+    return column.property;
+  }
+  get visibleColumns() {
+    return this.columns
+      .filter((column) => column.visible)
+      .map((column) => column.property);
   }
 
 }
