@@ -13,6 +13,12 @@ export const NAVIGATION_LOADER_MY_WORK_1: Array<NavigationLink | NavigationDropd
     route: '/myWork/fileProcedure',
     icon: 'mat:app_registration'
   },
+  {
+    type: 'link',
+    label: 'Asistentes Virtuales',
+    route: '/myWork/assistants',
+    icon: 'mat:insights'
+  },
 ];
 
 export const NAVIGATION_LOADER_MY_WORK_2: Array<NavigationLink | NavigationDropdown> = [
@@ -343,3 +349,13 @@ export const NAVIGATION_LOADER_AUDIT: Array<NavigationLink | NavigationDropdown>
     icon: 'mat:app_registration'
   }
 ];
+
+
+// export const NAVIGATION_LOADER_IA: Array<NavigationLink | NavigationDropdown> = [
+//   {
+//     type: 'link',
+//     label: 'Asistentes Virtuales',
+//     route: '/ia/assistants',
+//     icon: 'mat:insights'
+//   }
+// ];
