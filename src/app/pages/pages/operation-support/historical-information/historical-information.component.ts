@@ -43,9 +43,12 @@ import { FilterHistoricalInformationComponent } from './filter-historical-inform
 import { environment } from 'src/environments/environments';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
+import { stagger40ms } from '@vex/animations/stagger.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 
 @Component({
   selector: 'vex-historical-information',
+  animations: [fadeInUp400ms, stagger40ms],
   standalone: true,
   imports: [
     VexPageLayoutComponent,
@@ -70,9 +73,6 @@ import { Operation } from 'src/app/apps/interfaces/bpm/operation';
     MatInputModule,
     MatTabsModule,
     MatSelectModule,
-    AsyncPipe,
-    VexSecondaryToolbarComponent,
-    FluidHeightDirective,
     MatCheckboxModule,
   ],
   templateUrl: './historical-information.component.html',
@@ -336,12 +336,12 @@ export class HistoricalInformationComponent {
       ];
       
       const result = formattedValues.join(''); // Une sin espacios
-      this.searValueData(result);
+      this.searValueData(value,result);
     }
   
-    searValueData(data: string): void {
+    searValueData(data: SearchData,value:string): void {
       console.log(data);
-      this.baunitService.advancedSearch(data)
+      this.baunitService.historiAdvancedSearch(this.generateObjectPageSearchData(data),value)
       .subscribe(value=>{
         console.log(value);
         this.captureInformationSubscribe(value)
