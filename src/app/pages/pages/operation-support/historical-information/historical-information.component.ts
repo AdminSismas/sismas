@@ -26,7 +26,7 @@ import { SearchData } from 'src/app/apps/interfaces/search-data.model';
 import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { LIST_SCHEMAS_CONTROL_CHANGES, LIST_SCHEMAS_CONTROL_MAIN, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
+import { LIST_SCHEMAS_CONTROL_CHANGES, LIST_SCHEMAS_CONTROL_HISTORY, LIST_SCHEMAS_CONTROL_MAIN, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { GeographicViewerComponent } from 'src/app/apps/components/geographic-viewer/geographic-viewer.component';
@@ -156,7 +156,7 @@ export class HistoricalInformationComponent {
             disableClose: true,
             data: new ContentInfoSchema(
               data.baunitIdE, data, null,
-              LIST_SCHEMAS_CONTROL_CHANGES,
+              LIST_SCHEMAS_CONTROL_HISTORY,
               TYPEINFORMATION_VISUAL
             )
           })
@@ -165,6 +165,10 @@ export class HistoricalInformationComponent {
 
 
     createAdvancedSearch(): void {
+      if(this.searchData){
+        const cleanValue = this.cleanJsonValues(this.searchData)
+        this.searchData = cleanValue;
+      }
       this.dialog
         .open(FilterHistoricalInformationComponent, {
           minWidth: '50%',
@@ -183,6 +187,22 @@ export class HistoricalInformationComponent {
             this.validateRefreshCadastralData();
           }
         });
+    }
+
+    cleanJsonValues(data: any): any {
+      const cleanedData: any = {};
+  
+      // Iterar sobre las claves del JSON
+      Object.keys(data).forEach((key) => {
+        const value = data[key];
+        if (typeof value === 'string') {
+          // Eliminar solo los guiones bajos (__) dejando los números
+          cleanedData[key] = value.replace(/_/g, '');
+        } else {
+          cleanedData[key] = value; // Mantener valores no string tal como están
+        }
+      });
+      return cleanedData;
     }
   
     captureInformationCadastralData(): void {
