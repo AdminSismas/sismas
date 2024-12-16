@@ -75,6 +75,11 @@ export class SidenavComponent implements OnInit {
     this.user = this.userService.getUser();  
   }
 
+
+  changeRole(role: string): void {
+    this.userService.changeRole(role);  // Cambiar el rol del usuario
+  }
+
   collapseOpenSidenav() {
     this.layoutService.collapseOpenSidenav();
   }

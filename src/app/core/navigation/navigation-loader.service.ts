@@ -14,6 +14,8 @@ import {
 import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
 import { ProTaskE } from '../../apps/interfaces/pro-task-e';
 import { filter } from 'rxjs/operators';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +27,15 @@ export class NavigationLoaderService {
 
   _contentInformationProTaskE$ = new Subject<ProTaskE>();
   dataContentInformationProTaskE$: Observable<ProTaskE> = this._contentInformationProTaskE$.asObservable();
-
+  user: UserDetails | null = null;
   get items$(): Observable<NavigationItem[]> {
     return this._items.asObservable();
   }
 
   constructor(
     private readonly layoutService: VexLayoutService,
-    private protasksService: TasksPanelService
+    private protasksService: TasksPanelService,
+    private userService: UserService
   ) {
     this.loadInformationProTaskE();
 
@@ -53,7 +56,17 @@ export class NavigationLoaderService {
       });
   }
 
+
+
   loadInformationNavigation() {
+    this.user = this.userService.getUser();  
+    let role = this.user?.role || '';
+    console.log('role', role);
+
+    const filteredPublicService = NAVIGATION_LOADER_PUBLIC_SERVICE.filter(item => {
+      return !item.roles || item.roles.includes(role);
+    });
+
     let countProTaskAssigned = 0;
     let countProTaskPriority = 0;
     let countProTaskDevolution = 0;
@@ -77,6 +90,7 @@ export class NavigationLoaderService {
         label: 'Mi trabajo',
         children: [
           ...NAVIGATION_LOADER_MY_WORK_1,
+       
           {
             type: 'dropdown',
             label: 'Tareas',
@@ -123,32 +137,38 @@ export class NavigationLoaderService {
             ]
           },
           ...NAVIGATION_LOADER_MY_WORK_3
-        ]
+        ],
+        roles: ['ADMIN', 'USER']
       },
       {
         type: 'subheading',
         label: 'Apoyo operación',
-        children: NAVIGATION_LOADER_OPERATION_SUPPORT
+        children: NAVIGATION_LOADER_OPERATION_SUPPORT,
+        roles: ['ADMIN', 'USER']
       },
       {
         type: 'subheading',
         label: 'Datos abiertos',
-        children: NAVIGATION_LOADER_OPEN_DATA
+        children: NAVIGATION_LOADER_OPEN_DATA,
+        roles: ['ADMIN', 'USER', 'GUEST']
       },
       {
         type: 'subheading',
         label: 'Servicio público',
-        children: NAVIGATION_LOADER_PUBLIC_SERVICE
+        children: filteredPublicService,
+        roles: ['ADMIN', 'USER', 'GUEST']
       },
       {
         type: 'subheading',
         label: 'Configuración',
-        children: NAVIGATION_LOADER_CONFIGURATION
+        children: NAVIGATION_LOADER_CONFIGURATION,
+        roles: ['ADMIN']
       },
       {
         type: 'subheading',
         label: 'Auditoría',
-        children: NAVIGATION_LOADER_AUDIT
+        children: NAVIGATION_LOADER_AUDIT,
+        roles: ['ADMIN']
       },
       {
         type: 'subheading',
@@ -163,7 +183,11 @@ export class NavigationLoaderService {
         ]
       }
     ];
-    this.nextItems(listItem);
+    const accessibleNavigation = listItem.filter(item =>
+      !item.roles || item.roles.includes(role) 
+    );
+  
+    this.nextItems(accessibleNavigation);
   }
 
   nextItems(listItem: NavigationItem[]) {

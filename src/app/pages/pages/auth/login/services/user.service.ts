@@ -34,6 +34,14 @@ constructor() {
     this.currentUserSubject.next(null);
   }
 
+  changeRole(newRole: string): void {
+    const currentUser = this.currentUserSubject.value;
+    if (currentUser) {
+      currentUser.role = newRole; 
+      this.setUser(currentUser);  
+    }
+  }
+
 
   getUser(): UserDetails | null {
     return this.currentUserSubject.value;
