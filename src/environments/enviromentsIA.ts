@@ -1,8 +1,9 @@
 export const env = {
   production: false,
-  url_base: 'https://dev.api.cic-ware.com',
+  // url_base: 'https://dev.api.cic-ware.com',
+  url_base: 'https://api.cic-ware.com',
   debugMode: true,
-  api: '/api-1',
+  api: '/api-geogestion',
   api_end: '/api.php',
   //routes
   module: {
@@ -10,7 +11,7 @@ export const env = {
       ia_general_asis: '/asistente/ia_general.php',
       agenteAPI : '/agenteAPI.php',
       asistenteAudio: '/asistente/',
-      entorno: 'DESARROLLO',
+      entorno: 'PRODUCCION',
       gemini_audio: '/solutions/audio.py',
 
 

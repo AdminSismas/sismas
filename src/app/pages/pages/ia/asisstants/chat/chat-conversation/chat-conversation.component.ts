@@ -174,6 +174,9 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
 
     //Ruta de consulta al asistente
     const ruta_script = "/var/www/cobra/" + `${env.module.entorno}` + "/ia_general/ejecutable_ia_general.sh";
+    // const ruta_script = "/var/www/cobra/" + `${env.module.entorno}` + "/geogestion/env/ejecutable_geogestion.sh";
+
+
 
     this.chatServicesService.sendMessageToBackend(message, idUser , volumeUp, humanOn, this.threadId, this.espqr, asistenteId, instrucciones, id_asistente, empresa_modelo, ruta_script).subscribe(
       (response: any) => {

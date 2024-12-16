@@ -14,6 +14,8 @@ import { AssistantsTableMenuComponent } from './assistants-table-menu/assistants
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { contactsData } from 'src/static-data/contacts';
+
 
 @Component({
   selector: 'vex-contacts-table',
@@ -52,6 +54,7 @@ export class AssistantsTableComponent implements OnInit {
     | 'friends'
     | 'colleagues'
     | 'business' = 'all';
+  tableData = contactsData;
   tableColumns: TableColumn<Contact>[] = [
     {
       label: '',
@@ -109,13 +112,13 @@ export class AssistantsTableComponent implements OnInit {
     });
   }
 
-  // toggleStar(id: Contact['id']) {
-  //   const contact = this.tableData.find((c) => c.id === id);
+  toggleStar(id: Contact['id']) {
+    const contact = this.tableData.find((c) => c.id === id);
 
-  //   if (contact) {
-  //     contact.starred = !contact.starred;
-  //   }
-  // }
+    if (contact) {
+      contact.starred = !contact.starred;
+    }
+  }
 
   setData(data: Contact[]) {
     this.menuOpen = false;
