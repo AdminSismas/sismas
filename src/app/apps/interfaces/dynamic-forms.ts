@@ -8,4 +8,5 @@ export interface JSONInput {
   type: string;
   validators: Validators[];
   autocompleteOptions?: string[];
+  cssClasses?: string;
 }

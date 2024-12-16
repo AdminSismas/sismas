@@ -115,7 +115,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   openDialog(type: string): void {
     if (type === 'documents') {
       this.dialog.open(DocumentTableComponent, {
-        width: '60%',
+        width: '80%',
         data: {
           executionId: this.proTaskE?.executionId
         }
