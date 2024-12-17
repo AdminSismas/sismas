@@ -71,7 +71,6 @@ export class AddPropertyOwnerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.defaults)
     this.fractions_sum = this.defaults.ownersData.reduce((acc: number, owner: Owners) => {
       const fraction = Number(owner.fractionS)
       return acc + fraction ;
@@ -140,7 +139,6 @@ export class AddPropertyOwnerComponent implements OnInit {
     })
       .afterClosed()
       .subscribe((customer: { number: string; individualTypeNumber: string; }) => {
-        console.log(customer)
         this.form.reset(customer)
       })
   }
