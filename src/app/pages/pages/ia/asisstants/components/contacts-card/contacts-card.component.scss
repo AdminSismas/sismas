@@ -1,0 +1,11 @@
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    /* Espacio entre tarjetas */
+}
+
+.card {
+    /* Asegura que todas las tarjetas tengan al menos esta altura */
+    box-sizing: border-box;
+}

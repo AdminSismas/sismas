@@ -31,6 +31,19 @@ const routes: VexRoutes = [
         path: 'manage',
         loadChildren: () => import('./manage/my-work-manage.routes')
       },
+      // rutas de asistentes
+      {
+        path: 'assistants',
+        loadComponent: () =>
+          import('../../pages/ia/asisstants/assistants-grid/assistants-grid.component').then(
+            (m) => m.AssistantsGridComponent
+          ),
+      },
+      {
+        path: 'chat',
+        loadChildren: () =>
+          import('../../pages/ia/asisstants/chat/chat.routes')
+      },
       {
         path: '**',
         loadComponent: () =>

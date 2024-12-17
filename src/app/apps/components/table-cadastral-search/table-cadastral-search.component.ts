@@ -340,14 +340,13 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     ];
     
     const result = formattedValues.join(''); // Une sin espacios
-    this.searValueData(result);
+    this.searValueData(value,result);
   }
 
-  searValueData(data: string): void {
+  searValueData(searData:SearchData,data: string): void {
     console.log(data);
-    this.baunitService.advancedSearch(data)
+    this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
     .subscribe(value=>{
-      console.log(value);
       this.captureInformationSubscribe(value)
     });
   }
