@@ -93,6 +93,7 @@ export class AddPropertyOwnerComponent implements OnInit {
       .subscribe({
         next: (res: InfoPerson) => {
         this.customer = res;
+        console.log(this.customer,'customer')
 
         this.secondForm.enable()
         },
