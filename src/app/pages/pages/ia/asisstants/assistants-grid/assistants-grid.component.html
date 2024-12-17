@@ -1,0 +1,30 @@
+<div class="h-full flex flex-col">
+  <div class="p-6 pb-0 bg-foreground shadow-b flex-none border-b">
+    <div class="container px-0 flex justify-between items-center">
+      <h1 class="display-1 font-bold mt-0 mb-4 flex items-center">
+        <span @scaleIn
+          class="w-12 h-12 rounded-full text-primary-600 ltr:mr-4 rtl:ml-4 flex items-center justify-center bg-primary-600/10">
+          <mat-icon svgIcon="mat:blur_on"></mat-icon>
+        </span>
+        <span @fadeInRight class="block">Asistentes Virtuales</span>
+      </h1>
+      <button mat-raised-button color="primary" (click)="openAssistant()">
+        Agregar Asistente
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="assistants.length > 0" @stagger class="overflow-y-auto flex-auto">
+           <!-- falta en la linea 20  (toggleStar)="toggleStar($event)" -->
+    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 container">
+       <vex-contacts-card (openContact)="openAssistant($event)"
+        *ngFor="let assistant of assistants; trackBy: trackById" @fadeInUp [assistant]="assistant"></vex-contacts-card>
+    </div>
+  </div>
+
+  <div *ngIf="((assistants)?.length ?? 0) === 0" @scaleFadeIn
+    class="flex-auto flex flex-col items-center justify-center">
+    <img class="m-12 h-64" src="assets/img/illustrations/idea.svg" />
+    <h2 class="headline m-0 text-center">No contacts matching your filters</h2>
+  </div>
+</div>

@@ -95,16 +95,21 @@
       @fadeInUp
       [typeInformation]="typeInformation"
     ></vex-information-addresses-property>
-    <vex-information-property-owners
-      [id]="'dataInformationPropertyOwners' + schema"
-      #informationPropertyOwnersComponent{{schema}}
-      [expandedComponent]="false"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      @fadeInUp
-    ></vex-information-property-owners>
+    
+    @if (!viewProperties) {
+
+      <vex-information-property-owners 
+        [id]="'dataInformationPropertyOwners' + schema"
+        #informationPropertyOwnersComponent{{schema}}
+        [expandedComponent]="false"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        [typeInformation]="typeInformation"
+        @fadeInUp
+      ></vex-information-property-owners>
+
+    }
     <vex-information-constructions-property
       [id]="'dataInformationConstructionsPropertyComponent' + schema"
       #informationConstructionsPropertyComponent{{schema}}

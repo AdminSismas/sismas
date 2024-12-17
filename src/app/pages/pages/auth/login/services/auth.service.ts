@@ -11,37 +11,32 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
 
-  
-   private _token: string | null = null;
+  private _token: string | null = null;
+
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
-  private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) {}
 
-  // Obtener el token
   public get token(): string | null {
-    if (this._token) {
+    if (this._token != null) {
       return this._token;
+    }
+    if (this._token == null && (sessionStorage == null || sessionStorage.getItem('token') == null)) {
+      return null;
     }
 
-    if (sessionStorage.getItem('token')) {
-      this._token = sessionStorage.getItem('token');
-      return this._token;
-    }
-    return null;
+    this._token = sessionStorage.getItem('token');
+    return this._token;
   }
 
-  // Guardar el token
   saveToken(access_token: string) {
     this._token = access_token;
     try {
-      sessionStorage.setItem('token', this._token);
+      sessionStorage.setItem("token",this._token);
     } catch (error) {
-      console.error('Error al guardar el token', error);
     }
   }
 
-  // Refrescar el token
   refreshToken() {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -79,5 +79,39 @@ export const appRoutes: VexRoutes = [
           )
       }
     ]
-  }
+  },
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      // {
+      //   path: 'chat',
+      //   loadChildren: () =>
+      //     import('./pages/pages/ia/asisstants/chat/chat.routes').then(
+      //       (m) => m.default
+      //     ),
+      // },
+      // {
+      //   path: 'assistants',
+      //   loadComponent: () =>
+      //     import('./pages/pages/ia/asisstants/assistants-grid/assistants-grid.component').then(
+      //       (m) => m.AssistantsGridComponent
+      //     ),
+      // },
+      {
+        path: 'assistant',
+        loadComponent: () =>
+          import('./pages/pages/ia/asisstants/asisstants.component').then(
+            (m) => m.AsisstantsComponent
+          ),
+      },
+      {
+        path: '**',
+        loadComponent: () =>
+          import('./pages/pages/errors/error-404/error-404.component').then(
+            (m) => m.Error404Component
+          ),
+      }
+    ]
+  },
 ];

@@ -42,14 +42,40 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor])
     ),
     provideVex({
+      /**
+       * The config that will be used by default.
+       * This can be changed at runtime via the config panel or using the VexConfigService.
+       */
       config: vexConfigs.poseidon,
+      /**
+       * Only themes that are available in the config in tailwind.config.ts should be listed here.
+       * Any theme not listed here will not be available in the config panel.
+       */
       availableThemes: [
-        { name: 'Default', className: 'vex-theme-default' },
-        { name: 'Teal', className: 'vex-theme-teal' },
-        { name: 'Green', className: 'vex-theme-green' },
-        { name: 'Purple', className: 'vex-theme-purple' },
-        { name: 'Red', className: 'vex-theme-red' },
-        { name: 'Orange', className: 'vex-theme-orange' }
+        {
+          name: 'Default',
+          className: 'vex-theme-default'
+        },
+        {
+          name: 'Teal',
+          className: 'vex-theme-teal'
+        },
+        {
+          name: 'Green',
+          className: 'vex-theme-green'
+        },
+        {
+          name: 'Purple',
+          className: 'vex-theme-purple'
+        },
+        {
+          name: 'Red',
+          className: 'vex-theme-red'
+        },
+        {
+          name: 'Orange',
+          className: 'vex-theme-orange'
+        }
       ]
     }),
     provideNavigation(),

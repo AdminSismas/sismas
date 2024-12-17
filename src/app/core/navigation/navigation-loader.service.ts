@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { NavigationItem } from './navigation-item.interface';
+import { NavigationItem,  } from './navigation-item.interface';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {
   NAVIGATION_LOADER_AUDIT,
@@ -9,7 +9,7 @@ import {
   NAVIGATION_LOADER_MY_WORK_3,
   NAVIGATION_LOADER_OPEN_DATA,
   NAVIGATION_LOADER_OPERATION_SUPPORT,
-  NAVIGATION_LOADER_PUBLIC_SERVICE
+  NAVIGATION_LOADER_PUBLIC_SERVICE,
 } from '../../layouts/constants/constant-loader';
 import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
 import { ProTaskE } from '../../apps/interfaces/pro-task-e';
@@ -181,7 +181,7 @@ export class NavigationLoaderService {
             icon: 'mat:settings'
           }
         ]
-      }
+      },
     ];
     const accessibleNavigation = listItem.filter(item =>
       !item.roles || item.roles.includes(role) 
