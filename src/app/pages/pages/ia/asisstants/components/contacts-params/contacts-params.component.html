@@ -1,0 +1,469 @@
+<div class="modal-header-container">
+  <header class="modal-header">
+    <h2 class="headline m-0 flex-auto">
+      Opciones del Asistente {{ data.nombre }}
+    </h2>
+    <button
+      class="text-secondary"
+      mat-icon-button
+      type="button"
+      mat-dialog-close>
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </header>
+  <div class="modal-content-container">
+    <mat-tab-group>
+      <mat-tab label="Configuración General">
+        <div class="tab-content">
+          <mat-accordion>
+            <!-- Primer Acordeón - Nuevo contenido -->
+            <mat-expansion-panel #paneles expanded class="features-panel">
+              <mat-expansion-panel-header>
+                <mat-icon>dashboard_customize</mat-icon>
+                <mat-panel-title> Características </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <form [formGroup]="form" (ngSubmit)="updateFeature()">
+                <!-- Campos movidos al acordeón de Características -->
+                <mat-dialog-content class="flex flex-col">
+                  <!-- Primera fila -->
+                  <div class="flex flex-col sm:flex-row">
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Cambiar Modelo</mat-label>
+                      <mat-select formControlName="cambiar_modelo">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon
+                        matIconPrefix
+                        svgIcon="mat:autorenew"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                      <mat-label>OpenAI</mat-label>
+                      <mat-select formControlName="openai">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon matIconPrefix svgIcon="mat:api"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Anthropic</mat-label>
+                      <mat-select formControlName="anthropic">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon matIconPrefix svgIcon="mat:cloud"></mat-icon>
+                    </mat-form-field>
+                  </div>
+
+                  <!-- Segunda fila -->
+                  <div class="flex flex-col sm:flex-row">
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Google</mat-label>
+                      <mat-select formControlName="google">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Llama</mat-label>
+                      <mat-select formControlName="llama">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon matIconPrefix svgIcon="mat:android"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                      <mat-label>CIC</mat-label>
+                      <mat-select formControlName="cic">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon
+                        matIconPrefix
+                        svgIcon="mat:verified_user"></mat-icon>
+                    </mat-form-field>
+                  </div>
+
+                  <!-- Tercera fila -->
+                  <div class="flex flex-col sm:flex-row">
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Escuchar</mat-label>
+                      <mat-select formControlName="escuchar">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon matIconPrefix svgIcon="mat:hearing"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Hablar</mat-label>
+                      <mat-select formControlName="hablar">
+                        <mat-option [value]="1">Sí</mat-option>
+                        <mat-option [value]="0">No</mat-option>
+                      </mat-select>
+                      <mat-icon
+                        matIconPrefix
+                        svgIcon="mat:record_voice_over"></mat-icon>
+                    </mat-form-field>
+                  </div>
+                </mat-dialog-content>
+
+                <mat-dialog-actions align="end">
+                  <button
+                    mat-button
+                    type="button"
+                    (click)="collapsePanel(panel, paneles, panels)">
+                    Cancelar
+                  </button>
+                  <button color="primary" mat-flat-button type="submit">
+                    Actualizar
+                  </button>
+                </mat-dialog-actions>
+              </form>
+            </mat-expansion-panel>
+
+            <!-- Segundo Acordeón - Parámetros -->
+            <mat-expansion-panel #panel>
+              <mat-expansion-panel-header>
+                <mat-icon>precision_manufacturing</mat-icon>
+                <mat-panel-title> Parámetros </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <form [formGroup]="form" (ngSubmit)="updateparams()">
+                <mat-divider class="text-border"></mat-divider>
+
+                <mat-dialog-content class="flex flex-col">
+                  <!-- Primer fila -->
+                  <div class="flex flex-col sm:flex-row">
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Modelo Predeterminado</mat-label>
+                      <input
+                        formControlName="modelo_predeterminado"
+                        matInput
+                        maxlength="100" />
+                      <mat-icon matIconPrefix svgIcon="mat:build"></mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="sm:ml-6 flex-auto">
+                      <mat-label>Modelo Actual</mat-label>
+                      <mat-select
+                        formControlName="modelo_actual"
+                        (selectionChange)="onModeloChange($event.value)">
+                        <mat-option
+                          *ngFor="let modelo of modelosFiltrados"
+                          [value]="modelo.id"
+                          [matTooltip]="modelo.descripcion"
+                          matTooltipPosition="left">
+                          {{ modelo.modelo }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <!-- Ícono de tuerca que aparece solo si mostrarTuerca es true -->
+                    <!-- <img
+                      *ngIf="mostrarTuerca"
+                      (click)="generateAsistants()"
+                      src="assets/img/icons/logos/bot.svg"
+                      class="tuerca-icon" /> -->
+                  </div>
+
+                  <!-- Instrucciones divididas en tres textareas -->
+                  <div class="flex flex-col sm:flex-row">
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Instrucciones Generales</mat-label>
+                      <textarea
+                        formControlName="instrucciones"
+                        matInput
+                        rows="4"></textarea>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row">
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Instrucciones de Personalidad</mat-label>
+                      <textarea
+                        formControlName="instruccion_personalidad"
+                        matInput
+                        rows="4"></textarea>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row">
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Instrucciones de Saludo y Despedida</mat-label>
+                      <textarea
+                        formControlName="instruccion_saludo_despedida"
+                        matInput
+                        rows="4"></textarea>
+                    </mat-form-field>
+                  </div>
+
+                  <!-- Tercera fila -->
+                  <div class="flex flex-row items-center justify-start">
+                    <mat-slide-toggle
+                      class="custom-slide-toggle"
+                      formControlName="archivos"
+                      color="primary"
+                      labelPosition="before">
+                      Archivos
+                    </mat-slide-toggle>
+
+                    <mat-slide-toggle
+                      class="custom-slide-toggle"
+                      formControlName="codigo"
+                      color="primary"
+                      labelPosition="before">
+                      Código
+                    </mat-slide-toggle>
+                  </div>
+                </mat-dialog-content>
+
+                <mat-dialog-actions align="end">
+                  <button
+                    mat-button
+                    type="button"
+                    (click)="collapsePanel(panel, paneles, panels)">
+                    Cancelar
+                  </button>
+
+                  <!-- Botón dinámico que cambia entre Actualizar y Crear Parámetros -->
+                  <button
+                    *ngIf="!showCreateParamsButton && parametrosCreados"
+                    color="primary"
+                    mat-flat-button
+                    type="submit">
+                    Actualizar
+                  </button>
+
+                  <button
+                    *ngIf="showCreateParamsButton || !parametrosCreados"
+                    color="primary"
+                    mat-flat-button
+                    (click)="createIntructions()">
+                    Crear Instrucciones
+                  </button>
+                </mat-dialog-actions>
+              </form>
+            </mat-expansion-panel>
+
+            <!-- Tercer Acordeón - Voz -->
+            <mat-expansion-panel #panels>
+              <mat-expansion-panel-header>
+                <mat-icon>graphic_eq</mat-icon>
+                <mat-panel-title> Voz </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <form [formGroup]="form" (ngSubmit)="updateVoice()">
+                <mat-dialog-content class="flex flex-col">
+                  <!-- Primera fila: Nombre de la voz, Similarity Boost, Stability -->
+                  <div class="flex flex-col sm:flex-row sm:space-x-4">
+                    <!-- Nombre de la voz -->
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Nombre de la Voz</mat-label>
+                      <mat-select
+                        formControlName="id_modelo_voz"
+                        (selectionChange)="onVozChange($event.value)">
+                        <mat-option *ngFor="let voz of voces" [value]="voz.id">
+                          {{ voz.nombre_voz }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-icon
+                        matIconPrefix
+                        svgIcon="mat:record_voice_over"></mat-icon>
+                    </mat-form-field>
+
+                    <!-- Botón para reproducir/pausar el audio -->
+                    <button
+                      mat-icon-button
+                      type="button"
+                      (click)="toggleAudio($event)">
+                      <mat-icon>{{
+                        isPlaying ? "pause" : "play_arrow"
+                      }}</mat-icon>
+                    </button>
+
+                    <!-- Reproductor de audio oculto -->
+                    <audio #audioPlayer hidden>
+                      Your browser does not support the audio element.
+                    </audio>
+
+                    <!-- Similarity Boost -->
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Similitud </mat-label>
+                      <input
+                        matInput
+                        formControlName="similarity_boost"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        max="1" />
+                      <mat-icon matIconPrefix>compare_arrows</mat-icon>
+                    </mat-form-field>
+
+                    <!-- Stability -->
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Estabilidad</mat-label>
+                      <input
+                        matInput
+                        formControlName="stability"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        max="1" />
+                      <mat-icon matIconPrefix>trending_up</mat-icon>
+                    </mat-form-field>
+                  </div>
+
+                  <!-- Segunda fila: Style, Use Speaker Boost -->
+                  <div class="flex flex-col sm:flex-row sm:space-x-4">
+                    <!-- Style -->
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Estilo</mat-label>
+                      <input
+                        matInput
+                        formControlName="style"
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        max="1" />
+                      <mat-icon matIconPrefix>brush</mat-icon>
+                    </mat-form-field>
+
+                    <!-- Use Speaker Boost -->
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Refuerzo</mat-label>
+                      <mat-select formControlName="use_speaker_boost">
+                        <mat-option [value]="1">Activo</mat-option>
+                        <mat-option [value]="0">Desactivado</mat-option>
+                      </mat-select>
+                      <mat-icon matIconPrefix>volume_up</mat-icon>
+                    </mat-form-field>
+
+                    <!-- optimize_streaming_latency -->
+                    <mat-form-field class="flex-auto">
+                      <mat-label>Optimizar latencia</mat-label>
+                      <mat-select formControlName="optimize_streaming_latency">
+                        <mat-option [value]="1">Activo</mat-option>
+                        <mat-option [value]="0">Desactivado</mat-option>
+                      </mat-select>
+                      <mat-icon matIconPrefix>speed</mat-icon>
+                    </mat-form-field>
+                  </div>
+                </mat-dialog-content>
+
+                <mat-dialog-actions align="end">
+                  <button
+                    mat-button
+                    type="button"
+                    (click)="collapsePanel(panel, paneles, panels)">
+                    Cancelar
+                  </button>
+
+                  <!-- Botón dinámico que cambia entre Actualizar y Crear Voz -->
+                  <button
+                    *ngIf="!showCreateVoiceButton && voiceCreados"
+                    color="primary"
+                    mat-flat-button
+                    type="submit">
+                    Actualizar
+                  </button>
+
+                  <button
+                    *ngIf="showCreateVoiceButton || !voiceCreados"
+                    color="primary"
+                    mat-flat-button
+                    (click)="createVoice()">
+                    Crear Voz
+                  </button>
+                </mat-dialog-actions>
+              </form>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Archivos">
+        <div class="p-6">
+          <h2 class="text-xl font-bold mb-4">Agregar Documento</h2>
+          <form (ngSubmit)="onSubmitFileForm()">
+            <div class="mb-4">
+              <label
+                for="fuente"
+                class="block text-sm font-medium text-gray-700"
+                >Fuente</label
+              >
+              <input
+                type="text"
+                id="fuente"
+                [(ngModel)]="fuente"
+                name="fuente"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+            </div>
+            <div class="mb-4">
+              <label
+                for="asistente"
+                class="block text-sm font-medium text-gray-700"
+                >Asistente Dirigido</label
+              >
+              <select
+                id="asistente"
+                [(ngModel)]="asistente"
+                name="asistente"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                <option value="">Selecciona un asistente</option>
+                <option
+                  *ngFor="let assistant of assistants"
+                  [value]="assistant.id">
+                  {{ assistant.nombre }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label
+                for="proposito"
+                class="block text-sm font-medium text-gray-700"
+                >Propósito del Documento</label
+              >
+              <textarea
+                id="proposito"
+                [(ngModel)]="proposito"
+                name="proposito"
+                rows="4"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+            </div>
+            <div class="mb-4">
+              <label
+                for="archivo"
+                class="block text-sm font-medium text-gray-700"
+                >Cargar Archivo</label
+              >
+              <input
+                type="file"
+                id="archivo"
+                (change)="onFileSelected($event)"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+            </div>
+            <div class="flex justify-end">
+              <button
+                type="button"
+                class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+                (click)="close()">
+                Cerrar
+              </button>
+              <button
+                type="submit"
+                class="ml-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

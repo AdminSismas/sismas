@@ -27,18 +27,30 @@ export class ValidateInformationBaunitService {
     return this.requestsService.sendRequestsGetOption(url, {params: params});
   }
 
-  advancedSearch(valueUrlo: string):Observable<InformationPegeable> {
+  advancedSearchDa(page:PageSearchData,value:string):Observable<InformationPegeable> {
+
+    let paramsA:HttpParams = new HttpParams();
+     paramsA = paramsA.append('page', `${page.page}`)
+     paramsA = paramsA.append('size', `${page.size}`)
+     if (page.searchData.sidewalk !== null && page.searchData.sidewalk !== undefined && page.searchData.sidewalk.length > 10) {
+       paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`)
+     }
+     else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
+       paramsA = paramsA.append('npnlike',`${page.searchData.block}`)
+     }
+
     // const url: string = `${this.basic_url}/baunit/npnlike?npnlike=1800101040000030600069&page=0&size=4`;
-    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${valueUrlo}&page=0&size=20`;
+    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
     // return this.getData(url, paramsMun);
     return this.http.get<InformationPegeable>(url)
   }
 
-  historiAdvancedSearch(page:PageSearchData,value:string):Observable<InformationPegeable> {
+
+  advancedSearchCadastral(page:PageSearchData,value:string):Observable<InformationPegeable> {
+
     let paramsA:HttpParams = new HttpParams();
         paramsA = paramsA.append('page', `${page.page}`)
         paramsA = paramsA.append('size', `${page.size}`)
-
         if (page.searchData.sidewalk !== null && page.searchData.sidewalk !== undefined && page.searchData.sidewalk.length > 10) {
           paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`)
         }

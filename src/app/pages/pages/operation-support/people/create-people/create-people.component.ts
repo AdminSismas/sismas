@@ -130,7 +130,7 @@ export class CreatePeopleComponent implements OnInit {
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el nombre no puede tener espacios';
+        this.menssage.value = 'El nombre no puede tener espacios';
         return;
       }
     }
@@ -143,7 +143,7 @@ export class CreatePeopleComponent implements OnInit {
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el apellido no puede tener espacios';
+        this.menssage.value = 'El apellido no puede tener espacios';
         return;
       }
     }
@@ -176,7 +176,7 @@ export class CreatePeopleComponent implements OnInit {
     };
     let resApi = this.peopleServcie.userCreate(dataCreate).subscribe({
       next: (res) => {
-        this.alertSnakbar.open('Usuario registrado', 'CLOSE', {
+        this.alertSnakbar.open('Persona registrada', 'CLOSE', {
           duration: 3000,
           horizontalPosition: 'right'
         });
@@ -222,7 +222,7 @@ export class CreatePeopleComponent implements OnInit {
           this.disablesTypePople();
           this.menssage = {
             status: true,
-            value: 'persona ya se encuentra registrada'
+            value: 'La persona ya se encuentra registrada'
           };
           return;
         } else {
@@ -244,7 +244,7 @@ export class CreatePeopleComponent implements OnInit {
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el nombre no puede tener espacios';
+        this.menssage.value = 'El nombre no puede tener espacios';
         return;
       }
     }
@@ -257,7 +257,7 @@ export class CreatePeopleComponent implements OnInit {
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el apellido no puede tener espacios';
+        this.menssage.value = 'El apellido no puede tener espacios';
         return;
       }
     }
@@ -294,7 +294,7 @@ export class CreatePeopleComponent implements OnInit {
 
     this.peopleServcie.userEdit(dataCreate).subscribe({
       next: (res) => {
-        this.alertSnakbar.open('Usuario actualizado', 'CLOSE', {
+        this.alertSnakbar.open('Persona actualizada', 'CLOSE', {
           duration: 3000,
           horizontalPosition: 'right'
         });

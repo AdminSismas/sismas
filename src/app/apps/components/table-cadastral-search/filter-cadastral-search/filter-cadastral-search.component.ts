@@ -260,17 +260,20 @@ export class FilterCadastralSearchComponent implements OnInit {
   public clearFormFields(value:any){
     console.log('value',value?.tab?.textLabel )
 
-    if(value?.tab?.textLabel === 'Seleccion Municipal'){
+    if(value?.tab?.textLabel === 'Selección Municipal'){
       this.clearMultipleFields()
-    }
-
-    if(value?.tab?.textLabel === 'Multiplex Campos'){
-      this.clearMunicipalSelection()
-    }
-
-    if(value?.tab?.textLabel === 'Numero Predial Nacional'){
-      this.clearMunicipalSelection();
       this.formatFieldValue();
+    }
+
+    if(value?.tab?.textLabel === 'Múltiplex Campos'){
+      this.clearMunicipalSelection()
+      this.formatFieldValue();
+    }
+
+    if(value?.tab?.textLabel === 'Número Predial Nacional'){
+      this.clearMunicipalSelection();
+      this.clearMultipleFields();
+      
 
     }
   }
