@@ -249,7 +249,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     }).afterClosed()
       .subscribe(() => {
         setTimeout(() => (this.loadInformationPropertyOwners(), 200));
-        console.log(data, 'respuesta del modalcrear');
 
       });
   }
