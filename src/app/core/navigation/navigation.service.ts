@@ -7,7 +7,7 @@ import {
 } from './navigation-item.interface';
 import { Observable, Subject } from 'rxjs';
 import { NavigationLoaderService } from './navigation-loader.service';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+
 
 @Injectable({
   providedIn: 'root'

@@ -4,6 +4,7 @@ import { environment } from '../../../../../../environments/environments';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -11,32 +12,37 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class AuthService {
 
-  private _token: string | null = null;
-
+  
+   private _token: string | null = null;
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
+  private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
+  // Obtener el token
   public get token(): string | null {
-    if (this._token != null) {
+    if (this._token) {
       return this._token;
     }
-    if (this._token == null && (sessionStorage == null || sessionStorage.getItem('token') == null)) {
-      return null;
-    }
 
-    this._token = sessionStorage.getItem('token');
-    return this._token;
+    if (sessionStorage.getItem('token')) {
+      this._token = sessionStorage.getItem('token');
+      return this._token;
+    }
+    return null;
   }
 
+  // Guardar el token
   saveToken(access_token: string) {
     this._token = access_token;
     try {
-      sessionStorage.setItem("token",this._token);
+      sessionStorage.setItem('token', this._token);
     } catch (error) {
+      console.error('Error al guardar el token', error);
     }
   }
 
+  // Refrescar el token
   refreshToken() {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -69,6 +75,8 @@ export class AuthService {
         window.history.pushState(null, '', window.location.href);
       };
     });
+
+    this.userService.clearUser();
   }
 
   // Decodificar el token y obtener el 'sub'

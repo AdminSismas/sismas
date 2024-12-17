@@ -19,6 +19,8 @@ import { vexConfigs } from '@vex/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
 import { COLOMBIA_DATE_FORMATS } from './helpers/colombia-date-formats';
 import { authInterceptor } from './pages/pages/auth/login/services/auth.interceptor';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { PaginatorIntlEs } from './apps/components/paginator/PaginatorIntlEs';
 
 
 export const appConfig: ApplicationConfig = {
@@ -27,7 +29,8 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
       MatDialogModule,
       MatBottomSheetModule,
-      MatNativeDateModule
+      MatNativeDateModule,
+      MatPaginatorModule, 
     ),
     provideRouter(
       appRoutes,
@@ -94,6 +97,7 @@ export const appConfig: ApplicationConfig = {
       }
     }),
     { provide: MAT_DATE_LOCALE, useValue: 'es-CO' },
-    { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS },
+    { provide: MatPaginatorIntl, useClass: PaginatorIntlEs },
   ]
 };

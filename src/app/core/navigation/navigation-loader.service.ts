@@ -39,11 +39,12 @@ export class NavigationLoaderService {
   ) {
     this.loadInformationProTaskE();
 
+
     this.dataContentInformationProTaskE$.pipe(filter<ProTaskE>(Boolean))
       .subscribe((result) => {
         this.listProTasksE = [];
         this.listProTasksE.push(result);
-        this.loadInformationNavigation();
+        this.getUser();
       });
   }
 
@@ -56,12 +57,21 @@ export class NavigationLoaderService {
       });
   }
 
+  getUser(): void {
+    const user = this.userService.getUser(); 
+    
+    if (user) {
+      this.user = user;
+      if (user.authorities && user.authorities[0]) {
+        this.loadInformationNavigation(user.authorities[0].authority);
+      }
+    } else {
+      console.error('El usuario no está disponible');
+    }
+  }
 
+  loadInformationNavigation(role: string): void {
 
-  loadInformationNavigation() {
-    this.user = this.userService.getUser();  
-    let role = this.user?.role || '';
-    console.log('role', role);
 
     const filteredPublicService = NAVIGATION_LOADER_PUBLIC_SERVICE.filter(item => {
       return !item.roles || item.roles.includes(role);
