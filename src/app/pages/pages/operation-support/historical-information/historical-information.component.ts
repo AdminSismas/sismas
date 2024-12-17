@@ -320,7 +320,7 @@ export class HistoricalInformationComponent {
     }
   
     formatFieldValue(value:SearchData) {
-      const formattedValues = [
+      const formattedValues:any = [
        value.dpto,
        value.mpio,
        value.zonas,
@@ -389,6 +389,7 @@ export class HistoricalInformationComponent {
       if (event == null) {
         return;
       }
+      console.log(this.page, ' paginaciom')
       this.page = event.pageIndex;
       this.pageSize = event.pageSize;
   
