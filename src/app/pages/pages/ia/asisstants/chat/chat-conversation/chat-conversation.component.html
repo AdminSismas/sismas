@@ -14,7 +14,7 @@
           <div class="font-semibold text-sm truncate">{{ chat?.name }}</div>
           <div class="flex items-center gap-1 truncate">
             <div class="h-1.5 w-1.5 rounded-full bg-green-600"></div>
-            <div class="text-xs text-gray-600 dark:text-gray-400 truncate">Online</div>
+            <div class="text-xs text-gray-600 dark:text-gray-400 truncate">En línea</div>
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@
 
     <div class="flex-none bg-foreground border-t">
       <div class="relative h-16 flex items-center justify-between">
-        <button [matMenuTriggerFor]="addMenuButton" class="z-10 ml-4" color="primary" mat-mini-fab type="button">
+        <button class="z-10 ml-4" color="primary" mat-mini-fab type="button">
           <mat-icon>add</mat-icon>
         </button>
 
@@ -104,7 +104,7 @@
 
         <input
           class="z-0 absolute top-0 right-0 bottom-0 left-0 h-full w-full border-0 focus:border-0 px-20 bg-transparent"
-          placeholder="Type your message ..." type="text" [(ngModel)]="newMessage" [disabled]="isInputDisabled" (keydown)="onKeydown($event)" />
+          placeholder="Escribe tu mensaje ..." type="text" [(ngModel)]="newMessage" [disabled]="isInputDisabled" (keydown)="onKeydown($event)" />
 
         <button class="relative z-10 mr-4" mat-icon-button type="button" (click)="sendMessage()">
           <mat-icon>send</mat-icon>
