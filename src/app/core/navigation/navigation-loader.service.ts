@@ -39,12 +39,17 @@ export class NavigationLoaderService {
   ) {
     this.loadInformationProTaskE();
 
+    this.userService.currentUser.subscribe(user => {
+      if (user) {
+        this.loadInformationNavigation(user.authorities[0].authority); 
+      }
+    });
+
 
     this.dataContentInformationProTaskE$.pipe(filter<ProTaskE>(Boolean))
       .subscribe((result) => {
         this.listProTasksE = [];
         this.listProTasksE.push(result);
-        this.getUser();
       });
   }
 

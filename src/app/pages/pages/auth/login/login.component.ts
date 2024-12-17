@@ -16,6 +16,7 @@ import { AuthService } from './services/auth.service';
 
 import { UserService } from './services/user.service';
 import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 
 @Component({
   selector: 'vex-login',
@@ -50,7 +51,8 @@ export class LoginComponent {
     private cd: ChangeDetectorRef,
     private snackbar: MatSnackBar,
     private authService: AuthService,
-    private userService: UserService  
+    private userService: UserService,
+    private navigationLoaderService: NavigationLoaderService 
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -67,18 +69,21 @@ export class LoginComponent {
           if (response && response.token) {
             this.authService.saveToken(response.token);
 
-            // Decodificar el token y obtener los datos del usuario
+
             this.authService.getUserData()?.subscribe(
               (userData) => {
                 const user = new UserDetails(userData);
-                this.userService.setUser(user);  // Guardamos el usuario en el servicio
+                this.userService.setUser(user); 
 
-                this.router.navigate([`${environment.myWork_cadastralSearch}`])
-                  .then(() => {
-                    this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
-                      duration: 5000
-                    });
+    
+                this.navigationLoaderService.loadInformationNavigation(user.role);
+
+         
+                this.router.navigate([`${environment.myWork_cadastralSearch}`]).then(() => {
+                  this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
+                    duration: 5000
                   });
+                });
               },
               (error) => {
                 this.snackbar.open('Error al obtener los datos del usuario.', 'Error', {
