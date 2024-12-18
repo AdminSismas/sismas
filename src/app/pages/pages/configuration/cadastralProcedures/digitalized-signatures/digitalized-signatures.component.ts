@@ -9,9 +9,12 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 
 // Material
-import { MatIconModule } from '@angular/material/icon';
-import { TableDigitalizedSignaturesComponent } from 'src/app/apps/components/configuration/digitalized-signatures/table-digitalized-signatures.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TableDigitalizedSignaturesComponent } from 'src/app/apps/components/configuration/digitalized-signatures/table-digitalized-signatures.component';
+import { CreateSignatureComponent } from 'src/app/apps/components/configuration/digitalized-signatures/create-signature/create-signature.component';
 
 // Custom
 
@@ -38,4 +41,15 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class DigitalizedSignaturesComponent {
 
+
+  constructor (
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog,
+  ) {}
+
+  openDialogCreateSignature() {
+    console.log('Creando firma...')
+    this.snackbar.open('Creando firma...', 'Aceptar', { duration: 3000 })
+    this.dialog.open(CreateSignatureComponent)
+  }
 }

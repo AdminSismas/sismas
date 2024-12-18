@@ -46,6 +46,15 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
+        } @else if (input.type === "image") {
+          <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+            <ngx-mat-file-input
+              [formControlName]="input.name"
+              [accept]="'image/*'"
+              [multiple]="false"
+              [color]="'primary'"
+            ></ngx-mat-file-input>
+          </mat-form-field>
         } @else {
           <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
             <mat-label>{{ input.label }}</mat-label>

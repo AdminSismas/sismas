@@ -4,4 +4,5 @@ export interface DigitalizedSignaturesData {
   type: 'SUPER-ADMIN' | 'ADMIN' | 'USER';
   date: string;
   status: string;
+  signature: string;
 }

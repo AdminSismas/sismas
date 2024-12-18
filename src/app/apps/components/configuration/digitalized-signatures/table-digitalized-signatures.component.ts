@@ -10,7 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 // Custom
-import { DATA_SOURCE_DIGITALIZED_SIGNATURES, DIGITALIZED_SIGNATURES_COLUMNS, DIGITALIZED_SIGNATURES_DISPLAY_COLUMNS } from 'src/app/apps/constants/digitalized-signatures.constants';
+import { DATA_SOURCE_DIGITALIZED_SIGNATURES, DIGITALIZED_SIGNATURES_COLUMNS } from 'src/app/apps/constants/digitalized-signatures.constants';
 import { DigitalizedSignaturesData } from 'src/app/apps/interfaces/digitalized-signatures';
 
 @Component({
@@ -32,7 +32,7 @@ export class TableDigitalizedSignaturesComponent implements OnInit {
 
   public dataSource: MatTableDataSource<DigitalizedSignaturesData> = new MatTableDataSource<DigitalizedSignaturesData>(DATA_SOURCE_DIGITALIZED_SIGNATURES);
   public columns : { name: string, title: string }[] = DIGITALIZED_SIGNATURES_COLUMNS
-  public displayColumns: string[] = DIGITALIZED_SIGNATURES_DISPLAY_COLUMNS;
+  public displayColumns: string[] = [];
 
   public actionsBtn = computed(() =>{
     return [
@@ -56,7 +56,8 @@ export class TableDigitalizedSignaturesComponent implements OnInit {
   constructor () {}
 
   ngOnInit(): void {
-    // this.dataSource.data = DATA_SOURCE_DIGITALIZED_SIGNATURES;
-    console.log(this.dataSource)
+    this.displayColumns = this.columns.map((column) => column.name);
+    this.displayColumns.push('actions');
+
   }
 }

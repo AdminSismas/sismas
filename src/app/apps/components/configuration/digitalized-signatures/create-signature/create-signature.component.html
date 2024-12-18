@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Crear firma</h2>
+<mat-divider class="border-slate-400"></mat-divider>
+<mat-dialog-content class="py-4">
+  <section class="flex gap-4">
+    <dynamic-forms
+      [inputs]="searchInputs"
+      (formReady)="searchForm = $event"
+    ></dynamic-forms>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="searchPeople()"
+    >
+      Buscar
+    </button>
+  </section>
+  <mat-divider class="border-slate-400"></mat-divider>
+  <dynamic-forms
+    [inputs]="createInputs"
+    (formReady)="createForm = $event"
+  ></dynamic-forms>
+</mat-dialog-content>
