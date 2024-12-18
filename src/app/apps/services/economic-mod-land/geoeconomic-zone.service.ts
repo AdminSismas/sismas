@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
-import { GeoEconomicZone, Zone, ZoneServices } from '../../interfaces/economic-mod-land/zone-description';
+import { Observable, catchError, of } from 'rxjs';
+import { GeoEconomicZone, GeoEconomicZoneDetails, Zone, ZoneServices } from '../../interfaces/economic-mod-land/zone-description';
 import { environment as envi } from 'src/environments/environments';
 
 @Injectable({
@@ -65,6 +65,20 @@ export class GeoeconomicZoneService implements ZoneServices {
       .pipe(
         catchError((error: any) => {
           console.log('Error eliminando zona física urbana')
+          throw error
+        })
+      )
+  }
+
+  getValues(id: string | number): Observable<GeoEconomicZoneDetails> {
+    const url: string = `${this.base_url}${envi.geoeconomic_values}`
+    const params = new HttpParams()
+      .set('zonaHomoGeoEconomicaId', id)
+
+    return this.http.get<GeoEconomicZoneDetails>(url, { params })
+      .pipe(
+        catchError((error: any) => {
+          console.log('Error consultando detalles de zona geoeconómica')
           throw error
         })
       )

@@ -133,6 +133,7 @@ export const environment = {
   unitBuilt:'/unitBuilt',
   /* ------ V ------ */
   valuation:'/valuation/',
+  geoeconomic_values: '/zonaGEcoValor',
   /* ------ W ------ */
   /* ------ X ------ */
   /* ------ Y ------ */

@@ -169,6 +169,10 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   }
 
   createAdvancedSearch(): void {
+    if(this.searchData){
+      const cleanValue = this.cleanJsonValues(this.searchData)
+      this.searchData = cleanValue;
+    }
     this.dialog
       .open(FilterCadastralSearchComponent, {
         minWidth: '50%',
@@ -187,6 +191,22 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
           this.validateRefreshCadastralData();
         }
       });
+  }
+
+  cleanJsonValues(data: any): any {
+    const cleanedData: any = {};
+
+    // Iterar sobre las claves del JSON
+    Object.keys(data).forEach((key) => {
+      const value = data[key];
+      if (typeof value === 'string') {
+        // Eliminar solo los guiones bajos (__) dejando los números
+        cleanedData[key] = value.replace(/_/g, '');
+      } else {
+        cleanedData[key] = value; // Mantener valores no string tal como están
+      }
+    });
+    return cleanedData;
   }
 
   captureInformationCadastralData(): void {
@@ -295,8 +315,42 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       this.searchNationalPredialNumber(this.searchData);
       return true;
     }
+
+    if (searchData) {
+      this.formatFieldValue(this.searchData);
+      return true;
+    }
     return false;
   }
+
+  formatFieldValue(value:SearchData) {
+    const formattedValues = [
+     value.dpto,
+     value.mpio,
+     value.zonas,
+     value.sectorb,
+     value.comuna,
+     value.barrio,
+     value.manVer,
+     value.terreno,
+     value.condicion,
+     value.edificio,
+     value.piso,
+     value.unidadPredial
+    ];
+    
+    const result = formattedValues.join(''); // Une sin espacios
+    this.searValueData(value,result);
+  }
+
+  searValueData(searData:SearchData,data: string): void {
+    console.log(data);
+    this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
+    .subscribe(value=>{
+      this.captureInformationSubscribe(value)
+    });
+  }
+
 
   deleteInformations(customer: BaunitHead): void {
   }
