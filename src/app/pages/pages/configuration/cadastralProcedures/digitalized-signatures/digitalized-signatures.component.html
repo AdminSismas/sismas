@@ -1,11 +1,32 @@
-<p>digitalized-signatures works!</p>
 <vex-secondary-toolbar current="Formulario">
   <vex-breadcrumbs
-    [crumbs]="['Configuración','Trámites catastrales', 'Firmas digitalizadas']"
-    class="flex-auto"></vex-breadcrumbs>
+    [crumbs]="['Configuración', 'Trámites catastrales', 'Firmas digitalizadas']"
+    class="flex-auto"
+  ></vex-breadcrumbs>
 
-  <button class="ml-2" color="primary" mat-icon-button type="button">
+  <button
+    class="ml-2"
+    color="primary"
+    mat-icon-button
+    type="button"
+  >
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
   </button>
 </vex-secondary-toolbar>
-<table-digitalized-signatures></table-digitalized-signatures>
+<vex-page-layout>
+  <vex-page-layout-header>
+    <button
+      mat-raised-button
+      color="primary"
+    >
+      <mat-icon svgIcon="mat:add"></mat-icon>
+      Nuevo
+    </button>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content>
+    <main class="h-full">
+      <table-digitalized-signatures></table-digitalized-signatures>
+    </main>
+  </vex-page-layout-content>
+</vex-page-layout>
