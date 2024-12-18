@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms'
 // Vex
 
 // Material
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatSnackBar } from '@angular/material/snack-bar'
@@ -42,11 +42,13 @@ export class CreateSignatureComponent {
   public createInputs: JSONInput[] = CREATE_SIGNATURE_INPUTS;
 
   public personName: string = '';
+  public disableCreateForm: boolean = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private peopleService: PeopleService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialogRef: MatDialogRef<CreateSignatureComponent>
   ) {}
 
   searchPeople() {
@@ -55,6 +57,11 @@ export class CreateSignatureComponent {
       .subscribe((data: InfoPerson) => {
         console.log('Persona encontrada', data)
         this.personName = data.fullName
+        this.disableCreateForm = false
       })
+  }
+
+  createSignature() {
+    this.dialogRef.close(this.createForm.value)
   }
 }

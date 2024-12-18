@@ -15,8 +15,28 @@
     </button>
   </section>
   <mat-divider class="border-slate-400"></mat-divider>
-  <dynamic-forms
-    [inputs]="createInputs"
-    (formReady)="createForm = $event"
-  ></dynamic-forms>
+  <section class="pt-4">
+    <h2 class="text-center font-bold text-lg mb-4 text-slate-700">{{ personName }}</h2>
+    <dynamic-forms
+      [inputs]="createInputs"
+      (formReady)="createForm = $event"
+      [disabled]="disableCreateForm"
+    ></dynamic-forms>
+  </section>
 </mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="createSignature()"
+  >
+    Crear
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    mat-dialog-close
+  >
+    Cancelar
+  </button>
+</mat-dialog-actions>
