@@ -204,7 +204,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ], roles: ['ADMIN', 'USER', 'GUEST']
   },
   {
     type: 'dropdown',
@@ -223,7 +223,8 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
         route: '/publicService/ticketOffice/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ],
+    roles: ['ADMIN', 'USER']
   }
 ];
 

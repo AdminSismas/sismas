@@ -8,6 +8,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { NavigationLoaderService } from './navigation-loader.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,12 +19,14 @@ export class NavigationService {
   openChange$ = this._openChangeSubject.asObservable();
 
   constructor(
-    private readonly navigationLoaderService: NavigationLoaderService
+    private readonly navigationLoaderService: NavigationLoaderService,
+ 
   ) {}
 
   triggerOpenChange(item: NavigationDropdown) {
     this._openChangeSubject.next(item);
   }
+
 
   isLink(item: NavigationItem): item is NavigationLink {
     return item.type === 'link';
@@ -36,4 +39,6 @@ export class NavigationService {
   isSubheading(item: NavigationItem): item is NavigationSubheading {
     return item.type === 'subheading';
   }
+
+  
 }
