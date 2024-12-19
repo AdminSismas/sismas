@@ -9,6 +9,8 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
+import { TaskResponseModel } from '../interfaces/task-response.model';
+import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
 
 export const GUION: string = ' - ';
 export const SPACE: string = ' ';
@@ -199,6 +201,43 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
     type: 'text',
     visible: true
   }
+];
+
+export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
+  {
+    label: 'Detalle',
+    property: 'viewDetail',
+    type: 'button',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  
+  {
+    label: 'Nombre del trámite',
+    property: 'processName',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Nombre de la tarea',
+    property: 'flowName',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Fecha de inicio',
+    property: 'beginAt',
+    type: 'date',
+    visible: true
+  },
+  {
+    label: 'Días de retraso',
+    property: 'daysFinish',
+    type: 'text',
+    visible: true
+  },
+ 
+ 
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] = [
   ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,

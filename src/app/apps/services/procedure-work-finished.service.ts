@@ -55,9 +55,7 @@ export class ProcedureWorkFinishedService {
 
       public viewDetailIdProceduresFininsh(idProcedure:number){
         let paramsR:HttpParams = new HttpParams();
-        const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}`;
-            console.log(urlComplete,'URLS RUTA');  
-            console.log(this.basic_url,'baseUrl')                             
+        const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}`;                        
        return  this.http.get<any>(urlComplete + idProcedure);
       }
 
