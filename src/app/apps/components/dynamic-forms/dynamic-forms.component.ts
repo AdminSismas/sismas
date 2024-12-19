@@ -16,6 +16,7 @@ import { ComboxColletionComponent } from '../combox-colletion/combox-colletion.c
 import { JSONInput } from '../../interfaces/dynamic-forms';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'dynamic-forms',
@@ -30,6 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+    MatSelectModule,
 
     /* Custom */
     ComboxColletionComponent,
