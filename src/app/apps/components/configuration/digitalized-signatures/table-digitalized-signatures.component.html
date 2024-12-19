@@ -49,6 +49,16 @@
     *matRowDef="let row; columns: displayColumns"
   ></tr>
 </table>
+<mat-paginator
+  #paginator
+  [class.hidden]="!(isDesktop$ | async)"
+  [pageSizeOptions]="pageSizeOptions"
+  [length]="totalElements"
+  [pageSize]="pageSize"
+  [pageIndex]="page"
+  (page)="refreshInformationPaginator($event)"
+  class="sticky left-0 flex flex-col"
+></mat-paginator>
 
 <mat-menu
   #actionsMenu="matMenu"

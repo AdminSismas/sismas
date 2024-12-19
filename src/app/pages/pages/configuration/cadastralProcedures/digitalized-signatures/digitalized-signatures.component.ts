@@ -15,6 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TableDigitalizedSignaturesComponent } from 'src/app/apps/components/configuration/digitalized-signatures/table-digitalized-signatures.component';
 import { CreateSignatureComponent } from 'src/app/apps/components/configuration/digitalized-signatures/create-signature/create-signature.component';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { Observable } from 'rxjs';
 
 // Custom
 
@@ -41,10 +43,12 @@ import { CreateSignatureComponent } from 'src/app/apps/components/configuration/
 })
 export class DigitalizedSignaturesComponent {
 
+  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   constructor (
     private snackbar: MatSnackBar,
     private dialog: MatDialog,
+    private layoutService: VexLayoutService,
   ) {}
 
   openDialogCreateSignature() {
