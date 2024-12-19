@@ -30,6 +30,15 @@
             }
           </mat-autocomplete>
         </mat-form-field>
+      } @else if (input.element === "file") {
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+          <ngx-mat-file-input
+            [formControlName]="input.name"
+            [accept]="input.type ? input.type : ''"
+            [multiple]="false"
+            color="primary"
+          ></ngx-mat-file-input>
+        </mat-form-field>
       } @else if (input.element === "input") {
         @if (input.type === "date") {
           <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
