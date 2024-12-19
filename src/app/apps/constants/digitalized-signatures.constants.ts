@@ -60,8 +60,8 @@ export const CREATE_SIGNATURE_INPUTS: JSONInput[] = [
   {
     name: 'signature',
     label: 'Firma',
-    element: 'input',
-    type: 'image',
+    element: 'file',
+    type: '.png',
     validators: [Validators.required],
     placeholder: 'Agregar imagen de la firma',
   }

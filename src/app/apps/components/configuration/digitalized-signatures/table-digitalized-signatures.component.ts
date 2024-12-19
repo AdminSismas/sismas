@@ -3,6 +3,7 @@ import { Component, computed, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Vex
 
@@ -39,25 +40,32 @@ export class TableDigitalizedSignaturesComponent implements OnInit {
       {
         icon: 'mat:edit',
         label: 'Editar',
-        action: (row: DigitalizedSignaturesData) => {
-          console.log('Editar', row)
-        }
+        action: (row: DigitalizedSignaturesData) => this.editingDigitalizedSignatures(row)
       },
       {
         icon: 'mat:visibility',
         label: 'Ver Detalles',
-        action: (row: DigitalizedSignaturesData) => {
-          console.log('Ver Detalles', row)
-        }
+        action: (row: DigitalizedSignaturesData) =>this.viewDetailsDigitalizedSignatures(row)
       }
     ]
   })
 
-  constructor () {}
+  constructor (
+    private snackbar: MatSnackBar,
+  ) {}
 
   ngOnInit(): void {
     this.displayColumns = this.columns.map((column) => column.name);
     this.displayColumns.push('actions');
+  }
 
+  editingDigitalizedSignatures(row: DigitalizedSignaturesData) {
+    this.snackbar.open('Editando firma...', 'Aceptar', { duration: 3000 })
+    console.log('Editando firma...', row)
+  }
+
+  viewDetailsDigitalizedSignatures(row: DigitalizedSignaturesData) {
+    this.snackbar.open('Ver detalles de la firma...', 'Aceptar', { duration: 3000 })
+    console.log('Ver detalles de la firma...', row)
   }
 }
