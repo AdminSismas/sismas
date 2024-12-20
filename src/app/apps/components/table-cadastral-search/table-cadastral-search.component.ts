@@ -30,7 +30,6 @@ import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { FilterCadastralSearchComponent } from './filter-cadastral-search/filter-cadastral-search.component';
 import {
@@ -39,7 +38,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_EDITION
+  TABLE_COLUMN_PROPERTIES
 } from '../../constants/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -48,7 +47,6 @@ import { ContentInfoSchema } from '../../interfaces/content-info-schema';
 import { GeographicViewerComponent } from '../geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../environments/environments';
 import { SendInformationRegisterService } from '../../services/register-procedure/send-information-register.service';
-import { FluidHeightDirective } from '../../directives/fluid-height.directive';
 import { ValidateInformationBaunitService } from '../../services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -82,9 +80,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatTabsModule,
     MatSelectModule,
-    AsyncPipe,
-    VexSecondaryToolbarComponent,
-    FluidHeightDirective
   ]
 })
 export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
@@ -338,7 +333,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
      value.piso,
      value.unidadPredial
     ];
-    
+
     const result = formattedValues.join(''); // Une sin espacios
     this.searValueData(value,result);
   }

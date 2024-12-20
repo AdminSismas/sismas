@@ -49,7 +49,6 @@ import { Commune } from '../../../interfaces/territorial-organization/commune.mo
 import { NationalPredialNumber } from '../../../interfaces/national-predial-number';
 import { divideNpn } from '../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
-import { maxLengthValidator } from 'src/app/apps/validation-form/validation-general';
 import { CharacterValidateService } from 'src/app/apps/services/character-validate.service';
 
 @Component({
@@ -76,9 +75,6 @@ import { CharacterValidateService } from 'src/app/apps/services/character-valida
     ReactiveFormsModule,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    NgFor,
-    NgClass,
-    NgIf
   ]
 })
 export class FilterCadastralSearchComponent implements OnInit {
@@ -115,7 +111,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     piso: [this.defaults?.piso ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
     unidadPredial: [this.defaults?.unidadPredial ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
 
-    
+
     // MUltiple Fields
     registration: this.defaults?.registration ?? '',
     domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
@@ -193,7 +189,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   formatFieldValue() {
-    
+
       this.dpto?.reset();
       this.mpio?.reset();
       this.zonas?.reset();
@@ -208,7 +204,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       this.unidadPredial?.reset();
   }
 
-  
+
 
   public sendInformationTable() {
     const searchData = this.validateFilterSearchCadastral();
@@ -273,7 +269,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     if(value?.tab?.textLabel === 'Número Predial Nacional'){
       this.clearMunicipalSelection();
       this.clearMultipleFields();
-      
+
 
     }
   }
@@ -731,7 +727,7 @@ get unidadPredial(){
   return this.form.get('unidadPredial');
 }
 
-//  
+//
 
   get registration(){
     return this.form.get('registration');
