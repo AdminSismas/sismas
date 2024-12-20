@@ -100,7 +100,7 @@ export class SidenavComponent implements OnInit {
   toggleCollapse() {
     this.collapsed
       ? this.layoutService.expandSidenav()
-      : this.layoutService.collapseSidenav();
+      :( this.layoutService.collapseSidenav(),this.collapseCloseSidenav());
   }
 
   trackByRoute(index: number, item: NavigationItem): string {
