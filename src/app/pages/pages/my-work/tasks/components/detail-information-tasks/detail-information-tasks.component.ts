@@ -18,7 +18,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { NAME_NO_DISPONIBLE, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TABLE_COLUMN_PROPERTIES_EXECUTED, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
+import { NAME_NO_DISPONIBLE, PAGE_OPTION__5_7_10, PAGE_OPTION_UNIQUE_7, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TABLE_COLUMN_PROPERTIES_EXECUTED, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -41,6 +41,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-retail-execute-response.model';
+import { ProceduresCollection } from 'src/app/apps/interfaces/procedures-progress.model';
+import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
 
 @Component({
   selector: 'vex-detail-information-property-owner',
@@ -74,7 +77,8 @@ import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-ret
 export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
   
     isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-    contentInformations!: InformationPegeable;
+    contentTasksInformations!: InformationPegeable;
+    public taskDetails:TaskResponseModel= new TaskResponseModel();
 
       @Input({ required: true }) id: string = '';
       @Input({ required: true }) public expandedComponent: boolean = true;
@@ -86,8 +90,8 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       columns: TableColumn<TaskRetailExecuteResponseModel>[] = TABLE_COLUMN_PROPERTIES_EXECUTED;
       page:number = PAGE;
       totalElements: number = 0;
-      pageSize: number = PAGE_SIZE;
-      pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
+      pageSize: number = PAGE_OPTION_UNIQUE_7;
+      pageSizeOptions: number[] = PAGE_OPTION__5_7_10;
     
       dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
       searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -100,6 +104,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       private snackBar = inject(MatSnackBar);
 
   constructor(
+    private tasksPanelService: TasksPanelService,
     public dialogRef: MatDialogRef<DetailInformationTasksComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
@@ -121,8 +126,12 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     ngOnInit() {
       console.log('data nuevo objeto',this.data);
       this.dataSource = new MatTableDataSource();
-      if(this.data.taskExecuteDetail){
-        this.dataSource = this.data.taskExecuteDetail;
+      // if(this.data.taskExecuteDetail){
+      //   this.dataSource = this.data.taskExecuteDetail;
+      // }
+
+      if(this.data.taskId){
+        this.viewDetallyTask(this.data.taskId);
       }
 
       if (this.id?.length <= 0 || this.baunitId == null) {
@@ -137,8 +146,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       this.searchCtrl.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => this.onFilterChange(value));
-
-        this.checkNegativeDays()
     }
     ngAfterViewInit() {
       if (this.paginator) {
@@ -158,6 +165,10 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     isNegative(value: number): boolean {
       return value < 0;
     }
+
+    getAbsoluteValue(value: number): number {
+      return Math.abs(value);
+    }
   
     checkNegativeDays(): void {
       if (this.data && this.isNegative(this.data.daysFinish)) {
@@ -166,26 +177,86 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
         this.data.daysFinish = Math.abs(this.data.daysFinish);
       }
     }
+
+    viewDetallyTask(executionId:any){
+      this.tasksPanelService.viewTaskId(
+        executionId)
+        .subscribe( result => {
+          this.taskDetails = result;
+          console.log('primer servicio',this.taskDetails);
+          this.viewExcuteTask(executionId);
+        });
+    }
+
+
+    viewExcuteTask(taskId:any){
+      this.tasksPanelService.viewExecuteTaskId( this.generateObjectPageSearchData(taskId),taskId)
+        .subscribe({
+          error: (err: any) => this.captureInformationSubscribeError(err),
+          next: (executeTask: InformationPegeable) => {
+            console.log('segundo servicio',executeTask);
+            this.captureInformationSubscribeB(executeTask);
+             }
+             });
+    }
+          
+    captureInformationSubscribeB(executeTask: InformationPegeable): void {
+        let data: TaskRetailExecuteResponseModel[];
+        this.contentTasksInformations = executeTask;
+        console.log('executeTask',executeTask.content);
+
+        if (this.contentTasksInformations && this.contentTasksInformations.content) {
+          data = this.contentTasksInformations.content;
+          data = data.map((row: TaskRetailExecuteResponseModel) => new TaskRetailExecuteResponseModel(row));
+          this.dataSource.data = data;
+         }
+
+         
+          if (this.contentTasksInformations == null) {
+              this.page = PAGE;
+              return;
+          }
+
+          if (this.contentTasksInformations.totalElements) {
+              this.totalElements = this.contentTasksInformations.totalElements;
+          }
+
+          if (this.contentTasksInformations.pageable == null) {
+              this.page = PAGE;
+              return;
+          }
+
+          if (this.contentTasksInformations.pageable.pageNumber != null) {
+              this.page = this.contentTasksInformations.pageable.pageNumber;
+          }
+        
+    }
+
+    captureInformationSubscribeError(err: any): void {
+      this.contentTasksInformations = new InformationPegeable();
+      this.dataSource.data = [];
+    }
+  
   
    
     captureInformationConstructionData(): void {
    
-      if (this.contentInformations === null) {
+      if (this.contentTasksInformations === null) {
         this.page = PAGE;
         return;
       }
   
-      if (this.contentInformations.totalElements) {
-        this.totalElements = this.contentInformations.totalElements;
+      if (this.contentTasksInformations.totalElements) {
+        this.totalElements = this.contentTasksInformations.totalElements;
       }
   
-      if (this.contentInformations.pageable == null) {
+      if (this.contentTasksInformations.pageable == null) {
         this.page = PAGE;
         return;
       }
   
-      if (this.contentInformations.pageable.pageNumber != null) {
-        this.page = this.contentInformations.pageable.pageNumber;
+      if (this.contentTasksInformations.pageable.pageNumber != null) {
+        this.page = this.contentTasksInformations.pageable.pageNumber;
       }
     }
   
@@ -220,8 +291,48 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       }
       this.page = event.pageIndex;
       this.pageSize = event.pageSize;
+      const  data = this.contentTasksInformations.content.map((row: ProceduresCollection) => new TaskRetailExecuteResponseModel({row}));
+      if(this.data.taskId){
+        this.viewExcuteTask(this.data.taskId);
+      }
      
     }
+
+    captureInformationSubscribe(data: any) {
+      this.contentTasksInformations = data; 
+      this.captureInformationProceduresData(); 
+    }
+  
+
+    captureInformationProceduresData() {
+          let data: TaskRetailExecuteResponseModel[];
+          if (this.contentTasksInformations != null && this.contentTasksInformations.content != null) {
+              data = this.contentTasksInformations.content.map((row: ProceduresCollection) => new TaskRetailExecuteResponseModel({row}));
+              this.dataSource.data = data;
+          }
+      
+          if (this.contentTasksInformations == null) {
+              this.page = PAGE;
+              return;
+          }
+      
+          if (this.contentTasksInformations.totalElements) {
+              this.totalElements = this.contentTasksInformations.totalElements;
+          }
+      
+          if (this.contentTasksInformations.pageable == null) {
+              this.page = PAGE;
+              return;
+          }
+      
+          if (this.contentTasksInformations.pageable.pageNumber != null) {
+              this.page = this.contentTasksInformations.pageable.pageNumber;
+          }
+        }
+
+    
+
+
   
     onFilterChange(value: string): void {
       if (!this.dataSource) {

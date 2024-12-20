@@ -66,9 +66,9 @@ console.log('data desde el modal detalles ', this.data);
       this.dialogRef.close();
     }
 
-   isNegative(value: number): boolean {
-      return value < 0;
+    getAbsoluteValue(value: number): number {
+      return Math.abs(value);
     }
-
+  
      protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 }

@@ -107,7 +107,7 @@
     <span class="text-black text-sm">Días de retraso:</span>
     @if (data && data.daysFinish && data.daysFinish) {
 
-        <h2 class="text-sm">{{ data.daysFinish }}</h2>
+        <h2 class="text-sm">{{ getAbsoluteValue(data.daysFinish) }}</h2>
 
     } @else {
       <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>

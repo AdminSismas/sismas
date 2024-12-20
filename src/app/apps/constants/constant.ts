@@ -33,6 +33,7 @@ export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
 
+export const PAGE_OPTION__5_7_10: number[] = [5,7,10];
 export const PAGE_OPTION_UNIQUE_7: number = 7;
 export const PAGE_OPTION_UNIQUE: number = 10;
 export const PAGE_SIZE_OPTION: number[] = [5, PAGE_OPTION_UNIQUE_7, PAGE_OPTION_UNIQUE, 20, 50];
@@ -233,7 +234,7 @@ export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResp
   {
     label: 'Días de retraso',
     property: 'daysFinish',
-    type: 'text',
+    type: 'currency',
     visible: true
   },
  

@@ -17,69 +17,76 @@
       <div class="grid grid-cols-3 gap-4 items-center">
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Nombre del proceso</span>
+
+          
           <h2 class="text-sm">
-            {{ data?.value?.processName  }}
+            {{ this.taskDetails.processName ? this.taskDetails.processName : NAME_NO_DISPONIBLE }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Categoria del proceso:</span>
           <h2 class="text-sm">
-            {{ data?.value?.bpmProcessCategory  }}
+            {{ this.taskDetails.bpmProcessCategory ? this.taskDetails.bpmProcessCategory : NAME_NO_DISPONIBLE }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Prioridad:</span>
           <h2 class="text-sm">
-            {{ data?.value?.bpmPriority  }}
+            {{ this.taskDetails.bpmPriority ? this.taskDetails.bpmPriority : NAME_NO_DISPONIBLE }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Fecha de inicio del proceso:</span>
           <h2 class="text-sm">
-            {{ data?.value?.beginAt | date: 'dd/MM/yyyy hh:mm:ss a'  }}
+            {{ this.taskDetails.beginAt ? this.taskDetails.beginAt : NAME_NO_DISPONIBLE | date: 'dd/MM/yyyy hh:mm:ss a'  }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Fecha final de ejecucion del proceso:</span>
           <h2 class="text-sm">
-            {{ data?.value?.finishAt | date: 'dd/MM/yyyy hh:mm:ss a'  }}
+            {{ this.taskDetails.finishAt ? this.taskDetails.finishAt : NAME_NO_DISPONIBLE | date: 'dd/MM/yyyy hh:mm:ss a'  }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Nombre del usuario que atendio la ultima acción del proceso:</span>
           <h2 class="text-sm">
-            {{ data?.value?.lastUpdateBy  }}
+            {{ this.taskDetails.lastUpdateBy ? this.taskDetails.lastUpdateBy : NAME_NO_DISPONIBLE }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Fecha de la ultima acción del proceso:</span>
           <h2 class="text-sm">
-            {{ data?.value?.lastUpdateAt | date: 'dd/MM/yyyy hh:mm:ss a'  }}
+            {{ this.taskDetails.lastUpdateAt ? this.taskDetails.lastUpdateAt : NAME_NO_DISPONIBLE | date: 'dd/MM/yyyy hh:mm:ss a'  }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Fecha que inicio la ultima suspensión del proceso:</span>
           <h2 class="text-sm">
-            {{ data?.value?.suspensionStartAt  }}
+            {{ this.taskDetails.suspensionStartAt ? this.taskDetails.suspensionStartAt : NAME_NO_DISPONIBLE }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Dias acumulados suspendidos:</span>
           <h2 class="text-sm">
-            {{ data?.value?.suspendedDays  }}
+            {{ this.taskDetails.suspendedDays ? this.taskDetails.suspendedDays : NAME_NO_DISPONIBLE }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Fecha esperado de finalización del proceso:</span>
           <h2 class="text-sm">
-            {{ data?.value?.dueDate | date: 'dd/MM/yyyy hh:mm:ss a'  }}
+            {{ this.taskDetails.dueDate ? this.taskDetails.dueDate : NAME_NO_DISPONIBLE | date: 'dd/MM/yyyy hh:mm:ss a'  }}
           </h2>
         </div>
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Descripcion del proceso</span>
-          <h2 class="text-sm">
-            {{ data?.value?.process?.description  }}
-          </h2>
+          <!-- <h2 class="text-sm">
+            {{ this.taskDetails.process && this.taskDetails.process.description ? this.taskDetails.process.?.description : NAME_NO_DISPONIBLE }}
+          </h2> -->
+          @if (this.taskDetails.process && this.taskDetails.process.description) {
+            <h2 class="text-sm">{{ this.taskDetails.process.description }}</h2>
+          } @else {
+            <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+          }
         </div>
       </div>
     </mat-tab>
@@ -120,8 +127,24 @@
             </td>
           </ng-container>
 
-               <!-- Text Columns -->
-               <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+                    <!-- Text Columns -->
+                    <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+
+                        <ng-container
+                        *ngIf="column.type === 'currency'"
+                        [matColumnDef]="column.property">
+                        <th *matHeaderCellDef
+                            [ngClass]="column.cssClassesHead"
+                            class="uppercase text-center"
+                            mat-header-cell
+                            mat-sort-header>
+                          {{ column.label }}
+                        </th>
+                        <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
+                            class="uppercase">
+                          {{   getAbsoluteValue(row[column.property]) }}
+                        </td>
+                    </ng-container>
 
 
                       <ng-container
