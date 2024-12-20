@@ -11,8 +11,10 @@
         [src]="imageUrl$ | async"
         alt="Logo"
         class="w-6 select-none flex-none" />
-      <h2 class="vex-sidenav-toolbar__headline flex-auto">
-        {{ title$ | async }}
+      <h2 class="vex-sidenav-toolbar__headline flex-auto clickable" >
+        <a  (click)="navigateToCadastralSearch()" class="text-decoration-none">
+          {{ title$ | async }}
+        </a>
       </h2>
       <button
         (click)="toggleCollapse()"

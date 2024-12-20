@@ -14,9 +14,10 @@ import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollb
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule, NgFor, NgIf } from '@angular/common';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,6 +26,7 @@ import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
   styleUrls: ['./sidenav.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     NgIf,
     MatButtonModule,
     MatIconModule,
@@ -65,6 +67,7 @@ export class SidenavComponent implements OnInit {
   userPerfil$?: string
 
   constructor(
+    private router: Router,
     private navigationService: NavigationService,
     private layoutService: VexLayoutService,
     private configService: VexConfigService,
@@ -78,6 +81,9 @@ export class SidenavComponent implements OnInit {
     
   }
 
+  navigateToCadastralSearch() {
+    this.router.navigate(['/myWork/cadastralSearch']);
+  }
 
   changeRole(role: string): void {
     this.userService.changeRole(role);  
