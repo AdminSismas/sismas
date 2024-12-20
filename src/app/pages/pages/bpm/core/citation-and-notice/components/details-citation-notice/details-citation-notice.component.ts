@@ -6,10 +6,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../../../../../../../apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/constant';
 
 export let contactIdCounter = 50;
 
@@ -28,10 +33,17 @@ export let contactIdCounter = 50;
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    DatePipe,
+    HeaderCadastralInformationPropertyComponent,
+    MatExpansionModule
   ]
 })
 export class DetailsCitationNoticeComponent implements OnInit {
+
+  id: string = '';
+  participationId!: number;
+
   form = this.fb.group({
     name: this.fb.control('', {
       nonNullable: true
@@ -53,20 +65,27 @@ export class DetailsCitationNoticeComponent implements OnInit {
     })
   });
 
-  participant?: ProcessParticipant;
-
-  get isEdit(): boolean {
-    return !!this.participationId;
-  }
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) private participationId: ProcessParticipant['participationId'],
+    @Inject(MAT_DIALOG_DATA) public processParticipant: ProcessParticipant,
     private dialogRef: MatDialogRef<DetailsCitationNoticeComponent>,
     private fb: FormBuilder
   ) {
   }
 
   ngOnInit() {
+    if (this.id?.length <= 0 || this.processParticipant == null || this.processParticipant.participationId == null) {
+      return;
+    }
+    this.participationId = this.processParticipant.participationId;
+    this.id = this.id + this.getRandomInt(10000);
   }
 
+  get isEdit(): boolean {
+    return !!this.participationId;
+  }
+  private getRandomInt(max: number):number {
+    return Math.floor(Math.random() * max);
+  }
+
+  protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 }

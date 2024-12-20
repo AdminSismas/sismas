@@ -12,6 +12,11 @@ export const environment = {
     temp: 'temp',
     hist: 'hist'
   },
+  typeNotification: {
+    cited: '/citar',
+    notified: '/notificar',
+    notify: '/aviso'
+  },
   accessGeo:{
     value:'/accessGeo/',
     area:'area',

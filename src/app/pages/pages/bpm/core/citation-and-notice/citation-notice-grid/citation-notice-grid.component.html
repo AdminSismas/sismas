@@ -8,7 +8,7 @@
       <vex-citation-notice-card
         *ngFor="let participant of listParticipantsCards$ | async; trackBy: trackByParticipationId"
         [id]="participant.participationId + executionId + 'filteredCard'"
-        (openDetailProcessParticipant)="openDetailProcessParticipant.emit(participant.participationId)"
+        (openDetailProcessParticipant)="openDetailProcessParticipant.emit(participant)"
         (toggleStar)="emitToggleStar(participant.participationId)"
         [processParticipant]="participant"
         @fadeInUp>

@@ -1,7 +1,9 @@
 <div @stagger class="max-w-3xs w-full" [id]="id">
-  <div class="h-14 mb-6 flex px-6 sm:px-0 flex items-center" [id]="id + 'container-emmit'">
+  <div class="h-14 mb-6 flex px-6 sm:px-0 flex items-center" [id]="id + 'container-emmit'"
+       *ngIf="activeCategory">
     <button
       (click)="openAddNew.emit()"
+      *ngIf="activeCategory !== 'all'"
       class="flex-auto"
       color="primary"
       mat-raised-button
@@ -9,7 +11,12 @@
       <mat-icon
         class="ltr:-ml-4 ltr:mr-2 rtl:ml-2 icon-sm"
         svgIcon="mat:add"></mat-icon>
-      <span>Citar o Notificar Masivo</span>
+      <span
+        *ngIf="activeCategory === 'citation'"
+      >Notificar Masivo</span>
+      <span
+        *ngIf="activeCategory === 'notification'"
+      >Avisar Masivo</span>
     </button>
   </div>
 

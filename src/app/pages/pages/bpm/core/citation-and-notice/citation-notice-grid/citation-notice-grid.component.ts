@@ -76,7 +76,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
 
   @Output() toggleStar = new EventEmitter<ProcessParticipant['participationId']>();
-  @Output() openDetailProcessParticipant = new EventEmitter<ProcessParticipant['participationId']>();
+  @Output() openDetailProcessParticipant = new EventEmitter<ProcessParticipant>();
   @Output() changePageSearchData = new EventEmitter<PageSearchData>();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -112,9 +112,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['typeProcess']) {
-      if (this.typeProcess == 'ALL') {
-        this.getInformationAssignedTasks();
-      }
+      this.validateExecuteTypeProcess();
     }
 
     if (changes['searchCtrl']) {
@@ -124,8 +122,51 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     console.log(changes);
   }
 
+  validateExecuteTypeProcess() {
+    switch (this.typeProcess) {
+      case 'CITADO':
+        return this.getInformationCitedAssigned();
+      case 'NOTIFICADO':
+        return this.getInformationNotifiedAssigned();
+      case 'AVISO':
+        return this.getInformationNotifyAssigned();
+      default:
+        return this.getInformationAssignedTasks();
+    }
+  }
+
   getInformationAssignedTasks() {
     this.participantsProcess.getParticipantsProcess(this.generateObjectPageSearchData(), this.executionId)
+      .subscribe(
+        {
+          error: (err: any) => this.captureInformationSubscribeError(),
+          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
+        }
+      );
+  }
+
+  getInformationCitedAssigned() {
+    this.participantsProcess.getParticipantsCitedProcess(this.generateObjectPageSearchData(), this.executionId)
+      .subscribe(
+        {
+          error: (err: any) => this.captureInformationSubscribeError(),
+          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
+        }
+      );
+  }
+
+  getInformationNotifiedAssigned() {
+    this.participantsProcess.getParticipantsNotifiedProcess(this.generateObjectPageSearchData(), this.executionId)
+      .subscribe(
+        {
+          error: (err: any) => this.captureInformationSubscribeError(),
+          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
+        }
+      );
+  }
+
+  getInformationNotifyAssigned() {
+    this.participantsProcess.getParticipantsNotifyProcess(this.generateObjectPageSearchData(), this.executionId)
       .subscribe(
         {
           error: (err: any) => this.captureInformationSubscribeError(),

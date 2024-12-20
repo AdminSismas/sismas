@@ -97,9 +97,9 @@ export class CitationAndNoticeComponent implements OnInit {
     }
   }
 
-  openDetailProcessParticipant(id?: ProcessParticipant['participationId']) {
+  openDetailProcessParticipant(data?: ProcessParticipant) {
     this.dialog.open(DetailsCitationNoticeComponent, {
-      data: id || null,
+      data: data || null,
       width: '600px'
     });
   }

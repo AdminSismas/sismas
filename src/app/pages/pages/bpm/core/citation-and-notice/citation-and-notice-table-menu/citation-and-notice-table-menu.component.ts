@@ -38,7 +38,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
     },
     {
       type: 'subheading',
-      label: 'Labels'
+      label: 'Estados'
     },
     {
       type: 'link',

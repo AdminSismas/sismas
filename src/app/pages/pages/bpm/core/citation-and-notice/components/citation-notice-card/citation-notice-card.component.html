@@ -3,47 +3,82 @@
     (click)="openDetailProcessParticipant.emit(processParticipant.participationId)"
     class="p-4 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
     matRipple>
-    <img src="{{processParticipant.imageSrc}}" class="avatar h-12 w-12 mx-auto" alt="" />
+    <!--<img src="{{processParticipant.imageSrc}}" class="avatar h-20 w-20 mx-auto" alt="" />-->
 
-    <h2 class="title mb-1 mt-3">{{ processParticipant.fullName }}</h2>
+    <h2 class="title mb-1 mt-3">{{ processParticipant.bpmParticipation }}</h2>
     <div class="body-2 text-secondary flex items-center justify-center">
       <mat-icon
         class="ltr:mr-1 rtl:ml-1 icon-xs"
-        svgIcon="mat:business"></mat-icon>
-      <span>{{ processParticipant.individualNumber }}</span>
+        svgIcon="mat:receipt_long"></mat-icon>
+      <span>{{ processParticipant.individual.domIndividualTypeNumber }}
+        - {{ processParticipant.individualNumber }}</span>
     </div>
 
     <div class="body-2 text-secondary flex items-center justify-center">
       <mat-icon
         class="ltr:mr-1 rtl:ml-1 icon-xs"
-        svgIcon="mat:phone"></mat-icon>
+        svgIcon="mat:people"></mat-icon>
       <span>{{ processParticipant.fullName }}</span>
     </div>
 
     <button
+      *ngIf="processParticipant?.viaGubernativa?.domGuvState === 'Notificado'"
       (click)="emitToggleStar($event, processParticipant.participationId)"
       class="absolute top-2 right-2"
       mat-icon-button
       type="button">
-      <mat-icon
-        *ngIf="processParticipant?.viaGubernativa?.domGuvType"
-        class="text-amber-600"
-        svgIcon="mat:star"></mat-icon>
-      <mat-icon *ngIf="!processParticipant?.viaGubernativa?.domGuvType" svgIcon="mat:star_border"></mat-icon>
+      <mat-icon svgIcon="mat:label"
+                class="ltr:mr-3 rtl:ml-3 text-green-600"></mat-icon>
     </button>
+
+    <button
+      *ngIf="processParticipant?.viaGubernativa?.domGuvState === 'Citacion'"
+      (click)="emitToggleStar($event, processParticipant.participationId)"
+      class="absolute top-2 right-2"
+      mat-icon-button
+      type="button">
+      <mat-icon svgIcon="mat:label"
+                class="ltr:mr-3 rtl:ml-3 text-primary-600"></mat-icon>
+    </button>
+
+    <button
+      *ngIf="processParticipant?.viaGubernativa?.domGuvState === 'Aviso'"
+      (click)="emitToggleStar($event, processParticipant.participationId)"
+      class="absolute top-2 right-2"
+      mat-icon-button
+      type="button">
+      <mat-icon svgIcon="mat:label"
+                class="ltr:mr-3 rtl:ml-3 text-amber-600"></mat-icon>
+    </button>
+
   </div>
 
-  <div class="bg-app-bar p-2 flex items-center justify-around">
-    <button class="text-secondary" mat-icon-button type="button">
-      <mat-icon svgIcon="mat:phone"></mat-icon>
-    </button>
-
-    <button class="text-secondary" mat-icon-button type="button">
-      <mat-icon svgIcon="mat:mail"></mat-icon>
-    </button>
-
-    <button class="text-secondary" mat-icon-button type="button">
-      <mat-icon svgIcon="mat:chat"></mat-icon>
-    </button>
+  <div class="bg-app-bar p-0 flex items-center justify-around">
+    <div class="body-2 text-secondary flex items-center justify-center">
+      <mat-icon
+        class="ltr:mr-3 rtl:ml-1 icon-xs"
+        svgIcon="mat:people"></mat-icon>
+      <span>{{ processParticipant.viaGubernativa?.domGuvState }}</span>
+    </div>
+    <div class="flex flex-col">
+      <button
+        *ngIf="processParticipant?.viaGubernativa?.domGuvState === 'Notificado'"
+        (click)="emitToggleStar($event, processParticipant.participationId)"
+        class="text-secondary p-0" mat-icon-button type="button">
+        <mat-icon svgIcon="mat:event_note"></mat-icon>
+      </button>
+      <button
+        *ngIf="processParticipant?.viaGubernativa?.domGuvState === 'Citacion'"
+        (click)="emitToggleStar($event, processParticipant.participationId)"
+        class="text-secondary p-0" mat-icon-button type="button">
+        <mat-icon svgIcon="mat:notifications"></mat-icon>
+      </button>
+      <button
+        *ngIf="processParticipant?.viaGubernativa?.domGuvState === 'Aviso'"
+        (click)="emitToggleStar($event, processParticipant.participationId)"
+        class="text-secondary p-0" mat-icon-button type="button">
+        <mat-icon svgIcon="mat:chat"></mat-icon>
+      </button>
+    </div>
   </div>
 </div>
