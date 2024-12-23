@@ -2,7 +2,6 @@ import { LayoutComponent } from './layouts/layout/layout.component';
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import { AuthGuard } from './pages/pages/auth/login/guards/auth.guard';
 import { RoleGuard } from './pages/pages/auth/login/guards/role.guard';
-import { firstGuardGuard } from './guards/first-guard.guard';
 
 export const appRoutes: VexRoutes = [
   {
@@ -29,7 +28,6 @@ export const appRoutes: VexRoutes = [
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [firstGuardGuard],
     children: [
       {
         path: 'myWork',
@@ -85,6 +83,7 @@ export const appRoutes: VexRoutes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       // {
       //   path: 'chat',
