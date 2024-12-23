@@ -20,7 +20,7 @@ export class VexSplashScreenService {
       this.document.body.querySelector('#vex-splash-screen') ?? undefined;
 
     if (this.splashScreenElem) {
-      this.refreshURL();
+      //this.refreshURL();
 
       this.router.events
         .pipe(
