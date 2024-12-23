@@ -13,7 +13,7 @@ import { UserService } from './user.service';
 export class AuthService {
 
 
-   private _token: string | null = null;
+  private _token: string | null = null;
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
   private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
 
@@ -62,7 +62,7 @@ export class AuthService {
 
   // Verificar si está autenticado
   isAuthenticated(): boolean {
-    return this.token !== null;
+    return sessionStorage.getItem('token') !== null;
   }
 
   // Logout

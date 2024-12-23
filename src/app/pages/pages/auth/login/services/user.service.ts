@@ -24,7 +24,7 @@ constructor() {
 
 
   setUser(user: UserDetails): void {
-    sessionStorage.setItem('user', JSON.stringify(user));  
+    // sessionStorage.setItem('user', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
 
@@ -37,13 +37,16 @@ constructor() {
   changeRole(newRole: string): void {
     const currentUser = this.currentUserSubject.value;
     if (currentUser) {
-      currentUser.role = newRole; 
-      this.setUser(currentUser);  
+      currentUser.role = newRole;
+      this.setUser(currentUser);
     }
   }
 
 
   getUser(): UserDetails | null {
+    if (sessionStorage.getItem('token')) {
+
+    }
     return this.currentUserSubject.value;
   }
 }
