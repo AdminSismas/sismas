@@ -49,60 +49,81 @@
           @for (option of filteredRouteList$ | async; track option.label;) {
 
             <!-- Sila lista tiene solo una opcion  -->
-            @if (option.type === 'link') {
-              <mat-option
-              [value]="option.label">
-              {{ option.label}}
-              </mat-option>
+            @if(option.type === 'subheading') {
+               
+              @for (optionChil of option.children ; track optionChil.label) {
+            
+                      @if(optionChil.type === 'link') {
+                        <mat-option
+                        [value]="optionChil.route">
+                        ( {{option.label}} ) > {{ optionChil.label}}
+                        </mat-option>
+            
+                      } @else if(optionChil.type === 'dropdown') {
 
-              <!-- Si la lista tiene un subMenu con hijos  -->
+                        
+            
+                              @for (optionChil2 of optionChil.children  ; track optionChil2.label) {
+            
+                                      @if(optionChil2.type === 'link') {
+                                        <mat-option
+                                        [value]="optionChil2.route">
+                                        <!-- {{ optionChil2.label}} -->
+                                        ( {{optionChil.label}} ) > {{ optionChil2.label}}
+                                        </mat-option>
+                                      } @else if(optionChil2.type === 'dropdown') {
+            
+                                            @for (optionChil3 of option.children  ; track optionChil3.label) {
+            
+                                                @if(optionChil3.type === 'link') {
+                                                  <mat-option
+                                                  [value]="optionChil3.route">
+
+                                                  ( {{optionChil2.label}} ) > {{ optionChil3.label}}
+                                                  </mat-option>
+                                                } 
+                                          }
+                                      }
+                              }
+            
+                      }
+              }
+            
+            
+            <!-- Si la lista tiene un dropdown  -->
+            
+            } 
+            @else if(option.type === 'dropdown') {
+            
+                  @for (optionChild of option.children  ; track optionChild.label) {
+            
+                          @if(optionChild.type === 'link') {
+                            <mat-option
+                            [value]="optionChild.route">
+                            ({{ option.label}}) > {{ optionChild.label}}
+                            </mat-option>
+                          } @else if(option.type === 'dropdown') {
+            
+                                @for (option of option.children  ; track option.label) {
+            
+                                    @if(option.type === 'link') {
+                                      <mat-option
+                                      [value]="option.route">
+                                      {{ option.label}}
+                                      </mat-option>
+                                    } 
+                              }
+                          }
+                   }
             }
-          <!-- <mat-option
-          [value]="option.label">
-          {{ option.codeName}}
-          </mat-option>
-          } @empty {
-          <mat-option>
-          {{validationField}}
-          </mat-option> -->
+      
           }
 
         }
         </mat-autocomplete>
-          <!-- <mat-icon
-            class="flex-none vex-sidenav-search__icon"
-            svgIcon="mat:search"></mat-icon>
-          <div class="flex-auto vex-sidenav-search__placeholder">
-            Búsqueda rápida
-          </div>
-          <div class="flex-none vex-sidenav-search__keybind">Ctrl K</div> -->
         </div>
 
       </form>
-
-      <!-- Campo barrio -->
-      <!-- <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-        <mat-label>Lista del menú</mat-label>
-        <input type="text"
-               aria-label="Number"
-               matInput
-               formControlName="neighborhood"
-               placeholder="Seleccione un comuna&hellip;"
-               [matAutocomplete]="autoNeighborhood">
-        <mat-autocomplete autoActiveFirstOption #autoNeighborhood="matAutocomplete" [panelWidth]="350"
-                          (optionSelected)="loadBlocksRouteList($event.option.value, true)">
-          @for (option of filteredOptionsNeighborhoods$ | async; track option.codigoBarrio;) {
-            <mat-option
-              [value]="option.codeName">
-              {{ option.codeName}}
-            </mat-option>
-          } @empty {
-            <mat-option>
-              {{validationField}}
-            </mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field> -->
 
     </div>
 

@@ -52,6 +52,7 @@ export class SidenavComponent implements OnInit {
   public validationField = STRING_INFORMATION_NOT_FOUND;
   filteredRouteList$: Observable<NavigationItem[]> | undefined;
   public listRouteItem:NavigationItem[] = []
+  public listRouteItemNew:NavigationItem[] = []
 
   form: FormGroup;
 
@@ -91,6 +92,7 @@ export class SidenavComponent implements OnInit {
     private readonly popoverService: VexPopoverService,
     private readonly dialog: MatDialog,
     private userService: UserService,
+    
   ) {
 
     this.form = this.fb.group({
@@ -102,6 +104,8 @@ export class SidenavComponent implements OnInit {
     this.user = this.userService.getUser(); 
     this.navigationService._navigationMenuSubject$.subscribe((items) => {
       this.listRouteItem.push(items[0]);
+      // this.listRouteItem = this.filterUniqueRoutes(this.listRouteItem);
+
       // console.log('items lista optenida del menu', items);
     });
 
@@ -116,7 +120,6 @@ export class SidenavComponent implements OnInit {
       this.serachRouteTouch();
    
   }
-
 
   serachRouteTouch(){
     this.form.get('searchRuote')?.valueChanges.pipe(
@@ -184,24 +187,9 @@ export class SidenavComponent implements OnInit {
     if (label?.length <= 0) {
       return;
     }
-
-    this.navigationService._navigationMenuSubject$
-            .subscribe({
-             next: (result: NavigationItem[]) => {
-              this.listRouteItem = result;
-
-              if (this.listRouteItem[0] === undefined) {
-                this.listRouteItem.splice(0, 1);
-              }
-          
-              this.captureRuteInformation(this.listRouteItem, label)
-            }
-           }
-         );
- 
-  
+    this.router.navigate([label]);
+    this.form.get('searchRuote')?.reset();
     
-    console.log('this.listRouteItem', this.listRouteItem );
   }
 
 
@@ -229,6 +217,6 @@ export class SidenavComponent implements OnInit {
       if (this.listRouteItem[0] === undefined) {
         this.listRouteItem.splice(0, 1);
       }
-      console.log('this.listRouteItem', this.listRouteItem );
     }
+
 }
