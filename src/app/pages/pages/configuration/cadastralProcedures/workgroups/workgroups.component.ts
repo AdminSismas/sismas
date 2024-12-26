@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { Group } from './interfaces/group.interface';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { WorkgroupsService } from './services/work-group.service';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
@@ -34,7 +36,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule,
+    MatMenuModule
 
 
   ],
@@ -45,6 +49,20 @@ export class WorkgroupsComponent {
 
   displayedColumns: string[] = ['name', 'description', 'actions'];
   dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>([]);
+    public actionBtns = computed(() => {
+      return [
+        {
+          name: 'edit',
+          label: 'Editar',
+          icon: 'mat:edit'
+        },
+        {
+          name: 'delete',
+          label: 'Borrar',
+          icon: 'mat:delete'
+        }
+      ]
+    })
   
   // Paginación
   page: number = 0;
@@ -108,7 +126,7 @@ export class WorkgroupsComponent {
       this.showSnackBar('Error al editar el grupo'); // Mostrar mensaje de error en caso de fallo
     });
   }
-
+  
   // Método para cambiar de página
   onPageChange(event: any): void {
     this.page = event.pageIndex;
@@ -130,6 +148,28 @@ export class WorkgroupsComponent {
       horizontalPosition: 'center',  
       verticalPosition: 'bottom',  
     });
+  }
+
+  actionMenuHandler(action: string, row: any) {
+    if (action === 'edit') {
+      const dialogRef = this.dialog.open(GroupDialogComponent, {
+        data: {
+          ...row,
+          mode: 'edit'
+        }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result.groupId) {
+            this.editGroup(result);
+          } else {
+            this.createGroup(result);
+          }
+        }
+      });
+    }
+
   }
 
 }

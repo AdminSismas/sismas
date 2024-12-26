@@ -17,18 +17,33 @@
         <!-- Barra superior con el botón de "Nuevo" y el buscador -->
         <mat-card-header>
         
-          <div class="mat-header-actions">
-   
-            <button mat-raised-button color="primary" class="btn-new" (click)="openDialog()">
-              Nuevo
-              <mat-icon svgIcon="mat:add"></mat-icon>
+          <div class="flex items-center gap-4">
+            <!-- Botón "Nuevo Grupo de Trabajo" -->
+            <button
+              class="bg-primary-500 text-white font-medium px-4 rounded h-10 flex items-center"
+              (click)="openDialog()"
+            >
+              Nuevo Grupo de Trabajo
             </button>
           
+          
             <!-- Campo de búsqueda -->
-            <mat-form-field class="search-field" appearance="outline">
-              <mat-icon matPrefix svgIcon="mat:search"></mat-icon>
-              <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="Buscar..." />
-            </mat-form-field>
+            <div class="flex items-center border border-gray-300 rounded px-2 h-10">
+              <input
+                type="text"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="onSearchChange()"
+                class="focus:outline-none text-sm w-full h-full px-2"
+              />
+            </div>
+          
+            <!-- Botón "Buscar" -->
+            <button
+              class="bg-primary-500 text-white font-medium px-4 rounded h-10"
+              (click)="onSearchChange()"
+            >
+              Buscar
+            </button>
 
           </div>
         </mat-card-header>
@@ -53,9 +68,15 @@
               <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef><strong>Acciones</strong></th>
                 <td mat-cell *matCellDef="let element">
-                  <button mat-icon-button color="primary" (click)="openDialog(element)">
-                    <mat-icon svgIcon="mat:edit"></mat-icon>
-                  </button>
+                  <button
+                  mat-icon-button
+                  color="primary"
+                  type="button"
+                  [matMenuTriggerData]="{ row: element }"
+                  [matMenuTriggerFor]="actionsMenu"
+                >
+                  <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+                </button>
                 </td>
               </ng-container>
 
@@ -74,6 +95,26 @@
           [pageIndex]="page"
           (page)="onPageChange($event)">
         </mat-paginator>
+        <mat-menu
+        #actionsMenu="matMenu"
+        xPosition="before"
+        yPosition="below"
+      >
+        <ng-template
+          let-row="row"
+          matMenuContent
+        >
+          @for (action of actionBtns(); track action.name) {
+            <button
+              (click)="actionMenuHandler(action.name, row)"
+              mat-menu-item
+            >
+              <mat-icon svgIcon="{{ action.icon }}"></mat-icon>
+              {{ action.label }}
+            </button>
+          }
+        </ng-template>
+      </mat-menu>
       </mat-card>
     </div>
   </div>
