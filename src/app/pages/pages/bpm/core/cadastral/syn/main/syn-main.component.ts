@@ -1,13 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Error500Component } from '../../../../../errors/error-500/error-500.component';
-import { MatDialogTitle } from '@angular/material/dialog';
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 
 @Component({
   selector: 'vex-syn-main',
   standalone: true,
   imports: [
-    Error500Component,
-    MatDialogTitle
+    // Vex
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
+    // Material
+    // Custom
   ],
   templateUrl: './syn-main.component.html',
   styleUrl: './syn-main.component.scss'
