@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -49,6 +49,15 @@ export class WorkgroupsComponent {
 
   displayedColumns: string[] = ['name', 'description', 'actions'];
   dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>([]);
+    public actionBtns = computed(() => {
+      return [
+        {
+          name: 'edit',
+          label: 'Editar',
+          icon: 'mat:edit'
+        }
+      ]
+    })
   
   // Paginación
   page: number = 0;
@@ -136,33 +145,26 @@ export class WorkgroupsComponent {
     });
   }
 
-// actionMenuHandler(group?: Group): void {
-//   if (action === 'edit') {
-//     // Abrir el modal en modo edición
-//     this.dialog.open(GroupDialogComponent, {
-//       width: '400px',
-//       data: group || {} // Si existe un grupo, lo pasa al modal, si no, se pasa un objeto vacío
-//     });
-//     .afterClosed()
-//     .subscribe((result) => {
-//       if (result) {
-//         console.log('Usuario editado:', result);
-//         // Actualiza la lista de usuarios después de editar
-//         setTimeout(() => {
-//           this.getUsers(this.page, this.pageSize);
-//         }, 300);
-//       }
-//     });
-//   } else if (action === 'delete') {
-//     console.log('Eliminando usuario:', row);
-//     // Aquí puedes implementar lógica para eliminar al usuario
-//     // Por ejemplo, llamar un servicio para eliminar el usuario del backend:
-//     // this.userService.deleteUser(row.id).subscribe(() => {
-//     //   this.getUsers(this.page, this.pageSize);
-//     // });
-//   }
-// }
+    actionMenuHandler(action: string, row: any) {
+      if (action === 'edit') {
+        console.log('editing....')
+        const dialogRef = this.dialog.open(GroupDialogComponent, {
+          data: {
+            ...row,
+            mode: 'edit'
+          }
+        })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result.groupId) {
+          this.editGroup(result);
+        } else {
+          this.createGroup(result);
+        }
+      }
+    });
+  }
 
-  
+}
 
 }
