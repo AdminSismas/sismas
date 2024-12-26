@@ -385,7 +385,7 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
 
       domTipoDireccion: this.fBuilder.control(null, [Validators.required]),
       codigoPostal: this.fBuilder.control(null, [Validators.required, Validators.pattern(/^\d+$/)]),
-      nombrePredio: this.fBuilder.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]), // Solo letras y permite espacio
+      nombrePredio: this.fBuilder.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9\s.,-]*$/)]),
 
       esDireccionPrincipal: this.fBuilder.control(false, [Validators.required]),
       direccionTexto: this.fBuilder.control(null, [Validators.required]),
