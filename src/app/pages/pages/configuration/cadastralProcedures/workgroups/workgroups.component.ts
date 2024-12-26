@@ -126,7 +126,7 @@ export class WorkgroupsComponent {
       this.showSnackBar('Error al editar el grupo'); // Mostrar mensaje de error en caso de fallo
     });
   }
-
+  
   // Método para cambiar de página
   onPageChange(event: any): void {
     this.page = event.pageIndex;
@@ -150,26 +150,26 @@ export class WorkgroupsComponent {
     });
   }
 
-    actionMenuHandler(action: string, row: any) {
-      if (action === 'edit') {
-        console.log('editing....')
-        const dialogRef = this.dialog.open(GroupDialogComponent, {
-          data: {
-            ...row,
-            mode: 'edit'
-          }
-        })
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result.groupId) {
-          this.editGroup(result);
-        } else {
-          this.createGroup(result);
+  actionMenuHandler(action: string, row: any) {
+    if (action === 'edit') {
+      const dialogRef = this.dialog.open(GroupDialogComponent, {
+        data: {
+          ...row,
+          mode: 'edit'
         }
-      }
-    });
-  }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result.groupId) {
+            this.editGroup(result);
+          } else {
+            this.createGroup(result);
+          }
+        }
+      });
+    }
 
-}
+  }
 
 }

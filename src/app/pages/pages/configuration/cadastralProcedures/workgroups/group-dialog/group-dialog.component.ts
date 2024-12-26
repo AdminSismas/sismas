@@ -49,7 +49,10 @@ export class GroupDialogComponent {
 
   onSave(): void {
     if (this.groupForm.valid) {
-      this.dialogRef.close(this.groupForm.value);
+      this.dialogRef.close({
+        groupId: this.group.groupId,
+        ...this.groupForm.value
+      });
     }
   }
 
