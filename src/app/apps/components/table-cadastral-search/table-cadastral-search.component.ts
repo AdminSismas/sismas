@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -106,6 +106,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
     private infoTableService: InfoTableService,
@@ -126,6 +127,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
+
+    console.log('Route', this.route);
   }
 
   ngAfterViewInit(): void {
