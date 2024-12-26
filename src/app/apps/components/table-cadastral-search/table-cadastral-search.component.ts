@@ -131,8 +131,21 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
     if (this.route.snapshot.queryParams['npn']) {
       this.initParams = this.route.snapshot.queryParams['npn'];
-      console.log('Init params', this.initParams);
       this.searValueData({}, this.initParams as string)
+      setTimeout(() => {
+        console.log(this.dataSource.data[0])
+        this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
+          minWidth: '99%',
+          minHeight: '90%',
+          disableClose: true,
+          data: new ContentInfoSchema(
+            this.dataSource.data[0].baunitIdE,
+            this.dataSource.data[0],
+            null,
+            LIST_SCHEMAS_CONTROL_MAIN,
+          )
+        })
+      }, 300)
     }
   }
 
@@ -347,7 +360,6 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   }
 
   searValueData(searData:SearchData,data: string): void {
-    console.log(data);
     this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
     .subscribe(value=>{
       this.captureInformationSubscribe(value)
