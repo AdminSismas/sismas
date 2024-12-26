@@ -131,7 +131,6 @@ export class TableDigitalizedSignaturesComponent
       this.contentInformation.content != null
     ) {
       data = this.contentInformation.content
-      console.log('data: ', data)
       this.dataSource.data = data
     }
 

@@ -152,7 +152,6 @@ export class ZoneManagerComponent implements OnInit {
 
   onClickActionBtn(id: string, row: any) {
     if (id === 'delete') {
-      console.log('Eliminando zona...')
       this.zonesCode = row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode
       this.dialog.open(this.confirmDeleteDialog, { width: '40%' })
         .afterClosed()
@@ -163,7 +162,6 @@ export class ZoneManagerComponent implements OnInit {
         })
 
     } else if (id === 'edit') {
-      console.log('Editando zona...')
       this.openDialogEditZone(row)
     }
   }

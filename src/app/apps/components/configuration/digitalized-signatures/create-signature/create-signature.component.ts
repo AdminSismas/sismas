@@ -55,7 +55,6 @@ export class CreateSignatureComponent {
     this.peopleService
       .getPeopleTypeNumber(this.searchForm.value)
       .subscribe((data: InfoPerson) => {
-        console.log('Persona encontrada', data)
         this.personName = data.fullName
         this.disableCreateForm = false
       })

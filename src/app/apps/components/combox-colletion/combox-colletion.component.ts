@@ -81,7 +81,6 @@ export class ComboxColletionComponent implements OnInit {
   captureCalificationInformationSubscribe(result: DomainCalificationCollection[]) {
 
     this.calificationOptions = result;
-    console.log(this.calificationOptions);
   }
 
   captureInformationSubscribe(result: DomainCollection[]) {
@@ -89,7 +88,6 @@ export class ComboxColletionComponent implements OnInit {
       result = result.filter(dmc => dmc.inactive === false);
     }
     this.options = result;
-    console.log(this.options);
   }
 
   getRandomInt(max: number) {

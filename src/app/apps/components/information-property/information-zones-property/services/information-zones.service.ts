@@ -22,7 +22,6 @@ export class InformationZonesService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('baunitId', `${baunitId}`);
 
-    console.log('url', url);
 
     return this.getData(url, paramsR);
   }
