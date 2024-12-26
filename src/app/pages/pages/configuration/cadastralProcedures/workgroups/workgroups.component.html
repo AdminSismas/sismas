@@ -17,18 +17,33 @@
         <!-- Barra superior con el botón de "Nuevo" y el buscador -->
         <mat-card-header>
         
-          <div class="mat-header-actions">
-   
-            <button mat-raised-button color="primary" class="btn-new" (click)="openDialog()">
-              Nuevo
-              <mat-icon svgIcon="mat:add"></mat-icon>
+          <div class="flex items-center gap-4">
+            <!-- Botón "Nuevo Grupo de Trabajo" -->
+            <button
+              class="bg-primary-500 text-white font-medium px-4 rounded h-10 flex items-center"
+              (click)="openDialog()"
+            >
+              Nuevo Grupo de Trabajo
             </button>
           
+          
             <!-- Campo de búsqueda -->
-            <mat-form-field class="search-field" appearance="outline">
-              <mat-icon matPrefix svgIcon="mat:search"></mat-icon>
-              <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="Buscar..." />
-            </mat-form-field>
+            <div class="flex items-center border border-gray-300 rounded px-2 h-10">
+              <input
+                type="text"
+                [(ngModel)]="searchTerm"
+                (ngModelChange)="onSearchChange()"
+                class="focus:outline-none text-sm w-full h-full px-2"
+              />
+            </div>
+          
+            <!-- Botón "Buscar" -->
+            <button
+              class="bg-primary-500 text-white font-medium px-4 rounded h-10"
+              (click)="onSearchChange()"
+            >
+              Buscar
+            </button>
 
           </div>
         </mat-card-header>
