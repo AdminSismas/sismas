@@ -28,20 +28,34 @@
         </mat-icon>
       </button>
     </div>
-    <div *ngIf="searchVisible$ | async" class="vex-sidenav-search__container">
+    <div *ngIf="searchVisible$ | async">
       <form [formGroup]="form" >
         <div
           (click)="seeRutList()"
           class="vex-sidenav-search relative"
           matRipple
           matRippleColor="rgb(var(--vex-color-primary-600), 0.1)">
-          <input
+          <!-- <input
           matInput
           placeholder="Búsqueda rápida"
           formControlName="searchRuote"
           name="searchRuote"
           [matAutocomplete]="routeSearch"
-        />
+        /> -->
+     
+        <mat-form-field class="tap-search" >
+          <mat-label style="color: white;">Búsqueda rápida</mat-label>
+          <!-- <mat-icon svgIcon="mat:search"></mat-icon> -->
+          <input style="color: white;" 
+          class="tap-search"
+            matInput
+            formControlName="searchRuote"
+            type="text" 
+            [matAutocomplete]="routeSearch"
+          />
+          
+        </mat-form-field>
+       
         <mat-autocomplete autoActiveFirstOption #routeSearch="matAutocomplete" [panelWidth]="350"
         (optionSelected)="loadBlocksRouteList($event.option.value, true)">
 

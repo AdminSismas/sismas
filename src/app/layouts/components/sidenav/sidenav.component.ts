@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 
 @Component({
@@ -45,6 +46,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
     AsyncPipe,
     FormsModule,
     ReactiveFormsModule,
+    MatInputModule
   ]
   
 })
@@ -217,6 +219,7 @@ export class SidenavComponent implements OnInit {
       if (this.listRouteItem[0] === undefined) {
         this.listRouteItem.splice(0, 1);
       }
+      console.log('listRouteItem', this.listRouteItem);
     }
 
 }

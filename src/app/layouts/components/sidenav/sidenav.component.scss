@@ -186,3 +186,19 @@ button, input, optgroup, select, textarea {
   margin: 0;
   padding: 0;
 }
+
+.vex-sidenav-search:hover {
+  background-color: rgb(255 255 255 / 0%);
+  color:rgb(255 255 255 / 0%); 
+}
+
+.vex-sidenav-search {
+  background-color: rgb(255 255 255 / 0%)
+}
+
+
+
+    .mdc-text-field--outlined {
+        padding-right: max(41px, var(--mdc-outlined-text-field-container-shape));
+        background: #80808040;
+    }
