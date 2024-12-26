@@ -247,7 +247,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         executionId: this.executionId
       },
     }).afterClosed()
-      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
+      .subscribe(() => {
+        setTimeout(() => (this.loadInformationPropertyOwners(), 200));
+
+      });
   }
 
   onClickActionBtn(id: string, infoOwner: InfoOwners) {

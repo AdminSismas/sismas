@@ -170,3 +170,7 @@
 .vex-sidenav-search__keybind {
   @apply bg-white/10 rounded text-2xs px-2 py-1 font-semibold transition duration-300 ease-out;
 }
+  
+.clickable {
+  cursor: pointer;
+}

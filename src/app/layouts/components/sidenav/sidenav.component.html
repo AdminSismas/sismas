@@ -1,3 +1,4 @@
+
 <div
   (mouseenter)="collapseOpenSidenav()"
   (mouseleave)="collapseCloseSidenav()"
@@ -10,8 +11,10 @@
         [src]="imageUrl$ | async"
         alt="Logo"
         class="w-6 select-none flex-none" />
-      <h2 class="vex-sidenav-toolbar__headline flex-auto">
-        {{ title$ | async }}
+      <h2 class="vex-sidenav-toolbar__headline flex-auto clickable" >
+        <a  (click)="navigateToCadastralSearch()" class="text-decoration-none">
+          {{ title$ | async }}
+        </a>
       </h2>
       <button
         (click)="toggleCollapse()"
@@ -19,17 +22,12 @@
         class="vex-sidenav-toolbar__collapse-toggle -mr-4 leading-none flex-none hidden lg:block"
         mat-icon-button
         type="button">
-        <mat-icon
-          *ngIf="!collapsed"
-          class="icon-xs"
-          svgIcon="mat:radio_button_checked"></mat-icon>
-        <mat-icon
-          *ngIf="collapsed"
-          class="icon-xs"
-          svgIcon="mat:radio_button_unchecked"></mat-icon>
+        <mat-icon *ngIf="!collapsed">push_pin</mat-icon>
+        <mat-icon *ngIf="collapsed" >
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M680-840v80h-40v327l-80-80v-247H400v87l-87-87-33-33v-47h400ZM480-40l-40-40v-240H240v-80l80-80v-46L56-792l56-56 736 736-58 56-264-264h-6v240l-40 40ZM354-400h92l-44-44-2-2-46 46Zm126-193Zm-78 149Z"/></svg>
+        </mat-icon>
       </button>
     </div>
-
     <div *ngIf="searchVisible$ | async" class="vex-sidenav-search__container">
       <div
         (click)="openSearch()"
@@ -40,7 +38,7 @@
           class="flex-none vex-sidenav-search__icon"
           svgIcon="mat:search"></mat-icon>
         <div class="flex-auto vex-sidenav-search__placeholder">
-          Quick Search
+          Búsqueda rápida
         </div>
         <div class="flex-none vex-sidenav-search__keybind">Ctrl K</div>
       </div>
@@ -78,8 +76,8 @@
         class="vex-sidenav-user__image flex-none"
         src="../../../../assets/img/avatars/noavatar.png" />
       <div class="vex-sidenav-user__content flex-auto">
-        <div class="vex-sidenav-user__title">{{userName$}}</div>
-        <div class="vex-sidenav-user__subtitle">{{ userPerfil$ }}</div>
+        <div class="vex-sidenav-user__title">{{user?.username}}</div>
+        <div class="vex-sidenav-user__subtitle">{{ user?.role}}</div>
       </div>
       <mat-icon
         class="vex-sidenav-user__dropdown-icon flex-none"

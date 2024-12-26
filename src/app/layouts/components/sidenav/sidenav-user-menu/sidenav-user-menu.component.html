@@ -8,9 +8,9 @@
     <mat-icon
       class="vex-user-menu-item__icon icon-sm"
       svgIcon="mat:account_circle"></mat-icon>
-    <div class="vex-user-menu-item__label">Your Profile</div>
+    <div class="vex-user-menu-item__label">Mi perfil</div>
   </a>
-
+<!-- 
   <a
     (click)="close()"
     [routerLink]="['/']"
@@ -22,7 +22,7 @@
       svgIcon="mat:insights"></mat-icon>
     <div class="vex-user-menu-item__label">Analytics</div>
     <div class="vex-user-menu-item__badge">NEW</div>
-  </a>
+  </a> -->
 
   <a
     (click)="close()"
@@ -33,7 +33,7 @@
     <mat-icon
       class="vex-user-menu-item__icon icon-sm"
       svgIcon="mat:settings"></mat-icon>
-    <div class="vex-user-menu-item__label">Account Settings</div>
+    <div class="vex-user-menu-item__label">Configuración de la cuenta</div>
   </a>
 
   <div class="border-b border-divider mx-4"></div>
@@ -45,20 +45,20 @@
     <mat-icon
       class="vex-user-menu-item__icon icon-sm"
       svgIcon="mat:switch_account"></mat-icon>
-    <div class="vex-user-menu-item__label">Switch Account</div>
+    <div class="vex-user-menu-item__label">Cambiar cuenta</div>
     <mat-icon
       class="vex-user-menu-item__icon icon-sm"
       svgIcon="mat:chevron_right"></mat-icon>
   </div>
 
   <a
-    (click)="close()"
+    (click)="logout()"
     class="vex-user-menu-item"
     matRipple
     matRippleColor="rgb(var(--vex-color-primary-600), 0.1)">
     <mat-icon
       class="vex-user-menu-item__icon icon-sm"
       svgIcon="mat:logout"></mat-icon>
-    <div class="vex-user-menu-item__label">Sign Out</div>
+    <div class="vex-user-menu-item__label">Cerrar sesión</div>
   </a>
 </div>

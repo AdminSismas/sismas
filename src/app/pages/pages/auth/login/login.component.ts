@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -12,6 +12,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { environment } from '../../../../../environments/environments';
+import { AuthService } from './services/auth.service';
+
+import { UserService } from './services/user.service';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 
 @Component({
   selector: 'vex-login',
@@ -36,11 +41,7 @@ import { environment } from '../../../../../environments/environments';
   ]
 })
 export class LoginComponent {
-  form = this.fb.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required]
-  });
-
+  form!: FormGroup;
   inputType = 'password';
   visible = false;
 
@@ -48,19 +49,65 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private snackbar: MatSnackBar
-  ) {}
+    private snackbar: MatSnackBar,
+    private authService: AuthService,
+    private userService: UserService,
+    private navigationLoaderService: NavigationLoaderService 
+  ) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required]],
+      password: ['', Validators.required]
+    });
+  }
 
   send() {
-    this.router.navigate([`${environment.myWork_cadastralSearch}`])
-      .then(value => {});
-    this.snackbar.open(
-      "Bienvenido usuario ;)",
-      'Gracias',
-      {
-        duration: 10000
-      }
-    );
+    if (this.form.valid) {
+      const { email, password } = this.form.value;
+
+      this.authService.login(email, password).subscribe(
+        (response: any) => {
+          if (response && response.token) {
+            this.authService.saveToken(response.token);
+
+
+            this.authService.getUserData()?.subscribe(
+              (userData) => {
+                const user = new UserDetails(userData);
+                this.userService.setUser(user); 
+
+    
+                this.navigationLoaderService.loadInformationNavigation(user.role);
+
+         
+                this.router.navigate([`${environment.myWork_cadastralSearch}`]).then(() => {
+                  this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
+                    duration: 5000
+                  });
+                });
+              },
+              (error) => {
+                this.snackbar.open('Error al obtener los datos del usuario.', 'Error', {
+                  duration: 5000
+                });
+              }
+            );
+          } else {
+            this.snackbar.open('Credenciales incorrectas. Intenta nuevamente.', 'Error', {
+              duration: 5000
+            });
+          }
+        },
+        (error) => {
+          this.snackbar.open('Credenciales incorrectas. Intenta nuevamente.', 'Error', {
+            duration: 5000
+          });
+        }
+      );
+    } else {
+      this.snackbar.open('Por favor, complete los campos correctamente.', 'Error', {
+        duration: 3000
+      });
+    }
   }
 
   toggleVisibility() {

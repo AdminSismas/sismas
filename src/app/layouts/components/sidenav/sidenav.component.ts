@@ -14,7 +14,11 @@ import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollb
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule, NgFor, NgIf } from '@angular/common';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'vex-sidenav',
@@ -22,6 +26,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
   styleUrls: ['./sidenav.component.scss'],
   standalone: true,
   imports: [
+    CommonModule,
     NgIf,
     MatButtonModule,
     MatIconModule,
@@ -33,6 +38,9 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
   ]
 })
 export class SidenavComponent implements OnInit {
+
+  user: UserDetails | null = null;
+
   @Input() collapsed: boolean = false;
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
   title$ = this.configService.config$.pipe(
@@ -59,16 +67,26 @@ export class SidenavComponent implements OnInit {
   userPerfil$?: string
 
   constructor(
+    private router: Router,
     private navigationService: NavigationService,
     private layoutService: VexLayoutService,
     private configService: VexConfigService,
     private readonly popoverService: VexPopoverService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private userService: UserService
   ) {}
 
-  ngOnInit() {
-    this.userName$ = 'Usuario activo';
-    this.userPerfil$ = 'Prediador';
+  ngOnInit(): void {
+    this.user = this.userService.getUser(); 
+    
+  }
+
+  navigateToCadastralSearch() {
+    this.router.navigate(['/myWork/cadastralSearch']);
+  }
+
+  changeRole(role: string): void {
+    this.userService.changeRole(role);  
   }
 
   collapseOpenSidenav() {
@@ -82,7 +100,7 @@ export class SidenavComponent implements OnInit {
   toggleCollapse() {
     this.collapsed
       ? this.layoutService.expandSidenav()
-      : this.layoutService.collapseSidenav();
+      :( this.layoutService.collapseSidenav(),this.collapseCloseSidenav());
   }
 
   trackByRoute(index: number, item: NavigationItem): string {

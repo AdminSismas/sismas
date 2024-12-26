@@ -9,6 +9,8 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
+import { TaskResponseModel } from '../interfaces/task-response.model';
+import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
 
 export const GUION: string = ' - ';
 export const SPACE: string = ' ';
@@ -31,6 +33,7 @@ export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
 
+export const PAGE_OPTION__5_7_10: number[] = [5,7,10];
 export const PAGE_OPTION_UNIQUE_7: number = 7;
 export const PAGE_OPTION_UNIQUE: number = 10;
 export const PAGE_SIZE_OPTION: number[] = [5, PAGE_OPTION_UNIQUE_7, PAGE_OPTION_UNIQUE, 20, 50];
@@ -199,6 +202,43 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
     type: 'text',
     visible: true
   }
+];
+
+export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
+  {
+    label: 'Detalle',
+    property: 'viewDetail',
+    type: 'button',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  
+  {
+    label: 'Nombre del trámite',
+    property: 'processName',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Nombre de la tarea',
+    property: 'flowName',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Fecha de inicio',
+    property: 'beginAt',
+    type: 'date',
+    visible: true
+  },
+  {
+    label: 'Días de retraso',
+    property: 'daysFinish',
+    type: 'currency',
+    visible: true
+  },
+ 
+ 
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] = [
   ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,
@@ -401,6 +441,8 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
 export const LIST_SCHEMAS_CONTROL_MAIN: string[] = [`${environment.schemas.main}`];
 export const LIST_SCHEMAS_CONTROL_TEMP: string[] = [`${environment.schemas.temp}`];
 export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`,`${environment.schemas.main}`];
+export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.main}`,`${environment.schemas.hist}`];
+
 export const LIST_ZONES_RURAL: string[] = ['00'];
 export const LIST_FORM_CADASTRAL_0: string[] = [
   'municipality', 'zone', 'sector', 'community', 'neighborhood', 'block', 'sidewalk'
