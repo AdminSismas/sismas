@@ -144,7 +144,6 @@ export class AdministrativeSourcesComponent implements OnInit {
 
   onClickActionBtn(id: string, row: AdministrativeSource) {
     if (id === 'delete') {
-      console.log('Eliminando fuente...')
       this.selectedFuente = row;
       this.dialog.open(this.confirmDeleteDialog, {
         width: '40%',
@@ -156,7 +155,6 @@ export class AdministrativeSourcesComponent implements OnInit {
         })
 
     } else if (id === 'edit') {
-      console.log('Editando fuente...')
       const params: UpdateAdministrativeSource = {
         executionId: this.executionId as string,
         baunitId: this.baunitId as string,

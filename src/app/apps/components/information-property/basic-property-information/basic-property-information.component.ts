@@ -109,7 +109,6 @@ export class BasicPropertyInformationComponent implements OnInit {
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
-          console.log(result);
           setTimeout(() => this.data = result, 300);
         }
       })
