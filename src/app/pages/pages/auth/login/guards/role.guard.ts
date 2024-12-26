@@ -14,11 +14,11 @@ export class RoleGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    
+
     const user = this.userService.getUser();
 
     if (user) {
-      const requiredRoles = next.data['roles'];  
+      const requiredRoles = next.data['roles'];
       const userRole = user.role;
 
       if (requiredRoles.includes(userRole)) {

@@ -10,7 +10,6 @@ import {
 } from '../cadastral-information-property/cadastral-information-property.component';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { TWO_POINT_, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
-import { NgForOf, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
@@ -37,9 +36,7 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
     VexPageLayoutContentDirective,
     MatTabsModule,
     CadastralInformationPropertyComponent,
-    NgForOf,
     MatMenuModule,
-    NgIf
   ],
   templateUrl:
     './layout-card-cadastral-information-property-component.component.html',
