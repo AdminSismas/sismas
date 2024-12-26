@@ -17,7 +17,7 @@
 -->
 
 <vex-page-layout>
-  <vex-page-layout-header
+  <!-- <vex-page-layout-header
     class="pb-16 flex flex-col items-start justify-center"
   >
     <div
@@ -25,7 +25,7 @@
       [class.px-6]="layoutCtrl.value === 'fullwidth'"
       class="w-full flex flex-col sm:flex-row justify-between"
     ></div>
-  </vex-page-layout-header>
+  </vex-page-layout-header> -->
 
   <vex-page-layout-content
     [class.container]="layoutCtrl.value === 'fullwidth'"
@@ -40,8 +40,45 @@
         <div class="contet-search">
           <form
             [formGroup]="form"
-            class="flex justify-center items-center pt-6"
+            class="flex justify-center items-center pt-6 margin-10"
           >
+          <!-- <button
+        
+          class="ml-4 flex-none"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Add Customer"
+          type="button"
+        >
+       
+        </button> -->
+        <!-- Agregar persona -->
+        <div class="flex flex-col sm:flex-row sm:gap-4 mt-3 pt-3">
+          <div class="form-content-item flex flex-row items-center gap-4">
+            <button
+              color="primary"
+              aria-label=""
+              type="button"
+              mat-flat-button
+              (click)="createCustomer()"
+              name="crear"
+              class="ml-4 flex-none"
+            >
+              + Nueva persona
+            </button>
+        
+            <button
+              color="primary"
+              aria-label=""
+              type="button"
+              mat-flat-button
+              (click)="search()"
+              name="enviar"
+              class="ml-4 flex-none"
+            >
+              Buscar
+            </button>
+        
             <vex-combox-colletion
               ubscriptSizing="dynamic"
               idComboCollection="typeNumberDocument"
@@ -50,38 +87,23 @@
               typeDomainName="IndividualTypeNumber"
               placeholderDomainName="Seleccionar tipo documento&hellip;"
               (stringEventEmitter)="infoSelect($event)"
+              class="flex-none"
             ></vex-combox-colletion>
-            <div>
-              <mat-form-field subscriptSizing="dynamic">
-                <input
-                  matInput
-                  [formControl]="document"
-                  placeholder="Número de documento&hellip;"
-                  type="text"
-                  name="search"
-                />
-              </mat-form-field>
-              <div
-                class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align ng-tns-c508571215-102"
-              ></div>
-            </div>
+        
+            <mat-form-field class="flex-none">
+              <mat-label>Número documento</mat-label>
+              <input
+                matInput
+                [formControl]="document"
+                placeholder="Número de documento&hellip;"
+                type="text"
+                name="search"
+              />
+            </mat-form-field>
+          </div>
+        </div>
 
-            <div>
-              <button
-                color="primary"
-                aria-label=""
-                type="button"
-                mat-flat-button
-                (click)="search()"
-                name="enviar"
-                class="ml-4 flex-none"
-              >
-                Buscar
-              </button>
-              <div
-                class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align ng-tns-c508571215-102"
-              ></div>
-            </div>
+            
           </form>
         </div>
 
@@ -97,17 +119,10 @@
           <mat-icon svgIcon="mat:filter_list"></mat-icon>
         </button>
 
-        <button
-          (click)="createCustomer()"
-          class="ml-4 flex-none"
-          color="primary"
-          mat-mini-fab
-          matTooltip="Add Customer"
-          type="button"
-        >
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button>
+        
       </div>
+<br>
+<br>
 
       <table
         [dataSource]="dataSource"
