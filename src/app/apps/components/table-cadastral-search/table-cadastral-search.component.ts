@@ -85,7 +85,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  contentInformations!: InformationPegeable;
+  contentInformation!: InformationPegeable;
   searchData!: SearchData;
 
   @Input()
@@ -98,6 +98,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
+  initParams?: string;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -128,7 +129,11 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
 
-    console.log('Route', this.route);
+    if (this.route.snapshot.queryParams['npn']) {
+      this.initParams = this.route.snapshot.queryParams['npn'];
+      console.log('Init params', this.initParams);
+      this.searValueData({}, this.initParams as string)
+    }
   }
 
   ngAfterViewInit(): void {
@@ -209,28 +214,28 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   captureInformationCadastralData(): void {
     let data: BaunitHead[];
-    if (this.contentInformations?.content != null) {
-      data = this.contentInformations.content;
+    if (this.contentInformation?.content != null) {
+      data = this.contentInformation.content;
       data = data.map((row: BaunitHead) => new BaunitHead(row));
       this.dataSource.data = data;
     }
 
-    if (this.contentInformations == null) {
+    if (this.contentInformation == null) {
       this.page = PAGE;
       return;
     }
 
-    if (this.contentInformations.totalElements) {
-      this.totalElements = this.contentInformations.totalElements;
+    if (this.contentInformation.totalElements) {
+      this.totalElements = this.contentInformation.totalElements;
     }
 
-    if (this.contentInformations.pageable == null) {
+    if (this.contentInformation.pageable == null) {
       this.page = PAGE;
       return;
     }
 
-    if (this.contentInformations.pageable.pageNumber != null) {
-      this.page = this.contentInformations.pageable.pageNumber;
+    if (this.contentInformation.pageable.pageNumber != null) {
+      this.page = this.contentInformation.pageable.pageNumber;
     }
   }
 
@@ -400,12 +405,12 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
-    this.contentInformations = result;
+    this.contentInformation = result;
     this.captureInformationCadastralData();
   }
 
   captureInformationSubscribeError(): void {
-    this.contentInformations = new InformationPegeable();
+    this.contentInformation = new InformationPegeable();
     this.dataSource.data = [];
   }
 
