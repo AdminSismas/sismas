@@ -55,6 +55,11 @@ export class WorkgroupsComponent {
           name: 'edit',
           label: 'Editar',
           icon: 'mat:edit'
+        },
+        {
+          name: 'delete',
+          label: 'Borrar',
+          icon: 'mat:delete'
         }
       ]
     })
