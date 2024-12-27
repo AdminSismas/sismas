@@ -59,7 +59,7 @@ export class ValidateInformationBaunitService {
         }
         
         // const url:string = `${environment.url}:${environment.port}${environment.baunit_npnlike}${value}`;
-    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}0&size=${page.size}`;
+    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
     return this.http.get<InformationPegeable>(url)
     // return this.getData(url,paramsA).pipe();
 
