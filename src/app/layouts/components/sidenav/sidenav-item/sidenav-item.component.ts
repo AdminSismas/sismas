@@ -57,7 +57,8 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private cd: ChangeDetectorRef,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    
   ) {
   }
 

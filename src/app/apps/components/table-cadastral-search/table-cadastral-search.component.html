@@ -12,7 +12,7 @@
     </div>
   </vex-page-layout-header>
   <vex-page-layout-content class="-mt-2 px-5" >
-    <div class="card overflow-auto -mt-12 mat-elevation-z5">
+    <div class="card overflow-auto mat-elevation-z5">
       <div
         class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center">
         <button
@@ -32,17 +32,9 @@
           <input
             matInput
             [formControl]="searchCtrl"
-            placeholder="Search basic&hellip;"
+            placeholder="Búsqueda rápida&hellip;"
             type="text" />
         </mat-form-field>
-        <!-- <button
-          [matMenuTriggerFor]="columnFilterMenu"
-          class="ml-4 flex-none"
-          mat-icon-button
-          matTooltip="Filter Columns"
-          type="button">
-          <mat-icon svgIcon="mat:filter_list"></mat-icon>
-        </button> -->
       </div>
       <table
         @stagger
@@ -137,21 +129,6 @@
           </ng-container>
         </ng-container>
 
-        <!-- Action Column -->
-        <!-- <ng-container matColumnDef="actions">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header class="pl-1 pr-1"></th>
-          <td *matCellDef="let row" class="w-10 text-secondary pl-1 pr-1" mat-cell>
-            <button
-              (click)="$event.stopPropagation()"
-              [matMenuTriggerData]="{ customer: row }"
-              [matMenuTriggerFor]="actionsMenu"
-              mat-icon-button
-              type="button">
-              <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-            </button>
-          </td>
-        </ng-container> -->
-
         <tr *matHeaderRowDef="visibleColumns"
             mat-header-row></tr>
         <tr
@@ -174,25 +151,3 @@
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
-<!-- <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
-  <button
-    (click)="toggleColumnVisibility(column, $event)"
-    *ngFor="let column of columns"
-    class="mat-menu-item block">
-    <mat-checkbox
-      (click)="$event.stopPropagation()"
-      [(ngModel)]="column.visible"
-      color="primary">
-      {{ column.label }}
-    </mat-checkbox>
-  </button>
-</mat-menu> -->
-
-<!-- <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
-  <ng-template let-customer="customer" matMenuContent>
-    <button (click)="deleteInformations(customer)" mat-menu-item>
-      <mat-icon svgIcon="mat:delete"></mat-icon>
-      <span>Delete6</span>
-    </button>
-  </ng-template>
-</mat-menu> -->

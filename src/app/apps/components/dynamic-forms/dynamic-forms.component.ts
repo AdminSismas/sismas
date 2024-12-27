@@ -8,12 +8,15 @@ import { map, Observable, startWith } from 'rxjs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 /* Components */
 import { ComboxColletionComponent } from '../combox-colletion/combox-colletion.component';
 import { JSONInput } from '../../interfaces/dynamic-forms';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'dynamic-forms',
@@ -28,8 +31,11 @@ import { JSONInput } from '../../interfaces/dynamic-forms';
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+    MatSelectModule,
+
     /* Custom */
     ComboxColletionComponent,
+    NgxMatFileInputModule
   ],
   templateUrl: './dynamic-forms.component.html',
   styles: ``
@@ -99,6 +105,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
   }
 
   cssClassesForm(cssClasses: string): string {
+    if (this.inputs.length === 1) return 'w-full h-full'
     if (cssClasses) {
       return cssClasses
     } else {

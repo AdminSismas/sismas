@@ -20,7 +20,7 @@ export class VexSplashScreenService {
       this.document.body.querySelector('#vex-splash-screen') ?? undefined;
 
     if (this.splashScreenElem) {
-      this.refreshURL();
+      // this.refreshURL();
 
       this.router.events
         .pipe(
@@ -31,11 +31,11 @@ export class VexSplashScreenService {
     }
   }
 
-  refreshURL() {
-    this.router.navigate([`${environment.root}`]).then(() => {
-      console.log(`Se refresca la pagina y se reinicia la url`);
-    });
-  }
+  // refreshURL() {
+  //   this.router.navigate([`${environment.root}`]).then(() => {
+  //     console.log(`Se refresca la pagina y se reinicia la url`);
+  //   });
+  // }
 
   hide() {
     const player = this.animationBuilder

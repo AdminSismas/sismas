@@ -10,6 +10,7 @@ export interface NavigationLink {
     bgClass: string;
     textClass: string;
   };
+  roles?: string[];
 }
 
 export type NavigationItem =
@@ -27,10 +28,12 @@ export interface NavigationDropdown {
     bgClass: string;
     textClass: string;
   };
+  roles?: string[];
 }
 
 export interface NavigationSubheading {
   type: 'subheading';
   label: string;
   children: Array<NavigationLink | NavigationDropdown>;
+  roles?: string[];
 }
