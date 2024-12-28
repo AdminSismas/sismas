@@ -174,3 +174,35 @@
 .clickable {
   cursor: pointer;
 }
+
+button, input, optgroup, select, textarea {
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.vex-sidenav-search:hover {
+  background-color: rgb(255 255 255 / 0%);
+  color:rgb(255 255 255 / 0%); 
+}
+
+.vex-sidenav-search {
+  background-color: rgb(255 255 255 / 0%)
+}
+
+
+
+    .mdc-text-field--outlined {
+        padding-right: max(41px, var(--mdc-outlined-text-field-container-shape));
+        background: #80808040;
+    }
+
+    .white-icon {
+      color: #ffffff; /* Cambia el color del icono a blanco */
+    }
