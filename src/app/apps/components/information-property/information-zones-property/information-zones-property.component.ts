@@ -148,12 +148,12 @@ export class InformationZonesPropertyComponent implements OnInit {
       visible: true
     },
 
-    {
-      label: 'Actions',
-      property: 'actions',
-      type: 'button',
-      visible: true
-    }
+    // {
+    //   label: 'Actions',
+    //   property: 'actions',
+    //   type: 'button',
+    //   visible: true
+    // }
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
@@ -188,7 +188,7 @@ export class InformationZonesPropertyComponent implements OnInit {
   );
   
  visibleColumns(): string[] {
-  return ['viewDetail', 'zoneCodeColumn', 'baUnitZonaArea', 'zoneValidityColumn', 'actions']; 
+  return ['viewDetail', 'zoneCodeColumn', 'baUnitZonaArea', 'zoneValidityColumn']; 
 }
   actionBtns = computed(() => {
     return [
