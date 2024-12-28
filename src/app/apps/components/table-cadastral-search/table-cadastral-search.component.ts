@@ -355,7 +355,12 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
      value.unidadPredial
     ];
 
-    const result = formattedValues.join(''); // Une sin espacios
+    let  result = formattedValues.join(''); // Une sin espacios
+    if(value.codigoCompleto !== null || value.codigoCompleto !== undefined || value.codigoCompleto ){
+      result = value.codigoCompleto ?? '';
+    }else{
+      result = formattedValues.join('');
+    }
     this.searValueData(value,result);
   }
 
