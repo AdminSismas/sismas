@@ -211,9 +211,8 @@ export class FilterCadastralSearchComponent implements OnInit {
   public sendInformationTable() {
     const searchData = this.validateFilterSearchCadastral();
     const searchDataFiltered: SearchData = new SearchData(searchData);
-
-    if(this.codigoCompleto?.valid){
-      searchDataFiltered.codigoCompleto = this.codigoCompleto?.value;
+    if (this.codigoCompleto?.valid && this.codigoCompleto?.value?.trim()) {
+      searchDataFiltered.codigoCompleto = this.codigoCompleto.value.trim();
     }else{
       searchDataFiltered.dpto = this.fieldFormatterService.formatField(this.dpto?.value, 2);
       searchDataFiltered.mpio = this.fieldFormatterService.formatField(this.mpio?.value, 3);
@@ -247,7 +246,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.dialogRef.close(searchData);
   }
 
-  searchByAddress() { 
+  searchByAddress() {
     const searchData = this.validateFilterSearchCadastral();
     if (searchData.textAddress != null && searchData.textAddress.length > 1) {
       this.dialogRef.close(searchData);
