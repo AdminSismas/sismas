@@ -12,6 +12,7 @@ export class SearchData {
   edificio?:string;
   piso?:string;
   unidadPredial?:string;
+  codigoCompleto?:string;
 
   registration?: string;
   number?: string;

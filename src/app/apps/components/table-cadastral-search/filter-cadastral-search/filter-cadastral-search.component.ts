@@ -98,6 +98,8 @@ export class FilterCadastralSearchComponent implements OnInit {
 
 
     // National Property Number,
+
+    codigoCompleto: ['', [Validators.maxLength(30), Validators.pattern(/^\d+$/)]],
     dpto: [this.defaults?.dpto ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
     mpio: [this.defaults?.mpio ?? '',[Validators.maxLength(3),Validators.pattern(/^\d+$/)]],
     zonas: [this.defaults?.zonas ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
@@ -209,19 +211,23 @@ export class FilterCadastralSearchComponent implements OnInit {
   public sendInformationTable() {
     const searchData = this.validateFilterSearchCadastral();
     const searchDataFiltered: SearchData = new SearchData(searchData);
+    if (this.codigoCompleto?.valid && this.codigoCompleto?.value?.trim()) {
+      searchDataFiltered.codigoCompleto = this.codigoCompleto.value.trim();
+    }else{
+      searchDataFiltered.dpto = this.fieldFormatterService.formatField(this.dpto?.value, 2);
+      searchDataFiltered.mpio = this.fieldFormatterService.formatField(this.mpio?.value, 3);
+      searchDataFiltered.zonas = this.fieldFormatterService.formatField(this.zonas?.value, 2);
+      searchDataFiltered.sectorb = this.fieldFormatterService.formatField(this.sectorb?.value, 2);
+      searchDataFiltered.comuna =  this.fieldFormatterService.formatField(this.comuna?.value, 2);
+      searchDataFiltered.barrio = this.fieldFormatterService.formatField(this.barrio?.value, 2);
+      searchDataFiltered.manVer = this.fieldFormatterService.formatField(this.manVer?.value, 4);
+      searchDataFiltered.terreno = this.fieldFormatterService.formatField(this.terreno?.value, 4);
+      searchDataFiltered.condicion =  this.fieldFormatterService.formatField(this.condicion?.value, 1);
+      searchDataFiltered.edificio =  this.fieldFormatterService.formatField(this.edificio?.value, 2);
+      searchDataFiltered.piso = this.fieldFormatterService.formatField(this.piso?.value, 2);
+      searchDataFiltered.unidadPredial = this.fieldFormatterService.formatField(this.unidadPredial?.value, 4);
+    }
 
-    searchDataFiltered.dpto = this.fieldFormatterService.formatField(this.dpto?.value, 2);
-    searchDataFiltered.mpio = this.fieldFormatterService.formatField(this.mpio?.value, 3);
-    searchDataFiltered.zonas = this.fieldFormatterService.formatField(this.zonas?.value, 2);
-    searchDataFiltered.sectorb = this.fieldFormatterService.formatField(this.sectorb?.value, 2);
-    searchDataFiltered.comuna =  this.fieldFormatterService.formatField(this.comuna?.value, 2);
-    searchDataFiltered.barrio = this.fieldFormatterService.formatField(this.barrio?.value, 2);
-    searchDataFiltered.manVer = this.fieldFormatterService.formatField(this.manVer?.value, 4);
-    searchDataFiltered.terreno = this.fieldFormatterService.formatField(this.terreno?.value, 4);
-    searchDataFiltered.condicion =  this.fieldFormatterService.formatField(this.condicion?.value, 1);
-    searchDataFiltered.edificio =  this.fieldFormatterService.formatField(this.edificio?.value, 2);
-    searchDataFiltered.piso = this.fieldFormatterService.formatField(this.piso?.value, 2);
-    searchDataFiltered.unidadPredial = this.fieldFormatterService.formatField(this.unidadPredial?.value, 4);
 
     if (searchDataFiltered) {
       this.dialogRef.close(searchDataFiltered);
@@ -800,6 +806,10 @@ get unidadPredial(){
 
   get block(){
     return this.form.get('block');
+  }
+
+  get codigoCompleto(){
+    return this.form.get('codigoCompleto');
   }
 
 

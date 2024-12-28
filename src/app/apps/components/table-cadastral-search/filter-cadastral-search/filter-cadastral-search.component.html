@@ -30,6 +30,30 @@
   <vex-page-layout class="overflow-hidden">
     <vex-page-layout>
       <vex-page-layout-content class="container-fluid">
+
+
+        <h2 class="text-lg font-bold mb-2">Búsqueda por NPN completo</h2>
+        <div class="flex flex-col sm:flex-row items-center mb-4">
+          <mat-form-field class="sm:ml-2 sm:mr-2 w-1/2">
+            <mat-label>Código Completo</mat-label>
+            <input type="text"
+                   matInput
+                   formControlName="codigoCompleto"
+                   placeholder="Ingrese el código completo">
+          </mat-form-field>
+          <button
+            (click)="sendInformationTable()"
+            color="primary"
+            mat-flat-button
+            class="ml-2">
+            Buscar
+          </button>
+        </div>
+
+        <div class="border-t border-gray-300 my-4"></div>
+
+        <h2 class="text-lg font-bold mb-2">Búsqueda de NPN por partes</h2>
+
         <div class="flex flex-col sm:flex-row">
 
           <!-- Campo departamento -->
