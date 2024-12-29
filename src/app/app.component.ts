@@ -1,7 +1,7 @@
-import { Component } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
-import { BehaviorSubject } from 'rxjs'
-import { AuthService } from './pages/pages/auth/login/services/auth.service'
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { AuthService } from './pages/pages/auth/login/services/auth.service';
 
 @Component({
   selector: 'vex-root',
@@ -10,7 +10,7 @@ import { AuthService } from './pages/pages/auth/login/services/auth.service'
   imports: [RouterOutlet]
 })
 export class AppComponent {
-  title = 'geoGestion'
+  title = 'geoGestion';
 
 
 }

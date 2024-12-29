@@ -132,7 +132,7 @@ export class EditInformationAddressComponent implements OnInit {
       let detailBasicInformationAddress: DetailBasicInformationAddress | undefined;
       if (this.addEditInformationData.type === 'new') {
 
-        let createBasicInformationAddress = this.generateModelDirecction(value)
+        let createBasicInformationAddress = this.generateModelDirecction(value);
         
         if(value?.domTipoDireccion === 'Estructurada'){
 
@@ -151,7 +151,7 @@ export class EditInformationAddressComponent implements OnInit {
 
         const baunitId: string = this.addEditInformationData.baunitId || '';
         if (!baunitId) {
-          throw new Error('baunitId is not set.')
+          throw new Error('baunitId is not set.');
         }
         detailBasicInformationAddress = await lastValueFrom(
           this.informationPropertyService.createBasicInformationPropertyAddress(
@@ -226,7 +226,7 @@ export class EditInformationAddressComponent implements OnInit {
 
     
     };
-    return createBasicInformationAddress
+    return createBasicInformationAddress;
   }
 
   public filterValueAddreStructured(value:any):CreateBasicInformationAddress{
@@ -254,7 +254,7 @@ export class EditInformationAddressComponent implements OnInit {
           // campo bloqueado
           direccionTexto: ''
     };
-    return structutred
+    return structutred;
   }
 
   public filterValueAddreDontStructured(value:any):CreateBasicInformationAddress{
@@ -283,7 +283,7 @@ export class EditInformationAddressComponent implements OnInit {
           
       direccionTexto: value?.direccionTexto
     };
-    return dontStructutred
+    return dontStructutred;
   }
   // PROCESO CREAR /FIN
 
@@ -314,7 +314,7 @@ public generateModelDirecctionModel(value:any):DetailBasicInformationAddress{
 
   
   };
-  return createBasicInformationAddress
+  return createBasicInformationAddress;
 }
 
 public filterValueAddreStructuredModel(value:any):DetailBasicInformationAddress{
@@ -343,7 +343,7 @@ public filterValueAddreStructuredModel(value:any):DetailBasicInformationAddress{
         // campo bloqueado
         direccionTexto: ''
   };
-  return structutred
+  return structutred;
 }
 
 public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddress{
@@ -371,7 +371,7 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
         
     direccionTexto: value?.direccionTexto
   };
-  return dontStructutred
+  return dontStructutred;
 }
 
 // PROCESO ACTUALIZAR /FIN
@@ -418,7 +418,7 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
           this.informationAddressForm.controls[name].clearValidators();
           this.informationAddressForm.controls[name].updateValueAndValidity();
         }
-      })
+      });
     }
   }
   public blockPrimaryAddressField(){
@@ -500,58 +500,58 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
   }
 
   get letraViaPrincipal(){
-    return this.informationAddressForm.get('letraViaPrincipal')
+    return this.informationAddressForm.get('letraViaPrincipal');
   }
 
   get valorViaPrincipal(){
-    return this.informationAddressForm.get('valorViaPrincipal')
+    return this.informationAddressForm.get('valorViaPrincipal');
   }
 
   get valorViaGeneradora(){
-    return this.informationAddressForm.get('valorViaGeneradora')
+    return this.informationAddressForm.get('valorViaGeneradora');
   }
 
   get letraViaGeneradora(){
-    return this.informationAddressForm.get('letraViaGeneradora')
+    return this.informationAddressForm.get('letraViaGeneradora');
   }
 
   get numeroPredio(){
-    return this.informationAddressForm.get('numeroPredio')
+    return this.informationAddressForm.get('numeroPredio');
   }
 
   get nombrePredio(){
-    return this.informationAddressForm.get('nombrePredio')
+    return this.informationAddressForm.get('nombrePredio');
   }
 
   get direccionTexto(){
-    return this.informationAddressForm.get('direccionTexto')
+    return this.informationAddressForm.get('direccionTexto');
   }
 
   get domTipoDireccion(){
-    return this.informationAddressForm.get('domTipoDireccion')
+    return this.informationAddressForm.get('domTipoDireccion');
   }
 
   get domClaseViaPrincipal(){
-    return this.informationAddressForm.get('domClaseViaPrincipal')
+    return this.informationAddressForm.get('domClaseViaPrincipal');
   }
 
   get domSectorCiudad(){
-    return this.informationAddressForm.get('domSectorCiudad')
+    return this.informationAddressForm.get('domSectorCiudad');
   }
   get domSectorPredio(){
-    return this.informationAddressForm.get('domSectorPredio')
+    return this.informationAddressForm.get('domSectorPredio');
   }
   get codigoPostal(){
-    return this.informationAddressForm.get('codigoPostal')
+    return this.informationAddressForm.get('codigoPostal');
   }
   get esDireccionPrincipal(){
-    return this.informationAddressForm.get('esDireccionPrincipal')
+    return this.informationAddressForm.get('esDireccionPrincipal');
   }
   get complemento(){
-    return this.informationAddressForm.get('complemento')
+    return this.informationAddressForm.get('complemento');
   }
   get direccionId(){
-    return this.informationAddressForm.get('direccionId')
+    return this.informationAddressForm.get('direccionId');
   }
 
 }

@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { LuxonService } from './luxon.service';
 
-export function provideLuxon(): Array<Provider | EnvironmentProviders> {
+export function provideLuxon(): (Provider | EnvironmentProviders)[] {
   return [
     {
       provide: ENVIRONMENT_INITIALIZER,

@@ -58,7 +58,7 @@ function createFakeMail(id: string): Mail {
   const date: string = randRecentDate({ days: 30 }).toISOString();
   const subject: string = randSentence();
 
-  const body: string = `<p>Hey ${
+  const body = `<p>Hey ${
     to.name
   }</p><br/><p>${randParagraph()}</p><br/><p>${randParagraph()}</p><br/><p>Best,<br/>${
     from.name

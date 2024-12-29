@@ -1,4 +1,4 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component, ViewChild, OnInit  } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -48,16 +48,16 @@ import { contentInfoComments } from '../../interfaces/content-info-comments.mode
       NgIf
     ]
 })
-export class CommentsComponent {
+export class CommentsComponent implements OnInit {
   /* ============== ATRIBUTES ============== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  disablePaginator: boolean = true;
-  NumPage: number = 0;
-  NumSize: number = 5;
-  totalElements: number = 0;
+  disablePaginator = true;
+  NumPage = 0;
+  NumSize = 5;
+  totalElements = 0;
   pageSizeOptions: number[] = [5, 10, 20, 30];
 
-  executionId: string = "38";
+  executionId = "38";
   body: contentInfoComments = {
     commentText: ''
   };
@@ -151,7 +151,7 @@ export class CommentsComponent {
           duration: 3000,
           horizontalPosition: 'center'
         });
-        this.getDataFromDocumentManagementService()
+        this.getDataFromDocumentManagementService();
         this.form.reset();
       },
       error: (err) => {

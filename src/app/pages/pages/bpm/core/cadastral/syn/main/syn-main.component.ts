@@ -17,8 +17,8 @@ import { SyncMainService } from 'src/app/apps/services/bpm/sync-main.service';
   styleUrl: './syn-main.component.scss'
 })
 export class SynMainComponent implements OnInit {
-  @Input() public id: string = '';
-  @Input() public executionId: string = '';
+  @Input() public id = '';
+  @Input() public executionId = '';
 
   constructor(
     private syncMainService: SyncMainService,
@@ -57,6 +57,6 @@ export class SynMainComponent implements OnInit {
             this.snackbar.open('Error al sincronizar cambios', 'Aceptar', { duration: 3000 });
           }
         }
-      })
+      });
   }
 }

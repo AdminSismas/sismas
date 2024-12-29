@@ -82,16 +82,16 @@ export class TasksPanelComponent implements OnInit {
 
   protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
 
-  isExistDataInformations: boolean = false;
+  isExistDataInformations = false;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
   listProTasksE: ProTaskE[] = [];
   listProTasksECards: ProTaskE[] = [];
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
   typePanel: string | null = null;
-  label: string = 'Tareas activas';
+  label = 'Tareas activas';
 
   searchCtrl: UntypedFormControl = new UntypedFormControl('search');
 
@@ -132,7 +132,7 @@ export class TasksPanelComponent implements OnInit {
 
   onFilterChargeInformationByPanel() {
     this.activateLoading();
-    let state: boolean = false;
+    let state = false;
     if (!this.typePanel) {
       this.clearPanel();
       return state;
@@ -285,7 +285,7 @@ export class TasksPanelComponent implements OnInit {
 
   openDetailProtaskE(id: ProTaskE['executionId']) {
     if (this.listProTasksE?.length > 0) {
-      let protaskE: ProTaskE | undefined = this.listProTasksE.find((c) => c.executionId === id);
+      const protaskE: ProTaskE | undefined = this.listProTasksE.find((c) => c.executionId === id);
       if (protaskE) {
         protaskE.isBegin = !protaskE.isBegin;
       }
@@ -315,7 +315,7 @@ export class TasksPanelComponent implements OnInit {
     this.label = 'Información no Encontrada';
   }
 
-  activateLoading(value: boolean = false) {
+  activateLoading(value = false) {
     const valid = of(value);
     this.isExistDataInformations$ = valid.pipe(take(3));
   }

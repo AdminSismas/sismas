@@ -42,25 +42,25 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class DynamicFormsComponent implements OnInit, OnChanges {
 
-  @Input({ required: true }) public inputs: JSONInput[] = []
-  @Input() public initValues: any = {}
-  @Input() public className: string = '';
-  @Input() public disabled: boolean = false;
+  @Input({ required: true }) public inputs: JSONInput[] = [];
+  @Input() public initValues: any = {};
+  @Input() public className = '';
+  @Input() public disabled = false;
 
-  public form: FormGroup = new FormGroup({})
-  public options$: { [key: string]: Observable<string[]> | undefined } = {}
+  public form: FormGroup = new FormGroup({});
+  public options$: Record<string, Observable<string[]> | undefined> = {};
 
-  @Output() formReady = new EventEmitter<FormGroup>()
+  @Output() formReady = new EventEmitter<FormGroup>();
 
   constructor(
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    this.createForm()
+    this.createForm();
 
     if (this.disabled) {
-      this.form.disable()
+      this.form.disable();
     }
 
     this.inputs.forEach((input: JSONInput) => {
@@ -70,12 +70,12 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
           map((value: string) => input.autocompleteOptions!.filter(
             (option: any) => option.toLowerCase().includes(value.toLowerCase() || ''))
           )
-        )
+        );
       }
-    })
+    });
 
     if (this.initValues) {
-      this.form.reset(this.initValues)
+      this.form.reset(this.initValues);
     }
   }
 
@@ -90,35 +90,35 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
   }
 
   private createForm (): void {
-    const formObject: any = {}
+    const formObject: any = {};
     this.inputs.forEach(input => {
-      formObject[input.name] = ['', input.validators]
-    })
+      formObject[input.name] = ['', input.validators];
+    });
 
-    this.form = this.fb.group(formObject)
+    this.form = this.fb.group(formObject);
 
-    this.formReady.emit(this.form)
+    this.formReady.emit(this.form);
 
     this.form.valueChanges.subscribe(value => {
-      this.formReady.emit(this.form)
-    })
+      this.formReady.emit(this.form);
+    });
   }
 
   cssClassesForm(cssClasses: string): string {
-    if (this.inputs.length === 1) return 'w-full h-full'
+    if (this.inputs.length === 1) return 'w-full h-full';
     if (cssClasses) {
-      return cssClasses
+      return cssClasses;
     } else {
-      return 'w-full h-full grid grid-cols-2 grid-flow-row gap-x-4'
+      return 'w-full h-full grid grid-cols-2 grid-flow-row gap-x-4';
     }
   }
 
 
   cssClassesInput(cssClasses: string | undefined): string {
     if (cssClasses) {
-      return cssClasses
+      return cssClasses;
     } else {
-      return 'w-full h-full'
+      return 'w-full h-full';
     }
   }
 }

@@ -61,7 +61,7 @@ export class AttachmentFormComponent {
   @Output() dataUpdated = new EventEmitter<void>();
 
   file: File | null = null;
-  fileName: string = '';
+  fileName = '';
   attachmentForm: FormGroup;
   uploadedFiles: File[] = [];
   

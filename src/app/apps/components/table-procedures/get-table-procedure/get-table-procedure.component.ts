@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, Input, ViewChild, OnInit } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
@@ -69,7 +69,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
         ReactiveFormsModule
     ]
 })
-export class GetTableProcedureComponent {
+export class GetTableProcedureComponent implements OnInit {
   /* ============== ATRIBUTES ============== */
   dataSource!: MatTableDataSource<ProceduresCollection>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -78,8 +78,8 @@ export class GetTableProcedureComponent {
   contentInformations!: InformationPegeable;
   private fBuilder = inject(FormBuilder);
   informationAddressForm!: FormGroup;
-  seeInfo:boolean= false;
-  textInfo:string = 'Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem';
+  seeInfo= false;
+  textInfo = 'Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem';
 
   // beginAt!: Date;
   // beginAtE!: Date;
@@ -90,7 +90,7 @@ export class GetTableProcedureComponent {
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  totalElements: number = 0;
+  totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -146,8 +146,8 @@ export class GetTableProcedureComponent {
   }
 
   onSearch():void {
-    console.log(this.informationAddressForm)
-    console.log(this.informationAddressForm.value)
+    console.log(this.informationAddressForm);
+    console.log(this.informationAddressForm.value);
 
     // this.getDataFromProceduresService();
   }
@@ -226,15 +226,15 @@ export class GetTableProcedureComponent {
   }
 
   get beginAtForm(){
-    return this.informationAddressForm.get('beginAtForm')
+    return this.informationAddressForm.get('beginAtForm');
   }
   get beginAtEForm(){
-    return this.informationAddressForm.get('beginAtEForm')
+    return this.informationAddressForm.get('beginAtEForm');
   }
   get executionCodeForm(){
-    return this.informationAddressForm.get('executionCodeForm')
+    return this.informationAddressForm.get('executionCodeForm');
   }
   get individualNumberPartForm(){
-    return this.informationAddressForm.get('individualNumberPartForm')
+    return this.informationAddressForm.get('individualNumberPartForm');
   }
 }

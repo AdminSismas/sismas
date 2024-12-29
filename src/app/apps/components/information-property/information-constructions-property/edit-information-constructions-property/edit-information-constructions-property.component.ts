@@ -354,7 +354,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           this.informationConstructionForm.controls[name].clearValidators();
           this.informationConstructionForm.controls[name].updateValueAndValidity();
         }
-      })
+      });
     }
   }
 

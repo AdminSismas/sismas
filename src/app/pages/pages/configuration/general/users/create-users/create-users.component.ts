@@ -39,8 +39,8 @@ export class CreateUsersComponent implements OnInit {
   public searchForm?: FormGroup;
   public newUserForm?: FormGroup;
   public individualFinded?: InfoPerson | undefined;
-  public newUserFormDisabled: boolean = true;
-  public searchFormDisabled: boolean = false;
+  public newUserFormDisabled = true;
+  public searchFormDisabled = false;
   public initValuesSearchForm?: { number: string; individualTypeNumber: string; };
 
   constructor(
@@ -54,49 +54,49 @@ export class CreateUsersComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data.mode === 'edit') {
-      this.newUserFormDisabled = false
-      this.newUserForm?.reset(this.data)
+      this.newUserFormDisabled = false;
+      this.newUserForm?.reset(this.data);
       this.initValuesSearchForm = {
         number: this.data.individual.number,
         individualTypeNumber: this.data.individual.domIndividualTypeNumber
-      }
-      this.searchFormDisabled = true
+      };
+      this.searchFormDisabled = true;
     }
   }
 
   actionBtnLabel(): string {
     if (this.data.mode === 'create') {
-      return 'Crear'
+      return 'Crear';
     }
-    return 'Editar'
+    return 'Editar';
   }
 
   searchIndividual(): void {
     if (this.searchForm!.invalid) {
       this.snackbar.open('Se deben diligenciar el número de documento y el tipo de documento', 'CLOSE', {
         duration: 4000
-      })
-      return
+      });
+      return;
     }
-    const { number, individualTypeNumber } = this.searchForm!.value
+    const { number, individualTypeNumber } = this.searchForm!.value;
     this.peopleService.getPeopleTypeNumber({ number, individualTypeNumber })
       .subscribe({
         next: (result: InfoPerson) => {
           this.individualValidator(result.individualId)
             .subscribe((resultValidation: boolean) => {
-              console.log(resultValidation)
+              console.log(resultValidation);
               if (!resultValidation) {
-                this.individualFinded = result
-                this.searchFormDisabled = true
-                this.newUserFormDisabled = false
+                this.individualFinded = result;
+                this.searchFormDisabled = true;
+                this.newUserFormDisabled = false;
               } else {
-                this.snackbar.open('El individuo ya tiene un usuario asociado', 'CLOSE', { duration: 4000 })
+                this.snackbar.open('El individuo ya tiene un usuario asociado', 'CLOSE', { duration: 4000 });
               }
-            })
+            });
         },
         error: (error: any) => {
           if (error.status === 404) {
-            this.snackbar.open('Creando persona', 'CLOSE', { duration: 4000 })
+            this.snackbar.open('Creando persona', 'CLOSE', { duration: 4000 });
             this.dialog.open(CreatePeopleComponent, {
               data: {
                 number: this.searchForm!.value.number,
@@ -106,20 +106,20 @@ export class CreateUsersComponent implements OnInit {
             }).afterClosed()
               .subscribe({
                 next: (result: any) => {
-                  console.log(result)
+                  console.log(result);
                 },
                 error: (error: any) => {
-                  this.snackbar.open('Error al crear el individuo', 'CLOSE', { duration: 4000 })
-                  throw error
+                  this.snackbar.open('Error al crear el individuo', 'CLOSE', { duration: 4000 });
+                  throw error;
                 }
-              })
+              });
           }
         }
-      })
+      });
   }
 
   createIndividual(): void {
-    this.snackbar.open('Creando usuario', 'CLOSE', { duration: 4000 })
+    this.snackbar.open('Creando usuario', 'CLOSE', { duration: 4000 });
 
     this.dialog.open(CreatePeopleComponent, {
       data: {
@@ -130,40 +130,40 @@ export class CreateUsersComponent implements OnInit {
     }).afterClosed()
       .subscribe({
         next: (result: any) => {
-          console.log(result)
+          console.log(result);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al crear el individuo', 'CLOSE', { duration: 4000 })
-          throw error
+          this.snackbar.open('Error al crear el individuo', 'CLOSE', { duration: 4000 });
+          throw error;
         }
-      })
+      });
 
   }
 
   actionBtn(): void {
     if (this.data.mode === 'create') {
-      this.createUser()
+      this.createUser();
     } else if (this.data.mode === 'edit') {
-      this.editUser()
+      this.editUser();
     }
   }
 
   createUser(): void {
     if (this.newUserForm!.invalid) {
-      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CLOSE', { duration: 4000 })
-      return
+      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CLOSE', { duration: 4000 });
+      return;
     }
 
     this.usernameAndEmailValidator()
       .subscribe((result: boolean) => {
         if (!result) {
-          this.createUserService()
+          this.createUserService();
         }
-      })
+      });
   }
 
   usernameAndEmailValidator(): Observable<boolean> {
-    const { username, email } = this.newUserForm!.value
+    const { username, email } = this.newUserForm!.value;
 
     return forkJoin({
       usernameExists: this.userService.existUserName(username),
@@ -171,31 +171,31 @@ export class CreateUsersComponent implements OnInit {
     }).pipe(
       map((result: any) => {
         if (result.usernameExists) {
-          this.newUserForm?.get('username')?.setErrors({ usernameExists: true })
-          this.snackbar.open('El nombre de usuario ya existe', 'CLOSE', { duration: 4000 })
-          return true
+          this.newUserForm?.get('username')?.setErrors({ usernameExists: true });
+          this.snackbar.open('El nombre de usuario ya existe', 'CLOSE', { duration: 4000 });
+          return true;
         }
 
         if (result.emailExists) {
-          this.newUserForm?.get('email')?.setErrors({ emailExists: true })
-          this.snackbar.open('El correo electrónico ya existe', 'CLOSE', { duration: 4000 })
-          return true
+          this.newUserForm?.get('email')?.setErrors({ emailExists: true });
+          this.snackbar.open('El correo electrónico ya existe', 'CLOSE', { duration: 4000 });
+          return true;
         }
 
-        return false
-      }))
+        return false;
+      }));
   }
 
   individualValidator(individualId: number): Observable<boolean> {
     return this.userService.existIndividual(individualId)
       .pipe(map((result: boolean) => {
         if (!result) {
-          this.newUserForm?.get('individualId')?.setErrors({ individualIdExists: true })
-          return false
+          this.newUserForm?.get('individualId')?.setErrors({ individualIdExists: true });
+          return false;
         }
 
-        return true
-      }))
+        return true;
+      }));
 
   }
 
@@ -206,50 +206,50 @@ export class CreateUsersComponent implements OnInit {
       individual: {
         individualId: this.individualFinded!.individualId
       }
-    }
+    };
 
     this.userService.createUser(params)
       .subscribe({
         next: (result: CreateOutput) => {
-          this.snackbar.open('Usuario creado', 'CLOSE', { duration: 4000 })
-          this.dialogRef.close(result)
+          this.snackbar.open('Usuario creado', 'CLOSE', { duration: 4000 });
+          this.dialogRef.close(result);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al crear el usuario', 'CLOSE', { duration: 4000 })
-          this.dialogRef.close()
-          throw error
+          this.snackbar.open('Error al crear el usuario', 'CLOSE', { duration: 4000 });
+          this.dialogRef.close();
+          throw error;
         }
-      })
+      });
   }
 
   editUser(): void {
-    console.log('Editando usuario ...')
+    console.log('Editando usuario ...');
     if (this.newUserForm!.invalid) {
-      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CLOSE', { duration: 4000 })
-      return
+      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CLOSE', { duration: 4000 });
+      return;
     }
 
     this.userService.existEmail(this.newUserForm!.value.email)
       .subscribe((result: boolean) => {
         if (!result) {
-          this.editUserService()
+          this.editUserService();
         }
-      })
+      });
   }
 
   editUserService(): void {
     this.userService.updateUser(this.data.userId!, this.newUserForm!.value.email)
       .subscribe({
         next: (result: Content) => {
-          this.snackbar.open('Usuario actualizado', 'CLOSE', { duration: 4000 })
-          this.dialogRef.close(result)
+          this.snackbar.open('Usuario actualizado', 'CLOSE', { duration: 4000 });
+          this.dialogRef.close(result);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al actualizar el usuario', 'CLOSE', { duration: 4000 })
-          this.dialogRef.close()
-          throw error
+          this.snackbar.open('Error al actualizar el usuario', 'CLOSE', { duration: 4000 });
+          this.dialogRef.close();
+          throw error;
         }
-      })
+      });
   }
 }
 

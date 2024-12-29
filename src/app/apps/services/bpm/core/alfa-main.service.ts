@@ -13,7 +13,7 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
 })
 export class AlfaMainService {
 
-  basic_url: string = `${envi.url}:${envi.port}`;
+  basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
     private requestsService: SendGeneralRequestsService
@@ -21,12 +21,12 @@ export class AlfaMainService {
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
   validateAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
-    let url: string = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
+    const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   createAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
-    let url: string = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
+    const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
     return this.requestsService.sendRequestsFetchPost(url);
   }
 
@@ -34,7 +34,7 @@ export class AlfaMainService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
-    let url: string = `${this.basic_url}${envi.temporal}${page.searchData}${envi.operations}`;
+    const url = `${this.basic_url}${envi.temporal}${page.searchData}${envi.operations}`;
     return this.getData(url, paramsR);
   }
 
@@ -43,8 +43,8 @@ export class AlfaMainService {
     const formdata = new FormData();
     formdata.append('changeLogId', `${executionId}`);
     formdata.append('word', `${keyword}`);
-    let url: string = `${this.basic_url}${envi.temporal}${envi.clearChangelog}`;
-    let params = this.requestsService.loadMethodDeleteBody(formdata);
+    const url = `${this.basic_url}${envi.temporal}${envi.clearChangelog}`;
+    const params = this.requestsService.loadMethodDeleteBody(formdata);
     return this.requestsService.sendRequestsFetch(url, params);
   }
 
@@ -53,50 +53,50 @@ export class AlfaMainService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
-    let url: string = `${this.basic_url}${envi.metrict_cadastral_change}${page.searchData}`;
+    const url = `${this.basic_url}${envi.metrict_cadastral_change}${page.searchData}`;
     return this.getData(url, paramsR);
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike
   loadingNpnlikeByExecutionId(executionId: string): Observable<string[]> {
-    let url: string = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}`;
+    const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike/18001010100000099/baunits
   loadingListBeaUnitheadByExecutionIdAndnpnlike(executionId: string, npnLike: string): Observable<BaunitHead[]> {
-    let url: string = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}/${npnLike}${envi.baunits}`;
+    const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}/${npnLike}${envi.baunits}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   //{{url}}:{{port}}/temporal/BAUnitCreate
   createTemporalBeaUnithead(npnLike: string, executionId: string, bAunitCondition:string) {
-    let url: string = `${this.basic_url}${envi.temporal}${envi.bAUnitCreate}`;
+    const url = `${this.basic_url}${envi.temporal}${envi.bAUnitCreate}`;
     const formData = new FormData();
     formData.append('npnLike', `${npnLike}`);
     formData.append('changeLogId', `${executionId}`);
     formData.append('domBaunitCondition', `${bAunitCondition}`);
-    let params = this.requestsService.loadParamsMethodPostFormData(formData);
+    const params = this.requestsService.loadParamsMethodPostFormData(formData);
     return this.requestsService.sendRequestsFetch(url, params);
   }
 
   //{{url}}:{{port}}/temporal/BAUnitUpdate
   createUpdateTemporalBeaUnithead(baunitId: string, executionId: string) {
-    let url: string = `${this.basic_url}${envi.temporal}${envi.bAUnitUpdate}`;
+    const url = `${this.basic_url}${envi.temporal}${envi.bAUnitUpdate}`;
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-    let params = this.requestsService.loadParamsMethodPostFormData(formData);
+    const params = this.requestsService.loadParamsMethodPostFormData(formData);
     return this.requestsService.sendRequestsFetch(url, params);
   }
 
   //{{url}}:{{port}}/temporal/BAUnitDelete
   createDeleteTemporalBeaUnithead(baunitId: string, executionId: string) {
-    let url: string = `${this.basic_url}${envi.temporal}${envi.bAUnitDelete}`;
+    const url = `${this.basic_url}${envi.temporal}${envi.bAUnitDelete}`;
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-    let params = this.requestsService.loadParamsMethodPostFormData(formData);
+    const params = this.requestsService.loadParamsMethodPostFormData(formData);
     return this.requestsService.sendRequestsFetch(url, params);
   }
 

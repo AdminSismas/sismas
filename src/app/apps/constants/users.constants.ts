@@ -22,7 +22,7 @@ export const USER_COLUMNS: { name: string; label: string }[] = [
     name: 'enabled',
     label: 'Estado',
   }
-]
+];
 
 export const SEARCH_INPUTS: JSONInput[] = [
   {
@@ -41,7 +41,7 @@ export const SEARCH_INPUTS: JSONInput[] = [
     validators: [Validators.required],
     placeholder: 'Número de documento'
   }
-]
+];
 
 export const CREATE_USER_INPUTS: JSONInput[] = [
   {
@@ -60,4 +60,4 @@ export const CREATE_USER_INPUTS: JSONInput[] = [
     validators: [Validators.required, Validators.email],
     placeholder: 'Escribir correo electrónico'
   }
-]
+];

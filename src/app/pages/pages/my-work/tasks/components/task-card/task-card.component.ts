@@ -38,7 +38,7 @@ export class TaskCardComponent implements OnInit {
   @Output() openProtaskE: EventEmitter<ProTaskE> = new EventEmitter<ProTaskE>();
   @Output() openDetailProtaskE: EventEmitter<number | undefined> = new EventEmitter<ProTaskE['executionId']>();
 
-  URL_ICON_BASE: string = `${envi.ulr_icon_base}`;
+  URL_ICON_BASE = `${envi.ulr_icon_base}`;
 
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
@@ -58,7 +58,7 @@ export class TaskCardComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
     if (this.idCard != null && this.idCard?.length>0) {
-      this.idCard = this.idCard + this.getRandomInt(10000)
+      this.idCard = this.idCard + this.getRandomInt(10000);
     } else {
       this.idCard = this.getRandomInt(10000).toString();
     }
@@ -116,7 +116,7 @@ export class TaskCardComponent implements OnInit {
             data = this.contentTasksInformations.content;
             data = data.map((row: TaskRetailExecuteResponseModel) => new TaskRetailExecuteResponseModel(row));
             this.dataSource.data = data;
-            this.seeTaskProperty(objeOne,this.dataSource,id)
+            this.seeTaskProperty(objeOne,this.dataSource,id);
     }
 
   }

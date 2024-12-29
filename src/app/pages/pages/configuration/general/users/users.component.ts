@@ -58,15 +58,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
         label: 'Editar',
         icon: 'mat:edit'
       }
-    ]
-  })
+    ];
+  });
 
   public columns: { name: string, label: string }[] = USER_COLUMNS;
   public dataSource: MatTableDataSource<Content> = new MatTableDataSource<Content>();
   public displayedColumns: string[] = [];
-  public totalElements: number = 0;
-  public page: number = 0;
-  public pageSize: number = 10;
+  public totalElements = 0;
+  public page = 0;
+  public pageSize = 10;
   public pageSizeOptions: number[] = [5, 7, 10, 20, 50];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -81,7 +81,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.getUsers()
+    this.getUsers();
 
     this.displayedColumns = this.columns.map((column) => column.name);
     this.displayedColumns.push('actions');
@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getUsers(page: number = 0, size: number = 10): void {
+  getUsers(page = 0, size = 10): void {
     this.userService.getUsers(page, size)
       .subscribe({
         next: (data: User) => {
@@ -108,7 +108,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
           });
           throw error;
         }
-      })
+      });
   }
 
   dataSourceFormat(data: User): void {
@@ -116,12 +116,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
       return {
         ...row,
         fullName: row.individual.fullName
-      }
+      };
     });
   }
 
   pageEvent(pageEvent: PageEvent): void {
-    this.getUsers(pageEvent.pageIndex, pageEvent.pageSize)
+    this.getUsers(pageEvent.pageIndex, pageEvent.pageSize);
   }
 
   showTableValue(value: any, key: string): string {
@@ -140,16 +140,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
     })
       .afterClosed()
       .subscribe((result: User) => {
-        console.log(result)
+        console.log(result);
         setTimeout(() =>{
-          this.getUsers(this.page, this.pageSize)
-        } , 300)
-      })
+          this.getUsers(this.page, this.pageSize);
+        } , 300);
+      });
   }
 
   actionMenuHandler(action: string, row: User) {
     if (action === 'edit') {
-      console.log('editing....')
+      console.log('editing....');
       this.dialog.open(CreateUsersComponent, {
         data: {
           ...row,
@@ -158,13 +158,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
       })
         .afterClosed()
         .subscribe((result: User) => {
-          console.log(result)
+          console.log(result);
           setTimeout(() =>{
-            this.getUsers(this.page, this.pageSize)
-          } , 300)
-        })
+            this.getUsers(this.page, this.pageSize);
+          } , 300);
+        });
     } else if (action === 'delete') {
-      console.log('deleting....')
+      console.log('deleting....');
     }
   }
 }

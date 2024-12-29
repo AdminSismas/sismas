@@ -35,7 +35,7 @@ export const DATA_SOURCE_DIGITALIZED_SIGNATURES: DigitalizedSignaturesData[] = [
     status: 'Active',
     signature: 'Firma de David'
   },
-]
+];
 
 export const DIGITALIZED_SIGNATURES_COLUMNS: { name: string, title: string }[] = [
   {
@@ -54,7 +54,7 @@ export const DIGITALIZED_SIGNATURES_COLUMNS: { name: string, title: string }[] =
     name: 'signature',
     title: 'Firma'
   }
-]
+];
 
 export const CREATE_SIGNATURE_INPUTS: JSONInput[] = [
   {
@@ -65,4 +65,4 @@ export const CREATE_SIGNATURE_INPUTS: JSONInput[] = [
     validators: [Validators.required],
     placeholder: 'Agregar imagen de la firma',
   }
-]
+];

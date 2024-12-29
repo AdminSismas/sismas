@@ -53,14 +53,14 @@ import { MatInputModule } from '@angular/material/input';
 export class SidenavComponent implements OnInit {
   public validationField = STRING_INFORMATION_NOT_FOUND;
   filteredRouteList$: Observable<NavigationItem[]> | undefined;
-  public listRouteItem:NavigationItem[] = []
-  public listRouteItemNew:NavigationItem[] = []
+  public listRouteItem:NavigationItem[] = [];
+  public listRouteItemNew:NavigationItem[] = [];
 
   form: FormGroup;
 
   user: UserDetails | null = null;
 
-  @Input() collapsed: boolean = false;
+  @Input() collapsed = false;
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
   title$ = this.configService.config$.pipe(
     map((config) => config.sidenav.title)
@@ -82,8 +82,8 @@ export class SidenavComponent implements OnInit {
 
   items$: Observable<NavigationItem[]> = this.navigationService.items$;
 
-  userName$?: string
-  userPerfil$?: string
+  userName$?: string;
+  userPerfil$?: string;
 
   constructor(
     private router: Router,
@@ -200,7 +200,7 @@ export class SidenavComponent implements OnInit {
        this.listRouteItem = result;
    
     
-        let listOptions: NavigationItem[] =  this.listRouteItem.filter(
+        const listOptions: NavigationItem[] =  this.listRouteItem.filter(
           (option: NavigationItem): boolean => option.label === label);
         if (listOptions?.length > 0) {
           this.form.get('searchRuote')?.patchValue(listOptions[0].label);

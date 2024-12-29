@@ -80,7 +80,7 @@ export class GeneralMapsComponent implements OnInit {
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
     municipality: ['', Validators.required]
-  })
+  });
 
   filteredOptionsDepartments$: Observable<Department[]> | undefined;
   filteredOptionsMunicipalities$: Observable<Municipality[]> | undefined;
@@ -91,11 +91,11 @@ export class GeneralMapsComponent implements OnInit {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
 
-  public divpolLv1: string = '';
-  public divpolLv2: string = '';
+  public divpolLv1 = '';
+  public divpolLv2 = '';
 
   mapUrl: string | null = null; 
-  showMap: boolean = false;
+  showMap = false;
 
   constructor(
 
@@ -180,7 +180,7 @@ export class GeneralMapsComponent implements OnInit {
       return;
     }
 
-    let dpto = this._filterInformationCode(
+    const dpto = this._filterInformationCode(
       codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
     if (dpto == null || dpto?.length <= 0) {
       return;
@@ -233,7 +233,7 @@ captureMunicipalityInformation(result: Municipality[], skipPreloadedValues: bool
 
 
 private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
-  let listOptions: any[] = options
+  const listOptions: any[] = options
     .filter((option: any): boolean => option[keyValue] === code);
   return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
 }

@@ -80,16 +80,16 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     contentTasksInformations!: InformationPegeable;
     public taskDetails:TaskResponseModel= new TaskResponseModel();
 
-      @Input({ required: true }) id: string = '';
-      @Input({ required: true }) public expandedComponent: boolean = true;
-      @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+      @Input({ required: true }) id = '';
+      @Input({ required: true }) public expandedComponent = true;
+      @Input({ required: true }) schema = `${environment.schemas.main}`;
       @Input({ required: true }) baunitId: string | null | undefined = null;
       @Input() executionId: string | null | undefined = null;
       @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
     
       columns: TableColumn<TaskRetailExecuteResponseModel>[] = TABLE_COLUMN_PROPERTIES_EXECUTED;
       page:number = PAGE;
-      totalElements: number = 0;
+      totalElements = 0;
       pageSize: number = PAGE_OPTION_UNIQUE_7;
       pageSizeOptions: number[] = PAGE_OPTION__5_7_10;
     

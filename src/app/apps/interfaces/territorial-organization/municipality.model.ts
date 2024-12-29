@@ -19,7 +19,7 @@ export class Municipality {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.divpolLvl2SecCode && this.divpolLvl2Name) {
       return `${this.divpolLvl2SecCode}${GUION}${this.divpolLvl2Name}`;
     } else if (this.divpolLvl2SecCode) {

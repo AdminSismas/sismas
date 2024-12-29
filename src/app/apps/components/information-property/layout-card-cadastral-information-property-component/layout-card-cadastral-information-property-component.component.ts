@@ -50,8 +50,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
 
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
-  propertyUnit: boolean = false;
-  dataFlag: string = '';
+  propertyUnit = false;
+  dataFlag = '';
 
 
   constructor(

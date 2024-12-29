@@ -11,7 +11,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class WorkflowService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url:string = `${environment.url}:${environment.port}${environment.bpmProcess.value}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmProcess.value}`;
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(
@@ -21,12 +21,12 @@ export class WorkflowService {
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByWorkflow(page:PageSortByData):Observable<WorkflowCollection[]> {
-    const url: string = `${this.basic_url}`
+    const url = `${this.basic_url}`;
 
     let paramsWF: HttpParams = new HttpParams();
-    paramsWF = paramsWF.append('page', `${page.page}`)
-    paramsWF = paramsWF.append('size', `${page.size}`)
-    paramsWF = paramsWF.append('sortBy', `${page.sortBy}`)
+    paramsWF = paramsWF.append('page', `${page.page}`);
+    paramsWF = paramsWF.append('size', `${page.size}`);
+    paramsWF = paramsWF.append('sortBy', `${page.sortBy}`);
 
     return this.getData(url, paramsWF);
   }
@@ -36,7 +36,7 @@ export class WorkflowService {
   }
 
   createWorkflow(params: WorkflowCollection): Observable<WorkflowCollection> {
-    const url: string = `${this.basic_url}`
+    const url = `${this.basic_url}`;
 
     console.log("params: ", params);
 
@@ -50,7 +50,7 @@ export class WorkflowService {
   }
 
   updateWorkflow(params: WorkflowCollection): Observable<WorkflowCollection> {
-    const url: string = `${this.basic_url}/${params.processId}`
+    const url = `${this.basic_url}/${params.processId}`;
 
 
     return this.http.put<WorkflowCollection>(url, params)

@@ -26,11 +26,11 @@ import { MatTableModule } from '@angular/material/table';
 export class ComboboxComponent implements OnInit {
 
   @Input() options: any[] = [];
-  @Input() public label: string = '';
-  @Input() public formControlNameCombobox: string = '';
-  @Input() public idCombo: string = '';
+  @Input() public label = '';
+  @Input() public formControlNameCombobox = '';
+  @Input() public idCombo = '';
   @Input() public cssClasses?: string;
-  @Input() public placeholder: string = '';
+  @Input() public placeholder = '';
 
   constructor() {
   }

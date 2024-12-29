@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environments';
 })
 export class AttachmentService {
 
-  url:string = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${'proExecutionFile'}`;
+  url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${'proExecutionFile'}`;
 
   constructor(private http: HttpClient) { }
 

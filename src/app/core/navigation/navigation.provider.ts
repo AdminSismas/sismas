@@ -7,7 +7,7 @@ import {
 import { NavigationService } from './navigation.service';
 import { NavigationLoaderService } from './navigation-loader.service';
 
-export function provideNavigation(): Array<Provider | EnvironmentProviders> {
+export function provideNavigation(): (Provider | EnvironmentProviders)[] {
   return [
     {
       provide: ENVIRONMENT_INITIALIZER,

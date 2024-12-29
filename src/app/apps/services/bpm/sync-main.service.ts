@@ -8,14 +8,14 @@ import { environment as envi } from 'src/environments/environments';
 })
 export class SyncMainService {
 
-  base_url: string = `${envi.url}:${envi.port}${envi.synchronization}`;
+  base_url = `${envi.url}:${envi.port}${envi.synchronization}`;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  synchronizeChanges(executionId: string, page: number = 0, size: number = 10): Observable<string> {
-    let url: string = `${this.base_url}/${executionId}${envi.synchronize}`;
+  synchronizeChanges(executionId: string, page = 0, size = 10): Observable<string> {
+    let url = `${this.base_url}/${executionId}${envi.synchronize}`;
 
     url = `${url}?page=${page}&size=${size}`;
 

@@ -10,8 +10,8 @@ import { DomainCalificationCollection, DomainCollection } from '../../interfaces
 })
 export class CollectionServicesService {
 
-  basic_url:string = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
-  calification_url:string = `${environment.url}:${environment.port}${environment.calificationUB}`;
+  basic_url = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
+  calification_url = `${environment.url}:${environment.port}${environment.calificationUB}`;
   constructor(
     private requestsService: SendGeneralRequestsService
   ) { }

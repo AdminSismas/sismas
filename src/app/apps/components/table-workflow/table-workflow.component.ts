@@ -1,5 +1,5 @@
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReactiveFormsModule, FormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -66,7 +66,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     NgIf
   ]
 })
-export class TableWorkflowComponent implements OnInit {
+export class TableWorkflowComponent implements OnInit, AfterViewInit {
   /* ============== ATTRIBUTES ============== */
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   dataSource!: MatTableDataSource<WorkflowCollection>;
@@ -77,7 +77,7 @@ export class TableWorkflowComponent implements OnInit {
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  totalElements: number = 0;
+  totalElements = 0;
   columns: TableColumn<contentInfoWorkflow>[] = TABLE_COLUMN_PROPERTIES;
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -140,7 +140,7 @@ export class TableWorkflowComponent implements OnInit {
   }
 
   get visibleColumns() {
-    let columns = ['icon', ...this.columns
+    const columns = ['icon', ...this.columns
       .filter((column) => column.visible)
       .map((column) => column.property)];
 
@@ -160,7 +160,7 @@ export class TableWorkflowComponent implements OnInit {
   }
 
   generateObjectPageWorkflowData(): PageSortByData {
-    const sortBy: string = 'name';
+    const sortBy = 'name';
     return new PageSortByData(this.page, this.pageSize, sortBy);
   }
 
@@ -226,7 +226,7 @@ export class TableWorkflowComponent implements OnInit {
       .subscribe((result: { result: boolean, data: WorkflowCollection }) => {
         if (!result.result) return;
         this.createWorkflow(result.data);
-      })
+      });
   }
 
   createWorkflow(params: WorkflowCollection) {
@@ -261,7 +261,7 @@ export class TableWorkflowComponent implements OnInit {
       .subscribe((result: { result: boolean, data: WorkflowCollection }) => {
         if (!result.result) return;
         this.editWorkFlow(result.data);
-      })
+      });
   }
 
   editWorkFlow(params: WorkflowCollection) {

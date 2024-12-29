@@ -14,7 +14,7 @@ import { ProceduresCollection } from "../interfaces/procedures-progress.model";
 })
 export class ProceduresService {
     /* -------------- ATRIBUTOS -------------- */
-    basic_url:string = `${environment.url}:${environment.port}${environment.bpmOperation}${environment.proExecution}${environment.active}`;
+    basic_url = `${environment.url}:${environment.port}${environment.bpmOperation}${environment.proExecution}${environment.active}`;
 
     /* -------------- CONSTRUCTRO -------------- */
     constructor(private requestsService: SendGeneralRequestsService,private http: HttpClient) {}
@@ -23,12 +23,12 @@ export class ProceduresService {
     /* -------------- MÉTODOS -------------- */
     getDataPropertyByProcedures(page: PageProceduresData):Observable<ProceduresCollection[]> {
         let paramsPP:HttpParams = new HttpParams();
-        paramsPP = paramsPP.append('page', `${page.page}`)
-        paramsPP = paramsPP.append('size', `${page.size}`)
-        paramsPP = paramsPP.append('beginAt',`${page.beginAt}`)
-        paramsPP = paramsPP.append('beginAtE',`${page.beginAtE}`)
-        paramsPP = paramsPP.append('executionCode',`${page.executionCode}`)
-        paramsPP = paramsPP.append('individualNumber',`${page.individualNumber}`)
+        paramsPP = paramsPP.append('page', `${page.page}`);
+        paramsPP = paramsPP.append('size', `${page.size}`);
+        paramsPP = paramsPP.append('beginAt',`${page.beginAt}`);
+        paramsPP = paramsPP.append('beginAtE',`${page.beginAtE}`);
+        paramsPP = paramsPP.append('executionCode',`${page.executionCode}`);
+        paramsPP = paramsPP.append('individualNumber',`${page.individualNumber}`);
 
         console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
         return this.getData(`${this.basic_url}?`,paramsPP);
@@ -41,10 +41,10 @@ export class ProceduresService {
 
 
     public getFilterTableEjecutionService(page: PageProceduresData):Observable<ProceduresCollection[]>{
-        let paramsR:HttpParams = new HttpParams();
-        const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
+        const paramsR:HttpParams = new HttpParams();
+        const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
             console.log(urlComplete,'URLS RUTA');  
-            console.log(this.basic_url,'baseUrl')                             
+            console.log(this.basic_url,'baseUrl');                             
        return  this.http.get<any>(urlComplete);
     //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
 
@@ -55,9 +55,9 @@ export class ProceduresService {
       }
 
       viewDetailIdProcedures(taskId: number): Observable<any> {
-        const urlProcedure =`${environment.url}:${environment.port}${environment.bpmOperation.value}proExecution/`
+        const urlProcedure =`${environment.url}:${environment.port}${environment.bpmOperation.value}proExecution/`;
         
-        const urlTask: string = `${urlProcedure}${taskId}`;
+        const urlTask = `${urlProcedure}${taskId}`;
         return this.http.get<any>(urlTask);
       }
     

@@ -27,10 +27,10 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 })
 export class HeaderCadastralInformationPropertyComponent implements OnInit{
 
-  @Input() public idheaderCadastral: string = '';
+  @Input() public idheaderCadastral = '';
   @Input() public cssClasses?: string;
-  @Input() public label: string = '';
-  @Input() public icon: string = '';
+  @Input() public label = '';
+  @Input() public icon = '';
 
   constructor() { }
 

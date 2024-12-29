@@ -13,12 +13,12 @@ import { environment as envi } from 'src/environments/environments';
 })
 export class InformationZonesService {
 
-  basic_url: string = `${envi.url}:${envi.port}`;
+  basic_url = `${envi.url}:${envi.port}`;
 
   constructor(private requestsService: SendGeneralRequestsService) { }
 
   getByBauniFisica(baunitId: number): Observable<ZoneBAUnit> {
-    const url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
+    const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('baunitId', `${baunitId}`);
 
@@ -27,7 +27,7 @@ export class InformationZonesService {
   }
 
   getByBauniEcono(baunitId: number): Observable<GeoEconomicZoneInfo> {
-    const url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
+    const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('baunitId', `${baunitId}`);
 

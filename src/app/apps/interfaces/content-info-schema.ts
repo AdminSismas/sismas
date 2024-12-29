@@ -14,7 +14,7 @@ export class ContentInfoSchema {
               executionId: string | null = '',
               schemas: string[] = [],
               typeInformation: TypeInformation = TYPEINFORMATION_VISUAL,
-              flagData: string = '',
+              flagData = '',
             ) {
     this.content = content;
     this.baunitIdE = baunitIdE;

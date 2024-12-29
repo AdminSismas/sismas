@@ -23,7 +23,7 @@ export class CadastralSearchComponent implements OnInit, AfterViewInit {
     //throw new Error('Method not implemented.');
     this.route.params.pipe(map((params) => {
       console.log(params);
-    }))
+    }));
   }
 
   ngAfterViewInit() {

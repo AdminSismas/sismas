@@ -8,8 +8,8 @@ export class NationalPredialNumber {
   blockSidewalk?: string;
   property?: string;
   condition?: string;
-  building?: string
-  floor?: string
+  building?: string;
+  floor?: string;
   propertyUnit?: string;
 
 

@@ -18,7 +18,7 @@ export class Zone {
   }
 
   get codeName(): string {
-    let name: string = '';
+    const name = '';
     if (this.codigoZona && this.nombreZona) {
       return `${this.codigoZona}${GUION}${this.nombreZona}`;
     } else if (this.codigoZona) {

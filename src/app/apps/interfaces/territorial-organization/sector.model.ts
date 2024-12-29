@@ -18,7 +18,7 @@ export class Sector {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.codigoSector && this.nombreSector) {
       return `${this.codigoSector}${GUION}${this.nombreSector}`;
     } else if (this.codigoSector) {

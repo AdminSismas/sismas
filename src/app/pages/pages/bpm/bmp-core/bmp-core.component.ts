@@ -93,7 +93,7 @@ export class BmpCoreComponent implements OnInit {
 
   proTaskE_Bpm: ProTaskE | null = null;
 
-  executionId: string = '';
+  executionId = '';
   proFlow!: ProFlow;
   infoFatherURL!: string;
 
@@ -304,12 +304,12 @@ export class BmpCoreComponent implements OnInit {
     return obj;
   }
 
-  activateLoading(value: boolean = false) {
+  activateLoading(value = false) {
     const valid = of(value);
     this.isExistDataInformations$ = valid.pipe(take(3));
   }
 
-  activateSnapError(msg: string, timer: number = 1000) {
+  activateSnapError(msg: string, timer = 1000) {
     this.snackbar.open(
       msg,
       '', { duration: timer }

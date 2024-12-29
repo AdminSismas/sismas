@@ -100,7 +100,7 @@ export class NavigationLoaderService {
       countTotalProTask = countProTaskAssigned + countProTaskPriority + countProTaskDevolution;
     }
 
-    let listItem: NavigationItem[] = [
+    const listItem: NavigationItem[] = [
       {
         type: 'subheading',
         label: 'Mi trabajo',

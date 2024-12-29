@@ -29,8 +29,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './administrative-sources.component.scss'
 })
 export class AdministrativeSourcesComponent implements OnInit {
-  @Input() public id: string = '';
-  @Input() public expandedComponent: boolean = false;
+  @Input() public id = '';
+  @Input() public expandedComponent = false;
   @Input() public baunitId?: string | null;
   @Input() public schema?: string;
   @Input() public executionId?: string | null;
@@ -61,8 +61,8 @@ export class AdministrativeSourcesComponent implements OnInit {
         label: 'Eliminar',
         icon: 'mat:delete'
       }
-    ]
-  })
+    ];
+  });
 
   constructor(
     private administrativeSourcesService: AdministrativeSourcesService,
@@ -72,7 +72,7 @@ export class AdministrativeSourcesComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.typeInformation !== 'edition') {
-      this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions')
+      this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions');
     }
   }
 
@@ -81,14 +81,14 @@ export class AdministrativeSourcesComponent implements OnInit {
     if (this.schema === 'temp') {
       this.administrativeSourcesService.getAdministrativeSourcesTemp(this.baunitId as string, this.executionId as string)
         .subscribe(data => {
-          this.dataSource = data
-        })
+          this.dataSource = data;
+        });
     }
     else if (this.schema === 'main') {
       this.administrativeSourcesService.getAdministrativeSourcesMain(this.baunitId as string)
         .subscribe(data => {
-          this.dataSource = data
-        })
+          this.dataSource = data;
+        });
     }
   }
 
@@ -110,8 +110,8 @@ export class AdministrativeSourcesComponent implements OnInit {
       .subscribe((data: AdministrativeSource) => {
         setTimeout(() => {
           this.getDataSource();
-        }, 300)
-      })
+        }, 300);
+      });
     const params: CreateAdministrativeSourceParams = {
       executionId: this.executionId as string,
       baunitId: this.baunitId as string,
@@ -121,7 +121,7 @@ export class AdministrativeSourcesComponent implements OnInit {
         numeroFuente: '',
         enteEmisor: ''
       }
-    }
+    };
   }
 
   deleteFuenteAdministrativa(row: AdministrativeSource) {
@@ -129,17 +129,17 @@ export class AdministrativeSourcesComponent implements OnInit {
       baunitId: this.baunitId as string,
       changeLogId: this.executionId as string,
       fuenteAdminId: row.fuenteAdminId as string
-    }
+    };
     this.administrativeSourcesService.deleteAdministrativeSource(params)
       .subscribe({
         next: () => {
-          this.snackbar.open('Fuente administrativa eliminada', 'CLOSE', { duration: 4000 })
-          this.getDataSource()
+          this.snackbar.open('Fuente administrativa eliminada', 'CLOSE', { duration: 4000 });
+          this.getDataSource();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al eliminar la fuente administrativa', 'CLOSE', { duration: 4000 })
+          this.snackbar.open('Error al eliminar la fuente administrativa', 'CLOSE', { duration: 4000 });
         }
-      })
+      });
   }
 
   onClickActionBtn(id: string, row: AdministrativeSource) {
@@ -150,9 +150,9 @@ export class AdministrativeSourcesComponent implements OnInit {
       }).afterClosed()
         .subscribe((result: boolean) => {
           if (result) {
-            this.deleteFuenteAdministrativa(row)
+            this.deleteFuenteAdministrativa(row);
           }
-        })
+        });
 
     } else if (id === 'edit') {
       const params: UpdateAdministrativeSource = {
@@ -165,7 +165,7 @@ export class AdministrativeSourcesComponent implements OnInit {
           numeroFuente: row.numeroFuente,
           enteEmisor: row.enteEmisor
         }
-      }
+      };
 
       this.dialog.open(CreateAdministrativeSourceComponent, {
         width: '40%',
@@ -174,9 +174,9 @@ export class AdministrativeSourcesComponent implements OnInit {
         .afterClosed()
         .subscribe(() => {
           setTimeout(() => {
-            this.getDataSource()
-          }, 300)
-        })
+            this.getDataSource();
+          }, 300);
+        });
     }
   }
 }

@@ -88,7 +88,7 @@ export class SendGeneralRequestsService {
           'Content-Type': 'application/json',
           //'Authorization': `Bearer ${token}`
         }
-      }
+      };
     } else {
       params = {
         method: 'POST',
@@ -98,7 +98,7 @@ export class SendGeneralRequestsService {
           'Content-Type': 'application/json',
           //'Authorization': `Bearer ${token}`
         }
-      }
+      };
     }
     return params;
   }

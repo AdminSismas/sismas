@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
@@ -68,11 +68,11 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './documents-table.component.html',
   styleUrl: './documents-table.component.scss'
 })
-export class DocumentsTableComponent {
+export class DocumentsTableComponent implements AfterViewInit, OnInit {
 
     /* ============== ATRIBUTES ============== */
-    numRegister: number = 0;
-    disablePaginator: boolean = true;
+    numRegister = 0;
+    disablePaginator = true;
 
     layoutCtrl = new UntypedFormControl('boxed');
     searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -85,7 +85,7 @@ export class DocumentsTableComponent {
     @Input()
     page:number = PAGE;
     pageSize: number = PAGE_SIZE;
-    totalElements: number = 0;
+    totalElements = 0;
     pageSizeOptions: number[] = PAGE_SIZE_OPTION;
     columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE;
 

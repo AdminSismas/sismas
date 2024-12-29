@@ -260,15 +260,15 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   public clearFormFields(value:any){
-    console.log('value',value?.tab?.textLabel )
+    console.log('value',value?.tab?.textLabel );
 
     if(value?.tab?.textLabel === 'Selección Municipal'){
-      this.clearMultipleFields()
+      this.clearMultipleFields();
       this.formatFieldValue();
     }
 
     if(value?.tab?.textLabel === 'Múltiplex Campos'){
-      this.clearMunicipalSelection()
+      this.clearMunicipalSelection();
       this.formatFieldValue();
     }
 
@@ -364,7 +364,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(0);
-    let dpto = this._filterInformationCode(
+    const dpto = this._filterInformationCode(
       codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
     if (dpto == null || dpto?.length <= 0) {
       return;
@@ -380,7 +380,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(1);
-    let deptoMpio = this._filterInformationCode(
+    const deptoMpio = this._filterInformationCode(
       codeName, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
     if (deptoMpio == null || deptoMpio?.length <= 0) {
       return;
@@ -396,7 +396,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(2);
-    let ccZonaPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsZones);
+    const ccZonaPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsZones);
     this.territorialOrganizationService.getDataSectors(ccZonaPkey)
       .subscribe({
           next: (result: Sector[]) => this.captureSectorInformation(result, skipPreloadedValues)
@@ -408,8 +408,8 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(3);
-    let sectorPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsSectors);
-    let nationalPredialNumber: NationalPredialNumber = divideNpn(sectorPkey);
+    const sectorPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsSectors);
+    const nationalPredialNumber: NationalPredialNumber = divideNpn(sectorPkey);
     if (!nationalPredialNumber.zone) {
       return;
     }
@@ -430,7 +430,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(4);
-    let communityPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsCommunities);
+    const communityPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsCommunities);
     this.territorialOrganizationService.getDataNeighborhoods(communityPkey)
       .subscribe({
           next: (result: Neighborhood[]) => this.captureNeighborhoodsInformation(result, skipPreloadedValues)
@@ -442,7 +442,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(5);
-    let sectorPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsSectors);
+    const sectorPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsSectors);
     this.territorialOrganizationService.getDataSidewalks(sectorPkey)
       .subscribe({
           next: (result: Sidewalk[]) => this.captureSidewalksInformation(result, skipPreloadedValues)
@@ -454,7 +454,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(5);
-    let neighborhoodPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsNeighborhoods);
+    const neighborhoodPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsNeighborhoods);
     this.territorialOrganizationService.getDataBlocks(neighborhoodPkey)
       .subscribe({
           next: (result: Block[]) => this.captureBlocksInformation(result, skipPreloadedValues)
@@ -468,7 +468,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsDeparments = result;
 
     if (this.defaults?.department) {
-      let listOptions: Department[] = this.optionsDeparments.filter(
+      const listOptions: Department[] = this.optionsDeparments.filter(
         (option: Department): boolean => option.divpolLvl1Code === this.defaults?.department);
       if (listOptions?.length > 0) {
         this.form.get('department')?.patchValue(listOptions[0].codeName);
@@ -487,7 +487,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsMunicipalities = result;
 
     if (this.defaults?.municipality && !skipPreloadedValues) {
-      let listOptions: Municipality[] = this.optionsMunicipalities.filter(
+      const listOptions: Municipality[] = this.optionsMunicipalities.filter(
         (option: Municipality): boolean => option.divpolLvl2Code === this.defaults?.municipality);
       if (listOptions?.length > 0) {
         this.form.get('municipality')?.patchValue(listOptions[0].codeName);
@@ -506,7 +506,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsZones = result;
 
     if (this.defaults?.zone && !skipPreloadedValues) {
-      let listOptions: Zone[] = this.optionsZones.filter(
+      const listOptions: Zone[] = this.optionsZones.filter(
         (option: Zone): boolean => option.id === this.defaults?.zone);
       if (listOptions?.length > 0) {
         this.form.get('zone')?.patchValue(listOptions[0].codeName);
@@ -525,7 +525,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsSectors = result;
 
     if (this.defaults?.sector && !skipPreloadedValues) {
-      let listOptions: Sector[] = this.optionsSectors.filter(
+      const listOptions: Sector[] = this.optionsSectors.filter(
         (option: Sector): boolean => option.id === this.defaults?.sector);
       if (listOptions?.length > 0) {
         this.form.get('sector')?.patchValue(listOptions[0].codeName);
@@ -544,7 +544,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsCommunities = result;
 
     if (this.defaults?.community && !skipPreloadedValues) {
-      let listOptions: Commune[] = this.optionsCommunities.filter(
+      const listOptions: Commune[] = this.optionsCommunities.filter(
         (option: Commune): boolean => option.id === this.defaults?.community);
       if (listOptions?.length > 0) {
         this.form.get('community')?.patchValue(listOptions[0].codeName);
@@ -563,7 +563,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsNeighborhoods = result;
 
     if (this.defaults?.neighborhood && !skipPreloadedValues) {
-      let listOptions: Neighborhood[] = this.optionsNeighborhoods.filter(
+      const listOptions: Neighborhood[] = this.optionsNeighborhoods.filter(
         (option: Neighborhood): boolean => option.id === this.defaults?.neighborhood);
       if (listOptions?.length > 0) {
         this.form.get('neighborhood')?.patchValue(listOptions[0].codeName);
@@ -582,7 +582,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsSidewalks = result;
 
     if (this.defaults?.sidewalk && !skipPreloadedValues) {
-      let listOptions: Sidewalk[] = this.optionsSidewalks.filter(
+      const listOptions: Sidewalk[] = this.optionsSidewalks.filter(
         (option: Sidewalk): boolean => option.id === this.defaults?.sidewalk);
       if (listOptions?.length > 0) {
         this.form.get('sidewalk')?.patchValue(listOptions[0].codeName);
@@ -600,7 +600,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsBlocks = result;
 
     if (this.defaults?.block && !skipPreloadedValues) {
-      let listOptions: Block[] = this.optionsBlocks.filter(
+      const listOptions: Block[] = this.optionsBlocks.filter(
         (option: Block): boolean => option.id === this.defaults?.block);
       if (listOptions?.length > 0) {
         this.form.get('block')?.patchValue(listOptions[0].codeName);
@@ -616,7 +616,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
 
   private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
-    let listOptions: any[] = options
+    const listOptions: any[] = options
       .filter((option: any): boolean => option[keyValue] === code);
     return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
   }

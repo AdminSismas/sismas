@@ -44,7 +44,7 @@ export class AssistantsEditComponent implements OnInit {
   @Output() assistantUpdated = new EventEmitter<assistantData>();
   @ViewChild('imageInput') imageInput!: ElementRef<HTMLInputElement>;
   // isEditMode: boolean = false;
-  imgurl: string = '';
+  imgurl = '';
   selectedFile: File | null = null;  // Para almacenar el archivo seleccionado
 
   form : FormGroup;
@@ -87,7 +87,7 @@ export class AssistantsEditComponent implements OnInit {
       this.mode = 'create';
       console.log('Modo CREATE');
     }
-    this.traerEmpresas()
+    this.traerEmpresas();
 
 
     // if (this.data && this.data.id) {

@@ -98,9 +98,9 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   customers: People[] = [];
 
   // para enviarlo al formulario
-  typeDocument: boolean = false;
-  infoDoc: string = 'ID';
-  urlQuery: string = '';
+  typeDocument = false;
+  infoDoc = 'ID';
+  urlQuery = '';
 
   form: FormGroup = this.fb.group({});
 
@@ -150,9 +150,9 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // indicativos de la paginacion
   page: number = PAGE;
-  pageSize: number = 5;
+  pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 20, 50];
-  totalElements: number = 0;
+  totalElements = 0;
   dataSource!: MatTableDataSource<People>;
   selection = new SelectionModel<People>(true, []);
   name = new UntypedFormControl();
@@ -265,7 +265,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     value = value.toLowerCase();
     if (this.infoDoc !== 'ID') {
       if (value !== '') {
-        let obj = {
+        const obj = {
           number: value,
           page: this.page,
           size: this.pageSize,
@@ -280,7 +280,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       }
     } else {
       if (value !== '') {
-        let obj = {
+        const obj = {
           number: value
         };
         this.peopleService.getPeopleNumber(obj).subscribe((res: any) => {
@@ -294,7 +294,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   }
 
   refreshData() {
-    let params = {
+    const params = {
       page: this.page,
       size: this.pageSize,
       sortBy: 'number'

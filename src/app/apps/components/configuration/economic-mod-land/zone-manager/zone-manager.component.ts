@@ -43,7 +43,7 @@ export class ZoneManagerComponent implements OnInit {
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
     municipality: ['', Validators.required]
-  })
+  });
   public actionBtns = computed(() => {
     return [
       {
@@ -56,20 +56,20 @@ export class ZoneManagerComponent implements OnInit {
         label: 'Eliminar',
         icon: 'mat:delete'
       }
-    ]
-  })
-  public zonesCode: string = '';
+    ];
+  });
+  public zonesCode = '';
 
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
   @ViewChild('actionsMenu', { static: true }) actionsMenu!: TemplateRef<any>;
 
   @Input({ required: true }) public typeZone: 'urbana' | 'rural' | 'geoeconómica' = 'urbana';
-  @Input({ required: true }) public service!: ZoneServices
+  @Input({ required: true }) public service!: ZoneServices;
   @Input({ required: true }) public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   @Input({ required: true }) public columns: { name: string, title: string }[] = [];
   @Input({ required: true }) public displayedColumns: string[] = [];
-  @Input() public divpolLv1: string = '';
-  @Input() public divpolLv2: string = '';
+  @Input() public divpolLv1 = '';
+  @Input() public divpolLv2 = '';
 
   constructor(
     private dialog: MatDialog,
@@ -80,7 +80,7 @@ export class ZoneManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.displayedColumns = this.columns.map((column) => column.name);
-    this.displayedColumns.push('actions')
+    this.displayedColumns.push('actions');
   }
 
   openDialogCreateZone(): void {
@@ -96,10 +96,10 @@ export class ZoneManagerComponent implements OnInit {
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
-          })
-          throw error
+          });
+          throw error;
         }
-      })
+      });
   }
 
   openDialogEditZone(row: any): void {
@@ -116,14 +116,14 @@ export class ZoneManagerComponent implements OnInit {
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
-          })
-          throw error
+          });
+          throw error;
         }
-      })
+      });
   }
 
   createZone(result: any): void {
-    if (!result) return
+    if (!result) return;
     const params: Zone = {
       divpolLv1: this.divpolLv1,
       divpolLv2: this.divpolLv2,
@@ -131,73 +131,73 @@ export class ZoneManagerComponent implements OnInit {
         changeLogId: 2
       },
       ...result
-    }
+    };
     this.service.createZone(params)
       .subscribe({
         next: () => {
           this.snackbar.open(`Se ha creado la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
-          })
+          });
 
-          this.refreshServices.triggerRefresh()
+          this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
             duration: 4000
-          })
-          throw error
+          });
+          throw error;
         }
-      })
+      });
   }
 
   onClickActionBtn(id: string, row: any) {
     if (id === 'delete') {
-      this.zonesCode = row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode
+      this.zonesCode = row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode;
       this.dialog.open(this.confirmDeleteDialog, { width: '40%' })
         .afterClosed()
         .subscribe((result: boolean) => {
           if (result) {
-            this.deleteZone(row)
+            this.deleteZone(row);
           }
-        })
+        });
 
     } else if (id === 'edit') {
-      this.openDialogEditZone(row)
+      this.openDialogEditZone(row);
     }
   }
 
   deleteZone(row: any) {
-    const id: string = row.zonaHomoFisicaUrId || row.zonaHomoFisicaRuId || row.zonaHomoGeoEconomicaId
+    const id: string = row.zonaHomoFisicaUrId || row.zonaHomoFisicaRuId || row.zonaHomoGeoEconomicaId;
     this.service.deleteZone('99999', id)
       .subscribe({
         next: () => {
-          this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 4000 })
-          this.refreshServices.triggerRefresh()
+          this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 4000 });
+          this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 4000 })
-          throw error
+          this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 4000 });
+          throw error;
         }
-      })
+      });
   }
 
   editZone(result: any, row: any) {
-    if (!result) return
+    if (!result) return;
     const params = {
       ...row,
       ...result,
-    }
+    };
 
     this.service.updateZone(params)
       .subscribe({
         next: () => {
-          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 })
-          this.refreshServices.triggerRefresh()
+          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 4000 });
+          this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 })
-          throw error
+          this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 4000 });
+          throw error;
         }
-      })
+      });
   }
 }
