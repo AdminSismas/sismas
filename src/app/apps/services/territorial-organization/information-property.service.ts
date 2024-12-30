@@ -370,6 +370,11 @@ export class InformationPropertyService {
       );
   }
 
+  updateCalification(executionId: string, baunitId: string, constructionId: number, payload: Array<{ ccCalUBDom: { id: number } }>): Observable<void> {
+    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}/${executionId}/${baunitId}/${constructionId}`;
+    return this.http.put<void>(url, payload);
+  }
+
 
 
   /**
