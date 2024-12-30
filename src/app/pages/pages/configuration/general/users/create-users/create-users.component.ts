@@ -163,7 +163,8 @@ export class CreateUsersComponent implements OnInit {
   }
 
   usernameAndEmailValidator(): Observable<boolean> {
-    const { username, email } = this.newUserForm!.value;
+    const { email } = this.newUserForm!.value;
+    const username: string = `${this.individualFound!.firstName}.${this.individualFound!.lastName}`.toLowerCase();
 
     return forkJoin({
       usernameExists: this.userService.existUserName(username),
