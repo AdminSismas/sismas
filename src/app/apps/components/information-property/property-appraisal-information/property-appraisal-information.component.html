@@ -24,14 +24,14 @@
               type="text" />
           </mat-form-field>
           <span class="flex-1"></span>
-          <button
+          <!-- <button
             [matMenuTriggerFor]="columnFilterMenu"
             class="ml-4 flex-none"
             mat-icon-button
             matTooltip="Filter Columns"
             type="button">
             <mat-icon svgIcon="mat:filter_list"></mat-icon>
-          </button>
+          </button> -->
         </div>
         <table
           @stagger
@@ -101,7 +101,7 @@
                 {{ column.label }}
               </th>
               <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
-                {{ row[column.property] | currency: FORMAT_CURRENCY_COP:'' }}
+                {{ row[column.property] | currencyFormat:'COP' }}
               </td>
             </ng-container>
           </ng-container>
