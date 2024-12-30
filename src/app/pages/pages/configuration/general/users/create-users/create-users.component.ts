@@ -38,7 +38,7 @@ export class CreateUsersComponent implements OnInit {
 
   public searchForm?: FormGroup;
   public newUserForm?: FormGroup;
-  public individualFinded?: InfoPerson | undefined;
+  public individualFound?: InfoPerson | undefined;
   public newUserFormDisabled = true;
   public searchFormDisabled = false;
   public initValuesSearchForm?: { number: string; individualTypeNumber: string; };
@@ -86,7 +86,7 @@ export class CreateUsersComponent implements OnInit {
             .subscribe((resultValidation: boolean) => {
               console.log(resultValidation);
               if (!resultValidation) {
-                this.individualFinded = result;
+                this.individualFound = result;
                 this.searchFormDisabled = true;
                 this.newUserFormDisabled = false;
               } else {
@@ -163,7 +163,8 @@ export class CreateUsersComponent implements OnInit {
   }
 
   usernameAndEmailValidator(): Observable<boolean> {
-    const { username, email } = this.newUserForm!.value;
+    const { email } = this.newUserForm!.value;
+    const username: string = `${this.individualFound!.firstName}.${this.individualFound!.lastName}`.toLowerCase();
 
     return forkJoin({
       usernameExists: this.userService.existUserName(username),
@@ -200,11 +201,12 @@ export class CreateUsersComponent implements OnInit {
   }
 
   createUserService(): void {
+    const username: string = `${this.individualFound!.firstName}.${this.individualFound!.lastName}`.toLowerCase();
     const params: CreateUserParams = {
-      username: this.newUserForm!.value.username,
+      username: username,
       email: this.newUserForm!.value.email,
       individual: {
-        individualId: this.individualFinded!.individualId
+        individualId: this.individualFound!.individualId
       }
     };
 

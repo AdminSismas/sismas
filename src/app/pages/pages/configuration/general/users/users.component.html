@@ -17,15 +17,32 @@
 
 <vex-page-layout>
   <vex-page-layout-content>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="openDialogAddUser()"
-      class="mb-4"
-    >
-      Nuevo Usuario
-      <mat-icon svgIcon="mat:add"></mat-icon>
-    </button>
+    <div class="w-full flex gap-4 aling-center">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openDialogAddUser()"
+      >
+        Nuevo Usuario
+        <mat-icon svgIcon="mat:add"></mat-icon>
+      </button>
+      <mat-form-field>
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          placeholder="Buscar usuario"
+          [formControl]="searchCtrl"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="searchUser()"
+      >
+        <mat-icon svgIcon="mat:search"></mat-icon>
+        Buscar
+      </button>
+    </div>
     <table
       mat-table
       [dataSource]="dataSource"
