@@ -1,485 +1,401 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
-    <h2 class="headline m-0 flex-auto">
-      Editar construcción
-    </h2>
-    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
-      <mat-icon svgIcon="mat:close"></mat-icon>
-    </button>
-  </div>
+  <h2 class="headline m-0 flex-auto">
+    Editar Construcción
+  </h2>
+  <button class="text-secondary" mat-icon-button type="button" (click)="handleDialogClose()">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
 
-  <mat-divider class="text-border"></mat-divider>
+<mat-divider class="text-border"></mat-divider>
 
-  <mat-dialog-content>
+<mat-dialog-content>
+  <div @fadeInUp class="card overflow-hidden">
+    <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="false">
+      <ng-template matStepperIcon="edit">
+        <mat-icon svgIcon="mat:done_all"></mat-icon>
+      </ng-template>
 
-    <mat-tab-group>
-      <mat-tab label="Aspectos de construcción">
-    <form [formGroup]="editForm" (ngSubmit)="save()">
-      <vex-page-layout class="overflow-hidden">
-        <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
-          <div class="form-content">
+      <ng-template matStepperIcon="done">
+        <mat-icon svgIcon="mat:done_all"></mat-icon>
+      </ng-template>
 
-            <!-- Tipo de construcción -->
-            <div class="form-content-item">
-              <p><strong>Tipo de construcción</strong></p>
-              <vex-combox-colletion
-                idComboCollection="domBuiltType"
-                label="Tipo"
-                formControlNameCombobox="domBuiltType"
-                typeDomainName="BuiltType"
-                placeholderDomainName="Escoger tipo"
-              ></vex-combox-colletion>
-              <mat-error *ngIf="editForm.get('domBuiltType')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
+      <!-- Aspectos de Construcción -->
+      <mat-step [stepControl]="editForm">
+        <form [formGroup]="editForm">
+          <ng-template matStepLabel>Aspectos de Construcción</ng-template>
+
+          <h2 class="title m-0">Aspectos de Construcción</h2>
+          <div class="subheading-1">Por favor, edite los datos de la construcción.</div>
+
+          <div class="mt-4 flex flex-col gap-2">
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+              <vex-custom-selector
+              class="flex-auto"
+              [label]="'Tipo de Construcción'"
+              [placeholder]="'Seleccione el tipo...'"
+              [apiUrl]="api_domainName"
+              [queryParams]="{ domainName: 'BuiltType', active: true }"
+              [valueKey]="'dispname'"
+              [displayKey]="'dispname'"
+              [formControl]="domBuiltTypeControl"
+              (selectionChange)="onTypeSelectionChange($event)"
+              cssClasses="custom-class"
+              ></vex-custom-selector>
+
+              <vex-custom-selector
+              class="flex-auto"
+              [label]="'Uso de Construcción'"
+              [placeholder]="'Seleccione el uso...'"
+              [options]="filteredBuiltUseOptions"
+              [valueKey]="'dispname'"
+              [displayKey]="'dispname'"
+             [formControl]="domBuiltUseControl"
+              cssClasses="custom-class"
+              ></vex-custom-selector>
             </div>
 
-            <!-- Uso de construcción -->
-            <div class="form-content-item">
-              <p><strong>Uso de construcción</strong></p>
-              <vex-combox-colletion
-                idComboCollection="domBuiltUse"
-                label="Uso"
-                formControlNameCombobox="domBuiltUse"
-                typeDomainName="BuiltUse"
-                placeholderDomainName="Escoger uso"
-              ></vex-combox-colletion>
-              <mat-error *ngIf="editForm.get('domBuiltUse')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-            </div>
-
-            <!-- Id -->
-            <div class="form-content-item">
-              <p><strong>Id</strong></p>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
               <vex-input
-                label="Id"
+                class="flex-auto"
+                label="ID"
                 type="text"
                 idComboInput="unitBuiltLabel"
                 formControlNameInput="unitBuiltLabel"
               ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltLabel')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltLabel')?.hasError('pattern')">
-                Solo letras mayúsculas son permitidas.
-              </mat-error>
-            </div>
-
-            <!-- Piso -->
-            <div class="form-content-item">
-              <p><strong>Piso</strong></p>
               <vex-input
+                class="flex-auto"
                 label="Piso"
                 type="text"
                 idComboInput="unitBuiltFloors"
                 formControlNameInput="unitBuiltFloors"
               ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltFloors')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltFloors')?.hasError('pattern')">
-                Solo se permiten números enteros.
-              </mat-error>
-            </div>
-
-            <!-- Año -->
-            <div class="form-content-item">
-              <p><strong>Año</strong></p>
               <vex-input
+                class="flex-auto"
                 label="Año"
                 type="text"
                 idComboInput="unitBuiltYear"
                 formControlNameInput="unitBuiltYear"
               ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltYear')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltYear')?.hasError('pattern')">
-                Solo se permiten años entre 1900 y 2099.
-              </mat-error>
             </div>
 
-            <!-- Área total -->
-            <div class="form-content-item">
-              <p><strong>Área total</strong></p>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
               <vex-input
-                label="Área total"
+                class="flex-auto"
+                label="Área Total"
                 type="text"
                 idComboInput="unitBuiltArea"
                 formControlNameInput="unitBuiltArea"
               ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltArea')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltArea')?.hasError('pattern')">
-                Solo se permiten números.
-              </mat-error>
-            </div>
-
-            <!-- Puntaje -->
-            <div class="form-content-item">
-              <p><strong>Puntaje</strong></p>
               <vex-input
+                class="flex-auto"
+                label="Área Privada"
+                type="text"
+                idComboInput="unitBuiltPrivateArea"
+                formControlNameInput="unitBuiltPrivateArea"
+              ></vex-input>
+              <vex-input
+                class="flex-auto"
                 label="Puntaje"
                 type="text"
                 idComboInput="unitBuiltScore"
                 formControlNameInput="unitBuiltScore"
               ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltScore')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltScore')?.hasError('pattern')">
-                Solo se permiten números enteros.
-              </mat-error>
-
-
-
             </div>
 
-            <!-- Tipología -->
-            <div class="form-content-item">
-              <p><strong>Tipología</strong></p>
-              <vex-combox-colletion
-                idComboCollection="domTipologiaTipo"
-                label="Tipología"
-                formControlNameCombobox="domTipologiaTipo"
-                typeDomainName="TipologiaTipo"
-                placeholderDomainName="Escoger tipología"
-              ></vex-combox-colletion>
-              <mat-error *ngIf="editForm.get('domTipologiaTipo')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-            </div>
-
-            <!-- Área privada -->
-            <div class="form-content-item">
-              <p><strong>Área privada</strong></p>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
               <vex-input
-                label="Área privada"
-                type="text"
-                idComboInput="unitBuiltPrivateArea"
-                formControlNameInput="unitBuiltPrivateArea"
-              ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltPrivateArea')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltPrivateArea')?.hasError('pattern')">
-                Solo se permiten números.
-              </mat-error>
-
-            </div>
-
-            <!-- Avalúo -->
-            <div class="form-content-item">
-              <p><strong>Avalúo</strong></p>
-              <vex-input
+                class="flex-auto"
                 label="Avalúo"
                 type="text"
                 idComboInput="unitBuiltValuation"
                 formControlNameInput="unitBuiltValuation"
               ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltValuation')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltValuation')?.hasError('pattern')">
-                Solo se permiten números.
-              </mat-error>
-            </div>
-
-            <!-- Valor M2 -->
-            <div class="form-content-item">
-              <p><strong>Valor M2</strong></p>
               <vex-input
+                class="flex-auto"
                 label="Valor M2"
                 type="text"
                 idComboInput="unitBuiltValuationM2"
                 formControlNameInput="unitBuiltValuationM2"
               ></vex-input>
-              <mat-error *ngIf="editForm.get('unitBuiltValuationM2')?.hasError('required')">
-                Este campo es obligatorio.
-              </mat-error>
-              <mat-error *ngIf="editForm.get('unitBuiltValuationM2')?.hasError('pattern')">
-                Solo se permiten números.
-              </mat-error>
-            </div>
 
-            <!-- Observación -->
-            <div class="form-content-item">
-              <p><strong>Observación</strong></p>
               <vex-input
-                label="Observación"
-                type="text"
-                idComboInput="unitBuiltObservation"
-                formControlNameInput="unitBuiltObservation"
-              ></vex-input>
+              class="flex-auto"
+              label="Observación"
+              type="text"
+              idComboInput="unitBuiltObservation"
+              formControlNameInput="unitBuiltObservation"
+            ></vex-input>
             </div>
 
+           
           </div>
 
-          <div class="buttons">
-            <button color="primary" mat-raised-button type="submit">
-              Actualizar
-              <mat-icon svgIcon="mat:save"></mat-icon>
-            </button>
-            <button color="warn" mat-stroked-button mat-dialog-close type="button">
-              Cerrar
-              <mat-icon svgIcon="mat:close"></mat-icon>
-            </button>
-          </div>
-        </vex-page-layout-content>
-      </vex-page-layout>
-    </form>
-      </mat-tab>
-
-      <mat-tab label="Calificación tradicional">
-        <form [formGroup]="traditionalRatingForm" (ngSubmit)="onSubmitTraditionalForm()">
-
-          <br>
-          <!-- Estructura -->
-          <mat-card class="category-card">
-            <mat-card-title class="category-title">Estructura</mat-card-title>
-            <mat-card-content class="sub-category-content">
-              <div class="sub-category-section">
-                <!-- Armazón -->
-                <mat-form-field>
-                  <mat-label>Armazón</mat-label>
-                  <mat-select formControlName="structureArmazon">
-                    <mat-option *ngFor="let type of armazonOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Muros -->
-                <mat-form-field>
-                  <mat-label>Muros</mat-label>
-                  <mat-select formControlName="structureMuros">
-                    <mat-option *ngFor="let type of murosOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Cubierta -->
-                <mat-form-field>
-                  <mat-label>Cubierta</mat-label>
-                  <mat-select formControlName="structureCubierta">
-                    <mat-option *ngFor="let type of cubiertaOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Conservación -->
-                <mat-form-field>
-                  <mat-label>Conservación</mat-label>
-                  <mat-select formControlName="structureConservacion">
-                    <mat-option *ngFor="let type of conservacionOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-          </mat-card>
-
-          <!-- Acabados principales -->
-          <mat-card class="category-card">
-            <mat-card-title class="category-title">Acabados principales</mat-card-title>
-            <mat-card-content class="sub-category-content">
-              <div class="sub-category-section">
-                <!-- Fachadas -->
-                <mat-form-field>
-                  <mat-label>Fachadas</mat-label>
-                  <mat-select formControlName="finishesFachadas">
-                    <mat-option *ngFor="let type of fachadasOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Cubrimientos de Muros -->
-                <mat-form-field>
-                  <mat-label>Cubrimientos de Muros</mat-label>
-                  <mat-select formControlName="finishesMuros">
-                    <mat-option *ngFor="let type of murosCubrimientoOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Pisos -->
-                <mat-form-field>
-                  <mat-label>Pisos</mat-label>
-                  <mat-select formControlName="finishesPisos">
-                    <mat-option *ngFor="let type of pisosOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Conservación -->
-                <mat-form-field>
-                  <mat-label>Conservación</mat-label>
-                  <mat-select formControlName="finishesConservacion">
-                    <mat-option *ngFor="let type of conservacionOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-          </mat-card>
-
-          <!-- Baño -->
-          <mat-card class="category-card">
-            <mat-card-title class="category-title">Baño</mat-card-title>
-            <mat-card-content class="sub-category-content">
-              <div class="sub-category-section">
-                <!-- Tamaño -->
-                <mat-form-field>
-                  <mat-label>Tamaño</mat-label>
-                  <mat-select formControlName="bathSize">
-                    <mat-option *ngFor="let type of banoTamanoOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Enchapes -->
-                <mat-form-field>
-                  <mat-label>Enchapes</mat-label>
-                  <mat-select formControlName="bathEnchapes">
-                    <mat-option *ngFor="let type of banoEnchapesOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Mobiliario -->
-                <mat-form-field>
-                  <mat-label>Mobiliario</mat-label>
-                  <mat-select formControlName="bathMobiliario">
-                    <mat-option *ngFor="let type of banoMobiliarioOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Conservación -->
-                <mat-form-field>
-                  <mat-label>Conservación</mat-label>
-                  <mat-select formControlName="bathConservacion">
-                    <mat-option *ngFor="let type of conservacionOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-          </mat-card>
-
-          <!-- Cocina -->
-          <mat-card class="category-card">
-            <mat-card-title class="category-title">Cocina</mat-card-title>
-            <mat-card-content class="sub-category-content">
-              <div class="sub-category-section">
-                <!-- Tamaño -->
-                <mat-form-field>
-                  <mat-label>Tamaño</mat-label>
-                  <mat-select formControlName="kitchenSize">
-                    <mat-option *ngFor="let type of cocinaTamanoOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Enchapes -->
-                <mat-form-field>
-                  <mat-label>Enchapes</mat-label>
-                  <mat-select formControlName="kitchenEnchapes">
-                    <mat-option *ngFor="let type of cocinaEnchapesOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Mobiliario -->
-                <mat-form-field>
-                  <mat-label>Mobiliario</mat-label>
-                  <mat-select formControlName="kitchenMobiliario">
-                    <mat-option *ngFor="let type of cocinaMobiliarioOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-
-                <!-- Conservación -->
-                <mat-form-field>
-                  <mat-label>Conservación</mat-label>
-                  <mat-select formControlName="kitchenConservacion">
-                    <mat-option *ngFor="let type of conservacionOptions" [value]="type">
-                      {{ type }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </mat-card-content>
-          </mat-card>
-
-          <div class="buttons">
-            <button color="primary" mat-raised-button type="submit">
-              Guardar
-              <mat-icon svgIcon="mat:save"></mat-icon>
-            </button>
-            <button color="warn" mat-stroked-button mat-dialog-close type="button">
-              Cerrar
-              <mat-icon svgIcon="mat:close"></mat-icon>
+          <div class="actions flex items-center justify-end gap-2">
+            <button color="primary" mat-raised-button matStepperNext [disabled]="editForm.invalid"  (click)="save()">
+              Continuar
             </button>
           </div>
         </form>
-      </mat-tab>
-      <!-- Tercer Tab: Calificación tipología (Vacío) -->
-      <mat-tab label="Calificación tipología">
-        <form [formGroup]="informationConstructionForm" (ngSubmit)="onSubmitForm()">
-          <vex-page-layout class="overflow-hidden">
-            <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
-              <div class="form-content">
+      </mat-step>
 
-                <div class="form-content-item">
-                  <p><strong>Tipología</strong></p>
-                  <vex-combox-colletion
-                    idComboCollection="domTipologiaTipo"
-                    label="Tipología"
-                    formControlNameCombobox="domTipologiaTipo"
-                    typeDomainName="TipologiaTipo"
-                    placeholderDomainName="Escoger tipología"
-                  ></vex-combox-colletion>
-                  <mat-error *ngIf="informationConstructionForm.get('domTipologiaTipo')?.hasError('required')">
-                    Este campo es obligatorio.
-                  </mat-error>
-                </div>
+      <!-- Calificación -->
+      <mat-step [stepControl]="traditionalRatingForm">
+        <form [formGroup]="traditionalRatingForm">
+          <ng-template matStepLabel>Calificación</ng-template>
+
+          <h2 class="title m-0">Calificación</h2>
+          <div class="subheading-1">Seleccione el tipo de calificación.</div>
+
+          <div class="actions flex items-center gap-2 pt-3">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="toggleCalificationMode('tradicional')"
+              [class]="calificationMode === 'tradicional' ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+              [disabled]="calificationMode === 'tradicional'"
+            >
+              Tradicional
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="toggleCalificationMode('tipologia')"
+              [class]="calificationMode === 'tipologia' ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+              [disabled]="calificationMode === 'tipologia'"
+            >
+              Tipología
+            </button>
+          </div>
+
+          <!-- Tradicional -->
+          <div *ngIf="calificationMode === 'tradicional'" class="mt-4 flex flex-col gap-2">
 
 
-
-                <div class="buttons">
-                  <button color="primary" mat-raised-button type="submit">
-                    Guardar
-                    <mat-icon svgIcon="mat:save"></mat-icon>
-                  </button>
-                  <button color="warn" mat-stroked-button mat-dialog-close type="button">
-                    Cerrar
-                    <mat-icon svgIcon="mat:close"></mat-icon>
-                  </button>
-                </div>
-
+            <div class="mt-4 flex flex-col gap-2">
+  
+              <p><strong>Estructura</strong></p>
+              <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Armazón'"
+                [placeholder]="'Escoger armazón'"
+                [apiUrl]="getApiCalificationUrl('Armazon')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="structureArmazonControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+            <vex-custom-selector class="flex-auto"
+            [label]="'Muros'"
+            [placeholder]="'Escoger muros'"
+            [apiUrl]="getApiCalificationUrl('Muros')"
+            [valueKey]="'id'"
+            [displayKey]="'dispname'"
+            [formControl]="structureMurosControl"
+            cssClasses="custom-class"
+            ></vex-custom-selector>
+  
+            <vex-custom-selector class="flex-auto"
+            [label]="'Cubierta'"
+            [placeholder]="'Escoger cubierta'"
+            [apiUrl]="getApiCalificationUrl('Cubierta')"
+            [valueKey]="'id'"
+            [displayKey]="'dispname'"
+            [formControl]="structureCubiertaControl"
+            cssClasses="custom-class"
+            ></vex-custom-selector>
+  
+            <vex-custom-selector class="flex-auto"
+            [label]="'Conservación'"
+            [placeholder]="'Escoger conservación'"
+            [apiUrl]="getApiCalificationUrl('Conservacion_Cubierta')"
+            [valueKey]="'id'"
+            [displayKey]="'dispname'"
+            [formControl]="structureConservacionControl"
+            cssClasses="custom-class"
+            ></vex-custom-selector>
+  
+  
               </div>
-            </vex-page-layout-content>
-          </vex-page-layout>
+  
+            </div>
+  
+            <div class="mt-4 flex flex-col gap-2">
+  
+              <p><strong>Acabados Principales</strong></p>
+              <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Fachadas'"
+                [placeholder]="'Escoger fachada'"
+                [apiUrl]="getApiCalificationUrl('Fachada')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="finishesFachadasControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Cubrimiento de muros'"
+                [placeholder]="'Escoger cubrimiento'"
+                [apiUrl]="getApiCalificationUrl('Cubrimiento_Muros')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="finishesMurosControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Pisos'"
+                [placeholder]="'Escoger pisos'"
+                [apiUrl]="getApiCalificationUrl('Piso')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="finishesPisosControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Conservación'"
+                [placeholder]="'Escoger conservación'"
+                [apiUrl]="getApiCalificationUrl('Conservacion_Acabados')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="finishesConservacionControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+              </div>
+  
+            </div>
+  
+            <div class="mt-4 flex flex-col gap-2">
+  
+              <p><strong>Baño</strong></p>
+              <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Tamaño'"
+                [placeholder]="'Escoger tamaño'"
+                [apiUrl]="getApiCalificationUrl('Tamanio_Banio')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="bathSizeControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Enchapes'"
+                [placeholder]="'Escoger enchape'"
+                [apiUrl]="getApiCalificationUrl('Enchape_Banio')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="bathEnchapesControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Mobiliario'"
+                [placeholder]="'Escoger mobiliario'"
+                [apiUrl]="getApiCalificationUrl('Mobiliario_Banio')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="bathMobiliarioControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Conservación'"
+                [placeholder]="'Escoger conservación'"
+                [apiUrl]="getApiCalificationUrl('Conservacion_Banio')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="bathConservacionControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+  
+          
+  
+              </div>
+  
+            </div>
+  
+            <div class="mt-4 flex flex-col gap-2">
+  
+              <p><strong>Cocina</strong></p>
+              <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Tamaño'"
+                [placeholder]="'Escoger tamaño'"
+                [apiUrl]="getApiCalificationUrl('Tamanio_Cocina')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="kitchenSizeControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Enchapes'"
+                [placeholder]="'Escoger enchape'"
+                [apiUrl]="getApiCalificationUrl('Enchape_Cocina')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="kitchenEnchapesControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Mobiliario'"
+                [placeholder]="'Escoger mobiliario'"
+                [apiUrl]="getApiCalificationUrl('Mobiliario_Cocina')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="kitchenMobiliarioControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+  
+                <vex-custom-selector class="flex-auto"
+                [label]="'Conservación'"
+                [placeholder]="'Escoger conservación'"
+                [apiUrl]="getApiCalificationUrl('Conservacion_Cocina')"
+                [valueKey]="'id'"
+                [displayKey]="'dispname'"
+                [formControl]="kitchenConservacionControl"
+                cssClasses="custom-class"
+                ></vex-custom-selector>
+  
+           
+  
+  
+              </div>
+  
+            </div>
+  
+            </div>
+
+          <!-- Tipología -->
+          <div *ngIf="calificationMode === 'tipologia'" class="mt-4 flex flex-col gap-2">
+            <p><strong>Tipología</strong></p>
+            <vex-custom-selector
+              [label]="'Tipología'"
+              [placeholder]="'Seleccione tipología...'"
+              [apiUrl]="getApiCalificationUrl('Tipologia')"
+              formControlName="domTipologiaTipo"
+            ></vex-custom-selector>
+          </div>
+
+          <div class="actions flex items-center justify-end gap-2">
+            <button mat-raised-button color="primary" (click)="saveCalification()">Guardar</button>
+          </div>
         </form>
-
-
-
-      </mat-tab>
-    </mat-tab-group>
-  </mat-dialog-content>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</mat-dialog-content>
