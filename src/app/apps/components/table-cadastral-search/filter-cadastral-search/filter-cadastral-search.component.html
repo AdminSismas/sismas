@@ -57,7 +57,7 @@
         <div class="flex flex-col sm:flex-row">
 
           <!-- Campo departamento -->
-         
+
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Departamento</mat-label>
                   <input type="text"
@@ -66,15 +66,15 @@
                          matInput
                          formControlName="dpto"
                          placeholder="Departamento">
-                 
+
                 </mat-form-field>
-             
-            
-          
+
+
+
 
           <!-- Campo municipio -->
-        
-      
+
+
           <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
             <mat-label>Municipío</mat-label>
             <input type="text"
@@ -84,11 +84,11 @@
                   formControlName="mpio"
                   placeholder="Municipío">
           </mat-form-field>
-      
-       
+
+
 
           <!-- Campo zona -->
-         
+
             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
              <mat-label>Zonas</mat-label>
              <input type="text"
@@ -99,13 +99,13 @@
                     placeholder="Zona&hellip;"
                     >
            </mat-form-field>
-       
 
-        
+
+
 
 
           <!-- Campo sector -->
-     
+
             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Sector</mat-label>
               <input type="text"
@@ -116,13 +116,13 @@
                      placeholder="Sector"
                      >
             </mat-form-field>
-        
 
 
-     
+
+
 
               <!-- Campo Comuna -->
-            
+
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Comuna</mat-label>
                   <input type="text"
@@ -133,9 +133,9 @@
                          placeholder="Comuna"
                          >
                 </mat-form-field>
-          
 
-            
+
+
 
               <!-- Campo Barrio -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
@@ -148,7 +148,7 @@
                          placeholder="Barrio"
                          >
                 </mat-form-field>
-            
+
 
 
         </div> <!-- ************SECCIOON 1 X6 -->
@@ -156,8 +156,8 @@
         <br>
 
         <div class="flex flex-col sm:flex-row">
-       
-          
+
+
              <!-- Campo Man/ver -->
              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Man/ver</mat-label>
@@ -170,9 +170,9 @@
                      >
             </mat-form-field>
 
-        
 
-     
+
+
             <!-- Campo Terreno -->
             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Terreno</mat-label>
@@ -184,10 +184,10 @@
                      placeholder="Terreno"
                      >
             </mat-form-field>
-        
-       
 
-          
+
+
+
             <!-- Campo Condición -->
             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Condición</mat-label>
@@ -198,10 +198,10 @@
                      formControlName="condicion"
                      placeholder="Condición">
             </mat-form-field>
-          
-       
 
-         
+
+
+
             <!-- Campo Edificio -->
             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Edificio</mat-label>
@@ -213,10 +213,10 @@
                      placeholder="Edificio"
                      >
             </mat-form-field>
-      
-         
 
-       
+
+
+
             <!-- Campo Piso -->
             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Piso</mat-label>
@@ -228,9 +228,9 @@
                      placeholder="Piso"
                      >
             </mat-form-field>
-       
 
-          
+
+
              <!-- Campo Unidad Predial -->
              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Unidad Predial</mat-label>
@@ -242,8 +242,8 @@
                      placeholder="Unidad predial"
                      >
             </mat-form-field>
-      
-      
+
+
 
 
         </div>
@@ -457,6 +457,21 @@
               <!-- Campo zona -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Zona</mat-label>
+                <mat-select>
+                  @for (option of filteredOptionsZones$ | async; track option.codigoZona) {
+                    <mat-option
+                      [value]="option.codigoZona">
+                      {{ option.codigoZona }} - {{ option.nombreZona }}
+                    </mat-option>
+                  } @empty {
+                    <mat-option>
+                      {{STRING_INFORMATION_NOT_FOUND}}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <!-- <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                <mat-label>Zona</mat-label>
                 <input type="text"
                        aria-label="Number"
                        matInput
@@ -476,7 +491,7 @@
                     </mat-option>
                   }
                 </mat-autocomplete>
-              </mat-form-field>
+              </mat-form-field> -->
 
               <!-- Campo sector -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
