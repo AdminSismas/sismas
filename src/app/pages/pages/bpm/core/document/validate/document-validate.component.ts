@@ -18,8 +18,8 @@ import { DocumentTableComponent } from 'src/app/apps/components/bpm/document-tab
   styleUrl: './document-validate.component.scss'
 })
 export class DocumentValidateComponent implements OnInit {
-  @Input({ required: true }) public executionId: string = '';
-  @Input() public id: string = '';
+  @Input({ required: true }) public executionId = '';
+  @Input() public id = '';
   constructor() {
   }
 

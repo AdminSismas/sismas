@@ -21,7 +21,7 @@
                     <input
                         matInput
                         [formControl]="searchCtrl"
-                        placeholder="Buscar archivo&hellip;"
+                        placeholder="Filtrar archivo&hellip;"
                         type="text"/>
                 </mat-form-field>
 
@@ -42,7 +42,7 @@
                 <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
 
                     <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-                        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+                        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
                         <td *matCellDef="let row" (click)="viewFile(row)" class="uppeercase pl-1 pr-1" [ngClass]="column.cssClasses" mat-cell>
@@ -52,7 +52,7 @@
                     </ng-container>
 
                     <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-                        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+                        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
                         <td *matCellDef="let row" (click)="viewFile(row)" class="uppeercase pl-1 pr-1" [ngClass]="column.cssClasses" mat-cell>

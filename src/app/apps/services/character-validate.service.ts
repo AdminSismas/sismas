@@ -15,7 +15,6 @@ export class CharacterValidateService {
  formatField(value: string | number | null | undefined, maxLength: number): string {
   const stringValue = value ? String(value).trim() : ''; // Convertir a string si no está vacío
   const remainingLength = maxLength - stringValue.length; // Calcular caracteres faltantes
-  console.log('Servicio',value);
 
   if (remainingLength > 0) {
     // Rellenar con guiones bajos

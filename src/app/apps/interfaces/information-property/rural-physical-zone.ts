@@ -1,5 +1,5 @@
 export class RuralPhysicalZone {
-  zonaHomoFisicaRuId?:number
+  zonaHomoFisicaRuId?:number;
   zonaHomoFisicaRuCode?:number;
   domDisponibilidadAgua?:number;
   domInfluenciaVialRural?:number;

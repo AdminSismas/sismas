@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild, OnInit } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -44,15 +44,15 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/d
   ]
 })
 
-export class CommentsComponent {
+export class CommentsComponent implements OnInit {
   /* ============== ATRIBUTES ============== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  disablePaginator: boolean = true;
-  NumPage: number = 0;
-  NumSize: number = 5;
-  totalElements: number = 0;
+  disablePaginator = true;
+  NumPage = 0;
+  NumSize = 5;
+  totalElements = 0;
   pageSizeOptions: number[] = [5, 10, 20, 30];
-  executionId: string = '';
+  executionId = '';
 
   body: contentInfoComments = {
     commentText: ''
@@ -150,7 +150,7 @@ export class CommentsComponent {
           duration: 3000,
           horizontalPosition: 'center'
         });
-        this.getDataFromDocumentManagementService()
+        this.getDataFromDocumentManagementService();
         this.form.reset();
       },
       error: (err) => {

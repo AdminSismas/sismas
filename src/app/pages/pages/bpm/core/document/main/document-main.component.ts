@@ -16,8 +16,8 @@ import { DocumentsMainTableComponent } from './documents-table/documents-table.c
   styleUrl: './document-main.component.scss'
 })
 export class DocumentMainComponent implements OnInit {
-  @Input({ required: true }) public executionId: string = '';
-  @Input() public id: string = '';
+  @Input({ required: true }) public executionId = '';
+  @Input() public id = '';
   constructor() {
   }
 

@@ -127,19 +127,19 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
-  @Input({ required: true }) public showTittle: boolean = true;
+  @Input({ required: true }) public showTittle = true;
   @Input({ required: true }) public label!: string;
-  @Input() public id: string = '';
-  @Input({ required: true }) public schema: string = '';
-  @Input({ required: true }) contentInfoSchema!: ContentInfoSchema
+  @Input() public id = '';
+  @Input({ required: true }) public schema = '';
+  @Input({ required: true }) contentInfoSchema!: ContentInfoSchema;
   @Input({ required: true }) public baunitCondition?: string;
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
-  idContainer: string = '';
+  idContainer = '';
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
-  public viewProperties:boolean = false;
+  public viewProperties = false;
 
    constructor(private informationPropertyService: InformationPropertyService){ }
 
@@ -159,9 +159,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
         this.viewProperties = value2;
         this.removeItem('Propietarios');
       }
-    })
+    });
 
-    this.baunitHead = this.contentInfoSchema.content
+    this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
 
@@ -221,7 +221,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       baunitCondition === '(Propiedad horizontal) Matriz'
     ) return true;
 
-    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial')
+    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial');
 
     return false;
   }

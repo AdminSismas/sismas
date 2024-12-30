@@ -73,7 +73,7 @@
             ></mat-icon>
             <input
               matInput
-              placeholder="Search chats..."
+              placeholder="Filtrar chats..."
               type="text"
             />
           </mat-form-field>
@@ -91,9 +91,9 @@
               matRipple
               type="button"
             >
-              All
+              Todos
             </button>
-            <button
+            <!-- <button
               class="text-gray-400 font-medium text-sm px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition flex-1 text-center relative"
               matRipple
               type="button"
@@ -106,7 +106,7 @@
               type="button"
             >
               Workspaces
-            </button>
+            </button> -->
           </div>
 
           <div class="space-y-1">
@@ -134,9 +134,9 @@
                 <div class="flex-1 select-none truncate">
                   <div class="truncate flex mb-0.5">
                     <div class="font-medium flex-1">{{ chat.name }}</div>
-                    <div class="flex-none text-xs text-gray-500">
+                    <!-- <div class="flex-none text-xs text-gray-500">
                       {{ chat.timestamp }}
-                    </div>
+                    </div> -->
                   </div>
                   <div class="text-xs text-gray-500 truncate">
                     {{ chat.lastMessage }}
@@ -150,11 +150,11 @@
             class="inline-block text-gray-600 dark:text-gray-300 font-medium text-xs mx-6 mt-3"
             href="javascript:void(0);"
           >
-            <span>Show more</span>
+            <!-- <span>Show more</span>
             <mat-icon
               class="icon-xs align-middle select-none"
               svgIcon="mat:expand_more"
-            ></mat-icon>
+            ></mat-icon> -->
           </a>
         </div>
       </div>

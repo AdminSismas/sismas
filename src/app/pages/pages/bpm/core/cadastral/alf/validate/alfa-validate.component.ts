@@ -13,7 +13,7 @@ import { MatDialogTitle } from '@angular/material/dialog';
   styleUrl: './alfa-validate.component.scss'
 })
 export class AlfaValidateComponent implements OnInit {
-  @Input() public id: string = '';
+  @Input() public id = '';
   constructor() {
   }
 

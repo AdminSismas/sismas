@@ -67,7 +67,7 @@ export interface ZoneServices {
 export interface CreateZoneData {
   title: string;
   inputs: JSONInput[];
-  data?: { [key: string]: any };
+  data?: Record<string, any>;
 }
 
 export interface DataSourceZoneManager {

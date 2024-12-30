@@ -10,7 +10,6 @@ import {
 } from '../cadastral-information-property/cadastral-information-property.component';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { TWO_POINT_, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
-import { NgForOf, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
@@ -37,9 +36,7 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
     VexPageLayoutContentDirective,
     MatTabsModule,
     CadastralInformationPropertyComponent,
-    NgForOf,
     MatMenuModule,
-    NgIf
   ],
   templateUrl:
     './layout-card-cadastral-information-property-component.component.html',
@@ -53,8 +50,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
 
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
-  propertyUnit: boolean = false;
-  dataFlag: string = '';
+  propertyUnit = false;
+  dataFlag = '';
 
 
   constructor(
@@ -83,12 +80,12 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       this.createObjectLayout(schema)
     );
     //On init of component set type information according to the component
-    this.setTypeInformation(0);
+    // this.setTypeInformation(0);
 
 
-    if (this.defaults.typeInformation == 'visualization') {
+    // if (this.defaults.typeInformation == 'visualization') }{
       this.typeInformation = this.defaults.typeInformation;
-    }
+    // }}
 
     if(this.defaults.flagData !== ''){
         this.dataFlag = this.defaults.flagData;

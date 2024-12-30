@@ -23,7 +23,7 @@ export class BaunitHead {
   set registration(value:string) {}
 
   get registration(): string {
-    let name = '';
+    const name = '';
     if (this.propertyRegistryOffice && this.propertyRegistryNumber) {
       return `${this.propertyRegistryOffice} - ${this.propertyRegistryNumber}`;
     } else if (this.propertyRegistryOffice) {

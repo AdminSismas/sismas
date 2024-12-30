@@ -77,7 +77,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
 
   data!: ContentInformationConstruction;
   dataCalification!: CcCalificacionUB[];
-  schema: string = `${environment.schemas.main}`;
+  schema = `${environment.schemas.main}`;
   baunitId!: string;
 
   constructor(

@@ -16,8 +16,8 @@ import { animate, AnimationBuilder, style } from '@angular/animations';
 export class LoadingAppComponent  {
 
   splashScreenElem?: HTMLElement;
-  @Input({ required: true }) idLoading: string = 'vexSplashScreen';
-  @Input({ required: true }) showImage: boolean = true;
+  @Input({ required: true }) idLoading = 'vexSplashScreen';
+  @Input({ required: true }) showImage = true;
 
   constructor(
     private router: Router,

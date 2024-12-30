@@ -98,7 +98,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
 
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_OPTION_UNIQUE_7;
   pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
 
@@ -209,8 +209,8 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    let addNpnLike = this.formAdd.value.addNpnLike;
-    let bAunitCondition = this.formAdd.value.bAunitCondition;
+    const addNpnLike = this.formAdd.value.addNpnLike;
+    const bAunitCondition = this.formAdd.value.bAunitCondition;
     if(!addNpnLike || !bAunitCondition) {
       this.snackBar.open(
         'Para poder continuar diligencie los campos obligatorios',

@@ -20,7 +20,7 @@
             <div class="form-content-item">
               <vex-combox-colletion
                 idComboCollection="domTipoDireccion"
-                label="Tipo de Dirección"
+                label="Tipo de dirección"
                 formControlNameCombobox="domTipoDireccion"
                 typeDomainName="TipoDireccion"
                 placeholderDomainName="Escoger tipo de dirección"
@@ -29,11 +29,11 @@
             <mat-error *ngIf="this.domTipoDireccion?.invalid && this.domTipoDireccion?.touched">
               Este campo es obligatorio.
             </mat-error>
-           
+
             </div>
             <div class="form-content-item" >
               <vex-input
-                label="Código Postal"
+                label="Código postal"
                 type="text"
                 idComboInput="codigoPostal"
                 formControlNameInput="codigoPostal"
@@ -45,12 +45,12 @@
                     Solo se permiten números.
                   </mat-error>
               </div>
-            
-          
+
+
             </div>
             <div class="form-content-item">
               <vex-input
-                label="Nombre Predio"
+                label="Nombre predio"
                 type="text"
                 idComboInput="nombrePredio"
                 formControlNameInput="nombrePredio"
@@ -62,8 +62,8 @@
              </mat-error>
             </div>
             <div class="form-content-item">
-              <mat-slide-toggle 
-                class="mx-2" 
+              <mat-slide-toggle
+                class="mx-2"
                 labelPosition="before"
                 formControlName="esDireccionPrincipal"
                 color="primary"
@@ -82,14 +82,14 @@
             </div>
           </div>
 
-          
+
           <!-- Principal Fields  -->
           <mat-accordion class="flex flex-col py-0 px-0 mb-2">
             <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header
                 class="bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
                 <div class="w-full px-0 py-0 flex items-center">
-                  <h2 class="title m-0 text-center w-full uppercase">Principal</h2>
+                  <h2 class="title m-0 text-center w-full">Principal</h2>
                 </div>
               </mat-expansion-panel-header>
               <mat-panel-description class="py-0 px-0">
@@ -140,7 +140,7 @@
                   </div>
 
                   <div class="form-content-item" style="margin-right: -12px;">
-                    <vex-combox-colletion 
+                    <vex-combox-colletion
                       cssClasses="w-full"
                       idComboCollection="domSectorCiudad"
                       label="Sector ciudad"
@@ -164,7 +164,7 @@
               <mat-expansion-panel-header
                 class="bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
                 <div class="w-full px-0 py-0 flex items-center">
-                  <h2 class="title m-0 text-center w-full uppercase">Generadora</h2>
+                  <h2 class="title m-0 text-center w-full">Generadora</h2>
                 </div>
               </mat-expansion-panel-header>
               <mat-panel-description class="py-0 px-0">
@@ -183,12 +183,12 @@
                     <mat-error *ngIf="valorViaGeneradora?.hasError('pattern') && !valorViaGeneradora?.hasError('required')">
                     Solo se permiten números.
                   </mat-error>
-                    
+
                   </div>
                   <div class="form-content-item">
                     <vex-input
                       cssClasses="w-full"
-                      label="Número Predio"
+                      label="Número predio"
                       type="text"
                       idComboInput="numeroPredio"
                       formControlNameInput="numeroPredio"

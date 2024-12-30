@@ -5,7 +5,7 @@ export class TableProcedureResponseModel{
         content?: TablaContent[];
         number?: number;
         sort?: TablaSort;
-        numberOfElements?: number
+        numberOfElements?: number;
         pageable?: TablaPageable;
         first?: true;
         last?: true;

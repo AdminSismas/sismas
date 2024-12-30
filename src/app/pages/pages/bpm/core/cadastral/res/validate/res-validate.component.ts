@@ -17,9 +17,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './res-validate.component.scss'
 })
 export class ResValidateComponent implements OnInit {
-  @Input() public id: string = '';
-  @Input() public executionId: string = '';
-  basic_url: string = `${environment.url}:${environment.port}/${'bpmResolution'}/${'preview'}/`;
+  @Input() public id = '';
+  @Input() public executionId = '';
+  basic_url = `${environment.url}:${environment.port}/${'bpmResolution'}/${'preview'}/`;
   pdfUrl: SafeUrl = '';
   constructor( private sanitizer: DomSanitizer) {
   }
@@ -42,7 +42,7 @@ export class ResValidateComponent implements OnInit {
   }
 
   urlPdfViewer(): SafeUrl {
-    const urlComplete: string = `${this.basic_url}${this.executionId}`;
+    const urlComplete = `${this.basic_url}${this.executionId}`;
     console.log('urlComplete: ', urlComplete);
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
   }

@@ -23,7 +23,7 @@ export class ToolbarNotificationsComponent implements OnInit {
   @ViewChild('originRef', { static: true, read: ElementRef })
   originRef?: ElementRef;
 
-  dropdownOpen: boolean = false;
+  dropdownOpen = false;
 
   constructor(
     private popover: VexPopoverService,

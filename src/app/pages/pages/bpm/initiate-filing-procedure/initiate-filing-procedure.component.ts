@@ -155,11 +155,11 @@ export class InitiateFilingProcedureComponent implements OnInit {
 
   participants: ProcessParticipant[] = [];
 
-  propertyProcessing: string = 'Predio y Trámite';
-  participation: string = 'Participación';
-  verification: string = 'Verificación';
+  propertyProcessing = 'Predio y trámite';
+  participation = 'Participación';
+  verification = 'Verificación';
   informationRegister!: BaunitHead;
-  informationClear: boolean = false;
+  informationClear = false;
 
   propertyProcessingFormGroup: UntypedFormGroup = this.formBuilder.group({
     selectBpmProcessByCategory: [null, Validators.required],
@@ -223,7 +223,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   }
 
   obtainsCollectionsListProcessByCategory() {
-    let process = this.collectionServicesService.getDataDomainName(DOMAIN_COLLETION_BPMPROCESSCATEGORY);
+    const process = this.collectionServicesService.getDataDomainName(DOMAIN_COLLETION_BPMPROCESSCATEGORY);
     process.subscribe(
       {
         error: () => this._listBpmProcessCategory.next([]),
@@ -281,9 +281,9 @@ export class InitiateFilingProcedureComponent implements OnInit {
               this._listBpmDocumentsProcess.next([]);
               return;
             }
-            let listBpmDocument: BpmDocument[] = [];
+            const listBpmDocument: BpmDocument[] = [];
             result.map(st => {
-              let document = new BpmDocument(st);
+              const document = new BpmDocument(st);
               listBpmDocument.push(document);
             });
             this._listBpmDocumentsProcess.next(listBpmDocument);
@@ -333,7 +333,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
               this.infoGeneralService.setInfoProTaskE(proTaskE);
 
 
-              
+
 
 
 
@@ -401,7 +401,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     return option ? option.dispname : null;
   }
 
-  showBpmProcess(value: boolean = false) {
+  showBpmProcess(value = false) {
     const valid = of(value);
     this.isExistListBpmTypeProcess$ = valid.pipe(take(3));
   }
@@ -415,7 +415,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   }
 
   createListMetadataBpm(): MetadataBpm[] {
-    let list: MetadataBpm[] = [];
+    const list: MetadataBpm[] = [];
     if (this.baunitIdE) {
       list.push({
         metaField: `${CONSTANT_NAME_BAUNITID}`,
@@ -431,10 +431,10 @@ export class InitiateFilingProcedureComponent implements OnInit {
   }
 
   async createListAttachmentsList(): Promise<string[]> {
-    let list: string[] = [];
+    const list: string[] = [];
     const listBpmDocumentsProcess = await firstValueFrom(this.listBpmDocumentsProcess$);
     listBpmDocumentsProcess.forEach(st => {
-      let status = st.state ? CONSTANT_NAME_SI_ : CONSTANT_NAME_NO_;
+      const status = st.state ? CONSTANT_NAME_SI_ : CONSTANT_NAME_NO_;
       list.push(`${status}${SPACE}${st.name}`);
     });
     return list;

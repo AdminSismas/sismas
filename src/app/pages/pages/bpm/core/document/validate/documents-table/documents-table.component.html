@@ -3,7 +3,7 @@
     <!-- Search -->
     <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-6 pb-6 flex flex-col">
       <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
-      <input matInput [formControl]="searchCtrl" placeholder="Buscar archivo…" type="text" />
+      <input matInput [formControl]="searchCtrl" placeholder="Filtrar archivo…" type="text" />
     </mat-form-field>
 
     <!-- button filter -->
@@ -46,7 +46,7 @@
     <!-- Text Columns -->
     <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
       <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
         </th>
         <td
@@ -60,7 +60,7 @@
         matIconPrefix
         *ngIf="column.property === 'originalFileName'"
         [svgIcon]="getFileTypeIcon(row)"
-        [ngClass]="getFileIconColor(row)"  
+        [ngClass]="getFileIconColor(row)"
         class="w-5 h-5 p-0 items-center justify-center"
       ></mat-icon>
           {{ row[column.property] }}
@@ -68,7 +68,7 @@
       </ng-container>
 
       <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
         </th>
         <td
@@ -82,7 +82,7 @@
         matIconPrefix
         *ngIf="column.property === 'originalFileName'"
         [svgIcon]="getFileTypeIcon(row)"
-        [ngClass]="getFileIconColor(row)"  
+        [ngClass]="getFileIconColor(row)"
         class="w-5 h-5 p-0 items-center justify-center"
       ></mat-icon>
           {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}

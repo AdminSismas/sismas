@@ -1,23 +1,23 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
     <h2 class="headline m-0 flex-auto">
-      Agregar Documento
+      Agregar documento
     </h2>
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
       <mat-icon svgIcon="mat:close"></mat-icon>
     </button>
   </div>
-  
+
   <mat-divider class="text-border"></mat-divider>
-  
+
   <mat-dialog-content>
     <form [formGroup]="attachmentForm" (ngSubmit)="save()">
       <vex-page-layout class="overflow-hidden">
         <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
           <div class="form-content">
-  
+
             <!-- Tipo de Documento -->
             <div class="form-content-item">
-              <p><strong>Tipo de Documento</strong></p>
+              <p><strong>Tipo de documento</strong></p>
               <div class="p-4">
               <vex-combox-colletion
                 idComboCollection="attachmentType"
@@ -31,7 +31,7 @@
                 Este campo es obligatorio.
               </mat-error>
             </div>
-  
+
             <!-- Descripción -->
             <div class="form-content-item">
               <p><strong>Descripción</strong></p>
@@ -43,8 +43,8 @@
                 formControlNameInput="description"
               ></vex-input>
                </div>
-            </div>  
-  
+            </div>
+
             <!-- Campo de archivo adjunto -->
             <div class="col-span-1 md:col-span-2">
               <label class="text-[#666666] text-[15px]">Archivo de anexo</label>
@@ -64,7 +64,7 @@
               </ngx-dropzone>
               </div>
             </div>
-            
+
           </div>
           <br>
           <div class="buttons">

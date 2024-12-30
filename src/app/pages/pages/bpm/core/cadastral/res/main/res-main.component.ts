@@ -17,9 +17,9 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrl: './res-main.component.scss'
 })
 export class ResMainComponent implements OnInit {
-  @Input() public id: string = '';
-  @Input() public executionId: string = '';
-  basic_url: string = `${environment.url}:${environment.port}/${'bpmResolution'}/${'generate'}/`;
+  @Input() public id = '';
+  @Input() public executionId = '';
+  basic_url = `${environment.url}:${environment.port}/${'bpmResolution'}/${'generate'}/`;
   pdfUrl: SafeUrl = '';
   constructor(private sanitizer: DomSanitizer) {
   }
@@ -41,7 +41,7 @@ export class ResMainComponent implements OnInit {
   }
 
   urlPdfViewer(): SafeUrl {
-    const urlComplete: string = `${this.basic_url}${this.executionId}`;
+    const urlComplete = `${this.basic_url}${this.executionId}`;
     console.log('urlComplete: ', urlComplete);
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
   }

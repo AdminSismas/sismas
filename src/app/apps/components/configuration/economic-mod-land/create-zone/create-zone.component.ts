@@ -23,9 +23,9 @@ import { CreateZoneData } from 'src/app/apps/interfaces/economic-mod-land/zone-d
 })
 export class CreateZoneComponent implements OnInit {
 
-  public form: FormGroup = new FormGroup({})
-  public inputs: JSONInput[] = []
-  public actionLabel: string = 'Crear'
+  public form: FormGroup = new FormGroup({});
+  public inputs: JSONInput[] = [];
+  public actionLabel = 'Crear';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: CreateZoneData,
@@ -33,15 +33,15 @@ export class CreateZoneComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.inputs = this.data.inputs
+    this.inputs = this.data.inputs;
 
     if (this.data.data) {
-      this.actionLabel = 'Editar'
+      this.actionLabel = 'Editar';
     }
   }
 
   submitForm(): void {
     if (this.form.invalid) return;
-    this.dialogRef.close(this.form.value)
+    this.dialogRef.close(this.form.value);
   }
 }

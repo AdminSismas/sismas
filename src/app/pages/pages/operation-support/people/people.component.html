@@ -1,115 +1,93 @@
 <vex-secondary-toolbar current="Formulario">
   <vex-breadcrumbs
-    [crumbs]="['Apoyo operación', 'Personas']"
-    class="flex-auto"
-  ></vex-breadcrumbs>
+  [crumbs]="['Apoyo operación', 'Personas']"
+    class="flex-auto"></vex-breadcrumbs>
 
-  <button
-    class="ml-2"
-    color="primary"
-    mat-icon-button
-    type="button"
-  >
+  <button class="ml-2" color="primary" mat-icon-button type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
   </button>
 </vex-secondary-toolbar>
-<!-- <vex-in-construction></vex-in-construction>
--->
+<div class="card pt-6">
+  <form [formGroup]="form">
+    <!-- Campo departamento -->
+  <!-- <mat-form-field class="sm:ml-2 sm:mr-2 flex-1"> -->
 
-<vex-page-layout>
-  <vex-page-layout-header
-    class="pb-16 flex flex-col items-start justify-center"
+    <div class="flex flex-col sm:flex-row sm:gap-4 mt-3 pt-3">
+      <div class="form-content-item flex flex-row items-center justify-center gap-4" style="align-items: flex-start;">
+<div style="margin-left: 6px;">
+
+  <button
+    color="primary"
+    aria-label=""
+    type="button"
+    mat-flat-button
+    (click)="createCustomer()"
+    name="crear"
+    class="flex-none"
   >
-    <div
-      [class.container]="layoutCtrl.value === 'boxed'"
-      [class.px-6]="layoutCtrl.value === 'fullwidth'"
-      class="w-full flex flex-col sm:flex-row justify-between"
-    ></div>
-  </vex-page-layout-header>
+    + Nueva persona
+  </button>
+</div>
 
-  <vex-page-layout-content
-    [class.container]="layoutCtrl.value === 'fullwidth'"
-    [class.px-6]="layoutCtrl.value === 'fullwidth'"
-    class="-mt-6"
-  >
-    <div class="card overflow-auto -mt-16">
-      <div
-        class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center"
-      >
-        <!-- sección de búsqueda -->
-        <div class="contet-search">
-          <form
-            [formGroup]="form"
-            class="flex justify-center items-center pt-6"
-          >
-            <vex-combox-colletion
-              ubscriptSizing="dynamic"
-              idComboCollection="typeNumberDocument"
-              name="selector_document"
-              label="Tipo de documento"
-              typeDomainName="IndividualTypeNumber"
-              placeholderDomainName="Seleccionar tipo documento&hellip;"
-              (stringEventEmitter)="infoSelect($event)"
-            ></vex-combox-colletion>
-            <div>
-              <mat-form-field subscriptSizing="dynamic">
-                <input
-                  matInput
-                  [formControl]="document"
-                  placeholder="Número de documento&hellip;"
-                  type="text"
-                  name="search"
-                />
-              </mat-form-field>
-              <div
-                class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align ng-tns-c508571215-102"
-              ></div>
-            </div>
+          <vex-combox-colletion
+          ubscriptSizing="dynamic"
+          idComboCollection="typeNumberDocument"
+          name="selector_document"
+          label="Tipo de documento"
+          typeDomainName="IndividualTypeNumber"
+          placeholderDomainName="Seleccionar tipo documento&hellip;"
+          (stringEventEmitter)="infoSelect($event)"
+          class="flex-none"
+        ></vex-combox-colletion>
 
-            <div>
-              <button
-                color="primary"
-                aria-label=""
-                type="button"
-                mat-flat-button
-                (click)="search()"
-                name="enviar"
-                class="ml-4 flex-none"
-              >
-                Buscar
-              </button>
-              <div
-                class="mat-mdc-form-field-subscript-wrapper mat-mdc-form-field-bottom-align ng-tns-c508571215-102"
-              ></div>
-            </div>
-          </form>
-        </div>
+          <mat-form-field class="flex-none">
+          <mat-label>Número documento</mat-label>
+          <input
+            matInput
+            [formControl]="document"
+            placeholder="Número de documento&hellip;"
+            type="text"
+            name="search"
+          />
+          </mat-form-field>
 
-        <span class="flex-1"></span>
+          <div style="margin-left: 6px;">
 
-        <button
-          [matMenuTriggerFor]="columnFilterMenu"
-          class="ml-4 flex-none"
-          mat-icon-button
-          matTooltip="Filter Columns"
-          type="button"
-        >
-          <mat-icon svgIcon="mat:filter_list"></mat-icon>
-        </button>
+            <button
+              color="primary"
+              aria-label=""
+              type="button"
+              mat-flat-button
+              (click)="search()"
+              name="enviar"
+              class="flex-none"
+              style="margin: 6px;"
+            >
+              Buscar
+            </button>
+          </div>
 
-        <button
-          (click)="createCustomer()"
-          class="ml-4 flex-none"
-          color="primary"
-          mat-mini-fab
-          matTooltip="Add Customer"
-          type="button"
-        >
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button>
       </div>
+    </div>
 
-      <table
+
+</form>
+</div>
+
+
+
+<!-- <button
+[matMenuTriggerFor]="columnFilterMenu"
+class="ml-4 flex-none"
+mat-icon-button
+matTooltip="Filter Columns"
+type="button"
+>
+<mat-icon svgIcon="mat:filter_list"></mat-icon>
+</button> -->
+
+<div  class="mt-6 relative" style="padding-bottom: 56.25%; /* Relación de aspecto 16:9 */">
+  <table
         [dataSource]="dataSource"
         class="w-full"
         mat-table
@@ -155,7 +133,6 @@
           >
             <th
               *matHeaderCellDef
-              class="uppercase"
               mat-header-cell
               mat-sort-header
             >
@@ -216,9 +193,7 @@
         (page)="refreshPaginatorNext($event)"
       >
       </mat-paginator>
-    </div>
-  </vex-page-layout-content>
-</vex-page-layout>
+</div>
 
 <mat-menu
   #columnFilterMenu="matMenu"
@@ -265,3 +240,4 @@
     </button>
   </ng-template>
 </mat-menu>
+

@@ -374,7 +374,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       structureCubierta: [null],
       structureConservacion: [null],
 
-      // Campos de Acabados Principales
+      // Campos de acabados principales
       finishesFachadas: [null],
       finishesMuros: [null],
       finishesPisos: [null],
@@ -469,6 +469,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           this.privateAreaValidator('unitBuiltArea') // Validación para que no sea mayor al área total
         ]
       ],
+      unitBuiltObservation: [null]
       unitBuiltObservation: [null]
     });
 

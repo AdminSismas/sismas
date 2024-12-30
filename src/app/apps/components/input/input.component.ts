@@ -44,14 +44,14 @@ import { InputType } from '../../interfaces/content-info';
 })
 export class InputComponent implements OnInit {
 
-  @Input() public idComboInput: string = '';
+  @Input() public idComboInput = '';
   @Input() public cssClasses?: string;
-  @Input() public label: string = '';
-  @Input() public formControlNameInput: string = '';
-  @Input() public icon: string = '';
+  @Input() public label = '';
+  @Input() public formControlNameInput = '';
+  @Input() public icon = '';
   @Input() type: InputType = 'text';
   @Input() public hintValue: string |null = null;
-  @Input() public hideRequiredMarker: boolean = true;
+  @Input() public hideRequiredMarker = true;
 
   constructor() { }
 

@@ -53,7 +53,7 @@ export class ContentInformationConstruction {
   set typology(value:string) {}
 
   get typology(): string {
-    let name:string = `${NAME_NO_DISPONIBLE}`;
+    const name = `${NAME_NO_DISPONIBLE}`;
     if (this.domTipologiaTipo) {
       return `${this.domTipologiaTipo}`;
     }

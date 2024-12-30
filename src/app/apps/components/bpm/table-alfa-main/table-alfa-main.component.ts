@@ -78,13 +78,13 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   @Input({ required: true }) contentInformations!: InformationPegeable;
   @Input({ required: true }) executionId!: string;
   @Input() columns: TableColumn<Operation>[] = TABLE_ALFA_MAIN_OPERATION_COLUMN;
-  @Input({ required: true }) mode: number = 1;
+  @Input({ required: true }) mode = 1;
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   searchData!: SearchData;
 
   public page = PAGE;
-  public totalElements: number = 0;
+  public totalElements = 0;
   public pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
   public pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
   public dataSource!: MatTableDataSource<Operation>;
@@ -248,7 +248,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
           this.bpmCoreService.clearPropertyBpmOperation(this.executionId, operation.baunitHead!.baunitIdE as string)
             .subscribe(data => console.log(data));
         }
-      })
+      });
 
   }
 

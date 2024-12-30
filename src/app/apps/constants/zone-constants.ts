@@ -1,7 +1,7 @@
-import { Validators } from "@angular/forms"
-import { JSONInput } from "src/app/apps/interfaces/dynamic-forms"
+import { Validators } from "@angular/forms";
+import { JSONInput } from "src/app/apps/interfaces/dynamic-forms";
 
-export const NO_DETAILS_DATA: string = 'No hay detalles disponibles';
+export const NO_DETAILS_DATA = 'No hay detalles disponibles';
 
 export const URBAN_COLUMNS = [
   {
@@ -16,7 +16,7 @@ export const URBAN_COLUMNS = [
     name: 'vigencia',
     title: 'Vigencia'
   }
-]
+];
 
 export const RURAL_COLUMNS = [
   {
@@ -31,7 +31,7 @@ export const RURAL_COLUMNS = [
     name: 'vigencia',
     title: 'Vigencia'
   }
-]
+];
 
 export const GEOECONOMICA_COLUMNS = [
   {
@@ -46,7 +46,7 @@ export const GEOECONOMICA_COLUMNS = [
     name: 'vigencia',
     title: 'Vigencia'
   }
-]
+];
 
 const RURAL_PARAMS: JSONInput[] = [
   {
@@ -97,7 +97,7 @@ const RURAL_PARAMS: JSONInput[] = [
     element: 'collection',
     validators: [Validators.required]
   },
-]
+];
 
 const URBAN_PARAMS: JSONInput[] = [
   {
@@ -164,7 +164,7 @@ const URBAN_PARAMS: JSONInput[] = [
     element: 'collection',
     validators: [Validators.required]
   },
-]
+];
 
 const GEOECONOMIC_PARAMS: JSONInput[] = [
   {
@@ -199,7 +199,7 @@ const GEOECONOMIC_PARAMS: JSONInput[] = [
     element: 'input',
     validators: [Validators.required]
   },
-]
+];
 
 export const CADASTRE_CHANGE_LOG_PARAMS: JSONInput[] = [
   {
@@ -266,19 +266,19 @@ export const CADASTRE_CHANGE_LOG_PARAMS: JSONInput[] = [
     element: 'input',
     validators: [Validators.required]
   },
-]
+];
 
 
 export function getZoneParams(typeZone: string): JSONInput[] {
   switch (typeZone) {
     case 'rural':
-      return RURAL_PARAMS
+      return RURAL_PARAMS;
 
     case 'geoeconómica':
-      return GEOECONOMIC_PARAMS
+      return GEOECONOMIC_PARAMS;
 
     default:
-      return URBAN_PARAMS
+      return URBAN_PARAMS;
 
   }
 }

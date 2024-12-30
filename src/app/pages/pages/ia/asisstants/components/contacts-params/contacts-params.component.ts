@@ -63,17 +63,17 @@ export class ContactsParamsComponent implements OnInit, AfterViewInit {
 
 
   @ViewChild('audioPlayer') audioPlayer!: ElementRef<HTMLAudioElement>; // Elemento de audio
-  isPlaying: boolean = false;
-  currentAudioUrl: string = ''; // URL actual del audio
+  isPlaying = false;
+  currentAudioUrl = ''; // URL actual del audio
   voces: { id: number, nombre_voz: string, ejemplo_voz: string }[] = [];
 
   // Variables para el segundo formulario
-  fuente: string = '';
-  asistente: string = '';
-  proposito: string = '';
+  fuente = '';
+  asistente = '';
+  proposito = '';
   archivo: File | null = null;
 
-  mostrarTuerca: boolean = false;
+  mostrarTuerca = false;
 
   showCreateParamsButton = false;
   parametrosCreados = false;

@@ -64,20 +64,20 @@ export class EconomicModLandComponent implements OnInit{
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
     municipality: ['', Validators.required]
-  })
+  });
   public dataSource: DataSourceZoneManager = {
     urban: new MatTableDataSource<UrbanZone>(),
     rural: new MatTableDataSource<RuralZone>(),
     geoeconomic: new MatTableDataSource<GeoEconomicZone>()
-  }
+  };
   public filteredOptionsDepartments$: Observable<Department[]> | undefined;
   public filteredOptionsMunicipalities$: Observable<Municipality[]> | undefined;
   public optionsDeparments: Department[] = [];
   public optionsMunicipalities: Municipality[] = [];
   public STRING_INFORMATION_NOT_FOUND: string = STRING_INFORMATION_NOT_FOUND;
-  public divpolLv1: string = '';
-  public divpolLv2: string = '';
-  public gettedZones: boolean = false;
+  public divpolLv1 = '';
+  public divpolLv2 = '';
+  public gettedZones = false;
   public displayedColumns: DisplayedColumns = {
     urban: [],
     rural: [],
@@ -101,18 +101,18 @@ export class EconomicModLandComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.loadDepartmentalInformation()
+    this.loadDepartmentalInformation();
 
     Object.keys(this.displayedColumns).forEach((key: string) => {
       this.displayedColumns[key as keyof DisplayedColumns] = this.columns[key as keyof Columns].map((column) => column.name);
-      this.displayedColumns[key as keyof DisplayedColumns].push('actions')
-    })
+      this.displayedColumns[key as keyof DisplayedColumns].push('actions');
+    });
 
     this.refreshService.refresh$
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.getZones()
-      })
+        this.getZones();
+      });
   }
 
   loadDepartmentalInformation() {
@@ -139,7 +139,7 @@ export class EconomicModLandComponent implements OnInit{
       return;
     }
 
-    let dpto = this._filterInformationCode(
+    const dpto = this._filterInformationCode(
       codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
     if (dpto == null || dpto?.length <= 0) {
       return;
@@ -152,7 +152,7 @@ export class EconomicModLandComponent implements OnInit{
   }
 
   private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
-    let listOptions: any[] = options
+    const listOptions: any[] = options
       .filter((option: any): boolean => option[keyValue] === code);
     return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
   }
@@ -170,27 +170,27 @@ export class EconomicModLandComponent implements OnInit{
 
   getZones(): void {
     if (this.form.invalid) return;
-    const { department, municipality } = this.form.value
+    const { department, municipality } = this.form.value;
 
-    this.divpolLv1 = department.slice(0, 2)
-    this.divpolLv2 = municipality.slice(0, 3)
+    this.divpolLv1 = department.slice(0, 2);
+    this.divpolLv2 = municipality.slice(0, 3);
 
     this.gettedZones = true;
 
     this.urbanZoneService.getZones(this.divpolLv1, this.divpolLv2)
       .subscribe({
         next: ((result: UrbanZone[]) => this.dataSource.urban.data = result)
-      })
+      });
 
     this.ruralZoneService.getZones(this.divpolLv1, this.divpolLv2)
       .subscribe({
         next: ((result: RuralZone[]) => this.dataSource.rural.data = result)
-      })
+      });
 
     this.geoeconomicZoneService.getZones(this.divpolLv1, this.divpolLv2)
       .subscribe({
         next: ((result: GeoEconomicZone[]) => this.dataSource.geoeconomic.data = result)
-      })
+      });
   }
 
 

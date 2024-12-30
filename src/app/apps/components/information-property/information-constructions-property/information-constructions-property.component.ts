@@ -102,16 +102,16 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) public expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
   page:number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
 
@@ -300,9 +300,9 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     const dialogRef = this.dialog.open(this.confirmDialog);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        let baunitId = this.baunitId ?? '';
-        let executionId = this.executionId ?? '';
-        let unitBuiltId = customer.unitBuiltId;
+        const baunitId = this.baunitId ?? '';
+        const executionId = this.executionId ?? '';
+        const unitBuiltId = customer.unitBuiltId;
 
         this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
           next: () => {

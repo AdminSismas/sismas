@@ -58,7 +58,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class DetailInformationAddressComponent implements OnInit {
 
   data!: DetailBasicInformationAddress;
-  schema: string = `${environment.schemas.main}`;
+  schema = `${environment.schemas.main}`;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: BasicInformationAddress | undefined,
