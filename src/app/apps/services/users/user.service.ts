@@ -99,4 +99,8 @@ export class UserService {
       );
 
   }
+
+  // searchUser(value: string): Observable<User> {
+
+  // }
 }

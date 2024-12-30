@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, computed, OnInit, ViewChild } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,7 +17,6 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Content, User } from 'src/app/apps/interfaces/users/user';
-import { PeopleService } from 'src/app/apps/services/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
@@ -60,6 +59,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       }
     ];
   });
+  public searchCtrl: FormControl = new FormControl();
 
   public columns: { name: string, label: string }[] = USER_COLUMNS;
   public dataSource: MatTableDataSource<Content> = new MatTableDataSource<Content>();
@@ -76,7 +76,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private readonly layoutSerices: VexLayoutService,
     private dialog: MatDialog,
-    private peopleService: PeopleService,
     private snackbar: MatSnackBar
   ) { }
 
@@ -166,5 +165,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
     } else if (action === 'delete') {
       console.log('deleting....');
     }
+  }
+
+  searchUser() {
+    console.log(this.searchCtrl.value);
+    alert(this.searchCtrl.value);
   }
 }

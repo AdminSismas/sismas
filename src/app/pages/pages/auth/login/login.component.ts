@@ -37,7 +37,6 @@ import { NavigationLoaderService } from 'src/app/core/navigation/navigation-load
     RouterLink,
     MatSnackBarModule,
     MatSidenavModule,
-    RouterOutlet
   ]
 })
 export class LoginComponent {
@@ -52,7 +51,7 @@ export class LoginComponent {
     private snackbar: MatSnackBar,
     private authService: AuthService,
     private userService: UserService,
-    private navigationLoaderService: NavigationLoaderService 
+    private navigationLoaderService: NavigationLoaderService
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -73,12 +72,12 @@ export class LoginComponent {
             this.authService.getUserData()?.subscribe(
               (userData) => {
                 const user = new UserDetails(userData);
-                this.userService.setUser(user); 
+                this.userService.setUser(user);
 
-    
+
                 this.navigationLoaderService.loadInformationNavigation(user.role);
 
-         
+
                 this.router.navigate([`${environment.myWork_cadastralSearch}`]).then(() => {
                   this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
                     duration: 5000
