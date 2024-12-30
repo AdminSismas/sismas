@@ -75,10 +75,11 @@
               </ng-container>
 
               <!-- Actions Column -->
-              <ng-container matColumnDef="actions">
+              <ng-container   matColumnDef="actions">
                 <th *matHeaderCellDef mat-header-cell></th>
                 <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-                  <button
+                  <button 
+                  *ngIf="typeInformation === 'edition'"
                     mat-icon-button
                     [matMenuTriggerData]="{ infoOwner: row }"
                     [matMenuTriggerFor]="actionsMenu"
@@ -186,10 +187,10 @@
               </ng-container>
 
               <!-- Acciones -->
-              <ng-container matColumnDef="actions">
+              <ng-container   matColumnDef="actions">
                 <th *matHeaderCellDef mat-header-cell></th>
                 <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-                  <button mat-icon-button [matMenuTriggerData]="{ infoOwner: row }" [matMenuTriggerFor]="actionsGeoconomicMenu" type="button">
+                  <button *ngIf="typeInformation === 'edition'" mat-icon-button [matMenuTriggerData]="{ infoOwner: row }" [matMenuTriggerFor]="actionsGeoconomicMenu" type="button">
                     <mat-icon svgIcon="mat:more_horiz"></mat-icon>
                   </button>
                 </td>

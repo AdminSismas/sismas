@@ -38,7 +38,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_PROPERTIES
+  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
 } from '../../constants/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -178,7 +178,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
-          LIST_SCHEMAS_CONTROL_MAIN
+          LIST_SCHEMAS_CONTROL_MAIN,
+          TYPEINFORMATION_VISUAL
         )
       })
       .afterClosed();
