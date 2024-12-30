@@ -39,7 +39,6 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
-  TABLE_COLUMN_PROPERTIES
 } from '../../constants/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
