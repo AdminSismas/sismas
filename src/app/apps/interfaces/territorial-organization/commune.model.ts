@@ -18,7 +18,7 @@ export class Commune {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.codigoComuna && this.nombreComuna) {
       return `${this.codigoComuna}${GUION}${this.nombreComuna}`;
     } else if (this.codigoComuna) {

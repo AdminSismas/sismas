@@ -32,7 +32,7 @@ export class DomainCalificationCollection {
     this.domain = domain;
     this.dispname = dispname;
     this.colombiaCode = colombiaCode;
-    this.description = description
+    this.description = description;
  
    
   }

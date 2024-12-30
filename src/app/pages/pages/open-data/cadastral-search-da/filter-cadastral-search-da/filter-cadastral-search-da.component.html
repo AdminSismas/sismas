@@ -4,7 +4,7 @@
         class="headline m-0 flex-auto">
         Búsqueda avanzada datos abiertos
       </h2>
-  
+
       <button
         [matMenuTriggerFor]="settingsMenu"
         class="text-secondary"
@@ -12,7 +12,7 @@
         type="button">
         <mat-icon svgIcon="mat:more_vert"></mat-icon>
       </button>
-  
+
       <button
         class="text-secondary"
         mat-dialog-close
@@ -24,7 +24,7 @@
     <mat-divider class="text-border"></mat-divider>
     <mat-dialog-content class="flex flex-col overflow-hidden">
       <mat-tab-group class="overflow-hidden" (selectedTabChange)="clearFormFields($event)">
-  
+
    <!-- Búsqueda por segregación de número predial nacional -->
    <mat-tab label="Número Predial Nacional">
     <vex-page-layout class="overflow-hidden">
@@ -33,7 +33,7 @@
           <div class="flex flex-col sm:flex-row">
 
             <!-- Campo departamento -->
-           
+
                   <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                     <mat-label>Departamento</mat-label>
                     <input type="text"
@@ -42,15 +42,15 @@
                            matInput
                            formControlName="dpto"
                            placeholder="Departamento">
-                   
+
                   </mat-form-field>
-               
-              
-            
-  
+
+
+
+
             <!-- Campo municipio -->
-          
-        
+
+
             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
               <mat-label>Municipío</mat-label>
               <input type="text"
@@ -60,11 +60,11 @@
                     formControlName="mpio"
                     placeholder="Municipío">
             </mat-form-field>
-        
-         
-  
+
+
+
             <!-- Campo zona -->
-           
+
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                <mat-label>Zonas</mat-label>
                <input type="text"
@@ -75,13 +75,13 @@
                       placeholder="Zona&hellip;"
                       >
              </mat-form-field>
-         
-  
-          
-  
-  
+
+
+
+
+
             <!-- Campo sector -->
-       
+
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Sector</mat-label>
                 <input type="text"
@@ -92,13 +92,13 @@
                        placeholder="Sector"
                        >
               </mat-form-field>
-          
-  
-  
-       
-  
+
+
+
+
+
                 <!-- Campo Comuna -->
-              
+
                   <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                     <mat-label>Comuna</mat-label>
                     <input type="text"
@@ -109,10 +109,10 @@
                            placeholder="Comuna"
                            >
                   </mat-form-field>
-            
-  
-              
-  
+
+
+
+
                 <!-- Campo Barrio -->
                   <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                     <mat-label>Barrio</mat-label>
@@ -124,16 +124,16 @@
                            placeholder="Barrio"
                            >
                   </mat-form-field>
-              
-  
-  
+
+
+
           </div> <!-- ************SECCIOON 1 X6 -->
-  
+
           <br>
-  
+
           <div class="flex flex-col sm:flex-row">
-         
-            
+
+
                <!-- Campo Man/ver -->
                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Man/ver</mat-label>
@@ -145,10 +145,10 @@
                        placeholder="Man/ver"
                        >
               </mat-form-field>
-  
-          
-  
-       
+
+
+
+
               <!-- Campo Terreno -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Terreno</mat-label>
@@ -160,10 +160,10 @@
                        placeholder="Terreno"
                        >
               </mat-form-field>
-          
-         
-  
-            
+
+
+
+
               <!-- Campo Condición -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Condición</mat-label>
@@ -174,10 +174,10 @@
                        formControlName="condicion"
                        placeholder="Condición">
               </mat-form-field>
-            
-         
-  
-           
+
+
+
+
               <!-- Campo Edificio -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Edificio</mat-label>
@@ -189,10 +189,10 @@
                        placeholder="Edificio"
                        >
               </mat-form-field>
-        
-           
-  
-         
+
+
+
+
               <!-- Campo Piso -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Piso</mat-label>
@@ -204,12 +204,12 @@
                        placeholder="Piso"
                        >
               </mat-form-field>
-         
-  
-            
-               <!-- Campo Unidad Predial -->
+
+
+
+               <!-- Campo Unidad predial -->
                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Unidad Predial</mat-label>
+                <mat-label>Unidad predial</mat-label>
                 <input type="text"
                        maxlength="4"
                        aria-label="Number"
@@ -218,15 +218,15 @@
                        placeholder="Unidad predial"
                        >
               </mat-form-field>
-        
-        
-  
-  
+
+
+
+
           </div>
-  
+
           <br>
-  
-  
+
+
           <mat-dialog-actions align="center">
             <button
               (click)="sendInformationTable()"
@@ -238,7 +238,7 @@
               Buscar
             </button>
           </mat-dialog-actions>
-  
+
         </vex-page-layout-content>
       </vex-page-layout>
     </vex-page-layout>
@@ -260,27 +260,27 @@
                   icon="mat:assignment"
                   matIconSuffix
                 ></vex-input> -->
-                
+
               <mat-form-field>
                 <mat-label>Matrícula</mat-label>
-                <input 
+                <input
                 cssClasses="sm:ml-2 sm:mr-2 flex-1"
                 label="Matrícula"
                 type="text"
                 idComboInput="registrationID"
                 formControlNameInput="registration"
-                matInput 
+                matInput
                 placeholder="Matrícula&hellip;"/>
                 <mat-icon matIconSuffix svgIcon="mat:assignment"></mat-icon>
               </mat-form-field>
-               
+
                   <button color="primary" mat-raised-button type="button"
                           (click)="searchRegistrationNumber()">
                     <mat-icon matIconSuffix svgIcon="mat:search"></mat-icon>
                     Buscar
                   </button>
                   <button mat-icon-button color="primary"> </button>
-              
+
             </div>
               <div class="flex flex-col sm:flex-row">
                   <!--direccion-->
@@ -294,18 +294,18 @@
                   ></vex-input> -->
                   <mat-form-field>
                     <mat-label>Dirección</mat-label>
-                    <input 
+                    <input
                     cssClasses="sm:ml-2 sm:mr-2 flex-1"
                     label="Dirección"
                     type="text"
                     idComboInput="textAddressID"
                     formControlNameInput="textAddress"
-                    matInput 
+                    matInput
                     placeholder="Dirección&hellip;"/>
                     <mat-icon matIconSuffix svgIcon="mat:edit_location"></mat-icon>
                   </mat-form-field>
                   <!--boton de búsqueda-->
-                  
+
                     <button color="primary" mat-raised-button type="button"
                             (click)="searchByAddress()">
                       <mat-icon svgIcon="mat:search"></mat-icon>Buscar
@@ -398,18 +398,18 @@
           </div> -->
           <!-- Búsqueda por dirección de texto -->
 
-          
+
 
         </vex-page-layout-content>
       </vex-page-layout>
     </mat-tab>
-  
+
     <!-- Búsqueda por segregación de número predial nacional -->
     <mat-tab label="Selección municipal">
           <vex-page-layout>
             <vex-page-layout-content class="container-fluid">
               <div class="flex flex-col sm:flex-row">
-  
+
                 <!-- Campo departamento -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Departamentos</mat-label>
@@ -433,7 +433,7 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
                 <!-- Campo municipio -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Municipio</mat-label>
@@ -457,7 +457,7 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
                 <!-- Campo zona -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Zona</mat-label>
@@ -481,7 +481,7 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
                 <!-- Campo sector -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Sector</mat-label>
@@ -505,10 +505,10 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
               </div>
               <div class="flex flex-col sm:flex-row">
-  
+
                 <!-- Campo comuna -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Comuna</mat-label>
@@ -532,7 +532,7 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
                 <!-- Campo barrio -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Barrio</mat-label>
@@ -556,7 +556,7 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
                 <!-- Campo vereda -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Vereda</mat-label>
@@ -579,7 +579,7 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
                 <!-- Campo manzana -->
                 <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                   <mat-label>Manzana</mat-label>
@@ -603,9 +603,9 @@
                     }
                   </mat-autocomplete>
                 </mat-form-field>
-  
+
               </div>
-  
+
               <mat-dialog-actions align="center">
                 <button
                   (click)="searchMunicipalSelection()"
@@ -615,12 +615,12 @@
                   Buscar
                 </button>
               </mat-dialog-actions>
-  
+
             </vex-page-layout-content>
           </vex-page-layout>
     </mat-tab>
-  
-  
+
+
       </mat-tab-group>
     </mat-dialog-content>
   </form>
@@ -629,15 +629,14 @@
       <mat-icon svgIcon="mat:print"></mat-icon>
       <span>Imprimir</span>
     </button>
-  
+
     <button mat-menu-item>
       <mat-icon svgIcon="mat:download"></mat-icon>
       <span>Exportar</span>
     </button>
-  
+
     <button mat-menu-item>
       <mat-icon svgIcon="mat:delete"></mat-icon>
       <span>Borrar</span>
     </button>
   </mat-menu>
-  

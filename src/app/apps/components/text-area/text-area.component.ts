@@ -24,12 +24,12 @@ import { getRandomInt } from '../../utils/general';
 })
 export class TextAreaComponent implements OnInit {
 
-  @Input() cssClasses: string = '';
-  @Input() hintValue: string = '';
-  @Input() label: string = '';
-  @Input() formControlNameInput: string = '';
-  @Input() idTextArea: string = '';
-  @Input() hideRequiredMarker: boolean = true;
+  @Input() cssClasses = '';
+  @Input() hintValue = '';
+  @Input() label = '';
+  @Input() formControlNameInput = '';
+  @Input() idTextArea = '';
+  @Input() hideRequiredMarker = true;
 
   ngOnInit(): void {
     if (this.idTextArea.length>0) {

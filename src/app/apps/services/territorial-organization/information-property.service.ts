@@ -21,8 +21,8 @@ import { GeoEconomicZone } from '../../interfaces/information-property/geo-econo
   providedIn: 'root'
 })
 export class InformationPropertyService {
-  basic_url: string = `${envi.url}:${envi.port}`;
-  public ccAddress:string = EVIRONMENT_CC_DIRECCION
+  basic_url = `${envi.url}:${envi.port}`;
+  public ccAddress:string = EVIRONMENT_CC_DIRECCION;
   private httpClient = inject(HttpClient);
 
   reloadTable$ = new Subject<boolean>();
@@ -46,7 +46,7 @@ export class InformationPropertyService {
     id: string,
     executionId: string | null | undefined = null
   ): Observable<BasicInformationProperty> {
-    let url: string = `${this.basic_url}${envi.baunit}${schema}`;
+    let url = `${this.basic_url}${envi.baunit}${schema}`;
     if (!executionId || (executionId && schema === `${envi.schemas.main}`)) {
       url += `/${id}`;
     } else {
@@ -65,7 +65,7 @@ export class InformationPropertyService {
   ): Observable<BasicInformationAddress[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
-    const url: string = `${this.basic_url}${envi.basicAddress}`;
+    const url = `${this.basic_url}${envi.basicAddress}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -75,7 +75,7 @@ export class InformationPropertyService {
     schema: string,
     id: string | undefined
   ): Observable<DetailBasicInformationAddress> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}${id}`;
+    const url = `${this.basic_url}${envi.ccDireccion}${id}`;
     return this.requestsService
       .sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
@@ -88,7 +88,7 @@ export class InformationPropertyService {
     id: string,
     executionId: string | null | undefined = null
   ): Observable<InfoOwners[]> {
-    let url: string = `${this.basic_url}${envi.rrright}${schema}`;
+    let url = `${this.basic_url}${envi.rrright}${schema}`;
     if (!executionId || (executionId && schema === `${envi.schemas.main}`)) {
       url += `/${id}`;
     } else {
@@ -108,7 +108,7 @@ export class InformationPropertyService {
     params = params.append('page', `${page.page}`);
     params = params.append('size', `${page.size}`);
     params = params.append('sortBy', `unitBuiltLabel`);
-    let url: string = `${this.basic_url}${envi.unitBuilt}/${schema}`;
+    let url = `${this.basic_url}${envi.unitBuilt}/${schema}`;
     if (!executionId || (executionId && schema === `${envi.schemas.main}`)) {
       url += `/${page.searchData}`;
     } else {
@@ -124,7 +124,7 @@ export class InformationPropertyService {
     id: number | undefined
 
   ): Observable<ContentInformationConstruction> {
-    const url: string = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
+    const url = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
 
     return this.requestsService
       .sendRequestsFetchGet(url)
@@ -138,7 +138,7 @@ export class InformationPropertyService {
   ): Observable<CcCalificacionUB[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('unitBuiltId', `${unitBuiltId}`);
-    const url: string = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
+    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -153,7 +153,7 @@ export class InformationPropertyService {
     params = params.append('page', `${page.page}`);
     params = params.append('size', `${page.size}`);
     params = params.append('sortBy', `validityValuation`);
-    let url: string = `${this.basic_url}${envi.valuation}${schema}`;
+    let url = `${this.basic_url}${envi.valuation}${schema}`;
     if (!executionId || (executionId && schema === `${envi.schemas.main}`)) {
       url += `/${page.searchData}`;
     } else {
@@ -171,7 +171,7 @@ export class InformationPropertyService {
   ): Observable<ZoneBAUnit[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
-    let url: string = `${this.basic_url}${envi.baUnitZona_baunitId}`;
+    const url = `${this.basic_url}${envi.baUnitZona_baunitId}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -184,7 +184,7 @@ export class InformationPropertyService {
   ): Observable<ZoneBAUnit[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
-    let url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
+    const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -197,7 +197,7 @@ export class InformationPropertyService {
   ): Observable<ZoneBAUnit[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
-    let url: string = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
+    const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -210,7 +210,7 @@ export class InformationPropertyService {
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
     
-    let url: string = `${this.basic_url}/${'ccZonaHomoFisicaUr'}/${'divpol'}`;
+    const url = `${this.basic_url}/${'ccZonaHomoFisicaUr'}/${'divpol'}`;
   
     console.log('url', url);
     
@@ -226,7 +226,7 @@ export class InformationPropertyService {
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
-    let url: string = `${this.basic_url}/${'ccZonaHomoFisicaRu'}/${'divpol'}`;
+    const url = `${this.basic_url}/${'ccZonaHomoFisicaRu'}/${'divpol'}`;
 
     console.log('url', url);
     return this.getData(url, params).pipe(
@@ -242,7 +242,7 @@ export class InformationPropertyService {
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
-    let url: string = `${this.basic_url}/${'ccZonaHomoGeoEconomica'}/${'divpol'}`;
+    const url = `${this.basic_url}/${'ccZonaHomoGeoEconomica'}/${'divpol'}`;
 
     console.log('url', url);
     return this.getData(url, params).pipe(
@@ -287,7 +287,7 @@ export class InformationPropertyService {
     id: string,
     updateBasicInformationAddress: Partial<DetailBasicInformationAddress>
   ): Observable<DetailBasicInformationAddress> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}${id}`;
+    const url = `${this.basic_url}${envi.ccDireccion}${id}`;
     return this.httpClient.put<DetailBasicInformationAddress>(
       url,
       updateBasicInformationAddress
@@ -298,7 +298,7 @@ export class InformationPropertyService {
     id: string,
     updateBasicInformationConstruction: Partial<ContentInformationConstruction>
   ): Observable<ContentInformationConstruction> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}${id}`;
+    const url = `${this.basic_url}${envi.ccDireccion}${id}`;
     return this.httpClient.put<ContentInformationConstruction>(
       url,
       updateBasicInformationConstruction
@@ -318,10 +318,10 @@ export class InformationPropertyService {
     return this.http.put<BasicInformationProperty>(url, body)
       .pipe(
         catchError(error => {
-          console.log('Error en la edición de los aspectos generales del predio')
+          console.log('Error en la edición de los aspectos generales del predio');
           throw error;
         })
-      )
+      );
   }
   /**
    * Create basic information address
@@ -334,7 +334,7 @@ export class InformationPropertyService {
     baunitId: string,
     createBasicInformationAddress: CreateBasicInformationAddress,
   ): Observable<DetailBasicInformationAddress> {
-    const url: string = `${this.basic_url}${this.ccAddress}`;
+    const url = `${this.basic_url}${this.ccAddress}`;
     const httpParams: HttpParams = new HttpParams()
       .set('baunitId', baunitId);
     return this.httpClient.post<DetailBasicInformationAddress>(
@@ -378,14 +378,14 @@ export class InformationPropertyService {
    * @returns
    */
   deleteBasicInformationPropertyAddress(direccionId: string): Observable<any> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}${direccionId}`;
+    const url = `${this.basic_url}${envi.ccDireccion}${direccionId}`;
     const httpParams: HttpParams = new HttpParams().set('version', '99999');
     
     return this.httpClient.delete(url, { params: httpParams});
   }
 
   deleteBasicInformationPropertyConstruction(constructionId: string): Observable<any> {
-    const url: string = `${this.basic_url}${envi.ccDireccion}/${constructionId}`;
+    const url = `${this.basic_url}${envi.ccDireccion}/${constructionId}`;
     const httpParams: HttpParams = new HttpParams()
       .set('version', '9999999');
     return this.httpClient.delete(url, { params: httpParams });

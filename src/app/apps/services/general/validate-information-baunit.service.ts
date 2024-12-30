@@ -11,7 +11,7 @@ import { PageSearchData } from '../../interfaces/page-search-data.model';
 })
 export class ValidateInformationBaunitService {
 
-  basic_url:string = `${environment.url}:${environment.port}`;
+  basic_url = `${environment.url}:${environment.port}`;
   constructor(
     private http: HttpClient,
     private requestsService: SendGeneralRequestsService
@@ -30,37 +30,37 @@ export class ValidateInformationBaunitService {
   advancedSearchDa(page:PageSearchData,value:string):Observable<InformationPegeable> {
 
     let paramsA:HttpParams = new HttpParams();
-     paramsA = paramsA.append('page', `${page.page}`)
-     paramsA = paramsA.append('size', `${page.size}`)
+     paramsA = paramsA.append('page', `${page.page}`);
+     paramsA = paramsA.append('size', `${page.size}`);
      if (page.searchData.sidewalk !== null && page.searchData.sidewalk !== undefined && page.searchData.sidewalk.length > 10) {
-       paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`)
+       paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`);
      }
      else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
-       paramsA = paramsA.append('npnlike',`${page.searchData.block}`)
+       paramsA = paramsA.append('npnlike',`${page.searchData.block}`);
      }
 
     // const url: string = `${this.basic_url}/baunit/npnlike?npnlike=1800101040000030600069&page=0&size=4`;
-    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
+    const url = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
     // return this.getData(url, paramsMun);
-    return this.http.get<InformationPegeable>(url)
+    return this.http.get<InformationPegeable>(url);
   }
 
 
   advancedSearchCadastral(page:PageSearchData,value:string):Observable<InformationPegeable> {
 
     let paramsA:HttpParams = new HttpParams();
-        paramsA = paramsA.append('page', `${page.page}`)
-        paramsA = paramsA.append('size', `${page.size}`)
+        paramsA = paramsA.append('page', `${page.page}`);
+        paramsA = paramsA.append('size', `${page.size}`);
         if (page.searchData.sidewalk !== null && page.searchData.sidewalk !== undefined && page.searchData.sidewalk.length > 10) {
-          paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`)
+          paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`);
         }
         else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
-          paramsA = paramsA.append('npnlike',`${page.searchData.block}`)
+          paramsA = paramsA.append('npnlike',`${page.searchData.block}`);
         }
         
         // const url:string = `${environment.url}:${environment.port}${environment.baunit_npnlike}${value}`;
-    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}0&size=${page.size}`;
-    return this.http.get<InformationPegeable>(url)
+    const url = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
+    return this.http.get<InformationPegeable>(url);
     // return this.getData(url,paramsA).pipe();
 
   }
@@ -68,18 +68,18 @@ export class ValidateInformationBaunitService {
   historiAdvancedSearch(page:PageSearchData,value:string):Observable<InformationPegeable> {
 
     let paramsA:HttpParams = new HttpParams();
-        paramsA = paramsA.append('page', `${page.page}`)
-        paramsA = paramsA.append('size', `${page.size}`)
+        paramsA = paramsA.append('page', `${page.page}`);
+        paramsA = paramsA.append('size', `${page.size}`);
         if (page.searchData.sidewalk !== null && page.searchData.sidewalk !== undefined && page.searchData.sidewalk.length > 10) {
-          paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`)
+          paramsA = paramsA.append('npnlike',`${page.searchData.sidewalk}`);
         }
         else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
-          paramsA = paramsA.append('npnlike',`${page.searchData.block}`)
+          paramsA = paramsA.append('npnlike',`${page.searchData.block}`);
         }
         
         // const url:string = `${environment.url}:${environment.port}${environment.baunit_npnlike}${value}`;
-    const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
-    return this.http.get<InformationPegeable>(url)
+    const url = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
+    return this.http.get<InformationPegeable>(url);
     // return this.getData(url,paramsA).pipe();
 
   }

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, Input, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
@@ -78,7 +78,7 @@ import { MatDialog } from '@angular/material/dialog';
         InputComponent
     ]
 })
-export class TableProceduresComponent {
+export class TableProceduresComponent implements OnInit, OnDestroy {
   /* ============== ATRIBUTES ============== */
   /* ============== ATRIBUTES ============== */
 dataSource!: MatTableDataSource<ProceduresCollection>;
@@ -86,11 +86,11 @@ searchCtrl: UntypedFormControl = new UntypedFormControl();
 isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 layoutCtrl = new UntypedFormControl('boxed');
 contentInformations!: InformationPegeable;
-disabledEndDate: boolean = false;
+disabledEndDate = false;
 private fBuilder = inject(FormBuilder);
 informationEjecution!: FormGroup;
-seeInfo:boolean= false;
-seeInfoDocument:boolean= false;
+seeInfo= false;
+seeInfoDocument= false;
 public procedureDetail:TaskResponseModel= new TaskResponseModel();
 
 // Array para almacenar las suscripciones
@@ -100,7 +100,7 @@ private subscriptions: Subscription  | undefined[] = [];
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  totalElements: number = 0;
+  totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -204,7 +204,7 @@ private initForm(): void {
         +value.executionCode)
         .subscribe( result => {
           this.procedureDetail = result;
-            this.seeTaskProperty(this.procedureDetail,+value.executionCode)
+            this.seeTaskProperty(this.procedureDetail,+value.executionCode);
           
         });
     }
@@ -238,7 +238,7 @@ private initForm(): void {
         }))
       .subscribe(data=>{
         console.log(data, 'executoingCode');
-      })
+      });
     }
 
     public beginAtEFormGreaterThanDate(){
@@ -262,7 +262,7 @@ private initForm(): void {
       
      
         }))
-      .subscribe()
+      .subscribe();
     }
   
 
@@ -322,7 +322,7 @@ private initForm(): void {
       beginAtE: '',
       executionCode: this.executionCodeForm?.value,
       individualNumber: '',
-    }
+    };
     
     this.getDataFromProceduresService(formValue);
     }
@@ -358,10 +358,10 @@ private initForm(): void {
 
     if(this.beginAtForm?.value === null){
       // this.beginAtE?.setValue(new Date())
-       beginAtETrans = ''
+       beginAtETrans = '';
     }
 
-    const beginAtTrans = new Date(this.beginAtForm?.value)
+    const beginAtTrans = new Date(this.beginAtForm?.value);
 
 
     if(this.executionCodeForm?.value === null){
@@ -381,7 +381,7 @@ private initForm(): void {
       beginAtE: beginAtETrans ? this.formatDate(new Date('13/01/2024')) : '' ,
       executionCode: this.executionCodeForm?.value,
       individualNumber: this.individualNumberPartForm?.value,
-    }
+    };
     
     return formValue;
   }
@@ -471,15 +471,15 @@ private initForm(): void {
     }
 
     get beginAtForm(){
-      return this.informationEjecution.get('beginAtForm')
+      return this.informationEjecution.get('beginAtForm');
     }
     get beginAtEForm(){
-      return this.informationEjecution.get('beginAtEForm')
+      return this.informationEjecution.get('beginAtEForm');
     }
     get executionCodeForm(){
-      return this.informationEjecution.get('executionCodeForm')
+      return this.informationEjecution.get('executionCodeForm');
     }
     get individualNumberPartForm(){
-      return this.informationEjecution.get('individualNumberPartForm')
+      return this.informationEjecution.get('individualNumberPartForm');
     }
 }

@@ -65,7 +65,7 @@ describe('TableCadastralSearchComponent', () => {
     component = fixture.componentInstance;
     infoTableService = TestBed.inject(InfoTableService);
     service = TestBed.inject(VexLayoutService);
-    httpMock = TestBed.inject(HttpTestingController)
+    httpMock = TestBed.inject(HttpTestingController);
 
     fixture.detectChanges();
     compiled = fixture.nativeElement;

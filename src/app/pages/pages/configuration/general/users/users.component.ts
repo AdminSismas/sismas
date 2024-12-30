@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, computed, OnInit, ViewChild } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,11 +17,11 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Content, User } from 'src/app/apps/interfaces/users/user';
-import { PeopleService } from 'src/app/apps/services/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-users',
@@ -58,15 +58,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
         label: 'Editar',
         icon: 'mat:edit'
       }
-    ]
-  })
+    ];
+  });
+  public searchCtrl: FormControl = new FormControl();
 
   public columns: { name: string, label: string }[] = USER_COLUMNS;
   public dataSource: MatTableDataSource<Content> = new MatTableDataSource<Content>();
   public displayedColumns: string[] = [];
-  public totalElements: number = 0;
-  public page: number = 0;
-  public pageSize: number = 10;
+  public totalElements = 0;
+  public page = 0;
+  public pageSize = 10;
   public pageSizeOptions: number[] = [5, 7, 10, 20, 50];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -76,12 +77,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private readonly layoutSerices: VexLayoutService,
     private dialog: MatDialog,
-    private peopleService: PeopleService,
     private snackbar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    this.getUsers()
+    this.getUsers();
 
     this.displayedColumns = this.columns.map((column) => column.name);
     this.displayedColumns.push('actions');
@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getUsers(page: number = 0, size: number = 10): void {
+  getUsers(page = 0, size = 10): void {
     this.userService.getUsers(page, size)
       .subscribe({
         next: (data: User) => {
@@ -108,7 +108,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
           });
           throw error;
         }
-      })
+      });
   }
 
   dataSourceFormat(data: User): void {
@@ -116,12 +116,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
       return {
         ...row,
         fullName: row.individual.fullName
-      }
+      };
     });
   }
 
   pageEvent(pageEvent: PageEvent): void {
-    this.getUsers(pageEvent.pageIndex, pageEvent.pageSize)
+    this.getUsers(pageEvent.pageIndex, pageEvent.pageSize);
   }
 
   showTableValue(value: any, key: string): string {
@@ -140,16 +140,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
     })
       .afterClosed()
       .subscribe((result: User) => {
-        console.log(result)
+        console.log(result);
         setTimeout(() =>{
-          this.getUsers(this.page, this.pageSize)
-        } , 300)
-      })
+          this.getUsers(this.page, this.pageSize);
+        } , 300);
+      });
   }
 
   actionMenuHandler(action: string, row: User) {
     if (action === 'edit') {
-      console.log('editing....')
+      console.log('editing....');
       this.dialog.open(CreateUsersComponent, {
         data: {
           ...row,
@@ -158,13 +158,33 @@ export class UsersComponent implements OnInit, AfterViewInit {
       })
         .afterClosed()
         .subscribe((result: User) => {
-          console.log(result)
+          console.log(result);
           setTimeout(() =>{
-            this.getUsers(this.page, this.pageSize)
-          } , 300)
-        })
+            this.getUsers(this.page, this.pageSize);
+          } , 300);
+        });
     } else if (action === 'delete') {
-      console.log('deleting....')
+      console.log('deleting....');
     }
+  }
+
+  searchUser() {
+    if (!this.searchCtrl.value) {
+      this.getUsers();
+      return;
+    }
+    this.userService.searchUser(this.searchCtrl.value)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.dataSource.data = [res];
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this.snackbar.open('Usuario no encontrado', 'CLOSE', { duration: 4000 });
+          }
+          throw error;
+        }
+      });
   }
 }

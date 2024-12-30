@@ -13,7 +13,7 @@ import { MatDialogTitle } from '@angular/material/dialog';
   styleUrl: './eco-comite.component.scss'
 })
 export class EcoComiteComponent implements OnInit {
-  @Input() public id: string = '';
+  @Input() public id = '';
   constructor() {
   }
 

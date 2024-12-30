@@ -16,13 +16,13 @@ import { faPaperPlane, faPaperclip, faSearch, faPhone, faEllipsisV, faUserCircle
 })
 export class AgentChatComponent implements OnInit, AfterViewChecked {
   messages: { from: string, text: string }[] = [];
-  newMessage: string = '';
-  isTyping: boolean = false;
-  isSearchVisible: boolean = false;  // Estado para la visibilidad de la sección de búsqueda
-  isSoundOn: boolean = true;  // Estado del sonido
-  isRecording: boolean = false;  // Estado de la grabación de audio
-  isRobot: boolean = true;  // Estado del icono (robot/humano)
-  isInputDisabled: boolean = false;  // Estado del campo de texto
+  newMessage = '';
+  isTyping = false;
+  isSearchVisible = false;  // Estado para la visibilidad de la sección de búsqueda
+  isSoundOn = true;  // Estado del sonido
+  isRecording = false;  // Estado de la grabación de audio
+  isRobot = true;  // Estado del icono (robot/humano)
+  isInputDisabled = false;  // Estado del campo de texto
   mediaRecorder: MediaRecorder | null = null;  // Objeto de grabación de medios
   audioChunks: Blob[] = [];  // Almacena los fragmentos de audio grabados
   audio = new Audio();  // Objeto de audio para reproducir

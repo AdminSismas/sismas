@@ -88,7 +88,7 @@ export class EditInformationConstructionDialogComponent implements OnInit {
     'Vinilo Lujo', 'Otros lujos'
   ];
 
-  // Opciones para Baño
+  // Opciones para baño
   banoTamanoOptions: string[] = ['Sin baño', 'Pequeño', 'Mediano', 'Grande'];
   banoEnchapesOptions: string[] = [
     'Sin cubrimiento', 'Pañete', 'Baldosa común de cemento', 'Baldosín', 'Cristanac',
@@ -96,7 +96,7 @@ export class EditInformationConstructionDialogComponent implements OnInit {
   ];
   banoMobiliarioOptions: string[] = ['Pobre', 'Sencillo', 'Regular', 'Bueno', 'Lujoso'];
 
-  // Opciones para Cocina
+  // Opciones para cocina
   cocinaTamanoOptions: string[] = ['Sin cocina', 'Pequeña', 'Mediana', 'Grande'];
   cocinaEnchapesOptions: string[] = [
     'Sin cubrimiento', 'Pañete', 'Baldosa común de cemento', 'Baldosín', 'Cristanac',
@@ -152,25 +152,25 @@ export class EditInformationConstructionDialogComponent implements OnInit {
 
 
     this.traditionalRatingForm = this.fBuilder.group({
-      // Campos de Estructura
+      // Campos de estructura
       structureArmazon: [null],
       structureMuros: [null],
       structureCubierta: [null],
       structureConservacion: [null],
 
-      // Campos de Acabados Principales
+      // Campos de acabados principales
       finishesFachadas: [null],
       finishesMuros: [null],
       finishesPisos: [null],
       finishesConservacion: [null],
 
-      // Campos de Baño
+      // Campos de baño
       bathSize: [null],
       bathEnchapes: [null],
       bathMobiliario: [null],
       bathConservacion: [null],
 
-      // Campos de Cocina
+      // Campos de cocina
       kitchenSize: [null],
       kitchenEnchapes: [null],
       kitchenMobiliario: [null],

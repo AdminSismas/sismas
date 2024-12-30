@@ -32,10 +32,10 @@ export class DeleteInformationZonesPropertyComponent {
   deleteBAUnitZonesProperty(): void {
 
     this.informationPropertyService.deleteBAUnitZones(this.data.baUnitZonaId, this.data.baunitId, 2024, 99999)
-      .subscribe((res: any) => console.log(res))
+      .subscribe((res: any) => console.log(res));
 
-    this.close()
-    this.snackbar.open('Zona eliminada', 'CERRAR', { duration: 4000 })
+    this.close();
+    this.snackbar.open('Zona eliminada', 'CERRAR', { duration: 4000 });
   }
 
   close() {

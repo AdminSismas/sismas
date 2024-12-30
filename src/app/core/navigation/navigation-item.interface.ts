@@ -22,7 +22,7 @@ export interface NavigationDropdown {
   type: 'dropdown';
   label: string;
   icon?: string;
-  children: Array<NavigationLink | NavigationDropdown>;
+  children: (NavigationLink | NavigationDropdown)[];
   badge?: {
     value: string | any;
     bgClass: string;
@@ -34,6 +34,6 @@ export interface NavigationDropdown {
 export interface NavigationSubheading {
   type: 'subheading';
   label: string;
-  children: Array<NavigationLink | NavigationDropdown>;
+  children: (NavigationLink | NavigationDropdown)[];
   roles?: string[];
 }

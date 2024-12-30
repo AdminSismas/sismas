@@ -45,12 +45,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class SidenavItemComponent implements OnInit, OnChanges {
   @Input({ required: true }) item!: NavigationItem;
   @Input({ required: true }) level!: number;
-  isOpen: boolean = false;
-  isActive: boolean = false;
+  isOpen = false;
+  isActive = false;
 
   isLink = this.navigationService.isLink;
   isDropdown = this.navigationService.isDropdown;
   isSubheading = this.navigationService.isSubheading;
+  public routerItems: NavigationItem[] = [];
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -68,6 +69,9 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    // console.log(this.item,'this.item desde side nav Item ');
+    this.routerItems.push(this.item);
+    this.navigationService.menuItemList(this.item);
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -82,6 +86,10 @@ export class SidenavItemComponent implements OnInit, OnChanges {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((item) => this.onOpenChange(item));
+
+
+      
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {

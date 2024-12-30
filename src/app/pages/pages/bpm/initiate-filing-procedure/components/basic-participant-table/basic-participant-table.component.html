@@ -24,7 +24,7 @@
   </div>
   <vex-combox-colletion
     idComboCollection="typeParticipation"
-    label="Tipo Participación"
+    label="Tipo participación"
     formControlNameCombobox="typeParticipation"
     typeDomainName="BpmParticipation"
     placeholderDomainName="Ponga tipo documento&hellip;"
@@ -33,7 +33,7 @@
 </div>
 <div class="flex flex-col sm:flex-row lg:gap-1 sm:gap-6">
   <mat-form-field class="sm:w-full sm:ml-2 sm:mr-2 sm:flex-1 lg:flex-auto max-w-[430px] sm:min-w-[320px]">
-    <mat-label>Nombre Completo Persona</mat-label>
+    <mat-label>Nombre completo persona</mat-label>
     <input
       formControlName="personCompleted"
       matInput/>
@@ -62,7 +62,7 @@
           [matColumnDef]="column.property">
           <th
             *matHeaderCellDef
-            class="uppercase items-center"
+            class="items-center"
             mat-header-cell
             mat-sort-header>
             {{ column.label }}
@@ -79,7 +79,7 @@
       <!-- Action Column -->
       <ng-container matColumnDef="actions">
         <th *matHeaderCellDef mat-header-cell mat-sort-header
-            class="uppercase items-center">
+            class="items-center">
         </th>
         <td *matCellDef="let row"
             class="w-10 text-secondary pl-2 pr-2" mat-cell>
@@ -97,7 +97,7 @@
       <ng-container matColumnDef="empty-row">
         <td *matCellDef="let row"
             class="w-10 text-secondary pl-2 pr-2" mat-cell>
-          No Data
+          No data
         </td>
       </ng-container>
 
@@ -124,7 +124,7 @@
   <ng-template let-customer="customer" matMenuContent>
     <button (click)="deleteInformations(customer)" mat-menu-item>
       <mat-icon svgIcon="mat:delete"></mat-icon>
-      <span>Delete</span>
+      <span>Borrar</span>
     </button>
   </ng-template>
 </mat-menu>

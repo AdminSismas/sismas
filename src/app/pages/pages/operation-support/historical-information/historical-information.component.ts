@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input,ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, Input,ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { InConstructionComponent } from '../../../../apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -78,7 +78,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
   templateUrl: './historical-information.component.html',
   styleUrl: './historical-information.component.scss'
 })
-export class HistoricalInformationComponent {
+export class HistoricalInformationComponent implements OnInit, AfterViewInit {
 
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -88,7 +88,7 @@ export class HistoricalInformationComponent {
     @Input()
     columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
     page = PAGE;
-    totalElements: number = 0;
+    totalElements = 0;
     pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
     pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   
@@ -166,7 +166,7 @@ export class HistoricalInformationComponent {
 
     createAdvancedSearch(): void {
       if(this.searchData){
-        const cleanValue = this.cleanJsonValues(this.searchData)
+        const cleanValue = this.cleanJsonValues(this.searchData);
         this.searchData = cleanValue;
       }
       this.dialog
@@ -282,7 +282,7 @@ export class HistoricalInformationComponent {
       if (this.searchData == null) {
         return false;
       }
-      let searchData: SearchData = this.searchData;
+      const searchData: SearchData = this.searchData;
   
       if (this.isValidateField(searchData?.registration)) {
         this.searchPropertiesByRegistration(this.searchData);
@@ -344,7 +344,7 @@ export class HistoricalInformationComponent {
       this.baunitService.historiAdvancedSearch(this.generateObjectPageSearchData(data),value)
       .subscribe(value=>{
         console.log(value);
-        this.captureInformationSubscribe(value)
+        this.captureInformationSubscribe(value);
       });
     }
   
@@ -389,7 +389,7 @@ export class HistoricalInformationComponent {
       if (event == null) {
         return;
       }
-      console.log(this.page, ' paginaciom')
+      console.log(this.page, ' paginaciom');
       this.page = event.pageIndex;
       this.pageSize = event.pageSize;
   
@@ -423,7 +423,7 @@ export class HistoricalInformationComponent {
           );
           return;
         }
-        let url: string = `${environment.initiate_filing_procedure}`;
+        const url = `${environment.initiate_filing_procedure}`;
         this.sendInformation.setInformationRegister(data);
         this.router.navigate([`${url}`, data.baunitIdE])
           .then(r => {

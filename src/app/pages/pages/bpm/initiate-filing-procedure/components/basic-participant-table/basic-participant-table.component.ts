@@ -93,7 +93,7 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   @Output() processParticipants = new EventEmitter<ProcessParticipant[]>();
 
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource!: MatTableDataSource<ProcessParticipant>;
@@ -212,8 +212,8 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
                         }
                         return throwError(() => error);
                       }
-                    })
-                })
+                    });
+                });
             }
             return throwError(() => error);
           },
@@ -245,7 +245,7 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
     }
 
     if (this.person.individualId) {
-      let participant: ProcessParticipant = new ProcessParticipant();
+      const participant: ProcessParticipant = new ProcessParticipant();
       participant.participationId = 0;
       participant.bpmParticipation = typeParticipation;
       participant.individual = this.person;

@@ -12,11 +12,11 @@ import { DOCUMENT } from '@angular/common';
 })
 export class VexSidebarComponent implements OnDestroy {
   @Input() position: 'left' | 'right' = 'left';
-  @Input() invisibleBackdrop: boolean = false;
+  @Input() invisibleBackdrop = false;
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
-  private _opened: boolean = false;
+  private _opened = false;
 
   get opened() {
     return this._opened;

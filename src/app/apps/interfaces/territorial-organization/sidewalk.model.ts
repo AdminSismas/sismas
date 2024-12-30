@@ -18,7 +18,7 @@ export class Sidewalk {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.codigoVereda && this.nombreVereda) {
       return `${this.codigoVereda}${GUION}${this.nombreVereda}`;
     } else if (this.codigoVereda) {

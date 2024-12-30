@@ -90,16 +90,16 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) public expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<InfoAppraisal>[] = TABLE_COLUMN_PROPERTIES_APPRAISALS;
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
 
@@ -168,7 +168,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   }
 
   private validatePropertyInList(listFirst: string[], listSecond: string[]): boolean {
-    let showProperty: boolean = false;
+    let showProperty = false;
     listFirst.forEach(e => {
       if (listSecond.includes(e)) {
         showProperty = true;

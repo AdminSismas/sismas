@@ -3,8 +3,8 @@ import { contentInfoWorkflow } from '../interfaces/content-info-workflow.model';
 import { JSONInput } from '../interfaces/dynamic-forms';
 import { Validators } from '@angular/forms';
 
-export const PAGE: number = 0;
-export const PAGE_SIZE: number = 10;
+export const PAGE = 0;
+export const PAGE_SIZE = 10;
 export const PAGE_SIZE_OPTION: number[] = [5, 10, 20, 50];
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoWorkflow>[]= [
     {
@@ -56,7 +56,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoWorkflow>[]= [
         visible: true,
         cssClasses: ['font-medium']
     },
-]
+];
 
 const workflow: any = {
   "processId": 1,
@@ -71,7 +71,7 @@ const workflow: any = {
   "validToAt": "2026-07-12",
   "dueDays": 5,
   "icon": "camb_juridico_01.png"
-}
+};
 
 export const WORKFLOW_INPUTS: JSONInput[] = [
   {
@@ -154,4 +154,4 @@ export const WORKFLOW_INPUTS: JSONInput[] = [
     validators: [Validators.required],
     element: 'input'
   },
-]
+];

@@ -118,7 +118,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       type: 'BaunitProcessType',
       placeholder: 'Elijir un tipo de proceso'
     }
-  ]
+  ];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: BasicInformationProperty,
@@ -141,7 +141,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     "domBaunitCondition": ['', Validators.required],
     "domBaunitEconoDesti": ['', Validators.required],
     "domBaunitProcessType": ['']
-  })
+  });
 
   ngOnInit(): void {
     this.form.reset(this.data);
@@ -158,8 +158,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
         this.snackbar.open('Se ha actualizado los aspectos generales del predio', 'CLOSE', {
           duration: 4000,
         });
-        this.dialogRef.close(data)
+        this.dialogRef.close(data);
       }
-    })
+    });
   }
 }

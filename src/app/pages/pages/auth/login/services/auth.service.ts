@@ -12,8 +12,8 @@ import { UserService } from './user.service';
 })
 export class AuthService {
 
-  
-   private _token: string | null = null;
+
+  private _token: string | null = null;
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
   private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
 
@@ -62,13 +62,13 @@ export class AuthService {
 
   // Verificar si está autenticado
   isAuthenticated(): boolean {
-    return this.token !== null;
+    return sessionStorage.getItem('token') !== null;
   }
 
   // Logout
   logout(): void {
     this._token = null;
-    sessionStorage.removeItem('token');  
+    sessionStorage.removeItem('token');
     this.router.navigate(['/login']).then(() => {
       window.history.pushState(null, '', window.location.href);
       window.onpopstate = function () {
@@ -98,7 +98,7 @@ export class AuthService {
     const decodedToken = this.getDecodedToken();
     if (decodedToken && decodedToken.sub) {
       const username = decodedToken.sub;
-      console.log('Haciendo solicitud para obtener el usuario', username); 
+      console.log('Haciendo solicitud para obtener el usuario', username);
       return this.http.get<any>(`${this.userUrl}${username}`).pipe(
         catchError(err => {
           console.error('Error al obtener el usuario', err);

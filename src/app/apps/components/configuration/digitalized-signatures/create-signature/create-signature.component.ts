@@ -1,23 +1,23 @@
 // Angular framework
-import { Component, Inject } from '@angular/core'
-import { FormGroup } from '@angular/forms'
+import { Component, Inject } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 // Vex
 
 // Material
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule } from '@angular/material/icon'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { MatDividerModule } from '@angular/material/divider'
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
 
 // Custom
-import { DynamicFormsComponent } from '../../../dynamic-forms/dynamic-forms.component'
-import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms'
-import { PeopleService } from 'src/app/apps/services/people.service'
-import { SEARCH_INPUTS } from 'src/app/apps/constants/users.constants'
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person'
-import { CREATE_SIGNATURE_INPUTS } from 'src/app/apps/constants/digitalized-signatures.constants'
+import { DynamicFormsComponent } from '../../../dynamic-forms/dynamic-forms.component';
+import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
+import { PeopleService } from 'src/app/apps/services/people.service';
+import { SEARCH_INPUTS } from 'src/app/apps/constants/users.constants';
+import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { CREATE_SIGNATURE_INPUTS } from 'src/app/apps/constants/digitalized-signatures.constants';
 
 @Component({
   selector: 'vex-create-signature',
@@ -41,8 +41,8 @@ export class CreateSignatureComponent {
   public createForm: FormGroup = new FormGroup({});
   public createInputs: JSONInput[] = CREATE_SIGNATURE_INPUTS;
 
-  public personName: string = '';
-  public disableCreateForm: boolean = true;
+  public personName = '';
+  public disableCreateForm = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -55,13 +55,12 @@ export class CreateSignatureComponent {
     this.peopleService
       .getPeopleTypeNumber(this.searchForm.value)
       .subscribe((data: InfoPerson) => {
-        console.log('Persona encontrada', data)
-        this.personName = data.fullName
-        this.disableCreateForm = false
-      })
+        this.personName = data.fullName;
+        this.disableCreateForm = false;
+      });
   }
 
   createSignature() {
-    this.dialogRef.close(this.createForm.value)
+    this.dialogRef.close(this.createForm.value);
   }
 }

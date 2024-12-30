@@ -60,13 +60,13 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   data!:BasicInformationProperty;
 
-  @Input({ required: true }) id: string = '';
-  @Input() expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input() expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() propertyUnit: boolean = false;
-  @Input() typeInformation: string = 'visualization';
+  @Input() propertyUnit = false;
+  @Input() typeInformation = 'visualization';
 
   constructor(
     private informationPropertyService:InformationPropertyService,
@@ -109,10 +109,9 @@ export class BasicPropertyInformationComponent implements OnInit {
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
-          console.log(result);
           setTimeout(() => this.data = result, 300);
         }
-      })
+      });
   }
 
   private getRandomInt(max: number):number {

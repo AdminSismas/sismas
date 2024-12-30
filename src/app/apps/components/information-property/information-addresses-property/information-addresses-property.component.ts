@@ -94,20 +94,20 @@ export class InformationAddressesPropertyComponent
 {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-  public hasMainAddress:boolean = false;
+  public hasMainAddress = false;
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
@@ -143,7 +143,7 @@ export class InformationAddressesPropertyComponent
       if(value){
         this.searchBasicInformationPropertyAddresses();
       }
-    })
+    });
 
     this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
@@ -182,7 +182,7 @@ export class InformationAddressesPropertyComponent
 
     dialogRef.afterClosed().subscribe(async (data: any) => {
       if (data === 'delete' && basicInformationAddress.direccionId) {
-        let msg: string = 'Información eliminada con éxito';
+        let msg = 'Información eliminada con éxito';
         try {
           await lastValueFrom(
             this.informationPropertyService.deleteBasicInformationPropertyAddress(
@@ -230,7 +230,7 @@ export class InformationAddressesPropertyComponent
         error: (err: any) => this.captureInformationSubscribeError(err),
         next: (result: BasicInformationAddress[]) =>{
           this.filterAddressMain(result);
-          this.captureInformationSubscribe(result)
+          this.captureInformationSubscribe(result);
         }
       });
   }

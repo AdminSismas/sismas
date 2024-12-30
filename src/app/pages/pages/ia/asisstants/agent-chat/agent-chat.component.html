@@ -4,7 +4,7 @@
             <div class="card mb-sm-3 mb-md-0 contacts_card" style="height: 402px;">
                 <div class="card-header small-card-header">
                     <div class="input-group">
-                        <input type="text" placeholder="Search..." name="" class="form-control search small-input">
+                        <input type="text" placeholder="Filtrar..." name="" class="form-control search small-input">
                         <div class="input-group-prepend">
                             <span class="input-group-text search_btn small-btn"><fa-icon
                                     [icon]="['fas', 'search']"></fa-icon></span>
@@ -94,7 +94,7 @@
                                     [icon]="['fas', 'paperclip']"></fa-icon></span>
                         </div>
                         <textarea [(ngModel)]="newMessage" id="messageInput" class="form-control type_msg small-input"
-                            placeholder="Type your message..." [disabled]="isInputDisabled"></textarea>
+                            placeholder="Escribe tu mensaje..." [disabled]="isInputDisabled"></textarea>
                         <div class="input-group-append">
                             <button class="btn btn-primary send_btn small-btn" (click)="sendMessage()"><fa-icon
                                     [icon]="['fas', 'paper-plane']"></fa-icon></button>

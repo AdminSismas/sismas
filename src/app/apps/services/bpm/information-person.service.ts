@@ -10,12 +10,12 @@ import { InfoPerson } from '../../interfaces/information-property/info-person';
 })
 export class InformationPersonService {
 
-  basic_url: string = `${envi.url}:${envi.port}`;
+  basic_url = `${envi.url}:${envi.port}`;
 
   constructor(private requestsService: SendGeneralRequestsService) { }
 
   getFindPersonByNumber(number: string, individualTypeNumber:string): Observable<InfoPerson> {
-    const url: string = `${this.basic_url}${envi.individual_findByNumber}`;
+    const url = `${this.basic_url}${envi.individual_findByNumber}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', `${number}`);
     paramsR = paramsR.append('individualTypeNumber', `${individualTypeNumber}`);

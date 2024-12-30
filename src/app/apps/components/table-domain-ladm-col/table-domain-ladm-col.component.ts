@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core'; // √
+import { Component, DestroyRef, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core'; // √
 import { ReactiveFormsModule, FormsModule, UntypedFormControl } from '@angular/forms';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -72,7 +72,7 @@ import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../.
   ]
 })
 
-export class TableDomainLadmColComponent implements OnInit {
+export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
   /* ============== ATRIBUTES ============== */
   layoutCtrl = new UntypedFormControl('boxed');
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -84,7 +84,7 @@ export class TableDomainLadmColComponent implements OnInit {
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  totalElements: number = 0;
+  totalElements = 0;
   columns: TableColumn<contentInfoDomainLadmCol>[] = TABLE_COLUMN_PROPERTIES;
 
   // referencias a los elementos de la tabla
@@ -180,7 +180,7 @@ export class TableDomainLadmColComponent implements OnInit {
 
   // objeto de paginador de la tabla
   generateObjectPageDomainLadmColData(): PageSortByData {
-    const sortBy: string = 'domainName';
+    const sortBy = 'domainName';
     return new PageSortByData(this.page, this.pageSize, sortBy);
   }
 

@@ -43,4 +43,4 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     type: 'date',
     validators: [Validators.required],
   },
-]
+];

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild, computed, inject, signal } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild, computed, inject, signal, AfterViewInit } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -107,6 +108,7 @@ import { DeleteInformationZonesPropertyComponent } from './delete-information-zo
   styleUrl: './information-zones-property.component.scss'
 })
 export class InformationZonesPropertyComponent implements OnInit , OnChanges {
+export class InformationZonesPropertyComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents: boolean = false;
 
@@ -117,9 +119,9 @@ export class InformationZonesPropertyComponent implements OnInit , OnChanges {
 
 
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) public expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
@@ -165,11 +167,11 @@ export class InformationZonesPropertyComponent implements OnInit , OnChanges {
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
   
   dataBasicInformation!:BasicInformationProperty;
-  fractions_sum: number = 0;
+  fractions_sum = 0;
   page: number = PAGE;
   page2: number = PAGE;
-  totalPhysicalElements: number = 0;
-  totalGeoElements: number = 0;
+  totalPhysicalElements = 0;
+  totalGeoElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSize2: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
@@ -329,7 +331,7 @@ export class InformationZonesPropertyComponent implements OnInit , OnChanges {
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     this.isExpandPanel(this.expandedComponent);
 
-   console.log()
+   console.log();
 
   }
 

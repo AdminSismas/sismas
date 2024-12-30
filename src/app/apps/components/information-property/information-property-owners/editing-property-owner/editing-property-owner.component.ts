@@ -47,7 +47,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
     ]],
     domRightType: ['', Validators.required],
     beginAt: [Date(), Validators.required],
-  })
+  });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogsData,
@@ -59,8 +59,8 @@ export class EditingPropertyOwnerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const formValues = this.data.rrrightInfo
-    this.form.reset(formValues)
+    const formValues = this.data.rrrightInfo;
+    this.form.reset(formValues);
   }
 
   close(): void {
@@ -69,43 +69,43 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
   editRrrightOwnerProperty(): any {
     if (this.form.invalid) {
-      this.snackbar.open('El valor de la fracción no es válido', 'CLOSE', { duration: 4000 })
+      this.snackbar.open('El valor de la fracción no es válido', 'CLOSE', { duration: 4000 });
       return;
     }
 
-    const values = this.form.value
+    const values = this.form.value;
 
     try {
-      values.beginAt = values.beginAt.toISOString().split('T')[0]
+      values.beginAt = values.beginAt.toISOString().split('T')[0];
     } catch (e) {
-      values.beginAt = values.beginAt
+      values.beginAt = values.beginAt;
     }
-    values.rightId = this.data.rightId
+    values.rightId = this.data.rightId;
 
-    const { number, domIndividualTypeNumber } = this.data.individual
+    const { number, domIndividualTypeNumber } = this.data.individual;
 
     this.peopleService.getPeopleTypeNumber({ number: number, individualTypeNumber: domIndividualTypeNumber })
       .subscribe((res: InfoPerson) => {
-        values.individual = { individualId: res.individualId }
+        values.individual = { individualId: res.individualId };
         this.rrrightService.updatePropertyOwner({
           executionId: this.data.executionId,
           baunitId: this.data.baunitId,
           schema: this.data.schema as string,
           params: values
         }).subscribe(() => {
-          this.snackbar.open('Propietario actualizado', 'CLOSE', { duration: 4000 })
-          this.close()
-        })
-      })
+          this.snackbar.open('Propietario actualizado', 'CLOSE', { duration: 4000 });
+          this.close();
+        });
+      });
   }
 
   private createFractionValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const fraction = Number(control.value)
+      const fraction = Number(control.value);
       if (fraction + this.data!.fractions_sum! > 1 || fraction < 0) {
-        return { 'invalidFraction': true }
+        return { 'invalidFraction': true };
       }
-      return null
-    }
+      return null;
+    };
   }
 }

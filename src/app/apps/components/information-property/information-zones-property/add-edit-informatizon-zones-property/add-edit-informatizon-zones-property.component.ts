@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -57,7 +57,7 @@ import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/ge
   templateUrl: './add-edit-informatizon-zones-property.component.html',
   styleUrl: './add-edit-informatizon-zones-property.component.scss'
 })
-export class AddEditInformatizonZonesPropertyComponent {
+export class AddEditInformatizonZonesPropertyComponent implements OnInit {
 
   zoneBAUnitForm!: FormGroup;
 
@@ -66,7 +66,7 @@ export class AddEditInformatizonZonesPropertyComponent {
   divPolGeoeconomica: GeoEconomicZone[] = [];
 
 
-  isEdit: boolean = false;   
+  isEdit = false;   
 
   constructor(
     private fb: FormBuilder,
@@ -164,7 +164,7 @@ export class AddEditInformatizonZonesPropertyComponent {
     }
   }
 
-  numberValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  numberValidator(control: AbstractControl): Record<string, boolean> | null {
     const value = control.value?.toString().replace(',', '.'); 
     if (!/^\d+(\.\d+)?$/.test(value)) { 
       return { 'invalidNumber': true };
@@ -183,7 +183,7 @@ export class AddEditInformatizonZonesPropertyComponent {
   
      
       let selectedZone = null;
-      let requestBody: any = {
+      const requestBody: any = {
         baUnitZonaArea: formValue.baUnitZonaArea,
         baUnitZonaValor: formValue.baUnitZonaValor,
       };
