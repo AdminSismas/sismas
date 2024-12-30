@@ -15,7 +15,7 @@ export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[
   },
   {
     type: 'link',
-    label: 'Asistentes Virtuales',
+    label: 'Asistentes virtuales',
     route: '/myWork/assistants',
     icon: 'mat:insights'
   },
@@ -355,7 +355,7 @@ export const NAVIGATION_LOADER_AUDIT: (NavigationLink | NavigationDropdown)[] = 
 // export const NAVIGATION_LOADER_IA: Array<NavigationLink | NavigationDropdown> = [
 //   {
 //     type: 'link',
-//     label: 'Asistentes Virtuales',
+//     label: 'Asistentes virtuales',
 //     route: '/ia/assistants',
 //     icon: 'mat:insights'
 //   }

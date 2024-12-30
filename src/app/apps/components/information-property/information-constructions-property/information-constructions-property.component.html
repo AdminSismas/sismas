@@ -32,7 +32,7 @@
             <input
               matInput
               [formControl]="searchCtrl"
-              placeholder="Buscar construcciones&hellip;"
+              placeholder="Filtrar construcciones&hellip;"
               type="text" />
           </mat-form-field>
           <span class="flex-1"></span>
@@ -57,7 +57,6 @@
           <ng-container matColumnDef="viewDetail">
             <th
               *matHeaderCellDef
-              class="uppercase"
               mat-header-cell
               mat-sort-header>
             </th>
@@ -79,7 +78,6 @@
               *ngIf="column.type === 'text'"
               [matColumnDef]="column.property">
               <th *matHeaderCellDef
-                  class="uppercase"
                   mat-header-cell
                   mat-sort-header>
                 {{ column.label }}

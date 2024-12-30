@@ -1,6 +1,6 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
   <h2 class="headline m-0 flex-auto">
-    Nueva Construcción
+    Nueva construcción
   </h2>
   <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
     <mat-icon svgIcon="mat:close"></mat-icon>
@@ -12,16 +12,16 @@
 <mat-dialog-content>
   <mat-tab-group>
 
-    <!-- Primer Tab: Aspectos de Construcción -->
-    <mat-tab label="Aspectos de Construcción">
+    <!-- Primer Tab: Aspectos de construcción -->
+    <mat-tab label="Aspectos de construcción">
       <form [formGroup]="informationConstructionForm" (ngSubmit)="onSubmitForm()">
         <vex-page-layout class="overflow-hidden">
           <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
             <div class="form-content">
-              
-              <!-- Tipo de Construcción -->
+
+              <!-- Tipo de construcción -->
               <div class="form-content-item">
-                <p><strong>Tipo de Construcción</strong></p>
+                <p><strong>Tipo de construcción</strong></p>
                 <vex-combox-colletion
                   idComboCollection="domBuiltType"
                   label="Tipo"
@@ -34,9 +34,9 @@
                 </mat-error>
               </div>
 
-              <!-- Uso de Construcción -->
+              <!-- Uso de construcción -->
               <div class="form-content-item">
-                <p><strong>Uso de Construcción</strong></p>
+                <p><strong>Uso de construcción</strong></p>
                 <vex-combox-colletion
                   idComboCollection="domBuiltUse"
                   label="Uso"
@@ -49,11 +49,11 @@
                 </mat-error>
               </div>
 
-              <!-- ID -->
+              <!-- Id -->
               <div class="form-content-item">
-                <p><strong>ID</strong></p>
+                <p><strong>Id</strong></p>
                 <vex-input
-                  label="ID"
+                  label="Id"
                   type="text"
                   idComboInput="unitBuiltLabel"
                   formControlNameInput="unitBuiltLabel"
@@ -100,11 +100,11 @@
                 </mat-error>
               </div>
 
-              <!-- Área Total -->
+              <!-- Área total -->
               <div class="form-content-item">
-                <p><strong>Área Total</strong></p>
+                <p><strong>Área total</strong></p>
                 <vex-input
-                  label="Área Total"
+                  label="Área total"
                   type="text"
                   idComboInput="unitBuiltArea"
                   formControlNameInput="unitBuiltArea"
@@ -132,11 +132,11 @@
                 </mat-error>
               </div>
 
-              <!-- Área Privada -->
+              <!-- Área privada -->
               <div class="form-content-item">
-                <p><strong>Área Privada</strong></p>
+                <p><strong>Área privada</strong></p>
                 <vex-input
-                  label="Área Privada"
+                  label="Área privada"
                   type="text"
                   idComboInput="unitBuiltPrivateArea"
                   formControlNameInput="unitBuiltPrivateArea"
@@ -175,9 +175,9 @@
         </vex-page-layout>
       </form>
     </mat-tab>
-    <mat-tab label="Calificación Tradicional">
+    <mat-tab label="Calificación tradicional">
       <form [formGroup]="traditionalRatingForm" (ngSubmit)="onSubmitTraditionalForm()">
-    
+
         <br>
         <!-- Estructura -->
         <mat-card class="category-card">
@@ -193,7 +193,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Muros -->
               <mat-form-field>
                 <mat-label>Muros</mat-label>
@@ -203,7 +203,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Cubierta -->
               <mat-form-field>
                 <mat-label>Cubierta</mat-label>
@@ -213,7 +213,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Conservación -->
               <mat-form-field>
                 <mat-label>Conservación</mat-label>
@@ -226,10 +226,10 @@
             </div>
           </mat-card-content>
         </mat-card>
-        
-        <!-- Acabados Principales -->
+
+        <!-- Acabados principales -->
         <mat-card class="category-card">
-          <mat-card-title class="category-title">Acabados Principales</mat-card-title>
+          <mat-card-title class="category-title">Acabados principales</mat-card-title>
           <mat-card-content class="sub-category-content">
             <div class="sub-category-section">
               <!-- Fachadas -->
@@ -241,7 +241,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Cubrimientos de Muros -->
               <mat-form-field>
                 <mat-label>Cubrimientos de Muros</mat-label>
@@ -251,7 +251,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Pisos -->
               <mat-form-field>
                 <mat-label>Pisos</mat-label>
@@ -261,7 +261,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Conservación -->
               <mat-form-field>
                 <mat-label>Conservación</mat-label>
@@ -274,7 +274,7 @@
             </div>
           </mat-card-content>
         </mat-card>
-        
+
         <!-- Baño -->
         <mat-card class="category-card">
           <mat-card-title class="category-title">Baño</mat-card-title>
@@ -289,7 +289,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Enchapes -->
               <mat-form-field>
                 <mat-label>Enchapes</mat-label>
@@ -299,7 +299,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Mobiliario -->
               <mat-form-field>
                 <mat-label>Mobiliario</mat-label>
@@ -309,7 +309,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Conservación -->
               <mat-form-field>
                 <mat-label>Conservación</mat-label>
@@ -322,7 +322,7 @@
             </div>
           </mat-card-content>
         </mat-card>
-        
+
         <!-- Cocina -->
         <mat-card class="category-card">
           <mat-card-title class="category-title">Cocina</mat-card-title>
@@ -337,7 +337,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Enchapes -->
               <mat-form-field>
                 <mat-label>Enchapes</mat-label>
@@ -347,7 +347,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Mobiliario -->
               <mat-form-field>
                 <mat-label>Mobiliario</mat-label>
@@ -357,7 +357,7 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-        
+
               <!-- Conservación -->
               <mat-form-field>
                 <mat-label>Conservación</mat-label>
@@ -370,7 +370,7 @@
             </div>
           </mat-card-content>
         </mat-card>
-    
+
         <div class="buttons">
           <button color="primary" mat-raised-button type="submit">
             Guardar
@@ -383,8 +383,8 @@
         </div>
       </form>
     </mat-tab>
-    <!-- Tercer Tab: Calificación Tipología (Vacío) -->
-    <mat-tab label="Calificación Tipología">
+    <!-- Tercer Tab: Calificación tipología (Vacío) -->
+    <mat-tab label="Calificación tipología">
       <form [formGroup]="informationConstructionForm" (ngSubmit)="onSubmitForm()">
         <vex-page-layout class="overflow-hidden">
           <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
@@ -423,7 +423,7 @@
       </form>
 
 
-     
+
     </mat-tab>
 
   </mat-tab-group>

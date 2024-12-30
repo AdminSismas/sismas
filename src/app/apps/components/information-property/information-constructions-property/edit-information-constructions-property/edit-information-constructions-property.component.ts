@@ -199,23 +199,23 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       confirmButtonText: 'Sí, crear',
       cancelButtonText: 'Cancelar'
     });
-  
+
     if (!result.isConfirmed) {
       return;
     }
-  
+
     this.isLoading.set(true);
-  
+
     try {
       const value = this.informationConstructionForm.value || {};
-  
+
       if (value.unitBuiltPrivateArea) {
         value.unitBuiltPrivateArea = value.unitBuiltPrivateArea.toString().replace(',', '.');
       }
       if (value.unitBuiltArea) {
         value.unitBuiltArea = value.unitBuiltArea.toString().replace(',', '.');
       }
-  
+
       let detailBasicInformationConstruction: ContentInformationConstruction | undefined;
       if (this.addEditInformationData.type === 'new') {
         const createBasicInformationConstruction: CreateBasicInformationConstruction = {
@@ -229,7 +229,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           unitBuiltPrivateArea: value?.unitBuiltPrivateArea,
           unitBuiltObservation: value?.unitBuiltObservation,
         };
-  
+
         const baunitId: string = this.addEditInformationData.baunitId || '';
         if (!baunitId) {
           Swal.fire({
@@ -240,7 +240,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           });
           throw new Error('baunitId no está definido.');
         }
-  
+
 
         detailBasicInformationConstruction = await lastValueFrom(
           this.informationPropertyService.createBasicInformationPropertyConstruction(
@@ -249,7 +249,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
             createBasicInformationConstruction
           )
         );
-        
+
         Swal.fire({
           icon: 'success',
           title: 'Creación exitosa',
@@ -264,7 +264,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
           )
         );
       }
-  
+
       this.dialogRef.close(detailBasicInformationConstruction);
     } catch (e) {
       let errorMessage = 'Ocurrió un error inesperado.';
@@ -275,17 +275,17 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       } else if ((e as Error)?.message) {
         errorMessage = (e as Error).message;
       }
-  
+
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: `Ocurrió un error al guardar la información: ${errorMessage}`,
         confirmButtonColor: '#3f51b5'
       });
-  
+
       console.error(e);
     }
-  
+
     this.isLoading.set(false);
   }
   /**
@@ -300,7 +300,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       structureCubierta: [null],
       structureConservacion: [null],
 
-      // Campos de Acabados Principales
+      // Campos de acabados principales
       finishesFachadas: [null],
       finishesMuros: [null],
       finishesPisos: [null],
@@ -344,7 +344,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
         null,
         [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')]// Solo números
       ],
-      unitBuiltObservation: [null] 
+      unitBuiltObservation: [null]
     });
 
     if (this.addEditInformationData.type === 'new') {

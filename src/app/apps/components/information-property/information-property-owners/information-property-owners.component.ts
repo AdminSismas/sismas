@@ -82,7 +82,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Tipo Documento',
+      label: 'Tipo documento',
       property: 'domIndividualTypeNumber',
       type: 'text',
       visible: true
@@ -94,7 +94,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Nombre Completo',
+      label: 'Nombre completo',
       property: 'fullName',
       type: 'text',
       visible: true
@@ -106,7 +106,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Tipo Derecho',
+      label: 'Tipo derecho',
       property: 'domRightType',
       type: 'text',
       visible: true
@@ -118,7 +118,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Actions',
+      label: 'Acciones',
       property: 'actions',
       type: 'button',
       visible: true
@@ -304,6 +304,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {
-    return column.label === 'Tipo Documento' || column.label === 'Número' || column.label === 'Nombre Completo';
+    return column.label === 'Tipo documento' || column.label === 'Número' || column.label === 'Nombre completo';
   }
 }
