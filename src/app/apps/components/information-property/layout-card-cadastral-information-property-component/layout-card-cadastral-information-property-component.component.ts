@@ -83,12 +83,12 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       this.createObjectLayout(schema)
     );
     //On init of component set type information according to the component
-    this.setTypeInformation(0);
+    // this.setTypeInformation(0);
 
 
-    if (this.defaults.typeInformation == 'visualization') {
+    // if (this.defaults.typeInformation == 'visualization') }{
       this.typeInformation = this.defaults.typeInformation;
-    }
+    // }}
 
     if(this.defaults.flagData !== ''){
         this.dataFlag = this.defaults.flagData;

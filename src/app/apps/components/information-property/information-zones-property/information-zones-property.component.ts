@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild, computed, inject, signal } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild, computed, inject, signal } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -9,7 +9,8 @@ import {
   PAGE,
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
-  TYPEINFORMATION_EDITION
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -105,8 +106,9 @@ import { DeleteInformationZonesPropertyComponent } from './delete-information-zo
   templateUrl: './information-zones-property.component.html',
   styleUrl: './information-zones-property.component.scss'
 })
-export class InformationZonesPropertyComponent implements OnInit {
+export class InformationZonesPropertyComponent implements OnInit , OnChanges {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  seeAcctionsComponents: boolean = false;
 
   zoneBAUnit: ZoneBAUnit[] = [];
   zoneBAUnitRural: ZoneBAUnit[] = [];
@@ -148,12 +150,12 @@ export class InformationZonesPropertyComponent implements OnInit {
       visible: true
     },
 
-    // {
-    //   label: 'Actions',
-    //   property: 'actions',
-    //   type: 'button',
-    //   visible: true
-    // }
+    {
+      label: 'Actions',
+      property: 'actions',
+      type: 'button',
+      visible: true
+    }
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
@@ -188,7 +190,7 @@ export class InformationZonesPropertyComponent implements OnInit {
   );
   
  visibleColumns(): string[] {
-  return ['viewDetail', 'zoneCodeColumn', 'baUnitZonaArea', 'zoneValidityColumn']; 
+  return ['viewDetail', 'zoneCodeColumn', 'baUnitZonaArea', 'zoneValidityColumn','actions']; 
 }
   actionBtns = computed(() => {
     return [
@@ -225,6 +227,7 @@ export class InformationZonesPropertyComponent implements OnInit {
    
 
   ) {
+    console.log('constructor', this.typeInformation);
   }
 
   getZoneCode(row: ZoneBAUnit): string {
@@ -329,6 +332,12 @@ export class InformationZonesPropertyComponent implements OnInit {
    console.log()
 
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+      if (changes['typeInformation']) {
+        console.log('typeInformation', this.typeInformation);
+      }
+    }
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
