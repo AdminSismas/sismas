@@ -21,6 +21,7 @@ import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-users',
@@ -168,7 +169,22 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   searchUser() {
-    console.log(this.searchCtrl.value);
-    alert(this.searchCtrl.value);
+    if (!this.searchCtrl.value) {
+      this.getUsers();
+      return;
+    }
+    this.userService.searchUser(this.searchCtrl.value)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.dataSource.data = [res];
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this.snackbar.open('Usuario no encontrado', 'CLOSE', { duration: 4000 });
+          }
+          throw error;
+        }
+      });
   }
 }
