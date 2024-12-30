@@ -5,6 +5,7 @@ import {
   inject,
   Input,
   OnInit,
+  TemplateRef,
   ViewChild
 } from '@angular/core';
 import { InConstructionComponent } from '../../../../apps/components/in-construction/in-construction.component';
@@ -36,8 +37,8 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { People as People } from '../../../../apps/interfaces/people.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { filter, Observable, of, ReplaySubject } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { filter, lastValueFrom, Observable, of, ReplaySubject } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSort } from '@angular/material/sort';
@@ -57,6 +58,7 @@ import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-ca
 import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/constant';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vex-people',
@@ -85,6 +87,7 @@ import { MatButtonModule } from '@angular/material/button';
     VexPageLayoutContentDirective,
     VexPageLayoutHeaderDirective,
     VexSecondaryToolbarComponent,
+    MatDialogModule,
   ],
   templateUrl: './people.component.html',
   styleUrl: './people.component.scss'
@@ -106,6 +109,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
+  private snackBar = inject(MatSnackBar);
   // personalizacion de las columnas de las tablas
   @Input()
   columns: TableColumn<People>[] = [
@@ -193,16 +198,39 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   }
 
   // eliminacion de personas
+  // deleteCustomer(customer: People) {
+  //   this.customers.splice(
+  //     this.customers.findIndex(
+  //       (existingCustomer) => existingCustomer.individualId === customer.individualId
+  //     ),
+  //     1
+  //   );
+  //   this.selection.deselect(customer);
+  //   this.subject$.next(this.customers);
+  // }
+
   deleteCustomer(customer: People) {
-    this.customers.splice(
-      this.customers.findIndex(
-        (existingCustomer) => existingCustomer.id === customer.id
-      ),
-      1
-    );
-    this.selection.deselect(customer);
-    this.subject$.next(this.customers);
-  }
+      const dialogRef = this.dialog.open(this.confirmDialog);
+  
+      dialogRef.afterClosed().subscribe(async (data: any) => {
+        if (data === 'delete' && customer.individualId) {
+          let msg: string = 'Información eliminada con éxito';
+          try {
+            await lastValueFrom(
+              this.peopleService.getDeletePeopleId(
+                customer.individualId
+              )
+            );
+            this.dataSource.data = this.dataSource.data.filter((row: People) => {
+              return row.individualId !== customer.individualId;
+            });
+          } catch (e) {
+            msg = 'Error, no se pudo eliminar la persona';
+          }
+          this.snackBar.open(msg, 'CLOSE', { duration: 2000 });
+        }
+      });
+    }
 
   deleteCustomers(customers: People[]) {
     customers.forEach((c) => this.deleteCustomer(c));

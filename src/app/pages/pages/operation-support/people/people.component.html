@@ -242,3 +242,28 @@ type="button"
   </ng-template>
 </mat-menu>
 
+<ng-template #confirmDialog>
+  <h2 matDialogTitle>Eliminar persona</h2>
+  <mat-dialog-content>
+    <p>Desea eliminar la persona?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="flex gap-1 justify-center">
+    <button
+      mat-button
+      matDialogClose
+      mat-raised-button
+      color="primary"
+    >
+      Cancelar
+    </button>
+    <button
+      mat-button
+      [matDialogClose]="'delete'"
+      mat-raised-button
+      color="warn"
+    >
+      Eliminar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+

@@ -55,6 +55,12 @@ export class PeopleService {
     return this.fetchBody(url, body);
   }
 
+  getDeletePeopleId(params: number) {
+    const urlP: string = `${this.url_basic}${environment.individualNumber}/${params}?version=99999`;
+    return this.deleteBody(urlP);
+  }
+
+
   private getData(url: string, params: any): Observable<InfoPerson> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
@@ -68,5 +74,8 @@ export class PeopleService {
   }
   private updateBody(url: any, body: any): Observable<InformationPegeable> {
     return this.requestsService.sendRequestsUpdatePostBody(url, body);
+  }
+  private deleteBody(url: any): Observable<InformationPegeable> {
+    return this.requestsService.sendDeleteFetch(url);
   }
 }
