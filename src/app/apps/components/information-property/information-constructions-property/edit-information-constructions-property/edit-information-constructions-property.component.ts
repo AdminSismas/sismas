@@ -470,7 +470,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
         ]
       ],
       unitBuiltObservation: [null]
-      unitBuiltObservation: [null]
+  
     });
 
 
