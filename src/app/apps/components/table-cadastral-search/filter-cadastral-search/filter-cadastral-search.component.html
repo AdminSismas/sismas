@@ -458,15 +458,14 @@
               <!-- Campo zona -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Zona</mat-label>
-                <mat-select>
+                <mat-select
+                  (selectionChange)="loadSectorsInformation($event.value, true)"
+                >
                   @for (option of filteredOptionsZones$ | async; track option.codigoZona) {
                     <mat-option
-                      [value]="option.codigoZona">
+                      [value]="option.codigoZona"
+                    >
                       {{ option.codigoZona }} - {{ option.nombreZona }}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
                     </mat-option>
                   }
                 </mat-select>

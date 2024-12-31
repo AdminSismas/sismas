@@ -396,7 +396,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(2);
-    const ccZonaPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsZones);
+    const ccZonaPkey: string | null | undefined = this._filterInformationCode(codeName, this.optionsZones, 'codigoZona', 'id');
     this.territorialOrganizationService.getDataSectors(ccZonaPkey)
       .subscribe({
           next: (result: Sector[]) => this.captureSectorInformation(result, skipPreloadedValues)
