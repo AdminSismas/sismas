@@ -461,8 +461,9 @@
                 <mat-select
                   #zone
                   (selectionChange)="loadSectorsInformation($event.value, true)"
+                  formControlName="zone"
                 >
-                  @for (option of filteredOptionsZones$ | async; track option.codigoZona) {
+                  @for (option of optionsZones; track option.codigoZona) {
                     <mat-option
                       [value]="option.codigoZona"
                     >
@@ -570,6 +571,30 @@
                       }
                     </mat-autocomplete>
                   </mat-form-field>
+
+                  <!-- Campo manzana -->
+                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                  <mat-label>Manzana</mat-label>
+                  <input type="text"
+                         aria-label="Number"
+                         matInput
+                         formControlName="block"
+                         placeholder="Seleccione una manzana&hellip;"
+                         [matAutocomplete]="autoBlock"
+                         >
+                  <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">
+                    @for (option of filteredOptionsBlocks$ | async; track option.codigoManzana;) {
+                      <mat-option
+                        [value]="option.codeName">
+                        {{ option.codeName}}
+                      </mat-option>
+                    } @empty {
+                      <mat-option>
+                        {{STRING_INFORMATION_NOT_FOUND}}
+                      </mat-option>
+                    }
+                  </mat-autocomplete>
+                </mat-form-field>
                 } @else {
                   <!-- Campo vereda -->
                   <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
@@ -594,29 +619,7 @@
                     </mat-autocomplete>
                   </mat-form-field>
                 }
-                <!-- Campo manzana -->
-                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                  <mat-label>Manzana</mat-label>
-                  <input type="text"
-                         aria-label="Number"
-                         matInput
-                         formControlName="block"
-                         placeholder="Seleccione una manzana&hellip;"
-                         [matAutocomplete]="autoBlock"
-                         >
-                  <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">
-                    @for (option of filteredOptionsBlocks$ | async; track option.codigoManzana;) {
-                      <mat-option
-                        [value]="option.codeName">
-                        {{ option.codeName}}
-                      </mat-option>
-                    } @empty {
-                      <mat-option>
-                        {{STRING_INFORMATION_NOT_FOUND}}
-                      </mat-option>
-                    }
-                  </mat-autocomplete>
-                </mat-form-field>
+
               }
 
 
