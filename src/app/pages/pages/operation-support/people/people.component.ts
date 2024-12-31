@@ -7,7 +7,6 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { InConstructionComponent } from '../../../../apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -21,9 +20,6 @@ import {
   UntypedFormControl
 } from '@angular/forms';
 
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
@@ -36,10 +32,9 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { People as People } from '../../../../apps/interfaces/people.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { filter, Observable, of, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -49,26 +44,21 @@ import { CreatePeopleComponent } from './create-people/create-people.component';
 
 // imports from service people
 import { PeopleService } from 'src/app/apps/services/people.service';
-import { ComboboxComponent } from 'src/app/apps/components/combobox/combobox.component';
-import { ComboxAutoCompleteComponent } from 'src/app/apps/components/combox-auto-complete/combox-auto-complete.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
-import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
-import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/constant';
+import { PAGE } from 'src/app/apps/constants/constant';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vex-people',
   standalone: true,
   imports: [
-    ComboboxComponent,
-    ComboxAutoCompleteComponent,
     ComboxColletionComponent,
     CommonModule,
-    FilterCadastralSearchComponent,
     FormsModule,
-    InConstructionComponent,
     MatButtonModule,
     MatButtonToggleModule,
     MatCheckboxModule,
@@ -81,10 +71,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatTableModule,
     ReactiveFormsModule,
     VexBreadcrumbsComponent,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
-    VexSecondaryToolbarComponent,
+    VexSecondaryToolbarComponent
   ],
   templateUrl: './people.component.html',
   styleUrl: './people.component.scss'
@@ -106,7 +93,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  // personalizacion de las columnas de las tablas
+  // personalización de las columnas de las tablas
   @Input()
   columns: TableColumn<People>[] = [
     {
@@ -148,7 +135,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       .map((column) => column.property);
   }
 
-  // indicativos de la paginacion
+  // indicativos de la paginación
   page: number = PAGE;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 20, 50];
@@ -166,7 +153,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private peopleService: PeopleService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -192,7 +180,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // eliminacion de personas
+  // eliminación de personas
   deleteCustomer(customer: People) {
     this.customers.splice(
       this.customers.findIndex(
@@ -208,7 +196,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     customers.forEach((c) => this.deleteCustomer(c));
   }
 
-  // creacion de personas
+  // creación de personas
   createCustomer() {
     this.dialog
       .open(CreatePeopleComponent)
@@ -228,7 +216,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // actualizacion de personas
+  // actualización de personas
   updateCustomer(customer: People) {
     this.dialog
       .open(CreatePeopleComponent, {
@@ -256,7 +244,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // demas scritps
+  // demás scripts
   onFilterChange(value: string) {
     if (!this.dataSource) {
       return;
@@ -271,9 +259,27 @@ export class PeopleComponent implements OnInit, AfterViewInit {
           size: this.pageSize,
           individualTypeNumber: this.infoDoc
         };
-        this.peopleService.getPeopleTypeNumber(obj).subscribe((res: any) => {
-          this.customers = [res];
-          this.dataSource.data = [res];
+        this.peopleService.getPeopleTypeNumber(obj).subscribe({
+          next: (res: any) => {
+            this.customers = [res];
+            this.dataSource.data = [res];
+          },
+          error: (error: HttpErrorResponse) => {
+            if (error.status === 404) {
+              this.snackbar.open(
+                'No se encontró una persona con ese documento',
+                'CLOSE',
+                { duration: 4000 }
+              );
+              this.dialog.open(CreatePeopleComponent, {
+                data: {
+                  mode: 'create',
+                  domIndividualTypeNumber: this.infoDoc,
+                  number: value
+                }
+              });
+            }
+          }
         });
       } else {
         this.refreshData();
@@ -338,7 +344,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     this.subject$.next(this.customers);
   }
 
-  //funcion cambio
+  //función cambio
   cambio(event?: any) {
     const valorSeleccionado = event.value;
 
