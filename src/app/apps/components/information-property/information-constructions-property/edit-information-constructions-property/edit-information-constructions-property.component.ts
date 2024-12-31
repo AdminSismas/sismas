@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -25,6 +25,16 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CustomSelectorComponent } from '../../../custom-selector/custom-selector.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { valid } from 'chroma-js';
 
 
 
@@ -57,10 +67,20 @@ export interface AddEditInformationConstructionI {
     MatOptionModule,
     MatTabsModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    VexSecondaryToolbarComponent,
+    VexBreadcrumbsComponent,
+    MatStepperModule,
+    MatInputModule,
+    NgFor,
+    NgIf,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    CustomSelectorComponent,
+    MatTooltipModule
   ],
   templateUrl: './edit-information-constructions-property.component.html',
-  styleUrl: './edit-information-constructions-property.component.scss'
+  styleUrl: './edit-information-constructions-property.component.scss',
 })
 export class EditInformationConstructionsPropertyComponent implements OnInit {
 
@@ -77,68 +97,238 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   private fBuilder = inject(FormBuilder);
   readonly addEditInformationData = inject<AddEditInformationConstructionI>(MAT_DIALOG_DATA);
   traditionalRatingForm!: FormGroup;
+  ratingForm!: FormGroup;
   typologyRatingForm!: FormGroup;
   executionId: string | undefined;
+  api_domainName: string = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
+  calificationMode: 'tradicional' | 'tipologia' | null = null;
 
-  armazonOptions: string[] = [
-    'Madera', 'Tapia', 'Prefabricado', 'Ladrillo', 'Bloque', 'Madera inmunizada',
-    'Concreto hasta tres pisos', 'Concreto cuatro o más pisos'
-  ];
+  structureArmazonControl!: FormControl;
+  structureMurosControl!: FormControl;
+  structureCubiertaControl!: FormControl;
+  structureConservacionControl!: FormControl;
+  finishesFachadasControl!: FormControl;
+  finishesMurosControl!: FormControl;
+  finishesPisosControl!: FormControl;
+  finishesConservacionControl!: FormControl;
+  bathSizeControl!: FormControl;
+  bathEnchapesControl!: FormControl;
+  bathMobiliarioControl!: FormControl;
+  bathConservacionControl!: FormControl;
+  kitchenSizeControl!: FormControl;
+  kitchenEnchapesControl!: FormControl;
+  kitchenMobiliarioControl!: FormControl;
+  kitchenConservacionControl!: FormControl;
+  domTipologiaTipoControl!: FormControl;
+  allBuiltUseOptions: any[] = [];
+  filteredBuiltUseOptions: any[] = [];
+  filteredTypologyOptions: any[] = [];
+  isCreatingConstruction: boolean = false; // Estado de carga
+  constructionId!: number; // ID de la construcción creada 
+  constructionData: ContentInformationConstruction | null = null;
+  @ViewChild('stepper') stepper!: MatStepper;
 
-  murosOptions: string[] = [
-    'Materiales de desecho', 'Esterilla', 'Bahareque', 'Adobe', 'Tapia', 'Madera',
-    'Concreto Prefabricado', 'Bloque', 'Ladrillo', 'Madera Fina'
-  ];
-
-  cubiertaOptions: string[] = [
-    'Materiales de desecho', 'Zinc', 'Teja de barro', 'Eternit o Teja de barro',
-    'Azotea', 'Aluminio', 'Placas con Eternit'
-  ];
-
-  conservacionOptions: string[] = ['Malo', 'Regular', 'Bueno', 'Excelente'];
-
-  fachadasOptions: string[] = ['Pobre', 'Sencilla', 'Regular', 'Buena', 'Lujosa'];
-
-  murosCubrimientoOptions: string[] = [
-    'Sin cubrimiento', 'Pañete', 'Panel', 'Común', 'Ladrillo prensado', 'Estuco',
-    'Cerámica', 'Panel fino', 'Madera', 'Piedra ornamentada', 'Ladrillo fino',
-    'Mármol lujoso', 'Otros'
-  ];
-
-  pisosOptions: string[] = [
-    'Tierra Pisada', 'Cemento', 'Madera burda', 'Baldosa común de cemento', 'Tablón',
-    'Ladrillo', 'Listón machihembrado', 'Tableta', 'Caucho', 'Acrílico', 'Granito',
-    'Baldosa fina', 'Cerámica', 'Parquet', 'Alfombra', 'Retal de mármol', 'Mármol',
-    'Vinilo Lujo', 'Otros lujos'
-  ];
-
-  // Opciones para Baño
-  banoTamanoOptions: string[] = ['Sin baño', 'Pequeño', 'Mediano', 'Grande'];
-  banoEnchapesOptions: string[] = [
-    'Sin cubrimiento', 'Pañete', 'Baldosa común de cemento', 'Baldosín', 'Cristanac',
-    'Granito', 'Panel fino', 'Cerámica', 'Mármol', 'Enchape lujoso'
-  ];
-  banoMobiliarioOptions: string[] = ['Pobre', 'Sencillo', 'Regular', 'Bueno', 'Lujoso'];
-
-  // Opciones para Cocina
-  cocinaTamanoOptions: string[] = ['Sin cocina', 'Pequeña', 'Mediana', 'Grande'];
-  cocinaEnchapesOptions: string[] = [
-    'Sin cubrimiento', 'Pañete', 'Baldosa común de cemento', 'Baldosín', 'Cristanac',
-    'Granito', 'Panel fino', 'Cerámica', 'Mármol', 'Enchape lujoso'
-  ];
-  cocinaMobiliarioOptions: string[] = ['Pobre', 'Sencillo', 'Regular', 'Bueno', 'Lujoso'];
-
-
-
-  constructor() {
+  constructor(private http: HttpClient) {
     this.initForm();
+
+    this.structureArmazonControl = this.traditionalRatingForm.get('structureArmazon') as FormControl;
+    this.structureMurosControl = this.traditionalRatingForm.get('structureMuros') as FormControl;
+    this.structureCubiertaControl = this.traditionalRatingForm.get('structureCubierta') as FormControl;
+    this.structureConservacionControl = this.traditionalRatingForm.get('structureConservacion') as FormControl;
+    this.finishesFachadasControl = this.traditionalRatingForm.get('finishesFachadas') as FormControl;
+    this.finishesMurosControl = this.traditionalRatingForm.get('finishesMuros') as FormControl;
+    this.finishesPisosControl = this.traditionalRatingForm.get('finishesPisos') as FormControl;
+    this.finishesConservacionControl = this.traditionalRatingForm.get('finishesConservacion') as FormControl;
+    this.bathSizeControl = this.traditionalRatingForm.get('bathSize') as FormControl;
+    this.bathEnchapesControl = this.traditionalRatingForm.get('bathEnchapes') as FormControl;
+    this.bathMobiliarioControl = this.traditionalRatingForm.get('bathMobiliario') as FormControl;
+    this.bathConservacionControl = this.traditionalRatingForm.get('bathConservacion') as FormControl;
+    this.kitchenSizeControl = this.traditionalRatingForm.get('kitchenSize') as FormControl;
+    this.kitchenEnchapesControl = this.traditionalRatingForm.get('kitchenEnchapes') as FormControl;
+    this.kitchenMobiliarioControl = this.traditionalRatingForm.get('kitchenMobiliario') as FormControl;
+    this.kitchenConservacionControl = this.traditionalRatingForm.get('kitchenConservacion') as FormControl;
+    this.domTipologiaTipoControl = this.typologyRatingForm.get('domTipologiaTipo') as FormControl;
   }
 
   ngOnInit(): void {
     this.executionId = this.addEditInformationData.executionId;
     console.log('Execution ID:', this.executionId);
     this.loadDetailInformationConstruction();
+    this.fetchAllBuiltUseOptions();
 
+    this.domBuiltTypeControl.valueChanges.subscribe((selectedType) => {
+      this.onTypeSelectionForTypology(selectedType);
+    });
+
+    this.bathSizeControl.valueChanges.subscribe((value) => {
+      this.toggleBathroomFields(value);
+    });
+  
+    // Escuchar cambios en el selector de tamaño de la cocina
+    this.kitchenSizeControl.valueChanges.subscribe((value) => {
+      this.toggleKitchenFields(value);
+    });
+
+
+  }
+
+  private fetchAllBuiltUseOptions(): void {
+    const params = new HttpParams().append('domainName', 'BuiltUse').append('active', true);
+
+    this.http.get<any[]>(this.api_domainName, { params }).subscribe({
+      next: (data) => {
+        this.allBuiltUseOptions = data;
+        this.filteredBuiltUseOptions = data;
+      },
+      error: (err) => {
+        console.error('Error fetching BuiltUse options:', err);
+      }
+    });
+  }
+
+
+
+  onTypeSelectionChange(selectedType: any): void {
+    if (!selectedType) {
+      this.filteredBuiltUseOptions = this.allBuiltUseOptions;
+      this.informationConstructionForm.get('domBuiltUse')?.setValue(null); // Resetea el valor del uso
+      return;
+    }
+
+    const selectedTypeDispname = selectedType; // Valor seleccionado
+    this.filteredBuiltUseOptions = this.allBuiltUseOptions.filter((option) =>
+      option.code.startsWith(selectedTypeDispname)
+    );
+
+    this.informationConstructionForm.get('domBuiltUse')?.setValue(null); // Resetea el valor del uso
+  }
+
+  onTypeSelectionForTypology(selectedType: string): void {
+    if (!selectedType) {
+      // Si no hay selección, limpia las opciones de Tipología
+      this.filteredTypologyOptions = [];
+      this.domTipologiaTipoControl.setValue(null); // Resetea el valor de Tipología
+      return;
+    }
+  
+    // Construye la URL con el tipo seleccionado
+    const url = `${environment.url}:${environment.port}${environment.calificationUB}${environment.unitBuild}/${environment.schemas.temp}/tipologiaTipo/${selectedType}`;
+    
+    // Realiza la petición GET para obtener las opciones de Tipología
+    this.http.get<any[]>(url).subscribe({
+      next: (data) => {
+        this.filteredTypologyOptions = data; // Actualiza las opciones de Tipología
+      },
+      error: (err) => {
+        console.error('Error al cargar las opciones de Tipología:', err);
+        this.filteredTypologyOptions = []; // Limpia las opciones en caso de error
+      },
+    });
+  }
+
+
+  async createConstruction(): Promise<void> {
+    if (this.informationConstructionForm.invalid) {
+      this.informationConstructionForm.markAllAsTouched();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, corrige los errores en el formulario para continuar.',
+        confirmButtonColor: '#3f51b5',
+      });
+      return;
+    }
+
+    this.isCreatingConstruction = true; // Mostrar indicador de carga
+
+    try {
+      const formValue = this.informationConstructionForm.value;
+
+      const createBasicInformationConstruction: CreateBasicInformationConstruction = {
+        domBuiltType: formValue?.domBuiltType,
+        domBuiltUse: formValue?.domBuiltUse,
+        unitBuiltLabel: formValue?.unitBuiltLabel,
+        unitBuiltFloors: formValue?.unitBuiltFloors,
+        unitBuiltYear: formValue?.unitBuiltYear,
+        unitBuiltArea: formValue?.unitBuiltArea,
+        unitBuiltPrivateArea: formValue?.unitBuiltPrivateArea,
+        unitBuiltObservation: formValue?.unitBuiltObservation,
+      };
+
+      const baunitId: string = this.addEditInformationData.baunitId || '';
+      if (!baunitId) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'El ID de la unidad básica no está definido.',
+          confirmButtonColor: '#3f51b5',
+        });
+        throw new Error('El ID de la unidad básica no está definido.');
+      }
+
+      // Llamada al servicio para crear la construcción
+      const response = await lastValueFrom(
+        this.informationPropertyService.createBasicInformationPropertyConstruction(
+          this.executionId || '',
+          baunitId,
+          createBasicInformationConstruction
+        )
+      );
+
+      // Guarda el ID de la construcción
+      this.constructionId = response.unitBuiltId ?? 0;
+      this.constructionData = response; 
+
+      console.log('Construction ID:', this.constructionId);
+
+      // Deshabilitar edición del primer paso, verificando si el objeto existe
+      const firstStep = this.stepper.steps.get(0);
+      if (firstStep) {
+        firstStep.editable = false;
+      }
+
+      // Avanza al siguiente paso
+      this.stepper.next();
+    } catch (error) {
+      // Si ocurre un error, evitar que el wizard avance
+      this.stepper.selectedIndex = 0; // Asegura que el wizard se quede en el primer step
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: `Ocurrió un problema: ${error}`,
+        confirmButtonColor: '#3f51b5',
+      });
+      console.error(error);
+    } finally {
+      this.isCreatingConstruction = false; // Oculta el indicador de carga
+    }
+  }
+
+
+
+
+  filterBuiltUseByType(selectedTypeCode: string): void {
+    const builtUseControl = this.ratingForm.get('domBuiltUse');
+    if (!builtUseControl) {
+      return;
+    }
+
+    const builtUseOptions = (builtUseControl as any)?.options || [];
+
+    this.filteredBuiltUseOptions = builtUseOptions.filter((opt: any) =>
+      opt.code.startsWith(selectedTypeCode)
+    );
+
+    builtUseControl.setValue(null);
+  }
+
+  disableStepNavigation(): void {
+    const steps = this.stepper.steps.toArray();
+    steps.forEach((step, index) => {
+      if (index < this.stepper.selectedIndex) {
+        step.editable = false;
+      }
+    });
   }
 
 
@@ -171,136 +361,20 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
 
   }
 
-  onSubmitTraditionalForm() {
-
-  };
-
-
-  async onSubmitForm(): Promise<void> {
-    console.log('Submitting form with values:', this.informationConstructionForm.value);
-    if (this.informationConstructionForm.invalid) {
-      this.informationConstructionForm.markAllAsTouched();
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Por favor, corrige los errores en el formulario para continuar.',
-        confirmButtonColor: '#3f51b5'
-      });
-      return;
-    }
-
-    const result = await Swal.fire({
-      title: '¿Está seguro?',
-      text: 'Está a punto de crear una nueva construcción.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, crear',
-      cancelButtonText: 'Cancelar'
-    });
-  
-    if (!result.isConfirmed) {
-      return;
-    }
-  
-    this.isLoading.set(true);
-  
-    try {
-      const value = this.informationConstructionForm.value || {};
-  
-      if (value.unitBuiltPrivateArea) {
-        value.unitBuiltPrivateArea = value.unitBuiltPrivateArea.toString().replace(',', '.');
-      }
-      if (value.unitBuiltArea) {
-        value.unitBuiltArea = value.unitBuiltArea.toString().replace(',', '.');
-      }
-  
-      let detailBasicInformationConstruction: ContentInformationConstruction | undefined;
-      if (this.addEditInformationData.type === 'new') {
-        const createBasicInformationConstruction: CreateBasicInformationConstruction = {
-          domBuiltType: value?.domBuiltType,
-          domBuiltUse: value?.domBuiltUse,
-          unitBuiltLabel: value?.unitBuiltLabel,
-          unitBuiltFloors: value?.unitBuiltFloors,
-          unitBuiltYear: value?.unitBuiltYear,
-          unitBuiltArea: value?.unitBuiltArea,
-          domTipologiaTipo: value?.domTipologiaTipo,
-          unitBuiltPrivateArea: value?.unitBuiltPrivateArea,
-          unitBuiltObservation: value?.unitBuiltObservation,
-        };
-  
-        const baunitId: string = this.addEditInformationData.baunitId || '';
-        if (!baunitId) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'baunitId no está definido.',
-            confirmButtonColor: '#3f51b5'
-          });
-          throw new Error('baunitId no está definido.');
-        }
-  
-
-        detailBasicInformationConstruction = await lastValueFrom(
-          this.informationPropertyService.createBasicInformationPropertyConstruction(
-            this.executionId || '',
-            baunitId,
-            createBasicInformationConstruction
-          )
-        );
-        
-        Swal.fire({
-          icon: 'success',
-          title: 'Creación exitosa',
-          text: 'La información de construcción se ha guardado correctamente.',
-          confirmButtonText: 'OK', confirmButtonColor: '#3f51b5'
-        });
-      } else {
-        detailBasicInformationConstruction = await lastValueFrom(
-          this.informationPropertyService.updateBasicInformationPropertyConstruction(
-            this.detailBasicInformation()?.unitBuiltId?.toString() || '',
-            { ...value },
-          )
-        );
-      }
-  
-      this.dialogRef.close(detailBasicInformationConstruction);
-    } catch (e) {
-      let errorMessage = 'Ocurrió un error inesperado.';
-      if (e instanceof Error) {
-        errorMessage = e.message;
-      } else if (typeof e === 'string') {
-        errorMessage = e;
-      } else if ((e as Error)?.message) {
-        errorMessage = (e as Error).message;
-      }
-  
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: `Ocurrió un error al guardar la información: ${errorMessage}`,
-        confirmButtonColor: '#3f51b5'
-      });
-  
-      console.error(e);
-    }
-  
-    this.isLoading.set(false);
-  }
   /**
    * Init information address form
    */
   private initForm(): void {
 
-    this.traditionalRatingForm = this.fBuilder.group({
-      // Campos de Estructura
+
+    this.ratingForm = this.fBuilder.group({
+
       structureArmazon: [null],
       structureMuros: [null],
       structureCubierta: [null],
       structureConservacion: [null],
 
-      // Campos de Acabados Principales
+      // Campos de acabados principales
       finishesFachadas: [null],
       finishesMuros: [null],
       finishesPisos: [null],
@@ -316,7 +390,45 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       kitchenSize: [null],
       kitchenEnchapes: [null],
       kitchenMobiliario: [null],
-      kitchenConservacion: [null]
+      kitchenConservacion: [null],
+
+
+
+
+    });
+
+    this.traditionalRatingForm = this.fBuilder.group({
+      // Campos de Estructura
+      structureArmazon: [null, Validators.required],
+      structureMuros: [null, Validators.required],
+      structureCubierta: [null, Validators.required],
+      structureConservacion: [null, Validators.required],
+
+      // Campos de Acabados Principales
+      finishesFachadas: [null, Validators.required],
+      finishesMuros: [null, Validators.required],
+      finishesPisos: [null, Validators.required],
+      finishesConservacion: [null, Validators.required],
+
+      // Campos de Baño
+      bathSize: [null, Validators.required],
+      bathEnchapes: [null],
+      bathMobiliario: [null],
+      bathConservacion: [null],
+
+      // Campos de Cocina
+      kitchenSize: [null, Validators.required],
+      kitchenEnchapes: [null],
+      kitchenMobiliario: [null],
+      kitchenConservacion: [null],
+
+
+
+    });
+
+
+    this.typologyRatingForm = this.fBuilder.group({
+      domTipologiaTipo: [null, Validators.required],
     });
 
 
@@ -329,34 +441,320 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       ],
       unitBuiltFloors: [
         null,
-        [Validators.required, Validators.pattern('^[0-9]+$')] // Solo números enteros
+        [Validators.required, Validators.pattern('^(?:[1-9]|[1-9][0-9])$')] // Números del 1 al 99
       ],
       unitBuiltYear: [
         null,
-        [Validators.required, Validators.pattern('^(19|20)\\d{2}$')] // Solo años válidos entre 1900-2099
+        [
+          Validators.required,
+          Validators.pattern('^(19|20)\\d{2}$'), // Años entre 1900 y 2099
+          this.yearNotInFutureValidator() // Validación personalizada
+        ]
       ],
       unitBuiltArea: [
         null,
-        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')]// Solo números
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]+([.,][0-9]+)?$'), // Solo números
+          this.nonZeroValidator() // Validación para que el área no sea 0
+        ]
       ],
-      domTipologiaTipo: [null, Validators.required],
+
       unitBuiltPrivateArea: [
         null,
-        [Validators.required, Validators.pattern('^[0-9]+([.,][0-9]+)?$')]// Solo números
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]+([.,][0-9]+)?$'), // Solo números
+          this.nonZeroValidator(), // Validación para que el área no sea 0
+          this.privateAreaValidator('unitBuiltArea') // Validación para que no sea mayor al área total
+        ]
       ],
-      unitBuiltObservation: [null] 
+      unitBuiltObservation: [null]
+  
     });
 
-    if (this.addEditInformationData.type === 'new') {
-      const names: string[] = ['unitBuiltId'];
-      names.forEach((name: string) => {
-        if (this.informationConstructionForm.controls[name]) {
-          this.informationConstructionForm.controls[name].clearValidators();
-          this.informationConstructionForm.controls[name].updateValueAndValidity();
-        }
+
+  }
+
+  yearNotInFutureValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const currentYear = new Date().getFullYear();
+      const enteredYear = parseInt(control.value, 10);
+      if (enteredYear > currentYear) {
+        return { yearInFuture: true };
+      }
+      return null;
+    };
+  }
+
+  nonZeroValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = parseFloat(control.value);
+      if (value <= 0) {
+        return { nonZero: true }; // Devuelve un error si el valor es 0 o menor
+      }
+      return null; // Sin errores
+    };
+  }
+
+  privateAreaValidator(totalAreaControlName: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formGroup = control.parent; // Obtén el grupo del formulario
+      if (!formGroup) {
+        return null; // Espera hasta que haya un formulario padre
+      }
+      const totalAreaControl = formGroup.get(totalAreaControlName);
+      if (!totalAreaControl) {
+        return null; // Asegúrate de que el control exista
+      }
+      const totalArea = parseFloat(totalAreaControl.value);
+      const privateArea = parseFloat(control.value);
+      if (privateArea > totalArea) {
+        return { privateAreaExceedsTotal: true }; // Devuelve un error si el área privada es mayor
+      }
+      return null; // Sin errores
+    };
+  }
+
+  async submit(): Promise<void> {
+    if (this.calificationMode === 'tradicional') {
+      await this.submitTraditionalRating();
+    } else if (this.calificationMode === 'tipologia') {
+      await this.submitTypologyCalification();
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Modo de calificación no reconocido.',
+        confirmButtonColor: '#3f51b5',
       });
     }
   }
+  
+  
+
+  get activeCalificationForm(): FormGroup {
+    return this.calificationMode === 'tradicional' ? this.traditionalRatingForm : this.typologyRatingForm;
+  }
+  
+
+  getApiCalificationUrl(domain: string): string {
+    return `${environment.url}:${environment.port}${environment.calificationUB}/${domain}`;
+  }
+
+  getApiTipologiaCalificationUrl(tipologia: string): string {
+    return `${environment.url}:${environment.port}${environment.calificationUB}${environment.unitBuild}/${environment.schemas.temp}/${tipologia}`;
+  }
+
+  toggleCalificationMode(mode: 'tradicional' | 'tipologia'): void {
+    if (
+      (this.traditionalRatingForm.dirty && mode === 'tipologia') ||
+      (this.typologyRatingForm.dirty && mode === 'tradicional')
+    ) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Atención',
+        text: 'No puedes cambiar de tipo de calificación porque ya has comenzado a diligenciar este formulario.',
+        confirmButtonColor: '#3f51b5',
+      });
+      return;
+    }
+  
+    this.calificationMode = mode;
+  }
+  
+
+  get domBuiltTypeControl(): FormControl {
+    return this.informationConstructionForm.get('domBuiltType') as FormControl;
+  }
+
+  get domBuiltUseControl(): FormControl {
+    return this.informationConstructionForm.get('domBuiltUse') as FormControl;
+  }
+
+
+  async submitTraditionalRating(): Promise<void> {
+    if (this.traditionalRatingForm.invalid) {
+      this.traditionalRatingForm.markAllAsTouched();
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, completa todos los campos requeridos en la calificación tradicional.',
+        confirmButtonColor: '#3f51b5',
+      });
+      return;
+    }
+  
+    try {
+      const formValue = this.traditionalRatingForm.value;
+      const payload = Object.values(formValue)
+        .filter((id): id is number => typeof id === 'number' && !isNaN(id))
+        .map((id) => ({ ccCalUBDom: { id } }));
+  
+      if (payload.length === 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se encontraron valores válidos para enviar.',
+          confirmButtonColor: '#3f51b5',
+        });
+        return;
+      }
+  
+      const baunitId: string = this.addEditInformationData.baunitId || '';
+      if (!baunitId) throw new Error('baunitId no está definido.');
+  
+      await lastValueFrom(this.informationPropertyService.updateCalification(this.executionId || '', baunitId, this.constructionId, payload));
+  
+      Swal.fire({
+        icon: 'success',
+        title: 'Calificación Completa',
+        text: 'La calificación tradicional se guardó correctamente.',
+        confirmButtonColor: '#3f51b5',
+      });
+  
+      // Cerrar el diálogo y enviar el resultado al padre
+      this.dialogRef.close(this.constructionData);
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: `Ocurrió un error al guardar la calificación tradicional`,
+        confirmButtonColor: '#3f51b5',
+      });
+      console.error(error);
+    }
+  }
+  
+  async submitTypologyCalification(): Promise<void> {
+    const selectedTypology = this.typologyRatingForm.get('domTipologiaTipo')?.value;
+  
+    if (!selectedTypology) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, selecciona una tipología antes de continuar.',
+        confirmButtonColor: '#3f51b5',
+      });
+      return;
+    }
+  
+    try {
+      const url = `${environment.url}:${environment.port}${environment.calificationUB}${environment.unitBuild}/${environment.schemas.temp}/tipologiaTipo/list/${selectedTypology}`;
+      const response = await lastValueFrom(this.http.get<any[]>(url));
+  
+      const payload = response
+        .filter((item) => item?.ccCalUBDom?.id)
+        .map((item) => ({ ccCalUBDom: { id: item.ccCalUBDom.id } }));
+  
+      if (payload.length === 0) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se encontraron valores válidos para enviar.',
+          confirmButtonColor: '#3f51b5',
+        });
+        return;
+      }
+  
+      const baunitId: string = this.addEditInformationData.baunitId || '';
+      if (!baunitId) throw new Error('baunitId no está definido.');
+  
+      await lastValueFrom(this.informationPropertyService.updateCalification(this.executionId || '', baunitId, this.constructionId, payload));
+  
+      Swal.fire({
+        icon: 'success',
+        title: 'Calificación Completa',
+        text: 'La calificación por tipología se guardó correctamente.',
+        confirmButtonColor: '#3f51b5',
+      });
+  
+      // Cerrar el diálogo y enviar el resultado al padre
+      this.dialogRef.close(this.constructionData);
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: `Ocurrió un error al guardar la calificación por tipología`,
+        confirmButtonColor: '#3f51b5',
+      });
+      console.error(error);
+    }
+  }
+  
+
+
+  resetForms(): void {
+    this.traditionalRatingForm.reset();
+    this.typologyRatingForm.reset();
+    this.calificationMode = null;
+  }
+
+  toggleBathroomFields(selectedValue: number): void {
+    const shouldDisable = selectedValue === 34; // ID de "Sin_Baño"
+    const fieldsToToggle = [
+      this.bathEnchapesControl,
+      this.bathMobiliarioControl,
+      this.bathConservacionControl,
+    ];
+  
+    fieldsToToggle.forEach((control) => {
+      if (shouldDisable) {
+        control.disable();
+        control.reset(); // Limpia el valor cuando se desactiva
+      } else {
+        control.enable();
+      }
+    });
+  }
+  
+  toggleKitchenFields(selectedValue: number): void {
+    const shouldDisable = selectedValue === 49; // ID de "Sin_Cocina"
+    const fieldsToToggle = [
+      this.kitchenEnchapesControl,
+      this.kitchenMobiliarioControl,
+      this.kitchenConservacionControl,
+    ];
+  
+    fieldsToToggle.forEach((control) => {
+      if (shouldDisable) {
+        control.disable();
+        control.reset(); // Limpia el valor cuando se desactiva
+      } else {
+        control.enable();
+      }
+    });
+  }
+
+  handleDialogClose(): void {
+    const currentStepIndex = this.stepper.selectedIndex;
+    const calificationStepIndex = 1; 
+
+    if (currentStepIndex === calificationStepIndex) {
+      Swal.fire({
+        title: '¿Está seguro de cerrar?',
+        text: 'Está a punto de cerrar el diálogo sin haber completado la calificación. Los cambios no se guardarán.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cerrar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.dialogRef.close(); 
+        }
+      });
+    } else {
+      this.dialogRef.close(); // Cerrar directamente si no está en la sección de calificación
+    }
+  }
+
+  
+
+
+
+
 
 
 }

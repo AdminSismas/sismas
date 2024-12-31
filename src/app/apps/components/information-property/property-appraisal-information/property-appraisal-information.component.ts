@@ -26,7 +26,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { environment } from '../../../../../environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
@@ -48,6 +48,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
 import { TypeInformation } from '../../../interfaces/content-info';
+import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 
 @Component({
   selector: 'vex-property-appraisal-information',
@@ -61,6 +62,7 @@ import { TypeInformation } from '../../../interfaces/content-info';
     scaleFadeIn400ms
   ],
   imports: [
+    CommonModule,
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
     MatButtonModule,
@@ -80,10 +82,13 @@ import { TypeInformation } from '../../../interfaces/content-info';
     MatCheckboxModule,
     FormsModule,
     CurrencyPipe,
-    MatRippleModule
+    MatRippleModule,
+    CurrencyFormatPipe
   ],
+  
   templateUrl: './property-appraisal-information.component.html',
-  styleUrl: './property-appraisal-information.component.scss'
+  styleUrl: './property-appraisal-information.component.scss',
+  
 })
 export class PropertyAppraisalInformationComponent implements OnInit, AfterViewInit {
 

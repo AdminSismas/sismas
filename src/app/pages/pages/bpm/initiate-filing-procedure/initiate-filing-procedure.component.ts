@@ -155,7 +155,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
 
   participants: ProcessParticipant[] = [];
 
-  propertyProcessing = 'Predio y Trámite';
+  propertyProcessing = 'Predio y trámite';
   participation = 'Participación';
   verification = 'Verificación';
   informationRegister!: BaunitHead;
@@ -333,7 +333,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
               this.infoGeneralService.setInfoProTaskE(proTaskE);
 
 
-              
+
 
 
 

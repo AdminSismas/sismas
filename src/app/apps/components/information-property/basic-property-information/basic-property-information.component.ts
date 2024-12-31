@@ -21,7 +21,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
@@ -105,7 +105,7 @@ export class BasicPropertyInformationComponent implements OnInit {
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
       width: '60%',
-      data: { executionId: this.executionId ,...this.data }
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION}
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {

@@ -20,7 +20,7 @@
 >
   <!-- Tipo Interesado -->
   <div class="flex flex-row gap-4">
-    <span class="text-black uppercase text-sm">Tipo interesado:</span>
+    <span class="text-black text-sm">Tipo interesado:</span>
     @if (owner && owner.individual && owner.individual.domIndividualType) {
       <h2 class="text-sm">{{ owner.individual.domIndividualType }}</h2>
     } @else {
@@ -29,7 +29,7 @@
   </div>
   <!-- Tipo Documento -->
   <div class="flex flex-row gap-4">
-    <span class="text-black uppercase text-sm">Tipo Documento:</span>
+    <span class="text-black text-sm">Tipo Documento:</span>
     @if (
       owner && owner.individual && owner.individual.domIndividualTypeNumber
     ) {
@@ -40,7 +40,7 @@
   </div>
   <!-- Número -->
   <div class="flex flex-row gap-4">
-    <span class="text-black uppercase text-sm">Número:</span>
+    <span class="text-black text-sm">Número:</span>
     @if (owner && owner.individual && owner.individual.number) {
       <h2 class="text-sm">{{ owner.individual.number }}</h2>
     } @else {
@@ -49,7 +49,7 @@
   </div>
   <!-- Sexo -->
   <div class="flex flex-row gap-4">
-    <span class="text-black uppercase text-sm">Sexo:</span>
+    <span class="text-black text-sm">Sexo:</span>
     @if (owner && owner.individual && owner.individual.domIndividualSex) {
       <h2 class="text-sm">{{ owner.individual.domIndividualSex }}</h2>
     } @else {
@@ -58,7 +58,7 @@
   </div>
   <!-- Nombre 1 -->
   <div class="flex flew-row gap-4">
-    <span class="text-black uppercase text-sm">Nombre 1:</span>
+    <span class="text-black text-sm">Nombre 1:</span>
     @if (owner && owner.individual && owner.individual.firstName) {
       <h2 class="text-sm">{{ owner.individual.firstName }}</h2>
     } @else {
@@ -67,7 +67,7 @@
   </div>
   <!-- Nombre 2 -->
   <div class="flex flew-row gap-4">
-    <span class="text-black uppercase text-sm">Nombre 2:</span>
+    <span class="text-black text-sm">Nombre 2:</span>
     @if (owner && owner.individual && owner.individual.middleName) {
       <h2 class="text-sm">{{ owner.individual.middleName }}</h2>
     } @else {
@@ -76,7 +76,7 @@
   </div>
   <!-- Apellido 1 -->
   <div class="flex flex-row gap-4">
-    <span class="text-black uppercase text-sm">Apellido 1:</span>
+    <span class="text-black text-sm">Apellido 1:</span>
     @if (owner && owner.individual && owner.individual.lastName) {
       <h2 class="text-sm">{{ owner.individual.lastName }}</h2>
     } @else {
@@ -85,7 +85,7 @@
   </div>
   <!-- Apellido 2 -->
   <div class="flex flex-row gap-4">
-    <span class="text-black uppercase text-sm">Apellido 2:</span>
+    <span class="text-black text-sm">Apellido 2:</span>
     @if (owner && owner.individual && owner.individual.otherLastName) {
       <h2 class="text-sm">{{ owner.individual.otherLastName }}</h2>
     } @else {
@@ -94,7 +94,7 @@
   </div>
   <!-- Grupo Étnico -->
   <div class="flex flex-row gap-4">
-    <span class="text-black uppercase text-sm">Grupo Étnico:</span>
+    <span class="text-black text-sm">Grupo Étnico:</span>
     @if (
       owner && owner.individual && owner.individual.domIndividualEthnicGroup
     ) {
@@ -107,16 +107,16 @@
   <div></div>
   <!-- Razón Social -->
   <div class="flex flex-row gap-6 col-span-2">
-    <span class="text-black uppercase text-sm">Razón social:</span>
+    <span class="text-black text-sm">Razón social:</span>
     @if (owner && owner.individual && owner.individual.companyName) {
       <h2 class="text-sm">{{ owner.individual.companyName }}</h2>
     } @else {
       <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
     }
   </div>
-  <!-- Nombre Completo -->
+  <!-- Nombre completo -->
   <div class="flex flex-row gap-6 col-span-2">
-    <span class="text-black uppercase text-sm">Nombre Completo:</span>
+    <span class="text-black text-sm">Nombre completo:</span>
     @if (owner && owner.individual && owner.individual.fullName) {
       <h2 class="text-sm">{{ owner.individual.fullName }}</h2>
     } @else {

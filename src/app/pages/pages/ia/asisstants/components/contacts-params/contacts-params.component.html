@@ -1,7 +1,7 @@
 <div class="modal-header-container">
   <header class="modal-header">
     <h2 class="headline m-0 flex-auto">
-      Opciones del Asistente {{ data.nombre }}
+      Opciones del asistente {{ data.nombre }}
     </h2>
     <button
       class="text-secondary"
@@ -29,7 +29,7 @@
                   <!-- Primera fila -->
                   <div class="flex flex-col sm:flex-row">
                     <mat-form-field class="flex-auto">
-                      <mat-label>Cambiar Modelo</mat-label>
+                      <mat-label>Cambiar modelo</mat-label>
                       <mat-select formControlName="cambiar_modelo">
                         <mat-option [value]="1">Sí</mat-option>
                         <mat-option [value]="0">No</mat-option>
@@ -142,7 +142,7 @@
                   <!-- Primer fila -->
                   <div class="flex flex-col sm:flex-row">
                     <mat-form-field class="flex-auto">
-                      <mat-label>Modelo Predeterminado</mat-label>
+                      <mat-label>Modelo predeterminado</mat-label>
                       <input
                         formControlName="modelo_predeterminado"
                         matInput
@@ -175,7 +175,7 @@
                   <!-- Instrucciones divididas en tres textareas -->
                   <div class="flex flex-col sm:flex-row">
                     <mat-form-field class="flex-auto">
-                      <mat-label>Instrucciones Generales</mat-label>
+                      <mat-label>Instrucciones generales</mat-label>
                       <textarea
                         formControlName="instrucciones"
                         matInput
@@ -185,7 +185,7 @@
 
                   <div class="flex flex-col sm:flex-row">
                     <mat-form-field class="flex-auto">
-                      <mat-label>Instrucciones de Personalidad</mat-label>
+                      <mat-label>Instrucciones de personalidad</mat-label>
                       <textarea
                         formControlName="instruccion_personalidad"
                         matInput
@@ -378,7 +378,7 @@
                     color="primary"
                     mat-flat-button
                     (click)="createVoice()">
-                    Crear Voz
+                    Crear voz
                   </button>
                 </mat-dialog-actions>
               </form>
@@ -389,7 +389,7 @@
 
       <mat-tab label="Archivos">
         <div class="p-6">
-          <h2 class="text-xl font-bold mb-4">Agregar Documento</h2>
+          <h2 class="text-xl font-bold mb-4">Agregar documento</h2>
           <form (ngSubmit)="onSubmitFileForm()">
             <div class="mb-4">
               <label
@@ -427,7 +427,7 @@
               <label
                 for="proposito"
                 class="block text-sm font-medium text-gray-700"
-                >Propósito del Documento</label
+                >Propósito del documento</label
               >
               <textarea
                 id="proposito"
@@ -440,7 +440,7 @@
               <label
                 for="archivo"
                 class="block text-sm font-medium text-gray-700"
-                >Cargar Archivo</label
+                >Cargar archivo</label
               >
               <input
                 type="file"

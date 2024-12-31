@@ -134,6 +134,7 @@ export const environment = {
   url: 'https://prediosplus.api.cadastre4world.com',
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
+  user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/'
   /* ------ W ------ */

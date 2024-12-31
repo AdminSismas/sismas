@@ -129,7 +129,7 @@
           <input
             matInput
             [formControl]="searchCtrl"
-            placeholder="Buscar información&hellip;"
+            placeholder="Filtrar información&hellip;"
             type="text" />
         </mat-form-field>
         <span class="flex-1 sm:min-w-[100px]"></span>
@@ -185,7 +185,7 @@
             [matColumnDef]="column.property">
             <th
               *matHeaderCellDef
-              class="uppercase py-2.5"
+              class="py-2.5"
               mat-header-cell
               mat-sort-header>
               {{ column.label }}

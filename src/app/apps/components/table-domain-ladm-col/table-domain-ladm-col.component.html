@@ -9,7 +9,7 @@
             </div>
         </div>
     </vex-page-layout-header>
-    
+
 
     <vex-page-layout-content class="px-5 -mt-6">
         <div class="card overflow-auto -mt-16">
@@ -22,10 +22,10 @@
                     <input
                         matInput
                         [formControl]="searchCtrl"
-                        placeholder="Buscar dominio&hellip;"
+                        placeholder="Filtrar dominio&hellip;"
                         type="text"/>
                 </mat-form-field>
-    
+
                 <!-- Botón de filtro -->
                 <button
                     [matMenuTriggerFor]="columnFilterMenu"
@@ -36,13 +36,13 @@
                     <mat-icon svgIcon="mat:filter_list"></mat-icon>
                 </button>
             </div>
-        
+
             <!-- Tabla de dominios -->
             <table @stagger mat-table [dataSource]="dataSource" class="w-full " matSort>
                 <!-- Text Columns -->
                 <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
                     <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-                        <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
                         <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
@@ -50,7 +50,7 @@
                         </td>
                     </ng-container>
                 </ng-container>
-            
+
                 <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
                 <tr mat-row *matRowDef="let element; columns: visibleColumns;" @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"></tr>
             </table>

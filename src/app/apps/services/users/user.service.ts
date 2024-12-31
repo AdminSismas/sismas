@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
 import { Content, CreateOutput, CreateUserParams, User } from '../../interfaces/users/user';
 
@@ -98,5 +98,20 @@ export class UserService {
         })
       );
 
+  }
+
+  searchUser(value: string): Observable<Content> {
+    const url: string = `${this.base_url}${envi.user_exist}${value}`;
+
+
+    return this.http.get<Content>(url)
+      .pipe(
+        map((res: Content) => {
+          if (res.individual && res.individual.fullName) {
+            res.fullName = res.individual.fullName
+          }
+          return res;
+        })
+      );
   }
 }

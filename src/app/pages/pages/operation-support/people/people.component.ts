@@ -99,7 +99,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // para enviarlo al formulario
   typeDocument = false;
-  infoDoc = 'ID';
+  infoDoc = 'Id';
   urlQuery = '';
 
   form: FormGroup = this.fb.group({});
@@ -263,7 +263,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     }
     value = value.trim();
     value = value.toLowerCase();
-    if (this.infoDoc !== 'ID') {
+    if (this.infoDoc !== 'Id') {
       if (value !== '') {
         const obj = {
           number: value,
@@ -346,7 +346,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       this.typeDocument = true;
     } else {
       this.typeDocument = false;
-      this.infoDoc = 'ID';
+      this.infoDoc = 'Id';
     }
   }
 
