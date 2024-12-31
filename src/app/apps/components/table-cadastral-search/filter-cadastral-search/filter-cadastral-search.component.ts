@@ -191,7 +191,6 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   formatFieldValue() {
-
       this.dpto?.reset();
       this.mpio?.reset();
       this.zonas?.reset();
@@ -392,6 +391,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       );
   }
   loadSectorsInformation(codeName: string, skipPreloadedValues: boolean | null) {
+    console.log(codeName === '00');
     if (codeName?.length <= 0) {
       return;
     }

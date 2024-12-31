@@ -459,6 +459,7 @@
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Zona</mat-label>
                 <mat-select
+                  #zone
                   (selectionChange)="loadSectorsInformation($event.value, true)"
                 >
                   @for (option of filteredOptionsZones$ | async; track option.codigoZona) {
@@ -520,100 +521,106 @@
             </div>
             <div class="flex flex-col sm:flex-row">
 
-              <!-- Campo comuna -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Comuna</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="community"
-                       placeholder="Seleccione un comuna&hellip;"
-                       [matAutocomplete]="autoTownship">
-                <mat-autocomplete autoActiveFirstOption #autoTownship="matAutocomplete" [panelWidth]="350"
-                                  (optionSelected)="loadNeighborhoodsInformation($event.option.value, true)">
-                  @for (option of filteredOptionsCommunities$ | async; track option.codigoComuna;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+              @if(zone.value) {
+                @if(zone.value === '01') {
+                  <!-- Campo comuna -->
+                  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                    <mat-label>Comuna</mat-label>
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           formControlName="community"
+                           placeholder="Seleccione un comuna&hellip;"
+                           [matAutocomplete]="autoTownship">
+                    <mat-autocomplete autoActiveFirstOption #autoTownship="matAutocomplete" [panelWidth]="350"
+                                      (optionSelected)="loadNeighborhoodsInformation($event.option.value, true)">
+                      @for (option of filteredOptionsCommunities$ | async; track option.codigoComuna;) {
+                        <mat-option
+                          [value]="option.codeName">
+                          {{ option.codeName}}
+                        </mat-option>
+                      } @empty {
+                        <mat-option>
+                          {{STRING_INFORMATION_NOT_FOUND}}
+                        </mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
 
-              <!-- Campo barrio -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Barrio</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="neighborhood"
-                       placeholder="Seleccione un comuna&hellip;"
-                       [matAutocomplete]="autoNeighborhood">
-                <mat-autocomplete autoActiveFirstOption #autoNeighborhood="matAutocomplete" [panelWidth]="350"
-                                  (optionSelected)="loadBlocksInformation($event.option.value, true)">
-                  @for (option of filteredOptionsNeighborhoods$ | async; track option.codigoBarrio;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+                  <!-- Campo barrio -->
+                  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                    <mat-label>Barrio</mat-label>
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           formControlName="neighborhood"
+                           placeholder="Seleccione un comuna&hellip;"
+                           [matAutocomplete]="autoNeighborhood">
+                    <mat-autocomplete autoActiveFirstOption #autoNeighborhood="matAutocomplete" [panelWidth]="350"
+                                      (optionSelected)="loadBlocksInformation($event.option.value, true)">
+                      @for (option of filteredOptionsNeighborhoods$ | async; track option.codigoBarrio;) {
+                        <mat-option
+                          [value]="option.codeName">
+                          {{ option.codeName}}
+                        </mat-option>
+                      } @empty {
+                        <mat-option>
+                          {{STRING_INFORMATION_NOT_FOUND}}
+                        </mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+                } @else {
+                  <!-- Campo vereda -->
+                  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                    <mat-label>Vereda</mat-label>
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           formControlName="sidewalk"
+                           placeholder="Seleccione una vereda&hellip;"
+                           [matAutocomplete]="autoSidewalk">
+                    <mat-autocomplete autoActiveFirstOption #autoSidewalk="matAutocomplete" [panelWidth]="350">
+                      @for (option of filteredOptionsSidewalk$ | async; track option.codigoVereda;) {
+                        <mat-option
+                          [value]="option.codeName">
+                          {{ option.codeName}}
+                        </mat-option>
+                      } @empty {
+                        <mat-option>
+                          {{STRING_INFORMATION_NOT_FOUND}}
+                        </mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+                }
+                <!-- Campo manzana -->
+                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                  <mat-label>Manzana</mat-label>
+                  <input type="text"
+                         aria-label="Number"
+                         matInput
+                         formControlName="block"
+                         placeholder="Seleccione una manzana&hellip;"
+                         [matAutocomplete]="autoBlock"
+                         >
+                  <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">
+                    @for (option of filteredOptionsBlocks$ | async; track option.codigoManzana;) {
+                      <mat-option
+                        [value]="option.codeName">
+                        {{ option.codeName}}
+                      </mat-option>
+                    } @empty {
+                      <mat-option>
+                        {{STRING_INFORMATION_NOT_FOUND}}
+                      </mat-option>
+                    }
+                  </mat-autocomplete>
+                </mat-form-field>
+              }
 
-              <!-- Campo vereda -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Vereda</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="sidewalk"
-                       placeholder="Seleccione una vereda&hellip;"
-                       [matAutocomplete]="autoSidewalk">
-                <mat-autocomplete autoActiveFirstOption #autoSidewalk="matAutocomplete" [panelWidth]="350">
-                  @for (option of filteredOptionsSidewalk$ | async; track option.codigoVereda;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
 
-              <!-- Campo manzana -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Manzana</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="block"
-                       placeholder="Seleccione una manzana&hellip;"
-                       [matAutocomplete]="autoBlock"
-                       >
-                <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">
-                  @for (option of filteredOptionsBlocks$ | async; track option.codigoManzana;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+
 
             </div>
 
