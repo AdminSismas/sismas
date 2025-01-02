@@ -82,9 +82,10 @@ export class AuthService {
 
   // Decodificar el token y obtener el 'sub'
   getDecodedToken() {
-    if (this.token) {
+    const token = sessionStorage.getItem('token');
+    if (token) {
       try {
-        const decoded = jwtDecode(this.token);
+        const decoded = jwtDecode(token);
         return decoded as DecodeJwt;
       } catch (e) {
         console.error('Error al decodificar el token', e);

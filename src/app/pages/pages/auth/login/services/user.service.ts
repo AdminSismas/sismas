@@ -47,7 +47,7 @@ constructor() {
   getUser(): DecodeJwt | null {
     if (sessionStorage?.getItem('token')) {
       const decodedToken = jwtDecode<DecodeJwt>(sessionStorage.getItem('token') as string);
-      console.log(decodedToken);
+
       return decodedToken;
     }
     return null;

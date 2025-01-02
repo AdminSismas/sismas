@@ -35,7 +35,7 @@ export class NavigationLoaderService {
 
   constructor(
     private readonly layoutService: VexLayoutService,
-    private protasksService: TasksPanelService,
+    private proTasksService: TasksPanelService,
     private userService: UserService
   ) {
     this.loadInformationProTaskE();
@@ -54,7 +54,7 @@ export class NavigationLoaderService {
   }
 
   loadInformationProTaskE(): void {
-    this.protasksService.listProtaskE$.subscribe((result: ProTaskE) => {
+    this.proTasksService.listProtaskE$.subscribe((result: ProTaskE) => {
       if (result?.asigned) {
         this._contentInformationProTaskE$.next(result);
       }

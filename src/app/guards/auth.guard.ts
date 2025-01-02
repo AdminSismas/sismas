@@ -1,16 +1,16 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../pages/pages/auth/login/services/auth.service';
+import { UserService } from '../pages/pages/auth/login/services/user.service';
+import { DecodeJwt } from '../apps/interfaces/user-details/user.model';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-
-  console.log(route);
-  console.log(state);
+  const userService = inject(UserService)
 
   if (authService.isAuthenticated()) {
-    console.log('Está autenticado');
+    userService.setUser(authService.getDecodedToken() as DecodeJwt);
     return true;
   } else {
     router.navigate(['/login']);
