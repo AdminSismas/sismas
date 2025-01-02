@@ -1,5 +1,5 @@
 .vex-page-layout-simple .vex-page-layout-content {
-    padding-top: 1px;
+    padding-top: 0px;
     padding-bottom: 0;
 }
 
@@ -8,4 +8,9 @@
     display: block;
      padding-left: 0; 
      padding-right: 0; 
+}
+
+.card {
+    padding-top: 24px;
+  
 }
