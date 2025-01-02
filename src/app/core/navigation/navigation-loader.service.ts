@@ -47,7 +47,7 @@ export class NavigationLoaderService {
         this.listProTasksE.push(result);
         this.userService.currentUser.subscribe((user) => {
           if (user) {
-            this.loadInformationNavigation(user.authorities[0].authority);
+            this.loadInformationNavigation(user.role);
           }
         });
       });

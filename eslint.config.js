@@ -1,44 +1,47 @@
 // @ts-check
-const eslint = require("@eslint/js");
-const tseslint = require("typescript-eslint");
-const angular = require("angular-eslint");
+import { configs } from '@eslint/js'
+import { config, configs as _configs } from 'typescript-eslint'
+import { configs as __configs, processInlineTemplates } from 'angular-eslint'
 
-module.exports = tseslint.config(
+export default config(
   {
-    files: ["**/*.ts"],
+    files: ['**/*.ts'],
     extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended,
+      configs.recommended,
+      ..._configs.recommended,
+      ..._configs.stylistic,
+      ...__configs.tsRecommended
     ],
-    processor: angular.processInlineTemplates,
+    processor: processInlineTemplates,
     rules: {
-      "@angular-eslint/directive-selector": [
-        "error",
+      '@angular-eslint/directive-selector': [
+        'error',
         {
-          type: "attribute",
-          prefix: "vex",
-          style: "camelCase",
-        },
+          type: 'attribute',
+          prefix: 'vex',
+          style: 'camelCase'
+        }
       ],
-      "@angular-eslint/component-selector": [
-        "error",
+      '@angular-eslint/component-selector': [
+        'error',
         {
-          type: "element",
-          prefix: "vex",
-          style: "kebab-case",
-        },
+          type: 'element',
+          prefix: 'vex',
+          style: 'kebab-case'
+        }
       ],
-      "semi": ["error", "always"],  // Agregar esta línea para los puntos y coma
-    },
+      semi: ['error', 'always'], // Agregar esta línea para los puntos y coma
+    }
   },
   {
-    files: ["**/*.html"],
+    files: ['**/*.html'],
     extends: [
-      ...angular.configs.templateRecommended,
-      ...angular.configs.templateAccessibility,
+      ...__configs.templateRecommended,
+      ...__configs.templateAccessibility
     ],
-    rules: {},
+    rules: {
+      '@angular-eslint/template/click-events-have-key-events': 'off',
+      '@angular-eslint/template/interactive-supports-focus': 'off'
+    }
   }
 );

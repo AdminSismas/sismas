@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -9,22 +9,22 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class UserService {
 
-  private currentUserSubject: BehaviorSubject<UserDetails | null>;
-  public currentUser: Observable<UserDetails | null>;
+  private currentUserSubject: BehaviorSubject<DecodeJwt | null>;
+  public currentUser: Observable<DecodeJwt | null>;
 
 constructor() {
 
     const savedUser = sessionStorage.getItem('user');
     if (savedUser) {
-        this.currentUserSubject = new BehaviorSubject<UserDetails | null>(JSON.parse(savedUser));
+        this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(JSON.parse(savedUser));
     } else {
-        this.currentUserSubject = new BehaviorSubject<UserDetails | null>(null);
+        this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(null);
     }
     this.currentUser = this.currentUserSubject.asObservable();
 }
 
 
-  setUser(user: UserDetails): void {
+  setUser(user: DecodeJwt): void {
     // sessionStorage.setItem('user', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
