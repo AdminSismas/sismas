@@ -32,7 +32,7 @@ const baseConfig: VexConfig = {
   boxed: false,
   sidenav: {
     title: 'GEOGESTION',
-    imageUrl: 'assets/img/illustrations/it_support.svg',
+    imageUrl: 'assets/img/illustrations/geogestion_it_support.png',
     showCollapsePin: true,
     user: {
       visible: true
