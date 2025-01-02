@@ -12,7 +12,7 @@ export class UserDetails {
     authorities: Authority[];
     accountNonLocked: boolean;
     credentialsNonExpired: boolean;
-  
+
     constructor(data: any) {
       this.userId = data.userId;
       this.username = data.username;
@@ -29,7 +29,7 @@ export class UserDetails {
       this.credentialsNonExpired = data.credentialsNonExpired;
     }
   }
-  
+
   export class Individual {
     individualId: number;
     number: string;
@@ -48,7 +48,7 @@ export class UserDetails {
     updatedBy: string;
     updatedAt: string;
     fullName: string;
-  
+
     constructor(data: any) {
       this.individualId = data.individualId;
       this.number = data.number;
@@ -69,11 +69,18 @@ export class UserDetails {
       this.fullName = data.fullName;
     }
   }
-  
+
   export class Authority {
     authority: string;
-  
+
     constructor(data: any) {
       this.authority = data.authority;
     }
+  }
+
+  export interface DecodeJwt {
+    sub: string;
+    role: string;
+    exp: number;
+    iat: number;
   }
