@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { jwtDecode } from 'jwt-decode';
 
 
 @Injectable({
@@ -43,10 +44,12 @@ constructor() {
   }
 
 
-  getUser(): UserDetails | null {
-    if (sessionStorage.getItem('token')) {
-
+  getUser(): DecodeJwt | null {
+    if (sessionStorage?.getItem('token')) {
+      const decodedToken = jwtDecode<DecodeJwt>(sessionStorage.getItem('token') as string);
+      console.log(decodedToken);
+      return decodedToken;
     }
-    return this.currentUserSubject.value;
+    return null;
   }
 }

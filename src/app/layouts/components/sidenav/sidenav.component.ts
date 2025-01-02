@@ -16,7 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe, CommonModule, NgFor, NgIf } from '@angular/common';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 import { Router } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -48,7 +48,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatInputModule
   ]
-  
+
 })
 export class SidenavComponent implements OnInit {
   public validationField = STRING_INFORMATION_NOT_FOUND;
@@ -58,7 +58,7 @@ export class SidenavComponent implements OnInit {
 
   form: FormGroup;
 
-  user: UserDetails | null = null;
+  user: DecodeJwt | null = null;
 
   @Input() collapsed = false;
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
@@ -94,7 +94,7 @@ export class SidenavComponent implements OnInit {
     private readonly popoverService: VexPopoverService,
     private readonly dialog: MatDialog,
     private userService: UserService,
-    
+
   ) {
 
     this.form = this.fb.group({
@@ -103,7 +103,7 @@ export class SidenavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getUser(); 
+    this.user = this.userService.getUser();
     this.navigationService._navigationMenuSubject$.subscribe((items) => {
       this.listRouteItem.push(items[0]);
       // this.listRouteItem = this.filterUniqueRoutes(this.listRouteItem);
@@ -120,7 +120,7 @@ export class SidenavComponent implements OnInit {
       ));
 
       this.serachRouteTouch();
-   
+
   }
 
   serachRouteTouch(){
@@ -138,7 +138,7 @@ export class SidenavComponent implements OnInit {
   }
 
   changeRole(role: string): void {
-    this.userService.changeRole(role);  
+    this.userService.changeRole(role);
   }
 
   collapseOpenSidenav() {
@@ -191,23 +191,23 @@ export class SidenavComponent implements OnInit {
     }
     this.router.navigate([label]);
     this.form.get('searchRuote')?.reset();
-    
+
   }
 
 
   captureRuteInformation(result: NavigationItem[], label: string | null) {
       result = result;
        this.listRouteItem = result;
-   
-    
+
+
         const listOptions: NavigationItem[] =  this.listRouteItem.filter(
           (option: NavigationItem): boolean => option.label === label);
         if (listOptions?.length > 0) {
           this.form.get('searchRuote')?.patchValue(listOptions[0].label);
           this.loadBlocksRouteList(listOptions[0].label, false);
         }
-     
-  
+
+
       this.form.get('searchRuote')?.valueChanges.pipe(
         startWith(''),
         map((value): any[] => this.listRouteItem.filter(
