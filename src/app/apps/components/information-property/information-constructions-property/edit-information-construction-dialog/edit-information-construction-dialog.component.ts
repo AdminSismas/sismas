@@ -1,71 +1,64 @@
-import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, Inject, OnInit, inject } from '@angular/core';
+// Angular framework
+import { CommonModule, NgIf } from '@angular/common';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClient, HttpParams } from '@angular/common/http';
+// Vex
+// Material
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+// Custom
+import { CustomSelectorComponent } from '../../../custom-selector/custom-selector.component';
+import { environment } from 'src/environments/environments';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { InputComponent } from '../../../input/input.component';
-import { TextAreaComponent } from '../../../text-area/text-area.component';
-import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
-import Swal from 'sweetalert2';
-import e from 'express';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { CustomSelectorComponent } from '../../../custom-selector/custom-selector.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { environment } from 'src/environments/environments';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-edit-information-construction-dialog',
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    InputComponent,
-    TextAreaComponent,
-    ComboxColletionComponent,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatTabsModule,
-    MatCardModule,
-    MatSelectModule,
-    VexSecondaryToolbarComponent,
-    VexBreadcrumbsComponent,
-    MatStepperModule,
-    MatInputModule,
-    NgFor,
     NgIf,
+    ReactiveFormsModule,
+    // Vex
+    // Material
+    MatButtonModule,
+    MatCardModule,
     MatCheckboxModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatOptionModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     MatSnackBarModule,
+    MatStepperModule,
+    MatTabsModule,
+    MatTooltipModule,
+    // Custom
     CustomSelectorComponent,
-    MatTooltipModule
-
+    InputComponent,
+    SweetAlert2Module,
   ],
   templateUrl: './edit-information-construction-dialog.component.html',
   styleUrl: './edit-information-construction-dialog.component.scss'
@@ -73,7 +66,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class EditInformationConstructionDialogComponent implements OnInit {
   editForm: FormGroup;
   traditionalRatingForm: FormGroup;
-  api_domainName: string = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
+  api_domainName = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
   calificationMode: 'tradicional' | 'tipologia' = 'tradicional';
   filteredBuiltUseOptions: any[] = []; // Opciones dinámicas para Uso de Construcción
   filteredTypologyOptions: any[] = []; // Opciones dinámicas para Tipología
@@ -93,6 +86,16 @@ export class EditInformationConstructionDialogComponent implements OnInit {
   kitchenEnchapesControl!: FormControl;
   kitchenMobiliarioControl!: FormControl;
   kitchenConservacionControl!: FormControl;
+
+  @ViewChild('closingDialog') private closingDialog!: SwalComponent;
+  @ViewChild('saveConfirmDialog') private saveConfirmDialog!: SwalComponent;
+  @ViewChild('successDialog') private successDialog!: SwalComponent;
+  @ViewChild('errorDialog') private errorDialog!: SwalComponent;
+  @ViewChild('validationErrorDialog') private validationErrorDialog!: SwalComponent;
+  @ViewChild('calificationSuccessDialog') private calificationSuccessDialog!: SwalComponent;
+  @ViewChild('calificationErrorDialog') private calificationErrorDialog!: SwalComponent;
+
+  // Modifica los métodos que usan Swal
 
   constructor(
     private fb: FormBuilder,
@@ -188,7 +191,7 @@ export class EditInformationConstructionDialogComponent implements OnInit {
       domBuiltType: this.data.domBuiltType?.trim(),
       domBuiltUse: this.data.domBuiltUse?.trim(),
     });
-  
+
     // Cargar opciones dinámicas y filtrar según el tipo inicial
     this.fetchAllBuiltUseOptions(() => {
       const initialType = this.editForm.get('domBuiltType')?.value;
@@ -196,23 +199,23 @@ export class EditInformationConstructionDialogComponent implements OnInit {
         this.filterBuiltUseByType(initialType);
       }
     });
-  
+
     // Manejar el cambio dinámico del selector de tipo
     this.editForm.get('domBuiltType')?.valueChanges.subscribe((selectedType) => {
       this.onTypeSelectionChange(selectedType);
     });
   }
-  
+
 
 
   private validateInitialValues(): void {
     const initialType = this.editForm.get('domBuiltType')?.value;
     const initialUse = this.editForm.get('domBuiltUse')?.value;
-  
+
     if (initialType) {
       this.filterBuiltUseByType(initialType);
     }
-  
+
     if (
       initialUse &&
       !this.filteredBuiltUseOptions.some((option) => option.value === initialUse)
@@ -223,16 +226,7 @@ export class EditInformationConstructionDialogComponent implements OnInit {
   // Manejar cierre del diálogo
   handleDialogClose(): void {
     if (this.editForm.dirty || this.traditionalRatingForm.dirty) {
-      Swal.fire({
-        title: '¿Está seguro de cerrar?',
-        text: 'Los cambios no se guardarán.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, cerrar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
+      this.closingDialog.fire().then((result) => {
         if (result.isConfirmed) {
           this.dialogRef.close();
         }
@@ -253,65 +247,32 @@ export class EditInformationConstructionDialogComponent implements OnInit {
     if (this.editForm.valid) {
       const formValues = this.processFormValues(this.editForm.value);
 
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: '¿Deseas guardar los cambios realizados?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, guardar cambios',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
+      this.saveConfirmDialog.fire().then((result) => {
         if (result.isConfirmed) {
           this.informationPropertyService.updateConstruction(this.data.executionId, this.data.baunitId, formValues)
             .subscribe({
               next: () => {
-                Swal.fire({
-                  title: '¡Guardado!',
-                  text: 'Los datos se han actualizado correctamente.',
-                  confirmButtonColor: '#3f51b5',
-                  icon: 'success'
+                this.successDialog.fire().then(() => {
+                  this.dialogRef.close(formValues);
                 });
-                this.dialogRef.close(formValues);
               },
               error: () => {
-                Swal.fire({
-                  title: '¡Error!',
-                  text: 'Ha ocurrido un error al guardar los datos.',
-                  confirmButtonColor: '#3f51b5',
-                  icon: 'error'
-                });
+                this.errorDialog.fire();
               }
             });
         }
       });
     } else {
-      Swal.fire({
-        title: '¡Error!',
-        text: 'Por favor, corrige las validaciones del formulario.',
-        confirmButtonColor: '#3f51b5',
-        icon: 'error'
-      });
+      this.validationErrorDialog.fire();
     }
   }
 
   // Guardar calificación
   saveCalification(): void {
     if (this.traditionalRatingForm.valid) {
-      Swal.fire({
-        title: '¡Calificación Guardada!',
-        text: 'Los datos de la calificación han sido registrados.',
-        confirmButtonColor: '#3f51b5',
-        icon: 'success'
-      });
+      this.calificationSuccessDialog.fire();
     } else {
-      Swal.fire({
-        title: '¡Error!',
-        text: 'Por favor, corrige las validaciones de calificación.',
-        confirmButtonColor: '#3f51b5',
-        icon: 'error'
-      });
+      this.calificationErrorDialog.fire();
     }
   }
 
@@ -355,9 +316,9 @@ export class EditInformationConstructionDialogComponent implements OnInit {
   });
 }
 
-  
-  
-  
+
+
+
 
 
   private filterBuiltUseByType(selectedType: string): void {
@@ -365,54 +326,54 @@ export class EditInformationConstructionDialogComponent implements OnInit {
       console.warn('No hay opciones disponibles para filtrar. Esperando datos.');
       return;
     }
-  
+
     const filteredOptions = this.filteredBuiltUseOptions.filter((option) =>
       option.code.startsWith(selectedType)
     );
-  
+
     console.log('Opciones filtradas:', filteredOptions);
-  
+
     this.filteredBuiltUseOptions = filteredOptions;
-  
+
     // Verifica si el valor actual sigue siendo válido
     const currentUse = this.editForm.get('domBuiltUse')?.value;
     const isValid = filteredOptions.some((option) => option.dispname === currentUse);
-  
+
     if (!isValid) {
       console.log('El valor actual no es válido para el tipo seleccionado. Valor limpiado.');
       this.editForm.get('domBuiltUse')?.setValue(null);
     }
   }
-  
-  
-  
+
+
+
   onTypeSelectionChange(selectedType: string): void {
     console.log('Cambio en el tipo de construcción:', selectedType);
-  
+
     if (!selectedType) {
       console.log('No se seleccionó ningún tipo. Opciones de uso limpiadas.');
       this.filteredBuiltUseOptions = [];
       this.editForm.get('domBuiltUse')?.setValue(null);
       return;
     }
-  
+
     // Vuelve a cargar las opciones desde el backend
     this.fetchAllBuiltUseOptions(() => {
       this.filterBuiltUseByType(selectedType);
     });
   }
-  
-  
-  
+
+
+
   get domBuiltTypeControl(): FormControl {
     return this.editForm.get('domBuiltType') as FormControl;
   }
-  
+
   get domBuiltUseControl(): FormControl {
     return this.editForm.get('domBuiltUse') as FormControl;
   }
-  
-  
+
+
 
 
 }
