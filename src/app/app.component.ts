@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { AuthService } from './pages/pages/auth/login/services/auth.service';
 
 @Component({
   selector: 'vex-root',
@@ -9,8 +7,12 @@ import { AuthService } from './pages/pages/auth/login/services/auth.service';
   standalone: true,
   imports: [RouterOutlet]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'geoGestion';
 
-
+  ngOnInit(): void {
+    if (window.name !== 'geogestion') {
+      window.name = 'geogestion';
+    }
+  }
 }

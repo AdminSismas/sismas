@@ -146,3 +146,14 @@
     </button>
   </mat-menu>
 
+<swal
+  #confirmDialog
+  title="¿Está seguro?"
+  text="Esta acción no se puede deshacer"
+  icon="warning"
+  [showCancelButton]="true"
+  [confirmButtonText]="'Sí, eliminar'"
+  [cancelButtonText]="'Cancelar'"
+  [confirmButtonColor]="'#d33'"
+  [cancelButtonColor]="'#3085d6'"
+></swal>

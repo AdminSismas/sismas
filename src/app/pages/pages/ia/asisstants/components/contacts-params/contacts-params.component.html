@@ -135,7 +135,7 @@
                 <mat-panel-title> Parámetros </mat-panel-title>
               </mat-expansion-panel-header>
 
-              <form [formGroup]="form" (ngSubmit)="updateparams()">
+              <form [formGroup]="form" (ngSubmit)="updateParams()">
                 <mat-divider class="text-border"></mat-divider>
 
                 <mat-dialog-content class="flex flex-col">
@@ -244,7 +244,7 @@
                     *ngIf="showCreateParamsButton || !parametrosCreados"
                     color="primary"
                     mat-flat-button
-                    (click)="createIntructions()">
+                    (click)="createInstructions()">
                     Crear Instrucciones
                   </button>
                 </mat-dialog-actions>
@@ -467,3 +467,62 @@
     </mat-tab-group>
   </div>
 </div>
+
+<swal
+  #modelValidationWarning
+  icon="warning"
+  title="Error"
+  text="Por favor, seleccione al menos un modelo antes de continuar."
+  [confirmButtonText]="'OK'">
+</swal>
+
+<swal
+  #successUpdate
+  icon="success"
+  title="Éxito"
+  text="Parámetros actualizados correctamente"
+  [timer]="1000"
+  [confirmButtonText]="'OK'">
+</swal>
+
+<swal
+  #successInstructions
+  icon="success"
+  title="Éxito"
+  text="Instrucciones actualizadas correctamente"
+  [timer]="2200"
+  [confirmButtonText]="'OK'">
+</swal>
+
+<swal
+  #successVoice
+  icon="success"
+  title="Éxito"
+  text="Voz actualizada correctamente"
+  [timer]="2200"
+  [confirmButtonText]="'OK'">
+</swal>
+
+<swal
+  #documentSuccess
+  icon="success"
+  title="Éxito"
+  text="Documento cargado correctamente"
+  [confirmButtonText]="'OK'">
+</swal>
+
+<swal
+  #documentError
+  icon="error"
+  title="Error"
+  text="No se pudo cargar el documento"
+  [confirmButtonText]="'OK'">
+</swal>
+
+<swal
+  #formWarning
+  icon="warning"
+  title="Advertencia"
+  text="Por favor complete todos los campos"
+  [confirmButtonText]="'OK'">
+</swal>
