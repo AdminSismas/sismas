@@ -5,6 +5,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { UserService } from './user.service';
+import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 
 
 @Injectable({
@@ -43,21 +44,21 @@ export class AuthService {
   }
 
   // Refrescar el token
-  refreshToken() {
+  refreshToken(): Observable<{ token: string }> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<any>(this.urlEndpoint, httpOptions);
+    return this.http.post<{ token: string }>(this.urlEndpoint, httpOptions);
   }
 
   // Login
-  login(email: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<{ token: string }> {
     const body = { username: email, password: password };
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.http.post<any>(this.urlEndpoint, body, httpOptions);
+    return this.http.post<{ token: string }>(this.urlEndpoint, body, httpOptions);
   }
 
   // Verificar si está autenticado
@@ -81,10 +82,11 @@ export class AuthService {
 
   // Decodificar el token y obtener el 'sub'
   getDecodedToken() {
-    if (this.token) {
+    const token = sessionStorage.getItem('token');
+    if (token) {
       try {
-        const decoded = jwtDecode(this.token);
-        return decoded as any;
+        const decoded = jwtDecode(token);
+        return decoded as DecodeJwt;
       } catch (e) {
         console.error('Error al decodificar el token', e);
         return null;
@@ -99,7 +101,7 @@ export class AuthService {
     if (decodedToken && decodedToken.sub) {
       const username = decodedToken.sub;
       console.log('Haciendo solicitud para obtener el usuario', username);
-      return this.http.get<any>(`${this.userUrl}${username}`).pipe(
+      return this.http.get<UserDetails>(`${this.userUrl}${username}`).pipe(
         catchError(err => {
           console.error('Error al obtener el usuario', err);
           return throwError(() => err);

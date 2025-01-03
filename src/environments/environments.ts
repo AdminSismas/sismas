@@ -7,7 +7,7 @@ export const environment = {
     extentByCodigoData: 'extentByCodigoData'
   },
   active: 'active',
-  finish: 'finished',
+  administrativeSource: '/fuenteadmin/',
 
   apiUrlToken: '/token/authenticate',
   auth_login: '/auth/login',
@@ -72,7 +72,7 @@ export const environment = {
   domain_domainName: '/domain/name',
   /* ------ E ------ */
   /* ------ F ------ */
-  administrativeSource: '/fuenteadmin/',
+  finish: 'finished',
   /* ------ G ------ */
   geoeconomic_zones: '/ccZonaHomoGeoEconomica',
   geoeconomic_values: '/zonaGEcoValor',

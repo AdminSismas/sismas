@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -15,8 +24,13 @@ import { environment } from '../../../../../environments/environments';
 import { AuthService } from './services/auth.service';
 
 import { UserService } from './services/user.service';
-import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import {
+  DecodeJwt,
+  UserDetails
+} from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'vex-login',
@@ -36,7 +50,7 @@ import { NavigationLoaderService } from 'src/app/core/navigation/navigation-load
     MatCheckboxModule,
     RouterLink,
     MatSnackBarModule,
-    MatSidenavModule,
+    MatSidenavModule
   ]
 })
 export class LoginComponent {
@@ -63,49 +77,51 @@ export class LoginComponent {
     if (this.form.valid) {
       const { email, password } = this.form.value;
 
-      this.authService.login(email, password).subscribe(
-        (response: any) => {
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
           if (response && response.token) {
             this.authService.saveToken(response.token);
 
+            const user: DecodeJwt = jwtDecode(response.token);
+            this.userService.setUser(user);
 
-            this.authService.getUserData()?.subscribe(
-              (userData) => {
-                const user = new UserDetails(userData);
-                this.userService.setUser(user);
+            this.navigationLoaderService.loadInformationNavigation(user.role);
 
-
-                this.navigationLoaderService.loadInformationNavigation(user.role);
-
-
-                this.router.navigate([`${environment.myWork_cadastralSearch}`]).then(() => {
-                  this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
-                    duration: 5000
-                  });
-                });
-              },
-              (error) => {
-                this.snackbar.open('Error al obtener los datos del usuario.', 'Error', {
+            this.router
+              .navigate([`${environment.myWork_cadastralSearch}`])
+              .then(() => {
+                this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
                   duration: 5000
                 });
+              });
+          } else {
+            this.snackbar.open(
+              'Credenciales incorrectas. Intenta nuevamente.',
+              'Error',
+              {
+                duration: 5000
               }
             );
-          } else {
-            this.snackbar.open('Credenciales incorrectas. Intenta nuevamente.', 'Error', {
-              duration: 5000
-            });
           }
         },
-        (error) => {
-          this.snackbar.open('Credenciales incorrectas. Intenta nuevamente.', 'Error', {
-            duration: 5000
-          });
+        error: () => {
+          this.snackbar.open(
+            'Credenciales incorrectas. Intenta nuevamente.',
+            'Error',
+            {
+              duration: 5000
+            }
+          );
+        }
+      });
+    } else {
+      this.snackbar.open(
+        'Por favor, complete los campos correctamente.',
+        'Error',
+        {
+          duration: 3000
         }
       );
-    } else {
-      this.snackbar.open('Por favor, complete los campos correctamente.', 'Error', {
-        duration: 3000
-      });
     }
   }
 

@@ -19,6 +19,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 
+
+import { MatDialog, MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
+
 // Custom
 import { Columns, DataSourceZoneManager, DisplayedColumns, GeoEconomicZone, RuralZone, UrbanZone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
@@ -31,6 +39,7 @@ import { TerritorialOrganizationService } from 'src/app/apps/services/territoria
 import { URBAN_COLUMNS, RURAL_COLUMNS, GEOECONOMICA_COLUMNS } from '../../../../../apps/constants/zone-constants';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
 import { ZoneManagerComponent } from '../../../../../apps/components/configuration/economic-mod-land/zone-manager/zone-manager.component';
+import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 
 @Component({
   selector: 'vex-economic-mod-land',
@@ -46,12 +55,15 @@ import { ZoneManagerComponent } from '../../../../../apps/components/configurati
     MatInputModule,
     MatTabsModule,
     MatAutocompleteModule,
+    MatDialogModule,
+    
 
     /* Vex Components */
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
+    VexPageLayoutHeaderDirective,
 
     /* Custom Components */
     ZoneManagerComponent

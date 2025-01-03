@@ -14,10 +14,10 @@
     <div [formGroup]="form" class="p-6 flex flex-col gap-4">
       <div class="flex flex-col">
         <mat-form-field class="flex-1">
-          <mat-label>Correo</mat-label>
+          <mat-label>Usuario</mat-label>
           <input formControlName="email" matInput required />
           <mat-error *ngIf="form.controls['email'].hasError('required')">
-            Se necesita una dirección de correo electrónico para iniciar sesión
+            Se necesita un usuario válido para iniciar sesión
           </mat-error>
         </mat-form-field>
         <br/>
