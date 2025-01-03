@@ -1,31 +1,32 @@
+// Angular framework
+import { ChangeDetectorRef } from '@angular/core';
 import { Component, Inject, OnInit, Output, EventEmitter, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatMenuModule } from '@angular/material/menu';
 import { NgIf, NgFor } from '@angular/common';
-import { ComponentsServicesService } from '../components.services.service';
-import { assistantData } from 'src/app/core/crud/assistantsData.model';
-import { ContactsParamsService } from './contacts-params.service';
-import Swal from 'sweetalert2';
+import { SweetAlert2Module, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+// Vex
+// Material
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { log } from 'console';
-import { ChangeDetectorRef } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
-// import { AuthService } from '../../../../core/auth/auth.service';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+// Custom
+import { assistantData } from 'src/app/core/crud/assistantsData.model';
+import { ComponentsServicesService } from '../components.services.service';
+import { ContactsParamsService } from './contacts-params.service';
 
 @Component({
   selector: 'vex-contacts-params',
@@ -33,24 +34,27 @@ import { MatSliderModule } from '@angular/material/slider';
   templateUrl: './contacts-params.component.html',
   styleUrls: ['./contacts-params.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatDialogModule,
-    NgIf,
-    NgFor,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatTabsModule,
     FormsModule,
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+    SweetAlert2Module,
+    // Vex
+    // Material
+    MatButtonModule,
+    MatDialogModule,
+    MatDividerModule,
     MatExpansionModule,
-    MatTooltipModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatSliderModule,
     MatSlideToggleModule,
-    MatSliderModule
+    MatTabsModule,
+    MatTooltipModule,
   ]
 })
 export class ContactsParamsComponent implements OnInit, AfterViewInit {
@@ -82,6 +86,15 @@ export class ContactsParamsComponent implements OnInit, AfterViewInit {
 
   temperatureValue = 0.7; // Valor inicial
   topPValue = 1;
+
+  @ViewChild('modelValidationWarning') private modelValidationWarning!: SwalComponent;
+  @ViewChild('successUpdate') private successUpdate!: SwalComponent;
+  @ViewChild('successInstructions') private successInstructions!: SwalComponent;
+  @ViewChild('successVoice') private successVoice!: SwalComponent;
+  @ViewChild('documentSuccess') private documentSuccess!: SwalComponent;
+  @ViewChild('documentError') private documentError!: SwalComponent;
+  @ViewChild('formWarning') private formWarning!: SwalComponent;
+
 
   constructor(
     private fb: FormBuilder,
@@ -148,9 +161,9 @@ export class ContactsParamsComponent implements OnInit, AfterViewInit {
   this.form.get('llama')?.valueChanges.subscribe(() => this.filtrarModelos());
 
   this.form.valueChanges.subscribe(() => {
-    this.checkEmptyFieldsIntruction();
+    this.checkEmptyFieldsInstruction();
   });
-  this.checkInitialDataIntruction();
+  this.checkInitialDataInstruction();
 
   this.form.valueChanges.subscribe(() => {
     this.checkEmptyfieldsVoice();
@@ -274,116 +287,6 @@ export class ContactsParamsComponent implements OnInit, AfterViewInit {
   }
 
 
-  // generateAsistants() {
-  //   Swal.fire({
-  //     title: '¿Deseas continuar con la creación del asistente ' + this.data.nombre + '?',
-  //     imageUrl: 'assets/img/icons/alerts/robotIcon.png',
-  //     imageWidth: 135,
-  //     imageHeight: 135,
-  //     showCancelButton: true,
-  //     confirmButtonText: 'Sí',
-  //     cancelButtonText: 'No',
-  //     confirmButtonColor: '#564de6',
-  //     cancelButtonColor: '#dc3545',
-  //     reverseButtons: true
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //        // Mostrar el loading
-  //       Swal.fire({
-  //         title: 'Creando asistente...',
-  //         text: 'Por favor espera',
-  //         allowOutsideClick: false,
-  //         didOpen: () => {
-  //           Swal.showLoading();
-  //         }
-  //       });
-  //       // Crear el objeto con todos los campos de la interfaz pero solo asignar valores a los que necesitas
-  //       const generateAssistant: assistantData = {
-  //         id: 0, // Asigna valores por defecto
-  //         idempresa: 0,
-  //         empresa: '',
-  //         id_asistente: '',
-  //         nombre: this.data.nombre,
-  //         descripcion: '',
-  //         instrucciones: '',
-  //         instruccion_saludo_despedida: '',
-  //         instruccion_personalidad: '',
-  //         modelo_predeterminado: '',
-  //         modelo_actual: this.form.get('modelo_actual')?.value,
-  //         cambiar_modelo: 0,
-  //         openai: 0,
-  //         anthropic: 0,
-  //         google: 0,
-  //         llama: 0,
-  //         cic: 0,
-  //         escuchar: 0,
-  //         hablar: 0,
-  //         archivos: this.form.get('archivos')?.value,
-  //         codigo: this.form.get('codigo')?.value,
-  //         tavily: 0,
-  //         wikipedia: 0,
-  //         pdf: 0,
-  //         bi: 0,
-  //         video: 0,
-  //         imgurl: '',
-  //         id_voz: 0,
-  //         status: 0,
-  //         id_modelo_voz: 0,
-  //         similarity_boost: '',
-  //         stability: '',
-  //         style: '',
-  //         use_speaker_boost: '',
-  //         optimize_streaming_latency: '',
-  //         nombre_voz: '',
-  //         id_eleven: '',
-  //         ejemplo_voz: '',
-  //         empresa_modelo: ''
-  //       };
-  //       // Enviar el objeto completo
-  //       this.contactsParamsService.generateAsistants(generateAssistant).subscribe({
-  //         next: response => {
-  //           console.log('Response:', response);
-
-  //           if (response.success) {
-  //             this.dialogRef.close(response.data);
-  //             Swal.fire({
-  //               icon: 'success',
-  //               title: 'Éxito',
-  //               text: 'Asistente creado correctamente',
-  //               timer: 2000,
-  //               timerProgressBar: true,
-  //               showConfirmButton: false
-  //             });
-  //           } else {
-  //             console.log('Error al crear el Asistente: ' + response.message);
-  //             Swal.fire({
-  //               icon: 'error',
-  //               title: 'Error',
-  //               text: 'Error al crear el Asistente',
-  //               timer: 2500,
-  //               timerProgressBar: true,
-  //               showConfirmButton: false
-  //             });
-  //           }
-  //         },
-  //         error: err => {
-  //           Swal.fire({
-  //             icon: 'error',
-  //             title: 'Error',
-  //             text: 'Hubo un error al crear el Asistente. Por favor, inténtalo de nuevo más tarde.',
-  //             timer: 2500,
-  //             timerProgressBar: true,
-  //             showConfirmButton: false
-  //           });
-  //         }
-  //       });
-  //     } else {
-  //       console.log('Creación del asistente cancelada por el usuario.');
-  //     }
-  //   });
-  // }
-
-
   filtrarModelos(): void {
   const openaiSeleccionado = this.form.get('openai')?.value === 1;
   const googleSeleccionado = this.form.get('google')?.value === 1;
@@ -430,53 +333,11 @@ validateModelSelection(): boolean {
         formValues.llama === 1;
 }
 
-//Función que actualiza todos los datos del los acordiones
-// updateparams() {
-//   if (!this.validateModelSelection()) {
-//     Swal.fire({
-//       icon: 'warning',
-//       title: 'Error',
-//       text: 'Por favor, seleccione al menos un modelo antes de continuar.',
-//       confirmButtonText: 'OK'
-//     });
-//     return;
-//   }
-//   if (this.form.valid) {
-//     const updatedParams = {
-//       ...this.data,
-//       ...this.form.value
-//     };
-//     this.componentsServicesService.updateParam(this.data.id, updatedParams).subscribe(response => {
-//       if (response.success) {
-//         Swal.fire({
-//           icon: 'success',
-//           title: 'Éxito',
-//           timer: 1000,
-//           text: 'Parámetros actualizados correctamente',
-//           confirmButtonText: 'OK'
-//         }).then(() => {
-//           this.assistantUpdated.emit(updatedParams);
-//           this.dialogRef.close(updatedParams);
-//         });
-//       } else {
-//         console.error('Error al actualizar los parámetros:', response.message);
-//       }
-//     });
-//   } else {
-//     this.showFormErrors(); // Mostrar los errores del formulario
-//   }
-// }
 
-
-//Funcion actualizar datos del apartado Caracteristicas
+//Función actualizar datos del apartado Características
 updateFeature() {
   if (!this.validateModelSelection()) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Error',
-      text: 'Por favor, seleccione al menos un modelo antes de continuar.',
-      confirmButtonText: 'OK'
-    });
+    this.modelValidationWarning.fire();
     return;
   }
   if (this.form.valid) {
@@ -493,13 +354,7 @@ updateFeature() {
 
     this.componentsServicesService.updateParam(this.data.id, updatedParams, 'feature').subscribe(response => {
       if (response.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Éxito',
-          timer: 1000,
-          text: 'Parámetros actualizados correctamente',
-          confirmButtonText: 'OK'
-        }).then(() => {
+        this.successUpdate.fire().then(() => {
           this.assistantUpdated.emit({
             ...this.data,
             ...updatedParams
@@ -515,8 +370,8 @@ updateFeature() {
   }
 }
 
-//Funcion actualizar datos del apartado Parametros
-updateparams() {
+//Función actualizar datos del apartado Parámetros
+updateParams() {
   if (this.form.valid) {
     const updatedParams = {
       modelo_predeterminado: this.form.get('modelo_predeterminado')?.value,
@@ -530,13 +385,7 @@ updateparams() {
 
     this.componentsServicesService.updateParam(this.data.id, updatedParams, 'params').subscribe(response => {
       if (response.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Éxito',
-          timer: 1000,
-          text: 'Parámetros actualizados correctamente',
-          confirmButtonText: 'OK'
-        }).then(() => {
+        this.successUpdate.fire().then(() => {
           this.assistantUpdated.emit({
             ...this.data,
             ...updatedParams
@@ -552,7 +401,7 @@ updateparams() {
   }
 }
 
-//Funcion actualizar datos del apartado Voz
+//Función actualizar datos del apartado Voz
 updateVoice() {
   if (this.form.valid) {
     const updatedParams = {
@@ -566,13 +415,7 @@ updateVoice() {
 
     this.componentsServicesService.updateParam(this.data.id, updatedParams, 'voice').subscribe(response => {
       if (response.success) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Éxito',
-          timer: 1000,
-          text: 'Parámetros actualizados correctamente',
-          confirmButtonText: 'OK'
-        }).then(() => {
+        this.successUpdate.fire().then(() => {
           this.assistantUpdated.emit({
             ...this.data,
             ...updatedParams
@@ -589,7 +432,7 @@ updateVoice() {
 }
 
 // Función para verificar si los campos de instrucciones están vacíos
-checkEmptyFieldsIntruction(): void {
+checkEmptyFieldsInstruction(): void {
   const instrucciones = this.form.get('instrucciones')?.value;
   const instruccionPersonalidad = this.form.get('instruccion_personalidad')?.value;
   const instruccionSaludoDespedida = this.form.get('instruccion_saludo_despedida')?.value;
@@ -601,7 +444,7 @@ checkEmptyFieldsIntruction(): void {
 }
 
 // Función para verificar si los campos ya tienen datos
-checkInitialDataIntruction(): void {
+checkInitialDataInstruction(): void {
   const instrucciones = this.form.get('instrucciones')?.value;
   const instruccionPersonalidad = this.form.get('instruccion_personalidad')?.value;
   const instruccionSaludoDespedida = this.form.get('instruccion_saludo_despedida')?.value;
@@ -649,7 +492,7 @@ checkInitialDataVoice(): void {
 }
 
 // Función para crear las instrucciones
-createIntructions() {
+createInstructions() {
   const instructionData = {
     id: this.data.id,
     instrucciones: this.form.get('instrucciones')?.value,
@@ -694,15 +537,9 @@ createIntructions() {
 
   this.componentsServicesService.createIntructions(instructionData).subscribe(response => {
     if (response.success) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: 'Instrucciones actualizadas correctamente',
-        timer: 2200,
-        confirmButtonText: 'OK'
-      });
-      this.parametrosCreados = true; // Cambiar el estado para que aparezca "Actualizar"
-      this.showCreateParamsButton = false; // Ocultar botón de "Crear Parámetros"
+      this.successInstructions.fire();
+      this.parametrosCreados = true;
+      this.showCreateParamsButton = false;
     } else {
       console.error('Error al crear las instrucciones:', response.message);
     }
@@ -757,15 +594,9 @@ createVoice() {
 
   this.componentsServicesService.createVoice(VoiceData).subscribe(response => {
     if (response.success) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: 'Voz actualizada correctamente',
-        timer: 2200,
-        confirmButtonText: 'OK'
-      });
-      this.voiceCreados = true; // Cambiar el estado para que aparezca "Actualizar"
-      this.showCreateVoiceButton = false; // Ocultar botón de "Crear Voz"
+      this.successVoice.fire();
+      this.voiceCreados = true;
+      this.showCreateVoiceButton = false;
     } else {
       console.error('Error al crear la Voz:', response.message);
     }
@@ -801,30 +632,15 @@ createVoice() {
 
       this.contactsParamsService.sendFileData(formData).subscribe({
         next: (response) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Éxito',
-            text: 'Documento cargado correctamente',
-            confirmButtonText: 'OK'
-          });
+          this.documentSuccess.fire();
         },
         error: (error) => {
           console.error('Error al cargar el documento:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo cargar el documento',
-            confirmButtonText: 'OK'
-          });
+          this.documentError.fire();
         }
       });
     } else {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Advertencia',
-        text: 'Por favor complete todos los campos',
-        confirmButtonText: 'OK'
-      });
+      this.formWarning.fire();
     }
   }
 
