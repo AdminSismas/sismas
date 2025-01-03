@@ -36,6 +36,7 @@
     "@ngneat/falso": "^7.1.1",
     "@ngx-loading-bar/core": "^6.0.2",
     "@ngx-loading-bar/router": "^6.0.2",
+    "@sweetalert2/ngx-sweetalert2": "^12.4.0",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
