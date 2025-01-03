@@ -1,40 +1,38 @@
-import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
+// Angular framework
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
+import { CommonModule, NgIf } from '@angular/common';
+import { Component, OnInit, ViewChild, inject, signal, viewChild } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { SweetAlert2Module, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+// Vex
+// Material
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+// Custom
 import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from 'src/app/apps/constants/constant';
 import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
 import { ContentInformationConstruction, CreateBasicInformationConstruction } from 'src/app/apps/interfaces/information-property/content-information-construction';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { environment } from 'src/environments/environments';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
-import { TextAreaComponent } from '../../../text-area/text-area.component';
 import { InputComponent } from '../../../input/input.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import Swal from 'sweetalert2';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatOptionModule } from '@angular/material/core';
-import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CustomSelectorComponent } from '../../../custom-selector/custom-selector.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { valid } from 'chroma-js';
+import { V } from '@angular/cdk/keycodes';
 
 
 
@@ -50,34 +48,31 @@ export interface AddEditInformationConstructionI {
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    InputComponent,
-    TextAreaComponent,
-    ComboxColletionComponent,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatTabsModule,
-    MatCardModule,
-    MatSelectModule,
-    VexSecondaryToolbarComponent,
-    VexBreadcrumbsComponent,
-    MatStepperModule,
-    MatInputModule,
-    NgFor,
     NgIf,
+    ReactiveFormsModule,
+    SweetAlert2Module,
+    // Vex
+    // Material
+    MatButtonModule,
+    MatCardModule,
     MatCheckboxModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatOptionModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     MatSnackBarModule,
+    MatStepperModule,
+    MatTabsModule,
+    MatTooltipModule,
+    // Custom
     CustomSelectorComponent,
-    MatTooltipModule
+    InputComponent,
   ],
   templateUrl: './edit-information-constructions-property.component.html',
   styleUrl: './edit-information-constructions-property.component.scss',
@@ -124,9 +119,25 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   filteredBuiltUseOptions: any[] = [];
   filteredTypologyOptions: any[] = [];
   isCreatingConstruction: boolean = false; // Estado de carga
-  constructionId!: number; // ID de la construcción creada 
+  constructionId!: number; // ID de la construcción creada
   constructionData: ContentInformationConstruction | null = null;
+  errorStepper?: any;
+
   @ViewChild('stepper') stepper!: MatStepper;
+  @ViewChild('formError') formError!: SwalComponent;
+  @ViewChild('idError') idError!: SwalComponent;
+  @ViewChild('errorDialog') errorDialog!: SwalComponent;
+  @ViewChild('qualificationError') qualificationError!: SwalComponent;
+  @ViewChild('warningDialog') warningDialog!: SwalComponent;
+  @ViewChild('incompleteForm') incompleteForm!: SwalComponent;
+  @ViewChild('notFoundValues') notFoundValues!: SwalComponent;
+  @ViewChild('successDialog') successDialog!: SwalComponent;
+  @ViewChild('saveErrorDialog') saveErrorDialog!: SwalComponent;
+  @ViewChild('selectTypeError') selectTypeError!: SwalComponent;
+  @ViewChild('successQualificationType') successQualificationType!: SwalComponent;
+  @ViewChild('errorQualificationType') errorQualificationType!: SwalComponent;
+  @ViewChild('closeDialog') closeDialog!: SwalComponent;
+
 
   constructor(private http: HttpClient) {
     this.initForm();
@@ -163,7 +174,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
     this.bathSizeControl.valueChanges.subscribe((value) => {
       this.toggleBathroomFields(value);
     });
-  
+
     // Escuchar cambios en el selector de tamaño de la cocina
     this.kitchenSizeControl.valueChanges.subscribe((value) => {
       this.toggleKitchenFields(value);
@@ -210,10 +221,10 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       this.domTipologiaTipoControl.setValue(null); // Resetea el valor de Tipología
       return;
     }
-  
+
     // Construye la URL con el tipo seleccionado
     const url = `${environment.url}:${environment.port}${environment.calificationUB}${environment.unitBuild}/${environment.schemas.temp}/tipologiaTipo/${selectedType}`;
-    
+
     // Realiza la petición GET para obtener las opciones de Tipología
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
@@ -230,12 +241,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   async createConstruction(): Promise<void> {
     if (this.informationConstructionForm.invalid) {
       this.informationConstructionForm.markAllAsTouched();
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Por favor, corrige los errores en el formulario para continuar.',
-        confirmButtonColor: '#3f51b5',
-      });
+      this.formError.fire();
       return;
     }
 
@@ -257,13 +263,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
 
       const baunitId: string = this.addEditInformationData.baunitId || '';
       if (!baunitId) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'El ID de la unidad básica no está definido.',
-          confirmButtonColor: '#3f51b5',
-        });
-        throw new Error('El ID de la unidad básica no está definido.');
+        this.idError.fire();
       }
 
       // Llamada al servicio para crear la construcción
@@ -277,7 +277,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
 
       // Guarda el ID de la construcción
       this.constructionId = response.unitBuiltId ?? 0;
-      this.constructionData = response; 
+      this.constructionData = response;
 
       console.log('Construction ID:', this.constructionId);
 
@@ -292,12 +292,8 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
     } catch (error) {
       // Si ocurre un error, evitar que el wizard avance
       this.stepper.selectedIndex = 0; // Asegura que el wizard se quede en el primer step
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: `Ocurrió un problema: ${error}`,
-        confirmButtonColor: '#3f51b5',
-      });
+      this.errorStepper = error;
+      this.errorDialog.fire();
       console.error(error);
     } finally {
       this.isCreatingConstruction = false; // Oculta el indicador de carga
@@ -470,7 +466,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
         ]
       ],
       unitBuiltObservation: [null]
-  
+
     });
 
 
@@ -522,21 +518,16 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
     } else if (this.calificationMode === 'tipologia') {
       await this.submitTypologyCalification();
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Modo de calificación no reconocido.',
-        confirmButtonColor: '#3f51b5',
-      });
+      this.qualificationError.fire()
     }
   }
-  
-  
+
+
 
   get activeCalificationForm(): FormGroup {
     return this.calificationMode === 'tradicional' ? this.traditionalRatingForm : this.typologyRatingForm;
   }
-  
+
 
   getApiCalificationUrl(domain: string): string {
     return `${environment.url}:${environment.port}${environment.calificationUB}/${domain}`;
@@ -551,18 +542,13 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       (this.traditionalRatingForm.dirty && mode === 'tipologia') ||
       (this.typologyRatingForm.dirty && mode === 'tradicional')
     ) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Atención',
-        text: 'No puedes cambiar de tipo de calificación porque ya has comenzado a diligenciar este formulario.',
-        confirmButtonColor: '#3f51b5',
-      });
+      this.warningDialog.fire();
       return;
     }
-  
+
     this.calificationMode = mode;
   }
-  
+
 
   get domBuiltTypeControl(): FormControl {
     return this.informationConstructionForm.get('domBuiltType') as FormControl;
@@ -576,112 +562,72 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
   async submitTraditionalRating(): Promise<void> {
     if (this.traditionalRatingForm.invalid) {
       this.traditionalRatingForm.markAllAsTouched();
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Por favor, completa todos los campos requeridos en la calificación tradicional.',
-        confirmButtonColor: '#3f51b5',
-      });
+      this.incompleteForm.fire();
       return;
     }
-  
+
     try {
       const formValue = this.traditionalRatingForm.value;
       const payload = Object.values(formValue)
         .filter((id): id is number => typeof id === 'number' && !isNaN(id))
         .map((id) => ({ ccCalUBDom: { id } }));
-  
+
       if (payload.length === 0) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se encontraron valores válidos para enviar.',
-          confirmButtonColor: '#3f51b5',
-        });
+        this.notFoundValues.fire();
         return;
       }
-  
+
       const baunitId: string = this.addEditInformationData.baunitId || '';
       if (!baunitId) throw new Error('baunitId no está definido.');
-  
+
       await lastValueFrom(this.informationPropertyService.updateCalification(this.executionId || '', baunitId, this.constructionId, payload));
-  
-      Swal.fire({
-        icon: 'success',
-        title: 'Calificación Completa',
-        text: 'La calificación tradicional se guardó correctamente.',
-        confirmButtonColor: '#3f51b5',
-      });
-  
+
+      this.successDialog.fire();
+
       // Cerrar el diálogo y enviar el resultado al padre
       this.dialogRef.close(this.constructionData);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: `Ocurrió un error al guardar la calificación tradicional`,
-        confirmButtonColor: '#3f51b5',
-      });
+      this.saveErrorDialog.fire();
       console.error(error);
     }
   }
-  
+
   async submitTypologyCalification(): Promise<void> {
     const selectedTypology = this.typologyRatingForm.get('domTipologiaTipo')?.value;
-  
+
     if (!selectedTypology) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Por favor, selecciona una tipología antes de continuar.',
-        confirmButtonColor: '#3f51b5',
-      });
+      this.selectTypeError.fire()
       return;
     }
-  
+
     try {
       const url = `${environment.url}:${environment.port}${environment.calificationUB}${environment.unitBuild}/${environment.schemas.temp}/tipologiaTipo/list/${selectedTypology}`;
       const response = await lastValueFrom(this.http.get<any[]>(url));
-  
+
       const payload = response
         .filter((item) => item?.ccCalUBDom?.id)
         .map((item) => ({ ccCalUBDom: { id: item.ccCalUBDom.id } }));
-  
+
       if (payload.length === 0) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'No se encontraron valores válidos para enviar.',
-          confirmButtonColor: '#3f51b5',
-        });
+        this.notFoundValues.fire();
         return;
       }
-  
+
       const baunitId: string = this.addEditInformationData.baunitId || '';
       if (!baunitId) throw new Error('baunitId no está definido.');
-  
+
       await lastValueFrom(this.informationPropertyService.updateCalification(this.executionId || '', baunitId, this.constructionId, payload));
-  
-      Swal.fire({
-        icon: 'success',
-        title: 'Calificación Completa',
-        text: 'La calificación por tipología se guardó correctamente.',
-        confirmButtonColor: '#3f51b5',
-      });
-  
+
+      this.successQualificationType.fire()
+
       // Cerrar el diálogo y enviar el resultado al padre
       this.dialogRef.close(this.constructionData);
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: `Ocurrió un error al guardar la calificación por tipología`,
-        confirmButtonColor: '#3f51b5',
-      });
+      this.errorQualificationType.fire();
       console.error(error);
     }
   }
-  
+
 
 
   resetForms(): void {
@@ -697,7 +643,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       this.bathMobiliarioControl,
       this.bathConservacionControl,
     ];
-  
+
     fieldsToToggle.forEach((control) => {
       if (shouldDisable) {
         control.disable();
@@ -707,7 +653,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       }
     });
   }
-  
+
   toggleKitchenFields(selectedValue: number): void {
     const shouldDisable = selectedValue === 49; // ID de "Sin_Cocina"
     const fieldsToToggle = [
@@ -715,7 +661,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       this.kitchenMobiliarioControl,
       this.kitchenConservacionControl,
     ];
-  
+
     fieldsToToggle.forEach((control) => {
       if (shouldDisable) {
         control.disable();
@@ -728,21 +674,12 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
 
   handleDialogClose(): void {
     const currentStepIndex = this.stepper.selectedIndex;
-    const calificationStepIndex = 1; 
+    const calificationStepIndex = 1;
 
     if (currentStepIndex === calificationStepIndex) {
-      Swal.fire({
-        title: '¿Está seguro de cerrar?',
-        text: 'Está a punto de cerrar el diálogo sin haber completado la calificación. Los cambios no se guardarán.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, cerrar',
-        cancelButtonText: 'Cancelar',
-      }).then((result) => {
+      this.closeDialog.fire().then((result) => {
         if (result.isConfirmed) {
-          this.dialogRef.close(); 
+          this.dialogRef.close();
         }
       });
     } else {
@@ -750,7 +687,7 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
     }
   }
 
-  
+
 
 
 
