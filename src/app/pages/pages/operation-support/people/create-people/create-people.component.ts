@@ -353,9 +353,10 @@ export class CreatePeopleComponent implements OnInit {
   validateNit(nit: any): boolean {
     const word = nit;
     const aWord = /^\d{9}-\d$/.test(word);
-
-    return aWord ? false : true;
+  
+    return aWord;
   }
+  
 
   validateTypePople(): void {
     // validar los tipos de campos según los valores de los formularios
