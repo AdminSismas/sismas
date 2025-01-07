@@ -1,47 +1,40 @@
-import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { TaskCardComponent } from '../components/task-card/task-card.component';
+// Angular framework
+import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { ProTaskE } from '../../../../../apps/interfaces/pro-task-e';
-import { TasksPanelService } from '../../../../../apps/services/bpm/tasks-panel.service';
-import { InformationPegeable } from '../../../../../apps/interfaces/information-pegeable.model';
-import { PageSearchData } from '../../../../../apps/interfaces/page-search-data.model';
-import {
-  PAGE,
-  PAGE_SIZE_OPTION_UNIQUE,
-  PAGE_SIZE_TABLE_CADASTRAL,
-  PAGE_SIZE_TABLE_UNIQUE,
-  PANEL_ASSIGNED_TASKS,
-  PANEL_DEVOLUTION_TASKS,
-  PANEL_PRIORITIZED_TASKS
-} from '../../../../../apps/constants/constant';
+import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
+import { filter, take } from 'rxjs/operators';
 import { Observable, of, ReplaySubject } from 'rxjs';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
-import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
-import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { MatSortModule } from '@angular/material/sort';
-import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ProTask } from '../../../../../apps/interfaces/pro-task';
-import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
-import { FooterComponent } from '../../../../../layouts/components/footer/footer.component';
+// Vex
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+// Material
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { filter, take } from 'rxjs/operators';
-import { LoadingAppComponent } from '../../../../../apps/components/loading-app/loading-app.component';
-import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
-import { environment } from '../../../../../../environments/environments';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+// Custom
 import { CONSTANT_NAME_ID } from '../../../../../apps/constants/constantLabels';
+import { environment } from '../../../../../../environments/environments';
+import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
+import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
+import { InformationPegeable } from '../../../../../apps/interfaces/information-pegeable.model';
+import { LoadingAppComponent } from '../../../../../apps/components/loading-app/loading-app.component';
+import { PAGE,PAGE_SIZE_OPTION_UNIQUE,PAGE_SIZE_TABLE_CADASTRAL,PAGE_SIZE_TABLE_UNIQUE,PANEL_ASSIGNED_TASKS,PANEL_DEVOLUTION_TASKS,PANEL_PRIORITIZED_TASKS } from '../../../../../apps/constants/constant';
+import { PageSearchData } from '../../../../../apps/interfaces/page-search-data.model';
+import { ProTask } from '../../../../../apps/interfaces/pro-task';
+import { ProTaskE } from '../../../../../apps/interfaces/pro-task-e';
 import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
+import { TaskCardComponent } from '../components/task-card/task-card.component';
+import { TasksPanelService } from '../../../../../apps/services/bpm/tasks-panel.service';
 
 @Component({
   selector: 'vex-assigned-tasks',
@@ -54,26 +47,24 @@ import { SendInfoGeneralService } from '../../../../../apps/services/general/sen
     fadeInUp400ms,
     scaleFadeIn400ms],
   imports: [
-    VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent,
-    MatIconModule,
-    MatTabsModule,
-    MatSortModule,
-    MatButtonModule,
-    MatTooltipModule,
-    TaskCardComponent,
-    NgIf,
-    NgFor,
-    RouterLink,
-    RouterLinkActive,
     AsyncPipe,
-    MatInputModule,
+    NgFor,
+    NgIf,
     ReactiveFormsModule,
-    HeaderTasksComponent,
-    FooterComponent,
+    // Vex
+    // Material
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
     MatPaginatorModule,
+    MatSortModule,
+    MatTabsModule,
+    MatTooltipModule,
+    // Custom
+    FluidHeightDirective,
+    HeaderTasksComponent,
     LoadingAppComponent,
-    FluidHeightDirective
+    TaskCardComponent,
   ],
   templateUrl: './tasks-panel.component.html',
   styleUrl: './tasks-panel.component.scss'
@@ -82,9 +73,9 @@ export class TasksPanelComponent implements OnInit {
 
   protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
 
-  isExistDataInformations = false;
+  isExistDataInformation = false;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  contentInformations!: InformationPegeable;
+  contentInformation!: InformationPegeable;
   listProTasksE: ProTaskE[] = [];
   listProTasksECards: ProTaskE[] = [];
   page = PAGE;
@@ -98,9 +89,9 @@ export class TasksPanelComponent implements OnInit {
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  subjectContentInformations$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(1);
-  dataContentInformations$: Observable<InformationPegeable> = this.subjectContentInformations$.asObservable();
-  isExistDataInformations$: Observable<boolean> = of(false);
+  subjectContentInformation$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(1);
+  dataContentInformation$: Observable<InformationPegeable> = this.subjectContentInformation$.asObservable();
+  isExistDataInformation$: Observable<boolean> = of(false);
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -115,6 +106,7 @@ export class TasksPanelComponent implements OnInit {
     this.activateLoading();
     this.activatedRoute.params.subscribe(params => {
       this.typePanel = params[CONSTANT_NAME_ID];
+      this.resetPaginator();
       this.onFilterChargeInformationByPanel();
     });
 
@@ -124,7 +116,7 @@ export class TasksPanelComponent implements OnInit {
         return this.onFilterChange(value);
       });
 
-    this.dataContentInformations$.pipe(filter<InformationPegeable>(Boolean))
+    this.dataContentInformation$.pipe(filter<InformationPegeable>(Boolean))
       .subscribe((result) => {
         this.captureInformationSubscribe(result);
       });
@@ -133,6 +125,7 @@ export class TasksPanelComponent implements OnInit {
   onFilterChargeInformationByPanel() {
     this.activateLoading();
     let state = false;
+
     if (!this.typePanel) {
       this.clearPanel();
       return state;
@@ -198,7 +191,7 @@ export class TasksPanelComponent implements OnInit {
       .subscribe(
         {
           error: (err: any) => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.subjectContentInformations$.next(result)
+          next: (result: InformationPegeable) => this.subjectContentInformation$.next(result)
         }
       );
   }
@@ -208,7 +201,7 @@ export class TasksPanelComponent implements OnInit {
       .subscribe(
         {
           error: (err: any) => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.subjectContentInformations$.next(result)
+          next: (result: InformationPegeable) => this.subjectContentInformation$.next(result)
         }
       );
   }
@@ -218,50 +211,50 @@ export class TasksPanelComponent implements OnInit {
       .subscribe(
         {
           error: (err: any) => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.subjectContentInformations$.next(result)
+          next: (result: InformationPegeable) => this.subjectContentInformation$.next(result)
         }
       );
   }
 
   captureInformationSubscribeError(): void {
-    this.isExistDataInformations = false;
-    this.contentInformations = new InformationPegeable();
+    this.isExistDataInformation = false;
+    this.contentInformation = new InformationPegeable();
     this.listProTasksE = [];
     this.listProTasksECards= [];
     this.activateLoading(true);
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
-    this.isExistDataInformations = true;
-    this.contentInformations = result;
+    this.isExistDataInformation = true;
+    this.contentInformation = result;
     this.orderByInformationSubscribe();
     this.activateLoading(true);
   }
 
   orderByInformationSubscribe() {
     let data: ProTaskE[];
-    if (this.contentInformations?.content != null) {
-      this.listProTasksE = this.contentInformations.content;
-      data = this.contentInformations.content;
+    if (this.contentInformation?.content != null) {
+      this.listProTasksE = this.contentInformation.content;
+      data = this.contentInformation.content;
       data = data.map((row: ProTaskE) => new ProTaskE(row));
       this.listProTasksECards = data;
 
-      if (this.contentInformations == null) {
+      if (this.contentInformation == null) {
         this.page = PAGE;
         return;
       }
 
-      if (this.contentInformations.totalElements) {
-        this.totalElements = this.contentInformations.totalElements;
+      if (this.contentInformation.totalElements) {
+        this.totalElements = this.contentInformation.totalElements;
       }
 
-      if (this.contentInformations.pageable == null) {
+      if (this.contentInformation.pageable == null) {
         this.page = PAGE;
         return;
       }
 
-      if (this.contentInformations.pageable.pageNumber != null) {
-        this.page = this.contentInformations.pageable.pageNumber;
+      if (this.contentInformation.pageable.pageNumber != null) {
+        this.page = this.contentInformation.pageable.pageNumber;
       }
     }
   }
@@ -306,7 +299,7 @@ export class TasksPanelComponent implements OnInit {
   }
 
   clearPanel() {
-    this.contentInformations = new InformationPegeable();
+    this.contentInformation = new InformationPegeable();
     this.listProTasksE = [];
     this.listProTasksECards = [];
     this.page = PAGE;
@@ -317,6 +310,15 @@ export class TasksPanelComponent implements OnInit {
 
   activateLoading(value = false) {
     const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(3));
+    this.isExistDataInformation$ = valid.pipe(take(3));
+  }
+
+  private resetPaginator(): void {
+    this.page = PAGE;
+    this.pageSize = PAGE_SIZE_TABLE_UNIQUE;
+    if (this.paginator) {
+      this.paginator.firstPage();
+      this.paginator.pageSize = this.pageSize;
+    }
   }
 }
