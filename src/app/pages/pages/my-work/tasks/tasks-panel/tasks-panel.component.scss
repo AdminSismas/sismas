@@ -1,4 +1,8 @@
 
+.main {
+  margin-top: 20px !important;
+}
+
 .vex-footer {
   background: var(--vex-toolbar-background);
   box-shadow: var(--vex-footer-elevation);
@@ -16,7 +20,7 @@
   bottom: 0;
   width: 100%;
   background-color: #ffffff; /* Fondo blanco */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  box-shadow: 0 -2px 5px rgb(0 0 0 / 0%);
   padding: 10px 20px;
   z-index: 10; /* Asegura que el footer quede encima del contenido */
   display: flex;
@@ -25,10 +29,10 @@
 }
 
 mat-paginator {
-  background-color: #f8f9fa; /* Fondo claro */
+  background-color: #f8f9fa00; /* Fondo claro */
   border-radius: 8px; /* Bordes redondeados */
   padding: 4px 159px; /* Espaciado interno */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+ /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  Sombra sutil */
   min-width: 250px; /* Ancho mínimo para mantener el diseño */
   flex-shrink: 0; /* Evita que el paginador se reduzca más de lo necesario */
 }
