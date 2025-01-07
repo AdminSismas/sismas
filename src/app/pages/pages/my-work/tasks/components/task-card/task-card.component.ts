@@ -3,7 +3,6 @@ import { ProTaskE } from '../../../../../../apps/interfaces/pro-task-e';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 import { TruncatePipe } from '../../../../../../apps/pipes/truncate-pipe.pipe';
 import { NAME_NO_DISPONIBLE, SPACE } from '../../../../../../apps/constants/constant';
 import { environment as envi } from '../../../../../../../environments/environments';
@@ -11,7 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
 import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
-import { filter } from 'rxjs/operators';
 import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
 import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/procedures.constant';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
@@ -25,7 +23,6 @@ import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-ret
     MatRippleModule,
     MatIconModule,
     MatButtonModule,
-    NgIf,
     TruncatePipe
   ],
   templateUrl: './task-card.component.html',
@@ -76,18 +73,18 @@ export class TaskCardComponent implements OnInit {
       // minWidth:'370px',
         width:'98%',
         height: '86%',
-      data: { 
+      data: {
         taskId: taskId ,
         value,
-        taskExecuteDetail 
+        taskExecuteDetail
       }
     });
   }
 
-  
-  
-  
-  
+
+
+
+
   viewDetallyTask(value:any){
     this.tasksPanelService.viewTaskId(
       value.executionId)
@@ -106,7 +103,7 @@ export class TaskCardComponent implements OnInit {
         next: (objTwo: InformationPegeable) => this.captureInformationSubscribe(objOne,objTwo,objOne.executionId)
            });
   }
-        
+
   captureInformationSubscribe(objeOne:any,objTwo: InformationPegeable,id:number): void {
           let data: TaskRetailExecuteResponseModel[];
           this.contentTasksInformations = objTwo;
@@ -130,7 +127,7 @@ export class TaskCardComponent implements OnInit {
       return new PageSearchData(this.page, this.pageSize, baunitId,);
     }
 
- 
+
 
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

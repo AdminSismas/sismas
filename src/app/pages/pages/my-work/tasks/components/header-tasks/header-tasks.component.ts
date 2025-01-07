@@ -80,6 +80,6 @@ export class HeaderTasksComponent implements OnInit, OnChanges {
   }
 
   private isValueField(value: any) {
-    return value !== null && value !== undefined && value !== '';
+    return value !== null && value !== undefined;
   }
 }

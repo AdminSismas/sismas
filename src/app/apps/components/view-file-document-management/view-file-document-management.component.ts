@@ -101,16 +101,29 @@ export class ViewFileDocumentManagementComponent implements OnInit {
       })
       .catch(err => console.error('Error al cargar el archivo de texto', err));
   }
-
-  // Método para descargar el archivo
-  downloadFile(): void {
-    const urlComplete = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
-    const a = document.createElement('a');
-    a.href = urlComplete;
-    a.download = this.originalFileName;
-    a.click();
-  }
-
+    downloadFile(): void {
+      const urlComplete = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+      
+      // Abrir el documento en una nueva pestaña
+      const newWindow = window.open(urlComplete, '_blank');
+      
+      // Crear un enlace para descargar el archivo
+      const a = document.createElement('a');
+      a.href = urlComplete;
+      a.download = this.originalFileName;
+      
+      // Asegurarse de que el enlace se descargue en la nueva pestaña
+      if (newWindow) {
+        newWindow.onload = () => {
+          newWindow.document.body.appendChild(a);
+          a.click();
+        };
+      } else {
+        // Si la nueva pestaña no se puede abrir, descargar en la misma ventana
+        a.click();
+      }
+    }
+  
   switchViewDocMetaData(): void {
     this.showMetadataView = !this.showMetadataView;
     if (this.showMetadataView) {
