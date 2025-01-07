@@ -4,7 +4,7 @@
       [crumbs]="['Configuración', 'Catastral', 'Mod económico terreno']"
       class="flex-auto"
     ></vex-breadcrumbs>
-  
+
     <button
       class="ml-2"
       color="primary"
@@ -14,10 +14,10 @@
       <mat-icon svgIcon="mat:more_vert"></mat-icon>
     </button>
   </vex-secondary-toolbar>
-  
-  
-  
-  
+
+
+
+
     <vex-page-layout-content class="container-fluid">
       <section class="card flex items-right justify-right">
         <form
@@ -57,7 +57,7 @@
               }
             </mat-autocomplete>
           </mat-form-field>
-  
+
           <!-- Campo municipio -->
           <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
             <mat-label>Municipio</mat-label>
@@ -66,7 +66,7 @@
               aria-label="Number"
               matInput
               formControlName="municipality"
-              placeholder="Seleccione un municipio&hellip;"
+              placeholder="Seleccione un municipio"
               [matAutocomplete]="autoMunicipality"
             />
             <mat-autocomplete
