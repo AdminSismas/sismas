@@ -38,6 +38,8 @@ export class AuthService {
     this._token = access_token;
     try {
       sessionStorage.setItem('token', this._token);
+      const user: DecodeJwt = jwtDecode(this._token);
+      this.userService.setUser(user)
     } catch (error) {
       console.error('Error al guardar el token', error);
     }

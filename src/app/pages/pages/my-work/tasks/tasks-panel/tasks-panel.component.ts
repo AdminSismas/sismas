@@ -1,7 +1,13 @@
 // Angular framework
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AsyncPipe, LowerCasePipe, NgFor, NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { filter, take } from 'rxjs/operators';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -17,7 +23,11 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -28,7 +38,15 @@ import { FluidHeightDirective } from '../../../../../apps/directives/fluid-heigh
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
 import { InformationPegeable } from '../../../../../apps/interfaces/information-pegeable.model';
 import { LoadingAppComponent } from '../../../../../apps/components/loading-app/loading-app.component';
-import { PAGE,PAGE_SIZE_OPTION_UNIQUE,PAGE_SIZE_TABLE_CADASTRAL,PAGE_SIZE_TABLE_UNIQUE,PANEL_ASSIGNED_TASKS,PANEL_DEVOLUTION_TASKS,PANEL_PRIORITIZED_TASKS } from '../../../../../apps/constants/constant';
+import {
+  PAGE,
+  PAGE_SIZE_OPTION_UNIQUE,
+  PAGE_SIZE_TABLE_CADASTRAL,
+  PAGE_SIZE_TABLE_UNIQUE,
+  PANEL_ASSIGNED_TASKS,
+  PANEL_DEVOLUTION_TASKS,
+  PANEL_PRIORITIZED_TASKS
+} from '../../../../../apps/constants/constant';
 import { PageSearchData } from '../../../../../apps/interfaces/page-search-data.model';
 import { ProTask } from '../../../../../apps/interfaces/pro-task';
 import { ProTaskE } from '../../../../../apps/interfaces/pro-task-e';
@@ -45,7 +63,8 @@ import { TasksPanelService } from '../../../../../apps/services/bpm/tasks-panel.
     scaleIn400ms,
     stagger40ms,
     fadeInUp400ms,
-    scaleFadeIn400ms],
+    scaleFadeIn400ms
+  ],
   imports: [
     AsyncPipe,
     LowerCasePipe,
@@ -65,13 +84,12 @@ import { TasksPanelService } from '../../../../../apps/services/bpm/tasks-panel.
     FluidHeightDirective,
     HeaderTasksComponent,
     LoadingAppComponent,
-    TaskCardComponent,
+    TaskCardComponent
   ],
   templateUrl: './tasks-panel.component.html',
   styleUrl: './tasks-panel.component.scss'
 })
 export class TasksPanelComponent implements OnInit {
-
   protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
 
   isExistDataInformation = false;
@@ -90,8 +108,10 @@ export class TasksPanelComponent implements OnInit {
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  subjectContentInformation$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(1);
-  dataContentInformation$: Observable<InformationPegeable> = this.subjectContentInformation$.asObservable();
+  subjectContentInformation$: ReplaySubject<InformationPegeable> =
+    new ReplaySubject<InformationPegeable>(1);
+  dataContentInformation$: Observable<InformationPegeable> =
+    this.subjectContentInformation$.asObservable();
   isExistDataInformation$: Observable<boolean> = of(false);
 
   constructor(
@@ -99,13 +119,18 @@ export class TasksPanelComponent implements OnInit {
     private router: Router,
     private readonly layoutService: VexLayoutService,
     private proTasksService: TasksPanelService,
-    private infoGeneralService:SendInfoGeneralService
+    private infoGeneralService: SendInfoGeneralService
   ) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.onRouteChange();
+    })
   }
 
   ngOnInit() {
     this.activateLoading();
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe((params) => {
       this.typePanel = params[CONSTANT_NAME_ID];
       this.resetPaginator();
       this.onFilterChargeInformationByPanel();
@@ -117,7 +142,8 @@ export class TasksPanelComponent implements OnInit {
         return this.onFilterChange(value);
       });
 
-    this.dataContentInformation$.pipe(filter<InformationPegeable>(Boolean))
+    this.dataContentInformation$
+      .pipe(filter<InformationPegeable>(Boolean))
       .subscribe((result) => {
         this.captureInformationSubscribe(result);
       });
@@ -169,59 +195,62 @@ export class TasksPanelComponent implements OnInit {
 
     value = value.trim();
     value = value.toLowerCase();
-    this.listProTasksECards = this.listProTasksE
-      .filter((protaskE: ProTaskE) => {
+    this.listProTasksECards = this.listProTasksE.filter(
+      (protaskE: ProTaskE) => {
         if (protaskE.proTask && value?.length >= 3) {
           return this.filterObject(protaskE.proTask, value);
         }
         return protaskE;
-      });
+      }
+    );
   }
 
   filterObject(proTask: ProTask, value: string) {
-    return proTask !== null && proTask !== undefined && (
-      proTask.processName?.toLowerCase().includes(value) ||
-      proTask.flowName?.toLowerCase().includes(value) ||
-      proTask.daysBeginS?.toLowerCase().startsWith(value) ||
-      proTask.flowDetail?.toLowerCase().startsWith(value)
+    return (
+      proTask !== null &&
+      proTask !== undefined &&
+      (proTask.processName?.toLowerCase().includes(value) ||
+        proTask.flowName?.toLowerCase().includes(value) ||
+        proTask.daysBeginS?.toLowerCase().startsWith(value) ||
+        proTask.flowDetail?.toLowerCase().startsWith(value))
     );
   }
 
   getInformationAssignedTasks() {
-    this.proTasksService.getProTaskAssigned(this.generateObjectPageSearchData())
-      .subscribe(
-        {
-          error: (err: any) => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.subjectContentInformation$.next(result)
-        }
-      );
+    this.proTasksService
+      .getProTaskAssigned(this.generateObjectPageSearchData())
+      .subscribe({
+        error: (err: any) => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.subjectContentInformation$.next(result)
+      });
   }
 
   getInformationTaskPriority() {
-    this.proTasksService.getProTaskPriority(this.generateObjectPageSearchData())
-      .subscribe(
-        {
-          error: (err: any) => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.subjectContentInformation$.next(result)
-        }
-      );
+    this.proTasksService
+      .getProTaskPriority(this.generateObjectPageSearchData())
+      .subscribe({
+        error: (err: any) => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.subjectContentInformation$.next(result)
+      });
   }
 
   getInformationTaskDevolution() {
-    this.proTasksService.getProTaskDevolution(this.generateObjectPageSearchData())
-      .subscribe(
-        {
-          error: (err: any) => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.subjectContentInformation$.next(result)
-        }
-      );
+    this.proTasksService
+      .getProTaskDevolution(this.generateObjectPageSearchData())
+      .subscribe({
+        error: (err: any) => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.subjectContentInformation$.next(result)
+      });
   }
 
   captureInformationSubscribeError(): void {
     this.isExistDataInformation = false;
     this.contentInformation = new InformationPegeable();
     this.listProTasksE = [];
-    this.listProTasksECards= [];
+    this.listProTasksECards = [];
     this.activateLoading(true);
   }
 
@@ -272,14 +301,17 @@ export class TasksPanelComponent implements OnInit {
     if (proTaskE && this.typePanel) {
       this.infoGeneralService.setFatherURL(this.typePanel);
       this.infoGeneralService.setInfoProTaskE(proTaskE);
-      this.router.navigate([`${environment.bpm_bpmCore}`, proTaskE.executionId])
-        .then(r => {});
+      this.router
+        .navigate([`${environment.bpm_bpmCore}`, proTaskE.executionId])
+        .then((r) => {});
     }
   }
 
   openDetailProtaskE(id: ProTaskE['executionId']) {
     if (this.listProTasksE?.length > 0) {
-      const protaskE: ProTaskE | undefined = this.listProTasksE.find((c) => c.executionId === id);
+      const protaskE: ProTaskE | undefined = this.listProTasksE.find(
+        (c) => c.executionId === id
+      );
       if (protaskE) {
         protaskE.isBegin = !protaskE.isBegin;
       }
@@ -294,8 +326,9 @@ export class TasksPanelComponent implements OnInit {
     this.pageSize = event.pageSize;
     const validate: boolean = this.onFilterChargeInformationByPanel();
     if (!validate) {
-      throw new Error('No fue posible actualizar los datos del panel de tareas');
-
+      throw new Error(
+        'No fue posible actualizar los datos del panel de tareas'
+      );
     }
   }
 
@@ -322,4 +355,13 @@ export class TasksPanelComponent implements OnInit {
       this.paginator.pageSize = this.pageSize;
     }
   }
+
+  private onRouteChange() {
+    this.activateLoading();
+    this.resetPaginator();
+    this.onFilterChargeInformationByPanel();
+
+    this.proTasksService.getChargerProTaskCount();
+  }
+
 }
