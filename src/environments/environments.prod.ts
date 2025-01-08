@@ -1,10 +1,10 @@
 export const environment = {
   /* ------ A ------ */
   accessGeo: {
-    value: '/accessGeo/',
     area: 'area',
     extentByCodigo: 'extentByCodigo',
-    extentByCodigoData: 'extentByCodigoData'
+    extentByCodigoData: 'extentByCodigoData',
+    value: '/accessGeo/'
   },
   active: 'active',
   administrativeSource: '/fuenteadmin/',
@@ -119,9 +119,9 @@ export const environment = {
   rural_zones: '/ccZonaHomoFisicaRu',
   /* ------ S ------ */
   schemas: {
+    hist: 'hist',
     main: 'main',
-    temp: 'temp',
-    hist: 'hist'
+    temp: 'temp'
   },
   synchronization: '/synchronization',
   synchronize: '/synchronize',
