@@ -44,3 +44,11 @@
     padding-right: 225px;
     align-content: space-around;
 }
+
+.vex-footer-task {
+  transition: width 0.3s ease;
+}
+
+.vex-footer-task.expanded {
+  width: calc(100% - 262px); /* Ajusta este valor según el ancho del navbar */
+}
