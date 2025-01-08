@@ -78,7 +78,7 @@ import {
 })
 export class BmpCoreComponent implements OnInit {
 
-  isNavbarExpanded = false;
+  
   private listComponents = inject(DynamicComponentsService).getDynamicComponents();
   private readonly injector = inject(Injector);
 
@@ -137,9 +137,6 @@ export class BmpCoreComponent implements OnInit {
     }
     this.activateLoading(true);
   }
-  toggleNavbar() {
-    this.isNavbarExpanded = !this.isNavbarExpanded;
-  }
 
   refreshComponentsDynamic(proFlow: ProFlow) {
     if (!proFlow || !proFlow.preform || !proFlow.preform.pathForm) {
@@ -183,7 +180,6 @@ export class BmpCoreComponent implements OnInit {
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
-      this.isNavbarExpanded = isReturn;
       this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
         .then(() => {
         });
