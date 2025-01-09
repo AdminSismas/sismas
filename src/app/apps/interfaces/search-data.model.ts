@@ -1,4 +1,19 @@
 export class SearchData {
+
+  dpto?:string;
+  mpio?:string;
+  zonas?:string;
+  sectorb?:string;
+  comuna?:string;
+  barrio?:string;
+  manVer?:string;
+  terreno?:string;
+  condicion?:string;
+  edificio?:string;
+  piso?:string;
+  unidadPredial?:string;
+  codigoCompleto?:string;
+
   registration?: string;
   number?: string;
   domIndividualTypeNumber?: string;

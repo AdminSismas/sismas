@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>Agregar nuevo propietario</h2>
+<mat-divider class="border-slate-600"></mat-divider>
+<mat-dialog-content>
+
+  <p class="px-4"><strong>1 - </strong> Buscar persona</p>
+  <form
+    class="grid grid-flow-row grid-cols-2 grid-rows-2 py-4 gap-4 w-full"
+    [formGroup]="form"
+    autocomplete="off"
+    (ngSubmit)="searchPerson()"
+  >
+    <vex-combox-colletion
+      idComboCollection="typeNumberDocument"
+      name="selector_document"
+      label="Tipo de documento"
+      typeDomainName="IndividualTypeNumber"
+      placeholderDomainName="Seleccionar tipo documento&hellip;"
+      formControlNameCombobox="domIndividualTypeNumber"
+      [hideRequiredMarker]="false"
+      cssClasses="w-full"
+    >
+    </vex-combox-colletion>
+    <mat-form-field class="w-full">
+      <input
+        matInput
+        formControlName="number"
+        placeholder="Número de documento&hellip;"
+        type="text"
+        name="search"
+        required
+      />
+    </mat-form-field>
+
+    <div class="w-full flex justify-center flex-row columns col-span-2">
+      <button
+        color="primary"
+        type="submit"
+        mat-flat-button
+        name="enviar"
+        class="ml-4 flex-none p-4 text-lg"
+      >
+      Buscar
+    </button>
+  </div>
+  </form>
+  <mat-divider class="border-slate-400"></mat-divider>
+  <p class="p-4"><strong>2 - </strong> Agregar detalles del nuevo propietario</p>
+  <form
+    class="w-full grid grid-cols-2 gap-x-4 grid-flow-row py-4"
+    [formGroup]="secondForm"
+  >
+    @if (customer?.fullName) {
+      <h3 class="text-center text-2xl font-bold col-span-2 mb-6">
+        {{ customer!.fullName }}
+      </h3>
+    }
+    <mat-form-field [ngClass]="{'bg-red-50': secondForm.get('fraction')?.errors?.['invalidFraction']}">
+      <mat-label>Fracción</mat-label>
+      <input
+        matInput
+        formControlName="fraction"
+        placeholder="Fracción"
+        type="number"
+        min="0"
+        max="1"
+        step="0.01"
+      />
+      @if (secondForm.get('fraction')?.errors?.['invalidFraction']) {
+        <mat-error>Fracción no válida</mat-error>
+      }
+    </mat-form-field>
+    <vex-combox-colletion
+      idComboCollection="domRightType"
+      label="Tipo derecho"
+      formControlNameCombobox="domRightType"
+      typeDomainName="RightType"
+      placeholderDomainName="Seleccionar tipo derecho&hellip;"
+      cssClasses="w-full"
+    ></vex-combox-colletion>
+    <mat-form-field class="col-span-2">
+      <mat-label>Fecha creación</mat-label>
+      <input
+        matInput
+        [matDatepicker]="beginAt"
+        formControlName="beginAt"
+      />
+      <mat-hint>Formato fecha: DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="beginAt"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #beginAt></mat-datepicker>
+    </mat-form-field>
+    <div class="width-full flex justify-center gap-6 col-span-2 mt-8">
+      <button
+        color="primary"
+        type="submit"
+        mat-flat-button
+        class="p-5 text-lg"
+        (click)="addPropertyOwner()"
+      >
+        Continuar
+      </button>
+      <button
+        color="warn"
+        type="submit"
+        mat-flat-button
+        class="p-5 text-lg"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+<mat-dialog-content/>

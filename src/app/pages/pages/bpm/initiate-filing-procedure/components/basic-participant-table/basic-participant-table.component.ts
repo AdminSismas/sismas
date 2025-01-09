@@ -1,3 +1,4 @@
+// Angular framework
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -12,16 +13,6 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { Observable, ReplaySubject, throwError } from 'rxjs';
-import { TableColumn } from '@vex/interfaces/table-column.interface';
-import {
-  PAGE,
-  PAGE_SIZE_OPTION,
-  PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_BASIC_PRINCIPANTS
-} from '../../../../../../apps/constants/constant';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
 import {
   ControlContainer,
   FormGroup,
@@ -30,30 +21,45 @@ import {
   ReactiveFormsModule,
   UntypedFormControl
 } from '@angular/forms';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
+import { filter } from 'rxjs/operators';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { Observable, ReplaySubject, throwError } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+// Vex
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { filter } from 'rxjs/operators';
-import {
-  ComboxColletionComponent
-} from '../../../../../../apps/components/combox-colletion/combox-colletion.component';
+import { TableColumn } from '@vex/interfaces/table-column.interface';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+
+// Material
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+
+// Custom
+import { ComboxColletionComponent } from '../../../../../../apps/components/combox-colletion/combox-colletion.component';
+import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
 import { InfoPerson } from '../../../../../../apps/interfaces/information-property/info-person';
 import { InformationPersonService } from '../../../../../../apps/services/bpm/information-person.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
+import {
+  PAGE,
+  PAGE_SIZE_OPTION,
+  PAGE_SIZE_TABLE_CADASTRAL,
+  TABLE_COLUMN_BASIC_PRINCIPANTS
+} from '../../../../../../apps/constants/constant';
+import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
 
 @Component({
   selector: 'vex-basic-participant-table',
@@ -61,44 +67,52 @@ import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    FormsModule,
+    NgClass,
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule,
+    // Vex
+    // Material
     MatButtonModule,
     MatCheckboxModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
+    MatMenuModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    NgForOf,
-    NgIf,
-    NgClass,
-    MatMenuModule,
-    VexPageLayoutContentDirective,
+    // Custom
     ComboxColletionComponent,
     FluidMinHeightDirective,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    FluidMinHeightDirective
+    FluidMinHeightDirective,
   ],
   templateUrl: './basic-participant-table.component.html',
   styleUrl: './basic-participant-table.component.scss',
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
+  viewProviders: [
+    { provide: ControlContainer, useExisting: FormGroupDirective }
+  ]
 })
-export class BasicParticipantTableComponent implements OnInit, AfterViewInit, OnChanges {
-
+export class BasicParticipantTableComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   @Input({ required: true }) form!: FormGroup;
-  @Input() columns: TableColumn<ProcessParticipant>[] = TABLE_COLUMN_BASIC_PRINCIPANTS;
+  @Input() columns: TableColumn<ProcessParticipant>[] =
+    TABLE_COLUMN_BASIC_PRINCIPANTS;
   @Output() processParticipants = new EventEmitter<ProcessParticipant[]>();
 
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource!: MatTableDataSource<ProcessParticipant>;
   selection = new SelectionModel<ProcessParticipant>(true, []);
-  subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<ProcessParticipant[]>(1);
+  subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
+    ProcessParticipant[]
+  >(1);
   data$: Observable<ProcessParticipant[]> = this.subject$.asObservable();
   participants: ProcessParticipant[] = [];
   person!: InfoPerson | null;
@@ -113,9 +127,9 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   constructor(
     private snackbar: MatSnackBar,
     private readonly layoutService: VexLayoutService,
-    private personService: InformationPersonService
-  ) {
-  }
+    private personService: InformationPersonService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
@@ -124,12 +138,12 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
 
-    this.data$.pipe(filter<ProcessParticipant[]>(Boolean))
-      .subscribe(
-        (participants) => {
-          this.dataSource.data = participants;
-          this.processParticipants.emit(participants);
-        });
+    this.data$
+      .pipe(filter<ProcessParticipant[]>(Boolean))
+      .subscribe((participants) => {
+        this.dataSource.data = participants;
+        this.processParticipants.emit(participants);
+      });
   }
 
   ngAfterViewInit(): void {
@@ -167,10 +181,12 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
 
   deleteInformations(participant: ProcessParticipant): void {
     this.participants.splice(
-      this.participants.findIndex(
-        (existingParticipants) => {
-          return existingParticipants.individual.individualId === participant.individual.individualId;
-        }),
+      this.participants.findIndex((existingParticipants) => {
+        return (
+          existingParticipants.individual.individualId ===
+          participant.individual.individualId
+        );
+      }),
       1
     );
     this.selection.deselect(participant);
@@ -180,27 +196,57 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   findParticipant() {
     const info = this.form.value;
     if (!info.typeNumberDocument || !info.numberID) {
-      this.snackbar.open('Ingresar tipo documento o numero de documento', undefined,
-        { duration: 2000 });
+      this.snackbar.open(
+        'Ingresar tipo documento o número de documento',
+        undefined,
+        { duration: 2000 }
+      );
       return;
     }
 
-    this.personService.getFindPersonByNumber(info.numberID, info.typeNumberDocument)
-      .subscribe(
-        {
-          error: (error: HttpErrorResponse) => {
-            if (error.status == HttpStatusCode.NotFound) {
-              this.person = null;
-              this.form.get('personCompleted')?.patchValue('');
-              this.snackbar.open('Persona No Existe', undefined,
-                { duration: 2000 });
-              return;
-            }
-            return throwError(() => error);
-          },
-          next: (result: InfoPerson) => this.captureInformationCadastralData(result)
-        }
-      );
+    this.personService
+      .getFindPersonByNumber(info.numberID, info.typeNumberDocument)
+      .subscribe({
+        error: (error: HttpErrorResponse) => {
+          if (error.status == HttpStatusCode.NotFound) {
+            this.person = null;
+            this.form.get('personCompleted')?.patchValue('');
+            this.dialog
+              .open(CreatePeopleComponent, {
+                width: '60%',
+                data: {
+                  domIndividualTypeNumber: info.typeNumberDocument,
+                  number: info.numberID,
+                  mode: 'create'
+                }
+              })
+              .afterClosed()
+              .subscribe(
+                (result: { number: string; individualTypeNumber: string }) => {
+                  this.personService
+                    .getFindPersonByNumber(
+                      result.number,
+                      result.individualTypeNumber
+                    )
+                    .subscribe({
+                      next: (res: InfoPerson) =>
+                        this.captureInformationCadastralData(res),
+                      error: (error: HttpErrorResponse) => {
+                        if (error.status == HttpStatusCode.NotFound) {
+                          this.person = null;
+                          this.form.get('personCompleted')?.patchValue('');
+                        }
+                        return throwError(() => error);
+                      }
+                    });
+                }
+              );
+          }
+          return throwError(() => error);
+        },
+        next: (result: InfoPerson) =>
+          this.captureInformationCadastralData(result)
+      });
   }
 
   captureInformationCadastralData(result: InfoPerson): void {
@@ -215,24 +261,28 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
   addParticipantToList() {
     const typeParticipation = this.form.get('typeParticipation')?.value;
     if (!typeParticipation) {
-      this.snackbar.open('Seleccionar tipo de participacion', undefined,
-        { duration: 2000 });
+      this.snackbar.open('Seleccionar tipo de participación', undefined, {
+        duration: 2000
+      });
       return;
     }
     if (!this.person) {
-      this.snackbar.open('Selecciona o buscar un persona para agregarla como participante', undefined,
-        { duration: 2000 });
+      this.snackbar.open(
+        'Selecciona o buscar un persona para agregarla como participante',
+        undefined,
+        { duration: 2000 }
+      );
       return;
     }
 
     if (this.person.individualId) {
-      let participant: ProcessParticipant = new ProcessParticipant();
+      const participant: ProcessParticipant = new ProcessParticipant();
       participant.participationId = 0;
       participant.bpmParticipation = typeParticipation;
       participant.individual = this.person;
 
       if (this.participants.length > 0) {
-        const existParticipant = this.participants.find(pr => {
+        const existParticipant = this.participants.find((pr) => {
           return pr.individual.individualId == this.person?.individualId;
         });
         if (!existParticipant) {
@@ -240,8 +290,9 @@ export class BasicParticipantTableComponent implements OnInit, AfterViewInit, On
           this.subject$.next(this.participants);
           return;
         }
-        this.snackbar.open('Participante ya agregado', undefined,
-          { duration: 2000 });
+        this.snackbar.open('Participante ya agregado', undefined, {
+          duration: 2000
+        });
         return;
       }
       this.participants.unshift(participant);

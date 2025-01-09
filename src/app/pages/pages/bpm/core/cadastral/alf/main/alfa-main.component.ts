@@ -103,7 +103,8 @@ import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-mai
 export class AlfaMainComponent implements OnInit {
 
   public id: string = this.getRandomInt(1234).toString();
-  @Input({ required: true }) public executionId: string = '';
+  public mode = 1;
+  @Input({ required: true }) public executionId = '';
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
@@ -127,6 +128,9 @@ export class AlfaMainComponent implements OnInit {
   ) {
     if (proFlow?.flowId) {
       this.id += proFlow?.flowId;
+    }
+    if (proFlow?.mode) {
+      this.mode = proFlow?.mode;
     }
   }
 
@@ -180,7 +184,7 @@ export class AlfaMainComponent implements OnInit {
       {
         error: () => {
           this.snackbar.open(
-            'No se puede continuar la actividad error en la validacion alfanumerica.',
+            'No se puede continuar la actividad error en la validación alfanumérica.',
             'CLOSE', { duration: 1000 }
           );
           return;
@@ -233,7 +237,7 @@ export class AlfaMainComponent implements OnInit {
 
   captureInformationChangeLogAlfaMainError() {
     this.snackbar.open(
-      'No se puede continuar la actividad error en la validacion alfanumerica.',
+      'No se puede continuar la actividad error en la validación alfanumérica.',
       'CLOSE', { duration: 1000 }
     );
   }
@@ -250,7 +254,7 @@ export class AlfaMainComponent implements OnInit {
         for (const npm in indexOperation) {
           if (npm) {
 
-            let listOperation = indexOperation[npm] as Operation[];
+            const listOperation = indexOperation[npm] as Operation[];
             this.listOperationContentInformation.push(
               new OperationContentInformation(npm,
                 new InformationPegeable(
@@ -287,7 +291,7 @@ export class AlfaMainComponent implements OnInit {
     return new PageSearchData(PAGE, MAX_PAGE_SIZE_TABLE_UNIQUE, this.executionId);
   }
 
-  activateLoading(value: boolean = false) {
+  activateLoading(value = false) {
     const valid = of(value);
     this.isExistDataInformations$ = valid.pipe(take(3));
   }
@@ -351,14 +355,14 @@ export class AlfaMainComponent implements OnInit {
         minHeight: '30%',
         disableClose: true,
         data: new DataAlfaMain(this.executionId, type)
-      }
+      };
     } else {
       config = {
         width: '70%',
         height: '90%',
         disableClose: true,
         data: new DataAlfaMain(this.executionId, type)
-      }
+      };
     }
     this.dialog
       .open(CrudAlfaMainComponent, config)

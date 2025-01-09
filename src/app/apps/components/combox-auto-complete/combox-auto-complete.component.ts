@@ -32,13 +32,13 @@ export class ComboxAutoCompleteComponent implements OnInit {
   form!: FormGroup;
 
   @Input() options: any[] = [];
-  @Input() public label: string = '';
-  @Input() public formControlNameCombobox: string = '';
-  @Input() public idCombo: string = '';
+  @Input() public label = '';
+  @Input() public formControlNameCombobox = '';
+  @Input() public idCombo = '';
   @Input() public placeholder?: string;
   @Input() public cssClasses?: string;
 
-  filteredOptions: Observable<string[]> | undefined
+  filteredOptions: Observable<string[]> | undefined;
 
   constructor() { }
 

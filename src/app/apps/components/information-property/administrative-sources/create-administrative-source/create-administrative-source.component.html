@@ -1,0 +1,26 @@
+<mat-dialog-content class="flex flex-col overflow-hidden gap-2">
+  <h2 mat-dialog-title>Crear fuente administrativa</h2>
+  <mat-divider class="text-border border-slate-400 mb-4"></mat-divider>
+
+  <dynamic-forms
+    [inputs]="inputs"
+    (formReady)="form = $event"
+  ></dynamic-forms>
+  <mat-dialog-actions class="flex justify-center gap-6 w-full">
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="primary"
+      (click)="requestManager()"
+    >
+      {{ data.params ? "Actualizar" : "Crear" }}
+    </button>
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="warn"
+    >
+      Cerrar
+    </button>
+  </mat-dialog-actions>
+</mat-dialog-content>

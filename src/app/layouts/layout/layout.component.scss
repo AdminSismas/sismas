@@ -1,0 +1,13 @@
+.layout-container {
+    /* Asegúrate de que no haya márgenes, rellenos o alturas que reserven espacio */
+    margin: 0;
+    padding: 0;
+    height: auto;
+  }
+
+  .vex-toolbar {
+    display: none;
+  }
+  main{
+    margin-top: 0px !important;
+  }

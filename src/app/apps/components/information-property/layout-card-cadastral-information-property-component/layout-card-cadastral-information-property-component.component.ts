@@ -10,7 +10,6 @@ import {
 } from '../cadastral-information-property/cadastral-information-property.component';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { TWO_POINT_, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
-import { NgForOf, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
@@ -22,6 +21,7 @@ import {
   CONSTANT_INFOMATION_PREDIAL_TEMP
 } from '../../../constants/constantLabels';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 
 
 @Component({
@@ -36,9 +36,7 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
     VexPageLayoutContentDirective,
     MatTabsModule,
     CadastralInformationPropertyComponent,
-    NgForOf,
     MatMenuModule,
-    NgIf
   ],
   templateUrl:
     './layout-card-cadastral-information-property-component.component.html',
@@ -49,20 +47,26 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   implements OnInit, AfterViewInit
 {
   typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
+
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
+  propertyUnit = false;
+  dataFlag = '';
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
     private snackBar: MatSnackBar,
-    private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>
+    private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>,
+    private informationPropertyService: InformationPropertyService
   ) {}
 
   ngOnInit(): void {
     if (
       this.defaults == null ||
       this.defaults.schemas == null ||
-      this.defaults.typeInformation == null
+      this.defaults.typeInformation == null ||
+      this.defaults.flagData == null
     ) {
       return;
     }
@@ -76,7 +80,20 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       this.createObjectLayout(schema)
     );
     //On init of component set type information according to the component
-    this.setTypeInformation(0);
+    // this.setTypeInformation(0);
+
+
+    // if (this.defaults.typeInformation == 'visualization') }{
+      this.typeInformation = this.defaults.typeInformation;
+    // }}
+
+    if(this.defaults.flagData !== ''){
+        this.dataFlag = this.defaults.flagData;
+        console.log(this.defaults.flagData,'bandera para validar y ocultar ');
+        if(this.defaults.flagData === 'openDataFlag'){
+          this.informationPropertyService.showOptionsPersonSet(true);
+        }
+    }
   }
 
   createObjectLayout(schema: string): void {
@@ -95,7 +112,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       this.defaults?.baunitIdE === null ||
       this.defaults?.baunitIdE === undefined
     ) {
-      this.snackBar.open('ID no valido no es posible continuar!', 'CLOSE', {
+      this.snackBar.open('ID no válido no es posible continuar!', 'CLOSE', {
         duration: 3000,
         horizontalPosition: 'right'
       });
@@ -116,9 +133,9 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     const { index = -1 } = matTabChangeEvent || {};
     if (index >= 0 && this.optionschemas.length > 0){
       const selectedOptionSchema: ObjectSchema = this.optionschemas[index];
-      if (selectedOptionSchema) {
-        this.setTypeInformation(index);
-      }
+      // if (selectedOptionSchema) {
+      //   this.setTypeInformation(index);
+      // }
     }
   }
 

@@ -12,18 +12,18 @@ import { PageSortByData } from '../interfaces/page-sortBy-data.model';
 })
 export class DomainLadmColService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url:string = `${environment.url}:${environment.port}${environment.domain_domain}`;
+  basic_url = `${environment.url}:${environment.port}${environment.domain_domain}`;
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(private requestsService: SendGeneralRequestsService) {}
 
 
-  /* -------------- METODOS -------------- */
+  /* -------------- MÉTODOS -------------- */
   getDataPropertyByDomainName(page: PageSortByData):Observable<DomainCollection[]> {
     let paramsDN:HttpParams = new HttpParams();
-    paramsDN = paramsDN.append('page', `${page.page}`)
-    paramsDN = paramsDN.append('size', `${page.size}`)
-    paramsDN = paramsDN.append('sortBy',`${page.sortBy}`)
+    paramsDN = paramsDN.append('page', `${page.page}`);
+    paramsDN = paramsDN.append('size', `${page.size}`);
+    paramsDN = paramsDN.append('sortBy',`${page.sortBy}`);
     return this.getData(`${this.basic_url}`,paramsDN);
   }
 

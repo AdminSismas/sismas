@@ -70,7 +70,7 @@ export class ClearInformationDataComponent implements OnInit{
     const objectform = this.form.value;
     if (objectform == null || !objectform.clearData) {
       this.snackbar.open(
-        'Informacion no correspondiente, consulte al administrador.',
+        'Información no correspondiente, consulte al administrador.',
         'CLOSE', { duration: 1000 }
       );
     }

@@ -1,0 +1,28 @@
+<mat-form-field [ngClass]="cssClasses" [hideRequiredMarker]="hideRequiredMarker" class="w-full">
+    <mat-label>{{ label }}</mat-label>
+    <mat-select
+      [formControl]="formControl"
+      [placeholder]="placeholder"
+      (selectionChange)="onSelectionChange($event.value)"
+      class="w-full px-4 h-auto"
+    >
+      <!-- Opciones cargadas -->
+      <mat-option
+        *ngFor="let option of options"
+        [value]="option[valueKey]"
+        matTooltip="{{ option[displayKey] }}"
+      >
+        {{ option[displayKey] }}
+      </mat-option>
+  
+      <!-- Mensaje de carga -->
+      <mat-option *ngIf="loading" disabled>
+        Cargando...
+      </mat-option>
+    </mat-select>
+  
+    <!-- Hint opcional -->
+    <mat-hint *ngIf="hintValue && hintValue.length > 0">
+      {{ hintValue }}
+    </mat-hint>
+  </mat-form-field>

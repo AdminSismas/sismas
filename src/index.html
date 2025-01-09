@@ -1,66 +1,81 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Catastro Predial</title>
-  <base href="/" />
+  <head>
+    <meta charset="utf-8" />
+    <title>Catastro Predial</title>
+    <base href="/" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/balloon-css/balloon.min.css"
+    />
+    <meta
+      content="width=device-width, initial-scale=1"
+      name="viewport"
+    />
+    <link
+      href="assets/img/illustrations/geogestion_favicon.png"
+      rel="icon"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body dir="ltr">
+    <style>
+      #vex-splash-screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /*background: #111827;*/
+        z-index: 99999;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
 
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <link href="favicon.ico" rel="icon" type="image/x-icon" />
-</head>
-<body dir="ltr">
-<style>
-  #vex-splash-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /*background: #111827;*/
-    z-index: 99999;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-  }
+      .vex-splash-screen-loader {
+        width: 150px;
+        height: 22px;
+        border-radius: 20px;
+        color: #0076b9;
+        border: 2px solid;
+        position: relative;
+      }
 
-  .vex-splash-screen-loader {
-    width: 150px;
-    height: 22px;
-    border-radius: 20px;
-    color: #0076b9;
-    border: 2px solid;
-    position: relative;
-  }
+      .vex-splash-screen-loader::before {
+        content: "";
+        position: absolute;
+        margin: 2px;
+        inset: 0 100% 0 0;
+        border-radius: inherit;
+        background: currentColor;
+        animation: vex-splash-screen-loader-animation 2s forwards;
+      }
 
-  .vex-splash-screen-loader::before {
-    content: "";
-    position: absolute;
-    margin: 2px;
-    inset: 0 100% 0 0;
-    border-radius: inherit;
-    background: currentColor;
-    animation: vex-splash-screen-loader-animation 2s forwards;
-  }
+      @keyframes vex-splash-screen-loader-animation {
+        100% {
+          inset: 0;
+        }
+      }
+    </style>
 
-  @keyframes vex-splash-screen-loader-animation {
-    100% {
-      inset: 0;
-    }
-  }
-</style>
-
-<div id="vex-splash-screen">
-  <img
-    height="70"
-    width="70"
-    loading="eager"
-    src="assets/img/illustrations/it_support.svg" />
-  <h2 class="title m-0">Cargando ...</h2>
-  <div class="vex-splash-screen-loader"></div>
-</div>
-<vex-root></vex-root>
-</body>
+    <div id="vex-splash-screen">
+      <img
+        height="70"
+        width="70"
+        loading="eager"
+        src="assets/img/illustrations/it_support.svg"
+      />
+      <h2 class="title m-0">Cargando ...</h2>
+      <div class="vex-splash-screen-loader"></div>
+    </div>
+    <vex-root></vex-root>
+  </body>
 </html>

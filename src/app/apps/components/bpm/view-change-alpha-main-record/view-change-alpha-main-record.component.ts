@@ -70,7 +70,7 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
   @Input()
   columns: TableColumn<CadastralChangeLog>[] = TABLE_COLUMN_CHANGES_BPM_OPERATION;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_OPTION_UNIQUE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
 

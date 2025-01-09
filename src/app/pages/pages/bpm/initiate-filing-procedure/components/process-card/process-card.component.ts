@@ -24,7 +24,7 @@ import { NgIf } from '@angular/common';
 })
 export class ProcessCardComponent implements OnInit {
 
-  URL_ICON_BASE: string = `${envi.ulr_icon_base}`;
+  URL_ICON_BASE = `${envi.ulr_icon_base}`;
 
   @Input({ required: true }) public idCard: string | undefined = '';
   @Input({ required: true }) bpmTypeProcess!: BpmTypeProcess;

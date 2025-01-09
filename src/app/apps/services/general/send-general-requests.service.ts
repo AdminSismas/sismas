@@ -88,7 +88,7 @@ export class SendGeneralRequestsService {
           'Content-Type': 'application/json',
           //'Authorization': `Bearer ${token}`
         }
-      }
+      };
     } else {
       params = {
         method: 'POST',
@@ -98,7 +98,7 @@ export class SendGeneralRequestsService {
           'Content-Type': 'application/json',
           //'Authorization': `Bearer ${token}`
         }
-      }
+      };
     }
     return params;
   }
@@ -150,6 +150,10 @@ export class SendGeneralRequestsService {
         })
       );
   }
+
+  
+
+  
 
   sendRequestsFetchPost(url: string): Observable<any> {
     return this.http.post<any>(url, "");

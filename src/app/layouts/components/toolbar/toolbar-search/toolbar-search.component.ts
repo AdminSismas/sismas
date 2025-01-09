@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule]
 })
 export class ToolbarSearchComponent implements OnInit {
-  isOpen: boolean = false;
+  isOpen = false;
 
   @ViewChild('input', { read: ElementRef, static: true }) input?: ElementRef;
 

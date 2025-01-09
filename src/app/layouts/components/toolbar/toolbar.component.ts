@@ -48,7 +48,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class ToolbarComponent implements OnInit {
   @HostBinding('class.shadow-b')
-  showShadow: boolean = false;
+  showShadow = false;
 
   navigationItems$: Observable<NavigationItem[]> =
     this.navigationService.items$;

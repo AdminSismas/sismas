@@ -9,4 +9,5 @@ export interface ZoneBAUnit {
   ccZonaHomoFisicaUr?:UrbanPhysicalZone;
   ccZonaHomoGeoEconomica?:GeoEconomicZone;
   baUnitZonaValor?:number
+  baUnitZonaAreaE?:string
 }

@@ -26,6 +26,10 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environments';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/constant';
+
+interface defaultData extends People {
+  mode: 'create' | 'update';
+}
 @Component({
   selector: 'vex-create-people',
   standalone: true,
@@ -45,22 +49,22 @@ import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/constant';
   styleUrl: './create-people.component.scss'
 })
 export class CreatePeopleComponent implements OnInit {
-  typeDocument: string = 'tipo';
-  typeIndividualSex: string = '';
-  typePersons: string = '';
-  typeEthnicGroup: string = '';
+  typeDocument = 'tipo';
+  typeIndividualSex = '';
+  typePersons = '';
+  typeEthnicGroup = '';
 
   page = PAGE;
   size = PAGE_SIZE;
 
   form = this.fb.group({
     individualId: [this.defaults?.id || ''],
-    fristName: [this.defaults?.firstName || ''],
+    firstName: [this.defaults?.firstName || ''],
     middleName: [this.defaults?.middleName || ''],
     lastName: [this.defaults?.lastName || ''],
-    othername: [this.defaults?.lastName || ''],
+    otherLastName: [this.defaults?.lastName || ''],
     domIndividualTypeNumber: [this.defaults?.domIndividualTypeNumber || ''],
-    number: [this.defaults?.document || ''],
+    number: [this.defaults?.number || ''],
     companyName: [this.defaults?.companyName || ''],
     domIndividualSex: [this.defaults?.domIndividualSex || ''],
     domIndividualType: [
@@ -77,7 +81,7 @@ export class CreatePeopleComponent implements OnInit {
   };
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: People | undefined,
+    @Inject(MAT_DIALOG_DATA) public defaults: defaultData | undefined,
     private dialogRef: MatDialogRef<CreatePeopleComponent>,
     private fb: FormBuilder,
     private peopleServcie: PeopleService,
@@ -86,10 +90,15 @@ export class CreatePeopleComponent implements OnInit {
 
   ngOnInit() {
     if (this.defaults) {
-      this.validateTypePople();
-      this.mode = 'update';
+      if (this.defaults.mode === 'update') {
+        this.validateTypePople();
+        this.mode = 'update';
+      } else if (this.defaults.mode === 'create') {
+        this.mode = 'create';
+        this.form.reset(this.defaults);
+      }
     } else {
-      this.defaults = {} as People;
+      this.defaults = {} as defaultData;
     }
     this.disablesTypePople();
     this.form.patchValue(this.defaults);
@@ -116,40 +125,38 @@ export class CreatePeopleComponent implements OnInit {
     }
 
     //validamos que el input de palabra
-    if (this.form.get('fristName')?.value !== '') {
-      let validate = this.validateSingleWord(this.form.get('fristName')?.value);
+    if (this.form.get('firstName')?.value !== '') {
+      const validate = this.validateSingleWord(this.form.get('firstName')?.value);
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el nombre no puede tener espacios';
+        this.menssage.value = 'El nombre no puede tener espacios';
         return;
       }
     }
 
     //validamos que el input de palabra
     if (this.form.get('lastName')?.value !== '') {
-      let validate: boolean = this.validateSingleWord(
+      const validate: boolean = this.validateSingleWord(
         this.form.get('lastName')?.value
       );
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el apellido no puede tener espacios';
+        this.menssage.value = 'El apellido no puede tener espacios';
         return;
       }
     }
 
     // validamos nit
     if (this.form.get('domIndividualTypeNumber')?.value === 'NIT') {
-      console.log(this.form.get('number')?.value);
-      let validate: boolean | null = this.validateNit(
+      const validate: boolean | null = this.validateNit(
         this.form.get('number')?.value
       );
-      console.log(validate);
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'Numero de formato NIT no valido';
+        this.menssage.value = 'Número de formato NIT no válido';
         return;
       }
     }
@@ -159,21 +166,24 @@ export class CreatePeopleComponent implements OnInit {
 
     this.menssage.status = false;
 
-    // enviamos los datos para el envio de datos
+    // enviamos los datos para el envío de datos
 
-    let url_basic = `${environment.url}:${environment.port}${environment.individualNumber}`;
+    const url_basic = `${environment.url}:${environment.port}${environment.individualNumber}`;
 
-    let dataCreate = {
+    const dataCreate = {
       url: url_basic,
       body: people
     };
-    let resApi = this.peopleServcie.userCreate(dataCreate).subscribe({
+    const resApi = this.peopleServcie.userCreate(dataCreate).subscribe({
       next: (res) => {
-        this.alertSnakbar.open('Usuario registrado', 'CLOSE', {
+        this.alertSnakbar.open('Persona registrada', 'CLOSE', {
           duration: 3000,
           horizontalPosition: 'right'
         });
-        this.dialogRef.close();
+        this.dialogRef.close({
+          number: this.form.get('number')?.value,
+          domIndividualTypeNumber: this.form.get('domIndividualTypeNumber')?.value,
+        });
       },
       error: (error) => {
         console.log(error);
@@ -186,7 +196,7 @@ export class CreatePeopleComponent implements OnInit {
       status: false,
       value: ''
     };
-    //informacion de numero de documento
+    //información de número de documento
     if (
       this.form.get('number')?.value !== '' &&
       this.form.get('domIndividualTypeNumber')?.value !== ''
@@ -201,7 +211,7 @@ export class CreatePeopleComponent implements OnInit {
       let datosClient: any;
       try {
         datosClient = await firstValueFrom(
-          this.peopleServcie.getPeopleTypeNumer(obj)
+          this.peopleServcie.getPeopleTypeNumber(obj)
         );
       } catch (error) {
         console.error(error);
@@ -212,7 +222,7 @@ export class CreatePeopleComponent implements OnInit {
           this.disablesTypePople();
           this.menssage = {
             status: true,
-            value: 'persona ya se encuentra registrada'
+            value: 'La persona ya se encuentra registrada'
           };
           return;
         } else {
@@ -229,39 +239,37 @@ export class CreatePeopleComponent implements OnInit {
   updatePeople() {
     const people = this.form.value;
     //validamos que el input de palabra
-    if (this.form.get('fristName')?.value !== '') {
-      let validate = this.validateSingleWord(this.form.get('fristName')?.value);
+    if (this.form.get('firstName')?.value !== '') {
+      const validate = this.validateSingleWord(this.form.get('firstName')?.value);
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el nombre no puede tener espacios';
+        this.menssage.value = 'El nombre no puede tener espacios';
         return;
       }
     }
 
     //validamos que el input de palabra
     if (this.form.get('lastName')?.value !== '') {
-      let validate: boolean = this.validateSingleWord(
+      const validate: boolean = this.validateSingleWord(
         this.form.get('lastName')?.value
       );
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'el apellido no puede tener espacios';
+        this.menssage.value = 'El apellido no puede tener espacios';
         return;
       }
     }
 
     if (this.form.get('domIndividualTypeNumber')?.value === 'NIT') {
-      console.log(this.form.get('number')?.value);
-      let validate: boolean | null = this.validateNit(
+      const validate: boolean | null = this.validateNit(
         this.form.get('number')?.value
       );
-      console.log(validate);
 
       if (validate) {
         this.menssage.status = true;
-        this.menssage.value = 'Numero de formato NIT no valido';
+        this.menssage.value = 'Número de formato NIT no válido';
         return;
       }
     }
@@ -274,16 +282,19 @@ export class CreatePeopleComponent implements OnInit {
 
     this.menssage.status = false;
 
-    let url_basic = `${environment.url}:${environment.port}${environment.individualNumber}/${this.form.get('individualId')?.value}?baunitId=TESTS`;
+    const url_basic = `${environment.url}:${environment.port}${environment.individualNumber}/${this.form.get('individualId')?.value}?baunitId=TESTS`;
 
-    let dataCreate = {
+    people.number = this.defaults.number;
+    people.domIndividualType = this.defaults.domIndividualType;
+
+    const dataCreate = {
       url: url_basic,
       body: people
     };
-    let resApi = this.peopleServcie.userEdit(dataCreate).subscribe({
+
+    this.peopleServcie.userEdit(dataCreate).subscribe({
       next: (res) => {
-        console.log(res);
-        this.alertSnakbar.open('Usuario actualizado', 'CLOSE', {
+        this.alertSnakbar.open('Persona actualizada', 'CLOSE', {
           duration: 3000,
           horizontalPosition: 'right'
         });
@@ -314,10 +325,10 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   disablesTypePople(): void {
-    // validar los tipos de campos segun los valores de los formularios
-    this.form.get('fristName')?.disable();
+    // validar los tipos de campos según los valores de los formularios
+    this.form.get('firstName')?.disable();
     this.form.get('middleName')?.disable();
-    this.form.get('othername')?.disable();
+    this.form.get('otherLastName')?.disable();
     this.form.get('domIndividualSex')?.disable();
     this.form.get('lastName')?.disable();
     this.form.get('companyName')?.disable();
@@ -325,7 +336,7 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   clearValidatorsTow(): void {
-    let llaves = Object.keys(this.form.controls);
+    const llaves = Object.keys(this.form.controls);
     for (let i = 0; i < llaves.length; i++) {
       this.form.get(llaves[i])?.clearValidators();
       this.form.get(llaves[i])?.updateValueAndValidity();
@@ -342,18 +353,19 @@ export class CreatePeopleComponent implements OnInit {
   validateNit(nit: any): boolean {
     const word = nit;
     const aWord = /^\d{9}-\d$/.test(word);
-
-    return aWord ? false : true;
+  
+    return aWord;
   }
+  
 
   validateTypePople(): void {
-    // validar los tipos de campos segun los valores de los formularios
+    // validar los tipos de campos según los valores de los formularios
     this.clearValidatorsTow();
 
     this.form.get('domIndividualType')?.valueChanges.subscribe((type) => {
-      /* NOTA: hay que llevarse esta validacion a otra funcion para que podamos validar despues */
+      /* NOTA: hay que llevarse esta validación a otra función para que podamos validar después */
       if (type === 'Persona natural') {
-        this.form.get('fristName')?.setValidators(Validators.required);
+        this.form.get('firstName')?.setValidators(Validators.required);
         this.form.get('lastName')?.setValidators(Validators.required);
         this.form.get('number')?.setValidators(Validators.required);
         this.form
@@ -365,10 +377,10 @@ export class CreatePeopleComponent implements OnInit {
           this.form.get('domIndividualType')?.disable();
         }
 
-        this.form.get('fristName')?.enable();
+        this.form.get('firstName')?.enable();
         this.form.get('lastName')?.enable();
         this.form.get('middleName')?.enable();
-        this.form.get('othername')?.enable();
+        this.form.get('otherLastName')?.enable();
         this.form.get('domIndividualEthnicGroup')?.enable();
         this.form.get('domIndividualSex')?.enable();
         this.form.get('companyName')?.disable();
@@ -385,12 +397,12 @@ export class CreatePeopleComponent implements OnInit {
           this.form.get('domIndividualType')?.disable();
         }
 
-        this.form.get('fristName')?.disable();
+        this.form.get('firstName')?.disable();
         this.form.get('lastName')?.disable();
         this.form.get('domIndividualEthnicGroup')?.disable();
         this.form.get('domIndividualSex')?.disable();
         this.form.get('middleName')?.disable();
-        this.form.get('othername')?.disable();
+        this.form.get('otherLastName')?.disable();
       }
       this.form.get('domIndividualType')?.setValidators(Validators.required);
     });

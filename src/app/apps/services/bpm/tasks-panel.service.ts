@@ -4,7 +4,7 @@ import { SendGeneralRequestsService } from '../general/send-general-requests.ser
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ProTaskE } from '../../interfaces/pro-task-e';
 
 @Injectable({
@@ -12,25 +12,26 @@ import { ProTaskE } from '../../interfaces/pro-task-e';
 })
 export class TasksPanelService {
 
-  basic_url: string = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
+  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
   private _listProtaskE = new BehaviorSubject<ProTaskE>({});
   listProtaskE$ = this._listProtaskE.asObservable();
 
   constructor(
-    private requestsService: SendGeneralRequestsService) {
-    this.getChargerProTaskCount();
-  }
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
+  ) { }
 
   getChargerProTaskCount() {
     this.getProTaskCount()
       .subscribe((result: ProTaskE) => {
-        this._listProtaskE.next(result)
+        this._listProtaskE.next(result);
         });
   }
 
   getProTaskCount(): Observable<ProTaskE> {
-    const url: string = `${this.basic_url}${envi.bpmOperation.proTask_count}`;
+    const url = `${this.basic_url}${envi.bpmOperation.proTask_count}`;
+
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
@@ -39,7 +40,7 @@ export class TasksPanelService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
-    const url: string = `${this.basic_url}${envi.bpmOperation.proTask_asigned}`;
+    const url = `${this.basic_url}${envi.bpmOperation.proTask_asigned}`;
     return this.getData(url, paramsR);
   }
 
@@ -47,7 +48,7 @@ export class TasksPanelService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
-    const url: string = `${this.basic_url}${envi.bpmOperation.proTask_devolution}`;
+    const url = `${this.basic_url}${envi.bpmOperation.proTask_devolution}`;
     return this.getData(url, paramsR);
   }
 
@@ -55,7 +56,7 @@ export class TasksPanelService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
-    const url: string = `${this.basic_url}${envi.bpmOperation.proTask_priority}`;
+    const url = `${this.basic_url}${envi.bpmOperation.proTask_priority}`;
     return this.getData(url, paramsR);
   }
 
@@ -63,5 +64,24 @@ export class TasksPanelService {
     return this.requestsService.sendRequestsGetOption(url, { params: params })
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
+
+  viewTaskId(taskId: number): Observable<any> {
+    const urlTask = `${this.basic_url}${envi.bpmOperation.proExecution}${taskId}`;
+    console.log(urlTask);
+    return this.http.get<any>(urlTask);
+  }
+
+  viewExecuteTaskId(page: PageSearchData,taskId:string): Observable<any> {
+    let params: HttpParams = new HttpParams();
+    params = params.append('page', `${page.page}`);
+    params = params.append('size', `${page.size}`);
+    params = params.append('sortBy', `unitBuiltLabel`);
+
+
+    const urlTask = `${this.basic_url}${envi.bpmOperation.proTask}${taskId}?page=${page.page}&size=${page.size}`;
+    console.log(urlTask);
+    return this.http.get<any>(urlTask,);
+  }
+
 
 }

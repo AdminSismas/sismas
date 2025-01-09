@@ -19,16 +19,16 @@ import { SendGeneralRequestsService } from './general/send-general-requests.serv
 })
 export class CommentsService {
     /* -------------- ATRIBUTOS -------------- */
-    basic_url:string = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.bpmOperation.comment}`;
+    basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.bpmOperation.comment}`;
 
     /* -------------- CONSTRUCTRO -------------- */
     constructor(private requestsService: SendGeneralRequestsService) {}
 
-    /* -------------- METODOS -------------- */
+    /* -------------- MÉTODOS -------------- */
     getDataPropertyByComments(executionId: string, pegeData: PageCommentsData):Observable<CommentsCollection> {
         let paramsComm:HttpParams = new HttpParams();
-        paramsComm = paramsComm.append('page', `${pegeData.NumPage}`)
-        paramsComm = paramsComm.append('size', `${pegeData.NumSize}`)
+        paramsComm = paramsComm.append('page', `${pegeData.NumPage}`);
+        paramsComm = paramsComm.append('size', `${pegeData.NumSize}`);
         const url = `${this.basic_url}${executionId}`;
         return this.getData(url, paramsComm);
     }
@@ -44,11 +44,11 @@ export class CommentsService {
     }
 
 
-    /* -------------- METODOS PRIVADOS -------------- */
+    /* -------------- MÉTODOS PRIVADOS -------------- */
     private getData(url:string, params:any):Observable<CommentsCollection>{
         return this.requestsService.sendRequestsGetOption(url, {params: params});
     }
-    
+
     private fetchBody(url: string, body: any): Observable<CommentsCollection> {
         return this.requestsService.sendRequestsFetchPostBody(url, body);
     }

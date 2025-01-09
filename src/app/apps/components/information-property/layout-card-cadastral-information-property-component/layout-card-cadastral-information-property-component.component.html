@@ -1,16 +1,16 @@
 <div class="flex items-center" mat-dialog-title>
   <h2
     class="headline m-0 flex-auto">
-   {{CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE}}
+   {{CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE + ' - ' + baunitHead?.domBaunitCondition }}
   </h2>
 
-  <button
+  <!-- <button
     [matMenuTriggerFor]="settingsMenu"
     class="text-secondary"
     mat-icon-button
     type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
+  </button> -->
 
   <button
     class="text-secondary"
@@ -32,7 +32,9 @@
           [schema]="option.schema"
           [typeInformation]="typeInformation"
           [contentInfoSchema]="this.defaults"
-          [showTittle]="false">
+          [showTittle]="false"
+          [baunitCondition]="baunitHead?.domBaunitCondition"
+        >
         </vex-cadastral-information-property>
       </mat-tab>
     } @empty {
@@ -58,16 +60,16 @@
 <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Print</span>
+    <span>Imprimir</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Export</span>
+    <span>Exportar</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Delete</span>
+    <span>Borrar</span>
   </button>
 </mat-menu>

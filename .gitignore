@@ -47,3 +47,8 @@ testem.log
 Thumbs.db
 
 /ARCHIVE/*
+.vscode/settings.json
+
+# script
+/script
+src/@vex/styles/_generated-themes.scss

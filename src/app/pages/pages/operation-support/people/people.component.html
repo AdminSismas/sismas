@@ -1,52 +1,58 @@
 <vex-secondary-toolbar current="Formulario">
   <vex-breadcrumbs
-    [crumbs]="['Apoyo Operación', 'Personas']"
+  [crumbs]="['Apoyo operación', 'Personas']"
     class="flex-auto"></vex-breadcrumbs>
 
   <button class="ml-2" color="primary" mat-icon-button type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
   </button>
 </vex-secondary-toolbar>
-<!-- <vex-in-construction></vex-in-construction>
--->
+<div class="card pt-6">
+  <form [formGroup]="form">
+    <!-- Campo departamento -->
+  <!-- <mat-form-field class="sm:ml-2 sm:mr-2 flex-1"> -->
 
+    <div class="flex flex-col sm:flex-row sm:gap-4 mt-3 pt-3">
+      <div class="form-content-item flex flex-row items-center justify-center gap-4" style="align-items: flex-start;">
+<div style="margin-left: 6px;">
 
-<vex-page-layout>
-  <vex-page-layout-header
-    class="pb-16 flex flex-col items-start justify-center">
-    <div
-      [class.container]="layoutCtrl.value === 'boxed'"
-      [class.px-6]="layoutCtrl.value === 'fullwidth'"
-      class="w-full flex flex-col sm:flex-row justify-between"></div>
-  </vex-page-layout-header>
+  <button
+    color="primary"
+    aria-label=""
+    type="button"
+    mat-flat-button
+    (click)="createCustomer()"
+    name="crear"
+    class="flex-none"
+  >
+    <mat-icon svgIcon="mat:add"></mat-icon>
+    Nueva persona
+  </button>
+</div>
 
-  <vex-page-layout-content
-    [class.container]="layoutCtrl.value === 'fullwidth'"
-    [class.px-6]="layoutCtrl.value === 'fullwidth'"
-    class="-mt-6">
-    <div class="card overflow-auto -mt-16">
-      <div
-        class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
-        <!-- seccion de busqueda -->
-        <div class="contet-search">
-          <form [formGroup]="form" class="flex justify-center items-center">
-            <vex-combox-colletion
-              ubscriptSizing="dynamic"
-              idComboCollection="typeNumberDocument"
-              name="selector_document"
-              label="Tipo de documento"
-              typeDomainName="IndividualTypeNumber"
-              placeholderDomainName="Seleccionar tipo documento&hellip;"
-              (stringEventEmitter)="infoSelect($event)"></vex-combox-colletion>
+          <vex-combox-colletion
+          ubscriptSizing="dynamic"
+          idComboCollection="typeNumberDocument"
+          name="selector_document"
+          label="Tipo de documento"
+          typeDomainName="IndividualTypeNumber"
+          placeholderDomainName="Seleccionar tipo documento&hellip;"
+          (stringEventEmitter)="infoSelect($event)"
+          class="flex-none"
+        ></vex-combox-colletion>
 
-            <mat-form-field subscriptSizing="dynamic">
-              <input
-                matInput
-                [formControl]="document"
-                placeholder="Buscar numero de documento&hellip;"
-                type="text"
-                name="search" />
-            </mat-form-field>
+          <mat-form-field class="flex-none">
+          <mat-label>Número documento</mat-label>
+          <input
+            matInput
+            [formControl]="document"
+            placeholder="Número de documento&hellip;"
+            type="text"
+            name="search"
+          />
+          </mat-form-field>
+
+          <div style="margin-left: 6px;">
 
             <button
               color="primary"
@@ -55,54 +61,68 @@
               mat-flat-button
               (click)="search()"
               name="enviar"
-              class="ml-4 flex-none">
-              buscar
+              class="flex-none"
+              style="margin: 6px;"
+            >
+              <mat-icon svgIcon="mat:search"></mat-icon>
+              Buscar
             </button>
-          </form>
-        </div>
+          </div>
 
-        <span class="flex-1"></span>
-
-        <button
-          [matMenuTriggerFor]="columnFilterMenu"
-          class="ml-4 flex-none"
-          mat-icon-button
-          matTooltip="Filter Columns"
-          type="button">
-          <mat-icon svgIcon="mat:filter_list"></mat-icon>
-        </button>
-
-        <button
-          (click)="createCustomer()"
-          class="ml-4 flex-none"
-          color="primary"
-          mat-mini-fab
-          matTooltip="Add Customer"
-          type="button">
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button>
       </div>
+    </div>
 
-      <table [dataSource]="dataSource" class="w-full" mat-table matSort>
+
+</form>
+</div>
+
+
+
+<!-- <button
+[matMenuTriggerFor]="columnFilterMenu"
+class="ml-4 flex-none"
+mat-icon-button
+matTooltip="Filtrar columnas"
+type="button"
+>
+<mat-icon svgIcon="mat:filter_list"></mat-icon>
+</button> -->
+
+<div  class="mt-6 relative" style="padding-bottom: 56.25%; /* Relación de aspecto 16:9 */">
+  <table
+        [dataSource]="dataSource"
+        class="w-full"
+        mat-table
+        matSort
+      >
         <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
 
         <!-- Checkbox Column -->
         <ng-container matColumnDef="checkbox">
-          <th *matHeaderCellDef mat-header-cell>
+          <th
+            *matHeaderCellDef
+            mat-header-cell
+          >
             <mat-checkbox
               (change)="$event ? masterToggle() : null"
               [checked]="selection.hasValue() && isAllSelected()"
               [indeterminate]="selection.hasValue() && !isAllSelected()"
-              color="primary">
+              color="primary"
+            >
             </mat-checkbox>
           </th>
-          <td *matCellDef="let row" class="w-4" mat-cell>
+          <td
+            *matCellDef="let row"
+            class="w-4"
+            mat-cell
+          >
             <mat-checkbox
               (change)="$event ? selection.toggle(row) : null"
               (click)="$event.stopPropagation()"
               [checked]="selection.isSelected(row)"
-              color="primary">
+              color="primary"
+            >
             </mat-checkbox>
           </td>
         </ng-container>
@@ -111,15 +131,20 @@
         <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
           <ng-container
             *ngIf="column.type === 'text'"
-            [matColumnDef]="column.property">
+            [matColumnDef]="column.property"
+          >
             <th
               *matHeaderCellDef
-              class="uppercase"
               mat-header-cell
-              mat-sort-header>
+              mat-sort-header
+            >
               {{ column.label }}
             </th>
-            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            <td
+              *matCellDef="let row"
+              [ngClass]="column.cssClasses"
+              mat-cell
+            >
               {{ row[column.property] }}
             </td>
           </ng-container>
@@ -127,25 +152,38 @@
 
         <!-- Action Column -->
         <ng-container matColumnDef="actions">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
-          <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+          <th
+            *matHeaderCellDef
+            mat-header-cell
+            mat-sort-header
+          ></th>
+          <td
+            *matCellDef="let row"
+            class="w-10 text-secondary"
+            mat-cell
+          >
             <button
               (click)="$event.stopPropagation()"
               [matMenuTriggerData]="{ customer: row }"
               [matMenuTriggerFor]="actionsMenu"
               mat-icon-button
-              type="button">
+              type="button"
+            >
               <mat-icon svgIcon="mat:more_horiz"></mat-icon>
             </button>
           </td>
         </ng-container>
 
-        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+        <tr
+          *matHeaderRowDef="visibleColumns"
+          mat-header-row
+        ></tr>
         <tr
           (click)="updateCustomer(row)"
           *matRowDef="let row; columns: visibleColumns"
           class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-          mat-row></tr>
+          mat-row
+        ></tr>
       </table>
 
       <mat-paginator
@@ -154,35 +192,54 @@
         [pageIndex]="page"
         [length]="totalElements"
         class="sticky left-0"
-        (page)="refreshPaginatorNext($event)">
+        (page)="refreshPaginatorNext($event)"
+      >
       </mat-paginator>
-    </div>
-  </vex-page-layout-content>
-</vex-page-layout>
+</div>
 
-<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+<mat-menu
+  #columnFilterMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
   <button
     (click)="toggleColumnVisibility(column, $event)"
     *ngFor="let column of columns"
-    class="mat-menu-item block">
+    class="mat-menu-item block"
+  >
     <mat-checkbox
       (click)="$event.stopPropagation()"
       [(ngModel)]="column.visible"
-      color="primary">
+      color="primary"
+    >
       {{ column.label }}
     </mat-checkbox>
   </button>
 </mat-menu>
 
-<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
-  <ng-template let-customer="customer" matMenuContent>
-    <button (click)="updateCustomer(customer)" mat-menu-item>
+<mat-menu
+  #actionsMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
+  <ng-template
+    let-customer="customer"
+    matMenuContent
+  >
+    <button
+      (click)="updateCustomer(customer)"
+      mat-menu-item
+    >
       <mat-icon svgIcon="mat:edit"></mat-icon>
-      <span>Modify</span>
+      <span>Editar</span>
     </button>
-    <button (click)="deleteCustomer(customer)" mat-menu-item>
+    <button
+      (click)="deleteCustomer(customer)"
+      mat-menu-item
+    >
       <mat-icon svgIcon="mat:delete"></mat-icon>
-      <span>Delete</span>
+      <span>Eliminar</span>
     </button>
   </ng-template>
 </mat-menu>
+

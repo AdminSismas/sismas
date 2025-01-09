@@ -1,16 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { InConstructionComponent } from '../../in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexShowdownComponent, VexShowdownSourceDirective } from '@vex/components/vex-showdown';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
 import {
@@ -23,10 +16,11 @@ import { NgForOf, NgIf } from '@angular/common';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
+import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
+import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import {
   InformationPropertyOwnersComponent
 } from '../information-property-owners/information-property-owners.component';
@@ -43,6 +37,8 @@ import { TypeInformation } from '../../../interfaces/content-info';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
+import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -58,28 +54,16 @@ import { environment as envi } from '../../../../../environments/environments';
   ],
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
-    VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent,
     MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
     MatExpansionModule,
     ReactiveFormsModule,
     MatMenuModule,
-    VexShowdownComponent,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
     MatDividerModule,
     MatDialogContent,
-    VexShowdownSourceDirective,
     MatRippleModule,
-    VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
-    VexPageLayoutContentDirective,
     MatListModule,
     MatRippleModule,
     MatSnackBarModule,
@@ -92,7 +76,9 @@ import { environment as envi } from '../../../../../environments/environments';
     InformationConstructionsPropertyComponent,
     InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
-    MatFormFieldModule
+    MatFormFieldModule,
+    InformationUnitPropertyComponent,
+    AdministrativeSourcesComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -101,6 +87,17 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private basicPropertyInformationComponent?: ElementRef;
+  @ViewChild(InformationUnitPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationUnitPropertyComponent?: ElementRef;
+  @ViewChild(AdministrativeSourcesComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private administrativeSourcesComponent?: ElementRef;
+
   @ViewChild(InformationAddressesPropertyComponent, {
     read: ElementRef,
     static: false
@@ -125,23 +122,28 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
+
   private informationZonesPropertyComponent?: ElementRef;
 
+
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
-  @Input({ required: true }) public showTittle: boolean = true;
+  @Input({ required: true }) public showTittle = true;
   @Input({ required: true }) public label!: string;
-  @Input() public id: string = '';
-  @Input({ required: true }) public schema: string = '';
-  @Input({ required: true }) contentInfoSchema!: ContentInfoSchema
+  @Input() public id = '';
+  @Input({ required: true }) public schema = '';
+  @Input({ required: true }) contentInfoSchema!: ContentInfoSchema;
+  @Input({ required: true }) public baunitCondition?: string;
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
-  idContainer: string = '';
+  idContainer = '';
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  public viewProperties = false;
 
-  constructor() {
-  }
+   constructor(private informationPropertyService: InformationPropertyService){ }
+
+  
 
   ngOnInit(): void {
     if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
@@ -151,15 +153,25 @@ export class CadastralInformationPropertyComponent implements OnInit {
     if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
       return;
     }
+    this.informationPropertyService.showOptionsPersonStarted$
+    .subscribe(value2=>{
+      if(value2){
+        this.viewProperties = value2;
+        this.removeItem('Propietarios');
+      }
+    });
 
-    this.baunitHead = this.contentInfoSchema.content
+    this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
+
+
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
       behavior: 'smooth'
     });
+    if (this.baunitCondition)
 
     if (this.id?.length > 0) {
       this.id = this.id + this.getRandomInt(10000) + 'id' + this.getRandomInt(50) + this.schema;
@@ -168,6 +180,12 @@ export class CadastralInformationPropertyComponent implements OnInit {
       this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
       this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
     }
+  }
+   // Método para eliminar el objeto con la etiqueta "Propietarios"
+   removeItem(labelToRemove: string): void {
+    this.navigationItems = this.navigationItems.filter(
+      (item) => item.label !== labelToRemove
+    );
   }
 
   scrollTo(elementName: string) {
@@ -197,4 +215,14 @@ export class CadastralInformationPropertyComponent implements OnInit {
     return Math.floor(Math.random() * max);
   }
 
+  showInformationUnitProperty(baunitCondition: string | undefined): boolean {
+    if (
+      baunitCondition === '(Condominio) Matriz' ||
+      baunitCondition === '(Propiedad horizontal) Matriz'
+    ) return true;
+
+    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial');
+
+    return false;
+  }
 }

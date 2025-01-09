@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,10 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -25,8 +21,10 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
+import { MatDialog } from '@angular/material/dialog';
+import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -40,7 +38,6 @@ import { environment } from '../../../../../environments/environments';
     scaleFadeIn400ms,
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -49,13 +46,7 @@ import { environment } from '../../../../../environments/environments';
     MatInputModule,
     MatOptionModule,
     MatTabsModule,
-    NgForOf,
-    NgIf,
-    VexHighlightDirective,
     ReactiveFormsModule,
-    VexPageLayoutHeaderDirective,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
     MatSlideToggleModule,
     MatCardModule,
     HeaderCadastralInformationPropertyComponent,
@@ -69,13 +60,18 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   data!:BasicInformationProperty;
 
-  @Input({ required: true }) id: string = '';
-  @Input() expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input() expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
+  @Input() propertyUnit = false;
+  @Input() typeInformation = 'visualization';
 
-  constructor(private informationPropertyService:InformationPropertyService) {}
+  constructor(
+    private informationPropertyService:InformationPropertyService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     if (this.id?.length <= 0 || this.baunitId == null) {
@@ -104,6 +100,18 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   captureInformationSubscribe(result: BasicInformationProperty): void {
     this.data = result;
+  }
+
+  editBasicInformationProperty(): void {
+    this.dialog.open(EditBasicPropertyInformationComponent, {
+      width: '60%',
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION}
+    }).afterClosed()
+      .subscribe({
+        next: (result: BasicInformationProperty) => {
+          setTimeout(() => this.data = result, 300);
+        }
+      });
   }
 
   private getRandomInt(max: number):number {

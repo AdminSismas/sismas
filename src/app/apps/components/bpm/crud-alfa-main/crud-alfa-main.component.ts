@@ -60,7 +60,6 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
     MatDialogActions,
     MatIconModule,
     MatInputModule,
-    QuillEditorComponent,
     MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
@@ -99,7 +98,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
 
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_OPTION_UNIQUE_7;
   pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
 
@@ -193,7 +192,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
 
     if (!this.formCreateDelete.value || !this.formCreateDelete.value.npnLike) {
       this.snackBar.open(
-        'No se puede consultar informacion, con los datos suministrados.',
+        'No se puede consultar información, con los datos suministrados.',
         'CLOSE', { duration: 1000 }
       );
       return;
@@ -210,8 +209,8 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    let addNpnLike = this.formAdd.value.addNpnLike;
-    let bAunitCondition = this.formAdd.value.bAunitCondition;
+    const addNpnLike = this.formAdd.value.addNpnLike;
+    const bAunitCondition = this.formAdd.value.bAunitCondition;
     if(!addNpnLike || !bAunitCondition) {
       this.snackBar.open(
         'Para poder continuar diligencie los campos obligatorios',
@@ -224,7 +223,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       addNpnLike, this.executionId, bAunitCondition)
       .then((result: any) => {
         this.snackBar.open(
-          'Se creo una nueva unidad predial.',
+          'Se creó una nueva unidad predial.',
           'CLOSE', { duration: 1000 }
         );
         this.dialogRef.close();
@@ -239,7 +238,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       baunit?.baunitIdE, this.executionId)
       .then((result: any) => {
         this.snackBar.open(
-          'Se creo una nueva unidad predial para actualizar.',
+          'Se creó una nueva unidad predial para actualizar.',
           'CLOSE', { duration: 1000 }
         );
         this.loadPropertiesInformation();
@@ -254,7 +253,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       baunit?.baunitIdE, this.executionId)
       .then((result: any) => {
         this.snackBar.open(
-          'Se creo una nueva unidad predial para eliminar.',
+          'Se creó una nueva unidad predial para eliminar.',
           'CLOSE', { duration: 1000 }
         );
         this.loadPropertiesInformation();

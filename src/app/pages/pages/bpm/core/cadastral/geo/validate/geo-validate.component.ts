@@ -13,7 +13,7 @@ import { MatDialogTitle } from '@angular/material/dialog';
   styleUrl: './geo-validate.component.scss'
 })
 export class GeoValidateComponent implements OnInit {
-  @Input() public id: string = '';
+  @Input() public id = '';
   constructor() {
   }
 

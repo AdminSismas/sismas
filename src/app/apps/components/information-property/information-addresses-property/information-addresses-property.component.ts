@@ -94,19 +94,20 @@ export class InformationAddressesPropertyComponent
 {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  public hasMainAddress = false;
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
@@ -137,6 +138,12 @@ export class InformationAddressesPropertyComponent
       this.typeInformation === TYPEINFORMATION_VISUAL
     ) {
     }
+
+    this.informationPropertyService.reloadTableStarted$.subscribe(value=>{
+      if(value){
+        this.searchBasicInformationPropertyAddresses();
+      }
+    });
 
     this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
@@ -175,13 +182,13 @@ export class InformationAddressesPropertyComponent
 
     dialogRef.afterClosed().subscribe(async (data: any) => {
       if (data === 'delete' && basicInformationAddress.direccionId) {
-        let msg: string = 'Informacion eliminada con éxito';
+        let msg = 'Información eliminada con éxito';
         try {
-          // await lastValueFrom(
-          //   this.informationPropertyService.deleteBasicInformationPropertyAddress(
-          //     basicInformationAddress.direccionId
-          //   )
-          // );
+          await lastValueFrom(
+            this.informationPropertyService.deleteBasicInformationPropertyAddress(
+              basicInformationAddress.direccionId
+            )
+          );
           this.dataSource.data = this.dataSource.data.filter((row: BasicInformationAddress) => {
             return row.direccionId !== basicInformationAddress.direccionId;
           });
@@ -221,9 +228,23 @@ export class InformationAddressesPropertyComponent
       .getBasicInformationPropertyAddresses(this.schema, this.baunitId)
       .subscribe({
         error: (err: any) => this.captureInformationSubscribeError(err),
-        next: (result: BasicInformationAddress[]) =>
-          this.captureInformationSubscribe(result)
+        next: (result: BasicInformationAddress[]) =>{
+          this.filterAddressMain(result);
+          this.captureInformationSubscribe(result);
+        }
       });
+  }
+
+  public filterAddressMain(result: BasicInformationAddress[]){
+    const direccionesPrincipales = result.filter(d => d.esDireccionPrincipal);
+  
+    // Verifica que solo haya una dirección con "esDireccionPrincipal"
+    if (direccionesPrincipales.length === 0) {
+      this.hasMainAddress = false;  // Desbloquea
+    } else {
+      this.hasMainAddress = true;  // Bloquea
+    }
+
   }
 
   captureInformationSubscribeError(err: any): void {
@@ -253,6 +274,7 @@ export class InformationAddressesPropertyComponent
       type: data ? 'edit' : 'new',
       basicInformationAddress: data ? new BasicInformationAddress(data, this.schema) : undefined,
       baunitId: this.baunitId || undefined,
+      hasMainAddress: this.hasMainAddress
     };
     const dialogRef = this.dialog
       .open(EditInformationAddressComponent, {
@@ -261,7 +283,7 @@ export class InformationAddressesPropertyComponent
         disableClose: true,
         data: dialogData,
       });
-    
+
     dialogRef.afterClosed().subscribe((result: any) => {
       //Update information address object
       if (result && Array.isArray(this.dataSource?.data)) {

@@ -37,7 +37,7 @@ function buildScss(options: VexThemePluginOptions): string {
   /**
    * Add themes to the theme map
    */
-  for (let [themeName, partialThemeOptions] of Object.entries(themes)) {
+  for (const [themeName, partialThemeOptions] of Object.entries(themes)) {
     scss += `${themeName}: (`;
     scss += `selector: "${createThemeClassName(themeName)}", `;
 

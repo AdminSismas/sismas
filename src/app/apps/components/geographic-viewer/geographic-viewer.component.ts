@@ -101,13 +101,13 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
       this.queryParameters.zoom = 30;
     }
     for (const [parametersKey, parametersValue] of Object.entries(this.queryParameters)) {
-      let value = typeof parametersValue === 'object' || Array.isArray(parametersValue) ? JSON.stringify(parametersValue) : parametersValue;
-      let element: HTMLInputElement | null = document.getElementById(parametersKey) as HTMLInputElement;
+      const value = typeof parametersValue === 'object' || Array.isArray(parametersValue) ? JSON.stringify(parametersValue) : parametersValue;
+      const element: HTMLInputElement | null = document.getElementById(parametersKey) as HTMLInputElement;
       if (element != null && parametersValue != null) {
         element.value = value;
         element.textContent = value;
       }
-      let elementArea: HTMLTextAreaElement | null = document.getElementById(parametersKey) as HTMLTextAreaElement;
+      const elementArea: HTMLTextAreaElement | null = document.getElementById(parametersKey) as HTMLTextAreaElement;
       if (elementArea != null && parametersValue != null) {
         elementArea.value = value;
         elementArea.textContent = value;

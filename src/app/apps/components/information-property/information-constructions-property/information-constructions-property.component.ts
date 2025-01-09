@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -11,7 +11,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -23,7 +23,7 @@ import {
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
 } from '../../../constants/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -36,7 +36,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
@@ -50,6 +49,11 @@ import {
 } from './detail-information-constructions-property/detail-information-constructions-property.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/content-info';
+import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from './edit-information-constructions-property/edit-information-constructions-property.component';
+import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditInformationConstructionDialogComponent } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -63,29 +67,32 @@ import { TypeInformation } from '../../../interfaces/content-info';
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatOptionModule,
-    MatTabsModule,
+    NgClass,
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    VexHighlightDirective,
-    MatTableModule,
-    MatSortModule,
-    NgClass,
-    MatPaginatorModule,
-    MatTooltipModule,
+    SweetAlert2Module,
+    // Vex
+    // Material
+    MatAutocompleteModule,
+    MatButtonModule,
     MatCardModule,
-    HeaderCadastralInformationPropertyComponent,
-    MatMenuModule,
     MatCheckboxModule,
-    MatExpansionModule
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatOptionModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatTooltipModule,
+    // Custom
+    HeaderCadastralInformationPropertyComponent,
   ],
   templateUrl: './information-constructions-property.component.html',
   styleUrl: './information-constructions-property.component.scss'
@@ -95,16 +102,16 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) public expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
   page:number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
 
@@ -113,9 +120,12 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<NgTemplateOutlet>;
+  @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
+  @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
+  private snackBar = inject(MatSnackBar);
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
@@ -225,12 +235,89 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       .afterClosed();
   }
 
+  openAddEditConstructionInformationPropertyDialog(
+    data?: ContentInformationConstruction
+  ): void {
+    const dialogData: AddEditInformationConstructionI = {
+      type: data ? 'edit' : 'new',
+      basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
+      baunitId: this.baunitId || undefined,
+      executionId: this.executionId || undefined
+    };
+
+    const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
+      minWidth: '50%',
+      minHeight: '40%',
+      disableClose: true,
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((result: ContentInformationConstruction) => {
+      if (result) {
+        if (dialogData.type === 'new') {
+
+          this.dataSource.data = [...this.dataSource.data, result];
+        } else {
+
+          const index = this.dataSource.data.findIndex((item) => item.unitBuiltId === result.unitBuiltId);
+          if (index !== -1) {
+            this.dataSource.data[index] = result;
+            this.dataSource._updateChangeSubscription();
+          }
+        }
+      }
+    });
+  }
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
   }
 
+
+  editInformations(customer: any): void {
+    const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
+      minWidth: '50%',
+      minHeight: '40%',
+      data: {
+        ...customer,
+        executionId: this.executionId,
+        baunitId: this.baunitId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
+
+        if (index !== -1) {
+
+          this.dataSource.data[index] = result;
+
+          this.dataSource.data = [...this.dataSource.data];
+        }
+      }
+    });
+  }
+
   deleteInformations(customer: any): void {
-    console.log(customer);
+    const dialogRef = this.dialog.open(this.confirmDialog);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const baunitId = this.baunitId ?? '';
+        const executionId = this.executionId ?? '';
+        const unitBuiltId = customer.unitBuiltId;
+
+        this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
+          next: () => {
+
+            this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
+            this.deleteSwal.fire();
+          },
+          error: () => {
+            this.errorSwal.fire();
+          }
+        });
+      }
+    });
   }
 
   toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -30,7 +30,6 @@ import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { FilterCadastralSearchComponent } from './filter-cadastral-search/filter-cadastral-search.component';
 import {
@@ -39,7 +38,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_EDITION
+  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
 } from '../../constants/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -48,7 +47,6 @@ import { ContentInfoSchema } from '../../interfaces/content-info-schema';
 import { GeographicViewerComponent } from '../geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../environments/environments';
 import { SendInformationRegisterService } from '../../services/register-procedure/send-information-register.service';
-import { FluidHeightDirective } from '../../directives/fluid-height.directive';
 import { ValidateInformationBaunitService } from '../../services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -82,27 +80,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatTabsModule,
     MatSelectModule,
-    AsyncPipe,
-    VexSecondaryToolbarComponent,
-    FluidHeightDirective
   ]
 })
 export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  contentInformations!: InformationPegeable;
+  contentInformation!: InformationPegeable;
   searchData!: SearchData;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
 
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
+  initParams?: string;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -111,6 +107,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
     private infoTableService: InfoTableService,
@@ -131,6 +128,25 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
+
+    if (this.route.snapshot.queryParams['npn']) {
+      this.initParams = this.route.snapshot.queryParams['npn'];
+      this.searValueData({}, this.initParams as string);
+      setTimeout(() => {
+        console.log(this.dataSource.data[0]);
+        this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
+          minWidth: '99%',
+          minHeight: '90%',
+          disableClose: true,
+          data: new ContentInfoSchema(
+            this.dataSource.data[0].baunitIdE,
+            this.dataSource.data[0],
+            null,
+            LIST_SCHEMAS_CONTROL_MAIN,
+          )
+        });
+      }, 300);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -162,13 +178,18 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
-          LIST_SCHEMAS_CONTROL_MAIN
+          LIST_SCHEMAS_CONTROL_MAIN,
+          TYPEINFORMATION_VISUAL
         )
       })
       .afterClosed();
   }
 
   createAdvancedSearch(): void {
+    if(this.searchData){
+      const cleanValue = this.cleanJsonValues(this.searchData);
+      this.searchData = cleanValue;
+    }
     this.dialog
       .open(FilterCadastralSearchComponent, {
         minWidth: '50%',
@@ -189,30 +210,46 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       });
   }
 
+  cleanJsonValues(data: any): any {
+    const cleanedData: any = {};
+
+    // Iterar sobre las claves del JSON
+    Object.keys(data).forEach((key) => {
+      const value = data[key];
+      if (typeof value === 'string') {
+        // Eliminar solo los guiones bajos (__) dejando los números
+        cleanedData[key] = value.replace(/_/g, '');
+      } else {
+        cleanedData[key] = value; // Mantener valores no string tal como están
+      }
+    });
+    return cleanedData;
+  }
+
   captureInformationCadastralData(): void {
     let data: BaunitHead[];
-    if (this.contentInformations?.content != null) {
-      data = this.contentInformations.content;
+    if (this.contentInformation?.content != null) {
+      data = this.contentInformation.content;
       data = data.map((row: BaunitHead) => new BaunitHead(row));
       this.dataSource.data = data;
     }
 
-    if (this.contentInformations == null) {
+    if (this.contentInformation == null) {
       this.page = PAGE;
       return;
     }
 
-    if (this.contentInformations.totalElements) {
-      this.totalElements = this.contentInformations.totalElements;
+    if (this.contentInformation.totalElements) {
+      this.totalElements = this.contentInformation.totalElements;
     }
 
-    if (this.contentInformations.pageable == null) {
+    if (this.contentInformation.pageable == null) {
       this.page = PAGE;
       return;
     }
 
-    if (this.contentInformations.pageable.pageNumber != null) {
-      this.page = this.contentInformations.pageable.pageNumber;
+    if (this.contentInformation.pageable.pageNumber != null) {
+      this.page = this.contentInformation.pageable.pageNumber;
     }
   }
 
@@ -266,7 +303,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     if (this.searchData == null) {
       return false;
     }
-    let searchData: SearchData = this.searchData;
+    const searchData: SearchData = this.searchData;
 
     if (this.isValidateField(searchData?.registration)) {
       this.searchPropertiesByRegistration(this.searchData);
@@ -295,8 +332,48 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       this.searchNationalPredialNumber(this.searchData);
       return true;
     }
+
+    if (searchData) {
+      this.formatFieldValue(this.searchData);
+      return true;
+    }
     return false;
   }
+
+  formatFieldValue(value:SearchData) {
+    const formattedValues = [
+     value.dpto,
+     value.mpio,
+     value.zonas,
+     value.sectorb,
+     value.comuna,
+     value.barrio,
+     value.manVer,
+     value.terreno,
+     value.condicion,
+     value.edificio,
+     value.piso,
+     value.unidadPredial
+    ];
+
+    let result;
+
+    if (value?.codigoCompleto) {
+      result = value.codigoCompleto;
+    } else {
+      result = formattedValues.join('');
+    }
+
+    this.searValueData(value, result);
+  }
+
+  searValueData(searData:SearchData,data: string): void {
+    this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
+    .subscribe(value=>{
+      this.captureInformationSubscribe(value);
+    });
+  }
+
 
   deleteInformations(customer: BaunitHead): void {
   }
@@ -348,12 +425,12 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
-    this.contentInformations = result;
+    this.contentInformation = result;
     this.captureInformationCadastralData();
   }
 
   captureInformationSubscribeError(): void {
-    this.contentInformations = new InformationPegeable();
+    this.contentInformation = new InformationPegeable();
     this.dataSource.data = [];
   }
 
@@ -371,7 +448,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         );
         return;
       }
-      let url: string = `${envi.initiate_filing_procedure}`;
+      const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
       this.router.navigate([`${url}`, data.baunitIdE])
         .then(r => {

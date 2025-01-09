@@ -1,19 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Error500Component } from '../../../../errors/error-500/error-500.component';
 import { MatDialogTitle } from '@angular/material/dialog';
+import { DocumentsTableComponent } from '../validate/documents-table/documents-table.component';
+import { DocumentsMainTableComponent } from './documents-table/documents-table.component';
 
 @Component({
   selector: 'vex-document-main',
   standalone: true,
   imports: [
     Error500Component,
-    MatDialogTitle
+    MatDialogTitle,
+    DocumentsMainTableComponent
   ],
   templateUrl: './document-main.component.html',
   styleUrl: './document-main.component.scss'
 })
 export class DocumentMainComponent implements OnInit {
-  @Input() public id: string = '';
+  @Input({ required: true }) public executionId = '';
+  @Input() public id = '';
   constructor() {
   }
 

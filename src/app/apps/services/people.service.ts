@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environments';
 import { SendGeneralRequestsService } from './general/send-general-requests.service';
 import { Observable } from 'rxjs';
 import { InformationPegeable } from '../interfaces/information-pegeable.model';
+import { InfoPerson } from '../interfaces/information-property/info-person';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,6 @@ export class PeopleService {
   private url_basic = `${environment.url}:${environment.port}`;
 
   constructor(
-    private http: HttpClient,
     private requestsService: SendGeneralRequestsService
   ) {}
 
@@ -20,11 +20,11 @@ export class PeopleService {
     paramsR = paramsR.append('page', params.page);
     paramsR = paramsR.append('size', params.size);
     paramsR = paramsR.append('sortBy', params.sortBy);
-    const urlP: string = `${this.url_basic}${environment.individualNumber}`;
+    const urlP = `${this.url_basic}${environment.individualNumber}`;
     return this.getData(urlP, paramsR);
   }
 
-  getPeopleTypeNumer(params: any) {
+  getPeopleTypeNumber( params: any ): Observable<InfoPerson> {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', params.number);
     paramsR = paramsR.append(
@@ -32,12 +32,12 @@ export class PeopleService {
       params.individualTypeNumber
     );
 
-    const urlP: string = `${this.url_basic}${environment.individualTypeNumber}`;
+    const urlP = `${this.url_basic}${environment.individualTypeNumber}`;
     return this.getData(urlP, paramsR);
   }
 
   getPeopleNumber(params: any) {
-    const urlP: string = `${this.url_basic}${environment.individualNumber}/${params.number}`;
+    const urlP = `${this.url_basic}${environment.individualNumber}/${params.number}`;
     return this.getDataFetch(urlP);
   }
 
@@ -55,7 +55,7 @@ export class PeopleService {
     return this.fetchBody(url, body);
   }
 
-  private getData(url: string, params: any): Observable<InformationPegeable> {
+  private getData(url: string, params: any): Observable<InfoPerson> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
 

@@ -1,4 +1,8 @@
 
+.main {
+  margin-top: 20px !important;
+}
+
 .vex-footer {
   background: var(--vex-toolbar-background);
   box-shadow: var(--vex-footer-elevation);
@@ -10,4 +14,56 @@
   padding-left: 10px!important;
   padding-right: 10px!important;
 }
+
+.vex-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: 0 -2px 5px rgb(0 0 0 / 0%);
+  padding: 10px 20px;
+  z-index: 10; /* Asegura que el footer quede encima del contenido */
+  display: flex;
+  justify-content: space-between; /* Alinea los elementos a los extremos */
+  align-items: center; /* Centra verticalmente el contenido del footer */
+}
+
+mat-paginator {
+  background-color: #f8f9fa00; /* Fondo claro */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 4px 159px; /* Espaciado interno */
+ /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  Sombra sutil */
+  min-width: 250px; /* Ancho mínimo para mantener el diseño */
+  flex-shrink: 0; /* Evita que el paginador se reduzca más de lo necesario */
+}
+
+.mat-mdc-paginator-container {
+  padding: 1px 174px;
+}
+
+@media (max-width: 1366px) {
+  .vex-footer {
+    padding: 10px 15px; /* Ajusta el espaciado para pantallas más pequeñas */
+    justify-content: space-between; /* Asegura que todo esté bien distribuido */
+  }
+
+  mat-paginator {
+    min-width: 220px; /* Reduce el ancho mínimo */
+  }
+}
+
+@media (max-width: 1024px) {
+  .vex-footer {
+    flex-wrap: wrap; /* Permite que el contenido se ajuste en varias líneas si es necesario */
+    justify-content: center; /* Centra el contenido en pantallas pequeñas */
+  }
+
+  mat-paginator {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    border-radius: 4px; /* Reduce el radio para pantallas pequeñas */
+  }
+}
+
+
+
 

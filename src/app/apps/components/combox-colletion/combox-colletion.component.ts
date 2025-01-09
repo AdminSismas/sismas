@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgForOf } from '@angular/common';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { CollectionServicesService } from '../../services/general/collection-services.service';
-import { DomainCollection } from '../../interfaces/domain-name.model';
+import { DomainCalificationCollection, DomainCollection } from '../../interfaces/domain-name.model';
 import { MatTableModule } from '@angular/material/table';
 
 @Component({
@@ -16,10 +16,10 @@ import { MatTableModule } from '@angular/material/table';
     MatOptionModule,
     MatSelectModule,
     NgForOf,
-    NgIf,
     ReactiveFormsModule,
     MatTableModule,
-    NgClass
+    NgClass,
+    CommonModule
   ],
   templateUrl: './combox-colletion.component.html',
   styleUrl: './combox-colletion.component.scss',
@@ -28,16 +28,18 @@ import { MatTableModule } from '@angular/material/table';
 export class ComboxColletionComponent implements OnInit {
 
   options: DomainCollection[] = [];
+  calificationOptions: DomainCalificationCollection[] = [];
 
-  @Input() public label: string = '';
-  @Input() public formControlNameCombobox: string = '';
-  @Input() public typeDomainName: string = '';
+  @Input() public label = '';
+  @Input() public formControlNameCombobox = '';
+  @Input() public typeDomainName = '';
+  @Input() public typeCalificationDomainName = '';
   @Input() public placeholderDomainName?: string;
-  @Input() public idComboCollection: string = '';
+  @Input() public idComboCollection = '';
   @Input() public cssClasses?: string;
   @Input() public valueReturn: string | undefined = 'dispname';
   @Input() public hintValue: string | null = null;
-  @Input() public hideRequiredMarker: boolean = true;
+  @Input() public hideRequiredMarker = true;
 
   @Output() stringEventEmitter = new EventEmitter<string>();
 
@@ -53,8 +55,9 @@ export class ComboxColletionComponent implements OnInit {
       this.idComboCollection = this.getRandomInt(10000) + this.typeDomainName;
     }
     this.obtainsCollectionsList();
+    this.obtainsCalificationCollectionsList();
 
-    this.cssClasses = !this.cssClasses ? 'mainClass': this.cssClasses
+    this.cssClasses = !this.cssClasses ? 'mainClass': this.cssClasses;
   }
 
   obtainsCollectionsList() {
@@ -64,6 +67,20 @@ export class ComboxColletionComponent implements OnInit {
           (result: DomainCollection[]) => this.captureInformationSubscribe(result)
         );
     }
+  }
+
+  obtainsCalificationCollectionsList() {
+    if (this.typeCalificationDomainName != null && this.typeCalificationDomainName.length > 0) {
+      this.collectionServicesService.getCalificationDataDomainName(this.typeCalificationDomainName)
+        .subscribe(
+          (result: DomainCalificationCollection[]) => this.captureCalificationInformationSubscribe(result)
+        );
+    }
+  }
+
+  captureCalificationInformationSubscribe(result: DomainCalificationCollection[]) {
+
+    this.calificationOptions = result;
   }
 
   captureInformationSubscribe(result: DomainCollection[]) {

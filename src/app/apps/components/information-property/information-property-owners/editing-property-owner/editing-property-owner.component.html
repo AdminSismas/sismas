@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>
+  {{ data.individual.fullName }}
+</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <form
+    [formGroup]="form"
+    class="grid grid-cols-2 gap-4 grid-flow-row py-2"
+  >
+    <!-- Edición fracción -->
+    <mat-form-field [ngClass]="{'bg-red-50': form.get('fraction')?.errors?.['invalidFraction']}">
+      <mat-label>Fracción</mat-label>
+      <input
+        matInput
+        placeholder="Fracción"
+        formControlName="fraction"
+        min="0"
+        max="1"
+        step="0.01"
+        type="number"
+      />
+      @if (form.get('fraction')?.errors?.['invalidFraction']) {
+        <mat-error>Fracción no válida</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Edición tipo de derecho -->
+    <vex-combox-colletion
+      idComboCollection="domRightType"
+      label="Tipo derecho"
+      formControlNameCombobox="domRightType"
+      typeDomainName="RightType"
+      placeholderDomainName="Seleccionar tipo derecho&hellip;"
+      cssClasses="w-full"
+    ></vex-combox-colletion>
+
+    <!-- Edición fecha -->
+    <mat-form-field class="col-span-2">
+      <mat-label>Fecha creación</mat-label>
+      <input
+        matInput
+        [matDatepicker]="beginAt"
+        formControlName="beginAt"
+      />
+      <mat-hint>Formato fecha: DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="beginAt"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #beginAt></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Botones de acción -->
+    <div class="flex justify-center gap-6 col-span-2">
+      <button
+        color="primary"
+        type="submit"
+        mat-flat-button
+        class="p-6 text-lg"
+        (click)="editRrrightOwnerProperty()"
+      >
+        Guardar
+        <mat-icon svgIcon="mat:save"></mat-icon>
+      </button>
+      <button
+        color="warn"
+        type="submit"
+        mat-flat-button
+        class="p-6 text-lg"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

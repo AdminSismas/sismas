@@ -8,7 +8,7 @@ import { booleanAttribute } from '@angular/core';
  */
 export const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * max);
-}
+};
 
 export const  indexArraylist = (obj:any, value:any) => {
   if (validarVariable(obj) && obj.length > 0) {
@@ -17,8 +17,8 @@ export const  indexArraylist = (obj:any, value:any) => {
       [el[value]]: el,
     }), []);
   }
-}
+};
 
 export const validarVariable = (obj :string):boolean => {
   return obj !== null && obj !== undefined && obj !== "" || ( typeof obj === 'object');
-}
+};

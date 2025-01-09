@@ -1,7 +1,9 @@
 {
   "singleQuote": true,
-  "bracketSameLine": true,
+  "bracketSameLine": false,
   "trailingComma": "none",
+  "semi": true,
+  "singleAttributePerLine": true,
   "overrides": [
     {
       "files": [

@@ -1,9 +1,7 @@
-import { Component, inject, Injector, OnInit } from '@angular/core';
+import { Component, inject, Injector, OnInit, Output } from '@angular/core';
 import { AsyncPipe, NgClass, NgComponentOutlet, NgFor, NgIf } from '@angular/common';
-import { HeaderTasksComponent } from '../../my-work/tasks/components/header-tasks/header-tasks.component';
 import { LoadingAppComponent } from '../../../../apps/components/loading-app/loading-app.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { TaskCardComponent } from '../../my-work/tasks/components/task-card/task-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -18,13 +16,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { filter, map, take } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
-import { FooterComponent } from '../../../../layouts/components/footer/footer.component';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
-import { InConstructionComponent } from '../../../../apps/components/in-construction/in-construction.component';
 import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
 import {
   CONSTANT_VALIDATE_CHECK,
@@ -41,12 +35,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { DynamicComponentsService } from '../../../../apps/services/bpm/dynamic-components.service';
 import { CONSTANT_NAME_ID } from '../../../../apps/constants/constantLabels';
 import { environment } from '../../../../../environments/environments';
-import { BaunitHead } from '../../../../apps/interfaces/information-property/baunit-head.model';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
-import { VexColorScheme } from '@vex/config/vex-config.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { SearchModalComponent } from '../../../../layouts/components/sidenav/search-modal/search-modal.component';
-import { ContentInfoSchema } from '../../../../apps/interfaces/content-info-schema';
 import {
   ShowErrorValidateAlfaMainComponent
 } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
@@ -63,36 +53,32 @@ import {
     scaleFadeIn400ms],
   imports: [
     AsyncPipe,
-    FluidHeightDirective,
-    FooterComponent,
-    HeaderBpmCoreComponent,
-    HeaderTasksComponent,
-    InConstructionComponent,
-    LoadingAppComponent,
-    NgIf,
-    NgFor,
     NgClass,
     NgComponentOutlet,
-    MatIconModule,
-    MatTabsModule,
-    MatSortModule,
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+    // Vex
+    // Material
     MatButtonModule,
-    MatTooltipModule,
-    MatPaginatorModule,
+    MatIconModule,
     MatInputModule,
     MatOptionModule,
-    RouterLink,
-    RouterLinkActive,
-    ReactiveFormsModule,
-    TaskCardComponent,
-    VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
+    MatPaginatorModule,
+    MatSortModule,
+    MatTabsModule,
+    MatTooltipModule,
+    // Custom
+    FluidHeightDirective,
+    HeaderBpmCoreComponent,
+    LoadingAppComponent,
   ],
   templateUrl: './bmp-core.component.html',
   styleUrl: './bmp-core.component.scss'
 })
 export class BmpCoreComponent implements OnInit {
 
+  
   private listComponents = inject(DynamicComponentsService).getDynamicComponents();
   private readonly injector = inject(Injector);
 
@@ -108,7 +94,7 @@ export class BmpCoreComponent implements OnInit {
 
   proTaskE_Bpm: ProTaskE | null = null;
 
-  executionId: string = '';
+  executionId = '';
   proFlow!: ProFlow;
   infoFatherURL!: string;
 
@@ -125,6 +111,7 @@ export class BmpCoreComponent implements OnInit {
   }
 
   async ngOnInit() {
+
     this.activateLoading();
     this.executionId = await firstValueFrom(this.executionId$);
     this.proFlow = await firstValueFrom(this._proFlow$);
@@ -154,7 +141,7 @@ export class BmpCoreComponent implements OnInit {
   refreshComponentsDynamic(proFlow: ProFlow) {
     if (!proFlow || !proFlow.preform || !proFlow.preform.pathForm) {
       this.activateSnapError(
-        'Error valor invalido, no es posible continuar', 3000);
+        'Error valor inválido, no es posible continuar', 3000);
       return;
     }
     const pathForm = proFlow.preform.pathForm;
@@ -167,7 +154,7 @@ export class BmpCoreComponent implements OnInit {
           (x: ComponentTemplate) => x.nameComponent.includes(component.name)
         );
         if (listTmp?.length > 0) {
-          listTmp.forEach(x => this.createObjectComponent(x, component.name));
+          listTmp.forEach(x => this.createObjectComponent(x, component));
           listComponents.push(...listTmp);
         }
       });
@@ -185,7 +172,7 @@ export class BmpCoreComponent implements OnInit {
     if (!this.validations.isValueField(proFlow) && !this.validations.isNotValueFieldZero(proFlow.flowId) ||
       !this.validations.isValueField(proFlow.preform?.pathForm)) {
       this.activateSnapError(
-        'Error valor invalido, no es posible continuar');
+        'Error valor inválido, no es posible continuar');
       return false;
     }
     return true;
@@ -240,7 +227,7 @@ export class BmpCoreComponent implements OnInit {
           error: () => {
             this.activateLoading(true);
             this.activateSnapError(
-              'Error ejecutando servicio validacion de alfa main o validate main, no es posible continuar', 3000);
+              'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar', 3000);
           },
           next: (result: string[]) => {
             if(!result || result.length <= 0) {
@@ -280,7 +267,7 @@ export class BmpCoreComponent implements OnInit {
   captureInformationBpmCore(result: ProTaskE) {
     if (!result || !result.executionId || result.executionId <= 0 || !result.flowId) {
       this.activateSnapError(
-        'Error flowId valor invalido, no es posible continuar', 3000);
+        'Error flowId valor inválido, no es posible continuar', 3000);
       return;
     }
     this.proTaskE_Bpm = result;
@@ -307,9 +294,10 @@ export class BmpCoreComponent implements OnInit {
     return;
   }
 
-  createObjectComponent(obj: ComponentTemplate, name: string) {
-    obj.nameComponent = name;
-    obj.inputs = { 'executionId': this.executionId };
+  createObjectComponent(obj: ComponentTemplate, component: BasicComponentTemplate) {
+    obj.nameComponent = component.name;
+    obj.inputs = { 'executionId': this.executionId};
+    this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
       providers: [{ provide: ProFlow, useValue: this.proFlow }],
       parent: this.injector
@@ -317,12 +305,12 @@ export class BmpCoreComponent implements OnInit {
     return obj;
   }
 
-  activateLoading(value: boolean = false) {
+  activateLoading(value = false) {
     const valid = of(value);
     this.isExistDataInformations$ = valid.pipe(take(3));
   }
 
-  activateSnapError(msg: string, timer: number = 1000) {
+  activateSnapError(msg: string, timer = 1000) {
     this.snackbar.open(
       msg,
       '', { duration: timer }

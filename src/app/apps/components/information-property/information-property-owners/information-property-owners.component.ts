@@ -1,11 +1,10 @@
-import { AfterViewInit, Component, computed, effect, inject, Input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, Input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { MatRippleModule } from '@angular/material/core';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
@@ -29,9 +28,14 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
 import { TypeInformation } from 'src/app/apps/interfaces/content-info';
-import { AddEditInformationPropertyOwnerComponent } from './add-edit-information-property-owner/add-edit-information-property-owner.component';
+import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
+import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
+import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Owners } from 'src/app/apps/interfaces/bpm/changes-property-owner';
+import { CommonModule } from '@angular/common';
 
-export type InfoOwnerRowT = Pick<InfoOwners, 'beginAt' | 'fractionS' | 'domRightType'> &
+export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
 
 @Component({
@@ -49,22 +53,27 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'beginAt' | 'fractionS' | 'domRight
     HeaderCadastralInformationPropertyComponent,
     MatCardModule,
     MatRippleModule,
-    NgForOf,
     MatExpansionModule,
     MatIconModule,
-    NgIf,
-    DatePipe,
     MatButtonModule,
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
     MatDialogModule,
-    AddEditInformationPropertyOwnerComponent,
+    CommonModule
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
 })
 export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit {
+
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
+  @Input({ required: true }) baunitId: string | null | undefined = null;
+  @Input() executionId: string | null | undefined = null;
+  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+
   protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = [
     {
       label: 'Detalle',
@@ -73,7 +82,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Tipo Documento',
+      label: 'Tipo documento',
       property: 'domIndividualTypeNumber',
       type: 'text',
       visible: true
@@ -85,7 +94,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Nombre Completo',
+      label: 'Nombre completo',
       property: 'fullName',
       type: 'text',
       visible: true
@@ -97,7 +106,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Tipo Derecho',
+      label: 'Tipo derecho',
       property: 'domRightType',
       type: 'text',
       visible: true
@@ -109,31 +118,25 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Actions',
+      label: 'Acciones',
       property: 'actions',
       type: 'button',
       visible: true
     }
   ];
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-  
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('addEditDialog', { static: true }) addEditDialog: TemplateRef<any> | undefined;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
 
+  fractions_sum = 0;
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  dataSource: MatTableDataSource<InfoOwnerRowT> =
-    new MatTableDataSource<InfoOwnerRowT>([]);
+  rightIdSelected?: number;
+  dataSource: MatTableDataSource<InfoOwners> =
+    new MatTableDataSource<InfoOwners>([]);
   columns = signal(this.TABLE_COLUMNS);
   textColumns = computed(() =>
     this.columns().filter((column) => column.type === 'text')
@@ -157,7 +160,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       }
     ];
   });
-  addEditDialogContent = computed<{ title: string}>(() => {
+  addEditDialogContent = computed<{ title: string }>(() => {
     const initialState: any = {
       title: 'Nueva información de propietario'
     };
@@ -167,7 +170,9 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   private informationPropertyService = inject(InformationPropertyService);
   private matDialog = inject(MatDialog);
 
-  constructor() {}
+  constructor(
+    private snakbar: MatSnackBar
+  ) { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -180,6 +185,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema;
     this.isExpandPanel(this.expandedComponent);
+
+    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition';
   }
 
   isExpandPanel(expandedComponent: boolean): void {
@@ -190,7 +197,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   /**
    * Load information property
-   * @returns 
+   * @returns
    */
   async loadInformationPropertyOwners(): Promise<void> {
     if (!this.schema || !this.baunitId) {
@@ -204,19 +211,11 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           this.executionId
         )
       );
-      const data = infoOwners.map((infoOwner: InfoOwners) => {
-        const infoOwnerRow: InfoOwnerRowT = {
-          beginAt: infoOwner?.beginAt,
-          fractionS: infoOwner?.fractionS,
-          domRightType: infoOwner?.domRightType,
-          domIndividualTypeNumber:
-            infoOwner?.individual?.domIndividualTypeNumber || '',
-          number: infoOwner?.individual?.number || '',
-          fullName: infoOwner?.individual?.fullName || ''
-        };
-        return infoOwnerRow;
-      });
-      this.dataSource.data = data;
+      this.dataSource.data = infoOwners;
+      this.fractions_sum = infoOwners.reduce((acc: number, owner: InfoOwners) => {
+        const fraction = Number(owner.fractionS);
+        return acc + fraction ;
+      }, 0);
     } catch (e) {
       console.error(e);
     }
@@ -233,22 +232,58 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     dialog.afterClosed().subscribe((data: any) => console.log(data));
   }
 
-  onClickOpenAddEditModal(): void {
-    if (this.addEditDialog) {
-      const dialog = this.matDialog.open(this.addEditDialog, {
-        width: '80%',
-      });
-
-      dialog.afterClosed().subscribe((data: any) => console.log(data));
+  onClickOpenAddEditModal(data: any): void {
+    if (this.fractions_sum >= 1) {
+      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 4000 });
+      return;
     }
+
+    this.matDialog.open(AddPropertyOwnerComponent, {
+      width: '35%',
+      data: {
+        ownersData: data.data,
+        baunitId: this.baunitId,
+        schema: this.schema,
+        executionId: this.executionId
+      },
+    }).afterClosed()
+      .subscribe(() => {
+        setTimeout(() => (this.loadInformationPropertyOwners(), 200));
+
+      });
   }
 
-  onClickActionBtn(id: string, infoOwner: InfoOwnerRowT) {
+  onClickActionBtn(id: string, infoOwner: InfoOwners) {
+    this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
-      if (this.confirmDialog) {
-        const dialog = this.matDialog.open(this.confirmDialog);
-        dialog.afterClosed().subscribe((data: any) => console.log(data));
-      }
+      this.matDialog.open(DeletePropertyOwnerComponent, {
+        width: '35%',
+        data: {
+          baunitId: this.baunitId,
+          executionId: this.executionId,
+          rightId: this.rightIdSelected,
+          individual: infoOwner.individual
+        }
+      }).afterClosed()
+        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
+    } else if (id === 'edit') {
+      this.matDialog.open(EditingPropertyOwnerComponent, {
+        width: '35%',
+        data: {
+          fractions_sum: this.fractions_sum - Number(infoOwner.fractionS),
+          rightId: this.rightIdSelected,
+          executionId: this.executionId,
+          baunitId: this.baunitId,
+          schema: this.schema,
+          rrrightInfo: {
+            fraction: infoOwner.fractionS,
+            beginAt: infoOwner.beginAt,
+            domRightType: infoOwner.domRightType
+          },
+          individual: infoOwner.individual
+        }
+      }).afterClosed()
+        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
     }
   }
 
@@ -266,5 +301,9 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   private getRandomInt(max: number): number {
     return Math.floor(Math.random() * max);
+  }
+
+  individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {
+    return column.label === 'Tipo documento' || column.label === 'Número' || column.label === 'Nombre completo';
   }
 }

@@ -7,7 +7,7 @@ export class People {
   lastName: string;
   labels: any;
   domIndividualType: any;
-  document: any;
+  number: any;
   otherLastName: string;
   companyName: string;
   domIndividualSex: string;
@@ -22,7 +22,7 @@ export class People {
     this.fullName = customer.fullName;
     this.lastName = customer.lastName;
     this.domIndividualType = customer.domIndividualType;
-    this.document = customer.number;
+    this.number = customer.number;
     this.companyName = customer.companyName;
     this.otherLastName = customer.otherLastName;
     this.domIndividualSex = customer.domIndividualSex;

@@ -1,5 +1,5 @@
 <div class="w-full h-full flex flex-col shadow-md"
-     *ngIf="isExistDataInformations$ | async">
+     *ngIf="isExistDataInformation$ | async">
   <vex-header-tasks
     id="assignedTasks"
     [label]="label"
@@ -29,36 +29,33 @@
       class="flex-auto flex flex-col items-center justify-center">
       <img class="m-12 h-64" [src]="'./assets/img/illustrations/idea.svg'" alt="" />
       <h2 class="headline m-0 text-center">
-        {{ 'No hay Tareas Activas que coincida con tu busqueda' }}
+        No hay {{ label | lowercase }} que coincidan con tu búsqueda
       </h2>
     </div>
   </div>
 </div>
-<div class="vex-footer vex-footer-task w-100 p-0"
-     *ngIf="isExistDataInformations$ | async">
-  <div class="flex-auto flex items-center justify-items-center w-full container w-100">
-    <div class="font-medium ltr:ml-3 rtl:mr-3 hidden sm:block">
-      <span class="hidden min-w-[150px]">
-        Vex - Angular 17+ Material Design Admin Template - Save 100s of hours
-      designing and coding
-      </span>
 
-    </div>
-    <span class="flex-none w-14"></span>
-    <mat-paginator
-      #paginator
-      [pageSizeOptions]="pageSizeOptions"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageIndex]="page"
-      (page)="refreshInformationPaginator($event)"
-    class="grow ">
-    </mat-paginator>
-    <span class="flex-none w-14 min-w-[70px]"></span>
+<div class="vex-footer vex-footer-task w-100 p-0" *ngIf="isExistDataInformation$ | async">
+  <div class="footer-left">
+    <!-- Opcional: Contenido adicional, como texto o iconos -->
+    <!-- <span>Información extra</span> -->
   </div>
+  <mat-paginator
+    #paginator
+    [pageSizeOptions]="pageSizeOptions"
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="page"
+    (page)="refreshInformationPaginator($event)">
+  </mat-paginator>
 </div>
+
+
+
+
+
 <vex-loading-app
-  *ngIf="!(isExistDataInformations$ | async)"
+  *ngIf="!(isExistDataInformation$ | async)"
   #vexSplashScreen
   idLoading="vexSplashScreen"
   [showImage]="true"></vex-loading-app>

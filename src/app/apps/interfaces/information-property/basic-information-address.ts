@@ -16,7 +16,7 @@ export class BasicInformationAddress {
   set isMainAddress(value:boolean| undefined) {}
 
   get isMainAddress(): string {
-    let name:string = `${NAME_NO}`;
+    const name = `${NAME_NO}`;
     if (this.esDireccionPrincipal) {
       return `${NAME_SI}`;
     }

@@ -1,21 +1,27 @@
 import { NavigationDropdown, NavigationLink } from '../../core/navigation/navigation-item.interface';
 
-export const NAVIGATION_LOADER_MY_WORK_1: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
-    label: 'Busqueda catastral',
+    label: 'Búsqueda catastral',
     route: '/myWork/cadastralSearch',
     icon: 'mat:search'
   },
   {
     type: 'link',
-    label: 'Radicar Tramite',
+    label: 'Radicar trámite',
     route: '/myWork/fileProcedure',
     icon: 'mat:app_registration'
   },
+  {
+    type: 'link',
+    label: 'Asistentes virtuales',
+    route: '/myWork/assistants',
+    icon: 'mat:insights'
+  },
 ];
 
-export const NAVIGATION_LOADER_MY_WORK_2: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_MY_WORK_2: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'dropdown',
     label: 'Tareas',
@@ -62,27 +68,27 @@ export const NAVIGATION_LOADER_MY_WORK_2: Array<NavigationLink | NavigationDropd
     ]
   },
 ];
-export const NAVIGATION_LOADER_MY_WORK_3: Array<NavigationLink | NavigationDropdown> = [
-  {
-    type: 'link',
-    label: 'Busqueda catastral',
-    route: '/myWork/cadastralSearch',
-    icon: 'mat:search'
-  },
-  {
-    type: 'link',
-    label: 'Radicar Tramite',
-    route: '/myWork/fileProcedure',
-    icon: 'mat:app_registration'
-  },
+export const NAVIGATION_LOADER_MY_WORK_3: (NavigationLink | NavigationDropdown)[] = [
+//   {
+//     type: 'link',
+//     label: 'Búsqueda catastral',
+//     route: '/myWork/cadastralSearch',
+//     icon: 'mat:search'
+//   },
+//   {
+//     type: 'link',
+//     label: 'Radicar trámite',
+//     route: '/myWork/fileProcedure',
+//     icon: 'mat:app_registration'
+//   },
 ];
-export const NAVIGATION_LOADER_MY_WORK: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_MY_WORK: (NavigationLink | NavigationDropdown)[] = [
   ...NAVIGATION_LOADER_MY_WORK_1,
   ...NAVIGATION_LOADER_MY_WORK_2,
   ...NAVIGATION_LOADER_MY_WORK_3,
 ];
 
-export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
     label: 'Personas',
@@ -91,12 +97,12 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | Navigat
   },
   {
     type: 'dropdown',
-    label: 'Tramites',
+    label: 'Trámites',
     icon: 'mat:pending',
     children: [
       {
         type: 'link',
-        label: 'Priorizar Trabajo',
+        label: 'Priorizar trabajo',
         route: '/operationSupport/procedures/prioritizeWork',
         routerLinkActiveOptions: { exact: true }
       },
@@ -128,13 +134,13 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | Navigat
   },
   {
     type: 'link',
-    label: 'Analitica de la Operacion',
+    label: 'Analítica de la operación',
     route: '/operationSupport/operationalAnalytics',
     icon: 'mat:task_alt'
   }
 ];
 
-export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_OPEN_DATA: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
     label: 'Mapas generales',
@@ -143,7 +149,7 @@ export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropd
   },
   {
     type: 'link',
-    label: 'Busqueda catastral (DA)',
+    label: 'Búsqueda catastral (DA)',
     route: '/openData/cadastralSearchDA',
     icon: 'mat:app_registration'
   },
@@ -160,7 +166,7 @@ export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropd
       },
       {
         type: 'link',
-        label: 'Alfanumericas',
+        label: 'Alfanuméricas',
         route: '/openData/downloads/alphanumeric',
         routerLinkActiveOptions: { exact: true }
       }
@@ -168,7 +174,7 @@ export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropd
   }
 ];
 
-export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'dropdown',
     label: 'Ciudadanos',
@@ -176,29 +182,29 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
     children: [
       {
         type: 'link',
-        label: 'Validar Actos administrativos',
+        label: 'Validar actos administrativos',
         route: '/publicService/citizens/validateAdministrativeActs',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Validar Certificados',
+        label: 'Validar certificados',
         route: '/publicService/citizens/validateCertificates',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Generar Servicios',
+        label: 'Generar servicios',
         route: '/publicService/citizens/generateServices',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Historico de Servicios',
+        label: 'Histórico de servicios',
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ], roles: ['ADMIN', 'USER', 'GUEST']
   },
   {
     type: 'dropdown',
@@ -207,21 +213,22 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
     children: [
       {
         type: 'link',
-        label: 'Generar Servicios',
+        label: 'Generar servicios',
         route: '/publicService/ticketOffice/generateServices',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Historico de Servicios',
+        label: 'Histórico de servicios',
         route: '/publicService/ticketOffice/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ],
+    roles: ['ADMIN', 'USER']
   }
 ];
 
-export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_CONFIGURATION: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'dropdown',
     label: 'Catastral',
@@ -241,25 +248,25 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
       },
       {
         type: 'link',
-        label: 'Servicios y Tarifas',
+        label: 'Servicios y tarifas',
         route: '/configuration/cadastral/servicesRates',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Economico Terreno',
+        label: 'Mod económico terreno',
         route: '/configuration/cadastral/economicModLand',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Economico Construccion',
+        label: 'Mod económico construcción',
         route: '/configuration/cadastral/economicModConstruction',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Mod Economico Integral',
+        label: 'Mod económico integral',
         route: '/configuration/cadastral/integralEconomicMod',
         routerLinkActiveOptions: { exact: true }
       }
@@ -286,7 +293,7 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
   },
   {
     type: 'dropdown',
-    label: 'Tramites catastrales',
+    label: 'Trámites catastrales',
     icon: 'mat:pending',
     children: [
       {
@@ -309,13 +316,13 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
       },
       {
         type: 'link',
-        label: 'Documentos asociados a tramites',
+        label: 'Documentos asociados a trámites',
         route: '/configuration/cadastralProcedures/documentsAssociatedProcedures',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
-        label: 'Formatos de Salida',
+        label: 'Formatos de salida',
         route: '/configuration/cadastralProcedures/outputFormats',
         routerLinkActiveOptions: { exact: true }
       },
@@ -329,7 +336,7 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
   }
 ];
 
-export const NAVIGATION_LOADER_AUDIT: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_AUDIT: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
     label: 'Registros de acceso',
@@ -343,3 +350,13 @@ export const NAVIGATION_LOADER_AUDIT: Array<NavigationLink | NavigationDropdown>
     icon: 'mat:app_registration'
   }
 ];
+
+
+// export const NAVIGATION_LOADER_IA: Array<NavigationLink | NavigationDropdown> = [
+//   {
+//     type: 'link',
+//     label: 'Asistentes virtuales',
+//     route: '/ia/assistants',
+//     icon: 'mat:insights'
+//   }
+// ];

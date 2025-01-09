@@ -1,7 +1,6 @@
-import { Component, Inject, NgModule, ViewChild  } from '@angular/core';
+import { Component, ViewChild, OnInit  } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
-import { strict } from 'node:assert';
 
 // recursos de vex
 import { VexPageLayoutComponent } from "../../../../@vex/components/vex-page-layout/vex-page-layout.component";
@@ -26,9 +25,6 @@ import { CommentsService } from '../../services/comments.service';
 import { PageCommentsData } from '../../interfaces/page-comments-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { contentInfoComments } from '../../interfaces/content-info-comments.model';
-import { DateTime } from 'luxon';
-
-
 
 
 @Component({
@@ -40,11 +36,8 @@ import { DateTime } from 'luxon';
       CommonModule,
       FormsModule,
       ReactiveFormsModule,
-      VexPageLayoutComponent, 
-      VexPageLayoutHeaderDirective, 
-      VexBreadcrumbsComponent, 
+      VexPageLayoutComponent,
       VexPageLayoutContentDirective,
-      VexDateFormatRelativePipe,
       MatIconModule,
       MatDividerModule,
       MatPaginatorModule,
@@ -55,16 +48,16 @@ import { DateTime } from 'luxon';
       NgIf
     ]
 })
-export class CommentsComponent {
+export class CommentsComponent implements OnInit {
   /* ============== ATRIBUTES ============== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  disablePaginator: boolean = true;
-  NumPage: number = 0;
-  NumSize: number = 5;
-  totalElements: number = 0;
+  disablePaginator = true;
+  NumPage = 0;
+  NumSize = 5;
+  totalElements = 0;
   pageSizeOptions: number[] = [5, 10, 20, 30];
 
-  executionId: string = "38";
+  executionId = "38";
   body: contentInfoComments = {
     commentText: ''
   };
@@ -93,7 +86,7 @@ export class CommentsComponent {
   ngOnInit(): void {
     this.getDataFromDocumentManagementService();
   }
-  
+
 
   /* ------- Meth. HTML ------- */
 
@@ -133,12 +126,12 @@ export class CommentsComponent {
   }
 
   captureInformationSubscribe(data: InformationPegeable) {
-    this.contentInformations = data; 
+    this.contentInformations = data;
     this.totalElements = data.totalElements ?? 0;
     this.commentsData = (data.content || []).map(content => new contentInfoComments(content));
     this.viewPaginator(this.totalElements);
   }
-  
+
 
 
   postDataCommentService(): void {
@@ -148,7 +141,7 @@ export class CommentsComponent {
         horizontalPosition: 'center'
       });
       return;
-    } else { 
+    } else {
       this.body.commentText = this.form.get('newCommentText')?.value.trim();
     }
 
@@ -158,7 +151,7 @@ export class CommentsComponent {
           duration: 3000,
           horizontalPosition: 'center'
         });
-        this.getDataFromDocumentManagementService()
+        this.getDataFromDocumentManagementService();
         this.form.reset();
       },
       error: (err) => {
