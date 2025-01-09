@@ -1,0 +1,64 @@
+name: Deploy to Servers
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # 3. Install dependencies and build the app
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build -- --configuration=prod
+
+      # 4. Deploy to Manizales
+      - name: Deploy to Manizales
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: "-avz --delete"
+          path: "./dist/"
+          remote_path: "/var/www/manizales.sismas.com.co/"
+          remote_host: ${{ secrets.SFTP_HOST }}
+          remote_user: ${{ secrets.SFTP_USER }}
+          remote_key: ${{ secrets.SSH_KEY }}
+          remote_port: ${{ secrets.SFTP_PORT }}
+
+      # 5. Deploy to Armenia
+      - name: Deploy to Armenia
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: "-avz --delete"
+          path: "./dist/"
+          remote_path: "/var/www/armenia.sismas.com.co/"
+          remote_host: ${{ secrets.SFTP_HOST }}
+          remote_user: ${{ secrets.SFTP_USER }}
+          remote_key: ${{ secrets.SSH_KEY }}
+          remote_port: ${{ secrets.SFTP_PORT }}
+
+      # 6. Deploy to Masora
+      - name: Deploy to Masora
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: "-avz --delete"
+          path: "./dist/"
+          remote_path: "/var/www/masora.sismas.com.co/"
+          remote_host: ${{ secrets.SFTP_HOST }}
+          remote_user: ${{ secrets.SFTP_USER }}
+          remote_key: ${{ secrets.SSH_KEY }}
+          remote_port: ${{ secrets.SFTP_PORT }}
