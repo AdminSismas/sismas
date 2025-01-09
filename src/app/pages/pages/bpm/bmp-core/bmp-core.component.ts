@@ -1,4 +1,4 @@
-import { Component, inject, Injector, OnInit } from '@angular/core';
+import { Component, inject, Injector, OnInit, Output } from '@angular/core';
 import { AsyncPipe, NgClass, NgComponentOutlet, NgFor, NgIf } from '@angular/common';
 import { LoadingAppComponent } from '../../../../apps/components/loading-app/loading-app.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -78,6 +78,7 @@ import {
 })
 export class BmpCoreComponent implements OnInit {
 
+  
   private listComponents = inject(DynamicComponentsService).getDynamicComponents();
   private readonly injector = inject(Injector);
 
