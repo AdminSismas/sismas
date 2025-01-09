@@ -1,44 +1,28 @@
-name: Deploy to Server
+name: Deploy to Manizales
 
 on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy (manizales, armenia, masora)'
+        description: 'Select Environment'
         required: true
         default: 'manizales'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout the code
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # 2. Set up Node.js for Angular
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Deploy to Manizales
+        if: ${{ github.event.inputs.environment == 'manizales' }}
+        uses: burnett01/rsync-deployments@5.2
         with:
-          node-version: 16
-
-      # 3. Install dependencies and build the Angular app
-      - name: Install Dependencies and Build
-        run: |
-          npm install
-          npm run build -- --configuration=prod
-
-      # 4. Deploy based on selected environment
-      - name: Deploy to Environment
-        run: |
-          if [[ "${{ github.event.inputs.environment }}" == "manizales" ]]; then
-            rsync -avz --delete ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/manizales.sismas.com.co/
-          elif [[ "${{ github.event.inputs.environment }}" == "armenia" ]]; then
-            rsync -avz --delete ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/armenia.sismas.com.co/
-          elif [[ "${{ github.event.inputs.environment }}" == "masora" ]]; then
-            rsync -avz --delete ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/masora.sismas.com.co/
-          else
-            echo "Invalid environment: ${{ github.event.inputs.environment }}"
-            exit 1
-          fi
+          switches: "-avz --delete"
+          path: "./dist/"
+          remote_path: "/var/www/manizales.sismas.com.co/"
+          remote_host: ${{ secrets.SFTP_HOST }}
+          remote_user: ${{ secrets.SFTP_USER }}
+          remote_key: ${{ secrets.SSH_KEY }}
+          remote_port: ${{ secrets.SFTP_PORT }}
