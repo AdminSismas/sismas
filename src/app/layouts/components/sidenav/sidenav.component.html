@@ -76,7 +76,7 @@
           >
             @if (this.listRouteItem.length > 0) {
               @for (option of filteredRouteList$ | async; track option.label) {
-                <!-- Sila lista tiene solo una opcion  -->
+                <!-- Si la lista tiene solo una opción  -->
                 @if (option.type === "subheading") {
                   @for (optionChil of option.children; track optionChil.label) {
                     @if (optionChil.type === "link") {

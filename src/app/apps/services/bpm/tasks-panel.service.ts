@@ -20,9 +20,7 @@ export class TasksPanelService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {
-    this.getChargerProTaskCount();
-  }
+  ) { }
 
   getChargerProTaskCount() {
     this.getProTaskCount()
@@ -33,7 +31,7 @@ export class TasksPanelService {
 
   getProTaskCount(): Observable<ProTaskE> {
     const url = `${this.basic_url}${envi.bpmOperation.proTask_count}`;
-    
+
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }

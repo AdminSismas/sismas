@@ -230,6 +230,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         /**
          * Customer is the updated customer (if the user pressed Save - otherwise it's null)
          */
+        this.refreshData();
         if (updatedCustomer) {
           /**
            * Here we are updating our local array.

@@ -1,34 +1,33 @@
 export const environment = {
   /* ------ A ------ */
   accessGeo: {
-    value: '/accessGeo/',
     area: 'area',
     extentByCodigo: 'extentByCodigo',
-    extentByCodigoData: 'extentByCodigoData'
+    extentByCodigoData: 'extentByCodigoData',
+    value: '/accessGeo/'
   },
   active: 'active',
   administrativeSource: '/fuenteadmin/',
-
   apiUrlToken: '/token/authenticate',
   auth_login: '/auth/login',
   /* ------ B ------ */
   basicAddress: '/ccDireccion/baunitText',
+  baunit: '/baunit/',
+  baunit_attributes: '/baunit/attributes/',
   baunit_attributes_address: 'direccion',
   baunit_attributes_document: 'individualNumber',
   baunit_attributes_name: 'individualName',
   baunit_attributes_registration: 'matricula',
-  baunit_attributes: '/baunit/attributes/',
   baunit_baunitId: '/baunit/baunitId',
   baunit_npnlike: '/baunit/npnlike',
-  baunit: '/baunit/',
   bAUnitCreate: 'BAUnitCreate',
   bAUnitDelete: 'BAUnitDelete',
   baunits: '/baunits',
   bAUnitUpdate: 'BAUnitUpdate',
   baUnitZona_baunitId: '/baUnitZona/baunitId',
   bpm_bpmCore: '/bpm/bpm-core/',
-  bpm_users: '/bpmUser',
   bpm_username_exists: '/exists/username/',
+  bpm_users: '/bpmUser',
   bpm_email_exists: '/exists/email/',
   bpm_individual_exists: '/exists/individual/',
   bpmAttachment: {
@@ -39,16 +38,16 @@ export const environment = {
   bpmOperation: {
     comment: 'comment/',
     count: '/count',
+    proExecution: 'proExecution/',
     proExecution_next: 'proExecution/next/',
     proExecution_prev: 'proExecution/prev/',
-    proExecution: 'proExecution/',
-    proflow_proExecution: 'proflow/proExecution/',
     proflow: 'proflow/',
+    proflow_proExecution: 'proflow/proExecution/',
+    proTask: 'proTask/',
     proTask_asigned: 'proTask/asigned',
     proTask_count: 'proTask/count',
     proTask_devolution: 'proTask/devolutions',
     proTask_priority: 'proTask/priority',
-    proTask: 'proTask/',
     startProcess: 'startProcess',
     value: '/bpmOperation/'
   },
@@ -62,8 +61,8 @@ export const environment = {
   ccDireccion: '/ccDireccion/',
   changeLog: '/changeLog/',
   check: '/check',
-  clearChangelog: 'clearChangelog',
   clearBaunit: 'clearBAUnit',
+  clearChangelog: 'clearChangelog',
   comment: '/comment/',
   compare_temp: '/compare/temp/',
   /* ------ D ------ */
@@ -71,11 +70,12 @@ export const environment = {
   domain_domain: '/domain',
   domain_domainName: '/domain/name',
   /* ------ E ------ */
+  enableDebug: true,
   /* ------ F ------ */
   finish: 'finished',
   /* ------ G ------ */
-  geoeconomic_zones: '/ccZonaHomoGeoEconomica',
   geoeconomic_values: '/zonaGEcoValor',
+  geoeconomic_zones: '/ccZonaHomoGeoEconomica',
   /* ------ H ------ */
   /* ------ I ------ */
   individual_findByNumber: '/individual/findByNumber',
@@ -119,9 +119,9 @@ export const environment = {
   rural_zones: '/ccZonaHomoFisicaRu',
   /* ------ S ------ */
   schemas: {
+    hist: 'hist',
     main: 'main',
-    temp: 'temp',
-    hist: 'hist'
+    temp: 'temp'
   },
   synchronization: '/synchronization',
   synchronize: '/synchronize',
@@ -129,11 +129,11 @@ export const environment = {
   temporal: '/temporal/',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
-  urban_zones: '/ccZonaHomoFisicaUr',
-  url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
-  url: 'https://prediosplus.api.cadastre4world.com',
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
+  urban_zones: '/ccZonaHomoFisicaUr',
+  url: 'https://prediosplus.api.cadastre4world.com',
+  url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/'

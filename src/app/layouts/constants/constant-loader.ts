@@ -71,13 +71,13 @@ export const NAVIGATION_LOADER_MY_WORK_2: (NavigationLink | NavigationDropdown)[
 export const NAVIGATION_LOADER_MY_WORK_3: (NavigationLink | NavigationDropdown)[] = [
 //   {
 //     type: 'link',
-//     label: 'Busqueda catastral',
+//     label: 'Búsqueda catastral',
 //     route: '/myWork/cadastralSearch',
 //     icon: 'mat:search'
 //   },
 //   {
 //     type: 'link',
-//     label: 'Radicar Tramite',
+//     label: 'Radicar trámite',
 //     route: '/myWork/fileProcedure',
 //     icon: 'mat:app_registration'
 //   },

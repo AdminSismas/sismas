@@ -3,32 +3,29 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { jwtDecode } from 'jwt-decode';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   private currentUserSubject: BehaviorSubject<DecodeJwt | null>;
   public currentUser: Observable<DecodeJwt | null>;
 
-constructor() {
-
-    const savedUser = sessionStorage.getItem('user');
-    if (savedUser) {
-        this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(JSON.parse(savedUser));
+  constructor() {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      const savedUser: DecodeJwt = jwtDecode(token);
+      this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(
+        savedUser
+      );
     } else {
-        this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(null);
+      this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(null);
     }
     this.currentUser = this.currentUserSubject.asObservable();
-}
-
-
-  setUser(user: DecodeJwt): void {
-    // sessionStorage.setItem('user', JSON.stringify(user));
-    this.currentUserSubject.next(user);
   }
 
+  setUser(user: DecodeJwt): void {
+    this.currentUserSubject.next(user);
+  }
 
   clearUser(): void {
     sessionStorage.removeItem('user');
@@ -43,12 +40,16 @@ constructor() {
     }
   }
 
-
   getUser(): DecodeJwt | null {
     if (sessionStorage?.getItem('token')) {
-      const decodedToken = jwtDecode<DecodeJwt>(sessionStorage.getItem('token') as string);
+      let user: DecodeJwt | null = null;
+      this.currentUser.subscribe({
+        next: (res) => {
+          user = res;
+        }
+      });
 
-      return decodedToken;
+      return user;
     }
     return null;
   }

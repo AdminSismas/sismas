@@ -7,13 +7,13 @@ import {
   distinctUntilChanged,
   map,
   startWith,
-  switchMap
+  switchMap,
+  takeUntil
 } from 'rxjs/operators';
 import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
 import { VexPopoverService } from '@vex/components/vex-popover/vex-popover.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { SidenavUserMenuComponent } from './sidenav-user-menu/sidenav-user-menu.component';
-import { MatDialog } from '@angular/material/dialog';
 import { SidenavItemComponent } from './sidenav-item/sidenav-item.component';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
 import { MatRippleModule } from '@angular/material/core';
@@ -33,6 +33,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 
 @Component({
   selector: 'vex-sidenav',
@@ -92,6 +93,8 @@ export class SidenavComponent implements OnInit {
   userName$?: string;
   userPerfil$?: string;
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -99,8 +102,8 @@ export class SidenavComponent implements OnInit {
     private layoutService: VexLayoutService,
     private configService: VexConfigService,
     private readonly popoverService: VexPopoverService,
-    private readonly dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private navigationLoaderService: NavigationLoaderService
   ) {
     this.form = this.fb.group({
       searchRoute: ['']
@@ -111,9 +114,6 @@ export class SidenavComponent implements OnInit {
     this.user = this.userService.getUser();
     this.navigationService._navigationMenuSubject$.subscribe((items) => {
       this.listRouteItem.push(items[0]);
-      // this.listRouteItem = this.filterUniqueRoutes(this.listRouteItem);
-
-      // console.log('items lista obtenida del menu', items);
     });
 
     this.filteredRouteList$ = this.form.get('searchRoute')?.valueChanges.pipe(
@@ -126,10 +126,21 @@ export class SidenavComponent implements OnInit {
       )
     );
 
-    this.serachRouteTouch();
+    this.searchRouteTouch();
+
+    this.navigationLoaderService.taskCounters$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+
+    this.navigationLoaderService.refreshCounters();
   }
 
-  serachRouteTouch() {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  searchRouteTouch() {
     this.form
       .get('searchRoute')
       ?.valueChanges.pipe(
