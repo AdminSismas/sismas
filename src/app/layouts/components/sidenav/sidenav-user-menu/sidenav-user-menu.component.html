@@ -10,19 +10,16 @@
       svgIcon="mat:account_circle"></mat-icon>
     <div class="vex-user-menu-item__label">Mi perfil</div>
   </a>
-<!-- 
-  <a
-    (click)="close()"
-    [routerLink]="['/']"
+  <span
+    (click)="openChangePasswordDialog()"
     class="vex-user-menu-item"
     matRipple
     matRippleColor="rgb(var(--vex-color-primary-600), 0.1)">
     <mat-icon
       class="vex-user-menu-item__icon icon-sm"
-      svgIcon="mat:insights"></mat-icon>
-    <div class="vex-user-menu-item__label">Analytics</div>
-    <div class="vex-user-menu-item__badge">NEW</div>
-  </a> -->
+      svgIcon="mat:password"></mat-icon>
+    <div class="vex-user-menu-item__label">Cambiar contraseña</div>
+  </span>
 
   <a
     (click)="close()"

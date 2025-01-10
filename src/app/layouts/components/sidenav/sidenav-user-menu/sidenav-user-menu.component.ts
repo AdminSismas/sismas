@@ -1,23 +1,37 @@
+// Angular framework
 import { Component, OnInit } from '@angular/core';
-import { VexPopoverRef } from '@vex/components/vex-popover/vex-popover-ref';
-import { MatRippleModule } from '@angular/material/core';
 import { Router, RouterLink } from '@angular/router';
+// Vex
+import { VexPopoverRef } from '@vex/components/vex-popover/vex-popover-ref';
+// Material
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { environment } from '../../../../../environments/environments';
+import { MatRippleModule } from '@angular/material/core';
+// Custom
 import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
+import { ChangePasswordComponent } from 'src/app/apps/components/sidenav/menu/change-password/change-password.component';
+import { environment } from '../../../../../environments/environments';
 
 @Component({
   selector: 'vex-sidenav-user-menu',
   templateUrl: './sidenav-user-menu.component.html',
   styleUrls: ['./sidenav-user-menu.component.scss'],
-  imports: [MatRippleModule, RouterLink, MatIconModule],
+  imports: [
+    RouterLink,
+    // Vex
+    // Material
+    MatRippleModule,
+    MatIconModule
+    // Custom
+  ],
   standalone: true
 })
 export class SidenavUserMenuComponent implements OnInit {
   constructor(
     private readonly popoverRef: VexPopoverRef,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {}
@@ -28,10 +42,14 @@ export class SidenavUserMenuComponent implements OnInit {
     this.router.navigate([`${environment.auth_login}`]);
   }
 
+  openChangePasswordDialog(): void {
+    this.dialog.open(ChangePasswordComponent, {
+      width: '50%',
+    });
+  }
 
   logout() {
     this.authService.logout();
     this.close();
   }
-
 }
