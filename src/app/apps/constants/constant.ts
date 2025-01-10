@@ -9,12 +9,8 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
-<<<<<<< HEAD
 import { DocumentAsocietyModel } from '../interfaces/document-asociety.model';
-=======
-import { TaskResponseModel } from '../interfaces/task-response.model';
 import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
->>>>>>> 998ad8e05ed5e3d926f7c391edc6b4a0264dff08
 
 export const GUION = ' - ';
 export const SPACE = ' ';
@@ -117,35 +113,79 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
 ];
 export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[] = [
   {
+    label: 'ID',
+    property: 'outTempplateId',
+    type: 'text',
+    visible: true
+  },
+  
+  {
     label: 'Codigo Template',
     property: 'templateCode',
-    type: 'button',
+    type: 'text',
     visible: true,
   },
-  {
-    label: 'Template',
-    property: 'htmlTemplate',
-    type: 'text',
-    visible: true
-  },
+  // {
+  //   label: 'Template',
+  //   property: 'htmlTemplate',
+  //   type: 'operationType',
+  //   visible: true
+  // },
   {
     label: 'Header',
-    property: 'headerTemplate',
+    property: 'headerTemplateId',
     type: 'text',
     visible: true
   },
   {
-    label: 'Footer',
-    property: 'footerTemplate',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Sognado',
+    label: 'Firmado',
     property: 'isSinged',
     type: 'text',
     visible: true
   },
+ 
+  // {
+  //   label: 'Actualización',
+  //   property: 'updateAt',
+  //   type: 'text',
+  //   visible: true
+  // },
+  // {
+  //   label: 'Actualizado por',
+  //   property: 'updateBy',
+  //   type: 'text',
+  //   visible: true
+  // },
+  // {
+  //   label: 'Creado por', 
+  //   property: 'createdBy',
+  //    type: 'text', 
+  //    visible: true 
+  // },
+  // {
+  //   label: 'Fecha de creación',
+  //   property: 'createdAt',
+  //   type: 'text',
+  //   visible: true
+  // },
+  // {
+  //   label: 'Fecha de actualización',
+  //   property: 'updatedBy',
+  //   type: 'text',
+  //   visible: true
+  // },
+  // {
+  //   label: 'Actualizar', 
+  //   property: 'updatedAt',
+  //    type: 'text', 
+  //    visible: true 
+  // },
+  // {
+  //   label: 'Actualizar', 
+  //   property: 'schema',
+  //    type: 'text', 
+  //    visible: true 
+  // },
   {
     label: 'Acciones', 
     property: 'actions',

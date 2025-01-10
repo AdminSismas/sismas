@@ -10,7 +10,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, TABLE_COLUMN_DOCUMENT_ASOCIETY, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -32,6 +32,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { DocumentAsocietyModel } from 'src/app/apps/interfaces/document-asociety.model';
 import { DocumentAssociatedService } from 'src/app/apps/services/document-associated.service';
+import { DocumentAssociatedEditUpdateComponent } from './document-associated-edit-update/document-associated-edit-update.component';
 
 @Component({
   selector: 'vex-documents-associated-procedures',
@@ -103,10 +104,11 @@ export class DocumentsAssociatedProceduresComponent {
     }
   
     ngOnInit() {
+      console.log('ngOnInit');
       this.dataSource = new MatTableDataSource();
-      if (this.id?.length <= 0 || this.baunitId == null) {
-        return;
-      }
+      // if (this.id?.length <= 0 || this.baunitId == null) {
+      //   return;
+      // }
       this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
       if(this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
@@ -114,9 +116,6 @@ export class DocumentsAssociatedProceduresComponent {
         this.columns = TABLE_COLUMN_DOCUMENT_ASOCIETY;
       }
       this.searchDocumentoList();
-      // this.searchCtrl.valueChanges
-      //   .pipe(takeUntilDestroyed(this.destroyRef))
-      //   .subscribe((value) => this.onFilterChange(value));
     }
     ngAfterViewInit() {
       if (this.paginator) {
@@ -136,11 +135,8 @@ export class DocumentsAssociatedProceduresComponent {
    
   
     searchDocumentoList(): boolean {
-      if (!this.schema || !this.baunitId) {
-        return false;
-      }
       this.documentAssociatedService.getDataDocumentoAsociety(
-        this.generateObjectPageSearchData(this.baunitId))
+        this.generateObjectPageSearchData('1'))
         .subscribe({
           error: (err: any) => this.captureInformationSubscribeError(err),
           next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
@@ -151,7 +147,7 @@ export class DocumentsAssociatedProceduresComponent {
     captureInformationSubscribe(result: InformationPegeable): void {
       this.contentInformations = result;
       console.log('contentInformations', this.contentInformations);
-      // this.captureInformationConstructionData();
+      this.captureInformationConstructionData();
     }
   
     captureInformationConstructionData(): void {
@@ -239,29 +235,22 @@ export class DocumentsAssociatedProceduresComponent {
     }
   
   
-    editInformations(customer: any): void {
-      // const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
-      //   minWidth: '50%',
-      //   minHeight: '40%',
-      //   data: {
-      //     ...customer,
-      //     executionId: this.executionId,
-      //     baunitId: this.baunitId
-      //   }
-      // });
+    editInformations(valueTemplate: any): void {
+      console.log('valueTemplate valor de la tabla', valueTemplate);
+      const dialogRef = this.dialog.open(DocumentAssociatedEditUpdateComponent, {
+        width: '58%',
+        height: '80%',
+        disableClose: true,
+        data: {
+          ...valueTemplate
+        }
+      });
   
-      // dialogRef.afterClosed().subscribe((result) => {
-      //   if (result) {
-      //     const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
-  
-      //     if (index !== -1) {
-  
-      //       this.dataSource.data[index] = result;
-  
-      //       this.dataSource.data = [...this.dataSource.data];
-      //     }
-      //   }
-      // });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          console.log('result', result);
+        }
+      });
     }
   
     deleteInformations(customer: any): void {
@@ -285,7 +274,10 @@ export class DocumentsAssociatedProceduresComponent {
       //   }
       // });
     }
-  
+
+
+
+
     toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
       event.stopPropagation();
       event.stopImmediatePropagation();

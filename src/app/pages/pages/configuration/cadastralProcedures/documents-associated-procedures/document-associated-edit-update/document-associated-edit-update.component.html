@@ -1,0 +1,43 @@
+<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">
+      Editar template
+    </h2>
+    <button class="text-secondary" mat-icon-button type="button" (click)="handleDialogClose()">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content>
+    <div @fadeInUp class="card"></div>
+    <form [formGroup]="form" >
+      <div class="bg-foreground flex-1 overflow-y-auto p-4">
+        <quill-editor
+          formControlName="content"
+          [modules]="editorConfig"
+          class="w-full h-full"
+          style="min-height: 400px; height: 70vh;"
+          ></quill-editor>
+    
+          <div class="flex justify-left gap-6 col-span-2">
+            <button
+              color="primary"
+              type="submit"
+              mat-flat-button
+              class="p-6 text-lg"
+              (click)="saveTemplate()"
+            >
+              Guardar
+              <mat-icon svgIcon="mat:save"></mat-icon>
+            </button>
+            <button
+              color="warn"
+              type="submit"
+              mat-flat-button
+              class="p-6 text-lg"
+              (click)="handleDialogClose()"
+            >
+              Cancelar
+            </button>
+          </div>
+      </div>
+</form>
+  </mat-dialog-content>

@@ -21,9 +21,10 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
   paramsPP = paramsPP.append('page', `${page.page}`);
   paramsPP = paramsPP.append('size', `${page.size}`);
   const urlComplete = `${this.basic_url}/bpmOutTemplate?page=${page.page}&size=${page.size}&sortBy=templateCode`;
+  console.log('link: ',urlComplete);
 
   // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
-  return  this.http.get<InformationPegeable>(urlComplete);
+  return  this.http.get<any>(urlComplete);
 }
 
 }
