@@ -5,7 +5,7 @@ export class ProExecutionE {
   processId:number;
   participations:ProcessParticipant[];
   metadataList:MetadataBpm[];
-  attachmentsList:string[]
+  attachmentsList:string[];
 
 
   constructor(processId: number, participations: ProcessParticipant[],

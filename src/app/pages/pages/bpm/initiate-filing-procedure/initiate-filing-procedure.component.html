@@ -36,7 +36,7 @@
             <mat-icon svgIcon="mat:done_all"></mat-icon>
           </ng-template>
 
-          <!--  SELECCCIONAR TIPO DE CLASE Y PROCESO A RADICAR   -->
+          <!--  SELECCIONAR TIPO DE CLASE Y PROCESO A RADICAR   -->
           <mat-step [stepControl]="propertyProcessingFormGroup" vexMinFluidHeight fluidHeight=260>
             <form [formGroup]="propertyProcessingFormGroup">
               <ng-template matStepLabel>{{ propertyProcessing }}</ng-template>
@@ -45,7 +45,7 @@
                 <div class="subheading-1 w-full flex flex-col justify-between">
                   <div class="flex flex-col sm:flex-row sm:gap-4 pt-2">
                     <div class="flex flex-col gap-2 px-2 py-2">
-                      <span class="text-black uppercase text-sm">Número predial</span>
+                      <span class="text-black text-sm">Número predial</span>
                     </div>
                     <div class="flex flex-col gap-1 px-2 py-2">
                       <span class="text-sm">{{ cadastralNumberId$ | async }}</span>
@@ -56,7 +56,7 @@
                              aria-label="Number"
                              matInput
                              formControlName="selectBpmProcessByCategory"
-                             placeholder="Seleccione una categoria"
+                             placeholder="Seleccione una categoría"
                              [matAutocomplete]="autoDepartment">
                       <mat-autocomplete autoActiveFirstOption #autoDepartment="matAutocomplete"
                                         [panelWidth]="450"
@@ -128,7 +128,7 @@
             </form>
           </mat-step>
 
-          <!--  SELECCCIONAR  PARTICIPANTES  -->
+          <!--  SELECCIONAR  PARTICIPANTES  -->
           <mat-step [stepControl]="participationFormGroup" vexMinFluidHeight fluidHeight=260>
             <form [formGroup]="participationFormGroup">
               <ng-template matStepLabel>{{ participation }}</ng-template>
@@ -153,7 +153,7 @@
             </form>
           </mat-step>
 
-          <!--  SELECCCIONAR  TIPOS DE DOCUMENTOS  -->
+          <!--  SELECCIONAR  TIPOS DE DOCUMENTOS  -->
           <mat-step [stepControl]="verificationFormGroup" vexMinFluidHeight fluidHeight=260>
             <form [formGroup]="verificationFormGroup">
               <ng-template matStepLabel>{{ verification }}</ng-template>
@@ -170,7 +170,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="sm:w-full sm:ml-2 sm:mr-2 sm:flex-1 lg:flex-auto max-w-[430px] sm:min-w-[320px]">
-                  <mat-label>Tipo Trámite</mat-label>
+                  <mat-label>Tipo trámite</mat-label>
                   <input
                     type="type"
                     formControlName="typeProcedure"
@@ -179,7 +179,7 @@
                 </mat-form-field>
 
                 <mat-form-field class="sm:w-full sm:ml-2 sm:mr-2 sm:flex-1 lg:flex-auto max-w-[430px] sm:min-w-[320px]">
-                  <mat-label>Radicado Auxiliar</mat-label>
+                  <mat-label>Radicado auxiliar</mat-label>
                   <input
                     type="type"
                     formControlName="auxiliaryFilings"

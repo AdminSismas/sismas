@@ -1,5 +1,7 @@
 import { LayoutComponent } from './layouts/layout/layout.component';
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
+import { RoleGuard } from './pages/pages/auth/login/guards/role.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const appRoutes: VexRoutes = [
   {
@@ -21,39 +23,54 @@ export const appRoutes: VexRoutes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./pages/pages/auth/auth-routing.module')
+    loadChildren: () => import('./pages/pages/auth/auth-routing.module'),
   },
   {
     path: '',
     component: LayoutComponent,
+    canActivateChild: [authGuard],
     children: [
       {
         path: 'myWork',
-        loadChildren: () => import('./pages/pages/my-work/my-work.routes')
+        loadChildren: () => import('./pages/pages/my-work/my-work.routes'),
+        canActivate: [RoleGuard],
+        data: { roles: ['ADMIN', 'USER'] }
       },
       {
         path: 'operationSupport',
-        loadChildren: () => import('./pages/pages/operation-support/operation-support-routing.module')
+        loadChildren: () => import('./pages/pages/operation-support/operation-support-routing.module'),
+        canActivate: [RoleGuard],
+        data: { roles: ['ADMIN', 'USER'] }
       },
       {
         path: 'openData',
-        loadChildren: () => import('./pages/pages/open-data/open-data-routing.module')
+        loadChildren: () => import('./pages/pages/open-data/open-data-routing.module'),
+        canActivate: [RoleGuard],
+        data: { roles: ['ADMIN', 'USER', 'GUEST'] }
       },
       {
         path: 'publicService',
-        loadChildren: () => import('./pages/pages/public-service/public-service-routing.module')
+        loadChildren: () => import('./pages/pages/public-service/public-service-routing.module'),
+        canActivate: [RoleGuard],
+        data: { roles: ['ADMIN', 'USER', 'GUEST'] }
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./pages/pages/configuration/configuration-routing.module')
+        loadChildren: () => import('./pages/pages/configuration/configuration-routing.module'),
+        canActivate: [RoleGuard],
+        data: { roles: ['ADMIN'] }
       },
       {
         path: 'audit',
-        loadChildren: () => import('./pages/pages/audit/audit-routing.module')
+        loadChildren: () => import('./pages/pages/audit/audit-routing.module'),
+        canActivate: [RoleGuard],
+        data: { roles: ['ADMIN'] }
       },
       {
         path: 'bpm',
-        loadChildren: () => import('./pages/pages/bpm/bpm-routing')
+        loadChildren: () => import('./pages/pages/bpm/bpm-routing'),
+        canActivate: [RoleGuard],
+        data: { roles: ['ADMIN', 'USER'] }
       },
       {
         path: '**',
@@ -63,5 +80,40 @@ export const appRoutes: VexRoutes = [
           )
       }
     ]
-  }
+  },
+  {
+    path: '',
+    component: LayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      // {
+      //   path: 'chat',
+      //   loadChildren: () =>
+      //     import('./pages/pages/ia/asisstants/chat/chat.routes').then(
+      //       (m) => m.default
+      //     ),
+      // },
+      // {
+      //   path: 'assistants',
+      //   loadComponent: () =>
+      //     import('./pages/pages/ia/asisstants/assistants-grid/assistants-grid.component').then(
+      //       (m) => m.AssistantsGridComponent
+      //     ),
+      // },
+      {
+        path: 'assistant',
+        loadComponent: () =>
+          import('./pages/pages/ia/asisstants/asisstants.component').then(
+            (m) => m.AsisstantsComponent
+          ),
+      },
+      {
+        path: '**',
+        loadComponent: () =>
+          import('./pages/pages/errors/error-404/error-404.component').then(
+            (m) => m.Error404Component
+          ),
+      }
+    ]
+  },
 ];

@@ -1,0 +1,119 @@
+
+<div
+  class="flex items-center"
+  mat-dialog-title
+>
+  <h4 class="subheading-1 m-0 flex-auto">
+    Detalles tareas ejecutadas
+  </h4>
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content
+  class="grid grid-flow-row gap-y-4 gap-x-6 grid-cols-2 overflow-x-hidden lg:px-8"
+>
+  <!-- Tipo Interesado -->
+  <div class="flex flex-row gap-4">
+    <span class="text-black text-sm">Asignado a:</span>
+    @if (data && data.assignee && data.assignee) {
+      <h2 class="text-sm">{{ data.assignee }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+    
+    <!-- Tipo Interesado -->
+    <div class="flex flex-row gap-4">
+        <span class="text-black text-sm">Nombre del proceso:</span>
+        @if (data && data.processName && data.processName) {
+          <h2 class="text-sm">{{ data.processName }}</h2>
+        } @else {
+          <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+        }
+      </div>
+  <!-- Tipo Documento -->
+  <div class="flex flex-row gap-4">
+    <span class="text-black text-sm">Nombre de la tarea:</span>
+    @if (
+      data && data.flowName && data.flowName
+    ) {
+      <h2 class="text-sm">{{ data.flowName }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+  <!-- beginAt -->
+  <div class="flex flew-row gap-4">
+    <span class="text-black text-sm">Fecha de inicio :</span>
+    @if (data && data.beginAt && data.beginAt) {
+      <h2 class="text-sm">{{ data.beginAt | date: "dd/MM/yyyy hh:mm:ss a" }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+  <!-- Número -->
+  <div class="flex flex-row gap-4">
+    <span class="text-black text-sm">Fecha de asignación:</span>
+    @if (data && data.assigneeAt && data.assigneeAt) {
+      <h2 class="text-sm">{{ data.assigneeAt | date: "dd/MM/yyyy hh:mm:ss a" }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+   <!-- Número -->
+   <div class="flex flex-row gap-4">
+    <span class="text-black text-sm">Radicado:</span>
+    @if (data && data.flowDetail && data.flowDetail) {
+      <h2 class="text-sm">{{ data.flowDetail }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+  
+  <!-- Número -->
+  <div class="flex flex-row gap-4">
+    <span class="text-black text-sm">Días transcurridos:</span>
+    @if (data && data.daysBeginS && data.daysBeginS) {
+      <h2 class="text-sm">{{ data.daysBeginS }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+    
+
+   <!-- Número -->
+   <div class="flex flex-row gap-4">
+    <span class="text-black text-sm">Fecha de vencimiento:</span>
+    @if (data && data.dueDate && data.dueDate) {
+      <h2 class="text-sm">{{ data.dueDate | date: "dd/MM/yyyy hh:mm:ss a" }}</h2>
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+  <!-- Sexo -->
+  <div class="flex flex-row gap-4">
+    <span class="text-black text-sm">Días de retraso:</span>
+    @if (data && data.daysFinish && data.daysFinish) {
+
+        <h2 class="text-sm">{{ getAbsoluteValue(data.daysFinish) }}</h2>
+
+    } @else {
+      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
+    }
+  </div>
+
+
+  
+</mat-dialog-content>

@@ -67,9 +67,9 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
 })
 export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit {
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
@@ -82,7 +82,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Tipo Documento',
+      label: 'Tipo documento',
       property: 'domIndividualTypeNumber',
       type: 'text',
       visible: true
@@ -94,7 +94,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Nombre Completo',
+      label: 'Nombre completo',
       property: 'fullName',
       type: 'text',
       visible: true
@@ -106,7 +106,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Tipo Derecho',
+      label: 'Tipo derecho',
       property: 'domRightType',
       type: 'text',
       visible: true
@@ -118,7 +118,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'Actions',
+      label: 'Acciones',
       property: 'actions',
       type: 'button',
       visible: true
@@ -129,9 +129,9 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
 
-  fractions_sum: number = 0;
+  fractions_sum = 0;
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   rightIdSelected?: number;
@@ -186,7 +186,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     this.id = this.id + this.getRandomInt(10000) + this.schema;
     this.isExpandPanel(this.expandedComponent);
 
-    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition'
+    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition';
   }
 
   isExpandPanel(expandedComponent: boolean): void {
@@ -213,9 +213,9 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       );
       this.dataSource.data = infoOwners;
       this.fractions_sum = infoOwners.reduce((acc: number, owner: InfoOwners) => {
-        const fraction = Number(owner.fractionS)
+        const fraction = Number(owner.fractionS);
         return acc + fraction ;
-      }, 0)
+      }, 0);
     } catch (e) {
       console.error(e);
     }
@@ -234,7 +234,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   onClickOpenAddEditModal(data: any): void {
     if (this.fractions_sum >= 1) {
-      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 4000 })
+      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 4000 });
       return;
     }
 
@@ -247,7 +247,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         executionId: this.executionId
       },
     }).afterClosed()
-      .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
+      .subscribe(() => {
+        setTimeout(() => (this.loadInformationPropertyOwners(), 200));
+
+      });
   }
 
   onClickActionBtn(id: string, infoOwner: InfoOwners) {
@@ -262,7 +265,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           individual: infoOwner.individual
         }
       }).afterClosed()
-        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
+        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
     } else if (id === 'edit') {
       this.matDialog.open(EditingPropertyOwnerComponent, {
         width: '35%',
@@ -280,7 +283,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           individual: infoOwner.individual
         }
       }).afterClosed()
-        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200))
+        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
     }
   }
 
@@ -301,6 +304,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {
-    return column.label === 'Tipo Documento' || column.label === 'Número' || column.label === 'Nombre Completo';
+    return column.label === 'Tipo documento' || column.label === 'Número' || column.label === 'Nombre completo';
   }
 }

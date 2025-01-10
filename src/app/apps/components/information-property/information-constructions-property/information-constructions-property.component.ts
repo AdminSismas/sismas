@@ -11,7 +11,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -36,7 +36,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
@@ -52,10 +51,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/content-info';
 import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from './edit-information-constructions-property/edit-information-constructions-property.component';
 import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
-import { D } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditInformationConstructionDialogComponent } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
-import Swal from 'sweetalert2';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -69,30 +67,32 @@ import Swal from 'sweetalert2';
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatOptionModule,
-    MatTabsModule,
+    NgClass,
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    VexHighlightDirective,
-    MatTableModule,
-    MatSortModule,
-    NgClass,
-    MatPaginatorModule,
-    MatTooltipModule,
+    SweetAlert2Module,
+    // Vex
+    // Material
+    MatAutocompleteModule,
+    MatButtonModule,
     MatCardModule,
-    HeaderCadastralInformationPropertyComponent,
-    MatMenuModule,
     MatCheckboxModule,
+    MatDialogModule,
     MatExpansionModule,
-    MatDialogModule
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatOptionModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatTooltipModule,
+    // Custom
+    HeaderCadastralInformationPropertyComponent,
   ],
   templateUrl: './information-constructions-property.component.html',
   styleUrl: './information-constructions-property.component.scss'
@@ -102,16 +102,16 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) public expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
   page:number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
 
@@ -120,8 +120,10 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
-  
+  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<NgTemplateOutlet>;
+  @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
+  @ViewChild('errorSwal') private errorSwal!: SwalComponent;
+
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private snackBar = inject(MatSnackBar);
   constructor(
@@ -240,22 +242,23 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       type: data ? 'edit' : 'new',
       basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
       baunitId: this.baunitId || undefined,
+      executionId: this.executionId || undefined
     };
-  
+
     const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
       minWidth: '50%',
       minHeight: '40%',
       disableClose: true,
       data: dialogData,
     });
-  
+
     dialogRef.afterClosed().subscribe((result: ContentInformationConstruction) => {
       if (result) {
         if (dialogData.type === 'new') {
-        
+
           this.dataSource.data = [...this.dataSource.data, result];
         } else {
-     
+
           const index = this.dataSource.data.findIndex((item) => item.unitBuiltId === result.unitBuiltId);
           if (index !== -1) {
             this.dataSource.data[index] = result;
@@ -269,7 +272,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     return column.property;
   }
 
-  
+
   editInformations(customer: any): void {
     const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
       minWidth: '50%',
@@ -280,17 +283,15 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
         baunitId: this.baunitId
       }
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Encuentra el índice de la construcción que se ha editado
         const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
-  
+
         if (index !== -1) {
-          // Actualiza el elemento en dataSource
+
           this.dataSource.data[index] = result;
-          
-          // Forzar la actualización de la tabla
+
           this.dataSource.data = [...this.dataSource.data];
         }
       }
@@ -301,30 +302,18 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     const dialogRef = this.dialog.open(this.confirmDialog);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const baunitId = 2282747; // El valor fijo que mencionaste
-        const changeLogId = 68;
+        const baunitId = this.baunitId ?? '';
+        const executionId = this.executionId ?? '';
         const unitBuiltId = customer.unitBuiltId;
-  
-        this.informationPropertyService.deleteConstruction(baunitId, changeLogId, unitBuiltId).subscribe({
+
+        this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
           next: () => {
-            // Elimina el registro de la tabla si la petición fue exitosa
+
             this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
-            Swal.fire({
-              title: '¡Éxito!',
-              text: 'Información eliminada con éxito',
-              icon: 'success',
-              confirmButtonText: 'Cerrar',
-              confirmButtonColor: '#3f51b5'
-            });
+            this.deleteSwal.fire();
           },
           error: () => {
-            Swal.fire({
-              title: 'Error',
-              text: 'No fue posible eliminar la información',
-              icon: 'error',
-              confirmButtonText: 'Cerrar',
-              confirmButtonColor: '#3f51b5' 
-            });
+            this.errorSwal.fire();
           }
         });
       }

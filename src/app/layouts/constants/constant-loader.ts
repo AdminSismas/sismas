@@ -1,6 +1,6 @@
 import { NavigationDropdown, NavigationLink } from '../../core/navigation/navigation-item.interface';
 
-export const NAVIGATION_LOADER_MY_WORK_1: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
     label: 'Búsqueda catastral',
@@ -13,9 +13,15 @@ export const NAVIGATION_LOADER_MY_WORK_1: Array<NavigationLink | NavigationDropd
     route: '/myWork/fileProcedure',
     icon: 'mat:app_registration'
   },
+  {
+    type: 'link',
+    label: 'Asistentes virtuales',
+    route: '/myWork/assistants',
+    icon: 'mat:insights'
+  },
 ];
 
-export const NAVIGATION_LOADER_MY_WORK_2: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_MY_WORK_2: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'dropdown',
     label: 'Tareas',
@@ -62,27 +68,27 @@ export const NAVIGATION_LOADER_MY_WORK_2: Array<NavigationLink | NavigationDropd
     ]
   },
 ];
-export const NAVIGATION_LOADER_MY_WORK_3: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_MY_WORK_3: (NavigationLink | NavigationDropdown)[] = [
 //   {
 //     type: 'link',
-//     label: 'Busqueda catastral',
+//     label: 'Búsqueda catastral',
 //     route: '/myWork/cadastralSearch',
 //     icon: 'mat:search'
 //   },
 //   {
 //     type: 'link',
-//     label: 'Radicar Tramite',
+//     label: 'Radicar trámite',
 //     route: '/myWork/fileProcedure',
 //     icon: 'mat:app_registration'
 //   },
 ];
-export const NAVIGATION_LOADER_MY_WORK: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_MY_WORK: (NavigationLink | NavigationDropdown)[] = [
   ...NAVIGATION_LOADER_MY_WORK_1,
   ...NAVIGATION_LOADER_MY_WORK_2,
   ...NAVIGATION_LOADER_MY_WORK_3,
 ];
 
-export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
     label: 'Personas',
@@ -134,7 +140,7 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: Array<NavigationLink | Navigat
   }
 ];
 
-export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_OPEN_DATA: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
     label: 'Mapas generales',
@@ -168,7 +174,7 @@ export const NAVIGATION_LOADER_OPEN_DATA: Array<NavigationLink | NavigationDropd
   }
 ];
 
-export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'dropdown',
     label: 'Ciudadanos',
@@ -198,7 +204,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ], roles: ['ADMIN', 'USER', 'GUEST']
   },
   {
     type: 'dropdown',
@@ -217,11 +223,12 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: Array<NavigationLink | Navigation
         route: '/publicService/ticketOffice/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ],
+    roles: ['ADMIN', 'USER']
   }
 ];
 
-export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_CONFIGURATION: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'dropdown',
     label: 'Catastral',
@@ -329,7 +336,7 @@ export const NAVIGATION_LOADER_CONFIGURATION: Array<NavigationLink | NavigationD
   }
 ];
 
-export const NAVIGATION_LOADER_AUDIT: Array<NavigationLink | NavigationDropdown> = [
+export const NAVIGATION_LOADER_AUDIT: (NavigationLink | NavigationDropdown)[] = [
   {
     type: 'link',
     label: 'Registros de acceso',
@@ -343,3 +350,13 @@ export const NAVIGATION_LOADER_AUDIT: Array<NavigationLink | NavigationDropdown>
     icon: 'mat:app_registration'
   }
 ];
+
+
+// export const NAVIGATION_LOADER_IA: Array<NavigationLink | NavigationDropdown> = [
+//   {
+//     type: 'link',
+//     label: 'Asistentes virtuales',
+//     route: '/ia/assistants',
+//     icon: 'mat:insights'
+//   }
+// ];

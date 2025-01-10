@@ -3,11 +3,11 @@
     <!-- Search -->
     <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-6 pb-6 flex flex-col">
       <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
-      <input matInput [formControl]="searchCtrl" placeholder="Buscar archivo…" type="text" />
+      <input matInput [formControl]="searchCtrl" placeholder="Filtrar archivo…" type="text" />
     </mat-form-field>
 
     <!-- button filter -->
-    <button
+    <!-- <button
       [matMenuTriggerFor]="columnFilterMenu"
       mat-icon-button
       matTooltip="Filtrar columnas"
@@ -15,24 +15,24 @@
       class="ml-4 flex-col"
     >
       <mat-icon matIconPrefix svgIcon="mat:filter_list"></mat-icon>
-    </button>
+    </button> -->
   </div>
 
   <!-- Table -->
   <table @stagger mat-table [dataSource]="dataSource" class="w-full" matSort>
 
     <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef class="w-12"></th>
-        <td mat-cell *matCellDef="let row" class="w-12 text-center">
-          <button
-            mat-icon-button
-            matTooltip="Ver archivo"
-            (click)="viewFile(row)"
-          >
-            <mat-icon svgIcon="mat:visibility"></mat-icon>
-          </button>
-        </td>
-      </ng-container>
+      <th mat-header-cell *matHeaderCellDef class="w-12"></th>
+      <td mat-cell *matCellDef="let row" class="w-12 text-center">
+        <button
+          mat-icon-button
+          matTooltip="{{ getMatTooltip(row) }}"
+          (click)="viewFile(row)"
+        >
+        <mat-icon [svgIcon]="getFileIcon(row)"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef class="w-12">
@@ -46,7 +46,7 @@
     <!-- Text Columns -->
     <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
       <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
         </th>
         <td
@@ -56,18 +56,19 @@
           [ngClass]="column.cssClasses"
           mat-cell
         >
-          <mat-icon
-            matIconPrefix
-            *ngIf="column.property === 'originalFileName'"
-            svgIcon="mat:picture_as_pdf"
-            class="w-5 h-5 p-0 items-center justify-center text-red-600"
-          ></mat-icon>
+        <mat-icon
+        matIconPrefix
+        *ngIf="column.property === 'originalFileName'"
+        [svgIcon]="getFileTypeIcon(row)"
+        [ngClass]="getFileIconColor(row)"
+        class="w-5 h-5 p-0 items-center justify-center"
+      ></mat-icon>
           {{ row[column.property] }}
         </td>
       </ng-container>
 
       <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
         </th>
         <td
@@ -77,13 +78,14 @@
           [ngClass]="column.cssClasses"
           mat-cell
         >
-          <mat-icon
-            matIconPrefix
-            *ngIf="column.property === 'originalFileName'"
-            svgIcon="mat:picture_as_pdf"
-            class="w-5 h-5 p-0 items-center justify-center text-red-600"
-          ></mat-icon>
-          {{ row[column.property] | date: "short" }}
+        <mat-icon
+        matIconPrefix
+        *ngIf="column.property === 'originalFileName'"
+        [svgIcon]="getFileTypeIcon(row)"
+        [ngClass]="getFileIconColor(row)"
+        class="w-5 h-5 p-0 items-center justify-center"
+      ></mat-icon>
+          {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
         </td>
       </ng-container>
     </ng-container>

@@ -30,9 +30,9 @@ import { CommentsComponent } from '../comments/comments.component';
 export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   crumbs: string[] = [];
 
-  @Input() public idHeader: string = '';
-  @Input() public icon: string = '';
-  @Input({ required: true }) id: string = '';
+  @Input() public idHeader = '';
+  @Input() public icon = '';
+  @Input({ required: true }) id = '';
   @Input({ required: true }) proTaskE: ProTaskE | null = null;
   @Output() returnPanelTask = new EventEmitter<boolean>();
 
@@ -51,6 +51,9 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
+    console.log('HeaderBpmCoreComponent', this.id, this.proTaskE);
+
     if (!this.id || this.id?.length <= 0 || !this.proTaskE) {
       return;
     }
@@ -69,24 +72,26 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
       .subscribe((result: ProTaskE) => {
         this.chargerCrumbs(result);
       });
+      console.log('flujo actual:', this.crumbs);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes["proTaskE"] && this.proTaskE) {
       this._crumbs$.next(this.proTaskE);
+      this.chargerCrumbs(this.proTaskE);
     }
   }
 
   chargerCrumbs(proTaskE: ProTaskE){
     this.crumbs = [];
     if(proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName){
-      this.crumbs.push(proTaskE.proTask?.flowDetail)
+      this.crumbs.push(proTaskE.proTask?.flowDetail);
     }
     if(proTaskE?.executionId){
-      this.crumbs.push(proTaskE?.executionId.toString())
+      this.crumbs.push(proTaskE?.executionId.toString());
     }
     if(proTaskE?.proTask?.flowName){
-      this.crumbs.push(proTaskE?.proTask?.flowName)
+      this.crumbs.push(proTaskE?.proTask?.flowName);
     }
   }
 
@@ -110,18 +115,18 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   openDialog(type: string): void {
     if (type === 'documents') {
       this.dialog.open(DocumentTableComponent, {
-        width: '60%',
+        width: '80%',
         data: {
           executionId: this.proTaskE?.executionId
         }
-      })
+      });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
         width: '60%',
         data: {
           executionId: this.proTaskE?.executionId
         }
-      })
+      });
     }
   }
 }

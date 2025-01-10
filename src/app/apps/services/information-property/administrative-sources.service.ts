@@ -8,7 +8,7 @@ import { catchError, map, Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class AdministrativeSourcesService {
-  private base_url = `${env.url}:${env.port}${env.administrativeSource}`
+  private base_url = `${env.url}:${env.port}${env.administrativeSource}`;
 
   constructor(
     private http: HttpClient
@@ -17,89 +17,89 @@ export class AdministrativeSourcesService {
   /* GET */
 
   getAdministrativeSourcesMain(baunitId: string): Observable<AdministrativeSource[]> {
-    const url = `${this.base_url}main/${baunitId}`
+    const url = `${this.base_url}main/${baunitId}`;
     return this.http.get<AdministrativeSource[]>(url)
       .pipe(
         catchError(error => {
-          console.log('Error al obtener la información de fuentes administrativas main')
-          throw error
+          console.log('Error al obtener la información de fuentes administrativas main');
+          throw error;
         })
-      )
+      );
   }
 
   getAdministrativeSourcesTemp(baunitId: string, executionId: string): Observable<AdministrativeSource[]> {
-    const url = `${this.base_url}temp/${executionId}/${baunitId}`
+    const url = `${this.base_url}temp/${executionId}/${baunitId}`;
 
     return this.http.get<AdministrativeSource[]>(url)
       .pipe(
         catchError(error => {
-          console.log('Error al obtener la información de fuentes administrativas temp')
-          throw error
+          console.log('Error al obtener la información de fuentes administrativas temp');
+          throw error;
         })
-      )
+      );
   }
 
   getAdministrativeSourceById(params: { id: number, baunitId: string, executionId: string }): Observable<AdministrativeSource> {
-    const { id, baunitId, executionId } = params
-    const url = `${this.base_url}temp/${executionId}/${baunitId}/${id}`
+    const { id, baunitId, executionId } = params;
+    const url = `${this.base_url}temp/${executionId}/${baunitId}/${id}`;
 
     return this.http.get<AdministrativeSource>(url)
       .pipe(
         catchError(error => {
-          console.log('Error al obtener la información de fuentes administrativas')
-          throw error
+          console.log('Error al obtener la información de fuentes administrativas');
+          throw error;
         })
-      )
+      );
   }
 
   /* POST */
 
   createAdministrativeSource(params: CreateAdministrativeSourceParams): Observable<AdministrativeSource> {
-    const { executionId, baunitId, administrativeSource } = params
-    const url = `${this.base_url}temp/${executionId}/${baunitId}`
+    const { executionId, baunitId, administrativeSource } = params;
+    const url = `${this.base_url}temp/${executionId}/${baunitId}`;
 
     return this.http.post<AdministrativeSource>(url, administrativeSource)
       .pipe(
         catchError(error => {
-          console.log('Error al crear la fuente administrativa')
-          throw error
+          console.log('Error al crear la fuente administrativa');
+          throw error;
         })
-      )
+      );
   }
 
   /* PUT */
   updateAdministrativeSource(parameters: UpdateAdministrativeSource): Observable<AdministrativeSource> {
-    const { baunitId, executionId, params } = parameters
-    const url = `${this.base_url}temp/${executionId}/${baunitId}`
+    const { baunitId, executionId, params } = parameters;
+    const url = `${this.base_url}temp/${executionId}/${baunitId}`;
 
     return this.http.put<AdministrativeSource>(url, params)
       .pipe(
         catchError(error => {
-          console.log('Error al actualizar la fuente administrativa')
-          throw error
+          console.log('Error al actualizar la fuente administrativa');
+          throw error;
         })
-      )
+      );
   }
 
   /* DELETE */
 
   deleteAdministrativeSource(params: DeleteAdministrativeSourceParams): Observable<void> {
-    const { baunitId, changeLogId, fuenteAdminId } = params
-    const url = this.base_url.slice(0, -1)
+    const { baunitId, changeLogId, fuenteAdminId } = params;
+    const url = this.base_url.slice(0, -1);
 
-    const formData = new FormData()
-    formData.append('changeLogId', changeLogId)
-    formData.append('fuenteAdminId', fuenteAdminId)
-    formData.append('baunitId', baunitId)
+    const formData = new FormData();
+    formData.append('changeLogId', changeLogId);
+    formData.append('fuenteAdminId', fuenteAdminId);
+    formData.append('baunitId', baunitId);
 
     return this.http.delete<void>(url, {
       body: formData
     })
       .pipe(
         catchError(error => {
-          console.log('Error al eliminar la fuente administrativa')
-          throw error
+          console.log('Error al eliminar la fuente administrativa');
+          throw error;
         })
-      )
+      );
   }
 }

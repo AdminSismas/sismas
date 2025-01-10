@@ -24,7 +24,7 @@ const MAP_OPTION = {
 /**
  * @internal
  */
-let _toOption = (value: any) =>
+const _toOption = (value: any) =>
   MAP_OPTION.hasOwnProperty(value) ? (MAP_OPTION as any)[value] : value;
 
 /**
@@ -314,7 +314,7 @@ export class VexShowdownComponent
 }
 
 // Define options properties setter for angular directive and direct access
-for (let key of OPTIONS_PROPERTIES_KEYS) {
+for (const key of OPTIONS_PROPERTIES_KEYS) {
   Object.defineProperty(VexShowdownComponent.prototype, key, {
     set(value: any): void {
       this.setOption(key, _toOption(value));

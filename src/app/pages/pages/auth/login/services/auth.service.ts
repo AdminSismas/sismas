@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environments';
+import { Observable, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { UserService } from './user.service';
+import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 
 
 @Injectable({
@@ -8,36 +13,104 @@ import { environment } from '../../../../../../environments/environments';
 })
 export class AuthService {
 
+
   private _token: string | null = null;
-
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
+  private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
+  // Obtener el token
   public get token(): string | null {
-    if (this._token != null) {
+    if (this._token) {
       return this._token;
     }
-    if (this._token == null && (sessionStorage == null || sessionStorage.getItem('token') == null)) {
-      return null;
-    }
 
-    this._token = sessionStorage.getItem('token');
-    return this._token;
+    if (sessionStorage.getItem('token')) {
+      this._token = sessionStorage.getItem('token');
+      return this._token;
+    }
+    return null;
   }
 
+  // Guardar el token
   saveToken(access_token: string) {
     this._token = access_token;
     try {
-      sessionStorage.setItem("token",this._token);
+      sessionStorage.setItem('token', this._token);
+      const user: DecodeJwt = jwtDecode(this._token);
+      this.userService.setUser(user)
     } catch (error) {
+      console.error('Error al guardar el token', error);
     }
   }
 
-  refreshToken() {
+  // Refrescar el token
+  refreshToken(): Observable<{ token: string }> {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<any>(this.urlEndpoint,httpOptions);
+    return this.http.post<{ token: string }>(this.urlEndpoint, httpOptions);
+  }
+
+  // Login
+  login(email: string, password: string): Observable<{ token: string }> {
+    const body = { username: email, password: password };
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.post<{ token: string }>(this.urlEndpoint, body, httpOptions);
+  }
+
+  // Verificar si está autenticado
+  isAuthenticated(): boolean {
+    return sessionStorage.getItem('token') !== null;
+  }
+
+  // Logout
+  logout(): void {
+    this._token = null;
+    sessionStorage.removeItem('token');
+    this.router.navigate(['/login']).then(() => {
+      window.history.pushState(null, '', window.location.href);
+      window.onpopstate = function () {
+        window.history.pushState(null, '', window.location.href);
+      };
+    });
+
+    this.userService.clearUser();
+  }
+
+  // Decodificar el token y obtener el 'sub'
+  getDecodedToken() {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        return decoded as DecodeJwt;
+      } catch (e) {
+        console.error('Error al decodificar el token', e);
+        return null;
+      }
+    }
+    return null;
+  }
+
+  // Obtener datos del usuario usando el 'sub' (nombre de usuario)
+  getUserData() {
+    const decodedToken = this.getDecodedToken();
+    if (decodedToken && decodedToken.sub) {
+      const username = decodedToken.sub;
+      console.log('Haciendo solicitud para obtener el usuario', username);
+      return this.http.get<UserDetails>(`${this.userUrl}${username}`).pipe(
+        catchError(err => {
+          console.error('Error al obtener el usuario', err);
+          return throwError(() => err);
+        })
+      );
+    }
+    console.error('Token no disponible o no decodificado');
+    return null;
   }
 }

@@ -13,7 +13,7 @@ import { MatDialogTitle } from '@angular/material/dialog';
   styleUrl: './geo-main.component.scss'
 })
 export class GeoMainComponent implements OnInit {
-  @Input() public id: string = '';
+  @Input() public id = '';
   constructor() {
   }
 

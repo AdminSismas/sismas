@@ -10,7 +10,6 @@ import {
 } from '../cadastral-information-property/cadastral-information-property.component';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { TWO_POINT_, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
-import { NgForOf, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
@@ -37,9 +36,7 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
     VexPageLayoutContentDirective,
     MatTabsModule,
     CadastralInformationPropertyComponent,
-    NgForOf,
     MatMenuModule,
-    NgIf
   ],
   templateUrl:
     './layout-card-cadastral-information-property-component.component.html',
@@ -53,7 +50,9 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
 
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
-  propertyUnit: boolean = false;
+  propertyUnit = false;
+  dataFlag = '';
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
@@ -66,7 +65,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     if (
       this.defaults == null ||
       this.defaults.schemas == null ||
-      this.defaults.typeInformation == null
+      this.defaults.typeInformation == null ||
+      this.defaults.flagData == null
     ) {
       return;
     }
@@ -80,11 +80,19 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       this.createObjectLayout(schema)
     );
     //On init of component set type information according to the component
-    this.setTypeInformation(0);
+    // this.setTypeInformation(0);
 
 
-    if (this.defaults.typeInformation == 'visualization') {
+    // if (this.defaults.typeInformation == 'visualization') }{
       this.typeInformation = this.defaults.typeInformation;
+    // }}
+
+    if(this.defaults.flagData !== ''){
+        this.dataFlag = this.defaults.flagData;
+        console.log(this.defaults.flagData,'bandera para validar y ocultar ');
+        if(this.defaults.flagData === 'openDataFlag'){
+          this.informationPropertyService.showOptionsPersonSet(true);
+        }
     }
   }
 

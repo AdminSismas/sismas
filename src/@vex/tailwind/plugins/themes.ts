@@ -114,7 +114,7 @@ export default plugin.withOptions(
     return ({ theme, e, addComponents }: PluginAPI): void => {
       const themes = options.themes;
 
-      for (let [themeName, partialThemeOptions] of Object.entries(themes)) {
+      for (const [themeName, partialThemeOptions] of Object.entries(themes)) {
         let themeOptions: VexThemeOptions;
 
         /**
@@ -201,9 +201,7 @@ export default plugin.withOptions(
   (options: VexThemePluginOptions): Partial<Config> => {
     const defaultTheme = options.themes.default;
 
-    const colors: {
-      [colorName: string]: VexThemeColorPalette;
-    } = {};
+    const colors: Record<string, VexThemeColorPalette> = {};
 
     for (const [colorName, colorOptions] of Object.entries(
       defaultTheme.colors

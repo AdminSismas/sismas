@@ -5,13 +5,13 @@
       Búsqueda avanzada
     </h2>
 
-    <button
+    <!-- <button
       [matMenuTriggerFor]="settingsMenu"
       class="text-secondary"
       mat-icon-button
       type="button">
       <mat-icon svgIcon="mat:more_vert"></mat-icon>
-    </button>
+    </button> -->
 
     <button
       class="text-secondary"
@@ -24,6 +24,249 @@
   <mat-divider class="text-border"></mat-divider>
   <mat-dialog-content class="flex flex-col overflow-hidden">
     <mat-tab-group class="overflow-hidden" (selectedTabChange)="clearFormFields($event)">
+
+ <!-- Búsqueda por segregación de número predial nacional -->
+ <mat-tab label="Número Predial Nacional">
+  <vex-page-layout class="overflow-hidden">
+    <vex-page-layout>
+      <vex-page-layout-content class="container-fluid">
+
+
+        <h2 class="text-lg font-bold mb-2">Búsqueda por NPN completo</h2>
+        <div class="flex flex-col sm:flex-row items-center mb-4">
+          <mat-form-field class="sm:ml-2 sm:mr-2 w-1/2">
+            <mat-label>Código Completo</mat-label>
+            <input type="text"
+                   matInput
+                   formControlName="codigoCompleto"
+                   placeholder="Ingrese el código completo">
+          </mat-form-field>
+          <button
+            (click)="sendInformationTable()"
+            color="primary"
+            mat-flat-button
+            class="ml-2">
+            Buscar
+          </button>
+        </div>
+
+        <div class="border-t border-gray-300 my-4"></div>
+
+        <h2 class="text-lg font-bold mb-2">Búsqueda de NPN por partes</h2>
+
+        <div class="flex flex-col sm:flex-row">
+
+          <!-- Campo departamento -->
+
+
+                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                  <mat-label>Departamento</mat-label>
+                  <input type="text"
+                         aria-label="Number"
+                         maxlength="2"
+                         matInput
+                         formControlName="dpto"
+                         placeholder="Departamento">
+
+                </mat-form-field>
+
+
+
+
+          <!-- Campo municipio -->
+
+
+          <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+            <mat-label>Municipío</mat-label>
+            <input type="text"
+                  maxlength="3"
+                  aria-label="Number"
+                  matInput
+                  formControlName="mpio"
+                  placeholder="Municipío">
+          </mat-form-field>
+
+
+
+          <!-- Campo zona -->
+
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+             <mat-label>Zonas</mat-label>
+             <input type="text"
+                    maxlength="2"
+                    aria-label="Number"
+                    matInput
+                    formControlName="zonas"
+                    placeholder="Zona&hellip;"
+                    >
+           </mat-form-field>
+
+
+
+
+
+          <!-- Campo sector -->
+
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Sector</mat-label>
+              <input type="text"
+                     maxlength="2"
+                     aria-label="Number"
+                     matInput
+                     formControlName="sectorb"
+                     placeholder="Sector"
+                     >
+            </mat-form-field>
+
+
+
+
+
+              <!-- Campo Comuna -->
+
+                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                  <mat-label>Comuna</mat-label>
+                  <input type="text"
+                         maxlength="2"
+                         aria-label="Number"
+                         matInput
+                         formControlName="comuna"
+                         placeholder="Comuna"
+                         >
+                </mat-form-field>
+
+
+
+
+              <!-- Campo Barrio -->
+                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                  <mat-label>Barrio</mat-label>
+                  <input type="text"
+                         maxlength="2"
+                         aria-label="Number"
+                         matInput
+                         formControlName="barrio"
+                         placeholder="Barrio"
+                         >
+                </mat-form-field>
+
+
+
+        </div> <!-- ************SECCIOON 1 X6 -->
+
+        <br>
+
+        <div class="flex flex-col sm:flex-row">
+
+
+             <!-- Campo Man/ver -->
+             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Man/ver</mat-label>
+              <input type="text"
+                     maxlength="4"
+                     aria-label="Number"
+                     matInput
+                     formControlName="manVer"
+                     placeholder="Man/ver"
+                     >
+            </mat-form-field>
+
+
+
+
+            <!-- Campo Terreno -->
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Terreno</mat-label>
+              <input type="text"
+                     maxlength="4"
+                     aria-label="Number"
+                     matInput
+                     formControlName="terreno"
+                     placeholder="Terreno"
+                     >
+            </mat-form-field>
+
+
+
+
+            <!-- Campo Condición -->
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Condición</mat-label>
+              <input type="text"
+                     maxlength="1"
+                     aria-label="Number"
+                     matInput
+                     formControlName="condicion"
+                     placeholder="Condición">
+            </mat-form-field>
+
+
+
+
+            <!-- Campo Edificio -->
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Edificio</mat-label>
+              <input type="text"
+                     maxlength="2"
+                     aria-label="Number"
+                     matInput
+                     formControlName="edificio"
+                     placeholder="Edificio"
+                     >
+            </mat-form-field>
+
+
+
+
+            <!-- Campo Piso -->
+            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Piso</mat-label>
+              <input type="text"
+                     maxlength="2"
+                     aria-label="Number"
+                     matInput
+                     formControlName="piso"
+                     placeholder="Piso"
+                     >
+            </mat-form-field>
+
+
+
+             <!-- Campo Unidad Predial -->
+             <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+              <mat-label>Unidad predial</mat-label>
+              <input type="text"
+                     maxlength="4"
+                     aria-label="Number"
+                     matInput
+                     formControlName="unidadPredial"
+                     placeholder="Unidad predial"
+                     >
+            </mat-form-field>
+
+
+
+
+        </div>
+
+        <mat-dialog-actions align="center">
+          <button
+            (click)="sendInformationTable()"
+            color="primary"
+            mat-flat-button
+            [disabled]=""
+            type="primary">
+            <!-- !form.valid -->
+            Buscar
+          </button>
+        </mat-dialog-actions>
+
+      </vex-page-layout-content>
+    </vex-page-layout>
+  </vex-page-layout>
+ </mat-tab>
+
+
       <!-- Búsqueda por multiplex campos -->
       <mat-tab label="Múltiples campos" class="overflow-hidden">
         <vex-page-layout class="overflow-hidden">
@@ -215,6 +458,22 @@
               <!-- Campo zona -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
                 <mat-label>Zona</mat-label>
+                <mat-select
+                  #zone
+                  (selectionChange)="loadSectorsInformation($event.value, true)"
+                  formControlName="zone"
+                >
+                  @for (option of optionsZones; track option.codigoZona) {
+                    <mat-option
+                      [value]="option.codigoZona"
+                    >
+                      {{ option.codigoZona }} - {{ option.nombreZona }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <!-- <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                <mat-label>Zona</mat-label>
                 <input type="text"
                        aria-label="Number"
                        matInput
@@ -234,7 +493,7 @@
                     </mat-option>
                   }
                 </mat-autocomplete>
-              </mat-form-field>
+              </mat-form-field> -->
 
               <!-- Campo sector -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
@@ -263,99 +522,108 @@
             </div>
             <div class="flex flex-col sm:flex-row">
 
-              <!-- Campo comuna -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Comuna</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="community"
-                       placeholder="Seleccione un comuna&hellip;"
-                       [matAutocomplete]="autoTownship">
-                <mat-autocomplete autoActiveFirstOption #autoTownship="matAutocomplete" [panelWidth]="350"
-                                  (optionSelected)="loadNeighborhoodsInformation($event.option.value, true)">
-                  @for (option of filteredOptionsCommunities$ | async; track option.codigoComuna;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+              @if(zone.value) {
+                @if(zone.value === '01') {
+                  <!-- Campo comuna -->
+                  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                    <mat-label>Comuna</mat-label>
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           formControlName="community"
+                           placeholder="Seleccione un comuna&hellip;"
+                           [matAutocomplete]="autoTownship">
+                    <mat-autocomplete autoActiveFirstOption #autoTownship="matAutocomplete" [panelWidth]="350"
+                                      (optionSelected)="loadNeighborhoodsInformation($event.option.value, true)">
+                      @for (option of filteredOptionsCommunities$ | async; track option.codigoComuna;) {
+                        <mat-option
+                          [value]="option.codeName">
+                          {{ option.codeName}}
+                        </mat-option>
+                      } @empty {
+                        <mat-option>
+                          {{STRING_INFORMATION_NOT_FOUND}}
+                        </mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
 
-              <!-- Campo barrio -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Barrio</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="neighborhood"
-                       placeholder="Seleccione un comuna&hellip;"
-                       [matAutocomplete]="autoNeighborhood">
-                <mat-autocomplete autoActiveFirstOption #autoNeighborhood="matAutocomplete" [panelWidth]="350"
-                                  (optionSelected)="loadBlocksInformation($event.option.value, true)">
-                  @for (option of filteredOptionsNeighborhoods$ | async; track option.codigoBarrio;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+                  <!-- Campo barrio -->
+                  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                    <mat-label>Barrio</mat-label>
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           formControlName="neighborhood"
+                           placeholder="Seleccione un comuna&hellip;"
+                           [matAutocomplete]="autoNeighborhood">
+                    <mat-autocomplete autoActiveFirstOption #autoNeighborhood="matAutocomplete" [panelWidth]="350"
+                                      (optionSelected)="loadBlocksInformation($event.option.value, true)">
+                      @for (option of filteredOptionsNeighborhoods$ | async; track option.codigoBarrio;) {
+                        <mat-option
+                          [value]="option.codeName">
+                          {{ option.codeName}}
+                        </mat-option>
+                      } @empty {
+                        <mat-option>
+                          {{STRING_INFORMATION_NOT_FOUND}}
+                        </mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
 
-              <!-- Campo vereda -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Vereda</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="sidewalk"
-                       placeholder="Seleccione una vereda&hellip;"
-                       [matAutocomplete]="autoSidewalk">
-                <mat-autocomplete autoActiveFirstOption #autoSidewalk="matAutocomplete" [panelWidth]="350">
-                  @for (option of filteredOptionsSidewalk$ | async; track option.codigoVereda;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+                  <!-- Campo manzana -->
+                <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                  <mat-label>Manzana</mat-label>
+                  <input type="text"
+                         aria-label="Number"
+                         matInput
+                         formControlName="block"
+                         placeholder="Seleccione una manzana&hellip;"
+                         [matAutocomplete]="autoBlock"
+                         >
+                  <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">
+                    @for (option of filteredOptionsBlocks$ | async; track option.codigoManzana;) {
+                      <mat-option
+                        [value]="option.codeName">
+                        {{ option.codeName}}
+                      </mat-option>
+                    } @empty {
+                      <mat-option>
+                        {{STRING_INFORMATION_NOT_FOUND}}
+                      </mat-option>
+                    }
+                  </mat-autocomplete>
+                </mat-form-field>
+                } @else {
+                  <!-- Campo vereda -->
+                  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+                    <mat-label>Vereda</mat-label>
+                    <input type="text"
+                           aria-label="Number"
+                           matInput
+                           formControlName="sidewalk"
+                           placeholder="Seleccione una vereda&hellip;"
+                           [matAutocomplete]="autoSidewalk">
+                    <mat-autocomplete autoActiveFirstOption #autoSidewalk="matAutocomplete" [panelWidth]="350">
+                      @for (option of filteredOptionsSidewalk$ | async; track option.codigoVereda;) {
+                        <mat-option
+                          [value]="option.codeName">
+                          {{ option.codeName}}
+                        </mat-option>
+                      } @empty {
+                        <mat-option>
+                          {{STRING_INFORMATION_NOT_FOUND}}
+                        </mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+                }
 
-              <!-- Campo manzana -->
-              <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
-                <mat-label>Manzana</mat-label>
-                <input type="text"
-                       aria-label="Number"
-                       matInput
-                       formControlName="block"
-                       placeholder="Seleccione una manzana&hellip;"
-                       [matAutocomplete]="autoBlock">
-                <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">
-                  @for (option of filteredOptionsBlocks$ | async; track option.codigoManzana;) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName}}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{STRING_INFORMATION_NOT_FOUND}}
-                    </mat-option>
-                  }
-                </mat-autocomplete>
-              </mat-form-field>
+              }
+
+
+
 
             </div>
 

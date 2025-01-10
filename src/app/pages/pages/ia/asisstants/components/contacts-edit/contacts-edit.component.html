@@ -1,0 +1,125 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div class="flex items-center" mat-dialog-title>
+    <!-- Imagen de avatar con clic para cargar una nueva imagen -->
+    <div class="avatar-wrapper" (click)="triggerImageInput()">
+      <img *ngIf="imgurl" [src]="imgurl" class="avatar ltr:mr-5 rtl:ml-5 cursor-pointer" />
+      <!-- Muestra el ícono + cuando no hay imagen cargada y aplica la clase para el cursor -->
+      <div *ngIf="!imgurl" class="avatar-placeholder ltr:mr-5 rtl:ml-5 flex items-center justify-center cursor-pointer">
+        <mat-icon>add_a_photo</mat-icon>
+      </div>
+    </div>
+
+    <!-- Input oculto para subir imágenes -->
+    <input type="file" accept="image/*" #imageInput (change)="onImageSelected($event)" style="display: none" />
+
+    <h2 class="headline m-0 flex-auto">
+      {{ form.controls['nombre'].value || "" }}
+    </h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="text-border"></mat-divider>
+
+  <mat-dialog-content class="flex flex-col">
+    <mat-form-field class="mt-6">
+      <mat-label>Empresa</mat-label>
+      <!-- <input formControlName="empresa" matInput /> -->
+      <mat-select placeholder="Seleccione&hellip;" formControlName="idempresa">
+        <mat-option *ngFor="let empresas of empresas" [value]="empresas.id">{{ empresas.nombre }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre" matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Descripción</mat-label>
+      <textarea formControlName="descripcion" matInput></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">Cancelar</button>
+    <button color="primary" mat-flat-button type="submit">
+      <ng-container *ngIf="isUpdateMode(); else createMode">
+        Actualizar Asistente
+      </ng-container>
+      <ng-template #createMode>
+        Crear Asistente
+      </ng-template>
+      <!-- {{ isEditMode ? 'Actualizar' : 'Guardar' }} -->
+    </button>
+  </mat-dialog-actions>
+</form>
+
+<swal
+  #validationWarning
+  icon="warning"
+  title="Advertencia"
+  text="Por favor, completa todos los campos requeridos antes de continuar."
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #fileTypeError
+  icon="error"
+  title="Error"
+  text="El archivo seleccionado no es una imagen.">
+</swal>
+
+<swal
+  #successCreate
+  icon="success"
+  title="Éxito"
+  text="Asistente creado correctamente"
+  [timer]="2000"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #successUpdate
+  icon="success"
+  title="Éxito"
+  text="Asistente actualizado correctamente"
+  [timer]="2000"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #errorCreate
+  icon="error"
+  title="Error"
+  text="Error al crear el Asistente"
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #errorUpdate
+  icon="error"
+  title="Error"
+  text="Error al actualizar el Asistente"
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #generalError
+  icon="error"
+  title="Error"
+  text="Hubo un error. Por favor, inténtalo de nuevo más tarde."
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>

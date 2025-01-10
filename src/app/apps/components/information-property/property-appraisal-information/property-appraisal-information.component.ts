@@ -26,7 +26,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { environment } from '../../../../../environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
@@ -48,6 +48,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
 import { TypeInformation } from '../../../interfaces/content-info';
+import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 
 @Component({
   selector: 'vex-property-appraisal-information',
@@ -61,6 +62,7 @@ import { TypeInformation } from '../../../interfaces/content-info';
     scaleFadeIn400ms
   ],
   imports: [
+    CommonModule,
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
     MatButtonModule,
@@ -80,26 +82,29 @@ import { TypeInformation } from '../../../interfaces/content-info';
     MatCheckboxModule,
     FormsModule,
     CurrencyPipe,
-    MatRippleModule
+    MatRippleModule,
+    CurrencyFormatPipe
   ],
+  
   templateUrl: './property-appraisal-information.component.html',
-  styleUrl: './property-appraisal-information.component.scss'
+  styleUrl: './property-appraisal-information.component.scss',
+  
 })
 export class PropertyAppraisalInformationComponent implements OnInit, AfterViewInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) public expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) public expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<InfoAppraisal>[] = TABLE_COLUMN_PROPERTIES_APPRAISALS;
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
 
@@ -168,7 +173,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   }
 
   private validatePropertyInList(listFirst: string[], listSecond: string[]): boolean {
-    let showProperty: boolean = false;
+    let showProperty = false;
     listFirst.forEach(e => {
       if (listSecond.includes(e)) {
         showProperty = true;

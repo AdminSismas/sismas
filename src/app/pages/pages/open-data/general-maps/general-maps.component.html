@@ -9,7 +9,77 @@
 </vex-secondary-toolbar>
 <!-- <vex-in-construction></vex-in-construction>
  -->
-<vex-documnet-management></vex-documnet-management>
+
+<div class="card pt-6">
+  <form [formGroup]="form">
+    <!-- Campo departamento -->
+  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+    <mat-label>Departamentos</mat-label>
+    <input type="text"
+           aria-label="Number"
+           matInput
+           formControlName="department"
+           placeholder="Seleccione un departamento"
+           [matAutocomplete]="autoDepartment">
+    <mat-autocomplete autoActiveFirstOption #autoDepartment="matAutocomplete" [panelWidth]="350"
+                      (optionSelected)="loadMunicipalitiesInformation($event.option.value, true)">
+      @for (option of filteredOptionsDepartments$ | async; track option.divpolLvl1Code;) {
+        <mat-option
+          [value]="option.codeName">
+          {{ option.codeName}}
+        </mat-option>
+      } @empty {
+        <mat-option>
+          {{STRING_INFORMATION_NOT_FOUND}}
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  
+  <!-- Campo municipio -->
+  <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+    <mat-label>Municipio</mat-label>
+    <input type="text"
+           aria-label="Number"
+           matInput
+           formControlName="municipality"
+           placeholder="Seleccione un municipio&hellip;"
+           [matAutocomplete]="autoMunicipality">
+    <mat-autocomplete autoActiveFirstOption #autoMunicipality="matAutocomplete" [panelWidth]="350">
+      @for (option of filteredOptionsMunicipalities$ | async; track option.divpolLvl2Code;) {
+        <mat-option
+          [value]="option.codeName">
+          {{ option.codeName}}
+        </mat-option>
+      } @empty {
+        <mat-option>
+          {{STRING_INFORMATION_NOT_FOUND}}
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+  
+  
+  <mat-dialog-actions align="center">
+    <button
+      (click)="searchMunicipalSelection()"
+      color="primary"
+      mat-flat-button
+      type="primary">
+      Buscar
+    </button>
+  </mat-dialog-actions>
+</form>
+</div>
+
+<div *ngIf="showMap" class="mt-6 relative" style="padding-bottom: 56.25%; /* Relación de aspecto 16:9 */">
+  <iframe src="https://prediosplus.map.cadastre4world.com:8081/mapstore/#/context/prediosplus/47/?queryParamsID=e98598af-73f7-4136-a7eb-28c4034c41d8" 
+          width="100%" 
+          height="100%" 
+          frameborder="0" 
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+  </iframe>
+</div>
 
 
 

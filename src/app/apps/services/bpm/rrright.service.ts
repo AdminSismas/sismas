@@ -12,7 +12,7 @@ import { InfoPerson } from '../../interfaces/information-property/info-person';
 })
 export class RrrightService {
 
-  basic_url: string = `${env.url}:${env.port}${env.rrright}`;
+  basic_url = `${env.url}:${env.port}${env.rrright}`;
 
   constructor(
     private http: HttpClient,
@@ -20,49 +20,49 @@ export class RrrightService {
   ) { }
 
   getRrrightByBaUnitId( id: string, domain: string ): Observable<InfoOwners[]> | undefined {
-    let url: string = `${this.basic_url}${domain}/${id}`;
+    const url = `${this.basic_url}${domain}/${id}`;
 
     return this.http.get<InfoPerson>(url)
       .pipe(
         catchError(error => this.requestsService.errorNotFound(error))
-      )
+      );
   }
 
   postRrrightOwnerProperty( parameters: ParamsRrright ): Observable<InfoOwners> {
     const { schema, executionId, baunitId, params } = parameters;
 
-    const url: string = `${this.basic_url}${schema}/${executionId}/${baunitId}`;
+    const url = `${this.basic_url}${schema}/${executionId}/${baunitId}`;
 
     return this.http.post<InfoOwners>(url, params)
       .pipe(
         catchError(error => this.requestsService.errorNotFound(error))
-      )
+      );
   }
 
   deletePropertyOwner( parameters: DeleteParamsRrright ): Observable<void> {
     const { executionId, baunitId, rightId } = parameters;
 
-    const url: string = this.basic_url.slice(0, -1)
+    const url: string = this.basic_url.slice(0, -1);
 
     const params = new HttpParams()
         .set('rightId', rightId.toString())
         .set('changeLogId', executionId)
-        .set('baunitId', baunitId)
+        .set('baunitId', baunitId);
 
     return this.http.delete<void>(url, { params: params })
       .pipe(
         catchError(error => this.requestsService.errorNotFound(error))
-      )
+      );
   }
 
   updatePropertyOwner(parameters: ParamsRrright) {
-    const { executionId, baunitId, schema, params } = parameters
+    const { executionId, baunitId, schema, params } = parameters;
 
-    const url: string = `${this.basic_url}${schema}/${executionId}/${baunitId}`
+    const url = `${this.basic_url}${schema}/${executionId}/${baunitId}`;
 
     return this.http.put(url, params)
       .pipe(
         catchError(error => this.requestsService.errorNotFound(error))
-      )
+      );
   }
 }

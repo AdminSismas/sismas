@@ -91,7 +91,7 @@ export class VexShowdownSourceDirective implements OnChanges {
    * <vex-showdown [src]="url" (error)="sd.render('# Error\n> '+$event.message)">**Loading...**</vex-showdown>
    * ```
    */
-  @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter();
+  @Output() error = new EventEmitter<HttpErrorResponse>();
 
   constructor(
     private _showdownComponent: VexShowdownComponent,

@@ -2,7 +2,7 @@
   "singleQuote": true,
   "bracketSameLine": false,
   "trailingComma": "none",
-  "semi": false,
+  "semi": true,
   "singleAttributePerLine": true,
   "overrides": [
     {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,6 +7,12 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet]
 })
-export class  AppComponent {
+export class AppComponent implements OnInit {
   title = 'geoGestion';
+
+  ngOnInit(): void {
+    if (window.name !== 'geogestion') {
+      window.name = 'geogestion';
+    }
+  }
 }

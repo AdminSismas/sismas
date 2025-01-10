@@ -21,7 +21,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
@@ -60,13 +60,13 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   data!:BasicInformationProperty;
 
-  @Input({ required: true }) id: string = '';
-  @Input() expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input() expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() propertyUnit: boolean = false;
-  @Input() typeInformation: string = 'visualization';
+  @Input() propertyUnit = false;
+  @Input() typeInformation = 'visualization';
 
   constructor(
     private informationPropertyService:InformationPropertyService,
@@ -105,14 +105,13 @@ export class BasicPropertyInformationComponent implements OnInit {
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
       width: '60%',
-      data: { executionId: this.executionId ,...this.data }
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION}
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
-          console.log(result);
           setTimeout(() => this.data = result, 300);
         }
-      })
+      });
   }
 
   private getRandomInt(max: number):number {

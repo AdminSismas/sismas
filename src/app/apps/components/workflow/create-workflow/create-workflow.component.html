@@ -1,0 +1,33 @@
+<h2 mat-dialog-title class="sticky top-0 flex justify-between items-center">
+  <span>{{ labelAction() }} flujo de trabajo</span>
+  <button
+    mat-icon-button
+    mat-dialog-close
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</h2>
+<mat-divider class="border-slate-400"></mat-divider>
+<mat-dialog-content>
+  <dynamic-forms
+    [inputs]="WORKFLOW_INPUTS"
+    (formReady)="form = $event"
+    [initValues]="data.initValues"
+  ></dynamic-forms>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+  >
+    {{ labelAction() }}
+  </button>
+  <button
+    mat-raised-button
+    color="warn"
+    [mat-dialog-close]="{ result: false, data: null }"
+  >
+    Cancelar
+  </button>
+</mat-dialog-actions>

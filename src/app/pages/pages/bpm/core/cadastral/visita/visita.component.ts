@@ -13,7 +13,7 @@ import { MatDialogTitle } from '@angular/material/dialog';
   styleUrl: './visita.component.scss'
 })
 export class VisitaComponent  implements OnInit {
-  @Input() public id: string = '';
+  @Input() public id = '';
   constructor() {
   }
 

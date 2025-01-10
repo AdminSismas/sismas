@@ -1,0 +1,116 @@
+<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    {{ data.isEdit ? 'Editar' : 'Crear' }} Zona
+  </h2>
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content>
+  <form [formGroup]="zoneBAUnitForm" (ngSubmit)="onSave()">
+    <vex-page-layout class="overflow-hidden">
+      <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
+        <div class="form-content">
+          <div class="form-content-item">
+            <p><strong>Área</strong></p>
+            <vex-input
+              label="Área de terreno del predio asociada a la zona"
+              type="text"
+              idComboInput="baUnitZonaArea"
+              formControlNameInput="baUnitZonaArea"
+            ></vex-input>
+            <mat-error *ngIf="zoneBAUnitForm.controls['baUnitZonaArea'].hasError('required') && zoneBAUnitForm.controls['baUnitZonaArea'].touched">
+              El área es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="zoneBAUnitForm.controls['baUnitZonaArea'].hasError('invalidNumber') && zoneBAUnitForm.controls['baUnitZonaArea'].touched">
+              Debe ingresar un número válido.
+            </mat-error>
+          </div>
+
+          <div class="form-content-item">
+            <p><strong>Precio</strong></p>
+            <vex-input
+              label="Precio asociado al área de terreno"
+              type="text"
+              idComboInput="baUnitZonaValor"
+              formControlNameInput="baUnitZonaValor"
+            ></vex-input>
+            <mat-error *ngIf="zoneBAUnitForm.controls['baUnitZonaValor'].hasError('required') && zoneBAUnitForm.controls['baUnitZonaValor'].touched">
+              El precio es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="zoneBAUnitForm.controls['baUnitZonaValor'].hasError('invalidNumber') && zoneBAUnitForm.controls['baUnitZonaValor'].touched">
+              Debe ingresar un número válido.
+            </mat-error>
+          </div>
+
+          <div class="form-content-item" *ngIf="data.propertyType === 'Urbano'">
+            <p><strong>Zona física urbana</strong></p>
+            <mat-form-field floatLabel="always" style="width: 100%; max-width: 500px;">
+              <mat-label>Seleccionar Zona Urbana</mat-label>
+              <mat-select formControlName="ccZonaHomoFisicaUr" [compareWith]="compareZones">
+                <mat-option *ngFor="let zone of divPolUrbana" [value]="zone">
+                  {{ zone.zonaHomoFisicaUrCode }} - {{ zone.domTipificacionConstruccionTipo }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="zoneBAUnitForm.controls['ccZonaHomoFisicaUr'].hasError('required') && zoneBAUnitForm.controls['ccZonaHomoFisicaUr'].touched">
+              La zona es obligatoria.
+            </mat-error>
+          </div>
+
+          <div class="form-content-item" *ngIf="data.propertyType === 'Rural'">
+            <p><strong>Zona física rural</strong></p>
+            <mat-form-field floatLabel="always">
+              <mat-label>Seleccionar zona rural</mat-label>
+              <mat-select formControlName="ccZonaHomoFisicaRu" [compareWith]="compareZones">
+                <mat-option *ngFor="let zone of divPolRural" [value]="zone">
+                  {{ zone.zonaHomoFisicaRuCode }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="zoneBAUnitForm.controls['ccZonaHomoFisicaRu'].hasError('required') && zoneBAUnitForm.controls['ccZonaHomoFisicaRu'].touched">
+              La zona es obligatoria.
+            </mat-error>
+          </div>
+
+          <div class="form-content-item" *ngIf="data.propertyType === 'Geoeconomica'">
+            <p><strong>Zona geoeconómica</strong></p>
+            <mat-form-field floatLabel="always">
+              <mat-label>Seleccionar Zona geoeconómica</mat-label>
+              <mat-select formControlName="ccZonaHomoGeoEconomica" [compareWith]="compareZones">
+                <mat-option *ngFor="let zone of divPolGeoeconomica" [value]="zone">
+                  {{ zone.zonaHomoGeoEconomicaCode }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="zoneBAUnitForm.controls['ccZonaHomoGeoEconomica'].hasError('required') && zoneBAUnitForm.controls['ccZonaHomoGeoEconomica'].touched">
+              La zona es obligatoria.
+            </mat-error>
+          </div>
+        </div>
+      </vex-page-layout-content>
+    </vex-page-layout>
+
+    <div class="buttons">
+      <button color="primary" mat-raised-button type="submit">
+        Guardar
+        <mat-icon svgIcon="mat:save"></mat-icon>
+      </button>
+      <button color="warn" mat-stroked-button mat-dialog-close type="button">
+        Cerrar
+        <mat-icon svgIcon="mat:close"></mat-icon>
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<swal
+  #errorForm
+  title="Error"
+  icon="error"
+  text="Por favor, asegúrese que los campos son válidos y contengan solo números."
+  confirmButtonColor="#3f51b5"
+  confirmButtonText="Aceptar"
+></swal>

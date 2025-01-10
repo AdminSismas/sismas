@@ -3,47 +3,139 @@
   (mouseleave)="collapseCloseSidenav()"
   [class.collapsed]="collapsed"
   [class.open]="collapsed && (collapsedOpen$ | async)"
-  class="vex-sidenav flex flex-col">
+  class="vex-sidenav flex flex-col"
+>
   <div class="vex-sidenav-toolbar__container">
     <div class="sidenav-toolbar flex-none flex items-center">
       <img
         [src]="imageUrl$ | async"
         alt="Logo"
-        class="w-6 select-none flex-none" />
-      <h2 class="vex-sidenav-toolbar__headline flex-auto">
-        {{ title$ | async }}
+        class="w-6 select-none flex-none"
+      />
+      <h2 class="vex-sidenav-toolbar__headline flex-auto clickable">
+        <a
+          (click)="navigateToCadastralSearch()"
+          class="text-decoration-none"
+        >
+          {{ title$ | async }}
+        </a>
       </h2>
       <button
         (click)="toggleCollapse()"
         *ngIf="showCollapsePin$ | async"
         class="vex-sidenav-toolbar__collapse-toggle -mr-4 leading-none flex-none hidden lg:block"
         mat-icon-button
-        type="button">
+        type="button"
+      >
         <mat-icon
           *ngIf="!collapsed"
-          class="icon-xs"
-          svgIcon="mat:radio_button_checked"></mat-icon>
-        <mat-icon
-          *ngIf="collapsed"
-          class="icon-xs"
-          svgIcon="mat:radio_button_unchecked"></mat-icon>
+          class="white-icon"
+          >push_pin</mat-icon
+        >
+        <mat-icon *ngIf="collapsed">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 -960 960 960"
+            width="24px"
+            fill="#ffffff"
+          >
+            <path
+              d="M680-840v80h-40v327l-80-80v-247H400v87l-87-87-33-33v-47h400ZM480-40l-40-40v-240H240v-80l80-80v-46L56-792l56-56 736 736-58 56-264-264h-6v240l-40 40ZM354-400h92l-44-44-2-2-46 46Zm126-193Zm-78 149Z"
+            />
+          </svg>
+        </mat-icon>
       </button>
     </div>
+    <div *ngIf="searchVisible$ | async">
+      <form [formGroup]="form">
+        <div
+          (click)="seeRutList()"
+          class="vex-sidenav-search relative"
+          matRipple
+          matRippleColor="rgb(var(--vex-color-primary-600), 0.1)"
+        >
+          <mat-form-field class="tap-search">
+            <mat-label style="color: white">Búsqueda rápida</mat-label>
+            <!-- <mat-icon svgIcon="mat:search"></mat-icon> -->
+            <input
+              style="color: white"
+              class="tap-search"
+              matInput
+              formControlName="searchRoute"
+              type="text"
+              [matAutocomplete]="routeSearch"
+            />
+          </mat-form-field>
 
-    <div *ngIf="searchVisible$ | async" class="vex-sidenav-search__container">
-      <div
-        (click)="openSearch()"
-        class="vex-sidenav-search relative"
-        matRipple
-        matRippleColor="var(--vex-sidenav-item-ripple-color)">
-        <mat-icon
-          class="flex-none vex-sidenav-search__icon"
-          svgIcon="mat:search"></mat-icon>
-        <div class="flex-auto vex-sidenav-search__placeholder">
-          Quick Search
+          <mat-autocomplete
+            autoActiveFirstOption
+            #routeSearch="matAutocomplete"
+            [panelWidth]="350"
+            (optionSelected)="loadBlocksRouteList($event.option.value)"
+          >
+            @if (this.listRouteItem.length > 0) {
+              @for (option of filteredRouteList$ | async; track option.label) {
+                <!-- Si la lista tiene solo una opción  -->
+                @if (option.type === "subheading") {
+                  @for (optionChil of option.children; track optionChil.label) {
+                    @if (optionChil.type === "link") {
+                      <mat-option [value]="optionChil.route">
+                        ( {{ option.label }} ) > {{ optionChil.label }}
+                      </mat-option>
+                    } @else if (optionChil.type === "dropdown") {
+                      @for (
+                        optionChil2 of optionChil.children;
+                        track optionChil2.label
+                      ) {
+                        @if (optionChil2.type === "link") {
+                          <mat-option [value]="optionChil2.route">
+                            <!-- {{ optionChil2.label}} -->
+                            ( {{ optionChil.label }} ) > {{ optionChil2.label }}
+                          </mat-option>
+                        } @else if (optionChil2.type === "dropdown") {
+                          @for (
+                            optionChil3 of option.children;
+                            track optionChil3.label
+                          ) {
+                            @if (optionChil3.type === "link") {
+                              <mat-option [value]="optionChil3.route">
+                                ( {{ optionChil2.label }} ) >
+                                {{ optionChil3.label }}
+                              </mat-option>
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+
+                  <!-- Si la lista tiene un dropdown  -->
+                } @else if (option.type === "dropdown") {
+                  @for (
+                    optionChild of option.children;
+                    track optionChild.label
+                  ) {
+                    @if (optionChild.type === "link") {
+                      <mat-option [value]="optionChild.route">
+                        ({{ option.label }}) > {{ optionChild.label }}
+                      </mat-option>
+                    } @else if (option.type === "dropdown") {
+                      @for (option of option.children; track option.label) {
+                        @if (option.type === "link") {
+                          <mat-option [value]="option.route">
+                            {{ option.label }}
+                          </mat-option>
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          </mat-autocomplete>
         </div>
-        <div class="flex-none vex-sidenav-search__keybind">Ctrl K</div>
-      </div>
+      </form>
     </div>
 
     <div class="vex-sidenav-toolbar__divider"></div>
@@ -54,36 +146,46 @@
       <vex-sidenav-item
         *ngFor="let item of items$ | async; trackBy: trackByRoute"
         [item]="item"
-        [level]="0"></vex-sidenav-item>
+        [level]="0"
+      ></vex-sidenav-item>
     </div>
 
     <div
-      class="vex-sidenav-footer flex items-center justify-center opacity-20 px-6 py-6 select-none flex-none">
-      <img [src]="imageUrl$ | async" alt="Logo" class="w-8 select-none" />
+      class="vex-sidenav-footer flex items-center justify-center opacity-20 px-6 py-6 select-none flex-none"
+    >
+      <img
+        [src]="imageUrl$ | async"
+        alt="Logo"
+        class="w-8 select-none"
+      />
     </div>
   </vex-scrollbar>
 
   <div
     *ngIf="userVisible$ | async"
-    class="vex-sidenav-user__container flex-none">
+    class="vex-sidenav-user__container flex-none"
+  >
     <div
       #userProfileMenuOriginRef
       (click)="openProfileMenu(userProfileMenuOriginRef)"
       [class.vex-sidenav-user--open]="userMenuOpen$ | async"
       class="vex-sidenav-user flex items-center"
       matRipple
-      matRippleColor="var(--vex-sidenav-item-ripple-color)">
+      matRippleColor="var(--vex-sidenav-item-ripple-color)"
+    >
       <img
         alt="User Avatar"
         class="vex-sidenav-user__image flex-none"
-        src="../../../../assets/img/avatars/noavatar.png" />
+        src="../../../../assets/img/avatars/noavatar.png"
+      />
       <div class="vex-sidenav-user__content flex-auto">
-        <div class="vex-sidenav-user__title">{{userName$}}</div>
-        <div class="vex-sidenav-user__subtitle">{{ userPerfil$ }}</div>
+        <div class="vex-sidenav-user__title">{{ user?.sub }}</div>
+        <div class="vex-sidenav-user__subtitle">{{ user?.role }}</div>
       </div>
       <mat-icon
         class="vex-sidenav-user__dropdown-icon flex-none"
-        svgIcon="mat:arrow_drop_down"></mat-icon>
+        svgIcon="mat:arrow_drop_down"
+      ></mat-icon>
     </div>
   </div>
 </div>

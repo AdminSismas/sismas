@@ -8,14 +8,14 @@
     {{ label }}
   </h2>
 
-  <button
+  <!-- <button
     [matMenuTriggerFor]="settingsMenu"
     class="text-secondary"
     mat-icon-button
     type="button"
   >
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
+  </button> -->
 
   <button
     class="text-secondary"
@@ -95,16 +95,21 @@
       @fadeInUp
       [typeInformation]="typeInformation"
     ></vex-information-addresses-property>
-    <vex-information-property-owners
-      [id]="'dataInformationPropertyOwners' + schema"
-      #informationPropertyOwnersComponent{{schema}}
-      [expandedComponent]="false"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      @fadeInUp
-    ></vex-information-property-owners>
+    
+    @if (!viewProperties) {
+
+      <vex-information-property-owners 
+        [id]="'dataInformationPropertyOwners' + schema"
+        #informationPropertyOwnersComponent{{schema}}
+        [expandedComponent]="false"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        [typeInformation]="typeInformation"
+        @fadeInUp
+      ></vex-information-property-owners>
+
+    }
     <vex-information-constructions-property
       [id]="'dataInformationConstructionsPropertyComponent' + schema"
       #informationConstructionsPropertyComponent{{schema}}
@@ -132,6 +137,7 @@
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
+      [typeInformation]="typeInformation"
       @fadeInUp
     ></vex-information-zones-property>
   </div>

@@ -1,15 +1,12 @@
-import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
 // recursos de vex
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { stagger40ms } from '@vex/animations/stagger.animation';
 
 // recursos de angular material
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -63,16 +60,15 @@ import { SelectionModel } from '@angular/cdk/collections';
     NgFor,
     NgIf,
     ReactiveFormsModule,
-    DocumentValidateComponent
   ],
   templateUrl: './documents-table.component.html',
   styleUrl: './documents-table.component.scss'
 })
-export class DocumentsTableComponent {
+export class DocumentsTableComponent implements AfterViewInit, OnInit {
 
     /* ============== ATRIBUTES ============== */
-    numRegister: number = 0;
-    disablePaginator: boolean = true;
+    numRegister = 0;
+    disablePaginator = true;
 
     layoutCtrl = new UntypedFormControl('boxed');
     searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -85,7 +81,7 @@ export class DocumentsTableComponent {
     @Input()
     page:number = PAGE;
     pageSize: number = PAGE_SIZE;
-    totalElements: number = 0;
+    totalElements = 0;
     pageSizeOptions: number[] = PAGE_SIZE_OPTION;
     columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE;
 
@@ -221,6 +217,116 @@ export class DocumentsTableComponent {
         }
       });
     }
+
+    getFileIcon(row: any): string {
+      const fileExtension = this.getFileExtension(row.originalFileName);
+
+      switch (fileExtension) {
+        case 'pdf':
+        case 'txt':
+        case 'png':
+        case 'jpeg':
+        case 'jpg':
+        case 'gif':
+        case 'bmp':
+          return 'mat:visibility';
+
+        case 'doc':
+        case 'docx':
+        case 'xlsx':
+        case 'xls':
+        case 'zip':
+        case 'rar':
+          return 'mat:cloud_download';
+        default:
+          return 'mat:visibility';
+      }
+    }
+
+    getMatTooltip(row: any): string {
+      const fileExtension = this.getFileExtension(row.originalFileName);
+
+      switch (fileExtension) {
+        case 'pdf':
+        case 'txt':
+        case 'png':
+        case 'jpeg':
+        case 'jpg':
+        case 'gif':
+        case 'bmp':
+          return 'Ver archivo';
+
+        case 'doc':
+        case 'docx':
+        case 'xlsx':
+        case 'xls':
+        case 'zip':
+        case 'rar':
+          return 'Descargar archivo';
+
+        default:
+          return 'Ver archivo';
+      }
+    }
+
+    getFileTypeIcon(row: any): string {
+      const fileExtension = this.getFileExtension(row.originalFileName);
+      switch (fileExtension) {
+        case 'pdf':
+          return 'mat:picture_as_pdf'; // Icono de PDF
+        case 'txt':
+        case 'doc':
+        case 'docx':
+        case 'xlsx':
+        case 'xls':
+          return 'mat:description'; // Icono de documento
+        case 'png':
+        case 'jpeg':
+        case 'jpg':
+        case 'gif':
+        case 'bmp':
+          return 'mat:photo'; // Icono de imagen
+        case 'zip':
+        case 'rar':
+          return 'mat:folder'; // Icono de descarga
+        default:
+          return 'mat:attachment'; // Icono por defecto
+      }
+    }
+
+    getFileIconColor(row: any): string {
+      const fileExtension = this.getFileExtension(row.originalFileName);
+
+      // Colores para diferentes tipos de archivo
+      switch (fileExtension) {
+        case 'pdf':
+          return 'text-red-600';  // Rojo para PDF
+        case 'txt':
+        case 'doc':
+        case 'docx':
+        case 'xlsx':
+        case 'xls':
+          return 'text-blue-600';  // Azul para documentos
+        case 'png':
+        case 'jpeg':
+        case 'jpg':
+        case 'gif':
+        case 'bmp':
+          return 'text-green-600';  // Verde para imágenes
+        case 'zip':
+        case 'rar':
+          return 'text-yellow-600';  // Amarillo para archivos comprimidos
+        default:
+          return 'text-gray-600';  // Gris por defecto
+      }
+    }
+
+
+    // Función para obtener la extensión del archivo
+    getFileExtension(fileName: string): string {
+      return fileName.split('.').pop()?.toLowerCase() || '';
+    }
+
 
     toggleSelection(row: contentInfoAttachment): void {
       this.selection.toggle(row);
