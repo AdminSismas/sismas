@@ -9,6 +9,7 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
+import { DocumentAsocietyModel } from '../interfaces/document-asociety.model';
 
 export const GUION: string = ' - ';
 export const SPACE: string = ' ';
@@ -108,7 +109,44 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   }
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
-
+export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[] = [
+  {
+    label: 'Codigo Template',
+    property: 'templateCode',
+    type: 'button',
+    visible: true,
+  },
+  {
+    label: 'Template',
+    property: 'htmlTemplate',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Header',
+    property: 'headerTemplate',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Footer',
+    property: 'footerTemplate',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Sognado',
+    property: 'isSinged',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Acciones', 
+    property: 'actions',
+     type: 'button', 
+     visible: true 
+  }
+];
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
   {
     label: 'Matrícula inmobiliaria',
