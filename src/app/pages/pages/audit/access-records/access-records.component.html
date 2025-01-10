@@ -1,4 +1,4 @@
-<vex-secondary-toolbar current="Formulario">
+<!-- <vex-secondary-toolbar current="Formulario">
   <vex-breadcrumbs
     [crumbs]="['Auditoría','Registros de acceso']"
     class="flex-auto"></vex-breadcrumbs>
@@ -7,4 +7,41 @@
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
   </button>
 </vex-secondary-toolbar>
-<vex-in-construction></vex-in-construction>
+<vex-in-construction></vex-in-construction> -->
+
+
+
+<vex-secondary-toolbar current="Formulario">
+  <vex-breadcrumbs
+    [crumbs]="['Auditoría','Registros de acceso']"
+    class="flex-auto">
+  </vex-breadcrumbs>
+
+  <button class="ml-2" color="primary" mat-icon-button type="button">
+    <mat-icon svgIcon="mat:more_vert"></mat-icon>
+  </button>
+</vex-secondary-toolbar>
+
+<h1>aasdasd</h1>
+
+<!-- SLIDER -->
+<div class=" py-8 px-6 footer ">
+  <div class="relative overflow-hidden h-auto">
+    <div class="flex transition-transform duration-500 space-x-4"
+         [style.transform]="'translateX(' + (-currentIndex * 100) + '%)'">
+      <img *ngFor="let image of images; let i = index"
+           [src]="image"
+           [alt]="'Image ' + (i + 1)"
+           class="w-full h-auto object-cover rounded-lg">
+    </div>
+  
+    <button (click)="prevSlide()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white text-black p-2 rounded-full left">
+      &#10094;
+    </button>
+    <button (click)="nextSlide()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white text-black p-2 rounded-full right">
+      &#10095;
+    </button>
+  </div>
+</div>
+
+<!-- <vex-in-construction></vex-in-construction> -->
