@@ -26,13 +26,21 @@ export const USER_COLUMNS: { name: string; label: string }[] = [
 
 export const SEARCH_INPUTS: JSONInput[] = [
   {
-    name: 'username',
-    label: 'Nombre de usuario',
+    name: 'individualTypeNumber',
+    label: 'Tipo de documento',
+    element: 'collection',
+    type: 'IndividualTypeNumber',
+    validators: [Validators.required],
+    placeholder: 'Seleccionar tipo de documento'
+  },
+  {
+    name: 'number',
+    label: 'Número de documento',
     element: 'input',
     type: 'text',
     validators: [Validators.required],
-    placeholder: 'Escribe el nombre de usuario'
-  },
+    placeholder: 'Número de documento'
+  }
 ];
 
 export const CREATE_USER_INPUTS: JSONInput[] = [

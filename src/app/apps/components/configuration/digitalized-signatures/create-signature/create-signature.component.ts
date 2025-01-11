@@ -18,10 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 // Custom
 import { DynamicFormsComponent } from '../../../dynamic-forms/dynamic-forms.component';
 import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
-import { PeopleService } from 'src/app/apps/services/people.service';
-import { SEARCH_INPUTS } from 'src/app/apps/constants/users.constants';
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { CREATE_SIGNATURE_INPUTS } from 'src/app/apps/constants/digitalized-signatures.constants';
+import { CREATE_SIGNATURE_INPUTS, SEARCH_INPUTS } from 'src/app/apps/constants/digitalized-signatures.constants';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 
 @Component({

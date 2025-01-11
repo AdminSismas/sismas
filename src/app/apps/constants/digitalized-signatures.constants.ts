@@ -21,6 +21,17 @@ export const DIGITALIZED_SIGNATURES_COLUMNS: { name: string, title: string }[] =
   }
 ];
 
+export const SEARCH_INPUTS: JSONInput[] = [
+  {
+    name: 'username',
+    label: 'Nombre de usuario',
+    element: 'input',
+    type: 'text',
+    validators: [Validators.required],
+    placeholder: 'Escribe el nombre de usuario'
+  },
+];
+
 export const CREATE_SIGNATURE_INPUTS: JSONInput[] = [
   {
     name: 'signature',
