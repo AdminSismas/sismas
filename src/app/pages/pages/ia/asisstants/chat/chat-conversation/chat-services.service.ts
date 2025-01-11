@@ -12,7 +12,7 @@ export class ChatServicesService {
   constructor(private http: HttpClient) { }
 
 
-  sendMessageToBackend(message: string, idUser: number,  volumeUp: string, humanOn: string, threadId: string, espqr: string, asistenteId: string, instrucciones: string, id_asistente: string, empresa_modelo: string, ruta_script:string): Observable<any> {
+  sendMessageToBackend(message: string, idUser: number,  volumeUp: string, humanOn: string, threadId: string, espqr: string, asistenteId: string, instrucciones: string, id_asistente: string, empresa_modelo: string, ruta_script:string, url:string): Observable<any> {
     const api_iaChat = `${env.url_base}${env.api}${env.module.ia_general_asis}`;    const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const body = `ind=29&asistente=${encodeURIComponent(asistenteId)}&pregunta=${encodeURIComponent(message)}&idcliente=${idUser}&audio_nom=no&volume_up=${volumeUp}&human_on=${humanOn}&thread_id=${threadId}&ruta=no&espqr=${espqr}&instrucciones=${encodeURIComponent(instrucciones)}&id_asistente=${id_asistente}&empresa_modelo=${empresa_modelo}&ruta_script=${ruta_script}`;
     return this.http.post(api_iaChat, body, { headers });
