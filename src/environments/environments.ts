@@ -120,6 +120,8 @@ export const environment = {
   rrright: '/rrright/',
   rural_zones: '/ccZonaHomoFisicaRu',
   /* ------ S ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   schemas: {
     hist: 'hist',
     main: 'main',
