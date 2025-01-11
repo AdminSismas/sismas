@@ -1,5 +1,6 @@
 // Angular framework
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 // Vex
@@ -11,6 +12,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { PasswordService } from 'src/app/apps/services/users/password.service';
 // Custom
 import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
@@ -55,20 +58,26 @@ export class ChangePasswordComponent implements OnInit {
   public newPasswordError = '';
   public confirmPasswordError = '';
   public fullName = '';
+  public hideLastPassword = true;
+  public hideNewPassword = true;
+  public hideConfirmPassword = true;
+
+  private user!: UserDetails;
 
   constructor(
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private dialogRef: MatDialogRef<ChangePasswordComponent>,
     private generalValidations: GeneralValidationsService,
-    private userService: UserService
+    private userService: UserService,
+    private passwordService: PasswordService
   ) { }
 
   ngOnInit(): void {
     const user = this.userService.getUser();
     this.userService.getUserInfo(user?.sub as string).subscribe({
       next: (res) => {
-        console.log(res);
+        this.user = res;
         this.fullName = res.individual.fullName;
       }
     })
@@ -76,28 +85,36 @@ export class ChangePasswordComponent implements OnInit {
 
   changePassword(): void {
     this.form.markAllAsTouched();
+
+    if (!this.validForm()) return;
+
+    console.log(this.form.value);
+    this.dialogRef.close();
+    this.changePasswordService();
+  }
+
+  validForm(): boolean {
     if (this.form.errors) {
       if (this.form.errors['samePassword']) {
         this.snackbar.open('La nueva contraseña no puede ser la misma que la antigua', 'CLOSE', {
           duration: 3000
         });
-        return;
+        return false;
       } else if (this.form.errors['passwordMismatch']) {
         this.snackbar.open('Las nuevas contraseñas no coinciden', 'CLOSE', {
           duration: 3000
         });
-        return;
+        return false;
       }
     }
     if (this.form.invalid) {
       this.snackbar.open('Por favor, completa todos los campos', 'CLOSE', {
         duration: 3000
       });
-      return;
+      return false;
     }
-    console.log('Cambiar contraseña ...')
-    console.log(this.form.value);
-    this.dialogRef.close(this.form.value);
+
+    return true;
   }
 
   invalidInput(control: string): boolean {
@@ -141,5 +158,26 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     return response;
+  }
+
+  changePasswordService(): void {
+    const username = this.user.username;
+    const lastPassword = this.form.get('lastPassword')?.value;
+    const newPassword = this.form.get('newPassword')?.value;
+
+    this.passwordService.changePassword(username, lastPassword, newPassword).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.snackbar.open('Contraseña cambiada correctamente', 'CLOSE', {
+          duration: 3000
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        this.snackbar.open('Error al cambiar la contraseña', 'CLOSE', {
+          duration: 3000
+        });
+        throw err;
+      }
+    });
   }
 }
