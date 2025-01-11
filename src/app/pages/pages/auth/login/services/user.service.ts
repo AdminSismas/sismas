@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from 'src/environments/environments';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,9 @@ export class UserService {
   private currentUserSubject: BehaviorSubject<DecodeJwt | null>;
   public currentUser: Observable<DecodeJwt | null>;
 
-  constructor() {
+  constructor(
+    private http: HttpClient
+  ) {
     const token = sessionStorage.getItem('token');
     if (token) {
       const savedUser: DecodeJwt = jwtDecode(token);
@@ -52,5 +57,11 @@ export class UserService {
       return user;
     }
     return null;
+  }
+
+  getUserInfo(username: string): Observable<UserDetails> {
+    const url: string = `${environment.url}:${environment.port}${environment.bpm_user_info}${username}`;
+
+    return this.http.get<UserDetails>(url);
   }
 }
