@@ -16,7 +16,7 @@ import { MatRippleModule } from '@angular/material/core';
           class="text-secondary flex-none"></mat-icon>
         <input
           type="text"
-          placeholder="Filtrar..."
+          placeholder="Filtrar"
           class="text-xl font-medium bg-transparent outline-none flex-auto placeholder-secondary" />
         <button
           class="flex-none ltr:-mr-2 rtl:-ml-2 text-secondary"

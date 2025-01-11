@@ -18,7 +18,7 @@
 .vex-footer {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: calc(100% - var(--vex-sidenav-width));
   background-color: #ffffff; /* Fondo blanco */
   box-shadow: 0 -2px 5px rgb(0 0 0 / 0%);
   padding: 10px 20px;
@@ -31,14 +31,9 @@
 mat-paginator {
   background-color: #f8f9fa00; /* Fondo claro */
   border-radius: 8px; /* Bordes redondeados */
-  padding: 4px 159px; /* Espaciado interno */
  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  Sombra sutil */
   min-width: 250px; /* Ancho mínimo para mantener el diseño */
   flex-shrink: 0; /* Evita que el paginador se reduzca más de lo necesario */
-}
-
-.mat-mdc-paginator-container {
-  padding: 1px 174px;
 }
 
 @media (max-width: 1366px) {
