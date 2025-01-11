@@ -27,7 +27,7 @@
     <mat-form-field class="mt-6">
       <mat-label>Empresa</mat-label>
       <!-- <input formControlName="empresa" matInput /> -->
-      <mat-select placeholder="Seleccione&hellip;" formControlName="idempresa">
+      <mat-select placeholder="Seleccione" formControlName="idempresa">
         <mat-option *ngFor="let empresas of empresas" [value]="empresas.id">{{ empresas.nombre }}</mat-option>
       </mat-select>
     </mat-form-field>
