@@ -42,9 +42,10 @@ export class CreateSignatureComponent {
   public searchInputs: JSONInput[] = SEARCH_INPUTS;
   public createForm: FormGroup = new FormGroup({});
   public createInputs: JSONInput[] = CREATE_SIGNATURE_INPUTS;
-
   public personName = '';
   public disableCreateForm = true;
+
+  private userId?: number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,6 +57,7 @@ export class CreateSignatureComponent {
     this.userService.getUserInfo(this.searchForm.value.username).subscribe({
       next: (res) => {
         this.personName = res.individual.fullName;
+        this.userId = res.userId;
         this.disableCreateForm = false;
       }
     })
