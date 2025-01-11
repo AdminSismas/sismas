@@ -32,7 +32,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { DocumentAsocietyModel } from 'src/app/apps/interfaces/document-asociety.model';
 import { DocumentAssociatedService } from 'src/app/apps/services/document-associated.service';
-import { DocumentAssociatedEditUpdateComponent } from './document-associated-edit-update/document-associated-edit-update.component';
+import { AddEditInformationDocumentAssociated, DocumentAssociatedEditUpdateComponent } from './document-associated-edit-update/document-associated-edit-update.component';
 
 @Component({
   selector: 'vex-documents-associated-procedures',
@@ -72,10 +72,10 @@ export class DocumentsAssociatedProceduresComponent {
    isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentInformations!: InformationPegeable;
   
-    @Input({ required: true }) id = '';
+    // @Input({ required: true }) id = '';
     // @Input({ required: true }) public expandedComponent = true;
     @Input({ required: true }) schema = `${environment.schemas.main}`;
-    @Input({ required: true }) baunitId: string | null | undefined = null;
+    @Input({ required: true }) outTempplateId: string | null | undefined = null;
     @Input() executionId: string | null | undefined = null;
     @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
   
@@ -109,7 +109,7 @@ export class DocumentsAssociatedProceduresComponent {
       // if (this.id?.length <= 0 || this.baunitId == null) {
       //   return;
       // }
-      this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
+      // this.id = this.id + this.getRandomInt(10000) + this.schema + this.outTempplateId;
       if(this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
         this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
@@ -183,9 +183,9 @@ export class DocumentsAssociatedProceduresComponent {
     }
   
     openDetailInformationConstructionsProperty(data:DocumentAsocietyModel){
-      if (this.baunitId === null || this.baunitId === undefined) {
-        return;
-      }
+      // if (this.baunitId === null || this.baunitId === undefined) {
+      //   return;
+      // }
   
       // this.dialog
       //   .open(DetailInformationConstructionsPropertyComponent, {
@@ -197,7 +197,7 @@ export class DocumentsAssociatedProceduresComponent {
       //   .afterClosed();
     }
   
-    openAddEditConstructionInformationPropertyDialog(
+    openAddEditDocumentAssociatedDialog(
       data?: DocumentAsocietyModel
     ): void {
       // const dialogData: AddEditInformationConstructionI = {
@@ -234,6 +234,62 @@ export class DocumentsAssociatedProceduresComponent {
       return column.property;
     }
   
+
+    createEditDocumentTemplate(
+      data?: DocumentAsocietyModel
+    ): void {
+
+     
+
+      const dialogData: AddEditInformationDocumentAssociated = {
+        type: data ? 'edit' : 'new',
+        basicInformationConstruction: data ? new DocumentAsocietyModel(data, this.schema) : undefined,
+        outTempplateId: this.outTempplateId || undefined,
+      };
+
+      const dialogRef = this.dialog.open(DocumentAssociatedEditUpdateComponent, {
+        width: '58%',
+        height: '80%',
+        disableClose: true,
+        data: dialogData
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          console.log('RESPUESTA DEL CREAR O ACTUALIZAR', result);
+          console.log('TIPO PROCESOS', dialogData.type);
+          console.log('basicInformationConstruction', dialogData.basicInformationConstruction);
+
+
+          if(dialogData.type === 'new'){
+            // this.saveDocumento(dialogData.basicInformationConstruction);
+          }else{
+            // this.updateDocumento(dialogData.basicInformationConstruction);
+          }
+
+        }
+      });
+    }
+
+    saveDocumento(data:any): boolean {
+      this.documentAssociatedService.setDataDocumentoAsocietySave(
+        this.generateObjectPageSearchData(''),data)
+        .subscribe({
+          error: (err: any) => this.captureInformationSubscribeError(err),
+          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        });
+      return true;
+    }
+
+    updateDocumento(data:any): boolean {
+      this.documentAssociatedService.setUDocumentoAsocietyUpdate(
+        this.generateObjectPageSearchData(data.outTempplateId),data)
+        .subscribe({
+          error: (err: any) => this.captureInformationSubscribeError(err),
+          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        });
+      return true;
+    }
   
     editInformations(valueTemplate: any): void {
       console.log('valueTemplate valor de la tabla', valueTemplate);
@@ -257,11 +313,11 @@ export class DocumentsAssociatedProceduresComponent {
       const dialogRef = this.dialog.open(this.confirmDialog);
       // dialogRef.afterClosed().subscribe((result) => {
       //   if (result) {
-      //     const baunitId = this.baunitId ?? '';
+      //     const outTempplateId = this.outTempplateId ?? '';
       //     const executionId = this.executionId ?? '';
       //     const unitBuiltId = customer.unitBuiltId;
   
-      //     this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
+      //     this.informationPropertyService.deleteConstruction(outTempplateId, executionId, unitBuiltId).subscribe({
       //       next: () => {
   
       //         this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
@@ -318,8 +374,8 @@ export class DocumentsAssociatedProceduresComponent {
       this.dataSource.filter = value;
     }
   
-    private generateObjectPageSearchData(baunitId: string): PageSearchData {
-      return new PageSearchData(this.page, this.pageSize, baunitId);
+    private generateObjectPageSearchData(outTempplateId: string): PageSearchData {
+      return new PageSearchData(this.page, this.pageSize, outTempplateId);
     }
   
     private getRandomInt(max: number): number {

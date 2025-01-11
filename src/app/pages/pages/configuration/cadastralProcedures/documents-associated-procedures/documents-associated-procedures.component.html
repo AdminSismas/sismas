@@ -11,6 +11,21 @@
 <vex-page-layout>
 
   <vex-page-layout-content class="px-5 -mt-6">
+    <div class="w-full flex flex-col overflow-auto p-0">
+      <div class="px-4 h-16 border-b sticky left-0 flex items-center">
+        
+          <button
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="createEditDocumentTemplate()"
+          >
+            Nueva
+            <mat-icon svgIcon="mat:add"></mat-icon>
+          </button>
+        
+      </div>
+    </div>
 
     <div class="card overflow-auto mt-8">
 
@@ -131,7 +146,7 @@
         matMenuContent
       >
         <button
-          (click)="editInformations(templateValue)"
+          (click)="createEditDocumentTemplate(templateValue)"
           mat-menu-item
         >
           <mat-icon svgIcon="mat:edit"></mat-icon>

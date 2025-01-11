@@ -27,4 +27,28 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
   return  this.http.get<any>(urlComplete);
 }
 
+  /* -------------- MÉTODOS -------------- */
+  setDataDocumentoAsocietySave(page: any,value:any):Observable<InformationPegeable> {
+    let paramsPP:HttpParams = new HttpParams();
+    paramsPP = paramsPP.append('page', `${page.page}`);
+    paramsPP = paramsPP.append('size', `${page.size}`);
+    const urlComplete = `${this.basic_url}/bpmOutTemplate`;
+    console.log('link: ',urlComplete);
+  
+    // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
+    return  this.http.post<any>(urlComplete,value);
+  }
+
+  /* -------------- MÉTODOS -------------- */
+  setUDocumentoAsocietyUpdate(page: any,value:any):Observable<InformationPegeable> {
+    let paramsPP:HttpParams = new HttpParams();
+    paramsPP = paramsPP.append('page', `${page.page}`);
+    paramsPP = paramsPP.append('size', `${page.size}`);
+    const urlComplete = `${this.basic_url}/bpmOutTemplate/${page.outTempplateId}`;
+    console.log('link: ',urlComplete);
+  
+    // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
+    return  this.http.post<any>(urlComplete,value);
+  }
+
 }

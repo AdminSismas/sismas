@@ -7,9 +7,33 @@
     </button>
   </div>
   <mat-dialog-content>
-    <div @fadeInUp class="card"></div>
+    <!-- <div @fadeInUp class="card"></div> -->
+    <br>
+    <br>
+
     <form [formGroup]="form" >
       <div class="bg-foreground flex-1 overflow-y-auto p-4">
+        <!-- <vex-page-layout-content class="container-fluid p-0 overflow-hidden"> -->
+
+          <div class="flex items-center space-m-4">
+            <div class="form-content-item flex-1">
+              <vex-input
+                label="Header ID"
+                type="text"
+                idComboInput="codigoPostal"
+                formControlNameInput="headerTemplateId"
+              ></vex-input>
+            </div>
+            <div class="form-content-item flex-1">
+              <vex-input
+                label="Footer ID"
+                type="text"
+                idComboInput="footerTemplateId"
+                formControlNameInput="footerTemplateId"
+              ></vex-input>
+            </div>
+          </div>
+          
         <quill-editor
           formControlName="content"
           [modules]="editorConfig"
@@ -17,12 +41,13 @@
           style="min-height: 400px; height: 70vh;"
           ></quill-editor>
     
-          <div class="flex justify-left gap-6 col-span-2">
+          <!-- <div class="flex justify-left gap-6 col-span-2">
             <button
               color="primary"
               type="submit"
               mat-flat-button
               class="p-6 text-lg"
+              mat-raised-button
               (click)="saveTemplate()"
             >
               Guardar
@@ -33,11 +58,22 @@
               type="submit"
               mat-flat-button
               class="p-6 text-lg"
+              mat-stroked-button
               (click)="handleDialogClose()"
             >
               Cancelar
             </button>
+          </div> -->
+          <div class="buttons">
+            <button color="primary" mat-raised-button type="button" (click)="saveTemplate()">
+              Guardar
+              <mat-icon svgIcon="mat:save"></mat-icon>
+            </button>
+            <button color="warn" mat-stroked-button type="button" (click)="handleDialogClose()">
+              Cerrar
+            </button>
           </div>
+        <!-- </vex-page-layout-content> -->
       </div>
 </form>
   </mat-dialog-content>
