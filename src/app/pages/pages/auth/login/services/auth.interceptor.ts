@@ -28,10 +28,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      // if (error.status === 401) {
-      //   throw 'Token expired';
-      // }
-      authService.logout();
+      if (error.status === 401) {
+        authService.logout();
+        throw 'Token expired';
+      }
       throw error;
     })
   );

@@ -1,6 +1,6 @@
 // Angular framework
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 // Vex
 // Material
@@ -11,8 +11,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
 // Custom
+import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 
 interface FormErrors {
   required: boolean;
@@ -24,7 +25,7 @@ interface FormErrors {
   selector: 'vex-change-password',
   standalone: true,
   imports: [
-    CommonModule,
+  CommonModule,
     ReactiveFormsModule,
     // Vex
     // Material
@@ -39,7 +40,7 @@ interface FormErrors {
   templateUrl: './change-password.component.html',
   styles: ``
 })
-export class ChangePasswordComponent {
+export class ChangePasswordComponent implements OnInit {
   public form: FormGroup = this.fb.group({
     lastPassword: ['', Validators.required],
     newPassword: ['', Validators.required],
@@ -53,13 +54,25 @@ export class ChangePasswordComponent {
   public lastPasswordError = '';
   public newPasswordError = '';
   public confirmPasswordError = '';
+  public fullName = '';
 
   constructor(
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private dialogRef: MatDialogRef<ChangePasswordComponent>,
-    private generalValidations: GeneralValidationsService
+    private generalValidations: GeneralValidationsService,
+    private userService: UserService
   ) { }
+
+  ngOnInit(): void {
+    const user = this.userService.getUser();
+    this.userService.getUserInfo(user?.sub as string).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.fullName = res.individual.fullName;
+      }
+    })
+  }
 
   changePassword(): void {
     this.form.markAllAsTouched();

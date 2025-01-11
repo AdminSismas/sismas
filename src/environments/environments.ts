@@ -28,6 +28,7 @@ export const environment = {
   bpm_bpmCore: '/bpm/bpm-core/',
   bpm_username_exists: '/exists/username/',
   bpm_users: '/bpmUser',
+  bpm_user_info: '/bpmUser/username/',
   bpm_email_exists: '/exists/email/',
   bpm_individual_exists: '/exists/individual/',
   bpmAttachment: {
@@ -96,6 +97,7 @@ export const environment = {
   /* ------ O ------ */
   operations: '/operations',
   /* ------ P ------ */
+  password: '/password',
   port: '5001',
   post_path_viewer: 'rest/config/setParams',
   production: false,

@@ -43,8 +43,9 @@ export class SidenavUserMenuComponent implements OnInit {
   }
 
   openChangePasswordDialog(): void {
+    this.popoverRef.close()
     this.dialog.open(ChangePasswordComponent, {
-      width: '50%',
+      width: '40%',
     });
   }
 
