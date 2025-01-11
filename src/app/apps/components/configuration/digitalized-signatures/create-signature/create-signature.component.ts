@@ -5,7 +5,11 @@ import { FormGroup } from '@angular/forms';
 // Vex
 
 // Material
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -18,6 +22,7 @@ import { PeopleService } from 'src/app/apps/services/people.service';
 import { SEARCH_INPUTS } from 'src/app/apps/constants/users.constants';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { CREATE_SIGNATURE_INPUTS } from 'src/app/apps/constants/digitalized-signatures.constants';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 
 @Component({
   selector: 'vex-create-signature',
@@ -46,18 +51,17 @@ export class CreateSignatureComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private peopleService: PeopleService,
-    private snackbar: MatSnackBar,
+    private userService: UserService,
     private dialogRef: MatDialogRef<CreateSignatureComponent>
   ) {}
 
-  searchPeople() {
-    this.peopleService
-      .getPeopleTypeNumber(this.searchForm.value)
-      .subscribe((data: InfoPerson) => {
-        this.personName = data.fullName;
+  searchUser() {
+    this.userService.getUserInfo(this.searchForm.value.username).subscribe({
+      next: (res) => {
+        this.personName = res.individual.fullName;
         this.disableCreateForm = false;
-      });
+      }
+    })
   }
 
   createSignature() {
