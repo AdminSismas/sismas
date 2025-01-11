@@ -52,8 +52,7 @@ export class DigitalizedSignaturesComponent {
   ) {}
 
   openDialogCreateSignature() {
-    console.log('Creando firma...');
-    this.snackbar.open('Creando firma...', 'Aceptar', { duration: 3000 });
+    this.snackbar.open('Agregando firma...', 'Aceptar', { duration: 3000 });
     this.dialog.open(CreateSignatureComponent);
   }
 }
