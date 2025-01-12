@@ -28,6 +28,7 @@ export const environment = {
   bpm_bpmCore: '/bpm/bpm-core/',
   bpm_username_exists: '/exists/username/',
   bpm_users: '/bpmUser',
+  bpm_user_info: '/bpmUser/username/',
   bpm_email_exists: '/exists/email/',
   bpm_individual_exists: '/exists/individual/',
   bpmAttachment: {
@@ -95,6 +96,7 @@ export const environment = {
   number: 'number',
   /* ------ O ------ */
   operations: '/operations',
+  password: '/password',
   /* ------ P ------ */
   port: '5001',
   post_path_viewer: 'rest/config/setParams',
@@ -132,11 +134,14 @@ export const environment = {
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
   urban_zones: '/ccZonaHomoFisicaUr',
-  url: 'https://prediosplus.api.cadastre4world.com',
-  url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
+  url: 'https://manizales.api.sismas.com.co',
+  url_viewer: 'https://manizales.map.sismas.com.co:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
-  valuation: '/valuation/'
+  valuation: '/valuation/',
+  logo: 'assets/img/logo/logo_manizales.png',
+  video: 'assets/video/manizales.mp4',
+  titulo: 'Manizales',
   /* ------ W ------ */
   /* ------ X ------ */
   /* ------ Y ------ */

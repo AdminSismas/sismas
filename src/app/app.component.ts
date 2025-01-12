@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TitleService } from './apps/services/tittle.service';
 
 @Component({
   selector: 'vex-root',
@@ -8,11 +9,10 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet]
 })
 export class AppComponent implements OnInit {
-  title = 'geoGestion';
+  constructor(private titleService: TitleService) {}
+
 
   ngOnInit(): void {
-    if (window.name !== 'geogestion') {
-      window.name = 'geogestion';
-    }
+    this.titleService.setTitle();
   }
 }

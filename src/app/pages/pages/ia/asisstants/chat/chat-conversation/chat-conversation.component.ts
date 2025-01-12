@@ -56,6 +56,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   ]
 })
 export class ChatConversationComponent implements OnInit, AfterViewChecked {
+  url_entorno: string = environment.url;
   chat?: Chat;
   messages: { id: number; from: string; text: string; isButton?: boolean; timestamp?: string }[] = [];
   newMessage = '';
@@ -178,7 +179,7 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
 
 
 
-    this.chatServicesService.sendMessageToBackend(message, idUser , volumeUp, humanOn, this.threadId, this.espqr, asistenteId, instrucciones, id_asistente, empresa_modelo, ruta_script).subscribe(
+    this.chatServicesService.sendMessageToBackend(message, idUser , volumeUp, humanOn, this.threadId, this.espqr, asistenteId, instrucciones, id_asistente, empresa_modelo, ruta_script, this.url_entorno).subscribe(
       (response: any) => {
         this.isTyping = false;
         this.isInputDisabled = false;

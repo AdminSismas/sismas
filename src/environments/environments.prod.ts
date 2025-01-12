@@ -28,6 +28,7 @@ export const environment = {
   bpm_bpmCore: '/bpm/bpm-core/',
   bpm_username_exists: '/exists/username/',
   bpm_users: '/bpmUser',
+  
   bpm_email_exists: '/exists/email/',
   bpm_individual_exists: '/exists/individual/',
   bpmAttachment: {
@@ -136,7 +137,7 @@ export const environment = {
   url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
-  valuation: '/valuation/'
+  valuation: '/valuation/',
   /* ------ W ------ */
   /* ------ X ------ */
   /* ------ Y ------ */
