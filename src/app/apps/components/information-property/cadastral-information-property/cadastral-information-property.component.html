@@ -60,6 +60,8 @@
       [schema]="schema"
       [executionId]="executionId"
       [typeInformation]="typeInformation"
+      (propertyRegistryOffice)="propertyRegistryOffice = $event"
+      (propertyRegistryNumber)="propertyRegistryNumber = $event"
       @fadeInUp
     ></vex-basic-property-information>
     @if (showInformationUnitProperty(baunitCondition)) {
@@ -140,6 +142,42 @@
       [typeInformation]="typeInformation"
       @fadeInUp
     ></vex-information-zones-property>
+    <vex-information-folio-property
+      [id]="'informationFolioPropertyComponent' + schema"
+      #informationFolioPropertyComponent{{schema}}
+      [expandedComponent]="false"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      [typeInformation]="typeInformation"
+      [propertyRegistryOffice]="propertyRegistryOffice"
+      [propertyRegistryNumber]="propertyRegistryNumber"
+      @fadeInUp
+    ></vex-information-folio-property>
+    <vex-information-source-property
+      [id]="'InformationSourcePropertyComponent' + schema"
+      #InformationSourcePropertyComponent{{schema}}
+      [expandedComponent]="false"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      [typeInformation]="typeInformation"
+      [propertyRegistryOffice]="propertyRegistryOffice"
+      [propertyRegistryNumber]="propertyRegistryNumber"
+      @fadeInUp
+    ></vex-information-source-property>
+    <vex-information-person-property
+      [id]="'informationPersonPropertyComponent' + schema"
+      #informationPersonPropertyComponent{{schema}}
+      [expandedComponent]="false"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      [typeInformation]="typeInformation"
+      [propertyRegistryOffice]="propertyRegistryOffice"
+      [propertyRegistryNumber]="propertyRegistryNumber"
+      @fadeInUp
+    ></vex-information-person-property>
   </div>
 </mat-dialog-content>
 
