@@ -1,0 +1,38 @@
+<mat-accordion
+  class="flex flex-col py-0 px-0 mb-2"
+  [id]="id"
+>
+  <mat-expansion-panel
+    (opened)="isExpandPanel((expandedComponent = true))"
+    [expanded]="expandedComponent"
+  >
+    <mat-expansion-panel-header
+      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
+    >
+      <vex-header-cadastral-information-property
+        label="Super notariado"
+        icon="mat:contacts"
+        id="super-notariado-property"
+      >
+      </vex-header-cadastral-information-property>
+    </mat-expansion-panel-header>
+    <div class="grid grid-cols-2 grid-flow-row gap-y-2 gap-x-4 py-4">
+      <div class="grid grid-cols-2 grid-flow-row">
+        <strong>Nombre:</strong>
+        <span>David</span>
+      </div>
+      <div class="grid grid-cols-2 grid-flow-row">
+        <strong>Apellido:</strong>
+        <span>Aristizabal</span>
+      </div>
+      <div class="grid grid-cols-2 grid-flow-row">
+        <strong>Tipo de documento:</strong>
+        <span>Cédula de ciudadanía</span>
+      </div>
+      <div class="grid grid-cols-2 grid-flow-row">
+        <strong>Número de documento:</strong>
+        <span>1053819554</span>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

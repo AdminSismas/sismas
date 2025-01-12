@@ -45,7 +45,6 @@ import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -57,7 +56,6 @@ import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    VexHighlightDirective,
     MatTableModule,
     MatSortModule,
     NgClass,
@@ -79,7 +77,7 @@ export class InformationSourcePropertyComponent {
   subject$: BehaviorSubject<DataSource[]> = new BehaviorSubject<DataSource[]>([]);
   data$: Observable<DataSource[]> = this.subject$.asObservable();
   allSourceSnr: DataSource[] = [];
-  
+
   @Input({ required: true }) id = '';
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) baunitId: string | null | undefined = null;
@@ -94,7 +92,7 @@ export class InformationSourcePropertyComponent {
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<DataSource>[] = TABLE_COLUMN_PROPERTIES_SOURCE;
-  
+
   dataSource: MatTableDataSource<DataSource> = new MatTableDataSource<DataSource>([]);
 //dataSource!: MatTableDataSource<DataSource>;
 
@@ -132,15 +130,17 @@ export class InformationSourcePropertyComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { currentValue: typeInformation } = changes['typeInformation'];
-    if (typeInformation === TYPEINFORMATION_VISUAL) {
-      this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_OPTION__5_7_10;
-      this.columns = TABLE_COLUMN_PROPERTIES_SOURCE;
-    } else {
-      this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_OPTION__5_7_10;
-      this.columns = TABLE_COLUMN_PROPERTIES_SOURCE;
+    if (changes['typeInformation']) {
+      const { currentValue: typeInformation } = changes['typeInformation'];
+      if (typeInformation === TYPEINFORMATION_VISUAL) {
+        this.pageSize = PAGE_SIZE_SORT;
+        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.columns = TABLE_COLUMN_PROPERTIES_SOURCE;
+      } else {
+        this.pageSize = PAGE_SIZE_SORT;
+        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.columns = TABLE_COLUMN_PROPERTIES_SOURCE;
+      }
     }
   }
 

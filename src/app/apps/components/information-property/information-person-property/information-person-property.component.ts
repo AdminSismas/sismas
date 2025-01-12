@@ -1,4 +1,4 @@
-import { AsyncPipe, NgForOf, NgIf, NgClass } from '@angular/common';
+import { NgForOf, NgIf, NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -21,7 +21,6 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -44,7 +43,6 @@ import { environment } from 'src/environments/environments';
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -56,7 +54,6 @@ import { environment } from 'src/environments/environments';
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    VexHighlightDirective,
     MatTableModule,
     MatSortModule,
     NgClass,
@@ -78,7 +75,7 @@ export class InformationPersonPropertyComponent {
   subject$: BehaviorSubject<DataPerson[]> = new BehaviorSubject<DataPerson[]>([]);
   data$: Observable<DataPerson[]> = this.subject$.asObservable();
   allPersonSnr: DataPerson[] = [];
-  
+
   @Input({ required: true }) id = '';
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) baunitId: string | null | undefined = null;
@@ -93,7 +90,7 @@ export class InformationPersonPropertyComponent {
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<DataPerson>[] = TABLE_COLUMN_PROPERTIES_PERSON;
-  
+
   dataSource: MatTableDataSource<DataPerson> = new MatTableDataSource<DataPerson>([]);
 //dataPerson!: MatTableDataPerson<DataPerson>;
 
@@ -131,15 +128,17 @@ export class InformationPersonPropertyComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { currentValue: typeInformation } = changes['typeInformation'];
-    if (typeInformation === TYPEINFORMATION_VISUAL) {
-      this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_OPTION__5_7_10;
-      this.columns = TABLE_COLUMN_PROPERTIES_PERSON;
-    } else {
-      this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_OPTION__5_7_10;
-      this.columns = TABLE_COLUMN_PROPERTIES_PERSON;
+    if (changes['typeInformation']) {
+      const { currentValue: typeInformation } = changes['typeInformation'];
+      if (typeInformation === TYPEINFORMATION_VISUAL) {
+        this.pageSize = PAGE_SIZE_SORT;
+        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.columns = TABLE_COLUMN_PROPERTIES_PERSON;
+      } else {
+        this.pageSize = PAGE_SIZE_SORT;
+        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.columns = TABLE_COLUMN_PROPERTIES_PERSON;
+      }
     }
   }
 

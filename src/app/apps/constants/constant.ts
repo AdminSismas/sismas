@@ -220,7 +220,7 @@ export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResp
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
-  
+
   {
     label: 'Nombre del trámite',
     property: 'processName',
@@ -245,8 +245,8 @@ export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResp
     type: 'currency',
     visible: true
   },
- 
- 
+
+
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] = [
   ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,
@@ -486,6 +486,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'basicPropertyInformationComponent'
   },
   {
+    label: 'Super notariado',
+    fragment: 'superNotariadoPropertyComponent'
+  },
+  {
     label: 'Información de unidad predial',
     fragment: 'informationUnitPropertyComponent'
   },
@@ -494,12 +498,12 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'administrativeSourcesComponent'
   },
   {
-    label: 'Direcciones',
-    fragment: 'informationAddressesPropertyComponent'
-  },
-  {
     label: 'Propietarios',
     fragment: 'informationPropertyOwnersComponent'
+  },
+  {
+    label: 'Direcciones',
+    fragment: 'informationAddressesPropertyComponent'
   },
   {
     label: 'Construcciones',
