@@ -504,6 +504,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
   {
     label: 'Zonas',
     fragment: 'informationZonesPropertyComponent'
+  },
+  {
+    label: 'Fotos',
+    fragment: 'photosComponent'
   }
 ];
 

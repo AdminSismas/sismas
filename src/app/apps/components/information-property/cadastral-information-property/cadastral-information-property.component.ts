@@ -39,6 +39,7 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { PhotosComponent } from '../photos/photos.component';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -78,7 +79,8 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
     PropertyAppraisalInformationComponent,
     MatFormFieldModule,
     InformationUnitPropertyComponent,
-    AdministrativeSourcesComponent
+    AdministrativeSourcesComponent,
+    PhotosComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -97,7 +99,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private administrativeSourcesComponent?: ElementRef;
-
+  
   @ViewChild(InformationAddressesPropertyComponent, {
     read: ElementRef,
     static: false
@@ -124,6 +126,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
   })
 
   private informationZonesPropertyComponent?: ElementRef;
+
+  @ViewChild(PhotosComponent, { read: ElementRef, static: false })
+  private photosComponent?: ElementRef;
 
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;

@@ -136,7 +136,14 @@ export const environment = {
   url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
-  valuation: '/valuation/'
+  valuation: '/valuation/',
+  /* ------ AWS Config ------ */
+  awsConfig: {
+    accessKeyId: 'AKIAW5WU5HQB6DQ52QVS',
+    secretAccessKey: '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',
+    region: 'us-east-1',
+    bucketName: 'geo-masora-bucket'
+  }
   /* ------ W ------ */
   /* ------ X ------ */
   /* ------ Y ------ */

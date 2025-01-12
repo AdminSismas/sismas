@@ -140,6 +140,17 @@
       [typeInformation]="typeInformation"
       @fadeInUp
     ></vex-information-zones-property>
+    <vex-photos
+    #photosComponent{{schema}}
+    [id]="'photos' + schema"
+    [expandedComponent]="false"
+    [baunitId]="baunitId"
+    [schema]="schema"
+    [executionId]="executionId"
+    @fadeInUp
+    [typeInformation]="typeInformation"
+  >
+  </vex-photos>
   </div>
 </mat-dialog-content>
 
