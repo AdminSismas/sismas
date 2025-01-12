@@ -42,6 +42,7 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
 import { InformationFolioPropertyComponent } from "../information-folio-property/information-folio-property.component";
 import { InformationSourcePropertyComponent } from "../information-source-property/information-source-property.component";
 import { InformationPersonPropertyComponent } from "../information-person-property/information-person-property.component";
+import { SuperNotariadoPropertyComponent } from "../super-notariado-property/super-notariado-property.component";
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -77,14 +78,14 @@ import { InformationPersonPropertyComponent } from "../information-person-proper
     NgIf,
     InformationPropertyOwnersComponent,
     InformationConstructionsPropertyComponent,
-    InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
     MatFormFieldModule,
     InformationUnitPropertyComponent,
     AdministrativeSourcesComponent,
     InformationFolioPropertyComponent,
     InformationSourcePropertyComponent,
-    InformationPersonPropertyComponent
+    InformationPersonPropertyComponent,
+    SuperNotariadoPropertyComponent
 ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -93,6 +94,11 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private basicPropertyInformationComponent?: ElementRef;
+  @ViewChild(SuperNotariadoPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private superNotariadoPropertyComponent?: ElementRef;
   @ViewChild(InformationUnitPropertyComponent, {
     read: ElementRef,
     static: false
@@ -103,17 +109,16 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private administrativeSourcesComponent?: ElementRef;
-
-  @ViewChild(InformationAddressesPropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private informationAddressesPropertyComponent?: ElementRef;
   @ViewChild(InformationPropertyOwnersComponent, {
     read: ElementRef,
     static: false
   })
   private informationPropertyOwnersComponent?: ElementRef;
+  @ViewChild(InformationAddressesPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationAddressesPropertyComponent?: ElementRef;
   @ViewChild(InformationConstructionsPropertyComponent, {
     read: ElementRef,
     static: false
@@ -167,7 +172,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
    constructor(private informationPropertyService: InformationPropertyService){ }
 
-  
+
 
   ngOnInit(): void {
     if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
