@@ -8,18 +8,19 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import { Observable } from 'rxjs';
 
 // Vex
 
 // Material
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import {
   PAGE,
   PAGE_SIZE,
@@ -27,12 +28,14 @@ import {
 } from 'src/app/apps/constants/constant';
 
 // Custom
+import { CreateSignatureComponent } from './create-signature/create-signature.component';
 import { DIGITALIZED_SIGNATURES_COLUMNS } from 'src/app/apps/constants/digitalized-signatures.constants';
-import { UsersSignatures } from 'src/app/apps/interfaces/digitalized-signatures';
+import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { PageSortByData } from 'src/app/apps/interfaces/page-sortBy-data.model';
-import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { UsersSignatures } from 'src/app/apps/interfaces/digitalized-signatures';
 
 @Component({
   selector: 'table-digitalized-signatures',
@@ -46,8 +49,9 @@ import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
     MatMenuModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
     // Custom
+    SweetAlert2Module
   ],
   templateUrl: './table-digitalized-signatures.component.html',
   styles: ``
@@ -69,8 +73,10 @@ export class TableDigitalizedSignaturesComponent
   public pageSizeOptions: number[] = [...PAGE_SIZE_OPTION, 1];
   public totalElements = 0;
   public contentInformation!: InformationPegeable;
+
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('confirmDialog') private confirmDialog!: SwalComponent;
 
   public actionsBtn = computed(() => {
     return [
@@ -80,16 +86,17 @@ export class TableDigitalizedSignaturesComponent
         action: (row: UserDetails) => this.editingDigitalizedSignatures(row)
       },
       {
-        icon: 'mat:visibility',
-        label: 'Ver Detalles',
-        action: (row: UserDetails) => this.viewDetailsDigitalizedSignatures(row)
+        icon: 'mat:delete',
+        label: 'Eliminar',
+        action: (row: UserDetails) => this.deleteDigitalizedSignature(row)
       }
     ];
   });
 
   constructor(
     private snackbar: MatSnackBar,
-    private digitalizedSignaturesService: DigitalizedSignaturesService
+    private digitalizedSignaturesService: DigitalizedSignaturesService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -118,8 +125,8 @@ export class TableDigitalizedSignaturesComponent
             return {
               ...user,
               enabled: user.enabled ? 'Activo' : 'Inactivo'
-            }
-          })
+            };
+          });
           this.dataSource.data = content;
           this.totalElements = result.totalElements;
         }
@@ -142,14 +149,44 @@ export class TableDigitalizedSignaturesComponent
   }
 
   editingDigitalizedSignatures(row: UserDetails) {
-    this.snackbar.open('Editando firma...', 'Aceptar', { duration: 3000 });
-    console.log('Editando firma...', row);
+    console.log(row);
+    this.dialog
+      .open(CreateSignatureComponent, {
+        data: {
+          username: row.username
+        }
+      })
+      .afterClosed()
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.snackbar.open('Editando firma...', 'Aceptar', {
+            duration: 3000
+          });
+          this.getDataDigitalizedSignatures();
+        }
+      });
   }
 
-  viewDetailsDigitalizedSignatures(row: UserDetails) {
-    this.snackbar.open('Ver detalles de la firma...', 'Aceptar', {
-      duration: 3000
+  deleteDigitalizedSignature(row: UserDetails) {
+    this.confirmDialog.fire().then((result) => {
+      if (result.isConfirmed) {
+        this.digitalizedSignaturesService
+          .deleteSignature(row.userId)
+          .subscribe({
+            next: () => {
+              this.snackbar.open('Eliminando firma...', 'Aceptar', {
+                duration: 3000
+              });
+              this.getDataDigitalizedSignatures();
+            },
+            error: (error) => {
+              this.snackbar.open('Error al eliminar la firma', 'CLOSE', {
+                duration: 3000
+              });
+              throw error;
+            }
+          });
+      }
     });
-    console.log('Ver detalles de la firma...', row);
   }
 }

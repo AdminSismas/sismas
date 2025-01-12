@@ -5,6 +5,8 @@
     <dynamic-forms
       [inputs]="searchInputs"
       (formReady)="searchForm = $event"
+      [disabled]="!disableCreateForm"
+      [initValues]="data"
     ></dynamic-forms>
     <button
       mat-flat-button

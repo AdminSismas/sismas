@@ -53,12 +53,13 @@ export class DigitalizedSignaturesComponent {
   ) {}
 
   openDialogCreateSignature() {
-    this.snackbar.open('Agregando firma...', 'Aceptar', { duration: 3000 });
     this.dialog.open(CreateSignatureComponent)
       .afterClosed()
-      .subscribe(() => {
-        this.snackbar.open('Firma agregada', 'CLOSE', { duration: 3000 });
-        this.tableDigitalizedSignaturesComponent.getDataDigitalizedSignatures();
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.snackbar.open('Firma agregada', 'Aceptar', { duration: 3000 });
+          this.tableDigitalizedSignaturesComponent.getDataDigitalizedSignatures();
+        }
       });
   }
 }

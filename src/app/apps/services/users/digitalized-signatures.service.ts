@@ -1,8 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment as envi } from 'src/environments/environments';
 import { UsersSignatures } from '../../interfaces/digitalized-signatures';
 import { Observable } from 'rxjs';
+import { UserDetails } from '../../interfaces/user-details/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,9 +38,21 @@ export class DigitalizedSignaturesService {
     return this.http.get<UsersSignatures>(url, { params });
   }
 
-  addSignature(userId: number, formData: FormData): Observable<any> {
+  addSignature(userId: number, formData: FormData): Observable<UserDetails[]> {
     const url = `${this.base_url}/${userId}${envi.signatureUrl}`;
 
-    return this.http.patch<any>(url, formData);
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' })
+
+    return this.http.patch<UserDetails[]>(url, formData, { headers });
+  }
+
+  deleteSignature(userId: number): Observable<UserDetails[]> {
+    const url = `${this.base_url}/${userId}${envi.signatureUrl}`;
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' })
+
+    const formData = new FormData();
+    formData.append('file', new Blob() ,'NULL');
+
+    return this.http.patch<UserDetails[]>(url, formData, { headers });
   }
 }
