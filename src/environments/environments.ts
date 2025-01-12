@@ -140,6 +140,10 @@ export const environment = {
   user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/',
+  logo: 'assets/img/illustrations/it_support.svg',
+  video: 'assets/video/desarrollo.mp4',
+  titulo: 'Catastro Predial',
+
   /* ------ W ------ */
   withSignaturesUsers: '/with-signature',
   withoutSignaturesUsers: '/without-signature',
