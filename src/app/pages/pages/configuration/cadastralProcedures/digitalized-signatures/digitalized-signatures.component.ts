@@ -1,5 +1,5 @@
 // Angular framework
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 // Vex
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -44,6 +44,7 @@ import { Observable } from 'rxjs';
 export class DigitalizedSignaturesComponent {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  @ViewChild(TableDigitalizedSignaturesComponent) tableDigitalizedSignaturesComponent!: TableDigitalizedSignaturesComponent;
 
   constructor (
     private snackbar: MatSnackBar,
@@ -53,6 +54,11 @@ export class DigitalizedSignaturesComponent {
 
   openDialogCreateSignature() {
     this.snackbar.open('Agregando firma...', 'Aceptar', { duration: 3000 });
-    this.dialog.open(CreateSignatureComponent);
+    this.dialog.open(CreateSignatureComponent)
+      .afterClosed()
+      .subscribe(() => {
+        this.snackbar.open('Firma agregada', 'CLOSE', { duration: 3000 });
+        this.tableDigitalizedSignaturesComponent.getDataDigitalizedSignatures();
+      });
   }
 }

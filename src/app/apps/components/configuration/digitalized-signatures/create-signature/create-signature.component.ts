@@ -12,7 +12,6 @@ import {
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 
 // Custom
@@ -20,6 +19,8 @@ import { DynamicFormsComponent } from '../../../dynamic-forms/dynamic-forms.comp
 import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
 import { CREATE_SIGNATURE_INPUTS, SEARCH_INPUTS } from 'src/app/apps/constants/digitalized-signatures.constants';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'vex-create-signature',
@@ -50,7 +51,9 @@ export class CreateSignatureComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UserService,
-    private dialogRef: MatDialogRef<CreateSignatureComponent>
+    private dialogRef: MatDialogRef<CreateSignatureComponent>,
+    private digitalizedSignaturesService: DigitalizedSignaturesService,
+    private snackbar: MatSnackBar
   ) {}
 
   searchUser() {
@@ -64,6 +67,20 @@ export class CreateSignatureComponent {
   }
 
   createSignature() {
-    this.dialogRef.close(this.createForm.value);
+    const signatureFile = this.createForm.get('signature')?.value;
+    const formData = new FormData();
+    formData.append('file', signatureFile);
+
+    this.digitalizedSignaturesService.addSignature(this!.userId!, formData)
+      .subscribe({
+        next: () => {
+          this.dialogRef.close();
+        },
+        error: (error) => {
+          this.snackbar.open('Error al agregar la firma', 'CLOSE', { duration: 3000 });
+          throw error;
+        }
+      });
+
   }
 }

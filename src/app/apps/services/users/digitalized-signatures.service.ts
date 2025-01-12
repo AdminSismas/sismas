@@ -36,4 +36,10 @@ export class DigitalizedSignaturesService {
 
     return this.http.get<UsersSignatures>(url, { params });
   }
+
+  addSignature(userId: number, formData: FormData): Observable<any> {
+    const url = `${this.base_url}/${userId}${envi.signatureUrl}`;
+
+    return this.http.patch<any>(url, formData);
+  }
 }

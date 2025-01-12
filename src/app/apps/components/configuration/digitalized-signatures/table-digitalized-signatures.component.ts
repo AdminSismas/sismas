@@ -110,8 +110,6 @@ export class TableDigitalizedSignaturesComponent
   }
 
   getDataDigitalizedSignatures() {
-    const startIndex = this.page * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
     this.digitalizedSignaturesService
       .getUsersWithSignatures(this.page, this.pageSize)
       .subscribe({

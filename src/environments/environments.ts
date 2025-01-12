@@ -120,8 +120,7 @@ export const environment = {
   rrright: '/rrright/',
   rural_zones: '/ccZonaHomoFisicaRu',
   /* ------ S ------ */
-  withSignaturesUsers: '/with-signature',
-  withoutSignaturesUsers: '/without-signature',
+  signatureUrl: '/signatureUrl',
   schemas: {
     hist: 'hist',
     main: 'main',
@@ -140,8 +139,10 @@ export const environment = {
   url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
-  valuation: '/valuation/'
+  valuation: '/valuation/',
   /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   /* ------ X ------ */
   /* ------ Y ------ */
   /* ------ Z ------ */
