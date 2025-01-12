@@ -11,6 +11,9 @@ import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-in
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
 import { TaskResponseModel } from '../interfaces/task-response.model';
 import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
+import { DataFolio } from '../interfaces/information-property/snr-folio-info';
+import { DataSource } from '../interfaces/information-property/snr-source-info';
+import { DataPerson } from '../interfaces/information-property/snr-person-info';
 
 export const GUION = ' - ';
 export const SPACE = ' ';
@@ -39,6 +42,11 @@ export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [5, PAGE_OPTION_UNIQUE_7, PAGE_OPTION_UNIQUE, 20, 50];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
+
+export const PAGE_SIZE_SORT_FOLIO = 1;
+export const PAGE_SIZE_OPTION_FOLIO: number[] = [2, 5];
+
+
 
 export const PANEL_ASSIGNED_TASKS = "assignedTasks";
 export const PANEL_DEVOLUTION_TASKS = "returnedTasks";
@@ -504,7 +512,19 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
   {
     label: 'Zonas',
     fragment: 'informationZonesPropertyComponent'
-  }
+  },
+  {
+    label: 'Folio',
+    fragment: 'informationFolioPropertyComponent'
+  },
+  {
+    label: 'Fuente',
+    fragment: 'informationSourcePropertyComponent'
+  },
+  {
+    label: 'Persona',
+    fragment: 'informationPersonPropertyComponent'
+  },
 ];
 
 export const TABLE_COLUMN_BASIC_PRINCIPANTS: TableColumn<ProcessParticipant>[] = [
@@ -590,4 +610,165 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+];
+export const TABLE_COLUMN_PROPERTIES_FOLIO: TableColumn<DataFolio>[] = [
+  {
+    label: 'Matricula de matriz',
+    property: 'matriculaMatriz',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Matricula de segregados',
+    property: 'matriculaSegregados',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Zona',
+    property: 'zona',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Dirección',
+    property: 'direccion',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Fecha de apertura',
+    property: 'fechaApertura',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Estado',
+    property: 'estado',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  }
+];
+
+export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
+  {
+    label: 'Anotación',
+    property: 'anotacion',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Fuente Administrativa Tipo',
+    property: 'fuenteAdminTipo',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Número de Documento Fuente Administrativa',
+    property: 'fuenteAdminDocNumero',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Ente Emisor',
+    property: 'enteEmisor',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Oficina de Origen',
+    property: 'oficinaOrigen',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Ciudad de Origen',
+    property: 'ciudadOrigen',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Código de Naturaleza Jurídica',
+    property: 'codigoNatuJuridica',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Naturaleza Jurídica',
+    property: 'naturalezaJuridica',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Valor de Transacción',
+    property: 'valorTransaccion',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Fecha de Documento Fuente Administrativa',
+    property: 'fuenteAdminDocFecha',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Fecha',
+    property: 'fecha',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  }
+];
+export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
+  {
+    label: 'Anotación',
+    property: 'anotacion',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Tipo de Persona',
+    property: 'tipoPersona',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Número de Documento',
+    property: 'nroDocumento',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Nombre Completo',
+    property: 'nombreCompleto',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Información Complementaria',
+    property: 'infoComplementaria',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  }
 ];

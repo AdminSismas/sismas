@@ -49,6 +49,7 @@ import {
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { InformationFolioPropertyComponent } from "../../information-property/information-folio-property/information-folio-property.component";
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -66,8 +67,9 @@ import { MatDividerModule } from '@angular/material/divider';
     NgClass,
     MatMenuModule,
     MatDialogModule,
-    MatDividerModule
-  ],
+    MatDividerModule,
+
+],
   templateUrl: './table-alfa-main.component.html',
   styleUrl: './table-alfa-main.component.scss'
 })
@@ -208,6 +210,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
         {
           error: (err: any) => this.messageChangesNoAvailable(),
           next: (result: DifferenceChanges[]) => {
+            console.log("table-alfa-main:::: ",result);
             this.openDifferenceChangesProperty(
               result, this.executionId, operation?.baunitHead?.baunitIdE);
           }

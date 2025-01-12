@@ -39,6 +39,9 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { InformationFolioPropertyComponent } from "../information-folio-property/information-folio-property.component";
+import { InformationSourcePropertyComponent } from "../information-source-property/information-source-property.component";
+import { InformationPersonPropertyComponent } from "../information-person-property/information-person-property.component";
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -78,8 +81,11 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
     PropertyAppraisalInformationComponent,
     MatFormFieldModule,
     InformationUnitPropertyComponent,
-    AdministrativeSourcesComponent
-  ]
+    AdministrativeSourcesComponent,
+    InformationFolioPropertyComponent,
+    InformationSourcePropertyComponent,
+    InformationPersonPropertyComponent
+]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
   @ViewChild(BasicPropertyInformationComponent, {
@@ -122,8 +128,22 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
-
   private informationZonesPropertyComponent?: ElementRef;
+  @ViewChild(InformationFolioPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationFolioPropertyComponent?: ElementRef;
+  @ViewChild(InformationSourcePropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationSourcePropertyComponent?: ElementRef;
+  @ViewChild(InformationPersonPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationPersonPropertyComponent?: ElementRef;
 
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
@@ -139,6 +159,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
   idContainer = '';
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+
+  propertyRegistryOffice: string | null | undefined = null;
+  propertyRegistryNumber: string | null | undefined = null;
+
   public viewProperties = false;
 
    constructor(private informationPropertyService: InformationPropertyService){ }

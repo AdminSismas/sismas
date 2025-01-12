@@ -128,6 +128,7 @@ export const environment = {
   },
   synchronization: '/synchronization',
   synchronize: '/synchronize',
+  snr: '/snr',
   /* ------ T ------ */
   temporal: '/temporal/',
   /* ------ U ------ */
