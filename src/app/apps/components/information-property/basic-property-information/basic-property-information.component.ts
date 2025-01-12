@@ -68,8 +68,8 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input() propertyUnit = false;
   @Input() typeInformation = 'visualization';
 
-  @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
   @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
+  @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private informationPropertyService:InformationPropertyService,

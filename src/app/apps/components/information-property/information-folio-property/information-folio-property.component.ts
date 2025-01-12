@@ -235,7 +235,7 @@ export class InformationFolioPropertyComponent
   getDataSourceFolio(orip: string, fmi: string) {
     this.snrService.getFolioByOripAndFmi(orip, fmi).subscribe({
       next: (response) => {
-        this.allFolio = response;
+        this.allFolio = [response];
         this.subject$.next(this.allFolio.reverse());
         this.cdr.markForCheck();
       },

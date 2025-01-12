@@ -18,10 +18,10 @@ export class SnrService {
     ) { }
 
     /* GET */
-    getFolioByOripAndFmi(orip: string, fmi: string): Observable<DataFolio[]> {
+    getFolioByOripAndFmi(fmi: string, orip: string): Observable<DataFolio> {
         const url = `${this.base_url}/folio?orip=${orip}&fmi=${fmi}`;
-        
-        return this.http.get<DataFolio[]>(url).pipe(
+
+        return this.http.get<DataFolio>(url).pipe(
             catchError(error => {
                 console.error('Error al obtener la información de folio:', error);
                 return throwError(() => error); // Ajuste para TypeScript estricto
@@ -29,9 +29,9 @@ export class SnrService {
         );
     }
 
-    getSourceByOripAndFmi(orip: string, fmi: string): Observable<DataSource[]> {
+    getSourceByOripAndFmi(fmi: string, orip: string): Observable<DataSource[]> {
         const url = `${this.base_url}/fuente?orip=${orip}&fmi=${fmi}`;
-        
+
         return this.http.get<DataSource[]>(url).pipe(
             catchError(error => {
                 console.error('Error al obtener la información de Fuente:', error);
@@ -40,9 +40,9 @@ export class SnrService {
         );
     }
 
-    getPersonByOripAndFmi(orip: string, fmi: string): Observable<DataPerson[]> {
+    getPersonByOripAndFmi(fmi: string, orip: string): Observable<DataPerson[]> {
         const url = `${this.base_url}/persona?orip=${orip}&fmi=${fmi}`;
-        
+
         return this.http.get<DataPerson[]>(url).pipe(
             catchError(error => {
                 console.error('Error al obtener la información de Persona:', error);

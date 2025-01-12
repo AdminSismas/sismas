@@ -1,61 +1,30 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-
-export class DataFolio {
-
-    fid?:                    number;
-    orip?:                   string;
-    fmi?:                    string;
-    fechaApertura?:          string;
-    estado?:                 string;
-    matriculaMatriz?:        string;
-    matriculaSegregados?:    string;
-    direccion?:              string;
-    zona?:                   string;
-
-
-    constructor(DataFolio?: any) {
-        this.fid = DataFolio.fid ?? 0;
-        this.orip = DataFolio.orip ?? '';
-        this.fmi = DataFolio.fmi ?? '';
-        this.fechaApertura = DataFolio.fechaApertura ?? '';
-        this.estado = DataFolio.estado ?? '';
-        this.matriculaMatriz = DataFolio.matriculaMatriz ?? '';
-        this.matriculaSegregados = DataFolio.matriculaSegregados ?? '';
-        this.direccion = DataFolio.direccion ?? '';
-        this.zona = DataFolio.zona ?? '';
-    }
+export interface DataFolio {
+  fid?: number;
+  orip?: string;
+  fmi?: string;
+  fechaApertura?: string;
+  estado?: string;
+  matriculaMatriz?: string;
+  matriculaSegregados?: string;
+  direccion?: string;
+  zona?: string;
 }
 
+export class InfoFolio {
+  matriculaMatriz: string;
+  matriculaSegregados: string;
+  zona: string;
+  direccion: string;
+  fechaApertura: string;
+  estado: string;
 
-@Injectable({
-    providedIn: 'root',
-})
-export class RegisDataPqrsfService {
-    private dataSubject = new BehaviorSubject<DataFolio>(new DataFolio({}));
-    data$ = this.dataSubject.asObservable();
-
-    constructor() {}
-
-    setData(data: DataFolio) {
-    this.dataSubject.next(data);
-    }
-
-    getData() {
-    return this.dataSubject.value;
-    }
+  constructor(obj: DataFolio) {
+    this.matriculaMatriz = obj.matriculaMatriz as string;
+    this.matriculaSegregados = obj.matriculaSegregados as string;
+    this.zona = obj.zona as string;
+    this.direccion = obj.direccion as string;
+    this.fechaApertura = obj.fechaApertura as string;
+    this.estado = obj.estado as string;
+  }
 }
-
-
-/* export interface DataFolio {
-    fid?:                    number,
-    orip?:                   string,
-    fmi?:                    string,
-    fechaApertura?:          string,
-    estado?:                 string,
-    matriculaMatriz?:        string,
-    matriculaSegregados?:    string,
-    direccion?:              string,
-    zona?:                   string
-} */
 
