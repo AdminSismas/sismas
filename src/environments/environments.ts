@@ -86,6 +86,7 @@ export const environment = {
   /* ------ J ------ */
   /* ------ K ------ */
   /* ------ L ------ */
+  logo: 'assets/img/illustrations/it_support.svg',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
@@ -120,17 +121,18 @@ export const environment = {
   rrright: '/rrright/',
   rural_zones: '/ccZonaHomoFisicaRu',
   /* ------ S ------ */
-  signatureUrl: '/signatureUrl',
   schemas: {
     hist: 'hist',
     main: 'main',
     temp: 'temp'
   },
+  signatureUrl: '/signatureUrl',
+  snr: '/snr',
   synchronization: '/synchronization',
   synchronize: '/synchronize',
-  snr: '/snr',
   /* ------ T ------ */
   temporal: '/temporal/',
+  titulo: 'Desarrollo',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
@@ -141,9 +143,7 @@ export const environment = {
   user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/',
-  logo: 'assets/img/illustrations/it_support.svg',
   video: 'assets/video/desarrollo.mp4',
-  titulo: 'Catastro Predial',
 
   /* ------ W ------ */
   withSignaturesUsers: '/with-signature',

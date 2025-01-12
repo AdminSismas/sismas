@@ -86,6 +86,7 @@ export const environment = {
   /* ------ J ------ */
   /* ------ K ------ */
   /* ------ L ------ */
+  logo: 'assets/img/logo/logo_manizales.png',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
@@ -96,8 +97,8 @@ export const environment = {
   number: 'number',
   /* ------ O ------ */
   operations: '/operations',
-  password: '/password',
   /* ------ P ------ */
+  password: '/password',
   port: '5001',
   post_path_viewer: 'rest/config/setParams',
   production: true,
@@ -125,10 +126,13 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  signatureUrl: '/signatureUrl',
+  snr: '/snr',
   synchronization: '/synchronization',
   synchronize: '/synchronize',
   /* ------ T ------ */
   temporal: '/temporal/',
+  titulo: 'Manizales',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
@@ -139,10 +143,10 @@ export const environment = {
   user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/',
-  logo: 'assets/img/logo/logo_manizales.png',
   video: 'assets/video/manizales.mp4',
-  titulo: 'Manizales',
   /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   /* ------ X ------ */
   /* ------ Y ------ */
   /* ------ Z ------ */

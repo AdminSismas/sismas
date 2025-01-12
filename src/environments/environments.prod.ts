@@ -28,7 +28,7 @@ export const environment = {
   bpm_bpmCore: '/bpm/bpm-core/',
   bpm_username_exists: '/exists/username/',
   bpm_users: '/bpmUser',
-  
+  bpm_user_info: '/bpmUser/username/',
   bpm_email_exists: '/exists/email/',
   bpm_individual_exists: '/exists/individual/',
   bpmAttachment: {
@@ -86,6 +86,7 @@ export const environment = {
   /* ------ J ------ */
   /* ------ K ------ */
   /* ------ L ------ */
+  logo: 'assets/img/illustrations/it_support.svg',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
@@ -97,6 +98,7 @@ export const environment = {
   /* ------ O ------ */
   operations: '/operations',
   /* ------ P ------ */
+  password: '/password',
   port: '5001',
   post_path_viewer: 'rest/config/setParams',
   production: true,
@@ -124,10 +126,13 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  signatureUrl: '/signatureUrl',
+  snr: '/snr',
   synchronization: '/synchronization',
   synchronize: '/synchronize',
   /* ------ T ------ */
   temporal: '/temporal/',
+  titulo: 'Producción',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
@@ -138,7 +143,10 @@ export const environment = {
   user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/',
+  video: 'assets/video/desarrollo.mp4',
   /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   /* ------ X ------ */
   /* ------ Y ------ */
   /* ------ Z ------ */
