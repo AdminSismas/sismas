@@ -120,6 +120,7 @@ export const environment = {
   rrright: '/rrright/',
   rural_zones: '/ccZonaHomoFisicaRu',
   /* ------ S ------ */
+  signatureUrl: '/signatureUrl',
   schemas: {
     hist: 'hist',
     main: 'main',
@@ -144,6 +145,8 @@ export const environment = {
   titulo: 'Catastro Predial',
 
   /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   /* ------ X ------ */
   /* ------ Y ------ */
   /* ------ Z ------ */
