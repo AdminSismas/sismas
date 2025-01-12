@@ -11,6 +11,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { COLUMNS_ADMINISTRATIVE_SOURCES } from 'src/app/apps/constants/administrative-source.constants';
+import { TableColumn } from '@vex/interfaces/table-column.interface';
 
 @Component({
   selector: 'vex-administrative-sources',
@@ -38,17 +40,9 @@ export class AdministrativeSourcesComponent implements OnInit {
 
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
   public selectedFuente?: AdministrativeSource;
-
-  public displayedColumns: string[] = [
-    'domFuenteAdministrativaTipo',
-    'fechaDocumentoFuente',
-    'numeroFuente',
-    'enteEmisor',
-    'actions'
-  ];
-
   public dataSource: MatTableDataSource<AdministrativeSource> = new MatTableDataSource<AdministrativeSource>([]);
-
+  public columns: TableColumn<AdministrativeSource>[] = COLUMNS_ADMINISTRATIVE_SOURCES;
+  public displayedColumns: string[] = [];
   public actionBtns = computed(() => {
     return [
       {
@@ -64,6 +58,7 @@ export class AdministrativeSourcesComponent implements OnInit {
     ];
   });
 
+
   constructor(
     private administrativeSourcesService: AdministrativeSourcesService,
     private dialog: MatDialog,
@@ -71,6 +66,7 @@ export class AdministrativeSourcesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.displayedColumns = this.columns.map((column) => column.property);
     if (this.typeInformation !== 'edition') {
       this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions');
     }
