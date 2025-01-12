@@ -2,7 +2,7 @@ import { Component, computed, Input, OnInit, TemplateRef, ViewChild } from '@ang
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
 import { AdministrativeSource, CreateAdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, UpdateAdministrativeSource } from 'src/app/apps/interfaces/information-property/administrative-source';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,7 +47,7 @@ export class AdministrativeSourcesComponent implements OnInit {
     'actions'
   ];
 
-  public dataSource: AdministrativeSource[] = [];
+  public dataSource: MatTableDataSource<AdministrativeSource> = new MatTableDataSource<AdministrativeSource>([]);
 
   public actionBtns = computed(() => {
     return [
@@ -81,13 +81,13 @@ export class AdministrativeSourcesComponent implements OnInit {
     if (this.schema === 'temp') {
       this.administrativeSourcesService.getAdministrativeSourcesTemp(this.baunitId as string, this.executionId as string)
         .subscribe(data => {
-          this.dataSource = data;
+          this.dataSource.data = data;
         });
     }
     else if (this.schema === 'main') {
       this.administrativeSourcesService.getAdministrativeSourcesMain(this.baunitId as string)
         .subscribe(data => {
-          this.dataSource = data;
+          this.dataSource.data = data;
         });
     }
   }
