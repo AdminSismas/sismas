@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { DataFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
@@ -40,10 +40,15 @@ export class SnrService {
         );
     }
 
-    getPersonByOripAndFmi(fmi: string, orip: string): Observable<DataPerson[]> {
-        const url = `${this.base_url}/persona?orip=${orip}&fmi=${fmi}`;
+    getPersonByOripAndFmi(fmi: string, orip: string, anotacion: string): Observable<DataPerson[]> {
+        const url = `${this.base_url}/persona`;
 
-        return this.http.get<DataPerson[]>(url).pipe(
+        const params = new HttpParams()
+          .set('orip', orip)
+          .set('fmi', fmi)
+          .set('anotacion', anotacion);
+
+        return this.http.get<DataPerson[]>(url, { params }).pipe(
             catchError(error => {
                 console.error('Error al obtener la información de Persona:', error);
                 return throwError(() => error); // Ajuste para TypeScript estricto

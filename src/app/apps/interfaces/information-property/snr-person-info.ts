@@ -27,6 +27,7 @@ export class DataPerson {
 export interface DialogPersonData {
       propertyRegistryOffice: string | null | undefined;
       propertyRegistryNumber: string | null | undefined;
+      anotacion: string | null | undefined;
       baunitId: string | null | undefined;
       schema: string;
       executionId: string | null | undefined;

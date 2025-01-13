@@ -102,8 +102,7 @@ export class InformationPersonPropertyComponent {
 
   /* ========================== CONSTRUCTOR ========================== */
   constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public data: DialogPersonData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogPersonData,
     private readonly layoutService: VexLayoutService,
     private snrService: SnrService,
     private cdr: ChangeDetectorRef
@@ -173,7 +172,8 @@ export class InformationPersonPropertyComponent {
     }
     this.getDataSourcePerson(
       this.data.propertyRegistryOffice as string,
-      this.data.propertyRegistryNumber as string
+      this.data.propertyRegistryNumber as string,
+      this.data.anotacion as string
     );
   }
 
@@ -190,8 +190,8 @@ export class InformationPersonPropertyComponent {
   }
 
   /* ------------------------ Meth. Services ------------------------ */
-  getDataSourcePerson(orip: string, fmi: string) {
-    this.snrService.getPersonByOripAndFmi(orip, fmi).subscribe({
+  getDataSourcePerson(orip: string, fmi: string, anotacion: string) {
+    this.snrService.getPersonByOripAndFmi(orip, fmi, anotacion).subscribe({
       next: (response) => {
         this.allPersonSnr = response;
         this.subject$.next(this.allPersonSnr.reverse());

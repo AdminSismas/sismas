@@ -202,6 +202,7 @@ export class InformationSourcePropertyComponent {
       data: {
         propertyRegistryOffice: this.propertyRegistryOffice,
         propertyRegistryNumber: this.propertyRegistryNumber,
+        anotacion: row.anotacion,
         baunitId: this.baunitId,
         schema: this.schema,
         executionId: this.executionId,
