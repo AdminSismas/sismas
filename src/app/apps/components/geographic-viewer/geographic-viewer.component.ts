@@ -30,7 +30,6 @@ import { BaunitHead } from '../../interfaces/information-property/baunit-head.mo
 import { ContentInfoSchema } from '../../interfaces/content-info-schema';
 import { environment as envi } from '../../../../environments/environments';
 import { InformationGeographicService } from '../../services/territorial-organization/information-geographic.service';
-import { LoadingAppComponent } from '../loading-app/loading-app.component';
 import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-geographic-vie';
 
 @Component({
