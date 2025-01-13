@@ -1,5 +1,7 @@
 import { Validators } from "@angular/forms";
 import { JSONInput } from "../interfaces/dynamic-forms";
+import { TableColumn } from "@vex/interfaces/table-column.interface";
+import { AdministrativeSource } from "../interfaces/information-property/administrative-source";
 
 export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
   {
@@ -43,4 +45,49 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     type: 'date',
     validators: [Validators.required],
   },
+];
+
+export const COLUMNS_ADMINISTRATIVE_SOURCES: TableColumn<AdministrativeSource>[] = [
+  {
+    label: 'Tipo fuente administrativa',
+    property: 'domFuenteAdministrativaTipo',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Fecha',
+    property: 'fechaDocumentoFuente',
+    type: 'date',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Número',
+    property: 'numeroFuente',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Ente emisor',
+    property: 'domEnteEmisor',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Oficina',
+    property: 'oficinaOrigen',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Ciudad de origen',
+    property: 'ciudadOrigen',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  }
 ];

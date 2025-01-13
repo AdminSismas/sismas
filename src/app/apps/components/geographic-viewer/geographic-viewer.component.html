@@ -1,5 +1,4 @@
 <div class="flex items-center" mat-dialog-title>
-  <h2 class="headline m-0 flex-auto">{{ dialogTitle }}</h2>
   <button
     class="text-secondary"
     mat-dialog-close
@@ -10,41 +9,30 @@
 </div>
 <mat-divider class="text-border opacity-0"></mat-divider>
 
-
-<div *ngIf="hasError; else loadingOrFormContent">
-  <mat-dialog-content>
-    <p>{{ errorMessage }}</p>
+<form #postForm id="postForm" action="" method="POST" target="_blank">
+  <mat-dialog-content class="flex flex-col overflow-hidden">
+    <vex-page-layout class="overflow-hidden">
+      <vex-page-layout-content class="container-fluid p-0 overflow-hidden opacity-0">
+        <div class="flex flex-col sm:flex-row">
+          <input type="text" id="page" name="page" value="../../#/viewer/config" />
+          <input type="text" id="map" name="map" value="" />
+          <input type="text" id="featureinfo" name="featureinfo" value="" />
+          <input type="text" id="bbox" name="bbox" value="" />
+          <input type="text" id="center" name="center" value="" />
+          <input type="text" id="zoom" name="zoom" value="30" />
+          <textarea id="actions" name="actions"></textarea>
+        </div>
+      </vex-page-layout-content>
+    </vex-page-layout>
   </mat-dialog-content>
-</div>
+</form>
 
-<ng-template #loadingOrFormContent>
-  <div *ngIf="isLoading; else formContent">
-    <mat-dialog-content class="flex justify-center items-center">
-      <vex-loading-app
-        #vexSplashScreen
-        idLoading="vexSplashScreen"
-        [showImage]="true">
-      </vex-loading-app>
-    </mat-dialog-content>
-  </div>
-</ng-template>
+<swal
+  #ErrorMap
+  title="Error"
+  icon="error"
+  text="No se pudo cargar el mapa"
+  [showConfirmButton]="false"
+  [timer]="2000"
+></swal>
 
-<ng-template #formContent>
-  <form #postForm id="postForm" action="" method="POST" target="_blank">
-    <mat-dialog-content class="flex flex-col overflow-hidden">
-      <vex-page-layout class="overflow-hidden">
-        <vex-page-layout-content class="container-fluid p-0 overflow-hidden opacity-0">
-          <div class="flex flex-col sm:flex-row">
-            <input type="text" id="page" name="page" value="../../#/viewer/config" />
-            <input type="text" id="map" name="map" value="" />
-            <input type="text" id="featureinfo" name="featureinfo" value="" />
-            <input type="text" id="bbox" name="bbox" value="" />
-            <input type="text" id="center" name="center" value="" />
-            <input type="text" id="zoom" name="zoom" value="30" />
-            <textarea id="actions" name="actions"></textarea>
-          </div>
-        </vex-page-layout-content>
-      </vex-page-layout>
-    </mat-dialog-content>
-  </form>
-</ng-template>
