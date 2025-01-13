@@ -36,7 +36,10 @@ import { InformationPropertyOwnersComponent } from '../information-property-owne
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
-import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
+import {
+  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/constant';
 import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
 import { TypeInformation } from '../../../interfaces/content-info';
@@ -82,7 +85,7 @@ import { TypeInformation } from '../../../interfaces/content-info';
     InformationPropertyOwnersComponent,
     InformationUnitPropertyComponent,
     PropertyAppraisalInformationComponent,
-    SuperNotariadoPropertyComponent,
+    SuperNotariadoPropertyComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -95,13 +98,13 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
-  private superNotariadoPropertyComponent?: ElementRef;
-  @ViewChild(InformationUnitPropertyComponent, {
+  private informationUnitPropertyComponent?: ElementRef;
+  @ViewChild(AdministrativeSourcesComponent, {
     read: ElementRef,
     static: false
   })
-  private informationUnitPropertyComponent?: ElementRef;
-  @ViewChild(AdministrativeSourcesComponent, {
+  private superNotariadoPropertyComponent?: ElementRef;
+  @ViewChild(InformationUnitPropertyComponent, {
     read: ElementRef,
     static: false
   })

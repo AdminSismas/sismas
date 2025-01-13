@@ -485,16 +485,16 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'basicPropertyInformationComponent'
   },
   {
-    label: 'Super notariado',
-    fragment: 'superNotariadoPropertyComponent'
-  },
-  {
     label: 'Información de unidad predial',
     fragment: 'informationUnitPropertyComponent'
   },
   {
     label: 'Fuentes administrativas',
     fragment: 'administrativeSourcesComponent'
+  },
+  {
+    label: 'Super notariado',
+    fragment: 'superNotariadoPropertyComponent'
   },
   {
     label: 'Propietarios',
