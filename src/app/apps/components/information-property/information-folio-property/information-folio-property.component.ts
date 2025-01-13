@@ -1,51 +1,62 @@
-import { AsyncPipe, NgForOf, NgIf, NgClass } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+// Angular framework
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import { BehaviorSubject, filter, Observable } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatOptionModule } from '@angular/material/core';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgForOf, NgIf, NgClass } from '@angular/common';
+// Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
-import { BehaviorSubject, filter, Observable } from 'rxjs';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { 
-  PAGE, 
-  PAGE_SIZE, 
-  PAGE_SIZE_OPTION, 
-  PAGE_SIZE_OPTION_FOLIO, 
-  PAGE_SIZE_SORT_FOLIO, 
-  TABLE_COLUMN_PROPERTIES_FOLIO, 
-  TYPEINFORMATION_EDITION, 
-  TYPEINFORMATION_VISUAL 
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+// Material
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatOptionModule } from '@angular/material/core';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+// Custom
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION_FOLIO,
+  PAGE_SIZE_SORT_FOLIO,
+  TABLE_COLUMN_PROPERTIES_FOLIO,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
 } from 'src/app/apps/constants/constant';
 import { environment } from 'src/environments/environments';
 import { TypeInformation } from 'src/app/apps/interfaces/content-info';
-import { BasicInformationAddress } from 'src/app/apps/interfaces/information-property/basic-information-address';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { DataFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
-import { DifferenceChanges } from 'src/app/apps/interfaces/bpm/difference-changes';
-
-
 
 @Component({
   selector: 'vex-information-folio-property',
@@ -59,7 +70,6 @@ import { DifferenceChanges } from 'src/app/apps/interfaces/bpm/difference-change
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -71,7 +81,6 @@ import { DifferenceChanges } from 'src/app/apps/interfaces/bpm/difference-change
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    VexHighlightDirective,
     MatTableModule,
     MatSortModule,
     NgClass,
@@ -81,19 +90,21 @@ import { DifferenceChanges } from 'src/app/apps/interfaces/bpm/difference-change
     HeaderCadastralInformationPropertyComponent,
     MatMenuModule,
     MatCheckboxModule,
-    MatExpansionModule,
+    MatExpansionModule
   ],
   templateUrl: './information-folio-property.component.html',
   styleUrl: './information-folio-property.component.scss'
 })
-export class InformationFolioPropertyComponent implements OnInit, AfterViewInit, OnChanges {
+export class InformationFolioPropertyComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   /* =========================== ATRIBUTES =========================== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   subject$: BehaviorSubject<DataFolio[]> = new BehaviorSubject<DataFolio[]>([]);
   data$: Observable<DataFolio[]> = this.subject$.asObservable();
   allFolio: DataFolio[] = [];
-  
+
   @Input({ required: true }) id = '';
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) baunitId: string | null | undefined = null;
@@ -108,9 +119,11 @@ export class InformationFolioPropertyComponent implements OnInit, AfterViewInit,
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_FOLIO;
   columns: TableColumn<DataFolio>[] = TABLE_COLUMN_PROPERTIES_FOLIO;
-  
-  dataSource: MatTableDataSource<DataFolio> = new MatTableDataSource<DataFolio>([]);
-//dataSource!: MatTableDataSource<DataFolio>;
+
+  dataSource: MatTableDataSource<DataFolio> = new MatTableDataSource<DataFolio>(
+    []
+  );
+  //dataSource!: MatTableDataSource<DataFolio>;
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -121,8 +134,8 @@ export class InformationFolioPropertyComponent implements OnInit, AfterViewInit,
     private readonly layoutService: VexLayoutService,
     private snrService: SnrService,
     private cdr: ChangeDetectorRef,
-    private bpmCoreService: BpmCoreService,
-  ) { }
+    private bpmCoreService: BpmCoreService
+  ) {}
 
   /* ============================ METHODS ============================ */
   /* --------------------- Meth. Lifecycle Hooks --------------------- */
@@ -148,15 +161,17 @@ export class InformationFolioPropertyComponent implements OnInit, AfterViewInit,
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { currentValue: typeInformation } = changes['typeInformation'];
-    if (typeInformation === TYPEINFORMATION_VISUAL) {
-      this.pageSize = PAGE_SIZE_SORT_FOLIO;
-      this.pageSizeOptions = PAGE_SIZE_OPTION_FOLIO;
-      this.columns = TABLE_COLUMN_PROPERTIES_FOLIO;
-    } else {
-      this.pageSize = PAGE_SIZE_SORT_FOLIO;
-      this.pageSizeOptions = PAGE_SIZE_OPTION_FOLIO;
-      this.columns = TABLE_COLUMN_PROPERTIES_FOLIO;
+    if (changes['typeInformation']) {
+      const { currentValue: typeInformation } = changes['typeInformation'];
+      if (typeInformation === TYPEINFORMATION_VISUAL) {
+        this.pageSize = PAGE_SIZE_SORT_FOLIO;
+        this.pageSizeOptions = PAGE_SIZE_OPTION_FOLIO;
+        this.columns = TABLE_COLUMN_PROPERTIES_FOLIO;
+      } else {
+        this.pageSize = PAGE_SIZE_SORT_FOLIO;
+        this.pageSizeOptions = PAGE_SIZE_OPTION_FOLIO;
+        this.columns = TABLE_COLUMN_PROPERTIES_FOLIO;
+      }
     }
   }
 
@@ -179,7 +194,6 @@ export class InformationFolioPropertyComponent implements OnInit, AfterViewInit,
 
   /* ----------------------- Meth. Listening ----------------------- */
 
-
   /* ------------------------- Meth. Common ------------------------- */
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
@@ -191,13 +205,16 @@ export class InformationFolioPropertyComponent implements OnInit, AfterViewInit,
     if (!this.schema || !this.baunitId) {
       return;
     }
-    this.getDataSourceFolio(this.propertyRegistryNumber as string, this.propertyRegistryOffice as string);
+    this.getDataSourceFolio(
+      this.propertyRegistryNumber as string,
+      this.propertyRegistryOffice as string
+    );
 
     /* this.informationPropertyService.getBasicInformationPropertyAddresses(this.schema, this.baunitId)
       .subscribe({
         error: (err: any) => this.captureInformationSubscribeError(err),
         next: (result: BasicInformationAddress[]) =>{
-          
+
         }
       }); */
   }
@@ -227,9 +244,4 @@ export class InformationFolioPropertyComponent implements OnInit, AfterViewInit,
       }
     });
   }
-
-
-
-
-
 }

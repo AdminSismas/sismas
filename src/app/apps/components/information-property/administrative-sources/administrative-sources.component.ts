@@ -2,7 +2,7 @@ import { Component, computed, Input, OnInit, TemplateRef, ViewChild } from '@ang
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
 import { AdministrativeSource, CreateAdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, UpdateAdministrativeSource } from 'src/app/apps/interfaces/information-property/administrative-source';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { COLUMNS_ADMINISTRATIVE_SOURCES } from 'src/app/apps/constants/administrative-source.constants';
+import { TableColumn } from '@vex/interfaces/table-column.interface';
 
 @Component({
   selector: 'vex-administrative-sources',
@@ -38,17 +40,9 @@ export class AdministrativeSourcesComponent implements OnInit {
 
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
   public selectedFuente?: AdministrativeSource;
-
-  public displayedColumns: string[] = [
-    'domFuenteAdministrativaTipo',
-    'fechaDocumentoFuente',
-    'numeroFuente',
-    'enteEmisor',
-    'actions'
-  ];
-
-  public dataSource: AdministrativeSource[] = [];
-
+  public dataSource: MatTableDataSource<AdministrativeSource> = new MatTableDataSource<AdministrativeSource>([]);
+  public columns: TableColumn<AdministrativeSource>[] = COLUMNS_ADMINISTRATIVE_SOURCES;
+  public displayedColumns: string[] = [];
   public actionBtns = computed(() => {
     return [
       {
@@ -64,6 +58,7 @@ export class AdministrativeSourcesComponent implements OnInit {
     ];
   });
 
+
   constructor(
     private administrativeSourcesService: AdministrativeSourcesService,
     private dialog: MatDialog,
@@ -71,6 +66,7 @@ export class AdministrativeSourcesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.displayedColumns = this.columns.map((column) => column.property);
     if (this.typeInformation !== 'edition') {
       this.displayedColumns = this.displayedColumns.filter(column => column !== 'actions');
     }
@@ -81,13 +77,13 @@ export class AdministrativeSourcesComponent implements OnInit {
     if (this.schema === 'temp') {
       this.administrativeSourcesService.getAdministrativeSourcesTemp(this.baunitId as string, this.executionId as string)
         .subscribe(data => {
-          this.dataSource = data;
+          this.dataSource.data = data;
         });
     }
     else if (this.schema === 'main') {
       this.administrativeSourcesService.getAdministrativeSourcesMain(this.baunitId as string)
         .subscribe(data => {
-          this.dataSource = data;
+          this.dataSource.data = data;
         });
     }
   }
