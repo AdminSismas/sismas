@@ -656,14 +656,14 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
     cssClasses: ['font-medium']
   },
   {
-    label: 'Fuente Administrativa Tipo',
+    label: 'Tipo',
     property: 'fuenteAdminTipo',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Número de Documento Fuente Administrativa',
+    label: 'Número Documento',
     property: 'fuenteAdminDocNumero',
     type: 'text',
     visible: true,
@@ -677,21 +677,21 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
     cssClasses: ['font-medium']
   },
   {
-    label: 'Oficina de Origen',
+    label: 'Oficina',
     property: 'oficinaOrigen',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Ciudad de Origen',
+    label: 'Ciudad',
     property: 'ciudadOrigen',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Código de Naturaleza Jurídica',
+    label: 'Código',
     property: 'codigoNatuJuridica',
     type: 'text',
     visible: true,
@@ -705,26 +705,26 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
     cssClasses: ['font-medium']
   },
   {
-    label: 'Valor de Transacción',
+    label: 'Valor Transacción',
     property: 'valorTransaccion',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Fecha de Documento Fuente Administrativa',
+    label: 'Fecha',
     property: 'fuenteAdminDocFecha',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
-  {
-    label: 'Fecha',
-    property: 'fecha',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
-  }
+  // {
+  //   label: 'Fecha',
+  //   property: 'fecha',
+  //   type: 'text',
+  //   visible: true,
+  //   cssClasses: ['font-medium']
+  // }
 ];
 export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   {

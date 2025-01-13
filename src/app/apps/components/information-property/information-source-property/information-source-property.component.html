@@ -1,58 +1,86 @@
-<div class="w-full flex flex-col overflow-auto pt-2">
-  <!-- Table -->
-  <table
-    @stagger
-    [dataSource]="dataSource"
-    class="w-full"
-    mat-table
-    matSort
-  >
-    <!-- Text Columns -->
-    <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-      <!-- Text -->
-      <ng-container
-        *ngIf="column.visible && column.type === 'text'"
-        [matColumnDef]="column.property"
-      >
-        <th
-          *matHeaderCellDef
-          [ngClass]="column.cssClassesHead"
-          class="text-center"
-          mat-header-cell
-          mat-sort-header
-        >
-          {{ column.label }}
-        </th>
-        <td
-          *matCellDef="let row"
-          [ngClass]="column.cssClasses"
-          mat-cell
-        >
-          {{ row[column.property] }}
-        </td>
+@if (dataSource.data.length > 0) {
+  <div class="w-full flex flex-col pt-2">
+    <h2 class="text-center font-bold text-lg py-2 text-slate-800 bg-cyan-400">
+      Fuentes administrativas
+    </h2>
+    <!-- Table -->
+    <table
+      @stagger
+      [dataSource]="dataSource"
+      mat-table
+      matSort
+    >
+      <!-- Text Columns -->
+      <ng-container>
+        <ng-container matColumnDef="detalles">
+          <th
+            *matHeaderCellDef
+            class="text-center"
+            mat-header-cell
+            mat-sort-header
+          >
+            Detalles
+          </th>
+          <td
+            *matCellDef="let row"
+            class="text-center"
+            mat-cell
+          >
+            <button
+              mat-icon-button
+              (click)="viewDetails(row)"
+            >
+              <mat-icon svgIcon="mat:visibility"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
       </ng-container>
-    </ng-container>
+      <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+        <!-- Text -->
+        <ng-container
+          *ngIf="column.visible && column.type === 'text'"
+          [matColumnDef]="column.property"
+        >
+          <th
+            *matHeaderCellDef
+            [ngClass]="column.cssClassesHead"
+            class="text-center"
+            mat-header-cell
+            mat-sort-header
+          >
+            {{ column.label }}
+          </th>
+          <td
+            *matCellDef="let row"
+            [ngClass]="column.cssClasses"
+            mat-cell
+          >
+            {{ row[column.property] }}
+          </td>
+        </ng-container>
+      </ng-container>
 
-    <tr
-      *matHeaderRowDef="visibleColumns"
-      mat-header-row
-      class="bg-[#e5e7eb]"
-    ></tr>
-    <tr
-      *matRowDef="let row; columns: visibleColumns"
-      @fadeInUp
-      mat-row
-      class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-    ></tr>
-  </table>
+      <tr
+        *matHeaderRowDef="visibleColumns"
+        mat-header-row
+        class="bg-[#e5e7eb]"
+      ></tr>
+      <tr
+        *matRowDef="let row; columns: visibleColumns"
+        @fadeInUp
+        mat-row
+        class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+      ></tr>
+    </table>
 
-  <mat-paginator
-    #paginator
-    [pageSizeOptions]="pageSizeOptions"
-    [length]="totalElements"
-    [pageSize]="pageSize"
-    [pageIndex]="page"
-    (page)="refreshInformationPaginator($event)"
-    class="paginator"
-  ></mat-paginator>
-</div>
+    <mat-paginator
+      #paginator
+      [pageSizeOptions]="pageSizeOptions"
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageIndex]="page"
+      (page)="refreshInformationPaginator($event)"
+      class="paginator"
+    ></mat-paginator>
+  </div>
+}

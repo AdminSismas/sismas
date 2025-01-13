@@ -135,9 +135,11 @@ export class InformationSourcePropertyComponent {
   }
 
   get visibleColumns() {
-    return this.columns
+    const visibleColumns = ['detalles', ...this.columns
       .filter((column) => column.visible)
-      .map((column) => column.property);
+      .map((column) => column.property)]
+
+    return visibleColumns;
   }
 
   toggleColumnVisibility(column: TableColumn<DataSource>, event: Event) {
@@ -183,5 +185,9 @@ export class InformationSourcePropertyComponent {
         console.error('Error al obtener la información de fuente:', error);
       }
     });
+  }
+
+  viewDetails(row: DataSource): void {
+    alert(JSON.stringify(row));
   }
 }

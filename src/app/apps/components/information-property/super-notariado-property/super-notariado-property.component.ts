@@ -5,6 +5,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { InfoFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
 import { InformationSourcePropertyComponent } from '../information-source-property/information-source-property.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'super-notariado-property',
@@ -12,6 +13,7 @@ import { InformationSourcePropertyComponent } from '../information-source-proper
   imports: [
     // Vex
     // Material
+    MatDividerModule,
     MatExpansionModule,
     MatGridListModule,
     // Custom

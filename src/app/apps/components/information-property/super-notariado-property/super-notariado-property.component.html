@@ -16,14 +16,19 @@
       >
       </vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
-    <div class="grid grid-cols-2 grid-flow-row gap-y-2 gap-x-4 py-4">
-      @for (folioDetail of listFolioDetails; track $index) {
-        <div class="grid grid-cols-2 grid-flow-row">
-          <strong>{{ folioDetail.label }}:</strong>
-          <span>{{ folioDetail.value }}</span>
-        </div>
-      }
-    </div>
+    @if (expandedComponent) {
+      <div
+        class="grid grid-cols-2 grid-flow-row gap-y-2 gap-x-4 py-4 my-4 border-slate-950"
+      >
+        @for (folioDetail of listFolioDetails; track $index) {
+          <div class="grid grid-cols-2 grid-flow-row">
+            <strong>{{ folioDetail.label }}:</strong>
+            <span>{{ folioDetail.value }}</span>
+          </div>
+        }
+      </div>
+    }
+    <mat-divider class="border-slate-400 my-2"></mat-divider>
     <vex-information-source-property
       [baunitId]="baunitId"
       [schema]="schema"
