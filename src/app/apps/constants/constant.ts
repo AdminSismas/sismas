@@ -9,7 +9,6 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
-import { TaskResponseModel } from '../interfaces/task-response.model';
 import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
 import { DataFolio } from '../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../interfaces/information-property/snr-source-info';
@@ -486,16 +485,16 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'basicPropertyInformationComponent'
   },
   {
-    label: 'Super notariado',
-    fragment: 'superNotariadoPropertyComponent'
-  },
-  {
     label: 'Información de unidad predial',
     fragment: 'informationUnitPropertyComponent'
   },
   {
     label: 'Fuentes administrativas',
     fragment: 'administrativeSourcesComponent'
+  },
+  {
+    label: 'Super notariado',
+    fragment: 'superNotariadoPropertyComponent'
   },
   {
     label: 'Propietarios',
@@ -516,18 +515,6 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
   {
     label: 'Zonas',
     fragment: 'informationZonesPropertyComponent'
-  },
-  {
-    label: 'Folio',
-    fragment: 'informationFolioPropertyComponent'
-  },
-  {
-    label: 'Fuente',
-    fragment: 'informationSourcePropertyComponent'
-  },
-  {
-    label: 'Persona',
-    fragment: 'informationPersonPropertyComponent'
   },
 ];
 
@@ -669,14 +656,14 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
     cssClasses: ['font-medium']
   },
   {
-    label: 'Fuente Administrativa Tipo',
+    label: 'Tipo',
     property: 'fuenteAdminTipo',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Número de Documento Fuente Administrativa',
+    label: 'Número Documento',
     property: 'fuenteAdminDocNumero',
     type: 'text',
     visible: true,
@@ -690,21 +677,21 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
     cssClasses: ['font-medium']
   },
   {
-    label: 'Oficina de Origen',
+    label: 'Oficina',
     property: 'oficinaOrigen',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Ciudad de Origen',
+    label: 'Ciudad',
     property: 'ciudadOrigen',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Código de Naturaleza Jurídica',
+    label: 'Código',
     property: 'codigoNatuJuridica',
     type: 'text',
     visible: true,
@@ -718,26 +705,26 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
     cssClasses: ['font-medium']
   },
   {
-    label: 'Valor de Transacción',
+    label: 'Valor Transacción',
     property: 'valorTransaccion',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
   {
-    label: 'Fecha de Documento Fuente Administrativa',
+    label: 'Fecha',
     property: 'fuenteAdminDocFecha',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
   },
-  {
-    label: 'Fecha',
-    property: 'fecha',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
-  }
+  // {
+  //   label: 'Fecha',
+  //   property: 'fecha',
+  //   type: 'text',
+  //   visible: true,
+  //   cssClasses: ['font-medium']
+  // }
 ];
 export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   {

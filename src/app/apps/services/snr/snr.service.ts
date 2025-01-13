@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { DataFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
@@ -18,10 +18,10 @@ export class SnrService {
     ) { }
 
     /* GET */
-    getFolioByOripAndFmi(orip: string, fmi: string): Observable<DataFolio[]> {
+    getFolioByOripAndFmi(fmi: string, orip: string): Observable<DataFolio> {
         const url = `${this.base_url}/folio?orip=${orip}&fmi=${fmi}`;
-        
-        return this.http.get<DataFolio[]>(url).pipe(
+
+        return this.http.get<DataFolio>(url).pipe(
             catchError(error => {
                 console.error('Error al obtener la información de folio:', error);
                 return throwError(() => error); // Ajuste para TypeScript estricto
@@ -29,9 +29,9 @@ export class SnrService {
         );
     }
 
-    getSourceByOripAndFmi(orip: string, fmi: string): Observable<DataSource[]> {
+    getSourceByOripAndFmi(fmi: string, orip: string): Observable<DataSource[]> {
         const url = `${this.base_url}/fuente?orip=${orip}&fmi=${fmi}`;
-        
+
         return this.http.get<DataSource[]>(url).pipe(
             catchError(error => {
                 console.error('Error al obtener la información de Fuente:', error);
@@ -40,10 +40,15 @@ export class SnrService {
         );
     }
 
-    getPersonByOripAndFmi(orip: string, fmi: string): Observable<DataPerson[]> {
-        const url = `${this.base_url}/persona?orip=${orip}&fmi=${fmi}`;
-        
-        return this.http.get<DataPerson[]>(url).pipe(
+    getPersonByOripAndFmi(fmi: string, orip: string, anotacion: string): Observable<DataPerson[]> {
+        const url = `${this.base_url}/persona`;
+
+        const params = new HttpParams()
+          .set('orip', orip)
+          .set('fmi', fmi)
+          .set('anotacion', anotacion);
+
+        return this.http.get<DataPerson[]>(url, { params }).pipe(
             catchError(error => {
                 console.error('Error al obtener la información de Persona:', error);
                 return throwError(() => error); // Ajuste para TypeScript estricto

@@ -1,48 +1,48 @@
+// Angular framework
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatRippleModule } from '@angular/material/core';
-import {
-  InformationAddressesPropertyComponent
-} from '../information-addresses-property/information-addresses-property.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
-import { MatListModule } from '@angular/material/list';
 import { NgForOf, NgIf } from '@angular/common';
-import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { ReactiveFormsModule } from '@angular/forms';
+// Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
-import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
-import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
+// Material
+import { MatButtonModule } from '@angular/material/button';
 import {
-  InformationPropertyOwnersComponent
-} from '../information-property-owners/information-property-owners.component';
-import {
-  InformationConstructionsPropertyComponent
-} from '../information-constructions-property/information-constructions-property.component';
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle
+} from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {
-  PropertyAppraisalInformationComponent
-} from '../property-appraisal-information/property-appraisal-information.component';
-import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TypeInformation } from '../../../interfaces/content-info';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { environment as envi } from '../../../../../environments/environments';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRippleModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+// Custom
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
+import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
+import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { environment as envi } from '../../../../../environments/environments';
+import { InformationAddressesPropertyComponent } from '../information-addresses-property/information-addresses-property.component';
+import { InformationConstructionsPropertyComponent } from '../information-constructions-property/information-constructions-property.component';
+import { InformationPropertyOwnersComponent } from '../information-property-owners/information-property-owners.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { InformationFolioPropertyComponent } from "../information-folio-property/information-folio-property.component";
-import { InformationSourcePropertyComponent } from "../information-source-property/information-source-property.component";
-import { InformationPersonPropertyComponent } from "../information-person-property/information-person-property.component";
-import { SuperNotariadoPropertyComponent } from "../super-notariado-property/super-notariado-property.component";
+import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
+import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
+import {
+  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/constant';
+import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
+import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
+import { TypeInformation } from '../../../interfaces/content-info';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -58,35 +58,36 @@ import { SuperNotariadoPropertyComponent } from "../super-notariado-property/sup
   ],
   standalone: true,
   imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatDialogClose,
-    MatDialogTitle,
-    MatExpansionModule,
-    ReactiveFormsModule,
-    MatMenuModule,
-    MatDividerModule,
-    MatDialogContent,
-    MatRippleModule,
-    MatListModule,
-    MatRippleModule,
-    MatSnackBarModule,
-    VexHighlightModule,
-    BasicPropertyInformationComponent,
-    InformationAddressesPropertyComponent,
     NgForOf,
     NgIf,
-    InformationPropertyOwnersComponent,
-    InformationConstructionsPropertyComponent,
-    PropertyAppraisalInformationComponent,
+    ReactiveFormsModule,
+    // Vex
+    VexHighlightModule,
+    // Material
+    MatButtonModule,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle,
+    MatDividerModule,
+    MatExpansionModule,
     MatFormFieldModule,
-    InformationUnitPropertyComponent,
+    MatIconModule,
+    MatListModule,
+    MatMenuModule,
+    MatRippleModule,
+    MatRippleModule,
+    MatSnackBarModule,
+    // Custom
     AdministrativeSourcesComponent,
-    InformationFolioPropertyComponent,
-    InformationSourcePropertyComponent,
-    InformationPersonPropertyComponent,
-    SuperNotariadoPropertyComponent
-]
+    BasicPropertyInformationComponent,
+    InformationAddressesPropertyComponent,
+    InformationConstructionsPropertyComponent,
+    InformationPropertyOwnersComponent,
+    InformationUnitPropertyComponent,
+    InformationZonesPropertyComponent,
+    PropertyAppraisalInformationComponent,
+    SuperNotariadoPropertyComponent,
+  ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
   @ViewChild(BasicPropertyInformationComponent, {
@@ -94,11 +95,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private basicPropertyInformationComponent?: ElementRef;
-  @ViewChild(SuperNotariadoPropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private superNotariadoPropertyComponent?: ElementRef;
   @ViewChild(InformationUnitPropertyComponent, {
     read: ElementRef,
     static: false
@@ -109,6 +105,12 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private administrativeSourcesComponent?: ElementRef;
+  @ViewChild(SuperNotariadoPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private superNotariadoPropertyComponent?: ElementRef;
+  // @ViewChild(AdministrativeSourcesComponent, {
   @ViewChild(InformationPropertyOwnersComponent, {
     read: ElementRef,
     static: false
@@ -134,24 +136,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private informationZonesPropertyComponent?: ElementRef;
-  @ViewChild(InformationFolioPropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private informationFolioPropertyComponent?: ElementRef;
-  @ViewChild(InformationSourcePropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private informationSourcePropertyComponent?: ElementRef;
-  @ViewChild(InformationPersonPropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private informationPersonPropertyComponent?: ElementRef;
 
 
-  @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
+  @Input({ required: true }) typeInformation: TypeInformation =
+    TYPEINFORMATION_VISUAL;
   @Input({ required: true }) public showTittle = true;
   @Input({ required: true }) public label!: string;
   @Input() public id = '';
@@ -163,55 +151,75 @@ export class CadastralInformationPropertyComponent implements OnInit {
   executionId: string | null | undefined;
   idContainer = '';
   baunitId: string | null | undefined = null;
-  navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  navigationItems: { label: string; fragment: string }[] =
+    NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
 
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;
 
   public viewProperties = false;
 
-   constructor(private informationPropertyService: InformationPropertyService){ }
-
-
+  constructor(private informationPropertyService: InformationPropertyService) {}
 
   ngOnInit(): void {
-    if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
+    if (!this.contentInfoSchema || !this.contentInfoSchema.content) {
       return;
     }
 
-    if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
+    if (
+      this.schema !== `${envi.schemas.main}` &&
+      !this.contentInfoSchema.executionId
+    ) {
       return;
     }
-    this.informationPropertyService.showOptionsPersonStarted$
-    .subscribe(value2=>{
-      if(value2){
-        this.viewProperties = value2;
-        this.removeItem('Propietarios');
+    this.informationPropertyService.showOptionsPersonStarted$.subscribe(
+      (value2) => {
+        if (value2) {
+          this.viewProperties = value2;
+          this.removeItem('Propietarios');
+        }
       }
-    });
+    );
 
     this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
-
-
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
       behavior: 'smooth'
     });
     if (this.baunitCondition)
-
-    if (this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(10000) + 'id' + this.getRandomInt(50) + this.schema;
-      this.idContainer = this.id + this.getRandomInt(10000) + 'id' + this.getRandomInt(50) + this.schema + 'Contenedor';
-    } else {
-      this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
-      this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
-    }
+      if (this.id?.length > 0) {
+        this.id =
+          this.id +
+          this.getRandomInt(10000) +
+          'id' +
+          this.getRandomInt(50) +
+          this.schema;
+        this.idContainer =
+          this.id +
+          this.getRandomInt(10000) +
+          'id' +
+          this.getRandomInt(50) +
+          this.schema +
+          'Contenedor';
+      } else {
+        this.id =
+          this.getRandomInt(10000) +
+          'idCadastralInformation' +
+          this.getRandomInt(50) +
+          this.schema;
+        this.idContainer =
+          this.getRandomInt(10000) +
+          'idCadastralInformation' +
+          this.getRandomInt(50) +
+          this.schema +
+          'Contenedor';
+      }
   }
-   // Método para eliminar el objeto con la etiqueta "Propietarios"
-   removeItem(labelToRemove: string): void {
+  // Método para eliminar el objeto con la etiqueta "Propietarios"
+  removeItem(labelToRemove: string): void {
     this.navigationItems = this.navigationItems.filter(
       (item) => item.label !== labelToRemove
     );
@@ -220,7 +228,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   scrollTo(elementName: string) {
     const elem: ElementRef<any> | undefined = this[
       elementName as keyof CadastralInformationPropertyComponent
-      ] as unknown as ElementRef | undefined;
+    ] as unknown as ElementRef | undefined;
 
     if (elem == null || !elem.nativeElement) {
       return;
@@ -248,9 +256,12 @@ export class CadastralInformationPropertyComponent implements OnInit {
     if (
       baunitCondition === '(Condominio) Matriz' ||
       baunitCondition === '(Propiedad horizontal) Matriz'
-    ) return true;
+    )
+      return true;
 
-    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial');
+    this.navigationItems = this.navigationItems.filter(
+      (item) => item.label !== 'Información de unidad predial'
+    );
 
     return false;
   }

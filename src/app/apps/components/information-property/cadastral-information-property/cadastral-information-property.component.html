@@ -76,11 +76,6 @@
         [typeInformation]="typeInformation"
       ></vex-information-unit-property>
     }
-    <super-notariado-property
-      [id]="'superNotariadoPropertyComponent' + schema"
-      [propertyRegistryNumber]="propertyRegistryOffice"
-      [propertyRegistryOffice]="propertyRegistryNumber"
-    ></super-notariado-property>
     <vex-administrative-sources
       #administrativeSourcesComponent{{schema}}
       [id]="'administrativeSources' + schema"
@@ -90,10 +85,16 @@
       [executionId]="executionId"
       @fadeInUp
       [typeInformation]="typeInformation"
-    >
-    </vex-administrative-sources>
+    ></vex-administrative-sources>
+    <super-notariado-property
+      [id]="'superNotariadoPropertyComponent' + schema"
+      [propertyRegistryNumber]="propertyRegistryOffice"
+      [propertyRegistryOffice]="propertyRegistryNumber"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+    ></super-notariado-property>
     @if (!viewProperties) {
-
       <vex-information-property-owners
         [id]="'dataInformationPropertyOwners' + schema"
         #informationPropertyOwnersComponent{{schema}}
@@ -104,7 +105,6 @@
         [typeInformation]="typeInformation"
         @fadeInUp
       ></vex-information-property-owners>
-
     }
     <vex-information-addresses-property
       [id]="'basicInformationpropertyAddresses' + schema"
@@ -136,7 +136,7 @@
       @fadeInUp
       [typeInformation]="typeInformation"
     ></vex-property-appraisal-information>
-    <!-- <vex-information-zones-property
+    <vex-information-zones-property
       [id]="'informationZonesPropertyComponent' + schema"
       #informationZonesPropertyComponent{{schema}}
       [expandedComponent]="false"
@@ -145,45 +145,7 @@
       [executionId]="executionId"
       [typeInformation]="typeInformation"
       @fadeInUp
-    ></vex-information-zones-property> -->
-
-
-    <vex-information-folio-property
-      [id]="'informationFolioPropertyComponent' + schema"
-      #informationFolioPropertyComponent{{schema}}
-      [expandedComponent]="false"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      [propertyRegistryOffice]="propertyRegistryOffice"
-      [propertyRegistryNumber]="propertyRegistryNumber"
-      @fadeInUp
-    ></vex-information-folio-property>
-    <vex-information-source-property
-      [id]="'InformationSourcePropertyComponent' + schema"
-      #InformationSourcePropertyComponent{{schema}}
-      [expandedComponent]="false"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      [propertyRegistryOffice]="propertyRegistryOffice"
-      [propertyRegistryNumber]="propertyRegistryNumber"
-      @fadeInUp
-    ></vex-information-source-property>
-    <vex-information-person-property
-      [id]="'informationPersonPropertyComponent' + schema"
-      #informationPersonPropertyComponent{{schema}}
-      [expandedComponent]="false"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      [propertyRegistryOffice]="propertyRegistryOffice"
-      [propertyRegistryNumber]="propertyRegistryNumber"
-      @fadeInUp
-    ></vex-information-person-property>
+    ></vex-information-zones-property>
   </div>
 </mat-dialog-content>
 

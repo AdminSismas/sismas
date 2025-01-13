@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { TypeInformation } from "../content-info";
 
 export class DataPerson {
     fid?: number;
@@ -23,20 +24,12 @@ export class DataPerson {
     }
 }
 
-@Injectable({
-    providedIn: 'root',
-})
-export class RegisDataPqrsfService {
-    private dataSubject = new BehaviorSubject<DataPerson>(new DataPerson({}));
-    data$ = this.dataSubject.asObservable();
-
-    constructor() {}
-
-    setData(data: DataPerson) {
-        this.dataSubject.next(data);
+export interface DialogPersonData {
+      propertyRegistryOffice: string | null | undefined;
+      propertyRegistryNumber: string | null | undefined;
+      anotacion: string | null | undefined;
+      baunitId: string | null | undefined;
+      schema: string;
+      executionId: string | null | undefined;
+      typeInformation: TypeInformation;
     }
-
-    getData() {
-        return this.dataSubject.value;
-    }
-}
