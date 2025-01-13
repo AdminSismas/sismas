@@ -1,35 +1,49 @@
-import { NgForOf, NgIf, NgClass } from '@angular/common';
-import { ChangeDetectorRef, Component, Input, SimpleChanges, ViewChild } from '@angular/core';
+// Angular framework
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatOptionModule } from '@angular/material/core';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgForOf, NgIf, NgClass } from '@angular/common';
+import { Observable, BehaviorSubject, filter } from 'rxjs';
+// Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { Observable, BehaviorSubject, filter } from 'rxjs';
-import { TYPEINFORMATION_EDITION, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_VISUAL, PAGE_SIZE_SORT, PAGE_OPTION__5_7_10, TABLE_COLUMN_PROPERTIES_PERSON } from 'src/app/apps/constants/constant';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
-import { DataPerson } from 'src/app/apps/interfaces/information-property/snr-person-info';
+// Material
+import { MatIconModule } from '@angular/material/icon';
+import { MatOptionModule } from '@angular/material/core';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+// Custom
+import { DataPerson, DialogPersonData } from 'src/app/apps/interfaces/information-property/snr-person-info';
+import {
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TYPEINFORMATION_VISUAL,
+  PAGE_SIZE_SORT,
+  PAGE_OPTION__5_7_10,
+  TABLE_COLUMN_PROPERTIES_PERSON
+} from 'src/app/apps/constants/constant';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
-import { environment } from 'src/environments/environments';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-information-person-property',
@@ -44,26 +58,23 @@ import { environment } from 'src/environments/environments';
   ],
   imports: [
     FormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatOptionModule,
-    MatTabsModule,
+    NgClass,
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    MatTableModule,
-    MatSortModule,
-    NgClass,
+    // Vex
+    // Material
+    MatButtonModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatIconModule,
+    MatOptionModule,
     MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
     MatTooltipModule,
-    MatCardModule,
-    HeaderCadastralInformationPropertyComponent,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatExpansionModule,
+    // Custom
   ],
   templateUrl: './information-person-property.component.html',
   styleUrl: './information-person-property.component.scss'
@@ -72,46 +83,35 @@ export class InformationPersonPropertyComponent {
   /* =========================== ATRIBUTES =========================== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
-  subject$: BehaviorSubject<DataPerson[]> = new BehaviorSubject<DataPerson[]>([]);
+  subject$: BehaviorSubject<DataPerson[]> = new BehaviorSubject<DataPerson[]>(
+    []
+  );
   data$: Observable<DataPerson[]> = this.subject$.asObservable();
   allPersonSnr: DataPerson[] = [];
-
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) public expandedComponent = true;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input({ required: true }) schema = `${environment.schemas.main}`;
-  @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-  @Input() propertyRegistryOffice: string | null | undefined = '';
-  @Input() propertyRegistryNumber: string | null | undefined = '';
-
   page: number = PAGE;
   totalElements: number = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<DataPerson>[] = TABLE_COLUMN_PROPERTIES_PERSON;
 
-  dataSource: MatTableDataSource<DataPerson> = new MatTableDataSource<DataPerson>([]);
-//dataPerson!: MatTableDataPerson<DataPerson>;
+  dataSource: MatTableDataSource<DataPerson> =
+    new MatTableDataSource<DataPerson>([]);
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   /* ========================== CONSTRUCTOR ========================== */
   constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: DialogPersonData,
     private readonly layoutService: VexLayoutService,
     private snrService: SnrService,
-    private cdr: ChangeDetectorRef,
-  ) { }
+    private cdr: ChangeDetectorRef
+  ) {}
 
   /* ============================ METHODS ============================ */
   /* --------------------- Meth. Lifecycle Hooks --------------------- */
   ngOnInit(): void {
-    this.isExpandPanel(this.expandedComponent);
-
-    //this.getDataPersonFolio();
-    //this.dataPerson = new MatTableDataPerson<DataPerson[]>();
-
     this.data$.pipe(filter<DataPerson[]>(Boolean)).subscribe((personAllSnr) => {
       this.allPersonSnr = personAllSnr;
       this.dataSource.data = personAllSnr;
@@ -161,7 +161,6 @@ export class InformationPersonPropertyComponent {
 
   /* ----------------------- Meth. Listening ----------------------- */
 
-
   /* ------------------------- Meth. Common ------------------------- */
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
@@ -170,10 +169,13 @@ export class InformationPersonPropertyComponent {
   }
 
   searchBasicInformationPropertyFolio(): void {
-    if (!this.schema || !this.baunitId) {
+    if (!this.data.schema || !this.data.baunitId) {
       return;
     }
-    this.getDataSourcePerson(this.propertyRegistryNumber as string, this.propertyRegistryOffice as string);
+    this.getDataSourcePerson(
+      this.data.propertyRegistryNumber as string,
+      this.data.propertyRegistryOffice as string
+    );
   }
 
   captureInformationSubscribeError(err: any): void {

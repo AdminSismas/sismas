@@ -1,32 +1,38 @@
-import { NgForOf, NgIf, NgClass } from '@angular/common';
+// Angular framework
 import { ChangeDetectorRef, Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { TableColumn } from '@vex/interfaces/table-column.interface';
+import { NgForOf, NgIf, NgClass } from '@angular/common';
 import { Observable, BehaviorSubject, filter } from 'rxjs';
-import { TYPEINFORMATION_EDITION, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES_SOURCE, TYPEINFORMATION_VISUAL, PAGE_OPTION__5_7_10, PAGE_SIZE_SORT } from 'src/app/apps/constants/constant';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
-import { DataSource } from 'src/app/apps/interfaces/information-property/snr-source-info';
-import { SnrService } from 'src/app/apps/services/snr/snr.service';
-import { environment } from 'src/environments/environments';
+// Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
+import { TableColumn } from '@vex/interfaces/table-column.interface';
+// Material
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatOptionModule } from '@angular/material/core';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+// Custom
+import { DataSource } from 'src/app/apps/interfaces/information-property/snr-source-info';
+import { environment } from 'src/environments/environments';
+import { SnrService } from 'src/app/apps/services/snr/snr.service';
+import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { TYPEINFORMATION_EDITION, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES_SOURCE, TYPEINFORMATION_VISUAL, PAGE_OPTION__5_7_10, PAGE_SIZE_SORT } from 'src/app/apps/constants/constant';
+import { InformationPersonPropertyComponent } from '../information-person-property/information-person-property.component';
 
 
 @Component({
@@ -83,7 +89,8 @@ export class InformationSourcePropertyComponent {
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<DataSource>[] = TABLE_COLUMN_PROPERTIES_SOURCE;
-
+  propertyRegistryOffice: string | null | undefined = null;
+  propertyRegistryNumber: string | null | undefined = null;
   dataSource: MatTableDataSource<DataSource> = new MatTableDataSource<DataSource>([]);
 //dataSource!: MatTableDataSource<DataSource>;
 
@@ -94,6 +101,7 @@ export class InformationSourcePropertyComponent {
   constructor(
     private snrService: SnrService,
     private cdr: ChangeDetectorRef,
+    private dialog: MatDialog
   ) { }
 
   /* ============================ METHODS ============================ */
@@ -175,6 +183,8 @@ export class InformationSourcePropertyComponent {
 
   /* ------------------------ Meth. Services ------------------------ */
   getDataSourceFolio(orip: string, fmi: string) {
+    this.propertyRegistryOffice = orip;
+    this.propertyRegistryNumber = fmi;
     this.snrService.getSourceByOripAndFmi(orip, fmi).subscribe({
       next: (response) => {
         this.allSourceSnr = response;
@@ -188,6 +198,14 @@ export class InformationSourcePropertyComponent {
   }
 
   viewDetails(row: DataSource): void {
-    alert(JSON.stringify(row));
+    this.dialog.open(InformationPersonPropertyComponent, {
+      data: {
+        propertyRegistryOffice: this.propertyRegistryOffice,
+        propertyRegistryNumber: this.propertyRegistryNumber,
+        baunitId: this.baunitId,
+        schema: this.schema,
+        executionId: this.executionId,
+      }
+    })
   }
 }
