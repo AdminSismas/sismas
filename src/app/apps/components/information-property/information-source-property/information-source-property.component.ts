@@ -77,8 +77,6 @@ export class InformationSourcePropertyComponent {
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-  @Input() propertyRegistryOffice: string | null | undefined = '';
-  @Input() propertyRegistryNumber: string | null | undefined = '';
 
   page: number = PAGE;
   totalElements: number = 0;
@@ -105,7 +103,6 @@ export class InformationSourcePropertyComponent {
       this.allSourceSnr = sourceAllSnr;
       this.dataSource.data = sourceAllSnr;
     });
-    this.searchBasicInformationPropertyFolio();
   }
 
   ngAfterViewInit() {
@@ -155,11 +152,11 @@ export class InformationSourcePropertyComponent {
   /* ------------------------- Meth. Common ------------------------- */
 
 
-  searchBasicInformationPropertyFolio(): void {
+  searchBasicInformationPropertyFolio(orip: string, fmi: string): void {
     if (!this.schema || !this.baunitId) {
       return;
     }
-    this.getDataSourceFolio(this.propertyRegistryNumber as string, this.propertyRegistryOffice as string);
+    this.getDataSourceFolio(orip, fmi);
   }
 
   captureInformationSubscribeError(err: any): void {

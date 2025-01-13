@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -34,6 +34,8 @@ export class SuperNotariadoPropertyComponent {
   public infoFolio?: InfoFolio;
   public listFolioDetails: { label: string; value: string }[] = [];
 
+  @ViewChild(InformationSourcePropertyComponent) private informationSourcePropertyComponent!: InformationSourcePropertyComponent;
+
   constructor(
     private snrService: SnrService,
   ) { }
@@ -41,6 +43,7 @@ export class SuperNotariadoPropertyComponent {
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
       this.searchBasicInformationPropertyFolio();
+      this.informationSourcePropertyComponent.searchBasicInformationPropertyFolio(this.propertyRegistryOffice as string, this.propertyRegistryNumber as string);
     }
   }
 
