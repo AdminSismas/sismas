@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environments';
 import { DocumentAsocietyModel } from '../interfaces/document-asociety.model';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { InformationPegeable } from '../interfaces/information-pegeable.model';
 
 @Injectable({
@@ -51,4 +51,13 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
     return  this.http.patch<any>(urlComplete,value);
   }
 
+  setUDocumentoAsocietyDelete(outTemplateId:any):Observable<any> {
+    let paramsPP:HttpParams = new HttpParams();
+
+    const urlComplete = `${this.basic_url}/bpmOutTemplate/${outTemplateId}`;
+    console.log('link: ',urlComplete);
+  
+    // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
+    return  this.http.delete<InformationPegeable>(urlComplete);
+  }
 }

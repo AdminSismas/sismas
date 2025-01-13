@@ -10,11 +10,11 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, TABLE_COLUMN_DOCUMENT_ASOCIETY, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CommonModule, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -48,6 +48,7 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
     MatTableModule,
+    SweetAlert2Module,
     MatInputModule,
     MatIconModule,
     MatMenuModule,
@@ -65,6 +66,7 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
   ],
   templateUrl: './documents-associated-procedures.component.html',
   styleUrl: './documents-associated-procedures.component.scss'
@@ -81,6 +83,9 @@ export class DocumentsAssociatedProceduresComponent {
     @Input() executionId: string | null | undefined = null;
     @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
   
+    @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
+    @ViewChild('errorSwal') private errorSwal!: SwalComponent;
+  
     columns: TableColumn<DocumentAsocietyModel>[] = TABLE_COLUMN_DOCUMENT_ASOCIETY;
     page:number = PAGE;
     totalElements = 0;
@@ -94,8 +99,6 @@ export class DocumentsAssociatedProceduresComponent {
     @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort?: MatSort;
     @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<NgTemplateOutlet>;
-    @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
-    @ViewChild('errorSwal') private errorSwal!: SwalComponent;
   
     private readonly destroyRef: DestroyRef = inject(DestroyRef);
     private snackBar = inject(MatSnackBar);
@@ -270,24 +273,21 @@ export class DocumentsAssociatedProceduresComponent {
   
     deleteInformations(customer: any): void {
       const dialogRef = this.dialog.open(this.confirmDialog);
-      // dialogRef.afterClosed().subscribe((result) => {
-      //   if (result) {
-      //     const outTempplateId = this.outTempplateId ?? '';
-      //     const executionId = this.executionId ?? '';
-      //     const unitBuiltId = customer.unitBuiltId;
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          const outTemplateId = customer.outTemplateId ?? '';
   
-      //     this.informationPropertyService.deleteConstruction(outTempplateId, executionId, unitBuiltId).subscribe({
-      //       next: () => {
-  
-      //         this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
-      //         this.deleteSwal.fire();
-      //       },
-      //       error: () => {
-      //         this.errorSwal.fire();
-      //       }
-      //     });
-      //   }
-      // });
+          this.documentAssociatedService.setUDocumentoAsocietyDelete(outTemplateId).subscribe({
+            next: () => {
+              this.searchDocumentoList();
+              this.deleteSwal.fire();
+            },
+            error: () => {
+              this.errorSwal.fire();
+            }
+          });
+        }
+      });
     }
 
 
