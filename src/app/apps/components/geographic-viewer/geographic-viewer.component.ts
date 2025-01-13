@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -37,8 +38,8 @@ import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-
   standalone: true,
   imports: [
     CommonModule,
-    NgIf,
     ReactiveFormsModule,
+    SweetAlert2Module,
     // Vex
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
@@ -50,21 +51,15 @@ import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-
     MatDividerModule,
     MatIconModule,
     // Custom
-    LoadingAppComponent,
   ],
   templateUrl: './geographic-viewer.component.html'
 })
 export class GeographicViewerComponent implements OnInit, AfterViewInit {
   @ViewChild('postForm', { static: true }) postForm?: ElementRef;
+  @ViewChild('ErrorMap') private errorMap!: SwalComponent;
   queryParameters!: QueryParametersGeographicVie;
   baunitHead!: BaunitHead;
-  isLoading: boolean = true;
-  hasError: boolean = false;
   errorMessage: string = '';
-
-  get dialogTitle(): string {
-    return this.hasError ? 'Error' : 'Visor Geográfico';
-  }
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema | undefined,
@@ -75,13 +70,13 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (!this.defaults) {
-      this.closed();
+      this.dialogRef.close();
       return;
     }
     this.baunitHead = this.defaults?.content;
 
     if (this.baunitHead.cadastralNumber == null) {
-      this.closed();
+      this.dialogRef.close();
     }
   }
 
@@ -99,9 +94,8 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
       .getInfoGeographicViewer(this.baunitHead.cadastralNumber, '')
       .subscribe({
         next: (result: QueryParametersGeographicVie) => {
-          this.isLoading = false;
-          this.hasError = false;
           this.queryParameters = new QueryParametersGeographicVie(result);
+          console.log(result);
           this.formatElementOfForm();
         },
         error: (error) => {
@@ -142,18 +136,15 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
     this.postForm.nativeElement.action = `${envi.url_viewer}${envi.post_path_viewer}`;
     this.postForm.nativeElement.submit();
     console.log(this.postForm.nativeElement);
-    this.closed();
+    this.dialogRef.close();
   }
 
   handleError(message: string, error?: any): void {
-    this.isLoading = false;
-    this.hasError = true;
     this.errorMessage = message;
     console.error('Error en la solicitud:', error);
+    this.errorMap.fire().then(() => {
+      this.dialogRef.close();
+    });
     this.cdr.detectChanges();
-  }
-
-  closed() {
-    this.dialogRef.close();
   }
 }
