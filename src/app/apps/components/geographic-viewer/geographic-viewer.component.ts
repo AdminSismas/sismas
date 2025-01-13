@@ -1,5 +1,19 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+// Angular framework
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+// Vex
+import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+// Material
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
@@ -7,40 +21,40 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { CommonModule, NgIf } from '@angular/common';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-geographic-vie';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ContentInfoSchema } from '../../interfaces/content-info-schema';
+import { MatIconModule } from '@angular/material/icon';
+// Custom
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
-import { InformationGeographicService } from '../../services/territorial-organization/information-geographic.service';
+import { ContentInfoSchema } from '../../interfaces/content-info-schema';
 import { environment as envi } from '../../../../environments/environments';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
+import { InformationGeographicService } from '../../services/territorial-organization/information-geographic.service';
 import { LoadingAppComponent } from '../loading-app/loading-app.component';
+import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-geographic-vie';
 
 @Component({
   selector: 'vex-geographic-viewer-main',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
+    CommonModule,
     NgIf,
-    MatButtonModule,
-    MatDialogClose,
-    MatDividerModule,
+    ReactiveFormsModule,
+    // Vex
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
+    // Material
+    MatButtonModule,
+    MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
+    MatDividerModule,
     MatIconModule,
+    // Custom
     LoadingAppComponent,
-    CommonModule
   ],
   templateUrl: './geographic-viewer.component.html'
 })
 export class GeographicViewerComponent implements OnInit, AfterViewInit {
-
   @ViewChild('postForm', { static: true }) postForm?: ElementRef;
   queryParameters!: QueryParametersGeographicVie;
   baunitHead!: BaunitHead;
@@ -52,15 +66,12 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
     return this.hasError ? 'Error' : 'Visor Geográfico';
   }
 
-
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema | undefined,
     private dialogRef: MatDialogRef<GeographicViewerComponent>,
     private geographicService: InformationGeographicService,
     private cdr: ChangeDetectorRef
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     if (!this.defaults) {
@@ -84,29 +95,35 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.geographicService.getInfoGeographicViewer(this.baunitHead.cadastralNumber, '')
-  .subscribe({
-    next: (result: QueryParametersGeographicVie) => {
-      this.isLoading = false;
-      this.hasError = false;
-      this.queryParameters = new QueryParametersGeographicVie(result);
-      this.formatElementOfForm();
-    },
-    error: (error) => {
-      this.handleError(error.message);
-    }
-  });
+    this.geographicService
+      .getInfoGeographicViewer(this.baunitHead.cadastralNumber, '')
+      .subscribe({
+        next: (result: QueryParametersGeographicVie) => {
+          this.isLoading = false;
+          this.hasError = false;
+          this.queryParameters = new QueryParametersGeographicVie(result);
+          this.formatElementOfForm();
+        },
+        error: (error) => {
+          this.handleError(error.message);
+        }
+      });
   }
-
 
   formatElementOfForm(): void {
     if (!this.queryParameters) {
       return;
     }
     for (const [key, value] of Object.entries(this.queryParameters)) {
-      const element = document.getElementById(key) as HTMLInputElement | HTMLTextAreaElement | null;
+      const element = document.getElementById(key) as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | null;
       if (element) {
-        const formattedValue = typeof value === 'object' || Array.isArray(value) ? JSON.stringify(value) : value;
+        const formattedValue =
+          typeof value === 'object' || Array.isArray(value)
+            ? JSON.stringify(value)
+            : value;
         element.value = formattedValue || '';
         element.textContent = formattedValue || '';
       }
@@ -139,5 +156,4 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
   closed() {
     this.dialogRef.close();
   }
-
 }
