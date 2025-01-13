@@ -1,9 +1,9 @@
 export class DocumentAsocietyModel {
-    outTempplateId?: number | '';
+    outTemplateId?: number | undefined; ;
     templateCode?: string | '';
     htmlTemplate?: string | '';
-    headerTemplateId?: HeaderTemplateModel | '' | null;
-    footerTemplateId?: FooterTemplateModel | '' | null;
+    headerTemplate?: HeaderTemplateModel  | null;
+    footerTemplate?: FooterTemplateModel  | null;
     isSinged?: boolean | '';
     createdAt?: string | '';
     createdBy?: string | '';
@@ -14,12 +14,20 @@ export class DocumentAsocietyModel {
     size?: number | '';
   
   
-    constructor(content?: any,schema?:string, baunitId?: string,page?: number, size?: number,) {
-        this.outTempplateId = content.outTempplateId;
+    constructor(content?: any,schema?:string,page?: number, size?: number,) {
+        this.outTemplateId = content.outTemplateId;
         this.templateCode = content.templateCode;
         this.htmlTemplate = content.htmlTemplate;
-        this.headerTemplateId= new HeaderTemplateModel(content.headerTemplateId);
-        this.footerTemplateId = new FooterTemplateModel(content.footerTemplateId);
+        if (this.headerTemplate) {
+            this.headerTemplate.outTemplateId = content.headerTemplate.outTemplateId;
+        } else {
+            this.headerTemplate = content.headerTemplate;
+        }
+        if (this.footerTemplate) {
+            this.footerTemplate.outTemplateId = content.footerTemplate.outTemplateId;
+        } else {
+            this.footerTemplate = content.footerTemplate;
+        }
         this.isSinged = content.isSinged;
         this.updatedBy = content.updateBy;
         this.createdBy = content.createdBy;

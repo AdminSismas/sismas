@@ -114,7 +114,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
 export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[] = [
   {
     label: 'ID',
-    property: 'outTempplateId',
+    property: 'outTemplateId',
     type: 'text',
     visible: true
   },
@@ -133,8 +133,14 @@ export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[
   // },
   {
     label: 'Header',
-    property: 'headerTemplateId',
-    type: 'text',
+    property: 'headerTemplate',
+    type: 'operationType',
+    visible: true
+  },
+  {
+    label: 'Footer',
+    property: 'footerTemplate',
+    type: 'operationType',
     visible: true
   },
   {

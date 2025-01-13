@@ -3,14 +3,15 @@
     [crumbs]="['Configuración','Trámites catastrales', 'Documentos asociados a trámites']"
     class="flex-auto"></vex-breadcrumbs>
 
-  <button class="ml-2" color="primary" mat-icon-button type="button">
+  </vex-secondary-toolbar>
+  <!-- <button class="ml-2" color="primary" mat-icon-button type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
-</vex-secondary-toolbar>
+  </button> -->
 <!-- <vex-in-construction></vex-in-construction> -->
 <vex-page-layout>
 
   <vex-page-layout-content class="px-5 -mt-6">
+
     <div class="w-full flex flex-col overflow-auto p-0">
       <div class="px-4 h-16 border-b sticky left-0 flex items-center">
         
@@ -50,18 +51,19 @@
                 {{ row[column.property] }}
               </td>
             </ng-container>
-                <ng-container
-                *ngIf="column.type === 'operationType'"
-                [matColumnDef]="column.property">
-                <th *matHeaderCellDef
-                    mat-header-cell
-                    mat-sort-header>
-                  {{ column.label }}
-                </th>
-                <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
-                  {{ row[column.property] | slice:0:50 }}
-                </td>
-              </ng-container>
+
+            <ng-container
+              *ngIf="column.type === 'operationType'"
+              [matColumnDef]="column.property">
+              <th *matHeaderCellDef
+                  mat-header-cell
+                  mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                {{ row.outTemplateId }}
+              </td>
+            </ng-container>
           </ng-container>
 
            <!-- Action Column -->

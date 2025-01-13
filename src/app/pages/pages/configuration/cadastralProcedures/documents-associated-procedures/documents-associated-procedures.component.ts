@@ -33,6 +33,8 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { DocumentAsocietyModel } from 'src/app/apps/interfaces/document-asociety.model';
 import { DocumentAssociatedService } from 'src/app/apps/services/document-associated.service';
 import { AddEditInformationDocumentAssociated, DocumentAssociatedEditUpdateComponent } from './document-associated-edit-update/document-associated-edit-update.component';
+import { UserService } from '../../../auth/login/services/user.service';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 @Component({
   selector: 'vex-documents-associated-procedures',
@@ -75,7 +77,7 @@ export class DocumentsAssociatedProceduresComponent {
     // @Input({ required: true }) id = '';
     // @Input({ required: true }) public expandedComponent = true;
     @Input({ required: true }) schema = `${environment.schemas.main}`;
-    @Input({ required: true }) outTempplateId: string | null | undefined = null;
+    @Input({ required: true }) outTempplateId: number | null | undefined = null;
     @Input() executionId: string | null | undefined = null;
     @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
   
@@ -84,6 +86,7 @@ export class DocumentsAssociatedProceduresComponent {
     totalElements = 0;
     pageSize: number = PAGE_SIZE;
     pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
+    userSesion:DecodeJwt | null = null;
   
     dataSource!: MatTableDataSource<DocumentAsocietyModel>;
     searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -99,7 +102,8 @@ export class DocumentsAssociatedProceduresComponent {
     constructor(
       private dialog: MatDialog,
       private readonly layoutService: VexLayoutService,
-      private documentAssociatedService: DocumentAssociatedService
+      private documentAssociatedService: DocumentAssociatedService,
+      private userService:UserService
     ) {
     }
   
@@ -125,6 +129,9 @@ export class DocumentsAssociatedProceduresComponent {
         this.dataSource.sort = this.sort;
       }
     }
+    public getUserSession(){
+      this.userSesion = this.userService.getUser();
+    }
   
     get visibleColumns() {
       return this.columns
@@ -136,7 +143,7 @@ export class DocumentsAssociatedProceduresComponent {
   
     searchDocumentoList(): boolean {
       this.documentAssociatedService.getDataDocumentoAsociety(
-        this.generateObjectPageSearchData('1'))
+        this.generateObjectPageSearchData(''))
         .subscribe({
           error: (err: any) => this.captureInformationSubscribeError(err),
           next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
@@ -182,54 +189,7 @@ export class DocumentsAssociatedProceduresComponent {
       this.dataSource.data = [];
     }
   
-    openDetailInformationConstructionsProperty(data:DocumentAsocietyModel){
-      // if (this.baunitId === null || this.baunitId === undefined) {
-      //   return;
-      // }
-  
-      // this.dialog
-      //   .open(DetailInformationConstructionsPropertyComponent, {
-      //     minWidth: '60%',
-      //     minHeight: '70%',
-      //     disableClose: true,
-      //     data: new DocumentAsocietyModel(data,this.schema, this.baunitId)
-      //   })
-      //   .afterClosed();
-    }
-  
-    openAddEditDocumentAssociatedDialog(
-      data?: DocumentAsocietyModel
-    ): void {
-      // const dialogData: AddEditInformationConstructionI = {
-      //   type: data ? 'edit' : 'new',
-      //   basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
-      //   baunitId: this.baunitId || undefined,
-      //   executionId: this.executionId || undefined
-      // };
-  
-      // const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
-      //   minWidth: '50%',
-      //   minHeight: '40%',
-      //   disableClose: true,
-      //   data: dialogData,
-      // });
-  
-      // dialogRef.afterClosed().subscribe((result: DocumentAsocietyModel) => {
-      //   if (result) {
-      //     if (dialogData.type === 'new') {
-  
-      //       this.dataSource.data = [...this.dataSource.data, result];
-      //     } else {
-  
-      //       const index = this.dataSource.data.findIndex((item) => item.unitBuiltId === result.unitBuiltId);
-      //       if (index !== -1) {
-      //         this.dataSource.data[index] = result;
-      //         this.dataSource._updateChangeSubscription();
-      //       }
-      //     }
-      //   }
-      // });
-    }
+    
     trackByProperty<T>(index: number, column: TableColumn<T>): string {
       return column.property;
     }
@@ -239,13 +199,12 @@ export class DocumentsAssociatedProceduresComponent {
       data?: DocumentAsocietyModel
     ): void {
 
-     
-
       const dialogData: AddEditInformationDocumentAssociated = {
         type: data ? 'edit' : 'new',
-        basicInformationConstruction: data ? new DocumentAsocietyModel(data, this.schema) : undefined,
-        outTempplateId: this.outTempplateId || undefined,
+        documentAssociated: data ? new DocumentAsocietyModel(data, this.schema) : undefined,
+        outTemplateId: data?.outTemplateId || this.outTempplateId || undefined, 
       };
+      console.log('data', data);
 
       const dialogRef = this.dialog.open(DocumentAssociatedEditUpdateComponent, {
         width: '58%',
@@ -258,13 +217,13 @@ export class DocumentsAssociatedProceduresComponent {
         if (result) {
           console.log('RESPUESTA DEL CREAR O ACTUALIZAR', result);
           console.log('TIPO PROCESOS', dialogData.type);
-          console.log('basicInformationConstruction', dialogData.basicInformationConstruction);
+          console.log('documentAssociated', dialogData.documentAssociated);
 
 
           if(dialogData.type === 'new'){
-            // this.saveDocumento(dialogData.basicInformationConstruction);
+            this.saveDocumento(result);
           }else{
-            // this.updateDocumento(dialogData.basicInformationConstruction);
+            this.updateDocumento(dialogData.documentAssociated);
           }
 
         }
@@ -276,17 +235,17 @@ export class DocumentsAssociatedProceduresComponent {
         this.generateObjectPageSearchData(''),data)
         .subscribe({
           error: (err: any) => this.captureInformationSubscribeError(err),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+          next: (result: InformationPegeable) => this.searchDocumentoList()
         });
       return true;
     }
 
     updateDocumento(data:any): boolean {
       this.documentAssociatedService.setUDocumentoAsocietyUpdate(
-        this.generateObjectPageSearchData(data.outTempplateId),data)
+        this.generateObjectPageSearchData(data.outTemplateId),data)
         .subscribe({
           error: (err: any) => this.captureInformationSubscribeError(err),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+          next: (result: InformationPegeable) => this.searchDocumentoList()
         });
       return true;
     }
@@ -353,18 +312,6 @@ export class DocumentsAssociatedProceduresComponent {
       }
     }
 
-    public informationDetail(value:any){
-      console.log(value, 'Registro de la tabla');
-
-      // this.proceduresService.viewDetailIdProceduresFininsh(
-      //   +value.executionCode)
-      //   .subscribe( result => {
-      //     this.procedureDetail = result;
-      //       this.seeTaskProperty(this.procedureDetail,+value.executionCode);
-          
-      //   });
-    }
-  
     onFilterChange(value: string): void {
       if (!this.dataSource) {
         return;
