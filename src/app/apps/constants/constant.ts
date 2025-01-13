@@ -9,7 +9,6 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
-import { TaskResponseModel } from '../interfaces/task-response.model';
 import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
 import { DataFolio } from '../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../interfaces/information-property/snr-source-info';
@@ -516,18 +515,6 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
   {
     label: 'Zonas',
     fragment: 'informationZonesPropertyComponent'
-  },
-  {
-    label: 'Folio',
-    fragment: 'informationFolioPropertyComponent'
-  },
-  {
-    label: 'Fuente',
-    fragment: 'informationSourcePropertyComponent'
-  },
-  {
-    label: 'Persona',
-    fragment: 'informationPersonPropertyComponent'
   },
 ];
 

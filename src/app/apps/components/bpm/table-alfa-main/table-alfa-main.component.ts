@@ -49,7 +49,6 @@ import {
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { InformationFolioPropertyComponent } from "../../information-property/information-folio-property/information-folio-property.component";
 
 @Component({
   selector: 'vex-table-alfa-main',

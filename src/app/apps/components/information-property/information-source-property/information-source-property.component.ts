@@ -1,4 +1,4 @@
-import { AsyncPipe, NgForOf, NgIf, NgClass } from '@angular/common';
+import { NgForOf, NgIf, NgClass } from '@angular/common';
 import { ChangeDetectorRef, Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -6,7 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -16,16 +15,13 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable, BehaviorSubject, filter } from 'rxjs';
 import { TYPEINFORMATION_EDITION, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES_SOURCE, TYPEINFORMATION_VISUAL, PAGE_OPTION__5_7_10, PAGE_SIZE_SORT } from 'src/app/apps/constants/constant';
 import { TypeInformation } from 'src/app/apps/interfaces/content-info';
 import { DataSource } from 'src/app/apps/interfaces/information-property/snr-source-info';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { environment } from 'src/environments/environments';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
@@ -45,7 +41,13 @@ import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
     scaleFadeIn400ms
   ],
   imports: [
+    ReactiveFormsModule,
+    NgForOf,
+    NgIf,
+    NgClass,
     FormsModule,
+    // Vex
+    // Material
     MatAutocompleteModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -53,33 +55,24 @@ import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
     MatInputModule,
     MatOptionModule,
     MatTabsModule,
-    NgForOf,
-    NgIf,
-    ReactiveFormsModule,
     MatTableModule,
     MatSortModule,
-    NgClass,
     MatPaginatorModule,
     MatTooltipModule,
     MatCardModule,
-    HeaderCadastralInformationPropertyComponent,
     MatMenuModule,
     MatCheckboxModule,
-    MatExpansionModule,
+    // Custom
   ],
   templateUrl: './information-source-property.component.html',
   styleUrl: './information-source-property.component.scss'
 })
 export class InformationSourcePropertyComponent {
-  /* =========================== ATRIBUTES =========================== */
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   subject$: BehaviorSubject<DataSource[]> = new BehaviorSubject<DataSource[]>([]);
   data$: Observable<DataSource[]> = this.subject$.asObservable();
   allSourceSnr: DataSource[] = [];
 
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input() executionId: string | null | undefined = null;
@@ -101,7 +94,6 @@ export class InformationSourcePropertyComponent {
 
   /* ========================== CONSTRUCTOR ========================== */
   constructor(
-    private readonly layoutService: VexLayoutService,
     private snrService: SnrService,
     private cdr: ChangeDetectorRef,
   ) { }
@@ -109,15 +101,11 @@ export class InformationSourcePropertyComponent {
   /* ============================ METHODS ============================ */
   /* --------------------- Meth. Lifecycle Hooks --------------------- */
   ngOnInit(): void {
-    this.isExpandPanel(this.expandedComponent);
-
-    //this.getDataSourceFolio();
-    //this.dataSource = new MatTableDataSource<DataSource[]>();
-
     this.data$.pipe(filter<DataSource[]>(Boolean)).subscribe((sourceAllSnr) => {
       this.allSourceSnr = sourceAllSnr;
       this.dataSource.data = sourceAllSnr;
     });
+    this.searchBasicInformationPropertyFolio();
   }
 
   ngAfterViewInit() {
@@ -165,11 +153,7 @@ export class InformationSourcePropertyComponent {
 
 
   /* ------------------------- Meth. Common ------------------------- */
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchBasicInformationPropertyFolio();
-    }
-  }
+
 
   searchBasicInformationPropertyFolio(): void {
     if (!this.schema || !this.baunitId) {

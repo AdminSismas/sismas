@@ -39,8 +39,6 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { InformationFolioPropertyComponent } from "../information-folio-property/information-folio-property.component";
-import { InformationSourcePropertyComponent } from "../information-source-property/information-source-property.component";
 import { InformationPersonPropertyComponent } from "../information-person-property/information-person-property.component";
 import { SuperNotariadoPropertyComponent } from "../super-notariado-property/super-notariado-property.component";
 
@@ -82,8 +80,6 @@ import { SuperNotariadoPropertyComponent } from "../super-notariado-property/sup
     MatFormFieldModule,
     InformationUnitPropertyComponent,
     AdministrativeSourcesComponent,
-    InformationFolioPropertyComponent,
-    InformationSourcePropertyComponent,
     InformationPersonPropertyComponent,
     SuperNotariadoPropertyComponent
 ]
@@ -130,16 +126,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
   })
   private propertyAppraisalInformationComponent?: ElementRef;
   @ViewChild(InformationZonesPropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private informationZonesPropertyComponent?: ElementRef;
-  @ViewChild(InformationFolioPropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private informationFolioPropertyComponent?: ElementRef;
-  @ViewChild(InformationSourcePropertyComponent, {
     read: ElementRef,
     static: false
   })

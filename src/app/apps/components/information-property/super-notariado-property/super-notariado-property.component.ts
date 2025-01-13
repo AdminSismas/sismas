@@ -4,6 +4,7 @@ import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { InfoFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
+import { InformationSourcePropertyComponent } from '../information-source-property/information-source-property.component';
 
 @Component({
   selector: 'super-notariado-property',
@@ -14,7 +15,8 @@ import { InfoFolio } from 'src/app/apps/interfaces/information-property/snr-foli
     MatExpansionModule,
     MatGridListModule,
     // Custom
-    HeaderCadastralInformationPropertyComponent
+    HeaderCadastralInformationPropertyComponent,
+    InformationSourcePropertyComponent
   ],
   templateUrl: './super-notariado-property.component.html',
   styles: ``
@@ -24,6 +26,9 @@ export class SuperNotariadoPropertyComponent {
   @Input({ required: true }) public id = '';
   @Input({ required: true }) public propertyRegistryOffice: string | null | undefined = '';
   @Input({ required: true }) public propertyRegistryNumber: string | null | undefined = '';
+  @Input({ required: true }) public baunitId: string | null | undefined = '';
+  @Input({ required: true }) public schema: string = '';
+  @Input({ required: true }) public executionId: string | null | undefined = '';
 
   public expandedComponent = false;
   public infoFolio?: InfoFolio;
