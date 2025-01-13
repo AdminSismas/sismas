@@ -94,7 +94,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private basicPropertyInformationComponent?: ElementRef;
-  @ViewChild(SuperNotariadoPropertyComponent, {
+  @ViewChild(InformationUnitPropertyComponent, {
     read: ElementRef,
     static: false
   })
@@ -103,12 +103,13 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
-  private superNotariadoPropertyComponent?: ElementRef;
-  @ViewChild(InformationUnitPropertyComponent, {
+  private administrativeSourcesComponent?: ElementRef;
+  @ViewChild(SuperNotariadoPropertyComponent, {
     read: ElementRef,
     static: false
   })
-  private administrativeSourcesComponent?: ElementRef;
+  private superNotariadoPropertyComponent?: ElementRef;
+  // @ViewChild(AdministrativeSourcesComponent, {
   @ViewChild(InformationPropertyOwnersComponent, {
     read: ElementRef,
     static: false
