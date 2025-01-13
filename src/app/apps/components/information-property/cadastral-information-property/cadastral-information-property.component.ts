@@ -135,7 +135,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
-  private informationPersonPropertyComponent?: ElementRef;
+  private informationZonesPropertyComponent?: ElementRef;
+
 
   @Input({ required: true }) typeInformation: TypeInformation =
     TYPEINFORMATION_VISUAL;
