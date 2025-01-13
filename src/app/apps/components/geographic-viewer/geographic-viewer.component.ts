@@ -51,9 +51,9 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
   @ViewChild('postForm', { static: true }) postForm?: ElementRef;
   queryParameters!: QueryParametersGeographicVie;
   baunitHead!: BaunitHead;
-  isLoading: boolean = true; 
+  isLoading: boolean = true;
   hasError: boolean = false;
-  errorMessage: string = ''; 
+  errorMessage: string = '';
 
   get dialogTitle(): string {
     return this.hasError ? 'Error' : 'Visor Geográfico';
@@ -136,15 +136,14 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
   }
 
   handleError(message: string, error?: any): void {
-    this.isLoading = false; 
-    this.hasError = true; 
-    this.errorMessage = message; 
+    this.isLoading = false;
+    this.hasError = true;
+    this.errorMessage = message;
     console.error('Error en la solicitud:', error);
-    this.cdr.detectChanges(); 
+    this.cdr.detectChanges();
   }
 
   closed() {
     this.dialogRef.close();
   }
-
 }

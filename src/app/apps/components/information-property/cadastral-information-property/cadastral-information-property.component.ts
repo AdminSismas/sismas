@@ -84,8 +84,9 @@ import { TypeInformation } from '../../../interfaces/content-info';
     InformationConstructionsPropertyComponent,
     InformationPropertyOwnersComponent,
     InformationUnitPropertyComponent,
+    InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
-    SuperNotariadoPropertyComponent
+    SuperNotariadoPropertyComponent,
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {

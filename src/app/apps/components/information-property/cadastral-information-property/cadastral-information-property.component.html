@@ -136,6 +136,16 @@
       @fadeInUp
       [typeInformation]="typeInformation"
     ></vex-property-appraisal-information>
+    <vex-information-zones-property
+      [id]="'informationZonesPropertyComponent' + schema"
+      #informationZonesPropertyComponent{{schema}}
+      [expandedComponent]="false"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      [typeInformation]="typeInformation"
+      @fadeInUp
+    ></vex-information-zones-property>
   </div>
 </mat-dialog-content>
 
