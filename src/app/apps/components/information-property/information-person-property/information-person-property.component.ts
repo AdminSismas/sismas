@@ -116,6 +116,7 @@ export class InformationPersonPropertyComponent {
       this.allPersonSnr = personAllSnr;
       this.dataSource.data = personAllSnr;
     });
+    this.searchBasicInformationPropertyFolio();
   }
 
   ngAfterViewInit() {
@@ -162,19 +163,17 @@ export class InformationPersonPropertyComponent {
   /* ----------------------- Meth. Listening ----------------------- */
 
   /* ------------------------- Meth. Common ------------------------- */
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchBasicInformationPropertyFolio();
-    }
-  }
+
+
+
 
   searchBasicInformationPropertyFolio(): void {
     if (!this.data.schema || !this.data.baunitId) {
       return;
     }
     this.getDataSourcePerson(
-      this.data.propertyRegistryNumber as string,
-      this.data.propertyRegistryOffice as string
+      this.data.propertyRegistryOffice as string,
+      this.data.propertyRegistryNumber as string
     );
   }
 
