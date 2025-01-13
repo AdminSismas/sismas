@@ -44,11 +44,11 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
     let paramsPP:HttpParams = new HttpParams();
     paramsPP = paramsPP.append('page', `${page.page}`);
     paramsPP = paramsPP.append('size', `${page.size}`);
-    const urlComplete = `${this.basic_url}/bpmOutTemplate/${page.outTempplateId}`;
+    const urlComplete = `${this.basic_url}/bpmOutTemplate/${value.outTemplateId}`;
     console.log('link: ',urlComplete);
   
     // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
-    return  this.http.post<any>(urlComplete,value);
+    return  this.http.patch<any>(urlComplete,value);
   }
 
 }

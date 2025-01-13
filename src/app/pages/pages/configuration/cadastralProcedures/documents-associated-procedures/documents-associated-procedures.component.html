@@ -61,7 +61,15 @@
                 {{ column.label }}
               </th>
               <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
-                {{ row.outTemplateId }}
+                <ng-container *ngIf="column.property === 'headerTemplate' && row.headerTemplate">
+                  {{ row.headerTemplate.outTemplateId }}
+                </ng-container>
+                <ng-container *ngIf="column.property === 'footerTemplate' && row.footerTemplate">
+                  {{ row.footerTemplate.outTemplateId }}
+                </ng-container>
+                <ng-container *ngIf="column.property !== 'headerTemplate' && column.property !== 'footerTemplate'">
+                  {{ row[column.property] }}
+                </ng-container>
               </td>
             </ng-container>
           </ng-container>

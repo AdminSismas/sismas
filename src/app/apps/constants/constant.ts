@@ -125,12 +125,6 @@ export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[
     type: 'text',
     visible: true,
   },
-  // {
-  //   label: 'Template',
-  //   property: 'htmlTemplate',
-  //   type: 'operationType',
-  //   visible: true
-  // },
   {
     label: 'Header',
     property: 'headerTemplate',
@@ -150,48 +144,7 @@ export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[
     visible: true
   },
  
-  // {
-  //   label: 'Actualización',
-  //   property: 'updateAt',
-  //   type: 'text',
-  //   visible: true
-  // },
-  // {
-  //   label: 'Actualizado por',
-  //   property: 'updateBy',
-  //   type: 'text',
-  //   visible: true
-  // },
-  // {
-  //   label: 'Creado por', 
-  //   property: 'createdBy',
-  //    type: 'text', 
-  //    visible: true 
-  // },
-  // {
-  //   label: 'Fecha de creación',
-  //   property: 'createdAt',
-  //   type: 'text',
-  //   visible: true
-  // },
-  // {
-  //   label: 'Fecha de actualización',
-  //   property: 'updatedBy',
-  //   type: 'text',
-  //   visible: true
-  // },
-  // {
-  //   label: 'Actualizar', 
-  //   property: 'updatedAt',
-  //    type: 'text', 
-  //    visible: true 
-  // },
-  // {
-  //   label: 'Actualizar', 
-  //   property: 'schema',
-  //    type: 'text', 
-  //    visible: true 
-  // },
+ 
   {
     label: 'Acciones', 
     property: 'actions',

@@ -223,7 +223,7 @@ export class DocumentsAssociatedProceduresComponent {
           if(dialogData.type === 'new'){
             this.saveDocumento(result);
           }else{
-            this.updateDocumento(dialogData.documentAssociated);
+            this.updateDocumento(result);
           }
 
         }
@@ -242,7 +242,7 @@ export class DocumentsAssociatedProceduresComponent {
 
     updateDocumento(data:any): boolean {
       this.documentAssociatedService.setUDocumentoAsocietyUpdate(
-        this.generateObjectPageSearchData(data.outTemplateId),data)
+        this.generateObjectPageSearchData(data?.outTemplateId),data)
         .subscribe({
           error: (err: any) => this.captureInformationSubscribeError(err),
           next: (result: InformationPegeable) => this.searchDocumentoList()
@@ -321,8 +321,8 @@ export class DocumentsAssociatedProceduresComponent {
       this.dataSource.filter = value;
     }
   
-    private generateObjectPageSearchData(outTempplateId: string): PageSearchData {
-      return new PageSearchData(this.page, this.pageSize, outTempplateId);
+    private generateObjectPageSearchData(outTemplateId: string): PageSearchData {
+      return new PageSearchData(this.page, this.pageSize, outTemplateId);
     }
   
     private getRandomInt(max: number): number {

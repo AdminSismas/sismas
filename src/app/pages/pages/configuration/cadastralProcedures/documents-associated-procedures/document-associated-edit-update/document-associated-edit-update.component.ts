@@ -101,10 +101,10 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
       this.getUserSession();
       if (this.defaults.type === 'edit') {
         const htmlService = `${this.defaults.documentAssociated?.htmlTemplate}`;
-        this.form.get('content')?.setValue(this.sanitizeHtml(htmlService));
+        this.form.get('content')?.setValue(htmlService);
         console.log('this.defaults.documentAssociated?.headerTemplateId: ', this.defaults.documentAssociated?.headerTemplate);
 
-        const headerIdSet = this.defaults.documentAssociated?.footerTemplate?.outTemplateId;
+        const headerIdSet = this.defaults.documentAssociated?.headerTemplate?.outTemplateId;
         this.form.get('headerTemplateId')?.setValue(headerIdSet);
         
         const footerIdSet = this.defaults.documentAssociated?.footerTemplate?.outTemplateId;
@@ -157,7 +157,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
         const todayDay = new Date();
         const createBasicInformationAddress: DocumentAsocietyModel = {
       
-            outTemplateId: value.outTempplateId ? value.outTempplateId : '',
+            // outTemplateId: ,
             templateCode: this.templateCode?.value ? this.templateCode?.value : '',
             htmlTemplate: this.content?.value ? this.content?.value : '',
   
