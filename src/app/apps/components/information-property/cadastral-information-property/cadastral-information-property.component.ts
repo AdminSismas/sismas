@@ -155,6 +155,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] =
     NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean } = {};
 
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;
@@ -164,6 +165,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   constructor(private informationPropertyService: InformationPropertyService) {}
 
   ngOnInit(): void {
+    this.infoResorces();
     if (!this.contentInfoSchema || !this.contentInfoSchema.content) {
       return;
     }
@@ -219,6 +221,14 @@ export class CadastralInformationPropertyComponent implements OnInit {
           this.schema +
           'Contenedor';
       }
+  }
+
+  infoResorces(): void {
+    if (this.resources.length < 0) return;
+
+    Object.keys(this.editable).forEach((key) => {
+      this.editable[key as keyof typeof this.editable] = this.resources.includes(key);
+    });
   }
   // Método para eliminar el objeto con la etiqueta "Propietarios"
   removeItem(labelToRemove: string): void {

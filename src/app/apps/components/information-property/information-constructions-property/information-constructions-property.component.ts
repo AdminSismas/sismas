@@ -108,6 +108,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() editable? = true;
 
   columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
   page:number = PAGE;

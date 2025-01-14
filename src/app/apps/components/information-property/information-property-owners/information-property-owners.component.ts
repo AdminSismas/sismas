@@ -73,6 +73,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() editable? = true;
 
   protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = [
     {

@@ -37,6 +37,7 @@ export class AdministrativeSourcesComponent implements OnInit {
   @Input() public schema?: string;
   @Input() public executionId?: string | null;
   @Input() public typeInformation?: string;
+  @Input() public editable? = true;
 
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
   public selectedFuente?: AdministrativeSource;
