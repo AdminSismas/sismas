@@ -764,4 +764,4 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   }
 ];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS'];
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'];

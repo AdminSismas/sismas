@@ -156,7 +156,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] =
     NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
-  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean } = {};
+  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean } = {};
 
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;
