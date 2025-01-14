@@ -140,7 +140,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if(this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL) {
+    if(this.typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
       this.columns = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS;

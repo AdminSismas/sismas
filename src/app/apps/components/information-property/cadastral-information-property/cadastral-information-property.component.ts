@@ -39,6 +39,7 @@ import { InformationUnitPropertyComponent } from '../information-unit-property/i
 import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
 import {
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  REFERENCE_COMPONENTS,
   TYPEINFORMATION_VISUAL
 } from '../../../constants/constant';
 import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
@@ -226,7 +227,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
   infoResorces(): void {
     if (this.resources.length < 0) return;
 
-    Object.keys(this.editable).forEach((key) => {
+    const referenceComponents = REFERENCE_COMPONENTS;
+
+    referenceComponents.forEach((key) => {
       this.editable[key as keyof typeof this.editable] = this.resources.includes(key);
     });
   }
