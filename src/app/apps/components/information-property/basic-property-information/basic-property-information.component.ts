@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,6 +38,7 @@ import { EditBasicPropertyInformationComponent } from './edit-basic-property-inf
     scaleFadeIn400ms,
   ],
   imports: [
+    NgClass,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -93,12 +94,12 @@ export class BasicPropertyInformationComponent implements OnInit {
     this.informationPropertyService.getBasicInformationProperty(
       this.schema , this.baunitId, this.executionId)
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationProperty) => this.captureInformationSubscribe(result)
       });
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.data = new BasicInformationProperty();
   }
 
