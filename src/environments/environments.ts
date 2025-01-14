@@ -132,6 +132,7 @@ export const environment = {
   synchronization: '/synchronization',
   synchronize: '/synchronize',
   /* ------ T ------ */
+  tasksAssigned: '/assignedTasks',
   temporal: '/temporal/',
   titulo: 'Desarrollo',
   /* ------ U ------ */

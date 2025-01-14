@@ -292,6 +292,13 @@ export class BmpCoreComponent implements OnInit {
       );
       return;
     }
+
+    if (result.proTask!.taskId === -1) {
+      this.router.navigate([environment.myWork_tasksPanel, environment.tasksAssigned]).then();
+      this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 3000 });
+      return;
+    }
+
     this.proTaskE_Bpm = result;
     this.executionId = result.executionId?.toString();
     this.getNewProFlow(result.flowId?.toString());
