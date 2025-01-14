@@ -66,8 +66,9 @@ import { MatDividerModule } from '@angular/material/divider';
     NgClass,
     MatMenuModule,
     MatDialogModule,
-    MatDividerModule
-  ],
+    MatDividerModule,
+
+],
   templateUrl: './table-alfa-main.component.html',
   styleUrl: './table-alfa-main.component.scss'
 })
@@ -208,6 +209,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
         {
           error: (err: any) => this.messageChangesNoAvailable(),
           next: (result: DifferenceChanges[]) => {
+            console.log("table-alfa-main:::: ",result);
             this.openDifferenceChangesProperty(
               result, this.executionId, operation?.baunitHead?.baunitIdE);
           }

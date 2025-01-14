@@ -28,6 +28,7 @@ export const environment = {
   bpm_bpmCore: '/bpm/bpm-core/',
   bpm_username_exists: '/exists/username/',
   bpm_users: '/bpmUser',
+  bpm_user_info: '/bpmUser/username/',
   bpm_email_exists: '/exists/email/',
   bpm_individual_exists: '/exists/individual/',
   bpmAttachment: {
@@ -85,6 +86,7 @@ export const environment = {
   /* ------ J ------ */
   /* ------ K ------ */
   /* ------ L ------ */
+  logo: 'assets/img/logo/logo_san_vicente.png',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
@@ -96,6 +98,7 @@ export const environment = {
   /* ------ O ------ */
   operations: '/operations',
   /* ------ P ------ */
+  password: '/password',
   port: '5001',
   post_path_viewer: 'rest/config/setParams',
   production: true,
@@ -123,21 +126,27 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  signatureUrl: '/signatureUrl',
+  snr: '/snr',
   synchronization: '/synchronization',
   synchronize: '/synchronize',
   /* ------ T ------ */
   temporal: '/temporal/',
+  titulo: 'Masora',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
   urban_zones: '/ccZonaHomoFisicaUr',
-  url: 'https://prediosplus.api.cadastre4world.com',
-  url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
+  url: 'https://masora.api.sismas.com.co',
+  url_viewer: 'https://masora.map.sismas.com.co:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
-  valuation: '/valuation/'
+  valuation: '/valuation/',
+  video: 'assets/video/masora.mp4',
   /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   /* ------ X ------ */
   /* ------ Y ------ */
   /* ------ Z ------ */

@@ -54,6 +54,8 @@ import { jwtDecode } from 'jwt-decode';
   ]
 })
 export class LoginComponent {
+  videoPath: string = environment.video;
+  logoPath: string = environment.logo;
   form!: FormGroup;
   inputType = 'password';
   visible = false;

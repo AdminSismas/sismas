@@ -72,7 +72,7 @@
                     aria-label="Number"
                     matInput
                     formControlName="zonas"
-                    placeholder="Zona&hellip;"
+                    placeholder="Zona"
                     >
            </mat-form-field>
 
@@ -271,7 +271,7 @@
                 label="Tipo de documento"
                 formControlNameCombobox="domIndividualTypeNumber"
                 typeDomainName="IndividualTypeNumber"
-                placeholderDomainName="Ponga tipo documento&hellip;"
+                placeholderDomainName="Ponga tipo documento"
               ></vex-combox-colletion>
 
               <vex-input
@@ -413,7 +413,7 @@
                        aria-label="Number"
                        matInput
                        formControlName="municipality"
-                       placeholder="Seleccione un municipio&hellip;"
+                       placeholder="Seleccione un municipio"
                        [matAutocomplete]="autoMunicipality">
                 <mat-autocomplete autoActiveFirstOption #autoMunicipality="matAutocomplete" [panelWidth]="350"
                                   (optionSelected)="loadZonesInformation($event.option.value, true)">
@@ -437,7 +437,7 @@
                        aria-label="Number"
                        matInput
                        formControlName="zone"
-                       placeholder="Seleccione una zona&hellip;"
+                       placeholder="Seleccione una zona"
                        [matAutocomplete]="autoZone">
                 <mat-autocomplete autoActiveFirstOption #autoZone="matAutocomplete" [panelWidth]="350"
                                   (optionSelected)="loadSectorsInformation($event.option.value, true)">
@@ -461,7 +461,7 @@
                        aria-label="Number"
                        matInput
                        formControlName="sector"
-                       placeholder="Seleccione un sector&hellip;"
+                       placeholder="Seleccione un sector"
                        [matAutocomplete]="autoSector">
                 <mat-autocomplete autoActiveFirstOption #autoSector="matAutocomplete" [panelWidth]="350"
                                   (optionSelected)="loadCommunitiesInformation($event.option.value, true)">
@@ -488,7 +488,7 @@
                        aria-label="Number"
                        matInput
                        formControlName="community"
-                       placeholder="Seleccione un comuna&hellip;"
+                       placeholder="Seleccione un comuna"
                        [matAutocomplete]="autoTownship">
                 <mat-autocomplete autoActiveFirstOption #autoTownship="matAutocomplete" [panelWidth]="350"
                                   (optionSelected)="loadNeighborhoodsInformation($event.option.value, true)">
@@ -512,7 +512,7 @@
                        aria-label="Number"
                        matInput
                        formControlName="neighborhood"
-                       placeholder="Seleccione un comuna&hellip;"
+                       placeholder="Seleccione un comuna"
                        [matAutocomplete]="autoNeighborhood">
                 <mat-autocomplete autoActiveFirstOption #autoNeighborhood="matAutocomplete" [panelWidth]="350"
                                   (optionSelected)="loadBlocksInformation($event.option.value, true)">
@@ -536,7 +536,7 @@
                        aria-label="Number"
                        matInput
                        formControlName="sidewalk"
-                       placeholder="Seleccione una vereda&hellip;"
+                       placeholder="Seleccione una vereda"
                        [matAutocomplete]="autoSidewalk">
                 <mat-autocomplete autoActiveFirstOption #autoSidewalk="matAutocomplete" [panelWidth]="350">
                   @for (option of filteredOptionsSidewalk$ | async; track option.codigoVereda;) {
@@ -559,7 +559,7 @@
                        aria-label="Number"
                        matInput
                        formControlName="block"
-                       placeholder="Seleccione una manzana&hellip;"
+                       placeholder="Seleccione una manzana"
                        [matAutocomplete]="autoBlock"
                        >
                 <mat-autocomplete autoActiveFirstOption #autoBlock="matAutocomplete" [panelWidth]="350">

@@ -38,69 +38,23 @@
           mat-table
           [dataSource]="dataSource"
         >
-          <!-- Tipo fuente administrativa -->
-          <ng-container matColumnDef="domFuenteAdministrativaTipo">
+        @for(column of columns; track $index) {
+          <ng-container [matColumnDef]="column.property">
             <th
-              mat-header-cell
               *matHeaderCellDef
+              mat-header-cell
+              mat-sort-header
             >
-              Tipo fuente administrativa
+              {{ column.label }}
             </th>
             <td
+              *matCellDef="let row"
               mat-cell
-              *matCellDef="let element"
             >
-              {{ element.domFuenteAdministrativaTipo }}
+              {{ row[column.property] }}
             </td>
           </ng-container>
-
-          <!-- Fecha documento -->
-          <ng-container matColumnDef="fechaDocumentoFuente">
-            <th
-              mat-header-cell
-              *matHeaderCellDef
-            >
-              Fecha documento
-            </th>
-            <td
-              mat-cell
-              *matCellDef="let element"
-            >
-              {{ element.fechaDocumentoFuente }}
-            </td>
-          </ng-container>
-
-          <!-- Número fuente -->
-          <ng-container matColumnDef="numeroFuente">
-            <th
-              mat-header-cell
-              *matHeaderCellDef
-            >
-              Número fuente
-            </th>
-            <td
-              mat-cell
-              *matCellDef="let element"
-            >
-              {{ element.numeroFuente }}
-            </td>
-          </ng-container>
-
-          <!-- Ente emisor -->
-          <ng-container matColumnDef="enteEmisor">
-            <th
-              mat-header-cell
-              *matHeaderCellDef
-            >
-              Ente emisor
-            </th>
-            <td
-              mat-cell
-              *matCellDef="let element"
-            >
-              {{ element.enteEmisor }}
-            </td>
-          </ng-container>
+        }
           <!-- Action Column -->
           <ng-container matColumnDef="actions">
             <th

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -68,6 +68,9 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input() propertyUnit = false;
   @Input() typeInformation = 'visualization';
 
+  @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
+  @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
+
   constructor(
     private informationPropertyService:InformationPropertyService,
     private dialog: MatDialog
@@ -100,6 +103,8 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   captureInformationSubscribe(result: BasicInformationProperty): void {
     this.data = result;
+    this.propertyRegistryOffice.emit(this.data.propertyRegistryOffice);
+    this.propertyRegistryNumber.emit(this.data.propertyRegistryNumber);
   }
 
   editBasicInformationProperty(): void {

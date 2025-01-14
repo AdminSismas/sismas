@@ -1,5 +1,20 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+// Angular framework
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+// Vex
+import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+// Material
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
@@ -7,66 +22,60 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { NgFor, NgIf } from '@angular/common';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-geographic-vie';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ContentInfoSchema } from '../../interfaces/content-info-schema';
-import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+// Custom
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
-import { InformationGeographicService } from '../../services/territorial-organization/information-geographic.service';
+import { ContentInfoSchema } from '../../interfaces/content-info-schema';
 import { environment as envi } from '../../../../environments/environments';
-import { InputComponent } from '../input/input.component';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { LoadingAppComponent } from '../loading-app/loading-app.component';
+import { InformationGeographicService } from '../../services/territorial-organization/information-geographic.service';
+import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-geographic-vie';
 
 @Component({
   selector: 'vex-geographic-viewer-main',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
-    NgFor,
-    NgIf,
-    MatButtonModule,
-    MatDialogClose,
-    MatDividerModule,
+    SweetAlert2Module,
+    // Vex
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
-    MatInputModule,
-    InputComponent,
+    // Material
+    MatButtonModule,
+    MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
+    MatDividerModule,
     MatIconModule,
-    LoadingAppComponent
+    // Custom
   ],
   templateUrl: './geographic-viewer.component.html'
 })
 export class GeographicViewerComponent implements OnInit, AfterViewInit {
-
   @ViewChild('postForm', { static: true }) postForm?: ElementRef;
+  @ViewChild('ErrorMap') private errorMap!: SwalComponent;
   queryParameters!: QueryParametersGeographicVie;
   baunitHead!: BaunitHead;
+  errorMessage: string = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema | undefined,
     private dialogRef: MatDialogRef<GeographicViewerComponent>,
-    private geographicService: InformationGeographicService
-  ) {
-  }
+    private geographicService: InformationGeographicService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     if (!this.defaults) {
-      this.closed();
+      this.dialogRef.close();
       return;
     }
     this.baunitHead = this.defaults?.content;
 
     if (this.baunitHead.cadastralNumber == null) {
-      this.closed();
+      this.dialogRef.close();
     }
   }
 
@@ -74,43 +83,42 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
     this.getInformationGeographicViewer();
   }
 
-  getInformationGeographicViewer() {
-    if(!this.baunitHead || !this.baunitHead.cadastralNumber){
+  getInformationGeographicViewer(): void {
+    if (!this.baunitHead || !this.baunitHead.cadastralNumber) {
+      this.handleError('Datos insuficientes para realizar la consulta.');
       return;
     }
-    this.geographicService.getInfoGeographicViewer(this.baunitHead.cadastralNumber, '')
-      .subscribe(
-        {
-          error: () => this.queryParameters = new QueryParametersGeographicVie(),
-          next: (result: QueryParametersGeographicVie) => {
-            this.queryParameters = new QueryParametersGeographicVie(result);
-            this.formatElementOfForm();
-          }
+
+    this.geographicService
+      .getInfoGeographicViewer(this.baunitHead.cadastralNumber, '')
+      .subscribe({
+        next: (result: QueryParametersGeographicVie) => {
+          this.queryParameters = new QueryParametersGeographicVie(result);
+          console.log(result);
+          this.formatElementOfForm();
+        },
+        error: (error) => {
+          this.handleError(error.message);
         }
-      );
+      });
   }
 
-  formatElementOfForm() {
-    if (this.queryParameters == null) {
+  formatElementOfForm(): void {
+    if (!this.queryParameters) {
       return;
     }
-    if (this.queryParameters.page == null || this.queryParameters.page?.length < 0) {
-      this.queryParameters.page = `${envi.query_parameters_page}`;
-    }
-    if (this.queryParameters.zoom == null || this.queryParameters.zoom == 0) {
-      this.queryParameters.zoom = 30;
-    }
-    for (const [parametersKey, parametersValue] of Object.entries(this.queryParameters)) {
-      const value = typeof parametersValue === 'object' || Array.isArray(parametersValue) ? JSON.stringify(parametersValue) : parametersValue;
-      const element: HTMLInputElement | null = document.getElementById(parametersKey) as HTMLInputElement;
-      if (element != null && parametersValue != null) {
-        element.value = value;
-        element.textContent = value;
-      }
-      const elementArea: HTMLTextAreaElement | null = document.getElementById(parametersKey) as HTMLTextAreaElement;
-      if (elementArea != null && parametersValue != null) {
-        elementArea.value = value;
-        elementArea.textContent = value;
+    for (const [key, value] of Object.entries(this.queryParameters)) {
+      const element = document.getElementById(key) as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | null;
+      if (element) {
+        const formattedValue =
+          typeof value === 'object' || Array.isArray(value)
+            ? JSON.stringify(value)
+            : value;
+        element.value = formattedValue || '';
+        element.textContent = formattedValue || '';
       }
     }
     this.openGeographicViewerMain();
@@ -127,11 +135,15 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
     this.postForm.nativeElement.action = `${envi.url_viewer}${envi.post_path_viewer}`;
     this.postForm.nativeElement.submit();
     console.log(this.postForm.nativeElement);
-    this.closed();
-  }
-
-  closed() {
     this.dialogRef.close();
   }
 
+  handleError(message: string, error?: any): void {
+    this.errorMessage = message;
+    console.error('Error en la solicitud:', error);
+    this.errorMap.fire().then(() => {
+      this.dialogRef.close();
+    });
+    this.cdr.detectChanges();
+  }
 }
