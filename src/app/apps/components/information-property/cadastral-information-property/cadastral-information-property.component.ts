@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
@@ -146,6 +147,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @Input({ required: true }) public schema = '';
   @Input({ required: true }) contentInfoSchema!: ContentInfoSchema;
   @Input({ required: true }) public baunitCondition?: string;
+  @Input() public resources: string[] = [];
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;

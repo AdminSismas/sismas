@@ -7,7 +7,6 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
-  TemplateRef,
   ViewChild
 } from '@angular/core';
 import {
@@ -31,7 +30,6 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
 import { SearchData } from '../../../interfaces/search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -43,12 +41,10 @@ import {
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
-import {
-  ShowErrorValidateAlfaMainComponent
-} from '../show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -67,7 +63,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatMenuModule,
     MatDialogModule,
     MatDividerModule,
-
+    SweetAlert2Module,
 ],
   templateUrl: './table-alfa-main.component.html',
   styleUrl: './table-alfa-main.component.scss'
@@ -97,7 +93,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDeleteDialog', { static: true}) confirmDeleteDialog!: TemplateRef<any>;
+  @ViewChild('confirmDeleteDialog', { static: true}) confirmDeleteDialog!: SwalComponent;
 
   constructor(
     private dialog: MatDialog,
@@ -208,7 +204,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
       this.executionId, operation?.baunitHead?.baunitIdE)
       .subscribe(
         {
-          error: (err: any) => this.messageChangesNoAvailable(),
+          error: () => this.messageChangesNoAvailable(),
           next: (result: DifferenceChanges[]) => {
             console.log("table-alfa-main:::: ",result);
             this.openDifferenceChangesProperty(
@@ -217,7 +213,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
         });
   }
 
-  edithInformations(operation: Operation): void {
+  editInformations(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede ver la información de la unidad predial, consulte al administrador.',
@@ -235,7 +231,9 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
           operation?.baunitHead,
           this.executionId,
           LIST_SCHEMAS_CONTROL_TEMP,
-          TYPEINFORMATION_EDITION
+          TYPEINFORMATION_EDITION,
+          '',
+          this.resources
         )
       })
       .afterClosed();
@@ -243,27 +241,22 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   deleteInformations(operation: Operation): void {
     this.npnRemoving = operation.npnlike;
-    this.dialog.open(this.confirmDeleteDialog, {
-      width: '40%'
-    }).afterClosed()
-      .subscribe(result => {
-        if (result) {
-          this.bpmCoreService.clearPropertyBpmOperation(this.executionId, operation.baunitHead!.baunitIdE as string)
-            .subscribe(data => console.log(data));
-        }
-      });
-
+    this.confirmDeleteDialog.fire().then((result) => {
+      if (result.isConfirmed) {
+        this.bpmCoreService.clearPropertyBpmOperation(this.executionId, operation.baunitHead!.baunitIdE as string)
+          .subscribe(data => console.log(data));
+      }
+    });
   }
 
   openDifferenceChangesProperty(result: DifferenceChanges[],
                                 executionId:string, baunitIdE:string | undefined): void {
-    let data: DifferenceChanges[];
     if (!result || result.length <= 0) {
       this.messageChangesNoAvailable();
       return;
     }
 
-    data = result.map((row: DifferenceChanges) => {
+    const data: DifferenceChanges[] = result.map((row: DifferenceChanges) => {
       return new DifferenceChanges(row, executionId, baunitIdE);
     });
     this.dialog
@@ -277,7 +270,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   messageChangesNoAvailable() {
     this.snackbar.open(
-      'Cambios realizados en el contro de cambios no disponibles, consulte al administrador.',
+      'Cambios realizados en el control de cambios no disponibles, consulte al administrador.',
       'CLOSE', { duration: 1000 }
     );
   }
