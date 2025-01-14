@@ -129,7 +129,8 @@ export class BmpCoreComponent implements OnInit {
     this.executionId = await firstValueFrom(this.executionId$);
     this.proFlow = await firstValueFrom(this._proFlow$);
     this.infoFatherURL = await firstValueFrom(this._infoFatherURL$);
-    this.getResources(this.executionId);
+    this.resources = await firstValueFrom(this.tasksPanelServices.getResources(this.executionId));
+
     if (!this.infoFatherURL) {
       this.returnURLPrevious(`${environment.myWork_cadastralSearch}`);
       return;
@@ -150,14 +151,6 @@ export class BmpCoreComponent implements OnInit {
       return;
     }
     this.activateLoading(true);
-  }
-
-  getResources(executionId: string): void {
-    this.tasksPanelServices.getResources(executionId).subscribe({
-      next: (result) => {
-        this.resources = result.split(',').map((resource) => resource.trim());
-      }
-    });
   }
 
   refreshComponentsDynamic(proFlow: ProFlow) {
@@ -329,7 +322,7 @@ export class BmpCoreComponent implements OnInit {
     component: BasicComponentTemplate
   ) {
     obj.nameComponent = component.name;
-    obj.inputs = { executionId: this.executionId };
+    obj.inputs = { executionId: this.executionId, resources: this.resources };
     this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
       providers: [{ provide: ProFlow, useValue: this.proFlow }],

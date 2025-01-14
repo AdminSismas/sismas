@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -78,12 +78,15 @@ export class TasksPanelService {
     return this.http.get<any>(urlTask,);
   }
 
-  getResources(executionId: string): Observable<string> {
+  getResources(executionId: string): Observable<string[]> {
     const url = `${this.basic_url}${envi.bpmOperation.proflow_proExecution}${envi.bpmOperation.resources}${executionId}`;
 
     const headers: HttpHeaders = new HttpHeaders()
       .set('Content-Type', 'text/plain;charset=UTF-8');
 
-    return  this.http.get(url, { headers, responseType: 'text' });
+    return  this.http.get(url, { headers, responseType: 'text' })
+      .pipe(
+        map((result: string) => result.split(',').map((resource: string) => resource.trim()))
+      );
   }
 }

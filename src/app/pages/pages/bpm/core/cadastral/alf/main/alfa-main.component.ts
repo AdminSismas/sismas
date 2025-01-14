@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidMinHeightDirective } from '../../../../../../../apps/directives/fluid-min-height.directive';
@@ -66,6 +66,7 @@ import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-mai
   ],
   imports: [
     NgIf,
+    NgClass,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
     FluidMinHeightDirective,
@@ -378,6 +379,24 @@ export class AlfaMainComponent implements OnInit {
 
   private returnURLPrevious(url: string) {
     this.router.navigate([`${url}`]).then();
+  }
+
+  disabledButton(btn: string): boolean {
+    return !this.resources.includes(btn);
+  }
+
+  buttonsClass(btn: string): string {
+    let color = '!bg-slate-400 !text-gray-100 opacity-60';
+
+    if (btn === 'AGR' && !this.disabledButton(btn)) {
+      color = '!text-white !bg-primary-600';
+    } else if (btn === 'CRE' && !this.disabledButton(btn)) {
+      color = '!text-white !bg-green-600';
+    } else if (btn === 'BRR' && !this.disabledButton(btn)) {
+      color = '!text-white !bg-red-600';
+    }
+
+    return `rounded-full py-2 px-6 title ${color}`;
   }
 
   protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;

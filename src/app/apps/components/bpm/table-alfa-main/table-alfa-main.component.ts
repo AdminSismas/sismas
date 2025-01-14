@@ -78,8 +78,9 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   @Input({ required: true }) contentInformations!: InformationPegeable;
   @Input({ required: true }) executionId!: string;
-  @Input() columns: TableColumn<Operation>[] = TABLE_ALFA_MAIN_OPERATION_COLUMN;
   @Input({ required: true }) mode = 1;
+  @Input() resources: string[] = [];
+  @Input() columns: TableColumn<Operation>[] = TABLE_ALFA_MAIN_OPERATION_COLUMN;
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   searchData!: SearchData;
