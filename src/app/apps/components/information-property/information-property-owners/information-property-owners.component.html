@@ -24,9 +24,11 @@
         <div class="header-container m-2">
           @if (typeInformation === "edition") {
             <button
-              color="primary"
+              [ngClass]="!editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
+              [color]="editable ? 'primary' : ''"
               mat-raised-button
               type="button"
+              [disabled]="!editable"
               (click)="onClickOpenAddEditModal(dataSource)"
             >
               Nueva

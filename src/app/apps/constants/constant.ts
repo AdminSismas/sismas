@@ -767,3 +767,5 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
     cssClasses: ['font-medium']
   }
 ];
+
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'];

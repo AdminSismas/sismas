@@ -87,7 +87,7 @@ export const environment = {
   /* ------ J ------ */
   /* ------ K ------ */
   /* ------ L ------ */
-  logo: 'assets/img/logo/logo_armenia.png',
+  logo: 'assets/img/logo/logo_barrancabermeja.png',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
@@ -133,18 +133,18 @@ export const environment = {
   synchronize: '/synchronize',
   /* ------ T ------ */
   temporal: '/temporal/',
-  titulo: 'Armenia',
+  titulo: 'Barrancabermeja',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
   urban_zones: '/ccZonaHomoFisicaUr',
-  url: 'https://armenia.api.sismas.com.co',
-  url_viewer: 'https://armenia.map.sismas.com.co:8081/mapstore/',
+  url: 'https://barrancabermeja.api.sismas.com.co',
+  url_viewer: 'https://barrancabermeja.map.sismas.com.co:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/',
-  video: 'assets/video/armenia.mp4',
+  video: 'assets/video/barrancabermeja.mp4',
   /* ------ W ------ */
   withSignaturesUsers: '/with-signature',
   withoutSignaturesUsers: '/without-signature',
