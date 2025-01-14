@@ -145,7 +145,13 @@ export const environment = {
   /* ------ V ------ */
   valuation: '/valuation/',
   video: 'assets/video/desarrollo.mp4',
-
+  /* ------ AWS Config ------ */
+  awsConfig: {
+    accessKeyId: 'AKIAW5WU5HQB6DQ52QVS',
+    secretAccessKey: '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',
+    region: 'us-east-1',
+    bucketName: 'geo-masora-bucket'
+  },
   /* ------ W ------ */
   withSignaturesUsers: '/with-signature',
   withoutSignaturesUsers: '/without-signature',
