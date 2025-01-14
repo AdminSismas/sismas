@@ -50,6 +50,7 @@ export const environment = {
     proTask_devolution: 'proTask/devolutions',
     proTask_priority: 'proTask/priority',
     startProcess: 'startProcess',
+    resources: 'resorces/',
     value: '/bpmOperation/'
   },
   bpmProcess: {

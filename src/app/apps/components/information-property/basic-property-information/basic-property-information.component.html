@@ -21,8 +21,10 @@
         <div class="w-full my-2 pl-2 ">
           <button
             mat-raised-button
-            color="primary"
             title="Editar aspectos generales"
+            [ngClass]="!editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
+            [color]="editable ? 'primary' : ''"
+            [disabled]="!editable"
             (click)="editBasicInformationProperty()"
           >
             Editar

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
@@ -38,6 +39,7 @@ import { InformationUnitPropertyComponent } from '../information-unit-property/i
 import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
 import {
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  REFERENCE_COMPONENTS,
   TYPEINFORMATION_VISUAL
 } from '../../../constants/constant';
 import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
@@ -146,6 +148,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @Input({ required: true }) public schema = '';
   @Input({ required: true }) contentInfoSchema!: ContentInfoSchema;
   @Input({ required: true }) public baunitCondition?: string;
+  @Input() public resources: string[] = [];
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
@@ -153,6 +156,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] =
     NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean } = {};
 
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;
@@ -162,6 +166,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   constructor(private informationPropertyService: InformationPropertyService) {}
 
   ngOnInit(): void {
+    this.infoResorces();
     if (!this.contentInfoSchema || !this.contentInfoSchema.content) {
       return;
     }
@@ -217,6 +222,16 @@ export class CadastralInformationPropertyComponent implements OnInit {
           this.schema +
           'Contenedor';
       }
+  }
+
+  infoResorces(): void {
+    if (this.resources.length < 0) return;
+
+    const referenceComponents = REFERENCE_COMPONENTS;
+
+    referenceComponents.forEach((key) => {
+      this.editable[key as keyof typeof this.editable] = this.resources.includes(key);
+    });
   }
   // Método para eliminar el objeto con la etiqueta "Propietarios"
   removeItem(labelToRemove: string): void {

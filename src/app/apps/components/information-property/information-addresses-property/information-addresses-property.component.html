@@ -25,9 +25,13 @@
           <div class="px-4 h-16 border-b sticky left-0 flex items-center">
             @if (typeInformation === "edition") {
               <button
-                color="primary"
                 mat-raised-button
                 type="button"
+                [ngClass]="
+                  !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+                "
+                [color]="editable ? 'primary' : ''"
+                [disabled]="!editable"
                 (click)="openAddEditAddressInformationPropertyDialog()"
               >
                 Nueva
@@ -223,27 +227,14 @@
   </ng-template>
 </mat-menu>
 
-<ng-template #confirmDialog>
-  <h2 matDialogTitle>Eliminar Dirección</h2>
-  <mat-dialog-content>
-    <p>Desea eliminar la dirección?</p>
-  </mat-dialog-content>
-  <mat-dialog-actions class="flex gap-1 justify-center">
-    <button
-      mat-button
-      matDialogClose
-      mat-raised-button
-      color="primary"
-    >
-      Cancelar
-    </button>
-    <button
-      mat-button
-      [matDialogClose]="'delete'"
-      mat-raised-button
-      color="warn"
-    >
-      Eliminar
-    </button>
-  </mat-dialog-actions>
-</ng-template>
+<swal
+  #confirmDialog
+  title="¿Está seguro de eliminar la dirección?"
+  text="¿Está seguro de eliminar esta dirección?"
+  icon="warning"
+  [showCancelButton]="true"
+  [confirmButtonText]="'Sí, eliminar'"
+  [cancelButtonText]="'Cancelar'"
+  [confirmButtonColor]="'#3085d6'"
+  [cancelButtonColor]="'#d33'"
+></swal>
