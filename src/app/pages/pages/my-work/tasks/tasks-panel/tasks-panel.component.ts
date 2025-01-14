@@ -113,6 +113,7 @@ export class TasksPanelComponent implements OnInit {
   dataContentInformation$: Observable<InformationPegeable> =
     this.subjectContentInformation$.asObservable();
   isExistDataInformation$: Observable<boolean> = of(false);
+  resources: string[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -297,7 +298,7 @@ export class TasksPanelComponent implements OnInit {
     return proTaskE.executionId;
   }
 
-  openBpmCodeProtaskE(proTaskE?: ProTaskE) {
+  openBpmCodeProtaskE(proTaskE: ProTaskE) {
     if (proTaskE && this.typePanel) {
       this.infoGeneralService.setFatherURL(this.typePanel);
       this.infoGeneralService.setInfoProTaskE(proTaskE);
