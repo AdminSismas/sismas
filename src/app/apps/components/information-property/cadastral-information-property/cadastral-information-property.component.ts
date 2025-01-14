@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Angular framework
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -39,6 +41,17 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { PhotosComponent } from '../photos/photos.component';
+import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
+import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
+import {
+  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  REFERENCE_COMPONENTS,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/constant';
+import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
+import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
+import { TypeInformation } from '../../../interfaces/content-info';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -78,7 +91,8 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
     PropertyAppraisalInformationComponent,
     MatFormFieldModule,
     InformationUnitPropertyComponent,
-    AdministrativeSourcesComponent
+    AdministrativeSourcesComponent,
+    PhotosComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -97,7 +111,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private administrativeSourcesComponent?: ElementRef;
-
+  
   @ViewChild(InformationAddressesPropertyComponent, {
     read: ElementRef,
     static: false
@@ -125,6 +139,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
   private informationZonesPropertyComponent?: ElementRef;
 
+  @ViewChild(PhotosComponent, { read: ElementRef, static: false })
+  private photosComponent?: ElementRef;
+
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
   @Input({ required: true }) public showTittle = true;
@@ -133,6 +150,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @Input({ required: true }) public schema = '';
   @Input({ required: true }) contentInfoSchema!: ContentInfoSchema;
   @Input({ required: true }) public baunitCondition?: string;
+  @Input() public resources: string[] = [];
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
@@ -140,13 +158,15 @@ export class CadastralInformationPropertyComponent implements OnInit {
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
   public viewProperties = false;
+  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean } = {};
 
    constructor(private informationPropertyService: InformationPropertyService){ }
 
   
 
   ngOnInit(): void {
-    if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
+    this.infoResorces();
+    if (!this.contentInfoSchema || !this.contentInfoSchema.content) {
       return;
     }
 
@@ -181,8 +201,18 @@ export class CadastralInformationPropertyComponent implements OnInit {
       this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
     }
   }
-   // Método para eliminar el objeto con la etiqueta "Propietarios"
-   removeItem(labelToRemove: string): void {
+
+  infoResorces(): void {
+    if (this.resources.length < 0) return;
+
+    const referenceComponents = REFERENCE_COMPONENTS;
+
+    referenceComponents.forEach((key) => {
+      this.editable[key as keyof typeof this.editable] = this.resources.includes(key);
+    });
+  }
+  // Método para eliminar el objeto con la etiqueta "Propietarios"
+  removeItem(labelToRemove: string): void {
     this.navigationItems = this.navigationItems.filter(
       (item) => item.label !== labelToRemove
     );

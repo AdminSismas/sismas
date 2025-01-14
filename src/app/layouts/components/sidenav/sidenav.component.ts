@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationService } from '../../../core/navigation/navigation.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { VexConfigService } from '@vex/config/vex-config.service';
@@ -39,6 +39,7 @@ import { NavigationLoaderService } from 'src/app/core/navigation/navigation-load
   selector: 'vex-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     CommonModule,

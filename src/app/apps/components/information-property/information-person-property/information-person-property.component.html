@@ -1,0 +1,67 @@
+<div class="flex items-center justify-between">
+  <h2 mat-dialog-title>Información personas de la anotación</h2>
+  <button
+    mat-icon-button
+    mat-dialog-close
+    type="button"
+  ><mat-icon svgIcon="mat:close"></mat-icon></button>
+</div>
+<mat-divider class="border-slate-400"></mat-divider>
+<mat-dialog-content>
+  <!-- Table -->
+  <table
+    @stagger
+    [dataSource]="dataSource"
+    class="w-full"
+    mat-table
+    matSort
+  >
+    <!-- Text Columns -->
+    <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+      <!-- Text -->
+      <ng-container
+        *ngIf="column.visible && column.type === 'text'"
+        [matColumnDef]="column.property"
+      >
+        <th
+          *matHeaderCellDef
+          [ngClass]="column.cssClassesHead"
+          class="text-center"
+          mat-header-cell
+          mat-sort-header
+        >
+          {{ column.label }}
+        </th>
+        <td
+          *matCellDef="let row"
+          [ngClass]="column.cssClasses"
+          mat-cell
+        >
+          {{ row[column.property] }}
+        </td>
+      </ng-container>
+    </ng-container>
+
+    <tr
+      *matHeaderRowDef="visibleColumns"
+      mat-header-row
+      class="bg-[#e5e7eb]"
+    ></tr>
+    <tr
+      *matRowDef="let row; columns: visibleColumns"
+      @fadeInUp
+      mat-row
+      class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    #paginator
+    [pageSizeOptions]="pageSizeOptions"
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="page"
+    (page)="refreshInformationPaginator($event)"
+    class="paginator"
+  ></mat-paginator>
+</mat-dialog-content>

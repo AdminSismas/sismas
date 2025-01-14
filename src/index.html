@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Catastro Predial</title>
+    <title></title>
     <base href="/" />
     <link
       rel="stylesheet"
@@ -66,16 +66,14 @@
       }
     </style>
 
-    <div id="vex-splash-screen">
-      <img
-        height="70"
-        width="70"
-        loading="eager"
-        src="assets/img/illustrations/it_support.svg"
-      />
-      <h2 class="title m-0">Cargando ...</h2>
-      <div class="vex-splash-screen-loader"></div>
-    </div>
+  <div id="vex-splash-screen">
+    <video height="70" width="70" autoplay muted loop playsinline>
+      <source src="assets/video/an_logo.mp4" type="video/mp4">
+     Tu navegador no soporta video HTML5.
+    </video>
+    <h2 class="title m-0">Cargando ...</h2>
+    <div class="vex-splash-screen-loader"></div>
+  </div>
     <vex-root></vex-root>
   </body>
 </html>
