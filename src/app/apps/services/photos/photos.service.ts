@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 export interface Photo {
   key: string;
-  lastModified: string;
-  size: number;
   url: string;
 }
 
@@ -19,32 +17,29 @@ export class PhotosService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Listar fotos desde el endpoint
-   * @returns Observable<Photo[]>
+   * Listar fotos filtradas por baunitId, con paginación
+   * @param id baunitId para filtrar
+   * @param page Página actual
+   * @param limit Número de resultados por página
+   * @returns Observable con un array de URLs de imágenes
    */
-  listPhotos(): Observable<Photo[]> {
-    console.log('Obteniendo fotos desde el endpoint:', this.endpoint);
-    return this.http.get<any>(this.endpoint).pipe(
+  listPhotos(id: string, page: number = 1, limit: number = 10): Observable<string[]> {
+    const params = new HttpParams()
+      .set('id', id)
+      .set('page', page)
+      .set('limit', limit);
+
+    return this.http.get<any>(this.endpoint, { params }).pipe(
       map((response) => {
-        console.log('Respuesta del endpoint:', response); // Verifica el JSON
         if (!response || !response.files || !Array.isArray(response.files)) {
-          throw new Error('La respuesta no contiene un array válido en la propiedad "files".');
+          throw new Error('Respuesta inválida del servidor.');
         }
-  
-        return response.files.map((file: any) => ({
-          key: file.key,
-          lastModified: file.lastModified,
-          size: file.size,
-          url: file.url,
-        }));
+        return response.files; // Retornar solo el array de archivos
       }),
       catchError((error) => {
-        console.error('Error en el servicio:', error);
-        return [];
+        console.error('Error al obtener las fotos:', error);
+        throw error;
       })
     );
   }
-  
-  
-  
 }

@@ -29,10 +29,9 @@ import { PhotosService, Photo } from 'src/app/apps/services/photos/photos.servic
     CommonModule,
   ],
   templateUrl: './photos.component.html',
-  styleUrl: './photos.component.scss'
+  styleUrls: ['./photos.component.scss'],
 })
 export class PhotosComponent implements OnInit {
-  photos: Photo[] = [];
   images: string[] = [];
   loading = true;
   currentIndex = 0;
@@ -40,6 +39,7 @@ export class PhotosComponent implements OnInit {
   @Input() public id = '';
   @Input() public expandedComponent = false;
   @Input() public baunitId?: string | null;
+  // @Input() public baunitId: any = '1027396'; // BaunitId quemado para hacer pruebas
   @Input() public schema?: string;
   @Input() public executionId?: string | null;
   @Input() public typeInformation?: string;
@@ -47,14 +47,14 @@ export class PhotosComponent implements OnInit {
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
 
   constructor(
-    private administrativeSourcesService: AdministrativeSourcesService,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
     private photosService: PhotosService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    console.log('ID recibido:', this.baunitId);
+    // this.baunitId = '1027396'; // BaunitId quemado para hacer pruebas
+    console.log('ID quemado usado:', this.baunitId);
     this.loadPhotos();
   }
 
@@ -65,31 +65,18 @@ export class PhotosComponent implements OnInit {
       return;
     }
 
-    this.photosService.listPhotos().subscribe({
-      next: (photos: Photo[]) => {
-        // Filtrar imágenes que coincidan con el baunitId
-        this.photos = photos.filter((photo) => {
-          if (!photo.key || typeof photo.key !== 'string') {
-            console.warn('Imagen con clave inválida:', photo);
-            return false; // Omitir si no tiene clave válida
-          }
-          const match = photo.key.match(/\/674\/(\d+)\//); // Extraer el número entre /674/ y /
-          return match && match[1] === this.baunitId; // Comparar con baunitId
-        });
+    this.photosService.listPhotos(this.baunitId, 1, 100).subscribe({
+      next: (files: string[]) => {
+        this.images = files.map((file) => `https://geo-masora-bucket.s3.us-east-1.amazonaws.com/${file}`);
+        this.loading = false;
 
-        // Si no hay coincidencias, mostrar el mensaje de "No hay fotos"
-        if (this.photos.length === 0) {
+        if (this.images.length === 0) {
           console.warn('No se encontraron imágenes para el baunitId:', this.baunitId);
         }
-
-        // Obtener URLs para el carrusel
-        this.images = this.photos.map((photo) => photo.url);
-
-        this.loading = false; // Detener estado de carga
       },
       error: (err: any) => {
         console.error('Error al cargar las imágenes:', err.message || err);
-        this.loading = false; // Detener estado de carga incluso si hay error
+        this.loading = false;
       },
     });
   }
@@ -107,5 +94,4 @@ export class PhotosComponent implements OnInit {
       this.nextSlide();
     }, 5000);
   }
-
 }
