@@ -125,7 +125,7 @@ export class TasksPanelComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.onRouteChange();
-    })
+    });
   }
 
   ngOnInit() {
@@ -220,7 +220,7 @@ export class TasksPanelComponent implements OnInit {
     this.proTasksService
       .getProTaskAssigned(this.generateObjectPageSearchData())
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: InformationPegeable) =>
           this.subjectContentInformation$.next(result)
       });
@@ -230,7 +230,7 @@ export class TasksPanelComponent implements OnInit {
     this.proTasksService
       .getProTaskPriority(this.generateObjectPageSearchData())
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: InformationPegeable) =>
           this.subjectContentInformation$.next(result)
       });
@@ -240,7 +240,7 @@ export class TasksPanelComponent implements OnInit {
     this.proTasksService
       .getProTaskDevolution(this.generateObjectPageSearchData())
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: InformationPegeable) =>
           this.subjectContentInformation$.next(result)
       });
@@ -303,7 +303,7 @@ export class TasksPanelComponent implements OnInit {
       this.infoGeneralService.setInfoProTaskE(proTaskE);
       this.router
         .navigate([`${environment.bpm_bpmCore}`, proTaskE.executionId])
-        .then((r) => {});
+        .then();
     }
   }
 
