@@ -90,7 +90,7 @@ export class LoginComponent {
             this.navigationLoaderService.loadInformationNavigation(user.role);
 
             this.router
-              .navigate([`${environment.myWork_cadastralSearch}`])
+              .navigate([])
               .then(() => {
                 this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
                   duration: 5000
