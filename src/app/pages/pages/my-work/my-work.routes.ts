@@ -33,6 +33,13 @@ const routes: VexRoutes = [
       },
       // rutas de asistentes
       {
+        path: 'assistants',
+        loadComponent: () =>
+          import('../../pages/ia/asisstants/assistants-grid/assistants-grid.component').then(
+            (m) => m.AssistantsGridComponent
+          ),
+      },
+      {
         path: 'support',
         loadChildren: () =>
           import('../../pages/support/support.routes')
