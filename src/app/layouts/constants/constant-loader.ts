@@ -19,6 +19,12 @@ export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[
     route: '/myWork/assistants',
     icon: 'mat:insights'
   },
+  {
+    type: 'link',
+    label: 'Soporte',
+    route: '/myWork/support',
+    icon: 'mat:contact_support'
+  },
 ];
 
 export const NAVIGATION_LOADER_MY_WORK_2: (NavigationLink | NavigationDropdown)[] = [

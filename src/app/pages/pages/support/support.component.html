@@ -1,0 +1,142 @@
+<div class="container py-6">
+  <div class="card overflow-hidden">
+    <div class="h-64 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-t from-[#111827] from-1% opacity-90"></div>
+    </div>
+
+    <div class="z-10 relative -mt-16 px-6 flex items-center">
+      <div class="max-w-full flex-auto sm:ltr:ml-6 sm:rtl:mr-6">
+        <div class="h-16 flex items-end">
+          <h1 @fadeInRight class="headline text-white pb-2 m-0">Soportes</h1>
+        </div>
+
+        <!-- Mat-tab-nav-bar with connected mat-tab-nav-panel -->
+        <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+          <a
+            mat-tab-link
+            *ngFor="let link of links; let i = index"
+            [routerLink]="link.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="link.routerLinkActiveOptions || { exact: false }"
+            [disabled]="link.disabled ?? false"
+            (click)="activeLinkIndex = i"
+            [active]="activeLinkIndex === i">
+            {{ link.label }}
+          </a>
+        </nav>
+
+        <!-- Add mat-tab-nav-panel here -->
+        <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add a router outlet to load route components -->
+  <router-outlet></router-outlet>
+</div>
+
+
+<div *ngIf="activeLinkIndex === 0" class="p-6 container">
+  <h2 class="title mt-6 mb-4 flex items-center">
+    <span
+      @scaleIn
+      class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10">
+      <mat-icon class="icon-sm" svgIcon="mat:vertical_split"></mat-icon>
+    </span>
+    <span class="block">Solicitud de soporte</span>
+  </h2>
+
+  <div class="card overflow-hidden p-6">
+    <form [formGroup]="verticalAccountFormGroup" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <h3 class="text-lg font-bold education-header">Gestiona tu soporte</h3>
+        <p class="text-sm text-gray-600 mt-2">Complete la información para gestionar el soporte.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4">
+        <!-- Observación -->
+        <mat-form-field class="w-full">
+          <mat-label>Observación</mat-label>
+          <textarea
+            cdkFocusInitial
+            formControlName="observacion"
+            placeholder="Escribe una breve descripción del soporte."
+            matInput>
+          </textarea>
+          <mat-error *ngIf="verticalAccountFormGroup.controls['observacion'].hasError('required')">
+            El campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <!-- Módulo (Selector) -->
+        <mat-form-field class="w-full">
+          <mat-label>Módulo</mat-label>
+          <mat-select placeholder="Seleccione&hellip;" formControlName="id_modulo" (selectionChange)="onModuleSelect($event.value)">
+            <mat-option *ngFor="let module of moduleName" [value]="module['id']">
+              {{ module['modulo'] }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="verticalAccountFormGroup.controls['id_modulo'].hasError('required')">
+            El campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Vista (Selector) -->
+        <mat-form-field class="w-full">
+          <mat-label>Vista</mat-label>
+          <mat-select placeholder="Seleccione&hellip;" formControlName="id_vista">
+            <mat-option *ngFor="let view of viewName" [value]="view['id']">
+              {{ view['nombre_vista'] }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="verticalAccountFormGroup.controls['id_vista'].hasError('required')">
+            El campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Usuario -->
+        <mat-form-field class="w-full">
+          <mat-label>Nombre del usuario</mat-label>
+          <input
+            cdkFocusInitial
+            formControlName="nombre"
+            placeholder="Especifica el nombre del usuario que envía la solicitud."
+            matInput
+            maxlength="30" />
+          <mat-error *ngIf="verticalAccountFormGroup.controls['nombre'].hasError('required')">
+            El campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="flex justify-end mt-6">
+        <button
+          (click)="verticalAccountFormGroup.reset()"
+          [disabled]="verticalAccountFormGroup.pristine"
+          color="primary"
+          mat-button
+          type="button">
+          Cancelar
+        </button>
+        <button
+          [disabled]="verticalAccountFormGroup.invalid" data-idElemt="30" buttonvexHasPermission
+          color="primary"
+          mat-raised-button
+          type="submit">
+          Enviar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <hr class="my-6">
+
+  <div class="card">
+    <div class="px-6 py-4 border-b">
+      <h2 class="title m-0">Histórico soporte</h2>
+    </div>
+    <vex-support-logs [subjectSupportLogsList$]="subjectSupportLogsList$"></vex-support-logs>
+  </div>
+</div>
