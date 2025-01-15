@@ -9,6 +9,7 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
+import { DocumentAsocietyModel } from '../interfaces/document-asociety.model';
 import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
 import { DataFolio } from '../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../interfaces/information-property/snr-source-info';
@@ -118,7 +119,47 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   }
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
-
+export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[] = [
+  {
+    label: 'ID',
+    property: 'outTemplateId',
+    type: 'text',
+    visible: true
+  },
+  
+  {
+    label: 'Codigo Template',
+    property: 'templateCode',
+    type: 'text',
+    visible: true,
+  },
+  {
+    label: 'Header',
+    property: 'headerTemplate',
+    type: 'operationType',
+    visible: true
+  },
+  {
+    label: 'Footer',
+    property: 'footerTemplate',
+    type: 'operationType',
+    visible: true
+  },
+  {
+    label: 'Firmado',
+    property: 'isSinged',
+    type: 'text',
+    visible: true
+  },
+ 
+ 
+  {
+    label: 'Acciones', 
+    property: 'actions',
+     type: 'button', 
+     visible: true 
+  }
+];
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
   {
     label: 'Matrícula inmobiliaria',
