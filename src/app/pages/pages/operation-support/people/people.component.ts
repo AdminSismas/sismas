@@ -172,8 +172,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // obtenemos los datos para el select
   getOpcionSelect(opcion: any): { key: string; value: string } {
-    const key = Object.keys(opcion)[0]; //llave
-    const value = opcion[key]; // valor
+    const key = Object.keys(opcion)[0];
+    const value = opcion[key];
     return { key, value };
   }
 
@@ -204,7 +204,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
               return row.individualId !== customer.individualId;
             });
           } catch (e) {
-            msg = 'Antes de eliminar la persona se debe eliminar el usuario o la participación';
+            msg = 'Antes de eliminar la persona se debe eliminar el usuario o la participación.';
           }
           this.snackbar.open(msg, 'CLOSE', { duration: 2000 });
         }
