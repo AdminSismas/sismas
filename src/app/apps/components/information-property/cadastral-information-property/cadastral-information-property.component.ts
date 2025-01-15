@@ -18,11 +18,9 @@ import { NgForOf, NgIf } from '@angular/common';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
-import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import {
   InformationPropertyOwnersComponent
 } from '../information-property-owners/information-property-owners.component';
@@ -30,12 +28,7 @@ import {
   InformationConstructionsPropertyComponent
 } from '../information-constructions-property/information-constructions-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {
-  PropertyAppraisalInformationComponent
-} from '../property-appraisal-information/property-appraisal-information.component';
-import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TypeInformation } from '../../../interfaces/content-info';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
@@ -92,7 +85,8 @@ import { TypeInformation } from '../../../interfaces/content-info';
     MatFormFieldModule,
     InformationUnitPropertyComponent,
     AdministrativeSourcesComponent,
-    PhotosComponent
+    PhotosComponent,
+    SuperNotariadoPropertyComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -111,17 +105,22 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private administrativeSourcesComponent?: ElementRef;
-  
-  @ViewChild(InformationAddressesPropertyComponent, {
+  @ViewChild(SuperNotariadoPropertyComponent, {
     read: ElementRef,
     static: false
   })
-  private informationAddressesPropertyComponent?: ElementRef;
+  private superNotariadoPropertyComponent?: ElementRef;
+  // @ViewChild(AdministrativeSourcesComponent, {
   @ViewChild(InformationPropertyOwnersComponent, {
     read: ElementRef,
     static: false
   })
   private informationPropertyOwnersComponent?: ElementRef;
+  @ViewChild(InformationAddressesPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationAddressesPropertyComponent?: ElementRef;
   @ViewChild(InformationConstructionsPropertyComponent, {
     read: ElementRef,
     static: false
@@ -136,9 +135,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
-
   private informationZonesPropertyComponent?: ElementRef;
-
   @ViewChild(PhotosComponent, { read: ElementRef, static: false })
   private photosComponent?: ElementRef;
 
@@ -156,13 +153,18 @@ export class CadastralInformationPropertyComponent implements OnInit {
   executionId: string | null | undefined;
   idContainer = '';
   baunitId: string | null | undefined = null;
-  navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
-  public viewProperties = false;
+  navigationItems: { label: string; fragment: string }[] =
+    NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
   editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean } = {};
+
+  propertyRegistryOffice: string | null | undefined = null;
+  propertyRegistryNumber: string | null | undefined = null;
+
+  public viewProperties = false;
 
    constructor(private informationPropertyService: InformationPropertyService){ }
 
-  
+
 
   ngOnInit(): void {
     this.infoResorces();
