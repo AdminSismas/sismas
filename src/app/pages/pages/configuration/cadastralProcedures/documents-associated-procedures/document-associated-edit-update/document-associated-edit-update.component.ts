@@ -75,10 +75,15 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
 
   editorConfig = {
     toolbar: [
-      ['bold', 'italic', 'underline'], // Formatos básicos
+      [{ header: [1, 2, 3, false] }], // Tamaños de encabezado
+      ['bold', 'italic', 'underline', 'strike'], // Estilos de texto
+      [{ color: [] }, { background: [] }], // Colores de texto y fondo
+      [{ align: [] }], // Alineación
+      ['blockquote', 'code-block'], // Bloques de cita y código
       [{ list: 'ordered' }, { list: 'bullet' }], // Listas
-      [{ header: [1, 2, 3, false] }], // Encabezados
-      ['link', 'image'], // Enlaces e imágenes
+      ['link', 'image', 'video'], // Enlaces, imágenes, videos
+      ['clean'], // Botón para limpiar el formato
+      ['table'], // Opción para tablas (requiere un módulo extra)
     ],
   };
 

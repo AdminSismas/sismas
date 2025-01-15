@@ -1,3 +1,13 @@
 .buttons {
     @apply flex gap-2 justify-end py-2;
   }
+
+  .form-content-item {
+    margin-bottom: 1rem; /* Ajusta el margen inferior según sea necesario */
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
