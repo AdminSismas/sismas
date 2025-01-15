@@ -193,7 +193,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   
       dialogRef.afterClosed().subscribe(async (data: any) => {
         if (data === 'delete' && customer.individualId) {
-          let msg: string = 'Información eliminada con éxito';
+          let msg: string = 'Información eliminada con éxito.';
           try {
             await lastValueFrom(
               this.peopleService.getDeletePeopleId(
@@ -287,7 +287,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
           error: (error: HttpErrorResponse) => {
             if (error.status === 404) {
               this.snackbar.open(
-                'No se encontró una persona con ese documento',
+                'No se encontró una persona con ese documento.',
                 'CLOSE',
                 { duration: 4000 }
               );
