@@ -9,7 +9,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -26,10 +26,8 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import {
   DecodeJwt,
-  UserDetails
 } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 
 @Component({
