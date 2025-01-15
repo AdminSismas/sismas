@@ -1,9 +1,9 @@
 // @ts-check
-import { configs } from '@eslint/js'
-import { config, configs as _configs } from 'typescript-eslint'
-import { configs as __configs, processInlineTemplates } from 'angular-eslint'
+const { configs } = require('@eslint/js');
+const { config, configs: _configs } = require('typescript-eslint');
+const { configs: __configs, processInlineTemplates } = require('angular-eslint');
 
-export default config(
+module.exports = config(
   {
     files: ['**/*.ts'],
     extends: [

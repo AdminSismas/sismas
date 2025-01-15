@@ -40,6 +40,7 @@
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "angular-calendar": "~0.31.0",
     "apexcharts": "~3.44.0",
+    "aws-sdk": "^2.1692.0",
     "axios": "^1.6.8",
     "express": "^4.19.2",
     "highlight.js": "~11.9.0",

@@ -8,18 +8,19 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import { Observable } from 'rxjs';
 
 // Vex
 
 // Material
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import {
   PAGE,
   PAGE_SIZE,
@@ -27,14 +28,14 @@ import {
 } from 'src/app/apps/constants/constant';
 
 // Custom
-import {
-  DATA_SOURCE_DIGITALIZED_SIGNATURES,
-  DIGITALIZED_SIGNATURES_COLUMNS
-} from 'src/app/apps/constants/digitalized-signatures.constants';
-import { DigitalizedSignaturesData } from 'src/app/apps/interfaces/digitalized-signatures';
+import { CreateSignatureComponent } from './create-signature/create-signature.component';
+import { DIGITALIZED_SIGNATURES_COLUMNS } from 'src/app/apps/constants/digitalized-signatures.constants';
+import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { PageSortByData } from 'src/app/apps/interfaces/page-sortBy-data.model';
-import { Pegeable } from 'src/app/apps/interfaces/pegeable.model';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { UsersSignatures } from 'src/app/apps/interfaces/digitalized-signatures';
 
 @Component({
   selector: 'table-digitalized-signatures',
@@ -48,8 +49,9 @@ import { Pegeable } from 'src/app/apps/interfaces/pegeable.model';
     MatMenuModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
     // Custom
+    SweetAlert2Module
   ],
   templateUrl: './table-digitalized-signatures.component.html',
   styles: ``
@@ -59,8 +61,8 @@ export class TableDigitalizedSignaturesComponent
 {
   @Input({ required: true }) public isDesktop$!: Observable<boolean>;
 
-  public dataSource: MatTableDataSource<DigitalizedSignaturesData> =
-    new MatTableDataSource<DigitalizedSignaturesData>([]);
+  public dataSource: MatTableDataSource<UserDetails> =
+    new MatTableDataSource<UserDetails>([]);
   public columns: { name: string; title: string }[] =
     DIGITALIZED_SIGNATURES_COLUMNS;
   public displayColumns: string[] = [];
@@ -71,27 +73,31 @@ export class TableDigitalizedSignaturesComponent
   public pageSizeOptions: number[] = [...PAGE_SIZE_OPTION, 1];
   public totalElements = 0;
   public contentInformation!: InformationPegeable;
+
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('confirmDialog') private confirmDialog!: SwalComponent;
 
   public actionsBtn = computed(() => {
     return [
       {
         icon: 'mat:edit',
         label: 'Editar',
-        action: (row: DigitalizedSignaturesData) =>
-          this.editingDigitalizedSignatures(row)
+        action: (row: UserDetails) => this.editingDigitalizedSignatures(row)
       },
       {
-        icon: 'mat:visibility',
-        label: 'Ver Detalles',
-        action: (row: DigitalizedSignaturesData) =>
-          this.viewDetailsDigitalizedSignatures(row)
+        icon: 'mat:delete',
+        label: 'Eliminar',
+        action: (row: UserDetails) => this.deleteDigitalizedSignature(row)
       }
     ];
   });
 
-  constructor(private snackbar: MatSnackBar) {}
+  constructor(
+    private snackbar: MatSnackBar,
+    private digitalizedSignaturesService: DigitalizedSignaturesService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.displayColumns = this.columns.map((column) => column.name);
@@ -111,46 +117,25 @@ export class TableDigitalizedSignaturesComponent
   }
 
   getDataDigitalizedSignatures() {
-    const startIndex = this.page * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    const paginatedData = DATA_SOURCE_DIGITALIZED_SIGNATURES.slice(startIndex, endIndex);
-
-    this.dataSource.data = paginatedData;
-    this.totalElements = DATA_SOURCE_DIGITALIZED_SIGNATURES.length;
+    this.digitalizedSignaturesService
+      .getUsersWithSignatures(this.page, this.pageSize)
+      .subscribe({
+        next: (result: UsersSignatures) => {
+          const content = result.content.map((user: UserDetails) => {
+            return {
+              ...user,
+              enabled: user.enabled ? 'Activo' : 'Inactivo'
+            };
+          });
+          this.dataSource.data = content;
+          this.totalElements = result.totalElements;
+        }
+      });
   }
 
   generateObjectPageWorkflowData(): PageSortByData {
-    const sortBy = 'fullName';
+    const sortBy = 'username';
     return new PageSortByData(this.page, this.pageSize, sortBy);
-  }
-
-  captureInformationWorkflowData() {
-    let data: any[];
-    if (
-      this.contentInformation != null &&
-      this.contentInformation.content != null
-    ) {
-      data = this.contentInformation.content;
-      this.dataSource.data = data;
-    }
-
-    if (this.contentInformation == null) {
-      this.page = PAGE;
-      return;
-    }
-
-    if (this.contentInformation.totalElements) {
-      this.totalElements = this.contentInformation.totalElements;
-    }
-
-    if (this.contentInformation.pageable == null) {
-      this.page = PAGE;
-      return;
-    }
-
-    if (this.contentInformation.pageable.pageNumber != null) {
-      this.page = this.contentInformation.pageable.pageNumber;
-    }
   }
 
   refreshInformationPaginator(event: any): void {
@@ -163,15 +148,45 @@ export class TableDigitalizedSignaturesComponent
     this.getDataDigitalizedSignatures();
   }
 
-  editingDigitalizedSignatures(row: DigitalizedSignaturesData) {
-    this.snackbar.open('Editando firma...', 'Aceptar', { duration: 3000 });
-    console.log('Editando firma...', row);
+  editingDigitalizedSignatures(row: UserDetails) {
+    console.log(row);
+    this.dialog
+      .open(CreateSignatureComponent, {
+        data: {
+          username: row.username
+        }
+      })
+      .afterClosed()
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.snackbar.open('Editando firma...', 'Aceptar', {
+            duration: 3000
+          });
+          this.getDataDigitalizedSignatures();
+        }
+      });
   }
 
-  viewDetailsDigitalizedSignatures(row: DigitalizedSignaturesData) {
-    this.snackbar.open('Ver detalles de la firma...', 'Aceptar', {
-      duration: 3000
+  deleteDigitalizedSignature(row: UserDetails) {
+    this.confirmDialog.fire().then((result) => {
+      if (result.isConfirmed) {
+        this.digitalizedSignaturesService
+          .deleteSignature(row.userId)
+          .subscribe({
+            next: () => {
+              this.snackbar.open('Eliminando firma...', 'Aceptar', {
+                duration: 3000
+              });
+              this.getDataDigitalizedSignatures();
+            },
+            error: (error) => {
+              this.snackbar.open('Error al eliminar la firma', 'CLOSE', {
+                duration: 3000
+              });
+              throw error;
+            }
+          });
+      }
     });
-    console.log('Ver detalles de la firma...', row);
   }
 }

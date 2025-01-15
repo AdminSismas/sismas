@@ -10,6 +10,12 @@ export const environment = {
   administrativeSource: '/fuenteadmin/',
   apiUrlToken: '/token/authenticate',
   auth_login: '/auth/login',
+  awsConfig: {
+    accessKeyId: 'AKIAW5WU5HQB6DQ52QVS',
+    secretAccessKey: '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',
+    region: 'us-east-1',
+    bucketName: 'geo-masora-bucket'
+  },
   /* ------ B ------ */
   basicAddress: '/ccDireccion/baunitText',
   baunit: '/baunit/',
@@ -28,6 +34,7 @@ export const environment = {
   bpm_bpmCore: '/bpm/bpm-core/',
   bpm_username_exists: '/exists/username/',
   bpm_users: '/bpmUser',
+  bpm_user_info: '/bpmUser/username/',
   bpm_email_exists: '/exists/email/',
   bpm_individual_exists: '/exists/individual/',
   bpmAttachment: {
@@ -49,6 +56,7 @@ export const environment = {
     proTask_devolution: 'proTask/devolutions',
     proTask_priority: 'proTask/priority',
     startProcess: 'startProcess',
+    resources: 'resorces/',
     value: '/bpmOperation/'
   },
   bpmProcess: {
@@ -85,6 +93,7 @@ export const environment = {
   /* ------ J ------ */
   /* ------ K ------ */
   /* ------ L ------ */
+  logo: 'assets/img/logo/logo_armenia.png',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
@@ -96,6 +105,7 @@ export const environment = {
   /* ------ O ------ */
   operations: '/operations',
   /* ------ P ------ */
+  password: '/password',
   port: '5001',
   post_path_viewer: 'rest/config/setParams',
   production: true,
@@ -123,21 +133,27 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  signatureUrl: '/signatureUrl',
+  snr: '/snr',
   synchronization: '/synchronization',
   synchronize: '/synchronize',
   /* ------ T ------ */
   temporal: '/temporal/',
+  titulo: 'Armenia',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
   urban_zones: '/ccZonaHomoFisicaUr',
-  url: 'https://prediosplus.api.cadastre4world.com',
-  url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
+  url: 'https://armenia.api.sismas.com.co',
+  url_viewer: 'https://armenia.map.sismas.com.co:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
-  valuation: '/valuation/'
+  valuation: '/valuation/',
+  video: 'assets/video/armenia.mp4',
   /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   /* ------ X ------ */
   /* ------ Y ------ */
   /* ------ Z ------ */

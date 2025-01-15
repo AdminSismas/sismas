@@ -10,6 +10,12 @@ export const environment = {
   administrativeSource: '/fuenteadmin/',
   apiUrlToken: '/token/authenticate',
   auth_login: '/auth/login',
+  awsConfig: {
+    accessKeyId: 'AKIAW5WU5HQB6DQ52QVS',
+    secretAccessKey: '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',
+    region: 'us-east-1',
+    bucketName: 'geo-masora-bucket'
+  },
   /* ------ B ------ */
   basicAddress: '/ccDireccion/baunitText',
   baunit: '/baunit/',
@@ -50,6 +56,7 @@ export const environment = {
     proTask_devolution: 'proTask/devolutions',
     proTask_priority: 'proTask/priority',
     startProcess: 'startProcess',
+    resources: 'resorces/',
     value: '/bpmOperation/'
   },
   bpmProcess: {
@@ -86,6 +93,7 @@ export const environment = {
   /* ------ J ------ */
   /* ------ K ------ */
   /* ------ L ------ */
+  logo: 'assets/img/illustrations/it_support.svg',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
@@ -125,10 +133,13 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  signatureUrl: '/signatureUrl',
+  snr: '/snr',
   synchronization: '/synchronization',
   synchronize: '/synchronize',
   /* ------ T ------ */
   temporal: '/temporal/',
+  titulo: 'Desarrollo',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
@@ -138,8 +149,11 @@ export const environment = {
   url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
-  valuation: '/valuation/'
+  valuation: '/valuation/',
+  video: 'assets/video/desarrollo.mp4',
   /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
   /* ------ X ------ */
   /* ------ Y ------ */
   /* ------ Z ------ */

@@ -166,7 +166,7 @@
     </button>
     @if (mode === 1) {
       <button
-        (click)="edithInformations(row)"
+        (click)="editInformations(row)"
         mat-menu-item
       >
         <mat-icon svgIcon="mat:edit"></mat-icon>
@@ -183,28 +183,14 @@
   </ng-template>
 </mat-menu>
 
-<ng-template #confirmDeleteDialog>
-  <h2 mat-dialog-title>Confirmar eliminación</h2>
-  <mat-divider class="text-border border-slate-400"></mat-divider>
-  <mat-dialog-content class="flex flex-col items-center py-4 lg:px-8">
-    <span class="text-lg">¿Está seguro de remover esta unidad predial?</span>
-    <strong class="text-lg">{{ npnRemoving }}</strong>
-  </mat-dialog-content>
-  <mat-dialog-actions align="center">
-    <button
-      mat-flat-button
-      mat-dialog-close
-      color="primary"
-      [mat-dialog-close]="true"
-    >
-      Remover
-    </button>
-    <button
-      mat-flat-button
-      [mat-dialog-close]="true"
-      color="warn"
-    >
-      Cancelar
-    </button>
-  </mat-dialog-actions>
-</ng-template>
+<swal
+  #confirmDeleteDialog
+  title="Confirmar eliminación"
+  text="¿Está seguro de remover esta unidad predial?"
+  icon="warning"
+  [showCancelButton]="true"
+  [confirmButtonText]="'Sí, eliminar'"
+  [cancelButtonText]="'Cancelar'"
+  [confirmButtonColor]="'#3085d6'"
+  [cancelButtonColor]="'#d33'"
+></swal>
