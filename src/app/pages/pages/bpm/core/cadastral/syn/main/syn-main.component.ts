@@ -55,7 +55,7 @@ export class SynMainComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 400) {
-          this.snackbar.open(error.error, 'Aceptar', { duration: 3000 });
+          this.snackbar.open(error.error, 'Aceptar', { duration: 5000 });
         } else {
           this.snackbar.open('Error al sincronizar cambios', 'Aceptar', {
             duration: 3000

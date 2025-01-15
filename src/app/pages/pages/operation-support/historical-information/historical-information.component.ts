@@ -84,25 +84,25 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentInformations!: InformationPegeable;
     searchData!: SearchData;
-  
+
     @Input()
     columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
     page = PAGE;
     totalElements = 0;
     pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
     pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  
+
     dataSource!: MatTableDataSource<BaunitHead>;
     selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
     searchCtrl: UntypedFormControl = new UntypedFormControl();
-  
+
     @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
     @Input({ required: true }) executionId!: string;
-  
+
     private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  
+
     constructor(
       private router: Router,
       private dialog: MatDialog,
@@ -113,30 +113,30 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
       private baunitService: ValidateInformationBaunitService
     ) {
     }
-  
+
     get visibleColumns() {
       return this.columns
         .filter((column) => column.visible)
         .map((column) => column.property);
     }
-  
+
     ngOnInit(): void {
       this.dataSource = new MatTableDataSource();
       this.searchCtrl.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => this.onFilterChange(value));
     }
-  
+
     ngAfterViewInit(): void {
       if (this.paginator) {
         this.dataSource.paginator = this.paginator;
       }
-  
+
       if (this.sort) {
         this.dataSource.sort = this.sort;
       }
     }
-  
+
     openGeographicViewerMain(data: BaunitHead): void {
       this.dialog
         .open(GeographicViewerComponent, {
@@ -147,7 +147,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
         })
         .afterClosed();
     }
-  
+
     openCadastralInformationProperty(data: BaunitHead): void {
         this.dialog
           .open(LayoutCardCadastralInformationPropertyComponentComponent, {
@@ -191,7 +191,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
 
     cleanJsonValues(data: any): any {
       const cleanedData: any = {};
-  
+
       // Iterar sobre las claves del JSON
       Object.keys(data).forEach((key) => {
         const value = data[key];
@@ -204,7 +204,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
       });
       return cleanedData;
     }
-  
+
     captureInformationCadastralData(): void {
       let data: BaunitHead[];
       if (this.contentInformations?.content != null) {
@@ -212,26 +212,26 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
         data = data.map((row: BaunitHead) => new BaunitHead(row));
         this.dataSource.data = data;
       }
-  
+
       if (this.contentInformations == null) {
         this.page = PAGE;
         return;
       }
-  
+
       if (this.contentInformations.totalElements) {
         this.totalElements = this.contentInformations.totalElements;
       }
-  
+
       if (this.contentInformations.pageable == null) {
         this.page = PAGE;
         return;
       }
-  
+
       if (this.contentInformations.pageable.pageNumber != null) {
         this.page = this.contentInformations.pageable.pageNumber;
       }
     }
-  
+
     searchPropertiesByRegistration(data: SearchData): void {
       this.infoTableService.getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
         .subscribe(
@@ -241,7 +241,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
           }
         );
     }
-  
+
     searchPropertiesByDocument(data: SearchData): void {
       this.infoTableService.getDataPropertyByDocument(this.generateObjectPageSearchData(data))
         .subscribe(
@@ -251,7 +251,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
           }
         );
     }
-  
+
     searchPropertiesByName(data: SearchData): void {
       this.infoTableService.getDataPropertyByName(this.generateObjectPageSearchData(data))
         .subscribe(
@@ -261,7 +261,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
           }
         );
     }
-  
+
     searchPropertiesByAddress(data: SearchData): void {
       this.infoTableService.getDataPropertyByAddress(this.generateObjectPageSearchData(data))
         .subscribe({
@@ -269,7 +269,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
           next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
         });
     }
-  
+
     searchNationalPredialNumber(data: SearchData): void {
       this.infoTableService.getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
         .subscribe({
@@ -277,48 +277,48 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
           next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
         });
     }
-  
+
     validateRefreshCadastralData(): boolean {
       if (this.searchData == null) {
         return false;
       }
       const searchData: SearchData = this.searchData;
-  
+
       if (this.isValidateField(searchData?.registration)) {
         this.searchPropertiesByRegistration(this.searchData);
         return true;
       }
-  
+
       if (this.isValidateField(searchData?.number) &&
         this.isValidateField(searchData?.domIndividualTypeNumber)) {
         this.searchPropertiesByDocument(this.searchData);
         return true;
       }
-  
+
       if (this.isValidateField(searchData?.firstName) &&
         this.isValidateField(searchData?.lastName)) {
         this.searchPropertiesByName(this.searchData);
         return true;
       }
-  
+
       if (this.isValidateField(searchData?.textAddress)) {
         this.searchPropertiesByAddress(this.searchData);
         return true;
       }
-  
+
       if (searchData.sidewalk !== null && searchData.sidewalk !== undefined && searchData.sidewalk.length > 10 ||
         searchData.block !== null && searchData.block !== undefined && searchData.block.length > 10) {
         this.searchNationalPredialNumber(this.searchData);
         return true;
       }
-  
+
       if (searchData) {
         this.formatFieldValue(this.searchData);
         return true;
       }
       return false;
     }
-  
+
     formatFieldValue(value:SearchData) {
       const formattedValues:any = [
        value.dpto,
@@ -334,11 +334,11 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
        value.piso,
        value.unidadPredial
       ];
-      
+
       const result = formattedValues.join(''); // Une sin espacios
       this.searValueData(value,result);
     }
-  
+
     searValueData(data: SearchData,value:string): void {
       console.log(data);
       this.baunitService.historiAdvancedSearch(this.generateObjectPageSearchData(data),value)
@@ -347,11 +347,11 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
         this.captureInformationSubscribe(value);
       });
     }
-  
-  
+
+
     deleteInformations(customer: BaunitHead): void {
     }
-  
+
     onFilterChange(value: string): void {
       if (!this.dataSource) {
         return;
@@ -360,31 +360,31 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
       value = value.toLowerCase();
       this.dataSource.filter = value;
     }
-  
+
     toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
       event.stopPropagation();
       event.stopImmediatePropagation();
       column.visible = !column.visible;
     }
-  
+
     /** Whether the number of selected elements matches the total number of rows. */
     isAllSelected(): boolean {
       const numSelected = this.selection.selected.length;
       const numRows = this.dataSource.data.length;
       return numSelected === numRows;
     }
-  
+
     /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle(): void {
       this.isAllSelected()
         ? this.selection.clear()
         : this.dataSource.data.forEach((row) => this.selection.select(row));
     }
-  
+
     trackByProperty<T>(index: number, column: TableColumn<T>): string {
       return column.property;
     }
-  
+
     refreshInformationPaginator(event: PageEvent): void {
       if (event == null) {
         return;
@@ -392,34 +392,34 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
       console.log(this.page, ' paginaciom');
       this.page = event.pageIndex;
       this.pageSize = event.pageSize;
-  
+
       const validate: boolean = this.validateRefreshCadastralData();
       if (!validate) {
         throw new Error('No fue posible actualizar los datos de la tabla');
       }
     }
-  
+
     captureInformationSubscribe(result: InformationPegeable): void {
       this.contentInformations = result;
       this.captureInformationCadastralData();
     }
-  
+
     captureInformationSubscribeError(): void {
       this.contentInformations = new InformationPegeable();
       this.dataSource.data = [];
     }
-  
+
     generateObjectPageSearchData(data: SearchData): PageSearchData {
       return new PageSearchData(this.page, this.pageSize, data);
     }
-  
+
     async initiateFilingProcedure(data: BaunitHead ) {
       if (data && data?.baunitIdE) {
         const available = await this.baunitService.getBaunitIdEInOtherProcess(data?.baunitIdE);
         if (!available){
           this.snackbar.open(
             'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-            'CLOSE', { duration: 1000 }
+            'CLOSE', { duration: 5000 }
           );
           return;
         }
@@ -430,7 +430,7 @@ export class HistoricalInformationComponent implements OnInit, AfterViewInit {
           });
       }
     }
-  
+
     isValidateField(value: string | undefined): boolean {
       return value !== null && value !== undefined && value.length >= 1;
     }

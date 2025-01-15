@@ -199,7 +199,7 @@ export class BasicParticipantTableComponent
       this.snackbar.open(
         'Ingresar tipo documento o número de documento',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       return;
     }
@@ -270,7 +270,7 @@ export class BasicParticipantTableComponent
       this.snackbar.open(
         'Selecciona o buscar un persona para agregarla como participante',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       return;
     }

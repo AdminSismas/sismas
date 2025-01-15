@@ -159,15 +159,15 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
         minHeight: '90%',
         disableClose: true,
         data: new ContentInfoSchema(
-          data.baunitIdE, 
-          data, 
+          data.baunitIdE,
+          data,
           null,
           LIST_SCHEMAS_CONTROL_MAIN,
           undefined,
           this.flagData,
-          
+
         ),
-       
+
       })
       .afterClosed();
   }
@@ -342,7 +342,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
      value.piso,
      value.unidadPredial
     ];
-    
+
     const result = formattedValues.join(''); // Une sin espacios
     this.searValueData(value,result);
   }
@@ -426,7 +426,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
       if (!available){
         this.snackbar.open(
           'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-          'CLOSE', { duration: 1000 }
+          'CLOSE', { duration: 5000 }
         );
         return;
       }
