@@ -193,7 +193,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!this.formCreateDelete.value || !this.formCreateDelete.value.npnLike) {
       this.snackBar.open(
         'No se puede consultar información, con los datos suministrados.',
-        'CLOSE', { duration: 1000 }
+        'CLOSE', { duration: 5000 }
       );
       return;
     }
@@ -214,7 +214,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if(!addNpnLike || !bAunitCondition) {
       this.snackBar.open(
         'Para poder continuar diligencie los campos obligatorios',
-        'CLOSE', { duration: 1000 }
+        'CLOSE', { duration: 5000 }
       );
       return;
     }
@@ -224,7 +224,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       .then((result: any) => {
         this.snackBar.open(
           'Se creó una nueva unidad predial.',
-          'CLOSE', { duration: 1000 }
+          'CLOSE', { duration: 5000 }
         );
         this.dialogRef.close();
       });
@@ -239,7 +239,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       .then((result: any) => {
         this.snackBar.open(
           'Se creó una nueva unidad predial para actualizar.',
-          'CLOSE', { duration: 1000 }
+          'CLOSE', { duration: 5000 }
         );
         this.loadPropertiesInformation();
       });
@@ -254,7 +254,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       .then((result: any) => {
         this.snackBar.open(
           'Se creó una nueva unidad predial para eliminar.',
-          'CLOSE', { duration: 1000 }
+          'CLOSE', { duration: 5000 }
         );
         this.loadPropertiesInformation();
       });

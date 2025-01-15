@@ -146,7 +146,7 @@ export class AdministrativeSourcesComponent implements OnInit {
           this.snackbar.open(
             'Error al eliminar la fuente administrativa',
             'CLOSE',
-            { duration: 4000 }
+            { duration: 5000 }
           );
         }
       });

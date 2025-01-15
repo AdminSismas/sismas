@@ -22,7 +22,7 @@ export class DeleteInformationZonesPropertyComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { zone: ZoneBAUnit, baunitId: number, baUnitZonaId: number },
- 
+
     private dialogRef: MatDialogRef<DeleteInformationZonesPropertyComponent>,
     private snackbar: MatSnackBar,
     private informationPropertyService: InformationPropertyService,
@@ -35,7 +35,7 @@ export class DeleteInformationZonesPropertyComponent {
       .subscribe((res: any) => console.log(res));
 
     this.close();
-    this.snackbar.open('Zona eliminada', 'CERRAR', { duration: 4000 });
+    this.snackbar.open('Zona eliminada', 'CERRAR', { duration: 5000 });
   }
 
   close() {

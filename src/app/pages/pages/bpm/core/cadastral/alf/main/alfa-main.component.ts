@@ -181,7 +181,7 @@ export class AlfaMainComponent implements OnInit {
           this.snackbar.open(
             'No se puede continuar la actividad error en la validación alfanumérica.',
             'CLOSE',
-            { duration: 1000 }
+            { duration: 5000 }
           );
           return;
         },
@@ -231,7 +231,7 @@ export class AlfaMainComponent implements OnInit {
     this.snackbar.open(
       'No se puede continuar la actividad error en la validación alfanumérica.',
       'CLOSE',
-      { duration: 1000 }
+      { duration: 5000 }
     );
   }
 

@@ -270,7 +270,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
               this.snackbar.open(
                 'No se encontró una persona con ese documento',
                 'CLOSE',
-                { duration: 4000 }
+                { duration: 5000 }
               );
               this.dialog.open(CreatePeopleComponent, {
                 data: {

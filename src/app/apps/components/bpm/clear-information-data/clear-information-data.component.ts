@@ -71,14 +71,14 @@ export class ClearInformationDataComponent implements OnInit{
     if (objectform == null || !objectform.clearData) {
       this.snackbar.open(
         'Información no correspondiente, consulte al administrador.',
-        'CLOSE', { duration: 1000 }
+        'CLOSE', { duration: 5000 }
       );
     }
 
     if(objectform.clearData !== this.defaults?.keyWord){
       this.snackbar.open(
         'No se puede continuar palabra incorrecta, consulte al administrador.',
-        'CLOSE', { duration: 1000 }
+        'CLOSE', { duration: 5000 }
       );
       return;
     }
