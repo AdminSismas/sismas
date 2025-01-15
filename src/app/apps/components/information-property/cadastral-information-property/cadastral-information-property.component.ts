@@ -1,40 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-// Vex
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRippleModule } from '@angular/material/core';
+import {
+  InformationAddressesPropertyComponent
+} from '../information-addresses-property/information-addresses-property.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
+import { MatListModule } from '@angular/material/list';
+import { NgForOf, NgIf } from '@angular/common';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
-import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
-// Material
-import { MatButtonModule } from '@angular/material/button';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
 import {
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogTitle
-} from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
+  InformationPropertyOwnersComponent
+} from '../information-property-owners/information-property-owners.component';
+import {
+  InformationConstructionsPropertyComponent
+} from '../information-constructions-property/information-constructions-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatRippleModule } from '@angular/material/core';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-// Custom
-import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
-import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
-import { InformationAddressesPropertyComponent } from '../information-addresses-property/information-addresses-property.component';
-import { InformationConstructionsPropertyComponent } from '../information-constructions-property/information-constructions-property.component';
-import { InformationPropertyOwnersComponent } from '../information-property-owners/information-property-owners.component';
+import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { PhotosComponent } from '../photos/photos.component';
 import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
 import {
@@ -60,35 +60,33 @@ import { TypeInformation } from '../../../interfaces/content-info';
   ],
   standalone: true,
   imports: [
-    NgForOf,
-    NgIf,
-    ReactiveFormsModule,
-    // Vex
-    VexHighlightModule,
-    // Material
+    MatIconModule,
     MatButtonModule,
     MatDialogClose,
-    MatDialogContent,
     MatDialogTitle,
-    MatDividerModule,
     MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatListModule,
+    ReactiveFormsModule,
     MatMenuModule,
+    MatDividerModule,
+    MatDialogContent,
     MatRippleModule,
+    MatListModule,
     MatRippleModule,
     MatSnackBarModule,
-    // Custom
-    AdministrativeSourcesComponent,
+    VexHighlightModule,
     BasicPropertyInformationComponent,
     InformationAddressesPropertyComponent,
-    InformationConstructionsPropertyComponent,
+    NgForOf,
+    NgIf,
     InformationPropertyOwnersComponent,
-    InformationUnitPropertyComponent,
+    InformationConstructionsPropertyComponent,
     InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
-    SuperNotariadoPropertyComponent,
+    MatFormFieldModule,
+    InformationUnitPropertyComponent,
+    AdministrativeSourcesComponent,
+    PhotosComponent,
+    SuperNotariadoPropertyComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -138,10 +136,11 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private informationZonesPropertyComponent?: ElementRef;
+  @ViewChild(PhotosComponent, { read: ElementRef, static: false })
+  private photosComponent?: ElementRef;
 
 
-  @Input({ required: true }) typeInformation: TypeInformation =
-    TYPEINFORMATION_VISUAL;
+  @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
   @Input({ required: true }) public showTittle = true;
   @Input({ required: true }) public label!: string;
   @Input() public id = '';
@@ -163,7 +162,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
   public viewProperties = false;
 
-  constructor(private informationPropertyService: InformationPropertyService) {}
+   constructor(private informationPropertyService: InformationPropertyService){ }
+
+
 
   ngOnInit(): void {
     this.infoResorces();
@@ -171,57 +172,36 @@ export class CadastralInformationPropertyComponent implements OnInit {
       return;
     }
 
-    if (
-      this.schema !== `${envi.schemas.main}` &&
-      !this.contentInfoSchema.executionId
-    ) {
+    if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
       return;
     }
-    this.informationPropertyService.showOptionsPersonStarted$.subscribe(
-      (value2) => {
-        if (value2) {
-          this.viewProperties = value2;
-          this.removeItem('Propietarios');
-        }
+    this.informationPropertyService.showOptionsPersonStarted$
+    .subscribe(value2=>{
+      if(value2){
+        this.viewProperties = value2;
+        this.removeItem('Propietarios');
       }
-    );
+    });
 
     this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
+
+
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
       behavior: 'smooth'
     });
     if (this.baunitCondition)
-      if (this.id?.length > 0) {
-        this.id =
-          this.id +
-          this.getRandomInt(10000) +
-          'id' +
-          this.getRandomInt(50) +
-          this.schema;
-        this.idContainer =
-          this.id +
-          this.getRandomInt(10000) +
-          'id' +
-          this.getRandomInt(50) +
-          this.schema +
-          'Contenedor';
-      } else {
-        this.id =
-          this.getRandomInt(10000) +
-          'idCadastralInformation' +
-          this.getRandomInt(50) +
-          this.schema;
-        this.idContainer =
-          this.getRandomInt(10000) +
-          'idCadastralInformation' +
-          this.getRandomInt(50) +
-          this.schema +
-          'Contenedor';
-      }
+
+    if (this.id?.length > 0) {
+      this.id = this.id + this.getRandomInt(10000) + 'id' + this.getRandomInt(50) + this.schema;
+      this.idContainer = this.id + this.getRandomInt(10000) + 'id' + this.getRandomInt(50) + this.schema + 'Contenedor';
+    } else {
+      this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
+      this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
+    }
   }
 
   infoResorces(): void {
@@ -243,7 +223,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   scrollTo(elementName: string) {
     const elem: ElementRef<any> | undefined = this[
       elementName as keyof CadastralInformationPropertyComponent
-    ] as unknown as ElementRef | undefined;
+      ] as unknown as ElementRef | undefined;
 
     if (elem == null || !elem.nativeElement) {
       return;
@@ -271,12 +251,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
     if (
       baunitCondition === '(Condominio) Matriz' ||
       baunitCondition === '(Propiedad horizontal) Matriz'
-    )
-      return true;
+    ) return true;
 
-    this.navigationItems = this.navigationItems.filter(
-      (item) => item.label !== 'Información de unidad predial'
-    );
+    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial');
 
     return false;
   }
