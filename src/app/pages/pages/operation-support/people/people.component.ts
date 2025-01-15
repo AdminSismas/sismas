@@ -204,7 +204,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
               return row.individualId !== customer.individualId;
             });
           } catch (e) {
-            msg = 'Error, no se pudo eliminar la persona';
+            msg = 'Antes de eliminar la persona se debe eliminar el usuario o la participación';
           }
           this.snackbar.open(msg, 'CLOSE', { duration: 2000 });
         }
