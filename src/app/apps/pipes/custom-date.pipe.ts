@@ -9,7 +9,7 @@ import { DateFormatService } from '../services/date-format.service';
 export class CustomDatePipe implements PipeTransform {
   constructor(private dateFormatService: DateFormatService) {}
 
-  transform(value: Date | string, format: string = 'dd/MM/yyyy'): string {
+  transform(value: Date | string, format = 'dd/MM/yyyy'): string {
     return this.dateFormatService.format(value, format);
   }
 }

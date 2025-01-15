@@ -62,7 +62,12 @@ import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property
   standalone: true,
   imports: [
     FormsModule,
-    HeaderCadastralInformationPropertyComponent,
+    NgClass,
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+    // Vex
+    // Material
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -82,10 +87,8 @@ import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
-    NgClass,
-    NgFor,
-    NgIf,
-    ReactiveFormsModule,
+    // Custom
+    HeaderCadastralInformationPropertyComponent,
   ]
 })
 export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
@@ -94,9 +97,9 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: true }) expandedComponent: boolean = false;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) expandedComponent = false;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
@@ -104,7 +107,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource!: MatTableDataSource<BaunitHead>;
@@ -304,7 +307,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
         );
         return;
       }
-      let url: string = `${envi.initiate_filing_procedure}`;
+      const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
       this.router.navigate([`${url}`, data.baunitIdE])
         .then(r => {

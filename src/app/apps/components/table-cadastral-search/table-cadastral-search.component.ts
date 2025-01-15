@@ -38,7 +38,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_PROPERTIES
+  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
 } from '../../constants/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -91,7 +91,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
 
@@ -131,9 +131,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
     if (this.route.snapshot.queryParams['npn']) {
       this.initParams = this.route.snapshot.queryParams['npn'];
-      this.searValueData({}, this.initParams as string)
+      this.searValueData({}, this.initParams as string);
       setTimeout(() => {
-        console.log(this.dataSource.data[0])
         this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
           minWidth: '99%',
           minHeight: '90%',
@@ -144,8 +143,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
             null,
             LIST_SCHEMAS_CONTROL_MAIN,
           )
-        })
-      }, 300)
+        });
+      }, 300);
     }
   }
 
@@ -178,7 +177,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
-          LIST_SCHEMAS_CONTROL_MAIN
+          LIST_SCHEMAS_CONTROL_MAIN,
+          TYPEINFORMATION_VISUAL
         )
       })
       .afterClosed();
@@ -186,7 +186,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   createAdvancedSearch(): void {
     if(this.searchData){
-      const cleanValue = this.cleanJsonValues(this.searchData)
+      const cleanValue = this.cleanJsonValues(this.searchData);
       this.searchData = cleanValue;
     }
     this.dialog
@@ -302,7 +302,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     if (this.searchData == null) {
       return false;
     }
-    let searchData: SearchData = this.searchData;
+    const searchData: SearchData = this.searchData;
 
     if (this.isValidateField(searchData?.registration)) {
       this.searchPropertiesByRegistration(this.searchData);
@@ -355,14 +355,21 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
      value.unidadPredial
     ];
 
-    const result = formattedValues.join(''); // Une sin espacios
-    this.searValueData(value,result);
+    let result;
+
+    if (value?.codigoCompleto) {
+      result = value.codigoCompleto;
+    } else {
+      result = formattedValues.join('');
+    }
+
+    this.searValueData(value, result);
   }
 
   searValueData(searData:SearchData,data: string): void {
     this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
     .subscribe(value=>{
-      this.captureInformationSubscribe(value)
+      this.captureInformationSubscribe(value);
     });
   }
 
@@ -440,7 +447,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         );
         return;
       }
-      let url: string = `${envi.initiate_filing_procedure}`;
+      const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
       this.router.navigate([`${url}`, data.baunitIdE])
         .then(r => {

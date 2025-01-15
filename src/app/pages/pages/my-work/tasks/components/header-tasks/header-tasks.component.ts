@@ -46,9 +46,9 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 export class HeaderTasksComponent implements OnInit, OnChanges {
   searchStr: UntypedFormControl = new UntypedFormControl();
 
-  @Input() public idHeader: string = '';
-  @Input() public label: string = 'Tareas';
-  @Input() public icon: string = '';
+  @Input() public idHeader = '';
+  @Input() public label = 'Tareas';
+  @Input() public icon = '';
 
   @Output() outSearchStr = new EventEmitter<string>();
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
@@ -80,6 +80,6 @@ export class HeaderTasksComponent implements OnInit, OnChanges {
   }
 
   private isValueField(value: any) {
-    return value !== null && value !== undefined && value !== '';
+    return value !== null && value !== undefined;
   }
 }

@@ -16,7 +16,7 @@ export class WorkgroupsService {
 
 
   getAll(page: number, size: number): Observable<any> {
-    let params = {
+    const params = {
         page: page,
         size: size,
         sortBy: 'name',

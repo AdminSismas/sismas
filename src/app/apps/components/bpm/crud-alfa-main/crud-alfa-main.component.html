@@ -16,13 +16,13 @@
     </h2>
   }
 
-  <button
+  <!-- <button
     [matMenuTriggerFor]="settingsMenu"
     class="text-secondary"
     mat-icon-button
     type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
+  </button> -->
 
   <button
     class="text-secondary"
@@ -65,7 +65,7 @@
         label="Manzanas"
         formControlNameCombobox="bAunitCondition"
         typeDomainName="BaunitCondition"
-        placeholderDomainName="Seleccione una manzana&hellip;"
+        placeholderDomainName="Seleccione una manzana"
         cssClasses="sm:ml-2 sm:mr-2 flex-1 min-w-[200px] sm:min-w-[400px]"
       ></vex-combox-colletion>
     </div>
@@ -129,18 +129,18 @@
           <input
             matInput
             [formControl]="searchCtrl"
-            placeholder="Buscar información&hellip;"
+            placeholder="Filtrar información"
             type="text" />
         </mat-form-field>
         <span class="flex-1 sm:min-w-[100px]"></span>
-        <button
+        <!-- <button
           [matMenuTriggerFor]="columnFilterMenu"
           class="ml-4 flex-none"
           mat-icon-button
           matTooltip="Filtrar columnas"
           type="button">
           <mat-icon svgIcon="mat:filter_list"></mat-icon>
-        </button>
+        </button> -->
       </div>
       <table
         @stagger
@@ -185,7 +185,7 @@
             [matColumnDef]="column.property">
             <th
               *matHeaderCellDef
-              class="uppercase py-2.5"
+              class="py-2.5"
               mat-header-cell
               mat-sort-header>
               {{ column.label }}

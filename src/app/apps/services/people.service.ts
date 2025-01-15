@@ -20,7 +20,7 @@ export class PeopleService {
     paramsR = paramsR.append('page', params.page);
     paramsR = paramsR.append('size', params.size);
     paramsR = paramsR.append('sortBy', params.sortBy);
-    const urlP: string = `${this.url_basic}${environment.individualNumber}`;
+    const urlP = `${this.url_basic}${environment.individualNumber}`;
     return this.getData(urlP, paramsR);
   }
 
@@ -32,12 +32,12 @@ export class PeopleService {
       params.individualTypeNumber
     );
 
-    const urlP: string = `${this.url_basic}${environment.individualTypeNumber}`;
+    const urlP = `${this.url_basic}${environment.individualTypeNumber}`;
     return this.getData(urlP, paramsR);
   }
 
   getPeopleNumber(params: any) {
-    const urlP: string = `${this.url_basic}${environment.individualNumber}/${params.number}`;
+    const urlP = `${this.url_basic}${environment.individualNumber}/${params.number}`;
     return this.getDataFetch(urlP);
   }
 

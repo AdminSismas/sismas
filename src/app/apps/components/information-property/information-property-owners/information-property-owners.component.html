@@ -24,9 +24,11 @@
         <div class="header-container m-2">
           @if (typeInformation === "edition") {
             <button
-              color="primary"
+              [ngClass]="!editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
+              [color]="editable ? 'primary' : ''"
               mat-raised-button
               type="button"
+              [disabled]="!editable"
               (click)="onClickOpenAddEditModal(dataSource)"
             >
               Nueva
@@ -44,7 +46,6 @@
             <ng-container matColumnDef="viewDetail">
               <th
                 *matHeaderCellDef
-                class="uppercase"
                 mat-header-cell
                 mat-sort-header
               ></th>
@@ -73,7 +74,6 @@
               <ng-container [matColumnDef]="column.property">
                 <th
                   *matHeaderCellDef
-                  class="uppercase"
                   mat-sort-header
                   mat-header-cell
                 >
@@ -108,7 +108,7 @@
                 *matHeaderCellDef
                 mat-header-cell
               >
-                ACCIONES
+                Acciones
               </th>
               <td
                 *matCellDef="let row"

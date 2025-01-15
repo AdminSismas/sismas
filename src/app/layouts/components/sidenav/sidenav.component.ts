@@ -2,13 +2,18 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NavigationService } from '../../../core/navigation/navigation.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { VexConfigService } from '@vex/config/vex-config.service';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchMap,
+  takeUntil
+} from 'rxjs/operators';
 import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
 import { VexPopoverService } from '@vex/components/vex-popover/vex-popover.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { SidenavUserMenuComponent } from './sidenav-user-menu/sidenav-user-menu.component';
-import { MatDialog } from '@angular/material/dialog';
-import { SearchModalComponent } from './search-modal/search-modal.component';
 import { SidenavItemComponent } from './sidenav-item/sidenav-item.component';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
 import { MatRippleModule } from '@angular/material/core';
@@ -16,15 +21,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe, CommonModule, NgFor, NgIf } from '@angular/common';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { Router } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
-import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-
+import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 
 @Component({
   selector: 'vex-sidenav',
@@ -48,19 +57,18 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatInputModule
   ]
-  
 })
 export class SidenavComponent implements OnInit {
   public validationField = STRING_INFORMATION_NOT_FOUND;
   filteredRouteList$: Observable<NavigationItem[]> | undefined;
-  public listRouteItem:NavigationItem[] = []
-  public listRouteItemNew:NavigationItem[] = []
+  public listRouteItem: NavigationItem[] = [];
+  public listRouteItemNew: NavigationItem[] = [];
 
   form: FormGroup;
 
-  user: UserDetails | null = null;
+  user: DecodeJwt | null = null;
 
-  @Input() collapsed: boolean = false;
+  @Input() collapsed = false;
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
   title$ = this.configService.config$.pipe(
     map((config) => config.sidenav.title)
@@ -82,8 +90,10 @@ export class SidenavComponent implements OnInit {
 
   items$: Observable<NavigationItem[]> = this.navigationService.items$;
 
-  userName$?: string
-  userPerfil$?: string
+  userName$?: string;
+  userPerfil$?: string;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -92,53 +102,66 @@ export class SidenavComponent implements OnInit {
     private layoutService: VexLayoutService,
     private configService: VexConfigService,
     private readonly popoverService: VexPopoverService,
-    private readonly dialog: MatDialog,
     private userService: UserService,
-    
+    private navigationLoaderService: NavigationLoaderService
   ) {
-
     this.form = this.fb.group({
-      searchRuote: [''],
+      searchRoute: ['']
     });
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getUser(); 
+    this.user = this.userService.getUser();
     this.navigationService._navigationMenuSubject$.subscribe((items) => {
       this.listRouteItem.push(items[0]);
-      // this.listRouteItem = this.filterUniqueRoutes(this.listRouteItem);
-
-      // console.log('items lista optenida del menu', items);
     });
 
+    this.filteredRouteList$ = this.form.get('searchRoute')?.valueChanges.pipe(
+      debounceTime(100), // Espera 500 ms después del último cambio
+      distinctUntilChanged(),
+      map((value) =>
+        this.listRouteItem.filter((option) =>
+          option.label?.toLowerCase().includes(value.toLowerCase() || '')
+        )
+      )
+    );
 
-    this.filteredRouteList$ = this.form.get('searchRuote')?.valueChanges.pipe(
-        debounceTime(100),  // Espera 500 ms después del último cambio
-        distinctUntilChanged(),
-      map((value): any[] => this.listRouteItem.filter(
-        (option: any) => option.label?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+    this.searchRouteTouch();
 
-      this.serachRouteTouch();
-   
+    this.navigationLoaderService.taskCounters$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+
+    this.navigationLoaderService.refreshCounters();
   }
 
-  serachRouteTouch(){
-    this.form.get('searchRuote')?.valueChanges.pipe(
-      debounceTime(100),  // Espera 500 ms después del último cambio
-      distinctUntilChanged(),
-    map((value): any[] => this.listRouteItem.filter(
-      (option: any) => option.label?.toLowerCase().includes(value.toLowerCase() || ''))
-    )).subscribe((result) => {
-      console.log('result', result);
-    });
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  searchRouteTouch() {
+    this.form
+      .get('searchRoute')
+      ?.valueChanges.pipe(
+        debounceTime(100), // Espera 500 ms después del último cambio
+        distinctUntilChanged(),
+        map((value) =>
+          this.listRouteItem.filter((option) =>
+            option.label?.toLowerCase().includes(value.toLowerCase() || '')
+          )
+        )
+      )
+      .subscribe((result) => {
+        console.log('result', result);
+      });
   }
   navigateToCadastralSearch() {
     this.router.navigate(['/myWork/cadastralSearch']);
   }
 
   changeRole(role: string): void {
-    this.userService.changeRole(role);  
+    this.userService.changeRole(role);
   }
 
   collapseOpenSidenav() {
@@ -150,9 +173,12 @@ export class SidenavComponent implements OnInit {
   }
 
   toggleCollapse() {
-    this.collapsed
-      ? this.layoutService.expandSidenav()
-      :( this.layoutService.collapseSidenav(),this.collapseCloseSidenav());
+    if (this.collapsed) {
+      this.layoutService.expandSidenav();
+    } else {
+      this.layoutService.collapseSidenav();
+      this.collapseCloseSidenav();
+    }
   }
 
   trackByRoute(index: number, item: NavigationItem): string {
@@ -185,41 +211,40 @@ export class SidenavComponent implements OnInit {
     );
   }
 
-  loadBlocksRouteList(label: string, status: boolean | null): void {
+  loadBlocksRouteList(label: string): void {
     if (label?.length <= 0) {
       return;
     }
     this.router.navigate([label]);
-    this.form.get('searchRuote')?.reset();
-    
+    this.form.get('searchRoute')?.reset();
   }
 
-
   captureRuteInformation(result: NavigationItem[], label: string | null) {
-      result = result;
-       this.listRouteItem = result;
-   
-    
-        let listOptions: NavigationItem[] =  this.listRouteItem.filter(
-          (option: NavigationItem): boolean => option.label === label);
-        if (listOptions?.length > 0) {
-          this.form.get('searchRuote')?.patchValue(listOptions[0].label);
-          this.loadBlocksRouteList(listOptions[0].label, false);
-        }
-     
-  
-      this.form.get('searchRuote')?.valueChanges.pipe(
-        startWith(''),
-        map((value): any[] => this.listRouteItem.filter(
-          (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-        ));
+    this.listRouteItem = result;
+
+    const listOptions: NavigationItem[] = this.listRouteItem.filter(
+      (option: NavigationItem): boolean => option.label === label
+    );
+    if (listOptions?.length > 0) {
+      this.form.get('searchRoute')?.patchValue(listOptions[0].label);
+      this.loadBlocksRouteList(listOptions[0].label);
     }
 
-    public seeRutList(): void {
-      if (this.listRouteItem[0] === undefined) {
-        this.listRouteItem.splice(0, 1);
-      }
-      console.log('listRouteItem', this.listRouteItem);
-    }
+    this.form.get('searchRoute')?.valueChanges.pipe(
+      startWith(''),
+      map((value) =>
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.listRouteItem.filter((option: any) =>
+          option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+        )
+      )
+    );
+  }
 
+  public seeRutList(): void {
+    if (this.listRouteItem[0] === undefined) {
+      this.listRouteItem.splice(0, 1);
+    }
+    console.log('listRouteItem', this.listRouteItem);
+  }
 }

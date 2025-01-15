@@ -3,7 +3,7 @@ import Showdown, { ShowdownExtension } from 'showdown';
 /**
  * @internal
  */
-let { hasOwnProperty } = {};
+const { hasOwnProperty } = {};
 
 export interface ShowdownConfig extends Showdown.ConverterOptions {}
 
@@ -56,7 +56,7 @@ export class VexShowdownConfig implements Showdown.ConverterOptions {
    * @param options - A options object to merge.
    */
   public merge(options: VexShowdownConfig | Showdown.ConverterOptions) {
-    for (let key in options) {
+    for (const key in options) {
       if (hasOwnProperty.call(options, key)) {
         (this as any)[key] = (options as any)[key];
       }

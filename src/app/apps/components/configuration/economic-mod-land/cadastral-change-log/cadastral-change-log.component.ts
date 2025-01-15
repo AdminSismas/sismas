@@ -32,6 +32,6 @@ export class CadastralChangeLogComponent{
 
   submitForm(): void {
     if (this.form?.invalid) return;
-    this.dialogRef.close(this.form!.value)
+    this.dialogRef.close(this.form!.value);
   }
 }

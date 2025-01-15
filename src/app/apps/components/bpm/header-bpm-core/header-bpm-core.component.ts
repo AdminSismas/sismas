@@ -30,9 +30,9 @@ import { CommentsComponent } from '../comments/comments.component';
 export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   crumbs: string[] = [];
 
-  @Input() public idHeader: string = '';
-  @Input() public icon: string = '';
-  @Input({ required: true }) id: string = '';
+  @Input() public idHeader = '';
+  @Input() public icon = '';
+  @Input({ required: true }) id = '';
   @Input({ required: true }) proTaskE: ProTaskE | null = null;
   @Output() returnPanelTask = new EventEmitter<boolean>();
 
@@ -72,7 +72,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
       .subscribe((result: ProTaskE) => {
         this.chargerCrumbs(result);
       });
-      console.log('flujo actual:', this.crumbs)
+      console.log('flujo actual:', this.crumbs);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -85,13 +85,13 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   chargerCrumbs(proTaskE: ProTaskE){
     this.crumbs = [];
     if(proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName){
-      this.crumbs.push(proTaskE.proTask?.flowDetail)
+      this.crumbs.push(proTaskE.proTask?.flowDetail);
     }
     if(proTaskE?.executionId){
-      this.crumbs.push(proTaskE?.executionId.toString())
+      this.crumbs.push(proTaskE?.executionId.toString());
     }
     if(proTaskE?.proTask?.flowName){
-      this.crumbs.push(proTaskE?.proTask?.flowName)
+      this.crumbs.push(proTaskE?.proTask?.flowName);
     }
   }
 
@@ -119,14 +119,14 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
         data: {
           executionId: this.proTaskE?.executionId
         }
-      })
+      });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
         width: '60%',
         data: {
           executionId: this.proTaskE?.executionId
         }
-      })
+      });
     }
   }
 }

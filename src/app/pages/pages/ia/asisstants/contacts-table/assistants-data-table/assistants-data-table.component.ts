@@ -63,12 +63,12 @@ export class AssistantsDataTableComponent<T>
   @Input({ required: true }) columns!: TableColumn<T>[];
   @Input() pageSize = 20;
   @Input() pageSizeOptions = [10, 20, 50];
-  @Input() searchStr: string = '';
+  @Input() searchStr = '';
 
   @Output() toggleStar = new EventEmitter<Contact['id']>();
   @Output() openContact = new EventEmitter<Contact['id']>();
 
-  visibleColumns: Array<keyof T | string> = [];
+  visibleColumns: (keyof T | string)[] = [];
   dataSource = new MatTableDataSource<T>();
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;

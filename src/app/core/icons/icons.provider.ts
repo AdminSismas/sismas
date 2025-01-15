@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { IconsService } from './icons.service';
 
-export function provideIcons(): Array<Provider | EnvironmentProviders> {
+export function provideIcons(): (Provider | EnvironmentProviders)[] {
   return [
     {
       provide: ENVIRONMENT_INITIALIZER,

@@ -38,7 +38,7 @@ import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/
 export class EconomicZoneComponent implements OnInit {
   @Input({ required: true }) public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
 
-  public columns: { name: string, title: string }[] = GEOECONOMICA_COLUMNS
+  public columns: { name: string, title: string }[] = GEOECONOMICA_COLUMNS;
   public displayColumns: string[] = [];
   public columnsToDisplayWithExpand: string[] = [];
   public expandedElement?: GeoEconomicZone | null;
@@ -50,7 +50,7 @@ export class EconomicZoneComponent implements OnInit {
 
   ngOnInit(): void {
     this.displayColumns = this.columns.map((column) => column.name);
-    this.columnsToDisplayWithExpand = [...this.displayColumns, 'expand']
+    this.columnsToDisplayWithExpand = [...this.displayColumns, 'expand'];
   }
 
 expandRow(row: GeoEconomicZone): void {

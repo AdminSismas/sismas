@@ -4,7 +4,7 @@ export class ProceduresProcessCollection {
     description?: string;
     bpmProcessCategory?: string;
     Key?: string;
-    version?: string
+    version?: string;
     resource?: string;
     image?: string;
 

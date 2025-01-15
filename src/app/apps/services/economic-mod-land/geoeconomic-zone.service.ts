@@ -9,78 +9,78 @@ import { environment as envi } from 'src/environments/environments';
 })
 export class GeoeconomicZoneService implements ZoneServices {
 
-  public base_url: string = `${envi.url}:${envi.port}${envi.geoeconomic_zones}`
+  public base_url = `${envi.url}:${envi.port}${envi.geoeconomic_zones}`;
 
   constructor(
     private http: HttpClient
   ) { }
 
   getZones(divpolLv1: string, divpolLv2: string): Observable<GeoEconomicZone[]> {
-    const url = `${this.base_url}${envi.divpol}`
+    const url = `${this.base_url}${envi.divpol}`;
 
-    let params = new HttpParams()
-    params = params.append('divpolLv1', divpolLv1)
-    params = params.append('divpolLv2', divpolLv2)
+    let params = new HttpParams();
+    params = params.append('divpolLv1', divpolLv1);
+    params = params.append('divpolLv2', divpolLv2);
 
     return this.http.get<GeoEconomicZone[]>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error consultando zonas urbanas')
-          throw error
+          console.log('Error consultando zonas urbanas');
+          throw error;
         })
-      )
+      );
   }
 
   createZone(params: Zone): Observable<GeoEconomicZone> {
-    const url: string = `${this.base_url}`
+    const url = `${this.base_url}`;
 
     return this.http.post<GeoEconomicZone>(url, params)
       .pipe(
         catchError((error: any) => {
-          console.log('Error creando zona geoeconómica')
-          throw error
+          console.log('Error creando zona geoeconómica');
+          throw error;
         })
-      )
+      );
   }
 
   updateZone(params: GeoEconomicZone): Observable<GeoEconomicZone> {
-    const id = params.zonaHomoGeoEconomicaId
-    const url: string = `${this.base_url}/${id}`
+    const id = params.zonaHomoGeoEconomicaId;
+    const url = `${this.base_url}/${id}`;
 
     return this.http.put<GeoEconomicZone>(url, params)
       .pipe(
         catchError((error: any) => {
-          console.log('Error actualizando zona física urbana')
-          throw error
+          console.log('Error actualizando zona física urbana');
+          throw error;
         })
-      )
+      );
   }
 
   deleteZone(version: string, id: string): Observable<void> {
-    const url: string = `${this.base_url}/${id}`
+    const url = `${this.base_url}/${id}`;
     const params = new HttpParams()
-      .set('version', version)
+      .set('version', version);
 
     return this.http.delete<void>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error eliminando zona física urbana')
-          throw error
+          console.log('Error eliminando zona física urbana');
+          throw error;
         })
-      )
+      );
   }
 
   getValues(id: string | number): Observable<GeoEconomicZoneDetails> {
-    const url: string = `${this.base_url}${envi.geoeconomic_values}`
+    const url = `${this.base_url}${envi.geoeconomic_values}`;
     const params = new HttpParams()
-      .set('zonaHomoGeoEconomicaId', id)
+      .set('zonaHomoGeoEconomicaId', id);
 
     return this.http.get<GeoEconomicZoneDetails>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error consultando detalles de zona geoeconómica')
-          throw error
+          console.log('Error consultando detalles de zona geoeconómica');
+          throw error;
         })
-      )
+      );
   }
 }

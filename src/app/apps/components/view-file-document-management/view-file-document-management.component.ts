@@ -35,7 +35,7 @@ import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
 
 
 export class ViewFileDocumentManagementComponent implements OnInit {
-  showMetadataView: boolean = false;
+  showMetadataView = false;
   metadata: contentInfoAttachment;
   properties = MODEL_METADATA_PROPERTIES;
 
@@ -43,10 +43,10 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   idAtachment: number;
   originalFileName: string;
 
-  basic_url: string = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
   urlSafe: SafeUrl = '';
-  fileType: string = '';
-  fileContent: string = '';  // Almacenar el contenido del archivo .txt
+  fileType = '';
+  fileContent = '';  // Almacenar el contenido del archivo .txt
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -87,13 +87,13 @@ export class ViewFileDocumentManagementComponent implements OnInit {
 
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {
-    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+    const urlComplete = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
   }
 
   // Método para cargar el archivo de texto (.txt)
   loadTextFile(): void {
-    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+    const urlComplete = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
     fetch(urlComplete)
       .then(response => response.text())
       .then(text => {
@@ -101,16 +101,29 @@ export class ViewFileDocumentManagementComponent implements OnInit {
       })
       .catch(err => console.error('Error al cargar el archivo de texto', err));
   }
-
-  // Método para descargar el archivo
-  downloadFile(): void {
-    const urlComplete: string = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
-    const a = document.createElement('a');
-    a.href = urlComplete;
-    a.download = this.originalFileName;
-    a.click();
-  }
-
+    downloadFile(): void {
+      const urlComplete = `${this.basic_url}${this.executionId}/${this.idAtachment}/${this.originalFileName}`;
+      
+      // Abrir el documento en una nueva pestaña
+      const newWindow = window.open(urlComplete, '_blank');
+      
+      // Crear un enlace para descargar el archivo
+      const a = document.createElement('a');
+      a.href = urlComplete;
+      a.download = this.originalFileName;
+      
+      // Asegurarse de que el enlace se descargue en la nueva pestaña
+      if (newWindow) {
+        newWindow.onload = () => {
+          newWindow.document.body.appendChild(a);
+          a.click();
+        };
+      } else {
+        // Si la nueva pestaña no se puede abrir, descargar en la misma ventana
+        a.click();
+      }
+    }
+  
   switchViewDocMetaData(): void {
     this.showMetadataView = !this.showMetadataView;
     if (this.showMetadataView) {

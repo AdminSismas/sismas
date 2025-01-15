@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,9 @@ export class RoleGuard implements CanActivate {
   constructor(private userService: UserService, private router: Router) {}
 
   canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    const user = this.userService.getUser();
+    const user: DecodeJwt | null = this.userService.getUser();
 
     if (user) {
       const requiredRoles = next.data['roles'];

@@ -1,63 +1,62 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+// Angular framework
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { SweetAlert2Module, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+// Vex
+import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+// Material
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
-import { InputComponent } from '../../../input/input.component';
-import { TextAreaComponent } from '../../../text-area/text-area.component';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+// Custom
+import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/geo-economic-zone';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { InputComponent } from '../../../input/input.component';
 import { RuralPhysicalZone } from 'src/app/apps/interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from 'src/app/apps/interfaces/information-property/urban-physical-zone';
-import Swal from 'sweetalert2';
-import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/geo-economic-zone';
+import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
 
 @Component({
   selector: 'vex-add-edit-informatizon-zones-property',
   standalone: true,
   imports: [
-
     CommonModule,
-    MatFormFieldModule, 
-    MatInputModule, 
     ReactiveFormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
-    MatProgressSpinnerModule,
+    SweetAlert2Module,
+    // Vex
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    InputComponent,
-    TextAreaComponent,
-    ComboxColletionComponent,
-    MatTabsModule,
+    // Material
+    MatButtonModule,
     MatCardModule,
-    MatSelectModule
-
- 
-
-  
+    MatDialogModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTabsModule,
+    // Custom
+    InputComponent,
   ],
   templateUrl: './add-edit-informatizon-zones-property.component.html',
   styleUrl: './add-edit-informatizon-zones-property.component.scss'
 })
-export class AddEditInformatizonZonesPropertyComponent {
+export class AddEditInformatizonZonesPropertyComponent implements OnInit {
 
   zoneBAUnitForm!: FormGroup;
 
@@ -65,20 +64,21 @@ export class AddEditInformatizonZonesPropertyComponent {
   divPolRural: RuralPhysicalZone[] = [];
   divPolGeoeconomica: GeoEconomicZone[] = [];
 
+  @ViewChild('errorForm') errorForm!: SwalComponent;
 
-  isEdit: boolean = false;   
+  isEdit = false;
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEditInformatizonZonesPropertyComponent>,
     private informationPropertyService: InformationPropertyService,
-    @Inject(MAT_DIALOG_DATA) public data: {zone: ZoneBAUnit, baunitId: number, isEdit: boolean, propertyType: string} 
+    @Inject(MAT_DIALOG_DATA) public data: {zone: ZoneBAUnit, baunitId: number, isEdit: boolean, propertyType: string}
   ) {}
 
   ngOnInit(): void {
     this.isEdit = this.data.isEdit;
     this.initializeForm();
-    
+
 
     switch (this.data.propertyType) {
       case 'Urbano':
@@ -91,7 +91,7 @@ export class AddEditInformatizonZonesPropertyComponent {
         this.getByDivPolGeoeconomica();
         break;
     }
-  
+
     // const selectedZone = this.zoneBAUnitForm.controls['ccZonaHomoFisicaUr'].value;
     if (this.data.zone) {
       this.zoneBAUnitForm.patchValue({
@@ -104,7 +104,7 @@ export class AddEditInformatizonZonesPropertyComponent {
       });
     }
 
-    
+
   }
 
   compareZones(zone1: any, zone2: any): boolean {
@@ -124,7 +124,7 @@ export class AddEditInformatizonZonesPropertyComponent {
 
 
   private initializeForm(): void {
-  
+
     this.zoneBAUnitForm = this.fb.group({
       baUnitZonaId: [this.data.zone?.baUnitZonaId || null],
       baUnitZonaArea: [this.data.zone?.baUnitZonaArea || '', [Validators.required, this.numberValidator]],
@@ -134,7 +134,7 @@ export class AddEditInformatizonZonesPropertyComponent {
       baUnitZonaValor: [this.data.zone?.baUnitZonaValor || '', [Validators.required, this.numberValidator]],
     });
 
-  
+
     this.updateValidators();
   }
 
@@ -164,9 +164,9 @@ export class AddEditInformatizonZonesPropertyComponent {
     }
   }
 
-  numberValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const value = control.value?.toString().replace(',', '.'); 
-    if (!/^\d+(\.\d+)?$/.test(value)) { 
+  numberValidator(control: AbstractControl): Record<string, boolean> | null {
+    const value = control.value?.toString().replace(',', '.');
+    if (!/^\d+(\.\d+)?$/.test(value)) {
       return { 'invalidNumber': true };
     }
     return null;
@@ -176,19 +176,19 @@ export class AddEditInformatizonZonesPropertyComponent {
   onSave(): void {
     if (this.zoneBAUnitForm.valid) {
       const formValue = this.zoneBAUnitForm.value;
-      
-   
+
+
       formValue.baUnitZonaArea = formValue.baUnitZonaArea.toString().replace(',', '.');
       formValue.baUnitZonaValor = formValue.baUnitZonaValor.toString().replace(',', '.');
-  
-     
+
+
       let selectedZone = null;
-      let requestBody: any = {
+      const requestBody: any = {
         baUnitZonaArea: formValue.baUnitZonaArea,
         baUnitZonaValor: formValue.baUnitZonaValor,
       };
-  
-  
+
+
       switch (this.data.propertyType) {
         case 'Urbano':
           selectedZone = formValue.ccZonaHomoFisicaUr;
@@ -196,33 +196,33 @@ export class AddEditInformatizonZonesPropertyComponent {
           requestBody.ccZonaHomoFisicaRu = null;
           requestBody.ccZonaHomoGeoEconomica = null;
           break;
-  
+
         case 'Rural':
           selectedZone = formValue.ccZonaHomoFisicaRu;
           requestBody.ccZonaHomoFisicaRu = selectedZone;
           requestBody.ccZonaHomoFisicaUr = null;
           requestBody.ccZonaHomoGeoEconomica = null;
           break;
-  
+
         case 'Geoeconomica':
           selectedZone = formValue.ccZonaHomoGeoEconomica;
           requestBody.ccZonaHomoGeoEconomica = selectedZone;
           requestBody.ccZonaHomoFisicaUr = null;
           requestBody.ccZonaHomoFisicaRu = null;
           break;
-  
+
         default:
-         
+
           console.error('Tipo de propiedad no reconocido');
           return;
       }
-  
-   
+
+
       if (selectedZone && selectedZone.cadastreChangeLog) {
         selectedZone.cadastreChangeLog = null;
       }
-  
-     
+
+
       if (this.isEdit) {
         this.informationPropertyService.updateBAUnitZones(formValue.baUnitZonaId, requestBody, this.data.baunitId, 2024)
           .subscribe(response => {
@@ -237,25 +237,19 @@ export class AddEditInformatizonZonesPropertyComponent {
           });
       }
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Por favor, asegúrese de que los campos sean válidos y contengan solo números.',
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#3f51b5',
-      });
+      this.errorForm.fire();
     }
   }
 
   getByDivPolUrbana(): void {
     this.informationPropertyService.getByDivPolUrbana().subscribe((result: UrbanPhysicalZone[]) => {
-      this.divPolUrbana = result;  
-      console.log(this.divPolUrbana);  
+      this.divPolUrbana = result;
+      console.log(this.divPolUrbana);
 
     });
   }
-  
-  
+
+
   getByDivPolRural(): void {
     this.informationPropertyService.getByDivPolRural().subscribe((result) => {
       this.divPolRural = result;
@@ -269,8 +263,8 @@ export class AddEditInformatizonZonesPropertyComponent {
       console.log(result);
     });
   }
-  
-  
-  
+
+
+
 
 }

@@ -1,6 +1,6 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
   <h2 class="headline m-0 flex-auto">
- 
+
   </h2>
   <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
     <mat-icon svgIcon="mat:close"></mat-icon>
@@ -18,7 +18,7 @@
         <div class="flex flex-col gap-2">
           <span class="text-black text-sm">Nombre del proceso</span>
 
-          
+
           <h2 class="text-sm">
             {{ this.taskDetails.processName ? this.taskDetails.processName : NAME_NO_DISPONIBLE }}
           </h2>
@@ -95,10 +95,10 @@
         <div
           class="px-4 h-16 border-b sticky left-0 flex items-center">
           <!-- <span class="flex-1"></span> -->
-        
+
           <span class="flex-1"></span>
           <span class="flex-1"></span>
-         
+
         </div>
         <table
           @stagger
@@ -111,7 +111,6 @@
           <ng-container matColumnDef="viewDetail">
             <th
               *matHeaderCellDef
-              class="uppercase"
               mat-header-cell
               mat-sort-header>
             </th>
@@ -135,13 +134,12 @@
                         [matColumnDef]="column.property">
                         <th *matHeaderCellDef
                             [ngClass]="column.cssClassesHead"
-                            class="uppercase text-center"
+                            class="text-center"
                             mat-header-cell
                             mat-sort-header>
                           {{ column.label }}
                         </th>
-                        <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
-                            class="uppercase">
+                        <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
                           {{   getAbsoluteValue(row[column.property]) }}
                         </td>
                     </ng-container>
@@ -152,18 +150,17 @@
                             [matColumnDef]="column.property">
                             <th *matHeaderCellDef
                                 [ngClass]="column.cssClassesHead"
-                                class="uppercase text-center"
+                                class="text-center"
                                 mat-header-cell
                                 mat-sort-header>
                               {{ column.label }}
                             </th>
-                            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
-                                class="uppercase">
+                            <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
                               {{ row[column.property] | date:'dd/MM/yyyy' }}
                             </td>
                     </ng-container>
 
-                   
+
             </ng-container>
 
 
@@ -173,7 +170,6 @@
               *ngIf="column.type === 'text'"
               [matColumnDef]="column.property">
               <th *matHeaderCellDef
-                  class="uppercase"
                   mat-header-cell
                   mat-sort-header>
                 {{ column.label }}
@@ -185,7 +181,7 @@
           </ng-container>
 
           <!-- Action Column -->
-        
+
 
           <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
           <tr

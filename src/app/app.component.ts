@@ -1,7 +1,6 @@
-import { Component } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
-import { BehaviorSubject } from 'rxjs'
-import { AuthService } from './pages/pages/auth/login/services/auth.service'
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { TitleService } from './apps/services/tittle.service';
 
 @Component({
   selector: 'vex-root',
@@ -9,8 +8,11 @@ import { AuthService } from './pages/pages/auth/login/services/auth.service'
   standalone: true,
   imports: [RouterOutlet]
 })
-export class AppComponent {
-  title = 'geoGestion'
+export class AppComponent implements OnInit {
+  constructor(private titleService: TitleService) {}
 
 
+  ngOnInit(): void {
+    this.titleService.setTitle();
+  }
 }

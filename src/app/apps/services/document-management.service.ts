@@ -12,8 +12,8 @@ import { HttpClient } from '@angular/common/http';
 export class AttachmentService {
     /* -------------- ATRIBUTOS -------------- */
     //basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment}${environment.proExecution}`;
-    basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${environment.bpmAttachment.proExecution}`;
-    delete_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
+    basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${environment.bpmAttachment.proExecution}`;
+    delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
 
 
     /* -------------- CONSTRUCTRO -------------- */

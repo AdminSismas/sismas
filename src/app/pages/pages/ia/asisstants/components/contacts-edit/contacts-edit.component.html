@@ -27,7 +27,7 @@
     <mat-form-field class="mt-6">
       <mat-label>Empresa</mat-label>
       <!-- <input formControlName="empresa" matInput /> -->
-      <mat-select placeholder="Seleccione&hellip;" formControlName="idempresa">
+      <mat-select placeholder="Seleccione" formControlName="idempresa">
         <mat-option *ngFor="let empresas of empresas" [value]="empresas.id">{{ empresas.nombre }}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -56,3 +56,70 @@
     </button>
   </mat-dialog-actions>
 </form>
+
+<swal
+  #validationWarning
+  icon="warning"
+  title="Advertencia"
+  text="Por favor, completa todos los campos requeridos antes de continuar."
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #fileTypeError
+  icon="error"
+  title="Error"
+  text="El archivo seleccionado no es una imagen.">
+</swal>
+
+<swal
+  #successCreate
+  icon="success"
+  title="Éxito"
+  text="Asistente creado correctamente"
+  [timer]="2000"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #successUpdate
+  icon="success"
+  title="Éxito"
+  text="Asistente actualizado correctamente"
+  [timer]="2000"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #errorCreate
+  icon="error"
+  title="Error"
+  text="Error al crear el Asistente"
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #errorUpdate
+  icon="error"
+  title="Error"
+  text="Error al actualizar el Asistente"
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>
+
+<swal
+  #generalError
+  icon="error"
+  title="Error"
+  text="Hubo un error. Por favor, inténtalo de nuevo más tarde."
+  [timer]="2500"
+  [timerProgressBar]="true"
+  [showConfirmButton]="false">
+</swal>

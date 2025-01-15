@@ -12,7 +12,7 @@ import { ProceduresCollection } from "../interfaces/procedures-progress.model";
 })
 export class ProcedureWorkFinishedService {
    /* -------------- ATRIBUTOS -------------- */
-   basic_url:string = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.proExecution}${environment.active}`;
+   basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.proExecution}${environment.active}`;
 
    /* -------------- CONSTRUCTRO -------------- */
    constructor(private requestsService: SendGeneralRequestsService,private http: HttpClient) {}
@@ -40,10 +40,10 @@ export class ProcedureWorkFinishedService {
     }
 
     public getFilterTableProcedureService(page: PageProceduresData):Observable<ProceduresCollection[]>{
-      let paramsR:HttpParams = new HttpParams();
-      const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.finish}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
+      const paramsR:HttpParams = new HttpParams();
+      const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.finish}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
       console.log(urlComplete,'URLS RUTA');  
-          console.log(this.basic_url,'baseUrl')                             
+          console.log(this.basic_url,'baseUrl');                             
      return  this.http.get<any>(urlComplete);
   //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
 
@@ -54,8 +54,8 @@ export class ProcedureWorkFinishedService {
       }
 
       public viewDetailIdProceduresFininsh(idProcedure:number){
-        let paramsR:HttpParams = new HttpParams();
-        const urlComplete:string = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}`;                        
+        const paramsR:HttpParams = new HttpParams();
+        const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}`;                        
        return  this.http.get<any>(urlComplete + idProcedure);
       }
 

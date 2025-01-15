@@ -21,12 +21,14 @@ import { COLOMBIA_DATE_FORMATS } from './helpers/colombia-date-formats';
 import { authInterceptor } from './pages/pages/auth/login/services/auth.interceptor';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { PaginatorIntlEs } from './apps/interfaces/paginator/PaginatorIntlEs';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    importProvidersFrom(SweetAlert2Module.forRoot()),
     importProvidersFrom(
       BrowserModule,
       MatDialogModule,
@@ -101,11 +103,11 @@ export const appConfig: ApplicationConfig = {
     { provide: MAT_DATE_LOCALE, useValue: 'es-CO' },
     { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS },
 
-    { provide: MAT_DATE_LOCALE, useValue: 'es-CO' }, 
-    { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS }, 
+    { provide: MAT_DATE_LOCALE, useValue: 'es-CO' },
+    { provide: MAT_DATE_FORMATS, useValue: COLOMBIA_DATE_FORMATS },
     { provide: MatPaginatorIntl, useClass: PaginatorIntlEs },
 
 
-  
+
   ]
 };

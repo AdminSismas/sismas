@@ -16,11 +16,11 @@
     <!-- Search -->
     <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-6 pb-6 flex flex-col">
       <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
-      <input matInput [formControl]="searchCtrl" placeholder="Buscar archivo…" type="text" />
+      <input matInput [formControl]="searchCtrl" placeholder="Filtrar archivo" type="text" />
     </mat-form-field>
-  
+
     <!-- button filter -->
-    <button
+    <!-- <button
       [matMenuTriggerFor]="columnFilterMenu"
       mat-icon-button
       matTooltip="Filtrar Columnas"
@@ -28,9 +28,9 @@
       class="ml-4 flex-col"
     >
       <mat-icon matIconPrefix svgIcon="mat:filter_list"></mat-icon>
-    </button>
+    </button> -->
   </div>
-  
+
   <!-- Table -->
   <table @stagger mat-table [dataSource]="dataSource" class="w-full" matSort>
 
@@ -46,13 +46,13 @@
         </button>
       </td>
     </ng-container>
-      
 
-  
+
+
     <!-- Text Columns -->
     <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
       <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
         </th>
         <td
@@ -66,15 +66,15 @@
               matIconPrefix
               *ngIf="column.property === 'originalFileName'"
               [svgIcon]="getFileTypeIcon(row)"
-              [ngClass]="getFileIconColor(row)"  
+              [ngClass]="getFileIconColor(row)"
               class="w-5 h-5 p-0 items-center justify-center"
             ></mat-icon>
           {{ row[column.property] }}
         </td>
       </ng-container>
-  
+
       <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
         </th>
         <td
@@ -88,7 +88,7 @@
         matIconPrefix
         *ngIf="column.property === 'originalFileName'"
         [svgIcon]="getFileTypeIcon(row)"
-        [ngClass]="getFileIconColor(row)"  
+        [ngClass]="getFileIconColor(row)"
         class="w-5 h-5 p-0 items-center justify-center"
       ></mat-icon>
           {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
@@ -99,18 +99,18 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef class="w-12"></th>
       <td mat-cell *matCellDef="let row" class="w-12 text-center">
-  
+
         <button
           mat-icon-button
           matTooltip="Eliminar archivo"
           (click)="onDelete(row)"
           class="text-red-600 hover:text-red-800 focus:outline-none"
         >
-          <mat-icon svgIcon="mat:delete"></mat-icon>  
+          <mat-icon svgIcon="mat:delete"></mat-icon>
         </button>
       </td>
     </ng-container>
-  
+
     <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
     <tr
       mat-row
@@ -119,7 +119,7 @@
       class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
     ></tr>
   </table>
-  
+
   <!-- Paginator -->
   <mat-paginator
     *ngIf="disablePaginator == true"
@@ -133,7 +133,7 @@
     class="sticky left-0 flex flex-col"
   >
   </mat-paginator>
-  
+
   <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
     <button
       (click)="toggleColumnVisibility(column, $event)"
@@ -146,4 +146,14 @@
     </button>
   </mat-menu>
 
-  
+<swal
+  #confirmDialog
+  title="¿Está seguro?"
+  text="Esta acción no se puede deshacer"
+  icon="warning"
+  [showCancelButton]="true"
+  [confirmButtonText]="'Sí, eliminar'"
+  [cancelButtonText]="'Cancelar'"
+  [confirmButtonColor]="'#d33'"
+  [cancelButtonColor]="'#3085d6'"
+></swal>

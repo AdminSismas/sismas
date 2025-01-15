@@ -49,10 +49,10 @@ interface defaultData extends People {
   styleUrl: './create-people.component.scss'
 })
 export class CreatePeopleComponent implements OnInit {
-  typeDocument: string = 'tipo';
-  typeIndividualSex: string = '';
-  typePersons: string = '';
-  typeEthnicGroup: string = '';
+  typeDocument = 'tipo';
+  typeIndividualSex = '';
+  typePersons = '';
+  typeEthnicGroup = '';
 
   page = PAGE;
   size = PAGE_SIZE;
@@ -95,7 +95,7 @@ export class CreatePeopleComponent implements OnInit {
         this.mode = 'update';
       } else if (this.defaults.mode === 'create') {
         this.mode = 'create';
-        this.form.reset(this.defaults)
+        this.form.reset(this.defaults);
       }
     } else {
       this.defaults = {} as defaultData;
@@ -126,7 +126,7 @@ export class CreatePeopleComponent implements OnInit {
 
     //validamos que el input de palabra
     if (this.form.get('firstName')?.value !== '') {
-      let validate = this.validateSingleWord(this.form.get('firstName')?.value);
+      const validate = this.validateSingleWord(this.form.get('firstName')?.value);
 
       if (validate) {
         this.menssage.status = true;
@@ -137,7 +137,7 @@ export class CreatePeopleComponent implements OnInit {
 
     //validamos que el input de palabra
     if (this.form.get('lastName')?.value !== '') {
-      let validate: boolean = this.validateSingleWord(
+      const validate: boolean = this.validateSingleWord(
         this.form.get('lastName')?.value
       );
 
@@ -150,7 +150,7 @@ export class CreatePeopleComponent implements OnInit {
 
     // validamos nit
     if (this.form.get('domIndividualTypeNumber')?.value === 'NIT') {
-      let validate: boolean | null = this.validateNit(
+      const validate: boolean | null = this.validateNit(
         this.form.get('number')?.value
       );
 
@@ -168,13 +168,13 @@ export class CreatePeopleComponent implements OnInit {
 
     // enviamos los datos para el envío de datos
 
-    let url_basic = `${environment.url}:${environment.port}${environment.individualNumber}`;
+    const url_basic = `${environment.url}:${environment.port}${environment.individualNumber}`;
 
-    let dataCreate = {
+    const dataCreate = {
       url: url_basic,
       body: people
     };
-    let resApi = this.peopleServcie.userCreate(dataCreate).subscribe({
+    const resApi = this.peopleServcie.userCreate(dataCreate).subscribe({
       next: (res) => {
         this.alertSnakbar.open('Persona registrada', 'CLOSE', {
           duration: 3000,
@@ -240,7 +240,7 @@ export class CreatePeopleComponent implements OnInit {
     const people = this.form.value;
     //validamos que el input de palabra
     if (this.form.get('firstName')?.value !== '') {
-      let validate = this.validateSingleWord(this.form.get('firstName')?.value);
+      const validate = this.validateSingleWord(this.form.get('firstName')?.value);
 
       if (validate) {
         this.menssage.status = true;
@@ -251,7 +251,7 @@ export class CreatePeopleComponent implements OnInit {
 
     //validamos que el input de palabra
     if (this.form.get('lastName')?.value !== '') {
-      let validate: boolean = this.validateSingleWord(
+      const validate: boolean = this.validateSingleWord(
         this.form.get('lastName')?.value
       );
 
@@ -263,7 +263,7 @@ export class CreatePeopleComponent implements OnInit {
     }
 
     if (this.form.get('domIndividualTypeNumber')?.value === 'NIT') {
-      let validate: boolean | null = this.validateNit(
+      const validate: boolean | null = this.validateNit(
         this.form.get('number')?.value
       );
 
@@ -282,12 +282,12 @@ export class CreatePeopleComponent implements OnInit {
 
     this.menssage.status = false;
 
-    let url_basic = `${environment.url}:${environment.port}${environment.individualNumber}/${this.form.get('individualId')?.value}?baunitId=TESTS`;
+    const url_basic = `${environment.url}:${environment.port}${environment.individualNumber}/${this.form.get('individualId')?.value}?baunitId=TESTS`;
 
     people.number = this.defaults.number;
     people.domIndividualType = this.defaults.domIndividualType;
 
-    let dataCreate = {
+    const dataCreate = {
       url: url_basic,
       body: people
     };
@@ -336,7 +336,7 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   clearValidatorsTow(): void {
-    let llaves = Object.keys(this.form.controls);
+    const llaves = Object.keys(this.form.controls);
     for (let i = 0; i < llaves.length; i++) {
       this.form.get(llaves[i])?.clearValidators();
       this.form.get(llaves[i])?.updateValueAndValidity();
@@ -353,9 +353,10 @@ export class CreatePeopleComponent implements OnInit {
   validateNit(nit: any): boolean {
     const word = nit;
     const aWord = /^\d{9}-\d$/.test(word);
-
-    return aWord ? false : true;
+  
+    return aWord;
   }
+  
 
   validateTypePople(): void {
     // validar los tipos de campos según los valores de los formularios

@@ -1,18 +1,18 @@
 <vex-page-layout>
-                    <button
+                    <!-- <button
                         [matMenuTriggerFor]="columnFilterMenu"
                         mat-icon-button
-                        matTooltip="Filter Columns"
+                        matTooltip="Filtrar columnas"
                         type="button"
                         class="ml-4 flex-col">
                         <mat-icon svgIcon="mat:filter_list"></mat-icon>
-                    </button>
+                    </button> -->
                 <!-- Tabla de dominios -->
                 <table @stagger mat-table [dataSource]="dataSource" class="w-full " matSort>
                     <!-- Text Columns -->
                     <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
                         <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-                            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header>
                                 {{ column.label }}
                             </th>
                             <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
@@ -21,7 +21,7 @@
                         </ng-container>
 
                         <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-                            <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header>
                                 {{ column.label }}
                             </th>
                             <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
@@ -49,7 +49,7 @@
             </div>
         </vex-page-layout-content>
 
-        
+
 
 <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
     <button

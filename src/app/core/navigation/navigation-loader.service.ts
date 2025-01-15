@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { NavigationItem,  } from './navigation-item.interface';
+import { NavigationItem } from './navigation-item.interface';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {
   NAVIGATION_LOADER_AUDIT,
@@ -9,13 +9,13 @@ import {
   NAVIGATION_LOADER_MY_WORK_3,
   NAVIGATION_LOADER_OPEN_DATA,
   NAVIGATION_LOADER_OPERATION_SUPPORT,
-  NAVIGATION_LOADER_PUBLIC_SERVICE,
+  NAVIGATION_LOADER_PUBLIC_SERVICE
 } from '../../layouts/constants/constant-loader';
 import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
 import { ProTaskE } from '../../apps/interfaces/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,63 +25,105 @@ export class NavigationLoaderService {
   private readonly _items: BehaviorSubject<NavigationItem[]> =
     new BehaviorSubject<NavigationItem[]>([]);
 
+   private taskCounters = new BehaviorSubject<{
+    assigned: number;
+    priority: number;
+    devolution: number;
+    total: number;
+  }>({
+    assigned: 0,
+    priority: 0,
+    devolution: 0,
+    total: 0
+  });
+  taskCounters$ = this.taskCounters.asObservable();
   _contentInformationProTaskE$ = new Subject<ProTaskE>();
-  dataContentInformationProTaskE$: Observable<ProTaskE> = this._contentInformationProTaskE$.asObservable();
-  user: UserDetails | null = null;
+  dataContentInformationProTaskE$: Observable<ProTaskE> =
+    this._contentInformationProTaskE$.asObservable();
+  user: DecodeJwt | null = null;
   get items$(): Observable<NavigationItem[]> {
     return this._items.asObservable();
   }
 
   constructor(
     private readonly layoutService: VexLayoutService,
-    private protasksService: TasksPanelService,
+    private proTasksService: TasksPanelService,
     private userService: UserService
   ) {
+    const currentUser = this.userService.getUser();
+    if (currentUser) {
+      this.user = currentUser;
+      this.loadInformationNavigation(currentUser.role);
+    }
+    this.userService.currentUser.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.loadInformationNavigation(user.role);
+      }
+    });
     this.loadInformationProTaskE();
 
- 
-
-
-    this.dataContentInformationProTaskE$.pipe(filter<ProTaskE>(Boolean))
+    this.dataContentInformationProTaskE$
+      .pipe(filter<ProTaskE>(Boolean))
       .subscribe((result) => {
         this.listProTasksE = [];
         this.listProTasksE.push(result);
-        this.userService.currentUser.subscribe(user => {
+        this.userService.currentUser.subscribe((user) => {
           if (user) {
-            this.loadInformationNavigation(user.authorities[0].authority); 
+            this.loadInformationNavigation(user.role);
           }
         });
       });
+
+      setInterval(() => this.updateTaskCounters(), 60000);
+  }
+
+  private updateTaskCounters(): void {
+    if (this.user) {
+      this.proTasksService.getProTaskCount().subscribe({
+        next: (result: ProTaskE) => {
+          const counters = {
+            assigned: result.asigned || 0,
+            priority: result.priority || 0,
+            devolution: result.devolution || 0,
+            total: (result.asigned || 0) + (result.priority || 0) + (result.devolution || 0)
+          };
+
+          this.taskCounters.next(counters);
+          this.loadInformationNavigation(this.user!.role);
+        }
+      });
+    }
   }
 
   loadInformationProTaskE(): void {
-    this.protasksService.listProtaskE$
-      .subscribe((result: ProTaskE) => {
-        if (result?.asigned) {
-          this._contentInformationProTaskE$.next(result);
-        }
-      });
+    this.proTasksService.listProtaskE$.subscribe((result: ProTaskE) => {
+      if (result?.asigned) {
+        this._contentInformationProTaskE$.next(result);
+      }
+    });
   }
 
   getUser(): void {
-    const user = this.userService.getUser(); 
-    
+    const user = this.userService.getUser();
+
     if (user) {
-      this.user = user;
-      if (user.authorities && user.authorities[0]) {
-        this.loadInformationNavigation(user.authorities[0].authority);
-      }
+      this.user = user as DecodeJwt;
+
+      this.loadInformationNavigation(user.role);
     } else {
       console.error('El usuario no está disponible');
     }
   }
 
   loadInformationNavigation(role: string): void {
+    const filteredPublicService = NAVIGATION_LOADER_PUBLIC_SERVICE.filter(
+      (item) => {
+        return !item.roles || item.roles.includes(role);
+      }
+    );
 
-
-    const filteredPublicService = NAVIGATION_LOADER_PUBLIC_SERVICE.filter(item => {
-      return !item.roles || item.roles.includes(role);
-    });
+    const currentCounters = this.taskCounters.value;
 
     let countProTaskAssigned = 0;
     let countProTaskPriority = 0;
@@ -97,22 +139,23 @@ export class NavigationLoaderService {
       countProTaskAssigned = proTaskE.asigned ? proTaskE.asigned : 0;
       countProTaskPriority = proTaskE.priority ? proTaskE.priority : 0;
       countProTaskDevolution = proTaskE.devolution ? proTaskE.devolution : 0;
-      countTotalProTask = countProTaskAssigned + countProTaskPriority + countProTaskDevolution;
+      countTotalProTask =
+        countProTaskAssigned + countProTaskPriority + countProTaskDevolution;
     }
 
-    let listItem: NavigationItem[] = [
+    const listItem: NavigationItem[] = [
       {
         type: 'subheading',
         label: 'Mi trabajo',
         children: [
           ...NAVIGATION_LOADER_MY_WORK_1,
-       
+
           {
             type: 'dropdown',
             label: 'Tareas',
             icon: 'mat:task_alt',
             badge: {
-              value: countTotalProTask.toString(),
+              value: currentCounters.total.toString(),
               bgClass: 'bg-green-600',
               textClass: 'text-white'
             },
@@ -123,7 +166,7 @@ export class NavigationLoaderService {
                 route: '/myWork/tasks/tasksPanel/assignedTasks',
                 routerLinkActiveOptions: { exact: true },
                 badge: {
-                  value: countProTaskAssigned.toString(),
+                  value: currentCounters.assigned.toString(),
                   bgClass: 'bg-teal-600',
                   textClass: 'text-white'
                 }
@@ -134,7 +177,7 @@ export class NavigationLoaderService {
                 route: '/myWork/tasks/tasksPanel/prioritizedTasks',
                 routerLinkActiveOptions: { exact: true },
                 badge: {
-                  value: countProTaskPriority.toString(),
+                  value: currentCounters.priority.toString(),
                   bgClass: 'bg-purple-600',
                   textClass: 'text-white'
                 }
@@ -145,7 +188,7 @@ export class NavigationLoaderService {
                 route: '/myWork/tasks/tasksPanel/returnedTasks',
                 routerLinkActiveOptions: { exact: true },
                 badge: {
-                  value: countProTaskDevolution.toString(),
+                  value: currentCounters.devolution.toString(),
                   bgClass: 'bg-cyan-600',
                   textClass: 'text-white'
                 }
@@ -197,16 +240,20 @@ export class NavigationLoaderService {
             icon: 'mat:settings'
           }
         ]
-      },
+      }
     ];
-    const accessibleNavigation = listItem.filter(item =>
-      !item.roles || item.roles.includes(role) 
+    const accessibleNavigation = listItem.filter(
+      (item) => !item.roles || item.roles.includes(role)
     );
-  
+
     this.nextItems(accessibleNavigation);
   }
 
   nextItems(listItem: NavigationItem[]) {
     this._items.next(listItem);
+  }
+
+  refreshCounters(): void {
+    this.updateTaskCounters();
   }
 }

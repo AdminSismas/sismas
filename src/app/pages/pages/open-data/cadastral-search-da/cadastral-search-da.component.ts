@@ -93,10 +93,10 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-   flagData:string = 'openDataFlag';
+   flagData = 'openDataFlag';
 
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
@@ -174,7 +174,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
 
   createAdvancedSearch(): void {
     if(this.searchData){
-      const cleanValue = this.cleanJsonValues(this.searchData)
+      const cleanValue = this.cleanJsonValues(this.searchData);
       this.searchData = cleanValue;
     }
     this.dialog
@@ -290,7 +290,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
     if (this.searchData == null) {
       return false;
     }
-    let searchData: SearchData = this.searchData;
+    const searchData: SearchData = this.searchData;
 
     if (this.isValidateField(searchData?.registration)) {
       this.searchPropertiesByRegistration(this.searchData);
@@ -352,7 +352,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
     this.baunitService.advancedSearchDa(this.generateObjectPageSearchData(searchData),data)
     .subscribe(value=>{
       console.log(value);
-      this.captureInformationSubscribe(value)
+      this.captureInformationSubscribe(value);
     });
   }
 
@@ -430,7 +430,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
         );
         return;
       }
-      let url: string = `${environment.initiate_filing_procedure}`;
+      const url = `${environment.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
       this.router.navigate([`${url}`, data.baunitIdE])
         .then(r => {

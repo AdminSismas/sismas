@@ -46,7 +46,7 @@
           </div>
 
           <div class="form-content-item" *ngIf="data.propertyType === 'Urbano'">
-            <p><strong>Zona Física Urbana</strong></p>
+            <p><strong>Zona física urbana</strong></p>
             <mat-form-field floatLabel="always" style="width: 100%; max-width: 500px;">
               <mat-label>Seleccionar Zona Urbana</mat-label>
               <mat-select formControlName="ccZonaHomoFisicaUr" [compareWith]="compareZones">
@@ -59,11 +59,11 @@
               La zona es obligatoria.
             </mat-error>
           </div>
-          
+
           <div class="form-content-item" *ngIf="data.propertyType === 'Rural'">
-            <p><strong>Zona Física Rural</strong></p>
+            <p><strong>Zona física rural</strong></p>
             <mat-form-field floatLabel="always">
-              <mat-label>Seleccionar Zona Rural</mat-label>
+              <mat-label>Seleccionar zona rural</mat-label>
               <mat-select formControlName="ccZonaHomoFisicaRu" [compareWith]="compareZones">
                 <mat-option *ngFor="let zone of divPolRural" [value]="zone">
                   {{ zone.zonaHomoFisicaRuCode }}
@@ -74,11 +74,11 @@
               La zona es obligatoria.
             </mat-error>
           </div>
-          
+
           <div class="form-content-item" *ngIf="data.propertyType === 'Geoeconomica'">
-            <p><strong>Zona Geo-económica</strong></p>
+            <p><strong>Zona geoeconómica</strong></p>
             <mat-form-field floatLabel="always">
-              <mat-label>Seleccionar Zona Geo-económica</mat-label>
+              <mat-label>Seleccionar Zona geoeconómica</mat-label>
               <mat-select formControlName="ccZonaHomoGeoEconomica" [compareWith]="compareZones">
                 <mat-option *ngFor="let zone of divPolGeoeconomica" [value]="zone">
                   {{ zone.zonaHomoGeoEconomicaCode }}
@@ -105,3 +105,12 @@
     </div>
   </form>
 </mat-dialog-content>
+
+<swal
+  #errorForm
+  title="Error"
+  icon="error"
+  text="Por favor, asegúrese que los campos son válidos y contengan solo números."
+  confirmButtonColor="#3f51b5"
+  confirmButtonText="Aceptar"
+></swal>

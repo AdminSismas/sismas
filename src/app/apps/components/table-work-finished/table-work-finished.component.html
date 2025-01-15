@@ -9,18 +9,18 @@
                       <input
                           matInput
                           [matDatepicker]="startDatepicker"
-                          placeholder="Escriba o seleccione&hellip;"
+                          placeholder="Escriba o seleccione"
                           formControlName="beginAtForm"/>
                       <mat-datepicker-toggle
                           [for]="startDatepicker"
                           matIconSuffix></mat-datepicker-toggle>
-                      <!-- <mat-hint>Formato Fecha: dd/mm/yyyy</mat-hint> -->
+                      <!-- <mat-hint>Formato fecha: dd/mm/yyyy</mat-hint> -->
                       <mat-datepicker #startDatepicker></mat-datepicker>
                       <mat-error *ngIf="beginAtForm?.hasError('dateComparison')">
                         La fecha debe ser menor a la fecha  fin
                       </mat-error>
                   </mat-form-field>
-               
+
 
                 <!-- <div *ngIf="myForm.get('endDate')?.hasError('dateComparison') && myForm.get('endDate')?.touched" class="error-message">
                   The end date must be greater than or equal to the start date.
@@ -32,12 +32,12 @@
                   <input
                       matInput
                       [matDatepicker]="endDatepicker"
-                      placeholder="Escriba o seleccione&hellip;"
+                      placeholder="Escriba o seleccione"
                       formControlName="beginAtEForm"/>
                   <mat-datepicker-toggle
                       [for]="endDatepicker"
                       matIconSuffix></mat-datepicker-toggle>
-                  <!-- <mat-hint>Formato Fecha: dd/mm/yyyy</mat-hint> -->
+                  <!-- <mat-hint>Formato fecha: dd/mm/yyyy</mat-hint> -->
                   <mat-datepicker #endDatepicker></mat-datepicker>
                      <!-- Validaciones -->
                      <mat-error *ngIf="beginAtEForm?.touched && beginAtEForm?.hasError('required')">Este campo es obligatorio.</mat-error>
@@ -52,7 +52,7 @@
                         <input
                             matInput
                             formControlName="executionCodeForm"
-                            placeholder="Ingresa el número de radicado&hellip;"
+                            placeholder="Ingresa el número de radicado"
                             inputmode="numeric"
                             />
                         </mat-form-field>
@@ -61,25 +61,25 @@
                         <mat-error *ngIf="executionCodeForm?.hasError('pattern')">Solo se permite valores númerios.</mat-error>
                 </div>
               <span
-                style="z-index: 1000;" 
-                data-balloon-length="large" 
+                style="z-index: 1000;"
+                data-balloon-length="large"
                 aria-label="Cuando buscas por el campo Radicado no puedes buscar por Documento"
                 data-balloon-pos="up"
                   *ngIf="seeInfo"
                   >
                   <mat-icon  svgIcon="mat:info" ></mat-icon>
-                  
+
                 </span>
 
                 <span
-                style="z-index: 1000;" 
-                data-balloon-length="large" 
+                style="z-index: 1000;"
+                data-balloon-length="large"
                 aria-label="Cuando buscas por el campo Documento no puedes buscar por Radicado"
                 data-balloon-pos="up"
                   *ngIf="seeInfoDocument"
                   >
                   <mat-icon  svgIcon="mat:info" ></mat-icon>
-                  
+
                 </span>
                 <div>
                     <mat-form-field class="flex-auto">
@@ -87,7 +87,7 @@
                         <input
                             matInput
                             formControlName="individualNumberPartForm"
-                            placeholder="Ingresa el número de documento&hellip;"
+                            placeholder="Ingresa el número de documento"
                             inputmode="numeric"
                             />
                     </mat-form-field>
@@ -110,19 +110,19 @@
                     <input
                         matInput
                         [formControl]="searchCtrl"
-                        placeholder="Buscar dominio&hellip;"
+                        placeholder="Filtrar dominio"
                         type="text"/>
                 </mat-form-field>
 
                 <!-- Botón de filtro -->
-                <button
+                <!-- <button
                     [matMenuTriggerFor]="columnFilterMenu"
                     mat-icon-button
-                    matTooltip="Filter Columns"
+                    matTooltip="Filtrar columnas"
                     type="button"
                     class="ml-4 flex-col">
                     <mat-icon svgIcon="mat:filter_list"></mat-icon>
-                </button>
+                </button> -->
             </div>
 
             <!-- Tabla de dominios -->
@@ -135,7 +135,7 @@
                     <td mat-cell *matCellDef="let row">
                       <button
                         (click)="informationDetail(row)"
-                        mat-icon-button 
+                        mat-icon-button
                         title="Detalle del tramite">
                         <mat-icon class="icon-sm" svgIcon="mat:remove_red_eye"></mat-icon>
                       </button>
@@ -144,7 +144,7 @@
                 <!-- Text Columns -->
                 <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
                     <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-                        <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
                         <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
@@ -153,7 +153,7 @@
                     </ng-container>
 
                     <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-                        <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
                         <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>

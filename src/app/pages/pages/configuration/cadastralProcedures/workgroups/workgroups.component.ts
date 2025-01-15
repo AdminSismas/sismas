@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -45,7 +45,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './workgroups.component.html',
   styleUrl: './workgroups.component.scss'
 })
-export class WorkgroupsComponent {
+export class WorkgroupsComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'description', 'actions'];
   dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>([]);
@@ -61,17 +61,17 @@ export class WorkgroupsComponent {
           label: 'Borrar',
           icon: 'mat:delete'
         }
-      ]
-    })
+      ];
+    });
   
   // Paginación
-  page: number = 0;
-  pageSize: number = 10;
-  totalElements: number = 0;
+  page = 0;
+  pageSize = 10;
+  totalElements = 0;
   pageSizeOptions: number[] = [5, 10, 25, 50];
 
   // Buscador
-  searchTerm: string = '';
+  searchTerm = '';
 
   constructor(
     private workgroupsService: WorkgroupsService,

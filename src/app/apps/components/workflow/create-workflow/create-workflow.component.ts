@@ -30,7 +30,7 @@ export class CreateWorkflowComponent {
 
   public form?: FormGroup;
 
-  public WORKFLOW_INPUTS: JSONInput[] = WORKFLOW_INPUTS
+  public WORKFLOW_INPUTS: JSONInput[] = WORKFLOW_INPUTS;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { initValues: WorkflowCollection, mode: string },

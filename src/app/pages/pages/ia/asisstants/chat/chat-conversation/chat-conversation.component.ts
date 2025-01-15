@@ -56,22 +56,23 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   ]
 })
 export class ChatConversationComponent implements OnInit, AfterViewChecked {
+  url_entorno: string = environment.url;
   chat?: Chat;
   messages: { id: number; from: string; text: string; isButton?: boolean; timestamp?: string }[] = [];
-  newMessage: string = '';
-  isTyping: boolean = false;
-  isSearchVisible: boolean = false;
-  isSoundOn: boolean = true;
-  isRecording: boolean = false;
-  isRobot: boolean = false;
-  isInputDisabled: boolean = false;
-  isLoading: boolean = false;
+  newMessage = '';
+  isTyping = false;
+  isSearchVisible = false;
+  isSoundOn = true;
+  isRecording = false;
+  isRobot = false;
+  isInputDisabled = false;
+  isLoading = false;
   mediaRecorder: MediaRecorder | null = null;
   audioChunks: Blob[] = [];
   audio = new Audio();
-  threadId: string = 'nada';
+  threadId = 'nada';
   biUrl: SafeResourceUrl = '';
-  espqr: string = 'no';
+  espqr = 'no';
 
   form = new FormGroup({
     message: new FormControl<string>('', {
@@ -178,7 +179,7 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
 
 
 
-    this.chatServicesService.sendMessageToBackend(message, idUser , volumeUp, humanOn, this.threadId, this.espqr, asistenteId, instrucciones, id_asistente, empresa_modelo, ruta_script).subscribe(
+    this.chatServicesService.sendMessageToBackend(message, idUser , volumeUp, humanOn, this.threadId, this.espqr, asistenteId, instrucciones, id_asistente, empresa_modelo, ruta_script, this.url_entorno).subscribe(
       (response: any) => {
         this.isTyping = false;
         this.isInputDisabled = false;

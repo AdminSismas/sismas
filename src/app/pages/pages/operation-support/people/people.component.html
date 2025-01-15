@@ -25,7 +25,8 @@
     name="crear"
     class="flex-none"
   >
-    + Nueva persona
+    <mat-icon svgIcon="mat:add"></mat-icon>
+    Nueva persona
   </button>
 </div>
 
@@ -35,7 +36,7 @@
           name="selector_document"
           label="Tipo de documento"
           typeDomainName="IndividualTypeNumber"
-          placeholderDomainName="Seleccionar tipo documento&hellip;"
+          placeholderDomainName="Seleccionar tipo documento"
           (stringEventEmitter)="infoSelect($event)"
           class="flex-none"
         ></vex-combox-colletion>
@@ -45,11 +46,11 @@
           <input
             matInput
             [formControl]="document"
-            placeholder="Número de documento&hellip;"
+            placeholder="Número de documento"
             type="text"
             name="search"
           />
-          </mat-form-field>  
+          </mat-form-field>
 
           <div style="margin-left: 6px;">
 
@@ -63,6 +64,7 @@
               class="flex-none"
               style="margin: 6px;"
             >
+              <mat-icon svgIcon="mat:search"></mat-icon>
               Buscar
             </button>
           </div>
@@ -70,7 +72,7 @@
       </div>
     </div>
 
-  
+
 </form>
 </div>
 
@@ -80,7 +82,7 @@
 [matMenuTriggerFor]="columnFilterMenu"
 class="ml-4 flex-none"
 mat-icon-button
-matTooltip="Filter Columns"
+matTooltip="Filtrar columnas"
 type="button"
 >
 <mat-icon svgIcon="mat:filter_list"></mat-icon>
@@ -133,7 +135,6 @@ type="button"
           >
             <th
               *matHeaderCellDef
-              class="uppercase"
               mat-header-cell
               mat-sort-header
             >

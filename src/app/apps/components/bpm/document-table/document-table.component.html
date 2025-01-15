@@ -26,13 +26,13 @@
         <input
           matInput
           [formControl]="searchCtrl"
-          placeholder="Buscar archivo&hellip;"
+          placeholder="Filtrar archivo"
           type="text"
         />
       </mat-form-field>
 
       <!-- button filter -->
-      <button
+      <!-- <button
         [matMenuTriggerFor]="columnFilterMenu"
         mat-icon-button
         matTooltip="Filtrar columnas"
@@ -43,7 +43,7 @@
           matIconPrefix
           svgIcon="mat:filter_list"
         ></mat-icon>
-      </button>
+      </button> -->
     </div>
 
     <!-- Table -->
@@ -75,7 +75,7 @@
         >
           <th
             *matHeaderCellDef
-            class="uppercase pl-1 pr-1"
+            class="pl-1 pr-1"
             mat-header-cell
             mat-sort-header
           >
@@ -92,11 +92,11 @@
               matIconPrefix
               *ngIf="column.property === 'originalFileName'"
               [svgIcon]="getFileTypeIcon(row)"
-              [ngClass]="getFileIconColor(row)"  
+              [ngClass]="getFileIconColor(row)"
               class="w-5 h-5 p-0 items-center justify-center"
             ></mat-icon>
 
-          
+
             {{ row[column.property] }}
           </td>
         </ng-container>
@@ -107,7 +107,7 @@
         >
           <th
             *matHeaderCellDef
-            class="uppercase pl-1 pr-1"
+            class="pl-1 pr-1"
             mat-header-cell
             mat-sort-header
           >
@@ -124,7 +124,7 @@
           matIconPrefix
           *ngIf="column.property === 'originalFileName'"
           [svgIcon]="getFileTypeIcon(row)"
-          [ngClass]="getFileIconColor(row)"  
+          [ngClass]="getFileIconColor(row)"
           class="w-5 h-5 p-0 items-center justify-center"
         ></mat-icon>
             {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}

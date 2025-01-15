@@ -15,7 +15,7 @@ export class Department {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.divpolLvl1Code && this.divpolLvl1Name) {
       return `${this.divpolLvl1Code}${GUION}${this.divpolLvl1Name}`;
     } else if (this.divpolLvl1Code) {

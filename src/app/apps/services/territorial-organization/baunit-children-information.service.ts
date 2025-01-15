@@ -10,14 +10,14 @@ import { Baunit, BAunitLike } from '../../interfaces/information-property/baunit
 })
 export class UnitPropertyInformationService {
 
-  basic_url: string = `${envi.url}:${envi.port}`;
+  basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
     private requestsService: SendGeneralRequestsService
   ) { }
 
   getBaunitInformation( baunitId: string ): Observable<Baunit> {
-    let url: string = `${this.basic_url}${envi.baunit_baunitId}`;
+    let url = `${this.basic_url}${envi.baunit_baunitId}`;
 
     url += `?baunitId=${baunitId}`;
 
@@ -27,13 +27,13 @@ export class UnitPropertyInformationService {
   }
 
   getUnitPropertyInformation(
-    npn: string, page: number = 0, size: number = 7
+    npn: string, page = 0, size = 7
   ): Observable<BAunitLike> {
-    let url: string = `${this.basic_url}${envi.baunit_npnlike}`;
+    let url = `${this.basic_url}${envi.baunit_npnlike}`;
 
-    let npnlike: string = npn.toString().slice(0, 22);
-    let pageString: string = page.toString();
-    let sizeString: string = size.toString();
+    const npnlike: string = npn.toString().slice(0, 22);
+    const pageString: string = page.toString();
+    const sizeString: string = size.toString();
 
     const params: HttpParams = new HttpParams()
       .set('npnlike', npnlike)
@@ -47,7 +47,7 @@ export class UnitPropertyInformationService {
       .pipe(
         catchError(error => this.requestsService.errorNotFound(error)),
         tap((result: BAunitLike) => {
-          let new_content = result.content.filter((baUnit: Baunit) => baUnit.cadastralNumber !== npn)
+          const new_content = result.content.filter((baUnit: Baunit) => baUnit.cadastralNumber !== npn);
           result.content = new_content;
           return result;
         })

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +21,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
@@ -38,6 +38,7 @@ import { EditBasicPropertyInformationComponent } from './edit-basic-property-inf
     scaleFadeIn400ms,
   ],
   imports: [
+    NgClass,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -60,13 +61,17 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   data!:BasicInformationProperty;
 
-  @Input({ required: true }) id: string = '';
-  @Input() expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input() expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() propertyUnit: boolean = false;
-  @Input() typeInformation: string = 'visualization';
+  @Input() propertyUnit = false;
+  @Input() typeInformation = 'visualization';
+  @Input() editable? = true;
+
+  @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
+  @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private informationPropertyService:InformationPropertyService,
@@ -89,29 +94,31 @@ export class BasicPropertyInformationComponent implements OnInit {
     this.informationPropertyService.getBasicInformationProperty(
       this.schema , this.baunitId, this.executionId)
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationProperty) => this.captureInformationSubscribe(result)
       });
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.data = new BasicInformationProperty();
   }
 
   captureInformationSubscribe(result: BasicInformationProperty): void {
     this.data = result;
+    this.propertyRegistryOffice.emit(this.data.propertyRegistryOffice);
+    this.propertyRegistryNumber.emit(this.data.propertyRegistryNumber);
   }
 
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
       width: '60%',
-      data: { executionId: this.executionId ,...this.data }
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION}
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
           setTimeout(() => this.data = result, 300);
         }
-      })
+      });
   }
 
   private getRandomInt(max: number):number {

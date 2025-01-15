@@ -45,8 +45,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class SidenavItemComponent implements OnInit, OnChanges {
   @Input({ required: true }) item!: NavigationItem;
   @Input({ required: true }) level!: number;
-  isOpen: boolean = false;
-  isActive: boolean = false;
+  isOpen = false;
+  isActive = false;
 
   isLink = this.navigationService.isLink;
   isDropdown = this.navigationService.isDropdown;

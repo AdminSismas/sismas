@@ -1,6 +1,6 @@
 
 export class BpmDocument {
-  state:boolean = false;
+  state = false;
   name:string;
 
   constructor(name: string) {

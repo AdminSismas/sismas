@@ -20,18 +20,18 @@
             <input
               matInput
               [formControl]="searchCtrl"
-              placeholder="Búscar&hellip;"
+              placeholder="Filtrar"
               type="text" />
           </mat-form-field>
           <span class="flex-1"></span>
-          <button
+          <!-- <button
             [matMenuTriggerFor]="columnFilterMenu"
             class="ml-4 flex-none"
             mat-icon-button
-            matTooltip="Filter Columns"
+            matTooltip="Filtrar columnas"
             type="button">
             <mat-icon svgIcon="mat:filter_list"></mat-icon>
-          </button>
+          </button> -->
         </div>
         <table
           @stagger
@@ -44,7 +44,6 @@
           <ng-container matColumnDef="viewDetail">
             <th
               *matHeaderCellDef
-              class="uppercase"
               mat-header-cell
               mat-sort-header>
             </th>
@@ -67,14 +66,13 @@
               [matColumnDef]="column.property">
               <th *matHeaderCellDef
                   [ngClass]="column.cssClassesHead"
-                  class="uppercase text-center"
+                  class="text-center"
                   mat-header-cell
                   mat-sort-header>
                 {{ column.label }}
               </th>
               <td *matCellDef="let row"
-                  [ngClass]="column.cssClasses" mat-cell
-                  class="uppercase">
+                  [ngClass]="column.cssClasses" mat-cell>
                 {{ row[column.property] }}
               </td>
             </ng-container>
@@ -83,13 +81,12 @@
               [matColumnDef]="column.property">
               <th *matHeaderCellDef
                   [ngClass]="column.cssClassesHead"
-                  class="uppercase text-center"
+                  class="text-center"
                   mat-header-cell
                   mat-sort-header>
                 {{ column.label }}
               </th>
-              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
-                  class="uppercase">
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
                 {{ row[column.property] | date:'dd/MM/yyyy' }}
               </td>
             </ng-container>
@@ -98,14 +95,13 @@
               [matColumnDef]="column.property">
               <th *matHeaderCellDef
                   [ngClass]="column.cssClassesHead"
-                  class="uppercase text-center"
+                  class="text-center"
                   mat-header-cell
                   mat-sort-header>
                 {{ column.label }}
               </th>
-              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell
-                  class="uppercase">
-                {{ row[column.property] | currency: FORMAT_CURRENCY_COP:'' }}
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                {{ row[column.property] | currencyFormat:'COP' }}
               </td>
             </ng-container>
           </ng-container>
@@ -130,7 +126,7 @@
             <th mat-header-cell *matHeaderCellDef
                 [style.text-align]="'center'"
                 [attr.colspan]="2"
-                class="uppercase text-center">
+                class="text-center">
             </th>
           </ng-container>
 
@@ -139,7 +135,7 @@
             <th mat-header-cell
                 *matHeaderCellDef [attr.colspan]="3"
                 [style.text-align]="'center'"
-                class="uppercase text-center">
+                class="text-center">
               Avalúo catastral
             </th>
           </ng-container>
@@ -149,7 +145,7 @@
             <th mat-header-cell
                 *matHeaderCellDef [attr.colspan]="3"
                 [style.text-align]="'center'"
-                class="uppercase text-center">
+                class="text-center">
               Avalúo comercial
             </th>
           </ng-container>
@@ -159,7 +155,7 @@
             <th mat-header-cell
                 *matHeaderCellDef [attr.colspan]="1"
                 [style.text-align]="'center'"
-                class="uppercase text-center">
+                class="text-center">
               Autoavalúo
             </th>
           </ng-container>

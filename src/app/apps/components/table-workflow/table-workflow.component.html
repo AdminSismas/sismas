@@ -26,21 +26,21 @@
           <input
             matInput
             [formControl]="searchCtrl"
-            placeholder="Buscar dominio&hellip;"
+            placeholder="Filtrar dominio"
             type="text"
           />
         </mat-form-field>
 
         <!-- Botón de filtro -->
-        <button
+        <!-- <button
           [matMenuTriggerFor]="columnFilterMenu"
           mat-icon-button
-          matTooltip="Filter Columns"
+          matTooltip="Filtrar columnas"
           type="button"
           class="ml-4 flex-col"
         >
           <mat-icon svgIcon="mat:filter_list"></mat-icon>
-        </button>
+        </button> -->
       </div>
 
       <!-- Tabla de dominios -->
@@ -75,7 +75,6 @@
             >
               <th
                 *matHeaderCellDef
-                class="uppercase"
                 mat-header-cell
                 mat-sort-header
               >

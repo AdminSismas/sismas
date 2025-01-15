@@ -43,8 +43,8 @@ export class CreateAdministrativeSourceComponent implements OnInit {
     private dialogRef: MatDialogRef<CreateAdministrativeSourceComponent>,
   ) { }
 
-  public form: FormGroup = new FormGroup({})
-  public inputs: JSONInput[] = INPUTS_ADMINISTRATIVE_SOURCE
+  public form: FormGroup = new FormGroup({});
+  public inputs: JSONInput[] = INPUTS_ADMINISTRATIVE_SOURCE;
 
   ngOnInit(): void {
     if (this.data.params) {
@@ -53,17 +53,17 @@ export class CreateAdministrativeSourceComponent implements OnInit {
         fechaDocumentoFuente: new Date(this.data.params.fechaDocumentoFuente + 'T00:00:00-05:00'),
         numeroFuente: this.data.params.numeroFuente,
         enteEmisor: this.data.params.enteEmisor
-      }
+      };
 
-      this.form.reset(formParams)
+      this.form.reset(formParams);
     }
   }
 
   requestManager(): void {
     if (this.data.params) {
-      this.editAdministrativeSourceFunction()
+      this.editAdministrativeSourceFunction();
     } else {
-      this.createAdministrativeSourceFunction()
+      this.createAdministrativeSourceFunction();
     }
   }
 
@@ -72,30 +72,30 @@ export class CreateAdministrativeSourceComponent implements OnInit {
     const formsValue: any = this.form.value;
 
     formsValue.fechaDocumentoFuente = formsValue.fechaDocumentoFuente?.toISOString().split('T')[0];
-    formsValue.enteEmisor = `${formsValue.cateEnteEmisor} ${formsValue.tipoEnteEmisor}`
+    formsValue.enteEmisor = `${formsValue.cateEnteEmisor} ${formsValue.tipoEnteEmisor}`;
 
     const params: CreateAdministrativeSourceParams = {
       executionId: this.data.executionId,
       baunitId: this.data.baunitId,
       administrativeSource: formsValue
-    }
+    };
 
     this.administrativeSourceService.createAdministrativeSource(params)
       .subscribe({
         next: (data: AdministrativeSource) => {
-          this.snackbar.open('Fuente administrativa creada', 'CLOSE', { duration: 4000 })
-          this.dialogRef.close(data)
+          this.snackbar.open('Fuente administrativa creada', 'CLOSE', { duration: 4000 });
+          this.dialogRef.close(data);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al crear la fuente administrativa', 'CLOSE', { duration: 4000 })
+          this.snackbar.open('Error al crear la fuente administrativa', 'CLOSE', { duration: 4000 });
         }
-      })
+      });
   }
 
   editAdministrativeSourceFunction(): void {
     const formsValue: any = this.form.value;
 
-    formsValue.fechaDocumentoFuente = formsValue.fechaDocumentoFuente.toISOString().split('T')[0]
+    formsValue.fechaDocumentoFuente = formsValue.fechaDocumentoFuente.toISOString().split('T')[0];
 
     this.administrativeSourceService.updateAdministrativeSource({
       baunitId: this.data.baunitId,
@@ -107,12 +107,12 @@ export class CreateAdministrativeSourceComponent implements OnInit {
     })
       .subscribe({
         next: (data: AdministrativeSource) => {
-          this.snackbar.open('Fuente Administrativa actualizada', 'CLOSE', { duration: 4000 })
-          this.dialogRef.close()
+          this.snackbar.open('Fuente Administrativa actualizada', 'CLOSE', { duration: 4000 });
+          this.dialogRef.close();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al actualizar la fuente administrativa', 'CLOSE', { duration: 4000 })
+          this.snackbar.open('Error al actualizar la fuente administrativa', 'CLOSE', { duration: 4000 });
         }
-      })
+      });
   }
 }

@@ -80,11 +80,11 @@ searchCtrl: UntypedFormControl = new UntypedFormControl();
 isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 layoutCtrl = new UntypedFormControl('boxed');
 contentInformations!: InformationPegeable;
-disabledEndDate: boolean = false;
+disabledEndDate = false;
 private fBuilder = inject(FormBuilder);
 informationFinished!: FormGroup;
-seeInfo:boolean= false;
-seeInfoDocument:boolean= false;
+seeInfo= false;
+seeInfoDocument= false;
 public procedureDetail:TaskResponseModel= new TaskResponseModel();
 
 // Array para almacenar las suscripciones
@@ -94,7 +94,7 @@ private subscriptions: Subscription  | undefined[] = [];
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  totalElements: number = 0;
+  totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_FINISHED;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -130,7 +130,7 @@ private subscriptions: Subscription  | undefined[] = [];
     this.executionCodeValidate();
     this.individualNumberPartValid();
 
-    this.beginAtEForm?.setValue(new Date()) 
+    this.beginAtEForm?.setValue(new Date()); 
     this.executionCodeForm?.setValue(0);
     this.onSearch();
 
@@ -200,7 +200,7 @@ private initForm(): void {
         +value.executionCode)
         .subscribe( result => {
           this.procedureDetail = result;
-            this.seeTaskProperty(this.procedureDetail,+value.executionCode)
+            this.seeTaskProperty(this.procedureDetail,+value.executionCode);
           
         });
     }
@@ -234,7 +234,7 @@ private initForm(): void {
         }))
       .subscribe(data=>{
         console.log(data, 'executoingCode');
-      })
+      });
     }
 
     public beginAtEFormGreaterThanDate(){
@@ -255,7 +255,7 @@ private initForm(): void {
       
      
         }))
-      .subscribe()
+      .subscribe();
     }
   
 
@@ -312,7 +312,7 @@ private initForm(): void {
         beginAtE: this.formatDate(new Date()),
         executionCode: '0',
         individualNumber: '',
-      }
+      };
       
        this.getDataFromProceduresService(formValue);
     }
@@ -348,11 +348,11 @@ private initForm(): void {
 
     if(this.beginAtForm?.value === null){
       // this.beginAtE?.setValue(new Date())
-       beginAtETrans = new Date()
+       beginAtETrans = new Date();
     }else{
-      beginAtETrans = new Date(this.beginAtForm?.value)
+      beginAtETrans = new Date(this.beginAtForm?.value);
     }
-    const beginAtTrans = new Date(this.beginAtForm?.value)
+    const beginAtTrans = new Date(this.beginAtForm?.value);
 
 
     if(this.executionCodeForm?.value === null){
@@ -372,7 +372,7 @@ private initForm(): void {
       beginAtE: this.formatDate(beginAtETrans),
       executionCode: this.executionCodeForm?.value,
       individualNumber: this.individualNumberPartForm?.value,
-    }
+    };
     
     return formValue;
   }
@@ -410,11 +410,11 @@ private initForm(): void {
     getDataFromProceduresService(data:PageProceduresData) {
       
       console.log(data);
-      console.log(this.informationFinished)
+      console.log(this.informationFinished);
       this.proceduresService.getFilterTableProcedureService(data)
       .subscribe({
         next: (result: any) => {
-          console.log(result, 'respouesta servicio')
+          console.log(result, 'respouesta servicio');
             this.captureInformationSubscribe(result);
         },
         error: (error) => {
@@ -467,16 +467,16 @@ private initForm(): void {
   
 
     get beginAtForm(){
-      return this.informationFinished.get('beginAtForm')
+      return this.informationFinished.get('beginAtForm');
     }
     get beginAtEForm(){
-      return this.informationFinished.get('beginAtEForm')
+      return this.informationFinished.get('beginAtEForm');
     }
     get executionCodeForm(){
-      return this.informationFinished.get('executionCodeForm')
+      return this.informationFinished.get('executionCodeForm');
     }
     get individualNumberPartForm(){
-      return this.informationFinished.get('individualNumberPartForm')
+      return this.informationFinished.get('individualNumberPartForm');
     }
 
 }

@@ -32,14 +32,28 @@
   </div>
 
   <div
-    (click)="openDetailProtaskE.emit(protaskE.executionId)"
-    class="bg-app-bar p-2 flex items-star justify-items-start cursor-pointer">
-    <mat-icon
-      class="ltr:mr-1 rtl:ml-1 icon-xs ml-1 mr-3 mt-0 mb-0"
-      svgIcon="mat:settings"></mat-icon>
-        <span class="items-star text-center pl-2 pr-2 pt-0 pb-0" (click)="viewDetallyTask(protaskE)">
-           {{ 'Detalle Trámite' + SPACE + protaskE.proTask?.flowDetail }} 
-          </span>
+  (click)="openDetailProtaskE.emit(protaskE.executionId)"
+  class="bg-app-bar p-2 flex items-center justify-between cursor-pointer">
+
+  <!-- Ícono alineado a la izquierda -->
+  <mat-icon
+    class="icon-xs ltr:mr-2 rtl:ml-2"
+    svgIcon="mat:settings"
+    style="margin-right: 8px;">
+  </mat-icon>
+
+  <!-- Contenedor de texto centrado -->
+  <div
+    class="text-container text-center flex-grow"
+    (click)="viewDetailTask(protaskE)">
+    <span>
+      {{ 'Detalle trámite' }}
+    </span>
+    <span class="text-sm block">
+      {{ protaskE.proTask?.flowDetail }}
+    </span>
   </div>
+</div>
+
 </div>
 

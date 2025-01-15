@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
@@ -66,10 +66,10 @@ import { MatDividerModule } from '@angular/material/divider';
     ReactiveFormsModule,
   ]
 })
-export class DocumentTableComponent implements OnInit {
+export class DocumentTableComponent implements OnInit, AfterViewInit {
   /* ============== ATRIBUTES ============== */
-  numRegister: number = 0;
-  disablePaginator: boolean = true;
+  numRegister = 0;
+  disablePaginator = true;
 
   layoutCtrl = new UntypedFormControl('boxed');
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -81,7 +81,7 @@ export class DocumentTableComponent implements OnInit {
   @Input()
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_PROPERTIES;
 

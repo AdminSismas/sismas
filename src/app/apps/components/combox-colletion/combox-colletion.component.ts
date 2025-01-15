@@ -30,16 +30,16 @@ export class ComboxColletionComponent implements OnInit {
   options: DomainCollection[] = [];
   calificationOptions: DomainCalificationCollection[] = [];
 
-  @Input() public label: string = '';
-  @Input() public formControlNameCombobox: string = '';
-  @Input() public typeDomainName: string = '';
-  @Input() public typeCalificationDomainName: string = '';
+  @Input() public label = '';
+  @Input() public formControlNameCombobox = '';
+  @Input() public typeDomainName = '';
+  @Input() public typeCalificationDomainName = '';
   @Input() public placeholderDomainName?: string;
-  @Input() public idComboCollection: string = '';
+  @Input() public idComboCollection = '';
   @Input() public cssClasses?: string;
   @Input() public valueReturn: string | undefined = 'dispname';
   @Input() public hintValue: string | null = null;
-  @Input() public hideRequiredMarker: boolean = true;
+  @Input() public hideRequiredMarker = true;
 
   @Output() stringEventEmitter = new EventEmitter<string>();
 
@@ -57,7 +57,7 @@ export class ComboxColletionComponent implements OnInit {
     this.obtainsCollectionsList();
     this.obtainsCalificationCollectionsList();
 
-    this.cssClasses = !this.cssClasses ? 'mainClass': this.cssClasses
+    this.cssClasses = !this.cssClasses ? 'mainClass': this.cssClasses;
   }
 
   obtainsCollectionsList() {
