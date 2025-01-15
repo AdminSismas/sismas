@@ -89,20 +89,16 @@
       [typeInformation]="typeInformation"
     >
     </vex-administrative-sources>
-    <vex-information-addresses-property
-      [id]="'basicInformationpropertyAddresses' + schema"
-      #propertyAddressesComponent{{schema}}
-      [expandedComponent]="false"
+    <super-notariado-property
+      [id]="'superNotariadoPropertyComponent' + schema"
+      [propertyRegistryNumber]="propertyRegistryOffice"
+      [propertyRegistryOffice]="propertyRegistryNumber"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
-      @fadeInUp
-      [typeInformation]="typeInformation"
-    ></vex-information-addresses-property>
-    
+    ></super-notariado-property>
     @if (!viewProperties) {
-
-      <vex-information-property-owners 
+      <vex-information-property-owners
         [id]="'dataInformationPropertyOwners' + schema"
         #informationPropertyOwnersComponent{{schema}}
         [expandedComponent]="false"
@@ -113,7 +109,6 @@
         [editable]="editable.PRO"
         @fadeInUp
       ></vex-information-property-owners>
-
     }
     <vex-information-addresses-property
       [id]="'basicInformationpropertyAddresses' + schema"
@@ -125,6 +120,18 @@
       @fadeInUp
       [typeInformation]="typeInformation"
       [editable]="editable.DIR"
+    ></vex-information-addresses-property>
+
+
+    <vex-information-addresses-property
+      [id]="'basicInformationpropertyAddresses' + schema"
+      #propertyAddressesComponent{{schema}}
+      [expandedComponent]="false"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      @fadeInUp
+      [typeInformation]="typeInformation"
     ></vex-information-addresses-property>
     <vex-information-constructions-property
       [id]="'dataInformationConstructionsPropertyComponent' + schema"
