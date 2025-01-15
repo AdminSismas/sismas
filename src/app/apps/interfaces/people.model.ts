@@ -1,5 +1,6 @@
 export class People {
   id: number;
+  individualId: number;
   imageSrc: string;
   firstName: string;
   fullName: string;
@@ -17,6 +18,7 @@ export class People {
   constructor(customer: any) {
     this.middleName = customer.middleName;
     this.id = customer.individualId;
+    this.individualId = customer.individualId;
     this.imageSrc = customer.imageSrc;
     this.firstName = customer.firstName;
     this.fullName = customer.fullName;
