@@ -39,7 +39,6 @@ import { NavigationLoaderService } from 'src/app/core/navigation/navigation-load
   selector: 'vex-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     CommonModule,
