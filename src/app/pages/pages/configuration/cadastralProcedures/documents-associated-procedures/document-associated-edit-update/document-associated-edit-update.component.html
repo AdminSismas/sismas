@@ -10,52 +10,51 @@
     <!-- <div @fadeInUp class="card"></div> -->
     <br>
     <br>
-
-    <form [formGroup]="form" >
-      <div class="bg-foreground flex-1 overflow-y-auto p-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div class="form-content-item">
-            <vex-input
-              label="Header ID"
-              type="text"
-              idComboInput="codigoPostal"
-              formControlNameInput="headerTemplateId"
-            ></vex-input>
+    <vex-page-layout class="overflow-hidden">
+      <vex-page-layout-content class="container-fluid p-0 overflow-hidden">
+        <form [formGroup]="form" class="p-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="form-content-item">
+              <vex-input
+                label="Header ID"
+                type="text"
+                idComboInput="codigoPostal"
+                formControlNameInput="headerTemplateId"
+              ></vex-input>
+            </div>
+            <div class="form-content-item">
+              <vex-input
+                label="Footer ID"
+                type="text"
+                idComboInput="footerTemplateId"
+                formControlNameInput="footerTemplateId"
+              ></vex-input>
+            </div>
+            <div class="form-content-item">
+              <vex-input
+                label="Template code"
+                type="text"
+                idComboInput="templateCode"
+                formControlNameInput="templateCode"
+              ></vex-input>
+            </div>
           </div>
-          <div class="form-content-item">
-            <vex-input
-              label="Footer ID"
-              type="text"
-              idComboInput="footerTemplateId"
-              formControlNameInput="footerTemplateId"
-            ></vex-input>
+        
+          <div class="mt-4">
+            <quill-editor
+              formControlName="content"
+              [modules]="editorConfig"
+              class="w-full h-full"
+              style="min-height: 400px; height: 70vh;"
+            ></quill-editor>
           </div>
-          <div class="form-content-item">
-            <vex-input
-              label="Template code"
-              type="text"
-              idComboInput="templateCode"
-              formControlNameInput="templateCode"
-            ></vex-input>
+        
+          <div class="flex justify-end mt-4 space-x-4">
+            <button color="primary" mat-raised-button type="button" (click)="saveTemplate()">
+              Guardar
+            </button>
           </div>
-        </div>
-      
-        <div class="mt-4">
-          <quill-editor
-            formControlName="content"
-            [modules]="editorConfig"
-            class="w-full h-full"
-            style="min-height: 400px; height: 70vh;"
-          ></quill-editor>
-        </div>
-      
-        <div class="flex justify-end mt-4 space-x-4">
-          <button color="primary" mat-raised-button type="submit">
-            Guardar
-            <!-- <mat-icon svgIcon="mat:save"></mat-icon> -->
-          </button>
-       
-        </div>
-      </div>
-</form>
+        </form>
+      </vex-page-layout-content>
+    </vex-page-layout>
   </mat-dialog-content>
