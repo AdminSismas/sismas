@@ -181,7 +181,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404) {
-            this.snackbar.open('Usuario no encontrado', 'CLOSE', { duration: 4000 });
+            this.snackbar.open('Usuario no encontrado', 'CLOSE', { duration: 5000 });
           }
           throw error;
         }

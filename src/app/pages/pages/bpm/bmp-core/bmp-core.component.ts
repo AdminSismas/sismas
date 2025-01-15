@@ -48,6 +48,7 @@ import { SendInfoGeneralService } from '../../../../apps/services/general/send-i
 import { MatDialog } from '@angular/material/dialog';
 import { ShowErrorValidateAlfaMainComponent } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -266,7 +267,7 @@ export class BmpCoreComponent implements OnInit {
 
   executeBpmNextBpmCore() {
     this.bpmCoreService.getNextOperation(this.executionId).subscribe({
-      error: () => this.captureInformationSubscribeError(),
+      error: (error: HttpErrorResponse) => this.captureInformationSubscribeError(error),
       next: (result: ProTaskE) => this.captureInformationBpmCore(result)
     });
   }
@@ -274,7 +275,7 @@ export class BmpCoreComponent implements OnInit {
   previewBpmCore() {
     this.activateLoading();
     this.bpmCoreService.getPreviewOperation(this.executionId).subscribe({
-      error: () => this.captureInformationSubscribeError(),
+      error: (error: HttpErrorResponse) => this.captureInformationSubscribeError(error),
       next: (result: ProTaskE) => this.captureInformationBpmCore(result)
     });
   }
@@ -286,12 +287,11 @@ export class BmpCoreComponent implements OnInit {
       result.executionId <= 0 ||
       !result.flowId
     ) {
-      this.activateSnapError(
-        'Error flowId valor inválido, no es posible continuar',
-        3000
-      );
+      this.router.navigate([environment.myWork_tasksPanel]);
+      this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 5000 });
       return;
     }
+
     this.proTaskE_Bpm = result;
     this.executionId = result.executionId?.toString();
     this.getNewProFlow(result.flowId?.toString());
@@ -308,7 +308,12 @@ export class BmpCoreComponent implements OnInit {
     });
   }
 
-  captureInformationSubscribeError(): void {
+  captureInformationSubscribeError(error: HttpErrorResponse): void {
+    if (error.status === 400) {
+      this.activateLoading(true);
+      this.snackbar.open(error.error, 'Aceptar', { duration: 5000 });
+      this.router.navigate([environment.myWork_tasksPanel]);
+    }
     this.activateLoading(true);
     this.activateSnapError(
       'Error ejecutando servicio de continuar flujo Bpm o retroceder, no es posible continuar',

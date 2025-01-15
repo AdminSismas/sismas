@@ -213,7 +213,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'Identificador de la unidad predial no válido, por favor revisar.',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       this.returnPanelTask(true);
       return;
@@ -286,7 +286,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'No se encontro proceso seleccionado, por favor revisar.',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       return;
     }
@@ -297,7 +297,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
           this.snackBar.open(
             'Error no se encontro documentos asociados al proceso, por favor revisar.',
             undefined,
-            { duration: 2000 }
+            { duration: 5000 }
           );
           this._listBpmDocumentsProcess.next([]);
           return;
@@ -319,7 +319,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'No se encontro proceso seleccionado, por favor revisar.',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       return;
     }
@@ -328,7 +328,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'No se encontro participantes agregados al proceso, por favor revisar.',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       return;
     }
@@ -337,7 +337,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'Error no se encontro radicado auxiliar o identificado de la unidad predial, por favor revisar.',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       return;
     }
@@ -347,7 +347,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'Error no se encontro documentos asociados al proceso, por favor revisar.',
         undefined,
-        { duration: 2000 }
+        { duration: 5000 }
       );
       return;
     }

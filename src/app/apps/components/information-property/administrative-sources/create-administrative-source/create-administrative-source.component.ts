@@ -83,11 +83,11 @@ export class CreateAdministrativeSourceComponent implements OnInit {
     this.administrativeSourceService.createAdministrativeSource(params)
       .subscribe({
         next: (data: AdministrativeSource) => {
-          this.snackbar.open('Fuente administrativa creada', 'CLOSE', { duration: 4000 });
+          this.snackbar.open('Fuente administrativa creada', 'CLOSE', { duration: 5000 });
           this.dialogRef.close(data);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al crear la fuente administrativa', 'CLOSE', { duration: 4000 });
+          this.snackbar.open('Error al crear la fuente administrativa', 'CLOSE', { duration: 5000 });
         }
       });
   }
@@ -107,11 +107,11 @@ export class CreateAdministrativeSourceComponent implements OnInit {
     })
       .subscribe({
         next: (data: AdministrativeSource) => {
-          this.snackbar.open('Fuente Administrativa actualizada', 'CLOSE', { duration: 4000 });
+          this.snackbar.open('Fuente Administrativa actualizada', 'CLOSE', { duration: 5000 });
           this.dialogRef.close();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al actualizar la fuente administrativa', 'CLOSE', { duration: 4000 });
+          this.snackbar.open('Error al actualizar la fuente administrativa', 'CLOSE', { duration: 5000 });
         }
       });
   }
