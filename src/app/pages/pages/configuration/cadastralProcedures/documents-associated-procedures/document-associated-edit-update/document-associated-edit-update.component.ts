@@ -66,8 +66,8 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
   userSesion:any | null = null;
   form = this.fb.group({
     content: new UntypedFormControl('', [Validators.required]),
-    headerTemplateId: new UntypedFormControl('', [Validators.required]),
-    footerTemplateId: new UntypedFormControl('', [Validators.required]),
+    headerTemplateId: new UntypedFormControl('',),
+    footerTemplateId: new UntypedFormControl('',),
     templateCode: new UntypedFormControl('', [Validators.required]),
 
 
@@ -166,12 +166,6 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
             templateCode: this.templateCode?.value ? this.templateCode?.value : '',
             htmlTemplate: this.content?.value ? this.content?.value : '',
   
-            headerTemplate: new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined),
-            // headerTemplateId: this.headerTemplateId?.value ? this.headerTemplateId?.value : '',
-  
-            // footerTemplateId:  this.footerTemplateId?.value ? this.footerTemplateId?.value : '',
-            
-            footerTemplate:  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined),
   
             isSinged: value.isSinged ? value.isSinged : false,
             createdBy:  value.createdBy ? value.createdBy : this.userSesion?.sub,
@@ -185,6 +179,17 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
       
         
         };
+        if(this.headerTemplateId?.value){
+          createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
+
+        }
+        // headerTemplateId: this.headerTemplateId?.value ? this.headerTemplateId?.value : '',
+
+        // footerTemplateId:  this.footerTemplateId?.value ? this.footerTemplateId?.value : '',
+        if(this.footerTemplateId?.value){
+        createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined)
+        }
+
         return createBasicInformationAddress;
         
       }else{
@@ -196,12 +201,9 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
               outTemplateId: this.defaults.outTemplateId ? this.defaults.outTemplateId : undefined,
               templateCode: this.templateCode?.value ? this.templateCode?.value : '',
               htmlTemplate: this.content?.value ? this.content?.value : '',
-              headerTemplate: new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined),
-              footerTemplate:  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined),
+              // headerTemplate: new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined),
+              // footerTemplate:  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined),
 
-              // headerTemplateId: this.headerTemplateId?.value ? this.headerTemplateId?.value : '',
-
-              // footerTemplateId:  this.footerTemplateId?.value ? this.footerTemplateId?.value : '',
 
               isSinged: this.defaults.documentAssociated?.isSinged ? this.defaults.documentAssociated?.isSinged : false,
               createdBy:  this.defaults.documentAssociated?.createdBy ? this.defaults.documentAssociated?.createdBy : '',
@@ -210,7 +212,18 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
               updatedAt: this.defaults.documentAssociated?.updatedAt ? this.defaults.documentAssociated?.updatedAt : undefined,
 
           };
+
+          if(this.headerTemplateId?.value){
+            createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
+  
+          }
+          if(this.footerTemplateId?.value){
+          createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined)
+          }
+
           return createBasicInformationAddress;
+
+
           }
 
       }
