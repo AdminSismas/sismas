@@ -7,7 +7,7 @@ export class UserDetails {
     validToAt: string;
     individual: Individual;
     role: string;
-    enabled: boolean;
+    enabled: boolean | string;
     accountNonExpired: boolean;
     authorities: Authority[];
     accountNonLocked: boolean;

@@ -133,7 +133,6 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       this.initParams = this.route.snapshot.queryParams['npn'];
       this.searValueData({}, this.initParams as string);
       setTimeout(() => {
-        console.log(this.dataSource.data[0]);
         this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
           minWidth: '99%',
           minHeight: '90%',

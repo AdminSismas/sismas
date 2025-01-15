@@ -62,7 +62,12 @@ import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property
   standalone: true,
   imports: [
     FormsModule,
-    HeaderCadastralInformationPropertyComponent,
+    NgClass,
+    NgFor,
+    NgIf,
+    ReactiveFormsModule,
+    // Vex
+    // Material
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -82,10 +87,8 @@ import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
-    NgClass,
-    NgFor,
-    NgIf,
-    ReactiveFormsModule,
+    // Custom
+    HeaderCadastralInformationPropertyComponent,
   ]
 })
 export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {

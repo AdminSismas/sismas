@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AlfaMainComponent } from '../../../pages/pages/bpm/core/cadastral/alf/main/alfa-main.component';
 import { AlfaValidateComponent } from '../../../pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
 import { EcoComiteComponent } from '../../../pages/pages/bpm/core/cadastral/eco/comite/eco-comite.component';
@@ -16,10 +16,6 @@ import { ComponentTemplate } from '../../interfaces/bpm/render-template.types';
   providedIn: 'root'
 })
 export class DynamicComponentsService {
-
-  constructor() {
-  }
-
   _listMap: ComponentTemplate[] = [
     {
       nameComponent: 'cadAlfaMainComponent',
