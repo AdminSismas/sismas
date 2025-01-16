@@ -6,6 +6,12 @@ export class BasicInformationProperty {
   cadastralNumber?: string;
   cadastralLastNumber?: string;
   cadastralRegistryNumberTemp?: string;
+  cadlAreaCommonE?: string;
+  cadAreaPrivateE?: string;
+  cadastralAreaUnitbuilt?: string;
+  cadAreaUnitbuiltCommon?: string;
+  cadAreaUnitbuiltPrivate?: string;
+  
   cadastralRegistryNumber?: string;
   cadastralCreatedAt?: string;
   domBaunitType?: string;
@@ -41,6 +47,12 @@ export class BasicInformationProperty {
     this.cadastralNumber = content?.cadastralNumber || '';
     this.cadastralLastNumber = content?.cadastralLastNumber || '';
     this.cadastralRegistryNumberTemp = content?.cadastralRegistryNumberTemp || '';
+    this.cadlAreaCommonE = content?.cadlAreaCommonE || '';
+    this.cadAreaPrivateE = content?.cadAreaPrivateE || '';
+    this.cadastralAreaUnitbuilt = content?.cadastralAreaUnitbuilt || '';
+    this.cadAreaUnitbuiltCommon = content?.cadAreaUnitbuiltCommon || '';
+    this.cadAreaUnitbuiltPrivate = content?.cadAreaUnitbuiltPrivate || '';
+
     this.cadastralRegistryNumber = content?.cadastralRegistryNumber || '';
     this.cadastralCreatedAt = content?.cadastralCreatedAt || '';
     this.domBaunitType = content?.domBaunitType || '';
