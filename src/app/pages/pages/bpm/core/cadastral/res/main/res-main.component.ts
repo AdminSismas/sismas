@@ -54,6 +54,7 @@ export class ResMainComponent implements OnInit {
         },
         error: () => {
           console.error('Error al cargar el documento PDF:');
+          this.pdfUrl = 'error';
         }
       });
     }
