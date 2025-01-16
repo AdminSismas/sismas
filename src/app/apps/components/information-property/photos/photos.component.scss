@@ -1,12 +1,12 @@
 .footer {
-    padding: 6rem;
-    max-height: 80vh;
-    height: 60%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
+  padding: 4rem;
+  max-height: 70vh;
+  height: 60%;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -2%;
   }
   
   .slider-container {
@@ -56,3 +56,8 @@
     right: 10px;
   }
   
+  .center-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
