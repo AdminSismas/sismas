@@ -16,7 +16,7 @@ export class AttachmentService {
     delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
 
 
-    /* -------------- CONSTRUCTRO -------------- */
+    /* -------------- CONSTRUCTOR -------------- */
     constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
 
 

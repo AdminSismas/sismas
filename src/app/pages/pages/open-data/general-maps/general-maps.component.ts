@@ -3,7 +3,6 @@ import { InConstructionComponent } from '../../../../apps/components/in-construc
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { DocumnetManagementComponent } from "../../../../apps/components/documnet-management/documnet-management.component";
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
 import { InputComponent } from 'src/app/apps/components/input/input.component';
@@ -44,7 +43,6 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatIconModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
-    DocumnetManagementComponent,
     AsyncPipe,
     ComboxColletionComponent,
     InputComponent,
