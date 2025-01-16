@@ -32,44 +32,25 @@
           </button>
         </div>
       }
+      <br>
       <div class="w-full flex flex-col pt-2">
-        <div class="flex justify-between">
+        <!-- Títulos de las columnas -->
+        <div class="column-titles">
+          <h3 class="text-black">Identificación del predio</h3>
+          <h3 class="text-black">Propiedad y uso</h3>
+        </div>
+         <div class="flex justify-between">
+         
           <div class="flex flex-col gap-1">
-            <span class="text-black text-sm">Número predial</span>
-            <span class="text-black text-sm">Tipo</span>
             <span class="text-black text-sm">Número predial (F)</span>
-            <span class="text-black text-sm"
-              >Matrícula inmobiliaria</span
-            >
-            <span class="text-black text-sm"
-              >Incripción catastral</span
-            >
+            <span class="text-black text-sm">Número predial</span>
+            <span class="text-black text-sm">Número predial anterior</span>
+            <!-- <span class="text-black text-sm">Tipo</span> -->
+            <span class="text-black text-sm">Matrícula inmobiliaria</span>
             <span class="text-black text-sm">Nupre</span>
-            <span class="text-black text-sm">Actualizado por</span>
-            <span class="text-black text-sm">Último evento el</span>
             <span class="text-black text-sm">Código BAUnit</span>
           </div>
           <div class="flex flex-col gap-1">
-            @if (
-              data !== null &&
-              data !== undefined &&
-              data.cadastralNumber !== null &&
-              data.cadastralNumber
-            ) {
-              <span class="text-sm">{{ data.cadastralNumber }}</span>
-            } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            }
-            @if (
-              data !== null &&
-              data !== undefined &&
-              data.domBaunitType !== null &&
-              data.domBaunitType
-            ) {
-              <span class="text-sm">{{ data.domBaunitType }}</span>
-            } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            }
             @if (
               data !== null &&
               data !== undefined &&
@@ -83,26 +64,101 @@
             @if (
               data !== null &&
               data !== undefined &&
-              data.propertyRegistryOffice !== null &&
-              data.propertyRegistryOffice &&
-              data.propertyRegistryNumber
+              data.cadastralNumber !== null &&
+              data.cadastralNumber
             ) {
-              <span class="text-sm"
-                >{{ data.propertyRegistryOffice }}{{ GUION
-                }}{{ data.propertyRegistryNumber }}</span
-              >
+              <span class="text-sm">{{ data.cadastralNumber }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+            
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.cadastralLastNumber !== null &&
+              data.cadastralLastNumber
+            ) {
+              <span class="text-sm">{{ data.cadastralLastNumber }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
             @if (
               data !== null &&
               data !== undefined &&
-              data.cadastralCreatedAt !== null &&
-              data.cadastralCreatedAt
+              data.propertyRegistryNumber !== null &&
+              data.propertyRegistryNumber &&
+              data.propertyRegistryOffice !== null &&
+              data.propertyRegistryOffice
+
+            ) {
+              <span class="text-sm">{{ data.propertyRegistryNumber + GUION}}  {{ data.propertyRegistryOffice}}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.baunitIdOrigin !== null &&
+              data.baunitIdOrigin
             ) {
               <span class="text-sm">{{
-                data.cadastralCreatedAt | date: "dd/MM/yyyy"
+                data.baunitIdOrigin 
               }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.baunitIdE !== null &&
+              data.baunitIdE
+            ) {
+              <span class="text-sm">{{
+                data.baunitIdE 
+              }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+           
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-black text-sm">Destino económico</span>
+            <span class="text-black text-sm">Tipo</span>
+            <span class="text-black text-sm">Condición propiedad</span>
+            <span class="text-black text-sm">Incripción catastral</span >
+            <span class="text-black text-sm"> Código homologado</span>
+          </div>
+          <div class="flex flex-col gap-1">
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.domBaunitEconoDesti !== null &&
+              data.domBaunitEconoDesti
+            ) {
+              <span class="text-sm">{{ data.domBaunitEconoDesti }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.domBaunitType !== null &&
+              data.domBaunitType 
+            ) {
+              <span class="text-sm"
+                >{{ data.domBaunitType }}</span
+              >
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            } 
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.domBaunitCondition !== null &&
+              data.domBaunitCondition
+            ) {
+              <span class="text-sm">{{ data.domBaunitCondition }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
@@ -119,92 +175,43 @@
             @if (
               data !== null &&
               data !== undefined &&
-              data.updatedBy !== null &&
-              data.updatedBy
+              data.cadastralRegistryNumberTemp !== null &&
+              data.cadastralRegistryNumberTemp
             ) {
-              <span class="text-sm">{{ data.updatedBy }}</span>
-            } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            }
-            @if (
-              data !== null &&
-              data !== undefined &&
-              data.cadastralLastEventAt !== null &&
-              data.cadastralLastEventAt
-            ) {
-              <span class="text-sm">{{
-                data.cadastralLastEventAt | date: "dd/MM/yyyy"
-              }}</span>
-            } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            }
-            @if (
-              data !== null &&
-              data !== undefined &&
-              data.baunitIdE !== null &&
-              data.baunitIdE
-            ) {
-              <span class="text-sm">{{ data.baunitIdE }}</span>
+              <span class="text-sm">{{ data.cadastralRegistryNumberTemp }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
           </div>
+        </div>
+        <br>
+        <div class="column-titles">
+          <h3 class="text-black">Tamaños y áreas</h3>
+          <h3 class="text-black">Seguimiento y actualizaciones</h3>
+        </div>
+         <div class="flex justify-between">
+         
           <div class="flex flex-col gap-1">
-            <span class="text-black text-sm">Destino económico</span>
-            <span class="text-black text-sm"
-              >Condición propiedad</span
-            >
-            <span class="text-black text-sm"
-              >Número predial anterior</span
-            >
             <span class="text-black text-sm">Área registral</span>
             <span class="text-black text-sm">Área catastral</span>
-            <span class="text-black text-sm">Código homologado</span>
-            <span class="text-black text-sm">Actualizado el</span>
-            <span class="text-black text-sm"
-              >Número último evento</span
+            <span class="text-black text-sm">Área catastral común</span>
+            <span class="text-black text-sm">Área catastral privada</span
             >
+            <span class="text-black text-sm">Área catastral construida</span
+            >
+            <span class="text-black text-sm">Área catastral construida común</span>
+            <span class="text-black text-sm">Área catastral construida Privada</span>
           </div>
           <div class="flex flex-col gap-1">
-            @if (
-              data !== null &&
-              data !== undefined &&
-              data.domBaunitEconoDesti !== null &&
-              data.domBaunitEconoDesti
-            ) {
-              <span class="text-sm">{{ data.domBaunitEconoDesti }}</span>
-            } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            }
-            @if (
-              data !== null &&
-              data !== undefined &&
-              data.domBaunitCondition !== null &&
-              data.domBaunitCondition
-            ) {
-              <span class="text-sm">{{ data.domBaunitCondition }}</span>
-            } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            }
-            @if (
-              data !== null &&
-              data !== undefined &&
-              data.cadastralLastNumber !== null &&
-              data.cadastralLastNumber
-            ) {
-              <span class="text-sm">{{ data.cadastralLastNumber }}</span>
-            } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            }
             @if (
               data !== null &&
               data !== undefined &&
               data.propertyRegistryAreaE !== null &&
               data.propertyRegistryAreaE
             ) {
-              <span class="text-sm">{{ data.propertyRegistryAreaE }}</span>
+              <span class="text-sm">{{ data.propertyRegistryAreaE  }}</span>
             } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }
             @if (
               data !== null &&
@@ -212,31 +219,83 @@
               data.cadastralAreaE !== null &&
               data.cadastralAreaE
             ) {
-              <span class="text-sm">{{ data.cadastralAreaE }}</span>
+              <span class="text-sm">{{ data.cadastralAreaE  }}</span>
             } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO   }}</span>
             }
             @if (
               data !== null &&
               data !== undefined &&
-              data.cadastralRegistryNumberTemp !== null &&
-              data.cadastralRegistryNumberTemp
+              data.cadlAreaCommonE !== null &&
+              data.cadlAreaCommonE
             ) {
-              <span class="text-sm">{{
-                data.cadastralRegistryNumberTemp
-              }}</span>
+              <span class="text-sm">{{ data.cadlAreaCommonE  }}</span>
             } @else {
-              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }
             @if (
               data !== null &&
               data !== undefined &&
-              data.updatedAt !== null &&
-              data.updatedAt
+              data.cadAreaPrivateE !== null &&
+              data.cadAreaPrivateE 
+            ) {
+              <span class="text-sm"
+                >{{ data.cadAreaPrivateE }}
+              </span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.cadastralAreaUnitbuilt !== null &&
+              data.cadastralAreaUnitbuilt 
+            ) {
+              <span class="text-sm"
+                >{{ data.cadastralAreaUnitbuilt + ' Mts2' }}
+              </span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.cadAreaUnitbuiltCommon !== null &&
+              data.cadAreaUnitbuiltCommon
             ) {
               <span class="text-sm">{{
-                data.updatedAt | date: "dd/MM/yyyy"
-              }}</span>
+                data.cadAreaUnitbuiltCommon + ' Mts2' }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.cadAreaUnitbuiltPrivate !== null &&
+              data.cadAreaUnitbuiltPrivate
+            ) {
+              <span class="text-sm">{{
+                data.cadAreaUnitbuiltPrivate + ' Mts2' }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
+            }
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-black text-sm">Último evento el</span>
+            <span class="text-black text-sm">Número último evento</span>
+            <span class="text-black text-sm">Actualizado por</span>
+            <span class="text-black text-sm">Actualizado el</span>
+            
+            
+          </div>
+          <div class="flex flex-col gap-1">
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.cadastralLastEventAt !== null &&
+              data.cadastralLastEventAt
+            ) {
+              <span class="text-sm">{{ data.cadastralLastEventAt | date: "dd/MM/yyyy" }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
@@ -247,6 +306,26 @@
               data.cadastralLastEventCode
             ) {
               <span class="text-sm">{{ data.cadastralLastEventCode }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.updatedBy !== null &&
+              data.updatedBy
+            ) {
+              <span class="text-sm">{{ data.updatedBy  }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.updatedAt !== null &&
+              data.updatedAt
+            ) {
+              <span class="text-sm">{{ data.updatedAt | date: "dd/MM/yyyy" }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }

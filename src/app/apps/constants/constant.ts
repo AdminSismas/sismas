@@ -23,6 +23,8 @@ export const NAME_NO = 'NO';
 export const NAME_DATE = 'date';
 export const NAME_SI = 'SI';
 export const NAME_NO_DISPONIBLE = 'N/D';
+export const NAME_NO_DISPONIBLE_CERO = '0';
+
 export const INDIVIDUAL_TYPE_NUMBER = 'NIT';
 export const PAGE = 0;
 export const PAGE_SIZE = 10;

@@ -1,9 +1,7 @@
-import { Component, computed, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
-import { AdministrativeSource } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableModule } from '@angular/material/table';
-import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -39,7 +37,6 @@ export class PhotosComponent implements OnInit {
   @Input() public id = '';
   @Input() public expandedComponent = false;
   @Input() public baunitId?: string | null;
-  // @Input() public baunitId: any = '1027396'; // BaunitId quemado para hacer pruebas
   @Input() public schema?: string;
   @Input() public executionId?: string | null;
   @Input() public typeInformation?: string;
@@ -54,8 +51,8 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit(): void {
     // this.baunitId = '1027396'; // BaunitId quemado para hacer pruebas
-    console.log('ID quemado usado:', this.baunitId);
     this.loadPhotos();
+    this.autoSlide();
   }
 
   loadPhotos() {
