@@ -21,7 +21,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE,TYPEINFORMATION_EDITION } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
@@ -119,6 +119,7 @@ export class BasicPropertyInformationComponent implements OnInit {
           setTimeout(() => this.data = result, 300);
         }
       });
+      console.log(this.data, 'servicio con datos nuevos');
   }
 
   private getRandomInt(max: number):number {
@@ -126,5 +127,6 @@ export class BasicPropertyInformationComponent implements OnInit {
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
+  protected readonly NAME_NO_DISPONIBLE_CERO = NAME_NO_DISPONIBLE_CERO;
   protected readonly GUION = GUION;
 }
