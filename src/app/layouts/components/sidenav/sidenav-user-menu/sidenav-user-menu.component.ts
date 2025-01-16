@@ -1,5 +1,5 @@
 // Angular framework
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 // Vex
 import { VexPopoverRef } from '@vex/components/vex-popover/vex-popover-ref';
@@ -11,6 +11,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
 import { ChangePasswordComponent } from 'src/app/apps/components/sidenav/menu/change-password/change-password.component';
 import { environment } from '../../../../../environments/environments';
+import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 
 @Component({
   selector: 'vex-sidenav-user-menu',
@@ -26,15 +27,14 @@ import { environment } from '../../../../../environments/environments';
   ],
   standalone: true
 })
-export class SidenavUserMenuComponent implements OnInit {
+export class SidenavUserMenuComponent {
   constructor(
     private readonly popoverRef: VexPopoverRef,
     private router: Router,
     private authService: AuthService,
+    private navigationLoaderService: NavigationLoaderService,
     private dialog: MatDialog
   ) {}
-
-  ngOnInit(): void {}
 
   close(): void {
     /** Wait for animation to complete and then close */
@@ -43,13 +43,14 @@ export class SidenavUserMenuComponent implements OnInit {
   }
 
   openChangePasswordDialog(): void {
-    this.popoverRef.close()
+    this.popoverRef.close();
     this.dialog.open(ChangePasswordComponent, {
       width: '40%',
     });
   }
 
   logout() {
+    this.navigationLoaderService.stopCountLoop();
     this.authService.logout();
     this.close();
   }

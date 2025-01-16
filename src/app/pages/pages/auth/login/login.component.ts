@@ -86,6 +86,7 @@ export class LoginComponent {
             this.userService.setUser(user);
 
             this.navigationLoaderService.loadInformationNavigation(user.role);
+            this.navigationLoaderService.startCountLoop();
 
             this.router
               .navigate([`${environment.myWork_cadastralSearch}`])
