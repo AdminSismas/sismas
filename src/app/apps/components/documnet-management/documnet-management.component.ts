@@ -192,7 +192,7 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
         data: metaData,
       });
 
-      this.dialogRef.afterClosed().subscribe(result => {
+      this.dialogRef.afterClosed().subscribe(() => {
         console.log('The dialog was closed');
       });
     }
@@ -202,7 +202,7 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
   /* ------- Meth. Services ------- */
   getDataFromDocumentManagementService(): void {
     this.attachmentService.getDataPropertyByAttachment("37").subscribe({
-      next: (data: any) => {
+      next: (data: AttachmentCollection[]) => {
         console.log("Datos recibidos de la API1:", data);
         this.dataSource.data = data;
         this.totalElements = data.length;

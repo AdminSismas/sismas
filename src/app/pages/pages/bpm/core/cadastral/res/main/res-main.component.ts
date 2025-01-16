@@ -3,6 +3,7 @@ import { MatDialogTitle } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environments';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'vex-res-main',
@@ -18,7 +19,10 @@ export class ResMainComponent implements OnInit {
 
   basic_url = `${environment.url}:${environment.port}/${'bpmResolution'}/${'generate'}/`;
   pdfUrl: SafeUrl = '';
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     if (this.id?.length > 0) {
@@ -31,16 +35,29 @@ export class ResMainComponent implements OnInit {
       this.id =
         this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
     }
-    this.pdfUrl = this.urlPdfViewer();
+
+    this.loadPdf();
   }
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
 
-  urlPdfViewer(): SafeUrl {
-    const urlComplete = `${this.basic_url}${this.executionId}`;
-    console.log('urlComplete: ', urlComplete);
-    return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
-  }
+  loadPdf() {
+      const urlComplete = `${this.basic_url}${this.executionId}`;
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      this.http.get(urlComplete, { headers, responseType: 'blob' }).subscribe({
+        next: (response) => {
+          const blob = new Blob([response], { type: 'application/pdf' });
+          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+        },
+        error: () => {
+          console.error('Error al cargar el documento PDF:');
+          this.pdfUrl = 'error';
+        }
+      });
+    }
+
+
 }

@@ -146,14 +146,14 @@
 
     <!-- Paginator -->
     <mat-paginator
-      *ngIf="disablePaginator == true"
+      *ngIf="disablePaginator === true"
       #paginator
-      [class.hidden]="!(isDesktop$ | async)"
+      [class.hidden]="(isDesktop$ | async) === false"
       [pageSizeOptions]="pageSizeOptions"
       [length]="totalElements"
       [pageSize]="pageSize"
       [pageIndex]="page"
-      (page)="refreshInformationpaginator($event)"
+      (page)="refreshInformationPaginator($event)"
       class="sticky left-0 flex flex-col"
     >
     </mat-paginator>
