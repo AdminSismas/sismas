@@ -36,7 +36,6 @@ export class ResValidateComponent implements OnInit {
         this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
     }
 
-    // this.pdfUrl = this.urlPdfViewer();
     this.loadPdf();
   }
 
@@ -44,11 +43,6 @@ export class ResValidateComponent implements OnInit {
     return Math.floor(Math.random() * max);
   }
 
-  urlPdfViewer(): SafeUrl {
-    const urlComplete = `${this.basic_url}${this.executionId}`;
-    console.log('urlComplete: ', urlComplete);
-    return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
-  }
   loadPdf() {
     const urlComplete = `${this.basic_url}${this.executionId}`;
     const token = sessionStorage.getItem('token');
@@ -58,8 +52,8 @@ export class ResValidateComponent implements OnInit {
         const blob = new Blob([response], { type: 'application/pdf' });
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
       },
-      error: (err) => {
-        console.error('Error al cargar el documento PDF:', err);
+      error: () => {
+        console.error('Error al cargar el documento PDF:');
       }
     });
   }
