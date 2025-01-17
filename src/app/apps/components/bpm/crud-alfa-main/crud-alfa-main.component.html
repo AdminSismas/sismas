@@ -46,7 +46,7 @@
                placeholder="Seleccione una manzana"
                [matAutocomplete]="autoAddNpnLike">
         <mat-autocomplete autoActiveFirstOption #autoAddNpnLike="matAutocomplete" [panelWidth]="350">
-          @for (option of optionsListNpnlilke$ | async; track option; let index = $index) {
+          @for (option of optionsListNpnlike$ | async; track option; let index = $index) {
             <mat-option
               [value]="option">
               {{ option }}
@@ -95,7 +95,7 @@
                    placeholder="Seleccione una manzana"
                    [matAutocomplete]="autoAddNpnLike">
             <mat-autocomplete autoActiveFirstOption #autoAddNpnLike="matAutocomplete" [panelWidth]="350">
-              @for (option of optionsListNpnlilke$ | async; track option; let index = $index) {
+              @for (option of optionsListNpnlike$ | async; track option; let index = $index) {
                 <mat-option
                   [value]="option">
                   {{ option }}

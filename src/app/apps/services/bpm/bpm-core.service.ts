@@ -6,7 +6,7 @@ import { ProTaskE } from '../../interfaces/pro-task-e';
 import { ProFlow } from '../../interfaces/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
 import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -86,8 +86,12 @@ export class BpmCoreService {
     const formData: FormData = new FormData();
     formData.append('changeLogId', executionId);
     formData.append('baunitId', baunitId);
+
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
     return this.http.delete<void>(url, {
-      body: formData
+      body: formData,
+      headers
     })
       .pipe(catchError(error => {
         console.log('Error al remover la baunit');

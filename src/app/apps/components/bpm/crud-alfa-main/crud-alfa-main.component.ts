@@ -9,7 +9,6 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { QuillEditorComponent } from 'ngx-quill';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -50,6 +49,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-crud-alfa-main',
@@ -90,8 +90,8 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   data$: Observable<BaunitHead[]> = this.subject$.asObservable();
   baunitHeads: BaunitHead[] = [];
 
-  optionsListNpnlilke: string[] = [];
-  optionsListNpnlilke$: Observable<string[]> | undefined;
+  optionsListNpnlike: string[] = [];
+  optionsListNpnlike$: Observable<string[]> | undefined;
   executionId!: string;
   typeOperation!: TypeOperationAlfaMain;
 
@@ -177,10 +177,11 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   captureDepartmentInformation(result: string[]) {
-    this.optionsListNpnlilke = result;
-    this.optionsListNpnlilke$ = this.formAdd.get('addNpnLike')?.valueChanges.pipe(
+    this.optionsListNpnlike = result;
+    this.optionsListNpnlike$ = this.formAdd.get('addNpnLike')?.valueChanges.pipe(
       startWith(''),
-      map((value): any[] => this.optionsListNpnlilke.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      map((value): any[] => this.optionsListNpnlike.filter(
         (option: string) => option?.toLowerCase().includes(value.toLowerCase() || ''))
       ));
   }
@@ -197,7 +198,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       );
       return;
     }
-    this.alfaMainService.loadingListBeaUnitheadByExecutionIdAndnpnlike(
+    this.alfaMainService.loadingListBeaUnitheadByExecutionIdAndNpnLike(
       this.executionId, this.formCreateDelete.value.npnLike)
       .subscribe((result: BaunitHead[]) => {
         this.subject$.next(result);
@@ -219,29 +220,54 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.alfaMainService.createTemporalBeaUnithead(
-      addNpnLike, this.executionId, bAunitCondition)
-      .then((result: any) => {
-        this.snackBar.open(
-          'Se creó una nueva unidad predial.',
-          'CLOSE', { duration: 5000 }
-        );
-        this.dialogRef.close();
+    this.alfaMainService.createTemporalBeaUnithead(addNpnLike, this.executionId, bAunitCondition)
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            'Se creó una nueva unidad predial.',
+            'CLOSE', { duration: 5000 }
+          );
+          this.dialogRef.close();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Error al crear la unidad predial.',
+            'CLOSE', { duration: 5000 }
+          );
+          throw error;
+        }
       });
+    // this.alfaMainService.createTemporalBeaUnithead(
+    //   addNpnLike, this.executionId, bAunitCondition)
+    //   .then(() => {
+    //     this.snackBar.open(
+    //       'Se creó una nueva unidad predial.',
+    //       'CLOSE', { duration: 5000 }
+    //     );
+    //     this.dialogRef.close();
+    //   });
   }
 
   createBeaUnitHeadUpdate(baunit: BaunitHead): void {
     if (!baunit || !baunit?.baunitIdE) {
       return;
     }
-    this.alfaMainService.createUpdateTemporalBeaUnithead(
-      baunit?.baunitIdE, this.executionId)
-      .then((result: any) => {
-        this.snackBar.open(
-          'Se creó una nueva unidad predial para actualizar.',
-          'CLOSE', { duration: 5000 }
-        );
-        this.loadPropertiesInformation();
+    this.alfaMainService.createUpdateTemporalBeaUnithead(baunit?.baunitIdE, this.executionId)
+      .subscribe({
+        next: (() => {
+          this.snackBar.open(
+            'Se creó una nueva unidad predial para actualizar.',
+            'CLOSE', { duration: 5000 }
+          );
+          this.loadPropertiesInformation();
+        }),
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Error al crear la unidad predial para actualizar.',
+            'CLOSE', { duration: 5000 }
+          );
+          throw error;
+        }
       });
   }
 
@@ -249,14 +275,22 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!baunit || !baunit?.baunitIdE) {
       return;
     }
-    this.alfaMainService.createDeleteTemporalBeaUnithead(
-      baunit?.baunitIdE, this.executionId)
-      .then((result: any) => {
-        this.snackBar.open(
-          'Se creó una nueva unidad predial para eliminar.',
-          'CLOSE', { duration: 5000 }
-        );
-        this.loadPropertiesInformation();
+    this.alfaMainService.createDeleteTemporalBeaUnithead(baunit?.baunitIdE, this.executionId)
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            'Se creó una nueva unidad predial para eliminar.',
+            'CLOSE', { duration: 5000 }
+          );
+          this.loadPropertiesInformation();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Error al crear la unidad predial para eliminar.',
+            'CLOSE', { duration: 5000 }
+          );
+          throw error;
+        }
       });
   }
 
@@ -282,6 +316,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   masterToggle(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
