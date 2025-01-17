@@ -145,8 +145,8 @@ export const environment = {
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
   urban_zones: '/ccZonaHomoFisicaUr',
-  url: 'http://geogestion-desarrollo.cd2i0gms6zfy.us-east-1.rds.amazonaws.com',
-  url_viewer: 'https://geogestion-masora.map.sismas.com.co:8081/mapstore/',
+  url: 'https://dev.api.sismas.com.co',
+  url_viewer: 'https://masora.map.sismas.com.co:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
   valuation: '/valuation/',
