@@ -52,6 +52,7 @@ import { ViewChangeAlphaMainRecordComponent } from '../../../../../../../apps/co
 import { TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/content-info';
 import { CrudAlfaMainComponent } from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-main.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -329,15 +330,22 @@ export class AlfaMainComponent implements OnInit {
   }
 
   executeClearInformationAlfaMain(keyWord: string) {
-    this.alfaMainService
-      .clearInformationAlfaMain(this.executionId, keyWord)
-      .then(() => {
-        this.contentInformations = new InformationPegeable();
-        this.listOperationContentInformation = [];
-        this.validateChangeLogAlfaMain();
-        this.activateLoading();
-      })
-      .catch((err: any) => console.log(err));
+    this.alfaMainService.clearInformationAlfaMain(this.executionId, keyWord)
+      .subscribe({
+        next: () => {
+          this.contentInformations = new InformationPegeable();
+          this.listOperationContentInformation = [];
+          this.validateChangeLogAlfaMain();
+          this.activateLoading();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackbar.open(
+            'Error al eliminar la unidad predial.',
+            'CLOSE', { duration: 5000 }
+          );
+          throw error;
+        }
+      });
   }
 
   analyzeChangesOperationAlfaMain() {

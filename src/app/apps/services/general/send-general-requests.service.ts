@@ -116,18 +116,6 @@ export class SendGeneralRequestsService {
     };
   }
 
-  sendRequestsFetch(url: string, params: any): Promise<any> {
-    return fetch(url, params)
-      .then(result => result.json())
-      .catch(error => (error));
-  }
-
-  sendRequestsFetchText(url: string, params: any): Promise<any> {
-    return fetch(url, params)
-      .then(result => result.text())
-      .catch(error => (error));
-  }
-
   sendRequestsFetchGet(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
