@@ -32,7 +32,6 @@ import { AddPropertyOwnerComponent } from './add-property-owner/add-property-own
 import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Owners } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { CommonModule } from '@angular/common';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
@@ -50,6 +49,7 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     scaleFadeIn400ms
   ],
   imports: [
+    CommonModule,
     HeaderCadastralInformationPropertyComponent,
     MatCardModule,
     MatRippleModule,
@@ -60,7 +60,6 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatMenuModule,
     MatPaginatorModule,
     MatDialogModule,
-    CommonModule
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
@@ -73,6 +72,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() editable? = true;
 
   protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = [
     {
@@ -186,7 +186,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     this.id = this.id + this.getRandomInt(10000) + this.schema;
     this.isExpandPanel(this.expandedComponent);
 
-    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition';
+    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition' && this.editable;
   }
 
   isExpandPanel(expandedComponent: boolean): void {
@@ -234,7 +234,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   onClickOpenAddEditModal(data: any): void {
     if (this.fractions_sum >= 1) {
-      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 4000 });
+      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 5000 });
       return;
     }
 

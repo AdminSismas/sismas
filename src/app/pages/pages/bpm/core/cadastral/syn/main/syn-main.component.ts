@@ -10,7 +10,7 @@ import { SyncMainService } from 'src/app/apps/services/bpm/sync-main.service';
   imports: [
     // Vex
     // Material
-    MatButtonModule,
+    MatButtonModule
     // Custom
   ],
   templateUrl: './syn-main.component.html',
@@ -19,6 +19,7 @@ import { SyncMainService } from 'src/app/apps/services/bpm/sync-main.service';
 export class SynMainComponent implements OnInit {
   @Input() public id = '';
   @Input() public executionId = '';
+  @Input({ required: true }) public resources: string[] = [];
 
   constructor(
     private syncMainService: SyncMainService,
@@ -27,36 +28,40 @@ export class SynMainComponent implements OnInit {
 
   ngOnInit() {
     if (this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(100000)
-        + 'AlfaMainComponent' + this.getRandomInt(10);
+      this.id =
+        this.id +
+        this.getRandomInt(100000) +
+        'AlfaMainComponent' +
+        this.getRandomInt(10);
     } else {
-      this.id = this.getRandomInt(10000)
-        + 'AlfaMainComponent' + this.getRandomInt(10);
+      this.id =
+        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
     }
   }
-
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
 
-
   syncChanges() {
     console.log('Sync changes');
     console.log('Execution ID:', this.executionId);
 
-    this.syncMainService.synchronizeChanges(this.executionId)
-      .subscribe({
-        next: (response: string) => {
-          this.snackbar.open('Cambios sincronizados', 'Aceptar', { duration: 3000 });
-        },
-        error: (error: HttpErrorResponse) => {
-          if (error.status === 400) {
-            this.snackbar.open(error.error, 'Aceptar', { duration: 3000 });
-          } else {
-            this.snackbar.open('Error al sincronizar cambios', 'Aceptar', { duration: 3000 });
-          }
+    this.syncMainService.synchronizeChanges(this.executionId).subscribe({
+      next: () => {
+        this.snackbar.open('Cambios sincronizados', 'Aceptar', {
+          duration: 3000
+        });
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 400) {
+          this.snackbar.open(error.error, 'Aceptar', { duration: 5000 });
+        } else {
+          this.snackbar.open('Error al sincronizar cambios', 'Aceptar', {
+            duration: 3000
+          });
         }
-      });
+      }
+    });
   }
 }

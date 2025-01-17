@@ -108,6 +108,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() editable? = true;
 
   columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
   page:number = PAGE;
@@ -139,7 +140,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if(this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL) {
+    if(this.typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
       this.columns = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS;

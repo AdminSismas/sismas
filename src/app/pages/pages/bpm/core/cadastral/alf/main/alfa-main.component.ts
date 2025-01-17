@@ -1,10 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, OnInit } from '@angular/core';
-import { Error500Component } from '../../../../../errors/error-500/error-500.component';
-import { MatDialog, MatDialogTitle } from '@angular/material/dialog';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidMinHeightDirective } from '../../../../../../../apps/directives/fluid-min-height.directive';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -42,25 +40,17 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import {
-  TableAlfaMainComponent
-} from '../../../../../../../apps/components/bpm/table-alfa-main/table-alfa-main.component';
-import {
-  ClearInformationDataComponent
-} from '../../../../../../../apps/components/bpm/clear-information-data/clear-information-data.component';
+import { TableAlfaMainComponent } from '../../../../../../../apps/components/bpm/table-alfa-main/table-alfa-main.component';
+import { ClearInformationDataComponent } from '../../../../../../../apps/components/bpm/clear-information-data/clear-information-data.component';
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
   CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN
 } from '../../../../../../../apps/constants/constantLabels';
 import { OperationContentInformation } from '../../../../../../../apps/interfaces/bpm/operation-content-information';
 import { Pegeable } from '../../../../../../../apps/interfaces/pegeable.model';
-import {
-  ViewChangeAlphaMainRecordComponent
-} from '../../../../../../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
+import { ViewChangeAlphaMainRecordComponent } from '../../../../../../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
 import { TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/content-info';
-import {
-  CrudAlfaMainComponent
-} from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
+import { CrudAlfaMainComponent } from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-main.model';
 
 @Component({
@@ -75,12 +65,9 @@ import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-mai
     scaleFadeIn400ms
   ],
   imports: [
-    Error500Component,
-    MatDialogTitle,
     NgIf,
+    NgClass,
     VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
     VexPageLayoutContentDirective,
     FluidMinHeightDirective,
     MatStepperModule,
@@ -94,25 +81,28 @@ import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-mai
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    NgForOf,
     TableAlfaMainComponent
   ],
   templateUrl: './alfa-main.component.html',
   styleUrl: './alfa-main.component.scss'
 })
 export class AlfaMainComponent implements OnInit {
-
   public id: string = this.getRandomInt(1234).toString();
   public mode = 1;
   @Input({ required: true }) public executionId = '';
+  @Input({ required: true }) public resources: string[] = [];
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-  _validateChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
-  _createChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
+  _validateChangeLog$: ReplaySubject<ChangeControl> =
+    new ReplaySubject<ChangeControl>(1);
+  _createChangeLog$: ReplaySubject<ChangeControl> =
+    new ReplaySubject<ChangeControl>(1);
 
-  validateChangeLog$: Observable<ChangeControl> = this._validateChangeLog$.asObservable();
-  createChangeLog$: Observable<ChangeControl> = this._createChangeLog$.asObservable();
+  validateChangeLog$: Observable<ChangeControl> =
+    this._validateChangeLog$.asObservable();
+  createChangeLog$: Observable<ChangeControl> =
+    this._createChangeLog$.asObservable();
 
   infoFatherURL!: string;
   contentInformations!: InformationPegeable;
@@ -136,11 +126,14 @@ export class AlfaMainComponent implements OnInit {
 
   async ngOnInit() {
     if (this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(100000)
-        + 'AlfaMainComponent' + this.getRandomInt(10);
+      this.id =
+        this.id +
+        this.getRandomInt(100000) +
+        'AlfaMainComponent' +
+        this.getRandomInt(10);
     } else {
-      this.id = this.getRandomInt(10000)
-        + 'AlfaMainComponent' + this.getRandomInt(10);
+      this.id =
+        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
     }
     this.infoFatherURL = await firstValueFrom(this._infoFatherURL$);
 
@@ -178,14 +171,17 @@ export class AlfaMainComponent implements OnInit {
   }
 
   validateChangeLogAlfaMain() {
-    this.alfaMainService.validateAlfaMainOperations(
-      this.executionId, `${environment.schemas.temp}`
-    ).subscribe(
-      {
+    this.alfaMainService
+      .validateAlfaMainOperations(
+        this.executionId,
+        `${environment.schemas.temp}`
+      )
+      .subscribe({
         error: () => {
           this.snackbar.open(
             'No se puede continuar la actividad error en la validación alfanumérica.',
-            'CLOSE', { duration: 1000 }
+            'CLOSE',
+            { duration: 5000 }
           );
           return;
         },
@@ -196,30 +192,26 @@ export class AlfaMainComponent implements OnInit {
           }
           this._validateChangeLog$.next(result);
         }
-      }
-    );
+      });
   }
 
   createAlfaMainOperations() {
-    this.alfaMainService.createAlfaMainOperations(
-      this.executionId, `${environment.schemas.temp}`
-    ).subscribe(
-      {
+    this.alfaMainService
+      .createAlfaMainOperations(this.executionId, `${environment.schemas.temp}`)
+      .subscribe({
         error: () => this.captureInformationChangeLogAlfaMainError(),
         next: (result: ChangeControl) => this._createChangeLog$.next(result)
-      }
-    );
+      });
   }
 
   getAlfaMain() {
-    this.alfaMainService.getListAlfaMainOperations(
-      this.generateObjectPageSearchData()
-    ).subscribe(
-      {
+    this.alfaMainService
+      .getListAlfaMainOperations(this.generateObjectPageSearchData())
+      .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-      }
-    );
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   captureInformationSubscribeError(): void {
@@ -238,7 +230,8 @@ export class AlfaMainComponent implements OnInit {
   captureInformationChangeLogAlfaMainError() {
     this.snackbar.open(
       'No se puede continuar la actividad error en la validación alfanumérica.',
-      'CLOSE', { duration: 1000 }
+      'CLOSE',
+      { duration: 5000 }
     );
   }
 
@@ -249,22 +242,30 @@ export class AlfaMainComponent implements OnInit {
       data = this.contentInformations.content;
       data = data.map((row: Operation) => new Operation(row));
       const indexOperation = this.indexArraylist(data);
-      const result = Object.keys(indexOperation).map((key) => [key, indexOperation[key]]);
+      const result = Object.keys(indexOperation).map((key) => [
+        key,
+        indexOperation[key]
+      ]);
       if (result && result.length > 0) {
         for (const npm in indexOperation) {
           if (npm) {
-
             const listOperation = indexOperation[npm] as Operation[];
             this.listOperationContentInformation.push(
-              new OperationContentInformation(npm,
+              new OperationContentInformation(
+                npm,
                 new InformationPegeable(
                   listOperation.length / PAGE_OPTION_UNIQUE,
                   listOperation.length,
-                  false, listOperation.length, listOperation.length,
-                  true, (listOperation.length > 0), listOperation,
+                  false,
+                  listOperation.length,
+                  listOperation.length,
+                  true,
+                  listOperation.length > 0,
+                  listOperation,
                   new Pegeable(0, listOperation.length / PAGE_OPTION_UNIQUE)
                 )
-              ));
+              )
+            );
           }
         }
         return;
@@ -288,7 +289,11 @@ export class AlfaMainComponent implements OnInit {
   }
 
   generateObjectPageSearchData(): PageSearchData {
-    return new PageSearchData(PAGE, MAX_PAGE_SIZE_TABLE_UNIQUE, this.executionId);
+    return new PageSearchData(
+      PAGE,
+      MAX_PAGE_SIZE_TABLE_UNIQUE,
+      this.executionId
+    );
   }
 
   activateLoading(value = false) {
@@ -298,9 +303,9 @@ export class AlfaMainComponent implements OnInit {
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
-      this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
-        .then(() => {
-        });
+      this.router
+        .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
+        .then();
     }
   }
 
@@ -324,14 +329,15 @@ export class AlfaMainComponent implements OnInit {
   }
 
   executeClearInformationAlfaMain(keyWord: string) {
-    this.alfaMainService.clearInformationAlfaMain(
-      this.executionId, keyWord
-    ).then((result: any) => {
-      this.contentInformations = new InformationPegeable();
-      this.listOperationContentInformation = [];
-      this.validateChangeLogAlfaMain();
-      this.activateLoading();
-    }).catch((err: any) => console.log(err));
+    this.alfaMainService
+      .clearInformationAlfaMain(this.executionId, keyWord)
+      .then(() => {
+        this.contentInformations = new InformationPegeable();
+        this.listOperationContentInformation = [];
+        this.validateChangeLogAlfaMain();
+        this.activateLoading();
+      })
+      .catch((err: any) => console.log(err));
   }
 
   analyzeChangesOperationAlfaMain() {
@@ -343,13 +349,12 @@ export class AlfaMainComponent implements OnInit {
         data: [this.executionId]
       })
       .afterClosed()
-      .subscribe(() => {
-      });
+      .subscribe();
   }
 
-  executeCrudAlfaMain(type:TypeOperationAlfaMain){
-    let config ={ };
-    if(type === TYPEOPERATION_ADD) {
+  executeCrudAlfaMain(type: TypeOperationAlfaMain) {
+    let config = {};
+    if (type === TYPEOPERATION_ADD) {
       config = {
         width: '30%',
         minHeight: '30%',
@@ -373,13 +378,28 @@ export class AlfaMainComponent implements OnInit {
   }
 
   private returnURLPrevious(url: string) {
-    this.router.navigate([`${url}`])
-      .then(() => {
-      });
+    this.router.navigate([`${url}`]).then();
+  }
+
+  disabledButton(btn: string): boolean {
+    return !this.resources.includes(btn);
+  }
+
+  buttonsClass(btn: string): string {
+    let color = '!bg-slate-400 !text-gray-100 opacity-60';
+
+    if (btn === 'AGR' && !this.disabledButton(btn)) {
+      color = '!text-white !bg-primary-600';
+    } else if (btn === 'CRE' && !this.disabledButton(btn)) {
+      color = '!text-white !bg-green-600';
+    } else if (btn === 'BRR' && !this.disabledButton(btn)) {
+      color = '!text-white !bg-red-600';
+    }
+
+    return `rounded-full py-2 px-6 title ${color}`;
   }
 
   protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
   protected readonly TYPEOPERATION_DELETE = TYPEOPERATION_DELETE;
   protected readonly TYPEOPERATION_ADD = TYPEOPERATION_ADD;
 }
-

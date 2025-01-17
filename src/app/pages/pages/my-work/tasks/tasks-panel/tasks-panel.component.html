@@ -55,7 +55,7 @@
 
 
 <vex-loading-app
-  *ngIf="!(isExistDataInformation$ | async)"
+  *ngIf="(isExistDataInformation$ | async) === false"
   #vexSplashScreen
   idLoading="vexSplashScreen"
   [showImage]="true"></vex-loading-app>

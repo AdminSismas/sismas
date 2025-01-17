@@ -201,6 +201,33 @@
                 }
               ]
             },
+            "barrancabermeja": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.barrancabermeja.ts"
+                }
+              ]
+            },
             "test": {
               "optimization": {
                 "scripts": true,
@@ -248,9 +275,13 @@
             "masora": {
               "buildTarget": "geoGestion:build:masora"
             },
+            "barrancabermeja": {
+              "buildTarget": "geoGestion:build:barrancabermeja"
+            },
             "test": {
               "buildTarget": "geoGestion:build:test"
             }
+            
           }
         },
         "extract-i18n": {

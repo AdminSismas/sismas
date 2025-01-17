@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to deploy (manizales, armenia, masora)'
+        description: 'Environment to deploy (manizales, armenia, masora, barrancabermeja)'
         required: true
         default: 'manizales'
 
@@ -32,10 +32,11 @@ jobs:
             echo "environment=armenia" >> $GITHUB_ENV
           elif [[ "${{ github.event.pull_request.title }}" =~ "masora" ]]; then
             echo "environment=masora" >> $GITHUB_ENV
+          elif [[ "${{ github.event.pull_request.title }}" =~ "barrancabermeja" ]]; then
+            echo "environment=barrancabermeja" >> $GITHUB_ENV
           else
             echo "Environment not specified in Pull Request title."
             exit 1
-          fi
 
       # 3. Deploy based on environment
       - name: Deploy to Environment
@@ -49,7 +50,9 @@ jobs:
           elif [[ "${{ env.environment }}" == "masora" ]]; then
             echo "Deploying to Masora..."
             rsync -avz --delete ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/masora.sismas.com.co/
+          elif [[ "${{ env.environment }}" == "barrancabermeja" ]]; then
+            echo "Deploying to Barrancabermeja..."
+            rsync -avz --delete ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/barrancabermeja.sismas.com.co/
           else
             echo "Invalid environment: ${{ env.environment }}"
             exit 1
-          fi

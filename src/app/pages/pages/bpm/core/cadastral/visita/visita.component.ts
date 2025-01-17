@@ -14,8 +14,7 @@ import { MatDialogTitle } from '@angular/material/dialog';
 })
 export class VisitaComponent  implements OnInit {
   @Input() public id = '';
-  constructor() {
-  }
+  @Input({ required: true }) public resources: string[] = [];
 
   ngOnInit() {
     if (this.id?.length > 0) {

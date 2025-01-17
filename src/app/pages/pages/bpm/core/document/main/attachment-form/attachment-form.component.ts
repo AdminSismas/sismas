@@ -94,7 +94,7 @@ export class AttachmentFormComponent {
     if (file.length < event.addedFiles.length) {
 
       console.warn('Algunos archivos ya han sido seleccionados anteriormente.');
-      this.snackbar.open('Algunos archivos ya están seleccionados.', 'OK', { duration: 3000 });
+      this.snackbar.open('Algunos archivos ya están seleccionados.', 'OK', { duration: 5000 });
     }
     this.uploadedFiles.push(...file);
     this.attachmentForm .patchValue({
@@ -159,13 +159,13 @@ export class AttachmentFormComponent {
       response => {
         console.log('Respuesta de la API:', response);
 
-        this.snackbar.open('Archivo enviado correctamente', 'OK', { duration: 3000 });
+        this.snackbar.open('Archivo enviado correctamente', 'OK', { duration: 5000 });
         this.dialogRef.close();
         this.dataUpdated.emit();
       },
       error => {
         console.error('Error en la solicitud:', error);
-        this.snackbar.open('Error al enviar el archivo', 'OK', { duration: 3000 });
+        this.snackbar.open('Error al enviar el archivo', 'OK', { duration: 5000 });
       }
     );
   }

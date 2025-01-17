@@ -21,7 +21,7 @@
       </ng-container>
     </div>
     <vex-loading-app
-      *ngIf="!(isExistDataInformations$ | async)"
+      *ngIf="(isExistDataInformations$ | async) === false"
       #vexSplashScreen
       idLoading="vexSplashScreen"
       [showImage]="true"></vex-loading-app>

@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
-import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { lastValueFrom, Observable } from 'rxjs';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -48,6 +48,7 @@ import { AddEditInformationDataI, EditInformationAddressComponent } from './edit
 import { TypeInformation } from '../../../interfaces/content-info';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-information-addresses-property',
@@ -61,7 +62,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -73,7 +73,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    VexHighlightDirective,
     MatTableModule,
     MatSortModule,
     NgClass,
@@ -85,6 +84,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatCheckboxModule,
     MatExpansionModule,
     MatDialogModule,
+    SweetAlert2Module
   ],
   templateUrl: './information-addresses-property.component.html',
   styleUrl: './information-addresses-property.component.scss'
@@ -100,6 +100,7 @@ export class InformationAddressesPropertyComponent
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() editable? = true;
 
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
   page: number = PAGE;
@@ -113,7 +114,9 @@ export class InformationAddressesPropertyComponent
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
+  // @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
+  @ViewChild('confirmDialog', { static: true }) confirmDialog!: SwalComponent;
+
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private snackBar = inject(MatSnackBar);
   constructor(
@@ -136,8 +139,7 @@ export class InformationAddressesPropertyComponent
     if (
       this.typeInformation &&
       this.typeInformation === TYPEINFORMATION_VISUAL
-    ) {
-    }
+    )
 
     this.informationPropertyService.reloadTableStarted$.subscribe(value=>{
       if(value){
@@ -153,7 +155,7 @@ export class InformationAddressesPropertyComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     const { currentValue: typeInformation } = changes['typeInformation'];
-    if (typeInformation === TYPEINFORMATION_VISUAL) {
+    if (typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
       this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
@@ -178,26 +180,45 @@ export class InformationAddressesPropertyComponent
   }
 
   deleteInformations(basicInformationAddress: BasicInformationAddress): void {
-    const dialogRef = this.dialog.open(this.confirmDialog);
-
-    dialogRef.afterClosed().subscribe(async (data: any) => {
-      if (data === 'delete' && basicInformationAddress.direccionId) {
+    this.confirmDialog.fire().then(async (result) => {
+      if (result.isConfirmed) {
         let msg = 'Información eliminada con éxito';
         try {
           await lastValueFrom(
-            this.informationPropertyService.deleteBasicInformationPropertyAddress(
-              basicInformationAddress.direccionId
-            )
-          );
-          this.dataSource.data = this.dataSource.data.filter((row: BasicInformationAddress) => {
-            return row.direccionId !== basicInformationAddress.direccionId;
-          });
-        } catch (e) {
-          msg = 'Error, no se pudo eliminar la dirección';
-        }
-        this.snackBar.open(msg, 'CLOSE', { duration: 2000 });
+            this.informationPropertyService.deleteBasicInformationPropertyAddress(basicInformationAddress.direccionId as string)
+            );
+            this.dataSource.data = this.dataSource.data.filter((row: BasicInformationAddress) => {
+              return row.direccionId !== basicInformationAddress.direccionId;
+            });
+          } catch (e) {
+            msg = 'Error, no se pudo eliminar la dirección';
+            console.error(e);
+          }
+          this.snackBar.open(msg, 'CLOSE', { duration: 5000 });
       }
     });
+
+    // const dialogRef = this.dialog.open(this.confirmDialog);
+
+    // dialogRef.afterClosed().subscribe(async (data: any) => {
+    //   if (data === 'delete' && basicInformationAddress.direccionId) {
+    //     let msg = 'Información eliminada con éxito';
+    //     try {
+    //       await lastValueFrom(
+    //         this.informationPropertyService.deleteBasicInformationPropertyAddress(
+    //           basicInformationAddress.direccionId
+    //         )
+    //       );
+    //       this.dataSource.data = this.dataSource.data.filter((row: BasicInformationAddress) => {
+    //         return row.direccionId !== basicInformationAddress.direccionId;
+    //       });
+    //     } catch (e) {
+    //       msg = 'Error, no se pudo eliminar la dirección';
+    //       console.error(e);
+    //     }
+    //     this.snackBar.open(msg, 'CLOSE', { duration: 5000 });
+    //   }
+    // });
   }
 
   toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
@@ -227,7 +248,7 @@ export class InformationAddressesPropertyComponent
     this.informationPropertyService
       .getBasicInformationPropertyAddresses(this.schema, this.baunitId)
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationAddress[]) =>{
           this.filterAddressMain(result);
           this.captureInformationSubscribe(result);
@@ -237,7 +258,7 @@ export class InformationAddressesPropertyComponent
 
   public filterAddressMain(result: BasicInformationAddress[]){
     const direccionesPrincipales = result.filter(d => d.esDireccionPrincipal);
-  
+
     // Verifica que solo haya una dirección con "esDireccionPrincipal"
     if (direccionesPrincipales.length === 0) {
       this.hasMainAddress = false;  // Desbloquea
@@ -247,7 +268,7 @@ export class InformationAddressesPropertyComponent
 
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.dataSource.data = [];
   }
 

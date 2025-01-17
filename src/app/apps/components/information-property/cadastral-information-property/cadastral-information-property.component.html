@@ -60,6 +60,7 @@
       [schema]="schema"
       [executionId]="executionId"
       [typeInformation]="typeInformation"
+      [editable]="editable.GNR"
       (propertyRegistryOffice)="propertyRegistryOffice = $event"
       (propertyRegistryNumber)="propertyRegistryNumber = $event"
       @fadeInUp
@@ -83,9 +84,11 @@
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
+      [editable]="editable.FNA"
       @fadeInUp
       [typeInformation]="typeInformation"
-    ></vex-administrative-sources>
+    >
+    </vex-administrative-sources>
     <super-notariado-property
       [id]="'superNotariadoPropertyComponent' + schema"
       [propertyRegistryNumber]="propertyRegistryOffice"
@@ -103,9 +106,23 @@
         [schema]="schema"
         [executionId]="executionId"
         [typeInformation]="typeInformation"
+        [editable]="editable.PRO"
         @fadeInUp
       ></vex-information-property-owners>
     }
+    <vex-information-addresses-property
+      [id]="'basicInformationpropertyAddresses' + schema"
+      #propertyAddressesComponent{{schema}}
+      [expandedComponent]="false"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      @fadeInUp
+      [typeInformation]="typeInformation"
+      [editable]="editable.DIR"
+    ></vex-information-addresses-property>
+
+
     <vex-information-addresses-property
       [id]="'basicInformationpropertyAddresses' + schema"
       #propertyAddressesComponent{{schema}}
@@ -125,6 +142,7 @@
       [executionId]="executionId"
       @fadeInUp
       [typeInformation]="typeInformation"
+      [editable]="editable.CNS"
     ></vex-information-constructions-property>
     <vex-property-appraisal-information
       [id]="'dataIpropertyAppraisalInformationComponent' + schema"
@@ -146,6 +164,17 @@
       [typeInformation]="typeInformation"
       @fadeInUp
     ></vex-information-zones-property>
+    <vex-photos
+    #photosComponent{{schema}}
+    [id]="'photos' + schema"
+    [expandedComponent]="false"
+    [baunitId]="baunitId"
+    [schema]="schema"
+    [executionId]="executionId"
+    @fadeInUp
+    [typeInformation]="typeInformation"
+  >
+  </vex-photos>
   </div>
 </mat-dialog-content>
 

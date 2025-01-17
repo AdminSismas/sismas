@@ -51,22 +51,27 @@
       <form [formGroup]="form">
         <div
           (click)="seeRutList()"
-          class="vex-sidenav-search relative"
+          class="relative"
           matRipple
-          matRippleColor="rgb(var(--vex-color-primary-600), 0.1)"
+          
         >
-          <mat-form-field class="tap-search">
-            <mat-label style="color: white">Búsqueda rápida</mat-label>
-            <!-- <mat-icon svgIcon="mat:search"></mat-icon> -->
-            <input
-              style="color: white"
-              class="tap-search"
-              matInput
-              formControlName="searchRoute"
-              type="text"
-              [matAutocomplete]="routeSearch"
-            />
-          </mat-form-field>
+        <mat-form-field
+        id="unique-search-field"
+        class="vex-sidenav-search unique-search"
+        appearance="outline"
+      >
+        <mat-icon matPrefix class="search-icon">search</mat-icon>
+        <input
+          matInput
+          formControlName="searchRoute"
+          placeholder="Búsqueda rápida"
+          type="text"
+          [matAutocomplete]="routeSearch"
+        />
+      </mat-form-field>
+      
+        
+        
 
           <mat-autocomplete
             autoActiveFirstOption
