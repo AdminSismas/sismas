@@ -112,11 +112,14 @@ export class BasicPropertyInformationComponent implements OnInit {
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
       width: '60%',
-      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION}
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION},
+      disableClose: true // Ensure this is set to false or omitted
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
-          setTimeout(() => this.data = result, 300);
+          if(result && result?.baunitIdE) {
+            setTimeout(() => this.data = result, 300);
+          }
         }
       });
       console.log(this.data, 'servicio con datos nuevos');
