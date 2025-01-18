@@ -1,0 +1,100 @@
+<form [formGroup]="form">
+  <div class="flex items-center" mat-dialog-title>
+    <h2
+      class="headline m-0 flex-auto">
+      Buscar certificado
+    </h2>
+
+    <!-- <button
+      [matMenuTriggerFor]="settingsMenu"
+      class="text-secondary"
+      mat-icon-button
+      type="button">
+      <mat-icon svgIcon="mat:more_vert"></mat-icon>
+    </button> -->
+
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="text-border"></mat-divider>
+  <mat-dialog-content class="flex flex-col overflow-hidden">
+
+
+
+      
+        <vex-page-layout class="overflow-hidden">
+          <vex-page-layout-content class="container-fluid p-0 overflow-hidden" style="padding-bottom: 0px;">
+            <!--Búsqueda por círculo - matrícula / matrícula -->
+            <div class="flex flex-col sm:flex-row">
+              <vex-input
+                cssClasses="sm:ml-2 sm:mr-2 flex-1"
+                label="Matrícula"
+                type="text"
+                idComboInput="registrationID"
+                formControlNameInput="registration"
+                icon="mat:assignment"
+              ></vex-input>
+              <div class="sm:ml-2 sm:mr-2 flex-auto">
+                <button color="primary" mat-raised-button type="button"
+                        (click)="searchRegistrationNumber()">
+                  <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+                </button>
+          
+              </div>
+            </div>
+            <!-- Búsqueda por documento y tipo -->
+            <div class="flex flex-col sm:flex-row gap-4">
+              <vex-combox-colletion
+                idComboCollection="typeNumberDocument"
+                label="Tipo de documento"
+                formControlNameCombobox="domIndividualTypeNumber"
+                typeDomainName="IndividualTypeNumber"
+                placeholderDomainName="Tipo de documento"
+              ></vex-combox-colletion>
+
+              <vex-input
+                cssClasses="sm:ml-2 sm:mr-2 flex-1"
+                label="Documento"
+                type="text"
+                idComboInput="numberID"
+                formControlNameInput="number"
+                icon="mat:assignment"
+              ></vex-input>
+
+              <div class="sm:ml-2 sm:mr-2 flex-auto">
+                <button color="primary" mat-raised-button type="button"
+                        (click)="searchByDocumentAndTypeNumber()">
+                  <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+                </button>
+              </div>
+            </div>
+           
+
+          </vex-page-layout-content>
+        </vex-page-layout>
+    
+
+
+  </mat-dialog-content>
+</form>
+<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+  <button mat-menu-item>
+    <mat-icon svgIcon="mat:print"></mat-icon>
+    <span>Imprimir</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon svgIcon="mat:download"></mat-icon>
+    <span>Exportar</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon svgIcon="mat:delete"></mat-icon>
+    <span>Borrar</span>
+  </button>
+</mat-menu>
