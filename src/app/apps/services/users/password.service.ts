@@ -14,11 +14,11 @@ export class PasswordService {
     private http: HttpClient
   ) { }
 
-  changePassword(username: string, lastPassword: string, newPassword: string ): Observable<any> {
-    const url = `${this.base_url}/${username}`;
+  changePassword(userId: number, lastPassword: string, newPassword: string ): Observable<object> {
+    const url = `${this.base_url}/${userId}`;
 
     const body = { lastPassword, newPassword };
 
-    return this.http.put<any>(url, body);
+    return this.http.put<object>(url, body);
   }
 }

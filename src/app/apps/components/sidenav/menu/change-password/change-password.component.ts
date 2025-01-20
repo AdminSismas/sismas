@@ -18,12 +18,6 @@ import { PasswordService } from 'src/app/apps/services/users/password.service';
 import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 
-interface FormErrors {
-  required: boolean;
-  samePassword: boolean;
-  passwordMismatch: boolean;
-}
-
 @Component({
   selector: 'vex-change-password',
   standalone: true,
@@ -80,7 +74,7 @@ export class ChangePasswordComponent implements OnInit {
         this.user = res;
         this.fullName = res.individual.fullName;
       }
-    })
+    });
   }
 
   changePassword(): void {
@@ -119,7 +113,7 @@ export class ChangePasswordComponent implements OnInit {
 
   invalidInput(control: string): boolean {
     const { invalid, touched, errors } = this.form.controls[control];
-    let response: boolean = false;
+    let response = false;
 
     if (!invalid || !touched) {
       return response;
@@ -161,7 +155,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   changePasswordService(): void {
-    const username = this.user.username;
+    const username = this.user.userId;
     const lastPassword = this.form.get('lastPassword')?.value;
     const newPassword = this.form.get('newPassword')?.value;
 
