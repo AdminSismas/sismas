@@ -23,7 +23,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
-export interface AddEditInformationDocumentAssociated {
+// AddEditInformationDocumentAssociated
+export interface AddOutputFormats{
   type: 'edit' | 'new';
   documentAssociated: OutFormatModel | undefined;
   outTemplateId: number | undefined;
@@ -56,13 +57,13 @@ export interface AddEditInformationDocumentAssociated {
     MatFormFieldModule,
     InputComponent,
   ],
-  templateUrl: './document-associated-edit-update.component.html',
+  templateUrl: './output-formats-edit-update.component.html',
   styleUrls: [
-    './document-associated-edit-update.component.scss',
+    './output-formats-edit-update.component.scss',
   ],
 })
-export class DocumentAssociatedEditUpdateComponent implements OnInit {
- readonly defaults = inject<AddEditInformationDocumentAssociated>(MAT_DIALOG_DATA);
+export class OutputFormatsEditUpdateComponent implements OnInit {
+ readonly defaults = inject<AddOutputFormats>(MAT_DIALOG_DATA);
   userSesion:any | null = null;
   form = this.fb.group({
     content: new UntypedFormControl('', [Validators.required]),
@@ -89,7 +90,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
 
    constructor(
       // @Inject(MAT_DIALOG_DATA) public defaults: any,
-      private dialogRef: MatDialogRef<DocumentAssociatedEditUpdateComponent>,
+      private dialogRef: MatDialogRef<AddOutputFormats>,
       private fb: FormBuilder,
       private sanitizer: DomSanitizer,
        private userService:UserService
