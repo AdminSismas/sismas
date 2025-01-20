@@ -35,6 +35,7 @@ import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { PhotosComponent } from '../photos/photos.component';
+import { AlertsComponent } from '../alerts/alerts.component';
 import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
 import {
@@ -86,6 +87,7 @@ import { TypeInformation } from '../../../interfaces/content-info';
     InformationUnitPropertyComponent,
     AdministrativeSourcesComponent,
     PhotosComponent,
+    AlertsComponent,
     SuperNotariadoPropertyComponent
   ]
 })
@@ -138,6 +140,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
   private informationZonesPropertyComponent?: ElementRef;
   @ViewChild(PhotosComponent, { read: ElementRef, static: false })
   private photosComponent?: ElementRef;
+
+  @ViewChild(AlertsComponent, { read: ElementRef, static: false })
+  private alertsComponent?: ElementRef;
 
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
