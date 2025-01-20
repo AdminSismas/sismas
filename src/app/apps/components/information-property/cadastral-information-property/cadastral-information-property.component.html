@@ -163,6 +163,17 @@
     [typeInformation]="typeInformation"
   >
   </vex-photos>
+  <vex-alerts
+  #alertsComponent{{schema}}
+  [id]="'alerts' + schema"
+  [expandedComponent]="false"
+  [baunitId]="baunitId"
+  [schema]="schema"
+  [executionId]="executionId"
+  @fadeInUp
+  [typeInformation]="typeInformation"
+>
+</vex-alerts>
   </div>
 </mat-dialog-content>
 

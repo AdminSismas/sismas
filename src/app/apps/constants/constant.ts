@@ -562,6 +562,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
   {
     label: 'Fotos',
     fragment: 'photosComponent'
+  },
+  {
+    label: 'Alertas',
+    fragment: 'alertsComponent'
   }
 ];
 
