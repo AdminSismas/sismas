@@ -362,6 +362,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     console.log(proExecutionE);
     this.bpmCoreService.bpmOperationStartProcess(proExecutionE).subscribe({
       next: (proTaskE: ProTaskE) => {
+        console.log(proTaskE);
         if (proTaskE?.executionId) {
           this.infoGeneralService.setFatherURL(PANEL_ASSIGNED_TASKS);
           this.router
@@ -377,6 +378,16 @@ export class InitiateFilingProcedureComponent implements OnInit {
             }
           );
           return;
+        }
+
+        if (proTaskE?.proTask) {
+          if (proTaskE.proTask.taskId! < 0) {
+            this.router.navigate([environment.myWork_tasksPanel]);
+            this.snackBar.open(proTaskE.proTask.flowName!, 'Aceptar', {
+              duration: 5000
+            });
+            return;
+          }
         }
         this.snackBar.open('ERROR, DESCONOCIDO');
       },
