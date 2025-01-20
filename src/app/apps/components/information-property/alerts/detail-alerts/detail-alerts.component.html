@@ -3,7 +3,7 @@
   mat-dialog-title
 >
   <h4 class="subheading-1 m-0 flex-auto">
-    Propietario {{ owner?.individual?.fullName }}
+    Detalles de la Alerta #{{ alert?.alertBaunitId }}
   </h4>
   <button
     class="text-secondary"
@@ -18,109 +18,38 @@
 <mat-dialog-content
   class="grid grid-flow-row gap-y-4 gap-x-6 grid-cols-2 overflow-x-hidden lg:px-8"
 >
-  <!-- Tipo Interesado -->
+  <!-- Tipo de Alerta -->
   <div class="flex flex-row gap-4">
-    <span class="text-black text-sm">Tipo interesado:</span>
-    @if (owner && owner.individual && owner.individual.domIndividualType) {
-      <h2 class="text-sm">{{ owner.individual.domIndividualType }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
+    <span class="text-black text-sm">Tipo de Alerta:</span>
+    <h2 class="text-sm">{{ alert?.domAlertType || 'No disponible' }}</h2>
   </div>
-  <!-- Tipo Documento -->
+  <!-- Estado -->
   <div class="flex flex-row gap-4">
-    <span class="text-black text-sm">Tipo Documento:</span>
-    @if (
-      owner && owner.individual && owner.individual.domIndividualTypeNumber
-    ) {
-      <h2 class="text-sm">{{ owner.individual.domIndividualTypeNumber }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
+    <span class="text-black text-sm">Estado:</span>
+    <h2 class="text-sm">{{ alert?.alertState || 'No disponible' }}</h2>
   </div>
-  <!-- Número -->
+  <!-- Entidad Responsable -->
   <div class="flex flex-row gap-4">
-    <span class="text-black text-sm">Número:</span>
-    @if (owner && owner.individual && owner.individual.number) {
-      <h2 class="text-sm">{{ owner.individual.number }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
+    <span class="text-black text-sm">Entidad Responsable:</span>
+    <h2 class="text-sm">{{ alert?.alertEntityResponsible || 'No disponible' }}</h2>
   </div>
-  <!-- Sexo -->
+  <!-- Fecha de Inicio -->
   <div class="flex flex-row gap-4">
-    <span class="text-black text-sm">Sexo:</span>
-    @if (owner && owner.individual && owner.individual.domIndividualSex) {
-      <h2 class="text-sm">{{ owner.individual.domIndividualSex }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
+    <span class="text-black text-sm">Fecha de Inicio:</span>
+    <h2 class="text-sm">
+      {{ alert?.alertStartAt ? (alert.alertStartAt ) : 'No disponible' }}
+    </h2>
   </div>
-  <!-- Nombre 1 -->
-  <div class="flex flew-row gap-4">
-    <span class="text-black text-sm">Nombre 1:</span>
-    @if (owner && owner.individual && owner.individual.firstName) {
-      <h2 class="text-sm">{{ owner.individual.firstName }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
-  </div>
-  <!-- Nombre 2 -->
-  <div class="flex flew-row gap-4">
-    <span class="text-black text-sm">Nombre 2:</span>
-    @if (owner && owner.individual && owner.individual.middleName) {
-      <h2 class="text-sm">{{ owner.individual.middleName }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
-  </div>
-  <!-- Apellido 1 -->
+  <!-- Fecha de Fin -->
   <div class="flex flex-row gap-4">
-    <span class="text-black text-sm">Apellido 1:</span>
-    @if (owner && owner.individual && owner.individual.lastName) {
-      <h2 class="text-sm">{{ owner.individual.lastName }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
+    <span class="text-black text-sm">Fecha de Fin:</span>
+    <h2 class="text-sm">
+      {{ alert?.alertFinishAt ? (alert.alertFinishAt ) : 'No disponible' }}
+    </h2>
   </div>
-  <!-- Apellido 2 -->
-  <div class="flex flex-row gap-4">
-    <span class="text-black text-sm">Apellido 2:</span>
-    @if (owner && owner.individual && owner.individual.otherLastName) {
-      <h2 class="text-sm">{{ owner.individual.otherLastName }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
-  </div>
-  <!-- Grupo Étnico -->
-  <div class="flex flex-row gap-4">
-    <span class="text-black text-sm">Grupo Étnico:</span>
-    @if (
-      owner && owner.individual && owner.individual.domIndividualEthnicGroup
-    ) {
-      <h2 class="text-sm">{{ owner.individual.domIndividualEthnicGroup }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
-  </div>
-  <!-- Vacio -->
-  <div></div>
-  <!-- Razón Social -->
-  <div class="flex flex-row gap-6 col-span-2">
-    <span class="text-black text-sm">Razón social:</span>
-    @if (owner && owner.individual && owner.individual.companyName) {
-      <h2 class="text-sm">{{ owner.individual.companyName }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
-  </div>
-  <!-- Nombre completo -->
-  <div class="flex flex-row gap-6 col-span-2">
-    <span class="text-black text-sm">Nombre completo:</span>
-    @if (owner && owner.individual && owner.individual.fullName) {
-      <h2 class="text-sm">{{ owner.individual.fullName }}</h2>
-    } @else {
-      <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
-    }
+  <!-- Anotación -->
+  <div class="flex flex-row gap-4 col-span-2">
+    <span class="text-black text-sm">Anotación:</span>
+    <h2 class="text-sm">{{ alert?.alertAnotation || 'No disponible' }}</h2>
   </div>
 </mat-dialog-content>

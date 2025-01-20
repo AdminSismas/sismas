@@ -10,8 +10,6 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from '../../../../constants/constant';
-import { InfoOwners } from '../../../../interfaces/information-property/info-owners';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -36,30 +34,26 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
     MatDividerModule,
     MatIconModule,
     MatMenuModule,
-    MatDialogContent
+    MatDialogContent,
   ],
   templateUrl: './detail-alerts.component.html',
-  styleUrl: './detail-alerts.component.scss'
+  styleUrl: './detail-alerts.component.scss',
 })
 export class DetailAlertsComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public owner: InfoOwners | undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @Inject(MAT_DIALOG_DATA) public alert: any | undefined,
     private dialogRef: MatDialogRef<DetailAlertsComponent>,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    if (this.owner === null || this.owner === undefined) {
+    if (this.alert === null || this.alert === undefined) {
       this.close();
     }
   }
 
-
   close(): void {
     this.dialogRef.close();
   }
-
-  protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
-  protected readonly INDIVIDUAL_TYPE_NUMBER = INDIVIDUAL_TYPE_NUMBER;
 }

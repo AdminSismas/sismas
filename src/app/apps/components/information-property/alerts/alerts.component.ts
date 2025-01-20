@@ -179,24 +179,29 @@ export class AlertsComponent implements OnInit, AfterViewInit {
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
-      // this.loadInformationPropertyOwners();
+      this.loadAlertsByBaunitId();
     }
   }
 
   
   loadAlertsByBaunitId(): void {
-    const baunitId = '2273084';
-    this.alertsService.getAlertsByBaunitId(baunitId).subscribe(
+    if (!this.baunitId) {
+      console.warn('baunitId no proporcionado. No se pueden cargar las alertas.');
+      return;
+    }
+  
+    this.alertsService.getAlertsByBaunitId(this.baunitId).subscribe(
       (alerts) => {
         this.alerts = alerts;
         this.dataSource.data = this.alerts;
-        console.log('Alertas:', this.alerts);
+        // console.log('Alertas cargadas:', this.alerts);
       },
       (error) => {
         console.error('Error al obtener alertas:', error);
       }
     );
   }
+  
 
   openAlertDetails(alert: any): void {
     const dialogRef = this.matDialog.open(DetailAlertsComponent, {
