@@ -206,6 +206,7 @@ export class AlfaMainComponent implements OnInit {
   }
 
   getAlfaMain() {
+    console.log('Actualizando ...');
     this.alfaMainService
       .getListAlfaMainOperations(this.generateObjectPageSearchData())
       .subscribe({
