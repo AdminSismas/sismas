@@ -25,6 +25,7 @@ import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITI
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -52,7 +53,8 @@ import { EditBasicPropertyInformationComponent } from './edit-basic-property-inf
     MatCardModule,
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
-    DatePipe
+    DatePipe,
+    CurrencyLandsPipe
   ],
   templateUrl: './basic-property-information.component.html',
   styleUrl: './basic-property-information.component.scss'

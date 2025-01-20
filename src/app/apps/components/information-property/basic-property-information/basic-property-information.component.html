@@ -252,7 +252,7 @@
               data.cadastralAreaUnitbuilt 
             ) {
               <span class="text-sm"
-                >{{ data.cadastralAreaUnitbuilt + ' Mts2' }}
+                >{{ data.cadastralAreaUnitbuilt | currencyLands }}
               </span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
@@ -264,7 +264,7 @@
               data.cadAreaUnitbuiltCommon
             ) {
               <span class="text-sm">{{
-                data.cadAreaUnitbuiltCommon + ' Mts2' }}</span>
+                data.cadAreaUnitbuiltCommon | currencyLands }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }
@@ -275,7 +275,7 @@
               data.cadAreaUnitbuiltPrivate
             ) {
               <span class="text-sm">{{
-                data.cadAreaUnitbuiltPrivate + ' Mts2' }}</span>
+                data.cadAreaUnitbuiltPrivate | currencyLands }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }

@@ -50,15 +50,33 @@ export class EditBasicPropertyInformationComponent implements OnInit {
         {
         groupName:'Identificación del predio',
         fields:[
-              {
-              name: 'cadastralNumberFormat',
-              label: 'Número predial (F)',
-              collection: false,
-              type: 'text',
-              placeholder: 'Número predial (F)',
-              group:'',
-              groupName:'Identificación del predio'
-            },
+          {
+            name: 'propertyRegistryOffice',
+            label: 'Oficina de registro',
+            collection: false,
+            type: 'text',
+            placeholder: 'Oficina de registro',
+            group:'',
+            groupName:'Identificación del predio'
+          },
+          {
+            name: 'propertyRegistryNumber',
+            label: 'Número de registro',
+            collection: false,
+            type: 'text',
+            placeholder: 'Número de registro',
+            group:'',
+            groupName:'Identificación del predio'
+          },
+            //   {
+            //   name: 'cadastralNumberFormat',
+            //   label: 'Número predial (F)',
+            //   collection: false,
+            //   type: 'text',
+            //   placeholder: 'Número predial (F)',
+            //   group:'',
+            //   groupName:'Identificación del predio'
+            // },
             {
               name: 'cadastralNumber',
               label: 'Número predial',
@@ -78,24 +96,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
               groupName:'Identificación del predio'
             },
 // *********** estos dos campo contituyen matricula inmobiliaria**********
-            {
-              name: 'propertyRegistryOffice',
-              label: 'Oficina de registro',
-              collection: false,
-              type: 'text',
-              placeholder: 'Oficina de registro',
-              group:'',
-              groupName:'Identificación del predio'
-            },
-            {
-              name: 'propertyRegistryNumber',
-              label: 'Número de registro',
-              collection: false,
-              type: 'text',
-              placeholder: 'Número de registro',
-              group:'',
-              groupName:'Identificación del predio'
-            },
+           
+           
 // *********** estos dos campo contituyen matricula inmobiliaria**********
             {
               name: 'baunitIdOrigin',
@@ -237,49 +239,49 @@ export class EditBasicPropertyInformationComponent implements OnInit {
               },
           ]
         },
-        {
-          groupName:'Seguimientos y actualizaciones',
-          fields:[
-    // *****GRUPO "Seguimientos y actualizaciones" ****
+    //     {
+    //       groupName:'Seguimientos y actualizaciones',
+    //       fields:[
+    // // *****GRUPO "Seguimientos y actualizaciones" ****
 
-              {
-                name: 'cadastralLastEventAt',
-                label: 'Último evento el',
-                collection: false,
-                type: 'date',
-                placeholder: 'Último evento el',
-                group:'',
-                groupName:'Seguimientos y actualizaciones'
-              },
-              {
-                name: 'cadastralLastEventCode',
-                label: 'Número último evento',
-                collection: false,
-                type: 'text',
-                placeholder: 'Número último evento',
-                group:'',
-                groupName:'Seguimientos y actualizaciones'
-              },
-              {
-                name: 'updatedBy',
-                label: 'Actualizado por',
-                collection: false,
-                type: 'text',
-                placeholder: 'Actualizado por',
-                group:'',
-                groupName:'Seguimientos y actualizaciones'
-              },
-              {
-                name: 'updatedAt',
-                label: 'Actualizado el',
-                collection: false,
-                type: 'date',
-                placeholder: 'Actualizado el',
-                group:'',
-                groupName:'Seguimientos y actualizaciones'
-              }
-        ]
-      }
+    //           {
+    //             name: 'cadastralLastEventAt',
+    //             label: 'Último evento el',
+    //             collection: false,
+    //             type: 'date',
+    //             placeholder: 'Último evento el',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           },
+    //           {
+    //             name: 'cadastralLastEventCode',
+    //             label: 'Número último evento',
+    //             collection: false,
+    //             type: 'text',
+    //             placeholder: 'Número último evento',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           },
+    //           {
+    //             name: 'updatedBy',
+    //             label: 'Actualizado por',
+    //             collection: false,
+    //             type: 'text',
+    //             placeholder: 'Actualizado por',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           },
+    //           {
+    //             name: 'updatedAt',
+    //             label: 'Actualizado el',
+    //             collection: false,
+    //             type: 'date',
+    //             placeholder: 'Actualizado el',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           }
+    //     ]
+    //   }
       
     
   ];
@@ -328,12 +330,12 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // this.form.get('cadastralNumberFormat')?.disable();
+    this.form.get('cadastralNumberFormat')?.disable();
 
-    // this.form.get('cadastralLastEventAt')?.disable();
-    // this.form.get('cadastralLastEventCode')?.disable();
-    // this.form.get('updatedBy')?.disable();
-    // this.form.get('updatedAt')?.disable();
+    this.form.get('cadastralLastEventAt')?.disable();
+    this.form.get('cadastralLastEventCode')?.disable();
+    this.form.get('updatedBy')?.disable();
+    this.form.get('updatedAt')?.disable();
 
     this.form.reset(this.data);
   }
