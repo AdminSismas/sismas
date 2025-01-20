@@ -96,7 +96,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
               groupName:'Identificación del predio'
             },
 // *********** estos dos campo contituyen matricula inmobiliaria**********
-           
+
            
 // *********** estos dos campo contituyen matricula inmobiliaria**********
             {

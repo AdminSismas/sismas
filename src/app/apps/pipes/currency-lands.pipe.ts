@@ -19,13 +19,13 @@ export class CurrencyLandsPipe implements PipeTransform {
                       typeof value === 'string' ? parseFloat(value.replace(/[^0-9.-]+/g, '')) : value;
 
     // Formatear el valor con puntos como separadores de miles y comas como separadores decimales
-    const formattedValue = numericValue.toLocaleString('es-ES', {
+    const formattedValue = numericValue.toLocaleString('es-CO', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
 
     // Agregar "Mts²" al final del valor formateado si no lo contiene
-    return hasMts2 ? `${formattedValue} Mts²` : `${formattedValue} Mts²`;
+    return hasMts2 ? value : `${formattedValue} Mts2`;
   }
 
 }
