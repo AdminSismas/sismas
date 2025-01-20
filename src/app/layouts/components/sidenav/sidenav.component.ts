@@ -129,10 +129,14 @@ export class SidenavComponent implements OnInit {
     this.searchRouteTouch();
 
     this.navigationLoaderService.taskCounters$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
-
-    this.navigationLoaderService.refreshCounters();
+      .pipe(
+        takeUntil(this.destroy$),
+        distinctUntilChanged()
+      )
+      .subscribe(() => {
+        this.navigationService.refreshNavigationItems();
+      });
+      this.navigationLoaderService.refreshCounters();
   }
 
   ngOnDestroy(): void {

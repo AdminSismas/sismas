@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
@@ -78,6 +79,7 @@ import { ProExecutionE } from '../../../../apps/interfaces/bpm/pro-execution-e';
 import { ProTaskE } from '../../../../apps/interfaces/pro-task-e';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
 import { SendInformationRegisterService } from '../../../../apps/services/register-procedure/send-information-register.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-initiate-filing-procedure',
@@ -120,7 +122,7 @@ import { SendInformationRegisterService } from '../../../../apps/services/regist
     BasicParticipantTableComponent,
     FluidMinHeightDirective,
     FluidMinHeightDirective,
-    ProcessCardComponent,
+    ProcessCardComponent
   ],
   templateUrl: './initiate-filing-procedure.component.html',
   styleUrl: './initiate-filing-procedure.component.scss'
@@ -203,6 +205,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     private bpmCoreService: BpmCoreService,
     private infoGeneralService: SendInfoGeneralService
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     this.destroyRef.onDestroy(() => {});
   }
 
@@ -291,7 +294,6 @@ export class InitiateFilingProcedureComponent implements OnInit {
       return;
     }
     this.bpmProcessService.getListDocumentsByProcessId(processId).subscribe({
-      error: () => {},
       next: (result: string[]) => {
         if (!result || result?.length <= 0) {
           this.snackBar.open(
@@ -317,7 +319,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.propertyProcessingFormGroup.get('selectBpmProcess')?.value;
     if (!processId) {
       this.snackBar.open(
-        'No se encontro proceso seleccionado, por favor revisar.',
+        'No se encontró un proceso seleccionado, por favor revisar.',
         undefined,
         { duration: 5000 }
       );
@@ -326,7 +328,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     const existeParticipants = this.participants.length > 0;
     if (!existeParticipants) {
       this.snackBar.open(
-        'No se encontro participantes agregados al proceso, por favor revisar.',
+        'No se encontró participantes agregados al proceso, por favor revisar.',
         undefined,
         { duration: 5000 }
       );
@@ -335,7 +337,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     const metadataList = this.createListMetadataBpm();
     if (!metadataList || metadataList.length <= 1) {
       this.snackBar.open(
-        'Error no se encontro radicado auxiliar o identificado de la unidad predial, por favor revisar.',
+        'Error no se encontró radicado auxiliar o identificado de la unidad predial, por favor revisar.',
         undefined,
         { duration: 5000 }
       );
@@ -345,7 +347,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     const attachmentsList = await this.createListAttachmentsList();
     if (!attachmentsList || attachmentsList.length <= 0) {
       this.snackBar.open(
-        'Error no se encontro documentos asociados al proceso, por favor revisar.',
+        'Error no se encontró documentos asociados al proceso, por favor revisar.',
         undefined,
         { duration: 5000 }
       );
@@ -364,7 +366,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
           this.infoGeneralService.setFatherURL(PANEL_ASSIGNED_TASKS);
           this.router
             .navigate([`${environment.bpm_bpmCore}`, proTaskE.executionId])
-            .then(() => {});
+            .then();
           this.infoGeneralService.setInfoProTaskE(proTaskE);
 
           this.snackBar.open(
@@ -378,7 +380,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
         }
         this.snackBar.open('ERROR, DESCONOCIDO');
       },
-      error: (err: any) => {
+      error: (err: HttpErrorResponse) => {
         console.log(err);
         this.snackBar.open(err?.error, 'CLOSE', {
           duration: 5000,
@@ -420,9 +422,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
-      this.router
-        .navigate([`${environment.myWork_cadastralSearch}`])
-        .then(() => {});
+      this.router.navigate([`${environment.myWork_cadastralSearch}`]).then();
     }
   }
 
@@ -438,7 +438,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   }
 
   getOptionText(option: any): string {
-    return option ? option.dispname : null;
+    return option ? option.dispname : '';
   }
 
   showBpmProcess(value = false) {

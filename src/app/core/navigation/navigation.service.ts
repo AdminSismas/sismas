@@ -22,7 +22,11 @@ export class NavigationService {
 
   constructor(
     private readonly navigationLoaderService: NavigationLoaderService
-  ) {}
+  ) {
+    this.navigationLoaderService.taskCounters$.subscribe(() => {
+      this.refreshNavigationItems();
+    });
+  }
 
   triggerOpenChange(item: NavigationDropdown) {
     this._openChangeSubject.next(item);
@@ -43,5 +47,13 @@ export class NavigationService {
 
   isSubheading(item: NavigationItem): item is NavigationSubheading {
     return item.type === 'subheading';
+  }
+
+  refreshNavigationItems() {
+    const currentItems = this.navigationMenuSubject.value;
+    if (currentItems.length > 0) {
+      // Forzar una nueva emisión de los items actuales
+      this.navigationMenuSubject.next([...currentItems]);
+    }
   }
 }
