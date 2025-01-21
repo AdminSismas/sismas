@@ -32,6 +32,8 @@ export class SearchData {
   block?: string | null | undefined;
   sidewalk?: string | null | undefined;
 
+  baunitIdE?: string | null | undefined;
+
 
   constructor(content?: any) {
     if (content.registration) this.registration = content.registration.trim();
@@ -51,5 +53,6 @@ export class SearchData {
     if (content.neighborhood) this.neighborhood = content.neighborhood.trim();
     if (content.block) this.block = content.block.trim();
     if (content.sidewalk) this.sidewalk = content.sidewalk.trim();
+    if (content.baunitIdE) this.baunitIdE = content.baunitIdE.trim();
   }
 }
