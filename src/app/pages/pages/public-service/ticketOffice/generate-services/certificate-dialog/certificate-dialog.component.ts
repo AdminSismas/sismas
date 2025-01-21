@@ -72,7 +72,7 @@ import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/ap
 })
 export class CertificateDialogComponent implements OnInit {
 
-  currentView: 'table' | 'search' | 'property' | 'document' = 'table';
+  currentView: 'table' | 'search' | 'property' | 'document' = 'search';
   title = 'Certificados';
   searchData: any = {};
   selectedProperty: any;

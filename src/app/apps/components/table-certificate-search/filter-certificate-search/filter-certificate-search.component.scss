@@ -5,3 +5,13 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-f
   transform: translateY(-1.1em) scale(.75);
   width: 133.33333%;
 }
+
+
+.mainClass {
+  @apply sm:ml-2 sm:mr-2 flex-1
+}
+
+mat-label {
+  padding-left: 40px;
+  padding-right: 40px;
+}

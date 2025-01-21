@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -92,6 +92,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   @Output() search = new EventEmitter<void>();
   @Output() viewProperty = new EventEmitter<any>();
   @Output() viewDocument = new EventEmitter<any>();
+  @Input() searchedData: any; // Datos de búsqueda recibidos del diálogo principal
 
   // Lógica para los botones
   onSearchClick(): void {
@@ -139,6 +140,18 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService
   ) {
+  }
+// Datos de búsqueda recibidos del diálogo principal
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['searchData'] && this.searchData) {
+      this.applySearchFilter(this.searchData);
+    }
+  }
+
+  applySearchFilter(data: any): void {
+    console.log('Aplicando filtro en la tabla con los datos:', data);
+    // Aquí puedes implementar la lógica para filtrar la tabla
   }
 
   get visibleColumns() {

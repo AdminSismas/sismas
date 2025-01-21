@@ -96,7 +96,7 @@ export class CertificateGridComponent {
        this.dialog.open(CertificateDialogComponent, {
         data: certificate,
         width: '1200px',
-        height: '570px'
+        height: '370px'
       });
     
     } else {
@@ -109,20 +109,22 @@ export class CertificateGridComponent {
 
     // Lógica para obtener las pólizas
     this.certificates = [
+
+      
       {
         id: 1,
-        name: 'Ficha catastral',
+        name: 'No poseer bien',
         price: 7.337,
         icon: 'mat:insert_drive_file'
       },
 
-      {
-        id: 2,
-        name: 'Plano predial catastral',
-        price: 32.899,
-        icon:'mat:map'
+      // {
+      //   id: 2,
+      //   name: 'Plano predial catastral',
+      //   price: 32.899,
+      //   icon:'mat:map'
         
-       },
+      //  },
       
      
     ];

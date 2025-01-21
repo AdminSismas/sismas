@@ -1,6 +1,6 @@
 import { Component, DestroyRef, EventEmitter, inject, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,7 +19,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/sn
 import { ComboxColletionComponent } from '../../combox-colletion/combox-colletion.component';
 import { InputComponent } from '../../input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import {
   TerritorialOrganizationService
@@ -50,6 +50,14 @@ import { NationalPredialNumber } from '../../../interfaces/national-predial-numb
 import { divideNpn } from '../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../constants/constantLabels';
 import { CharacterValidateService } from 'src/app/apps/services/character-validate.service';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { InformationPersonService } from 'src/app/apps/services/bpm/information-person.service';
+import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
+import { ViewFileDocumentManagementComponent } from '../../view-file-document-management/view-file-document-management.component';
+import { ViewCertificateManagementComponent } from '../../view-certificate-management/view-certificate-management.component';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'vex-filter-certificate-search',
@@ -86,6 +94,8 @@ export class FilterCertificateSearchComponent implements OnInit {
   protected readonly LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = LIMPIAR_CAMPOS_SELECCION_MUNICIPAL;
   protected readonly LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = LIMPIAR_CAMPOS_MULTIPLES_CAMPOS;
 
+  isFullNameEditable = false;
+
 
   optionsDeparments: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
@@ -95,7 +105,7 @@ export class FilterCertificateSearchComponent implements OnInit {
   optionsNeighborhoods: Neighborhood[] = [];
   optionsBlocks: Block[] = [];
   optionsSidewalks: Sidewalk[] = [];
-
+  person!: InfoPerson | null;
   form: FormGroup = this.fb.group({
 
 
@@ -126,6 +136,7 @@ export class FilterCertificateSearchComponent implements OnInit {
     middleName: this.defaults?.middleName ?? '',
     lastName: this.defaults?.lastName ?? '',
     companyName: this.defaults?.companyName ?? '',
+   
 
     // Municipal Selection
     department: this.defaults?.department ?? '',
@@ -157,7 +168,9 @@ export class FilterCertificateSearchComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
-    private fieldFormatterService: CharacterValidateService
+    private fieldFormatterService: CharacterValidateService,
+    private personService: InformationPersonService,
+    private dialog: MatDialog,
   ) {
   }
 
@@ -180,6 +193,8 @@ export class FilterCertificateSearchComponent implements OnInit {
     );
   }
 
+  
+
   searchByDocumentAndTypeNumber() {
     const searchData = this.validateFilterSearchCadastral();
     if (searchData.number?.length > 1 && searchData.domIndividualTypeNumber?.length > 1) {
@@ -190,6 +205,26 @@ export class FilterCertificateSearchComponent implements OnInit {
       'No es posible la búsqueda por doumento y tipo de documento, datos no válidos',
       'CLOSE', 'end'
     );
+  }
+
+  viewFile(): void {
+    const documentNumber = this.form.get('number')?.value;
+    const documentType = this.form.get('domIndividualTypeNumber')?.value;
+    const fullName = this.form.get('firstName')?.value;
+  
+  
+  
+    const dialogRef = this.dialog.open(ViewCertificateManagementComponent, {
+      minWidth: '370px',
+      width: '98%',
+      height: '86%',
+      disableClose: true,
+      data: { documentNumber, documentType, fullName }
+    });
+  
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('The dialog was closed');
+    });
   }
 
   formatFieldValue() {
@@ -206,6 +241,8 @@ export class FilterCertificateSearchComponent implements OnInit {
       this.piso?.reset();
       this.unidadPredial?.reset();
   }
+
+  
 
 
 
@@ -308,7 +345,44 @@ export class FilterCertificateSearchComponent implements OnInit {
 
   }
 
+  findParticipant() {
+    const info = this.form.value;
+    if (!info.domIndividualTypeNumber || !info.number) {
+      this.snackBar.open(
+        'Ingresar tipo documento o número de documento',
+        undefined,
+        { duration: 5000 }
+      );
+      return;
+    }
 
+    this.personService
+      .getFindPersonByNumber(info.number, info.domIndividualTypeNumber)
+      .subscribe({
+        error: () => {
+          this.snackBar.open('Usuario no encontrado. Por favor, ingresa tu nombre completo.', 'Cerrar', { duration: 10000 });
+          this.enableFullNameInput();
+          this.form.get('firstName')?.patchValue('');
+         
+        },
+        next: (result: any) => {
+          this.captureInformationCadastralData(result);
+        },
+      });
+  }
+
+  captureInformationCadastralData(result: any): void {
+    if (result?.fullName) {
+      this.form.get('firstName')?.patchValue(result.fullName);
+      this.isFullNameEditable = false; 
+      this.form.get('firstName')?.disable();
+    }
+  }
+
+  enableFullNameInput(): void {
+    this.isFullNameEditable = true; 
+    this.form.get('firstName')?.enable();
+  }
 
   validateFilterSearchCadastral(): any {
     const searchData = this.form.value;
@@ -813,6 +887,12 @@ get unidadPredial(){
   get codigoCompleto(){
     return this.form.get('codigoCompleto');
   }
+
+  get firstNameControl(): FormControl {
+    return this.form.get('firstName') as FormControl;
+  }
+
+
 
 
 }
