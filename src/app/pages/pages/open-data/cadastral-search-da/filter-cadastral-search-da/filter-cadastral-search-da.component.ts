@@ -339,7 +339,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
 
 
   loadDepartmentalInformation() {
-    this.territorialOrganizationService.getDataDeparments()
+    this.territorialOrganizationService.getDataDepartments()
       .subscribe({
           next: (result: Department[]) => this.captureDepartmentInformation(result)
         }

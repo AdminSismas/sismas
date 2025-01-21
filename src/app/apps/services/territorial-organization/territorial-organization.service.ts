@@ -26,7 +26,7 @@ export class TerritorialOrganizationService {
   ) {
   }
 
-  getDataDeparments(): Observable<Department[]> {
+  getDataDepartments(): Observable<Department[]> {
     const url = `${this.basic_url}${environment.qbaunit_ccdpto}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
