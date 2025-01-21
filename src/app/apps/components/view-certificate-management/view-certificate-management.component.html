@@ -20,13 +20,10 @@
 
         <!-- Botón de descarga en la parte superior derecha (para archivos visibles como imagen o PDF) -->
         <button
-          *ngIf="
-            fileType === 'pdf' || fileType === 'image' || fileType === 'txt'
-          "
           type="button"
           class="w-10 h-10 p-0 ml-1 leading-none flex items-center rounded-button justify-center hover:bg-hover text-primary-600 bg-primary-600/10"
-
           mat-icon-button
+          (click)="downloadPdfFromSafeUrl()"
         >
           <mat-icon
             class="w-8 h-8"
@@ -84,22 +81,22 @@
       class="w-full pt-4"
     >
       <!-- Visualización del archivo PDF en el iframe -->
-      <div *ngIf="fileType === 'pdf'">
-        <iframe
-          [src]="urlSafe"
-          width="100%"
-          height="500px"
-        ></iframe>
-      </div>
+      <iframe
+      *ngIf="pdfUrl !== 'error'"
+      [src]="pdfUrl"
+      width="100%"
+      height="100%"
+      style="border: none"
+    ></iframe>
 
       <!-- Visualización de la imagen -->
-      <div *ngIf="fileType === 'image'">
+      <!-- <div *ngIf="fileType === 'image'">
         <img
           [src]="urlSafe"
           alt="Imagen"
           width="100%"
         />
-      </div>
+      </div> -->
 
       <!-- Visualización de archivo TXT -->
       <div *ngIf="fileType === 'txt'">

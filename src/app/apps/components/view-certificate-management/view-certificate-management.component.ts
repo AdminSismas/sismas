@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input, SecurityContext } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -17,7 +17,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
 import { environment } from 'src/environments/environments';
 import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'vex-view-certificate-management',
@@ -37,6 +37,8 @@ import { HttpClient } from '@angular/common/http';
   ]
 })
 export class ViewCertificateManagementComponent implements OnInit {
+
+  @Input() public id = '';
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
 
@@ -46,9 +48,9 @@ export class ViewCertificateManagementComponent implements OnInit {
   fullName: string;
 
   basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individualNumber}`;
-  urlSafe: SafeUrl = '';
+  pdfUrl: SafeUrl = '';
   fileType = '';
-  fileContent = ''; // Almacenar el contenido del archivo .txt
+  fileContent = ''; 
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -56,15 +58,19 @@ export class ViewCertificateManagementComponent implements OnInit {
     public dialogRef: MatDialogRef<ViewCertificateManagementComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { documentNumber: string; documentType: string; fullName: string }
   ) {
+
+   
+
     this.documentNumber = data.documentNumber;
     this.documentType = data.documentType;
-    this.fullName = data.fullName;
+    this.fullName =  data.fullName.toUpperCase();
+
   }
 
   ngOnInit(): void {
-    //this.urlSafe = this.urlPdfViewer();
+    //this.pdfUrl = this.urlPdfViewer();
     //this.loadPdf();
-    this.downloadAndShowPdf();
+    this.loadPdf();
   
   }
 
@@ -83,12 +89,11 @@ export class ViewCertificateManagementComponent implements OnInit {
 
 
   downloadAndShowPdf(): void {
-    const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.data.fullName)}`;
+    const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${this.basic_url}${queryParams}`;
 
     console.log('Cargando PDF desde:', fullUrl);
 
-    // Realiza la solicitud HTTP para obtener el PDF
     this.http.get(fullUrl, { responseType: 'blob' }).subscribe({
       next: (response: Blob) => {
         if (response.type !== 'application/pdf') {
@@ -96,19 +101,42 @@ export class ViewCertificateManagementComponent implements OnInit {
           return;
         }
 
-        // Crea una URL local para el blob
         const blobUrl = window.URL.createObjectURL(response);
 
-        // Muestra el PDF en el `iframe`
-        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
 
-        // Descarga el archivo automáticamente
+
         this.downloadPdf(response);
       },
       error: (err) => {
         console.error('Error al cargar el PDF:', err);
       },
     });
+  }
+
+  downloadPdfFromSafeUrl(): void {
+ 
+    const unsafeUrl = this.sanitizer.sanitize(SecurityContext.URL, this.pdfUrl);
+    
+    if (unsafeUrl) {
+     
+      fetch(unsafeUrl)
+        .then(res => res.blob())
+        .then(blob => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = 'certificado_no_bien.pdf'; 
+          document.body.appendChild(a); 
+          a.click();
+          document.body.removeChild(a);
+
+          window.URL.revokeObjectURL(blobUrl);
+        })
+        .catch(error => console.error('Error al descargar el archivo:', error));
+    } else {
+      console.error('URL no segura, descarga cancelada.');
+    }
   }
 
   downloadPdf(blob: Blob): void {
@@ -122,32 +150,50 @@ export class ViewCertificateManagementComponent implements OnInit {
     window.URL.revokeObjectURL(blobUrl);
   }
 
-  
-  loadPdf(): void {
-    const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.data.fullName)}`;
+  loadPdf() {
+
+    const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${this.basic_url}${queryParams}`;
-
-    console.log('Cargando PDF desde:', fullUrl);
-
-    // Realiza la solicitud HTTP con el token incluido
-    this.http.get(fullUrl, { responseType: 'blob' }).subscribe({
-      next: (response: Blob) => {
-        if (response.type !== 'application/pdf') {
-          console.error('La respuesta no es un PDF válido.');
-          return;
-        }
-
-        // Genera una URL local para el blob
-        const blobUrl = window.URL.createObjectURL(response);
-        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
-
-        console.log('PDF cargado y listo para mostrar.');
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.get(fullUrl, { headers, responseType: 'blob' }).subscribe({
+      next: (response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
       },
-      error: (err) => {
-        console.error('Error al cargar el PDF:', err);
-      },
+      error: () => {
+        console.error('Error al cargar el documento PDF:');
+        this.pdfUrl = 'error';
+      }
     });
   }
+
+  
+  // loadPdf(): void {
+  //   const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.data.fullName)}`;
+  //   const fullUrl = `${this.basic_url}${queryParams}`;
+
+  //   console.log('Cargando PDF desde:', fullUrl);
+
+  //   // Realiza la solicitud HTTP con el token incluido
+  //   this.http.get(fullUrl, { responseType: 'blob' }).subscribe({
+  //     next: (response: Blob) => {
+  //       if (response.type !== 'application/pdf') {
+  //         console.error('La respuesta no es un PDF válido.');
+  //         return;
+  //       }
+
+  //       // Genera una URL local para el blob
+  //       const blobUrl = window.URL.createObjectURL(response);
+  //       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+
+  //       console.log('PDF cargado y listo para mostrar.');
+  //     },
+  //     error: (err) => {
+  //       console.error('Error al cargar el PDF:', err);
+  //     },
+  //   });
+  // }
 
   
 
