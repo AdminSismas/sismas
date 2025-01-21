@@ -1,0 +1,162 @@
+export const environment = {
+  /* ------ A ------ */
+  accessGeo: {
+    area: 'area',
+    extentByCodigo: 'extentByCodigo',
+    extentByCodigoData: 'extentByCodigoData',
+    value: '/accessGeo/'
+  },
+  active: 'active',
+  administrativeSource: '/fuenteadmin/',
+  apiUrlToken: '/token/authenticate',
+  auth_login: '/auth/login',
+  awsConfig: {
+    accessKeyId: 'AKIAW5WU5HQB6DQ52QVS',
+    secretAccessKey: '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',
+    region: 'us-east-1',
+    bucketName: 'geo-masora-bucket'
+  },
+  /* ------ B ------ */
+  basicAddress: '/ccDireccion/baunitText',
+  baunit: 'baunit',
+  baunit_attributes: '/baunit/attributes/',
+  baunit_attributes_address: 'direccion',
+  baunit_attributes_document: 'individualNumber',
+  baunit_attributes_name: 'individualName',
+  baunit_attributes_registration: 'matricula',
+  baunit_baunitId: '/baunit/baunitId',
+  baunit_npnlike: '/baunit/npnlike',
+  bAUnitCreate: 'BAUnitCreate',
+  bAUnitDelete: 'BAUnitDelete',
+  baunits: '/baunits',
+  bAUnitUpdate: 'BAUnitUpdate',
+  baUnitZona_baunitId: '/baUnitZona/baunitId',
+  bpm_bpmCore: '/bpm/bpm-core/',
+  bpm_username_exists: '/exists/username/',
+  bpm_users: '/bpmUser',
+  bpm_user_info: '/bpmUser/username/',
+  bpm_email_exists: '/exists/email/',
+  bpm_individual_exists: '/exists/individual/',
+  bpmAttachment: {
+    count: '/count',
+    proExecution: 'proExecution/',
+    value: '/bpmAttachment/'
+  },
+  bpmOperation: {
+    comment: 'comment/',
+    count: '/count',
+    proExecution: 'proExecution/',
+    proExecution_next: 'proExecution/next/',
+    proExecution_prev: 'proExecution/prev/',
+    proflow: 'proflow/',
+    proflow_proExecution: 'proflow/proExecution/',
+    proTask: 'proTask/',
+    proTask_asigned: 'proTask/asigned',
+    proTask_count: 'proTask/count',
+    proTask_devolution: 'proTask/devolutions',
+    proTask_priority: 'proTask/priority',
+    startProcess: 'startProcess',
+    resources: 'resorces/',
+    value: '/bpmOperation/'
+  },
+  bpmProcess: {
+    category: '/category',
+    prodocumentStr: '/prodocumentStr/',
+    value: '/bpmProcess'
+  },
+  /* ------ C ------ */
+  calificationUB: '/calificationUB',
+  ccDireccion: '/ccDireccion/',
+  changeLog: '/changeLog/',
+  check: '/check',
+  clearBaunit: 'clearBAUnit',
+  clearChangelog: 'clearChangelog',
+  comment: '/comment/',
+  compare_temp: '/compare/temp/',
+  /* ------ D ------ */
+  divpol: '/divpol',
+  domain_domain: '/domain',
+  domain_domainName: '/domain/name',
+  /* ------ E ------ */
+  enableDebug: true,
+  /* ------ F ------ */
+  finish: 'finished',
+  formato: '/formato',
+  /* ------ G ------ */
+  geoeconomic_values: '/zonaGEcoValor',
+  geoeconomic_zones: '/ccZonaHomoGeoEconomica',
+  /* ------ H ------ */
+  /* ------ I ------ */
+  individual_findByNumber: '/individual/findByNumber',
+  individualNumber: '/individual',
+  individualTypeNumber: '/individual/findByNumber',
+  initiate_filing_procedure: '/bpm/initiateFilingProcedure/',
+  /* ------ J ------ */
+  /* ------ K ------ */
+  /* ------ L ------ */
+  logo: 'assets/img/illustrations/it_support.svg',
+  /* ------ M ------ */
+  metrict_cadastral_change: '/metrict/CadastreChangeLog/',
+  myWork_cadastralSearch: '/myWork/cadastralSearch',
+  myWork_tasksPanel: '/myWork/tasks/tasksPanel/',
+  /* ------ N ------ */
+  notFound: '/not-found',
+  npnlike: '/npnlike',
+  number: 'number',
+  /* ------ O ------ */
+  operations: '/operations',
+  /* ------ P ------ */
+  password: '/password',
+  port: '5001',
+  post_path_viewer: 'rest/config/setParams',
+  production: false,
+  proExecution: '/proExecution/',
+  /* ------ Q ------ */
+  qbaunit_ccbarrio: '/qbaunit/ccbarrio',
+  qbaunit_cccomuna: '/qbaunit/cccomuna',
+  qbaunit_cccorr: '/qbaunit/cccorr',
+  qbaunit_ccdpto: '/qbaunit/ccdpto',
+  qbaunit_ccmanzana: '/qbaunit/ccmanzana',
+  qbaunit_ccmpio: '/qbaunit/ccmpio',
+  qbaunit_ccsector: '/qbaunit/ccsector',
+  qbaunit_ccvereda: '/qbaunit/ccvereda',
+  qbaunit_cczona: '/qbaunit/cczona',
+  qbaunit_npnlike: '/baunit/npnlike',
+  query_parameters_page: '../../#/context/prediosplus/11/',
+  /* ------ R ------ */
+  refresh_navigation: '/myWork/cadastralSearch',
+  root: '/',
+  rrright: '/rrright/',
+  rural_zones: '/ccZonaHomoFisicaRu',
+  /* ------ S ------ */
+  schemas: {
+    hist: 'hist',
+    main: 'main',
+    temp: 'temp'
+  },
+  serviciosTaquilla: '/serviciosTaquilla',
+  signatureUrl: '/signatureUrl',
+  snr: '/snr',
+  synchronization: '/synchronization',
+  synchronize: '/synchronize',
+  /* ------ T ------ */
+  temporal: '/temporal/',
+  titulo: 'Desarrollo',
+  /* ------ U ------ */
+  ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
+  unitBuild: '/unitBuild',
+  unitBuilt: '/unitBuilt',
+  urban_zones: '/ccZonaHomoFisicaUr',
+  url: 'https://dev.api.sismas.com.co',
+  url_viewer: 'https://masora.map.sismas.com.co:8081/mapstore/',
+  user_exist: '/username/',
+  /* ------ V ------ */
+  valuation: '/valuation/',
+  video: 'assets/video/desarrollo.mp4',
+  /* ------ W ------ */
+  withSignaturesUsers: '/with-signature',
+  withoutSignaturesUsers: '/without-signature',
+  /* ------ X ------ */
+  /* ------ Y ------ */
+  /* ------ Z ------ */
+};

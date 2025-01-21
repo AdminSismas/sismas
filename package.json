@@ -1,6 +1,9 @@
 {
   "name": "geogestion",
   "version": "17.0.0",
+  "engines": {
+    "node":"^18.0.0"
+  },
   "description": "GeoGestion - Sistema Catastral",
   "author": "https://themeforest.net/user/visurel",
   "license": "https://themeforest.net/licenses/standard",
@@ -8,6 +11,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-test": "ng serve --configuration=test",
     "start-p": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",

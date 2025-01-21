@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SendGeneralRequestsService } from './send-general-requests.service';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
@@ -14,7 +14,8 @@ export class InfoTableService {
   basic_url = `${environment.url}:${environment.port}${environment.baunit_attributes}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
   ) { }
 
   getDataPropertyByRegistration(page:PageSearchData):Observable<InformationPegeable> {
@@ -70,6 +71,17 @@ export class InfoTableService {
     }
     const url = `${environment.url}:${environment.port}${environment.baunit_npnlike}`;
     return this.getData(url,paramsA).pipe();
+  }
+
+  getDataBaunitIdE(page: number, size: number, baunit: string): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${environment.baunit}`;
+
+    const params: HttpParams = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('baunit', baunit);
+
+    return this.http.get<InformationPegeable>(url, { params });
   }
 
   private getData(url:string, params:any):Observable<InformationPegeable>{

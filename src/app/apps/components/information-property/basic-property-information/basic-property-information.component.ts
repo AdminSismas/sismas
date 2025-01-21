@@ -21,10 +21,11 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE,TYPEINFORMATION_EDITION } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -52,7 +53,8 @@ import { EditBasicPropertyInformationComponent } from './edit-basic-property-inf
     MatCardModule,
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
-    DatePipe
+    DatePipe,
+    CurrencyLandsPipe
   ],
   templateUrl: './basic-property-information.component.html',
   styleUrl: './basic-property-information.component.scss'
@@ -112,13 +114,17 @@ export class BasicPropertyInformationComponent implements OnInit {
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
       width: '60%',
-      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION}
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION},
+      disableClose: true // Ensure this is set to false or omitted
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
-          setTimeout(() => this.data = result, 300);
+          if(result && result?.baunitIdE) {
+            setTimeout(() => this.data = result, 300);
+          }
         }
       });
+      console.log(this.data, 'servicio con datos nuevos');
   }
 
   private getRandomInt(max: number):number {
@@ -126,5 +132,6 @@ export class BasicPropertyInformationComponent implements OnInit {
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
+  protected readonly NAME_NO_DISPONIBLE_CERO = NAME_NO_DISPONIBLE_CERO;
   protected readonly GUION = GUION;
 }

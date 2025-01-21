@@ -23,7 +23,7 @@ export class PhotosService {
    * @param limit Número de resultados por página
    * @returns Observable con un array de URLs de imágenes
    */
-  listPhotos(id: string, page: number = 1, limit: number = 10): Observable<string[]> {
+  listPhotos(id: string, page: number = 1, limit: number = 100): Observable<string[]> {
     const params = new HttpParams()
       .set('id', id)
       .set('page', page)

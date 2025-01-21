@@ -1,7 +1,17 @@
-<div class="container flex items-center text-center" mat-dialog-title [id]="id">
-  <iframe *ngIf="pdfUrl" [src]="pdfUrl" width="100%" height="500px" style="border: none;"></iframe>
+<div
+  class="h-full container flex items-center text-center"
+  mat-dialog-title
+  [id]="id"
+>
+  <iframe
+    *ngIf="pdfUrl !== 'error'"
+    [src]="pdfUrl"
+    width="100%"
+    height="100%"
+    style="border: none"
+  ></iframe>
 
-  <div *ngIf="!pdfUrl">
+  <div *ngIf="pdfUrl === 'error'">
     <p>No se pudo cargar el documento PDF.</p>
   </div>
 </div>

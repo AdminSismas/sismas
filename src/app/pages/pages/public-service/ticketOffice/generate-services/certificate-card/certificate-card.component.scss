@@ -1,0 +1,18 @@
+.card {
+
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    // background-image: url('/assets/img/backgrounds/paper-texture.jpg'); 
+    // background-size: cover; 
+    // background-position: center; 
+  }
+
+//   .title {
+//     font-family: 'Courier New', Courier, monospace; /* Estilo de máquina de escribir */
+//     text-transform: uppercase;
+//   }
+
+  .card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+  }

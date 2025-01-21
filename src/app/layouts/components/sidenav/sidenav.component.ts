@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NavigationService } from '../../../core/navigation/navigation.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { VexConfigService } from '@vex/config/vex-config.service';
@@ -129,10 +129,14 @@ export class SidenavComponent implements OnInit {
     this.searchRouteTouch();
 
     this.navigationLoaderService.taskCounters$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
-
-    this.navigationLoaderService.refreshCounters();
+      .pipe(
+        takeUntil(this.destroy$),
+        distinctUntilChanged()
+      )
+      .subscribe(() => {
+        this.navigationService.refreshNavigationItems();
+      });
+      this.navigationLoaderService.refreshCounters();
   }
 
   ngOnDestroy(): void {

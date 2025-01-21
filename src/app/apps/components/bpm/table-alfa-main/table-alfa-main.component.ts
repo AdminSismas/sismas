@@ -2,10 +2,12 @@ import {
   AfterViewInit,
   Component,
   DestroyRef,
+  EventEmitter,
   inject,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -45,6 +47,7 @@ import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -77,6 +80,8 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   @Input({ required: true }) mode = 1;
   @Input() resources: string[] = [];
   @Input() columns: TableColumn<Operation>[] = TABLE_ALFA_MAIN_OPERATION_COLUMN;
+
+  @Output() refreshData = new EventEmitter<void>();
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   searchData!: SearchData;
@@ -171,7 +176,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede ver la información de la unidad predial, consulte al administrador.',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -196,7 +201,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede visualizar los cambios realizados, consulte al administrador.',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -217,7 +222,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede ver la información de la unidad predial, consulte al administrador.',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -239,12 +244,23 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
       .afterClosed();
   }
 
-  deleteInformations(operation: Operation): void {
+  deleteInformation(operation: Operation): void {
     this.npnRemoving = operation.npnlike;
     this.confirmDeleteDialog.fire().then((result) => {
       if (result.isConfirmed) {
         this.bpmCoreService.clearPropertyBpmOperation(this.executionId, operation.baunitHead!.baunitIdE as string)
-          .subscribe(data => console.log(data));
+          .subscribe({
+            next: () => {
+              this.refreshData.emit();
+            },
+            error: (error: HttpErrorResponse) => {
+              this.snackbar.open(
+                'Error al eliminar la unidad predial.',
+                'CLOSE', { duration: 5000 }
+              );
+              throw error;
+            }
+          });
       }
     });
   }
@@ -271,7 +287,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   messageChangesNoAvailable() {
     this.snackbar.open(
       'Cambios realizados en el control de cambios no disponibles, consulte al administrador.',
-      'CLOSE', { duration: 5000 }
+      'CLOSE', { duration: 10000 }
     );
   }
 

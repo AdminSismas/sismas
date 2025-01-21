@@ -95,7 +95,7 @@ export class ZoneManagerComponent implements OnInit {
         next: (result: any) => this.createZone(result),
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
-            duration: 4000
+            duration: 10000
           });
           throw error;
         }
@@ -115,7 +115,7 @@ export class ZoneManagerComponent implements OnInit {
         next: (result: any) => this.editZone(result, row),
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
-            duration: 4000
+            duration: 10000
           });
           throw error;
         }
@@ -136,14 +136,14 @@ export class ZoneManagerComponent implements OnInit {
       .subscribe({
         next: () => {
           this.snackbar.open(`Se ha creado la zona ${this.typeZone}`, 'Cerrar', {
-            duration: 4000
+            duration: 10000
           });
 
           this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
           this.snackbar.open(`Error al crear la zona ${this.typeZone}`, 'Cerrar', {
-            duration: 4000
+            duration: 10000
           });
           throw error;
         }
@@ -171,11 +171,11 @@ export class ZoneManagerComponent implements OnInit {
     this.service.deleteZone('99999', id)
       .subscribe({
         next: () => {
-          this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 5000 });
+          this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 10000 });
           this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 5000 });
+          this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 10000 });
           throw error;
         }
       });
@@ -191,11 +191,11 @@ export class ZoneManagerComponent implements OnInit {
     this.service.updateZone(params)
       .subscribe({
         next: () => {
-          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 5000 });
+          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 10000 });
           this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 5000 });
+          this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 10000 });
           throw error;
         }
       });

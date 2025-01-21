@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -8,7 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -85,7 +86,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   protected readonly LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = LIMPIAR_CAMPOS_MULTIPLES_CAMPOS;
 
 
-  optionsDeparments: Department[] = [];
+  optionsDepartments: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
   optionsZones: Zone[] = [];
   optionsSectors: Sector[] = [];
@@ -98,7 +99,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
 
     // National Property Number,
-
+    baunitIdE: [''],
     codigoCompleto: ['', [Validators.maxLength(30), Validators.pattern(/^\d+$/)]],
     dpto: [this.defaults?.dpto ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
     mpio: [this.defaults?.mpio ?? '',[Validators.maxLength(3),Validators.pattern(/^\d+$/)]],
@@ -185,7 +186,7 @@ export class FilterCadastralSearchComponent implements OnInit {
       return;
     }
     this.openSnackbar(
-      'No es posible la búsqueda por doumento y tipo de documento, datos no válidos',
+      'No es posible la búsqueda por documento y tipo de documento, datos no válidos',
       'CLOSE', 'end'
     );
   }
@@ -328,7 +329,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   searchMunicipalSelection() {
     const searchData = this.validateFilterSearchCadastral();
     const searchDataFiltered: SearchData = new SearchData(searchData);
-    searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+    searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDepartments, NAME_CODENAME, 'divpolLvl1Code');
     searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
     searchDataFiltered.zone = this.captureCodeOfCodeNameAndID(searchData.zone, this.optionsZones);
     searchDataFiltered.sector = this.captureCodeOfCodeNameAndID(searchData.sector, this.optionsSectors);
@@ -364,7 +365,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     }
     this._clearFormSelection(0);
     const dpto = this._filterInformationCode(
-      codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+      codeName, this.optionsDepartments, NAME_CODENAME, 'divpolLvl1Code');
     if (dpto == null || dpto?.length <= 0) {
       return;
     }
@@ -465,10 +466,10 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   captureDepartmentInformation(result: Department[]) {
     result = result.map((dpto: Department) => new Department(dpto));
-    this.optionsDeparments = result;
+    this.optionsDepartments = result;
 
     if (this.defaults?.department) {
-      const listOptions: Department[] = this.optionsDeparments.filter(
+      const listOptions: Department[] = this.optionsDepartments.filter(
         (option: Department): boolean => option.divpolLvl1Code === this.defaults?.department);
       if (listOptions?.length > 0) {
         this.form.get('department')?.patchValue(listOptions[0].codeName);
@@ -478,7 +479,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     this.filteredOptionsDepartments$ = this.form.get('department')?.valueChanges.pipe(
       startWith(''),
-      map((value): any[] => this.optionsDeparments.filter(
+      map((value): any[] => this.optionsDepartments.filter(
         (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
       ));
   }
@@ -614,6 +615,14 @@ export class FilterCadastralSearchComponent implements OnInit {
       ));
   }
 
+  searchByBaunitIdE(): void {
+    const baunitIdE = this.form.get('baunitIdE')?.value;
+    if (!baunitIdE) {
+      this.snackBar.open('Ingrese el número de la ficha', 'Aceptar', { duration: 5000 });
+      return;
+    }
+    this.dialogRef.close({ baunitIdE });
+  }
 
   private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
     const listOptions: any[] = options

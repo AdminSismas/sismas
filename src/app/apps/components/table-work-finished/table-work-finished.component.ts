@@ -420,7 +420,7 @@ private initForm(): void {
         },
         error: (error) => {
             this.alertSnakbar.open('Hubo un error, verifique la información de los filtros', 'Close', {
-              duration: 3000,
+              duration: 10000,
               horizontalPosition: 'center'
             });
             console.error('Hubo un error al obtener los datos: ', error);

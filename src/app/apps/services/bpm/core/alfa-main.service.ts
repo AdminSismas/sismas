@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
 import { catchError, Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
 import { PageSearchData } from '../../../interfaces/page-search-data.model';
 import { ChangeControl } from '../../../interfaces/bpm/change-control';
@@ -16,7 +16,8 @@ export class AlfaMainService {
   basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
   ) {}
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
@@ -43,9 +44,12 @@ export class AlfaMainService {
     const formdata = new FormData();
     formdata.append('changeLogId', `${executionId}`);
     formdata.append('word', `${keyword}`);
+
     const url = `${this.basic_url}${envi.temporal}${envi.clearChangelog}`;
-    const params = this.requestsService.loadMethodDeleteBody(formdata);
-    return this.requestsService.sendRequestsFetch(url, params);
+
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
+    return this.http.delete(url, { body: formdata, headers });
   }
 
   //{{url}}:{{port}}/metrict/CadastreChangeLog/{{executionId}}?page=0&size=30
@@ -64,30 +68,34 @@ export class AlfaMainService {
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike/18001010100000099/baunits
-  loadingListBeaUnitheadByExecutionIdAndnpnlike(executionId: string, npnLike: string): Observable<BaunitHead[]> {
+  loadingListBeaUnitheadByExecutionIdAndNpnLike(executionId: string, npnLike: string): Observable<BaunitHead[]> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}/${npnLike}${envi.baunits}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   //{{url}}:{{port}}/temporal/BAUnitCreate
-  createTemporalBeaUnithead(npnLike: string, executionId: string, bAunitCondition:string) {
+  createTemporalBeaUnithead(npnLike: string, executionId: string, bAunitCondition:string): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.temporal}${envi.bAUnitCreate}`;
     const formData = new FormData();
     formData.append('npnLike', `${npnLike}`);
     formData.append('changeLogId', `${executionId}`);
     formData.append('domBaunitCondition', `${bAunitCondition}`);
-    const params = this.requestsService.loadParamsMethodPostFormData(formData);
-    return this.requestsService.sendRequestsFetch(url, params);
+    
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+    
+    return this.http.post<InformationPegeable>(url, formData, { headers: headers });
   }
 
   //{{url}}:{{port}}/temporal/BAUnitUpdate
-  createUpdateTemporalBeaUnithead(baunitId: string, executionId: string) {
+  createUpdateTemporalBeaUnithead(baunitId: string, executionId: string): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.temporal}${envi.bAUnitUpdate}`;
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-    const params = this.requestsService.loadParamsMethodPostFormData(formData);
-    return this.requestsService.sendRequestsFetch(url, params);
+    
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
+    return this.http.post<InformationPegeable>(url, formData, { headers: headers });
   }
 
   //{{url}}:{{port}}/temporal/BAUnitDelete
@@ -96,11 +104,13 @@ export class AlfaMainService {
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-    const params = this.requestsService.loadParamsMethodPostFormData(formData);
-    return this.requestsService.sendRequestsFetch(url, params);
+    
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
+    return this.http.delete(url, { body: formData, headers });
   }
 
-  private getData(url: string, params: any): Observable<InformationPegeable> {
+  private getData(url: string, params: unknown): Observable<InformationPegeable> {
     return this.requestsService.sendRequestsGetOption(url, { params: params })
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }

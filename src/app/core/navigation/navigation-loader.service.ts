@@ -41,6 +41,9 @@ export class NavigationLoaderService {
   dataContentInformationProTaskE$: Observable<ProTaskE> =
     this._contentInformationProTaskE$.asObservable();
   user: DecodeJwt | null = null;
+
+  private _countLoop?: NodeJS.Timeout | null;
+
   get items$(): Observable<NavigationItem[]> {
     return this._items.asObservable();
   }
@@ -74,8 +77,19 @@ export class NavigationLoaderService {
           }
         });
       });
+  }
 
-      setInterval(() => this.updateTaskCounters(), 60000);
+  startCountLoop(): void {
+    if (!this._countLoop) {
+      this._countLoop = setInterval(() => this.updateTaskCounters(), 60000);
+    }
+  }
+
+  stopCountLoop(): void {
+    if (this._countLoop) {
+      clearInterval(this._countLoop);
+      this._countLoop = null;
+    }
   }
 
   private updateTaskCounters(): void {
@@ -124,24 +138,6 @@ export class NavigationLoaderService {
     );
 
     const currentCounters = this.taskCounters.value;
-
-    let countProTaskAssigned = 0;
-    let countProTaskPriority = 0;
-    let countProTaskDevolution = 0;
-    let countTotalProTask = 0;
-
-    let proTaskE: ProTaskE | null = null;
-    if (this.listProTasksE?.length > 0) {
-      proTaskE = this.listProTasksE[0];
-    }
-
-    if (proTaskE !== null) {
-      countProTaskAssigned = proTaskE.asigned ? proTaskE.asigned : 0;
-      countProTaskPriority = proTaskE.priority ? proTaskE.priority : 0;
-      countProTaskDevolution = proTaskE.devolution ? proTaskE.devolution : 0;
-      countTotalProTask =
-        countProTaskAssigned + countProTaskPriority + countProTaskDevolution;
-    }
 
     const listItem: NavigationItem[] = [
       {

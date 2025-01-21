@@ -18,7 +18,7 @@ export const environment = {
   },
   /* ------ B ------ */
   basicAddress: '/ccDireccion/baunitText',
-  baunit: '/baunit/',
+  baunit: 'baunit',
   baunit_attributes: '/baunit/attributes/',
   baunit_attributes_address: 'direccion',
   baunit_attributes_document: 'individualNumber',
@@ -81,6 +81,7 @@ export const environment = {
   enableDebug: false,
   /* ------ F ------ */
   finish: 'finished',
+  formato: '/formato',
   /* ------ G ------ */
   geoeconomic_values: '/zonaGEcoValor',
   geoeconomic_zones: '/ccZonaHomoGeoEconomica',
@@ -133,6 +134,7 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  serviciosTaquilla: '/serviciosTaquilla',
   signatureUrl: '/signatureUrl',
   snr: '/snr',
   synchronization: '/synchronization',

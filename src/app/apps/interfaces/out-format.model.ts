@@ -1,4 +1,4 @@
-export class DocumentAsocietyModel {
+export class OutFormatModel {
     outTemplateId?: number | undefined; ;
     templateCode?: string | '';
     htmlTemplate?: string | '';

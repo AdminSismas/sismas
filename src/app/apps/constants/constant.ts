@@ -9,7 +9,7 @@ import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
 import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
-import { DocumentAsocietyModel } from '../interfaces/document-asociety.model';
+import { OutFormatModel } from '../interfaces/out-format.model';
 import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
 import { DataFolio } from '../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../interfaces/information-property/snr-source-info';
@@ -23,6 +23,8 @@ export const NAME_NO = 'NO';
 export const NAME_DATE = 'date';
 export const NAME_SI = 'SI';
 export const NAME_NO_DISPONIBLE = 'N/D';
+export const NAME_NO_DISPONIBLE_CERO = '0';
+
 export const INDIVIDUAL_TYPE_NUMBER = 'NIT';
 export const PAGE = 0;
 export const PAGE_SIZE = 10;
@@ -94,7 +96,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
     label: 'Área terreno',
     property: 'cadastralArea',
-    type: 'text',
+    type: 'operationType',
     visible: true,
     cssClasses: ['font-medium']
   },
@@ -121,7 +123,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   }
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
-export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<DocumentAsocietyModel>[] = [
+export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<OutFormatModel>[] = [
   {
     label: 'ID',
     property: 'outTemplateId',
@@ -562,6 +564,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
   {
     label: 'Fotos',
     fragment: 'photosComponent'
+  },
+  {
+    label: 'Alertas',
+    fragment: 'alertsComponent'
   }
 ];
 

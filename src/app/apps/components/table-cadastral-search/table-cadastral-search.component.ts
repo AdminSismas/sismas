@@ -51,6 +51,8 @@ import { environment as envi } from '../../../../environments/environments';
 import { SendInformationRegisterService } from '../../services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from '../../services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CurrencyLandsPipe } from '../../pipes/currency-lands.pipe';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -82,6 +84,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatTabsModule,
     MatSelectModule,
+    CurrencyLandsPipe
   ]
 })
 export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
@@ -306,6 +309,11 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     }
     const searchData: SearchData = this.searchData;
 
+    if (searchData.baunitIdE) {
+      this.searchPropertiesByBaunitIdE(searchData.baunitIdE);
+      return true;
+    }
+
     if (this.isValidateField(searchData?.registration)) {
       this.searchPropertiesByRegistration(this.searchData);
       return true;
@@ -339,6 +347,18 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       return true;
     }
     return false;
+  }
+  searchPropertiesByBaunitIdE(baunit: string) {
+    this.infoTableService.getDataBaunitIdE(this.page, this.pageSize, baunit)
+      .subscribe({
+        next: (result: InformationPegeable) => this.captureInformationSubscribe(result),
+        error: (error: HttpErrorResponse) => {
+          this.captureInformationSubscribeError();
+          if(error.status === 404){
+            this.snackbar.open('No se encontró un predio con ese número', 'Cerrar', { duration: 5000 });
+          }
+        }
+      });
   }
 
   formatFieldValue(value:SearchData) {
@@ -445,7 +465,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       if (!available){
         this.snackbar.open(
           'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-          'CLOSE', { duration: 5000 }
+          'CLOSE', { duration: 10000 }
         );
         return;
       }

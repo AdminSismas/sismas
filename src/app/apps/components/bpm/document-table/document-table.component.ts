@@ -5,7 +5,6 @@ import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
 // recursos de vex
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -40,7 +39,7 @@ import { MatDividerModule } from '@angular/material/divider';
 @Component({
   templateUrl: './document-table.component.html',
   styleUrl: './document-table.component.css',
-  selector: 'vex-documnet-management',
+  selector: 'vex-document-management',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
@@ -67,7 +66,7 @@ import { MatDividerModule } from '@angular/material/divider';
   ]
 })
 export class DocumentTableComponent implements OnInit, AfterViewInit {
-  /* ============== ATRIBUTES ============== */
+  /* ============== ATTRIBUTES ============== */
   numRegister = 0;
   disablePaginator = true;
 
@@ -96,7 +95,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { executionId: string },
     private dialog: MatDialog,
     private attachmentService: AttachmentService,
     private readonly layoutService: VexLayoutService,
@@ -134,7 +133,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     column.visible = !column.visible;
   }
 
-  refreshInformationpaginator(event: PageEvent): void {
+  refreshInformationPaginator(event: PageEvent): void {
     if (event == null) {
       return;
     }
@@ -189,7 +188,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
         }
       });
 
-    this.dialogRef.afterClosed().subscribe(result => {
+    this.dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
     });
   }
@@ -199,7 +198,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   /* ------- Meth. Services ------- */
   getDataFromDocumentManagementService(): void {
     this.attachmentService.getDataPropertyByAttachment(this.data.executionId).subscribe({
-      next: (data: any) => {
+      next: (data: AttachmentCollection[]) => {
         console.log("Datos recibidos de la API1:", data);
         this.dataSource.data = data;
         this.totalElements = data.length;
@@ -212,8 +211,8 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getFileIcon(row: any): string {
-    const fileExtension = this.getFileExtension(row.originalFileName);
+  getFileIcon(row: AttachmentCollection): string {
+    const fileExtension = this.getFileExtension(row.originalFileName!);
 
     switch (fileExtension) {
       case 'pdf':
@@ -237,8 +236,8 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getMatTooltip(row: any): string {
-    const fileExtension = this.getFileExtension(row.originalFileName);
+  getMatTooltip(row: AttachmentCollection): string {
+    const fileExtension = this.getFileExtension(row.originalFileName!);
 
     switch (fileExtension) {
       case 'pdf':
@@ -263,8 +262,8 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getFileTypeIcon(row: any): string {
-    const fileExtension = this.getFileExtension(row.originalFileName);
+  getFileTypeIcon(row: AttachmentCollection): string {
+    const fileExtension = this.getFileExtension(row.originalFileName!);
     switch (fileExtension) {
       case 'pdf':
         return 'mat:picture_as_pdf'; // Icono de PDF
@@ -288,8 +287,8 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getFileIconColor(row: any): string {
-    const fileExtension = this.getFileExtension(row.originalFileName);
+  getFileIconColor(row: AttachmentCollection): string {
+    const fileExtension = this.getFileExtension(row.originalFileName!);
     
     // Colores para diferentes tipos de archivo
     switch (fileExtension) {

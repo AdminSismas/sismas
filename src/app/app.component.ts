@@ -14,5 +14,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle();
+    if (window.name !== 'geogestion') {
+      window.name = 'geogestion';
+    }
   }
 }

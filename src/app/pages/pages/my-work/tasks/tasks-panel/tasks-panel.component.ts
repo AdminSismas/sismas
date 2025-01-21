@@ -125,7 +125,10 @@ export class TasksPanelComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      this.onRouteChange();
+      const token = sessionStorage.getItem('token');
+      if (token) {
+        this.onRouteChange();
+      }
     });
   }
 

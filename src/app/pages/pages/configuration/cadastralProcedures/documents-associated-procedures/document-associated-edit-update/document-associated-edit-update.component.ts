@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, DestroyRef, Inject, inject, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { DocumentAsocietyModel, FooterTemplateModel, HeaderTemplateModel } from 'src/app/apps/interfaces/document-asociety.model';
+import {  FooterTemplateModel, HeaderTemplateModel, OutFormatModel } from 'src/app/apps/interfaces/out-format.model';
 
 import { QuillEditorComponent } from 'ngx-quill';
 import { CommonModule, NgClass, NgForOf, NgIf } from '@angular/common';
@@ -25,7 +25,7 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 export interface AddEditInformationDocumentAssociated {
   type: 'edit' | 'new';
-  documentAssociated: DocumentAsocietyModel | undefined;
+  documentAssociated: OutFormatModel | undefined;
   outTemplateId: number | undefined;
 }
 
@@ -157,10 +157,10 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
 
 
     // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress 
-    public generateModelDirecctionModel(value: any): DocumentAsocietyModel | undefined {
+    public generateModelDirecctionModel(value: any): OutFormatModel | undefined {
       if (this.defaults.type === 'new') {
         const todayDay = new Date();
-        const createBasicInformationAddress: DocumentAsocietyModel = {
+        const createBasicInformationAddress: OutFormatModel = {
       
             // outTemplateId: ,
             templateCode: this.templateCode?.value ? this.templateCode?.value : '',
@@ -196,7 +196,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
 
           if(this.defaults.outTemplateId){
 
-            const createBasicInformationAddress: DocumentAsocietyModel = {
+            const createBasicInformationAddress: OutFormatModel = {
 
               outTemplateId: this.defaults.outTemplateId ? this.defaults.outTemplateId : undefined,
               templateCode: this.templateCode?.value ? this.templateCode?.value : '',
