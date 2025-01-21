@@ -1,41 +1,51 @@
 export class BasicInformationProperty {
-  propertyRegistryOffice?: string;
-  propertyRegistryNumber?: string;
-  propertyRegistryArea?: string;
-  cadastralArea?: string;
+
+  // GRUPO "Identificación del predio"
+  cadastralNumberFormat?: string;
   cadastralNumber?: string;
   cadastralLastNumber?: string;
-  cadastralRegistryNumberTemp?: string;
-  cadlAreaCommonE?: string;
+  propertyRegistryOffice?: string;
+  propertyRegistryNumber?: string;
+  baunitIdOrigin?: string;
+
+
+ // *****GRUPO "Propiedad y uso" ****
+ domBaunitEconoDesti?: string;
+ domBaunitType?: string;
+ domBaunitCondition?: string;
+ cadastralRegistryNumber?: string;
+ cadastralRegistryNumberTemp?: string;
+
+   // *****GRUPO "Tamaños y áreas" ****
+  propertyRegistryAreaE?: string;
+  cadastralAreaE?: string;
+  cadAreaCommonE?: string;
   cadAreaPrivateE?: string;
   cadastralAreaUnitbuilt?: string;
   cadAreaUnitbuiltCommon?: string;
   cadAreaUnitbuiltPrivate?: string;
-  
-  cadastralRegistryNumber?: string;
+
+  // *****GRUPO "Seguimientos y actualizaciones" ****
+  cadastralLastEventAt?: string;
+  cadastralLastEventCode?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+
+
+  propertyRegistryArea?: string;
+  cadastralArea?: string;
   cadastralCreatedAt?: string;
-  domBaunitType?: string;
-  domBaunitCondition?: string;
-  domBaunitEconoDesti?: string;
   domBaunitProcessType?: string;
   cadastralLastMasiveEventAt?: string;
   cadastralLastMasiveEventCode?: string;
-  cadastralLastEventAt?: string;
-  cadastralLastEventCode?: string;
-  baunitIdOrigin?: string;
   hash?: string;
   createdBy?: string;
   createdAt?: string;
-  updatedBy?: string;
-  updatedAt?: string;
   masterGroup?: string;
   detailGroup?: string;
-  cadastralNumberFormat?: string;
   cadNumDetail?: string;
   npnlike?: string;
   baunitIdE?: string;
-  propertyRegistryAreaE?: string;
-  cadastralAreaE?: string;
   executionId?: string;
 
 
@@ -47,7 +57,7 @@ export class BasicInformationProperty {
     this.cadastralNumber = content?.cadastralNumber || '';
     this.cadastralLastNumber = content?.cadastralLastNumber || '';
     this.cadastralRegistryNumberTemp = content?.cadastralRegistryNumberTemp || '';
-    this.cadlAreaCommonE = content?.cadlAreaCommonE || '';
+    this.cadAreaCommonE = content?.cadAreaCommonE || '';
     this.cadAreaPrivateE = content?.cadAreaPrivateE || '';
     this.cadastralAreaUnitbuilt = content?.cadastralAreaUnitbuilt || '';
     this.cadAreaUnitbuiltCommon = content?.cadAreaUnitbuiltCommon || '';

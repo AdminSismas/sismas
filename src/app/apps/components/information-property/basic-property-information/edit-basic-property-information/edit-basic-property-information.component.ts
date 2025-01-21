@@ -8,116 +8,282 @@ import { BasicInformationProperty } from 'src/app/apps/interfaces/information-pr
 import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 interface EditBasicPropertyInputs {
+  
+  groupName?:string;
+  fields?: InputsField[];
+}
+interface InputsField {
   name: string;
   label: string;
   placeholder: string;
   collection: boolean;
   type: string;
+  group:string;
+  groupName:string
 }
 
 @Component({
   selector: 'vex-edit-basic-property-information',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    ComboxColletionComponent
+    ComboxColletionComponent,
+    MatDatepickerModule
   ],
   templateUrl: './edit-basic-property-information.component.html',
   styles: ``
 })
 export class EditBasicPropertyInformationComponent implements OnInit {
+  groupedInputs: any;
 
   public inputs: EditBasicPropertyInputs[] = [
-    {
-      name: 'propertyRegistryOffice',
-      label: 'Oficina de registro',
-      collection: false,
-      type: 'text',
-      placeholder: 'Nombre de la oficina de registro'
-    },
-    {
-      name: 'propertyRegistryNumber',
-      label: 'Número de registro',
-      collection: false,
-      type: 'text',
-      placeholder: 'Número de registro'
-    },
-    {
-      name: 'propertyRegistryArea',
-      label: 'Área de registro',
-      collection: false,
-      type: 'number',
-      placeholder: 'Área de registro'
-    },
-    {
-      name: 'cadastralArea',
-      label: 'Área de cadastro',
-      collection: false,
-      type: 'number',
-      placeholder: 'Área de cadastro'
-    },
-    {
-      name: 'cadastralNumber',
-      label: 'Número de cadastro',
-      collection: false,
-      type: 'text',
-      placeholder: 'Número de cadastro'
-    },
-    {
-      name: 'cadastralLastNumber',
-      label: 'Último número de cadastro',
-      collection: false,
-      type: 'text',
-      placeholder: 'Último número de cadastro'
-    },
-    {
-      name: 'cadastralRegistryNumberTemp',
-      label: 'Número de registro temporal',
-      collection: false,
-      type: 'text',
-      placeholder: 'Número temporal de registro'
-    },
-    {
-      name: 'cadastralRegistryNumber',
-      label: 'Número de registro',
-      collection: false,
-      type: 'text',
-      placeholder: 'Número de registro'
-    },
-    {
-      name: 'domBaunitType',
-      label: 'Tipo de unidad',
-      collection: true,
-      type: 'BaunitType',
-      placeholder: 'Elejir un tipo de unidad'
-    },
-    {
-      name: 'domBaunitCondition',
-      label: 'Condición de la unidad',
-      collection: true,
-      type: 'BaunitCondition',
-      placeholder: 'Elejir una condición de la unidad'
-    },
-    {
-      name: 'domBaunitEconoDesti',
-      label: 'Destino económico',
-      collection: true,
-      type: 'BaunitEconoDesti',
-      placeholder: 'Elejir un destino económico'
-    },
-    {
-      name: 'domBaunitProcessType',
-      label: 'Tipo de proceso',
-      collection: true,
-      type: 'BaunitProcessType',
-      placeholder: 'Elijir un tipo de proceso'
-    }
+    // GRUPO "Identificación del predio"
+        {
+        groupName:'Identificación del predio',
+        fields:[
+          {
+            name: 'propertyRegistryOffice',
+            label: 'Oficina de registro',
+            collection: false,
+            type: 'text',
+            placeholder: 'Oficina de registro',
+            group:'',
+            groupName:'Identificación del predio'
+          },
+          {
+            name: 'propertyRegistryNumber',
+            label: 'Número de registro',
+            collection: false,
+            type: 'text',
+            placeholder: 'Número de registro',
+            group:'',
+            groupName:'Identificación del predio'
+          },
+            //   {
+            //   name: 'cadastralNumberFormat',
+            //   label: 'Número predial (F)',
+            //   collection: false,
+            //   type: 'text',
+            //   placeholder: 'Número predial (F)',
+            //   group:'',
+            //   groupName:'Identificación del predio'
+            // },
+            {
+              name: 'cadastralNumber',
+              label: 'Número predial',
+              collection: false,
+              type: 'text',
+              placeholder: 'Número predial',
+              group:'',
+              groupName:'Identificación del predio'
+            },
+            {
+              name: 'cadastralLastNumber',
+              label: 'Número predial anterior',
+              collection: false,
+              type: 'number',
+              placeholder: 'Número predial anterior',
+              group:'',
+              groupName:'Identificación del predio'
+            },
+// *********** estos dos campo contituyen matricula inmobiliaria**********
+
+           
+// *********** estos dos campo contituyen matricula inmobiliaria**********
+            {
+              name: 'baunitIdOrigin',
+              label: 'Nupre',
+              collection: false,
+              type: 'text',
+              placeholder: 'Nupre',
+              group:'',
+              groupName:'Identificación del predio'
+            },
+            // {
+            //   name: 'baunitIdE',
+            //   label: 'Código BAUnit',
+            //   collection: false,
+            //   type: 'text',
+            //   placeholder: 'Código BAUnit'
+            // },
+            ]
+            },
+        {
+        groupName:'Propiedad y uso',
+          fields:[
+              // *****GRUPO "Propiedad y uso" ****
+
+                {
+                  name: 'domBaunitEconoDesti',
+                  label: 'Destino económico',
+                  collection: false,
+                  type: 'text',
+                  placeholder: 'Destino económico',
+                  group:'',
+                  groupName:'Propiedad y uso'
+                },
+                {
+                  name: 'domBaunitType',
+                  label: 'Tipo',
+                  collection: false,
+                  type: 'text',
+                  placeholder: 'Tipo',
+                  group:'',
+                  groupName:'Propiedad y uso'
+                },
+                {
+                  name: 'domBaunitCondition',
+                  label: 'Condición propiedad',
+                  collection: false,
+                  type: 'text',
+                  placeholder: 'Condición propiedad',
+                  group:'',
+                  groupName:'Propiedad y uso'
+                },
+                {
+                  name: 'cadastralRegistryNumber',
+                  label: 'Incripción catastral',
+                  collection: false,
+                  type: 'text',
+                  placeholder: 'Incripción catastral',
+                  group:'',
+                  groupName:'Propiedad y uso'
+                },
+                {
+                  name: 'cadastralRegistryNumberTemp',
+                  label: 'Código homologado',
+                  collection: false,
+                  type: 'text',
+                  placeholder: 'Código homologado',
+                  group:'',
+                  groupName:'Propiedad y uso'
+                },
+            ]
+        },
+        {
+          groupName:'Tamaños y áreas',
+          fields:[
+            // *****GRUPO "Tamaños y áreas" ****
+
+              {
+                name: 'propertyRegistryAreaE',
+                label: 'Área registral',
+                collection: false,
+                type: 'text',
+                placeholder: 'Área registral',
+                group:'',
+                groupName:'Tamaños y áreas'
+              },
+              {
+                name: 'cadastralAreaE',
+                label: 'Área catastral',
+                collection: false,
+                type: 'text',
+                placeholder: 'Área catastral',
+                group:'',
+                groupName:'Tamaños y áreas'
+              },
+              {
+                name: 'cadlAreaCommonE',
+                label: 'Área catastral común',
+                collection: false,
+                type: 'text',
+                placeholder: 'Área catastral común',
+                group:'',
+                groupName:'Tamaños y áreas'
+              },
+              {
+                name: 'cadAreaPrivateE',
+                label: 'Área catastral privada',
+                collection: false,
+                type: 'text',
+                placeholder: 'Área catastral privada',
+                group:'',
+                groupName:'Tamaños y áreas'
+              },
+              {
+                name: 'cadastralAreaUnitbuilt',
+                label: 'Área catastral construida',
+                collection: false,
+                type: 'text',
+                placeholder: 'Área catastral construida',
+                group:'',
+                groupName:'Tamaños y áreas'
+              },
+              {
+                name: 'cadAreaUnitbuiltCommon',
+                label: 'Área catastral construida común',
+                collection: false,
+                type: 'text',
+                placeholder: 'Área catastral construida común',
+                group:'',
+                groupName:'Tamaños y áreas'
+              },
+              {
+                name: 'cadAreaUnitbuiltPrivate',
+                label: 'Área catastral construida Privada',
+                collection: false,
+                type: 'text',
+                placeholder: 'Área catastral construida Privada',
+                group:'',
+                groupName:'Tamaños y áreas'
+              },
+          ]
+        },
+    //     {
+    //       groupName:'Seguimientos y actualizaciones',
+    //       fields:[
+    // // *****GRUPO "Seguimientos y actualizaciones" ****
+
+    //           {
+    //             name: 'cadastralLastEventAt',
+    //             label: 'Último evento el',
+    //             collection: false,
+    //             type: 'date',
+    //             placeholder: 'Último evento el',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           },
+    //           {
+    //             name: 'cadastralLastEventCode',
+    //             label: 'Número último evento',
+    //             collection: false,
+    //             type: 'text',
+    //             placeholder: 'Número último evento',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           },
+    //           {
+    //             name: 'updatedBy',
+    //             label: 'Actualizado por',
+    //             collection: false,
+    //             type: 'text',
+    //             placeholder: 'Actualizado por',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           },
+    //           {
+    //             name: 'updatedAt',
+    //             label: 'Actualizado el',
+    //             collection: false,
+    //             type: 'date',
+    //             placeholder: 'Actualizado el',
+    //             group:'',
+    //             groupName:'Seguimientos y actualizaciones'
+    //           }
+    //     ]
+    //   }
+      
+    
   ];
 
   constructor(
@@ -129,21 +295,48 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   ) { }
 
   public form: FormGroup = this.fb.group({
-    "propertyRegistryOffice": ['', Validators.required],
-    "propertyRegistryNumber": ['', Validators.required],
-    "propertyRegistryArea": ['', Validators.min(0)],
-    "cadastralArea": ['', [Validators.required,Validators.min(0)]],
-    "cadastralNumber": ['', Validators.required],
-    "cadastralLastNumber": ['', Validators.required],
-    "cadastralRegistryNumberTemp": ['', Validators.required],
+    // GRUPO "Identificación del predio"
+    "cadastralNumberFormat": ['', [Validators.required]],
+    "cadastralNumber": ['', [Validators.required]],
+    "cadastralLastNumber": ['', [Validators.min(0)]],
+    "propertyRegistryOffice": ['', [Validators.required]],
+    "propertyRegistryNumber": ['', [Validators.required]],
+    "baunitIdOrigin": [''],
+
+   // *****GRUPO "Propiedad y uso" ****
+
+    "domBaunitEconoDesti": ['',[ Validators.required]],
+    "domBaunitType": ['',[ Validators.required]],
+    "domBaunitCondition": ['', [Validators.required]],
     "cadastralRegistryNumber": [''],
-    "domBaunitType": ['', Validators.required],
-    "domBaunitCondition": ['', Validators.required],
-    "domBaunitEconoDesti": ['', Validators.required],
-    "domBaunitProcessType": ['']
+    "cadastralRegistryNumberTemp": [''],
+
+    // *****GRUPO "Tamaños y áreas" ****
+    "propertyRegistryAreaE": [''],
+    "cadastralAreaE": ['',[Validators.required,Validators.min(0)]],
+    "cadlAreaCommonE": [''],
+    "cadAreaPrivateE": [''],
+    "cadastralAreaUnitbuilt": [''],
+    "cadAreaUnitbuiltCommon": [''],
+    "cadAreaUnitbuiltPrivate": [''],
+
+    // *****GRUPO "Seguimientos y actualizaciones" ****
+
+     "cadastralLastEventAt": [''],
+     "cadastralLastEventCode": [''],
+     "updatedBy": [''],
+     "updatedAt": ['']
+
   });
 
   ngOnInit(): void {
+    this.form.get('cadastralNumberFormat')?.disable();
+
+    this.form.get('cadastralLastEventAt')?.disable();
+    this.form.get('cadastralLastEventCode')?.disable();
+    this.form.get('updatedBy')?.disable();
+    this.form.get('updatedAt')?.disable();
+
     this.form.reset(this.data);
   }
 
@@ -161,5 +354,16 @@ export class EditBasicPropertyInformationComponent implements OnInit {
         this.dialogRef.close(data);
       }
     });
+  }
+
+  groupInputsByGroupName(inputs: any[]): any {
+    return inputs.reduce((groups, input) => {
+      const groupName = input.groupName || 'Otros';
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+      groups[groupName].push(input);
+      return groups;
+    }, {});
   }
 }

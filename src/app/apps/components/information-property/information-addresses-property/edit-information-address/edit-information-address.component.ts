@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -51,6 +51,8 @@ export interface AddEditInformationDataI {
     ComboxColletionComponent,
     ReactiveFormsModule,
     MatFormFieldModule,
+    NgForOf,
+    NgIf,
   ],
   templateUrl: './edit-information-address.component.html',
   styleUrl: './edit-information-address.component.scss'

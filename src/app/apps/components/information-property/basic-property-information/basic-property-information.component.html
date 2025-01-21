@@ -91,7 +91,7 @@
               data.propertyRegistryOffice
 
             ) {
-              <span class="text-sm">{{ data.propertyRegistryNumber + GUION}}  {{ data.propertyRegistryOffice}}</span>
+              <span class="text-sm">{{ data.propertyRegistryOffice + GUION}} {{ data.propertyRegistryNumber}}  </span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
@@ -209,7 +209,7 @@
               data.propertyRegistryAreaE !== null &&
               data.propertyRegistryAreaE
             ) {
-              <span class="text-sm">{{ data.propertyRegistryAreaE  }}</span>
+              <span class="text-sm">{{ data.propertyRegistryAreaE | currencyLands  }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }
@@ -219,17 +219,17 @@
               data.cadastralAreaE !== null &&
               data.cadastralAreaE
             ) {
-              <span class="text-sm">{{ data.cadastralAreaE  }}</span>
+              <span class="text-sm">{{ data.cadastralAreaE | currencyLands  }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO   }}</span>
             }
             @if (
               data !== null &&
               data !== undefined &&
-              data.cadlAreaCommonE !== null &&
-              data.cadlAreaCommonE
+              data.cadAreaCommonE !== null &&
+              data.cadAreaCommonE
             ) {
-              <span class="text-sm">{{ data.cadlAreaCommonE  }}</span>
+              <span class="text-sm">{{ data.cadAreaCommonE | currencyLands  }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }
@@ -240,7 +240,7 @@
               data.cadAreaPrivateE 
             ) {
               <span class="text-sm"
-                >{{ data.cadAreaPrivateE }}
+                >{{ data.cadAreaPrivateE | currencyLands }}
               </span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
@@ -252,7 +252,7 @@
               data.cadastralAreaUnitbuilt 
             ) {
               <span class="text-sm"
-                >{{ data.cadastralAreaUnitbuilt + ' Mts2' }}
+                >{{ data.cadastralAreaUnitbuilt | currencyLands }}
               </span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
@@ -264,7 +264,7 @@
               data.cadAreaUnitbuiltCommon
             ) {
               <span class="text-sm">{{
-                data.cadAreaUnitbuiltCommon + ' Mts2' }}</span>
+                data.cadAreaUnitbuiltCommon | currencyLands }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }
@@ -275,7 +275,7 @@
               data.cadAreaUnitbuiltPrivate
             ) {
               <span class="text-sm">{{
-                data.cadAreaUnitbuiltPrivate + ' Mts2' }}</span>
+                data.cadAreaUnitbuiltPrivate | currencyLands }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2'  }}</span>
             }
