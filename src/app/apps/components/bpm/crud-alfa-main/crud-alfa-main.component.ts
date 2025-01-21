@@ -194,7 +194,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!this.formCreateDelete.value || !this.formCreateDelete.value.npnLike) {
       this.snackBar.open(
         'No se puede consultar información, con los datos suministrados.',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -215,7 +215,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if(!addNpnLike || !bAunitCondition) {
       this.snackBar.open(
         'Para poder continuar diligencie los campos obligatorios',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -225,14 +225,14 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
         next: () => {
           this.snackBar.open(
             'Se creó una nueva unidad predial.',
-            'CLOSE', { duration: 5000 }
+            'CLOSE', { duration: 10000 }
           );
           this.dialogRef.close();
         },
         error: (error: HttpErrorResponse) => {
           this.snackBar.open(
             'Error al crear la unidad predial.',
-            'CLOSE', { duration: 5000 }
+            'CLOSE', { duration: 10000 }
           );
           throw error;
         }
@@ -242,7 +242,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     //   .then(() => {
     //     this.snackBar.open(
     //       'Se creó una nueva unidad predial.',
-    //       'CLOSE', { duration: 5000 }
+    //       'CLOSE', { duration: 10000 }
     //     );
     //     this.dialogRef.close();
     //   });
@@ -257,14 +257,14 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
         next: (() => {
           this.snackBar.open(
             'Se creó una nueva unidad predial para actualizar.',
-            'CLOSE', { duration: 5000 }
+            'CLOSE', { duration: 10000 }
           );
           this.loadPropertiesInformation();
         }),
         error: (error: HttpErrorResponse) => {
           this.snackBar.open(
             'Error al crear la unidad predial para actualizar.',
-            'CLOSE', { duration: 5000 }
+            'CLOSE', { duration: 10000 }
           );
           throw error;
         }
@@ -280,14 +280,14 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
         next: () => {
           this.snackBar.open(
             'Se creó una nueva unidad predial para eliminar.',
-            'CLOSE', { duration: 5000 }
+            'CLOSE', { duration: 10000 }
           );
           this.loadPropertiesInformation();
         },
         error: (error: HttpErrorResponse) => {
           this.snackBar.open(
             'Error al crear la unidad predial para eliminar.',
-            'CLOSE', { duration: 5000 }
+            'CLOSE', { duration: 10000 }
           );
           throw error;
         }

@@ -127,6 +127,23 @@
               {{ row[column.property] }}
             </td>
           </ng-container>
+          <ng-container
+            *ngIf="column.type === 'operationType'"
+            [matColumnDef]="column.property">
+            <th
+              *matHeaderCellDef
+              class="pl-1 pr-1"
+              mat-header-cell
+              mat-sort-header>
+              {{ column.label }}
+            </th>
+            <td *matCellDef="let row"
+                [ngClass]="column.cssClasses"
+                mat-cell
+                class="pl-1 pr-1">
+              {{ row[column.property]  | currencyLands }}
+            </td>
+          </ng-container>
         </ng-container>
 
         <tr *matHeaderRowDef="visibleColumns"

@@ -116,7 +116,7 @@ export class AddPropertyOwnerComponent implements OnInit {
     this.fractions_sum += Number(this.secondForm.value.fraction);
 
     if (this.fractions_sum > 1) {
-      this.snackbar.open('La suma de fracciones es mayor a 1', 'CLOSE', { duration: 5000 });
+      this.snackbar.open('La suma de fracciones es mayor a 1', 'CLOSE', { duration: 10000 });
       return;
     }
 
@@ -125,11 +125,11 @@ export class AddPropertyOwnerComponent implements OnInit {
         this.close();
       });
 
-    this.snackbar.open('Propietario agregado', 'CLOSE', { duration: 5000 });
+    this.snackbar.open('Propietario agregado', 'CLOSE', { duration: 10000 });
   }
 
   createPerson(newCustomer: { number: string; individualTypeNumber: string; }): void {
-    this.snackbar.open('Creando usuario', 'CLOSE', { duration: 5000 });
+    this.snackbar.open('Creando usuario', 'CLOSE', { duration: 10000 });
 
     this.dialog.open(CreatePeopleComponent, {
       data: {

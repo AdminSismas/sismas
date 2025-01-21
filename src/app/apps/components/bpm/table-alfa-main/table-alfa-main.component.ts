@@ -171,7 +171,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede ver la información de la unidad predial, consulte al administrador.',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -196,7 +196,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede visualizar los cambios realizados, consulte al administrador.',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -217,7 +217,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede ver la información de la unidad predial, consulte al administrador.',
-        'CLOSE', { duration: 5000 }
+        'CLOSE', { duration: 10000 }
       );
       return;
     }
@@ -271,7 +271,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   messageChangesNoAvailable() {
     this.snackbar.open(
       'Cambios realizados en el control de cambios no disponibles, consulte al administrador.',
-      'CLOSE', { duration: 5000 }
+      'CLOSE', { duration: 10000 }
     );
   }
 

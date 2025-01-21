@@ -94,7 +94,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
     label: 'Área terreno',
     property: 'cadastralArea',
-    type: 'text',
+    type: 'operationType',
     visible: true,
     cssClasses: ['font-medium']
   },
