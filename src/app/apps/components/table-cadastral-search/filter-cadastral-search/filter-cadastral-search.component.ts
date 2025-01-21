@@ -618,7 +618,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   searchByBaunitIdE(): void {
     const baunitIdE = this.form.get('baunitIdE')?.value;
     if (!baunitIdE) {
-      this.snackBar.open('Ingrese el número predial', 'Aceptar', { duration: 5000 });
+      this.snackBar.open('Ingrese el número de la ficha', 'Aceptar', { duration: 5000 });
       return;
     }
     this.dialogRef.close({ baunitIdE });
