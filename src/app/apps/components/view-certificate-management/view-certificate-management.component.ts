@@ -1,7 +1,17 @@
-import { Component, OnInit, Inject, Input, SecurityContext } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  Input,
+  SecurityContext
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeUrl
+} from '@angular/platform-browser';
 
 // recursos de angular material
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +24,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 
 // recursos de archivos locales
-import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
 import { environment } from 'src/environments/environments';
 import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -37,41 +46,40 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   ]
 })
 export class ViewCertificateManagementComponent implements OnInit {
-
   @Input() public id = '';
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
 
-  typeCertificate: string = 'CERT_POSEER_BIEN_TAQUILLA';
+  typeCertificate = 'CERT_POSEER_BIEN_TAQUILLA';
   documentNumber: string;
   documentType: string;
   fullName: string;
 
   basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individualNumber}`;
-  pdfUrl: SafeResourceUrl = '';
+  pdfUrl: SafeResourceUrl | string = '';
   fileType = '';
-  fileContent = ''; 
+  fileContent = '';
 
   constructor(
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     public dialogRef: MatDialogRef<ViewCertificateManagementComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { documentNumber: string; documentType: string; fullName: string }
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      documentNumber: string;
+      documentType: string;
+      fullName: string;
+    }
   ) {
-
-   
-
     this.documentNumber = data.documentNumber;
     this.documentType = data.documentType;
-    this.fullName =  data.fullName.toUpperCase();
-
+    this.fullName = data.fullName.toUpperCase();
   }
 
   ngOnInit(): void {
     //this.pdfUrl = this.urlPdfViewer();
     //this.loadPdf();
     this.loadPdf();
-  
   }
 
   getFileType(fileName: string): string {
@@ -86,7 +94,6 @@ export class ViewCertificateManagementComponent implements OnInit {
     if (['dwg', 'shp'].includes(extension!)) return 'dwg';
     return 'unknown';
   }
-
 
   downloadAndShowPdf(): void {
     const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
@@ -105,35 +112,34 @@ export class ViewCertificateManagementComponent implements OnInit {
 
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
 
-
         this.downloadPdf(response);
       },
       error: (err) => {
         console.error('Error al cargar el PDF:', err);
-      },
+      }
     });
   }
 
   downloadPdfFromSafeUrl(): void {
- 
     const unsafeUrl = this.sanitizer.sanitize(SecurityContext.URL, this.pdfUrl);
-    
+
     if (unsafeUrl) {
-     
       fetch(unsafeUrl)
-        .then(res => res.blob())
-        .then(blob => {
+        .then((res) => res.blob())
+        .then((blob) => {
           const blobUrl = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = blobUrl;
-          a.download = 'certificado_no_bien.pdf'; 
-          document.body.appendChild(a); 
+          a.download = 'certificado_no_bien.pdf';
+          document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
 
           window.URL.revokeObjectURL(blobUrl);
         })
-        .catch(error => console.error('Error al descargar el archivo:', error));
+        .catch((error) =>
+          console.error('Error al descargar el archivo:', error)
+        );
     } else {
       console.error('URL no segura, descarga cancelada.');
     }
@@ -151,24 +157,25 @@ export class ViewCertificateManagementComponent implements OnInit {
   }
 
   loadPdf() {
-
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${this.basic_url}${queryParams}`;
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
     this.http.get(fullUrl, { headers, responseType: 'blob' }).subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
-        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+        const blobUrl = URL.createObjectURL(blob);
+        // Asegúrate de que esta línea use bypassSecurityTrustResourceUrl
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
       },
-      error: () => {
-        console.error('Error al cargar el documento PDF:');
+      error: (error) => {
+        console.error('Error al cargar el documento PDF:', error);
         this.pdfUrl = 'error';
       }
     });
   }
 
-  
   // loadPdf(): void {
   //   const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.data.fullName)}`;
   //   const fullUrl = `${this.basic_url}${queryParams}`;
@@ -195,21 +202,14 @@ export class ViewCertificateManagementComponent implements OnInit {
   //   });
   // }
 
-  
-
-
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {
-
-
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${this.basic_url}${queryParams}`;
 
     console.log('fullUrl', fullUrl);
     return this.sanitizer.bypassSecurityTrustResourceUrl(fullUrl);
-  
   }
-
 
   switchViewDocMetaData(): void {
     this.showMetadataView = !this.showMetadataView;

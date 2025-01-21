@@ -82,12 +82,12 @@
     >
       <!-- Visualización del archivo PDF en el iframe -->
       <iframe
-      *ngIf="pdfUrl !== 'error'"
-      [src]="pdfUrl"
-      width="100%"
-      height="100%"
-      style="border: none"
-    ></iframe>
+        *ngIf="pdfUrl && pdfUrl !== 'error'"
+        [src]="pdfUrl"
+        width="100%"
+        height="100%"
+        style="border: none"
+      ></iframe>
 
       <!-- Visualización de la imagen -->
       <!-- <div *ngIf="fileType === 'image'">
