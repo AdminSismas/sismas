@@ -49,6 +49,7 @@ import { environment as envi } from '../../../../environments/environments';
 import { SendInformationRegisterService } from '../../services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from '../../services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CurrencyLandsPipe } from '../../pipes/currency-lands.pipe';
 
 
 @Component({
@@ -80,6 +81,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,
     MatTabsModule,
     MatSelectModule,
+    CurrencyLandsPipe
   ]
 })
 export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
