@@ -160,7 +160,7 @@ export class TableDigitalizedSignaturesComponent
       .subscribe((res: boolean) => {
         if (res) {
           this.snackbar.open('Editando firma...', 'Aceptar', {
-            duration: 3000
+            duration: 10000
           });
           this.getDataDigitalizedSignatures();
         }
@@ -175,13 +175,13 @@ export class TableDigitalizedSignaturesComponent
           .subscribe({
             next: () => {
               this.snackbar.open('Eliminando firma...', 'Aceptar', {
-                duration: 3000
+                duration: 10000
               });
               this.getDataDigitalizedSignatures();
             },
             error: (error) => {
               this.snackbar.open('Error al eliminar la firma', 'CLOSE', {
-                duration: 3000
+                duration: 10000
               });
               throw error;
             }

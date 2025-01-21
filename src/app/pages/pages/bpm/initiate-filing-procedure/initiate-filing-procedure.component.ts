@@ -216,7 +216,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'Identificador de la unidad predial no válido, por favor revisar.',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       this.returnPanelTask(true);
       return;
@@ -289,7 +289,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'No se encontro proceso seleccionado, por favor revisar.',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       return;
     }
@@ -299,7 +299,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
           this.snackBar.open(
             'Error no se encontro documentos asociados al proceso, por favor revisar.',
             undefined,
-            { duration: 5000 }
+            { duration: 10000 }
           );
           this._listBpmDocumentsProcess.next([]);
           return;
@@ -321,7 +321,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'No se encontró un proceso seleccionado, por favor revisar.',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       return;
     }
@@ -330,7 +330,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'No se encontró participantes agregados al proceso, por favor revisar.',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       return;
     }
@@ -339,7 +339,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'Error no se encontró radicado auxiliar o identificado de la unidad predial, por favor revisar.',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       return;
     }
@@ -349,7 +349,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       this.snackBar.open(
         'Error no se encontró documentos asociados al proceso, por favor revisar.',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       return;
     }
@@ -374,7 +374,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
             `Radicado Exitoso, Identificador: ${proTaskE?.executionId}`,
             'CLOSE',
             {
-              duration: 5000
+              duration: 10000
             }
           );
           return;
@@ -384,7 +384,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
           if (proTaskE.proTask.taskId! < 0) {
             this.router.navigate([environment.myWork_tasksPanel]);
             this.snackBar.open(proTaskE.proTask.flowName!, 'Aceptar', {
-              duration: 5000
+              duration: 10000
             });
             return;
           }
@@ -394,7 +394,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         console.log(err);
         this.snackBar.open(err?.error, 'CLOSE', {
-          duration: 5000,
+          duration: 10000,
           horizontalPosition: 'right'
         });
       }

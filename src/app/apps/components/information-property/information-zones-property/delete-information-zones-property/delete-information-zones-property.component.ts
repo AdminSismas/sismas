@@ -35,7 +35,7 @@ export class DeleteInformationZonesPropertyComponent {
       .subscribe((res: any) => console.log(res));
 
     this.close();
-    this.snackbar.open('Zona eliminada', 'CERRAR', { duration: 5000 });
+    this.snackbar.open('Zona eliminada', 'CERRAR', { duration: 10000 });
   }
 
   close() {

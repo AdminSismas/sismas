@@ -91,7 +91,7 @@ export class CreateSignatureComponent implements OnInit {
         },
         error: (error) => {
           this.snackbar.open('Error al agregar la firma', 'CLOSE', {
-            duration: 3000
+            duration: 10000
           });
           throw error;
         }

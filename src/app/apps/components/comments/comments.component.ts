@@ -137,7 +137,7 @@ export class CommentsComponent implements OnInit {
   postDataCommentService(): void {
     if (!this.form.get('newCommentText')?.value.trim()) {
       this.alertSnakbar.open('El comentario está vacío', 'Close', {
-        duration: 3000,
+        duration: 10000,
         horizontalPosition: 'center'
       });
       return;
@@ -148,7 +148,7 @@ export class CommentsComponent implements OnInit {
     this.commentsService.postDataPropertyByComments(this.executionId, this.body).subscribe({
       next: (data: any) => {
         this.alertSnakbar.open('Comentario Enviado', 'Close', {
-          duration: 3000,
+          duration: 10000,
           horizontalPosition: 'center'
         });
         this.getDataFromDocumentManagementService();
@@ -165,7 +165,7 @@ export class CommentsComponent implements OnInit {
     this.commentsService.deleteDataPropertyByComments(this.executionId, commentId).subscribe({
       next: (data: any) => {
         this.alertSnakbar.open('Comentario Eliminado', 'Close', {
-          duration: 3000,
+          duration: 10000,
           horizontalPosition: 'center'
         });
         this.getDataFromDocumentManagementService();

@@ -57,7 +57,7 @@ export class DigitalizedSignaturesComponent {
       .afterClosed()
       .subscribe((res: boolean) => {
         if (res) {
-          this.snackbar.open('Firma agregada', 'Aceptar', { duration: 5000 });
+          this.snackbar.open('Firma agregada', 'Aceptar', { duration: 10000 });
           this.tableDigitalizedSignaturesComponent.getDataDigitalizedSignatures();
         }
       });

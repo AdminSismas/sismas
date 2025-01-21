@@ -177,7 +177,7 @@ export class CreatePeopleComponent implements OnInit {
     const resApi = this.peopleServcie.userCreate(dataCreate).subscribe({
       next: (res) => {
         this.alertSnakbar.open('Persona registrada', 'CLOSE', {
-          duration: 3000,
+          duration: 10000,
           horizontalPosition: 'right'
         });
         this.dialogRef.close({
@@ -295,7 +295,7 @@ export class CreatePeopleComponent implements OnInit {
     this.peopleServcie.userEdit(dataCreate).subscribe({
       next: (res) => {
         this.alertSnakbar.open('Persona actualizada', 'CLOSE', {
-          duration: 3000,
+          duration: 10000,
           horizontalPosition: 'right'
         });
         this.dialogRef.close();

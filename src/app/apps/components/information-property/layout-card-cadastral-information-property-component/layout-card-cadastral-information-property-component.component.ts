@@ -119,7 +119,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       this.defaults?.baunitIdE === undefined
     ) {
       this.snackBar.open('ID no válido no es posible continuar!', 'CLOSE', {
-        duration: 3000,
+        duration: 10000,
         horizontalPosition: 'right'
       });
       this.close();

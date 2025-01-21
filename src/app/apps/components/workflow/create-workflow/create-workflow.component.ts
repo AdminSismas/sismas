@@ -48,7 +48,7 @@ export class CreateWorkflowComponent {
 
   onSubmit() {
     if (!this.form!.valid) {
-      this.snackbar.open('Se deben completar todos los campos requeridos', 'CLOSE', { duration: 5000 });
+      this.snackbar.open('Se deben completar todos los campos requeridos', 'CLOSE', { duration: 10000 });
       return;
     }
 

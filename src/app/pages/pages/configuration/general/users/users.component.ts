@@ -104,7 +104,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         },
         error: (error: any) => {
           this.snackbar.open('Error al obtener usuarios', 'CLOSE', {
-            duration: 4000,
+            duration: 10000,
           });
           throw error;
         }
@@ -181,7 +181,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404) {
-            this.snackbar.open('Usuario no encontrado', 'CLOSE', { duration: 5000 });
+            this.snackbar.open('Usuario no encontrado', 'CLOSE', { duration: 10000 });
           }
           throw error;
         }

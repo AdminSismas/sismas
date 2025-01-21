@@ -368,14 +368,14 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
           next: (response) => {
             console.log('Archivo eliminado con éxito:', response);
             this.snackBar.open('Archivo eliminado con éxito', 'Cerrar', {
-              duration: 3000,
+              duration: 10000,
               panelClass: ['snack-success'],
             });
           },
           error: (error) => {
             console.error('Error al eliminar el archivo:', error);
             this.snackBar.open('Hubo un error al eliminar el archivo. Intente nuevamente.', 'Cerrar', {
-              duration: 5000,
+              duration: 10000,
               panelClass: ['snack-error'],
             });
           }
