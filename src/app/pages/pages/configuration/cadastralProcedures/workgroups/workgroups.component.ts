@@ -18,6 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PAGE_OPTION__10_20_50_100 } from 'src/app/apps/constants/constant';
 
 @Component({
   selector: 'vex-workgroups',
@@ -68,7 +69,7 @@ export class WorkgroupsComponent implements OnInit {
   page = 0;
   pageSize = 10;
   totalElements = 0;
-  pageSizeOptions: number[] = [5, 10, 25, 50];
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
 
   // Buscador
   searchTerm = '';

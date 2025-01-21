@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   PAGE,
+  PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
@@ -114,7 +115,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   page:number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
 
   dataSource!: MatTableDataSource<ContentInformationConstruction>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();

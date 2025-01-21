@@ -13,6 +13,7 @@ import {
   NAME_NO_DISPONIBLE,
   NAME_SELFVALUATIONVALUE,
   PAGE,
+  PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
@@ -106,7 +107,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
 
   dataSource!: MatTableDataSource<InfoAppraisal>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();

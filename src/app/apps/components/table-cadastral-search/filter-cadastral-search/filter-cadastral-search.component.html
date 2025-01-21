@@ -270,6 +270,12 @@
                   type="button"
                   (click)="searchRegistrationNumber()"
                 >
+                <button
+                  color="primary"
+                  mat-raised-button
+                  type="button"
+                  (click)="searchRegistrationNumber()"
+                >
                   <mat-icon svgIcon="mat:search"></mat-icon>Buscar
                 </button>
               </div>
@@ -556,6 +562,7 @@
                         </mat-option>
                       } @empty {
                         <mat-option>
+                          {{ STRING_INFORMATION_NOT_FOUND }}
                           {{ STRING_INFORMATION_NOT_FOUND }}
                         </mat-option>
                       }

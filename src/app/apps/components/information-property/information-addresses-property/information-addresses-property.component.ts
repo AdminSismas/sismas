@@ -17,6 +17,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   PAGE,
+  PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_OPTION_ADDRESS,
@@ -106,7 +107,7 @@ export class InformationAddressesPropertyComponent
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public hasMainAddress = false;
 
@@ -156,12 +157,12 @@ export class InformationAddressesPropertyComponent
   ngOnChanges(changes: SimpleChanges): void {
     const { currentValue: typeInformation } = changes['typeInformation'];
     if (typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
-      this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
+      this.pageSize = PAGE_SIZE;
+      this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
       this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
     } else {
       this.pageSize = PAGE_SIZE;
-      this.pageSizeOptions = PAGE_SIZE_OPTION;
+      this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
       this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
     }
   }

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -597,6 +598,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   captureDepartmentInformation(result: Department[]) {
     result = result.map((dpto: Department) => new Department(dpto));
+    this.optionsDepartments = result;
     this.optionsDepartments = result;
 
     if (this.defaults?.department) {

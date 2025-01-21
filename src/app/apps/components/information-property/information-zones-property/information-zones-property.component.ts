@@ -7,6 +7,7 @@ import {
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
   PAGE,
+  PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
   TYPEINFORMATION_EDITION,
@@ -172,8 +173,8 @@ export class InformationZonesPropertyComponent implements OnInit , OnChanges, Af
   totalGeoElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSize2: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  pageSizeOptions2: number[] = PAGE_SIZE_OPTION;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions2: number[] = PAGE_OPTION__10_20_50_100;
   rightIdSelected?: number;
   dataSource: MatTableDataSource<ZoneBAUnit> =
     new MatTableDataSource<ZoneBAUnit>([]);
