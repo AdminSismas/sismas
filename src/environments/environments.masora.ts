@@ -18,7 +18,7 @@ export const environment = {
   },
   /* ------ B ------ */
   basicAddress: '/ccDireccion/baunitText',
-  baunit: '/baunit/',
+  baunit: 'baunit',
   baunit_attributes: '/baunit/attributes/',
   baunit_attributes_address: 'direccion',
   baunit_attributes_document: 'individualNumber',

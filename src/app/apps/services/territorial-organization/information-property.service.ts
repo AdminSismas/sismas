@@ -46,7 +46,7 @@ export class InformationPropertyService {
     id: string,
     executionId: string | null | undefined = null
   ): Observable<BasicInformationProperty> {
-    let url = `${this.basic_url}${envi.baunit}${schema}`;
+    let url = `${this.basic_url}/${envi.baunit}/${schema}`;
     if (!executionId || (executionId && schema === `${envi.schemas.main}`)) {
       url += `/${id}`;
     } else {
@@ -313,7 +313,7 @@ export class InformationPropertyService {
 
   updateBasicInformationProperty(executionId: string, baunitId: string, body: UpdateBasicInformationProperty): Observable<BasicInformationProperty> {
 
-    const url = `${this.basic_url}${envi.baunit}temp/${executionId}/${baunitId}`;
+    const url = `${this.basic_url}/${envi.baunit}/temp/${executionId}/${baunitId}`;
 
     return this.http.put<BasicInformationProperty>(url, body)
       .pipe(
