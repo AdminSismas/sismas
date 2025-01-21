@@ -37,6 +37,8 @@ export const FORMAT_CURRENCY_SIMBOL = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND = 'Información no disponible';
 
 export const PAGE_OPTION__5_7_10: number[] = [5,7,10];
+export const PAGE_OPTION__10_20_50_100: number[] = [10,20,50,100];
+
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [5, PAGE_OPTION_UNIQUE_7, PAGE_OPTION_UNIQUE, 20, 50];

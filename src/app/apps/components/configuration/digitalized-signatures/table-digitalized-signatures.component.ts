@@ -23,6 +23,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   PAGE,
+  PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION
 } from 'src/app/apps/constants/constant';
@@ -70,7 +71,7 @@ export class TableDigitalizedSignaturesComponent
   // MatPaginator configuration
   public page: number = PAGE;
   public pageSize: number = PAGE_SIZE;
-  public pageSizeOptions: number[] = [...PAGE_SIZE_OPTION, 1];
+  public pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   public totalElements = 0;
   public contentInformation!: InformationPegeable;
 

@@ -8,7 +8,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, TABLE_COLUMN_DOCUMENT_ASOCIETY, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, TABLE_COLUMN_DOCUMENT_ASOCIETY, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -90,7 +90,7 @@ export class DocumentsAssociatedProceduresComponent {
     page:number = PAGE;
     totalElements = 0;
     pageSize: number = PAGE_SIZE;
-    pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
+    pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
     userSesion:DecodeJwt | null = null;
   
     dataSource!: MatTableDataSource<DocumentAsocietyModel>;

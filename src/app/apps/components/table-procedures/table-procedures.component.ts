@@ -41,6 +41,7 @@ import { InputComponent } from '../input/input.component';
 import { TaskResponseModel } from '../../interfaces/task-response.model';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PAGE_OPTION__10_20_50_100 } from '../../constants/constant';
 
 
 
@@ -99,7 +100,7 @@ private subscriptions: Subscription  | undefined[] = [];
 @Input()
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES;
 

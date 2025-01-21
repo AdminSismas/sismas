@@ -41,6 +41,7 @@ import { dateComparisonValidator } from './validations-form/validation-form-gene
 import { MatDialog } from '@angular/material/dialog';
 import { TaskResponseModel } from '../../interfaces/task-response.model';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { PAGE_OPTION__10_20_50_100 } from '../../constants/constant';
 @Component({
   selector: 'vex-table-work-finished',
   standalone: true, 
@@ -93,7 +94,7 @@ private subscriptions: Subscription  | undefined[] = [];
 @Input()
   page:number = PAGE;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_FINISHED;
 
