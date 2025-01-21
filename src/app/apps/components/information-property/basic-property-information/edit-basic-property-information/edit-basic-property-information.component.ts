@@ -349,7 +349,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     .subscribe({
       next: (data: BasicInformationProperty) => {
         this.snackbar.open('Se ha actualizado los aspectos generales del predio', 'CLOSE', {
-          duration: 4000,
+          duration: 10000,
         });
         this.dialogRef.close(data);
       }

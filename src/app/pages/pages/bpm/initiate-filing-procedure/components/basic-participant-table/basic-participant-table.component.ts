@@ -199,7 +199,7 @@ export class BasicParticipantTableComponent
       this.snackbar.open(
         'Ingresar tipo documento o número de documento',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       return;
     }
@@ -262,7 +262,7 @@ export class BasicParticipantTableComponent
     const typeParticipation = this.form.get('typeParticipation')?.value;
     if (!typeParticipation) {
       this.snackbar.open('Seleccionar tipo de participación', undefined, {
-        duration: 2000
+        duration: 10000
       });
       return;
     }
@@ -270,7 +270,7 @@ export class BasicParticipantTableComponent
       this.snackbar.open(
         'Selecciona o buscar un persona para agregarla como participante',
         undefined,
-        { duration: 5000 }
+        { duration: 10000 }
       );
       return;
     }
@@ -291,7 +291,7 @@ export class BasicParticipantTableComponent
           return;
         }
         this.snackbar.open('Participante ya agregado', undefined, {
-          duration: 2000
+          duration: 10000
         });
         return;
       }

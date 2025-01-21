@@ -92,7 +92,7 @@ export class LoginComponent {
               .navigate([`${environment.myWork_cadastralSearch}`])
               .then(() => {
                 this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
-                  duration: 5000
+                  duration: 10000
                 });
               });
           } else {
@@ -100,7 +100,7 @@ export class LoginComponent {
               'Credenciales incorrectas. Intenta nuevamente.',
               'Error',
               {
-                duration: 5000
+                duration: 10000
               }
             );
           }
@@ -110,7 +110,7 @@ export class LoginComponent {
             'Credenciales incorrectas. Intenta nuevamente.',
             'Error',
             {
-              duration: 5000
+              duration: 10000
             }
           );
         }
@@ -120,7 +120,7 @@ export class LoginComponent {
         'Por favor, complete los campos correctamente.',
         'Error',
         {
-          duration: 3000
+          duration: 10000
         }
       );
     }

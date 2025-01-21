@@ -288,7 +288,7 @@ export class BmpCoreComponent implements OnInit {
       !result.flowId
     ) {
       this.router.navigate([environment.myWork_tasksPanel]);
-      this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 5000 });
+      this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 10000 });
       return;
     }
 
@@ -311,7 +311,7 @@ export class BmpCoreComponent implements OnInit {
   captureInformationSubscribeError(error: HttpErrorResponse): void {
     if (error.status === 400) {
       this.activateLoading(true);
-      this.snackbar.open(error.error, 'Aceptar', { duration: 5000 });
+      this.snackbar.open(error.error, 'Aceptar', { duration: 10000 });
       this.router.navigate([environment.myWork_tasksPanel]);
     }
     this.activateLoading(true);

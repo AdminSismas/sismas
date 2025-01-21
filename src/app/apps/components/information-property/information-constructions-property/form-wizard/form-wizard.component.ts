@@ -122,7 +122,7 @@ export class FormWizardComponent {
       'Hooray! You successfully created your account.',
       undefined,
       {
-        duration: 5000
+        duration: 10000
       }
     );
   }

@@ -89,6 +89,6 @@ export class PhotosComponent implements OnInit {
   autoSlide(): void {
     setInterval(() => {
       this.nextSlide();
-    }, 5000);
+    }, 10000);
   }
 }
