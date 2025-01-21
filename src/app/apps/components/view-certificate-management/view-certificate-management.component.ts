@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, Input, SecurityContext } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 // recursos de angular material
 import { MatIconModule } from '@angular/material/icon';
@@ -48,7 +48,7 @@ export class ViewCertificateManagementComponent implements OnInit {
   fullName: string;
 
   basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individualNumber}`;
-  pdfUrl: SafeUrl = '';
+  pdfUrl: SafeResourceUrl = '';
   fileType = '';
   fileContent = ''; 
 
