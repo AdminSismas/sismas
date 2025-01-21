@@ -19,7 +19,7 @@ export class BasicInformationProperty {
    // *****GRUPO "Tamaños y áreas" ****
   propertyRegistryAreaE?: string;
   cadastralAreaE?: string;
-  cadlAreaCommonE?: string;
+  cadAreaCommonE?: string;
   cadAreaPrivateE?: string;
   cadastralAreaUnitbuilt?: string;
   cadAreaUnitbuiltCommon?: string;
@@ -57,7 +57,7 @@ export class BasicInformationProperty {
     this.cadastralNumber = content?.cadastralNumber || '';
     this.cadastralLastNumber = content?.cadastralLastNumber || '';
     this.cadastralRegistryNumberTemp = content?.cadastralRegistryNumberTemp || '';
-    this.cadlAreaCommonE = content?.cadlAreaCommonE || '';
+    this.cadAreaCommonE = content?.cadAreaCommonE || '';
     this.cadAreaPrivateE = content?.cadAreaPrivateE || '';
     this.cadastralAreaUnitbuilt = content?.cadastralAreaUnitbuilt || '';
     this.cadAreaUnitbuiltCommon = content?.cadAreaUnitbuiltCommon || '';
