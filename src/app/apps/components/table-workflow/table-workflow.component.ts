@@ -36,6 +36,7 @@ import { PageSortByData } from '../../interfaces/page-sortBy-data.model';
 import { WorkflowCollection } from '../../interfaces/workflow.model';
 import { WorkflowService } from '../../services/workflow.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PAGE_OPTION__10_20_50_100 } from '../../constants/constant';
 
 @Component({
   selector: 'vex-table-workflow',
@@ -76,7 +77,7 @@ export class TableWorkflowComponent implements OnInit, AfterViewInit {
   @Input()
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   totalElements = 0;
   columns: TableColumn<contentInfoWorkflow>[] = TABLE_COLUMN_PROPERTIES;
 

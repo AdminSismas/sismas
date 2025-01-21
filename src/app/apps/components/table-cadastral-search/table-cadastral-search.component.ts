@@ -36,6 +36,8 @@ import {
   LIST_SCHEMAS_CONTROL_MAIN,
   LIST_SCHEMAS_CONTROL_TEMP,
   PAGE,
+  PAGE_OPTION__10_20_50_100,
+  PAGE_SIZE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
@@ -95,8 +97,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   page = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  pageSize: number = PAGE_SIZE;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
 
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);

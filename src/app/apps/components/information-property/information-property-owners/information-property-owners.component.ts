@@ -3,7 +3,7 @@ import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_EDITION } from '../../../constants/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TYPEINFORMATION_EDITION } from '../../../constants/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
@@ -133,7 +133,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   rightIdSelected?: number;
   dataSource: MatTableDataSource<InfoOwners> =
     new MatTableDataSource<InfoOwners>([]);
