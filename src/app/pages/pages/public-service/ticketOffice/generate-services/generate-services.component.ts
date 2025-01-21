@@ -3,6 +3,7 @@ import { InConstructionComponent } from '../../../../../apps/components/in-const
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { CertificateGridComponent } from './certificate-grid/certificate-grid.component';
 
 @Component({
   selector: 'vex-generate-services',
@@ -11,7 +12,8 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
+    VexSecondaryToolbarComponent,
+    CertificateGridComponent
   ],
   templateUrl: './generate-services.component.html',
   styleUrl: './generate-services.component.scss'
