@@ -698,7 +698,6 @@ export class FilterCadastralSearchComponent implements OnInit {
     result: Sidewalk[],
     skipPreloadedValues: boolean | null
   ) {
-    alert('sidewalks');
     result = result.map((sd: Sidewalk) => new Sidewalk(sd));
     this.optionsSidewalks = result;
 
