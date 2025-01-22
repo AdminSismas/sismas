@@ -31,6 +31,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
+  TABLE_COLUMN_INFORMATION_PROPERTIES,
   TABLE_COLUMN_PROPERTIES,
   TYPEINFORMATION_EDITION,
   TYPEINFORMATION_VISUAL,
@@ -105,7 +106,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   @Input()
-  columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
+  columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_INFORMATION_PROPERTIES;
   page = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
