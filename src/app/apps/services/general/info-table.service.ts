@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SendGeneralRequestsService } from './send-general-requests.service';
 import { environment } from '../../../../environments/environments';

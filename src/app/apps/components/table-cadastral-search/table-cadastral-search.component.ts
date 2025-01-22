@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
@@ -15,7 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -34,12 +35,9 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { FilterCadastralSearchComponent } from './filter-cadastral-search/filter-cadastral-search.component';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
-  LIST_SCHEMAS_CONTROL_TEMP,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  PAGE_SIZE_OPTION,
-  PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
 } from '../../constants/constant';
 import {
@@ -395,10 +393,6 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-  deleteInformations(customer: BaunitHead): void {
-  }
-
   onFilterChange(value: string): void {
     if (!this.dataSource) {
       return;
@@ -423,6 +417,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
@@ -472,8 +467,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
       const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
       this.router.navigate([`${url}`, data.baunitIdE])
-        .then(r => {
-        });
+        .then();
     }
   }
 
