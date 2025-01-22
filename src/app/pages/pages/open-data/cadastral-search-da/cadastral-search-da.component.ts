@@ -1,12 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AfterViewInit, Component,Input, DestroyRef,inject, OnInit, ViewChild } from '@angular/core';
-import { InConstructionComponent } from '../../../../apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexPageLayoutHeaderDirective } from "../../../../../@vex/components/vex-page-layout/vex-page-layout-header.directive";
-import { CommentsComponent } from "../../../../apps/components/comments/comments.component";
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
@@ -17,7 +15,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
-import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -44,25 +41,20 @@ import { Observable } from 'rxjs';
 import { FilterCadastralSearchDaComponent } from './filter-cadastral-search-da/filter-cadastral-search-da.component';
 import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
 import { environment } from 'src/environments/environments';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
 @Component({
   selector: 'vex-cadastral-search-da',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    CurrencyLandsPipe,
     VexPageLayoutContentDirective,
     VexPageLayoutHeaderDirective,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent,
-    InConstructionComponent,
-    CommentsComponent,
-    AsyncPipe,
-    VexSecondaryToolbarComponent,
     VexPageLayoutContentDirective,
-    FluidHeightDirective,
     FormsModule,
     NgIf,
-    NgFor,
     NgClass,
     ReactiveFormsModule,
     VexPageLayoutComponent,
@@ -356,10 +348,6 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-  deleteInformations(customer: BaunitHead): void {
-  }
-
   onFilterChange(value: string): void {
     if (!this.dataSource) {
       return;
@@ -384,6 +372,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
@@ -433,8 +422,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
       const url = `${environment.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
       this.router.navigate([`${url}`, data.baunitIdE])
-        .then(r => {
-        });
+        .then();
     }
   }
 
