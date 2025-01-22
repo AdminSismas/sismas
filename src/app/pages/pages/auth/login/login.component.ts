@@ -88,13 +88,28 @@ export class LoginComponent {
             this.navigationLoaderService.loadInformationNavigation(user.role);
             this.navigationLoaderService.startCountLoop();
 
-            this.router
-              .navigate([`${environment.myWork_cadastralSearch}`])
-              .then(() => {
-                this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
-                  duration: 10000
-                });
-              });
+            const redirectRoute =
+              user.role === 'GUEST'
+                ? environment.myWork_cadastralSearchDa
+                : environment.myWork_cadastralSearch;
+  
+            this.router.navigate([redirectRoute]).then(() => {
+              this.snackbar.open(
+                `Bienvenido, ${user.role === 'GUEST' ? 'invitado' : 'usuario'} ;)`,
+                'Gracias',
+                {
+                  duration: 5000,
+                }
+              );
+            });
+
+            // this.router
+            //   .navigate([`${environment.myWork_cadastralSearch}`])
+            //   .then(() => {
+            //     this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
+            //       duration: 10000
+            //     });
+            //   });
           } else {
             this.snackbar.open(
               'Credenciales incorrectas. Intenta nuevamente.',

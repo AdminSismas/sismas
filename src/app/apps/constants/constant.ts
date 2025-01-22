@@ -599,7 +599,7 @@ export const TABLE_COLUMN_BASIC_PRINCIPANTS: TableColumn<ProcessParticipant>[] =
 export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
   {
     label: '',
-    property: 'operationType',
+    property: 'otherProperty',
     type: 'operationType',
     visible: true,
     cssClasses: []
@@ -628,7 +628,7 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
   {
     label: 'Área terreno',
     property: 'cadastralArea',
-    type: 'text',
+    type: 'operationType',
     visible: true,
     cssClasses: ['font-medium']
   },

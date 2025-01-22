@@ -25,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -48,19 +48,20 @@ import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/
 import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
 @Component({
   selector: 'vex-table-alfa-main',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    CurrencyLandsPipe,
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    NgForOf,
     NgIf,
     NgClass,
     MatMenuModule,
