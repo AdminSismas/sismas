@@ -50,12 +50,14 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
 @Component({
   selector: 'vex-crud-alfa-main',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    CurrencyLandsPipe,
     MatDialogContent,
     MatDialogActions,
     MatIconModule,

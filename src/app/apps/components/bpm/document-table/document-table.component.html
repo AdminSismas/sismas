@@ -68,69 +68,66 @@
         </td>
       </ng-container>
       <!-- Text Columns -->
-      <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-        <ng-container
-          *ngIf="column.type === 'text'"
-          [matColumnDef]="column.property"
-        >
-          <th
-            *matHeaderCellDef
-            class="pl-1 pr-1"
-            mat-header-cell
-            mat-sort-header
-          >
-            {{ column.label }}
-          </th>
-          <td
-            *matCellDef="let row"
-            (click)="viewFile(row)"
-            class="uppeercase pl-1 pr-1"
-            [ngClass]="column.cssClasses"
-            mat-cell
-          >
-            <mat-icon
-              matIconPrefix
-              *ngIf="column.property === 'originalFileName'"
-              [svgIcon]="getFileTypeIcon(row)"
-              [ngClass]="getFileIconColor(row)"
-              class="w-5 h-5 p-0 items-center justify-center"
-            ></mat-icon>
-
-
-            {{ row[column.property] }}
-          </td>
-        </ng-container>
-
-        <ng-container
-          *ngIf="column.type === 'date'"
-          [matColumnDef]="column.property"
-        >
-          <th
-            *matHeaderCellDef
-            class="pl-1 pr-1"
-            mat-header-cell
-            mat-sort-header
-          >
-            {{ column.label }}
-          </th>
-          <td
-            *matCellDef="let row"
-            (click)="viewFile(row)"
-            class="uppeercase pl-1 pr-1"
-            [ngClass]="column.cssClasses"
-            mat-cell
-          >
-          <mat-icon
-          matIconPrefix
-          *ngIf="column.property === 'originalFileName'"
-          [svgIcon]="getFileTypeIcon(row)"
-          [ngClass]="getFileIconColor(row)"
-          class="w-5 h-5 p-0 items-center justify-center"
-        ></mat-icon>
-            {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
-          </td>
-        </ng-container>
-      </ng-container>
+       @for (column of columns; track trackByProperty) {
+        @if (column.type === "text") {
+          <ng-container [matColumnDef]="column.property">
+            <th
+              *matHeaderCellDef
+              class="pl-1 pr-1"
+              mat-header-cell
+              mat-sort-header
+            >
+              {{ column.label }}
+            </th>
+            <td
+              *matCellDef="let row"
+              [ngClass]="column.cssClasses"
+              mat-cell
+              class="pl-1 pr-1"
+            >
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        } @else if (column.type === "date") {
+          <ng-container [matColumnDef]="column.property">
+            <th
+              *matHeaderCellDef
+              class="pl-1 pr-1"
+              mat-header-cell
+              mat-sort-header
+            >
+              {{ column.label }}
+            </th>
+            <td
+              *matCellDef="let row"
+              [ngClass]="column.cssClasses"
+              mat-cell
+              class="pl-1 pr-1"
+            >
+              {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
+            </td>
+          </ng-container>
+        } @else if (column.type === "operationType") {
+          <ng-container [matColumnDef]="column.property">
+            <th
+              *matHeaderCellDef
+              class="pl-1 pr-1"
+              mat-header-cell
+              mat-sort-header
+            >
+              {{ column.label }}
+            </th>
+            <td
+              *matCellDef="let row"
+              [ngClass]="column.cssClasses"
+              mat-cell
+              class="pl-1 pr-1"
+            >
+              {{ row[column.property] | currencyLands }}
+            </td>
+          </ng-container>
+        }
+      }
 
       <tr
         mat-header-row

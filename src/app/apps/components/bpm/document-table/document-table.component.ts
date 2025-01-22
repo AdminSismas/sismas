@@ -33,6 +33,7 @@ import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeabl
 import { ViewFileDocumentManagementComponent } from '../../view-file-document-management/view-file-document-management.component';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../../constants/attachment.constant';
 import { MatDividerModule } from '@angular/material/divider';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
 
 
@@ -43,6 +44,7 @@ import { MatDividerModule } from '@angular/material/divider';
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    CurrencyLandsPipe,
     CommonModule,
     FormsModule,
     MatButtonModule,
