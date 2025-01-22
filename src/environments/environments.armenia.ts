@@ -98,6 +98,7 @@ export const environment = {
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
   myWork_cadastralSearch: '/myWork/cadastralSearch',
+  myWork_cadastralSearchDa: '/openData/cadastralSearchDA',
   myWork_tasksPanel: '/myWork/tasks/tasksPanel/',
   /* ------ N ------ */
   notFound: '/not-found',
