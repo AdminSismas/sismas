@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -107,7 +106,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
     // National Property Number,
-
+    baunitIdE: [''],
     codigoCompleto: [
       '',
       [Validators.maxLength(30), Validators.pattern(/^\d+$/)]
@@ -727,6 +726,16 @@ export class FilterCadastralSearchComponent implements OnInit {
         this.form.get('block')?.patchValue(listOptions[0].codeName);
       }
     }
+  }
+
+  searchBybaunitIdE() {
+    const baunitIdE = this.form.get('baunitIdE')?.value;
+    if (!baunitIdE) {
+      this.snackBar.open('Ingresar número de ficha', 'Aceptar', { duration: 5000 });
+      return;
+    }
+
+    this.dialogRef.close({ baunitIdE });
   }
 
   private _filterInformationCode(
