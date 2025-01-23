@@ -3,6 +3,7 @@ import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   UntypedFormControl,
   Validators
@@ -68,8 +69,12 @@ import { CharacterValidateService } from 'src/app/apps/services/character-valida
   standalone: true,
   imports: [
     CommonModule,
-    ComboxColletionComponent,
-    InputComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    // Vex
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
+    // Material
     MatAutocompleteModule,
     MatButtonModule,
     MatDialogModule,
@@ -81,9 +86,9 @@ import { CharacterValidateService } from 'src/app/apps/services/character-valida
     MatSelectModule,
     MatTabsModule,
     MatTooltipModule,
-    ReactiveFormsModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective
+    // Custom
+    ComboxColletionComponent,
+    InputComponent,
   ]
 })
 export class FilterCadastralSearchComponent implements OnInit {
@@ -104,74 +109,59 @@ export class FilterCadastralSearchComponent implements OnInit {
   optionsBlocks: Block[] = [];
   optionsSidewalks: Sidewalk[] = [];
 
-  form: FormGroup = this.fb.group({
-    // National Property Number,
-    baunitIdE: [''],
-    codigoCompleto: [
-      '',
-      [Validators.maxLength(30), Validators.pattern(/^\d+$/)]
-    ],
-    dpto: [
-      this.defaults?.dpto ?? '',
-      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
-    ],
-    mpio: [
-      this.defaults?.mpio ?? '',
-      [Validators.maxLength(3), Validators.pattern(/^\d+$/)]
-    ],
-    zonas: [
-      this.defaults?.zonas ?? '',
-      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
-    ],
-    sectorb: [
-      this.defaults?.sectorb ?? '',
-      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
-    ],
-    comuna: [
-      this.defaults?.comuna ?? '',
-      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
-    ],
-    barrio: [
-      this.defaults?.barrio ?? '',
-      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
-    ],
-    manVer: [
-      this.defaults?.manVer ?? '',
-      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
-    ],
-    terreno: [
-      this.defaults?.terreno ?? '',
-      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
-    ],
-    condicion: [
-      this.defaults?.condicion ?? '',
-      [Validators.maxLength(1), Validators.pattern(/^\d+$/)]
-    ],
-    edificio: [
-      this.defaults?.edificio ?? '',
-      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
-    ],
-    piso: [
-      this.defaults?.piso ?? '',
-      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
-    ],
-    unidadPredial: [
-      this.defaults?.unidadPredial ?? '',
-      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
-    ],
+  // Form BaunitIdE
+  formBaunitIdE: FormGroup = this.fb.group({
+    baunitIdE: ['']
+  });
 
-    // MUltiple Fields
-    registration: this.defaults?.registration ?? '',
+  // Form Npn Complete
+  formNpnComplete: FormGroup = this.fb.group({
+    codigoCompleto: ['']
+  });
+
+  // Form Npn Like
+  formNpnLike: FormGroup = this.fb.group({
+    dpto: [this.defaults?.dpto ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    mpio: [this.defaults?.mpio ?? '', [Validators.maxLength(3), Validators.pattern(/^\d+$/)]],
+    zonas: [this.defaults?.zonas ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    sector: [this.defaults?.sectorb ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    comuna: [this.defaults?.comuna ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    barrio: [this.defaults?.barrio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    manVer: [this.defaults?.manVer ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
+    terreno: [this.defaults?.terreno ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
+    condicion: [this.defaults?.condicion ?? '', [Validators.maxLength(1), Validators.pattern(/^\d+$/)]],
+    edificio: [this.defaults?.edificio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    piso: [this.defaults?.piso ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    unidadPredial: [this.defaults?.unidadPredial ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
+  });
+
+  // Form Registration
+  formRegistration: FormGroup = this.fb.group({
+    registration: [this.defaults?.registration ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
+  });
+
+  // Form Document Type
+  formDocumentType: FormGroup = this.fb.group({
+    number: [this.defaults?.number ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
     domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
-    firstName: this.defaults?.firstName ?? '',
-    otherLastName: this.defaults?.otherLastName ?? '',
-    textAddress: this.defaults?.textAddress ?? '',
-    number: this.defaults?.number ?? '',
-    middleName: this.defaults?.middleName ?? '',
-    lastName: this.defaults?.lastName ?? '',
-    companyName: this.defaults?.companyName ?? '',
+  });
 
-    // Municipal Selection
+  // Form Name or Company Name
+  formNames: FormGroup = this.fb.group({
+    firstName: [this.defaults?.firstName ?? '', Validators.required],
+    middleName: [this.defaults?.middleName ?? ''],
+    lastName: [this.defaults?.lastName ?? '', Validators.required],
+    otherLastName: [this.defaults?.otherLastName ?? ''],
+    companyName: [this.defaults?.companyName ?? ''],
+  });
+  
+  // Form Address
+  formAddress: FormGroup = this.fb.group({
+    textAddress: this.defaults?.textAddress ?? '',
+  });
+
+  // Form Municipal Selection
+  formMunicipalSelection: FormGroup = this.fb.group({
     department: this.defaults?.department ?? '',
     municipality: this.defaults?.municipality ?? '',
     zone: this.defaults?.zone ?? '',
@@ -202,9 +192,9 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   searchRegistrationNumber() {
-    const searchData = this.validateFilterSearchCadastral();
-    if (searchData.registration?.length > 1) {
-      this.dialogRef.close(searchData);
+    const registration = this.registration?.value;
+    if (registration?.length > 1) {
+      this.dialogRef.close({ registration });
       return;
     }
     this.openSnackbar(
@@ -215,7 +205,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   searchByDocumentAndTypeNumber() {
-    const searchData = this.validateFilterSearchCadastral();
+    const searchData = { number: this.number?.value, domIndividualTypeNumber: this.domIndividualTypeNumber?.value };
     if (
       searchData.number?.length > 1 &&
       searchData.domIndividualTypeNumber?.length > 1
@@ -315,12 +305,28 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   searchByName() {
-    const searchData = this.validateFilterSearchCadastral();
-    this.dialogRef.close(searchData);
+    if (!this.formNames.invalid || this.formNames.get('companyName')?.value?.length > 0) {
+      const searchData = {
+        firstName: this.firstName?.value.toUpperCase(),
+        middleName: this.middleName?.value.toUpperCase(),
+        lastName: this.lastName?.value.toUpperCase(),
+        otherLastName: this.otherLastName?.value.toUpperCase(),
+        companyName: this.companyName?.value.toUpperCase()
+      };
+
+      this.dialogRef.close(searchData);
+      return;
+    }
+
+    this.openSnackbar(
+      'No es posible la búsqueda por nombre, datos no válidos o incompletos',
+      'Aceptar',
+      'end'
+    );
   }
 
   searchByAddress() {
-    const searchData = this.validateFilterSearchCadastral();
+    const searchData = { textAddress: this.textAddress?.value };
     if (searchData.textAddress != null && searchData.textAddress.length > 1) {
       this.dialogRef.close(searchData);
       return;
@@ -377,7 +383,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   validateFilterSearchCadastral(): any {
-    const searchData = this.form.value;
+    const searchData = this.formMunicipalSelection.value;
     if (searchData == null) {
       throw new Error(
         'Customer ID does not exist, this customer cannot be updated'
@@ -606,7 +612,7 @@ export class FilterCadastralSearchComponent implements OnInit {
           option.divpolLvl1Code === this.defaults?.department
       );
       if (listOptions?.length > 0) {
-        this.form.get('department')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('department')?.patchValue(listOptions[0].codeName);
         this.loadMunicipalitiesInformation(listOptions[0].codeName, false);
       }
     }
@@ -624,7 +630,7 @@ export class FilterCadastralSearchComponent implements OnInit {
           option.divpolLvl2Code === this.defaults?.municipality
       );
       if (listOptions?.length > 0) {
-        this.form.get('municipality')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('municipality')?.patchValue(listOptions[0].codeName);
         this.loadZonesInformation(listOptions[0].codeName, false);
       }
     }
@@ -638,7 +644,7 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Zone): boolean => option.id === this.defaults?.zone
       );
       if (listOptions?.length > 0) {
-        this.form.get('zone')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('zone')?.patchValue(listOptions[0].codeName);
         this.loadSectorsInformation(listOptions[0].codeName, false);
       }
     }
@@ -655,7 +661,7 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Sector): boolean => option.id === this.defaults?.sector
       );
       if (listOptions?.length > 0) {
-        this.form.get('sector')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('sector')?.patchValue(listOptions[0].codeName);
         this.loadCommunitiesInformation(listOptions[0].codeName, false);
       }
     }
@@ -672,7 +678,7 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Commune): boolean => option.id === this.defaults?.community
       );
       if (listOptions?.length > 0) {
-        this.form.get('community')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('community')?.patchValue(listOptions[0].codeName);
         this.loadNeighborhoodsInformation(listOptions[0].codeName, false);
       }
     }
@@ -690,7 +696,7 @@ export class FilterCadastralSearchComponent implements OnInit {
           option.id === this.defaults?.neighborhood
       );
       if (listOptions?.length > 0) {
-        this.form.get('neighborhood')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('neighborhood')?.patchValue(listOptions[0].codeName);
         this.loadBlocksInformation(listOptions[0].codeName, false);
       }
     }
@@ -707,7 +713,7 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Sidewalk): boolean => option.id === this.defaults?.sidewalk
       );
       if (listOptions?.length > 0) {
-        this.form.get('sidewalk')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('sidewalk')?.patchValue(listOptions[0].codeName);
       }
     }
   }
@@ -723,13 +729,13 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Block): boolean => option.id === this.defaults?.block
       );
       if (listOptions?.length > 0) {
-        this.form.get('block')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection.get('block')?.patchValue(listOptions[0].codeName);
       }
     }
   }
 
   searchByBaunitIdE() {
-    const baunitIdE = this.form.get('baunitIdE')?.value;
+    const baunitIdE = this.formBaunitIdE.get('baunitIdE')?.value;
     if (!baunitIdE) {
       this.snackBar.open('Ingresar número de ficha', 'Aceptar', { duration: 5000 });
       return;
@@ -789,7 +795,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     }
   }
   private _clearListForm(list: string[]): void {
-    list.forEach((value): void => this.form.get(value)?.patchValue(''));
+    list.forEach((value): void => this.formMunicipalSelection.get(value)?.patchValue(''));
   }
   private _clearListObject(code: number) {
     if (code === 0) this._clearListObject0();
@@ -833,124 +839,124 @@ export class FilterCadastralSearchComponent implements OnInit {
   // formulario nuevo
 
   get dpto() {
-    return this.form.get('dpto');
+    return this.formNpnLike.get('dpto');
   }
 
   get mpio() {
-    return this.form.get('mpio');
+    return this.formNpnLike.get('mpio');
   }
 
   get zonas() {
-    return this.form.get('zonas');
+    return this.formNpnLike.get('zonas');
   }
 
   get sectorb() {
-    return this.form.get('sectorb');
+    return this.formNpnLike.get('sector');
   }
 
   get comuna() {
-    return this.form.get('comuna');
+    return this.formNpnLike.get('comuna');
   }
 
   get barrio() {
-    return this.form.get('barrio');
+    return this.formNpnLike.get('barrio');
   }
 
   get terreno() {
-    return this.form.get('terreno');
+    return this.formNpnLike.get('terreno');
   }
 
   get condicion() {
-    return this.form.get('condicion');
+    return this.formNpnLike.get('condicion');
   }
 
   get edificio() {
-    return this.form.get('edificio');
+    return this.formNpnLike.get('edificio');
   }
 
   get piso() {
-    return this.form.get('piso');
+    return this.formNpnLike.get('piso');
   }
 
   get unidadPredial() {
-    return this.form.get('unidadPredial');
+    return this.formNpnLike.get('unidadPredial');
   }
 
   //
 
   get registration() {
-    return this.form.get('registration');
-  }
-
-  get domIndividualTypeNumber() {
-    return this.form.get('domIndividualTypeNumber');
-  }
-
-  get firstName() {
-    return this.form.get('firstName');
-  }
-
-  get otherLastName() {
-    return this.form.get('otherLastName');
-  }
-
-  get textAddress() {
-    return this.form.get('textAddress');
+    return this.formRegistration.get('registration');
   }
 
   get number() {
-    return this.form.get('number');
+    return this.formDocumentType.get('number');
+  }
+
+  get domIndividualTypeNumber() {
+    return this.formDocumentType.get('domIndividualTypeNumber');
+  }
+
+  get firstName() {
+    return this.formNames.get('firstName');
   }
 
   get middleName() {
-    return this.form.get('middleName');
+    return this.formNames.get('middleName');
   }
 
   get lastName() {
-    return this.form.get('lastName');
+    return this.formNames.get('lastName');
+  }
+
+  get otherLastName() {
+    return this.formNames.get('otherLastName');
   }
 
   get companyName() {
-    return this.form.get('companyName');
+    return this.formNames.get('companyName');
+  }
+
+  get textAddress() {
+    return this.formAddress.get('textAddress');
   }
 
   get department() {
-    return this.form.get('department');
+    return this.formMunicipalSelection.get('department');
   }
 
   get municipality() {
-    return this.form.get('municipality');
+    return this.formMunicipalSelection.get('municipality');
   }
 
   get zone() {
-    return this.form.get('zone');
+    return this.formMunicipalSelection.get('zone');
   }
 
   get manVer() {
-    return this.form.get('manVer');
+    return this.formNpnLike.get('manVer');
   }
 
   get sector() {
-    return this.form.get('sector');
+    return this.formMunicipalSelection.get('sector');
   }
 
   get community() {
-    return this.form.get('community');
+    return this.formMunicipalSelection.get('community');
   }
 
   get neighborhood() {
-    return this.form.get('neighborhood');
+    return this.formMunicipalSelection.get('neighborhood');
   }
 
   get sidewalk() {
-    return this.form.get('sidewalk');
+    return this.formMunicipalSelection.get('sidewalk');
   }
 
   get block() {
-    return this.form.get('block');
+    return this.formMunicipalSelection.get('block');
   }
 
   get codigoCompleto() {
-    return this.form.get('codigoCompleto');
+    return this.formNpnComplete.get('codigoCompleto');
   }
 }

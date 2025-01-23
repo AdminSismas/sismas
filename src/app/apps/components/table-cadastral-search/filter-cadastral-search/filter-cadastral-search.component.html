@@ -1,48 +1,51 @@
-<form [formGroup]="form">
-  <div
-    class="flex items-center"
-    mat-dialog-title
+<div
+  class="flex items-center"
+  mat-dialog-title
+>
+  <h2 class="headline m-0 flex-auto">Búsqueda avanzada</h2>
+  
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
   >
-    <h2 class="headline m-0 flex-auto">Búsqueda avanzada</h2>
-
-    <!-- <button
-      [matMenuTriggerFor]="settingsMenu"
-      class="text-secondary"
-      mat-icon-button
-      type="button">
-      <mat-icon svgIcon="mat:more_vert"></mat-icon>
-    </button> -->
-
-    <button
-      class="text-secondary"
-      mat-dialog-close
-      mat-icon-button
-      type="button"
-    >
-      <mat-icon svgIcon="mat:close"></mat-icon>
-    </button>
-  </div>
-  <mat-divider class="text-border"></mat-divider>
-  <mat-dialog-content class="flex flex-col overflow-hidden">
-    <mat-tab-group
-      class="overflow-hidden"
-      (selectedTabChange)="clearFormFields($event)"
-    >
-      <!-- Búsqueda por segregación de número predial nacional -->
-      <mat-tab label="Número Predial Nacional">
-        <vex-page-layout class="overflow-hidden">
-          <vex-page-layout>
-            <vex-page-layout-content class="container-fluid">
-              <h2 class="text-lg font-bold mb-2">Búsqueda por número de ficha</h2>
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content class="flex flex-col overflow-hidden">
+  <mat-tab-group
+    class="overflow-hidden"
+    (selectedTabChange)="clearFormFields($event)"
+  >
+    <!-- Búsqueda por segregación de número predial nacional -->
+    <mat-tab label="Número Predial Nacional">
+      <vex-page-layout class="overflow-hidden">
+        <vex-page-layout>
+          <vex-page-layout-content class="container-fluid">
+            <form [formGroup]="formBaunitIdE">
+              <h2 class="text-lg font-bold mb-2">
+                Búsqueda por número de ficha
+              </h2>
               <mat-form-field class="sm:ml-2 sm:mr-2 w-1/2">
                 <mat-label>Número de ficha</mat-label>
-                <input type="number" matInput formControlName="baunitIdE"/>
+                <input
+                  type="number"
+                  matInput
+                  formControlName="baunitIdE"
+                  class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
               </mat-form-field>
               <button
                 mat-raised-button
                 color="primary"
                 (click)="searchByBaunitIdE()"
-              ><mat-icon svgIcon="mat:search"></mat-icon>Buscar</button>
+              >
+                <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+              </button>
+            </form>
+            <form [formGroup]="formNpnComplete">
               <h2 class="text-lg font-bold mb-2">Búsqueda por NPN completo</h2>
               <div class="flex flex-col sm:flex-row items-center mb-4">
                 <mat-form-field class="sm:ml-2 sm:mr-2 w-1/2">
@@ -60,12 +63,15 @@
                   mat-flat-button
                   class="ml-2"
                 >
+                  <mat-icon svgIcon="mat:search"></mat-icon>
                   Buscar
                 </button>
               </div>
+            </form>
 
-              <div class="border-t border-gray-300 my-4"></div>
+            <div class="border-t border-gray-300 my-4"></div>
 
+            <form [formGroup]="formNpnLike">
               <h2 class="text-lg font-bold mb-2">Búsqueda de NPN por partes</h2>
 
               <div class="flex flex-col sm:flex-row">
@@ -120,7 +126,7 @@
                     maxlength="2"
                     aria-label="Number"
                     matInput
-                    formControlName="sectorb"
+                    formControlName="sector"
                     placeholder="Sector"
                   />
                 </mat-form-field>
@@ -235,35 +241,37 @@
                   />
                 </mat-form-field>
               </div>
+            </form>
 
-              <mat-dialog-actions align="center">
-                <button
-                  (click)="sendInformationTable()"
-                  color="primary"
-                  mat-flat-button
-                  [disabled]=""
-                  type="primary"
-                >
-                  <!-- !form.valid -->
-                  Buscar
-                </button>
-              </mat-dialog-actions>
-            </vex-page-layout-content>
-          </vex-page-layout>
+            <mat-dialog-actions align="center">
+              <button
+                (click)="sendInformationTable()"
+                color="primary"
+                mat-flat-button
+                [disabled]=""
+                type="primary"
+              >
+                <mat-icon svgIcon="mat:search"></mat-icon>
+                Buscar
+              </button>
+            </mat-dialog-actions>
+          </vex-page-layout-content>
         </vex-page-layout>
-      </mat-tab>
+      </vex-page-layout>
+    </mat-tab>
 
-      <!-- Búsqueda por multiplex campos -->
-      <mat-tab
-        label="Múltiples campos"
-        class="overflow-hidden"
-      >
-        <vex-page-layout class="overflow-hidden">
-          <vex-page-layout-content
-            class="container-fluid p-0 overflow-hidden"
-            style="padding-bottom: 0px"
-          >
-            <!--Búsqueda por círculo - matrícula / matrícula -->
+    <!-- Búsqueda por multiplex campos -->
+    <mat-tab
+      label="Múltiples campos"
+      class="overflow-hidden"
+    >
+      <vex-page-layout class="overflow-hidden">
+        <vex-page-layout-content
+          class="container-fluid p-0 overflow-hidden"
+          style="padding-bottom: 0px"
+        >
+          <!--Búsqueda por círculo - matrícula / matrícula -->
+          <form [formGroup]="formRegistration">
             <div class="flex flex-col sm:flex-row">
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-1"
@@ -284,7 +292,10 @@
                 </button>
               </div>
             </div>
-            <!-- Búsqueda por documento y tipo -->
+          </form>
+
+          <!-- Búsqueda por documento y tipo -->
+          <form [formGroup]="formDocumentType">
             <div class="flex flex-col sm:flex-row">
               <vex-combox-colletion
                 idComboCollection="typeNumberDocument"
@@ -314,7 +325,9 @@
                 </button>
               </div>
             </div>
-            <!-- Búsqueda por nombre y apellidos o en su defecto por nombre de la compañía -->
+          </form>
+          <!-- Búsqueda por nombre y apellidos o en su defecto por nombre de la compañía -->
+          <form [formGroup]="formNames">
             <div class="flex flex-col sm:flex-row">
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-auto"
@@ -374,7 +387,10 @@
                 </button>
               </div>
             </div>
-            <!-- Búsqueda por dirección de texto -->
+          </form>
+
+          <!-- Búsqueda por dirección de texto -->
+          <form [formGroup]="formAddress">
             <div class="flex flex-col sm:flex-row">
               <!--direccion-->
               <vex-input
@@ -397,14 +413,16 @@
                 </button>
               </div>
             </div>
-          </vex-page-layout-content>
-        </vex-page-layout>
-      </mat-tab>
+          </form>
+        </vex-page-layout-content>
+      </vex-page-layout>
+    </mat-tab>
 
-      <!-- Búsqueda por segregación de número predial nacional -->
-      <mat-tab label="Selección municipal">
-        <vex-page-layout>
-          <vex-page-layout-content class="container-fluid">
+    <!-- Búsqueda por segregación de número predial nacional -->
+    <mat-tab label="Selección municipal">
+      <vex-page-layout>
+        <vex-page-layout-content class="container-fluid">
+          <form [formGroup]="formMunicipalSelection">
             <div class="flex flex-col sm:flex-row">
               <!-- Campo departamento -->
               <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
@@ -468,7 +486,7 @@
                 <mat-select
                   #sector
                   (selectionChange)="
-                    form.get('zone')?.value === '00'
+                    formMunicipalSelection.get('zone')?.value === '00'
                       ? loadSidewalksInformation($event.value, true)
                       : loadCommunitiesInformation($event.value, true)
                   "
@@ -575,23 +593,23 @@
                 }
               }
             </div>
-
-            <mat-dialog-actions align="center">
-              <button
-                (click)="searchMunicipalSelection()"
-                color="primary"
-                mat-flat-button
-                type="primary"
-              >
-                Buscar
-              </button>
-            </mat-dialog-actions>
-          </vex-page-layout-content>
-        </vex-page-layout>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-dialog-content>
-</form>
+          </form>
+          <mat-dialog-actions align="center">
+            <button
+              (click)="searchMunicipalSelection()"
+              color="primary"
+              mat-flat-button
+              type="primary"
+            >
+              <mat-icon svgIcon="mat:search"></mat-icon>
+              Buscar
+            </button>
+          </mat-dialog-actions>
+        </vex-page-layout-content>
+      </vex-page-layout>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
 <mat-menu
   #settingsMenu="matMenu"
   xPosition="before"
