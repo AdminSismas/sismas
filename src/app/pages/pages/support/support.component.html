@@ -53,7 +53,39 @@
         <p class="text-sm text-gray-600 mt-2">Complete la información para gestionar el soporte.</p>
       </div>
 
-      <div class="grid grid-cols-1 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Observación -->
+        <mat-form-field class="w-full">
+          <mat-label>Título</mat-label>
+          <input
+            cdkFocusInitial
+            formControlName="titulo"
+            placeholder="Escribe un título para el soporte."
+            matInput
+            maxlength="50" />
+          <mat-error *ngIf="verticalAccountFormGroup.controls['titulo'].hasError('required')">
+            El campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field class="w-full">
+          <mat-label>Asunto</mat-label>
+          <input
+            cdkFocusInitial
+            formControlName="asunto"
+            placeholder="Escribe el asunto."
+            matInput
+            maxlength="250" />
+          <mat-error *ngIf="verticalAccountFormGroup.controls['asunto'].hasError('required')">
+            El campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      
+
+      <div class="grid grid-cols-1 gap-4 mt-4">
         <!-- Observación -->
         <mat-form-field class="w-full">
           <mat-label>Observación</mat-label>
@@ -74,7 +106,7 @@
         <mat-form-field class="w-full">
           <mat-label>Módulo</mat-label>
           <mat-select placeholder="Seleccione&hellip;" formControlName="id_modulo" (selectionChange)="onModuleSelect($event.value)">
-            <mat-option *ngFor="let module of moduleName" [value]="module['id']">
+            <mat-option *ngFor="let module of modulo" [value]="module['id']">
               {{ module['modulo'] }}
             </mat-option>
           </mat-select>
@@ -86,8 +118,8 @@
         <!-- Vista (Selector) -->
         <mat-form-field class="w-full">
           <mat-label>Vista</mat-label>
-          <mat-select placeholder="Seleccione&hellip;" formControlName="id_vista">
-            <mat-option *ngFor="let view of viewName" [value]="view['id']">
+          <mat-select placeholder="Seleccione&hellip;" formControlName="id_vista" (selectionChange)="onVistaSelect($event.value)">
+            <mat-option *ngFor="let view of vista" [value]="view['id']">
               {{ view['nombre_vista'] }}
             </mat-option>
           </mat-select>
@@ -96,8 +128,17 @@
           </mat-error>
         </mat-form-field>
 
+        <mat-form-field class="w-full" *ngIf="subvista && subvista.length > 0">
+          <mat-label>Subvista</mat-label>
+          <mat-select placeholder="Seleccione&hellip;" formControlName="id_subvista">
+            <mat-option *ngFor="let subview of subvista" [value]="subview.id">
+              {{ subview.nombre_subvista }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <!-- Usuario -->
-        <mat-form-field class="w-full">
+        <!-- <mat-form-field class="w-full">
           <mat-label>Nombre del usuario</mat-label>
           <input
             cdkFocusInitial
@@ -108,7 +149,7 @@
           <mat-error *ngIf="verticalAccountFormGroup.controls['nombre'].hasError('required')">
             El campo es obligatorio.
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
 
       <div class="flex justify-end mt-6">
@@ -131,12 +172,12 @@
     </form>
   </div>
 
-  <hr class="my-6">
+  <!-- <hr class="my-6">
 
   <div class="card">
     <div class="px-6 py-4 border-b">
       <h2 class="title m-0">Histórico soporte</h2>
     </div>
     <vex-support-logs [subjectSupportLogsList$]="subjectSupportLogsList$"></vex-support-logs>
-  </div>
+  </div> -->
 </div>

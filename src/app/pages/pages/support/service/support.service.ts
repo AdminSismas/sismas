@@ -5,6 +5,7 @@ import { supportData } from '../model/support.model';
 // import { env, env2 } from 'src/environments/environments';
 import { ModuloName } from '../model/modulos.model';
 import { SupportLogs } from '../support_logs/model/supportLogs.model';
+import { env } from 'src/environments/environments.soporte';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +17,8 @@ export class SupportService {
   // BehaviorSubject to hold and manage the current state
   private supportingSubject = new BehaviorSubject<supportData[]>([]);
   private supportingLogsSubject = new BehaviorSubject<SupportLogs[]>([]);
+  //private apiTickets = 'https://tickets.cic-ware.com/api/v1/tickets';
+  private apiTickets = `${env.url_base}${env.api}${env.module.soporte}`;  
   supportLog$ = this.supportingLogsSubject.asObservable();
   support$ = this.supportingSubject.asObservable();
   supportLogs: SupportLogs[] = [];
@@ -26,6 +29,52 @@ export class SupportService {
   vista: string = '';
 
   constructor(private http: HttpClient) { }
+
+  // insertTicket(formData: any): Observable<{ success: boolean; message: string; data?: any }> {
+  //   const headers = new HttpHeaders({
+  //     Authorization: 'AYR5gnSy5rIf8Y02H9RNnf28CVHYb1DnD8LaDYjkmG8bhc1Q-oATMSVF3WVTcWtl', 
+  //     'Content-Type': 'application/json',
+  //   });
+
+  //   const body = {
+  //     title: formData.titulo,
+  //     group: 'Administrativos',
+  //     priority_id: 2, 
+  //     state: 'new', 
+  //     customer_id: 9, 
+  //     article: {
+  //       subject: formData.asunto,
+  //       body: formData.observacion,
+  //       type: 'note',
+  //       internal: false,
+  //     },
+  //   };
+
+  //   return this.http.post<{ success: boolean; message: string; data?: any }>(
+  //     this.apiTickets,
+  //     body,
+  //     { headers }
+  //   ).pipe(
+  //     map(response => {
+  //       if (response.success) {
+  //         console.log('API_RESPONSE_supportcreated:', response.data);
+  //         return { success: true, message: 'Soporte creado', data: response.data };
+  //       } else {
+  //         console.log('API_RESPONSE_support_notcreated:', response.data);
+  //         return { success: false, message: response.message, data: null };
+  //       }
+  //     }),
+  //     catchError(error => {
+  //       console.error('API error:', error);
+  //       return of({ success: false, message: error.message, data: null });
+  //     })
+  //   );
+  // }
+
+  insertTicket(formData: any): Observable<any> {
+    const apiUrl = `${this.apiTickets}`; 
+    return this.http.post(apiUrl, formData);
+  }
 
   createSupportRequest(request: supportData): Observable<{ success: boolean; message: string; data?: any }> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');

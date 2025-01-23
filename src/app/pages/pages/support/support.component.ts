@@ -42,6 +42,8 @@ import { SupportLogsComponent } from './support_logs/support-logs.component';
 import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { Link } from '@vex/interfaces/link.interface';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Modulo, Subvista, Vista } from './interfaces/module.model';
+import { MODULES } from './constants/modules.constant';
 
 @Component({
   selector: 'vex-support',
@@ -79,6 +81,10 @@ export class SupportComponent implements OnInit {
   // subject$: BehaviorSubject<UserAuthData[]> = new BehaviorSubject<UserAuthData[]>([]);
   verticalAccountFormGroup!: FormGroup;
   moduleName: ModuloName[] = []; // Define the property to hold modules names
+  modulo: Modulo[] = []; 
+  vista: Vista[] = []; 
+  subvista: Subvista[] = [];
+
   viewName: VistaName[] = []; // Define the property to hold views names
   statusName: StatusData[] = []; // Define the property to hold status names
   observations: ObservationsData[] = []; // Define the property to hold observations
@@ -108,9 +114,12 @@ export class SupportComponent implements OnInit {
   ) {
     this.verticalAccountFormGroup = this.fb.group({
       observacion: ['', Validators.required],
+      titulo: ['', Validators.required],
+      asunto: ['', Validators.required],
       id_modulo: ['', Validators.required],
       id_vista: ['', Validators.required],
-      nombre: ['', Validators.required],
+      id_subvista: [''],
+      // nombre: ['', Validators.required],
     });
   }
 
@@ -147,12 +156,7 @@ export class SupportComponent implements OnInit {
     // });
   }
   loadModulos() {
-    this.supportService.getModulos().subscribe((response) => {
-        if (response.success) {
-            this.moduleName = response.data || [];
-            this.cd.detectChanges();
-        }
-    });
+    this.modulo = MODULES.map((modulo: any) => new Modulo(modulo));
   }
 
   loadVistas(id_modulo: number) {
@@ -166,7 +170,16 @@ export class SupportComponent implements OnInit {
   }
 
   onModuleSelect(moduleId: number) {
-    this.loadVistas(moduleId);
+    this.verticalAccountFormGroup.get('id_vista')?.reset();
+    this.verticalAccountFormGroup.get('id_subvista')?.reset();
+    this.vista = this.modulo.find(m => m.id === moduleId)?.vistas || [];
+    this.subvista = [];
+  }
+
+  onVistaSelect(vistaId: number) {
+    this.verticalAccountFormGroup.get('id_subvista')?.reset();
+    const selectedVista = this.vista.find(v => v.id === vistaId);
+    this.subvista = selectedVista?.subvistas || [];
   }
 
   refreshData() {
@@ -195,104 +208,37 @@ export class SupportComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (this.verticalAccountFormGroup.valid) {
-    //   const formData = this.verticalAccountFormGroup.value;
-    //   console.log('FormData:', formData);
+    if (this.verticalAccountFormGroup.valid) {
+      const formData = this.verticalAccountFormGroup.value;
+      console.log('FormData:', formData);
 
-    //   // Add id_empleado to formData
-    //   if (this.currentUser && this.currentUser.idEmp) {
-    //     formData.id_empleado = this.currentUser.idEmp;
-    //   } else {
-    //     Swal.fire({
-    //       icon: 'error',
-    //       title: 'Error',
-    //       text: 'No se pudo obtener el ID del empleado.',
-    //     });
-    //     return;
-    //   }
+      this.supportService.insertTicket(formData).subscribe(response => {
+        if (response.success) {
+          Swal.fire({
+            title: '¡Solicitud enviada!',
+            text: 'Tu solicitud ha sido enviada correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              //                                                               this.refreshData();
+              this.resetForm();
+            }
+          });
+        } else {
+          Swal.fire({
+            title: '¡Error!',
+            text: 'Ha ocurrido un error al enviar tu solicitud',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+          });
+        }
+      });
 
-    //   // Mostrar SweetAlert de carga
-    //   Swal.fire({
-    //     title: 'Enviando solicitud...',
-    //     text: 'Por favor espera mientras procesamos tu solicitud.',
-    //     icon: 'info',
-    //     allowOutsideClick: false,
-    //     didOpen: () => {
-    //       Swal.showLoading();
-    //     }
-    //   });
 
-    //   // Crear solicitud de soporte
-    //   this.supportService.createSupportRequest(formData).subscribe(
-    //     response => {
-    //       if (response.success) {
-    //         const { vista_name = '', modulo_name = '', nombre = '', observacion = '' } = {
-    //           ...response.data,
-    //           ...formData,
-    //         };
-    //         console.log('Solicitud de soporte creada DATA RESPONSE:', response.data);
-    //         console.log('Solicitud de soporte creada FORMDATA:', formData);
-            
-    //         // Resetear formulario con valores iniciales y limpiar validaciones
-    //         this.resetForm();
 
-    //         this.refreshData(); // Refrescar los datos
+    }
 
-    //         // Enviar correo
-    //         this.supportService.sendEmail(vista_name, modulo_name, nombre, observacion).subscribe(
-    //           emailResponse => {
-    //             Swal.close();
-    //             if (emailResponse.success) {
-    //               Swal.fire({
-    //                 icon: 'success',
-    //                 title: '¡Éxito!',
-    //                 text: 'Solicitud de soporte y correo enviados con éxito.',
-    //                 timer: 3000,
-    //                 showConfirmButton: false,
-    //                 timerProgressBar: true
-    //               });
-    //             } else {
-    //               Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Error',
-    //                 text: 'Error al enviar el correo.',
-    //               });
-    //             }
-    //           },
-    //           error => {
-    //             Swal.close();
-    //             Swal.fire({
-    //               icon: 'error',
-    //               title: 'Error',
-    //               text: `Error al enviar el correo: ${error.message}`,
-    //             });
-    //           }
-    //         );
-    //       } else {
-    //         Swal.close();
-    //         Swal.fire({
-    //           icon: 'error',
-    //           title: 'Error',
-    //           text: 'Error al crear la solicitud de soporte.',
-    //         });
-    //       }
-    //     },
-    //     error => {
-    //       Swal.close();
-    //       Swal.fire({
-    //         icon: 'error',
-    //         title: 'Error',
-    //         text: `Error al enviar la solicitud de soporte: ${error.message}`,
-    //       });
-    //     }
-    //   );
-    // } else {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Formulario incompleto',
-    //     text: 'Por favor completa todos los campos correctamente.',
-    //   });
-    // }
   }
 
   // Método para resetear el formulario
@@ -302,7 +248,10 @@ export class SupportComponent implements OnInit {
       observacion: '',
       id_modulo: '',
       id_vista: '',
-      nombre: ''
+      id_subvista: '',
+      nombre: '',
+      titulo: '',
+      asunto: '',
     });
 
     // Limpiar estados de validación
