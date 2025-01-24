@@ -123,6 +123,12 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDr
         label: 'Trabajo finalizado',
         route: '/operationSupport/procedures/workFinished',
         routerLinkActiveOptions: { exact: true }
+      },
+      {
+        type: 'link',
+        label: 'Trabajo histórico',
+        route: '/operationSupport/procedures/workHistorical',
+        routerLinkActiveOptions: { exact: true }
       }
     ]
   },

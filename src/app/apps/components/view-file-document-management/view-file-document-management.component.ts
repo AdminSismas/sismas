@@ -97,7 +97,7 @@ export class ViewFileDocumentManagementComponent implements OnInit {
 
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {
-    const urlComplete = `${this.basic_url}${this.executionId}/${this.idAttachment}/${this.originalFileName}`;
+    const urlComplete = `https://masora.api.sismas.com.co:5001/bpmAttachment/20/429/CERT_RADICA_8920-2025.pdf`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
   }
 

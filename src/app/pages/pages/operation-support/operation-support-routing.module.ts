@@ -37,6 +37,13 @@ const routes: VexRoutes = [
               import('./procedures/work-finished/work-finished.component').then(
                 (m) => m.WorkFinishedComponent
               )
+          },
+          {
+            path: 'workHistorical',
+            loadComponent: () =>
+              import('./procedures/work-historical/work-historical.component').then(
+                (m) => m.WorkHistoricalComponent
+              )
           }
         ]
       },
