@@ -4,6 +4,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule, NgIf } from '@angular/common';
+import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 
 @Component({
   selector: 'vex-certificate-card',
@@ -13,7 +14,8 @@ import { CommonModule, NgIf } from '@angular/common';
     MatIconModule, 
     MatButtonModule, 
     NgIf, 
-    CommonModule
+    CommonModule,
+    CurrencyFormatPipe
   ],
   templateUrl: './certificate-card.component.html',
   styleUrl: './certificate-card.component.scss'

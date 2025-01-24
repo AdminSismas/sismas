@@ -44,16 +44,16 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
   ]
 })
 export class CertificateGridComponent {
-  showSearchInput: boolean = false;   
-  searchQuery: string = ''; 
+  showSearchInput: boolean = false;
+  searchQuery: string = '';
   trackById = this.trackByIdCertificate;
   certificates: Certificate[] = [];
-  filteredCertificates: Certificate[] = []; 
+  filteredCertificates: Certificate[] = [];
 
   constructor(
     private dialog: MatDialog,
-   
-  
+
+
   ) {}
 
   ngOnInit() {
@@ -62,16 +62,16 @@ export class CertificateGridComponent {
   }
 
   trackByIdCertificate(index: number, certificate: Certificate): number {
-    return certificate.id; 
+    return certificate.id;
   }
 
 
 
   toggleSearchInput() {
-    this.showSearchInput = !this.showSearchInput; 
+    this.showSearchInput = !this.showSearchInput;
     if (!this.showSearchInput) {
-      this.searchQuery = ''; 
-      this.filteredCertificates = [...this.certificates]; 
+      this.searchQuery = '';
+      this.filteredCertificates = [...this.certificates];
     }
   }
 
@@ -86,19 +86,19 @@ export class CertificateGridComponent {
   }
 
   createCertificate() {
- 
+
   }
 
   openCertificate(id: number) {
     const certificate = this.certificates.find(ins => ins.id === id);
-  
+
     if (certificate) {
        this.dialog.open(CertificateDialogComponent, {
         data: certificate,
         width: '1200px',
         height: '370px'
       });
-    
+
     } else {
       console.error(`Certificado con id ${id} no encontrada.`);
     }
@@ -110,11 +110,11 @@ export class CertificateGridComponent {
     // Lógica para obtener las pólizas
     this.certificates = [
 
-      
+
       {
         id: 1,
-        name: 'No poseer bien',
-        price: 7.337,
+        name: 'Certificado de poseer o no poseer bienes',
+        price: 15000,
         icon: 'mat:insert_drive_file'
       },
 
@@ -123,16 +123,16 @@ export class CertificateGridComponent {
       //   name: 'Plano predial catastral',
       //   price: 32.899,
       //   icon:'mat:map'
-        
+
       //  },
-      
-     
+
+
     ];
-  
-    this.filteredCertificates = [...this.certificates]; 
-    
+
+    this.filteredCertificates = [...this.certificates];
+
   }
-  
+
 
 
 

@@ -16,3 +16,8 @@
     transform: translateY(-5px);
     transition: all 0.3s ease;
   }
+
+  .break-word {
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
