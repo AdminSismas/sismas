@@ -59,7 +59,7 @@
           </td>
         </ng-container>
       </ng-container>
-
+ 
       <tr
         *matHeaderRowDef="visibleColumns"
         mat-header-row
@@ -72,7 +72,7 @@
         class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
       ></tr>
     </table>
-
+ 
     <mat-paginator
       #paginator
       [pageSizeOptions]="pageSizeOptions"
@@ -82,5 +82,9 @@
       (page)="refreshInformationPaginator($event)"
       class="paginator"
     ></mat-paginator>
+  </div>
+}@else{
+  <div  class="flex justify-center items-center py-4">
+    <p class="text-gray-500 text-lg">No hay datos para mostrar.</p>
   </div>
 }
