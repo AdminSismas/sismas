@@ -36,62 +36,69 @@
             </button>
           </div>
         }
-        <table
-          mat-table
-          [dataSource]="dataSource"
-        >
-        @for(column of columns; track $index) {
-          <ng-container [matColumnDef]="column.property">
-            <th
-              *matHeaderCellDef
-              mat-header-cell
-              mat-sort-header
-            >
-              {{ column.label }}
-            </th>
-            <td
-              *matCellDef="let row"
-              mat-cell
-            >
-              {{ row[column.property] }}
-            </td>
-          </ng-container>
-        }
-          <!-- Action Column -->
-          <ng-container matColumnDef="actions">
-            <th
-              *matHeaderCellDef
-              mat-header-cell
-              mat-sort-header
-            >
-              Acciones
-            </th>
-            <td
-              *matCellDef="let row"
-              class="w-10 text-secondary"
-              mat-cell
-            >
-              <button
-                (click)="$event.stopPropagation()"
-                [matMenuTriggerData]="{ row: row }"
-                [matMenuTriggerFor]="actionsMenu"
-                mat-icon-button
-                type="button"
+        @if (dataSource.data.length > 0) {
+ 
+          <table
+            mat-table
+            [dataSource]="dataSource"
+          >
+          @for(column of columns; track $index) {
+            <ng-container [matColumnDef]="column.property">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                mat-sort-header
               >
-                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns"
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumns"
-          ></tr>
-        </table>
+                {{ column.label }}
+              </th>
+              <td
+                *matCellDef="let row"
+                mat-cell
+              >
+                {{ row[column.property] }}
+              </td>
+            </ng-container>
+          }
+            <!-- Action Column -->
+            <ng-container matColumnDef="actions">
+              <th
+                *matHeaderCellDef
+                mat-header-cell
+                mat-sort-header
+              >
+                Acciones
+              </th>
+              <td
+                *matCellDef="let row"
+                class="w-10 text-secondary"
+                mat-cell
+              >
+                <button
+                  (click)="$event.stopPropagation()"
+                  [matMenuTriggerData]="{ row: row }"
+                  [matMenuTriggerFor]="actionsMenu"
+                  mat-icon-button
+                  type="button"
+                >
+                  <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+                </button>
+              </td>
+            </ng-container>
+ 
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+            ></tr>
+          </table>
+        } @else{
+          <div  class="flex justify-center items-center py-4">
+            <p class="text-gray-500 text-lg">No hay datos para mostrar.</p>
+          </div>
+        }
         <mat-menu
           #actionsMenu="matMenu"
           xPosition="before"
