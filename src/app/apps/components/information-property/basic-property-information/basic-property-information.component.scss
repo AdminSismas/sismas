@@ -37,6 +37,15 @@ mat-expansion-panel-header.mat-expanded:focus {
     width: 100%; /* Cada título ocupa el ancho completo */
     margin-bottom: 4px; /* Añade un pequeño margen entre títulos */
   }
+
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ml-2 {
+    margin-left: 0.5rem; /* Ajusta el valor según sea necesario */
+  }
 }
 
 

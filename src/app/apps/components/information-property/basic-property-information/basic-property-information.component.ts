@@ -26,6 +26,9 @@ import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
+import { GeographicViewerComponent } from '../../geographic-viewer/geographic-viewer.component';
+import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -54,7 +57,8 @@ import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
     DatePipe,
-    CurrencyLandsPipe
+    CurrencyLandsPipe,
+    MatDividerModule
   ],
   templateUrl: './basic-property-information.component.html',
   styleUrl: './basic-property-information.component.scss'
@@ -130,6 +134,17 @@ export class BasicPropertyInformationComponent implements OnInit {
   private getRandomInt(max: number):number {
     return Math.floor(Math.random() * max);
   }
+
+    openGeographicViewerMain(data: any): void {
+      this.dialog
+        .open(GeographicViewerComponent, {
+          width: '30%',
+          height: '30%',
+          disableClose: true,
+          data: new ContentInfoSchema(data.baunitIdE, data)
+        })
+        .afterClosed();
+    }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
   protected readonly NAME_NO_DISPONIBLE_CERO = NAME_NO_DISPONIBLE_CERO;

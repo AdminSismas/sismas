@@ -7,7 +7,8 @@
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
     >
       <vex-header-cadastral-information-property
-        label="Aspectos generales"
+        label="
+        "
         icon="mat:description"
         id="information-basicpropertyData"
       >
@@ -34,6 +35,21 @@
       }
       <br>
       <div class="w-full flex flex-col pt-2">
+        <div class="flex items-center">
+          <button
+          (click)="openGeographicViewerMain(data)"
+          class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-green-600 bg-green-600/10"
+          mat-icon-button
+          title="Ver mapa"
+        >
+          <mat-icon
+            class="icon-sm"
+            svgIcon="mat:map"
+          ></mat-icon>
+        </button>
+        <span class="ml-2">Ver mapa</span>
+      </div>
+      <mat-divider class="border-slate-400 my-2"></mat-divider>
         <!-- Títulos de las columnas -->
         <div class="column-titles">
           <h3 class="text-black">Identificación del predio</h3>
