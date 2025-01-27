@@ -22,18 +22,16 @@
     
         <!-- Mostrar filtro y tabla solo si hay Avalúos -->
         <div *ngIf="dataSource && dataSource.data.length > 0">
-          <div
-          class="px-4 h-16 border-b sticky left-0 flex items-center">
-            <span class="flex-1"></span>
-          <mat-form-field subscriptSizing="dynamic" class=" pl-1 pr-1 pt-6 pb-6 flex flex-col">
+          <div class="px-4 h-16 border-b sticky left-0 flex items-center">
+            <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-6 pb-6 flex flex-col">
               <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
               <input
                 matInput
                 [formControl]="searchCtrl"
-                placeholder="Filtrar"
-              type="text" />
+                placeholder="Filtrar avalúos"
+                type="text"
+              />
             </mat-form-field>
-            <span class="flex-1"></span>
           <!-- <button
             [matMenuTriggerFor]="columnFilterMenu"
             class="ml-4 flex-none"
@@ -43,6 +41,7 @@
             <mat-icon svgIcon="mat:filter_list"></mat-icon>
           </button> -->
           </div>
+          
           <table
             @stagger
             [dataSource]="dataSource"
