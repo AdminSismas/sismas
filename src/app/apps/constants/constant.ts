@@ -28,7 +28,7 @@ export const NAME_NO_DISPONIBLE_CERO = '0';
 export const INDIVIDUAL_TYPE_NUMBER = 'NIT';
 export const PAGE = 0;
 export const PAGE_SIZE = 10;
-export const PAGE_SIZE_TABLE_CADASTRAL = 7;
+export const PAGE_SIZE_TABLE_CADASTRAL = 10;
 export const TITULO_PAGE_CADASTRAL = 'Búsqueda catastral';
 export const URL_PAGE_CADASTRAL = 'Búsqueda catastral';
 
@@ -49,7 +49,7 @@ export const PAGE_OPTION__10_20_50_100: number[] = [10,20,50,100];
 
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
-export const PAGE_SIZE_OPTION: number[] = [5, PAGE_OPTION_UNIQUE_7, PAGE_OPTION_UNIQUE, 20, 50];
+export const PAGE_SIZE_OPTION: number[] = [ PAGE_OPTION_UNIQUE, 20, 50, 100];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 
