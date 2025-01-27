@@ -1,11 +1,11 @@
 <h2 mat-dialog-title>Registro de cambio</h2>
 <mat-divider class="border-slate-400"></mat-divider>
 <mat-dialog-content>
-  <dynamic-forms
+  <vex-dynamic-forms
     [inputs]="data.inputs"
     [initValues]="data.data"
     (formReady)="form = $event"
-  ></dynamic-forms>
+  ></vex-dynamic-forms>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <button

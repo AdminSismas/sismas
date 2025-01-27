@@ -92,7 +92,9 @@
             {{ row[column.property] }}
           </td>
         </ng-container>
-      } @else if (column.type === "operationType") {
+      } @else if (
+        column.type === "operationType" && column.property === "cadastralArea"
+      ) {
         <ng-container [matColumnDef]="column.property">
           <th
             *matHeaderCellDef
@@ -190,6 +192,18 @@
         <mat-icon svgIcon="mat:edit"></mat-icon>
         <span>Editar</span>
       </button>
+      <!-- @if (
+        row.domBaunitCondition === "(Condominio) Matriz" ||
+        row.domBaunitCondition === "(Propiedad horizontal) Matriz"
+      ) {
+        <button 
+          mat-menu-item
+          (click)="editCadastralUnits(row)"
+        >
+          <mat-icon svgIcon="mat:apartment"></mat-icon>
+          Editar unidades
+        </button>
+      } -->
       <button
         (click)="deleteInformation(row)"
         mat-menu-item

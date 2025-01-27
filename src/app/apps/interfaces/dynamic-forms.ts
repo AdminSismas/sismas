@@ -4,10 +4,10 @@ export interface JSONInput {
   name: string;
   label: string;
   placeholder: string;
-  element: 'collection' | 'autocomplete' | 'input' | 'file' | 'select';
+  element: 'collection' | 'autocomplete' | 'input' | 'file' | 'select' | 'date';
   type: string;
   validators: Validators[];
   autocompleteOptions?: string[];
   cssClasses?: string;
-  options?: string[];
+  options?: { value: string, label: string }[];
 }

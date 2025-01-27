@@ -9,11 +9,11 @@
 </h2>
 <mat-divider class="border-slate-400"></mat-divider>
 <mat-dialog-content>
-  <dynamic-forms
+  <vex-dynamic-forms
     [inputs]="WORKFLOW_INPUTS"
     (formReady)="form = $event"
     [initValues]="data.initValues"
-  ></dynamic-forms>
+  ></vex-dynamic-forms>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <button

@@ -1,28 +1,33 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AsyncPipe, NgClass } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
-import { map, Observable, startWith } from 'rxjs';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Component,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
+import { NgClass } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 /* Material Modules */
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 /* Components */
 import { ComboxColletionComponent } from '../combox-colletion/combox-colletion.component';
 import { JSONInput } from '../../interfaces/dynamic-forms';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
-  selector: 'dynamic-forms',
+  selector: 'vex-dynamic-forms',
   standalone: true,
   imports: [
-    AsyncPipe,
     ReactiveFormsModule,
     NgClass,
     /* Material */
@@ -41,38 +46,26 @@ import { MatSelectModule } from '@angular/material/select';
   styles: ``
 })
 export class DynamicFormsComponent implements OnInit, OnChanges {
-
   @Input({ required: true }) public inputs: JSONInput[] = [];
   @Input() public initValues: any = {};
   @Input() public className = '';
   @Input() public disabled = false;
 
   public form: FormGroup = new FormGroup({});
-  public options$: Record<string, Observable<string[]> | undefined> = {};
+
+  private dateFilters = new Map<string, (date: Date | null) => boolean>();
 
   @Output() formReady = new EventEmitter<FormGroup>();
 
-  constructor(
-    private fb: FormBuilder
-  ) { }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.createForm();
+    this.createDateFilters();
 
     if (this.disabled) {
       this.form.disable();
     }
-
-    this.inputs.forEach((input: JSONInput) => {
-      if (input.element === 'autocomplete') {
-        this.options$[input.name] = this.form.get(input.name)!.valueChanges.pipe(
-          startWith(''),
-          map((value: string) => input.autocompleteOptions!.filter(
-            (option: any) => option.toLowerCase().includes(value.toLowerCase() || ''))
-          )
-        );
-      }
-    });
 
     if (this.initValues) {
       this.form.reset(this.initValues);
@@ -89,9 +82,20 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
     }
   }
 
-  private createForm (): void {
+  private createDateFilters(): void {
+    this.inputs
+      .filter((input) => input.element === 'date')
+      .forEach((dateInput) => {
+        this.dateFilters.set(
+          dateInput.name,
+          this.createFilterForType(dateInput.type)
+        );
+      });
+  }
+
+  private createForm(): void {
     const formObject: any = {};
-    this.inputs.forEach(input => {
+    this.inputs.forEach((input) => {
       formObject[input.name] = ['', input.validators];
     });
 
@@ -99,12 +103,12 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
 
     this.formReady.emit(this.form);
 
-    this.form.valueChanges.subscribe(value => {
+    this.form.valueChanges.subscribe(() => {
       this.formReady.emit(this.form);
     });
   }
 
-  cssClassesForm(cssClasses: string): string {
+  cssClassesForm(cssClasses: string | undefined): string {
     if (this.inputs.length === 1) return 'w-full h-full';
     if (cssClasses) {
       return cssClasses;
@@ -113,12 +117,36 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
     }
   }
 
-
   cssClassesInput(cssClasses: string | undefined): string {
     if (cssClasses) {
       return cssClasses;
     } else {
       return 'w-full h-full';
     }
+  }
+
+  private createFilterForType(typeString: string): (date: Date | null) => boolean {
+    return (date: Date | null): boolean => {
+      if (!date) return true;
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      date.setHours(0, 0, 0, 0);
+
+      switch (typeString) {
+        case 'future':
+          return date.getTime() >= today.getTime();
+        case 'past':
+          return date.getTime() <= today.getTime();
+        case 'today':
+          return date.getTime() === today.getTime();
+        default:
+          return true;
+      }
+    };
+  }
+
+  getDateFiler(inputName: string): (date: Date | null) => boolean {
+    return this.dateFilters.get(inputName) || (() => true);
   }
 }

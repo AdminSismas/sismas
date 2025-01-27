@@ -221,9 +221,9 @@ export const CADASTRE_CHANGE_LOG_PARAMS: JSONInput[] = [
   {
     name: 'resolutionAt',
     label: 'Fecha de resolución',
-    type: 'date',
+    element: 'date',
+    type: 'past',
     placeholder: 'Escribir fecha de resolución',
-    element: 'input',
     validators: [Validators.required]
   },
   {
@@ -237,9 +237,9 @@ export const CADASTRE_CHANGE_LOG_PARAMS: JSONInput[] = [
   {
     name: 'rootingAt',
     label: 'Fecha de radicación',
-    type: 'date',
+    element: 'date',
+    type: 'past',
     placeholder: 'Escribir fecha de raíz',
-    element: 'input',
     validators: [Validators.required]
   },
   {
@@ -253,9 +253,9 @@ export const CADASTRE_CHANGE_LOG_PARAMS: JSONInput[] = [
   {
     name: 'beginAt',
     label: 'Fecha de inicio',
-    type: 'date',
+    element: 'date',
+    type: 'past',
     placeholder: 'Escribir fecha de inicio',
-    element: 'input',
     validators: [Validators.required]
   },
   {

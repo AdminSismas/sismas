@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +17,6 @@ import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-pe
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
-import { People } from 'src/app/apps/interfaces/people.model';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -121,7 +120,7 @@ export class AddPropertyOwnerComponent implements OnInit {
     }
 
     this.rrrightService.postRrrightOwnerProperty(params)
-      .subscribe((res: any) => {
+      .subscribe(() => {
         this.close();
       });
 

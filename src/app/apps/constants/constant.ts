@@ -657,7 +657,7 @@ export const TABLE_COLUMN_BASIC_PRINCIPANTS: TableColumn<ProcessParticipant>[] =
 export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
   {
     label: '',
-    property: 'otherProperty',
+    property: 'operationType',
     type: 'operationType',
     visible: true,
     cssClasses: []

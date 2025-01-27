@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AfterViewInit, Component, computed, inject, Input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
@@ -112,7 +113,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       visible: true
     },
     {
-      label: 'A partil del',
+      label: 'Inicio de tenencia',
       property: 'beginAt',
       type: 'text',
       visible: true
@@ -171,7 +172,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   private matDialog = inject(MatDialog);
 
   constructor(
-    private snakbar: MatSnackBar
+    private snackbar: MatSnackBar
   ) { }
 
   ngAfterViewInit(): void {
@@ -234,7 +235,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   onClickOpenAddEditModal(data: any): void {
     if (this.fractions_sum >= 1) {
-      this.snakbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 10000 });
+      this.snackbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 10000 });
       return;
     }
 

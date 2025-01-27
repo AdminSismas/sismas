@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
@@ -14,7 +15,6 @@ import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PeopleService } from 'src/app/apps/services/people.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { DateTime } from 'luxon';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -60,6 +60,11 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
   ngOnInit(): void {
     const formValues = this.data.rrrightInfo;
+    if (formValues?.beginAt) {
+      formValues.beginAt = new Date(
+        this.data.rrrightInfo!.beginAt + 'T00:00:00-05:00'
+      );
+    }
     this.form.reset(formValues);
   }
 
@@ -77,8 +82,8 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
     try {
       values.beginAt = values.beginAt.toISOString().split('T')[0];
-    } catch (e) {
-      values.beginAt = values.beginAt;
+    } catch {
+      values.beginAt = values.beginAt as string;
     }
     values.rightId = this.data.rightId;
 

@@ -1,15 +1,26 @@
+<div mat-dialog-title class="flex justify-between items-center">
+  <h2>Crear fuente administrativa</h2>
+  <button
+    class="text-secondary"
+    mat-icon-button
+    type="button"
+    mat-dialog-close
+    tabindex="-1"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border border-slate-400 mb-4"></mat-divider>
 <mat-dialog-content class="flex flex-col overflow-hidden gap-2">
-  <h2 mat-dialog-title>Crear fuente administrativa</h2>
-  <mat-divider class="text-border border-slate-400 mb-4"></mat-divider>
-
-  <dynamic-forms
+  <vex-dynamic-forms
     [inputs]="inputs"
     (formReady)="form = $event"
-  ></dynamic-forms>
+    [initValues]="initValues"
+    className="grid grid-cols-6 grid-flow-row gap-x-4"
+  ></vex-dynamic-forms>
   <mat-dialog-actions class="flex justify-center gap-6 w-full">
     <button
       mat-flat-button
-      mat-dialog-close
       color="primary"
       (click)="requestManager()"
     >

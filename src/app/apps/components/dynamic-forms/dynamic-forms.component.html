@@ -12,24 +12,8 @@
           placeholderDomainName="{{ input.placeholder }}&hellip;"
           [idComboCollection]="input.name"
           [cssClasses]="cssClassesInput(input.cssClasses)"
+          [ngClass]="cssClassesInput(input.cssClasses)"
         ></vex-combox-colletion>
-      } @else if (input.element === "autocomplete") {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
-          <mat-label>{{ input.label }}</mat-label>
-          <input
-            matInput
-            placeholder="{{ input.placeholder }}&hellip;"
-            [formControlName]="input.name"
-            [matAutocomplete]="auto"
-          />
-          <mat-autocomplete #auto="matAutocomplete">
-            @for (option of options$[input.name] | async; track option) {
-              <mat-option [value]="option">
-                {{ option }}
-              </mat-option>
-            }
-          </mat-autocomplete>
-        </mat-form-field>
       } @else if (input.element === "file") {
         <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
           <ngx-mat-file-input
@@ -40,7 +24,7 @@
           ></ngx-mat-file-input>
         </mat-form-field>
       } @else if (input.element === "select") {
-        <mat-form-field>
+        <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)">
           <mat-label>{{ input.label }}</mat-label>
           <mat-select
             [formControlName]="input.name"
@@ -48,37 +32,36 @@
             placeholder="{{ input.placeholder }}&hellip;"
           >
             @for (option of input.options; track $index) {
-              <mat-option [value]="option">{{ option }}</mat-option>
+              <mat-option [value]="option.value">{{ option.label }}</mat-option>
             }
           </mat-select>
         </mat-form-field>
+      } @else if (input.element === "date") {
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+          <mat-label>{{ input.label }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="{{ input.placeholder }}&hellip;"
+            [formControlName]="input.name"
+            [matDatepickerFilter]="getDateFiler(input.name)"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
       } @else if (input.element === "input") {
-        @if (input.type === "date") {
-          <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
-            <mat-label>{{ input.label }}</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              placeholder="{{ input.placeholder }}&hellip;"
-              [formControlName]="input.name"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        } @else {
-          <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
-            <mat-label>{{ input.label }}</mat-label>
-            <input
-              matInput
-              [type]="input.type"
-              placeholder="{{ input.placeholder }}&hellip;"
-              [formControlName]="input.name"
-            />
-          </mat-form-field>
-        }
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+          <mat-label>{{ input.label }}</mat-label>
+          <input
+            matInput
+            [type]="input.type"
+            placeholder="{{ input.placeholder }}&hellip;"
+            [formControlName]="input.name"
+          />
+        </mat-form-field>
       }
     }
   </form>

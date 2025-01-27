@@ -39,6 +39,16 @@ export class AlfaMainService {
     return this.getData(url, paramsR);
   }
 
+  getListAlfaMainOperationsUnitsByBaunitId(page: PageSearchData, executionId: string, baunitId: string): Observable<InformationPegeable> {
+    const url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+
+    const paramsR: HttpParams = new HttpParams()
+      .set('page', `${page.page}`)
+      .set('size', `${page.size}`);
+
+      return this.http.get<InformationPegeable>(url, { params: paramsR });
+  }
+
   //{{url}}:{{port}}/temporal/clearChangelog
   clearInformationAlfaMain(executionId: string, keyword: string){
     const formdata = new FormData();
@@ -57,7 +67,9 @@ export class AlfaMainService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
+
     const url = `${this.basic_url}${envi.metrict_cadastral_change}${page.searchData}`;
+    
     return this.getData(url, paramsR);
   }
 

@@ -31,11 +31,26 @@ export class TerritorialOrganizationService {
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
+  getAllDataDepartments(): Observable<Department[]> {
+    const url = `${this.basic_url}${environment.qbaunit_divpol_ccdpto}`;
+
+    return this.http.get<Department[]>(url);
+  }
+
   getDataMunicipalities(dpto: string | null | undefined): Observable<Municipality[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('dpto', `${dpto}`);
     const url = `${this.basic_url}${environment.qbaunit_ccmpio}`;
     return this.getData(url, paramsMun);
+  }
+
+  getAllDataMunicipalities(dpto: string ): Observable<Municipality[]> {
+    const url = `${this.basic_url}${environment.qbaunit_divpol_ccmpio}`;
+
+    const params: HttpParams = new HttpParams()
+      .set('dpto', dpto);
+
+    return this.http.get<Municipality[]>(url, { params });
   }
 
   getDataTownships(deptoMpio: string | null | undefined): Observable<Township[]> {

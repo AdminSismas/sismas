@@ -78,7 +78,7 @@ export class AdministrativeSourcesComponent implements OnInit {
 
   ngOnInit(): void {
     this.displayedColumns = this.columns.map((column) => column.property);
-    if (this.typeInformation !== 'edition' || !this.editable) {
+    if (this.typeInformation !== 'edition' || !this.editable ) {
       this.displayedColumns = this.displayedColumns.filter(
         (column) => column !== 'actions'
       );
@@ -129,9 +129,9 @@ export class AdministrativeSourcesComponent implements OnInit {
 
   deleteFuenteAdministrativa(row: AdministrativeSource) {
     const params: DeleteAdministrativeSourceParams = {
-      baunitId: this.baunitId as string,
-      changeLogId: this.executionId as string,
-      fuenteAdminId: row.fuenteAdminId as string
+      baunitId: this.baunitId!,
+      changeLogId: this.executionId!,
+      fuenteAdminId: row.fuenteAdminId!
     };
     this.administrativeSourcesService
       .deleteAdministrativeSource(params)
@@ -169,7 +169,10 @@ export class AdministrativeSourcesComponent implements OnInit {
           domFuenteAdministrativaTipo: row.domFuenteAdministrativaTipo,
           fechaDocumentoFuente: row.fechaDocumentoFuente,
           numeroFuente: row.numeroFuente,
-          enteEmisor: row.enteEmisor
+          domEnteEmisor: row.domEnteEmisor,
+          oficinaOrigen: row.oficinaOrigen,
+          departamentoOrigen: row.departamentoOrigen!,
+          ciudadOrigen: row.ciudadOrigen
         }
       };
 

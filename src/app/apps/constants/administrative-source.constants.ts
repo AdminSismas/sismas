@@ -2,6 +2,9 @@ import { Validators } from "@angular/forms";
 import { JSONInput } from "../interfaces/dynamic-forms";
 import { TableColumn } from "@vex/interfaces/table-column.interface";
 import { AdministrativeSource } from "../interfaces/information-property/administrative-source";
+import { GeneralValidationsService } from "../services/validations/general-validations.service";
+
+const generalValidationsService = new GeneralValidationsService();
 
 export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
   {
@@ -11,6 +14,16 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     element: 'collection',
     type: 'FuenteAdministrativaTipo',
     validators: [Validators.required],
+    cssClasses: 'col-span-2'
+  },
+  {
+    name: 'fechaDocumentoFuente',
+    label: 'Fecha de documento',
+    placeholder: 'Fecha de documento',
+    element: 'date',
+    type: 'past',
+    validators: [Validators.required, generalValidationsService.maxDateValidator()],
+    cssClasses: 'col-span-2'
   },
   {
     name: 'numeroFuente',
@@ -19,32 +32,46 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     element: 'input',
     type: 'string',
     validators: [Validators.required],
+    cssClasses: 'col-span-2'
   },
   {
-    name: 'cateEnteEmisor',
-    label: 'Categoría ente emisor',
-    placeholder: 'Escribir categoría de ente emisor',
-    element: 'select',
-    type: 'string',
+    name: 'domEnteEmisor',
+    label: 'Ente emisor',
+    placeholder: 'Seleccionar el ente emisor',
+    element: 'collection',
+    type: 'EnteEmisor',
     validators: [Validators.required],
-    options: ['Notaría', 'Registraduría', 'Otro']
+    cssClasses: 'col-span-3'
   },
   {
-    name: 'tipoEnteEmisor',
-    label: 'Tipo ente emisor',
+    name: 'oficinaOrigen',
+    label: 'Oficina',
     placeholder: 'Escribir tipo de ente emisor',
     element: 'input',
     type: 'string',
     validators: [Validators.required],
+    cssClasses: 'col-span-3'
   },
   {
-    name: 'fechaDocumentoFuente',
-    label: 'Fecha de documento',
-    placeholder: 'Fecha de documento',
-    element: 'input',
-    type: 'date',
+    name: 'departamentoOrigen',
+    label: 'Departamento',
+    placeholder: 'Seleccionar departamento',
+    element: 'select',
+    type: 'string',
+    options: [],
     validators: [Validators.required],
+    cssClasses: 'col-span-3'
   },
+  {
+    name: 'ciudadOrigen',
+    label: 'Ciudad',
+    placeholder: 'Seleccionar ciudad',
+    element: 'select',
+    type: 'string',
+    options: [],
+    validators: [Validators.required],
+    cssClasses: 'col-span-3'
+  }
 ];
 
 export const COLUMNS_ADMINISTRATIVE_SOURCES: TableColumn<AdministrativeSource>[] = [
@@ -89,5 +116,11 @@ export const COLUMNS_ADMINISTRATIVE_SOURCES: TableColumn<AdministrativeSource>[]
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
+  },
+  {
+    label: 'Acciones',
+    property: 'actions',
+    type: 'button',
+    visible: true
   }
 ];

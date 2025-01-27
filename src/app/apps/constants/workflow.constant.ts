@@ -133,18 +133,18 @@ export const WORKFLOW_INPUTS: JSONInput[] = [
   {
     label: 'Válido desde',
     name: 'validBeginAt',
-    type: 'date',
+    element: 'date',
+    type: 'past',
     placeholder: 'Válido desde',
     validators: [Validators.required],
-    element: 'input'
   },
   {
     label: 'Válido hasta',
     name: 'validToAt',
-    type: 'date',
+    element: 'date',
+    type: 'future',
     placeholder: 'Válido hasta',
     validators: [],
-    element: 'input'
   },
   {
     label: 'Dias de vencimiento',

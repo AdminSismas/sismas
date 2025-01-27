@@ -85,6 +85,7 @@ export const environment = {
   geoeconomic_values: '/zonaGEcoValor',
   geoeconomic_zones: '/ccZonaHomoGeoEconomica',
   /* ------ H ------ */
+  headBaunitByMaster: '/headBaunitByMaster',
   /* ------ I ------ */
   individual_findByNumber: '/individual/findByNumber',
   individualNumber: '/individual',
@@ -116,8 +117,10 @@ export const environment = {
   qbaunit_cccomuna: '/qbaunit/cccomuna',
   qbaunit_cccorr: '/qbaunit/cccorr',
   qbaunit_ccdpto: '/qbaunit/ccdpto',
+  qbaunit_divpol_ccdpto: '/qbaunit/divpol/ccdpto',
   qbaunit_ccmanzana: '/qbaunit/ccmanzana',
   qbaunit_ccmpio: '/qbaunit/ccmpio',
+  qbaunit_divpol_ccmpio: '/qbaunit/divpol/ccmpio',
   qbaunit_ccsector: '/qbaunit/ccsector',
   qbaunit_ccvereda: '/qbaunit/ccvereda',
   qbaunit_cczona: '/qbaunit/cczona',

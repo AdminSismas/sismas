@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment as env } from 'src/environments/environments';
-import { AdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, FuentesAdministrativasTipo, UpdateAdministrativeSource } from '../../interfaces/information-property/administrative-source';
-import { catchError, map, Observable, of } from 'rxjs';
+import { AdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, UpdateAdministrativeSource } from '../../interfaces/information-property/administrative-source';
+import { catchError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -92,7 +92,10 @@ export class AdministrativeSourcesService {
     formData.append('fuenteAdminId', fuenteAdminId);
     formData.append('baunitId', baunitId);
 
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
     return this.http.delete<void>(url, {
+      headers,
       body: formData
     })
       .pipe(

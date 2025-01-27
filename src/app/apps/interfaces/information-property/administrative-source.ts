@@ -1,14 +1,17 @@
 export interface AdministrativeSource {
-  fuenteAdminId:               string;
+  fuenteAdminId: string;
   domFuenteAdministrativaTipo: string;
-  fechaDocumentoFuente:        Date | string;
-  numeroFuente:                string;
-  enteEmisor:                  string;
-  hash:                        string;
-  createdBy:                   string;
-  createdAt:                   Date | string;
-  updatedBy:                   string;
-  updatedAt:                   Date | string;
+  fechaDocumentoFuente: string | Date;
+  numeroFuente: string;
+  domEnteEmisor: string;
+  oficinaOrigen: string;
+  ciudadOrigen: string;
+  departamentoOrigen?: string;
+  hash: string;
+  createdBy: string;
+  createdAt: string;
+  updatedBy: string;
+  updatedAt: string;
 }
 
 export interface CreateAdministrativeSourceParams {
@@ -18,10 +21,13 @@ export interface CreateAdministrativeSourceParams {
 }
 
 export interface CreateAdministrativeSource {
-  domFuenteAdministrativaTipo?: string;
-  fechaDocumentoFuente?:        Date | string;
-  numeroFuente?:                string;
-  enteEmisor?:                  string;
+  domFuenteAdministrativaTipo: string;
+  fechaDocumentoFuente: string;
+  numeroFuente: string;
+  domEnteEmisor: string;
+  oficinaOrigen: string;
+  departamentoOrigen: string;
+  ciudadOrigen: string;
 }
 
 export interface FuentesAdministrativasTipo {
@@ -44,7 +50,10 @@ export interface UpdateAdministrativeSourceParams {
   domFuenteAdministrativaTipo: string;
   fechaDocumentoFuente: Date | string;
   numeroFuente: string;
-  enteEmisor: string;
+  domEnteEmisor: string;
+  oficinaOrigen: string;
+  departamentoOrigen: string;
+  ciudadOrigen: string;
 }
 
 export interface DeleteAdministrativeSourceParams {

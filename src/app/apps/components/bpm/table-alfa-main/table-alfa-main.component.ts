@@ -49,6 +49,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
+import { DialogTableAlfaMainComponent } from '../dialog-table-alfa-main/dialog-table-alfa-main.component';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -136,6 +137,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
     if (changes['contentInformations'] && this.contentInformations) {
       this._contentInformations$.next(this.contentInformations);
     }
@@ -150,7 +152,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     let data: Operation[];
     if (this.contentInformations?.content != null) {
       data = this.contentInformations.content;
-      data = data.map((row: Operation) => new Operation(row));
+      // data = data.map((row: Operation) => new Operation(row));
       this.dataSource.data = data;
     }
 
@@ -294,5 +296,16 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
+  }
+
+  editCadastralUnits(row: Operation) {
+    console.log(row);
+    this.dialog.open(DialogTableAlfaMainComponent, {
+      width: '80%',
+      data: {
+        executionId: this.executionId,
+        baunitIdE: row.baunitHead?.baunitIdE,
+      }
+    });
   }
 }
