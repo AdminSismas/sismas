@@ -89,6 +89,7 @@
       [typeInformation]="typeInformation"
     >
     </vex-administrative-sources>
+    @if (!showRulesPage) {
     <super-notariado-property
       [id]="'superNotariadoPropertyComponent' + schema"
       [propertyRegistryNumber]="propertyRegistryOffice"
@@ -97,7 +98,8 @@
       [schema]="schema"
       [executionId]="executionId"
     ></super-notariado-property>
-    @if (!viewProperties) {
+    }
+    @if (!showRulesPage) {
       <vex-information-property-owners
         [id]="'dataInformationPropertyOwners' + schema"
         #informationPropertyOwnersComponent{{schema}}
@@ -152,6 +154,7 @@
       [typeInformation]="typeInformation"
       @fadeInUp
     ></vex-information-zones-property>
+    @if (!showRulesPage) {
     <vex-photos
     #photosComponent{{schema}}
     [id]="'photos' + schema"
@@ -163,6 +166,8 @@
     [typeInformation]="typeInformation"
   >
   </vex-photos>
+}
+@if (!showRulesPage) {
   <vex-alerts
   #alertsComponent{{schema}}
   [id]="'alerts' + schema"
@@ -174,6 +179,7 @@
   [typeInformation]="typeInformation"
 >
 </vex-alerts>
+}
   </div>
 </mat-dialog-content>
 

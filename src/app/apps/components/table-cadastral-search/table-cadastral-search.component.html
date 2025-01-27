@@ -2,8 +2,8 @@
   <vex-page-layout-header class="pb-4 flex flex-col items-start justify-center">
     <div class="w-full flex flex-col sm:flex-row justify-between px-6">
       <div>
-        <h1 class="title mt-0 mb-1">Búsqueda catastral</h1>
-        <vex-breadcrumbs [crumbs]="['Mi trabajo', 'Búsqueda catastral']">
+        <h1 class="title mt-0 mb-1">{{ principaltitleMenu }}</h1>
+        <vex-breadcrumbs [crumbs]="titleArray">
         </vex-breadcrumbs>
       </div>
     </div>
@@ -24,7 +24,7 @@
             class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
             svgIcon="mat:search"
           ></mat-icon>
-          <span>Búsqueda avanzada</span>
+          <span>{{ titleMenu }}</span>
         </button>
         <span class="flex-1"></span>
         <mat-form-field
@@ -127,8 +127,8 @@
               </button>
 
               <button
-                (click)="openCadastralInformationProperty(row)"
-                class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
+              class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
+              (click)="openCadastralInformationProperty(row)"
                 mat-icon-button
                 title="Consultar información predial"
               >
@@ -138,17 +138,19 @@
                 ></mat-icon>
               </button>
 
-              <button
-                (click)="initiateFilingProcedure(row)"
-                class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
-                mat-icon-button
-                title="Radicar"
-              >
-                <mat-icon
-                  class="icon-sm"
-                  svgIcon="mat:add"
-                ></mat-icon>
-              </button>
+              @if (seeAction) {
+                <button 
+                  (click)="initiateFilingProcedure(row)"
+                  class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
+                  mat-icon-button
+                  title="Radicar"
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:add"
+                  ></mat-icon>
+                </button>
+              }
             </div>
           </td>
         </ng-container>

@@ -60,13 +60,16 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   baunitHead: BaunitHead | null = null;
   propertyUnit = false;
   dataFlag = '';
+  rulePage = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>,
     private informationPropertyService: InformationPropertyService
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit(): void {
     if (
@@ -100,8 +103,18 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
         this.informationPropertyService.showOptionsPersonSet(true);
       }
     }
+    this.proccessRulePage();
   }
 
+  proccessRulePage() {
+    if(this.defaults && this.defaults.rulePage) {
+      if(this.defaults.rulePage === 'cadastralSearchDA') {
+         this.rulePage = this.defaults.rulePage;
+         this.informationPropertyService.showRulePageSet(true);
+      }
+
+    }
+  }
   createObjectLayout(schema: string): void {
     let title = '';
     title =

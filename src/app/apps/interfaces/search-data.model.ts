@@ -34,6 +34,9 @@ export class SearchData {
 
   baunitIdE?: string | null | undefined;
 
+  rulePage?: string;
+  
+
 
   constructor(content?: any) {
     if (content.registration) this.registration = content.registration.trim();
@@ -54,5 +57,7 @@ export class SearchData {
     if (content.block) this.block = content.block.trim();
     if (content.sidewalk) this.sidewalk = content.sidewalk.trim();
     if (content.baunitIdE) this.baunitIdE = content.baunitIdE.trim();
+    if (content.rulePage) this.rulePage = content.rulePage.trim();
+
   }
 }

@@ -29,6 +29,12 @@ export const INDIVIDUAL_TYPE_NUMBER = 'NIT';
 export const PAGE = 0;
 export const PAGE_SIZE = 10;
 export const PAGE_SIZE_TABLE_CADASTRAL = 7;
+export const TITULO_PAGE_CADASTRAL = 'Búsqueda catastral';
+export const URL_PAGE_CADASTRAL = 'Búsqueda catastral';
+
+export const RULE_PAGE_CADASTRAL_DA = 'cadastralSearchDA';
+export const TITULO_PAGE_CADASTRAL_DA = 'Búsqueda catastral DA';
+
 
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
 export const PAGE_SIZE_TABLE_UNIQUE = 10;

@@ -154,6 +154,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @Input({ required: true }) public baunitCondition?: string;
   @Input() public resources: string[] = [];
 
+  @Input() public rulePage: string = '';
+
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
   idContainer = '';
@@ -166,6 +168,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
   propertyRegistryNumber: string | null | undefined = null;
 
   public viewProperties = false;
+  public showRulesPage = false;
+
 
    constructor(private informationPropertyService: InformationPropertyService){ }
 
@@ -187,6 +191,15 @@ export class CadastralInformationPropertyComponent implements OnInit {
         this.removeItem('Propietarios');
       }
     });
+    this.informationPropertyService.showOptionsRulePage$
+    .subscribe(value2=>{
+      if(value2){
+        console.log('this.navigationItems', this.navigationItems);
+        console.log('this.rulePage', this.rulePage);
+
+        this.proccessRulePage();
+      }
+    });
 
     this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
@@ -206,6 +219,20 @@ export class CadastralInformationPropertyComponent implements OnInit {
     } else {
       this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
       this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
+    }
+    
+  }
+  proccessRulePage() {
+    if(this.rulePage) {
+      if(this.rulePage === 'cadastralSearchDA') {
+        this.showRulesPage = true;
+        this.removeItem('Fotos');
+        this.removeItem('Alertas');
+        this.removeItem('Super notariado');
+        this.removeItem('Propietarios');
+      }else{
+      }
+
     }
   }
 

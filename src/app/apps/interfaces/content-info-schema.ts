@@ -9,7 +9,9 @@ export class ContentInfoSchema {
   content?: any;
   typeInformation?: TypeInformation;
   flagData?: string = '';
+  
   resources?: string[] = [];
+  rulePage?: string = '';
 
   constructor(
     baunitIdE?: string,
@@ -18,7 +20,8 @@ export class ContentInfoSchema {
     schemas: string[] = [],
     typeInformation: TypeInformation = TYPEINFORMATION_VISUAL,
     flagData = '',
-    resources: string[] = []
+    resources: string[] = [],
+    rulePage = ''
   ) {
     this.content = content;
     this.baunitIdE = baunitIdE;
@@ -27,5 +30,6 @@ export class ContentInfoSchema {
     this.typeInformation = typeInformation;
     this.flagData = flagData;
     this.resources = resources;
+    this.rulePage = rulePage;
   }
 }

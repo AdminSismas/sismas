@@ -107,7 +107,10 @@ export class FilterCadastralSearchComponent implements OnInit {
   optionsCommunities: Commune[] = [];
   optionsNeighborhoods: Neighborhood[] = [];
   optionsBlocks: Block[] = [];
+  seeRuleField: boolean = true;
+
   optionsSidewalks: Sidewalk[] = [];
+  defaultData: SearchData = this.defaults?.searchData;
 
   // Form BaunitIdE
   formBaunitIdE: FormGroup = this.fb.group({
@@ -121,74 +124,93 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   // Form Npn Like
   formNpnLike: FormGroup = this.fb.group({
-    dpto: [this.defaults?.dpto ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    mpio: [this.defaults?.mpio ?? '', [Validators.maxLength(3), Validators.pattern(/^\d+$/)]],
-    zonas: [this.defaults?.zonas ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    sector: [this.defaults?.sectorb ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    comuna: [this.defaults?.comuna ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    barrio: [this.defaults?.barrio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    manVer: [this.defaults?.manVer ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
-    terreno: [this.defaults?.terreno ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
-    condicion: [this.defaults?.condicion ?? '', [Validators.maxLength(1), Validators.pattern(/^\d+$/)]],
-    edificio: [this.defaults?.edificio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    piso: [this.defaults?.piso ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    unidadPredial: [this.defaults?.unidadPredial ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
+    dpto: [this.defaultData?.dpto ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    mpio: [this.defaultData?.mpio ?? '', [Validators.maxLength(3), Validators.pattern(/^\d+$/)]],
+    zonas: [this.defaultData?.zonas ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    sector: [this.defaultData?.sectorb ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    comuna: [this.defaultData?.comuna ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    barrio: [this.defaultData?.barrio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    manVer: [this.defaultData?.manVer ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
+    terreno: [this.defaultData?.terreno ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
+    condicion: [this.defaultData?.condicion ?? '', [Validators.maxLength(1), Validators.pattern(/^\d+$/)]],
+    edificio: [this.defaultData?.edificio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    piso: [this.defaultData?.piso ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
+    unidadPredial: [this.defaultData?.unidadPredial ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
   });
 
   // Form Registration
   formRegistration: FormGroup = this.fb.group({
-    registration: [this.defaults?.registration ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
+    registration: [this.defaultData?.registration ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
   });
 
   // Form Document Type
   formDocumentType: FormGroup = this.fb.group({
-    number: [this.defaults?.number ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
-    domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
+    number: [this.defaultData?.number ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
+    domIndividualTypeNumber: this.defaultData?.domIndividualTypeNumber ?? '',
   });
 
   // Form Name or Company Name
   formNames: FormGroup = this.fb.group({
-    firstName: [this.defaults?.firstName ?? '', Validators.required],
-    middleName: [this.defaults?.middleName ?? ''],
-    lastName: [this.defaults?.lastName ?? '', Validators.required],
-    otherLastName: [this.defaults?.otherLastName ?? ''],
-    companyName: [this.defaults?.companyName ?? ''],
+    firstName: [this.defaultData?.firstName ?? '', Validators.required],
+    middleName: [this.defaultData?.middleName ?? ''],
+    lastName: [this.defaultData?.lastName ?? '', Validators.required],
+    otherLastName: [this.defaultData?.otherLastName ?? ''],
+    companyName: [this.defaultData?.companyName ?? ''],
   });
   
   // Form Address
   formAddress: FormGroup = this.fb.group({
-    textAddress: this.defaults?.textAddress ?? '',
+    textAddress: this.defaultData?.textAddress ?? '',
   });
 
   // Form Municipal Selection
   formMunicipalSelection: FormGroup = this.fb.group({
-    department: this.defaults?.department ?? '',
-    municipality: this.defaults?.municipality ?? '',
-    zone: this.defaults?.zone ?? '',
-    sector: this.defaults?.sector ?? '',
-    community: this.defaults?.community ?? '',
-    neighborhood: this.defaults?.neighborhood ?? '',
-    sidewalk: this.defaults?.sidewalk ?? '',
-    block: this.defaults?.block ?? ''
+    department: this.defaultData?.department ?? '',
+    municipality: this.defaultData?.municipality ?? '',
+    zone: this.defaultData?.zone ?? '',
+    sector: this.defaultData?.sector ?? '',
+    community: this.defaultData?.community ?? '',
+    neighborhood: this.defaultData?.neighborhood ?? '',
+    sidewalk: this.defaultData?.sidewalk ?? '',
+    block: this.defaultData?.block ?? ''
   });
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: SearchData | undefined,
+    @Inject(MAT_DIALOG_DATA) public defaults: any | undefined,
     private dialogRef: MatDialogRef<FilterCadastralSearchComponent>,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
     private fieldFormatterService: CharacterValidateService
-  ) {}
+  ) {
+
+  }
 
   ngOnInit() {
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => console.log(value));
+      this.proccessRulePage()
+  }
+
+  proccessRulePage() {
+    if(this.defaults && this.defaults.rulePage) {
+      if(this.defaults.rulePage === 'cadastralSearchDA') {
+       this.formDocumentType.disable()
+       this.formNames.disable();
+       this.seeRuleField = false;
+      }else{
+        this.formDocumentType.enable()
+       this.formNames.enable();
+       this.seeRuleField = true;
+       
+      }
+
+    }
   }
 
   searchRegistrationNumber() {
@@ -606,10 +628,10 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.optionsDepartments = result;
     this.optionsDepartments = result;
 
-    if (this.defaults?.department) {
+    if (this.defaultData?.department) {
       const listOptions: Department[] = this.optionsDepartments.filter(
         (option: Department): boolean =>
-          option.divpolLvl1Code === this.defaults?.department
+          option.divpolLvl1Code === this.defaultData?.department
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('department')?.patchValue(listOptions[0].codeName);
@@ -624,10 +646,10 @@ export class FilterCadastralSearchComponent implements OnInit {
     result = result.map((mncp: Municipality) => new Municipality(mncp));
     this.optionsMunicipalities = result;
 
-    if (this.defaults?.municipality && !skipPreloadedValues) {
+    if (this.defaultData?.municipality && !skipPreloadedValues) {
       const listOptions: Municipality[] = this.optionsMunicipalities.filter(
         (option: Municipality): boolean =>
-          option.divpolLvl2Code === this.defaults?.municipality
+          option.divpolLvl2Code === this.defaultData?.municipality
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('municipality')?.patchValue(listOptions[0].codeName);
@@ -639,9 +661,9 @@ export class FilterCadastralSearchComponent implements OnInit {
     result = result.map((dpto: Zone) => new Zone(dpto));
     this.optionsZones = result;
 
-    if (this.defaults?.zone && !skipPreloadedValues) {
+    if (this.defaultData?.zone && !skipPreloadedValues) {
       const listOptions: Zone[] = this.optionsZones.filter(
-        (option: Zone): boolean => option.id === this.defaults?.zone
+        (option: Zone): boolean => option.id === this.defaultData?.zone
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('zone')?.patchValue(listOptions[0].codeName);
@@ -656,9 +678,9 @@ export class FilterCadastralSearchComponent implements OnInit {
     result = result.map((dpto: Sector) => new Sector(dpto));
     this.optionsSectors = result;
 
-    if (this.defaults?.sector && !skipPreloadedValues) {
+    if (this.defaultData?.sector && !skipPreloadedValues) {
       const listOptions: Sector[] = this.optionsSectors.filter(
-        (option: Sector): boolean => option.id === this.defaults?.sector
+        (option: Sector): boolean => option.id === this.defaultData?.sector
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('sector')?.patchValue(listOptions[0].codeName);
@@ -673,9 +695,9 @@ export class FilterCadastralSearchComponent implements OnInit {
     result = result.map((dpto: Commune) => new Commune(dpto));
     this.optionsCommunities = result;
 
-    if (this.defaults?.community && !skipPreloadedValues) {
+    if (this.defaultData?.community && !skipPreloadedValues) {
       const listOptions: Commune[] = this.optionsCommunities.filter(
-        (option: Commune): boolean => option.id === this.defaults?.community
+        (option: Commune): boolean => option.id === this.defaultData?.community
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('community')?.patchValue(listOptions[0].codeName);
@@ -690,10 +712,10 @@ export class FilterCadastralSearchComponent implements OnInit {
     result = result.map((dpto: Neighborhood) => new Neighborhood(dpto));
     this.optionsNeighborhoods = result;
 
-    if (this.defaults?.neighborhood && !skipPreloadedValues) {
+    if (this.defaultData?.neighborhood && !skipPreloadedValues) {
       const listOptions: Neighborhood[] = this.optionsNeighborhoods.filter(
         (option: Neighborhood): boolean =>
-          option.id === this.defaults?.neighborhood
+          option.id === this.defaultData?.neighborhood
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('neighborhood')?.patchValue(listOptions[0].codeName);
@@ -708,9 +730,9 @@ export class FilterCadastralSearchComponent implements OnInit {
     result = result.map((sd: Sidewalk) => new Sidewalk(sd));
     this.optionsSidewalks = result;
 
-    if (this.defaults?.sidewalk && !skipPreloadedValues) {
+    if (this.defaultData?.sidewalk && !skipPreloadedValues) {
       const listOptions: Sidewalk[] = this.optionsSidewalks.filter(
-        (option: Sidewalk): boolean => option.id === this.defaults?.sidewalk
+        (option: Sidewalk): boolean => option.id === this.defaultData?.sidewalk
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('sidewalk')?.patchValue(listOptions[0].codeName);
@@ -724,9 +746,9 @@ export class FilterCadastralSearchComponent implements OnInit {
     result = result.map((sd: Block) => new Block(sd));
     this.optionsBlocks = result;
 
-    if (this.defaults?.block && !skipPreloadedValues) {
+    if (this.defaultData?.block && !skipPreloadedValues) {
       const listOptions: Block[] = this.optionsBlocks.filter(
-        (option: Block): boolean => option.id === this.defaults?.block
+        (option: Block): boolean => option.id === this.defaultData?.block
       );
       if (listOptions?.length > 0) {
         this.formMunicipalSelection.get('block')?.patchValue(listOptions[0].codeName);

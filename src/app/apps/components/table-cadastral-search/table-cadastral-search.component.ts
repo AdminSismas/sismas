@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -16,7 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -60,6 +60,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   animations: [fadeInUp400ms, stagger40ms],
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     NgClass,
     NgIf,
@@ -87,7 +88,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     CurrencyLandsPipe
   ]
 })
-export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
+export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnChanges {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
@@ -99,11 +100,22 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  titleArray: string[] = ['Mi trabajo'];
+  titleMenu: string = 'Búsqueda avanzada';
+  principaltitleMenu: string = 'Búsqueda avanzada';
+  seeAction:boolean = true;
+
 
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   initParams?: string;
+
+
+
+  @Input() tituloPage?:string = '';
+  @Input() rulePage?:string = '';
+    
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -120,8 +132,30 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService
   ) {
+    console.log('TableCadastralSearchComponent , Configuracion');
+    this.detectCurrentUrl();
   }
 
+  detectCurrentUrl(): void {
+    const currentUrl = this.router.url;
+    console.log('Current URL:', currentUrl);
+    const lastSegment = this.getLastSegment(currentUrl);
+    console.log('Last Segment:', lastSegment);
+    if (lastSegment === 'cadastralSearch') {
+      this.titleAsing('Búsqueda catastral');
+      this.menuAsing('Búsqueda avanzada','Búsqueda catastral');
+    }
+    // else{
+    //   this.titleAsing('Búsqueda catastral DA');
+    //   this.menuAsing('Búsqueda avanzada DA');
+
+    // }
+  }
+
+  getLastSegment(url: string): string {
+    const segments = url.split('/');
+    return segments.pop() || '';
+  }
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)
@@ -163,6 +197,24 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
     }
   }
 
+   ngOnChanges(changes: SimpleChanges) {
+      if (changes['tituloPage'] && this.tituloPage) {
+        this.tituloPage = this.tituloPage ;
+        this.titleAsing(this.tituloPage);
+        this.menuAsing('Búsqueda avanzada DA',this.tituloPage);
+        this.seeAction = false;
+      }
+    }
+  
+  titleAsing(value: string): void {
+    this.titleArray.push(value);
+  }
+
+  menuAsing(title:string,principal:string): void {
+  this.titleMenu = title;
+  this.principaltitleMenu = principal;
+  }
+
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
@@ -183,7 +235,10 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
           LIST_SCHEMAS_CONTROL_MAIN,
-          TYPEINFORMATION_VISUAL
+          TYPEINFORMATION_VISUAL,
+          '',
+          [],
+          this.rulePage
         )
       })
       .afterClosed();
@@ -200,7 +255,10 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit {
         width: '70%',
         minHeight: '50%',
         disableClose: true,
-        data: this.searchData
+        data: {
+          searchData: this.searchData,
+          rulePage: this.rulePage
+        }
       })
       .afterClosed()
       .subscribe((searchData: SearchData) => {

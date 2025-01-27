@@ -31,6 +31,9 @@ export class InformationPropertyService {
   showOptionsPerson$ = new BehaviorSubject<boolean>(false);
   showOptionsPersonStarted$: Observable<boolean> = this.showOptionsPerson$.asObservable();
 
+  showRulePage$ = new BehaviorSubject<boolean>(false);
+  showOptionsRulePage$: Observable<boolean> = this.showRulePage$.asObservable();
+
   constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
 
   public reloadTableSet(value:boolean):void{
@@ -39,6 +42,10 @@ export class InformationPropertyService {
 
   public showOptionsPersonSet(value:boolean):void{
     this.showOptionsPerson$.next(value);
+  }
+
+  public showRulePageSet(value:boolean):void{
+    this.showRulePage$.next(value);
   }
 
   getBasicInformationProperty(
