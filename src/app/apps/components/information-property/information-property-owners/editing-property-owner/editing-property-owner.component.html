@@ -5,10 +5,10 @@
 <mat-dialog-content>
   <form
     [formGroup]="form"
-    class="grid grid-cols-2 gap-4 grid-flow-row py-2"
+    class="grid grid-cols-4 gap-4 grid-flow-row py-2"
   >
     <!-- Edición fracción -->
-    <mat-form-field [ngClass]="{'bg-red-50': form.get('fraction')?.errors?.['invalidFraction']}">
+    <mat-form-field [ngClass]="{'bg-red-50': form.get('fraction')?.errors?.['invalidFraction'] }">
       <mat-label>Fracción</mat-label>
       <input
         matInput
@@ -23,6 +23,15 @@
         <mat-error>Fracción no válida</mat-error>
       }
     </mat-form-field>
+    <mat-form-field aria-disabled="true">
+      <mat-label>Total fracciones</mat-label>
+      <input
+        matInput
+        placeholder="Fracción total"
+        formControlName="fractions_sum"
+        type="number"
+      />
+    </mat-form-field>
 
     <!-- Edición tipo de derecho -->
     <vex-combox-colletion
@@ -32,10 +41,11 @@
       typeDomainName="RightType"
       placeholderDomainName="Seleccionar tipo derecho"
       cssClasses="w-full"
+      class="col-span-2"
     ></vex-combox-colletion>
 
     <!-- Edición fecha -->
-    <mat-form-field class="col-span-2">
+    <mat-form-field class="col-span-4">
       <mat-label>Inicio de tenencia</mat-label>
       <input
         matInput

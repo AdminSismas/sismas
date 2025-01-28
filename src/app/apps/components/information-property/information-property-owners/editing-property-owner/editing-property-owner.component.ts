@@ -45,6 +45,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
       Validators.min(0),
       this.createFractionValidator()
     ]],
+    fractions_sum: [0],
     domRightType: ['', Validators.required],
     beginAt: [Date(), Validators.required],
   });
@@ -59,13 +60,16 @@ export class EditingPropertyOwnerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const formValues = this.data.rrrightInfo;
+    const formValues = {...this.data.rrrightInfo!, fractions_sum: this.data.fractions_sum!};
+
     if (formValues?.beginAt) {
       formValues.beginAt = new Date(
         this.data.rrrightInfo!.beginAt + 'T00:00:00-05:00'
       );
     }
+    console.log(formValues);
     this.form.reset(formValues);
+    this.form.get('fractions_sum')!.disable();
   }
 
   close(): void {
@@ -112,5 +116,9 @@ export class EditingPropertyOwnerComponent implements OnInit {
       }
       return null;
     };
+  }
+
+  get max(): number {
+    return 1 - this.data!.fractions_sum!;
   }
 }

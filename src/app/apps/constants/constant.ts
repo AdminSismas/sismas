@@ -596,12 +596,12 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'administrativeSourcesComponent'
   },
   {
-    label: 'Super notariado',
-    fragment: 'superNotariadoPropertyComponent'
-  },
-  {
     label: 'Propietarios',
     fragment: 'informationPropertyOwnersComponent'
+  },
+  {
+    label: 'Super notariado',
+    fragment: 'superNotariadoPropertyComponent'
   },
   {
     label: 'Direcciones',

@@ -357,4 +357,11 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   private getRandomInt(max: number): number {
     return Math.floor(Math.random() * max);
   }
+
+  disabledClass(): string {
+    if (!this.editable) {
+      return '!bg-slate-400 !text-gray-100 opacity-60';
+    }
+    return '';
+  }
 }

@@ -107,17 +107,16 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private administrativeSourcesComponent?: ElementRef;
-  @ViewChild(SuperNotariadoPropertyComponent, {
-    read: ElementRef,
-    static: false
-  })
-  private superNotariadoPropertyComponent?: ElementRef;
-  // @ViewChild(AdministrativeSourcesComponent, {
   @ViewChild(InformationPropertyOwnersComponent, {
     read: ElementRef,
     static: false
   })
   private informationPropertyOwnersComponent?: ElementRef;
+  @ViewChild(SuperNotariadoPropertyComponent, {
+  read: ElementRef,
+    static: false
+  })
+  private superNotariadoPropertyComponent?: ElementRef;
   @ViewChild(InformationAddressesPropertyComponent, {
     read: ElementRef,
     static: false
@@ -154,7 +153,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @Input({ required: true }) public baunitCondition?: string;
   @Input() public resources: string[] = [];
 
-  @Input() public rulePage: string = '';
+  @Input() public rulePage = '';
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
@@ -162,7 +161,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] =
     NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
-  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean } = {};
+  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean, ZON?: boolean } = {};
 
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;
@@ -289,4 +288,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
     return false;
   }
+
+  
 }

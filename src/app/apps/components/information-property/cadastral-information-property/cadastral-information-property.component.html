@@ -90,16 +90,6 @@
     >
     </vex-administrative-sources>
     @if (!showRulesPage) {
-    <super-notariado-property
-      [id]="'superNotariadoPropertyComponent' + schema"
-      [propertyRegistryNumber]="propertyRegistryOffice"
-      [propertyRegistryOffice]="propertyRegistryNumber"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-    ></super-notariado-property>
-    }
-    @if (!showRulesPage) {
       <vex-information-property-owners
         [id]="'dataInformationPropertyOwners' + schema"
         #informationPropertyOwnersComponent{{schema}}
@@ -111,6 +101,14 @@
         [editable]="editable.PRO"
         @fadeInUp
       ></vex-information-property-owners>
+      <super-notariado-property
+        [id]="'superNotariadoPropertyComponent' + schema"
+        [propertyRegistryNumber]="propertyRegistryOffice"
+        [propertyRegistryOffice]="propertyRegistryNumber"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+      ></super-notariado-property>
     }
     <vex-information-addresses-property
       [id]="'basicInformationpropertyAddresses' + schema"
@@ -155,31 +153,31 @@
       @fadeInUp
     ></vex-information-zones-property>
     @if (!showRulesPage) {
-    <vex-photos
-    #photosComponent{{schema}}
-    [id]="'photos' + schema"
-    [expandedComponent]="false"
-    [baunitId]="baunitId"
-    [schema]="schema"
-    [executionId]="executionId"
-    @fadeInUp
-    [typeInformation]="typeInformation"
-  >
-  </vex-photos>
-}
-@if (!showRulesPage) {
-  <vex-alerts
-  #alertsComponent{{schema}}
-  [id]="'alerts' + schema"
-  [expandedComponent]="false"
-  [baunitId]="baunitId"
-  [schema]="schema"
-  [executionId]="executionId"
-  @fadeInUp
-  [typeInformation]="typeInformation"
->
-</vex-alerts>
-}
+      <vex-photos
+        #photosComponent{{schema}}
+        [id]="'photos' + schema"
+        [expandedComponent]="false"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        @fadeInUp
+        [typeInformation]="typeInformation"
+      >
+      </vex-photos>
+    }
+    @if (!showRulesPage) {
+      <vex-alerts
+        #alertsComponent{{schema}}
+        [id]="'alerts' + schema"
+        [expandedComponent]="false"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        @fadeInUp
+        [typeInformation]="typeInformation"
+      >
+      </vex-alerts>
+    }
   </div>
 </mat-dialog-content>
 

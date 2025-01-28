@@ -1,92 +1,147 @@
 <mat-accordion class="flex flex-col py-0 px-0 mb-2">
   <mat-expansion-panel
-    (opened)="isExpandPanel(expandedComponent = true)"
-    [expanded]="expandedComponent">
+    (opened)="isExpandPanel((expandedComponent = true))"
+    [expanded]="expandedComponent"
+  >
     <mat-expansion-panel-header
-      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
+    >
       <vex-header-cadastral-information-property
         label="Zonas"
         icon="mat:description"
-        id="information-ZonespropertyData">
+        id="information-ZonespropertyData"
+      >
       </vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
     <mat-panel-description class="py-0 px-0">
-
       <div class="flex w-full justify-between">
-
         <div class="flex flex-col w-[48%]">
           <!-- Title for the First Table -->
           <div class="header-container m-2 flex items-center justify-between">
             <span class="font-bold text-xl">Zonas físicas</span>
-            <button *ngIf="typeInformation === 'edition'" mat-raised-button color="primary" type="button" (click)="onClickOpenAddEditModal(dataSource)">
+            <button
+              [ngClass]="disabledClass()"
+              [disabled]="!editable"
+              *ngIf="typeInformation === 'edition'"
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onClickOpenAddEditModal(dataSource)"
+            >
               Nueva
               <mat-icon svgIcon="mat:add"></mat-icon>
             </button>
           </div>
-        
+
           <!-- Mostrar mensaje si no hay Zonas físicas -->
           <div
             *ngIf="!dataSource || dataSource.data.length === 0"
             class="flex justify-center items-center py-4"
           >
-            <p class="text-gray-500 text-lg">No hay Zonas físicas para mostrar.</p>
+            <p class="text-gray-500 text-lg">
+              No hay Zonas físicas para mostrar.
+            </p>
           </div>
-        
+
           <!-- Mostrar tabla y paginación solo si hay datos -->
-          <div *ngIf="dataSource && dataSource.data.length > 0" class="table-container overflow-x-auto w-full">
-            <table mat-table [dataSource]="dataSource" matSort class="w-full">
+          <div
+            *ngIf="dataSource && dataSource.data.length > 0"
+            class="table-container overflow-x-auto w-full"
+          >
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              class="w-full"
+            >
               <ng-container matColumnDef="viewDetail">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
-                <td *matCellDef="let row" mat-cell>
-                  <div class="flex align-middle text-center content-center items-center">
+                <th
+                  *matHeaderCellDef
+                  mat-header-cell
+                  mat-sort-header
+                ></th>
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                >
+                  <div
+                    class="flex align-middle text-center content-center items-center"
+                  >
                     <button
-                      class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
                       mat-icon-button
                       title="Detalles"
                       (click)="openInformationPropertyZone(row, 'physical')"
                     >
-                      <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+                      <mat-icon
+                        class="icon-sm"
+                        svgIcon="mat:visibility"
+                      ></mat-icon>
                     </button>
                   </div>
                 </td>
               </ng-container>
 
-        
               <ng-container matColumnDef="zoneCodeColumn">
-                <th *matHeaderCellDef mat-sort-header mat-header-cell>
+                <th
+                  *matHeaderCellDef
+                  mat-sort-header
+                  mat-header-cell
+                >
                   Código
                 </th>
-                <td *matCellDef="let row" mat-cell>
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                >
                   {{ getZoneCode(row) }}
                 </td>
               </ng-container>
 
-        
               <ng-container matColumnDef="zoneValidityColumn">
-                <th *matHeaderCellDef mat-sort-header mat-header-cell>
+                <th
+                  *matHeaderCellDef
+                  mat-sort-header
+                  mat-header-cell
+                >
                   Vigencia
                 </th>
-                <td *matCellDef="let row" mat-cell>
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                >
                   {{ getZonevalidity(row) }}
                 </td>
               </ng-container>
 
-        
               <ng-container *ngFor="let column of textColumns()">
                 <ng-container [matColumnDef]="column.property">
-                  <th *matHeaderCellDef mat-sort-header mat-header-cell>
+                  <th
+                    *matHeaderCellDef
+                    mat-sort-header
+                    mat-header-cell
+                  >
                     {{ column.label }}
                   </th>
-                  <td *matCellDef="let row" mat-cell>
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                  >
                     {{ row[column.property] }}
                   </td>
                 </ng-container>
               </ng-container>
-        
+
               <!-- Actions Column -->
-              <ng-container   matColumnDef="actions">
-                <th *matHeaderCellDef mat-header-cell></th>
-                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+              <ng-container matColumnDef="actions">
+                <th
+                  *matHeaderCellDef
+                  mat-header-cell
+                ></th>
+                <td
+                  *matCellDef="let row"
+                  class="w-10 text-secondary"
+                  mat-cell
+                >
                   <button
                     *ngIf="typeInformation === 'edition'"
                     mat-icon-button
@@ -98,25 +153,51 @@
                   </button>
                 </td>
               </ng-container>
-        
-              <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
-              <tr mat-row @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer" *matRowDef="let row; columns: visibleColumns()"></tr>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="visibleColumns()"
+              ></tr>
+              <tr
+                mat-row
+                @fadeInUp
+                class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+                *matRowDef="let row; columns: visibleColumns()"
+              ></tr>
             </table>
-        
-            <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
-              <ng-template let-infoOwner="infoOwner" matMenuContent>
-                <button *ngFor="let actionBtn of actionBtns()" mat-menu-item (click)="onClickActionBtn(actionBtn.id, infoOwner)">
+
+            <mat-menu
+              #actionsMenu="matMenu"
+              xPosition="before"
+              yPosition="below"
+            >
+              <ng-template
+                let-infoOwner="infoOwner"
+                matMenuContent
+              >
+                <button
+                  *ngFor="let actionBtn of actionBtns()"
+                  mat-menu-item
+                  (click)="onClickActionBtn(actionBtn.id, infoOwner)"
+                >
                   <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
                   <span>{{ actionBtn.label }}</span>
                 </button>
-                <button mat-menu-item disabled *ngIf="actionBtns().length === 0">
+                <button
+                  mat-menu-item
+                  disabled
+                  *ngIf="actionBtns().length === 0"
+                >
                   <span class="text-center">No options</span>
                 </button>
               </ng-template>
             </mat-menu>
           </div>
-        
-          <div *ngIf="dataSource && dataSource.data.length > 0" class="paginator-container flex justify-center">
+
+          <div
+            *ngIf="dataSource && dataSource.data.length > 0"
+            class="paginator-container flex justify-center"
+          >
             <mat-paginator
               #paginator1
               [pageSizeOptions]="pageSizeOptions"
@@ -127,108 +208,210 @@
               class="paginator"
             />
           </div>
-
-
         </div>
 
         <div class="border-l-2 border-gray-300"></div>
 
-         <!-- Second Table -->
-         
-         <div class="flex flex-col w-[48%]">
+        <!-- Second Table -->
+
+        <div class="flex flex-col w-[48%]">
           <div class="header-container m-2 flex items-center justify-between">
             <span class="font-bold text-xl">Zonas geoeconómicas</span>
-            <button *ngIf="typeInformation === 'edition'" mat-raised-button color="primary" type="button" (click)="onClickOpenGeoconomicAddEditModal(dataSourceGeoeconomicZones)">
+            <button
+              [ngClass]="disabledClass()"
+              [disabled]="!editable"
+              *ngIf="typeInformation === 'edition'"
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="
+                onClickOpenGeoconomicAddEditModal(dataSourceGeoeconomicZones)
+              "
+            >
               Nueva
               <mat-icon svgIcon="mat:add"></mat-icon>
             </button>
           </div>
-        
+
           <!-- Mostrar mensaje si no hay Zonas geoeconómicas -->
-          <div *ngIf="!dataSourceGeoeconomicZones || dataSourceGeoeconomicZones.data.length === 0" class="flex justify-center items-center py-4">
-            <p class="text-gray-500 text-lg">No hay Zonas geoeconómicas para mostrar.</p>
+          <div
+            *ngIf="
+              !dataSourceGeoeconomicZones ||
+              dataSourceGeoeconomicZones.data.length === 0
+            "
+            class="flex justify-center items-center py-4"
+          >
+            <p class="text-gray-500 text-lg">
+              No hay Zonas geoeconómicas para mostrar.
+            </p>
           </div>
-        
+
           <!-- Mostrar tabla solo si hay datos -->
-          <div *ngIf="dataSourceGeoeconomicZones && dataSourceGeoeconomicZones.data.length > 0" class="table-container overflow-x-auto w-full">
-            <table mat-table [dataSource]="dataSourceGeoeconomicZones" matSort class="w-full">
+          <div
+            *ngIf="
+              dataSourceGeoeconomicZones &&
+              dataSourceGeoeconomicZones.data.length > 0
+            "
+            class="table-container overflow-x-auto w-full"
+          >
+            <table
+              mat-table
+              [dataSource]="dataSourceGeoeconomicZones"
+              matSort
+              class="w-full"
+            >
               <!-- Detalles -->
               <ng-container matColumnDef="viewDetail">
-                <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
-                <td *matCellDef="let row" mat-cell>
-                  <div class="flex align-middle text-center content-center items-center">
+                <th
+                  *matHeaderCellDef
+                  mat-header-cell
+                  mat-sort-header
+                ></th>
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                >
+                  <div
+                    class="flex align-middle text-center content-center items-center"
+                  >
                     <button
                       class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
                       mat-icon-button
                       title="Detalles"
                       (click)="openInformationPropertyZone(row, 'geoeconomic')"
                     >
-                      <mat-icon class="icon-sm" svgIcon="mat:visibility"></mat-icon>
+                      <mat-icon
+                        class="icon-sm"
+                        svgIcon="mat:visibility"
+                      ></mat-icon>
                     </button>
                   </div>
                 </td>
               </ng-container>
-        
+
               <!-- Código -->
               <ng-container matColumnDef="zoneCodeColumn">
-                <th *matHeaderCellDef mat-sort-header mat-header-cell>
+                <th
+                  *matHeaderCellDef
+                  mat-sort-header
+                  mat-header-cell
+                >
                   Código
                 </th>
-                <td *matCellDef="let row" mat-cell>
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                >
                   {{ getGeoeconomicZoneCode(row) }}
                 </td>
               </ng-container>
-        
+
               <!-- Vigencia -->
               <ng-container matColumnDef="zoneValidityColumn">
-                <th *matHeaderCellDef mat-sort-header mat-header-cell>
+                <th
+                  *matHeaderCellDef
+                  mat-sort-header
+                  mat-header-cell
+                >
                   Vigencia
                 </th>
-                <td *matCellDef="let row" mat-cell>
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                >
                   {{ getGeoeconomicZoneValidity(row) }}
                 </td>
               </ng-container>
-        
+
               <!-- Columnas dinámicas -->
               <ng-container *ngFor="let column of textColumns()">
                 <ng-container [matColumnDef]="column.property">
-                  <th *matHeaderCellDef mat-sort-header mat-header-cell>
+                  <th
+                    *matHeaderCellDef
+                    mat-sort-header
+                    mat-header-cell
+                  >
                     {{ column.label }}
                   </th>
-                  <td *matCellDef="let row" mat-cell>
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                  >
                     {{ row[column.property] }}
                   </td>
                 </ng-container>
               </ng-container>
-        
+
               <!-- Acciones -->
-              <ng-container   matColumnDef="actions">
-                <th *matHeaderCellDef mat-header-cell></th>
-                <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
-                  <button *ngIf="typeInformation === 'edition'" mat-icon-button [matMenuTriggerData]="{ infoOwner: row }" [matMenuTriggerFor]="actionsGeoconomicMenu" type="button">
+              <ng-container matColumnDef="actions">
+                <th
+                  *matHeaderCellDef
+                  mat-header-cell
+                ></th>
+                <td
+                  *matCellDef="let row"
+                  class="w-10 text-secondary"
+                  mat-cell
+                >
+                  <button
+                    *ngIf="typeInformation === 'edition'"
+                    mat-icon-button
+                    [matMenuTriggerData]="{ infoOwner: row }"
+                    [matMenuTriggerFor]="actionsGeoconomicMenu"
+                    type="button"
+                  >
                     <mat-icon svgIcon="mat:more_horiz"></mat-icon>
                   </button>
                 </td>
               </ng-container>
-        
-              <tr mat-header-row *matHeaderRowDef="visibleColumns()"></tr>
-              <tr mat-row @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer" *matRowDef="let row; columns: visibleColumns()"></tr>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="visibleColumns()"
+              ></tr>
+              <tr
+                mat-row
+                @fadeInUp
+                class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+                *matRowDef="let row; columns: visibleColumns()"
+              ></tr>
             </table>
-        
-            <mat-menu #actionsGeoconomicMenu="matMenu" xPosition="before" yPosition="below">
-              <ng-template let-infoOwner="infoOwner" matMenuContent>
-                <button *ngFor="let actionBtn of actionBtns()" mat-menu-item (click)="onClickGeoconomicActionBtn(actionBtn.id, infoOwner)">
+
+            <mat-menu
+              #actionsGeoconomicMenu="matMenu"
+              xPosition="before"
+              yPosition="below"
+            >
+              <ng-template
+                let-infoOwner="infoOwner"
+                matMenuContent
+              >
+                <button
+                  *ngFor="let actionBtn of actionBtns()"
+                  mat-menu-item
+                  (click)="onClickGeoconomicActionBtn(actionBtn.id, infoOwner)"
+                >
                   <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
                   <span>{{ actionBtn.label }}</span>
                 </button>
-                <button mat-menu-item disabled *ngIf="actionBtns().length === 0">
+                <button
+                  mat-menu-item
+                  disabled
+                  *ngIf="actionBtns().length === 0"
+                >
                   <span class="text-center">No options</span>
                 </button>
               </ng-template>
             </mat-menu>
           </div>
-        
-          <div *ngIf="dataSourceGeoeconomicZones && dataSourceGeoeconomicZones.data.length > 0" class="paginator-container flex justify-center">
+
+          <div
+            *ngIf="
+              dataSourceGeoeconomicZones &&
+              dataSourceGeoeconomicZones.data.length > 0
+            "
+            class="paginator-container flex justify-center"
+          >
             <mat-paginator
               #paginator2
               [pageSizeOptions]="pageSizeOptions2"
@@ -240,12 +423,7 @@
             />
           </div>
         </div>
-
-
-
       </div>
-
     </mat-panel-description>
   </mat-expansion-panel>
 </mat-accordion>
-
