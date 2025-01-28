@@ -22,13 +22,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { environment } from '../../../../../environments/environments';
 import { AuthService } from './services/auth.service';
-
 import { UserService } from './services/user.service';
 import {
   DecodeJwt,
 } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
+import { EVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/constant';
 
 @Component({
   selector: 'vex-login',
@@ -54,9 +54,11 @@ import { jwtDecode } from 'jwt-decode';
 export class LoginComponent {
   videoPath: string = environment.video;
   logoPath: string = environment.logo;
+  logoPathAlter: string = '';
   form!: FormGroup;
   inputType = 'password';
   visible = false;
+  seeLogoRetiro = false;
 
   constructor(
     private router: Router,
@@ -71,6 +73,8 @@ export class LoginComponent {
       email: ['', [Validators.required]],
       password: ['', Validators.required]
     });
+
+    this.findLogo(this.logoPath);
   }
 
   send() {
@@ -152,4 +156,19 @@ export class LoginComponent {
       this.cd.markForCheck();
     }
   }
+
+  findLogo(logo: string) {
+    const lastSegment = this.getLastSegment(logo);
+    if (lastSegment === NAME_LOGO_IMG_SAN_VICENTE) {
+      this.seeLogoRetiro = true;
+      this.logoPathAlter = EVIRONMENT_RETIRO_IMG;
+    } else {
+      this.seeLogoRetiro = false;
+    }
+  }
+
+  getLastSegment(path: string): string {
+    return path.substring(path.lastIndexOf('/') + 1);
+  }
+
 }

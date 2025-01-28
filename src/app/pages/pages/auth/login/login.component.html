@@ -53,6 +53,7 @@
       <button (click)="send()" color="primary" style="background-color: #1a3a45;" mat-raised-button type="button">Ingresar</button>
       <div class="p-6 pb-0 flex flex-col items-center justify-center">
         <div class="fill-current text-center">
+          <img *ngIf="seeLogoRetiro" class="logo-large" [attr.src]="logoPathAlter" alt="logo" />
           <img class="logo-large" [attr.src]="logoPath" alt="logo" />
         </div>
       </div>
