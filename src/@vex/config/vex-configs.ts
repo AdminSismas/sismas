@@ -32,7 +32,7 @@ const baseConfig: VexConfig = {
   boxed: false,
   sidenav: {
     title: 'SISMAS',
-    imageUrl: 'assets/img/illustrations/geogestion_it_support.png',
+    imageUrl: 'assets/img/illustrations/Sismas.png',
     showCollapsePin: true,
     user: {
       visible: true
