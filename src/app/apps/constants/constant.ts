@@ -15,7 +15,7 @@ import { DataFolio } from '../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../interfaces/information-property/snr-person-info';
 
-export const GUION = ' - ';
+export const GUION = '-';
 export const SPACE = ' ';
 export const TWO_POINT_ = ': ';
 export const NAME_NA = 'N/A';

@@ -534,4 +534,11 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   isValidateField(value: string | undefined): boolean {
     return value !== null && value !== undefined && value.length >= 1;
   }
+
+  cleanHyphenatedText(value: string | undefined): string {
+    if (!value) {
+      return '';
+    }
+    return value.includes('-') ? value.replace(/\s*-\s*/g, '-') : value;
+  }
 }

@@ -168,13 +168,13 @@
                 {{ column.label }}
               </th>
               <td
-                *matCellDef="let row"
-                [ngClass]="column.cssClasses"
-                mat-cell
-                class="pl-1 pr-1"
-              >
-                {{ row[column.property] }}
-              </td>
+              *matCellDef="let row"
+              [ngClass]="column.cssClasses"
+              mat-cell
+              class="pl-1 pr-1"
+            >
+              {{ cleanHyphenatedText(row[column.property]) }}
+            </td>
             </ng-container>
           } @else if (column.type === "operationType") {
             <ng-container [matColumnDef]="column.property">
