@@ -31,7 +31,7 @@ const baseConfig: VexConfig = {
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'GEOGESTION',
+    title: 'SISMAS',
     imageUrl: 'assets/img/illustrations/geogestion_it_support.png',
     showCollapsePin: true,
     user: {
