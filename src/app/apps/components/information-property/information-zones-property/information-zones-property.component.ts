@@ -9,7 +9,8 @@ import {
   computed,
   inject,
   signal,
-  AfterViewInit
+  AfterViewInit,
+  ChangeDetectorRef
 } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -262,7 +263,7 @@ export class InformationZonesPropertyComponent
   protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
-  constructor(private readonly layoutService: VexLayoutService) {
+  constructor(private readonly layoutService: VexLayoutService, private changeDetectorRef: ChangeDetectorRef) {
     console.log('constructor', this.typeInformation);
   }
 
@@ -339,24 +340,37 @@ export class InformationZonesPropertyComponent
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator || null;
-    this.dataSource.sort = this.sort || null;
-
-    this.dataSourceGeoeconomicZones.paginator = this.paginator2 || null;
-    this.dataSourceGeoeconomicZones.sort = this.sort2 || null;
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+      this.changeDetectorRef.detectChanges();
+    }
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+  
+    if (this.paginator2) {
+      this.dataSourceGeoeconomicZones.paginator = this.paginator2;
+      this.changeDetectorRef.detectChanges();
+    }
+    if (this.sort2) {
+      this.dataSourceGeoeconomicZones.sort = this.sort2;
+    }
   }
+  
 
   refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
     const { pageIndex, pageSize } = pageEvent;
-
+  
     if (paginatorId === 'paginator1') {
       this.page = pageIndex;
       this.pageSize = pageSize;
+      this.changeDetectorRef.markForCheck(); // 
     }
-
+  
     if (paginatorId === 'paginator2') {
       this.page2 = pageIndex;
       this.pageSize2 = pageSize;
+      this.changeDetectorRef.markForCheck(); // 
     }
   }
 
@@ -384,32 +398,45 @@ export class InformationZonesPropertyComponent
     }
   }
 
-  searchInformationsZonesProperty(): boolean {
-    if (!this.schema || !this.baunitId) {
-      return false;
-    }
-    this.informationPropertyService
-      .getByBauniFisica(this.baunitId, this.schema, this.executionId)
+  searchInformationsZonesProperty(): void {
+    if (!this.schema || !this.baunitId) return;
+  
+    this.informationPropertyService.getByBauniFisica(this.baunitId, this.schema, this.executionId)
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
-        next: (result: ZoneBAUnit[]) => this.captureInformationSubscribe(result)
-      });
-    return true;
-  }
+        next: (result: ZoneBAUnit[]) => {
+          this.zoneBAUnit = result;
+          this.dataSource.data = this.zoneBAUnit;
+          this.totalPhysicalElements = this.zoneBAUnit.length;
 
-  searchInformationsGeoeconomicZonesProperty(): boolean {
-    if (!this.schema || !this.baunitId) {
-      return false;
-    }
-    this.informationPropertyService
-      .getByBauniEcono(this.baunitId, this.schema, this.executionId)
-      .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
-        next: (result: ZoneBAUnit[]) =>
-          this.captureGeoeconomicInformationSubscribe(result)
+          if (this.paginator) {
+            this.dataSource.paginator = this.paginator;
+            this.changeDetectorRef.markForCheck();
+          }
+        },
+        error: (err: any) => this.captureInformationSubscribeError(err)
       });
-    return true;
   }
+  
+
+  searchInformationsGeoeconomicZonesProperty(): void {
+    if (!this.schema || !this.baunitId) return;
+  
+    this.informationPropertyService.getByBauniEcono(this.baunitId, this.schema, this.executionId)
+      .subscribe({
+        next: (result: ZoneBAUnit[]) => {
+          this.zoneBAUnitGeoeconomic = result;
+          this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
+          this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
+  
+          if (this.paginator2) {
+            this.dataSourceGeoeconomicZones.paginator = this.paginator2;
+            this.changeDetectorRef.detectChanges();
+          }
+        },
+        error: (err: any) => this.captureInformationSubscribeError(err)
+      });
+  }
+  
 
   openInformationPropertyZone(zone: ZoneBAUnit, zoneType: string): void {
     if (zoneType === 'physical') {
