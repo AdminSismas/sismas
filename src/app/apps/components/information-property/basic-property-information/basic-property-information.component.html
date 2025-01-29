@@ -55,7 +55,7 @@
           <h3 class="text-black">Propiedad y uso</h3>
         </div>
          <div class="flex justify-between">
-         
+
           <div class="flex flex-col gap-1">
             <span class="text-black text-sm">Número predial (F)</span>
             <span class="text-black text-sm">Número predial</span>
@@ -63,7 +63,7 @@
             <!-- <span class="text-black text-sm">Tipo</span> -->
             <span class="text-black text-sm">Matrícula inmobiliaria</span>
             <span class="text-black text-sm">Nupre</span>
-            <span class="text-black text-sm">Código BAUnit</span>
+            <span class="text-black text-sm">N° Ficha</span>
           </div>
           <div class="flex flex-col gap-1">
             @if (
@@ -86,7 +86,7 @@
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
-            
+
             @if (
               data !== null &&
               data !== undefined &&
@@ -117,7 +117,7 @@
               data.baunitIdOrigin
             ) {
               <span class="text-sm">{{
-                data.baunitIdOrigin 
+                data.baunitIdOrigin
               }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
@@ -130,12 +130,12 @@
               data.baunitIdE
             ) {
               <span class="text-sm">{{
-                data.baunitIdE 
+                data.baunitIdE
               }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
-           
+
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-black text-sm">Destino económico</span>
@@ -159,14 +159,14 @@
               data !== null &&
               data !== undefined &&
               data.domBaunitType !== null &&
-              data.domBaunitType 
+              data.domBaunitType
             ) {
               <span class="text-sm"
                 >{{ data.domBaunitType }}</span
               >
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-            } 
+            }
             @if (
               data !== null &&
               data !== undefined &&
@@ -205,7 +205,7 @@
           <h3 class="text-black">Seguimiento y actualizaciones</h3>
         </div>
          <div class="flex justify-between">
-         
+
           <div class="flex flex-col gap-1">
             <span class="text-black text-sm">Área registral</span>
             <span class="text-black text-sm">Área catastral</span>
@@ -252,7 +252,7 @@
               data !== null &&
               data !== undefined &&
               data.cadAreaPrivateE !== null &&
-              data.cadAreaPrivateE 
+              data.cadAreaPrivateE
             ) {
               <span class="text-sm"
                 >{{ data.cadAreaPrivateE | currencyLands }}
@@ -264,7 +264,7 @@
               data !== null &&
               data !== undefined &&
               data.cadastralAreaUnitbuilt !== null &&
-              data.cadastralAreaUnitbuilt 
+              data.cadastralAreaUnitbuilt
             ) {
               <span class="text-sm"
                 >{{ data.cadastralAreaUnitbuilt | currencyLands }}
@@ -300,8 +300,8 @@
             <span class="text-black text-sm">Número último evento</span>
             <span class="text-black text-sm">Actualizado por</span>
             <span class="text-black text-sm">Actualizado el</span>
-            
-            
+
+
           </div>
           <div class="flex flex-col gap-1">
             @if (
