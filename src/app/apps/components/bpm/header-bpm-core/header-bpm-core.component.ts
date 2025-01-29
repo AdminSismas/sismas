@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { GeneralValidationsService } from '../../../services/validations/general-validations.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
-import { CONSTANT_NAME_RETURN } from '../../../constants/constantLabels';
+import { CONSTANT_NAME_RETURN, NAME_FILED, NAME_VERSION } from '../../../constants/constantLabels';
 import { ProTaskE } from '../../../interfaces/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -85,10 +85,12 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   chargerCrumbs(proTaskE: ProTaskE){
     this.crumbs = [];
     if(proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName){
-      this.crumbs.push(proTaskE.proTask?.flowDetail);
+      const flowDetailTtitle = `${NAME_FILED}: ${proTaskE.proTask?.flowDetail}` ;
+      this.crumbs.push(flowDetailTtitle);
     }
     if(proTaskE?.executionId){
-      this.crumbs.push(proTaskE?.executionId.toString());
+      const executionIdTtitle = `${NAME_VERSION}: ${proTaskE?.executionId}` ;
+      this.crumbs.push(executionIdTtitle);
     }
     if(proTaskE?.proTask?.flowName){
       this.crumbs.push(proTaskE?.proTask?.flowName);
