@@ -24,7 +24,9 @@
         @if (typeInformation === "edition") {
           <div class="w-full flex items-center m-2">
             <button
-              [ngClass]="!editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
+              [ngClass]="
+                !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+              "
               [color]="editable ? 'primary' : ''"
               [disabled]="!editable"
               mat-raised-button
@@ -37,28 +39,29 @@
           </div>
         }
         @if (dataSource.data.length > 0) {
- 
           <table
             mat-table
             [dataSource]="dataSource"
           >
-          @for(column of columns; track $index) {
-            <ng-container [matColumnDef]="column.property">
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-                mat-sort-header
-              >
-                {{ column.label }}
-              </th>
-              <td
-                *matCellDef="let row"
-                mat-cell
-              >
-                {{ row[column.property] }}
-              </td>
-            </ng-container>
-          }
+            @for (column of columns; track $index) {
+              @if (column.property !== "actions") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                  >
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              }
+            }
             <!-- Action Column -->
             <ng-container matColumnDef="actions">
               <th
@@ -84,7 +87,7 @@
                 </button>
               </td>
             </ng-container>
- 
+
             <tr
               mat-header-row
               *matHeaderRowDef="displayedColumns"
@@ -94,8 +97,8 @@
               *matRowDef="let row; columns: displayedColumns"
             ></tr>
           </table>
-        } @else{
-          <div  class="flex justify-center items-center py-4">
+        } @else {
+          <div class="flex justify-center items-center py-4">
             <p class="text-gray-500 text-lg">No hay datos para mostrar.</p>
           </div>
         }
