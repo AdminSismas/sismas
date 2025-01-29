@@ -21,12 +21,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { InputComponent } from 'src/app/apps/components/input/input.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
+import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from 'src/app/apps/constants/constant';
+
+
 
 // AddEditInformationDocumentAssociated
 export interface AddOutputFormats{
   type: 'edit' | 'new';
-  documentAssociated: OutFormatModel | undefined;
+  documentAssociated: OutFormatModel | undefined; 
   outTemplateId: number | undefined;
 }
 
@@ -74,6 +76,12 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
 
   });
 
+  
+  headerTemplate:string = STRUCTURE_HTML_HEADER ;
+  footerTemplate:string = STRUCTURE_HTML_FOOTER;
+
+  @ViewChild('quillEditor', { static: false }) quillEditor?: QuillEditorComponent;
+
   editorConfig = {
     toolbar: [
       [{ header: [1, 2, 3, false] }], // Tamaños de encabezado
@@ -86,6 +94,9 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
       ['clean'], // Botón para limpiar el formato
       ['table'], // Opción para tablas (requiere un módulo extra)
     ],
+    clipboard: {
+      matchVisual: false, // Evita modificaciones visuales en el DOM
+    },
   };
 
    constructor(
@@ -107,7 +118,12 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
       this.getUserSession();
       if (this.defaults.type === 'edit') {
         const htmlService = `${this.defaults.documentAssociated?.htmlTemplate}`;
+
+         // Establecer HTML como contenido inicial
+        // Configurar contenido inicial para Quill
+        this.setQuillContent(htmlService);
         this.form.get('content')?.setValue(htmlService);
+
         console.log('this.defaults.documentAssociated?.headerTemplateId: ', this.defaults.documentAssociated?.headerTemplate);
 
         const headerIdSet = this.defaults.documentAssociated?.headerTemplate?.outTemplateId;
@@ -120,6 +136,15 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
 
       }
     }
+
+    private setQuillContent(html: string) {
+      if (this.quillEditor?.quillEditor) {
+        this.quillEditor.quillEditor.clipboard.dangerouslyPasteHTML(html);
+      } else {
+        console.error('La instancia de QuillEditor no está disponible.');
+      }
+    } 
+
     public getUserSession(){
       this.userSesion = this.userService.getUser();
     }
@@ -159,75 +184,66 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
 
     // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress 
     public generateModelDirecctionModel(value: any): OutFormatModel | undefined {
-      if (this.defaults.type === 'new') {
-        const todayDay = new Date();
-        const createBasicInformationAddress: OutFormatModel = {
-      
-            // outTemplateId: ,
-            templateCode: this.templateCode?.value ? this.templateCode?.value : '',
-            htmlTemplate: this.content?.value ? this.content?.value : '',
-  
-  
-            isSinged: value.isSinged ? value.isSinged : false,
-            createdBy:  value.createdBy ? value.createdBy : this.userSesion?.sub,
-            createdAt:  value.createdAt ? value.createdAt : this.getCurrentFormattedDate(),
-
-            updatedBy: value.updatedBy ? value.updatedBy : null,
-            updatedAt: value.updatedAt ? value.updatedAt : null,
-            // schema:  value.schema ? value.schema : '',
-            // page: value.page ? value.page : '',
-            // size:  value.size ? value.size : '',
-      
-        
-        };
-        if(this.headerTemplateId?.value){
-          createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
-
-        }
-        // headerTemplateId: this.headerTemplateId?.value ? this.headerTemplateId?.value : '',
-
-        // footerTemplateId:  this.footerTemplateId?.value ? this.footerTemplateId?.value : '',
-        if(this.footerTemplateId?.value){
-        createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined)
-        }
-
-        return createBasicInformationAddress;
-        
-      }else{
-
-          if(this.defaults.outTemplateId){
-
-            const createBasicInformationAddress: OutFormatModel = {
-
-              outTemplateId: this.defaults.outTemplateId ? this.defaults.outTemplateId : undefined,
-              templateCode: this.templateCode?.value ? this.templateCode?.value : '',
-              htmlTemplate: this.content?.value ? this.content?.value : '',
-              // headerTemplate: new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined),
-              // footerTemplate:  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined),
-
-
-              isSinged: this.defaults.documentAssociated?.isSinged ? this.defaults.documentAssociated?.isSinged : false,
-              createdBy:  this.defaults.documentAssociated?.createdBy ? this.defaults.documentAssociated?.createdBy : '',
-              createdAt:  this.defaults.documentAssociated?.createdAt ? this.defaults.documentAssociated?.createdAt : '',
-              updatedBy: this.defaults.documentAssociated?.updatedBy ? this.defaults.documentAssociated?.updatedBy : undefined,
-              updatedAt: this.defaults.documentAssociated?.updatedAt ? this.defaults.documentAssociated?.updatedAt : undefined,
-
-          };
-
-          if(this.headerTemplateId?.value){
-            createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
-  
-          }
-          if(this.footerTemplateId?.value){
-          createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined)
-          }
-
-          return createBasicInformationAddress;
-
-
-          }
-
+      // Obtener el contenido HTML desde el editor Quill
+      let textFormatHtml = '';
+      if (this.quillEditor?.quillEditor) {
+        textFormatHtml = this.quillEditor.quillEditor.root.innerHTML;
+      } else {
+        console.error('La instancia de QuillEditor no está disponible.');
       }
+      const fullHtmlDocument = this.cleanHtml(this.headerTemplate +textFormatHtml + this.footerTemplate);
+      if (this.defaults.type === 'new') {
+        const createBasicInformationAddress: OutFormatModel = {
+          templateCode: this.templateCode?.value || '',
+          htmlTemplate: fullHtmlDocument || '',
+          isSinged: value.isSinged || false,
+          createdBy: value.createdBy || this.userSesion?.sub,
+          createdAt: value.createdAt || this.getCurrentFormattedDate(),
+          updatedBy: value.updatedBy || null,
+          updatedAt: value.updatedAt || null,
+        };
+    
+        if (this.headerTemplateId?.value) {
+          createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(
+            Number(this.headerTemplateId.value)
+          );
+        }
+        if (this.footerTemplateId?.value) {
+          createBasicInformationAddress.footerTemplate = new FooterTemplateModel(
+            Number(this.footerTemplateId.value)
+          );
+        }
+    
+        return createBasicInformationAddress;
+      } else if (this.defaults.type === 'edit') {
+
+        const fullHtmlDocument = this.cleanHtml(this.headerTemplate + textFormatHtml + this.footerTemplate);
+        const createBasicInformationAddress: OutFormatModel = {
+          outTemplateId: this.defaults.outTemplateId,
+          templateCode: this.templateCode?.value || '',
+          htmlTemplate: fullHtmlDocument || '',
+          isSinged: this.defaults.documentAssociated?.isSinged || false,
+          createdBy: this.defaults.documentAssociated?.createdBy || '',
+          createdAt: this.defaults.documentAssociated?.createdAt || '',
+          updatedBy: this.userSesion?.sub || '',
+          updatedAt: this.getCurrentFormattedDate(),
+        };
+    
+        if (this.headerTemplateId?.value) {
+          createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(
+            Number(this.headerTemplateId.value)
+          );
+        }
+        if (this.footerTemplateId?.value) {
+          createBasicInformationAddress.footerTemplate = new FooterTemplateModel(
+            Number(this.footerTemplateId.value)
+          );
+        }
+    
+        return createBasicInformationAddress;
+      }
+    
+      return undefined;
     }
 
     formatDate(date: Date): string {
@@ -244,6 +260,16 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
     getCurrentFormattedDate(): string {
       const now = new Date();
       return this.formatDate(now);
+    }
+
+    cleanHtml(html: string): string {
+     // 1. Elimina etiquetas <span> innecesarias
+      let cleanedHtml = html.replace(/<span[^>]*>|<\/span>/g, '');
+
+      // 2. Elimina <p>{style}</p> si está inmediatamente después de <body>
+      cleanedHtml = cleanedHtml.replace(/(<body[^>]*>\s*)<p>\{style\}<\/p>\s*/i, '$1');
+
+      return cleanedHtml;
     }
 
 

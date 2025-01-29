@@ -56,6 +56,15 @@ export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
 export const PAGE_SIZE_OPTION_FOLIO: number[] = [2, 5];
 
+export const STRUCTURE_HTML_HEADER = 
+`<html>
+  <head>
+     {style}
+  </head>
+  <body>`;
+
+export const STRUCTURE_HTML_FOOTER = `</body></html>`;
+
 
 
 export const PANEL_ASSIGNED_TASKS = "assignedTasks";
