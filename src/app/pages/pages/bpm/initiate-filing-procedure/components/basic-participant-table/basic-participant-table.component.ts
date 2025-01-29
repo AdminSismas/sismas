@@ -268,7 +268,7 @@ export class BasicParticipantTableComponent
     }
     if (!this.person) {
       this.snackbar.open(
-        'Selecciona o buscar un persona para agregarla como participante',
+        'Seleccionar o buscar una persona para agregarla como participante',
         undefined,
         { duration: 10000 }
       );
