@@ -81,6 +81,7 @@ export const environment = {
   enableDebug: false,
   /* ------ F ------ */
   finish: 'finished',
+  formato: '/formato',
   /* ------ G ------ */
   geoeconomic_values: '/zonaGEcoValor',
   geoeconomic_zones: '/ccZonaHomoGeoEconomica',
@@ -97,7 +98,7 @@ export const environment = {
   logo: 'assets/img/illustrations/it_support.svg',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
-   myWork_cadastralSearch: '/myWork/cadastralSearch',
+  myWork_cadastralSearch: '/myWork/cadastralSearch',
   myWork_cadastralSearchDa: '/openData/cadastralSearchDA',
   myWork_tasksPanel: '/myWork/tasks/tasksPanel/',
   /* ------ N ------ */
@@ -137,6 +138,7 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  serviciosTaquilla: '/serviciosTaquilla',
   signatureUrl: '/signatureUrl',
   snr: '/snr',
   synchronization: '/synchronization',

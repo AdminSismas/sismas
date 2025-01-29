@@ -81,6 +81,7 @@ export const environment = {
   enableDebug: true,
   /* ------ F ------ */
   finish: 'finished',
+  formato: '/formato',
   /* ------ G ------ */
   geoeconomic_values: '/zonaGEcoValor',
   geoeconomic_zones: '/ccZonaHomoGeoEconomica',
@@ -137,6 +138,7 @@ export const environment = {
     main: 'main',
     temp: 'temp'
   },
+  serviciosTaquilla: '/serviciosTaquilla',
   signatureUrl: '/signatureUrl',
   snr: '/snr',
   synchronization: '/synchronization',

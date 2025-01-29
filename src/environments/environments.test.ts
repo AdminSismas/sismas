@@ -98,7 +98,7 @@ export const environment = {
   logo: 'assets/img/illustrations/it_support.svg',
   /* ------ M ------ */
   metrict_cadastral_change: '/metrict/CadastreChangeLog/',
-   myWork_cadastralSearch: '/myWork/cadastralSearch',
+  myWork_cadastralSearch: '/myWork/cadastralSearch',
   myWork_cadastralSearchDa: '/openData/cadastralSearchDA',
   myWork_tasksPanel: '/myWork/tasks/tasksPanel/',
   /* ------ N ------ */
@@ -144,8 +144,9 @@ export const environment = {
   synchronization: '/synchronization',
   synchronize: '/synchronize',
   /* ------ T ------ */
+  tasksAssigned: '/assignedTasks',
   temporal: '/temporal/',
-  titulo: 'Desarrollo',
+  titulo: 'Pruebas',
   /* ------ U ------ */
   ulr_icon_base: 'assets/img/icons/cadastral-logos/128x128/',
   unitBuild: '/unitBuild',
