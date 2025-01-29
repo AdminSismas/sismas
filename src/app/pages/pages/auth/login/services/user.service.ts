@@ -12,7 +12,8 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
   private currentUserSubject: BehaviorSubject<DecodeJwt | null>;
   public currentUser: Observable<DecodeJwt | null>;
-
+  private currentUserDataSubject: BehaviorSubject<UserDetails | null>;
+  public currentUserData: Observable<UserDetails | null>;
   constructor(
     private http: HttpClient
   ) {
@@ -26,6 +27,17 @@ export class UserService {
       this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(null);
     }
     this.currentUser = this.currentUserSubject.asObservable();
+
+    const userData = sessionStorage.getItem('user');
+    if (userData) {
+      const savedUserData: UserDetails = JSON.parse(userData);
+      this.currentUserDataSubject = new BehaviorSubject<UserDetails | null>(
+        savedUserData
+      );
+    } else {
+      this.currentUserDataSubject = new BehaviorSubject<UserDetails | null>(null);
+    }
+    this.currentUserData = this.currentUserDataSubject.asObservable();
   }
 
   setUser(user: DecodeJwt): void {
@@ -50,7 +62,9 @@ export class UserService {
       let user: DecodeJwt | null = null;
       this.currentUser.subscribe({
         next: (res) => {
+
           user = res;
+         
         }
       });
 
@@ -58,10 +72,20 @@ export class UserService {
     }
     return null;
   }
+  getUserData(): UserDetails | null {
+    return this.currentUserDataSubject.value;
+  }
+  
+
 
   getUserInfo(username: string): Observable<UserDetails> {
     const url: string = `${environment.url}:${environment.port}${environment.bpm_user_info}${username}`;
 
     return this.http.get<UserDetails>(url);
+  }
+
+  setUserData(user: UserDetails): void {
+    sessionStorage.setItem('user', JSON.stringify(user));  
+    this.currentUserDataSubject.next(user);
   }
 }

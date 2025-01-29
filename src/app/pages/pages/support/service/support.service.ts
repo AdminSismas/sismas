@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { supportData } from '../model/support.model';
 // import { env, env2 } from 'src/environments/environments';
@@ -75,6 +75,12 @@ export class SupportService {
     const apiUrl = `${this.apiTickets}`; 
     return this.http.post(apiUrl, formData);
   }
+
+  getTickets(customerId: number): Observable<any> {
+    const params = new HttpParams().set('customer_id', customerId.toString());
+    return this.http.get<any>(`${this.apiTickets}`, { params });
+}
+  
 
   createSupportRequest(request: supportData): Observable<{ success: boolean; message: string; data?: any }> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');

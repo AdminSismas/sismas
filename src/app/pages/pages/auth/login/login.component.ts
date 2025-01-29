@@ -80,18 +80,34 @@ export class LoginComponent {
   send() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
-
+  
       this.authService.login(email, password).subscribe({
         next: (response) => {
           if (response && response.token) {
             this.authService.saveToken(response.token);
-
+  
             const user: DecodeJwt = jwtDecode(response.token);
             this.userService.setUser(user);
-
+  
             this.navigationLoaderService.loadInformationNavigation(user.role);
             this.navigationLoaderService.startCountLoop();
 
+            this.userService.getUserInfo(user.sub).subscribe({
+              next: (res) => {
+                this.userService.setUserData(res);
+              },
+              error: () => {
+                this.snackbar.open(
+                  'Credenciales incorrectas. Intenta nuevamente.',
+                  'Error',
+                  {
+                    duration: 5000,
+                  }
+                );
+              },
+            });
+
+  
             const redirectRoute =
               user.role === 'GUEST'
                 ? environment.myWork_cadastralSearchDa
@@ -106,20 +122,12 @@ export class LoginComponent {
                 }
               );
             });
-
-            // this.router
-            //   .navigate([`${environment.myWork_cadastralSearch}`])
-            //   .then(() => {
-            //     this.snackbar.open('Bienvenido usuario ;)', 'Gracias', {
-            //       duration: 10000
-            //     });
-            //   });
           } else {
             this.snackbar.open(
               'Credenciales incorrectas. Intenta nuevamente.',
               'Error',
               {
-                duration: 10000
+                duration: 5000,
               }
             );
           }
@@ -129,21 +137,22 @@ export class LoginComponent {
             'Credenciales incorrectas. Intenta nuevamente.',
             'Error',
             {
-              duration: 10000
+              duration: 5000,
             }
           );
-        }
+        },
       });
     } else {
       this.snackbar.open(
         'Por favor, complete los campos correctamente.',
         'Error',
         {
-          duration: 10000
+          duration: 10000,
         }
       );
     }
   }
+  
 
   toggleVisibility() {
     if (this.visible) {

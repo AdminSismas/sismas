@@ -7,3 +7,23 @@
 .mat-step-header {
   cursor: default !important;
 }
+
+.badge-low {
+  color: green;
+  font-weight: bold;
+}
+
+.badge-normal {
+  color: blue;
+  font-weight: bold;
+}
+
+.badge-high {
+  color: red;
+  font-weight: bold;
+}
+
+.badge-unknown {
+  color: grey;
+  font-weight: bold;
+}

@@ -136,20 +136,45 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
 
-        <!-- Usuario -->
-        <!-- <mat-form-field class="w-full">
-          <mat-label>Nombre del usuario</mat-label>
-          <input
-            cdkFocusInitial
-            formControlName="nombre"
-            placeholder="Especifica el nombre del usuario que envía la solicitud."
-            matInput
-            maxlength="30" />
-          <mat-error *ngIf="verticalAccountFormGroup.controls['nombre'].hasError('required')">
-            El campo es obligatorio.
-          </mat-error>
-        </mat-form-field> -->
+      <div class="col-span-1 md:col-span-2">
+        <label class="text-[#666666] text-[15px]">Archivo de anexo</label>
+        <div class="p-4">
+          <ngx-dropzone
+            class="mt-3"
+            (change)="onSelect($event)"
+          >
+            <ngx-dropzone-label>
+              <div class="flex flex-col items-center text-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-8 h-8 text-gray-500 dark:text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+                  />
+                </svg>
+                Carga o arrastra tu archivo
+              </div>
+            </ngx-dropzone-label>
+            <ngx-dropzone-preview
+              *ngFor="let file of uploadedFiles"
+              [removable]="true"
+              (removed)="onRemove(file)"
+            >
+              <ngx-dropzone-label
+                >{{ file.name }} ({{ file.type }})</ngx-dropzone-label
+              >
+            </ngx-dropzone-preview>
+          </ngx-dropzone>
+        </div>
       </div>
 
       <div class="flex justify-end mt-6">
@@ -172,12 +197,12 @@
     </form>
   </div>
 
-  <!-- <hr class="my-6">
+  <hr class="my-6">
 
   <div class="card">
     <div class="px-6 py-4 border-b">
       <h2 class="title m-0">Histórico soporte</h2>
     </div>
-    <vex-support-logs [subjectSupportLogsList$]="subjectSupportLogsList$"></vex-support-logs>
-  </div> -->
+    <vex-support-logs></vex-support-logs>
+  </div>
 </div>

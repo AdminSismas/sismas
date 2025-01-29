@@ -79,6 +79,7 @@ export class UserDetails {
   }
 
   export interface DecodeJwt {
+    
     sub: string;
     role: string;
     exp: number;

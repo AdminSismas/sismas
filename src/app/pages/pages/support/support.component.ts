@@ -5,6 +5,7 @@ import {
   EventEmitter,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import {
   FormGroup,
@@ -19,7 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -44,6 +45,9 @@ import { Link } from '@vex/interfaces/link.interface';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Modulo, Subvista, Vista } from './interfaces/module.model';
 import { MODULES } from './constants/modules.constant';
+import { UserService } from '../auth/login/services/user.service';
+import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @Component({
   selector: 'vex-support',
@@ -71,19 +75,26 @@ import { MODULES } from './constants/modules.constant';
     RouterLink,
     RouterOutlet,
     MatTabsModule,
-    RouterModule
+    RouterModule,
+    NgxDropzoneModule,
   ]
 })
 export class SupportComponent implements OnInit {
-  @Output() refreshLogs: EventEmitter<supportData> = new EventEmitter<supportData>();
+  // @Output() refreshLogs: EventEmitter<supportData> = new EventEmitter<supportData>();
+  @Output() refreshLogs: EventEmitter<void> = new EventEmitter<void>();
+  @ViewChild(SupportLogsComponent) supportLogsComponent!: SupportLogsComponent;
   // @Output() userUpdated = new EventEmitter<UserAuthData>();
   // currentUser: UserAuthData | null = null;
   // subject$: BehaviorSubject<UserAuthData[]> = new BehaviorSubject<UserAuthData[]>([]);
   verticalAccountFormGroup!: FormGroup;
+  file: File | null = null;
   moduleName: ModuloName[] = []; // Define the property to hold modules names
   modulo: Modulo[] = []; 
   vista: Vista[] = []; 
   subvista: Subvista[] = [];
+  user: DecodeJwt | null = null;
+  userData: UserDetails | null = null;
+  uploadedFiles: File[] = [];
 
   viewName: VistaName[] = []; // Define the property to hold views names
   statusName: StatusData[] = []; // Define the property to hold status names
@@ -100,17 +111,19 @@ export class SupportComponent implements OnInit {
       route: './',
       routerLinkActiveOptions: { exact: true }
     },
-    {
-      label: 'Respuesta de soportes',
-      route: './answer-support'
-    },
+    // {
+    //   label: 'Respuesta de soportes',
+    //   route: './answer-support'
+    // },
   ];
   constructor(
     private fb: UntypedFormBuilder,
     private cd: ChangeDetectorRef,
     // private authService: AuthService,
     private supportService: SupportService,
-    private supportLogsService: SupportLogsService
+    private supportLogsService: SupportLogsService,
+    private userService: UserService,
+    private snackbar: MatSnackBar
   ) {
     this.verticalAccountFormGroup = this.fb.group({
       observacion: ['', Validators.required],
@@ -119,13 +132,16 @@ export class SupportComponent implements OnInit {
       id_modulo: ['', Validators.required],
       id_vista: ['', Validators.required],
       id_subvista: [''],
+      file: [''],
       // nombre: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
 
- 
+    this.user = this.userService.getUser();
+    this.userData = this.userService.getUserData();
+    console.log('User:', this.userData);
     this.loadModulos(); //return data
     this.cd.detectChanges();
     this.cd.markForCheck();
@@ -188,7 +204,7 @@ export class SupportComponent implements OnInit {
         this.supportLogsList = response.data as SupportLogs[];
         this.subjectSupportLogsList$.next(this.supportLogsList);
         this.cd.markForCheck();
-        this.cd.detectChanges(); // Force refresh
+        this.cd.detectChanges(); 
       }
     });
 
@@ -212,6 +228,10 @@ export class SupportComponent implements OnInit {
       const formData = this.verticalAccountFormGroup.value;
       console.log('FormData:', formData);
 
+      formData.id_cliente = this.userData?.userId;
+
+      console.log('FormData:', formData);
+
       this.supportService.insertTicket(formData).subscribe(response => {
         if (response.success) {
           Swal.fire({
@@ -223,6 +243,8 @@ export class SupportComponent implements OnInit {
             if (result.isConfirmed) {
               //                                                               this.refreshData();
               this.resetForm();
+              this.supportLogsComponent.fetchTickets();
+              
             }
           });
         } else {
@@ -241,28 +263,49 @@ export class SupportComponent implements OnInit {
 
   }
 
-  // Método para resetear el formulario
-  resetForm() {
-    // Resetear con valores iniciales
-    this.verticalAccountFormGroup.reset({
-      observacion: '',
-      id_modulo: '',
-      id_vista: '',
-      id_subvista: '',
-      nombre: '',
-      titulo: '',
-      asunto: '',
-    });
 
-    // Limpiar estados de validación
-    Object.keys(this.verticalAccountFormGroup.controls).forEach(key => {
-      const control = this.verticalAccountFormGroup.get(key);
+  resetForm() {
+    this.verticalAccountFormGroup.reset();
+    Object.keys(this.verticalAccountFormGroup.controls).forEach((controlName) => {
+      const control = this.verticalAccountFormGroup.get(controlName);
       if (control) {
-        control.setErrors(null); // Eliminar errores
-        control.markAsPristine(); // Marcar como limpio
-        control.markAsUntouched(); // Marcar como no tocado
+        control.markAsPristine(); 
+        control.markAsUntouched(); 
+        control.setErrors(null); 
       }
     });
-    this.verticalAccountFormGroup.updateValueAndValidity(); // Actualizar estado general del formulario
   }
+
+  onSelect(event: any) {
+    console.log('event: ', event);
+
+    const file = event.addedFiles.filter((nuevoArchivo: File) => {
+
+      return !this.uploadedFiles.some((archivoExistente: File) =>
+        archivoExistente.name === nuevoArchivo.name && archivoExistente.size === nuevoArchivo.size
+      );
+    });
+
+    if (file.length < event.addedFiles.length) {
+
+      console.warn('Algunos archivos ya han sido seleccionados anteriormente.');
+      this.snackbar.open('Algunos archivos ya están seleccionados.', 'OK', { duration: 10000 });
+    }
+    this.uploadedFiles.push(...file);
+    this.verticalAccountFormGroup.patchValue({
+      file: this.uploadedFiles
+    });
+    this.verticalAccountFormGroup.get('file')?.updateValueAndValidity();
+  }
+
+  onRemove(event: any) {
+    console.log('event: ', event);
+    const index = this.uploadedFiles.indexOf(event);
+    if (index > -1) {
+      this.uploadedFiles.splice(index, 1);
+    }
+  }
+
+
+ 
 }

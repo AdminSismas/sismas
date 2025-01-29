@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -44,6 +44,13 @@ import { SupportLogsService } from './service/support-logs.service';
 // import { UserAuthData } from 'src/app/core/auth/authData.model';
 // import { AuthService } from 'src/app/core/auth/auth.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { env } from 'src/environments/environments.soporte';
+import { Ticket } from './model/ticket.model';
+import { CustomDatePipe } from 'src/app/apps/pipes/custom-date.pipe';
+import { UserService } from '../../auth/login/services/user.service';
+import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+
 
 @Component({
   selector: 'vex-support-logs',
@@ -69,248 +76,85 @@ import { distinctUntilChanged } from 'rxjs/operators';
     FormsModule,
     MatDialogModule,
     MatInputModule,
+    CommonModule
   ],
   templateUrl: './support-logs.component.html',
   styleUrl: './support-logs.component.scss'
 })
 export class SupportLogsComponent implements OnInit, AfterViewInit {
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @Input() refreshLogs!: EventEmitter<SupportLogs>; // refresh logs
-  @Input() subjectSupportLogsList$: BehaviorSubject<SupportLogs[]> = new BehaviorSubject<SupportLogs[]>([]);
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
+  private apiTickets = `${env.url_base}${env.api}${env.module.soporte}`;  
+  userData: UserDetails | null = null;
   
-  pageSize = 5;
-  pageSizeOptions: number[] = [5, 10, 20, 50];
-  dataSource!: MatTableDataSource<SupportLogs>;
-  selection = new SelectionModel<SupportLogs>(true, []);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  displayedColumns: string[] = ['No.Ticket', 'title', 'priorityId', 'createdAt', 'updatedAt'];
+  dataSource = new MatTableDataSource<Ticket>([]);
+  selection = new SelectionModel<Ticket>(true, []);
   searchCtrl = new UntypedFormControl();
-  
-  subscription = new Subscription();
-  layoutCtrl = new UntypedFormControl('boxed');
-  // currentUser: UserAuthData | null = null;
-  subject$: BehaviorSubject<SupportLogs[]> = new BehaviorSubject<SupportLogs[]>([]);
-  subjectObservations$: BehaviorSubject<ObservationsData[]> = new BehaviorSubject<ObservationsData[]>([]);
-  subjectStatus$: BehaviorSubject<StatusData[]> = new BehaviorSubject<StatusData[]>([]);
-
-  dataObservationsSource = new MatTableDataSource<ObservationsData>();
-  dataStatusSource = new MatTableDataSource<StatusData>();
-
-  data$: Observable<SupportLogs[]> = this.subject$.asObservable();
-  dataObservations$: Observable<ObservationsData[]> = this.subjectObservations$.asObservable();
-  dataStatus$: Observable<StatusData[]> = this.subjectStatus$.asObservable();
-
-  supportLogs: SupportLogs[] = [];
-  observations: ObservationsData[] = [];
-  status: StatusData[] = [];
-
-  @Input()
-  columns: TableColumn<SupportLogs>[] = [
-    {
-      label: 'Soporte',
-      property: 'id_soporte',
-      type: 'text',
-      visible: true,
-      cssClasses: ['text-secondary', 'font-medium']
-    },
-    {
-      label: 'Fecha',
-      property: 'fecha_hora',
-      type: 'text',
-      visible: true,
-      cssClasses: ['text-secondary', 'font-medium']
-    },
-    {
-      label: 'Observación',
-      property: 'observacion',
-      type: 'text',
-      visible: true,
-      cssClasses: ['text-secondary', 'font-medium']
-    }
-  ];
-  visibleColumns = this.columns.filter(c => c.visible).map(c => c.property);
 
   constructor(
-    private cd: ChangeDetectorRef,
-    private configService: VexConfigService,
-    // private authService: AuthService,
-    private supportLogsService: SupportLogsService,
-    private supportService: SupportService
+    private supportService: SupportService,
+    private userService: UserService,
+
   ) {}
 
+  getPriorityText(priorityId: number): string {
+    switch (priorityId) {
+      case 1: return 'Baja';
+      case 2: return 'Normal';
+      case 3: return 'Alta';
+      default: return 'Desconocida';
+    }
+  }
+
+  getPriorityClass(priorityId: number): string {
+    switch (priorityId) {
+      case 1: return 'badge-low';
+      case 2: return 'badge-normal';
+      case 3: return 'badge-high';
+      default: return 'badge-unknown';
+    }
+  }
+
   ngOnInit() {
-    // this.currentUser = this.authService.getCurrentUser();
-    // this.footerVisibleChange(false);
+    this.userData = this.userService.getUserData();
+    this.fetchTickets();
 
-    // this.dataSource = new MatTableDataSource();
-    // if (this.currentUser) {
-    //   console.log("currentUser", this.currentUser);
-    // } else {
-    //   console.error("No user is logged in");
-    // }
-   
-    if (!this.subjectSupportLogsList$) {
-      console.error("subjectSupportLogsList$ is undefined. Initializing as a new BehaviorSubject.");
-      this.subjectSupportLogsList$ = new BehaviorSubject<SupportLogs[]>([]);
-    }
-  
-    this.subscription.add(
-      this.subjectSupportLogsList$.subscribe({
-        next: data => {
-          distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)) // Compare previous and current values
-          this.loadAllDataLogs(); // Load logs after subscription is set up
-          console.log("Received logs:", data);
-        },
-        error: err => {
-          console.error("Error in logs subscription:", err);
-        }
-      })
-    );
-    this.supportService.getSupportLogs().subscribe((response) => {
-      if (response.success) {
-        // Update the supportLogs array with the fetched logs
-        this.supportLogs = response.data || [];
-
-      } else {
-        console.error('Failed to fetch logs:', response.message);
-      }
+    this.searchCtrl.valueChanges.subscribe((value) => {
+      this.applyFilter(value);
     });
-
-    this.data$.pipe(filter<SupportLogs[]>(Boolean)).subscribe((supportLogs) => {
-      this.supportLogs = supportLogs;
-      this.dataSource.data = supportLogs;
-    });
-
-    this.searchCtrl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => this.onFilterChange(value));
-  }
-
-  loadAllDataLogs() {
-    this.loadObservationSupports();
-    this.loadStatusSupports();
-    this.loadSupportLogs();
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      console.log('Unsubscribed from subjectSupportLogsList$');
-    }
   }
 
   ngAfterViewInit() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.sort.active = 'id';     
+    this.sort.direction = 'desc'; 
+    this.dataSource.sort = this.sort;
   }
 
-  loadObservationSupports() {
-    this.supportLogsService.getObservationsSupport().subscribe(response => {
-      if (response.success && response.data) {
-        this.observations = response.data as ObservationsData[];
-        this.combineDataSources(); // Merge after loading observations
-        this.subjectObservations$.next(this.observations);
-        this.cd.markForCheck();
-      }
-    });
-  }
-
-  loadStatusSupports() {
-    this.supportLogsService.getStatuses().subscribe(response => {
-      if (response.success && response.data) {
-        this.status = response.data as StatusData[];
-        this.combineDataSources(); // Merge after loading status
-        this.subjectStatus$.next(this.status);
-        this.cd.markForCheck();
-      }
-    });
-  }
-
-  combineDataSources() {
-    // Combine data: Merge observations and status into supportLogs based on matching IDs
-    const combinedData = this.supportLogs.map(log => {
-      // Find the corresponding observation and status based on matching IDs
-      const observation = this.observations.find(obs => obs.id === log.id_soporte);
-      const status = this.status.find(stat => stat.id === log.id_status);
-
-      // Return combined object
-      return {
-        ...log,
-        observacion: observation?.observacion || 'N/A', // Default 'N/A' if not found
-        status_name: status?.status || 'N/A' // Default 'N/A' if not found
-      };
-    });
-
-    // Log the final combined data
-    this.dataSource.data = combinedData;
-    this.dataSource._updateChangeSubscription(); // Notify the table to re-render with the updated data
-
-    // Update the data source and emit the new data
-    this.cd.markForCheck();
-    this.cd.detectChanges(); // Force change detection
-  }
-
-  // Load logs and merge with observations
-  loadSupportLogs() {
-    // if (!this.currentUser) {
-    //   console.error("Cannot load logs: User not logged in");
-    //   return;
-    // }
-
-    // this.supportLogsService.getSupportLogs().pipe(
-    //   map(response => {
-    //     if (response.success && response.data) {
-    //       // Filter logs based on the logged-in user
-    //       return response.data.filter(log => log.id_empleado === this.currentUser?.idEmp);
-    //     }
-    //     return [];
-    //   })
-    // ).subscribe({
-    //   next: filteredLogs => {
-    //     if (JSON.stringify(filteredLogs) !== JSON.stringify(this.supportLogs)) {
-    //       this.supportLogs = filteredLogs;
-    //       this.combineDataSources(); // Merge after loading logs
-    //       this.subjectSupportLogsList$.next(this.supportLogs);
-    //       console.log("Filtered Logs:", filteredLogs);
-    //       this.cd.markForCheck();
-    //       this.cd.detectChanges(); // Force refresh
-    //     }
-    //   },
-    //   error: err => {
-    //     console.error("Error fetching support logs:", err);
-    //   }
-    // });
-  }
-    toggleColumnVisibility(column: TableColumn<SupportLogs>, event: Event) {
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-
-      // Impide que las columnas sean ocultadas
-      if (column.property === 'fecha_hora' || column.property === 'observacion' || column.property === 'id_soporte') {
-        return;
-      }
-    }
-
-  footerVisibleChange(change: boolean): void {
-    this.configService.updateConfig({
-      footer: {
-        visible: false
-      }
-    });
-  }
-
-  onFilterChange(value: string) {
-    if (!this.dataSource) {
+  fetchTickets(): void {
+    if (!this.userData) {
       return;
     }
-    value = value.trim();
-    value = value.toLowerCase();
-    this.dataSource.filter = value;
+    this.supportService.getTickets(this.userData.userId).subscribe(
+      (response) => {
+        this.dataSource.data = response.data;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        console.log('Tickets cargados:', this.dataSource.data);
+      },
+      (error) => {
+        console.error('Error al cargar los tickets', error);
+      }
+    );
+   
+  }
+
+  applyFilter(value: string) {
+    this.dataSource.filter = value.trim().toLowerCase();
   }
 
   isAllSelected() {
@@ -323,16 +167,5 @@ export class SupportLogsComponent implements OnInit, AfterViewInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>) {
-    return column.property;
-  }
-
-  onRespuestaChange(row: any): void {
-    // Perform an update operation here, such as calling an API to save the changes.
-    this.supportLogsService.updateRespuesta(row.id, row.respuesta).subscribe(response => {
-
-    });
   }
 }
