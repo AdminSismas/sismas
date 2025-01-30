@@ -172,8 +172,6 @@ export class AlertsComponent implements OnInit, AfterViewInit {
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema;
     this.isExpandPanel(this.expandedComponent);
-    this.loadAlertsByBaunitId();
-
     this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition' && this.editable;
   }
 

@@ -51,8 +51,14 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit(): void {
     // this.baunitId = '1027396'; // BaunitId quemado para hacer pruebas
-    this.loadPhotos();
+    this.isExpandPanel(this.expandedComponent);
     this.autoSlide();
+  }
+
+  isExpandPanel(expandedComponent: boolean): void {
+    if (expandedComponent) {
+      this.loadPhotos();
+    }
   }
 
   loadPhotos() {
@@ -72,7 +78,7 @@ export class PhotosComponent implements OnInit {
         }
       },
       error: (err: any) => {
-        console.error('Error al cargar las imágenes:', err.message || err);
+        // console.error('Error al cargar las imágenes:', err.message || err);
         this.loading = false;
       },
     });

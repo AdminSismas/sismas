@@ -37,7 +37,7 @@ export class PhotosService {
         return response.files; // Retornar solo el array de archivos
       }),
       catchError((error) => {
-        console.error('Error al obtener las fotos:', error);
+        // console.error('Error al obtener las fotos:', error);
         throw error;
       })
     );
