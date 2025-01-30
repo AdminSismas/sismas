@@ -521,7 +521,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
   {
     label: 'Construcciones',
     property: 'cadastralValuationUnits',
-    type: 'text',
+    type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
     cssClasses: ['font-medium','pl-1 pr-1']
@@ -529,7 +529,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
   {
     label: 'Total',
     property: 'commercialValuation',
-    type: 'text',
+    type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
     cssClasses: ['font-medium','pl-1 pr-1']
@@ -537,7 +537,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
   {
     label: 'Terreno',
     property: 'commercialValuationLand',
-    type: 'text',
+    type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
     cssClasses: ['font-medium','pl-1 pr-1']
@@ -545,7 +545,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
   {
     label: 'Construcciones',
     property: 'commercialValuationUnits',
-    type: 'text',
+    type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
     cssClasses: ['font-medium','pl-1 pr-1']
@@ -553,7 +553,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
   {
     label: 'Total',
     property: 'selfValuationValue',
-    type: 'text',
+    type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1'],
     cssClasses: ['font-medium', 'pl-1']
