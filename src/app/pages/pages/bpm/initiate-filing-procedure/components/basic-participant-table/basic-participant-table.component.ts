@@ -7,10 +7,8 @@ import {
   EventEmitter,
   inject,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {
@@ -57,7 +55,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_BASIC_PRINCIPANTS
+  TABLE_COLUMN_BASIC_PRINCIPALS
 } from '../../../../../../apps/constants/constant';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
 
@@ -95,13 +93,13 @@ import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/proces
   ]
 })
 export class BasicParticipantTableComponent
-  implements OnInit, AfterViewInit, OnChanges
+  implements OnInit, AfterViewInit
 {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   @Input({ required: true }) form!: FormGroup;
   @Input() columns: TableColumn<ProcessParticipant>[] =
-    TABLE_COLUMN_BASIC_PRINCIPANTS;
+    TABLE_COLUMN_BASIC_PRINCIPALS;
   @Output() processParticipants = new EventEmitter<ProcessParticipant[]>();
 
   page = PAGE;
@@ -154,10 +152,6 @@ export class BasicParticipantTableComponent
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('prueba');
   }
 
   onFilterChange(value: string): void {

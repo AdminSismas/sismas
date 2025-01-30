@@ -4,7 +4,7 @@ export interface JSONInput {
   name: string;
   label: string;
   placeholder: string;
-  element: 'collection' | 'autocomplete' | 'input' | 'file' | 'select' | 'date';
+  element: 'collection' | 'autocomplete' | 'input' | 'file' | 'select' | 'date' | 'toggle' | 'checkbox';
   type: string;
   validators: Validators[];
   autocompleteOptions?: string[];

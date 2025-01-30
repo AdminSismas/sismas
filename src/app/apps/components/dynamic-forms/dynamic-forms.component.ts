@@ -23,21 +23,24 @@ import { ComboxColletionComponent } from '../combox-colletion/combox-colletion.c
 import { JSONInput } from '../../interfaces/dynamic-forms';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'vex-dynamic-forms',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
     NgClass,
+    ReactiveFormsModule,
     /* Material */
     MatAutocompleteModule,
+    MatCheckbox,
     MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
     MatSelectModule,
-
+    MatSlideToggleModule,
     /* Custom */
     ComboxColletionComponent,
     NgxMatFileInputModule
@@ -52,7 +55,6 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
   @Input() public disabled = false;
 
   public form: FormGroup = new FormGroup({});
-
   private dateFilters = new Map<string, (date: Date | null) => boolean>();
 
   @Output() formReady = new EventEmitter<FormGroup>();
@@ -123,6 +125,13 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
     } else {
       return 'w-full h-full';
     }
+  }
+
+  labelPositionToggle(input: JSONInput): 'before' | 'after' {
+    if (input.type === 'before') {
+      return 'before';
+    }
+    return 'after';
   }
 
   private createFilterForType(typeString: string): (date: Date | null) => boolean {

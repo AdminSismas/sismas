@@ -26,7 +26,7 @@ module.exports = config(
         'error',
         {
           type: 'element',
-          prefix: 'vex',
+          prefix: ['', 'vex'],
           style: 'kebab-case'
         }
       ],
