@@ -113,7 +113,7 @@ export class AdministrativeSourcesComponent implements OnInit {
   createAdministrativeSource(): void {
     this.dialog
       .open(CreateAdministrativeSourceComponent, {
-        width: '40%',
+        width: '100%',
         data: {
           executionId: this.executionId as string,
           baunitId: this.baunitId as string
