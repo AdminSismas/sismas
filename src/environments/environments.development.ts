@@ -152,7 +152,7 @@ export const environment = {
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
   urban_zones: '/ccZonaHomoFisicaUr',
-  url: 'https://prediosplus.api.cadastre4world.com',
+  url: 'https://dev.api.sismas.com.co',
   url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
   user_exist: '/username/',
   /* ------ V ------ */
