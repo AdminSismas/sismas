@@ -80,9 +80,6 @@ export class CreateAdministrativeSourceComponent
         };
   
         this.initValues = formParams;
-
-        console.log(this.initValues);
-        
       }
 
       if (this.initValues?.departamentoOrigen) {
@@ -94,7 +91,10 @@ export class CreateAdministrativeSourceComponent
             this.form.reset(this.initValues);
           });
         }
+        return;
       }
+      this.form.reset(this.initValues);
+      return;
     });
 
   }
@@ -104,6 +104,7 @@ export class CreateAdministrativeSourceComponent
   }
 
   requestManager(): void {
+    this.form.markAllAsTouched();
     if (this.data.params) {
       this.editAdministrativeSourceFunction();
     } else {
@@ -111,7 +112,7 @@ export class CreateAdministrativeSourceComponent
     }
   }
 
-  getDataDepartment(callback: () => void): void {
+  private getDataDepartment(callback: () => void): void {
     this.territorialOrganizationService
       .getAllDataDepartments()
       .subscribe((result: Department[]) => {
@@ -158,6 +159,7 @@ export class CreateAdministrativeSourceComponent
 
   getDataMunicipality(): void {
     this.form.get('departamentoOrigen')!.valueChanges.subscribe((value) => {
+      this.form.get('ciudadOrigen')!.setValue(null);
       const ccdpto = this.departments.find(department => department.divpolLvl1Name === value)!;
       this.territorialOrganizationService
         .getAllDataMunicipalities(ccdpto.divpolLvl1Code!)
@@ -218,7 +220,10 @@ export class CreateAdministrativeSourceComponent
   }
 
   editAdministrativeSourceFunction(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.handleError();
+      return;
+    };
 
     const formsValue: any = this.form.value;
 
