@@ -178,7 +178,7 @@ export class AdministrativeSourcesComponent implements OnInit {
 
       this.dialog
         .open(CreateAdministrativeSourceComponent, {
-          width: '40%',
+          width: '100%',
           data: params
         })
         .afterClosed()
