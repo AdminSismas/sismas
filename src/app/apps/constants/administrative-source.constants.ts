@@ -48,7 +48,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     label: 'Oficina',
     placeholder: 'Escribir tipo de ente emisor',
     element: 'input',
-    type: 'string',
+    type: 'number',
     validators: [Validators.required],
     cssClasses: 'col-span-3'
   },

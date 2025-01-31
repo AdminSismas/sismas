@@ -165,14 +165,14 @@ export class AdministrativeSourcesComponent implements OnInit {
         executionId: this.executionId as string,
         baunitId: this.baunitId as string,
         params: {
-          fuenteAdminId: row.fuenteAdminId,
           domFuenteAdministrativaTipo: row.domFuenteAdministrativaTipo,
           fechaDocumentoFuente: row.fechaDocumentoFuente,
           numeroFuente: row.numeroFuente,
           domEnteEmisor: row.domEnteEmisor,
           oficinaOrigen: row.oficinaOrigen,
           departamentoOrigen: row.departamentoOrigen!,
-          ciudadOrigen: row.ciudadOrigen
+          ciudadOrigen: row.ciudadOrigen,
+          fuenteAdminId: row.fuenteAdminId,
         }
       };
 
