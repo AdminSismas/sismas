@@ -216,7 +216,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropd
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ], roles: ['ADMIN', 'USER', 'GUEST']
+    ], roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ']
   },
   {
     type: 'dropdown',
@@ -236,7 +236,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropd
         routerLinkActiveOptions: { exact: true }
       }
     ],
-    roles: ['ADMIN', 'USER']
+    roles: ['ADMIN', 'USER', 'USER_READ']
   }
 ];
 

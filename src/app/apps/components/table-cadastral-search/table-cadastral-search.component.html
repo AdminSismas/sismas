@@ -138,7 +138,7 @@
                 ></mat-icon>
               </button>
 
-              @if (seeAction) {
+              <ng-container *ngIf="seeAction && user?.role !== 'USER_READ'">
                 <button 
                   (click)="initiateFilingProcedure(row)"
                   class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
@@ -150,7 +150,7 @@
                     svgIcon="mat:add"
                   ></mat-icon>
                 </button>
-              }
+              </ng-container>
             </div>
           </td>
         </ng-container>

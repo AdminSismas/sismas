@@ -52,6 +52,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CurrencyLandsPipe } from '../../pipes/currency-lands.pipe';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService } from '../../services/bpm/bpm-process.service';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { DecodeJwt } from '../../interfaces/user-details/user.model';
 
 
 @Component({
@@ -94,6 +96,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
+  user: DecodeJwt | null = null;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -133,7 +136,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     private infoTableService: InfoTableService,
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
-    private baunitService: ValidateInformationBaunitService
+    private baunitService: ValidateInformationBaunitService,
+    private userService: UserService,
   ) {
     console.log('TableCadastralSearchComponent , Configuracion');
     this.detectCurrentUrl();
@@ -166,6 +170,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getUser();
+
     this.bpmProcessService.setPermissions({ executionId: '', message: '' });
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges

@@ -193,25 +193,26 @@ export class NavigationLoaderService {
           },
           ...NAVIGATION_LOADER_MY_WORK_3
         ],
-        roles: ['ADMIN', 'USER']
+        roles: ['ADMIN', 'USER', 'USER_READ']
       },
       {
         type: 'subheading',
         label: 'Apoyo operación',
         children: NAVIGATION_LOADER_OPERATION_SUPPORT,
-        roles: ['ADMIN', 'USER']
+        roles: ['ADMIN', 'USER', 'USER_READ']
       },
       {
         type: 'subheading',
         label: 'Datos abiertos',
         children: NAVIGATION_LOADER_OPEN_DATA,
-        roles: ['ADMIN', 'USER', 'GUEST']
+        roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ']
       },
       {
         type: 'subheading',
         label: 'Servicio público',
         children: filteredPublicService,
-        roles: ['ADMIN', 'USER', 'GUEST']
+        roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ']
+        
       },
       {
         type: 'subheading',
