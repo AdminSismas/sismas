@@ -42,7 +42,7 @@ import { BasicParticipantTableComponent } from './components/basic-participant-t
 import { BaunitHead } from '../../../../apps/interfaces/information-property/baunit-head.model';
 import { BpmCoreService } from '../../../../apps/services/bpm/bpm-core.service';
 import { BpmDocument } from '../../../../apps/interfaces/bpm/bpm-document';
-import { BpmProcessService } from '../../../../apps/services/bpm/bpm-process.service';
+import { BpmProcessService, PermissionVailable } from '../../../../apps/services/bpm/bpm-process.service';
 import { BpmTypeProcess } from '../../../../apps/interfaces/bpm/bpm-type-process';
 import { CollectionServicesService } from '../../../../apps/services/general/collection-services.service';
 import {
@@ -363,6 +363,8 @@ export class InitiateFilingProcedureComponent implements OnInit {
     this.bpmCoreService.bpmOperationStartProcess(proExecutionE).subscribe({
       next: (proTaskE: ProTaskE) => {
         console.log(proTaskE);
+        if (proTaskE?.executionId && proTaskE.proTask?.taskId !== -1) {
+          this.infoGeneralService.setFatherURL(PANEL_ASSIGNED_TASKS);
         if (proTaskE?.executionId) {
           this.infoGeneralService.setFatherURL(PANEL_ASSIGNED_TASKS);
           this.router
@@ -371,21 +373,33 @@ export class InitiateFilingProcedureComponent implements OnInit {
           this.infoGeneralService.setInfoProTaskE(proTaskE);
 
           this.snackBar.open(
-            `Radicado Exitoso, Identificador: ${proTaskE?.executionId}`,
+            `Radicado: ${proTaskE?.proTask?.flowDetail} Exitoso, Versión: ${proTaskE?.executionId}`,
             'CLOSE',
             {
               duration: 10000
             }
           );
+        
+          return;
+        }
+
+          this.infoGeneralService.setInfoProTaskE(proTaskE);
           return;
         }
 
         if (proTaskE?.proTask) {
           if (proTaskE.proTask.taskId! < 0) {
-            this.router.navigate([environment.myWork_tasksPanel]);
+            const vailablePermission: PermissionVailable = {
+              executionId: proTaskE.executionId?.toString() || '',
+              message: proTaskE.proTask.flowName!
+            };
+            this.router.navigate([environment.myWork_tasksPanel], {
+              queryParams: { executionId: proTaskE.executionId }
+            });
             this.snackBar.open(proTaskE.proTask.flowName!, 'Aceptar', {
               duration: 10000
             });
+            this.bpmProcessService.setPermissions(vailablePermission)
             return;
           }
         }

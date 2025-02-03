@@ -8,7 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { filter, take } from 'rxjs/operators';
+import { distinctUntilChanged, filter, take } from 'rxjs/operators';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -53,6 +53,12 @@ import { ProTaskE } from '../../../../../apps/interfaces/pro-task-e';
 import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
 import { TaskCardComponent } from '../components/task-card/task-card.component';
 import { TasksPanelService } from '../../../../../apps/services/bpm/tasks-panel.service';
+import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
+import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-retail-execute-response.model';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { DetailInformationTasksComponent } from '../components/detail-information-tasks/detail-information-tasks.component';
+import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 
 @Component({
   selector: 'vex-assigned-tasks',
@@ -102,6 +108,9 @@ export class TasksPanelComponent implements OnInit {
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
   typePanel: string | null = null;
   label = 'Tareas activas';
+  public taskOne: TaskResponseModel = new TaskResponseModel();
+  contentTasksInformations!: InformationPegeable;
+  dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
 
   searchCtrl: UntypedFormControl = new UntypedFormControl('search');
 
@@ -115,8 +124,12 @@ export class TasksPanelComponent implements OnInit {
   isExistDataInformation$: Observable<boolean> = of(false);
   resources: string[] = [];
 
+verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
+
   constructor(
+    private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
+    private bpmProcessService: BpmProcessService,
     private router: Router,
     private readonly layoutService: VexLayoutService,
     private proTasksService: TasksPanelService,
@@ -133,6 +146,7 @@ export class TasksPanelComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource();
     this.activateLoading();
     this.activatedRoute.params.subscribe((params) => {
       this.typePanel = params[CONSTANT_NAME_ID];
@@ -151,7 +165,93 @@ export class TasksPanelComponent implements OnInit {
       .subscribe((result) => {
         this.captureInformationSubscribe(result);
       });
+
+      this.bpmProcessService.dataPermissions$.pipe(
+        take(1),
+        distinctUntilChanged(),   
+        )
+        .subscribe((result) => {
+          if(result && result.executionId && result.message){
+            this.verificPermissionAvaliable = result;
+            this.viewDetailTask(this.verificPermissionAvaliable?.executionId);
+          }
+      });
   }
+
+  lauchModalTaskCard() {
+
+  }
+
+  viewDetailTask(value: any) {
+    this.proTasksService.viewProTaskId(value).subscribe((result) => {
+      this.taskOne = result;
+      this.viewExecuteTask(this.taskOne);
+    });
+    console.log('viewDetailTask', value);
+  }
+
+  viewExecuteTask(objOne: any) {
+    this.proTasksService
+      .viewExecuteTaskId(
+        this.generateObjectPageSearchDataTask(this.verificPermissionAvaliable?.executionId),
+        this.verificPermissionAvaliable?.executionId
+      )
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (objTwo: InformationPegeable) =>
+          this.captureInformationSubscribeTask(objOne, objTwo, +this.verificPermissionAvaliable?.executionId)
+      });
+  }
+
+  private generateObjectPageSearchDataTask(baunitId: string): PageSearchData {
+    return new PageSearchData(this.page, this.pageSize, baunitId);
+  }
+
+  captureInformationSubscribeTask(
+      objOne: any,
+      objTwo: InformationPegeable,
+      id: number
+    ): void {
+      let data: TaskRetailExecuteResponseModel[];
+      this.contentTasksInformations = objTwo;
+      console.log('objTwo', objTwo.content);
+  
+      if (
+        this.contentTasksInformations &&
+        this.contentTasksInformations.content
+      ) {
+        data = this.contentTasksInformations.content;
+        data = data.map(
+          (row: TaskRetailExecuteResponseModel) =>
+            new TaskRetailExecuteResponseModel(row)
+        );
+        this.dataSource.data = data;
+        this.seeTaskProperty(objOne, this.dataSource, id);
+      }
+    }
+  
+
+    seeTaskProperty(
+        value: TaskResponseModel,
+        taskExecuteDetail: any,
+        taskId: number,
+      ): void {
+        this.dialog.open(DetailInformationTasksComponent, {
+          // minWidth: '60%',
+          // minHeight: '70%',
+          // disableClose: true,
+          // minWidth:'370px',
+          width: '98%',
+          height: '86%',
+          data: {
+            taskId: taskId,
+            value,
+            taskExecuteDetail,
+            textAlert:  this.verificPermissionAvaliable ? this.verificPermissionAvaliable : null
+          }
+        });
+      }
+
 
   onFilterChargeInformationByPanel() {
     this.activateLoading();

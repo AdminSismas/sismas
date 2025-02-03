@@ -1,7 +1,37 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
   <h2 class="headline m-0 flex-auto">
-
+    <span>Radicado: {{ this.taskDetails && this.taskDetails.executionCode ? this.taskDetails.executionCode : NAME_NO_DISPONIBLE }}</span>
+    - 
+    <span>Versión: {{ this.taskDetails && this.taskDetails.executionId ? this.taskDetails.executionId : NAME_NO_DISPONIBLE }}</span>
   </h2>
+  <button
+  color="secondary"
+  mat-button
+  type="button"
+  class="box bg-app-bar rounded caption min-w-3"
+  title="Comentarios"
+  (click)="openDialog('comments')"
+>
+  <mat-icon
+    class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+    svgIcon="mat:insert_comment"
+  ></mat-icon>
+  <span class="box-text">{{ countComment$ | async }}</span>
+</button>
+<button
+              color="secondary"
+              mat-button
+              type="button"
+              class="box bg-app-bar rounded caption min-w-3"
+              title="Archivos"
+              (click)="openDialog('documents')"
+            >
+              <mat-icon
+                class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+                svgIcon="mat:attach_file"
+              ></mat-icon>
+              <span class="box-text">{{ countAttachment$ | async }}</span>
+            </button>
   <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
     <mat-icon svgIcon="mat:close"></mat-icon>
   </button>
@@ -11,7 +41,16 @@
 
 <mat-panel-title>
   <mat-dialog-content
+  
   >
+  @if (message !== '') {
+    <div *ngIf="showAlert" [ngClass]="color" class="top-0 left-0 w-full p-4 flex items-center justify-between z-50">
+      <span class="text-white">{{ message }}</span>
+      <!-- <button (click)="closeAlert()" class="text-white ml-4">
+        <mat-icon>close</mat-icon>
+      </button> -->
+    </div>
+  }
   <mat-tab-group>
     <mat-tab label="Detalles de la tarea">
       <div class="grid grid-cols-3 gap-4 items-center">
@@ -30,7 +69,7 @@
           </h2>
         </div>
         <div class="flex flex-col gap-2">
-          <span class="text-black text-sm">Prioridad:</span>
+          <span class="text-black text-sm" (click)="openSnackbar()">Prioridad:</span>
           <h2 class="text-sm">
             {{ this.taskDetails.bpmPriority ? this.taskDetails.bpmPriority : NAME_NO_DISPONIBLE }}
           </h2>
@@ -88,6 +127,48 @@
             <h2 class="text-sm">{{ NAME_NO_DISPONIBLE }}</h2>
           }
         </div>
+        <div class="flex flex-col gap-2">
+         
+        </div>
+        <div class="flex flex-col gap-2">
+         
+        </div>
+        <div class="flex flex-col gap-2">
+     
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-end gap-2 p-4">
+            <!-- <button
+              color="secondary"
+              mat-button
+              type="button"
+              class="box bg-app-bar rounded caption min-w-3"
+              title="Comentarios"
+              (click)="openDialog('comments')"
+            >
+              <mat-icon
+                class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+                svgIcon="mat:insert_comment"
+              ></mat-icon>
+              <span class="box-text">{{ countComment$ | async }}</span>
+            </button>
+            <button
+              color="secondary"
+              mat-button
+              type="button"
+              class="box bg-app-bar rounded caption min-w-3"
+              title="Archivos"
+              (click)="openDialog('documents')"
+            >
+              <mat-icon
+                class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+                svgIcon="mat:attach_file"
+              ></mat-icon>
+              <span class="box-text">{{ countAttachment$ | async }}</span>
+            </button> -->
+          </div>
+        </div>
+        
       </div>
     </mat-tab>
     <mat-tab label="Tareas ejecutadas">

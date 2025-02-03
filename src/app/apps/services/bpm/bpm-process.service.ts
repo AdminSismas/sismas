@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { BpmTypeProcess } from '../../interfaces/bpm/bpm-type-process';
+export interface PermissionVailable {
+  executionId: string;
+  message: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class BpmProcessService {
   basic_url = `${environment.url}:${environment.port}${environment.bpmProcess.value}`;
+
+    subjectPermision$: BehaviorSubject<PermissionVailable> = new BehaviorSubject<PermissionVailable>({ executionId: '', message: '' });
+    dataPermissions$: Observable<PermissionVailable> = this.subjectPermision$.asObservable();
 
   constructor(
     private requestsService: SendGeneralRequestsService
@@ -30,4 +37,7 @@ export class BpmProcessService {
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
+  setPermissions(data: PermissionVailable): void {
+    this.subjectPermision$.next(data);
+  }
 }

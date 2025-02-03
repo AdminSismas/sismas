@@ -284,8 +284,7 @@ export class BmpCoreComponent implements OnInit {
     if (
       !result ||
       !result.executionId ||
-      result.executionId <= 0 ||
-      !result.flowId
+      result.flowId! < 0 
     ) {
       this.router.navigate([environment.myWork_tasksPanel]);
       this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 10000 });
@@ -294,7 +293,7 @@ export class BmpCoreComponent implements OnInit {
 
     this.proTaskE_Bpm = result;
     this.executionId = result.executionId?.toString();
-    this.getNewProFlow(result.flowId?.toString());
+    this.getNewProFlow(result.flowId!.toString());
     this.infoGeneralService.setInfoProTaskE(result);
     this.activateLoading(true);
   }

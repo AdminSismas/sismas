@@ -99,4 +99,9 @@ export class BpmCoreService {
       }));
     }
 
+    bpmOperationGetFiled(executId: number): Observable<ProTaskE>  {
+      const url = `${this.basic_url}${envi.bpmOperation.value}${envi.bpmOperation.proTask}${executId}/active`;
+      return this.requestsService.sendRequestsFetchGet(url)
+        .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    }
 }

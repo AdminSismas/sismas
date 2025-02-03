@@ -72,6 +72,12 @@ export class TasksPanelService {
     return this.http.get<any>(urlTask);
   }
 
+  viewProTaskId(taskId: number): Observable<any> {
+    const urlTask = `${this.basic_url}${envi.bpmOperation.proTask}${taskId}/active`;
+    return this.http.get<any>(urlTask);
+  }
+
+
   viewExecuteTaskId(page: PageSearchData,taskId:string): Observable<any> {
     const urlTask = `${this.basic_url}${envi.bpmOperation.proTask}${taskId}?page=${page.page}&size=${page.size}`;
     console.log(urlTask);

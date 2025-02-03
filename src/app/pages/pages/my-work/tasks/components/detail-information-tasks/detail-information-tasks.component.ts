@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -33,7 +33,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UntypedFormControl } from '@angular/forms';
 import { TypeInformation } from 'src/app/apps/interfaces/content-info';
 import { environment } from 'src/environments/environments';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -44,6 +44,12 @@ import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-ret
 import { ProceduresCollection } from 'src/app/apps/interfaces/procedures-progress.model';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
+import { EventEmitter } from '@angular/core';
+import { DocumentTableComponent } from 'src/app/apps/components/bpm/document-table/document-table.component';
+import { CommentsComponent } from 'src/app/apps/components/comments/comments.component';
+import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
+import { ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'vex-detail-information-property-owner',
@@ -86,13 +92,24 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       @Input({ required: true }) baunitId: string | null | undefined = null;
       @Input() executionId: string | null | undefined = null;
       @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+
+      @Input() message: string = '';
+      @Input() color: string = 'bg-blue-500'; // Color por defecto
+      @Output() closeModal = new EventEmitter<void>();
     
       columns: TableColumn<TaskRetailExecuteResponseModel>[] = TABLE_COLUMN_PROPERTIES_EXECUTED;
       page:number = PAGE;
       totalElements = 0;
       pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
       pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+      showAlert: boolean = false;
     
+      _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);
+      countAttachment$: Observable<number> = this._countAttachment$.asObservable();
+
+      _countComment$: ReplaySubject<number> = new ReplaySubject<number>(0);
+      countComment$: Observable<number> = this._countComment$.asObservable();
+
       dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
       searchCtrl: UntypedFormControl = new UntypedFormControl();
     
@@ -104,6 +121,8 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       private snackBar = inject(MatSnackBar);
 
   constructor(
+    private  route: ActivatedRoute,
+    private bpmCoreService: BpmCoreService,
     private tasksPanelService: TasksPanelService,
     public dialogRef: MatDialogRef<DetailInformationTasksComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -113,9 +132,22 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
   ) {
   }
 
+  openSnackbar() {
+    this.snackBar.open('Este es un mensaje de alerta', 'Cerrar', {
+      duration: 15000,
+      verticalPosition: 'top', // Posición vertical: 'top' o 'bottom'
+      horizontalPosition: 'center', // Posición horizontal: 'start', 'center', 'end', 'left', 'right'
+      panelClass: ['custom-snackbar'] // Clase CSS personalizada
+    });
+  }
 
   close(): void {
     this.dialogRef.close();
+  }
+
+  closeAlert() {
+    this.showAlert = false;
+    
   }
 
   // implementacion de tabla
@@ -124,11 +156,19 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
    
   
     ngOnInit() {
+       // Accede a los parámetros de consulta
+    this.route.queryParamMap.subscribe(params => {
+      this.executionId = params.get('executionId');  // Obtén el valor del parámetro
+      
+    });
       console.log('data nuevo objeto',this.data);
       this.dataSource = new MatTableDataSource();
-      // if(this.data.taskExecuteDetail){
-      //   this.dataSource = this.data.taskExecuteDetail;
-      // }
+
+      if(this.data && this.data.textAlert && this.data?.textAlert.message){
+        
+        this.message = this.data?.textAlert.message;
+        this.showAlert = true;
+      }
 
       if(this.data.taskId){
         this.viewDetallyTask(this.data.taskId);
@@ -146,6 +186,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       this.searchCtrl.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => this.onFilterChange(value));
+        
     }
     ngAfterViewInit() {
       if (this.paginator) {
@@ -183,7 +224,10 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
         executionId)
         .subscribe( result => {
           this.taskDetails = result;
+          this.id = this.taskDetails.executionId ? String(this.taskDetails.executionId) : '';
           console.log('primer servicio',this.taskDetails);
+          this.getInformationProTaskCountComment();
+         this.getInformationProTaskCountAttachment();
           this.viewExcuteTask(executionId);
         });
     }
@@ -354,6 +398,33 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
 
   // implementacion de tabla
 
+openDialog(type: string): void {
+    if (type === 'documents') {
+      this.dialog.open(DocumentTableComponent, {
+        width: '80%',
+        data: {
+          executionId: this.executionId
+        }
+      });
+    } else if (type === 'comments') {
+      this.dialog.open(CommentsComponent, {
+        width: '60%',
+        data: {
+          executionId: this.executionId
+        }
+      });
+    }
+  }
+
+  getInformationProTaskCountComment() {
+    this.bpmCoreService.getProTaskCountComment(this.id)
+      .subscribe((result: number) => this._countComment$.next(result));
+  }
+
+  getInformationProTaskCountAttachment() {
+    this.bpmCoreService.getProTaskCountAttachment(this.id)
+      .subscribe((result: number) => this._countAttachment$.next(result));
+  }
 
 
 
