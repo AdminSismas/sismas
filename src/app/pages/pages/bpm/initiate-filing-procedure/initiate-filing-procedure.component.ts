@@ -363,6 +363,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     this.bpmCoreService.bpmOperationStartProcess(proExecutionE).subscribe({
       next: (proTaskE: ProTaskE) => {
         console.log(proTaskE);
+        this.bpmProcessService.setPermissions({ executionId: '', message: '' });
         if (proTaskE?.executionId && proTaskE.proTask?.taskId !== -1) {
           this.infoGeneralService.setFatherURL(PANEL_ASSIGNED_TASKS);
         if (proTaskE?.executionId) {

@@ -51,6 +51,7 @@ import { ValidateInformationBaunitService } from '../../services/general/validat
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CurrencyLandsPipe } from '../../pipes/currency-lands.pipe';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BpmProcessService } from '../../services/bpm/bpm-process.service';
 
 
 @Component({
@@ -124,6 +125,8 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
 
   constructor(
     private router: Router,
+    
+    private bpmProcessService: BpmProcessService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
@@ -163,6 +166,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   }
 
   ngOnInit(): void {
+    this.bpmProcessService.setPermissions({ executionId: '', message: '' });
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
