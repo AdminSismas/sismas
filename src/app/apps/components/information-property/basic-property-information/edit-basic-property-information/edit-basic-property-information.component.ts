@@ -332,7 +332,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   ngOnInit(): void {
     this.form.reset(this.data);
     Object.keys(this.form.controls).forEach(field => {
-      if (field !== 'propertyRegistryOffice' && field !== 'propertyRegistryNumber') {
+      if (field !== 'propertyRegistryOffice' && field !== 'propertyRegistryNumber' && field !== 'domBaunitEconoDesti' && field !== 'domBaunitType' && field !== 'cadastralRegistryNumber') {
         this.form.get(field)?.disable();
       }
     });
