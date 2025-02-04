@@ -41,7 +41,9 @@ import { InputComponent } from '../input/input.component';
 import { TaskResponseModel } from '../../interfaces/task-response.model';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { PAGE_OPTION__10_20_50_100 } from '../../constants/constant';
+import { MODAL_LARGE, PAGE_OPTION__10_20_50_100,
+  MODAL_SMALL
+ } from '../../constants/constant';
 import { ViewFileDocumentManagementComponent } from '../view-file-document-management/view-file-document-management.component';
 import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
 
@@ -212,9 +214,7 @@ private initForm(): void {
 
           this.dialog
           .open(DocumentViewerWorkHistoricalComponent, {
-            minWidth: '370px',
-            width: '98%',
-            height: '86%',
+            ...MODAL_LARGE,
             disableClose: true,
             data: { url: this.urlView}
            
@@ -244,7 +244,7 @@ private initForm(): void {
   
     seeTaskProperty(value:TaskResponseModel,taskId:number):void {
       this.dialog.open(DetailInformationTasksComponent, {
-        width: '50%',
+        ...MODAL_SMALL,
         data: { taskId: taskId ,value }
       });
     }

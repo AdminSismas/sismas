@@ -36,6 +36,7 @@ import { contentInfoAttachment } from '../../interfaces/content-info-attachment.
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { ViewFileDocumentManagementComponent } from '../view-file-document-management/view-file-document-management.component';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../constants/attachment.constant';
+import { MODAL_SMALL } from '../../constants/constant';
 
 
 
@@ -185,9 +186,7 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
   viewFile(metaData: contentInfoAttachment): void {
     this.dialog
       .open(ViewFileDocumentManagementComponent, {
-        minWidth:'370px',
-        width:'98%',
-        height: '86%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: metaData,
       });

@@ -29,7 +29,8 @@ import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-b
 import {
   CONSTANT_VALIDATE_CHECK,
   CONSTANT_VALIDATE_OTHER,
-  LISTO_FORM_BPM_CORE
+  LISTO_FORM_BPM_CORE,
+  MODAL_LARGE
 } from '../../../../apps/constants/constant';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
@@ -256,8 +257,7 @@ export class BmpCoreComponent implements OnInit {
         }
 
         this.dialog.open(ShowErrorValidateAlfaMainComponent, {
-          width: '100%',
-          maxWidth: '800px',
+          ...MODAL_LARGE,
           data: result
         });
         this.activateLoading(true);

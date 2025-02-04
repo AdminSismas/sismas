@@ -4,7 +4,7 @@ import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
-import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TYPEINFORMATION_EDITION } from '../../../constants/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
@@ -225,8 +225,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   openInformationPropertyOwner(owner: InfoOwners): void {
     const dialog = this.matDialog
       .open(DetailInformationPropertyOwnerComponent, {
-        minWidth: '50%',
-        minHeight: '40%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: owner
       });
@@ -240,7 +239,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     }
 
     this.matDialog.open(AddPropertyOwnerComponent, {
-      width: '35%',
+      ...MODAL_SMALL,
       data: {
         ownersData: data.data,
         baunitId: this.baunitId,
@@ -258,7 +257,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
       this.matDialog.open(DeletePropertyOwnerComponent, {
-        width: '35%',
+        ...MODAL_SMALL,
         data: {
           baunitId: this.baunitId,
           executionId: this.executionId,
@@ -269,7 +268,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
     } else if (id === 'edit') {
       this.matDialog.open(EditingPropertyOwnerComponent, {
-        width: '35%',
+        ...MODAL_SMALL,
         data: {
           fractions_sum: this.fractions_sum - Number(infoOwner.fractionS),
           rightId: this.rightIdSelected,

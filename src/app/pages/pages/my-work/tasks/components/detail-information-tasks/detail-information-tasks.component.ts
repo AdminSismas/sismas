@@ -18,7 +18,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { NAME_NO_DISPONIBLE, PAGE_OPTION__10_20_50_100, PAGE_OPTION__5_7_10, PAGE_OPTION_UNIQUE_7, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, PAGE_SIZE_TABLE_UNIQUE, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TABLE_COLUMN_PROPERTIES_EXECUTED, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
+import { NAME_NO_DISPONIBLE, PAGE_OPTION__10_20_50_100, PAGE_OPTION__5_7_10, PAGE_OPTION_UNIQUE_7, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, PAGE_SIZE_TABLE_UNIQUE, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TABLE_COLUMN_PROPERTIES_EXECUTED, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL, MODAL_SMALL } from 'src/app/apps/constants/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -309,8 +309,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     openDetailInTaks(data:TaskRetailExecuteResponseModel){
       this.dialog
         .open(DetailExecutedTasksComponent, {
-          minWidth: '40%',
-          minHeight: '70%',
+          ...MODAL_SMALL,
           disableClose: true,
           data: data
         })

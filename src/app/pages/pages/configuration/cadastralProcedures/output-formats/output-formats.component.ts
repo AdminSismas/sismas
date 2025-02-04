@@ -22,7 +22,15 @@ import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { OutFormatModel } from 'src/app/apps/interfaces/out-format.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, TABLE_COLUMN_DOCUMENT_ASOCIETY, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
+import {
+  PAGE, PAGE_SIZE,
+  PAGE_SIZE_OPTION_ADDRESS,
+  PAGE_SIZE_SORT,
+  TABLE_COLUMN_DOCUMENT_ASOCIETY,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL,
+  MODAL_SMALL
+} from 'src/app/apps/constants/constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../../../auth/login/services/user.service';
 
@@ -223,8 +231,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
       console.log('data', data);
 
       const dialogRef = this.dialog.open(OutputFormatsEditUpdateComponent, {
-        width: '58%',
-        height: '80%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: dialogData
       });

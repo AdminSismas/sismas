@@ -12,6 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ComponentsServicesService } from '../components.services.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ContactsParamsComponent } from '../contacts-params/contacts-params.component';
+import { MODAL_SMALL } from 'src/app/apps/constants/constant';
 
 @Component({
   selector: 'vex-contacts-card',
@@ -92,7 +93,7 @@ export class ContactsCardComponent implements OnInit {
         imgurl: this.assistant.imgurl,
         status: this.assistant.status
       },
-      width: '600px',
+      ...MODAL_SMALL,
       disableClose: true
     });
 
@@ -110,7 +111,7 @@ export class ContactsCardComponent implements OnInit {
   openParamsModal() {
     const dialogRef = this.dialog.open(ContactsParamsComponent, {
       data: this.assistant,
-      width: '800px',
+      ...MODAL_SMALL,
       disableClose: true
     });
 

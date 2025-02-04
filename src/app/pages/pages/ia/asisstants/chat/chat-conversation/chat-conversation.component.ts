@@ -33,6 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Observable, of } from 'rxjs';
 import { env } from "../../../../../../../environments/enviromentsIA";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MODAL_MEDIUM } from 'src/app/apps/constants/constant';
 
 @Component({
   selector: 'vex-chat-conversation',
@@ -356,8 +357,7 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
 
   openSettings() {
     this.dialog.open(this.settingsDialog, {
-      width: '800px',
-      height: '600px',
+      ...MODAL_MEDIUM,
       disableClose: true,
       panelClass: 'custom-dialog-container'
     });

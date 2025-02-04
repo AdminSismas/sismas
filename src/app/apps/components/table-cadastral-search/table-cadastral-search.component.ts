@@ -38,7 +38,10 @@ import {
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
+  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL,
+  MODAL_LARGE,
+  MODAL_MEDIUM,
+  MODAL_SMALL,
 } from '../../constants/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -183,8 +186,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
       this.searValueData({}, this.initParams as string);
       setTimeout(() => {
         this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          minWidth: '99%',
-          minHeight: '90%',
+          ...MODAL_LARGE,
           disableClose: true,
           data: new ContentInfoSchema(
             this.dataSource.data[0].baunitIdE,
@@ -228,8 +230,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
-        width: '30%',
-        height: '30%',
+          ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInfoSchema(data.baunitIdE, data)
       })
@@ -239,8 +240,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   openCadastralInformationProperty(data: BaunitHead): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        minWidth: '99%',
-        minHeight: '90%',
+          ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
@@ -261,9 +261,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     }
     this.dialog
       .open(FilterCadastralSearchComponent, {
-        minWidth: '50%',
-        width: '70%',
-        minHeight: '50%',
+        ...MODAL_MEDIUM,
         disableClose: true,
         data: {
           searchData: this.searchData,

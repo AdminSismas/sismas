@@ -15,7 +15,8 @@ import {
   PAGE_OPTION_UNIQUE,
   TYPEOPERATION_ADD,
   TYPEOPERATION_CREATE,
-  TYPEOPERATION_DELETE
+  TYPEOPERATION_DELETE,
+  MODAL_SMALL
 } from '../../../../../../../apps/constants/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/pro-flow';
@@ -352,8 +353,7 @@ export class AlfaMainComponent implements OnInit {
   analyzeChangesOperationAlfaMain() {
     this.dialog
       .open(ViewChangeAlphaMainRecordComponent, {
-        minWidth: '60%',
-        maxHeight: '90%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: [this.executionId]
       })

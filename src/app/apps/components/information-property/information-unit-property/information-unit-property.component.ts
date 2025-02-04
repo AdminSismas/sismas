@@ -35,6 +35,8 @@ import {
   TABLE_COLUMN_PROPERTIES,
   TYPEINFORMATION_EDITION,
   TYPEINFORMATION_VISUAL,
+  MODAL_SMALL,
+  MODAL_LARGE
 } from 'src/app/apps/constants/constant';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
 import { GeographicViewerComponent } from '../../geographic-viewer/geographic-viewer.component';
@@ -202,8 +204,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
-        width: '30%',
-        height: '30%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInfoSchema(data.baunitIdE, data)
       })
@@ -213,8 +214,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   openCadastralInformationProperty(data: BaunitHead): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        minWidth: '99%',
-        minHeight: '90%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,

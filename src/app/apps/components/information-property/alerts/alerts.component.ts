@@ -4,7 +4,7 @@ import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_EDITION } from '../../../constants/constant';
+import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
@@ -203,8 +203,7 @@ export class AlertsComponent implements OnInit, AfterViewInit {
 
   openAlertDetails(alert: any): void {
     const dialogRef = this.matDialog.open(DetailAlertsComponent, {
-      minWidth: '50%',
-      minHeight: '40%',
+      ...MODAL_SMALL,
       disableClose: true,
       data: alert,
     });

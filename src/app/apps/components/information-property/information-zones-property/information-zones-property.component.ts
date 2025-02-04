@@ -22,7 +22,8 @@ import {
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
   TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPEINFORMATION_VISUAL,
+  MODAL_SMALL
 } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -444,8 +445,7 @@ export class InformationZonesPropertyComponent
       const dialog = this.matDialog.open(
         DetailInformationPropertyZonesComponent,
         {
-          minWidth: '50%',
-          minHeight: '40%',
+          ...MODAL_SMALL,
           disableClose: true,
           data: { zone, propertyType }
         }
@@ -455,8 +455,7 @@ export class InformationZonesPropertyComponent
       const dialog = this.matDialog.open(
         DetailInformationPropertyZonesComponent,
         {
-          minWidth: '50%',
-          minHeight: '40%',
+          ...MODAL_SMALL,
           disableClose: true,
           data: { zone, propertyType: 'Geoeconómica' }
         }
@@ -518,8 +517,7 @@ export class InformationZonesPropertyComponent
     if (id === 'delete') {
       this.matDialog
         .open(DeleteInformationZonesPropertyComponent, {
-          minWidth: '60%',
-          minHeight: '70%',
+          ...MODAL_SMALL,
           disableClose: true,
           data: {
             zone,
@@ -541,8 +539,7 @@ export class InformationZonesPropertyComponent
     if (id === 'delete') {
       this.matDialog
         .open(DeleteInformationZonesPropertyComponent, {
-          minWidth: '60%',
-          minHeight: '70%',
+          ...MODAL_SMALL,
           disableClose: true,
           data: {
             zone,
@@ -569,8 +566,7 @@ export class InformationZonesPropertyComponent
 
     this.matDialog
       .open(AddEditInformatizonZonesPropertyComponent, {
-        minWidth: '60%',
-        minHeight: '70%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: { zone: data, baunitId: this.baunitId, isEdit, propertyType }
       })
@@ -589,8 +585,7 @@ export class InformationZonesPropertyComponent
 
     this.matDialog
       .open(AddEditInformatizonZonesPropertyComponent, {
-        minWidth: '60%',
-        minHeight: '70%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: { zone: data, baunitId: this.baunitId, isEdit, propertyType }
       })

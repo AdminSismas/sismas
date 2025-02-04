@@ -35,10 +35,13 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
   LIST_SCHEMAS_CONTROL_TEMP,
+  MODAL_LARGE,
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL
+  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL,
+  MODAL_MEDIUM,
+  MODAL_SMALL
 } from '../../constants/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -171,8 +174,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       this.searValueData({}, this.initParams as string);
       setTimeout(() => {
         this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          minWidth: '99%',
-          minHeight: '90%',
+          ...MODAL_LARGE,
           disableClose: true,
           data: new ContentInfoSchema(
             this.dataSource.data[0].baunitIdE,
@@ -198,8 +200,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
-        width: '30%',
-        height: '30%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInfoSchema(data.baunitIdE, data)
       })
@@ -209,8 +210,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   openCadastralInformationProperty(data: BaunitHead): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        minWidth: '99%',
-        minHeight: '90%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
@@ -228,9 +228,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
     }
     this.dialog
       .open(FilterCertificateSearchComponent, {
-        minWidth: '50%',
-        width: '70%',
-        minHeight: '50%',
+        ...MODAL_MEDIUM,
         disableClose: true,
         data: this.searchData
       })
@@ -499,9 +497,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   viewFile(metaData: contentInfoAttachment): void {
     this.dialog
       .open(ViewFileDocumentManagementComponent, {
-        minWidth: '370px',
-        width: '98%',
-        height: '86%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: {
           metaData: metaData,

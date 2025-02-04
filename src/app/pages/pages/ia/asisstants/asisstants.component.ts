@@ -8,6 +8,7 @@ import { VexPageLayoutComponent } from "../../../../../@vex/components/vex-page-
 import { VexBreadcrumbsComponent } from "../../../../../@vex/components/vex-breadcrumbs/vex-breadcrumbs.component";
 import { VexPageLayoutContentDirective } from "../../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive";
 import { MatIconModule } from '@angular/material/icon';
+import { MODAL_SMALL } from 'src/app/apps/constants/constant';
 
 @Component({
     selector: 'vex-asisstants',
@@ -50,7 +51,7 @@ export class AsisstantsComponent implements OnInit {
     openEditDialog(assistant: assistantData) {
         const dialogRef = this.dialog.open(AssistantsEditComponent, {
             data: assistant,
-            width: '600px',
+            ...MODAL_SMALL,
             disableClose: true
         });
 

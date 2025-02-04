@@ -17,7 +17,7 @@ import { INPUT_FORM_VISIT, TABLE_COLUMN_THIRD_PARTY } from 'src/app/apps/constan
 import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
 import { BasicParticipantTableDialogComponent } from 'src/app/apps/components/bpm/basic-participant-table-dialog/basic-participant-table-dialog.component';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from 'src/app/apps/constants/constant';
+import { MODAL_LARGE, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from 'src/app/apps/constants/constant';
 import { MatSort } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -120,8 +120,7 @@ export class VisitaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onThirdPartyAffectedTrue() {
     this.dialog.open(BasicParticipantTableDialogComponent, {
-      width: '90%',
-      height: '90%',
+      ...MODAL_LARGE,
     })
     .afterClosed()
     .subscribe((result: ProcessParticipant[]) => {

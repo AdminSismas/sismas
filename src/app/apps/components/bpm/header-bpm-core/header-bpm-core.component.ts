@@ -8,6 +8,7 @@ import { GeneralValidationsService } from '../../../services/validations/general
 import { Observable, ReplaySubject } from 'rxjs';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { CONSTANT_NAME_RETURN, NAME_FILED, NAME_VERSION } from '../../../constants/constantLabels';
+import { MODAL_MEDIUM, MODAL_SMALL } from '../../../constants/constant';
 import { ProTaskE } from '../../../interfaces/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
@@ -117,14 +118,14 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   openDialog(type: string): void {
     if (type === 'documents') {
       this.dialog.open(DocumentTableComponent, {
-        width: '80%',
+        ...MODAL_MEDIUM,
         data: {
           executionId: this.proTaskE?.executionId
         }
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
-        width: '60%',
+        ...MODAL_SMALL,
         data: {
           executionId: this.proTaskE?.executionId
         }

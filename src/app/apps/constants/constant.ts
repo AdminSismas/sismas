@@ -888,3 +888,7 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
 ];
 
 export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'];
+
+export const MODAL_LARGE ={ maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
+export const MODAL_MEDIUM ={ maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
+export const MODAL_SMALL ={ maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };

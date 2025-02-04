@@ -15,6 +15,7 @@ import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { MODAL_MEDIUM } from 'src/app/apps/constants/constant';
 
 @Component({
   selector: 'vex-certificate-grid',
@@ -95,8 +96,7 @@ export class CertificateGridComponent {
     if (certificate) {
        this.dialog.open(CertificateDialogComponent, {
         data: certificate,
-        width: '1200px',
-        height: '370px'
+        ...MODAL_MEDIUM,
       });
 
     } else {

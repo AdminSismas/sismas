@@ -17,7 +17,10 @@ import {
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_ALFA_MAIN_OPERATION_COLUMN, TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPEINFORMATION_VISUAL,
+  MODAL_LARGE,
+  MODAL_MEDIUM,
+  MODAL_SMALL
 } from '../../../constants/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -185,8 +188,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     }
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        minWidth: '99%',
-        minHeight: '90%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
           operation?.baunitHead?.baunitIdE,
@@ -231,8 +233,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     }
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        minWidth: '99%',
-        minHeight: '90%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
           operation?.baunitHead?.baunitIdE,
@@ -280,7 +281,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     });
     this.dialog
       .open(ViewChangesBpmOperationComponent, {
-        width: '60%',
+        ...MODAL_SMALL,
         disableClose: true,
         data:data
       })
@@ -301,7 +302,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   editCadastralUnits(row: Operation) {
     console.log(row);
     this.dialog.open(DialogTableAlfaMainComponent, {
-      width: '80%',
+      ...MODAL_MEDIUM,
       data: {
         executionId: this.executionId,
         baunitIdE: row.baunitHead?.baunitIdE,

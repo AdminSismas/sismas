@@ -21,7 +21,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITION } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
@@ -117,7 +117,7 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
-      width: '60%',
+      ...MODAL_SMALL,
       data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION},
       disableClose: true // Ensure this is set to false or omitted
     }).afterClosed()
@@ -138,8 +138,7 @@ export class BasicPropertyInformationComponent implements OnInit {
     openGeographicViewerMain(data: any): void {
       this.dialog
         .open(GeographicViewerComponent, {
-          width: '30%',
-          height: '30%',
+          ...MODAL_SMALL,
           disableClose: true,
           data: new ContentInfoSchema(data.baunitIdE, data)
         })

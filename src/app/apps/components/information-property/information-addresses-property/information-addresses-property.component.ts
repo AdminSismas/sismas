@@ -23,7 +23,10 @@ import {
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
-  TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
+  TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL,
+  MODAL_SMALL
 } from '../../../constants/constant';
 import { MatCardModule } from '@angular/material/card';
 import {
@@ -276,8 +279,7 @@ export class InformationAddressesPropertyComponent
   openAddressInformationProperty(data: BasicInformationAddress) {
     this.dialog
       .open(DetailInformationAddressComponent, {
-        minWidth: '50%',
-        minHeight: '40%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: new BasicInformationAddress(data, this.schema)
       })
@@ -300,8 +302,7 @@ export class InformationAddressesPropertyComponent
     };
     const dialogRef = this.dialog
       .open(EditInformationAddressComponent, {
-        minWidth: '50%',
-        minHeight: '40%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: dialogData,
       });

@@ -55,7 +55,8 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_BASIC_PRINCIPALS
+  TABLE_COLUMN_BASIC_PRINCIPALS,
+  MODAL_SMALL
 } from '../../../../../../apps/constants/constant';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
 
@@ -207,7 +208,7 @@ export class BasicParticipantTableComponent
             this.form.get('personCompleted')?.patchValue('');
             this.dialog
               .open(CreatePeopleComponent, {
-                width: '60%',
+                ...MODAL_SMALL,
                 data: {
                   domIndividualTypeNumber: info.typeNumberDocument,
                   number: info.numberID,

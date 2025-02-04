@@ -32,6 +32,7 @@ import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-atta
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { ViewFileDocumentManagementComponent } from '../../view-file-document-management/view-file-document-management.component';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../../constants/attachment.constant';
+import { MODAL_LARGE } from '../../../constants/constant';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
@@ -180,9 +181,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   viewFile(metaData: contentInfoAttachment): void {
     this.dialog
       .open(ViewFileDocumentManagementComponent, {
-        minWidth: '370px',
-        width: '98%',
-        height: '86%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: {
           metaData: metaData,

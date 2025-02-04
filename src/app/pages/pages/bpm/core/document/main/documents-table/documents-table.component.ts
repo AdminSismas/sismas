@@ -34,6 +34,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/view-file-document-management/view-file-document-management.component';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
+import { MODAL_LARGE } from 'src/app/apps/constants/constant';
 
 
 @Component({
@@ -191,9 +192,7 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
     viewFile(metaData: contentInfoAttachment): void {
       this.dialog
         .open(ViewFileDocumentManagementComponent, {
-          minWidth:'370px',
-          width:'98%',
-          height: '86%',
+          ...MODAL_LARGE,
           disableClose: true,
           data: {
             metaData: metaData,
@@ -332,9 +331,7 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
 
     onClickOpenAddAttachmentModal(): void {
       const dialogRef = this.dialog.open(AttachmentFormComponent, {
-        minWidth: '370px',
-        width: '98%',
-        height: '86%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: { executionId: this.executionId }
       });

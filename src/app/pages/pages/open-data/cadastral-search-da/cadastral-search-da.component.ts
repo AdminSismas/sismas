@@ -24,7 +24,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { SearchData } from 'src/app/apps/interfaces/search-data.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { LIST_SCHEMAS_CONTROL_MAIN, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/constant';
+import { LIST_SCHEMAS_CONTROL_MAIN, MODAL_LARGE, MODAL_SMALL, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/constant';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
 import { GeographicViewerComponent } from 'src/app/apps/components/geographic-viewer/geographic-viewer.component';
@@ -136,8 +136,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
-        width: '30%',
-        height: '30%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInfoSchema(data.baunitIdE, data)
       })
@@ -147,8 +146,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
   openCadastralInformationProperty(data: BaunitHead): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        minWidth: '99%',
-        minHeight: '90%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE,
@@ -171,9 +169,7 @@ export class CadastralSearchDAComponent implements OnInit, AfterViewInit {
     }
     this.dialog
       .open(FilterCadastralSearchDaComponent, {
-        minWidth: '50%',
-        width: '70%',
-        minHeight: '50%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: this.searchData
       })

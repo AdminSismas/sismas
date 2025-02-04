@@ -34,6 +34,7 @@ import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/vie
 import { DocumentValidateComponent } from '../document-validate.component';
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES, TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE } from 'src/app/apps/constants/attachment.constant';
 import { SelectionModel } from '@angular/cdk/collections';
+import { MODAL_LARGE } from 'src/app/apps/constants/constant';
 
 
 @Component({
@@ -185,9 +186,7 @@ export class DocumentsTableComponent implements AfterViewInit, OnInit {
     viewFile(metaData: contentInfoAttachment): void {
       this.dialog
         .open(ViewFileDocumentManagementComponent, {
-          minWidth:'370px',
-          width:'98%',
-          height: '86%',
+          ...MODAL_LARGE,
           disableClose: true,
           data: {
             metaData: metaData,

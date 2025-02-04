@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AssistantsService } from 'src/app/core/crud/assistantsService.service';
 import { assistantData } from 'src/app/core/crud/assistantsData.model';
 import { contactsData } from 'src/static-data/contacts';
+import { MODAL_SMALL } from 'src/app/apps/constants/constant';
 
 
 @Component({
@@ -121,7 +122,7 @@ export class AssistantsGridComponent implements OnInit {
         nombre: '',
         descripcion: ''
       },
-      width: '600px'
+      ...MODAL_SMALL,
     });
   }
 

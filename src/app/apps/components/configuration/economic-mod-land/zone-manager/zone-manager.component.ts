@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 import { EconomicZoneComponent } from '../economic-zone/economic-zone.component';
+import { MODAL_SMALL } from 'src/app/apps/constants/constant';
 
 @Component({
   selector: 'zone-manager',
@@ -85,7 +86,7 @@ export class ZoneManagerComponent implements OnInit {
 
   openDialogCreateZone(): void {
     this.dialog.open(CreateZoneComponent, {
-      width: '60%',
+      ...MODAL_SMALL,
       data: {
         title: this.typeZone,
         inputs: getZoneParams(this.typeZone)
@@ -104,7 +105,7 @@ export class ZoneManagerComponent implements OnInit {
 
   openDialogEditZone(row: any): void {
     this.dialog.open(CreateZoneComponent, {
-      width: '60%',
+      ...MODAL_SMALL,
       data: {
         title: `${this.typeZone} ${row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode}`,
         inputs: getZoneParams(this.typeZone),

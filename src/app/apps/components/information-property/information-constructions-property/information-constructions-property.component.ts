@@ -21,7 +21,10 @@ import {
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
-  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
+  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL,
+  MODAL_SMALL
 } from '../../../constants/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -229,8 +232,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
 
     this.dialog
       .open(DetailInformationConstructionsPropertyComponent, {
-        minWidth: '60%',
-        minHeight: '70%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInformationConstruction(data,this.schema, this.baunitId)
       })
@@ -248,8 +250,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     };
 
     const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
-      minWidth: '50%',
-      minHeight: '40%',
+      ...MODAL_SMALL,
       disableClose: true,
       data: dialogData,
     });
@@ -277,8 +278,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
 
   editInformations(customer: any): void {
     const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
-      minWidth: '50%',
-      minHeight: '40%',
+      ...MODAL_SMALL,
       data: {
         ...customer,
         executionId: this.executionId,

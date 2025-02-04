@@ -30,7 +30,7 @@ import { Observable } from 'rxjs';
 import { GeographicViewerComponent } from 'src/app/apps/components/geographic-viewer/geographic-viewer.component';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
-import { LIST_SCHEMAS_CONTROL_MAIN, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
+import { LIST_SCHEMAS_CONTROL_MAIN, MODAL_LARGE, MODAL_MEDIUM, MODAL_SMALL, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
 import { TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/procedures.constant';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
@@ -124,8 +124,7 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
       this.searValueData({}, this.initParams as string);
       setTimeout(() => {
         this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          minWidth: '99%',
-          minHeight: '90%',
+          ...MODAL_LARGE,
           disableClose: true,
           data: new ContentInfoSchema(
             this.dataSource.data[0].baunitIdE,
@@ -151,8 +150,7 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
-        width: '30%',
-        height: '30%',
+        ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInfoSchema(data.baunitIdE, data)
       })
@@ -162,8 +160,7 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
   openCadastralInformationProperty(data: BaunitHead): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        minWidth: '99%',
-        minHeight: '90%',
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
@@ -181,9 +178,7 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
     }
     this.dialog
       .open(FilterCadastralSearchComponent, {
-        minWidth: '50%',
-        width: '70%',
-        minHeight: '50%',
+        ...MODAL_MEDIUM,
         disableClose: true,
         data: this.searchData
       })

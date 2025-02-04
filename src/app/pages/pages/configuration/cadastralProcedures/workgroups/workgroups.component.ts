@@ -18,7 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PAGE_OPTION__10_20_50_100 } from 'src/app/apps/constants/constant';
+import { PAGE_OPTION__10_20_50_100, MODAL_SMALL } from 'src/app/apps/constants/constant';
 
 @Component({
   selector: 'vex-workgroups',
@@ -95,7 +95,7 @@ export class WorkgroupsComponent implements OnInit {
   // Método para abrir el modal de crear/editar
   openDialog(group?: Group): void {
     const dialogRef = this.dialog.open(GroupDialogComponent, {
-      width: '400px',
+      ...MODAL_SMALL,
       data: group || {} // Si existe un grupo, lo pasa al modal, si no, se pasa un objeto vacío
     });
 

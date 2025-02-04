@@ -37,7 +37,8 @@ import {
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND,
   LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
-  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL
+  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL,
+  MODAL_LARGE
 } from '../../../constants/constant';
 import { Zone } from '../../../interfaces/territorial-organization/zone.model';
 import { Sector } from '../../../interfaces/territorial-organization/sector.model';
@@ -215,9 +216,7 @@ export class FilterCertificateSearchComponent implements OnInit {
   
   
     const dialogRef = this.dialog.open(ViewCertificateManagementComponent, {
-      minWidth: '370px',
-      width: '98%',
-      height: '86%',
+      ...MODAL_LARGE,
       disableClose: true,
       data: { documentNumber, documentType, fullName }
     });
