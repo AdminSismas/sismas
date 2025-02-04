@@ -34,25 +34,25 @@ export const appRoutes: VexRoutes = [
         path: 'myWork',
         loadChildren: () => import('./pages/pages/my-work/my-work.routes'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'USER_READ'] }
+        data: { roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV'] }
       },
       {
         path: 'operationSupport',
         loadChildren: () => import('./pages/pages/operation-support/operation-support-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'USER_READ'] }
+        data: { roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV'] }
       },
       {
         path: 'openData',
         loadChildren: () => import('./pages/pages/open-data/open-data-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ'] }
+        data: { roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ', 'USER_SERV'] }
       },
       {
         path: 'publicService',
         loadChildren: () => import('./pages/pages/public-service/public-service-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ'] }
+        data: { roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ', 'USER_SERV'] }
       },
       {
         path: 'configuration',
@@ -70,7 +70,7 @@ export const appRoutes: VexRoutes = [
         path: 'bpm',
         loadChildren: () => import('./pages/pages/bpm/bpm-routing'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'USER_READ'] }
+        data: { roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV'] }
       },
       {
         path: '**',
