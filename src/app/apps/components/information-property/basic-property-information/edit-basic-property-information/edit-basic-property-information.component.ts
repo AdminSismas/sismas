@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 interface EditBasicPropertyInputs {
-  
+
   groupName?:string;
   fields?: InputsField[];
 }
@@ -97,7 +97,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
             },
 // *********** estos dos campo contituyen matricula inmobiliaria**********
 
-           
+
 // *********** estos dos campo contituyen matricula inmobiliaria**********
             {
               name: 'baunitIdOrigin',
@@ -282,8 +282,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     //           }
     //     ]
     //   }
-      
-    
+
+
   ];
 
   constructor(
@@ -330,14 +330,12 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.form.get('cadastralNumberFormat')?.disable();
-
-    this.form.get('cadastralLastEventAt')?.disable();
-    this.form.get('cadastralLastEventCode')?.disable();
-    this.form.get('updatedBy')?.disable();
-    this.form.get('updatedAt')?.disable();
-
     this.form.reset(this.data);
+    Object.keys(this.form.controls).forEach(field => {
+      if (field !== 'propertyRegistryOffice' && field !== 'propertyRegistryNumber') {
+        this.form.get(field)?.disable();
+      }
+    });
   }
 
   editBasicInformationProperty() {
