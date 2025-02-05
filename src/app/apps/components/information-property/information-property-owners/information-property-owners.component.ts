@@ -34,6 +34,7 @@ import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-pro
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+import { FRACTION_DECIMALS, TABLE_COLUMNS } from 'src/app/apps/constants/information-property-owners.constants';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -75,62 +76,14 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
   @Input() editable? = true;
 
-  protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = [
-    {
-      label: 'Detalle',
-      property: 'viewDetail',
-      type: 'button',
-      visible: true
-    },
-    {
-      label: 'Tipo documento',
-      property: 'domIndividualTypeNumber',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Número',
-      property: 'number',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Nombre completo',
-      property: 'fullName',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Fracción',
-      property: 'fractionS',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Tipo derecho',
-      property: 'domRightType',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Inicio de tenencia',
-      property: 'beginAt',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Acciones',
-      property: 'actions',
-      type: 'button',
-      visible: true
-    }
-  ];
+  protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = TABLE_COLUMNS;
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
 
   fractions_sum = 0;
+  fractions_decimals: number = FRACTION_DECIMALS;
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
@@ -215,7 +168,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       this.dataSource.data = infoOwners;
       this.fractions_sum = infoOwners.reduce((acc: number, owner: InfoOwners) => {
         const fraction = Number(owner.fractionS);
-        return acc + fraction ;
+        const sum = acc + fraction;
+        return Math.round(sum * 100) / Math.pow(10, this.fractions_decimals);
       }, 0);
     } catch (e) {
       console.error(e);

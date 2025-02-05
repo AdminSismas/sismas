@@ -120,11 +120,18 @@ export class AddPropertyOwnerComponent implements OnInit {
     }
 
     this.rrrightService.postRrrightOwnerProperty(params)
-      .subscribe(() => {
-        this.close();
+      .subscribe({
+        next: () => {
+          this.snackbar.open('Propietario agregado', 'CLOSE', { duration: 10000 });
+          this.close();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error);
+          if (error.status === 400) {
+            this.snackbar.open(error.error, 'Aceptar', { duration: 5000 });
+          }
+        }
       });
-
-    this.snackbar.open('Propietario agregado', 'CLOSE', { duration: 10000 });
   }
 
   createPerson(newCustomer: { number: string; individualTypeNumber: string; }): void {
