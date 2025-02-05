@@ -50,15 +50,18 @@ export class ViewCertificateManagementComponent implements OnInit {
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
 
-  typeCertificate = 'CERT_POSEER_BIEN_TAQUILLA';
+  typeCertificate: string;
   documentNumber: string;
   documentType: string;
   fullName: string;
+  baunitID: number;
 
-  basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individualNumber}`;
+ 
   pdfUrl: SafeResourceUrl | string = '';
   fileType = '';
   fileContent = '';
+  basic_url: string | undefined;
+  basic_url_appraisals: string | undefined;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -69,11 +72,22 @@ export class ViewCertificateManagementComponent implements OnInit {
       documentNumber: string;
       documentType: string;
       fullName: string;
+      typeCertificate: string;
+      baunitID: number;
     }
   ) {
     this.documentNumber = data.documentNumber;
     this.documentType = data.documentType;
-    this.fullName = data.fullName.toUpperCase();
+    this.fullName = data.fullName ? data.fullName.toUpperCase() : '';
+    this.typeCertificate = data.typeCertificate;
+    this.baunitID = data.baunitID
+
+    if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
+      this.basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individualNumber}`;
+    } else {
+      this.basic_url_appraisals = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}/${this.baunitID}`;
+    }
+  
   }
 
   ngOnInit(): void {
@@ -122,7 +136,7 @@ export class ViewCertificateManagementComponent implements OnInit {
 
   downloadPdfFromSafeUrl(): void {
     const unsafeUrl = this.sanitizer.sanitize(SecurityContext.URL, this.pdfUrl);
-
+  
     if (unsafeUrl) {
       fetch(unsafeUrl)
         .then((res) => res.blob())
@@ -130,11 +144,20 @@ export class ViewCertificateManagementComponent implements OnInit {
           const blobUrl = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = blobUrl;
-          a.download = 'certificado_no_bien.pdf';
+  
+      
+          let fileName = '';
+          if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
+            fileName = `Certificado_de_poseer_o_no_bienes_${this.fullName}.pdf`;
+          } else if (this.typeCertificate === 'CERT_FICHA_AVALUO') {
+            fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
+          }
+  
+          a.download = fileName; // Usar el nombre de archivo definido
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
-
+  
           window.URL.revokeObjectURL(blobUrl);
         })
         .catch((error) =>
@@ -144,21 +167,31 @@ export class ViewCertificateManagementComponent implements OnInit {
       console.error('URL no segura, descarga cancelada.');
     }
   }
-
+  
   downloadPdf(blob: Blob): void {
     const blobUrl = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
+    
+  
+    let fileName = '';
+    if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
+      fileName = `Certificado_de_poseer_o_no_bienes_${this.fullName}.pdf`;
+    } else if (this.typeCertificate === 'CERT_FICHA_AVALUO') {
+      fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
+    }
+  
     a.href = blobUrl;
-    a.download = 'certificado_no_bien.pdf';
+    a.download = fileName;
     a.click();
-
-    // Limpia la URL del blob después de la descarga
+  
     window.URL.revokeObjectURL(blobUrl);
   }
 
   loadPdf() {
+    const url = this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA' ? this.basic_url : this.basic_url_appraisals;
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
-    const fullUrl = `${this.basic_url}${queryParams}`;
+    const fullUrl = `${url}${queryParams}`;
+
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
@@ -166,7 +199,6 @@ export class ViewCertificateManagementComponent implements OnInit {
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const blobUrl = URL.createObjectURL(blob);
-        // Asegúrate de que esta línea use bypassSecurityTrustResourceUrl
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
       },
       error: (error) => {

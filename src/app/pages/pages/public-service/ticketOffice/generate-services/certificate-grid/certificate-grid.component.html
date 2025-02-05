@@ -35,9 +35,12 @@
     <div *ngIf="filteredCertificates.length > 0" @stagger class="overflow-y-auto flex-auto">
       <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 container">
 
-        <vex-certificate-card (openCertificate)="openCertificate(certificate.id)"
-          *ngFor="let certificate of filteredCertificates; trackBy: trackById" @fadeInUp [certificate]="certificate">
-        </vex-certificate-card>
+        <vex-certificate-card
+        *ngFor="let certificate of filteredCertificates; trackBy: trackById"
+        (openCertificate)="openCertificate(certificate.id, certificate.id === 1 ? 'standard' : 'avaluo')"
+        @fadeInUp
+        [certificate]="certificate">
+      </vex-certificate-card>
       </div>
     </div>
   
