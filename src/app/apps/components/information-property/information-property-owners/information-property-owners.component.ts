@@ -4,7 +4,7 @@ import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
-import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TYPEINFORMATION_EDITION, MODAL_SMALL, MODAL_MEDIUM } from '../../../constants/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
@@ -239,7 +239,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     }
 
     this.matDialog.open(AddPropertyOwnerComponent, {
-      ...MODAL_SMALL,
+      ...MODAL_MEDIUM,
       data: {
         ownersData: data.data,
         baunitId: this.baunitId,

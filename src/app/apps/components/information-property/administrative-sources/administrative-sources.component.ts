@@ -16,7 +16,7 @@ import { CreateAdministrativeSourceComponent } from './create-administrative-sou
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { COLUMNS_ADMINISTRATIVE_SOURCES } from 'src/app/apps/constants/administrative-source.constants';
-import { MODAL_LARGE } from '../../../constants/constant';
+import { MODAL_LARGE, MODAL_MEDIUM } from '../../../constants/constant';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { NgClass } from '@angular/common';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -114,7 +114,7 @@ export class AdministrativeSourcesComponent implements OnInit {
   createAdministrativeSource(): void {
     this.dialog
       .open(CreateAdministrativeSourceComponent, {
-        ...MODAL_LARGE,
+        ...MODAL_MEDIUM,
         data: {
           executionId: this.executionId as string,
           baunitId: this.baunitId as string
@@ -179,7 +179,7 @@ export class AdministrativeSourcesComponent implements OnInit {
 
       this.dialog
         .open(CreateAdministrativeSourceComponent, {
-          width: '100%',
+          ...MODAL_MEDIUM,
           data: params
         })
         .afterClosed()
