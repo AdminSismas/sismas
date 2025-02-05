@@ -43,15 +43,18 @@
             <div class="flex flex-col ">
               <div *ngIf="change.operationType === 'CREATE'"
                    class="px-4 py-2 rounded-xl !bg-green-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                {{ change.operationType }}
+                <!-- {{ change.operationType }} -->
+                  Creado
               </div>
               <div *ngIf="change.operationType === 'UPDATE'"
                    class="px-4 py-2 rounded-xl !bg-primary-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                {{ change.operationType }}
+                <!-- {{ change.operationType }} -->
+                Agregado
               </div>
               <div *ngIf="change.operationType === 'DELETE'"
                    class="px-4 py-2 rounded-xl !bg-red-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                {{ change.operationType }}
+                <!-- {{ change.operationType }} -->
+                  Borrado
               </div>
             </div>
           </div>
