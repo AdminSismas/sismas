@@ -53,6 +53,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { UserService } from '../../auth/login/services/user.service';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 
 @Component({
@@ -93,7 +95,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   typeDocument = false;
   infoDoc = 'Id';
   urlQuery = '';
-
+  user: DecodeJwt | null = null;
   form: FormGroup = this.fb.group({});
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -161,10 +163,12 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private peopleService: PeopleService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
+    this.user = this.userService.getUser();
     this.dataSource = new MatTableDataSource();
 
     this.refreshData();
