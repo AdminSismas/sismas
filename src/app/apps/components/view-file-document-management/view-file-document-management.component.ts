@@ -98,7 +98,6 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {
     const urlComplete = `${this.basic_url}${this.executionId}/${this.idAttachment}/${this.originalFileName}`;
-    alert(urlComplete);
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
   }
 
