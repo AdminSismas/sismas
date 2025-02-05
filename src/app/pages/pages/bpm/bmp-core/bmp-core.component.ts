@@ -50,6 +50,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ShowErrorValidateAlfaMainComponent } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -123,7 +124,8 @@ export class BmpCoreComponent implements OnInit {
     private snackbar: MatSnackBar,
     private bpmCoreService: BpmCoreService,
     private infoGeneralService: SendInfoGeneralService,
-    private tasksPanelServices: TasksPanelService
+    private tasksPanelServices: TasksPanelService,
+     private bpmProcessService: BpmProcessService,
   ) {}
 
   async ngOnInit() {
@@ -281,18 +283,24 @@ export class BmpCoreComponent implements OnInit {
   }
 
   captureInformationBpmCore(result: ProTaskE) {
-    if (
-      !result ||
-      !result.executionId ||
-      result.flowId! < 0 
-    ) {
-      this.router.navigate([environment.myWork_tasksPanel]);
+    if (result?.proTask) {
+      if (result.proTask.taskId! < 0  ) {
+       const vailablePermission: PermissionVailable = {
+                    executionId: result.executionId?.toString() || '',
+                    message: result?.proTask?.flowName || ''
+                  };
+      this.router.navigate([environment.myWork_tasksPanel],{
+        queryParams: { executionId: result.executionId }
+      });
       this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 10000 });
+      this.bpmProcessService.setPermissions(vailablePermission)
       return;
     }
+  }
+
 
     this.proTaskE_Bpm = result;
-    this.executionId = result.executionId?.toString();
+    this.executionId = result.executionId?.toString() || '';
     this.getNewProFlow(result.flowId!.toString());
     this.infoGeneralService.setInfoProTaskE(result);
     this.activateLoading(true);
