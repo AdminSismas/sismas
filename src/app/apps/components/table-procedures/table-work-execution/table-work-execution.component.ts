@@ -21,7 +21,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProceduresService } from '../../../services/procedures.service';
 import { PageProceduresData } from '../../../interfaces/page-procedures-data.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -37,39 +37,48 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { InputComponent } from '../../input/input.component';
 
 
 
 @Component({
-    selector: 'vex-table-procedures',
+    selector: 'vex-table-execution',
     standalone: true,
-    templateUrl: './table-procedures.component.html',
-    styleUrl: './table-procedures.component.scss',
+    templateUrl: './table-work-execution.component.html',
+    styleUrl: './table-work-execution.component.scss',
     animations: [fadeInUp400ms, stagger40ms],
     providers: [
       { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
     ],
     imports: [
-        VexPageLayoutComponent,
-        VexPageLayoutContentDirective,
-        MatTableModule,
-        MatInputModule,
-        MatIconModule,
-        MatMenuModule,
-        ReactiveFormsModule,
-        MatPaginatorModule,
-        MatDatepickerModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        CommonModule,
-        FormsModule,
-        NgFor,
-        NgClass,
-        NgIf,
-        ReactiveFormsModule
+         VexPageLayoutComponent,
+            VexPageLayoutContentDirective,
+            MatTableModule,
+            MatInputModule,
+            MatIconModule,
+            MatMenuModule,
+            ReactiveFormsModule,
+            MatPaginatorModule,
+            MatDatepickerModule,
+            MatCheckboxModule,
+            MatButtonModule,
+            MatIconModule ,
+            MatSortModule,
+            MatTableModule,
+            CommonModule,
+            FormsModule,
+            MatDatepickerModule,
+            NgFor,
+            NgClass,
+            NgIf,
+            ReactiveFormsModule,
+            InputComponent
     ]
 })
-export class GetTableProcedureComponent implements OnInit {
+export class TableWorkExecutionComponent implements OnInit {
   /* ============== ATRIBUTES ============== */
   dataSource!: MatTableDataSource<ProceduresCollection>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -80,7 +89,7 @@ export class GetTableProcedureComponent implements OnInit {
   informationAddressForm!: FormGroup;
   seeInfo= false;
   textInfo = 'Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem';
-
+  public procedureDetail:TaskResponseModel= new TaskResponseModel();
   // beginAt!: Date;
   // beginAtE!: Date;
   // executionCode: string = '';
@@ -100,6 +109,7 @@ export class GetTableProcedureComponent implements OnInit {
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
+     private dialog: MatDialog,
     private proceduresService: ProceduresService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
@@ -193,6 +203,25 @@ export class GetTableProcedureComponent implements OnInit {
     this.contentInformations = data; 
     this.captureInformationProceduresData(); 
   }
+
+  public informationDetail(value:any){
+    console.log(value, 'Registro de la tabla');
+
+    this.proceduresService.viewDetailIdProcedures(
+      +value.executionCode)
+      .subscribe( result => {
+        this.procedureDetail = result;
+          this.seeTaskProperty(this.procedureDetail,+value.executionCode);
+        
+      });
+  }
+
+   seeTaskProperty(value:TaskResponseModel,taskId:number):void {
+        this.dialog.open(DetailInformationTasksComponent, {
+          width: '50%',
+          data: { taskId: taskId ,value }
+        });
+      }
 
   captureInformationProceduresData() {
     let data: contentInfoProcedures[];

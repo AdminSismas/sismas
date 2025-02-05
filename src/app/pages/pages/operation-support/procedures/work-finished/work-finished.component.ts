@@ -3,7 +3,8 @@ import { InConstructionComponent } from '../../../../../apps/components/in-const
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { TableWorkFinishedComponent } from 'src/app/apps/components/table-work-finished/table-work-finished.component';
+import { TableProceduresComponent } from 'src/app/apps/components/table-procedures/table-procedures.component';
+import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'vex-work-finished',
@@ -13,11 +14,12 @@ import { TableWorkFinishedComponent } from 'src/app/apps/components/table-work-f
     MatIconModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
-    TableWorkFinishedComponent
+    TableProceduresComponent
   ],
   templateUrl: './work-finished.component.html',
   styleUrl: './work-finished.component.scss'
 })
 export class WorkFinishedComponent {
+  urlMain = environment.finish;
 
 }

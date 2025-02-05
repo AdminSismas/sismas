@@ -6,6 +6,7 @@ export class contentInfoProcedures {
     lastUpdateAt: string;
     suspendedDays: number;
     dueDate: string;
+    executionId?: number;
 
 
     constructor(content?: any) {
@@ -16,5 +17,6 @@ export class contentInfoProcedures {
         this.lastUpdateAt = content.lastUpdateAt;
         this.suspendedDays = content.suspendedDays;
         this.dueDate = content.dueDate;
+        this.executionId = content.executionId;
     }
 }

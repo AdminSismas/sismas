@@ -10,7 +10,9 @@
                             matInput
                             [matDatepicker]="startDatepicker"
                             placeholder="Escriba o seleccione"
-                            formControlName="beginAtForm"/>
+                            formControlName="beginAtForm"
+                            [max]="maxDate"
+                            />
                         <mat-datepicker-toggle
                             [for]="startDatepicker"
                             matIconSuffix></mat-datepicker-toggle>
@@ -19,6 +21,7 @@
                         <mat-error *ngIf="beginAtForm?.hasError('dateComparison')">
                           La fecha debe ser menor a la fecha  fin
                         </mat-error>
+                        <mat-error *ngIf="beginAtForm?.touched && beginAtForm?.hasError('required')">Este campo es obligatorio.</mat-error>
                     </mat-form-field>
 
 
@@ -33,7 +36,9 @@
                         matInput
                         [matDatepicker]="endDatepicker"
                         placeholder="Escriba o seleccione"
-                        formControlName="beginAtEForm"/>
+                        formControlName="beginAtEForm"
+                        [max]="maxDate"
+                        />
                     <mat-datepicker-toggle
                         [for]="endDatepicker"
                         matIconSuffix></mat-datepicker-toggle>
@@ -42,7 +47,7 @@
                        <!-- Validaciones -->
                        <mat-error *ngIf="beginAtEForm?.touched && beginAtEForm?.hasError('required')">Este campo es obligatorio.</mat-error>
                        <mat-error *ngIf="beginAtEForm?.hasError('dateComparison')">
-                         La fecha debe ser menor a la fecha  fin.
+                         La fecha debe ser mayor a la fecha  de inicio.
                        </mat-error>
                       </mat-form-field>
                   <div>
@@ -57,7 +62,7 @@
                               />
                           </mat-form-field>
                           <br>
-                          <mat-error *ngIf="beginAtEForm?.touched && beginAtEForm?.hasError('required')">Este campo es obligatorio.</mat-error>
+                          <mat-error *ngIf="executionCodeForm?.touched && executionCodeForm?.hasError('required')">Este campo es obligatorio.</mat-error>
                           <mat-error *ngIf="executionCodeForm?.hasError('pattern')">Solo se permite valores númerios.</mat-error>
                   </div>
                 <span

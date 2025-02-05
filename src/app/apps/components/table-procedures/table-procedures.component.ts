@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject, Input, ViewChild, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { NgFor, NgClass, NgIf, CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl,FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
@@ -109,6 +109,9 @@ private subscriptions: Subscription  | undefined[] = [];
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   totalElements = 0;
+  maxDate: Date = new Date(); // Fecha máxima permitida (hoy)
+  maxStartDate: Date = new Date(); // Fecha máxima permitida para la fecha de inicio (un día antes de hoy)
+
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -145,11 +148,12 @@ private subscriptions: Subscription  | undefined[] = [];
     this.executionCodeValidate();
     this.individualNumberPartValid();
 
-    this.defaultTableData();
-
+    this.maxStartDate = this.getOneDayBefore(new Date());
+    
     // Validacion de fechas
     this.beginAtgreaterThanDate();
     this.beginAtEFormGreaterThanDate();
+    this.defaultTableData();
 
   }
 
@@ -159,28 +163,51 @@ private subscriptions: Subscription  | undefined[] = [];
     console.log('Todas las suscripciones han sido canceladas');
   }
 
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['urlTable']) {
+       this.urlTable = changes['urlTable'].currentValue;
+      }
+      if (changes['urlView']) {
+       console.log('urlView', changes['urlView']);
+      }
+    }
+  
+
+  getOneDayBefore(date: Date): Date {
+    const result = new Date(date);
+    result.setDate(result.getDate() - 1);
+    return result;
+  }
+
+
+    // Método para generar una fecha un mes atrás a partir de una fecha actual proporcionada
+    getOneMonthAgo(date: Date): Date {
+      const result = new Date(date);
+      result.setMonth(result.getMonth() - 1);
+      return result;
+    }
+
+    
   /**
    * Init information address form
    */
 private initForm(): void {
   this.informationEjecution = this.fBuilder.group({
     beginAtForm: this.fBuilder.control(null,[Validators.required]),
-    beginAtEForm: this.fBuilder.control(null),
+    beginAtEForm: this.fBuilder.control(null,[Validators.required]),
     executionCodeForm: this.fBuilder.control(0, [Validators.pattern(/^[0-9]*$/)]), // Solo letras y permite espacio
     individualNumberPartForm: this.fBuilder.control( null, [Validators.pattern(/^[0-9]*$/)]),
   
-  },
-  {
-    // Aplica el validador a nivel de formulario
-    validators: dateComparisonValidator('beginAtForm', 'beginAtEForm'),
   }
 );
-  this.beginAtForm?.setValue(new Date());
+  this.beginAtForm?.setValue(this.getOneMonthAgo(new Date()));
+  this.beginAtEForm?.setValue(new Date());
+
 }
 
 
     /* ------- Meth. HTML ------- */
-    toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
+    toggleColumnVisibility(column: TableColumn<contentInfoProcedures>, event: Event) {
       event.stopPropagation();
       event.stopImmediatePropagation();
       column.visible = !column.visible;
@@ -220,21 +247,15 @@ private initForm(): void {
            
           });
     
-   
-
-       
-
-
-
         } else {
 
           console.log(value, 'Registro de la tabla');
 
           this.proceduresService.viewDetailIdProcedures(
-            +value.executionCode)
+            +value.executionId)
             .subscribe( result => {
               this.procedureDetail = result;
-                this.seeTaskProperty(this.procedureDetail,+value.executionCode);
+                this.seeTaskProperty(this.procedureDetail,+value.executionId);
               
             });
 
@@ -259,12 +280,19 @@ private initForm(): void {
   
           const beginAtComparation = this.beginAtForm?.value ? new Date(this.beginAtForm?.value): null ;
           const beginAtEComparation = this.beginAtEForm?.value ? new Date(this.beginAtEForm?.value) : null ;
-  
-          if (beginAtComparation && beginAtEComparation && new Date(beginAtEComparation) < new Date(beginAtComparation)){
-            this.beginAtForm?.setErrors({ dateComparison: true });
-          }else{
-            this.beginAtForm?.setErrors(null);
+          
+            if (beginAtComparation && beginAtEComparation ){
+            if ( beginAtComparation.getTime() < beginAtEComparation.getTime()){
+
+              // this.beginAtForm?.setErrors(null);
+              // this.beginAtEForm?.reset();
+              this.beginAtEForm?.markAsTouched();
+              this.beginAtEForm?.markAsUntouched();
+            }else{
+              this.beginAtForm?.setErrors({ dateComparison: true });
+            }
           }
+      
           // Aquí podrías realizar una llamada HTTP o cualquier otra operación
           console.log(value, 'executoingCode');
      
@@ -274,29 +302,27 @@ private initForm(): void {
       });
     }
 
-    public beginAtEFormGreaterThanDate(){
-
+    public beginAtEFormGreaterThanDate() {
       this.beginAtEForm?.valueChanges.pipe(
-        debounceTime(100),  // Espera 500 ms después del último cambio
+        debounceTime(100),  // Espera 100ms después del último cambio
         distinctUntilChanged(),
-        tap(value => {
-  
-          const beginAtComparation = this.beginAtForm?.value ? new Date(this.beginAtForm?.value): null ;
-          const beginAtEComparation = this.beginAtEForm?.value ? new Date(this.beginAtEForm?.value) : null ;
-  
-          if (beginAtComparation && beginAtEComparation && new Date(beginAtEComparation) < new Date(beginAtComparation)){
-            this.beginAtEForm?.setErrors({ dateComparison: true });
-          }else{
-            this.beginAtEForm?.setErrors(null);
+        tap(() => {
+          const beginAtDate = this.beginAtForm?.value ? new Date(this.beginAtForm.value) : null;
+          const beginAtEDate = this.beginAtEForm?.value ? new Date(this.beginAtEForm.value) : null;
+    
+          if (beginAtDate && beginAtEDate ) {
+              if ( beginAtEDate.getTime() > beginAtDate.getTime()) {
 
-          }
-        
-          console.log('Validadorde fecha');
-      
-     
-        }))
-      .subscribe();
+                this.beginAtEForm?.setErrors(null);
+              } else {
+                this.beginAtEForm?.setErrors({ dateComparison: true });
+              }
+        }
+          console.log('Validador de fecha', { beginAtDate, beginAtEDate });
+        })
+      ).subscribe();
     }
+    
   
 
     public executionCodeValidate(){
@@ -351,12 +377,12 @@ private initForm(): void {
     const formValue: PageProceduresData =  {
       page: this.page,
       size: this.pageSize,
-      beginAt: '13/01/2024',
-      beginAtE: '',
-      executionCode: this.executionCodeForm?.value,
+      beginAt: this.formatDate(this.getOneMonthAgo(new Date())),
+      beginAtE: this.formatDate(new Date()),
+      executionCode: '0',
       individualNumber: '',
     };
-    
+    // this.objectParameters();
     this.getDataFromProceduresService(formValue);
     }
   
@@ -387,33 +413,14 @@ private initForm(): void {
   
     /* ------- Meth. Common ------- */
     objectParameters(): PageProceduresData {
-      let beginAtETrans = '';
-
-    if(this.beginAtForm?.value === null){
-      // this.beginAtE?.setValue(new Date())
-       beginAtETrans = '';
-    }
-
-    const beginAtTrans = new Date(this.beginAtForm?.value);
-
-
-    if(this.executionCodeForm?.value === null){
-      // this.beginAtE?.setValue(new Date())
-      this.executionCodeForm?.setValue(0); 
-    }
-
-    if(this.individualNumberPartForm?.value === null){
-      // this.beginAtE?.setValue(new Date())
-      this.individualNumberPartForm?.setValue(''); 
-    }
-
+    
     const formValue: PageProceduresData =  {
       page: this.page,
       size: this.pageSize,
-      beginAt: this.formatDate(beginAtTrans),
-      beginAtE: beginAtETrans ? this.formatDate(new Date('13/01/2024')) : '' ,
-      executionCode: this.executionCodeForm?.value,
-      individualNumber: this.individualNumberPartForm?.value,
+      beginAt:  this.beginAtForm?.value ? this.formatDate(this.beginAtForm.value) : this.formatDate(this.getOneMonthAgo(new Date())) ,
+      beginAtE: this.beginAtEForm?.value ? this.formatDate(this.beginAtEForm.value) : this.formatDate(new Date()) ,
+      executionCode: this.executionCodeForm?.value ? this.executionCodeForm?.value : 0 ,
+      individualNumber: this.individualNumberPartForm?.value ? this.individualNumberPartForm?.value : '',
     };
     
     return formValue;
@@ -450,7 +457,7 @@ private initForm(): void {
   
     /* ------- Meth. Services ------- */
     getDataFromProceduresService(data:PageProceduresData) {
-      this.proceduresService.getFilterTableEjecutionService(data)
+      this.proceduresService.getFilterTableEjecutionService(data, this.urlTable || '')
       .subscribe({
         next: (result: any) => {
             this.captureInformationSubscribe(result);

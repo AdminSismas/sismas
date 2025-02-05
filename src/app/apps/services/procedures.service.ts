@@ -40,9 +40,9 @@ export class ProceduresService {
     }
 
 
-    public getFilterTableEjecutionService(page: PageProceduresData):Observable<ProceduresCollection[]>{
+    public getFilterTableEjecutionService(page: PageProceduresData,urlMain:string):Observable<ProceduresCollection[]>{
         const paramsR:HttpParams = new HttpParams();
-        const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
+        const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${urlMain}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
             console.log(urlComplete,'URLS RUTA');  
             console.log(this.basic_url,'baseUrl');                             
        return  this.http.get<any>(urlComplete);
