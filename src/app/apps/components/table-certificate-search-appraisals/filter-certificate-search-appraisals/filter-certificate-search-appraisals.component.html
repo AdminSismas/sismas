@@ -22,8 +22,10 @@
           class="container-fluid p-0 overflow-hidden"
           style="padding-bottom: 0px"
         >
+
+
           <!--Búsqueda por círculo - matrícula / matrícula -->
-          <form [formGroup]="formRegistration">
+          <!-- <form [formGroup]="formRegistration">
             <div class="flex flex-col sm:flex-row">
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-1"
@@ -44,11 +46,57 @@
                 </button>
               </div>
             </div>
+          </form> -->
+
+          <form [formGroup]="formBaunitIdE">
+            <h2 class="text-lg font-bold mb-2">
+              Búsqueda por número de ficha
+            </h2>
+            <mat-form-field class="sm:ml-2 sm:mr-2 w-1/2">
+              <mat-label>Número de ficha</mat-label>
+              <input
+                type="number"
+                matInput
+                formControlName="baunitIdE"
+                class="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
+            </mat-form-field>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="searchByBaunitIdE()"
+            >
+              <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+            </button>
+          </form>
+          <form [formGroup]="formNpnComplete">
+            <h2 class="text-lg font-bold mb-2">Búsqueda por NPN completo</h2>
+            <div class="flex flex-col sm:flex-row items-center mb-4">
+              <mat-form-field class="sm:ml-2 sm:mr-2 w-1/2">
+                <mat-label>Código Completo</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="codigoCompleto"
+                  placeholder="Ingrese el código completo"
+                />
+              </mat-form-field>
+              <button
+                (click)="sendInformationTable()"
+                color="primary"
+                mat-flat-button
+                class="ml-2"
+              >
+                <mat-icon svgIcon="mat:search"></mat-icon>
+                Buscar
+              </button>
+            </div>
           </form>
 
           <!-- Búsqueda por documento y tipo -->
            <div *ngIf="seeRuleField">
              <form [formGroup]="formDocumentType">
+              <h2 class="text-lg font-bold mb-2">Búsqueda por documento de identidad</h2>
                <div class="flex flex-col sm:flex-row gap-4">
                  <vex-combox-colletion
                    idComboCollection="typeNumberDocument"
