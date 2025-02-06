@@ -36,7 +36,9 @@ import {
   TYPEINFORMATION_EDITION,
   TYPEINFORMATION_VISUAL,
   MODAL_SMALL,
-  MODAL_LARGE
+  MODAL_LARGE,
+  ROL_USER_READ,
+  ROL_GUEST
 } from 'src/app/apps/constants/constant';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
 import { GeographicViewerComponent } from '../../geographic-viewer/geographic-viewer.component';
@@ -55,6 +57,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { UnitPropertyInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
 import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 
 @Component({
@@ -99,6 +103,8 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
+  rolGuest = ROL_GUEST;
+  rolUserRead = ROL_USER_READ;
 
   @Input({ required: true }) id = '';
   @Input({ required: true }) expandedComponent = false;
@@ -116,6 +122,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
+  user: DecodeJwt | null = null;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -129,7 +136,8 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService,
-    private unitPropertyInformationService: UnitPropertyInformationService
+    private unitPropertyInformationService: UnitPropertyInformationService,
+    private userService: UserService,
   ) {
   }
 
@@ -140,6 +148,8 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.user = this.userService.getUser();
+    console.log(this.user,'user rol');
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }

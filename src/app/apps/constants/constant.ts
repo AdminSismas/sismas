@@ -81,6 +81,9 @@ export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = "Multiplex Campos";
 export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
 export const EVIRONMENT_CC_DIRECCION = '/ccDireccion';
+export const ROL_GUEST = 'GUEST';
+export const ROL_USER_READ = 'USER_READ';
+
 export const EVIRONMENT_RETIRO_IMG = 'assets/img/logo/logo_El_retiro.png';
 export const NAME_LOGO_IMG_SAN_VICENTE = 'logo_san_vicente.png';
 
