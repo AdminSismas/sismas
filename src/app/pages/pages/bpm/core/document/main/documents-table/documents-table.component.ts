@@ -35,11 +35,15 @@ import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/vie
 import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
 import { MODAL_LARGE } from 'src/app/apps/constants/constant';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { stagger40ms } from '@vex/animations/stagger.animation';
 
 
 @Component({
   selector: 'vex-documents-main-table',
   standalone: true,
+  animations: [fadeInUp400ms, stagger40ms],
   imports: [
     CommonModule,
     FormsModule,
@@ -200,9 +204,6 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
           }
         });
 
-        this.dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
-        });
       }
 
 
