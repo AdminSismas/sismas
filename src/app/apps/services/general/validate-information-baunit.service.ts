@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from './send-general-requests.service';
 import { environment as envi, environment } from '../../../../environments/environments';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
 
 @Injectable({
@@ -17,10 +18,15 @@ export class ValidateInformationBaunitService {
     private requestsService: SendGeneralRequestsService
   ) { }
 
-  async getBaunitIdEInOtherProcess(baunitIdE: string):Promise<boolean> {
-    //const url: string = `${this.basic_url}${envi.bpmOperation.proflow}${flowId}`;
-    //return this.requestsService.sendRequestsFetchGetAsync(url);
-    return true;
+  getBaunitIdEInOtherProcess(baunitIdE: string):Observable<string> {
+    const url = `${this.basic_url}${envi.bpmOperation.value}${envi.checkProcess}${baunitIdE}`;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8;'})
+
+    return this.http.get(url, { 
+      responseType: 'text',
+      headers: headers
+    });
   }
 
   private getData(url:string, params:any):Observable<InformationPegeable>{

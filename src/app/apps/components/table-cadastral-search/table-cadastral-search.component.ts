@@ -1,16 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,7 +46,7 @@ import { InfoTableService } from '../../services/general/info-table.service';
 import { SearchData } from '../../interfaces/search-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -38,14 +56,13 @@ import {
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  TABLE_COLUMN_PROPERTIES, TYPEINFORMATION_VISUAL,
+  TABLE_COLUMN_PROPERTIES,
+  TYPEINFORMATION_VISUAL,
   MODAL_LARGE,
   MODAL_MEDIUM,
-  MODAL_SMALL,
+  MODAL_SMALL
 } from '../../constants/constant';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../interfaces/content-info-schema';
 import { GeographicViewerComponent } from '../geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../environments/environments';
@@ -57,7 +74,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService } from '../../services/bpm/bpm-process.service';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from '../../interfaces/user-details/user.model';
-
 
 @Component({
   selector: 'vex-table-cadastral-search',
@@ -94,8 +110,9 @@ import { DecodeJwt } from '../../interfaces/user-details/user.model';
     CurrencyLandsPipe
   ]
 })
-export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnChanges {
-
+export class TableCadastralSearchComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
@@ -110,19 +127,18 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   titleArray: string[] = ['Mi trabajo'];
   titleMenu: string = 'Búsqueda avanzada';
   principaltitleMenu: string = 'Búsqueda avanzada';
-  seeAction:boolean = true;
-
+  seeAction: boolean = true;
 
   dataSource!: MatTableDataSource<BaunitHead>;
-  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
+  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(
+    true,
+    []
+  );
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   initParams?: string;
 
-
-
-  @Input() tituloPage?:string = '';
-  @Input() rulePage?:string = '';
-    
+  @Input() tituloPage?: string = '';
+  @Input() rulePage?: string = '';
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -131,7 +147,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
 
   constructor(
     private router: Router,
-    
+
     private bpmProcessService: BpmProcessService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -140,7 +156,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService,
-    private userService: UserService,
+    private userService: UserService
   ) {
     console.log('TableCadastralSearchComponent , Configuracion');
     this.detectCurrentUrl();
@@ -153,7 +169,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     console.log('Last Segment:', lastSegment);
     if (lastSegment === 'cadastralSearch') {
       this.titleAsing('Búsqueda catastral');
-      this.menuAsing('Búsqueda avanzada','Búsqueda catastral');
+      this.menuAsing('Búsqueda avanzada', 'Búsqueda catastral');
     }
     // else{
     //   this.titleAsing('Búsqueda catastral DA');
@@ -185,16 +201,19 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
       this.initParams = this.route.snapshot.queryParams['npn'];
       this.searValueData({}, this.initParams as string);
       setTimeout(() => {
-        this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          ...MODAL_LARGE,
-          disableClose: true,
-          data: new ContentInfoSchema(
-            this.dataSource.data[0].baunitIdE,
-            this.dataSource.data[0],
-            null,
-            LIST_SCHEMAS_CONTROL_MAIN,
-          )
-        });
+        this.dialog.open(
+          LayoutCardCadastralInformationPropertyComponentComponent,
+          {
+            ...MODAL_LARGE,
+            disableClose: true,
+            data: new ContentInfoSchema(
+              this.dataSource.data[0].baunitIdE,
+              this.dataSource.data[0],
+              null,
+              LIST_SCHEMAS_CONTROL_MAIN
+            )
+          }
+        );
       }, 300);
     }
   }
@@ -209,28 +228,28 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     }
   }
 
-   ngOnChanges(changes: SimpleChanges) {
-      if (changes['tituloPage'] && this.tituloPage) {
-        this.tituloPage = this.tituloPage ;
-        this.titleAsing(this.tituloPage);
-        this.menuAsing('Búsqueda avanzada DA',this.tituloPage);
-        this.seeAction = false;
-      }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tituloPage'] && this.tituloPage) {
+      this.tituloPage = this.tituloPage;
+      this.titleAsing(this.tituloPage);
+      this.menuAsing('Búsqueda avanzada DA', this.tituloPage);
+      this.seeAction = false;
     }
-  
+  }
+
   titleAsing(value: string): void {
     this.titleArray.push(value);
   }
 
-  menuAsing(title:string,principal:string): void {
-  this.titleMenu = title;
-  this.principaltitleMenu = principal;
+  menuAsing(title: string, principal: string): void {
+    this.titleMenu = title;
+    this.principaltitleMenu = principal;
   }
 
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
-          ...MODAL_SMALL,
+        ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInfoSchema(data.baunitIdE, data)
       })
@@ -240,10 +259,12 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   openCadastralInformationProperty(data: BaunitHead): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          ...MODAL_LARGE,
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
-          data.baunitIdE, data, null,
+          data.baunitIdE,
+          data,
+          null,
           LIST_SCHEMAS_CONTROL_MAIN,
           TYPEINFORMATION_VISUAL,
           '',
@@ -255,7 +276,7 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   }
 
   createAdvancedSearch(): void {
-    if(this.searchData){
+    if (this.searchData) {
       const cleanValue = this.cleanJsonValues(this.searchData);
       this.searchData = cleanValue;
     }
@@ -324,48 +345,52 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
   }
 
   searchPropertiesByRegistration(data: SearchData): void {
-    this.infoTableService.getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByDocument(data: SearchData): void {
-    this.infoTableService.getDataPropertyByDocument(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByDocument(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByName(data: SearchData): void {
-    this.infoTableService.getDataPropertyByName(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByName(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByAddress(data: SearchData): void {
-    this.infoTableService.getDataPropertyByAddress(this.generateObjectPageSearchData(data))
+    this.infoTableService
+      .getDataPropertyByAddress(this.generateObjectPageSearchData(data))
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
   searchNationalPredialNumber(data: SearchData): void {
-    this.infoTableService.getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
+    this.infoTableService
+      .getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
@@ -385,14 +410,18 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
       return true;
     }
 
-    if (this.isValidateField(searchData?.number) &&
-      this.isValidateField(searchData?.domIndividualTypeNumber)) {
+    if (
+      this.isValidateField(searchData?.number) &&
+      this.isValidateField(searchData?.domIndividualTypeNumber)
+    ) {
       this.searchPropertiesByDocument(this.searchData);
       return true;
     }
 
-    if (this.isValidateField(searchData?.firstName) &&
-      this.isValidateField(searchData?.lastName)) {
+    if (
+      this.isValidateField(searchData?.firstName) &&
+      this.isValidateField(searchData?.lastName)
+    ) {
       this.searchPropertiesByName(this.searchData);
       return true;
     }
@@ -402,8 +431,14 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
       return true;
     }
 
-    if (searchData.sidewalk !== null && searchData.sidewalk !== undefined && searchData.sidewalk.length > 10 ||
-      searchData.block !== null && searchData.block !== undefined && searchData.block.length > 10) {
+    if (
+      (searchData.sidewalk !== null &&
+        searchData.sidewalk !== undefined &&
+        searchData.sidewalk.length > 10) ||
+      (searchData.block !== null &&
+        searchData.block !== undefined &&
+        searchData.block.length > 10)
+    ) {
       this.searchNationalPredialNumber(this.searchData);
       return true;
     }
@@ -415,32 +450,38 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     return false;
   }
   searchPropertiesByBaunitIdE(baunit: string) {
-    this.infoTableService.getDataBaunitIdE(this.page, this.pageSize, baunit)
+    this.infoTableService
+      .getDataBaunitIdE(this.page, this.pageSize, baunit)
       .subscribe({
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result),
         error: (error: HttpErrorResponse) => {
           this.captureInformationSubscribeError();
-          if(error.status === 404){
-            this.snackbar.open('No se encontró un predio con ese número', 'Cerrar', { duration: 5000 });
+          if (error.status === 404) {
+            this.snackbar.open(
+              'No se encontró un predio con ese número',
+              'Cerrar',
+              { duration: 5000 }
+            );
           }
         }
       });
   }
 
-  formatFieldValue(value:SearchData) {
+  formatFieldValue(value: SearchData) {
     const formattedValues = [
-     value.dpto,
-     value.mpio,
-     value.zonas,
-     value.sectorb,
-     value.comuna,
-     value.barrio,
-     value.manVer,
-     value.terreno,
-     value.condicion,
-     value.edificio,
-     value.piso,
-     value.unidadPredial
+      value.dpto,
+      value.mpio,
+      value.zonas,
+      value.sectorb,
+      value.comuna,
+      value.barrio,
+      value.manVer,
+      value.terreno,
+      value.condicion,
+      value.edificio,
+      value.piso,
+      value.unidadPredial
     ];
 
     let result;
@@ -454,11 +495,15 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     this.searValueData(value, result);
   }
 
-  searValueData(searData:SearchData,data: string): void {
-    this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
-    .subscribe(value=>{
-      this.captureInformationSubscribe(value);
-    });
+  searValueData(searData: SearchData, data: string): void {
+    this.baunitService
+      .advancedSearchCadastral(
+        this.generateObjectPageSearchData(searData),
+        data
+      )
+      .subscribe((value) => {
+        this.captureInformationSubscribe(value);
+      });
   }
 
   onFilterChange(value: string): void {
@@ -522,20 +567,34 @@ export class TableCadastralSearchComponent implements OnInit, AfterViewInit,OnCh
     return new PageSearchData(this.page, this.pageSize, data);
   }
 
-  async initiateFilingProcedure(data: BaunitHead) {
-    if (data && data?.baunitIdE) {
-      const available = await this.baunitService.getBaunitIdEInOtherProcess(data?.baunitIdE);
-      if (!available){
-        this.snackbar.open(
-          'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-          'CLOSE', { duration: 10000 }
-        );
-        return;
+  isBaunitValid(data: BaunitHead): void {
+    console.log('Iniciando validación de unidad predial');
+
+    this.baunitService.getBaunitIdEInOtherProcess(data.baunitIdE!).subscribe({
+      next: () => {
+        console.log('Unidad predial valida');
+        // Si la validación es exitosa, procedemos a iniciar el trámite
+        this.initiateFilingProcedure(data);
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 400) {
+          this.snackbar.open(
+            error.error,
+            'Aceptar',
+            { duration: 10000 }
+          );
+          return;
+        }
+        this.snackbar.open('Error al radicar', 'Aceptar', { duration: 10000 });
       }
+    });
+  }
+
+  initiateFilingProcedure(data: BaunitHead) {
+    if (data && data?.baunitIdE) {
       const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
-      this.router.navigate([`${url}`, data.baunitIdE])
-        .then();
+      this.router.navigate([`${url}`, data.baunitIdE]).then();
     }
   }
 
