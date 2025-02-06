@@ -201,7 +201,8 @@ export class CreateUsersComponent implements OnInit {
   }
 
   createUserService(): void {
-    const username: string = `${this.individualFound!.firstName}.${this.individualFound!.lastName}`.toLowerCase();
+    const username = this.formatUsername(this.individualFound!.firstName, this.individualFound!.lastName);
+
     const params: CreateUserParams = {
       username: username,
       email: this.newUserForm!.value.email,
@@ -222,6 +223,15 @@ export class CreateUsersComponent implements OnInit {
           throw error;
         }
       });
+  }
+
+  formatUsername(firstName: string, lastName: string): string {
+    let username = `${firstName}.${lastName}`;
+    username = username.toLowerCase();
+    username = username.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    return username;
+    
   }
 
   editUser(): void {
