@@ -44,6 +44,7 @@ interface InputsField {
 })
 export class EditBasicPropertyInformationComponent implements OnInit {
   groupedInputs: any;
+  public maxDate = new Date();
 
   public inputs: EditBasicPropertyInputs[] = [
     // GRUPO "Identificación del predio"

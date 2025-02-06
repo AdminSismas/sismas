@@ -43,6 +43,7 @@ import { MatDividerModule } from '@angular/material/divider';
 export class AddPropertyOwnerComponent implements OnInit {
   public customer?: InfoPerson;
   public fractions_sum = 0;
+  public maxDate = new Date();
 
   public form: FormGroup = this.fb.group({
     domIndividualTypeNumber: ['', Validators.required],

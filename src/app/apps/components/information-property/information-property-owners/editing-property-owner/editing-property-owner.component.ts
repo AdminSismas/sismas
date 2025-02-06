@@ -38,6 +38,7 @@ import { MatDividerModule } from '@angular/material/divider';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditingPropertyOwnerComponent implements OnInit {
+  public maxDate = new Date();
   public form: FormGroup = this.fb.group({
     fraction: [0, [
       Validators.required,
