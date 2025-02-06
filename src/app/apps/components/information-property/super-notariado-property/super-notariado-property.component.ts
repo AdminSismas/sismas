@@ -21,7 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
     InformationSourcePropertyComponent
   ],
   templateUrl: './super-notariado-property.component.html',
-  styles: ``
+  styleUrl: './super-notariado-property.component.scss'
 })
 export class SuperNotariadoPropertyComponent {
 
