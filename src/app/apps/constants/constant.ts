@@ -661,6 +661,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'informationConstructionsPropertyComponent'
   },
   {
+    label: 'Colindantes',
+    fragment: 'informationAdjacentPropertyComponent'
+  },
+  {
     label: 'Avalúos',
     fragment: 'propertyAppraisalInformationComponent'
   },

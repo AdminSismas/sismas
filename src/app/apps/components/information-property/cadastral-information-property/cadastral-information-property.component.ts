@@ -129,6 +129,11 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private informationConstructionsPropertyComponent?: ElementRef;
+  @ViewChild(InformationAdjacentPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationAdjacentPropertyComponent?: ElementRef;
   @ViewChild(PropertyAppraisalInformationComponent, {
     read: ElementRef,
     static: false
