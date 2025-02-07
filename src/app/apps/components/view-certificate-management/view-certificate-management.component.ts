@@ -27,6 +27,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { environment } from 'src/environments/environments';
 import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'vex-view-certificate-management',
@@ -42,10 +44,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     MatTabsModule,
     NgFor,
     NgIf,
-    MatIconModule
+    MatIconModule,
+    MatProgressSpinnerModule
+  
   ]
 })
 export class ViewCertificateManagementComponent implements OnInit {
+
+  isLoading: boolean = false; 
+  errorMessage: string = '';
+  isErrorMessage: boolean = false;
   @Input() public id = '';
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
@@ -58,6 +66,7 @@ export class ViewCertificateManagementComponent implements OnInit {
 
  
   pdfUrl: SafeResourceUrl | string = '';
+  loadSubscription: Subscription | undefined;
   fileType = '';
   fileContent = '';
   basic_url: string | undefined;
@@ -153,7 +162,7 @@ export class ViewCertificateManagementComponent implements OnInit {
             fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
           }
   
-          a.download = fileName; // Usar el nombre de archivo definido
+          a.download = fileName; 
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
@@ -186,8 +195,11 @@ export class ViewCertificateManagementComponent implements OnInit {
   
     window.URL.revokeObjectURL(blobUrl);
   }
-
   loadPdf() {
+    this.isLoading = true; // Inicia la carga
+    this.errorMessage = ''; // Limpia cualquier mensaje previo
+    this.isErrorMessage = false; // Reset para el color de mensaje
+
     const url = this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA' ? this.basic_url : this.basic_url_appraisals;
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${url}${queryParams}`;
@@ -195,44 +207,45 @@ export class ViewCertificateManagementComponent implements OnInit {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get(fullUrl, { headers, responseType: 'blob' }).subscribe({
+    // Realizar la solicitud HTTP y suscribirse a la respuesta
+    this.loadSubscription = this.http.get(fullUrl, { headers, responseType: 'blob' }).subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const blobUrl = URL.createObjectURL(blob);
         this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+        this.isLoading = false; // Termina la carga
+        this.errorMessage = 'Certificado generado correctamente'; // Mensaje de éxito
+        this.isErrorMessage = false; // Mensaje de éxito, color verde
+
+        // Desaparecer el mensaje después de 3 segundos
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
       },
       error: (error) => {
         console.error('Error al cargar el documento PDF:', error);
         this.pdfUrl = 'error';
+        this.isLoading = false; // Termina la carga
+        this.errorMessage = 'Error en generación de certificado'; // Mensaje de error
+        this.isErrorMessage = true; // Mensaje de error, color rojo
+
+        // Cerrar el dialog automáticamente si ocurre un error
+        setTimeout(() => {
+          this.dialogRef.close(); // Cierra el dialog si hay un error
+        }, 3000);
       }
     });
   }
 
-  // loadPdf(): void {
-  //   const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.data.fullName)}`;
-  //   const fullUrl = `${this.basic_url}${queryParams}`;
+ 
+  cancelLoad() {
+    this.isLoading = false; 
+    this.errorMessage = '';
+    this.loadSubscription?.unsubscribe();
+    this.dialogRef.close();
+  }
 
-  //   console.log('Cargando PDF desde:', fullUrl);
 
-  //   // Realiza la solicitud HTTP con el token incluido
-  //   this.http.get(fullUrl, { responseType: 'blob' }).subscribe({
-  //     next: (response: Blob) => {
-  //       if (response.type !== 'application/pdf') {
-  //         console.error('La respuesta no es un PDF válido.');
-  //         return;
-  //       }
-
-  //       // Genera una URL local para el blob
-  //       const blobUrl = window.URL.createObjectURL(response);
-  //       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
-
-  //       console.log('PDF cargado y listo para mostrar.');
-  //     },
-  //     error: (err) => {
-  //       console.error('Error al cargar el PDF:', err);
-  //     },
-  //   });
-  // }
 
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {
