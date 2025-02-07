@@ -1,0 +1,22 @@
+mat-expansion-panel-header.mat-expanded,
+mat-expansion-panel-header.mat-expanded:focus {
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel:not(.mat-expanded),
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {;
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+.mat-expansion-panel.mat-expanded
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
+  background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
+}
+
+::ng-deep .classInformationConstruction div.mat-expansion-panel-body {
+  padding: 0;
+}
+
+.mat-mdc-header-row {
+  height: var(--mat-table-header-container-height-geo-getion, 45px) !important;
+}

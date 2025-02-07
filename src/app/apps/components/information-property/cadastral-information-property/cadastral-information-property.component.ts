@@ -46,6 +46,7 @@ import {
 import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
 import { TypeInformation } from '../../../interfaces/content-info';
+import { InformationAdjacentPropertyComponent } from '../information-adjacent-property/information-adjacent-property.component';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -88,7 +89,8 @@ import { TypeInformation } from '../../../interfaces/content-info';
     AdministrativeSourcesComponent,
     PhotosComponent,
     AlertsComponent,
-    SuperNotariadoPropertyComponent
+    SuperNotariadoPropertyComponent,
+    InformationAdjacentPropertyComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -163,7 +165,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   divPolLv2!: string;
   navigationItems: { label: string; fragment: string }[] =
     NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
-  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean, ZON?: boolean } = {};
+  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean, ZON?: boolean, CLN?: boolean } = {};
 
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;

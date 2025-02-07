@@ -17,6 +17,7 @@ import { EVIRONMENT_CC_DIRECCION } from '../../constants/constant';
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
+import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
 
 @Injectable({
   providedIn: 'root'
@@ -124,6 +125,17 @@ export class InformationPropertyService {
       catchError((error) => this.requestsService.errorNotFound(error))
     );
   }
+
+  getBasicInformationPropertyAdjacent(
+    baunitId: string,
+  ): Observable<BasicInformationAdjacent[]> {
+    const url = `${this.basic_url}/ccColindante/${envi.baunit}/${baunitId}`;
+    return this.requestsService
+      .sendRequestsFetchGet(url)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+  }
+
+
   // ${executionId}/${baunitId}
   getDetailBasicInformationPropertyConstructions(
     id: number | undefined

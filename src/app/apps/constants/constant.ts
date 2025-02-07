@@ -14,6 +14,7 @@ import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execut
 import { DataFolio } from '../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../interfaces/information-property/snr-person-info';
+import { BasicInformationAdjacent } from '../interfaces/information-property/basic-information-adjacent';
 
 export const GUION = '-';
 export const SPACE = ' ';
@@ -56,7 +57,7 @@ export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [ PAGE_OPTION_UNIQUE, 20, 50, 100];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
-
+export const PAGE_SIZE_OPTION_ADJACENT: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
 export const PAGE_SIZE_OPTION_FOLIO: number[] = [2, 5];
 
@@ -335,6 +336,27 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
   }
 ];
 
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformationAdjacent>[] = [
+  {
+    label: 'Ficha',
+    property: 'ccColindanteBaunitId',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Colindante',
+    property: 'colindante',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Punto cardinal',
+    property: 'domPuntoCardinal',
+    type: 'text',
+    visible: true
+  }
+];
+
 export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
   {
     label: 'Detalle',
@@ -376,6 +398,12 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
+
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<BasicInformationAdjacent>[] = [
+  ...TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL,
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+];
+export const TABLE_COLUMN_PROPERTIES_ADJACENT: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL;
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: 'cadAlfaMainComponent',

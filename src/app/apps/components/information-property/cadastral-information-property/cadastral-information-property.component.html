@@ -132,6 +132,17 @@
       [typeInformation]="typeInformation"
       [editable]="editable.CNS"
     ></vex-information-constructions-property>
+    <vex-information-adjacent-property
+    [id]="'dataInformationAdjacentPropertyComponent' + schema"
+    #informationAdjacentPropertyComponent{{schema}}
+    [expandedComponent]="false"
+    [baunitId]="baunitId"
+    [schema]="schema"
+    [executionId]="executionId"
+    @fadeInUp
+    [typeInformation]="typeInformation"
+    [editable]="editable.CLN"
+  ></vex-information-adjacent-property>
     <vex-property-appraisal-information
       [id]="'dataIpropertyAppraisalInformationComponent' + schema"
       #propertyAppraisalInformationComponent{{schema}}
