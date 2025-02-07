@@ -60,7 +60,10 @@ import {
   TYPEINFORMATION_VISUAL,
   MODAL_LARGE,
   MODAL_MEDIUM,
-  MODAL_SMALL
+  MODAL_SMALL,
+  INFORMATION_HISTORICAL,
+  TITULO_PAGE_CADASTRAL_DA,
+  TITULO_PAGE_AVANZADA
 } from '../../constants/constant';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../interfaces/content-info-schema';
@@ -117,6 +120,7 @@ export class TableCadastralSearchComponent
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
   user: DecodeJwt | null = null;
+  setNewEndPoint: boolean = false;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -230,12 +234,37 @@ export class TableCadastralSearchComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tituloPage'] && this.tituloPage) {
-      // this.tituloPage = this.tituloPage;
-      this.titleAsing(this.tituloPage);
-      this.menuAsing('Búsqueda avanzada DA', this.tituloPage);
-      this.seeAction = false;
+      this.tituloPage = this.tituloPage;
+      if(this.tituloPage === TITULO_PAGE_CADASTRAL_DA){
+        this.titleAsing(this.tituloPage);
+        this.menuAsing(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
+        this.seeAction = false;
+      }else{
+        
+        this.titleAsing(this.tituloPage);
+        this.menuAsing(TITULO_PAGE_AVANZADA, this.tituloPage);
+        this.seeAction = false;
+        // this.validateEndPoint()
+      }
     }
   }
+
+  validateEndPoint(){
+    if(this.tituloPage === INFORMATION_HISTORICAL){
+      this.setNewEndPoint = true;
+    }
+  }
+
+  searHistoricalData(data: SearchData,value:string): void {
+    console.log(data);
+    this.baunitService.historiAdvancedSearch(this.generateObjectPageSearchData(data),value)
+    .subscribe(value=>{
+      console.log(value);
+      this.captureInformationSubscribe(value);
+    });
+  }
+
+  
 
   titleAsing(value: string): void {
     this.titleArray.push(value);
@@ -504,6 +533,10 @@ export class TableCadastralSearchComponent
       .subscribe((value) => {
         this.captureInformationSubscribe(value);
       });
+      // if(this.setNewEndPoint){
+      //     this.searHistoricalData(searData,data)
+      // }else{
+      // }
   }
 
   onFilterChange(value: string): void {

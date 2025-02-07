@@ -30,10 +30,14 @@ export const PAGE = 0;
 export const PAGE_SIZE = 10;
 export const PAGE_SIZE_TABLE_CADASTRAL = 10;
 export const TITULO_PAGE_CADASTRAL = 'Búsqueda catastral';
+export const TITULO_PAGE_AVANZADA = 'Búsqueda avanzada';
+
 export const URL_PAGE_CADASTRAL = 'Búsqueda catastral';
 
 export const RULE_PAGE_CADASTRAL_DA = 'cadastralSearchDA';
 export const TITULO_PAGE_CADASTRAL_DA = 'Búsqueda catastral DA';
+export const RULE_PAGE_HISTORICAL = 'historicalInformation';
+export const INFORMATION_HISTORICAL = 'Información histórica';
 
 
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
