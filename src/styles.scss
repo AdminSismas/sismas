@@ -47,6 +47,42 @@ body{
   color: rgba(0, 0, 0, 0.87);
 }
 
+.mat-mdc-snack-bar-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.mdc-snackbar__surface {
+  background: #ddd !important;
+  border-radius: 1em !important;
+}
+
+.mat-mdc-simple-snack-bar {
+  align-items: center;
+  background: #ddd;
+  display: flex;
+  flex-direction: column;
+  height: 15vh;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.mat-mdc-snack-bar-label, .mdc-snackbar__label {
+  font-size: 1.25rem !important;
+  color: #222 !important;
+}
+
+.mat-mdc-snack-bar-actions {
+  padding: 0.5em;
+}
+
+.mat-mdc-snack-bar-actions button {
+  background-color: #4f46e5 !important;
+  color: white !important;
+  border-radius: 9999999px !important;
+}
 
 //.mat-elevation-z0, .mat-mdc-elevation-specific.mat-elevation-z0 {
 //  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12);
