@@ -86,7 +86,7 @@ export class DetailInformationAddressComponent implements OnInit {
     if (this.defaults?.direccionId === null || this.defaults?.direccionId === undefined) {
       return;
     }
-    this.informationPropertyService.getDetailBasicInformationPropertyAddresses(this.schema, this.defaults.direccionId)
+    this.informationPropertyService.getDetailBasicInformationPropertyAddresses(this.defaults.direccionId)
       .subscribe({
           next: (result: DetailBasicInformationAddress) => this.data = result,
           error: (err: any) => console.log('Consulta NOK.')

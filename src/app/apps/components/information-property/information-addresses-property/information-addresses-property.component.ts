@@ -19,9 +19,6 @@ import {
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  PAGE_SIZE_OPTION,
-  PAGE_SIZE_OPTION_ADDRESS,
-  PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
   TYPEINFORMATION_EDITION,
@@ -250,7 +247,7 @@ export class InformationAddressesPropertyComponent
       return;
     }
     this.informationPropertyService
-      .getBasicInformationPropertyAddresses(this.schema, this.baunitId)
+      .getBasicInformationPropertyAddresses(this.baunitId)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationAddress[]) =>{

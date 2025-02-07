@@ -46,7 +46,7 @@ import { InfoTableService } from '../../services/general/info-table.service';
 import { SearchData } from '../../interfaces/search-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -125,9 +125,9 @@ export class TableCadastralSearchComponent
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   titleArray: string[] = ['Mi trabajo'];
-  titleMenu: string = 'Búsqueda avanzada';
-  principaltitleMenu: string = 'Búsqueda avanzada';
-  seeAction: boolean = true;
+  titleMenu = 'Búsqueda avanzada';
+  principaltitleMenu = 'Búsqueda avanzada';
+  seeAction = true;
 
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(
@@ -230,7 +230,7 @@ export class TableCadastralSearchComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tituloPage'] && this.tituloPage) {
-      this.tituloPage = this.tituloPage;
+      // this.tituloPage = this.tituloPage;
       this.titleAsing(this.tituloPage);
       this.menuAsing('Búsqueda avanzada DA', this.tituloPage);
       this.seeAction = false;

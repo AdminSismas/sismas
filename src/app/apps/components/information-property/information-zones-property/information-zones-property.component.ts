@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Component,
   Input,
@@ -20,9 +21,7 @@ import {
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  PAGE_SIZE_OPTION,
   TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
   MODAL_SMALL
 } from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
@@ -33,17 +32,14 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import {
   MatDialog,
-  MatDialogContent,
   MatDialogModule
 } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import {
-  AsyncPipe,
   CommonModule,
-  DatePipe,
   NgForOf,
   NgIf
 } from '@angular/common';
@@ -55,15 +51,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { TypeInformation } from '../../../interfaces/content-info';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { InfoOwnerRowT } from '../information-property-owners/information-property-owners.component';
 import {
   MatPaginator,
   MatPaginatorModule,
@@ -71,14 +62,7 @@ import {
 } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { InfoOwners } from 'src/app/apps/interfaces/information-property/info-owners';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { DetailInformationPropertyOwnerComponent } from '../information-property-owners/detail-information-property-owner/detail-information-property-owner.component';
-import { AddPropertyOwnerComponent } from '../information-property-owners/add-property-owner/add-property-owner.component';
-import { DeletePropertyOwnerComponent } from '../information-property-owners/delete-property-owner/delete-property-owner.component';
-import { EditingPropertyOwnerComponent } from '../information-property-owners/editing-property-owner/editing-property-owner.component';
-import { InformationZonesService } from './services/information-zones.service';
 import { DetailInformationPropertyZonesComponent } from './detail-information-property-zones/detail-information-property-zones.component';
 import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { AddEditInformatizonZonesPropertyComponent } from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
@@ -99,7 +83,6 @@ import { DeleteInformationZonesPropertyComponent } from './delete-information-zo
   imports: [
     MatExpansionModule,
     CdkAccordionModule,
-    AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -110,17 +93,11 @@ import { DeleteInformationZonesPropertyComponent } from './delete-information-zo
     MatTabsModule,
     NgForOf,
     NgIf,
-    VexHighlightDirective,
     ReactiveFormsModule,
-    VexPageLayoutHeaderDirective,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
     MatSlideToggleModule,
     MatCardModule,
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
-    DatePipe,
-    MatDialogContent,
     HeaderCadastralInformationPropertyComponent,
     MatCardModule,
     MatRippleModule,
@@ -137,7 +114,7 @@ export class InformationZonesPropertyComponent
   implements OnInit, OnChanges, AfterViewInit
 {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  seeAcctionsComponents: boolean = false;
+  seeAcctionsComponents = false;
 
   zoneBAUnit: ZoneBAUnit[] = [];
   zoneBAUnitRural: ZoneBAUnit[] = [];
@@ -148,6 +125,8 @@ export class InformationZonesPropertyComponent
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
+  @Input({ required: true }) divPolLv1!: string;
+  @Input({ required: true }) divPolLv2!: string;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
@@ -308,7 +287,7 @@ export class InformationZonesPropertyComponent
     this.informationPropertyService
       .getBasicInformationProperty(this.schema, this.baunitId, this.executionId)
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationProperty) =>
           this.captureBasicInformationSubscribe(result)
       });
@@ -381,8 +360,6 @@ export class InformationZonesPropertyComponent
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     this.isExpandPanel(this.expandedComponent);
-
-    console.log();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -402,7 +379,7 @@ export class InformationZonesPropertyComponent
   searchInformationsZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
   
-    this.informationPropertyService.getByBauniFisica(this.baunitId, this.schema, this.executionId)
+    this.informationPropertyService.getByBauniFisica(this.baunitId)
       .subscribe({
         next: (result: ZoneBAUnit[]) => {
           this.zoneBAUnit = result;
@@ -414,7 +391,7 @@ export class InformationZonesPropertyComponent
             this.changeDetectorRef.markForCheck();
           }
         },
-        error: (err: any) => this.captureInformationSubscribeError(err)
+        error: () => this.captureInformationSubscribeError()
       });
   }
   
@@ -422,7 +399,7 @@ export class InformationZonesPropertyComponent
   searchInformationsGeoeconomicZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
   
-    this.informationPropertyService.getByBauniEcono(this.baunitId, this.schema, this.executionId)
+    this.informationPropertyService.getByBauniEcono(this.baunitId)
       .subscribe({
         next: (result: ZoneBAUnit[]) => {
           this.zoneBAUnitGeoeconomic = result;
@@ -434,7 +411,7 @@ export class InformationZonesPropertyComponent
             this.changeDetectorRef.detectChanges();
           }
         },
-        error: (err: any) => this.captureInformationSubscribeError(err)
+        error: () => this.captureInformationSubscribeError()
       });
   }
   
@@ -464,7 +441,7 @@ export class InformationZonesPropertyComponent
     }
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.zoneBAUnit = [];
     this.zoneBAUnitRural = [];
     this.zoneBAUnitUrban = [];
@@ -568,7 +545,14 @@ export class InformationZonesPropertyComponent
       .open(AddEditInformatizonZonesPropertyComponent, {
         ...MODAL_SMALL,
         disableClose: true,
-        data: { zone: data, baunitId: this.baunitId, isEdit, propertyType }
+        data: {
+          zone: data,
+          baunitId: this.baunitId,
+          isEdit,
+          propertyType,
+          divpolLv1: this.divPolLv1,
+          divpolLv2: this.divPolLv2
+        }
       })
       .afterClosed()
       .subscribe(() =>
@@ -587,7 +571,14 @@ export class InformationZonesPropertyComponent
       .open(AddEditInformatizonZonesPropertyComponent, {
         ...MODAL_SMALL,
         disableClose: true,
-        data: { zone: data, baunitId: this.baunitId, isEdit, propertyType }
+        data: {
+          zone: data,
+          baunitId: this.baunitId,
+          isEdit,
+          propertyType,
+          divpolLv1: this.divPolLv1,
+          divpolLv2: this.divPolLv2
+        }
       })
       .afterClosed()
       .subscribe(() =>

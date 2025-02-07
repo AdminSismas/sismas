@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -25,7 +26,7 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
 import { InputComponent } from '../../../input/input.component';
 import { RuralPhysicalZone } from 'src/app/apps/interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from 'src/app/apps/interfaces/information-property/urban-physical-zone';
-import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
+import { AddZoneParameters } from 'src/app/apps/interfaces/information-property/zone-baunit';
 
 @Component({
   selector: 'vex-add-edit-informatizon-zones-property',
@@ -72,7 +73,7 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEditInformatizonZonesPropertyComponent>,
     private informationPropertyService: InformationPropertyService,
-    @Inject(MAT_DIALOG_DATA) public data: {zone: ZoneBAUnit, baunitId: number, isEdit: boolean, propertyType: string}
+    @Inject(MAT_DIALOG_DATA) public data: AddZoneParameters
   ) {}
 
   ngOnInit(): void {
@@ -242,7 +243,7 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   }
 
   getByDivPolUrbana(): void {
-    this.informationPropertyService.getByDivPolUrbana().subscribe((result: UrbanPhysicalZone[]) => {
+    this.informationPropertyService.getByDivPolUrbana(this.data.divpolLv1, this.data.divpolLv2).subscribe((result: UrbanPhysicalZone[]) => {
       this.divPolUrbana = result;
       console.log(this.divPolUrbana);
 
@@ -251,14 +252,14 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
 
 
   getByDivPolRural(): void {
-    this.informationPropertyService.getByDivPolRural().subscribe((result) => {
+    this.informationPropertyService.getByDivPolRural(this.data.divpolLv1, this.data.divpolLv2).subscribe((result) => {
       this.divPolRural = result;
       console.log(this.divPolRural);
     });
   }
 
   getByDivPolGeoeconomica(): void {
-    this.informationPropertyService.getByDivPolGeoeconomica().subscribe((result) => {
+    this.informationPropertyService.getByDivPolGeoeconomica(this.data.divpolLv1, this.data.divpolLv2).subscribe((result) => {
       this.divPolGeoeconomica = result;
       console.log(result);
     });

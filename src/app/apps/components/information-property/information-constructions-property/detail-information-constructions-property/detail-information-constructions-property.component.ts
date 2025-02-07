@@ -115,7 +115,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
       return;
     }
     this.informationPropertyService
-      .getDetailBasicInformationPropertyConstructions(this.schema, this.defaults.unitBuiltId)
+      .getDetailBasicInformationPropertyConstructions(this.defaults.unitBuiltId)
       .subscribe({
           next: (result: ContentInformationConstruction) => this.data = result,
           error: (err: any) => console.log('Consulta NOK.')
@@ -131,7 +131,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
     }
     this.informationPropertyService
       .getDetailBasicInformationPropertyCalificationConstructions(
-        this.schema, this.defaults.unitBuiltId, Number(this.defaults.baunitId))
+        this.defaults.unitBuiltId)
       .subscribe({
           next: (result: CcCalificacionUB[]) => this.dataCalification = result,
           error: (err: any) => console.log('Consulta NOK.')

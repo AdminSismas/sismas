@@ -339,7 +339,6 @@ export class EditInformationConstructionsPropertyComponent implements OnInit {
       const detailBasicInformationConstruction: ContentInformationConstruction =
         await lastValueFrom(
           this.informationPropertyService.getDetailBasicInformationPropertyConstructions(
-            this.schema(),
             this.addEditInformationData.basicInformationConstruction?.unitBuiltId
           )
         );

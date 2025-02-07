@@ -1,4 +1,5 @@
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -51,7 +52,6 @@ export interface AddEditInformationDataI {
     ComboxColletionComponent,
     ReactiveFormsModule,
     MatFormFieldModule,
-    NgForOf,
     NgIf,
   ],
   templateUrl: './edit-information-address.component.html',
@@ -104,7 +104,6 @@ export class EditInformationAddressComponent implements OnInit {
       const detailBasicInformationAddress: DetailBasicInformationAddress =
         await lastValueFrom(
           this.informationPropertyService.getDetailBasicInformationPropertyAddresses(
-            this.schema(),
             this.addEditInformationData.basicInformationAddress?.direccionId
           )
         );
@@ -134,7 +133,7 @@ export class EditInformationAddressComponent implements OnInit {
       let detailBasicInformationAddress: DetailBasicInformationAddress | undefined;
       if (this.addEditInformationData.type === 'new') {
 
-        let createBasicInformationAddress = this.generateModelDirecction(value);
+        let createBasicInformationAddress = this.generateModelDirecction();
         
         if(value?.domTipoDireccion === 'Estructurada'){
 
@@ -165,7 +164,7 @@ export class EditInformationAddressComponent implements OnInit {
       } else {
         this.blockPrimaryAddressField();
         const value = this.informationAddressForm.value || {};
-        let createBasicInformationAddress = this.generateModelDirecctionModel(value);
+        let createBasicInformationAddress = this.generateModelDirecctionModel();
 
         if(value?.domTipoDireccion === 'Estructurada'){
 
@@ -202,7 +201,7 @@ export class EditInformationAddressComponent implements OnInit {
 
  
 // PROCESO CREAR MODELO DE DATOS CreateBasicInformationAddress
-  public generateModelDirecction(value:any):CreateBasicInformationAddress{
+  public generateModelDirecction():CreateBasicInformationAddress{
     const createBasicInformationAddress: CreateBasicInformationAddress = {
 
       // campos BASE
@@ -290,7 +289,7 @@ export class EditInformationAddressComponent implements OnInit {
   // PROCESO CREAR /FIN
 
 // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress 
-public generateModelDirecctionModel(value:any):DetailBasicInformationAddress{
+public generateModelDirecctionModel():DetailBasicInformationAddress{
   const createBasicInformationAddress: DetailBasicInformationAddress = {
 
     // campos BASE

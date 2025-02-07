@@ -159,6 +159,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
   executionId: string | null | undefined;
   idContainer = '';
   baunitId: string | null | undefined = null;
+  divPolLv1!: string;
+  divPolLv2!: string;
   navigationItems: { label: string; fragment: string }[] =
     NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
   editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean, ZON?: boolean } = {};
@@ -170,9 +172,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   public showRulesPage = false;
 
 
-   constructor(private informationPropertyService: InformationPropertyService){ }
-
-
+  constructor(private informationPropertyService: InformationPropertyService){ }
 
   ngOnInit(): void {
     this.infoResorces();
@@ -203,6 +203,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
     this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
+    this.divPolLv1 = this.baunitHead.cadastralNumber!.substring(0, 2);
+    this.divPolLv2 = this.baunitHead.cadastralNumber!.substring(2, 5);
+
+    console.log(this.baunitHead);
 
 
 
@@ -229,7 +233,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
         this.removeItem('Alertas');
         this.removeItem('Super notariado');
         this.removeItem('Propietarios');
-      }else{
       }
 
     }

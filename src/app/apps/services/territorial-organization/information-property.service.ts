@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
@@ -66,8 +67,7 @@ export class InformationPropertyService {
       );
   }
 
-  getBasicInformationPropertyAddresses(
-    schema: string,
+  getBasicInformationPropertyAddresses(    
     id: string
   ): Observable<BasicInformationAddress[]> {
     let params: HttpParams = new HttpParams();
@@ -79,7 +79,6 @@ export class InformationPropertyService {
   }
 
   getDetailBasicInformationPropertyAddresses(
-    schema: string,
     id: string | undefined
   ): Observable<DetailBasicInformationAddress> {
     const url = `${this.basic_url}${envi.ccDireccion}${id}`;
@@ -127,7 +126,6 @@ export class InformationPropertyService {
   }
   // ${executionId}/${baunitId}
   getDetailBasicInformationPropertyConstructions(
-    schema: string,
     id: number | undefined
 
   ): Observable<ContentInformationConstruction> {
@@ -139,9 +137,7 @@ export class InformationPropertyService {
   }
 
   getDetailBasicInformationPropertyCalificationConstructions(
-    schema: string,
     unitBuiltId: number | undefined,
-    baunitId: number | undefined
   ): Observable<CcCalificacionUB[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('unitBuiltId', `${unitBuiltId}`);
@@ -173,8 +169,6 @@ export class InformationPropertyService {
 
   getBasicInformationPropertyZones(
     id: string,
-    schema: string,
-    executionId: string | null | undefined = null
   ): Observable<ZoneBAUnit[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
@@ -186,12 +180,10 @@ export class InformationPropertyService {
 
   getByBauniFisica(
     id: string,
-    schema: string,
-    executionId: string | null | undefined = null
   ): Observable<ZoneBAUnit[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
-    const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
+    const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdFisicas}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -199,25 +191,21 @@ export class InformationPropertyService {
 
   getByBauniEcono(
     id: string,
-    schema: string,
-    executionId: string | null | undefined = null
   ): Observable<ZoneBAUnit[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
-    const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
+    const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}`;
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
   }
-  getByDivPolUrbana(): Observable<UrbanPhysicalZone[]> {
-    const divpolLv1 = 18;
-    const divpolLv2 = '001';
+  getByDivPolUrbana(divpolLv1: string, divpolLv2: string): Observable<UrbanPhysicalZone[]> {
     
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
     
-    const url = `${this.basic_url}/${'ccZonaHomoFisicaUr'}/${'divpol'}`;
+    const url = `${this.basic_url}${envi.ccZonaHomoFisicaUr}${envi.divpol}`;
   
     console.log('url', url);
     
@@ -226,14 +214,12 @@ export class InformationPropertyService {
     );
   }
 
-  getByDivPolRural(): Observable<RuralPhysicalZone[]> {
+  getByDivPolRural(divpolLv1: string, divpolLv2: string): Observable<RuralPhysicalZone[]> {
 
-    const divpolLv1 = 18;
-    const divpolLv2 = '001'; 
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
-    const url = `${this.basic_url}/${'ccZonaHomoFisicaRu'}/${'divpol'}`;
+    const url = `${this.basic_url}${envi.ccZonaHomoFisicaRu}${envi.divpol}`;
 
     console.log('url', url);
     return this.getData(url, params).pipe(
@@ -242,14 +228,12 @@ export class InformationPropertyService {
 
   }
 
-  getByDivPolGeoeconomica(): Observable<GeoEconomicZone[]> {
+  getByDivPolGeoeconomica(divpolLv1: string, divpolLv2: string): Observable<GeoEconomicZone[]> {
 
-    const divpolLv1 = 18;
-    const divpolLv2 = '001'; 
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
-    const url = `${this.basic_url}/${'ccZonaHomoGeoEconomica'}/${'divpol'}`;
+    const url = `${this.basic_url}${envi.ccZonaHomoGeoEconomica}${envi.divpol}`;
 
     console.log('url', url);
     return this.getData(url, params).pipe(
@@ -262,7 +246,7 @@ export class InformationPropertyService {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${baunitId}`);
     params = params.append('validityValuation', `${validityValuation}`);
-    const url = `${this.basic_url}/${'baUnitZona'}`;
+    const url = `${this.basic_url}${envi.baUnitZona}`;
     return this.http.post(url, body, { params: params });
   }
 
@@ -270,7 +254,7 @@ export class InformationPropertyService {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${baunitId}`);
     params = params.append('validityValuation', `${validityValuation}`);
-    const url = `${this.basic_url}/${'baUnitZona'}/${baUnitZonaId}`;
+    const url = `${this.basic_url}${envi.baUnitZona}/${baUnitZonaId}`;
     return this.http.put(url, body, { params: params });
   }
 
@@ -279,7 +263,7 @@ export class InformationPropertyService {
     params = params.append('baunitId', `${baunitId}`);
     params = params.append('validityValuation', `${validityValuation}`);
     params = params.append('version', `${version}`);
-    const url = `${this.basic_url}/${'baUnitZona'}/${baUnitZonaId}`;
+    const url = `${this.basic_url}${envi.baUnitZona}/${baUnitZonaId}`;
     return this.http.delete(url, { params: params });
   }
 
@@ -377,7 +361,7 @@ export class InformationPropertyService {
       );
   }
 
-  updateCalification(executionId: string, baunitId: string, constructionId: number, payload: Array<{ ccCalUBDom: { id: number } }>): Observable<void> {
+  updateCalification(executionId: string, baunitId: string, constructionId: number, payload: { ccCalUBDom: { id: number } }[]): Observable<void> {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}/${executionId}/${baunitId}/${constructionId}`;
     return this.http.put<void>(url, payload);
   }
