@@ -48,7 +48,8 @@ import {
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND,
   LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
-  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL
+  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL,
+  NUMERO_PREDIAL_NACIONAL
 } from '../../../constants/constant';
 import { Zone } from '../../../interfaces/territorial-organization/zone.model';
 import { Sector } from '../../../interfaces/territorial-organization/sector.model';
@@ -364,17 +365,17 @@ export class FilterCadastralSearchComponent implements OnInit {
   public clearFormFields(value: any) {
     console.log('value', value?.tab?.textLabel);
 
-    if (value?.tab?.textLabel === 'Selección Municipal') {
-      this.clearMultipleFields();
-      this.formatFieldValue();
-    }
-
-    if (value?.tab?.textLabel === 'Múltiplex Campos') {
+    if (value?.tab?.textLabel === LIMPIAR_CAMPOS_SELECCION_MUNICIPAL) {
       this.clearMunicipalSelection();
       this.formatFieldValue();
     }
 
-    if (value?.tab?.textLabel === 'Número Predial Nacional') {
+    if (value?.tab?.textLabel === LIMPIAR_CAMPOS_MULTIPLES_CAMPOS) {
+      this.clearMultipleFields();
+      this.formatFieldValue();
+    }
+
+    if (value?.tab?.textLabel === NUMERO_PREDIAL_NACIONAL) {
       this.clearMunicipalSelection();
       this.clearMultipleFields();
     }

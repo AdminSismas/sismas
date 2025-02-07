@@ -75,8 +75,10 @@ export const PROCESO_ACTUALIZAR_DIRECCION = "Editar dirección";
 
 export const CONSTANT_VALIDATE_CHECK = "checkStatusBpmOperation";
 export const CONSTANT_VALIDATE_OTHER = "OTHER_CHECK";
-export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = "Seleccion Municipal";
-export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = "Multiplex Campos";
+export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = "Selección municipal";
+export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = "Múltiples campos";
+export const NUMERO_PREDIAL_NACIONAL = "Número Predial Nacional";
+
 
 export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
