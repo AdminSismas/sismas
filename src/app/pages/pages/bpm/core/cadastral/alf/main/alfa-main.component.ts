@@ -182,7 +182,7 @@ export class AlfaMainComponent implements OnInit {
         error: () => {
           this.snackbar.open(
             'No se puede continuar la actividad error en la validación alfanumérica.',
-            'CLOSE',
+            'CERRAR',
             { duration: 10000 }
           );
           return;
@@ -233,7 +233,7 @@ export class AlfaMainComponent implements OnInit {
   captureInformationChangeLogAlfaMainError() {
     this.snackbar.open(
       'No se puede continuar la actividad error en la validación alfanumérica.',
-      'CLOSE',
+      'CERRAR',
       { duration: 10000 }
     );
   }
@@ -343,7 +343,7 @@ export class AlfaMainComponent implements OnInit {
         error: (error: HttpErrorResponse) => {
           this.snackbar.open(
             'Error al eliminar la unidad predial.',
-            'CLOSE', { duration: 10000 }
+            'CERRAR', { duration: 10000 }
           );
           throw error;
         }

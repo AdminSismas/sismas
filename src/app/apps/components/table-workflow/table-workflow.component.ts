@@ -244,10 +244,10 @@ export class TableWorkflowComponent implements OnInit, AfterViewInit {
         next: (result: WorkflowCollection) => {
           console.log("result: ", result);
           this.getDataFromWorkflowService();
-          this.snackbar.open('Flujo de trabajo creado', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Flujo de trabajo creado', 'CERRAR', { duration: 10000 });
         },
         error: () => {
-          this.snackbar.open('Hubo un error al crear el flujo de trabajo', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Hubo un error al crear el flujo de trabajo', 'CERRAR', { duration: 10000 });
         },
       });
   }
@@ -270,10 +270,10 @@ export class TableWorkflowComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (result: WorkflowCollection) => {
           this.getDataFromWorkflowService();
-          this.snackbar.open('Flujo de trabajo actualizado', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Flujo de trabajo actualizado', 'CERRAR', { duration: 10000 });
         },
         error: () => {
-          this.snackbar.open('Hubo un error al actualizar el flujo de trabajo', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Hubo un error al actualizar el flujo de trabajo', 'CERRAR', { duration: 10000 });
         },
       });
   }

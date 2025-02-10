@@ -195,7 +195,7 @@ export class InformationAddressesPropertyComponent
             msg = 'Error, no se pudo eliminar la dirección';
             console.error(e);
           }
-          this.snackBar.open(msg, 'CLOSE', { duration: 10000 });
+          this.snackBar.open(msg, 'CERRAR', { duration: 10000 });
       }
     });
 

@@ -172,11 +172,11 @@ export class ZoneManagerComponent implements OnInit {
     this.service.deleteZone('99999', id)
       .subscribe({
         next: () => {
-          this.snackbar.open('Zona eliminada', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Zona eliminada', 'CERRAR', { duration: 10000 });
           this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al eliminar la zona', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Error al eliminar la zona', 'CERRAR', { duration: 10000 });
           throw error;
         }
       });
@@ -192,11 +192,11 @@ export class ZoneManagerComponent implements OnInit {
     this.service.updateZone(params)
       .subscribe({
         next: () => {
-          this.snackbar.open('Zona actualizada', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Zona actualizada', 'CERRAR', { duration: 10000 });
           this.refreshServices.triggerRefresh();
         },
         error: (error: any) => {
-          this.snackbar.open('Error al actualizar la zona', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Error al actualizar la zona', 'CERRAR', { duration: 10000 });
           throw error;
         }
       });

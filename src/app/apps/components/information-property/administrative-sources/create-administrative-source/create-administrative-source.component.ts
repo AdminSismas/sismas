@@ -204,7 +204,7 @@ export class CreateAdministrativeSourceComponent
       .createAdministrativeSource(params)
       .subscribe({
         next: (data: AdministrativeSource) => {
-          this.snackbar.open('Fuente administrativa creada', 'CLOSE', {
+          this.snackbar.open('Fuente administrativa creada', 'CERRAR', {
             duration: 10000
           });
           this.dialogRef.close(data);
@@ -212,7 +212,7 @@ export class CreateAdministrativeSourceComponent
         error: () => {
           this.snackbar.open(
             'Error al crear la fuente administrativa',
-            'CLOSE',
+            'CERRAR',
             { duration: 10000 }
           );
         }
@@ -242,7 +242,7 @@ export class CreateAdministrativeSourceComponent
       })
       .subscribe({
         next: () => {
-          this.snackbar.open('Fuente Administrativa actualizada', 'CLOSE', {
+          this.snackbar.open('Fuente Administrativa actualizada', 'CERRAR', {
             duration: 10000
           });
           this.dialogRef.close();
@@ -250,7 +250,7 @@ export class CreateAdministrativeSourceComponent
         error: () => {
           this.snackbar.open(
             'Error al actualizar la fuente administrativa',
-            'CLOSE',
+            'CERRAR',
             { duration: 10000 }
           );
         }

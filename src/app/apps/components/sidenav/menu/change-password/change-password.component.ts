@@ -90,19 +90,19 @@ export class ChangePasswordComponent implements OnInit {
   validForm(): boolean {
     if (this.form.errors) {
       if (this.form.errors['samePassword']) {
-        this.snackbar.open('La nueva contraseña no puede ser la misma que la antigua', 'CLOSE', {
+        this.snackbar.open('La nueva contraseña no puede ser la misma que la antigua', 'CERRAR', {
           duration: 10000
         });
         return false;
       } else if (this.form.errors['passwordMismatch']) {
-        this.snackbar.open('Las nuevas contraseñas no coinciden', 'CLOSE', {
+        this.snackbar.open('Las nuevas contraseñas no coinciden', 'CERRAR', {
           duration: 10000
         });
         return false;
       }
     }
     if (this.form.invalid) {
-      this.snackbar.open('Por favor, completa todos los campos', 'CLOSE', {
+      this.snackbar.open('Por favor, completa todos los campos', 'CERRAR', {
         duration: 10000
       });
       return false;
@@ -162,12 +162,12 @@ export class ChangePasswordComponent implements OnInit {
     this.passwordService.changePassword(username, lastPassword, newPassword).subscribe({
       next: (res) => {
         console.log(res);
-        this.snackbar.open('Contraseña cambiada correctamente', 'CLOSE', {
+        this.snackbar.open('Contraseña cambiada correctamente', 'CERRAR', {
           duration: 10000
         });
       },
       error: (err: HttpErrorResponse) => {
-        this.snackbar.open('Error al cambiar la contraseña', 'CLOSE', {
+        this.snackbar.open('Error al cambiar la contraseña', 'CERRAR', {
           duration: 10000
         });
         throw err;

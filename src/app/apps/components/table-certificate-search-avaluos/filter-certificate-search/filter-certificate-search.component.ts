@@ -176,7 +176,7 @@ export class FilterCertificateSearchComponent implements OnInit {
     }
     this.openSnackbar(
       'No es posible la búsqueda por círculo - matrícula, datos no válidos',
-      'CLOSE', 'end'
+      'CERRAR', 'end'
     );
   }
 
@@ -188,7 +188,7 @@ export class FilterCertificateSearchComponent implements OnInit {
     }
     this.openSnackbar(
       'No es posible la búsqueda por doumento y tipo de documento, datos no válidos',
-      'CLOSE', 'end'
+      'CERRAR', 'end'
     );
   }
 
@@ -237,7 +237,7 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CLOSE', 'end'
+      'CERRAR', 'end'
     );
     console.log(searchDataFiltered);
   }
@@ -256,7 +256,7 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por dirección, datos no válidos',
-      'CLOSE', 'end'
+      'CERRAR', 'end'
     );
   }
 
@@ -347,7 +347,7 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CLOSE', 'end'
+      'CERRAR', 'end'
     );
     console.log(searchDataFiltered);
   }

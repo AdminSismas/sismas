@@ -116,14 +116,14 @@ export class AddPropertyOwnerComponent implements OnInit {
     this.fractions_sum += Number(this.secondForm.value.fraction);
 
     if (this.fractions_sum > 1) {
-      this.snackbar.open('La suma de fracciones es mayor a 1', 'CLOSE', { duration: 10000 });
+      this.snackbar.open('La suma de fracciones es mayor a 1', 'CERRAR', { duration: 10000 });
       return;
     }
 
     this.rrrightService.postRrrightOwnerProperty(params)
       .subscribe({
         next: () => {
-          this.snackbar.open('Propietario agregado', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Propietario agregado', 'CERRAR', { duration: 10000 });
           this.close();
         },
         error: (error: HttpErrorResponse) => {
@@ -136,7 +136,7 @@ export class AddPropertyOwnerComponent implements OnInit {
   }
 
   createPerson(newCustomer: { number: string; individualTypeNumber: string; }): void {
-    this.snackbar.open('Creando usuario', 'CLOSE', { duration: 10000 });
+    this.snackbar.open('Creando usuario', 'CERRAR', { duration: 10000 });
 
     this.dialog.open(CreatePeopleComponent, {
       data: {

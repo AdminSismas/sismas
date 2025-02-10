@@ -73,7 +73,7 @@ export class CreateUsersComponent implements OnInit {
 
   searchIndividual(): void {
     if (this.searchForm!.invalid) {
-      this.snackbar.open('Se deben diligenciar el número de documento y el tipo de documento', 'CLOSE', {
+      this.snackbar.open('Se deben diligenciar el número de documento y el tipo de documento', 'CERRAR', {
         duration: 10000
       });
       return;
@@ -90,13 +90,13 @@ export class CreateUsersComponent implements OnInit {
                 this.searchFormDisabled = true;
                 this.newUserFormDisabled = false;
               } else {
-                this.snackbar.open('El individuo ya tiene un usuario asociado', 'CLOSE', { duration: 10000 });
+                this.snackbar.open('El individuo ya tiene un usuario asociado', 'CERRAR', { duration: 10000 });
               }
             });
         },
         error: (error: any) => {
           if (error.status === 404) {
-            this.snackbar.open('Creando persona', 'CLOSE', { duration: 10000 });
+            this.snackbar.open('Creando persona', 'CERRAR', { duration: 10000 });
             this.dialog.open(CreatePeopleComponent, {
               data: {
                 number: this.searchForm!.value.number,
@@ -109,7 +109,7 @@ export class CreateUsersComponent implements OnInit {
                   console.log(result);
                 },
                 error: (error: any) => {
-                  this.snackbar.open('Error al crear el individuo', 'CLOSE', { duration: 10000 });
+                  this.snackbar.open('Error al crear el individuo', 'CERRAR', { duration: 10000 });
                   throw error;
                 }
               });
@@ -119,7 +119,7 @@ export class CreateUsersComponent implements OnInit {
   }
 
   createIndividual(): void {
-    this.snackbar.open('Creando usuario', 'CLOSE', { duration: 10000 });
+    this.snackbar.open('Creando usuario', 'CERRAR', { duration: 10000 });
 
     this.dialog.open(CreatePeopleComponent, {
       data: {
@@ -133,7 +133,7 @@ export class CreateUsersComponent implements OnInit {
           console.log(result);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al crear el individuo', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Error al crear el individuo', 'CERRAR', { duration: 10000 });
           throw error;
         }
       });
@@ -150,7 +150,7 @@ export class CreateUsersComponent implements OnInit {
 
   createUser(): void {
     if (this.newUserForm!.invalid) {
-      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CLOSE', { duration: 10000 });
+      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CERRAR', { duration: 10000 });
       return;
     }
 
@@ -173,13 +173,13 @@ export class CreateUsersComponent implements OnInit {
       map((result: any) => {
         if (result.usernameExists) {
           this.newUserForm?.get('username')?.setErrors({ usernameExists: true });
-          this.snackbar.open('El nombre de usuario ya existe', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('El nombre de usuario ya existe', 'CERRAR', { duration: 10000 });
           return true;
         }
 
         if (result.emailExists) {
           this.newUserForm?.get('email')?.setErrors({ emailExists: true });
-          this.snackbar.open('El correo electrónico ya existe', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('El correo electrónico ya existe', 'CERRAR', { duration: 10000 });
           return true;
         }
 
@@ -214,11 +214,11 @@ export class CreateUsersComponent implements OnInit {
     this.userService.createUser(params)
       .subscribe({
         next: (result: CreateOutput) => {
-          this.snackbar.open('Usuario creado', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Usuario creado', 'CERRAR', { duration: 10000 });
           this.dialogRef.close(result);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al crear el usuario', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Error al crear el usuario', 'CERRAR', { duration: 10000 });
           this.dialogRef.close();
           throw error;
         }
@@ -237,7 +237,7 @@ export class CreateUsersComponent implements OnInit {
   editUser(): void {
     console.log('Editando usuario ...');
     if (this.newUserForm!.invalid) {
-      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CLOSE', { duration: 10000 });
+      this.snackbar.open('Se deben diligenciar los datos del usuario', 'CERRAR', { duration: 10000 });
       return;
     }
 
@@ -253,11 +253,11 @@ export class CreateUsersComponent implements OnInit {
     this.userService.updateUser(this.data.userId!, this.newUserForm!.value.email)
       .subscribe({
         next: (result: Content) => {
-          this.snackbar.open('Usuario actualizado', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Usuario actualizado', 'CERRAR', { duration: 10000 });
           this.dialogRef.close(result);
         },
         error: (error: any) => {
-          this.snackbar.open('Error al actualizar el usuario', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Error al actualizar el usuario', 'CERRAR', { duration: 10000 });
           this.dialogRef.close();
           throw error;
         }

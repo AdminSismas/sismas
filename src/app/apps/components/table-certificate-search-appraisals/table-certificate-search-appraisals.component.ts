@@ -533,7 +533,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
       if (!available){
         this.snackbar.open(
           'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-          'CLOSE', { duration: 10000 }
+          'CERRAR', { duration: 10000 }
         );
         return;
       }

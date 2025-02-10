@@ -188,7 +188,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   onClickOpenAddEditModal(data: any): void {
     if (this.fractions_sum >= 1) {
-      this.snackbar.open('El predio ya está completamente asignado', 'CLOSE', { duration: 10000 });
+      this.snackbar.open('El predio ya está completamente asignado', 'CERRAR', { duration: 10000 });
       return;
     }
 

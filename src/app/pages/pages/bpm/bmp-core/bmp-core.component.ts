@@ -30,7 +30,8 @@ import {
   CONSTANT_VALIDATE_CHECK,
   CONSTANT_VALIDATE_OTHER,
   LISTO_FORM_BPM_CORE,
-  MODAL_LARGE
+  MODAL_LARGE,
+  MODAL_SMALL
 } from '../../../../apps/constants/constant';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
@@ -259,7 +260,7 @@ export class BmpCoreComponent implements OnInit {
         }
 
         this.dialog.open(ShowErrorValidateAlfaMainComponent, {
-          ...MODAL_LARGE,
+          ...MODAL_SMALL,
           data: result
         });
         this.activateLoading(true);

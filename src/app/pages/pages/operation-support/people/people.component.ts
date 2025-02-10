@@ -210,7 +210,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
           } catch (e) {
             msg = 'Antes de eliminar la persona se debe eliminar el usuario o la participación.';
           }
-          this.snackbar.open(msg, 'CLOSE', { duration: 10000 });
+          this.snackbar.open(msg, 'CERRAR', { duration: 10000 });
         }
       });
     }
@@ -292,7 +292,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
             if (error.status === 404) {
               this.snackbar.open(
                 'No se encontró una persona con ese documento.',
-                'CLOSE',
+                'CERRAR',
                 { duration: 10000 }
               );
               this.dialog.open(CreatePeopleComponent, {

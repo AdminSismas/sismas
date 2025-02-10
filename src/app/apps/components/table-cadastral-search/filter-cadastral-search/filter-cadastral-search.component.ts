@@ -222,7 +222,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     }
     this.openSnackbar(
       'No es posible la búsqueda por círculo - matrícula, datos no válidos',
-      'CLOSE',
+      'CERRAR',
       'end'
     );
   }
@@ -238,7 +238,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     }
     this.openSnackbar(
       'No es posible la búsqueda por documento y tipo de documento, datos no válidos',
-      'CLOSE',
+      'CERRAR',
       'end'
     );
   }
@@ -321,7 +321,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CLOSE',
+      'CERRAR',
       'end'
     );
     console.log(searchDataFiltered);
@@ -357,7 +357,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por dirección, datos no válidos',
-      'CLOSE',
+      'CERRAR',
       'end'
     );
   }
@@ -480,7 +480,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CLOSE',
+      'CERRAR',
       'end'
     );
     console.log(searchDataFiltered);

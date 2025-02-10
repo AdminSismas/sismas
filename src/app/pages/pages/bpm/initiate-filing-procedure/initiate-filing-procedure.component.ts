@@ -375,7 +375,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
 
           this.snackBar.open(
             `Radicado: ${proTaskE?.proTask?.flowDetail} Exitoso, Versión: ${proTaskE?.executionId}`,
-            'CLOSE',
+            'CERRAR',
             {
               duration: 10000
             }
@@ -408,7 +408,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);
-        this.snackBar.open(err?.error, 'CLOSE', {
+        this.snackBar.open(err?.error, 'CERRAR', {
           duration: 10000,
           horizontalPosition: 'right'
         });

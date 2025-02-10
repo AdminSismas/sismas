@@ -181,7 +181,7 @@ export class TableDigitalizedSignaturesComponent
               this.getDataDigitalizedSignatures();
             },
             error: (error) => {
-              this.snackbar.open('Error al eliminar la firma', 'CLOSE', {
+              this.snackbar.open('Error al eliminar la firma', 'CERRAR', {
                 duration: 10000
               });
               throw error;

@@ -79,7 +79,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
   editRrrightOwnerProperty(): any {
     if (this.form.invalid) {
-      this.snackbar.open('El valor de la fracción no es válido', 'CLOSE', { duration: 10000 });
+      this.snackbar.open('El valor de la fracción no es válido', 'CERRAR', { duration: 10000 });
       return;
     }
 
@@ -103,7 +103,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
           schema: this.data.schema as string,
           params: values
         }).subscribe(() => {
-          this.snackbar.open('Propietario actualizado', 'CLOSE', { duration: 10000 });
+          this.snackbar.open('Propietario actualizado', 'CERRAR', { duration: 10000 });
           this.close();
         });
       });

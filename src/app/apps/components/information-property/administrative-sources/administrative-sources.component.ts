@@ -138,7 +138,7 @@ export class AdministrativeSourcesComponent implements OnInit {
       .deleteAdministrativeSource(params)
       .subscribe({
         next: () => {
-          this.snackbar.open('Fuente administrativa eliminada', 'CLOSE', {
+          this.snackbar.open('Fuente administrativa eliminada', 'CERRAR', {
             duration: 10000
           });
           this.getDataSource();
@@ -146,7 +146,7 @@ export class AdministrativeSourcesComponent implements OnInit {
         error: () => {
           this.snackbar.open(
             'Error al eliminar la fuente administrativa',
-            'CLOSE',
+            'CERRAR',
             { duration: 10000 }
           );
         }

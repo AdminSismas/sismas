@@ -90,7 +90,7 @@ export class CreateSignatureComponent implements OnInit {
           this.dialogRef.close(true);
         },
         error: (error) => {
-          this.snackbar.open('Error al agregar la firma', 'CLOSE', {
+          this.snackbar.open('Error al agregar la firma', 'CERRAR', {
             duration: 10000
           });
           throw error;
