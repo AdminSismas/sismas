@@ -11,13 +11,13 @@ describe('DocumentsMainTableComponent', () => {
       imports: [DocumentsMainTableComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(DocumentsMainTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

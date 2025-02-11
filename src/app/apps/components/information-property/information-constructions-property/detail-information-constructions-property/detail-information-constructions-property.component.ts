@@ -14,7 +14,7 @@ import { InformationPropertyService } from '../../../../services/territorial-org
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { GUION, NAME_NO_DISPONIBLE, TWO_POINT_ } from '../../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE, TWO_POINT_ } from '../../../../constants/general/constant';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';

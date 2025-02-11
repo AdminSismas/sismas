@@ -40,7 +40,7 @@ import {
   PAGE_SIZE_SORT,
   PAGE_OPTION__5_7_10,
   TABLE_COLUMN_PROPERTIES_PERSON
-} from 'src/app/apps/constants/constant';
+} from '../../../constants/general/constant';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';

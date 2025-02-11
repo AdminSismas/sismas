@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, DestroyRef, Inject, inject, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import {  FooterTemplateModel, HeaderTemplateModel, OutFormatModel } from 'src/app/apps/interfaces/out-format.model';
+import {  FooterTemplateModel, HeaderTemplateModel, OutFormatModel } from '../../../../../../apps/interfaces/general/out-format.model';
 
 import { QuillEditorComponent } from 'ngx-quill';
 import { CommonModule, NgClass, NgForOf, NgIf } from '@angular/common';
@@ -18,17 +18,17 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, Unty
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InputComponent } from 'src/app/apps/components/input/input.component';
+import { InputComponent } from '../../../../../../apps/components/general-components/input/input.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from 'src/app/apps/constants/constant';
+import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../apps/constants/general/constant';
 
 
 
 // AddEditInformationDocumentAssociated
 export interface AddOutputFormats{
   type: 'edit' | 'new';
-  documentAssociated: OutFormatModel | undefined; 
+  documentAssociated: OutFormatModel | undefined;
   outTemplateId: number | undefined;
 }
 
@@ -76,7 +76,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
 
   });
 
-  
+
   headerTemplate:string = STRUCTURE_HTML_HEADER ;
   footerTemplate:string = STRUCTURE_HTML_FOOTER;
 
@@ -128,7 +128,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
 
         const headerIdSet = this.defaults.documentAssociated?.headerTemplate?.outTemplateId;
         this.form.get('headerTemplateId')?.setValue(headerIdSet);
-        
+
         const footerIdSet = this.defaults.documentAssociated?.footerTemplate?.outTemplateId;
         this.form.get('footerTemplateId')?.setValue(footerIdSet);
 
@@ -143,7 +143,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
       } else {
         console.error('La instancia de QuillEditor no está disponible.');
       }
-    } 
+    }
 
     public getUserSession(){
       this.userSesion = this.userService.getUser();
@@ -164,7 +164,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
       // }
       this.dialogRef.close();
     }
-  
+
 
     saveTemplate(): any {
       if (this.form.invalid) {
@@ -182,7 +182,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
     }
 
 
-    // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress 
+    // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress
     public generateModelDirecctionModel(value: any): OutFormatModel | undefined {
       // Obtener el contenido HTML desde el editor Quill
       let textFormatHtml = '';
@@ -202,7 +202,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
           updatedBy: value.updatedBy || null,
           updatedAt: value.updatedAt || null,
         };
-    
+
         if (this.headerTemplateId?.value) {
           createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(
             Number(this.headerTemplateId.value)
@@ -213,7 +213,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
             Number(this.footerTemplateId.value)
           );
         }
-    
+
         return createBasicInformationAddress;
       } else if (this.defaults.type === 'edit') {
 
@@ -228,7 +228,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
           updatedBy: this.userSesion?.sub || '',
           updatedAt: this.getCurrentFormattedDate(),
         };
-    
+
         if (this.headerTemplateId?.value) {
           createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(
             Number(this.headerTemplateId.value)
@@ -239,10 +239,10 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
             Number(this.footerTemplateId.value)
           );
         }
-    
+
         return createBasicInformationAddress;
       }
-    
+
       return undefined;
     }
 
@@ -253,10 +253,10 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
       const seconds = String(date.getSeconds()).padStart(2, '0');
-  
+
       return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
-  
+
     getCurrentFormattedDate(): string {
       const now = new Date();
       return this.formatDate(now);
@@ -276,7 +276,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
     get content(){
       return this.form.get('content');
     }
-    
+
     get headerTemplateId(){
       return this.form.get('headerTemplateId');
     }

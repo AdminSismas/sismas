@@ -17,15 +17,15 @@ import {
   TYPEOPERATION_CREATE,
   TYPEOPERATION_DELETE,
   MODAL_SMALL
-} from '../../../../../../../apps/constants/constant';
+} from '../../../../../../../apps/constants/general/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { ProFlow } from '../../../../../../../apps/interfaces/pro-flow';
-import { InformationPegeable } from '../../../../../../../apps/interfaces/information-pegeable.model';
+import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
+import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
 import { AlfaMainService } from '../../../../../../../apps/services/bpm/core/alfa-main.service';
-import { PageSearchData } from '../../../../../../../apps/interfaces/page-search-data.model';
+import { PageSearchData } from '../../../../../../../apps/interfaces/general/page-search-data.model';
 import { firstValueFrom, Observable, of, ReplaySubject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-import { LoadingAppComponent } from '../../../../../../../apps/components/loading-app/loading-app.component';
+import { LoadingAppComponent } from '../../../../../../../apps/components/general-components/loading-app/loading-app.component';
 import { Operation } from '../../../../../../../apps/interfaces/bpm/operation';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
 import { environment } from '../../../../../../../../environments/environments';
@@ -46,13 +46,13 @@ import { ClearInformationDataComponent } from '../../../../../../../apps/compone
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
   CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN
-} from '../../../../../../../apps/constants/constantLabels';
+} from '../../../../../../../apps/constants/general/constantLabels';
 import { OperationContentInformation } from '../../../../../../../apps/interfaces/bpm/operation-content-information';
-import { Pegeable } from '../../../../../../../apps/interfaces/pegeable.model';
+import { Pegeable } from '../../../../../../../apps/interfaces/general/pegeable.model';
 import { ViewChangeAlphaMainRecordComponent } from '../../../../../../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
-import { TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/content-info';
+import { TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/general/content-info';
 import { CrudAlfaMainComponent } from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
-import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-main.model';
+import { DataAlfaMain } from '../../../../../../../apps/interfaces/bpm/data-alfa-main.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

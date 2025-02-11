@@ -11,13 +11,13 @@ describe('DocumentsTableComponent', () => {
       imports: [DocumentsTableComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(DocumentsTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

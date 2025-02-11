@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
-import { PageSearchData } from '../../interfaces/page-search-data.model';
-import { InformationPegeable } from '../../interfaces/information-pegeable.model';
+import { PageSearchData } from '../../interfaces/general/page-search-data.model';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ProTaskE } from '../../interfaces/pro-task-e';
+import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 
 @Injectable({
   providedIn: 'root'

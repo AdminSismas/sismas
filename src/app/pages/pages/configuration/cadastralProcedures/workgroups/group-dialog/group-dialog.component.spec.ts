@@ -11,13 +11,13 @@ describe('GroupDialogComponent', () => {
       imports: [GroupDialogComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(GroupDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

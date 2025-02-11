@@ -3,8 +3,8 @@ import { environment as envi } from '../../../../../environments/environments';
 import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
 import { catchError, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
-import { PageSearchData } from '../../../interfaces/page-search-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { ChangeControl } from '../../../interfaces/bpm/change-control';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 
@@ -69,7 +69,7 @@ export class AlfaMainService {
     paramsR = paramsR.append('size', `${page.size}`);
 
     const url = `${this.basic_url}${envi.metrict_cadastral_change}${page.searchData}`;
-    
+
     return this.getData(url, paramsR);
   }
 
@@ -92,9 +92,9 @@ export class AlfaMainService {
     formData.append('npnLike', `${npnLike}`);
     formData.append('changeLogId', `${executionId}`);
     formData.append('domBaunitCondition', `${bAunitCondition}`);
-    
+
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-    
+
     return this.http.post<InformationPegeable>(url, formData, { headers: headers });
   }
 
@@ -104,7 +104,7 @@ export class AlfaMainService {
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-    
+
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
 
     return this.http.post<InformationPegeable>(url, formData, { headers: headers });
@@ -116,7 +116,7 @@ export class AlfaMainService {
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-    
+
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
 
     return this.http.delete(url, { body: formData, headers });

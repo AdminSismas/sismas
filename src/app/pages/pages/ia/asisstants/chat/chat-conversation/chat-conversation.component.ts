@@ -33,7 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Observable, of } from 'rxjs';
 import { env } from "../../../../../../../environments/enviromentsIA";
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MODAL_MEDIUM } from 'src/app/apps/constants/constant';
+import { MODAL_MEDIUM } from '../../../../../../apps/constants/general/constant';
 
 @Component({
   selector: 'vex-chat-conversation',

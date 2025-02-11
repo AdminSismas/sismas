@@ -6,13 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
-import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   PAGE
-} from 'src/app/apps/constants/constant';
+} from '../../../constants/general/constant';
 import { AlfaMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/alf/main/alfa-main.component';
 // Custom
 

@@ -6,14 +6,16 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin, map, Observable } from 'rxjs';
-import { DynamicFormsComponent } from 'src/app/apps/components/dynamic-forms/dynamic-forms.component';
-import { CREATE_USER_INPUTS, SEARCH_INPUTS } from 'src/app/apps/constants/users.constants';
-import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
+import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
+import { CREATE_USER_INPUTS, SEARCH_INPUTS } from '../../../../../../apps/constants/general/users.constants';
+import { JSONInput } from '../../../../../../apps/interfaces/forms/dynamic-forms';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { Content, CreateOutput, CreateUserDialogData, CreateUserParams, User } from 'src/app/apps/interfaces/users/user';
-import { PeopleService } from 'src/app/apps/services/people.service';
+import { Content, CreateOutput, CreateUserDialogData, CreateUserParams } from 'src/app/apps/interfaces/users/user';
+import { PeopleService } from '../../../../../../apps/services/users/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
-import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+import {
+  CreatePeopleComponent
+} from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 
 @Component({
   selector: 'vex-create-users',
@@ -231,7 +233,7 @@ export class CreateUsersComponent implements OnInit {
     username = username.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
     return username;
-    
+
   }
 
   editUser(): void {

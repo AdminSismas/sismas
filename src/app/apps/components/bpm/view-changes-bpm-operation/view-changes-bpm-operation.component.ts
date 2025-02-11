@@ -9,9 +9,9 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
-import { ComboxColletionComponent } from '../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../general-components/combox-colletion/combox-colletion.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputComponent } from '../../input/input.component';
+import { InputComponent } from '../../general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -24,8 +24,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatListModule } from '@angular/material/list';
-import { CONSTANT_CHANGE_UNITED_PREDIAL } from '../../../constants/constantLabels';
-import { TWO_POINT_ } from '../../../constants/constant';
+import { CONSTANT_CHANGE_UNITED_PREDIAL } from '../../../constants/general/constantLabels';
+import { TWO_POINT_ } from '../../../constants/general/constant';
 
 @Component({
   selector: 'vex-view-changes-bpm-operation',

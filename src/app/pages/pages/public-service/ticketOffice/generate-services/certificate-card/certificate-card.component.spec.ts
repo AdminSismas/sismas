@@ -11,13 +11,13 @@ describe('CertificateCardComponent', () => {
       imports: [CertificateCardComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(CertificateCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -10,7 +10,7 @@ describe('SendInformationRegisterService', () => {
     service = TestBed.inject(SendInformationRegisterService);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

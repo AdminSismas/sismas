@@ -26,8 +26,7 @@ describe(AppComponent.name, () => {
 
   test(`should have as title 'geoGestion'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
-    expect(component.title).toEqual('geoGestion');
+    expect(window.name).toEqual('geoGestion');
   });
 
 });

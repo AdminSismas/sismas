@@ -57,8 +57,8 @@ import {
   CONSTANT_NAME_RETURN,
   CONSTANT_NAME_ROOTING,
   CONSTANT_NAME_SI_
-} from '../../../../apps/constants/constantLabels';
-import { DomainCollection } from '../../../../apps/interfaces/domain-name.model';
+} from '../../../../apps/constants/general/constantLabels';
+import { DomainCollection } from '../../../../apps/interfaces/general/domain-name.model';
 import {
   DOMAIN_COLLETION_BPMPROCESSCATEGORY,
   GUION,
@@ -69,14 +69,14 @@ import {
   PANEL_ASSIGNED_TASKS,
   SPACE,
   TABLE_COLUMN_PROPERTIES
-} from '../../../../apps/constants/constant';
+} from '../../../../apps/constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
 import { MetadataBpm } from '../../../../apps/interfaces/bpm/metadata-bpm';
 import { ProcessCardComponent } from './components/process-card/process-card.component';
 import { ProcessParticipant } from '../../../../apps/interfaces/bpm/process-participant';
 import { ProExecutionE } from '../../../../apps/interfaces/bpm/pro-execution-e';
-import { ProTaskE } from '../../../../apps/interfaces/pro-task-e';
+import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
 import { SendInformationRegisterService } from '../../../../apps/services/register-procedure/send-information-register.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -380,7 +380,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
               duration: 10000
             }
           );
-        
+
           return;
         }
 

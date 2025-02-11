@@ -24,17 +24,17 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentService } from 'src/app/apps/services/document-management.service';
-import { AttachmentCollection } from 'src/app/apps/interfaces/attachment.model';
-import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { AttachmentService } from '../../../../../../../apps/services/documnet-management/document-management.service';
+import { AttachmentCollection } from '../../../../../../../apps/interfaces/documnet-management/attachment.model';
+import { contentInfoAttachment } from '../../../../../../../apps/interfaces/general/content-info-attachment.model';
+import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
 
 import { DocumentValidateComponent } from '../document-validate.component';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES, TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE } from 'src/app/apps/constants/attachment.constant';
+import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES, TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE } from '../../../../../../../apps/constants/general/attachment.constant';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MODAL_LARGE } from 'src/app/apps/constants/constant';
+import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constant';
 
 
 @Component({

@@ -46,7 +46,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 // Custom
-import { ComboxColletionComponent } from '../../../../../../apps/components/combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
 import { InfoPerson } from '../../../../../../apps/interfaces/information-property/info-person';
@@ -57,7 +57,7 @@ import {
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_BASIC_PRINCIPALS,
   MODAL_SMALL
-} from '../../../../../../apps/constants/constant';
+} from '../../../../../../apps/constants/general/constant';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
 
 @Component({

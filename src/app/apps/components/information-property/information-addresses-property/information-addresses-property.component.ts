@@ -24,7 +24,7 @@ import {
   TYPEINFORMATION_EDITION,
   TYPEINFORMATION_VISUAL,
   MODAL_SMALL
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import { MatCardModule } from '@angular/material/card';
 import {
   HeaderCadastralInformationPropertyComponent
@@ -46,7 +46,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AddEditInformationDataI, EditInformationAddressComponent } from './edit-information-address/edit-information-address.component';
-import { TypeInformation } from '../../../interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

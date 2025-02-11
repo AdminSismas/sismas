@@ -11,7 +11,7 @@ describe(InformationGeographicService.name, () => {
     service = TestBed.inject(InformationGeographicService);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

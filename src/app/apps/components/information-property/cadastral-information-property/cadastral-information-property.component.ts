@@ -29,7 +29,7 @@ import {
 } from '../information-constructions-property/information-constructions-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
@@ -42,10 +42,10 @@ import {
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
   REFERENCE_COMPONENTS,
   TYPEINFORMATION_VISUAL
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
-import { TypeInformation } from '../../../interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { InformationAdjacentPropertyComponent } from '../information-adjacent-property/information-adjacent-property.component';
 
 @Component({
@@ -230,7 +230,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
       this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
     }
-    
+
   }
   proccessRulePage() {
     if(this.rulePage) {
@@ -299,5 +299,5 @@ export class CadastralInformationPropertyComponent implements OnInit {
     return false;
   }
 
-  
+
 }

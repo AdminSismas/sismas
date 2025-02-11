@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { MODEL_METADATA_PROPERTIES } from 'src/app/apps/constants/attachment.constant';
+import { MODEL_METADATA_PROPERTIES } from '../../../../../../apps/constants/general/attachment.constant';
 import { environment } from 'src/environments/environments';
 
 @Component({
@@ -28,7 +28,7 @@ import { environment } from 'src/environments/environments';
   styleUrl: './document-viewer-work-historical.component.scss'
 })
 export class DocumentViewerWorkHistoricalComponent {
-  
+
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
 
@@ -44,7 +44,7 @@ export class DocumentViewerWorkHistoricalComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: {
       url: string;
-    
+
     }
   ) {
     this.url = data.url;
@@ -92,9 +92,9 @@ export class DocumentViewerWorkHistoricalComponent {
       console.error('Token no encontrado. Asegúrate de estar autenticado.');
       return;
     }
-  
+
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
+
     this.http.get(this.url, { headers, responseType: 'blob' }).subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
@@ -107,7 +107,7 @@ export class DocumentViewerWorkHistoricalComponent {
       },
     });
   }
-  
+
 
 
   switchViewDocMetaData(): void {

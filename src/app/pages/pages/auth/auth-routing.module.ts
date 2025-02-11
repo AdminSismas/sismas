@@ -28,7 +28,7 @@ const routes: VexRoutes = [
       {
         path: '**',
         loadComponent: () =>
-          import('../../../apps/components/in-construction/in-construction.component').then(
+          import('../../../apps/components/general-components/in-construction/in-construction.component').then(
             (m) => m.InConstructionComponent
           )
       }

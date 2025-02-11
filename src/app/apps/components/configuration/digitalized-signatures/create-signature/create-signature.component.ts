@@ -15,12 +15,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
 // Custom
-import { DynamicFormsComponent } from '../../../dynamic-forms/dynamic-forms.component';
-import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
+import { DynamicFormsComponent } from '../../../forms/dynamic-forms/dynamic-forms.component';
+import { JSONInput } from '../../../../interfaces/forms/dynamic-forms';
 import {
   CREATE_SIGNATURE_INPUTS,
   SEARCH_INPUTS
-} from 'src/app/apps/constants/digitalized-signatures.constants';
+} from '../../../../constants/general/digitalized-signatures.constants';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

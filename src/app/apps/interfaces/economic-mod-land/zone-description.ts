@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { JSONInput } from "../dynamic-forms";
+import { JSONInput } from "../forms/dynamic-forms";
 import { MatTableDataSource } from "@angular/material/table";
 
 export interface UrbanZone {

@@ -10,10 +10,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PeopleService } from 'src/app/apps/services/people.service';
+import { PeopleService } from '../../../../services/users/people.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { MatDividerModule } from '@angular/material/divider';
 

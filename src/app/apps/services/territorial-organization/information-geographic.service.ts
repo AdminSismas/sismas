@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
-import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-geographic-vie';
+import { QueryParametersGeographicVie } from '../../interfaces/geographic/query-parameters-geographic-vie';
 
 @Injectable({
   providedIn: 'root'
@@ -32,9 +32,9 @@ export class InformationGeographicService {
     const url = `${this.basic_url}${envi.accessGeo.extentByCodigoData}/${cadastralNumber}`;
     return this.requestsService.sendRequestsFetchGet(url).pipe(
       catchError(error => {
-       
+
         console.error('Error en la solicitud:', error);
-  
+
         return throwError(() => new Error('No se pudo encontrar el mapa solicitado.'));
       })
     );

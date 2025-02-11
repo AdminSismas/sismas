@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DatePipe, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { BasicInformationAddress } from '../../../../interfaces/information-property/basic-information-address';
-import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from '../../../../constants/constant';
+import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from '../../../../constants/general/constant';
 import {
   DetailBasicInformationAddress
 } from '../../../../interfaces/information-property/detail-basic-information-address';

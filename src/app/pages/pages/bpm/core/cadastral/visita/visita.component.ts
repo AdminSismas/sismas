@@ -12,12 +12,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // Custom
-import { DynamicFormsComponent } from 'src/app/apps/components/dynamic-forms/dynamic-forms.component';
-import { INPUT_FORM_VISIT, TABLE_COLUMN_THIRD_PARTY } from 'src/app/apps/constants/cadastral-visit.constants';
-import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
-import { BasicParticipantTableDialogComponent } from 'src/app/apps/components/bpm/basic-participant-table-dialog/basic-participant-table-dialog.component';
+import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
+import { INPUT_FORM_VISIT, TABLE_COLUMN_THIRD_PARTY } from '../../../../../../apps/constants/information-property/cadastral-visit.constants';
+import { JSONInput } from '../../../../../../apps/interfaces/forms/dynamic-forms';
+import {
+  BasicParticipantTableDialogComponent
+} from 'src/app/apps/components/bpm/basic-participant-table-dialog/basic-participant-table-dialog.component';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
-import { MODAL_LARGE, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from 'src/app/apps/constants/constant';
+import { MODAL_LARGE, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '../../../../../../apps/constants/general/constant';
 import { MatSort } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 

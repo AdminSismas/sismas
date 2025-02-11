@@ -11,13 +11,13 @@ describe('AttachmentFormComponent', () => {
       imports: [AttachmentFormComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(AttachmentFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

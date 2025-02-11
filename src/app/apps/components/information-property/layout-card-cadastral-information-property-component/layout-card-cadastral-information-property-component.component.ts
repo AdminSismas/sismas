@@ -11,24 +11,24 @@ import { MatIconModule } from '@angular/material/icon';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { CadastralInformationPropertyComponent } from '../cadastral-information-property/cadastral-information-property.component';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import {
   TWO_POINT_,
   TYPEINFORMATION_VISUAL
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
 import {
   ObjectSchema,
   TypeInformation
-} from '../../../interfaces/content-info';
+} from '../../../interfaces/general/content-info';
 import {
   CONSTANT_INFOMATION_PREDIAL,
   CONSTANT_INFOMATION_PREDIAL_HIST,
   CONSTANT_INFOMATION_PREDIAL_MAIN,
   CONSTANT_INFOMATION_PREDIAL_TEMP
-} from '../../../constants/constantLabels';
+} from '../../../constants/general/constantLabels';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 
@@ -68,7 +68,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>,
     private informationPropertyService: InformationPropertyService
   ) {
-    
+
   }
 
   ngOnInit(): void {

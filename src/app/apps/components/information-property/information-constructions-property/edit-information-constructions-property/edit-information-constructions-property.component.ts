@@ -1,10 +1,19 @@
 // Angular framework
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit, ViewChild, inject, signal, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { SweetAlert2Module, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 // Material
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -25,15 +34,20 @@ import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
-import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from 'src/app/apps/constants/constant';
-import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
-import { ContentInformationConstruction, CreateBasicInformationConstruction } from 'src/app/apps/interfaces/information-property/content-information-construction';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from '../../../../constants/general/constant';
+import {
+  BasicInformationConstruction
+} from 'src/app/apps/interfaces/information-property/basic-information-construction';
+import {
+  ContentInformationConstruction,
+  CreateBasicInformationConstruction
+} from 'src/app/apps/interfaces/information-property/content-information-construction';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { environment } from 'src/environments/environments';
-import { InputComponent } from '../../../input/input.component';
-import { CustomSelectorComponent } from '../../../custom-selector/custom-selector.component';
-import { V } from '@angular/cdk/keycodes';
-
+import { InputComponent } from '../../../general-components/input/input.component';
+import { CustomSelectorComponent } from '../../../general-components/custom-selector/custom-selector.component';
 
 
 export interface AddEditInformationConstructionI {

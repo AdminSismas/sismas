@@ -4,12 +4,12 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ParamsRrright, AddPropertyOwnerData, Owners } from 'src/app/apps/interfaces/bpm/changes-property-owner';
-import { PeopleService } from 'src/app/apps/services/people.service';
+import { PeopleService } from '../../../../services/users/people.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';

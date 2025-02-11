@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TitleService } from './apps/services/tittle.service';
+import { TitleService } from './apps/services/general/tittle.service';
 
 @Component({
   selector: 'vex-root',

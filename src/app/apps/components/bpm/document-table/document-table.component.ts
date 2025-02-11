@@ -26,13 +26,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentService } from 'src/app/apps/services/document-management.service';
-import { AttachmentCollection } from 'src/app/apps/interfaces/attachment.model';
-import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { ViewFileDocumentManagementComponent } from '../../view-file-document-management/view-file-document-management.component';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../../constants/attachment.constant';
-import { MODAL_LARGE } from '../../../constants/constant';
+import { AttachmentService } from '../../../services/documnet-management/document-management.service';
+import { AttachmentCollection } from '../../../interfaces/documnet-management/attachment.model';
+import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { ViewFileDocumentManagementComponent } from '../../general-components/view-file-document-management/view-file-document-management.component';
+import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../../constants/general/attachment.constant';
+import { MODAL_LARGE } from '../../../constants/general/constant';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 
@@ -223,7 +223,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'jpg':
       case 'gif':
       case 'bmp':
-        return 'mat:visibility'; 
+        return 'mat:visibility';
 
       case 'doc':
       case 'docx':
@@ -231,9 +231,9 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'xls':
       case 'zip':
       case 'rar':
-        return 'mat:cloud_download';  
+        return 'mat:cloud_download';
       default:
-        return 'mat:visibility'; 
+        return 'mat:visibility';
     }
   }
 
@@ -248,7 +248,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'jpg':
       case 'gif':
       case 'bmp':
-        return 'Ver archivo';  
+        return 'Ver archivo';
 
       case 'doc':
       case 'docx':
@@ -256,10 +256,10 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'xls':
       case 'zip':
       case 'rar':
-        return 'Descargar archivo'; 
+        return 'Descargar archivo';
 
       default:
-        return 'Ver archivo';  
+        return 'Ver archivo';
     }
   }
 
@@ -290,7 +290,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
 
   getFileIconColor(row: AttachmentCollection): string {
     const fileExtension = this.getFileExtension(row.originalFileName!);
-    
+
     // Colores para diferentes tipos de archivo
     switch (fileExtension) {
       case 'pdf':

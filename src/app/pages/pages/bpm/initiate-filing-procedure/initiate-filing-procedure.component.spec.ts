@@ -11,13 +11,13 @@ describe('InitiateFilingProcedureComponent', () => {
       imports: [InitiateFilingProcedureComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(InitiateFilingProcedureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

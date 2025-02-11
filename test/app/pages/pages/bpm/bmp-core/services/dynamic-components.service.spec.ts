@@ -11,7 +11,7 @@ describe(DynamicComponentsService.name, () => {
     service = TestBed.inject(DynamicComponentsService);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

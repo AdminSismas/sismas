@@ -11,13 +11,13 @@ describe('ProcessCardComponent', () => {
       imports: [ProcessCardComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ProcessCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

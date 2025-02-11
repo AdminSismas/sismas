@@ -4,7 +4,7 @@ import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
-import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TYPEINFORMATION_EDITION, MODAL_SMALL, MODAL_MEDIUM } from '../../../constants/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TYPEINFORMATION_EDITION, MODAL_SMALL, MODAL_MEDIUM } from '../../../constants/general/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
@@ -28,13 +28,13 @@ import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-pe
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
 import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
-import { FRACTION_DECIMALS, TABLE_COLUMNS } from 'src/app/apps/constants/information-property-owners.constants';
+import { FRACTION_DECIMALS, TABLE_COLUMNS } from '../../../constants/information-property/information-property-owners.constants';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;

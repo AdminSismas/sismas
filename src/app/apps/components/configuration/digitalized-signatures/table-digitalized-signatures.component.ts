@@ -26,17 +26,17 @@ import {
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION
-} from 'src/app/apps/constants/constant';
+} from '../../../constants/general/constant';
 
 // Custom
 import { CreateSignatureComponent } from './create-signature/create-signature.component';
-import { DIGITALIZED_SIGNATURES_COLUMNS } from 'src/app/apps/constants/digitalized-signatures.constants';
+import { DIGITALIZED_SIGNATURES_COLUMNS } from '../../../constants/general/digitalized-signatures.constants';
 import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { PageSortByData } from 'src/app/apps/interfaces/page-sortBy-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { PageSortByData } from '../../../interfaces/general/page-sortBy-data.model';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
-import { UsersSignatures } from 'src/app/apps/interfaces/digitalized-signatures';
+import { UsersSignatures } from '../../../interfaces/users/digitalized-signatures';
 
 @Component({
   selector: 'table-digitalized-signatures',

@@ -30,8 +30,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataSource } from 'src/app/apps/interfaces/information-property/snr-source-info';
 import { environment } from 'src/environments/environments';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
-import { TYPEINFORMATION_EDITION, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES_SOURCE, TYPEINFORMATION_VISUAL, PAGE_OPTION__5_7_10, PAGE_SIZE_SORT } from 'src/app/apps/constants/constant';
+import { TypeInformation } from '../../../interfaces/general/content-info';
+import { TYPEINFORMATION_EDITION, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES_SOURCE, TYPEINFORMATION_VISUAL, PAGE_OPTION__5_7_10, PAGE_SIZE_SORT } from '../../../constants/general/constant';
 import { InformationPersonPropertyComponent } from '../information-person-property/information-person-property.component';
 
 

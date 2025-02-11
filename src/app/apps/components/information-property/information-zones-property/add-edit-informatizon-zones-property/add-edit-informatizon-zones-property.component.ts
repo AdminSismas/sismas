@@ -23,7 +23,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 // Custom
 import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/geo-economic-zone';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { InputComponent } from '../../../input/input.component';
+import { InputComponent } from '../../../general-components/input/input.component';
 import { RuralPhysicalZone } from 'src/app/apps/interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from 'src/app/apps/interfaces/information-property/urban-physical-zone';
 import { AddZoneParameters } from 'src/app/apps/interfaces/information-property/zone-baunit';

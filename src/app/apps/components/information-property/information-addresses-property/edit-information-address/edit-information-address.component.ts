@@ -5,22 +5,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI ,PROCESO_CREAR_DIRECCION ,PROCESO_ACTUALIZAR_DIRECCION} from 'src/app/apps/constants/constant';
+import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI ,PROCESO_CREAR_DIRECCION ,PROCESO_ACTUALIZAR_DIRECCION} from '../../../../constants/general/constant';
 import { environment } from 'src/environments/environments';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { CreateBasicInformationAddress, DetailBasicInformationAddress } from 'src/app/apps/interfaces/information-property/detail-basic-information-address';
 import { BasicInformationAddress } from 'src/app/apps/interfaces/information-property/basic-information-address';
 import { lastValueFrom } from 'rxjs';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { InputComponent } from '../../../input/input.component';
+import { InputComponent } from '../../../general-components/input/input.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { TextAreaComponent } from '../../../text-area/text-area.component';
+import { TextAreaComponent } from '../../../general-components/text-area/text-area.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 export interface AddEditInformationDataI {
@@ -76,7 +76,7 @@ export class EditInformationAddressComponent implements OnInit {
   private informationPropertyService = inject(InformationPropertyService);
   private fBuilder = inject(FormBuilder);
   readonly addEditInformationData = inject<AddEditInformationDataI>(MAT_DIALOG_DATA);
-  
+
 
   constructor() {
     this.initForm();
@@ -134,7 +134,7 @@ export class EditInformationAddressComponent implements OnInit {
       if (this.addEditInformationData.type === 'new') {
 
         let createBasicInformationAddress = this.generateModelDirecction();
-        
+
         if(value?.domTipoDireccion === 'Estructurada'){
 
           createBasicInformationAddress = this.filterValueAddreStructured(value);
@@ -199,7 +199,7 @@ export class EditInformationAddressComponent implements OnInit {
   }
 
 
- 
+
 // PROCESO CREAR MODELO DE DATOS CreateBasicInformationAddress
   public generateModelDirecction():CreateBasicInformationAddress{
     const createBasicInformationAddress: CreateBasicInformationAddress = {
@@ -211,7 +211,7 @@ export class EditInformationAddressComponent implements OnInit {
       numeroPredio:'',
 
       direccionTexto: '',
-      
+
        // PRINCIPAL
        domClaseViaPrincipal:'',
        letraViaPrincipal:'',
@@ -225,7 +225,7 @@ export class EditInformationAddressComponent implements OnInit {
        nombrePredio:'',
        domSectorPredio:'',
 
-    
+
     };
     return createBasicInformationAddress;
   }
@@ -260,35 +260,35 @@ export class EditInformationAddressComponent implements OnInit {
 
   public filterValueAddreDontStructured(value:any):CreateBasicInformationAddress{
     const dontStructutred: CreateBasicInformationAddress = {
-  
+
       // campos BASE Informacion permanente
         domTipoDireccion:'',
         esDireccionPrincipal:false,
         codigoPostal:'',
         nombrePredio:'',
-        
-  
+
+
       // PRINCIPAL // campo bloqueado
       domClaseViaPrincipal:'',
       letraViaPrincipal:'',
       valorViaPrincipal:'',
       domSectorCiudad:'',
-  
+
       // GENERADORA // campo bloqueado
       letraViaGeneradora:'',
       valorViaGeneradora:'',
       complemento:'',
       domSectorPredio:'',
       numeroPredio:'',
-  
-          
+
+
       direccionTexto: value?.direccionTexto
     };
     return dontStructutred;
   }
   // PROCESO CREAR /FIN
 
-// PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress 
+// PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress
 public generateModelDirecctionModel():DetailBasicInformationAddress{
   const createBasicInformationAddress: DetailBasicInformationAddress = {
 
@@ -299,7 +299,7 @@ public generateModelDirecctionModel():DetailBasicInformationAddress{
     nombrePredio:'',
 
     direccionTexto: '',
-    
+
      // PRINCIPAL
      domClaseViaPrincipal:'',
      letraViaPrincipal:'',
@@ -313,7 +313,7 @@ public generateModelDirecctionModel():DetailBasicInformationAddress{
      domSectorPredio:'',
      numeroPredio:'',
 
-  
+
   };
   return createBasicInformationAddress;
 }
@@ -339,7 +339,7 @@ public filterValueAddreStructuredModel(value:any):DetailBasicInformationAddress{
     complemento:value?.complemento,
     domSectorPredio:value?.domSectorPredio,
     numeroPredio:value?.numeroPredio,
-    
+
 
         // campo bloqueado
         direccionTexto: ''
@@ -369,7 +369,7 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
     numeroPredio:'',
     domSectorPredio:'',
 
-        
+
     direccionTexto: value?.direccionTexto
   };
   return dontStructutred;
@@ -392,7 +392,7 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
       direccionTexto: this.fBuilder.control(null, [Validators.required]),
       complemento: this.fBuilder.control(null),
       direccionId: this.fBuilder.control(null, [Validators.required]),
-      
+
       // PRINCIPAL
       domClaseViaPrincipal: [null, [Validators.required]], // Clase de vía principal (select)
       letraViaPrincipal: [null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]], // Solo letras
@@ -406,7 +406,7 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
       letraViaGeneradora: this.fBuilder.control(null, [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
       domSectorPredio: this.fBuilder.control(null, [Validators.required]),
 
-      
+
     });
     this.esDireccionPrincipal?.setValue(false);//VALOR por defecto
     this.complemento?.disable();//VALOR por defecto
@@ -425,20 +425,20 @@ public filterValueAddreDontStructuredModel(value:any):DetailBasicInformationAddr
   public blockPrimaryAddressField(){
       if(this.addEditInformationData.hasMainAddress){
 
-        if(this.addEditInformationData && 
+        if(this.addEditInformationData &&
               (this.addEditInformationData?.basicInformationAddress &&
               this.addEditInformationData?.basicInformationAddress?.esDireccionPrincipal === true)){
-                this.esDireccionPrincipal?.enable(); 
+                this.esDireccionPrincipal?.enable();
               }else if(this.addEditInformationData?.basicInformationAddress &&
                 this.addEditInformationData?.basicInformationAddress?.esDireccionPrincipal === false){
-                  this.esDireccionPrincipal?.disable(); 
+                  this.esDireccionPrincipal?.disable();
                   this.esDireccionPrincipal?.setValue(false);//VALOR por defecto
             }else{
-              this.esDireccionPrincipal?.disable(); 
+              this.esDireccionPrincipal?.disable();
               this.esDireccionPrincipal?.setValue(false);//VALOR por defecto
             }
         }else{
-          this.esDireccionPrincipal?.enable(); 
+          this.esDireccionPrincipal?.enable();
         }
   }
 

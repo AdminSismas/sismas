@@ -48,6 +48,7 @@ export interface VexConfig {
     state: 'expanded' | 'collapsed';
   };
   toolbar: {
+    visible: boolean;
     fixed: boolean;
     user: {
       visible: boolean;
@@ -59,6 +60,9 @@ export interface VexConfig {
   footer: {
     visible: boolean;
     fixed: boolean;
+  };
+  configPanelToggle: {
+    visible: boolean;
   };
 }
 

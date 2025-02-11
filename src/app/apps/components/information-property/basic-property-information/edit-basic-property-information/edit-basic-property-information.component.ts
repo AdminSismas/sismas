@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';

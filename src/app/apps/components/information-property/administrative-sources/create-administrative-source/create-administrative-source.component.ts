@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
+import {
+  AdministrativeSourcesService
+} from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,11 +15,13 @@ import {
   AdministrativeSource,
   CreateAdministrativeSourceParams
 } from 'src/app/apps/interfaces/information-property/administrative-source';
-import { DynamicFormsComponent } from '../../../dynamic-forms/dynamic-forms.component';
-import { JSONInput } from 'src/app/apps/interfaces/dynamic-forms';
-import { INPUTS_ADMINISTRATIVE_SOURCE } from 'src/app/apps/constants/administrative-source.constants';
+import { DynamicFormsComponent } from '../../../forms/dynamic-forms/dynamic-forms.component';
+import { JSONInput } from '../../../../interfaces/forms/dynamic-forms';
+import { INPUTS_ADMINISTRATIVE_SOURCE } from '../../../../constants/information-property/administrative-source.constants';
 import { MatSelectModule } from '@angular/material/select';
-import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
+import {
+  TerritorialOrganizationService
+} from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import { MatIconModule } from '@angular/material/icon';
@@ -78,7 +78,7 @@ export class CreateAdministrativeSourceComponent
             this.data.params.fechaDocumentoFuente + 'T00:00:00-05:00'
           )
         };
-  
+
         this.initValues = formParams;
       }
 
@@ -146,9 +146,9 @@ export class CreateAdministrativeSourceComponent
             label: municipio.divpolLvl2Name!,
             value: municipio.divpolLvl2Name!
           }));
-          
+
           municipioOrigen = municipioOrigen.sort((a, b) => a.label.localeCompare(b.label));
-  
+
           const ciudadInput = this.inputs.find(input => input.name === 'ciudadOrigen');
           if (ciudadInput) {
             ciudadInput.options = municipioOrigen;

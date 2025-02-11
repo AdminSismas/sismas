@@ -20,22 +20,22 @@ import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/sn
 // RECURSOS PERSONALES
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { InputComponent } from 'src/app/apps/components/input/input.component';
-import { LIMPIAR_CAMPOS_MULTIPLES_CAMPOS, LIMPIAR_CAMPOS_SELECCION_MUNICIPAL, LIST_FORM_CADASTRAL_0, LIST_FORM_CADASTRAL_1, LIST_FORM_CADASTRAL_2, LIST_FORM_CADASTRAL_3, LIST_FORM_CADASTRAL_4, LIST_FORM_CADASTRAL_5, LIST_ZONES_RURAL, NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
-import { CONSTANT_NAME_ID } from 'src/app/apps/constants/constantLabels';
+import { InputComponent } from '../../../../../apps/components/general-components/input/input.component';
+import { LIMPIAR_CAMPOS_MULTIPLES_CAMPOS, LIMPIAR_CAMPOS_SELECCION_MUNICIPAL, LIST_FORM_CADASTRAL_0, LIST_FORM_CADASTRAL_1, LIST_FORM_CADASTRAL_2, LIST_FORM_CADASTRAL_3, LIST_FORM_CADASTRAL_4, LIST_FORM_CADASTRAL_5, LIST_ZONES_RURAL, NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from '../../../../../apps/constants/general/constant';
+import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
 import { Sidewalk } from 'src/app/apps/interfaces/territorial-organization/sidewalk.model';
 import { Neighborhood } from 'src/app/apps/interfaces/territorial-organization/neighborhood.model';
 import { Commune } from 'src/app/apps/interfaces/territorial-organization/commune.model';
 import { Sector } from 'src/app/apps/interfaces/territorial-organization/sector.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
-import { NationalPredialNumber } from 'src/app/apps/interfaces/national-predial-number';
-import { SearchData } from 'src/app/apps/interfaces/search-data.model';
+import { NationalPredialNumber } from '../../../../../apps/interfaces/information-property/national-predial-number';
+import { SearchData } from '../../../../../apps/interfaces/general/search-data.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CharacterValidateService } from 'src/app/apps/services/character-validate.service';
+import { CharacterValidateService } from '../../../../../apps/utils/character-validate.service';
 import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { Zone } from 'src/app/apps/interfaces/territorial-organization/zone.model';
 import { divideNpn } from 'src/app/apps/utils/divide-national-predial-number';
@@ -105,7 +105,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
     piso: [this.defaults?.piso ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
     unidadPredial: [this.defaults?.unidadPredial ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
 
-    
+
     // MUltiple Fields
     registration: this.defaults?.registration ?? '',
     domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
@@ -183,7 +183,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
   }
 
   formatFieldValue() {
-    
+
       this.dpto?.reset();
       this.mpio?.reset();
       this.zonas?.reset();
@@ -198,7 +198,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
       this.unidadPredial?.reset();
   }
 
-  
+
 
   public sendInformationTable() {
     const searchData = this.validateFilterSearchCadastral();
@@ -719,7 +719,7 @@ get unidadPredial(){
   return this.form.get('unidadPredial');
 }
 
-//  
+//
 
   get registration(){
     return this.form.get('registration');

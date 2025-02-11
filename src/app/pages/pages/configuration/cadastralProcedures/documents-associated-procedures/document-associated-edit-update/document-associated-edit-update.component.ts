@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, DestroyRef, Inject, inject, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import {  FooterTemplateModel, HeaderTemplateModel, OutFormatModel } from 'src/app/apps/interfaces/out-format.model';
+import {  FooterTemplateModel, HeaderTemplateModel, OutFormatModel } from '../../../../../../apps/interfaces/general/out-format.model';
 
 import { QuillEditorComponent } from 'ngx-quill';
 import { CommonModule, NgClass, NgForOf, NgIf } from '@angular/common';
@@ -18,7 +18,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, Unty
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InputComponent } from 'src/app/apps/components/input/input.component';
+import { InputComponent } from '../../../../../../apps/components/general-components/input/input.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
@@ -111,7 +111,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
 
         const headerIdSet = this.defaults.documentAssociated?.headerTemplate?.outTemplateId;
         this.form.get('headerTemplateId')?.setValue(headerIdSet);
-        
+
         const footerIdSet = this.defaults.documentAssociated?.footerTemplate?.outTemplateId;
         this.form.get('footerTemplateId')?.setValue(footerIdSet);
 
@@ -138,7 +138,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
       // }
       this.dialogRef.close();
     }
-  
+
 
     saveTemplate(): any {
       if (this.form.invalid) {
@@ -156,17 +156,17 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
     }
 
 
-    // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress 
+    // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress
     public generateModelDirecctionModel(value: any): OutFormatModel | undefined {
       if (this.defaults.type === 'new') {
         const todayDay = new Date();
         const createBasicInformationAddress: OutFormatModel = {
-      
+
             // outTemplateId: ,
             templateCode: this.templateCode?.value ? this.templateCode?.value : '',
             htmlTemplate: this.content?.value ? this.content?.value : '',
-  
-  
+
+
             isSinged: value.isSinged ? value.isSinged : false,
             createdBy:  value.createdBy ? value.createdBy : this.userSesion?.sub,
             createdAt:  value.createdAt ? value.createdAt : this.getCurrentFormattedDate(),
@@ -176,8 +176,8 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
             // schema:  value.schema ? value.schema : '',
             // page: value.page ? value.page : '',
             // size:  value.size ? value.size : '',
-      
-        
+
+
         };
         if(this.headerTemplateId?.value){
           createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
@@ -191,7 +191,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
         }
 
         return createBasicInformationAddress;
-        
+
       }else{
 
           if(this.defaults.outTemplateId){
@@ -215,7 +215,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
 
           if(this.headerTemplateId?.value){
             createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
-  
+
           }
           if(this.footerTemplateId?.value){
           createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined)
@@ -236,10 +236,10 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
       const seconds = String(date.getSeconds()).padStart(2, '0');
-  
+
       return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
-  
+
     getCurrentFormattedDate(): string {
       const now = new Date();
       return this.formatDate(now);
@@ -249,7 +249,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
     get content(){
       return this.form.get('content');
     }
-    
+
     get headerTemplateId(){
       return this.form.get('headerTemplateId');
     }

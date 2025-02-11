@@ -15,7 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { contactsData } from 'src/static-data/contacts';
-import { MODAL_SMALL } from 'src/app/apps/constants/constant';
+import { MODAL_SMALL } from '../../../../../apps/constants/general/constant';
 
 
 @Component({

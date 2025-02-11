@@ -1,4 +1,16 @@
-import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -18,37 +30,47 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { NAME_NO_DISPONIBLE, PAGE_OPTION__10_20_50_100, PAGE_OPTION__5_7_10, PAGE_OPTION_UNIQUE_7, PAGE_SIZE, PAGE_SIZE_OPTION_ADDRESS, PAGE_SIZE_SORT, PAGE_SIZE_TABLE_UNIQUE, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS, TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION, TABLE_COLUMN_PROPERTIES_EXECUTED, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL, MODAL_SMALL } from 'src/app/apps/constants/constant';
+import {
+  MODAL_SMALL,
+  NAME_NO_DISPONIBLE,
+  PAGE_OPTION__10_20_50_100,
+  PAGE_SIZE_OPTION_ADDRESS,
+  PAGE_SIZE_SORT,
+  PAGE_SIZE_TABLE_UNIQUE,
+  TABLE_COLUMN_PROPERTIES_EXECUTED,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
+} from '../../../../../../apps/constants/general/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
-import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
+import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { DetailExecutedTasksComponent } from './detail-executed-tasks/detail-executed-tasks.component';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { PAGE } from 'src/app/apps/constants/procedures.constant';
+import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
+import { PAGE } from '../../../../../../apps/constants/general/procedures.constant';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UntypedFormControl } from '@angular/forms';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { TypeInformation } from '../../../../../../apps/interfaces/general/content-info';
 import { environment } from 'src/environments/environments';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-retail-execute-response.model';
-import { ProceduresCollection } from 'src/app/apps/interfaces/procedures-progress.model';
+import { TaskRetailExecuteResponseModel } from '../../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
+import { ProceduresCollection } from '../../../../../../apps/interfaces/tables/procedures-progress.model';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
-import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
-import { EventEmitter } from '@angular/core';
+import { TaskResponseModel } from '../../../../../../apps/interfaces/bpm/task-response.model';
 import { DocumentTableComponent } from 'src/app/apps/components/bpm/document-table/document-table.component';
-import { CommentsComponent } from 'src/app/apps/components/comments/comments.component';
+import { CommentsComponent } from 'src/app/apps/components/general-components/comments/comments.component';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
-import { ActivatedRouteSnapshot } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -81,7 +103,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './detail-information-tasks.component.html'
 })
 export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
-  
+
     isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentTasksInformations!: InformationPegeable;
     public taskDetails:TaskResponseModel= new TaskResponseModel();
@@ -96,14 +118,14 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       @Input() message: string = '';
       @Input() color: string = 'bg-blue-500'; // Color por defecto
       @Output() closeModal = new EventEmitter<void>();
-    
+
       columns: TableColumn<TaskRetailExecuteResponseModel>[] = TABLE_COLUMN_PROPERTIES_EXECUTED;
       page:number = PAGE;
       totalElements = 0;
       pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
       pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
       showAlert: boolean = false;
-    
+
       _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);
       countAttachment$: Observable<number> = this._countAttachment$.asObservable();
 
@@ -112,11 +134,11 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
 
       dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
       searchCtrl: UntypedFormControl = new UntypedFormControl();
-    
+
       @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
       @ViewChild(MatSort, { static: true }) sort?: MatSort;
       @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
-      
+
       private readonly destroyRef: DestroyRef = inject(DestroyRef);
       private snackBar = inject(MatSnackBar);
 
@@ -147,25 +169,25 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
 
   closeAlert() {
     this.showAlert = false;
-    
+
   }
 
   // implementacion de tabla
-  
-   
-   
-  
+
+
+
+
     ngOnInit() {
        // Accede a los parámetros de consulta
     this.route.queryParamMap.subscribe(params => {
       this.executionId = params.get('executionId');  // Obtén el valor del parámetro
-      
+
     });
       console.log('data nuevo objeto',this.data);
       this.dataSource = new MatTableDataSource();
 
       if(this.data && this.data.textAlert && this.data?.textAlert.message){
-        
+
         this.message = this.data?.textAlert.message;
         this.showAlert = true;
       }
@@ -186,7 +208,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       this.searchCtrl.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => this.onFilterChange(value));
-        
+
     }
     ngAfterViewInit() {
       if (this.paginator) {
@@ -196,7 +218,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
         this.dataSource.sort = this.sort;
       }
     }
-  
+
     get visibleColumns() {
       return this.columns
         .filter((column) => column.visible)
@@ -210,7 +232,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     getAbsoluteValue(value: number): number {
       return Math.abs(value);
     }
-  
+
     checkNegativeDays(): void {
       if (this.data && this.isNegative(this.data.daysFinish)) {
         console.log('Días negativos:', this.data.daysFinish);
@@ -243,7 +265,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
              }
              });
     }
-          
+
     captureInformationSubscribeB(executeTask: InformationPegeable): void {
         let data: TaskRetailExecuteResponseModel[];
         this.contentTasksInformations = executeTask;
@@ -255,7 +277,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
           this.dataSource.data = data;
          }
 
-         
+
           if (this.contentTasksInformations == null) {
               this.page = PAGE;
               return;
@@ -273,39 +295,39 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
           if (this.contentTasksInformations.pageable.pageNumber != null) {
               this.page = this.contentTasksInformations.pageable.pageNumber;
           }
-        
+
     }
 
     captureInformationSubscribeError(err: any): void {
       this.contentTasksInformations = new InformationPegeable();
       this.dataSource.data = [];
     }
-  
-  
-   
+
+
+
     captureInformationConstructionData(): void {
-   
+
       if (this.contentTasksInformations === null) {
         this.page = PAGE;
         return;
       }
-  
+
       if (this.contentTasksInformations.totalElements) {
         this.totalElements = this.contentTasksInformations.totalElements;
       }
-  
+
       if (this.contentTasksInformations.pageable == null) {
         this.page = PAGE;
         return;
       }
-  
+
       if (this.contentTasksInformations.pageable.pageNumber != null) {
         this.page = this.contentTasksInformations.pageable.pageNumber;
       }
     }
-  
-   
-  
+
+
+
     openDetailInTaks(data:TaskRetailExecuteResponseModel){
       this.dialog
         .open(DetailExecutedTasksComponent, {
@@ -315,19 +337,19 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
         })
         .afterClosed();
     }
-  
-    
+
+
     trackByProperty<T>(index: number, column: TableColumn<T>): string {
       return column.property;
     }
-  
-  
+
+
     toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
       event.stopPropagation();
       event.stopImmediatePropagation();
       column.visible = !column.visible;
     }
-  
+
     refreshInformationPaginator(event: PageEvent): void {
       if (event == null) {
         return;
@@ -338,14 +360,14 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       if(this.data.taskId){
         this.viewExcuteTask(this.data.taskId);
       }
-     
+
     }
 
     captureInformationSubscribe(data: any) {
-      this.contentTasksInformations = data; 
-      this.captureInformationProceduresData(); 
+      this.contentTasksInformations = data;
+      this.captureInformationProceduresData();
     }
-  
+
 
     captureInformationProceduresData() {
           let data: TaskRetailExecuteResponseModel[];
@@ -353,30 +375,30 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
               data = this.contentTasksInformations.content.map((row: ProceduresCollection) => new TaskRetailExecuteResponseModel({row}));
               this.dataSource.data = data;
           }
-      
+
           if (this.contentTasksInformations == null) {
               this.page = PAGE;
               return;
           }
-      
+
           if (this.contentTasksInformations.totalElements) {
               this.totalElements = this.contentTasksInformations.totalElements;
           }
-      
+
           if (this.contentTasksInformations.pageable == null) {
               this.page = PAGE;
               return;
           }
-      
+
           if (this.contentTasksInformations.pageable.pageNumber != null) {
               this.page = this.contentTasksInformations.pageable.pageNumber;
           }
         }
 
-    
 
 
-  
+
+
     onFilterChange(value: string): void {
       if (!this.dataSource) {
         return;
@@ -385,11 +407,11 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       value = value.toLowerCase();
       this.dataSource.filter = value;
     }
-  
+
     private generateObjectPageSearchData(baunitId: string): PageSearchData {
       return new PageSearchData(this.page, this.pageSize, baunitId);
     }
-  
+
     private getRandomInt(max: number): number {
       return Math.floor(Math.random() * max);
     }

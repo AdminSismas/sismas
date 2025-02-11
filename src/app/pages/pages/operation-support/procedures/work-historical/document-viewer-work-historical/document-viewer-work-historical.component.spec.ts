@@ -11,13 +11,13 @@ describe('DocumentViewerWorkHistoricalComponent', () => {
       imports: [DocumentViewerWorkHistoricalComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(DocumentViewerWorkHistoricalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

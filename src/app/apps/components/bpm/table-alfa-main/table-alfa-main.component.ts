@@ -21,7 +21,7 @@ import {
   MODAL_LARGE,
   MODAL_MEDIUM,
   MODAL_SMALL
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,8 +32,8 @@ import { NgClass, NgIf } from '@angular/common';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
-import { SearchData } from '../../../interfaces/search-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { SearchData } from '../../../interfaces/general/search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -43,7 +43,7 @@ import { Operation } from '../../../interfaces/bpm/operation';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';

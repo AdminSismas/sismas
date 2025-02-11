@@ -9,7 +9,7 @@ describe(BpmCoreService.name, () => {
     service = TestBed.inject(BpmCoreService);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

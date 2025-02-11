@@ -19,9 +19,9 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { SearchData } from 'src/app/apps/interfaces/search-data.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
+import { SearchData } from '../../../interfaces/general/search-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
@@ -39,15 +39,15 @@ import {
   MODAL_LARGE,
   ROL_USER_READ,
   ROL_GUEST
-} from 'src/app/apps/constants/constant';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
-import { GeographicViewerComponent } from '../../geographic-viewer/geographic-viewer.component';
+} from '../../../constants/general/constant';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { GeographicViewerComponent } from '../../geographic/geographic-viewer/geographic-viewer.component';
 import { environment as envi, environment } from 'src/environments/environments';
 import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
@@ -63,8 +63,8 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 @Component({
   selector: 'vex-information-unit-property',
-  templateUrl: './information-unit-property.html',
-  styleUrls: ['./information-unit-property.scss'],
+  templateUrl: './information-unit-property.component.html',
+  styleUrls: ['./information-unit-property.component.scss'],
   animations: [fadeInUp400ms, stagger40ms],
   standalone: true,
   imports: [

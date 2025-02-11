@@ -30,7 +30,7 @@ import {
 } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { People as People } from '../../../../apps/interfaces/people.model';
+import { People as People } from '../../../../apps/interfaces/users/people.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, ReplaySubject,lastValueFrom } from 'rxjs';
@@ -44,11 +44,11 @@ import { CommonModule } from '@angular/common';
 import { CreatePeopleComponent } from './create-people/create-people.component';
 
 // imports from service people
-import { PeopleService } from 'src/app/apps/services/people.service';
+import { PeopleService } from '../../../../apps/services/users/people.service';
 import { MatSelectModule } from '@angular/material/select';
-import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
-import { PAGE } from 'src/app/apps/constants/constant';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { ComboxColletionComponent } from '../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import { PAGE } from '../../../../apps/constants/general/constant';
+import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -194,7 +194,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   // eliminación de personas
   deleteCustomer(customer: People) {
       const dialogRef = this.dialog.open(this.confirmDialog);
-  
+
       dialogRef.afterClosed().subscribe(async (data: any) => {
         if (data === 'delete' && customer.individualId) {
           let msg: string = 'Información eliminada con éxito.';

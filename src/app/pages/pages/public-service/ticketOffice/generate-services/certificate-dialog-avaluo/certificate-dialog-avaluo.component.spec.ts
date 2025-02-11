@@ -11,13 +11,13 @@ describe('CertificateDialogAvaluoComponent', () => {
       imports: [CertificateDialogAvaluoComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(CertificateDialogAvaluoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

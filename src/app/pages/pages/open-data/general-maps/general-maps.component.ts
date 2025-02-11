@@ -1,14 +1,11 @@
-import { Component, DestroyRef, Inject, OnInit, inject } from '@angular/core';
-import { InConstructionComponent } from '../../../../apps/components/in-construction/in-construction.component';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
-import { InputComponent } from 'src/app/apps/components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,35 +14,30 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { LIMPIAR_CAMPOS_MULTIPLES_CAMPOS, LIMPIAR_CAMPOS_SELECCION_MUNICIPAL, LIST_FORM_CADASTRAL_0, LIST_FORM_CADASTRAL_1, LIST_FORM_CADASTRAL_2, LIST_FORM_CADASTRAL_3, LIST_FORM_CADASTRAL_4, LIST_FORM_CADASTRAL_5, NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
+import {
+  LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
+  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL,
+  NAME_CODENAME,
+  STRING_INFORMATION_NOT_FOUND
+} from '../../../../apps/constants/general/constant';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
-import { SearchData } from 'src/app/apps/interfaces/search-data.model';
-import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import { Observable, Subject, map, startWith } from 'rxjs';
-import { CONSTANT_NAME_ID } from 'src/app/apps/constants/constantLabels';
+import {
+  TerritorialOrganizationService
+} from 'src/app/apps/services/territorial-organization/territorial-organization.service';
+import { map, Observable, startWith, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { GeographicViewerComponent } from 'src/app/apps/components/geographic-viewer/geographic-viewer.component';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
-import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
-import { environment } from 'src/environments/environments';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'vex-general-maps',
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
     AsyncPipe,
-    ComboxColletionComponent,
-    InputComponent,
     MatAutocompleteModule,
     MatButtonModule,
     MatDialogModule,
@@ -58,10 +50,8 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatTabsModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
     CommonModule
-],
+  ],
   templateUrl: './general-maps.component.html',
   styleUrl: './general-maps.component.scss'
 })
@@ -92,12 +82,12 @@ export class GeneralMapsComponent implements OnInit {
   public divpolLv1 = '';
   public divpolLv2 = '';
 
-  mapUrl: string | null = null; 
+  mapUrl: string | null = null;
   showMap = false;
 
   constructor(
 
- 
+
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
@@ -112,7 +102,7 @@ export class GeneralMapsComponent implements OnInit {
       .subscribe((value) => console.log(value));
   }
 
-  
+
 
   // public clearFormFields(value:any){
   //   console.log('value',value?.tab?.textLabel )
@@ -129,7 +119,7 @@ export class GeneralMapsComponent implements OnInit {
   public clearMunicipalSelection(){
     this.department?.reset();
     this.municipality?.reset();
- 
+
 
   }
 
@@ -227,7 +217,7 @@ captureMunicipalityInformation(result: Municipality[], skipPreloadedValues: bool
     )
   );
 }
- 
+
 
 
 private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {

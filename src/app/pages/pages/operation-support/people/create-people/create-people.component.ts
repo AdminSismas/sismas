@@ -12,7 +12,7 @@ import {
   MatDialogModule,
   MatDialogRef
 } from '@angular/material/dialog';
-import { People as People } from '../../../../../apps/interfaces/people.model';
+import { People as People } from '../../../../../apps/interfaces/users/people.model';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
@@ -20,12 +20,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
-import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
-import { PeopleService } from 'src/app/apps/services/people.service';
+import { ComboxColletionComponent } from '../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import { PeopleService } from '../../../../../apps/services/users/people.service';
 import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environments';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/constant';
+import { PAGE, PAGE_SIZE } from '../../../../../apps/constants/general/constant';
 
 interface defaultData extends People {
   mode: 'create' | 'update';
@@ -353,10 +353,10 @@ export class CreatePeopleComponent implements OnInit {
   validateNit(nit: any): boolean {
     const word = nit;
     const aWord = /^\d{9}-\d$/.test(word);
-  
+
     return aWord;
   }
-  
+
 
   validateTypePople(): void {
     // validar los tipos de campos según los valores de los formularios

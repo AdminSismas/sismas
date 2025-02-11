@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DateFormatService } from '../services/date-format.service';
+import { DateFormatService } from '../services/general/date-format.service';
 
 
 @Pipe({
   name: 'customDate',
-  standalone: true 
+  standalone: true
 })
 export class CustomDatePipe implements PipeTransform {
   constructor(private dateFormatService: DateFormatService) {}

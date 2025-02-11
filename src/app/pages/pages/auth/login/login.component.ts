@@ -28,7 +28,7 @@ import {
 } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
-import { EVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/constant';
+import { EVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from '../../../../apps/constants/general/constant';
 
 @Component({
   selector: 'vex-login',
@@ -80,15 +80,15 @@ export class LoginComponent {
   send() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
-  
+
       this.authService.login(email, password).subscribe({
         next: (response) => {
           if (response && response.token) {
             this.authService.saveToken(response.token);
-  
+
             const user: DecodeJwt = jwtDecode(response.token);
             this.userService.setUser(user);
-  
+
             this.navigationLoaderService.loadInformationNavigation(user.role);
             this.navigationLoaderService.startCountLoop();
 
@@ -107,12 +107,12 @@ export class LoginComponent {
               },
             });
 
-  
+
             const redirectRoute =
               user.role === 'GUEST'
                 ? environment.myWork_cadastralSearchDa
                 : environment.myWork_cadastralSearch;
-  
+
             this.router.navigate([redirectRoute]).then(() => {
               this.snackbar.open(
                 `Bienvenido, ${user.role === 'GUEST' ? 'invitado' : 'usuario'} ;)`,
@@ -152,7 +152,7 @@ export class LoginComponent {
       );
     }
   }
-  
+
 
   toggleVisibility() {
     if (this.visible) {

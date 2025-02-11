@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ProTaskE } from '../../../../../../apps/interfaces/pro-task-e';
+import { ProTaskE } from '../../../../../../apps/interfaces/bpm/pro-task-e';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,17 +9,17 @@ import {
   MODAL_LARGE,
   NAME_NO_DISPONIBLE,
   SPACE
-} from '../../../../../../apps/constants/constant';
+} from '../../../../../../apps/constants/general/constant';
 import { environment as envi } from '../../../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
-import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
-import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
-import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/procedures.constant';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { TaskResponseModel } from '../../../../../../apps/interfaces/bpm/task-response.model';
+import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
+import { PAGE, PAGE_SIZE } from '../../../../../../apps/constants/general/procedures.constant';
+import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatTableDataSource } from '@angular/material/table';
-import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-retail-execute-response.model';
+import { TaskRetailExecuteResponseModel } from '../../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
 
 @Component({
   selector: 'vex-task-card',

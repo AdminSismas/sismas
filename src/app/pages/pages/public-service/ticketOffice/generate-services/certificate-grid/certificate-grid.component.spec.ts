@@ -11,13 +11,13 @@ describe('CertificateGridComponent', () => {
       imports: [CertificateGridComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(CertificateGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

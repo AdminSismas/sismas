@@ -21,13 +21,13 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { GeographicViewerComponent } from '../../geographic-viewer/geographic-viewer.component';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
+import { GeographicViewerComponent } from '../../geographic/geographic-viewer/geographic-viewer.component';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({

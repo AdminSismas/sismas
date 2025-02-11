@@ -1,13 +1,13 @@
 import { Component, DestroyRef, inject, Input, TemplateRef, ViewChild } from '@angular/core';
-import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
+import { InConstructionComponent } from '../../../../../apps/components/general-components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
+import { PageSearchData } from '../../../../../apps/interfaces/general/page-search-data.model';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
 import {  MatTableModule } from '@angular/material/table';
 import {  MatDialogModule, } from '@angular/material/dialog';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -60,5 +60,5 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 })
 export class DocumentsAssociatedProceduresComponent {
 
-   
+
 }
