@@ -32,14 +32,14 @@
   <div class="w-full max-w-4xl p-4 flex items-center justify-center gap-4 mx-auto" style="padding-left: 278px;">
     <button color="warn" mat-raised-button type="button"
             class="grow max-w-xs"
-            (click)="previewBpmCore()">
+            (click)="onReject()">
       Rechazar
     </button>
     <button
       [ngClass]="['!bg-green-600','!text-white']"
       mat-raised-button type="button"
       class="grow max-w-xs"
-      (click)="nextBpmCore()">
+      (click)="onAccept()">
       Aceptar
     </button>
   </div>
