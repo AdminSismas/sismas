@@ -189,7 +189,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       return;
     }
 
-    if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
+    if(this.schema === `${envi.schemas.temp}` && !this.contentInfoSchema.executionId ){
       return;
     }
     this.informationPropertyService.showOptionsPersonStarted$

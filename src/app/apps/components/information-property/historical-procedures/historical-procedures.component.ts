@@ -42,10 +42,23 @@ import { PageProceduresData } from 'src/app/apps/interfaces/page-procedures-data
 import { ProceduresService } from 'src/app/apps/services/procedures.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 
 @Component({
   selector: 'vex-historical-procedures-property',
   standalone: true,
+   animations: [
+      fadeInRight400ms,
+      stagger80ms,
+      scaleIn400ms,
+      stagger40ms,
+      fadeInUp400ms,
+      scaleFadeIn400ms
+    ],
   imports: [
      MatExpansionModule,
      CdkAccordionModule,

@@ -601,6 +601,8 @@ export const LIST_SCHEMAS_CONTROL_MAIN: string[] = [`${environment.schemas.main}
 export const LIST_SCHEMAS_CONTROL_TEMP: string[] = [`${environment.schemas.temp}`];
 export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`,`${environment.schemas.main}`];
 export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.main}`,`${environment.schemas.hist}`];
+export const LIST_SCHEMAS_CONTROL_HISTORY_PRIME: string[] = [`${environment.schemas.hist}`,`${environment.schemas.main}`];
+
 
 export const LIST_ZONES_RURAL: string[] = ['00'];
 export const LIST_FORM_CADASTRAL_0: string[] = [
