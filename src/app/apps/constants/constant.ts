@@ -336,6 +336,47 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
   }
 ];
 
+export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformationConstruction>[] = [
+  {
+    label: 'Detalle',
+    property: 'viewDetailEcono',
+    type: 'button',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Código',
+    property: 'getZoneCode',
+    type: 'badge',
+    visible: true
+  },
+  {
+    label: 'Área',
+    property: 'baUnitZonaArea',
+    type: 'text',
+    visible: true
+  },
+  {
+    label: 'Vigencia',
+    property: 'getZonevalidity',
+    type: 'progress',
+    visible: true
+  },
+  {
+    label: 'Común',
+    property: 'esComun',
+    type: 'operationType',
+    visible: true
+  },
+
+  {
+    label: 'Actions',
+    property: 'actions',
+    type: 'button',
+    visible: true
+  }
+];
+
 export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformationAdjacent>[] = [
   {
     label: 'Ficha',

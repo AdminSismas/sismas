@@ -68,6 +68,9 @@ import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-ba
 import { AddEditInformatizonZonesPropertyComponent } from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { DeleteInformationZonesPropertyComponent } from './delete-information-zones-property/delete-information-zones-property.component';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
+import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
+import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
 
 @Component({
   selector: 'vex-information-zones-property',
@@ -105,7 +108,10 @@ import { DeleteInformationZonesPropertyComponent } from './delete-information-zo
     MatPaginatorModule,
     MatDialogModule,
     CommonModule,
-    MatTableModule
+    MatTableModule,
+    CurrencyLandsPipe,
+    GeoEconomicZonesPropertyComponent,
+    PhysicalZonesPropertyComponent
   ],
   templateUrl: './information-zones-property.component.html',
   styleUrl: './information-zones-property.component.scss'
@@ -154,6 +160,12 @@ export class InformationZonesPropertyComponent
       label: 'Vigencia',
       property: 'getZonevalidity',
       type: 'text',
+      visible: true
+    },
+    {
+      label: 'Común',
+      property: 'esComun',
+      type: 'operationType',
       visible: true
     },
 
@@ -205,6 +217,7 @@ export class InformationZonesPropertyComponent
         'zoneCodeColumn',
         'baUnitZonaArea',
         'zoneValidityColumn',
+        'esComun',
         'actions'
       ];
     }
@@ -214,6 +227,7 @@ export class InformationZonesPropertyComponent
       'zoneCodeColumn',
       'baUnitZonaArea',
       'zoneValidityColumn',
+      'esComun'
     ];
   }
   actionBtns = computed(() => {
@@ -366,6 +380,10 @@ export class InformationZonesPropertyComponent
     if (changes['typeInformation']) {
       console.log('typeInformation', this.typeInformation);
     }
+  }
+
+  trackByProperty<T>(index: number, column: TableColumn<T>): string {
+    return column.property;
   }
 
   isExpandPanel(expandedComponent: boolean): void {

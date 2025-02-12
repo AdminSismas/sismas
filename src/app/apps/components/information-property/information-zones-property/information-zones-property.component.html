@@ -43,392 +43,47 @@
             </p>
           </div>
 
-          <!-- Mostrar tabla y paginación solo si hay datos -->
+          <!-- Mostrar tabla solo si hay datos -->
+
           <div
-            *ngIf="dataSource && dataSource.data.length > 0"
-            class="table-container overflow-x-auto w-full"
-          >
-          <table
-          mat-table
-          [dataSource]="dataSource"
-          matSort
-          class="w-full"
+          *ngIf="dataSource && dataSource.data.length > 0"
+          class="table-container overflow-x-auto w-full"
         >
-          <!-- Detalles -->
-          <ng-container matColumnDef="viewDetail">
-            <th
-              *matHeaderCellDef
-              mat-header-cell
-              mat-sort-header
-            ></th>
-            <td
-              *matCellDef="let row"
-              mat-cell
-            >
-              <div
-                class="flex align-middle text-center content-center items-center"
-              >
-                <button
-                  class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
-                  mat-icon-button
-                  title="Detalles"
-                  (click)="openInformationPropertyZone(row, 'geoeconomic')"
-                >
-                  <mat-icon
-                    class="icon-sm text-green-500"
-                    svgIcon="mat:visibility"
-                  ></mat-icon>
-                </button>
-              </div>
-            </td>
-          </ng-container>
+        <!-- Tabla -->
+        <vex-physical-zones-property
 
-          <!-- Código -->
-          <ng-container matColumnDef="zoneCodeColumn">
-            <th
-              *matHeaderCellDef
-              mat-sort-header
-              mat-header-cell
-            >
-              Código
-            </th>
-            <td
-              *matCellDef="let row"
-              mat-cell
-            >
-              {{ getZoneCode(row) }}
-            </td>
-          </ng-container>
+        [id]="id"
+        [expandedComponent]="expandedComponent"
+        [schema]="schema" 
+        [baunitId]="baunitId"
+        [editable]="editable"
+        [divPolLv1]="divPolLv1"
+        [divPolLv2]="divPolLv2"
+        [executionId]="executionId"
+        [typeInformation]="typeInformation"
 
-          <!-- Vigencia -->
-          <ng-container matColumnDef="zoneValidityColumn">
-            <th
-              *matHeaderCellDef
-              mat-sort-header
-              mat-header-cell
-            >
-              Vigencia
-            </th>
-            <td
-              *matCellDef="let row"
-              mat-cell
-            >
-              {{ getZonevalidity(row) }}
-            </td>
-          </ng-container>
+        ></vex-physical-zones-property>
 
-          <!-- Columnas dinámicas -->
-          <ng-container *ngFor="let column of textColumns()">
-            <ng-container [matColumnDef]="column.property">
-              <th
-                *matHeaderCellDef
-                mat-sort-header
-                mat-header-cell
-              >
-                {{ column.label }}
-              </th>
-              <td
-                *matCellDef="let row"
-                mat-cell
-              >
-                {{ row[column.property] }}
-              </td>
-            </ng-container>
-          </ng-container>
-
-          <!-- Acciones -->
-          <ng-container matColumnDef="actions">
-            <th
-              *matHeaderCellDef
-              mat-header-cell
-            ></th>
-            <td
-              *matCellDef="let row"
-              class="w-10 text-secondary"
-              mat-cell
-            >
-              <button
-                *ngIf="typeInformation === 'edition'"
-                mat-icon-button
-                [matMenuTriggerData]="{ infoOwner: row }"
-                [matMenuTriggerFor]="actionsMenu"
-                type="button"
-              >
-                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr
-            mat-header-row
-            *matHeaderRowDef="visibleColumns()"
-          ></tr>
-          <tr
-            mat-row
-            @fadeInUp
-            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-            *matRowDef="let row; columns: visibleColumns()"
-          ></tr>
-        </table>
-           
-
-            <mat-menu
-              #actionsMenu="matMenu"
-              xPosition="before"
-              yPosition="below"
-            >
-              <ng-template
-                let-infoOwner="infoOwner"
-                matMenuContent
-              >
-                <button
-                  *ngFor="let actionBtn of actionBtns()"
-                  mat-menu-item
-                  (click)="onClickActionBtn(actionBtn.id, infoOwner)"
-                >
-                  <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
-                  <span>{{ actionBtn.label }}</span>
-                </button>
-                <button
-                  mat-menu-item
-                  disabled
-                  *ngIf="actionBtns().length === 0"
-                >
-                  <span class="text-center">No options</span>
-                </button>
-              </ng-template>
-            </mat-menu>
-          </div>
-
-          <div
-            *ngIf="dataSource && dataSource.data.length > 0"
-            class="paginator-container flex justify-center"
-          >
-            <mat-paginator
-              #paginator1
-              [pageSizeOptions]="pageSizeOptions"
-              [length]="totalPhysicalElements"
-              [pageSize]="pageSize"
-              [pageIndex]="page"
-              (page)="refreshPaginator($event, 'paginator1')"
-              class="paginator"
-            />
-          </div>
+      </div>
+        
         </div>
 
         <div class="border-l-2 border-gray-300"></div>
 
         <!-- Second Table -->
+<vex-geo-economic-zones-property
 
-        <div class="flex flex-col w-[48%]">
-          <div class="header-container m-2 flex items-center justify-between">
-            <span class="font-bold text-xl">Zonas geoeconómicas</span>
-            <button
-              [ngClass]="disabledClass()"
-              [disabled]="!editable"
-              *ngIf="typeInformation === 'edition'"
-              mat-raised-button
-              color="primary"
-              type="button"
-              (click)="
-                onClickOpenGeoconomicAddEditModal(dataSourceGeoeconomicZones)
-              "
-            >
-              Nueva
-              <mat-icon svgIcon="mat:add"></mat-icon>
-            </button>
-          </div>
-
-          <!-- Mostrar mensaje si no hay Zonas geoeconómicas -->
-          <div
-            *ngIf="
-              !dataSourceGeoeconomicZones ||
-              dataSourceGeoeconomicZones.data.length === 0
-            "
-            class="flex justify-center items-center py-4"
-          >
-            <p class="text-gray-500 text-lg">
-              No hay Zonas geoeconómicas para mostrar.
-            </p>
-          </div>
-
-          <!-- Mostrar tabla solo si hay datos -->
-          <div
-            *ngIf="
-              dataSourceGeoeconomicZones &&
-              dataSourceGeoeconomicZones.data.length > 0
-            "
-            class="table-container overflow-x-auto w-full"
-          >
-            <table
-              mat-table
-              [dataSource]="dataSourceGeoeconomicZones"
-              matSort
-              class="w-full"
-            >
-              <!-- Detalles -->
-              <ng-container matColumnDef="viewDetail">
-                <th
-                  *matHeaderCellDef
-                  mat-header-cell
-                  mat-sort-header
-                ></th>
-                <td
-                  *matCellDef="let row"
-                  mat-cell
-                >
-                  <div
-                    class="flex align-middle text-center content-center items-center"
-                  >
-                    <button
-                      class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
-                      mat-icon-button
-                      title="Detalles"
-                      (click)="openInformationPropertyZone(row, 'geoeconomic')"
-                    >
-                      <mat-icon
-                        class="icon-sm text-green-500"
-                        svgIcon="mat:visibility"
-                      ></mat-icon>
-                    </button>
-                  </div>
-                </td>
-              </ng-container>
-
-              <!-- Código -->
-              <ng-container matColumnDef="zoneCodeColumn">
-                <th
-                  *matHeaderCellDef
-                  mat-sort-header
-                  mat-header-cell
-                >
-                  Código
-                </th>
-                <td
-                  *matCellDef="let row"
-                  mat-cell
-                >
-                  {{ getGeoeconomicZoneCode(row) }}
-                </td>
-              </ng-container>
-
-              <!-- Vigencia -->
-              <ng-container matColumnDef="zoneValidityColumn">
-                <th
-                  *matHeaderCellDef
-                  mat-sort-header
-                  mat-header-cell
-                >
-                  Vigencia
-                </th>
-                <td
-                  *matCellDef="let row"
-                  mat-cell
-                >
-                  {{ getGeoeconomicZoneValidity(row) }}
-                </td>
-              </ng-container>
-
-              <!-- Columnas dinámicas -->
-              <ng-container *ngFor="let column of textColumns()">
-                <ng-container [matColumnDef]="column.property">
-                  <th
-                    *matHeaderCellDef
-                    mat-sort-header
-                    mat-header-cell
-                  >
-                    {{ column.label }}
-                  </th>
-                  <td
-                    *matCellDef="let row"
-                    mat-cell
-                  >
-                    {{ row[column.property] }}
-                  </td>
-                </ng-container>
-              </ng-container>
-
-              <!-- Acciones -->
-              <ng-container matColumnDef="actions">
-                <th
-                  *matHeaderCellDef
-                  mat-header-cell
-                ></th>
-                <td
-                  *matCellDef="let row"
-                  class="w-10 text-secondary"
-                  mat-cell
-                >
-                  <button
-                    *ngIf="typeInformation === 'edition'"
-                    mat-icon-button
-                    [matMenuTriggerData]="{ infoOwner: row }"
-                    [matMenuTriggerFor]="actionsGeoconomicMenu"
-                    type="button"
-                  >
-                    <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-
-              <tr
-                mat-header-row
-                *matHeaderRowDef="visibleColumns()"
-              ></tr>
-              <tr
-                mat-row
-                @fadeInUp
-                class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-                *matRowDef="let row; columns: visibleColumns()"
-              ></tr>
-            </table>
-
-            <mat-menu
-              #actionsGeoconomicMenu="matMenu"
-              xPosition="before"
-              yPosition="below"
-            >
-              <ng-template
-                let-infoOwner="infoOwner"
-                matMenuContent
-              >
-                <button
-                  *ngFor="let actionBtn of actionBtns()"
-                  mat-menu-item
-                  (click)="onClickGeoconomicActionBtn(actionBtn.id, infoOwner)"
-                >
-                  <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
-                  <span>{{ actionBtn.label }}</span>
-                </button>
-                <button
-                  mat-menu-item
-                  disabled
-                  *ngIf="actionBtns().length === 0"
-                >
-                  <span class="text-center">No options</span>
-                </button>
-              </ng-template>
-            </mat-menu>
-          </div>
-
-          <div
-            *ngIf="
-              dataSourceGeoeconomicZones &&
-              dataSourceGeoeconomicZones.data.length > 0
-            "
-            class="paginator-container flex justify-center"
-          >
-            <mat-paginator
-              #paginator2
-              [pageSizeOptions]="pageSizeOptions2"
-              [length]="totalGeoElements"
-              [pageSize]="pageSize2"
-              [pageIndex]="page2"
-              (page)="refreshPaginator($event, 'paginator2')"
-              class="paginator"
-            />
-          </div>
-        </div>
+[id]="id"
+[expandedComponent]="expandedComponent"
+[schema]="schema" 
+[baunitId]="baunitId"
+[editable]="editable"
+[divPolLv1]="divPolLv1"
+[divPolLv2]="divPolLv2"
+[executionId]="executionId"
+[typeInformation]="typeInformation"
+></vex-geo-economic-zones-property>
+        
       </div>
     </mat-panel-description>
   </mat-expansion-panel>
