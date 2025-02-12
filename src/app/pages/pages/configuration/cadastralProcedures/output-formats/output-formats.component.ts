@@ -29,7 +29,8 @@ import {
   TABLE_COLUMN_DOCUMENT_ASOCIETY,
   TYPEINFORMATION_EDITION,
   TYPEINFORMATION_VISUAL,
-  MODAL_SMALL
+  MODAL_SMALL,
+  PAGE_OPTION__10_20_50_100
 } from 'src/app/apps/constants/constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../../../auth/login/services/user.service';
@@ -111,7 +112,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     page:number = PAGE;
     totalElements = 0;
     pageSize: number = PAGE_SIZE;
-    pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
+    pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
     userSesion:DecodeJwt | null = null;
   
     dataSource!: MatTableDataSource<OutFormatModel>;
