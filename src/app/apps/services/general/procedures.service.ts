@@ -50,6 +50,16 @@ export class ProceduresService {
 
     }
 
+    public getFilterTableHistoryService(page: PageProceduresData):Observable<ProceduresCollection[]>{
+        const paramsR:HttpParams = new HttpParams();
+        const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
+            console.log(urlComplete,'URLS RUTA');  
+            console.log(this.basic_url,'baseUrl');                             
+       return  this.http.get<any>(urlComplete);
+    //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
+
+    }
+
     async sendRequestsFetchGetAsync(url: string) {
         return this.http.get<any>(url);
       }

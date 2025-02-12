@@ -47,6 +47,7 @@ import { PropertyAppraisalInformationComponent } from '../property-appraisal-inf
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { InformationAdjacentPropertyComponent } from '../information-adjacent-property/information-adjacent-property.component';
+import { HistoricalProceduresPropertyComponent } from '../historical-procedures/historical-procedures.component';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -90,7 +91,8 @@ import { InformationAdjacentPropertyComponent } from '../information-adjacent-pr
     PhotosComponent,
     AlertsComponent,
     SuperNotariadoPropertyComponent,
-    InformationAdjacentPropertyComponent
+    InformationAdjacentPropertyComponent,
+    HistoricalProceduresPropertyComponent
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -187,7 +189,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       return;
     }
 
-    if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
+    if(this.schema === `${envi.schemas.temp}` && !this.contentInfoSchema.executionId ){
       return;
     }
     this.informationPropertyService.showOptionsPersonStarted$

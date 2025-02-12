@@ -62,7 +62,8 @@ import {
   MODAL_SMALL,
   INFORMATION_HISTORICAL,
   TITULO_PAGE_CADASTRAL_DA,
-  TITULO_PAGE_AVANZADA
+  TITULO_PAGE_AVANZADA,
+  LIST_SCHEMAS_CONTROL_HISTORY_PRIME
 } from '../../../constants/general/constant';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
@@ -132,6 +133,7 @@ export class TableCadastralSearchComponent
   titleMenu = 'Búsqueda avanzada';
   principaltitleMenu = 'Búsqueda avanzada';
   seeAction = true;
+  seeActionHistory = true;
 
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(
@@ -239,12 +241,16 @@ export class TableCadastralSearchComponent
         this.titleAsing(this.tituloPage);
         this.menuAsing(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
         this.seeAction = false;
-      }else{
-
+      }else if(this.tituloPage === TITULO_PAGE_AVANZADA){
         this.titleAsing(this.tituloPage);
         this.menuAsing(TITULO_PAGE_AVANZADA, this.tituloPage);
         this.seeAction = false;
         // this.validateEndPoint()
+      }else{
+        this.titleAsing(this.tituloPage);
+        this.menuAsing('Búsqueda avanzada', this.tituloPage);
+        this.seeAction = false;
+        this.seeActionHistory = false;
       }
     }
   }
@@ -286,7 +292,8 @@ export class TableCadastralSearchComponent
   }
 
   openCadastralInformationProperty(data: BaunitHead): void {
-    this.dialog
+    if(this.seeActionHistory){
+      this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
         ...MODAL_LARGE,
         disableClose: true,
@@ -302,6 +309,26 @@ export class TableCadastralSearchComponent
         )
       })
       .afterClosed();
+    }else{
+
+      this.dialog
+        .open(LayoutCardCadastralInformationPropertyComponentComponent, {
+          ...MODAL_LARGE,
+          disableClose: true,
+          data: new ContentInfoSchema(
+            data.baunitIdE,
+            data,
+            null,
+            LIST_SCHEMAS_CONTROL_HISTORY_PRIME,
+            TYPEINFORMATION_VISUAL,
+            '',
+            [],
+            this.rulePage
+          )
+        })
+        .afterClosed();
+
+    }
   }
 
   createAdvancedSearch(): void {

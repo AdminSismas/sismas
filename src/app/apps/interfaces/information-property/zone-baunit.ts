@@ -10,6 +10,8 @@ export interface ZoneBAUnit {
   ccZonaHomoGeoEconomica?: GeoEconomicZone;
   baUnitZonaValor?: number;
   baUnitZonaAreaE?: string;
+  esComun?: string;
+
 }
 
 export interface AddZoneParameters {

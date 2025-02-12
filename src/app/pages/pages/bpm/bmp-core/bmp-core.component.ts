@@ -52,6 +52,7 @@ import { ShowErrorValidateAlfaMainComponent } from '../../../../apps/components/
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -115,6 +116,7 @@ export class BmpCoreComponent implements OnInit {
   proFlow!: ProFlow;
   infoFatherURL!: string;
   resources: string[] = [];
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -156,6 +158,29 @@ export class BmpCoreComponent implements OnInit {
       return;
     }
     this.activateLoading(true);
+  }
+
+  confirmAction(action: () => void, message: string): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: { message },
+      disableClose: true 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        action();
+      }
+    });
+  }
+
+
+  onAccept(): void {
+    this.confirmAction(() => this.nextBpmCore(), '¿Está seguro que desea continuar a la siguiente tarea?');
+  }
+
+  onReject(): void {
+    this.confirmAction(() => this.previewBpmCore(), '¿Está seguro que desea rechazar la tarea?');
   }
 
   refreshComponentsDynamic(proFlow: ProFlow) {

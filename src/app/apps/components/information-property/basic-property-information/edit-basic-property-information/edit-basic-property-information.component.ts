@@ -69,15 +69,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
             group:'',
             groupName:'Identificación del predio'
           },
-            //   {
-            //   name: 'cadastralNumberFormat',
-            //   label: 'Número predial (F)',
-            //   collection: false,
-            //   type: 'text',
-            //   placeholder: 'Número predial (F)',
-            //   group:'',
-            //   groupName:'Identificación del predio'
-            // },
+           
             {
               name: 'cadastralNumber',
               label: 'Número predial',
@@ -109,13 +101,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
               group:'',
               groupName:'Identificación del predio'
             },
-            // {
-            //   name: 'baunitIdE',
-            //   label: 'Código BAUnit',
-            //   collection: false,
-            //   type: 'text',
-            //   placeholder: 'Código BAUnit'
-            // },
             ]
             },
         {
@@ -124,28 +109,31 @@ export class EditBasicPropertyInformationComponent implements OnInit {
               // *****GRUPO "Propiedad y uso" ****
 
                 {
+                // DEBE SER LISTA TIPO 
                   name: 'domBaunitEconoDesti',
                   label: 'Destino económico',
-                  collection: false,
-                  type: 'text',
+                  collection: true,
+                  type: 'BaunitEconoDesti',
                   placeholder: 'Destino económico',
                   group:'',
                   groupName:'Propiedad y uso'
                 },
+                // DEBE SER LISTA TIPO
                 {
                   name: 'domBaunitType',
                   label: 'Tipo',
-                  collection: false,
-                  type: 'text',
+                  collection: true,
+                  type: 'BaunitType',
                   placeholder: 'Tipo',
                   group:'',
                   groupName:'Propiedad y uso'
                 },
                 {
+                  // DEBE SER LISTA TIPO
                   name: 'domBaunitCondition',
                   label: 'Condición propiedad',
-                  collection: false,
-                  type: 'text',
+                  collection: true,
+                  type: 'BaunitCondition',
                   placeholder: 'Condición propiedad',
                   group:'',
                   groupName:'Propiedad y uso'
@@ -240,50 +228,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
               },
           ]
         },
-    //     {
-    //       groupName:'Seguimientos y actualizaciones',
-    //       fields:[
-    // // *****GRUPO "Seguimientos y actualizaciones" ****
-
-    //           {
-    //             name: 'cadastralLastEventAt',
-    //             label: 'Último evento el',
-    //             collection: false,
-    //             type: 'date',
-    //             placeholder: 'Último evento el',
-    //             group:'',
-    //             groupName:'Seguimientos y actualizaciones'
-    //           },
-    //           {
-    //             name: 'cadastralLastEventCode',
-    //             label: 'Número último evento',
-    //             collection: false,
-    //             type: 'text',
-    //             placeholder: 'Número último evento',
-    //             group:'',
-    //             groupName:'Seguimientos y actualizaciones'
-    //           },
-    //           {
-    //             name: 'updatedBy',
-    //             label: 'Actualizado por',
-    //             collection: false,
-    //             type: 'text',
-    //             placeholder: 'Actualizado por',
-    //             group:'',
-    //             groupName:'Seguimientos y actualizaciones'
-    //           },
-    //           {
-    //             name: 'updatedAt',
-    //             label: 'Actualizado el',
-    //             collection: false,
-    //             type: 'date',
-    //             placeholder: 'Actualizado el',
-    //             group:'',
-    //             groupName:'Seguimientos y actualizaciones'
-    //           }
-    //     ]
-    //   }
-
 
   ];
 

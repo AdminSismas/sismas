@@ -165,7 +165,16 @@
       [divPolLv1]="divPolLv1"
       [divPolLv2]="divPolLv2"
       @fadeInUp
-    ></vex-information-zones-property>
+    ></vex-information-zones-property
+    >
+    <vex-historical-procedures-property
+    [id]="'HistoricalProceduresPropertyComponent' + schema"
+    [expandedComponent]="false"
+    [baunitId]="baunitId"
+    [schema]="schema"
+    [executionId]="executionId"
+    [typeInformation]="typeInformation"
+    ></vex-historical-procedures-property>
     @if (!showRulesPage) {
       <vex-photos
         #photosComponent{{schema}}
