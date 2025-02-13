@@ -84,7 +84,7 @@ import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 export class SupportLogsComponent implements OnInit, AfterViewInit {
 
   private apiTickets = `${env.url_base}${env.api}${env.module.soporte}`;  
-  userData: UserDetails | null = null;
+  userID: number | null = null;
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -119,7 +119,7 @@ export class SupportLogsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.userData = this.userService.getUserData();
+    this.userID = this.userService.getUserData();
     this.fetchTickets();
 
     this.searchCtrl.valueChanges.subscribe((value) => {
@@ -136,10 +136,10 @@ export class SupportLogsComponent implements OnInit, AfterViewInit {
   }
 
   fetchTickets(): void {
-    if (!this.userData) {
+    if (!this.userID) {
       return;
     }
-    this.supportService.getTickets(this.userData.userId).subscribe(
+    this.supportService.getTickets(this.userID).subscribe(
       (response) => {
         this.dataSource.data = response.data;
         this.dataSource.paginator = this.paginator;

@@ -93,7 +93,7 @@ export class SupportComponent implements OnInit {
   vista: Vista[] = []; 
   subvista: Subvista[] = [];
   user: DecodeJwt | null = null;
-  userData: UserDetails | null = null;
+  userID: number | null = null;
   uploadedFiles: File[] = [];
 
   viewName: VistaName[] = []; // Define the property to hold views names
@@ -140,8 +140,8 @@ export class SupportComponent implements OnInit {
   ngOnInit(): void {
 
     this.user = this.userService.getUser();
-    this.userData = this.userService.getUserData();
-    console.log('User:', this.userData);
+    this.userID = this.userService.getUserData();
+ 
     this.loadModulos(); //return data
     this.cd.detectChanges();
     this.cd.markForCheck();
@@ -228,7 +228,7 @@ export class SupportComponent implements OnInit {
       const formData = this.verticalAccountFormGroup.value;
       console.log('FormData:', formData);
 
-      formData.id_cliente = this.userData?.userId;
+      formData.id_cliente = this.userID;
 
       console.log('FormData:', formData);
 
