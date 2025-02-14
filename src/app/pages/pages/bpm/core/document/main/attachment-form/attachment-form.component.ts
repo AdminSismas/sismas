@@ -23,7 +23,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
-import { AttachmentService } from '../service/attachment.service';
+import { AttachmentService } from '../../../../../../../apps/services/bpm/core/document/main/attachment.service';
 import { ComboxColletionComponent } from '../../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
 import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
 import Swal from 'sweetalert2';

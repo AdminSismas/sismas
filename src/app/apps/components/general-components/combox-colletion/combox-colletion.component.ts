@@ -4,7 +4,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule, NgClass, NgForOf } from '@angular/common';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
-import { CollectionServicesService } from '../../../services/general/collection-services.service';
+import { CollectionServices } from '../../../services/general/collection.service';
 import { DomainCalificationCollection, DomainCollection } from '../../../interfaces/general/domain-name.model';
 import { MatTableModule } from '@angular/material/table';
 
@@ -44,7 +44,7 @@ export class ComboxColletionComponent implements OnInit {
   @Output() stringEventEmitter = new EventEmitter<string>();
 
   constructor(
-    private collectionServicesService: CollectionServicesService
+    private collectionServicesService: CollectionServices
   ) {
   }
 

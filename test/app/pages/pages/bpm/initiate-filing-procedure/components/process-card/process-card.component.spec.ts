@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DocumentsTableComponent } from './documents-table.component';
+import { ProcessCardComponent } from './process-card.component';
 
-describe('DocumentsTableComponent', () => {
-  let component: DocumentsTableComponent;
-  let fixture: ComponentFixture<DocumentsTableComponent>;
+describe('ProcessCardComponent', () => {
+  let component: ProcessCardComponent;
+  let fixture: ComponentFixture<ProcessCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DocumentsTableComponent]
+      imports: [ProcessCardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DocumentsTableComponent);
+    fixture = TestBed.createComponent(ProcessCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

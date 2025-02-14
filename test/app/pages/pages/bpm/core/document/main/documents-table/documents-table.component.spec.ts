@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  DocumentsMainTableComponent
+} from '../../../../../../../../../src/app/pages/pages/bpm/core/document/main/documents-table/documents-table.component';
 
-import { DocumentsMainTableComponent } from './documents-table.component';
 
-describe('DocumentsMainTableComponent', () => {
+describe(DocumentsMainTableComponent.name, () => {
   let component: DocumentsMainTableComponent;
   let fixture: ComponentFixture<DocumentsMainTableComponent>;
 

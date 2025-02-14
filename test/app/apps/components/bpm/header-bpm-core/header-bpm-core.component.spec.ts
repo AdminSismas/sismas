@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HeaderBpmCoreComponent
-} from '../../../../../../../../src/app/apps/components/bpm/header-bpm-core/header-bpm-core.component';
+} from '../../../../../../src/app/apps/components/bpm/header-bpm-core/header-bpm-core.component';
 
 describe(HeaderBpmCoreComponent.name, () => {
   let component: HeaderBpmCoreComponent;

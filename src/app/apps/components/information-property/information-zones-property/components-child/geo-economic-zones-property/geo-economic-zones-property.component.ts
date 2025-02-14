@@ -51,15 +51,15 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
-import { MODAL_SMALL, NAME_NO_DISPONIBLE, NAVIGATION_ITEMS_INFORMACION_PROPERTIY, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC, TYPEINFORMATION_EDITION } from 'src/app/apps/constants/constant';
+import { MODAL_SMALL, NAME_NO_DISPONIBLE, NAVIGATION_ITEMS_INFORMACION_PROPERTIY, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC, TYPEINFORMATION_EDITION } from 'src/app/apps/constants/general/constant';
 import { DeleteInformationZonesPropertyComponent } from '../../delete-information-zones-property/delete-information-zones-property.component';
 import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { PAGE } from 'src/app/apps/constants/procedures.constant';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { PAGE } from 'src/app/apps/constants/general/procedures.constant';
+import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
 import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
 
@@ -98,23 +98,21 @@ import { Observable } from 'rxjs';
     MatDialogModule,
     CommonModule,
     MatTableModule,
-    CurrencyLandsPipe
-
   ],
   templateUrl: './geo-economic-zones-property.component.html',
   styleUrl: './geo-economic-zones-property.component.scss'
 })
-export class GeoEconomicZonesPropertyComponent 
+export class GeoEconomicZonesPropertyComponent
 implements OnInit, OnChanges, AfterViewInit {
 
    isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     seeAcctionsComponents = false;
-  
+
     zoneBAUnit: ZoneBAUnit[] = [];
     zoneBAUnitRural: ZoneBAUnit[] = [];
     zoneBAUnitUrban: ZoneBAUnit[] = [];
     zoneBAUnitGeoeconomic: ZoneBAUnit[] = [];
-  
+
     @Input({ required: true }) id = '';
     @Input({ required: true }) public expandedComponent = true;
     @Input({ required: true }) schema = `${environment.schemas.main}`;
@@ -124,10 +122,10 @@ implements OnInit, OnChanges, AfterViewInit {
     @Input() editable?: boolean;
     @Input() executionId: string | null | undefined = null;
     @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
-  
+
     columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC;
-   
-  
+
+
     @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
     @ViewChild(MatPaginator, { static: true }) paginator2?: MatPaginator;
     @ViewChild(MatSort, { static: true }) sort2?: MatSort;
@@ -135,7 +133,7 @@ implements OnInit, OnChanges, AfterViewInit {
     @ViewChild('confirmDialog', { static: true }) confirmDialog:
       | TemplateRef<any>
       | undefined;
-  
+
     dataBasicInformation!: BasicInformationProperty;
     fractions_sum = 0;
     page: number = PAGE;
@@ -149,16 +147,16 @@ implements OnInit, OnChanges, AfterViewInit {
     rightIdSelected?: number;
     dataSource: MatTableDataSource<ZoneBAUnit> =
       new MatTableDataSource<ZoneBAUnit>([]);
-  
-  
+
+
     dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnit> =
       new MatTableDataSource<ZoneBAUnit>([]);
     // columnsGeoeconomicZones = signal(this.TABLE_COLUMNS);
     // textColumnsGeoeconomicZones = computed(() =>
     //   this.columnsGeoeconomicZones().filter((column) => column.type === 'text')
     // );
-  
-    
+
+
     actionBtns = computed(() => {
       return [
         {
@@ -179,13 +177,13 @@ implements OnInit, OnChanges, AfterViewInit {
       };
       return { ...initialState };
     });
-  
+
     private informationPropertyService = inject(InformationPropertyService);
     private matDialog = inject(MatDialog);
-  
+
     protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
     protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
-  
+
     constructor(private readonly layoutService: VexLayoutService, private changeDetectorRef: ChangeDetectorRef) {
       console.log('constructor', this.typeInformation);
     }
@@ -195,8 +193,8 @@ implements OnInit, OnChanges, AfterViewInit {
         .filter((column) => column.visible)
         .map((column) => column.property);
     }
-  
-  
+
+
     getZoneCode(row: ZoneBAUnit): string {
       if (row.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode) {
         return row.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode.toString();
@@ -205,7 +203,7 @@ implements OnInit, OnChanges, AfterViewInit {
       }
       return NAME_NO_DISPONIBLE;
     }
-  
+
     getZonevalidity(row: ZoneBAUnit): string {
       if (row.ccZonaHomoFisicaRu?.vigencia) {
         return row.ccZonaHomoFisicaRu.vigencia.toString();
@@ -214,26 +212,26 @@ implements OnInit, OnChanges, AfterViewInit {
       }
       return NAME_NO_DISPONIBLE;
     }
-  
+
     getGeoeconomicZoneCode(row: ZoneBAUnit): string {
       if (row.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode) {
         return row.ccZonaHomoGeoEconomica.zonaHomoGeoEconomicaCode.toString();
       }
       return NAME_NO_DISPONIBLE;
     }
-  
+
     getGeoeconomicZoneValidity(row: ZoneBAUnit): string {
       if (row.ccZonaHomoGeoEconomica?.vigencia) {
         return row.ccZonaHomoGeoEconomica.vigencia.toString();
       }
       return NAME_NO_DISPONIBLE;
     }
-  
+
     searchBasicInformationProperty(): void {
       if (!this.schema || !this.baunitId) {
         return;
       }
-  
+
       this.informationPropertyService
         .getBasicInformationProperty(this.schema, this.baunitId, this.executionId)
         .subscribe({
@@ -242,12 +240,12 @@ implements OnInit, OnChanges, AfterViewInit {
             this.captureBasicInformationSubscribe(result)
         });
     }
-  
+
     captureBasicInformationSubscribe(result: BasicInformationProperty): void {
       this.dataBasicInformation = result;
       console.log(this.dataBasicInformation.cadastralNumberFormat);
     }
-  
+
     determinePropertyType(): string {
       if (
         !this.dataBasicInformation ||
@@ -255,12 +253,12 @@ implements OnInit, OnChanges, AfterViewInit {
       ) {
         return '';
       }
-  
+
       const typeCode = this.dataBasicInformation.cadastralNumberFormat.substring(
         7,
         9
       );
-  
+
       console.log('typeCode', typeCode);
       if (typeCode === '00') {
         return 'Rural';
@@ -268,7 +266,7 @@ implements OnInit, OnChanges, AfterViewInit {
         return 'Urbano';
       }
     }
-  
+
     ngAfterViewInit(): void {
       if (this.paginator) {
         this.dataSource.paginator = this.paginator;
@@ -277,7 +275,7 @@ implements OnInit, OnChanges, AfterViewInit {
       if (this.sort) {
         this.dataSource.sort = this.sort;
       }
-    
+
       if (this.paginator2) {
         this.dataSourceGeoeconomicZones.paginator = this.paginator2;
         this.changeDetectorRef.detectChanges();
@@ -286,24 +284,24 @@ implements OnInit, OnChanges, AfterViewInit {
         this.dataSourceGeoeconomicZones.sort = this.sort2;
       }
     }
-    
-  
+
+
     refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
       const { pageIndex, pageSize } = pageEvent;
-    
+
       if (paginatorId === 'paginator1') {
         this.page = pageIndex;
         this.pageSize = pageSize;
-        this.changeDetectorRef.markForCheck(); // 
+        this.changeDetectorRef.markForCheck(); //
       }
-    
+
       if (paginatorId === 'paginator2') {
         this.page2 = pageIndex;
         this.pageSize2 = pageSize;
-        this.changeDetectorRef.markForCheck(); // 
+        this.changeDetectorRef.markForCheck(); //
       }
     }
-  
+
     ngOnInit() {
       if (this.id?.length <= 0 || this.baunitId == null) {
         return;
@@ -314,17 +312,17 @@ implements OnInit, OnChanges, AfterViewInit {
       this.searchInformationsGeoeconomicZonesProperty();
       this.searchBasicInformationProperty();
     }
-  
+
     ngOnChanges(changes: SimpleChanges) {
       if (changes['typeInformation']) {
         console.log('typeInformation', this.typeInformation);
       }
     }
-  
+
     trackByProperty<T>(index: number, column: TableColumn<T>): string {
       return column.property;
     }
-  
+
     isExpandPanel(expandedComponent: boolean): void {
       if (expandedComponent) {
         this.searchInformationsZonesProperty();
@@ -333,17 +331,17 @@ implements OnInit, OnChanges, AfterViewInit {
 
       }
     }
-  
+
     searchInformationsZonesProperty(): void {
       if (!this.schema || !this.baunitId) return;
-    
+
       this.informationPropertyService.getByBauniFisica(this.baunitId)
         .subscribe({
           next: (result: ZoneBAUnit[]) => {
             this.zoneBAUnit = result;
             this.dataSource.data = this.zoneBAUnit;
             this.totalPhysicalElements = this.zoneBAUnit.length;
-  
+
             if (this.paginator) {
               this.dataSource.paginator = this.paginator;
               this.changeDetectorRef.markForCheck();
@@ -352,18 +350,18 @@ implements OnInit, OnChanges, AfterViewInit {
           error: () => this.captureInformationSubscribeError()
         });
     }
-    
-  
+
+
     searchInformationsGeoeconomicZonesProperty(): void {
       if (!this.schema || !this.baunitId) return;
-    
+
       this.informationPropertyService.getByBauniEcono(this.baunitId)
         .subscribe({
           next: (result: ZoneBAUnit[]) => {
             this.zoneBAUnitGeoeconomic = result;
             this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
             this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
-    
+
             if (this.paginator2) {
               this.dataSourceGeoeconomicZones.paginator = this.paginator2;
               this.changeDetectorRef.detectChanges();
@@ -372,8 +370,8 @@ implements OnInit, OnChanges, AfterViewInit {
           error: () => this.captureInformationSubscribeError()
         });
     }
-    
-  
+
+
     openInformationPropertyZone(zone: ZoneBAUnit, zoneType: string): void {
       if (zoneType === 'physical') {
         const propertyType = this.determinePropertyType();
@@ -398,14 +396,14 @@ implements OnInit, OnChanges, AfterViewInit {
         dialog.afterClosed().subscribe((data: any) => console.log(data));
       }
     }
-  
+
     captureInformationSubscribeError(): void {
       this.zoneBAUnit = [];
       this.zoneBAUnitRural = [];
       this.zoneBAUnitUrban = [];
       this.zoneBAUnitGeoeconomic = [];
     }
-  
+
     captureInformationSubscribe(result: ZoneBAUnit[]): void {
       this.zoneBAUnit = result;
       this.zoneBAUnitRural = this.filterByObject(result, 'ccZonaHomoFisicaRu');
@@ -416,7 +414,7 @@ implements OnInit, OnChanges, AfterViewInit {
       );
       this.dataSource.data = this.zoneBAUnit;
     }
-  
+
     captureGeoeconomicInformationSubscribe(result: ZoneBAUnit[]): void {
       this.zoneBAUnit = result;
       this.zoneBAUnitRural = this.filterByObject(result, 'ccZonaHomoFisicaRu');
@@ -427,15 +425,15 @@ implements OnInit, OnChanges, AfterViewInit {
       );
       this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
     }
-  
+
     private getRandomInt(max: number): number {
       return Math.floor(Math.random() * max);
     }
-  
+
     filterByObject(result: ZoneBAUnit[], key: string): ZoneBAUnit[] {
       return result.filter((zn: ZoneBAUnit) => this.validateObjet(zn, key));
     }
-  
+
     validateObjet(object: any, key: string) {
       return (
         object &&
@@ -444,7 +442,7 @@ implements OnInit, OnChanges, AfterViewInit {
         object[key] != ''
       );
     }
-  
+
     onClickActionBtn(id: string, zone: ZoneBAUnit): void {
       if (id === 'edit') {
         this.onClickOpenAddEditModal(zone);
@@ -466,7 +464,7 @@ implements OnInit, OnChanges, AfterViewInit {
           );
       }
     }
-  
+
     onClickGeoconomicActionBtn(id: string, zone: ZoneBAUnit): void {
       if (id === 'edit') {
         this.onClickOpenGeoconomicAddEditModal(zone);
@@ -491,14 +489,14 @@ implements OnInit, OnChanges, AfterViewInit {
           );
       }
     }
-  
+
     onClickOpenAddEditModal(data: any): void {
       const propertyType = this.determinePropertyType();
-  
+
       const isEdit = data && data.baUnitZonaId;
-  
+
       console.log(this.baunitId);
-  
+
       this.matDialog
         .open(AddEditInformatizonZonesPropertyComponent, {
           ...MODAL_SMALL,
@@ -517,14 +515,14 @@ implements OnInit, OnChanges, AfterViewInit {
           setTimeout(() => this.searchInformationsZonesProperty(), 200)
         );
     }
-  
+
     onClickOpenGeoconomicAddEditModal(data: any): void {
       const propertyType = 'Geoeconomica';
-  
+
       const isEdit = data && data.baUnitZonaId;
-  
+
       console.log(this.baunitId);
-  
+
       this.matDialog
         .open(AddEditInformatizonZonesPropertyComponent, {
           ...MODAL_SMALL,
@@ -543,7 +541,7 @@ implements OnInit, OnChanges, AfterViewInit {
           setTimeout(() => this.searchInformationsGeoeconomicZonesProperty(), 200)
         );
     }
-  
+
     disabledClass(): string {
       if (!this.editable) {
         return '!bg-slate-400 !text-gray-100 opacity-60';
@@ -551,5 +549,5 @@ implements OnInit, OnChanges, AfterViewInit {
       return 'w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10';
     }
 
-  
+
 }

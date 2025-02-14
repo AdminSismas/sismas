@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  AttachmentFormComponent
+} from '../../../../../../../../../src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 
-import { AttachmentFormComponent } from './attachment-form.component';
-
-describe('AttachmentFormComponent', () => {
+describe(AttachmentFormComponent.name, () => {
   let component: AttachmentFormComponent;
   let fixture: ComponentFixture<AttachmentFormComponent>;
 

@@ -8,7 +8,7 @@ import { DomainCalificationCollection, DomainCollection } from '../../interfaces
 @Injectable({
   providedIn: 'root'
 })
-export class CollectionServicesService {
+export class CollectionServices {
 
   basic_url = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
   calification_url = `${environment.url}:${environment.port}${environment.calificationUB}`;

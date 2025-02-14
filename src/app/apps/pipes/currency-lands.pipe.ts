@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CurrencyLandsPipe implements PipeTransform {
 
   transform(value: any): string {
-    if (value == null || value === '') {
+    if (value == undefined || value == null || value === '') {
       return '';
     }
 

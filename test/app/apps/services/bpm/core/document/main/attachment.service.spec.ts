@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import {
+  AttachmentService
+} from '../../../../../../../../src/app/apps/services/bpm/core/document/main/attachment.service';
 
-import { AttachmentService } from './attachment.service';
-
-describe('AttachmentService', () => {
+describe(AttachmentService.name, () => {
   let service: AttachmentService;
 
   beforeEach(() => {

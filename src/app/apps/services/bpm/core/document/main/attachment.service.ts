@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError } from 'rxjs';
-import { AttachmentCollection } from '../../../../../../../apps/interfaces/documnet-management/attachment.model';
-import { environment } from 'src/environments/environments';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'

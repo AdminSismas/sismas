@@ -120,6 +120,9 @@
     "setupFilesAfterEnv": [
       "<rootDir>/setup-jest.ts"
     ],
+    "moduleNameMapper": {
+      "@vex/(.*)$": "<rootDir>/src/@vex/$1"
+    },
     "globalSetup": "jest-preset-angular/global-setup"
   }
 }
