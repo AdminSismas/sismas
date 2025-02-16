@@ -85,6 +85,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentTasksInformations!: InformationPegeable;
     public taskDetails:TaskResponseModel= new TaskResponseModel();
+    assignedSee: string = '';
 
       @Input({ required: true }) id = '';
       @Input({ required: true }) public expandedComponent = true;
@@ -229,6 +230,16 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
           this.getInformationProTaskCountComment();
          this.getInformationProTaskCountAttachment();
           this.viewExcuteTask(executionId);
+          this.viewDetallyTaskExecuId(executionId);
+        });
+    }
+
+    viewDetallyTaskExecuId(executionId:any){
+      this.tasksPanelService.viewProTaskId(
+        executionId)
+        .subscribe( result => {
+          console.log('Tercer servicio result',result);
+          this.assignedSee = result.assignee;
         });
     }
 

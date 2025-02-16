@@ -3,6 +3,8 @@
     <span>Radicado: {{ this.taskDetails && this.taskDetails.executionCode ? this.taskDetails.executionCode : NAME_NO_DISPONIBLE }}</span>
     - 
     <span>Versión: {{ this.taskDetails && this.taskDetails.executionId ? this.taskDetails.executionId : NAME_NO_DISPONIBLE }}</span>
+    -
+    <span>Trámite asignado a : {{ this.assignedSee  ? this.assignedSee : NAME_NO_DISPONIBLE }}</span>
   </h2>
   <button
   color="secondary"
