@@ -4,6 +4,7 @@ export class BaunitHead {
   propertyRegistryNumber?: string;
   cadastralNumber?: string;
   cadastralArea?: number;
+  cadastralAreaE?: string;
   cadastralRegistryNumber?: string;
   domBaunitCondition?: string;
   domBaunitEconoDesti?: string;
@@ -15,6 +16,7 @@ export class BaunitHead {
     this.propertyRegistryNumber = content.propertyRegistryNumber || '';
     this.cadastralNumber = content.cadastralNumber || '';
     this.cadastralArea = content.cadastralArea || 0;
+    this.cadastralAreaE = content.cadastralAreaE || '';
     this.cadastralRegistryNumber = content.cadastralRegistryNumber || '';
     this.domBaunitCondition = content.domBaunitCondition || '';
     this.domBaunitEconoDesti = content.domBaunitEconoDesti || '';

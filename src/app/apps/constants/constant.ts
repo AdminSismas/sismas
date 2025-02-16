@@ -49,6 +49,7 @@ export const FORMAT_CURRENCY_COP = 'COP';
 export const FORMAT_CURRENCY_SIMBOL = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND = 'Información no disponible';
 
+export const PAGE_OPTION__1_5_10: number[] = [1,5,10];
 export const PAGE_OPTION__5_7_10: number[] = [5,7,10];
 export const PAGE_OPTION__10_20_50_100: number[] = [10,20,50,100];
 
@@ -261,10 +262,17 @@ export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] =
   },
   {
     label: 'Área terreno',
-    property: 'cadastralArea',
+    property: 'cadastralAreaE',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
+  },
+  {
+    label: 'Condición',
+    property: 'domBaunitCondition',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
   },
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];

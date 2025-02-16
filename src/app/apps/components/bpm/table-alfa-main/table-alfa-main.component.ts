@@ -19,8 +19,8 @@ import {
   TABLE_ALFA_MAIN_OPERATION_COLUMN, TYPEINFORMATION_EDITION,
   TYPEINFORMATION_VISUAL,
   MODAL_LARGE,
-  MODAL_MEDIUM,
-  MODAL_SMALL
+  MODAL_SMALL,
+  MODAL_MEDIUM
 } from '../../../constants/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -52,7 +52,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { DialogTableAlfaMainComponent } from '../dialog-table-alfa-main/dialog-table-alfa-main.component';
+import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -140,7 +140,6 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     if (changes['contentInformations'] && this.contentInformations) {
       this._contentInformations$.next(this.contentInformations);
     }
@@ -300,12 +299,12 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   editCadastralUnits(row: Operation) {
-    console.log(row);
-    this.dialog.open(DialogTableAlfaMainComponent, {
+    this.dialog.open(ModificationPropertyUnitsComponent, {
       ...MODAL_MEDIUM,
       data: {
         executionId: this.executionId,
         baunitIdE: row.baunitHead?.baunitIdE,
+        npnMatrix: row.baunitHead!.cadastralNumber
       }
     });
   }

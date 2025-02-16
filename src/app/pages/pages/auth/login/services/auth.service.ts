@@ -72,6 +72,7 @@ export class AuthService {
   logout(): void {
     this._token = null;
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     this.router.navigate(['/login']).then(() => {
       window.history.pushState(null, '', window.location.href);
       window.onpopstate = function () {
