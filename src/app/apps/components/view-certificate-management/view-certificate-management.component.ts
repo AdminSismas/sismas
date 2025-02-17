@@ -118,30 +118,7 @@ export class ViewCertificateManagementComponent implements OnInit {
     return 'unknown';
   }
 
-  downloadAndShowPdf(): void {
-    const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
-    const fullUrl = `${this.basic_url}${queryParams}`;
 
-    console.log('Cargando PDF desde:', fullUrl);
-
-    this.http.get(fullUrl, { responseType: 'blob' }).subscribe({
-      next: (response: Blob) => {
-        if (response.type !== 'application/pdf') {
-          console.error('El archivo recibido no es un PDF.');
-          return;
-        }
-
-        const blobUrl = window.URL.createObjectURL(response);
-
-        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
-
-        this.downloadPdf(response);
-      },
-      error: (err) => {
-        console.error('Error al cargar el PDF:', err);
-      }
-    });
-  }
 
   downloadPdfFromSafeUrl(): void {
     const unsafeUrl = this.sanitizer.sanitize(SecurityContext.URL, this.pdfUrl);
@@ -160,6 +137,8 @@ export class ViewCertificateManagementComponent implements OnInit {
             fileName = `Certificado_de_poseer_o_no_bienes_${this.fullName}.pdf`;
           } else if (this.typeCertificate === 'CERT_FICHA_AVALUO') {
             fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
+          } else if (this.typeCertificate === 'CERT_PLANO_PREDIAL_CATASTRAL') {
+            fileName = `Certificado_plano_predial_catastral_${this.baunitID}.pdf`;
           }
   
           a.download = fileName; 
@@ -177,28 +156,11 @@ export class ViewCertificateManagementComponent implements OnInit {
     }
   }
   
-  downloadPdf(blob: Blob): void {
-    const blobUrl = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    
-  
-    let fileName = '';
-    if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
-      fileName = `Certificado_de_poseer_o_no_bienes_${this.fullName}.pdf`;
-    } else if (this.typeCertificate === 'CERT_FICHA_AVALUO') {
-      fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
-    }
-  
-    a.href = blobUrl;
-    a.download = fileName;
-    a.click();
-  
-    window.URL.revokeObjectURL(blobUrl);
-  }
+
   loadPdf() {
-    this.isLoading = true; // Inicia la carga
-    this.errorMessage = ''; // Limpia cualquier mensaje previo
-    this.isErrorMessage = false; // Reset para el color de mensaje
+    this.isLoading = true; 
+    this.errorMessage = ''; 
+    this.isErrorMessage = false; 
 
     const url = this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA' ? this.basic_url : this.basic_url_appraisals;
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;

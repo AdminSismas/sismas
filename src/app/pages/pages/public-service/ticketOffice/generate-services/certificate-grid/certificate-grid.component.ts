@@ -133,14 +133,24 @@ export class CertificateGridComponent {
         id: 1,
         name: 'Certificado de poseer o no poseer bienes',
         price: 15000,
-        icon: 'mat:insert_drive_file'
+        icon: 'mat:insert_drive_file',
+        type: 'CERT_POSEER_BIEN_TAQUILLA'
       },
 
       {
         id: 2,
         name: 'Certificado de ficha de avalúo',
         price: 55000,
-        icon:'mat:monetization_on'
+        icon:'mat:monetization_on',
+        type: 'CERT_FICHA_AVALUO'
+
+       },
+       {
+        id: 3,
+        name: 'Certificado plano predial catastral',
+        price: 39000,
+        icon:'mat:map',
+        type: 'CERT_PLANO_PREDIAL_CATASTRAL'
 
        },
 
