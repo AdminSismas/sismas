@@ -1,0 +1,19 @@
+@if (showMap) {
+  <iframe
+    *ngIf="urlIframe"
+    [id]="idComponent"
+    [src]="urlIframe"
+    width="100%" height="800px" style="border: none">
+  </iframe>
+
+  <vex-loading-app
+    *ngIf="(isExistDataInformations$ | async) === false && !urlIframe"
+    #vexSplashScreen
+    idLoading="vexSplashScreen"
+    [showImage]="true"></vex-loading-app>
+
+} @else {
+  <div class="no-data-information">
+    No hay información disponible
+  </div>
+}

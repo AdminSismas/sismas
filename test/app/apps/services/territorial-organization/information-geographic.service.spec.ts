@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import {
   InformationGeographicService
-} from '../../../../../src/app/apps/services/territorial-organization/information-geographic.service';
+} from '../../../../../src/app/apps/services/geographics/information-geographic.service';
 
 describe(InformationGeographicService.name, () => {
   let service: InformationGeographicService;

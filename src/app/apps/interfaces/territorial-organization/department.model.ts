@@ -6,9 +6,9 @@ export class Department {
   divpolLvl1SecCode: string | undefined;
 
   constructor(content?: any) {
-    this.divpolLvl1Code = content.divpolLvl1Code;
-    this.divpolLvl1Name = content.divpolLvl1Name;
-    this.divpolLvl1SecCode = content.divpolLvl1SecCode;
+    this.divpolLvl1Code = content?.divpolLvl1Code || '';
+    this.divpolLvl1Name = content?.divpolLvl1Name || '';
+    this.divpolLvl1SecCode = content?.divpolLvl1SecCode || '';
   }
 
   set codeName(value: string) {

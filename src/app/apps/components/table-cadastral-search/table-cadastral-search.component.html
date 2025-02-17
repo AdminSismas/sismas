@@ -10,9 +10,7 @@
   </vex-page-layout-header>
   <vex-page-layout-content class="-mt-2 px-5">
     <div class="card overflow-auto mat-elevation-z5">
-      <div
-        class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center"
-      >
+      <div class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center">
         <button
           class="rounded-full py-2 px-6 title"
           color="primary"
@@ -127,8 +125,8 @@
               </button>
 
               <button
-              class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
-              (click)="openCadastralInformationProperty(row)"
+                class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
+                (click)="openCadastralInformationProperty(row)"
                 mat-icon-button
                 title="Consultar información predial"
               >
@@ -139,7 +137,7 @@
               </button>
 
               <ng-container *ngIf="seeAction && user?.role !== 'USER_READ'">
-                <button 
+                <button
                   (click)="isBaunitValid(row)"
                   class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
                   mat-icon-button
@@ -168,13 +166,13 @@
                 {{ column.label }}
               </th>
               <td
-              *matCellDef="let row"
-              [ngClass]="column.cssClasses"
-              mat-cell
-              class="pl-1 pr-1"
-            >
-              {{ cleanHyphenatedText(row[column.property]) }}
-            </td>
+                *matCellDef="let row"
+                [ngClass]="column.cssClasses"
+                mat-cell
+                class="pl-1 pr-1"
+              >
+                {{ cleanHyphenatedText(row[column.property]) }}
+              </td>
             </ng-container>
           } @else if (column.type === "operationType") {
             <ng-container [matColumnDef]="column.property">

@@ -1,14 +1,10 @@
-import { Component, DestroyRef, Inject, OnInit, inject } from '@angular/core';
-import { InConstructionComponent } from '../../../../apps/components/in-construction/in-construction.component';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
-import { InputComponent } from 'src/app/apps/components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -17,35 +13,32 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { LIMPIAR_CAMPOS_MULTIPLES_CAMPOS, LIMPIAR_CAMPOS_SELECCION_MUNICIPAL, LIST_FORM_CADASTRAL_0, LIST_FORM_CADASTRAL_1, LIST_FORM_CADASTRAL_2, LIST_FORM_CADASTRAL_3, LIST_FORM_CADASTRAL_4, LIST_FORM_CADASTRAL_5, NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
+import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
-import { SearchData } from 'src/app/apps/interfaces/search-data.model';
-import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import { Observable, Subject, map, startWith } from 'rxjs';
-import { CONSTANT_NAME_ID } from 'src/app/apps/constants/constantLabels';
+import {
+  TerritorialOrganizationService
+} from 'src/app/apps/services/territorial-organization/territorial-organization.service';
+import { map, Observable, startWith, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { GeographicViewerComponent } from 'src/app/apps/components/geographic-viewer/geographic-viewer.component';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
-import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
-import { environment } from 'src/environments/environments';
 import { DomSanitizer } from '@angular/platform-browser';
+import {
+  GeographicViewerEmbeddedComponent
+} from '../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
+import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
+import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
+import { Zone } from '../../../../apps/interfaces/territorial-organization/zone.model';
 
 @Component({
   selector: 'vex-general-maps',
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent,
     AsyncPipe,
-    ComboxColletionComponent,
-    InputComponent,
     MatAutocompleteModule,
     MatButtonModule,
     MatDialogModule,
@@ -58,138 +51,118 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatTabsModule,
     MatTooltipModule,
     ReactiveFormsModule,
+    CommonModule,
+    GeographicViewerEmbeddedComponent,
     VexPageLayoutComponent,
+    VexPageLayoutHeaderDirective,
     VexPageLayoutContentDirective,
-    CommonModule
-],
+    FluidHeightDirective
+  ],
   templateUrl: './general-maps.component.html',
   styleUrl: './general-maps.component.scss'
 })
 export class GeneralMapsComponent implements OnInit {
 
   protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
-  protected readonly LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = LIMPIAR_CAMPOS_SELECCION_MUNICIPAL;
-  protected readonly LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = LIMPIAR_CAMPOS_MULTIPLES_CAMPOS;
-
-
+  idGeneralMap = 'GeneralMapContent';
   optionsDeparments: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
+  optionsZones: Zone[] = [];
+
+  ccZonaId: string | null = null;
+  titleArray: string[] = ['Datos abiertos', 'Mapas generales'];
+  principaltitleMenu = 'Mapas generales';
 
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
-    municipality: ['', Validators.required]
+    municipality: ['', Validators.required],
+    zone: ['']
   });
 
   filteredOptionsDepartments$: Observable<Department[]> | undefined;
   filteredOptionsMunicipalities$: Observable<Municipality[]> | undefined;
+  filteredoptionsZones$: Observable<Zone[]> | undefined;
 
   private destroy$ = new Subject<void>();
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-
-  public divpolLv1 = '';
-  public divpolLv2 = '';
-
-  mapUrl: string | null = null; 
-  showMap = false;
-
   constructor(
-
- 
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
-    private sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer
   ) {
   }
 
   ngOnInit() {
+    this.idGeneralMap = this.getRandomInt(10000) + 'GeneralMapViewer';
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => console.log(value));
   }
 
-  
-
-  // public clearFormFields(value:any){
-  //   console.log('value',value?.tab?.textLabel )
-
-  //   if(value?.tab?.textLabel === 'Seleccion Municipal'){
-  //     this.clearMultipleFields()
-  //   }
-
-  //   if(value?.tab?.textLabel === 'Multiplex Campos'){
-  //     this.clearMunicipalSelection()
-  //   }
-  // }
-
-  public clearMunicipalSelection(){
-    this.department?.reset();
-    this.municipality?.reset();
- 
-
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
+  searchccZoneBySelection() {
+    if (this.form.invalid) {
+      return;
+    }
+    const { municipality, zone } = this.form.value;
+    this.ccZonaId = null;
 
+    const objZone: Zone[] = this.optionsZones
+      .filter(op => zone && op.codeName?.toLowerCase() === zone.toLowerCase());
+    this.ccZonaId = objZone != null && objZone?.length > 0 ? objZone[0].id : null;
+    if (this.ccZonaId != null && this.ccZonaId?.length > 0) {
+      return;
+    }
 
-
-
-  openSnackbar(msg: string, action: string, position: MatSnackBarHorizontalPosition) {
-    this.snackBar.open(
-      msg, action, { duration: 3000, horizontalPosition: position }
-    );
+    const objMunicipality: Municipality[] = this.optionsMunicipalities
+      .filter(op => municipality && op.codeName?.toLowerCase() === municipality.toLowerCase());
+    this.ccZonaId = objMunicipality != null && objMunicipality?.length > 0 ? objMunicipality[0].divpolLvl2Code : null;
+    if (this.ccZonaId != null && this.ccZonaId?.length > 0) {
+      return;
+    }
   }
-
-  searchMunicipalSelection() {
-    if (this.form.invalid) return;
-
-    const { department, municipality } = this.form.value;
-    const divpolLv1 = department.slice(0, 2);
-    const divpolLv2 = municipality.slice(0, 3);
-
-    this.showMap = true;
-
-    // // Aquí generamos la URL completa para el mapa
-    // const mapUrl = this.generateMapUrl(divpolLv1, divpolLv2);
-    // this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(mapUrl).toString();
-  }
-
-
-  generateMapUrl(departmentCode: string, municipalityCode: string): string {
-    const baseUrl = '${envi.url_viewer}${envi.post_path_viewer}';
-    return `${baseUrl}?department=${departmentCode}&municipality=${municipalityCode}`;
-  }
-
-
-
 
   loadDepartmentalInformation() {
     this.territorialOrganizationService.getDataDepartments()
-      .subscribe({
-          next: (result: Department[]) => this.captureDepartmentInformation(result)
-        }
-      );
+      .subscribe((result: Department[]) => this.captureDepartmentInformation(result));
   }
+
   loadMunicipalitiesInformation(codeName: string, skipPreloadedValues: boolean | null) {
     if (codeName?.length <= 0) {
       return;
     }
-
-    const dpto = this._filterInformationCode(
-      codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+    const dpto = this._filterInformationCode(codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
     if (dpto == null || dpto?.length <= 0) {
       return;
     }
+
     this.territorialOrganizationService.getDataMunicipalities(dpto)
-      .subscribe({
-        next: (result: Municipality[]) => this.captureMunicipalityInformation(result, skipPreloadedValues)
-      }
-      );
+      .subscribe((result: Municipality[]) => this.captureMunicipalityInformation(result, skipPreloadedValues));
   }
 
+  loadZonesInformation(codeName: string, skipPreloadedValues: boolean | null) {
+    if (codeName?.length <= 0) {
+      return;
+    }
+    const dpto = this._filterInformationCode(
+      codeName, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code'
+    );
+    if (dpto == null || dpto?.length <= 0) {
+      return;
+    }
+    this.territorialOrganizationService.getDataZones(dpto)
+      .subscribe((result: Zone[]) => this.captureZoneInformation(result, skipPreloadedValues)
+      );
+  }
 
   captureDepartmentInformation(result: Department[]): void {
     result = result.map((dpto: Department) => new Department(dpto));
@@ -202,50 +175,70 @@ export class GeneralMapsComponent implements OnInit {
       ));
   }
 
-captureMunicipalityInformation(result: Municipality[], skipPreloadedValues: boolean | null) {
-  // Mapear los municipios y almacenarlos
-  this.optionsMunicipalities = result.map((mncp: Municipality) => new Municipality(mncp));
-
-  // Si ya hay un municipio seleccionado y no se deben saltar los valores pre-cargados
-  const selectedMunicipality = this.form.get('municipality')?.value; // Usar .value para acceder al valor
-  if (selectedMunicipality && !skipPreloadedValues) {
-    const listOptions: Municipality[] = this.optionsMunicipalities.filter(
-      (option: Municipality) => option.divpolLvl2Code === selectedMunicipality
-    );
-    if (listOptions?.length > 0) {
-      this.form.get('municipality')?.patchValue(listOptions[0].codeName);
+  captureMunicipalityInformation(result: Municipality[], skipPreloadedValues: boolean | null) {
+    // Mapear los municipios y almacenarlos
+    this.optionsMunicipalities = result.map((mncp: Municipality) => new Municipality(mncp));
+    // Si ya hay un municipio seleccionado y no se deben saltar los valores pre-cargados
+    const selectedMunicipality = this.form.get('municipality')?.value; // Usar .value para acceder al valor
+    if (selectedMunicipality && !skipPreloadedValues) {
+      const listOptions: Municipality[] = this.optionsMunicipalities.filter((option: Municipality) => option.divpolLvl2Code === selectedMunicipality);
+      if (listOptions?.length > 0) {
+        this.form.get('municipality')?.patchValue(listOptions[0].codeName);
+      }
     }
+    this.getObservableMunicipalities();
   }
 
-  // Filtrar las opciones de municipio para el autocompletado
-  this.filteredOptionsMunicipalities$ = this.form.get('municipality')?.valueChanges.pipe(
-    startWith(''),
-    map((value: string) =>
-      this.optionsMunicipalities.filter(
-        (option: Municipality) => option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+  getObservableMunicipalities(){
+    // Filtrar las opciones de municipio para el autocompletado
+    this.filteredOptionsMunicipalities$ = this.form.get('municipality')?.valueChanges.pipe(
+      startWith(''),
+      map((value: string) =>
+        this.optionsMunicipalities.filter(
+          (option: Municipality) => option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+        )
       )
-    )
-  );
-}
- 
+    );
+  }
 
+  captureZoneInformation(result: Zone[], skipPreloadedValues: boolean | null) {
+    this.optionsZones = result.map((zn: Zone) => new Zone(zn));
+    const selectedZone = this.form.get('zone')?.value;
+    if (selectedZone && !skipPreloadedValues) {
+      const listOptions: Zone[] = this.optionsZones.filter((option: Zone): boolean => option.id === selectedZone);
+      if (listOptions?.length > 0) {
+        this.form.get('zone')?.patchValue(listOptions[0].codeName);
+      }
+    }
 
-private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
-  const listOptions: any[] = options
-    .filter((option: any): boolean => option[keyValue] === code);
-  return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
-}
+    // Filtrar las opciones de zona para el autocompletado
+    this.filteredoptionsZones$ = this.form.get('zone')?.valueChanges.pipe(
+      startWith(''),
+      map((value: string) =>
+        this.optionsZones.filter(
+          (option: Zone) => option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+        )
+      )
+    );
+  }
 
+  private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
+    const listOptions: any[] = options
+      .filter((option: any): boolean => option[keyValue] === code);
+    return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
+  }
 
-  get department(){
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+  }
+
+  get department() {
     return this.form.get('department');
   }
 
-  get municipality(){
+  get municipality() {
     return this.form.get('municipality');
   }
-
-
 
 
 }

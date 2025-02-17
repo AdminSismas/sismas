@@ -27,7 +27,7 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable } from 'rxjs';
-import { GeographicViewerComponent } from 'src/app/apps/components/geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from '../../../../../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import { LIST_SCHEMAS_CONTROL_MAIN, MODAL_LARGE, MODAL_MEDIUM, MODAL_SMALL, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
