@@ -57,6 +57,13 @@ export class ProceduresService {
             console.log(this.basic_url,'baseUrl');                             
        return  this.http.get<any>(urlComplete);
     //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
+    }
+    public getFilterHistoryService(page: PageProceduresData):Observable<ProceduresCollection[]>{
+        const paramsR:HttpParams = new HttpParams();
+                                                               // /bpmOperation/proExecution/baunitId/active/{{baunitId}}?page=0&size=10
+        const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}baunitId/finish/${page.executionCode}?page=${page.page}&size=${page.size}`;                       
+       return  this.http.get<any>(urlComplete);
+    //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
 
     }
 
@@ -71,5 +78,13 @@ export class ProceduresService {
         return this.http.get<any>(urlTask);
       }
     
+
+      formatDate(date: Date | string, format = 'dd/MM/yyyy'): string {
+        const dateObj = new Date(date);
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        return format.replace('dd', day).replace('MM', month).replace('yyyy', String(year));
+      }
 
 }

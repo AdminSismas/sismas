@@ -1,8 +1,8 @@
 // ANGULAR IMPORTS
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { Component, DestroyRef, inject, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { FormBuilder, UntypedFormControl,FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, UntypedFormControl,FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 // ANGULAR MATERIAL IMPORTS
@@ -37,7 +37,6 @@ import { TypeInformation } from 'src/app/apps/interfaces/content-info';
 import { ProceduresCollection } from 'src/app/apps/interfaces/procedures-progress.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { contentInfoProcedures } from 'src/app/apps/interfaces/content-info-procedures.model';
 import { PageProceduresData } from 'src/app/apps/interfaces/page-procedures-data.model';
 import { ProceduresService } from 'src/app/apps/services/procedures.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -47,6 +46,17 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { contentInfoProcedures } from 'src/app/apps/interfaces/content-info-procedures.model';
+import { EventEmitter } from '@angular/core';
+import { MatSelectModule } from '@angular/material/select';
+
+export interface HistoryListBasic {
+  nameList : string;
+  executionId : number;
+  bpmProcessCategory : string;
+  processName : string;
+  lastupdated_at : string;
+}
 
 @Component({
   selector: 'vex-historical-procedures-property',
@@ -84,7 +94,8 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
      NgClass,
      NgIf,
      InputComponent,
-     ReactiveFormsModule
+     ReactiveFormsModule,
+     MatSelectModule
   ],
   templateUrl: './historical-procedures.component.html',
   styleUrl: './historical-procedures.component.scss'
@@ -98,6 +109,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
    @Input() editable?: boolean;
    @Input() executionId: string | null | undefined = null;
    @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+   @Output() showListHistory = new EventEmitter<HistoryListBasic[]>();
 
    dataSource!: MatTableDataSource<ProceduresCollection>;
    searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -116,7 +128,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
   constructor(
       private readonly layoutService: VexLayoutService,
       private proceduresService: ProceduresService,
-       private alertSnakbar: MatSnackBar,
+       private alertSnakbar: MatSnackBar
     ) { }
 
     ngOnInit(): void {
@@ -127,12 +139,13 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
       .subscribe((value) => this.onFilterChange(value));
       this.defaultTableData();
     }
-
+    
     ngOnDestroy() {
-
+      
     }
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
+    isExpandPanel(expandedComponent: boolean): void {
+      if (expandedComponent) {
+      this.defaultTableData();
     }
   }
 
@@ -243,19 +256,21 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
       const formValue: PageProceduresData =  {
         page: this.page,
         size: this.pageSize,
-        beginAt: '13/01/2024',
+        beginAt: '',
         beginAtE: '',
-        executionCode: '0',
+        executionCode: this.baunitId != null ? this.baunitId : '0',
         individualNumber: '',
       };
-      
-      this.getDataFromProceduresService(formValue);
+      if(this.baunitId != null){
+
+        this.getDataFromProceduresService(formValue);
+      }
       }
 
 
      /* ------- Meth. Services ------- */
      getDataFromProceduresService(data:PageProceduresData) {
-      this.proceduresService.getFilterTableHistoryService(data)
+      this.proceduresService.getFilterHistoryService(data)
       .subscribe({
         next: (result: any) => {
             this.captureInformationSubscribe(result);
@@ -276,7 +291,26 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
   captureInformationSubscribe(data: InformationPegeable) {
       this.contentInformations = data; 
       this.captureInformationProceduresData(); 
+      this.proccessHistoryList(data);
+  }
+
+  proccessHistoryList(data: InformationPegeable): void {
+    if (data?.content.length > 1) {
+      const listHistory : HistoryListBasic[] = data.content.map((row: any) => ({
+        nameList:  row.executionId + ' - ' + row.bpmProcessCategory + ' - ' + row.processName +' - ' + this.transformDate(row.lastUpdateAt),
+        executionId: row.executionId,
+        bpmProcessCategory: row.bpmProcessCategory,
+        processName: row.processName,
+        lastupdated_at: this.transformDate(new Date(row.lastUpdateAt))
+      }));
+      this.showListHistory.emit(listHistory);
     }
+  
+  }
+
+  transformDate(date: Date): string {
+    return this.proceduresService.formatDate(date);
+  }
 
     captureInformationProceduresData() {
           let data: contentInfoProcedures[];

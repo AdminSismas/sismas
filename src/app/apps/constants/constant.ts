@@ -724,6 +724,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'informationZonesPropertyComponent'
   },
   {
+    label: 'Trámites Históricos',
+    fragment: 'historicalProceduresPropertyComponent'
+  },
+  {
     label: 'Fotos',
     fragment: 'photosComponent'
   },

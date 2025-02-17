@@ -156,14 +156,16 @@ export class InformationAddressesPropertyComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     const { currentValue: typeInformation } = changes['typeInformation'];
-    if (typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
-      this.pageSize = PAGE_SIZE;
-      this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
-      this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
-    } else {
-      this.pageSize = PAGE_SIZE;
-      this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
-      this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
+    if(typeInformation){
+      if (typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
+        this.pageSize = PAGE_SIZE;
+        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
+        this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
+      } else {
+        this.pageSize = PAGE_SIZE;
+        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
+        this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
+      }
     }
   }
 

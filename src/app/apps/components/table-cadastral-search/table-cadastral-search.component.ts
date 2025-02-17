@@ -236,11 +236,23 @@ export class TableCadastralSearchComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tituloPage'] && this.tituloPage) {
-      // this.tituloPage = this.tituloPage ;
-      this.titleAsing(this.tituloPage);
-      this.menuAsing(TITULO_PAGE_AVANZADA, this.tituloPage);
-      this.seeAction = false;
-      // this.validateEndPoint()
+      this.tituloPage = this.tituloPage;
+      if(this.tituloPage === TITULO_PAGE_CADASTRAL_DA){
+        this.titleAsing(this.tituloPage);
+        this.menuAsing(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
+        this.seeAction = false;
+      }else if(this.tituloPage === TITULO_PAGE_AVANZADA){
+        
+        this.titleAsing(this.tituloPage);
+        this.menuAsing(TITULO_PAGE_AVANZADA, this.tituloPage);
+        this.seeAction = false;
+        // this.validateEndPoint()
+      }else{
+        this.titleAsing(this.tituloPage);
+        this.menuAsing('Búsqueda avanzada', this.tituloPage);
+        this.seeAction = false;
+        this.seeActionHistory = false;
+      }
     }
   }
 
