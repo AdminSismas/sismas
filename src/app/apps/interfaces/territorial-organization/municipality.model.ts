@@ -8,10 +8,10 @@ export class Municipality {
 
 
   constructor(content?: any) {
-    this.fkDivpolLvl1Code = content.fkDivpolLvl1Code;
-    this.divpolLvl2Code = content.divpolLvl2Code;
-    this.divpolLvl2Name = content.divpolLvl2Name;
-    this.divpolLvl2SecCode = content.divpolLvl2SecCode;
+    this.fkDivpolLvl1Code = content?.fkDivpolLvl1Code || '';
+    this.divpolLvl2Code = content?.divpolLvl2Code || '';
+    this.divpolLvl2Name = content?.divpolLvl2Name || '';
+    this.divpolLvl2SecCode = content?.divpolLvl2SecCode || '';
   }
 
 

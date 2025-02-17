@@ -1,11 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  HostBinding,
-  inject,
-  OnInit
-} from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostBinding, inject, OnInit } from '@angular/core';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { VexConfigService } from '@vex/config/vex-config.service';
 import { filter, map, startWith, switchMap } from 'rxjs/operators';
@@ -15,11 +8,10 @@ import { MegaMenuComponent } from './mega-menu/mega-menu.component';
 import { Observable, of } from 'rxjs';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { ToolbarUserComponent } from './toolbar-user/toolbar-user.component';
-import { ToolbarNotificationsComponent } from './toolbar-notifications/toolbar-notifications.component';
 import { NavigationItemComponent } from '../navigation/navigation-item/navigation-item.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
@@ -37,10 +29,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     NgIf,
     RouterLink,
     MatMenuModule,
-    NgClass,
     NgFor,
     NavigationItemComponent,
-    ToolbarNotificationsComponent,
     ToolbarUserComponent,
     NavigationComponent,
     AsyncPipe

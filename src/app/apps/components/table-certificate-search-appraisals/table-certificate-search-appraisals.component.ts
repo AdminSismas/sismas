@@ -47,7 +47,7 @@ import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../interfaces/content-info-schema';
-import { GeographicViewerComponent } from '../geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from '../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../environments/environments';
 import { SendInformationRegisterService } from '../../services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from '../../services/general/validate-information-baunit.service';
@@ -63,7 +63,7 @@ import { ViewCertificateManagementComponent } from '../view-certificate-manageme
 
 
 @Component({
-  selector: 'vex-table-certificate-search-appraisals',	
+  selector: 'vex-table-certificate-search-appraisals',
   templateUrl: './table-certificate-search-appraisals.component.html',
   styleUrls: ['./table-certificate-search-appraisals.component.scss'],
   animations: [fadeInUp400ms, stagger40ms],
@@ -126,7 +126,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
 
   @Input() tituloPage?:string = '';
   @Input() rulePage?:string = '';
-    
+
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -135,7 +135,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
 
   constructor(
     private router: Router,
-    
+
     private bpmProcessService: BpmProcessService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -151,7 +151,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
   }
 
   dialogRef!: MatDialogRef<ViewFileDocumentManagementComponent>;
-  
+
   detectCurrentUrl(): void {
     const currentUrl = this.router.url;
     console.log('Current URL:', currentUrl);
@@ -223,7 +223,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
         this.seeAction = false;
       }
     }
-  
+
   titleAsing(value: string): void {
     this.titleArray.push(value);
   }
@@ -571,8 +571,8 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
         data: {
           baunitID: data.baunitIdE,
           typeCertificate: typeCertificate
-          
-        
+
+
         }
       });
 

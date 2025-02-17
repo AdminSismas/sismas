@@ -68,7 +68,7 @@ import {
 } from '../../constants/constant';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../interfaces/content-info-schema';
-import { GeographicViewerComponent } from '../geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from '../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../environments/environments';
 import { SendInformationRegisterService } from '../../services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from '../../services/general/validate-information-baunit.service';
@@ -121,7 +121,7 @@ export class TableCadastralSearchComponent
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
   user: DecodeJwt | null = null;
-  setNewEndPoint = false;
+  setNewEndPoint: boolean = false;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -242,7 +242,7 @@ export class TableCadastralSearchComponent
         this.menuAsing(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
         this.seeAction = false;
       }else if(this.tituloPage === TITULO_PAGE_AVANZADA){
-        
+
         this.titleAsing(this.tituloPage);
         this.menuAsing(TITULO_PAGE_AVANZADA, this.tituloPage);
         this.seeAction = false;
@@ -310,7 +310,7 @@ export class TableCadastralSearchComponent
       })
       .afterClosed();
     }else{
-      
+
       this.dialog
         .open(LayoutCardCadastralInformationPropertyComponentComponent, {
           ...MODAL_LARGE,

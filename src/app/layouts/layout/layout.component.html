@@ -22,17 +22,20 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="vex-layout-sidenav-content vex-layout-sidenav-content-custom">
-      <!-- <vex-toolbar [class.dark]="config.layout === 'vertical'" class="vex-toolbar"></vex-toolbar> -->
-      <main class="vex-layout-content vex-layout-content-custom">
+      <vex-toolbar *ngIf="config.toolbar.visible" [class.dark]="config.layout === 'vertical'" class="vex-toolbar"></vex-toolbar>
+
+      <main class="vex-layout-content vex-layout-content-custom"
+            [class.mt-0]="!config.toolbar.visible"
+            [ngClass]="!config.toolbar.visible ? ' vex-layout-content-mt' : ''"
+            >
         <router-outlet></router-outlet>
       </main>
-
-<!--      <vex-footer *ngIf="config.footer.visible" class="vex-footer"></vex-footer>-->
+      <vex-footer *ngIf="config.footer.visible" class="vex-footer"></vex-footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
-
-  <!--<vex-config-panel-toggle
-    (openConfig)="configpanel.open()"></vex-config-panel-toggle>-->
+  <vex-config-panel-toggle
+    *ngIf="config.configPanelToggle.visible"
+    (openConfig)="configpanel.open()"></vex-config-panel-toggle>
 
   <!-- CONFIGPANEL -->
   <vex-sidebar

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GeographicViewerComponent
-} from '../../../../../src/app/apps/components/geographic-viewer/geographic-viewer.component';
+} from '../../../../../../src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 
 
 describe(GeographicViewerComponent.name, () => {

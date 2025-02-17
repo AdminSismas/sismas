@@ -9,6 +9,7 @@
   [class.vex-layout-sidenav-collapsed]="sidenavCollapsed$ | async"
   [class.vex-layout-toolbar-fixed]="config.toolbar.fixed"
   [class.vex-layout-vertical]="config.layout === 'vertical'"
+  [class.layout-container]="config.toolbar.visible"
   class="vex-base-layout-container">
   <ng-content></ng-content>
 </div>

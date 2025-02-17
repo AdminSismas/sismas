@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
 import { VexConfigService } from '@vex/config/vex-config.service';
 import { VexSidebarComponent } from '@vex/components/vex-sidebar/vex-sidebar.component';
 
-import { AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { FooterComponent } from '../components/footer/footer.component';
@@ -42,7 +42,8 @@ import { VexConfig } from '@vex/config/vex-config.interface';
     NgTemplateOutlet,
     RouterOutlet,
     SearchComponent,
-    VexProgressBarComponent
+    VexProgressBarComponent,
+    NgClass
   ],
   standalone: true
 })
