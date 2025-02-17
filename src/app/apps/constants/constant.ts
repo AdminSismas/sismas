@@ -92,7 +92,7 @@ export const EVIRONMENT_CC_DIRECCION = '/ccDireccion';
 export const ROL_GUEST = 'GUEST';
 export const ROL_USER_READ = 'USER_READ';
 
-export const EVIRONMENT_RETIRO_IMG = 'assets/img/logo/logo_El_retiro.png';
+export const ENVIRONMENT_RETIRO_IMG = 'assets/img/logo/logo_El_retiro.png';
 export const NAME_LOGO_IMG_SAN_VICENTE = 'logo_san_vicente.png';
 
 
@@ -988,3 +988,5 @@ export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'
 export const MODAL_LARGE ={ maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM ={ maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
 export const MODAL_SMALL ={ maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
+export const IDLE_TIME_MINUTES = 10;
+export const TIMEOUT_TIME_MINUTES = 15;
