@@ -25,6 +25,8 @@ import { CommentsService } from '../../services/comments.service';
 import { PageCommentsData } from '../../interfaces/page-comments-data.model';
 import { InformationPegeable } from '../../interfaces/information-pegeable.model';
 import { contentInfoComments } from '../../interfaces/content-info-comments.model';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { DecodeJwt } from '../../interfaces/user-details/user.model';
 
 
 @Component({
@@ -56,6 +58,7 @@ export class CommentsComponent implements OnInit {
   NumSize = 5;
   totalElements = 0;
   pageSizeOptions: number[] = [5, 10, 20, 30];
+  user: DecodeJwt | null = null;
 
   executionId = "38";
   body: contentInfoComments = {
@@ -76,6 +79,7 @@ export class CommentsComponent implements OnInit {
     private commentsService: CommentsService,
     private readonly layoutService: VexLayoutService,
     private alertSnakbar: MatSnackBar,
+    private userService: UserService,
     private fb: FormBuilder ) {
       this.form = this.fb.group({
         newCommentText: [''],
@@ -85,6 +89,7 @@ export class CommentsComponent implements OnInit {
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.getDataFromDocumentManagementService();
+    this.user = this.userService.getUser();
   }
 
 
