@@ -27,9 +27,13 @@
                                 {{ comment.updatedAt | date:'dd/MM/yyyy' }}
                                 </h5>
                             </div>
-                            <button  mat-icon-button  matIconSuffix type="button" (click)="delelteDataCommentService(comment.commentId ?? 0)" class="rounded-full relative hover:bg-red-200 z-10 mx-6">
-                                <mat-icon class="text-red-500" svgIcon="mat:delete"></mat-icon>
-                            </button>
+                            @if(user && user.sub && user.sub === comment.userName){
+                            
+                                <button  mat-icon-button  matIconSuffix type="button" (click)="delelteDataCommentService(comment.commentId ?? 0)" class="rounded-full relative hover:bg-red-200 z-10 mx-6">
+                                    <mat-icon class="text-red-500" svgIcon="mat:delete"></mat-icon>
+                                </button>
+
+                            }
                         </div>
 
                         <p class="m-0 mt-2 pl-11 caption text-secondary" style="white-space: pre-wrap;">{{ comment.commentText }}</p>

@@ -53,6 +53,26 @@
     @stagger
     class="max-w-full w-10/12 flex flex-col gap-6"
   >
+  @if(schema === 'hist' && seeHisDropdown) {
+    <form [formGroup]="form" class="max-w-full w-10/12 flex flex-col gap-6">
+      <mat-form-field class="sm:ml-2 sm:mr-2 flex-1" >
+        <mat-label>Filtro de históricos</mat-label>
+        <mat-select formControlName="history" (selectionChange)="updateContextComponent()"
+        >
+          @for (
+            option of listHistoryTemp;
+            track option.executionId
+          ) {
+            <mat-option [value]="option">
+              {{ option.nameList }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+  
+    </form>
+
+  }
     <vex-basic-property-information
       #basicAdministrativeUnitInformation{{schema}}
       [id]="'basicAdministrativeUnitInformation' + schema"
@@ -161,19 +181,22 @@
       [schema]="schema"
       [executionId]="executionId"
       [typeInformation]="typeInformation"
-      [editable]="!editable.ZON"
+      [editable]="editable.ZON"
       [divPolLv1]="divPolLv1"
       [divPolLv2]="divPolLv2"
       @fadeInUp
     ></vex-information-zones-property
     >
     <vex-historical-procedures-property
-    [id]="'HistoricalProceduresPropertyComponent' + schema"
+    [id]="'historicalProceduresPropertyComponent' + schema"
+    #historicalProceduresPropertyComponent{{schema}}
     [expandedComponent]="false"
     [baunitId]="baunitId"
     [schema]="schema"
     [executionId]="executionId"
+    @fadeInUp
     [typeInformation]="typeInformation"
+    (showListHistory)="showListHistory($event)"
     ></vex-historical-procedures-property>
     @if (!showRulesPage) {
       <vex-photos

@@ -29,6 +29,8 @@
                 {{ comment.updatedAt | date: "dd/MM/yyyy hh:mm:ss a" }}
               </h5>
             </div>
+
+            @if(user && user.sub && user.sub === comment.userName){
             <button
               mat-icon-button
               matIconSuffix
@@ -41,6 +43,7 @@
                 svgIcon="mat:delete"
               ></mat-icon>
             </button>
+          }
           </div>
 
           <p

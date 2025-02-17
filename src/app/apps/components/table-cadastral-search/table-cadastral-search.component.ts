@@ -131,7 +131,7 @@ export class TableCadastralSearchComponent
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   titleArray: string[] = ['Mi trabajo'];
   titleMenu = 'Búsqueda avanzada';
-  principaltitleMenu = 'Búsqueda avanzada';
+  principalTitleMenu = 'Búsqueda avanzada';
   seeAction = true;
   seeActionHistory = true;
 
@@ -164,7 +164,7 @@ export class TableCadastralSearchComponent
     private baunitService: ValidateInformationBaunitService,
     private userService: UserService
   ) {
-    console.log('TableCadastralSearchComponent , Configuracion');
+    console.log('TableCadastralSearchComponent , Configuración');
     this.detectCurrentUrl();
   }
 
@@ -256,22 +256,21 @@ export class TableCadastralSearchComponent
     }
   }
 
-  validateEndPoint(){
-    if(this.tituloPage === INFORMATION_HISTORICAL){
+  validateEndPoint() {
+    if (this.tituloPage === INFORMATION_HISTORICAL) {
       this.setNewEndPoint = true;
     }
   }
 
-  searHistoricalData(data: SearchData,value:string): void {
+  searHistoricalData(data: SearchData, value: string): void {
     console.log(data);
-    this.baunitService.historiAdvancedSearch(this.generateObjectPageSearchData(data),value)
-    .subscribe(value=>{
-      console.log(value);
-      this.captureInformationSubscribe(value);
-    });
+    this.baunitService
+      .historiAdvancedSearch(this.generateObjectPageSearchData(data), value)
+      .subscribe((value) => {
+        console.log(value);
+        this.captureInformationSubscribe(value);
+      });
   }
-
-
 
   titleAsing(value: string): void {
     this.titleArray.push(value);
@@ -279,7 +278,7 @@ export class TableCadastralSearchComponent
 
   menuAsing(title: string, principal: string): void {
     this.titleMenu = title;
-    this.principaltitleMenu = principal;
+    this.principalTitleMenu = principal;
   }
 
   openGeographicViewerMain(data: BaunitHead): void {
@@ -561,10 +560,10 @@ export class TableCadastralSearchComponent
       .subscribe((value) => {
         this.captureInformationSubscribe(value);
       });
-      // if(this.setNewEndPoint){
-      //     this.searHistoricalData(searData,data)
-      // }else{
-      // }
+    // if(this.setNewEndPoint){
+    //     this.searHistoricalData(searData,data)
+    // }else{
+    // }
   }
 
   onFilterChange(value: string): void {
@@ -639,11 +638,7 @@ export class TableCadastralSearchComponent
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 400) {
-          this.snackbar.open(
-            error.error,
-            'Aceptar',
-            { duration: 10000 }
-          );
+          this.snackbar.open(error.error, 'Aceptar', { duration: 10000 });
           return;
         }
         this.snackbar.open('Error al radicar', 'Aceptar', { duration: 10000 });

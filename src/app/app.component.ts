@@ -9,8 +9,9 @@ import { TitleService } from './apps/services/tittle.service';
   imports: [RouterOutlet]
 })
 export class AppComponent implements OnInit {
-  constructor(private titleService: TitleService) {}
+  
 
+  constructor(private titleService: TitleService) {}
 
   ngOnInit(): void {
     this.titleService.setTitle();

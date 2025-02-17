@@ -17,6 +17,7 @@ export interface Baunit {
   propertyRegistryNumber:  string;
   cadastralNumber:         string;
   cadastralArea:           number;
+  cadastralAreaUnitbuilt:  number;
   cadastralRegistryNumber: null;
   domBaunitCondition:      DOMBaunitCondition;
   domBaunitEconoDesti:     DOMBaunitEconoDesti;

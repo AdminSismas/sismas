@@ -23,12 +23,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { environment } from '../../../../../environments/environments';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import {
-  DecodeJwt,
-} from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
-import { EVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/constant';
+import {
+  ENVIRONMENT_RETIRO_IMG,
+  NAME_LOGO_IMG_SAN_VICENTE
+} from 'src/app/apps/constants/constant';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
 
 @Component({
   selector: 'vex-login',
@@ -54,11 +57,14 @@ import { EVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/c
 export class LoginComponent {
   videoPath: string = environment.video;
   logoPath: string = environment.logo;
-  logoPathAlter: string = '';
+  logoPathAlter = '';
   form!: FormGroup;
   inputType = 'password';
   visible = false;
   seeLogoRetiro = false;
+  idleState = 'NOT_STARTED';
+  countdown?: number | null;
+  lastPing?: Date | null;
 
   constructor(
     private router: Router,
@@ -67,7 +73,7 @@ export class LoginComponent {
     private snackbar: MatSnackBar,
     private authService: AuthService,
     private userService: UserService,
-    private navigationLoaderService: NavigationLoaderService
+    private navigationLoaderService: NavigationLoaderService,
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -75,20 +81,23 @@ export class LoginComponent {
     });
 
     this.findLogo(this.logoPath);
+    
+    
   }
+  
 
   send() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
-  
+
       this.authService.login(email, password).subscribe({
         next: (response) => {
           if (response && response.token) {
             this.authService.saveToken(response.token);
-  
+
             const user: DecodeJwt = jwtDecode(response.token);
             this.userService.setUser(user);
-  
+
             this.navigationLoaderService.loadInformationNavigation(user.role);
             this.navigationLoaderService.startCountLoop();
 
@@ -101,24 +110,24 @@ export class LoginComponent {
                   'Credenciales incorrectas. Intenta nuevamente.',
                   'Error',
                   {
-                    duration: 5000,
+                    duration: 5000
                   }
                 );
-              },
+              }
             });
 
-  
             const redirectRoute =
               user.role === 'GUEST'
                 ? environment.myWork_cadastralSearchDa
                 : environment.myWork_cadastralSearch;
-  
+
             this.router.navigate([redirectRoute]).then(() => {
+              this.authService.resetIdle();
               this.snackbar.open(
                 `Bienvenido, ${user.role === 'GUEST' ? 'invitado' : 'usuario'} ;)`,
                 'Gracias',
                 {
-                  duration: 5000,
+                  duration: 5000
                 }
               );
             });
@@ -127,7 +136,7 @@ export class LoginComponent {
               'Credenciales incorrectas. Intenta nuevamente.',
               'Error',
               {
-                duration: 5000,
+                duration: 5000
               }
             );
           }
@@ -137,22 +146,21 @@ export class LoginComponent {
             'Credenciales incorrectas. Intenta nuevamente.',
             'Error',
             {
-              duration: 5000,
+              duration: 5000
             }
           );
-        },
+        }
       });
     } else {
       this.snackbar.open(
         'Por favor, complete los campos correctamente.',
         'Error',
         {
-          duration: 10000,
+          duration: 10000
         }
       );
     }
   }
-  
 
   toggleVisibility() {
     if (this.visible) {
@@ -170,7 +178,7 @@ export class LoginComponent {
     const lastSegment = this.getLastSegment(logo);
     if (lastSegment === NAME_LOGO_IMG_SAN_VICENTE) {
       this.seeLogoRetiro = true;
-      this.logoPathAlter = EVIRONMENT_RETIRO_IMG;
+      this.logoPathAlter = ENVIRONMENT_RETIRO_IMG;
     } else {
       this.seeLogoRetiro = false;
     }
@@ -179,5 +187,4 @@ export class LoginComponent {
   getLastSegment(path: string): string {
     return path.substring(path.lastIndexOf('/') + 1);
   }
-
 }

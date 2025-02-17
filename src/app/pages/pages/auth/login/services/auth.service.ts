@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { UserService } from './user.service';
 import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from 'src/app/apps/constants/constant';
 
 
 @Injectable({
@@ -17,8 +20,41 @@ export class AuthService {
   private _token: string | null = null;
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
   private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
+  private lastPing?: Date | null;
 
-  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
+  constructor(
+    private http: HttpClient, private router: Router,
+    private userService: UserService,
+    private idle: Idle,
+    snackbar: MatSnackBar,
+  ) { 
+    idle.setIdle(IDLE_TIME_MINUTES * 60);
+    idle.setTimeout(TIMEOUT_TIME_MINUTES * 60);
+    idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+    // Do something when the user becomes idle
+    idle.onIdleStart.subscribe(() => {
+      const timeout = TIMEOUT_TIME_MINUTES - IDLE_TIME_MINUTES;
+      let wordTime = 'minutos';
+      if (timeout < 2) {
+        wordTime = 'minuto';
+      }
+      snackbar.open(`En ${Math.round(timeout)} ${wordTime} se cerrará la sesión por inactividad`, 'Cerrar', {
+        duration: 10000
+      });
+    });
+
+    // Do something when the user becomes active again
+    idle.onIdleEnd.subscribe(() => {
+      console.log(new Date());
+    });
+
+    // Do something when the user has timed out
+    idle.onTimeout.subscribe(() => {
+      console.log(new Date());
+      this.logout();
+    });
+  }
 
   // Obtener el token
   public get token(): string | null {
@@ -31,6 +67,12 @@ export class AuthService {
       return this._token;
     }
     return null;
+  }
+
+  resetIdle() {
+    this.idle.stop();
+    this.idle.watch();
+    this.lastPing = null;
   }
 
   // Guardar el token
@@ -65,6 +107,9 @@ export class AuthService {
 
   // Verificar si está autenticado
   isAuthenticated(): boolean {
+    if (sessionStorage.getItem('token') !== null) {
+      this.resetIdle();
+    }
     return sessionStorage.getItem('token') !== null;
   }
 
@@ -72,6 +117,8 @@ export class AuthService {
   logout(): void {
     this._token = null;
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+    this.idle.stop();
     this.router.navigate(['/login']).then(() => {
       window.history.pushState(null, '', window.location.href);
       window.onpopstate = function () {
@@ -113,4 +160,6 @@ export class AuthService {
     console.error('Token no disponible o no decodificado');
     return null;
   }
+
+
 }
