@@ -18,6 +18,7 @@
       <!-- Tabla -->
       <ng-container *ngSwitchCase="'table'">
         <vex-table-certificate-search-appraisals
+          [certificateType]="certificate.type"
           (search)="onSearch($event)" 
           (viewDocument)="onViewDocument($event)" 
           (viewProperty)="onViewProperty($event)">
