@@ -26,6 +26,7 @@ import { saveAs } from 'file-saver';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { MatDividerModule } from '@angular/material/divider';
+import * as FileSaver from 'file-saver';
 
 
 @Component({
