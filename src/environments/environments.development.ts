@@ -3,6 +3,11 @@ export const environment = {
     area: "area",
     extentByCodigo: "extentByCodigo",
     extentByCodigoData: "extentByCodigoData",
+    generalMap: "/mapaGeneral",
+    geoTemporal: "/geotemporal",
+    geoHistoria: "/geohistoria",
+    dataOpen: "/datosAbiertos/",
+    get: "/get/",
     value: "/accessGeo/"
   },
   active: "active",
