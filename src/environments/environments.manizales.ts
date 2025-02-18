@@ -95,6 +95,7 @@ export const environment = {
   individualNumber: "/individual",
   individualTypeNumber: "/individual/findByNumber",
   initiate_filing_procedure: "/bpm/initiateFilingProcedure/",
+  loading_logo: "assets/img/logo/manizales.gif",
   logo: "assets/img/logo/logo_manizales.png",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   myWork_cadastralSearch: "/myWork/cadastralSearch",
