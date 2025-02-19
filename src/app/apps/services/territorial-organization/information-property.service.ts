@@ -68,12 +68,17 @@ export class InformationPropertyService {
       );
   }
 
-  getBasicInformationPropertyAddresses(    
-    id: string
-  ): Observable<BasicInformationAddress[]> {
+  getBasicInformationPropertyAddresses( executionId: string | null | undefined, baunitId: string | null | undefined,
+    schema:string,
+    page: number,pageSize: number
+     ): Observable<BasicInformationAddress[]> {
+  
     let params: HttpParams = new HttpParams();
-    params = params.append('baunitId', `${id}`);
-    const url = `${this.basic_url}${envi.basicAddress}`;
+   
+    // {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}
+    const url = `${this.basic_url}/ccDireccion/${schema}/${executionId}/${baunitId}?page=${page}&size=${pageSize}`;
+    // const url = `${this.basic_url}${envi.basicAddress}`;
+
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );

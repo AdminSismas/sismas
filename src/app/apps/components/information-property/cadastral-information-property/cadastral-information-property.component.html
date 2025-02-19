@@ -81,6 +81,7 @@
       [executionId]="executionId"
       [typeInformation]="typeInformation"
       [editable]="editable.GNR"
+      [expandedComponent]="expand_tap_property_information"
       (propertyRegistryOffice)="propertyRegistryOffice = $event"
       (propertyRegistryNumber)="propertyRegistryNumber = $event"
       @fadeInUp
@@ -89,7 +90,7 @@
       <vex-information-unit-property
         #unitPropertyInformationComponent{{schema}}
         [id]="'informationUnitProperty' + schema"
-        [expandedComponent]="false"
+        [expandedComponent]="expand_tap"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
@@ -100,7 +101,7 @@
     <vex-administrative-sources
       #administrativeSourcesComponent{{schema}}
       [id]="'administrativeSources' + schema"
-      [expandedComponent]="false"
+      [expandedComponent]="expand_tap"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
@@ -113,7 +114,7 @@
       <vex-information-property-owners
         [id]="'dataInformationPropertyOwners' + schema"
         #informationPropertyOwnersComponent{{schema}}
-        [expandedComponent]="false"
+        [expandedComponent]="expand_tap"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
@@ -128,12 +129,13 @@
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
+        [expandedComponent]="expand_tap"
       ></super-notariado-property>
     }
     <vex-information-addresses-property
       [id]="'basicInformationpropertyAddresses' + schema"
       #propertyAddressesComponent{{schema}}
-      [expandedComponent]="false"
+      [expandedComponent]="expand_tap"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
@@ -144,7 +146,7 @@
     <vex-information-constructions-property
       [id]="'dataInformationConstructionsPropertyComponent' + schema"
       #informationConstructionsPropertyComponent{{schema}}
-      [expandedComponent]="false"
+      [expandedComponent]="expand_tap"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
@@ -155,7 +157,7 @@
     <vex-information-adjacent-property
     [id]="'dataInformationAdjacentPropertyComponent' + schema"
     #informationAdjacentPropertyComponent{{schema}}
-    [expandedComponent]="false"
+    [expandedComponent]="expand_tap"
     [baunitId]="baunitId"
     [schema]="schema"
     [executionId]="executionId"
@@ -166,7 +168,7 @@
     <vex-property-appraisal-information
       [id]="'dataIpropertyAppraisalInformationComponent' + schema"
       #propertyAppraisalInformationComponent{{schema}}
-      [expandedComponent]="false"
+      [expandedComponent]="expand_tap"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
@@ -176,7 +178,7 @@
     <vex-information-zones-property
       [id]="'informationZonesPropertyComponent' + schema"
       #informationZonesPropertyComponent{{schema}}
-      [expandedComponent]="false"
+      [expandedComponent]="expand_tap"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
@@ -202,7 +204,7 @@
       <vex-photos
         #photosComponent{{schema}}
         [id]="'photos' + schema"
-        [expandedComponent]="false"
+        [expandedComponent]="expand_tap"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
@@ -215,7 +217,7 @@
       <vex-alerts
         #alertsComponent{{schema}}
         [id]="'alerts' + schema"
-        [expandedComponent]="false"
+        [expandedComponent]="expand_tap"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"

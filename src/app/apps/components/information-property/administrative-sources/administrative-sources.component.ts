@@ -102,8 +102,18 @@ export class AdministrativeSourcesComponent implements OnInit {
         .subscribe((data) => {
           this.dataSource.data = data;
         });
-    }
-  }
+    }else if(this.schema === 'hist') {
+
+      this.administrativeSourcesService
+        .getAdministrativeSourcesHist(
+          this.baunitId as string,
+          this.executionId as string
+        )
+        .subscribe((data) => {
+          this.dataSource.data = data;
+        });
+     }
+  } 
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {

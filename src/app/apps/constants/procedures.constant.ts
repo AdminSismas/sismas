@@ -65,6 +65,13 @@ export const TABLE_COLUMN_PROPERTIES_HISTORY: TableColumn<contentInfoProcedures>
     //     cssClasses: ['text-secondary']
     //   },
     {
+        label: 'Versión',
+        property: 'executionId',
+        type: 'text',
+        visible: true,
+        cssClasses: ['font-medium']
+    },
+    {
         label: 'Radicado',
         property: 'executionCode',
         type: 'text',

@@ -186,6 +186,9 @@ export class CadastralInformationPropertyComponent implements OnInit {
   public viewProperties = false;
   public showRulesPage = false;
   public seeHisDropdown = false;
+  public expand_tap_property_information = true;
+  public expand_tap = false;
+  
   public listHistoryTemp: HistoryListBasic[] = [];
      form!: FormGroup;
 
@@ -246,7 +249,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
       this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
     }
-    
+
   }
   proccessRulePage() {
     if(this.rulePage) {
@@ -276,15 +279,38 @@ export class CadastralInformationPropertyComponent implements OnInit {
       (item) => item.label !== labelToRemove
     );
   }
+  
+  spandTapSet(sedTap: boolean) {
+    this.expand_tap = sedTap;
+    return this.expand_tap;
+  }
 
   showListHistory(list:HistoryListBasic[]){
     this.listHistoryTemp = list;
-    this.seeHisDropdown = true;
+    if(this.listHistoryTemp.length > 0){
+      this.seeHisDropdown = true;
+      this.form.get('history')?.setValue(this.listHistoryTemp[0]);
+      this.updateContextComponent();  
+      this.spandTapSet(false);
+      if(this.schema === 'hist') {
+        this.expand_tap_property_information = false; // Expand the tap
+      }
+
+    }
   }
 
   updateContextComponent(){
-    this.executionId = this.form.get('history')?.value.executionId;
+    this.executionId = this.form.get('history')?.value?.executionId;
+    if(this.executionId){
 
+      this.spandTapSet(true);
+      this.expand_tap_property_information = true; // Expand the tap
+      setTimeout(() => {
+        this.spandTapSet(false);
+        this.expand_tap_property_information = false; // Expand the tap
+      }, 1300);
+
+    }
   }
 
   scrollTo(elementName: string) {
