@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProcessCardComponent } from './process-card.component';
+import { WorkHistoricalComponent } from './work-historical.component';
 
-describe('ProcessCardComponent', () => {
-  let component: ProcessCardComponent;
-  let fixture: ComponentFixture<ProcessCardComponent>;
+describe('WorkHistoricalComponent', () => {
+  let component: WorkHistoricalComponent;
+  let fixture: ComponentFixture<WorkHistoricalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProcessCardComponent]
+      imports: [WorkHistoricalComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProcessCardComponent);
+    fixture = TestBed.createComponent(WorkHistoricalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

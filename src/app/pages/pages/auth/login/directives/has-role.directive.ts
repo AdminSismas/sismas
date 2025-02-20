@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { UserService } from './user.service';
+import { UserService } from '../services/user.service';
 
 @Directive({
   selector: '[vexHasRole]',
@@ -7,20 +7,20 @@ import { UserService } from './user.service';
 })
 export class HasRoleDirective {
   constructor(
-    private templateRef: TemplateRef<any>,  
-    private viewContainer: ViewContainerRef,  
-    private userService: UserService  
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private userService: UserService
   ) {}
 
 
   @Input() set appHasRole(roles: string[]) {
-    const user = this.userService.getUser();  
+    const user = this.userService.getUser();
 
     // Si el usuario tiene un rol y ese rol está incluido en los roles permitidos
     if (user && roles.includes(user.role)) {
-      this.viewContainer.createEmbeddedView(this.templateRef);  
+      this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
-      this.viewContainer.clear();  
+      this.viewContainer.clear();
     }
   }
 }
