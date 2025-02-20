@@ -30,8 +30,6 @@ import {
   ENVIRONMENT_RETIRO_IMG,
   NAME_LOGO_IMG_SAN_VICENTE
 } from 'src/app/apps/constants/constant';
-import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
-import { Keepalive } from '@ng-idle/keepalive';
 
 @Component({
   selector: 'vex-login',
@@ -99,7 +97,6 @@ export class LoginComponent {
             this.userService.setUser(user);
 
             this.navigationLoaderService.loadInformationNavigation(user.role);
-            this.navigationLoaderService.startCountLoop();
 
             this.userService.getUserInfo(user.sub).subscribe({
               next: (res) => {

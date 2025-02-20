@@ -214,7 +214,7 @@ export class FilterCertificateSearchComponent implements OnInit {
     const fullName = this.form.get('firstName')?.value;
     const typeCertificate = 'CERT_POSEER_BIEN_TAQUILLA';
   
-  
+    this.dialog.closeAll();
   
     const dialogRef = this.dialog.open(ViewCertificateManagementComponent, {
       ...MODAL_LARGE,

@@ -5,7 +5,7 @@ import {
   Input,
   SecurityContext
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import {
   DomSanitizer,
@@ -29,6 +29,7 @@ import { MODEL_METADATA_PROPERTIES } from '../../constants/attachment.constant';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'vex-view-certificate-management',
@@ -45,11 +46,13 @@ import { Subscription } from 'rxjs';
     NgFor,
     NgIf,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule,
+  
   
   ]
 })
-export class ViewCertificateManagementComponent implements OnInit {
+export class ViewCertificateManagementComponent {
 
   isLoading: boolean = false; 
   errorMessage: string = '';
@@ -57,6 +60,13 @@ export class ViewCertificateManagementComponent implements OnInit {
   @Input() public id = '';
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
+  isVerified: boolean = false;  
+  paymentForm: FormGroup;
+  selectedFile: File | null = null;
+  currentTitle: string = 'Validación de pago'; 
+  currentIcon: string = 'mat:verified';  
+  showWarning: boolean = false;
+  successMessage: string = '';
 
   typeCertificate: string;
   documentNumber: string;
@@ -72,10 +82,14 @@ export class ViewCertificateManagementComponent implements OnInit {
   basic_url: string | undefined;
   basic_url_appraisals: string | undefined;
 
+
+  private validReferences = ['123456', '987654', '456789'];
+
   constructor(
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     public dialogRef: MatDialogRef<ViewCertificateManagementComponent>,
+    private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       documentNumber: string;
@@ -96,14 +110,49 @@ export class ViewCertificateManagementComponent implements OnInit {
     } else {
       this.basic_url_appraisals = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}/${this.baunitID}`;
     }
+
+    this.paymentForm = this.fb.group({
+      reference: [''],  
+    });
   
   }
 
-  ngOnInit(): void {
-    //this.pdfUrl = this.urlPdfViewer();
-    //this.loadPdf();
-    this.loadPdf();
+  validatePayment() {
+    const reference = this.paymentForm.value.reference;
+
+    if (!reference && !this.selectedFile) {
+      this.errorMessage = 'Debes ingresar un número de referencia o subir un comprobante.';
+      this.isErrorMessage = true;
+      setTimeout(() => (this.errorMessage = ''), 3000);
+      return;
+    }
+
+  
+    if (this.validReferences.includes(reference) || this.selectedFile) {
+      this.errorMessage = 'Validación exitosa.';
+      this.isErrorMessage = false;
+      this.isVerified = true;
+
+
+      this.currentTitle = 'Detalles del Certificado';
+      this.currentIcon = 'mat:insert_drive_file';
+
+
+      this.loadPdf();
+
+      setTimeout(() => (this.errorMessage = ''), 3000);
+    } else {
+      this.errorMessage = 'Número de referencia o comprobante inválido.';
+      this.isErrorMessage = true;
+      setTimeout(() => (this.errorMessage = ''), 3000);
+    }
   }
+  
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
 
   getFileType(fileName: string): string {
     const extension = fileName.split('.').pop()?.toLowerCase();

@@ -13,9 +13,9 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { InConstructionComponent } from 'src/app/apps/components/in-construction/in-construction.component';
-import { PAGE_OPTION__10_20_50_100 } from 'src/app/apps/constants/constant';
-import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
-import { Content } from 'src/app/apps/interfaces/users/user';
+// import { PAGE_OPTION__10_20_50_100 } from 'src/app/apps/constants/constant';
+// import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
+// import { Content } from 'src/app/apps/interfaces/users/user';
 import { DownloadReportsService } from './services/download-reports.service';
 import { DownloadReport } from './interfaces/report.interface';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,6 +26,7 @@ import { saveAs } from 'file-saver';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { MatDividerModule } from '@angular/material/divider';
+// import * as FileSaver from 'file-saver';
 
 
 @Component({

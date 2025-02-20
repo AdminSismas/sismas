@@ -9,6 +9,19 @@
 <mat-divider class="text-border"></mat-divider>
   <mat-dialog-content>
 
+    <div class="header-container m-2">
+     
+        <button
+        mat-raised-button
+        color="primary"
+          type="button"
+          (click)="newFolder(dataSource)"
+        >
+          Nuevo
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+    
+    </div>
   <div class="card overflow-auto">
     <div
       class="bg-app-bar mt-4 px-4 h-16 border-b sticky left-0 flex items-center"

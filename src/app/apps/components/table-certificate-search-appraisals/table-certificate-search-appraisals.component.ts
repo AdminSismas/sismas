@@ -562,6 +562,8 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
 
     console.log('Data:', data.baunitIdE);
 
+    this.dialog.closeAll();
+    
     this.dialog
       .open(ViewCertificateManagementComponent, {
         minWidth: '370px',

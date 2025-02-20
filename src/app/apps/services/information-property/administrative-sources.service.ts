@@ -39,6 +39,18 @@ export class AdministrativeSourcesService {
       );
   }
 
+  getAdministrativeSourcesHist(baunitId: string, executionId: string): Observable<AdministrativeSource[]> {
+    const url = `${this.base_url}hist/${executionId}/${baunitId}`;
+
+    return this.http.get<AdministrativeSource[]>(url)
+      .pipe(
+        catchError(error => {
+          console.log('Error al obtener la información de fuentes administrativas temp');
+          throw error;
+        })
+      );
+  }
+
   getAdministrativeSourceById(params: { id: number, baunitId: string, executionId: string }): Observable<AdministrativeSource> {
     const { id, baunitId, executionId } = params;
     const url = `${this.base_url}temp/${executionId}/${baunitId}/${id}`;

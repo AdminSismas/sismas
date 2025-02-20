@@ -2,7 +2,7 @@
   class="flex flex-col py-0 px-0 mb-2"
   [id]="id"
 >
-  <mat-expansion-panel [expanded]="expandedComponent">
+  <mat-expansion-panel [expanded]="expandedComponent" (opened)="isExpandPanel((expandedComponent = true))">
     <mat-expansion-panel-header
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
     >

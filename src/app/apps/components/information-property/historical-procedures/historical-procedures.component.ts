@@ -145,7 +145,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
     }
     isExpandPanel(expandedComponent: boolean): void {
       if (expandedComponent) {
-      this.defaultTableData();
+      // this.defaultTableData();
     }
   }
 
@@ -297,7 +297,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
   proccessHistoryList(data: InformationPegeable): void {
     if (data?.content.length > 1) {
       const listHistory : HistoryListBasic[] = data.content.map((row: any) => ({
-        nameList:  row.executionId + ' - ' + row.bpmProcessCategory + ' - ' + row.processName +' - ' + this.transformDate(row.lastUpdateAt),
+        nameList:  'Versión: ' + row.executionId+ ' - Radicado: ' + row.executionCode  + ' - ' + row.bpmProcessCategory + ' - ' + row.processName +' - ' + this.transformDate(row.lastUpdateAt),
         executionId: row.executionId,
         bpmProcessCategory: row.bpmProcessCategory,
         processName: row.processName,
