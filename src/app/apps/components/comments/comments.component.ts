@@ -27,12 +27,25 @@ import { InformationPegeable } from '../../interfaces/information-pegeable.model
 import { contentInfoComments } from '../../interfaces/content-info-comments.model';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from '../../interfaces/user-details/user.model';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogClose, MatDialogContent } from '@angular/material/dialog';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
 
 @Component({
     selector: 'vex-comments',
     standalone: true,
+    animations: [
+        fadeInRight400ms,
+        stagger80ms,
+        scaleIn400ms,
+        stagger40ms,
+        fadeInUp400ms,
+        scaleFadeIn400ms,
+      ],
     templateUrl: './comments.component.html',
     styleUrl: './comments.component.scss',
     imports: [
@@ -41,6 +54,9 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
       ReactiveFormsModule,
       VexPageLayoutComponent,
       VexPageLayoutContentDirective,
+      MatDialogContent,
+      MatDialogClose,
+      MatIconModule,
       MatIconModule,
       MatDividerModule,
       MatPaginatorModule,
@@ -86,7 +102,7 @@ export class CommentsComponent implements OnInit {
       this.form = this.fb.group({
         newCommentText: [''],
       });
-      if(this.data.value.executionId){
+      if(this.data && this.data?.value && this.data?.value?.executionId){
         this.executionId = this.data.value.executionId;
       }
     }
