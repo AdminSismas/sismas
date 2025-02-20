@@ -7,7 +7,7 @@ import { BasicComponentTemplate } from '../interfaces/bpm/render-template.types'
 import { ProcessParticipant } from '../interfaces/bpm/process-participant';
 import { Operation } from '../interfaces/bpm/operation';
 import { environment } from '../../../environments/environments';
-import { TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
+import { TypeButtonAlfaMain, TypeInformation, TypeOperationAlfaMain } from '../interfaces/content-info';
 import { CadastralChangeLog } from '../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../interfaces/out-format.model';
 import { TaskRetailExecuteResponseModel } from '../interfaces/task-retail-execute-response.model';
@@ -62,7 +62,7 @@ export const PAGE_SIZE_OPTION_ADJACENT: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
 export const PAGE_SIZE_OPTION_FOLIO: number[] = [2, 5];
 
-export const STRUCTURE_HTML_HEADER = 
+export const STRUCTURE_HTML_HEADER =
 `<html>
   <head>
      {style}
@@ -211,7 +211,7 @@ export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<OutFormatModel>[] = [
     type: 'text',
     visible: true
   },
-  
+
   {
     label: 'Codigo Template',
     property: 'templateCode',
@@ -236,13 +236,13 @@ export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<OutFormatModel>[] = [
     type: 'text',
     visible: true
   },
- 
- 
+
+
   {
-    label: 'Acciones', 
+    label: 'Acciones',
     property: 'actions',
-     type: 'button', 
-     visible: true 
+     type: 'button',
+     visible: true
   }
 ];
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
@@ -476,7 +476,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     name: 'cadGeoMainComponent',
     pathForm : '/core/cadastral/geo/main.html',
     serviceValidation: '',
-    mode: 1
+    mode: 3
   },
   {
     name: 'cadGeoValidateComponent',
@@ -990,3 +990,11 @@ export const MODAL_MEDIUM ={ maxWidth: '100%', width: '80%', minHeight: '80%', h
 export const MODAL_SMALL ={ maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
+
+
+export const TYPE_BOTTON_ONE:TypeButtonAlfaMain = 'AGR';
+export const TYPE_BOTTON_TWO:TypeButtonAlfaMain = 'CRE';
+export const TYPE_BOTTON_TREE:TypeButtonAlfaMain = 'BRR';
+export const TYPE_BOTTON_FOUR:TypeButtonAlfaMain = 'CRE_GEO';
+
+
