@@ -58,7 +58,7 @@ import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { GeographicViewerComponent } from '../../geographic/geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendInformationRegisterService } from '../../../services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from '../../../services/general/validate-information-baunit.service';

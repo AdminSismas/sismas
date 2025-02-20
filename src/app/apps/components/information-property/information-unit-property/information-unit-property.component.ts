@@ -41,7 +41,7 @@ import {
   ROL_GUEST
 } from '../../../constants/general/constant';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { GeographicViewerComponent } from '../../geographic/geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi, environment } from 'src/environments/environments';
 import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';

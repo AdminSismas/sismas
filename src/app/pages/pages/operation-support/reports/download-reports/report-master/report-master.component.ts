@@ -3,7 +3,6 @@ import { ReportCategory } from '../interfaces/report-category.interface';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ReportService } from '../services/report.service';
 import { DownloadReport } from '../interfaces/report.interface';
-import { InConstructionComponent } from 'src/app/apps/components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,20 +13,17 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
-import { MatToolbar } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { DownloadReportsComponent } from '../download-reports.component';
 
 @Component({
   selector: 'vex-report-master',
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
     CommonModule,
     ReactiveFormsModule,
@@ -40,15 +36,13 @@ import { DownloadReportsComponent } from '../download-reports.component';
     MatMenuModule,
     MatDatepickerModule,
     MatCardModule,
-    MatToolbar,
     MatDialogModule,
-  
+
     /* Vex */
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
     /* Custom */
     DownloadReportsComponent
   ],

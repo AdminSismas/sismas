@@ -1,8 +1,8 @@
 // ANGULAR IMPORTS
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { Component, DestroyRef, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { FormBuilder, UntypedFormControl,FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 // ANGULAR MATERIAL IMPORTS
@@ -35,7 +35,6 @@ import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
 import { ProceduresCollection } from 'src/app/apps/interfaces/tables/procedures-progress.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { contentInfoProcedures } from 'src/app/apps/interfaces/general/content-info-procedures.model';
 import { PageProceduresData } from 'src/app/apps/interfaces/general/page-procedures-data.model';
 import { ProceduresService } from 'src/app/apps/services/general/procedures.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -45,9 +44,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { InputComponent } from '../../general-components/input/input.component';
-import { contentInfoProcedures } from 'src/app/apps/interfaces/content-info-procedures.model';
-import { EventEmitter } from '@angular/core';
+import { contentInfoProcedures } from 'src/app/apps/interfaces/general/content-info-procedures.model';
 import { MatSelectModule } from '@angular/material/select';
 
 export interface HistoryListBasic {
@@ -89,9 +86,8 @@ export interface HistoryListBasic {
     NgFor,
     NgClass,
     NgIf,
-    InputComponent,
     ReactiveFormsModule,
-     MatSelectModule
+    MatSelectModule
   ],
   templateUrl: './historical-procedures.component.html',
   styleUrl: './historical-procedures.component.scss'

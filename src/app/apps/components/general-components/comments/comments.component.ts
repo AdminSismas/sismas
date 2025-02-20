@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -25,13 +25,13 @@ import { PageCommentsData } from '../../../interfaces/general/page-comments-data
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { contentInfoComments } from '../../../interfaces/general/content-info-comments.model';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { DecodeJwt } from '../../interfaces/user-details/user.model';
-import { MAT_DIALOG_DATA, MatDialogClose, MatDialogContent } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { DecodeJwt } from '../../../interfaces/user-details/user.model';
 
 
 @Component({
@@ -47,24 +47,23 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
       ],
     templateUrl: './comments.component.html',
     styleUrl: './comments.component.scss',
-    imports: [
-      CommonModule,
-      FormsModule,
-      ReactiveFormsModule,
-      VexPageLayoutComponent,
-      VexPageLayoutContentDirective,
-      MatDialogContent,
-      MatDialogClose,
-      MatIconModule,
-      MatIconModule,
-      MatDividerModule,
-      MatPaginatorModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatButtonModule,
-      NgFor,
-      NgIf
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
+    MatDialogClose,
+    MatIconModule,
+    MatIconModule,
+    MatDividerModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    NgFor,
+    NgIf
+  ]
 })
 export class CommentsComponent implements OnInit {
   /* ============== ATRIBUTES ============== */

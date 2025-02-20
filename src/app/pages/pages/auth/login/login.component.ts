@@ -1,14 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -23,12 +14,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { environment } from '../../../../../environments/environments';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import {
-  DecodeJwt,
-} from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
-import { EVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from '../../../../apps/constants/general/constant';
+import {
+  ENVIRONMENT_RETIRO_IMG,
+  NAME_LOGO_IMG_SAN_VICENTE
+} from 'src/app/apps/constants/general/constant';
 
 @Component({
   selector: 'vex-login',

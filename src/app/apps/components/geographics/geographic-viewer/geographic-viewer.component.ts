@@ -1,13 +1,5 @@
 // Angular framework
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -27,17 +19,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 // Custom
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-<<<<<<<< HEAD:src/app/apps/components/geographic/geographic-viewer/geographic-viewer.component.ts
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { environment as envi } from '../../../../../environments/environments';
-import { InformationGeographicService } from '../../../services/territorial-organization/information-geographic.service';
-import { QueryParametersGeographicVie } from '../../../interfaces/geographic/query-parameters-geographic-vie';
-========
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
-import { environment as envi } from '../../../../../environments/environments';
 import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
-import { QueryParametersGeographicVie } from '../../../interfaces/query-parameters-geographic-vie';
->>>>>>>> db6d2e572ee7e64a9aa9fe99dc19d10b23eaca2e:src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component.ts
+import { QueryParametersGeographicVie } from '../../../interfaces/geographics/query-parameters-geographic-vie';
 
 @Component({
   selector: 'vex-geographic-viewer-main',

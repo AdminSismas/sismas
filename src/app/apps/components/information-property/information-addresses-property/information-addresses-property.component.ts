@@ -1,5 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -16,14 +26,14 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
   TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_SMALL
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { MatCardModule } from '@angular/material/card';
 import {
@@ -42,15 +52,16 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationAddress } from '../../../interfaces/information-property/basic-information-address';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AddEditInformationDataI, EditInformationAddressComponent } from './edit-information-address/edit-information-address.component';
+import {
+  AddEditInformationDataI,
+  EditInformationAddressComponent
+} from './edit-information-address/edit-information-address.component';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { PageProceduresData } from 'src/app/apps/interfaces/page-procedures-data.model';
 
 @Component({
   selector: 'vex-information-addresses-property',

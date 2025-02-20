@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { environment, environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
-import { QueryParametersGeographicVie } from '../../interfaces/query-parameters-geographic-vie';
+import { QueryParametersGeographicVie } from '../../interfaces/geographics/query-parameters-geographic-vie';
 
 @Injectable({
   providedIn: 'root'

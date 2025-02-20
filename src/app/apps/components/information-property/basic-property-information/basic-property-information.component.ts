@@ -26,7 +26,7 @@ import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { GeographicViewerComponent } from '../../geographic/geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { MatDividerModule } from '@angular/material/divider';
 
