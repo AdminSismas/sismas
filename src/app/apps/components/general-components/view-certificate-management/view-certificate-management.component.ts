@@ -5,7 +5,7 @@ import {
   Input,
   SecurityContext
 } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import {
   DomSanitizer,
@@ -29,6 +29,7 @@ import { MODEL_METADATA_PROPERTIES } from '../../../constants/general/attachment
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'vex-view-certificate-management',
@@ -45,11 +46,13 @@ import { Subscription } from 'rxjs';
     NgFor,
     NgIf,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+MatButtonModule,
+
 
   ]
 })
-export class ViewCertificateManagementComponent implements OnInit {
+export class ViewCertificateManagementComponent {
 
   isLoading: boolean = false;
   errorMessage: string = '';
@@ -57,6 +60,13 @@ export class ViewCertificateManagementComponent implements OnInit {
   @Input() public id = '';
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
+  isVerified: boolean = false;
+  paymentForm: FormGroup;
+  selectedFile: File | null = null;
+  currentTitle: string = 'Validación de pago';
+  currentIcon: string = 'mat:verified';
+  showWarning: boolean = false;
+  successMessage: string = '';
 
   typeCertificate: string;
   documentNumber: string;
@@ -72,10 +82,14 @@ export class ViewCertificateManagementComponent implements OnInit {
   basic_url: string | undefined;
   basic_url_appraisals: string | undefined;
 
+
+  private validReferences = ['123456', '987654', '456789'];
+
   constructor(
     private sanitizer: DomSanitizer,
     private http: HttpClient,
     public dialogRef: MatDialogRef<ViewCertificateManagementComponent>,
+    private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       documentNumber: string;
@@ -96,14 +110,48 @@ export class ViewCertificateManagementComponent implements OnInit {
     } else {
       this.basic_url_appraisals = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}/${this.baunitID}`;
     }
+this.paymentForm = this.fb.group({
+      reference: [''],
+    });
 
   }
 
-  ngOnInit(): void {
-    //this.pdfUrl = this.urlPdfViewer();
-    //this.loadPdf();
-    this.loadPdf();
+  validatePayment() {
+    const reference = this.paymentForm.value.reference;
+
+    if (!reference && !this.selectedFile) {
+      this.errorMessage = 'Debes ingresar un número de referencia o subir un comprobante.';
+      this.isErrorMessage = true;
+      setTimeout(() => (this.errorMessage = ''), 3000);
+      return;
+    }
+
+
+    if (this.validReferences.includes(reference) || this.selectedFile) {
+      this.errorMessage = 'Validación exitosa.';
+      this.isErrorMessage = false;
+      this.isVerified = true;
+
+
+      this.currentTitle = 'Detalles del Certificado';
+      this.currentIcon = 'mat:insert_drive_file';
+
+
+      this.loadPdf();
+
+      setTimeout(() => (this.errorMessage = ''), 3000);
+    } else {
+      this.errorMessage = 'Número de referencia o comprobante inválido.';
+      this.isErrorMessage = true;
+      setTimeout(() => (this.errorMessage = ''), 3000);
+    }
   }
+
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
 
   getFileType(fileName: string): string {
     const extension = fileName.split('.').pop()?.toLowerCase();
@@ -118,30 +166,7 @@ export class ViewCertificateManagementComponent implements OnInit {
     return 'unknown';
   }
 
-  downloadAndShowPdf(): void {
-    const queryParams = `?number=${encodeURIComponent(this.data.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.data.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
-    const fullUrl = `${this.basic_url}${queryParams}`;
 
-    console.log('Cargando PDF desde:', fullUrl);
-
-    this.http.get(fullUrl, { responseType: 'blob' }).subscribe({
-      next: (response: Blob) => {
-        if (response.type !== 'application/pdf') {
-          console.error('El archivo recibido no es un PDF.');
-          return;
-        }
-
-        const blobUrl = window.URL.createObjectURL(response);
-
-        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
-
-        this.downloadPdf(response);
-      },
-      error: (err) => {
-        console.error('Error al cargar el PDF:', err);
-      }
-    });
-  }
 
   downloadPdfFromSafeUrl(): void {
     const unsafeUrl = this.sanitizer.sanitize(SecurityContext.URL, this.pdfUrl);
@@ -160,6 +185,8 @@ export class ViewCertificateManagementComponent implements OnInit {
             fileName = `Certificado_de_poseer_o_no_bienes_${this.fullName}.pdf`;
           } else if (this.typeCertificate === 'CERT_FICHA_AVALUO') {
             fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
+          } else if (this.typeCertificate === 'CERT_PLANO_PREDIAL_CATASTRAL') {
+            fileName = `Certificado_plano_predial_catastral_${this.baunitID}.pdf`;
           }
 
           a.download = fileName;
@@ -177,28 +204,11 @@ export class ViewCertificateManagementComponent implements OnInit {
     }
   }
 
-  downloadPdf(blob: Blob): void {
-    const blobUrl = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
 
-
-    let fileName = '';
-    if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
-      fileName = `Certificado_de_poseer_o_no_bienes_${this.fullName}.pdf`;
-    } else if (this.typeCertificate === 'CERT_FICHA_AVALUO') {
-      fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
-    }
-
-    a.href = blobUrl;
-    a.download = fileName;
-    a.click();
-
-    window.URL.revokeObjectURL(blobUrl);
-  }
   loadPdf() {
-    this.isLoading = true; // Inicia la carga
-    this.errorMessage = ''; // Limpia cualquier mensaje previo
-    this.isErrorMessage = false; // Reset para el color de mensaje
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.isErrorMessage = false;
 
     const url = this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA' ? this.basic_url : this.basic_url_appraisals;
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;

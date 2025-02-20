@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationService } from '../../../core/navigation/navigation.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { VexConfigService } from '@vex/config/vex-config.service';
@@ -12,7 +12,7 @@ import {
 } from 'rxjs/operators';
 import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
 import { VexPopoverService } from '@vex/components/vex-popover/vex-popover.service';
-import { Observable, of, Subject } from 'rxjs';
+import { interval, Observable, of, Subject } from 'rxjs';
 import { SidenavUserMenuComponent } from './sidenav-user-menu/sidenav-user-menu.component';
 import { SidenavItemComponent } from './sidenav-item/sidenav-item.component';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
@@ -58,7 +58,7 @@ import { NavigationLoaderService } from 'src/app/core/navigation/navigation-load
     MatInputModule
   ]
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
   public validationField = STRING_INFORMATION_NOT_FOUND;
   filteredRouteList$: Observable<NavigationItem[]> | undefined;
   public listRouteItem: NavigationItem[] = [];
@@ -127,16 +127,19 @@ export class SidenavComponent implements OnInit {
     );
 
     this.searchRouteTouch();
-
-    this.navigationLoaderService.taskCounters$
+    interval(2000)
       .pipe(
+        switchMap(() => this.navigationLoaderService.taskCounters$),
         takeUntil(this.destroy$),
         distinctUntilChanged()
       )
       .subscribe(() => {
+        console.log('Actualizando counters');
         this.navigationService.refreshNavigationItems();
       });
+      
       this.navigationLoaderService.refreshCounters();
+      this.navigationLoaderService.startCountLoop();
   }
 
   ngOnDestroy(): void {

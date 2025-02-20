@@ -27,7 +27,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable } from 'rxjs';
 import {
   GeographicViewerComponent
-} from '../../../../../../apps/components/geographic/geographic-viewer/geographic-viewer.component';
+} from '../../../../../../apps/components/geographics/geographic/geographic-viewer/geographic-viewer.component';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';

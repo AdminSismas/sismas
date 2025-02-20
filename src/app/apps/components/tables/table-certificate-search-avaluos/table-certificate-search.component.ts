@@ -92,6 +92,9 @@ import { contentInfoAttachment } from '../../../interfaces/general/content-info-
     MatTabsModule,
     MatSelectModule
 
+    MatSelectModule,
+    ViewFileDocumentManagementComponent
+
   ]
 })
 export class TableCertificateSearchComponent implements OnInit, AfterViewInit {

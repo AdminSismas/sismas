@@ -4,6 +4,7 @@ export class Certificate {
   name: string;
   price: number;
   icon: string;
+  type: string;
 
 
   constructor(certificate: any) {
@@ -11,6 +12,7 @@ export class Certificate {
     this.name = certificate.name;
     this.price = certificate.price;
     this.icon = certificate.icon;
+    this.type = certificate.type;
   }
 
 }

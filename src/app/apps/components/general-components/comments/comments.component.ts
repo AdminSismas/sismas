@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -24,28 +24,47 @@ import { CommentsService } from '../../../services/comments/comments.service';
 import { PageCommentsData } from '../../../interfaces/general/page-comments-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { contentInfoComments } from '../../../interfaces/general/content-info-comments.model';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { DecodeJwt } from '../../interfaces/user-details/user.model';
+import { MAT_DIALOG_DATA, MatDialogClose, MatDialogContent } from '@angular/material/dialog';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
 
 @Component({
-  selector: 'vex-comments',
-  standalone: true,
-  templateUrl: './comments.component.html',
-  styleUrl: './comments.component.scss',
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    MatIconModule,
-    MatDividerModule,
-    MatPaginatorModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    NgFor,
-    NgIf
-  ]
+    selector: 'vex-comments',
+    standalone: true,
+    animations: [
+        fadeInRight400ms,
+        stagger80ms,
+        scaleIn400ms,
+        stagger40ms,
+        fadeInUp400ms,
+        scaleFadeIn400ms,
+      ],
+    templateUrl: './comments.component.html',
+    styleUrl: './comments.component.scss',
+    imports: [
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      VexPageLayoutComponent,
+      VexPageLayoutContentDirective,
+      MatDialogContent,
+      MatDialogClose,
+      MatIconModule,
+      MatIconModule,
+      MatDividerModule,
+      MatPaginatorModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      NgFor,
+      NgIf
+    ]
 })
 export class CommentsComponent implements OnInit {
   /* ============== ATRIBUTES ============== */
@@ -55,6 +74,7 @@ export class CommentsComponent implements OnInit {
   NumSize = 5;
   totalElements = 0;
   pageSizeOptions: number[] = [5, 10, 20, 30];
+  user: DecodeJwt | null = null;
 
   executionId = '38';
   body: contentInfoComments = {
@@ -75,17 +95,22 @@ export class CommentsComponent implements OnInit {
     private commentsService: CommentsService,
     private readonly layoutService: VexLayoutService,
     private alertSnakbar: MatSnackBar,
-    private fb: FormBuilder) {
-    this.form = this.fb.group({
-      newCommentText: ['']
-    });
-  }
-
+    private userService: UserService,
+     @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder ) {
+      this.form = this.fb.group({
+        newCommentText: [''],
+      });
+      if(this.data && this.data?.value && this.data?.value?.executionId){
+        this.executionId = this.data.value.executionId;
+      }
+    }
   /* ============== METHODS ============== */
 
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.getDataFromDocumentManagementService();
+    this.user = this.userService.getUser();
   }
 
 

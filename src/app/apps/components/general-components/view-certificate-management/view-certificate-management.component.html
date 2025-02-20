@@ -3,15 +3,17 @@
     <div class="flex items-center justify-between pt-3 pb-1">
       <div class="flex items-center gap-9">
         <div class="flex items-center space-x-2">
-          <mat-icon svgIcon="mat:insert_drive_file" class="w-5 h-5 p-0"></mat-icon>
-          <h2 class="title text-2xl headline flex-auto m-0">Detalles del certificado</h2>
+          <mat-icon [svgIcon]="currentIcon" class="w-5 h-5 p-0"></mat-icon>
+          <h2 class="title text-2xl headline flex-auto m-0">{{ currentTitle }}</h2>
         </div>
+        
 
         <!-- Botón de descarga en la parte superior derecha (para archivos visibles como imagen o PDF) -->
         <button
           type="button"
           class="w-10 h-10 p-0 ml-1 leading-none flex items-center rounded-button justify-center hover:bg-hover text-primary-600 bg-primary-600/10"
           mat-icon-button
+          *ngIf="isVerified"
           (click)="downloadPdfFromSafeUrl()"
         >
           <mat-icon class="w-8 h-8" matIconPrefix class="icon-sm" svgIcon="mat:cloud_download" title="Descargar"></mat-icon>
@@ -43,7 +45,40 @@
       <p>{{ errorMessage }}</p>
     </div>
 
-    <div *ngIf="showMetadataView === false" class="w-full pt-4">
+    <div *ngIf="!isVerified" class="p-6 w-full">
+      <h3 class="text-lg font-semibold text-gray-700 mb-4">Comprobante de pago</h3>
+      
+      <form [formGroup]="paymentForm" (ngSubmit)="validatePayment()">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-600">Número de Referencia</label>
+          <input 
+            formControlName="reference"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded mt-1"
+            placeholder="Ej: 1234567890"
+          />
+        </div>
+      
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-600">Subir Comprobante</label>
+          <input type="file" (change)="onFileSelected($event)" class="w-full p-2 border border-gray-300 rounded mt-1" />
+        </div>
+      
+    
+      
+        <div class="flex justify-end gap-2">
+          <button type="submit"
+            color="primary"
+            mat-raised-button>
+            Validar
+          </button>
+        </div>
+      </form>
+      
+      
+    </div>
+
+    <div *ngIf="isVerified" class="w-full pt-4">
       <!-- Visualización del archivo PDF en el iframe -->
       <iframe *ngIf="pdfUrl && pdfUrl !== 'error'" [src]="pdfUrl" width="100%" height="100%" style="border: none"></iframe>
 

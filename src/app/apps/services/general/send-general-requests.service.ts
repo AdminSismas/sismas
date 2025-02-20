@@ -120,6 +120,10 @@ export class SendGeneralRequestsService {
     return this.http.get<any>(url);
   }
 
+  sendRequestsGetText(url: string): Observable<any> {
+    return this.http.get(url, {responseType: 'text'});
+  }
+
   async sendRequestsFetchGetAsync(url: string) {
     return this.http.get<any>(url);
   }
@@ -139,9 +143,19 @@ export class SendGeneralRequestsService {
       );
   }
 
-  
 
-  
+  sendRequestsFetch(url: string, params: any): Promise<any> {
+    return fetch(url, params)
+      .then(result => result.json())
+      .catch(error => (error));
+  }
+
+  sendRequestsFetchText(url: string, params: any): Promise<any> {
+    return fetch(url, params)
+      .then(result => result.text())
+      .catch(error => (error));
+  }
+
 
   sendRequestsFetchPost(url: string): Observable<any> {
     return this.http.post<any>(url, "");

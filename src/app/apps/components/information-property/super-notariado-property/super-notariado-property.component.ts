@@ -31,8 +31,9 @@ export class SuperNotariadoPropertyComponent {
   @Input({ required: true }) public baunitId: string | null | undefined = '';
   @Input({ required: true }) public schema: string = '';
   @Input({ required: true }) public executionId: string | null | undefined = '';
+  @Input() expandedComponent = false;
 
-  public expandedComponent = false;
+  // public expandedComponent = false;
   public infoFolio?: InfoFolio;
   public listFolioDetails: { label: string; value: string }[] = [];
 

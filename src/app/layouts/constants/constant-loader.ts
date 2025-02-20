@@ -145,11 +145,27 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDr
     icon: 'mat:assignment_turned_in'
   },
   {
-    type: 'link',
-    label: 'Analítica de la operación',
-    route: '/operationSupport/operationalAnalytics',
-    icon: 'mat:task_alt'
-  }
+    type: 'dropdown',
+    label: 'Reportes',
+    icon: 'mat:insert_drive_file',
+    children: [
+      {
+        type: 'link',
+        label: 'Analítica de la operación',
+        route: '/operationSupport/reports/operationalAnalytics',
+        icon: 'mat:task_alt',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        type: 'link',
+        label: 'Descarga de reportes',
+        route: '/operationSupport/reports/downloadReports',
+        routerLinkActiveOptions: { exact: true }
+      }
+    ]
+
+  },
+
 ];
 
 export const NAVIGATION_LOADER_OPEN_DATA: (NavigationLink | NavigationDropdown)[] = [

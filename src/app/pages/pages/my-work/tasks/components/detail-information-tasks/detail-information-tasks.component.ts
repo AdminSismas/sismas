@@ -107,6 +107,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentTasksInformations!: InformationPegeable;
     public taskDetails:TaskResponseModel= new TaskResponseModel();
+    assignedSee: string = '';
 
       @Input({ required: true }) id = '';
       @Input({ required: true }) public expandedComponent = true;
@@ -178,6 +179,8 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
 
 
     ngOnInit() {
+      console.log('this.data ', this.data);
+      this.executionId = this.data.executionId;
        // Accede a los parámetros de consulta
     this.route.queryParamMap.subscribe(params => {
       this.executionId = params.get('executionId');  // Obtén el valor del parámetro
@@ -251,6 +254,16 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
           this.getInformationProTaskCountComment();
          this.getInformationProTaskCountAttachment();
           this.viewExcuteTask(executionId);
+          this.viewDetallyTaskExecuId(executionId);
+        });
+    }
+
+    viewDetallyTaskExecuId(executionId:any){
+      this.tasksPanelService.viewProTaskId(
+        executionId)
+        .subscribe( result => {
+          console.log('Tercer servicio result',result);
+          this.assignedSee = result.assignee;
         });
     }
 
@@ -424,14 +437,14 @@ openDialog(type: string): void {
       this.dialog.open(DocumentTableComponent, {
         width: '80%',
         data: {
-          executionId: this.executionId
+          executionId: this.data?.value?.executionId
         }
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
         width: '60%',
         data: {
-          executionId: this.executionId
+          executionId: this.data?.value?.executionId
         }
       });
     }

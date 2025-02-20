@@ -59,6 +59,9 @@ export class LoginComponent {
   inputType = 'password';
   visible = false;
   seeLogoRetiro = false;
+  idleState = 'NOT_STARTED';
+  countdown?: number | null;
+  lastPing?: Date | null;
 
   constructor(
     private router: Router,
@@ -67,7 +70,7 @@ export class LoginComponent {
     private snackbar: MatSnackBar,
     private authService: AuthService,
     private userService: UserService,
-    private navigationLoaderService: NavigationLoaderService
+    private navigationLoaderService: NavigationLoaderService,
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -75,7 +78,10 @@ export class LoginComponent {
     });
 
     this.findLogo(this.logoPath);
+
+
   }
+
 
   send() {
     if (this.form.valid) {
@@ -90,7 +96,6 @@ export class LoginComponent {
             this.userService.setUser(user);
 
             this.navigationLoaderService.loadInformationNavigation(user.role);
-            this.navigationLoaderService.startCountLoop();
 
             this.userService.getUserInfo(user.sub).subscribe({
               next: (res) => {
@@ -101,12 +106,11 @@ export class LoginComponent {
                   'Credenciales incorrectas. Intenta nuevamente.',
                   'Error',
                   {
-                    duration: 5000,
+                    duration: 5000
                   }
                 );
-              },
+              }
             });
-
 
             const redirectRoute =
               user.role === 'GUEST'
@@ -114,11 +118,12 @@ export class LoginComponent {
                 : environment.myWork_cadastralSearch;
 
             this.router.navigate([redirectRoute]).then(() => {
+              this.authService.resetIdle();
               this.snackbar.open(
                 `Bienvenido, ${user.role === 'GUEST' ? 'invitado' : 'usuario'} ;)`,
                 'Gracias',
                 {
-                  duration: 5000,
+                  duration: 5000
                 }
               );
             });
@@ -127,7 +132,7 @@ export class LoginComponent {
               'Credenciales incorrectas. Intenta nuevamente.',
               'Error',
               {
-                duration: 5000,
+                duration: 5000
               }
             );
           }
@@ -137,17 +142,17 @@ export class LoginComponent {
             'Credenciales incorrectas. Intenta nuevamente.',
             'Error',
             {
-              duration: 5000,
+              duration: 5000
             }
           );
-        },
+        }
       });
     } else {
       this.snackbar.open(
         'Por favor, complete los campos correctamente.',
         'Error',
         {
-          duration: 10000,
+          duration: 10000
         }
       );
     }
@@ -170,7 +175,7 @@ export class LoginComponent {
     const lastSegment = this.getLastSegment(logo);
     if (lastSegment === NAME_LOGO_IMG_SAN_VICENTE) {
       this.seeLogoRetiro = true;
-      this.logoPathAlter = EVIRONMENT_RETIRO_IMG;
+      this.logoPathAlter = ENVIRONMENT_RETIRO_IMG;
     } else {
       this.seeLogoRetiro = false;
     }
@@ -179,5 +184,4 @@ export class LoginComponent {
   getLastSegment(path: string): string {
     return path.substring(path.lastIndexOf('/') + 1);
   }
-
 }

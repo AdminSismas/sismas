@@ -12,8 +12,8 @@ import { environment } from '../../../../../../environments/environments';
 export class UserService {
   private currentUserSubject: BehaviorSubject<DecodeJwt | null>;
   public currentUser: Observable<DecodeJwt | null>;
-  private currentUserDataSubject: BehaviorSubject<UserDetails | null>;
-  public currentUserData: Observable<UserDetails | null>;
+  private currentUserDataSubject: BehaviorSubject<number | null>;
+  public currentUserData: Observable<number| null>;
   constructor(
     private http: HttpClient
   ) {
@@ -28,14 +28,14 @@ export class UserService {
     }
     this.currentUser = this.currentUserSubject.asObservable();
 
-    const userData = sessionStorage.getItem('user');
-    if (userData) {
-      const savedUserData: UserDetails = JSON.parse(userData);
-      this.currentUserDataSubject = new BehaviorSubject<UserDetails | null>(
+    const ID = sessionStorage.getItem('ID');
+    if (ID) {
+      const savedUserData: number = JSON.parse(ID);
+      this.currentUserDataSubject = new BehaviorSubject<number | null>(
         savedUserData
       );
     } else {
-      this.currentUserDataSubject = new BehaviorSubject<UserDetails | null>(null);
+      this.currentUserDataSubject = new BehaviorSubject<number | null>(null);
     }
     this.currentUserData = this.currentUserDataSubject.asObservable();
   }
@@ -45,7 +45,7 @@ export class UserService {
   }
 
   clearUser(): void {
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('ID');
     this.currentUserSubject.next(null);
   }
 
@@ -72,7 +72,7 @@ export class UserService {
     }
     return null;
   }
-  getUserData(): UserDetails | null {
+  getUserData(): number | null {
     return this.currentUserDataSubject.value;
   }
 
@@ -85,7 +85,7 @@ export class UserService {
   }
 
   setUserData(user: UserDetails): void {
-    sessionStorage.setItem('user', JSON.stringify(user));
-    this.currentUserDataSubject.next(user);
+    sessionStorage.setItem('ID', JSON.stringify(user.userId));
+    this.currentUserDataSubject.next(user.userId);
   }
 }

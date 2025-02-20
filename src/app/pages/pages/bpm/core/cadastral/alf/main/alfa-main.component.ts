@@ -391,7 +391,7 @@ export class AlfaMainComponent implements OnInit {
   }
 
   disabledButton(btn: string): boolean {
-    return !this.resources.includes(btn);
+    return this.resources.includes(btn);
   }
 
   buttonsClass(btn: string): string {

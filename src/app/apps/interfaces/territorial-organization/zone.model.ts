@@ -8,10 +8,10 @@ export class Zone {
 
 
   constructor(content?: any) {
-    this.id = content.id;
-    this.codigoZona = content.codigoZona;
-    this.nombreZona = content.nombreZona;
-    this.deptompio = content.deptompio;
+    this.id = content?.id || '';
+    this.codigoZona = content?.codigoZona || '';
+    this.nombreZona = content?.nombreZona || '';
+    this.deptompio = content?.deptompio || '';
   }
 
   set codeName(value: string) {

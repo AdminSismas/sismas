@@ -50,6 +50,7 @@ import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { PageProceduresData } from 'src/app/apps/interfaces/page-procedures-data.model';
 
 @Component({
   selector: 'vex-information-addresses-property',
@@ -155,15 +156,17 @@ export class InformationAddressesPropertyComponent
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { currentValue: typeInformation } = changes['typeInformation'];
-    if (typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
-      this.pageSize = PAGE_SIZE;
-      this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
-      this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
-    } else {
-      this.pageSize = PAGE_SIZE;
-      this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
-      this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
+    if(changes['typeInformation'].currentValue){
+      const { currentValue: typeInformation } = changes['typeInformation'];
+      if (typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
+        this.pageSize = PAGE_SIZE;
+        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
+        this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
+      } else {
+        this.pageSize = PAGE_SIZE;
+        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
+        this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
+      }
     }
   }
 
@@ -246,8 +249,9 @@ export class InformationAddressesPropertyComponent
     if (!this.schema || !this.baunitId) {
       return;
     }
+
     this.informationPropertyService
-      .getBasicInformationPropertyAddresses(this.baunitId)
+      .getBasicInformationPropertyAddresses(this.executionId, this.baunitId , this.schema ,this.page,this.pageSize)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationAddress[]) =>{

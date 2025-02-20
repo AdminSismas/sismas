@@ -88,8 +88,7 @@ export class BasicPropertyInformationComponent implements OnInit {
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema;
-    this.searchBasicInformationProperty();
+
   }
 
   searchBasicInformationProperty():void {
@@ -143,6 +142,13 @@ export class BasicPropertyInformationComponent implements OnInit {
           data: new ContentInfoSchema(data.baunitIdE, data)
         })
         .afterClosed();
+    }
+
+    isExpandPanel(expandedComponent: boolean): void {
+      if (expandedComponent) {
+        this.id = this.id + this.getRandomInt(10000) + this.schema;
+        this.searchBasicInformationProperty();
+      }
     }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

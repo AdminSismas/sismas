@@ -4,7 +4,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
@@ -47,7 +47,8 @@ import { PropertyAppraisalInformationComponent } from '../property-appraisal-inf
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { InformationAdjacentPropertyComponent } from '../information-adjacent-property/information-adjacent-property.component';
-import { HistoricalProceduresPropertyComponent } from '../historical-procedures/historical-procedures.component';
+import { HistoricalProceduresPropertyComponent, HistoryListBasic } from '../historical-procedures/historical-procedures.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -92,7 +93,8 @@ import { HistoricalProceduresPropertyComponent } from '../historical-procedures/
     AlertsComponent,
     SuperNotariadoPropertyComponent,
     InformationAdjacentPropertyComponent,
-    HistoricalProceduresPropertyComponent
+    HistoricalProceduresPropertyComponent,
+    MatSelectModule
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -149,6 +151,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
   @ViewChild(PhotosComponent, { read: ElementRef, static: false })
   private photosComponent?: ElementRef;
 
+  private historicalProceduresPropertyComponent?: ElementRef;
+  @ViewChild(HistoricalProceduresPropertyComponent, { read: ElementRef, static: false })
+  private historyComponent?: ElementRef;
+
   @ViewChild(AlertsComponent, { read: ElementRef, static: false })
   private alertsComponent?: ElementRef;
 
@@ -179,9 +185,16 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
   public viewProperties = false;
   public showRulesPage = false;
+  public seeHisDropdown = false;
+  public expand_tap_property_information = true;
+  public expand_tap = false;
+  
+  public listHistoryTemp: HistoryListBasic[] = [];
+     form!: FormGroup;
 
 
-  constructor(private informationPropertyService: InformationPropertyService){ }
+  constructor(private informationPropertyService: InformationPropertyService,
+    private fb: FormBuilder){ }
 
   ngOnInit(): void {
     this.infoResorces();
@@ -218,6 +231,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
     console.log(this.baunitHead);
 
 
+    this.form = this.fb.group({
+      history: [ null],
+      
+    });
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
@@ -261,6 +278,39 @@ export class CadastralInformationPropertyComponent implements OnInit {
     this.navigationItems = this.navigationItems.filter(
       (item) => item.label !== labelToRemove
     );
+  }
+  
+  spandTapSet(sedTap: boolean) {
+    this.expand_tap = sedTap;
+    return this.expand_tap;
+  }
+
+  showListHistory(list:HistoryListBasic[]){
+    this.listHistoryTemp = list;
+    if(this.listHistoryTemp.length > 0){
+      this.seeHisDropdown = true;
+      this.form.get('history')?.setValue(this.listHistoryTemp[0]);
+      this.updateContextComponent();  
+      this.spandTapSet(false);
+      if(this.schema === 'hist') {
+        this.expand_tap_property_information = false; // Expand the tap
+      }
+
+    }
+  }
+
+  updateContextComponent(){
+    this.executionId = this.form.get('history')?.value?.executionId;
+    if(this.executionId){
+
+      this.spandTapSet(true);
+      this.expand_tap_property_information = true; // Expand the tap
+      setTimeout(() => {
+        this.spandTapSet(false);
+        this.expand_tap_property_information = false; // Expand the tap
+      }, 1300);
+
+    }
   }
 
   scrollTo(elementName: string) {

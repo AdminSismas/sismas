@@ -76,6 +76,7 @@ export class CertificateDialogAvaluoComponent implements OnInit {
   selectedProperty: any;
   selectedFile: any;
   certificate!: Certificate;
+ 
 
 
   constructor(
@@ -89,6 +90,7 @@ export class CertificateDialogAvaluoComponent implements OnInit {
   ngOnInit() {
     if (this.data) {
       this.certificate = this.data;
+      console.log(this.certificate.type);
     }
   }
 

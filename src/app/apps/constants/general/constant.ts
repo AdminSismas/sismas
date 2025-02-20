@@ -49,6 +49,7 @@ export const FORMAT_CURRENCY_COP = 'COP';
 export const FORMAT_CURRENCY_SIMBOL = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND = 'Información no disponible';
 
+export const PAGE_OPTION__1_5_10: number[] = [1,5,10];
 export const PAGE_OPTION__5_7_10: number[] = [5,7,10];
 export const PAGE_OPTION__10_20_50_100: number[] = [10,20,50,100];
 
@@ -91,7 +92,7 @@ export const EVIRONMENT_CC_DIRECCION = '/ccDireccion';
 export const ROL_GUEST = 'GUEST';
 export const ROL_USER_READ = 'USER_READ';
 
-export const EVIRONMENT_RETIRO_IMG = 'assets/img/logo/logo_El_retiro.png';
+export const ENVIRONMENT_RETIRO_IMG = 'assets/img/logo/logo_El_retiro.png';
 export const NAME_LOGO_IMG_SAN_VICENTE = 'logo_san_vicente.png';
 
 
@@ -261,10 +262,17 @@ export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] =
   },
   {
     label: 'Área terreno',
-    property: 'cadastralArea',
+    property: 'cadastralAreaE',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
+  },
+  {
+    label: 'Condición',
+    property: 'domBaunitCondition',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
   },
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
@@ -716,6 +724,10 @@ export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: 
     fragment: 'informationZonesPropertyComponent'
   },
   {
+    label: 'Trámites Históricos',
+    fragment: 'historicalProceduresPropertyComponent'
+  },
+  {
     label: 'Fotos',
     fragment: 'photosComponent'
   },
@@ -976,3 +988,5 @@ export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'
 export const MODAL_LARGE ={ maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM ={ maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
 export const MODAL_SMALL ={ maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
+export const IDLE_TIME_MINUTES = 10;
+export const TIMEOUT_TIME_MINUTES = 15;

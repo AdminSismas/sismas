@@ -171,6 +171,11 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   loadingNpnlike() {
+    if (this.defaults?.addNpnLike) {
+      this.formAdd.get('addNpnLike')?.setValue(this.defaults.addNpnLike);
+      return;
+    };
+
     this.alfaMainService.loadingNpnlikeByExecutionId(this.executionId)
       .subscribe({
           next: (result: string[]) => this.captureDepartmentInformation(result)

@@ -28,7 +28,7 @@ export class DataAlfaMain {
     content?: any) {
     this.executionId = executionId || '';
     this.typeOperation = typeOperation || null;
-    this.addNpnLike = content?.addNpnLike.trim() || '';
-    this.bAunitCondition = content?.bAunitCondition.trim() || '';
+    this.addNpnLike = content?.addNpnLike?.trim() || '';
+    this.bAunitCondition = content?.bAunitCondition?.trim() || '';
   }
 }

@@ -1,14 +1,12 @@
 <vex-page-layout>
-<!--     <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center">
-        <div class="w-full flex flex-col sm:flex-row justify-between px-6">
-            <div>
-                <h1 class="title mt-0 mb-1">Formulario</h1>
-                <vex-breadcrumbs
-                [crumbs]="['Datos abiertos', 'Mapas generales']"
-                ></vex-breadcrumbs>
-            </div>
-        </div>
-    </vex-page-layout-header> -->
+    <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+        <h2 class="headline m-0 flex-auto" style="margin: 19px;">
+            Comentarios
+        </h2>
+        <button class="text-secondary" mat-dialog-close mat-icon-button type="button" style="margin: 9px;">
+          <mat-icon svgIcon="mat:close"></mat-icon>
+        </button>
+      </div>
 
     <vex-page-layout-content>
         <h2 class="body-2 m-0 pt-6 text-secondary flex items-center">
@@ -27,9 +25,13 @@
                                 {{ comment.updatedAt | date:'dd/MM/yyyy' }}
                                 </h5>
                             </div>
-                            <button mat-icon-button matIconSuffix type="button" (click)="deletedDataCommentService(comment.commentId ?? 0)" class="rounded-full relative hover:bg-red-200 z-10 mx-6">
-                                <mat-icon class="text-red-500" svgIcon="mat:delete"></mat-icon>
-                            </button>
+                            @if(user && user.sub && user.sub === comment.userName){
+
+                                <button  mat-icon-button  matIconSuffix type="button" (click)="delelteDataCommentService(comment.commentId ?? 0)" class="rounded-full relative hover:bg-red-200 z-10 mx-6">
+                                    <mat-icon class="text-red-500" svgIcon="mat:delete"></mat-icon>
+                                </button>
+
+                            }
                         </div>
 
                         <p class="m-0 mt-2 pl-11 caption text-secondary" style="white-space: pre-wrap;">{{ comment.commentText }}</p>

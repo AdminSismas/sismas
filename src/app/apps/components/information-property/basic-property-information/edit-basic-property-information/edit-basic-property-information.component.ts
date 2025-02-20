@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogClose, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
@@ -10,6 +10,7 @@ import { InformationPropertyService } from 'src/app/apps/services/territorial-or
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatIconModule } from '@angular/material/icon';
 
 interface EditBasicPropertyInputs {
 
@@ -33,11 +34,13 @@ interface InputsField {
     CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatDialogClose,
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
     ComboxColletionComponent,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatIconModule,
   ],
   templateUrl: './edit-basic-property-information.component.html',
   styles: ``
@@ -140,10 +143,10 @@ export class EditBasicPropertyInformationComponent implements OnInit {
                 },
                 {
                   name: 'cadastralRegistryNumber',
-                  label: 'Incripción catastral',
+                  label: 'Inscripción catastral',
                   collection: false,
-                  type: 'text',
-                  placeholder: 'Incripción catastral',
+                  type: 'date',
+                  placeholder: 'Inscripción catastral',
                   group:'',
                   groupName:'Propiedad y uso'
                 },

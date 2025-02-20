@@ -126,6 +126,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
   titleMenu: string = 'Búsqueda';
   principaltitleMenu: string = 'Búsqueda avanzada';
   seeAction:boolean = true;
+  @Input() certificateType!: string;
 
 
   dataSource!: MatTableDataSource<BaunitHead>;
@@ -569,9 +570,11 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
 
   viewFile(data: BaunitHead): void {
 
-    const typeCertificate = 'CERT_FICHA_AVALUO';
+    const typeCertificate = this.certificateType;
 
     console.log('Data:', data.baunitIdE);
+
+    this.dialog.closeAll();
 
     this.dialog
       .open(ViewCertificateManagementComponent, {
