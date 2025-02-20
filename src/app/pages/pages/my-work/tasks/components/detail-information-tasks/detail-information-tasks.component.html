@@ -6,27 +6,27 @@
     -
     <span>Trámite asignado a : {{ this.assignedSee  ? this.assignedSee : NAME_NO_DISPONIBLE }}</span>
   </h2>
-  <button
-  color="secondary"
-  mat-button
-  type="button"
-  class="box bg-app-bar rounded caption min-w-3"
-  title="Comentarios"
-  (click)="openDialog('comments')"
->
-  <mat-icon
-    class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-    svgIcon="mat:insert_comment"
-  ></mat-icon>
-  <span class="box-text">{{ countComment$ | async }}</span>
-</button>
-<button
-              color="secondary"
-              mat-button
-              type="button"
-              class="box bg-app-bar rounded caption min-w-3"
-              title="Archivos"
-              (click)="openDialog('documents')"
+          <button
+          color="secondary"
+          mat-button
+          type="button"
+          class="box bg-app-bar rounded caption min-w-3"
+          title="Comentarios"
+          (click)="openDialog('comments')"
+        >
+          <mat-icon
+            class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+            svgIcon="mat:insert_comment"
+          ></mat-icon>
+          <span class="box-text">{{ countComment$ | async }}</span>
+        </button>
+        <button
+          color="secondary"
+          mat-button
+          type="button"
+          class="box bg-app-bar rounded caption min-w-3"
+          title="Archivos"
+          (click)="openDialog('documents')"
             >
               <mat-icon
                 class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"

@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit  } from '@angular/core';
+import { Component, ViewChild, OnInit, Inject  } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -27,6 +27,7 @@ import { InformationPegeable } from '../../interfaces/information-pegeable.model
 import { contentInfoComments } from '../../interfaces/content-info-comments.model';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from '../../interfaces/user-details/user.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -80,10 +81,14 @@ export class CommentsComponent implements OnInit {
     private readonly layoutService: VexLayoutService,
     private alertSnakbar: MatSnackBar,
     private userService: UserService,
+     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder ) {
       this.form = this.fb.group({
         newCommentText: [''],
       });
+      if(this.data.value.executionId){
+        this.executionId = this.data.value.executionId;
+      }
     }
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */

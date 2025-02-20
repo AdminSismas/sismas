@@ -35,6 +35,7 @@ import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../.
 import { MODAL_LARGE } from '../../../constants/constant';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
+import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 
 
 
@@ -128,6 +129,19 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     }
   }
 
+  newFolder(value:any): void {
+        const dialogRef = this.dialog.open(AttachmentFormComponent, {
+          ...MODAL_LARGE,
+          disableClose: true,
+          data: { executionId: this.data.executionId }
+        });
+  
+  
+        dialogRef.componentInstance.dataUpdated.subscribe(() => {
+          console.log('Evento recibido, actualizando datos...');
+          this.getDataFromDocumentManagementService();
+        });
+  }
 
   /* ------- Meth. HTML ------- */
   toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {

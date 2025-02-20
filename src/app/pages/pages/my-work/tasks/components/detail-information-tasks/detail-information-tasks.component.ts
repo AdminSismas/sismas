@@ -157,6 +157,8 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
    
   
     ngOnInit() {
+      console.log('this.data ', this.data);
+      this.executionId = this.data.executionId;
        // Accede a los parámetros de consulta
     this.route.queryParamMap.subscribe(params => {
       this.executionId = params.get('executionId');  // Obtén el valor del parámetro
@@ -413,14 +415,14 @@ openDialog(type: string): void {
       this.dialog.open(DocumentTableComponent, {
         width: '80%',
         data: {
-          executionId: this.executionId
+          executionId: this.data?.value?.executionId
         }
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
         width: '60%',
         data: {
-          executionId: this.executionId
+          executionId: this.data?.value?.executionId
         }
       });
     }
