@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CertificateTableComponent } from './certificate-table.component';
+import { CertificateTableComponent } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-table/certificate-table.component';
 
 describe('CertificateTableComponent', () => {
   let component: CertificateTableComponent;

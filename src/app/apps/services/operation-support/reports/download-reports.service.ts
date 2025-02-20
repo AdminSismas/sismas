@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DownloadReport } from '../interfaces/report.interface';
+import { DownloadReport } from '../../../interfaces/operation-support/reports/report.interface';
 
 
 @Injectable({
@@ -9,7 +9,7 @@ import { DownloadReport } from '../interfaces/report.interface';
 })
 export class DownloadReportsService {
 
-  private apiUrl = 'https://dev.api.cic-ware.com/reportes/consultas.php'; 
+  private apiUrl = 'https://dev.api.cic-ware.com/reportes/consultas.php';
 
   constructor(private http: HttpClient) { }
 

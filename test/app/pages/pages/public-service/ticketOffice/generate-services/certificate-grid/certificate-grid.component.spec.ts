@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  CertificateGridComponent
+} from '../../../../../../../../src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-grid/certificate-grid.component';
 
-import { CertificateGridComponent } from './certificate-grid.component';
 
 describe('CertificateGridComponent', () => {
   let component: CertificateGridComponent;

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ConfirmationDialogComponent } from 'src/app/pages/pages/bpm/bmp-core/confirmation-dialog/confirmation-dialog.component';
 
-import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
@@ -11,7 +11,7 @@ describe('ConfirmationDialogComponent', () => {
       imports: [ConfirmationDialogComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ConfirmationDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  CertificateDialogAvaluoComponent
+} from '../../../../../../../../src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-dialog-avaluo/certificate-dialog-avaluo.component';
 
-import { CertificateDialogAvaluoComponent } from './certificate-dialog-avaluo.component';
 
 describe('CertificateDialogAvaluoComponent', () => {
   let component: CertificateDialogAvaluoComponent;

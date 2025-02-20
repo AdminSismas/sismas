@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ProcessCardComponent } from './process-card.component';
+import {
+  ProcessCardComponent
+} from '../../../../../../../../src/app/pages/pages/bpm/initiate-filing-procedure/components/process-card/process-card.component';
 
 describe('ProcessCardComponent', () => {
   let component: ProcessCardComponent;

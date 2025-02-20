@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BasicParticipantTableComponent } from './basic-participant-table.component';
+import {
+  BasicParticipantTableComponent
+} from '../../../../../../../../src/app/pages/pages/bpm/initiate-filing-procedure/components/basic-participant-table/basic-participant-table.component';
 
 describe('BasicParticipantTableComponent', () => {
   let component: BasicParticipantTableComponent;
