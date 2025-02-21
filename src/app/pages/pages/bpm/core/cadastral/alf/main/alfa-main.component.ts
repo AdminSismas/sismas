@@ -50,17 +50,17 @@ import {
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
   CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN
-} from '../../../../../../../apps/constants/general/constantLabels';
+} from '../../../../../../../apps/constants/constantLabels';
 import { OperationContentInformation } from '../../../../../../../apps/interfaces/bpm/operation-content-information';
-import { Pegeable } from '../../../../../../../apps/interfaces/general/pegeable.model';
+import { Pegeable } from '../../../../../../../apps/interfaces/pegeable.model';
 import {
   ViewChangeAlphaMainRecordComponent
 } from '../../../../../../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
-import { TypeButtonAlfaMain, TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/general/content-info';
+import { TypeButtonAlfaMain, TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/content-info';
 import {
   CrudAlfaMainComponent
 } from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
-import { DataAlfaMain } from '../../../../../../../apps/interfaces/bpm/data-alfa-main.model';
+import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-main.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

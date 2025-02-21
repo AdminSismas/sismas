@@ -7,7 +7,7 @@ import { BasicComponentTemplate } from '../../interfaces/bpm/render-template.typ
 import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
 import { Operation } from '../../interfaces/bpm/operation';
 import { environment } from '../../../../environments/environments';
-import { TypeInformation, TypeOperationAlfaMain } from '../../interfaces/general/content-info';
+import { TypeButtonAlfaMain, TypeInformation, TypeOperationAlfaMain } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../../interfaces/general/out-format.model';
 import { TaskRetailExecuteResponseModel } from '../../interfaces/bpm/task-retail-execute-response.model';
@@ -476,7 +476,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     name: 'cadGeoMainComponent',
     pathForm : '/core/cadastral/geo/main.html',
     serviceValidation: '',
-    mode: 1
+    mode: 3
   },
   {
     name: 'cadGeoValidateComponent',
@@ -990,3 +990,11 @@ export const MODAL_MEDIUM ={ maxWidth: '100%', width: '80%', minHeight: '80%', h
 export const MODAL_SMALL ={ maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
+
+
+export const TYPE_BOTTON_ONE:TypeButtonAlfaMain = 'AGR';
+export const TYPE_BOTTON_TWO:TypeButtonAlfaMain = 'CRE';
+export const TYPE_BOTTON_TREE:TypeButtonAlfaMain = 'BRR';
+export const TYPE_BOTTON_FOUR:TypeButtonAlfaMain = 'CRE_GEO';
+
+

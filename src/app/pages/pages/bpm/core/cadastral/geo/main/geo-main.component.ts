@@ -3,13 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { MatTab, MatTabContent, MatTabGroup } from '@angular/material/tabs';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { STRING_INFORMATION_NOT_FOUND } from '../../../../../../../apps/constants/general/constant';
-import {
-  LoadingAppComponent
-} from '../../../../../../../apps/components/general-components/loading-app/loading-app.component';
+import { STRING_INFORMATION_NOT_FOUND } from '../../../../../../../apps/constants/constant';
+import { LoadingAppComponent } from '../../../../../../../apps/components/loading-app/loading-app.component';
 import { Observable, of } from 'rxjs';
+import { ProFlow } from '../../../../../../../apps/interfaces/pro-flow';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlfaMainService } from '../../../../../../../apps/services/bpm/core/alfa-main.service';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
@@ -26,7 +25,6 @@ import {
   GeographicViewerEmbeddedComponent
 } from '../../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { AlfaMainComponent } from '../../alf/main/alfa-main.component';
-import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
 
 @Component({
   selector: 'vex-geo-main',
@@ -51,6 +49,7 @@ import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
     LoadingAppComponent,
     FluidHeightDirective,
     GeographicViewerEmbeddedComponent,
+    MatTabContent,
     AlfaMainComponent
   ],
   templateUrl: './geo-main.component.html',

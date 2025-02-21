@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AsyncPipe, NgIf } from '@angular/common';
@@ -17,8 +17,7 @@ import { LoadingAppComponent } from '../../general-components/loading-app/loadin
     NgIf
   ],
   templateUrl: './geographic-viewer-embedded.component.html',
-  styleUrl: './geographic-viewer-embedded.component.scss',
-  encapsulation: ViewEncapsulation.None
+  styleUrl: './geographic-viewer-embedded.component.scss'
 })
 export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
 
@@ -74,7 +73,6 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
 
     this.captureErrorResult();
   }
-
 
   getViewGeneralMapByExecutionId(executionId: string, schema: string) {
     this.geographicService.getViewGeneralMapByExecutionId(executionId, schema)
