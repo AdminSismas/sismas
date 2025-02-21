@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -16,7 +16,7 @@ import {
   TYPEOPERATION_ADD,
   TYPEOPERATION_CREATE,
   TYPEOPERATION_DELETE,
-  MODAL_SMALL
+  MODAL_SMALL, TYPE_BOTTON_TWO, TYPE_BOTTON_TREE, TYPE_BOTTON_FOUR, TYPE_BOTTON_ONE
 } from '../../../../../../../apps/constants/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/pro-flow';
@@ -41,17 +41,25 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { TableAlfaMainComponent } from '../../../../../../../apps/components/bpm/table-alfa-main/table-alfa-main.component';
-import { ClearInformationDataComponent } from '../../../../../../../apps/components/bpm/clear-information-data/clear-information-data.component';
+import {
+  TableAlfaMainComponent
+} from '../../../../../../../apps/components/bpm/table-alfa-main/table-alfa-main.component';
+import {
+  ClearInformationDataComponent
+} from '../../../../../../../apps/components/bpm/clear-information-data/clear-information-data.component';
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
   CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN
 } from '../../../../../../../apps/constants/constantLabels';
 import { OperationContentInformation } from '../../../../../../../apps/interfaces/bpm/operation-content-information';
 import { Pegeable } from '../../../../../../../apps/interfaces/pegeable.model';
-import { ViewChangeAlphaMainRecordComponent } from '../../../../../../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
-import { TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/content-info';
-import { CrudAlfaMainComponent } from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
+import {
+  ViewChangeAlphaMainRecordComponent
+} from '../../../../../../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
+import { TypeButtonAlfaMain, TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/content-info';
+import {
+  CrudAlfaMainComponent
+} from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain } from '../../../../../../../apps/interfaces/data-alfa-main.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -88,11 +96,12 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './alfa-main.component.html',
   styleUrl: './alfa-main.component.scss'
 })
-export class AlfaMainComponent implements OnInit {
+export class AlfaMainComponent implements OnInit, AfterViewInit {
   public id: string = this.getRandomInt(1234).toString();
-  public mode = 1;
+
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
+  @Input({ required: false }) public mode:number = 1;
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
@@ -126,7 +135,7 @@ export class AlfaMainComponent implements OnInit {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     if (this.id?.length > 0) {
       this.id =
         this.id +
@@ -137,12 +146,10 @@ export class AlfaMainComponent implements OnInit {
       this.id =
         this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
     }
-    this.infoFatherURL = await firstValueFrom(this._infoFatherURL$);
 
-    if (!this.infoFatherURL) {
-      this.returnURLPrevious(`${environment.myWork_cadastralSearch}`);
-      return;
-    }
+    this._infoFatherURL$
+      .pipe(filter<string>(Boolean))
+      .subscribe((result: string) => this.infoFatherURL = result);
 
     if (!this.executionId) {
       this.returnPanelTask(true);
@@ -170,6 +177,21 @@ export class AlfaMainComponent implements OnInit {
         }
         this.getAlfaMain();
       });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (!this.infoFatherURL) {
+        this.returnURLPrevious(`${environment.myWork_cadastralSearch}`);
+        return;
+      }
+
+      if (!this.executionId) {
+        this.returnPanelTask(true);
+        return false;
+      }
+
+    }, 300);
   }
 
   validateChangeLogAlfaMain() {
@@ -386,20 +408,26 @@ export class AlfaMainComponent implements OnInit {
       });
   }
 
+
+  executeCreateAlfaGeo(type: TypeOperationAlfaMain) {
+    if (type === TYPEOPERATION_ADD) {
+
+    }
+  }
+
   private returnURLPrevious(url: string) {
     this.router.navigate([`${url}`]).then();
   }
 
-  disabledButton(btn: string): boolean {
+  disabledButton(btn: TypeButtonAlfaMain): boolean {
     return this.resources.includes(btn);
   }
 
-  buttonsClass(btn: string): string {
+  buttonsClass(btn: TypeButtonAlfaMain): string {
     let color = '!bg-slate-400 !text-gray-100 opacity-60';
-
     if (btn === 'AGR' && !this.disabledButton(btn)) {
       color = '!text-white !bg-primary-600';
-    } else if (btn === 'CRE' && !this.disabledButton(btn)) {
+    } else if ((btn === 'CRE'|| btn === 'CRE_GEO') && !this.disabledButton(btn)) {
       color = '!text-white !bg-green-600';
     } else if (btn === 'BRR' && !this.disabledButton(btn)) {
       color = '!text-white !bg-red-600';
@@ -411,4 +439,8 @@ export class AlfaMainComponent implements OnInit {
   protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
   protected readonly TYPEOPERATION_DELETE = TYPEOPERATION_DELETE;
   protected readonly TYPEOPERATION_ADD = TYPEOPERATION_ADD;
+  protected readonly TYPE_BOTTON_TWO = TYPE_BOTTON_TWO;
+  protected readonly TYPE_BOTTON_TREE = TYPE_BOTTON_TREE;
+  protected readonly TYPE_BOTTON_FOUR = TYPE_BOTTON_FOUR;
+  protected readonly TYPE_BOTTON_ONE = TYPE_BOTTON_ONE;
 }

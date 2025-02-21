@@ -16,11 +16,11 @@
         >
           @if (mode === 1) {
             <button
-              [ngClass] = "buttonsClass('AGR')"
+              [ngClass] = "buttonsClass(TYPE_BOTTON_ONE)"
               color="primary"
               mat-raised-button
               type="button"
-              [disabled]="disabledButton('AGR')"
+              [disabled]="disabledButton(TYPE_BOTTON_ONE)"
               (click)="executeCrudAlfaMain(TYPEOPERATION_CREATE)"
             >
               <mat-icon
@@ -30,11 +30,11 @@
               <span>Agregar</span>
             </button>
             <button
-              [ngClass] = "buttonsClass('CRE')"
+              [ngClass] = "buttonsClass(TYPE_BOTTON_TWO)"
               mat-raised-button
               type="button"
               (click)="executeCrudAlfaMain(TYPEOPERATION_ADD)"
-              [disabled]="disabledButton('CRE')"
+              [disabled]="disabledButton(TYPE_BOTTON_TWO)"
             >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
@@ -43,12 +43,12 @@
               <span>Crear</span>
             </button>
             <button
-              [ngClass] = "buttonsClass('BRR')"
+              [ngClass] = "buttonsClass(TYPE_BOTTON_TREE)"
               color="warning"
               mat-raised-button
               type="button"
               (click)="executeCrudAlfaMain(TYPEOPERATION_DELETE)"
-              [disabled]="disabledButton('BRR')"
+              [disabled]="disabledButton(TYPE_BOTTON_TREE)"
             >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
@@ -56,9 +56,6 @@
               ></mat-icon>
               <span>Borrar</span>
             </button>
-          }
-          @else {
-            <span class="sm:flex-auto"></span>
           }
           <button
             class="rounded-full py-2 px-6 title !bg-cyan-600 !text-white"
@@ -73,6 +70,22 @@
             ></mat-icon>
             <span>Analizar cambio</span>
           </button>
+          @if (mode === 3) {
+            <button
+              [ngClass] = "buttonsClass(TYPE_BOTTON_FOUR)"
+              mat-raised-button
+              type="button"
+              (click)="executeCreateAlfaGeo(TYPEOPERATION_ADD)"
+              [disabled]="disabledButton(TYPE_BOTTON_FOUR)">
+              <mat-icon
+                class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+                svgIcon="mat:add"
+              ></mat-icon>
+              <span>Crear Cambio Geografico</span>
+            </button>
+          } @else {
+            <span class="sm:flex-auto"></span>
+          }
           <span class="sm:flex-auto xl:flex-1"></span>
           @if (mode === 1) {
             <button
@@ -151,4 +164,5 @@
   #vexSplashScreen
   idLoading="vexSplashScreen"
   [showImage]="true"
-></vex-loading-app>
+>
+</vex-loading-app>

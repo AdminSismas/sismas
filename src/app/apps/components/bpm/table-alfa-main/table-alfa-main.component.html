@@ -18,9 +18,7 @@
       ></th>
       <td
         *matCellDef="let row"
-        mat-cell
-        class="pl-1 pr-1"
-      >
+        mat-cell class="px-3">
         <div
           *ngIf="row['operationType'] === 'CREATE'"
           class="px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-green-600"
@@ -92,9 +90,7 @@
             {{ row[column.property] }}
           </td>
         </ng-container>
-      } @else if (
-        column.type === "operationType" && column.property === "cadastralArea"
-      ) {
+      } @else if (column.type === "operationType" && column.property === "cadastralArea") {
         <ng-container [matColumnDef]="column.property">
           <th
             *matHeaderCellDef
@@ -129,15 +125,21 @@
         class="w-10 text-secondary pl-1 pr-1"
         mat-cell
       >
-        <button
-          (click)="$event.stopPropagation()"
-          [matMenuTriggerData]="{ row: row }"
-          [matMenuTriggerFor]="actionsMenu"
-          mat-icon-button
-          type="button"
-        >
-          <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-        </button>
+        @if (mode !== 3) {
+          <button
+            (click)="$event.stopPropagation()"
+            [matMenuTriggerData]="{ row: row }"
+            [matMenuTriggerFor]="actionsMenu"
+            mat-icon-button
+            type="button"
+          >
+            <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+          </button>
+        } @else {
+          <div
+            class="px-4 py-2 !text-white inline-flex self-end max-h-[10px] min-w-[10px]"
+          ></div>
+        }
       </td>
     </ng-container>
 
@@ -177,13 +179,16 @@
     let-row="row"
     matMenuContent
   >
-    <button
-      (click)="viewChanges(row)"
-      mat-menu-item
-    >
-      <mat-icon svgIcon="mat:info"></mat-icon>
-      <span>Ver cambios</span>
-    </button>
+    @if (mode !== 3) {
+      <button
+        (click)="viewChanges(row)"
+        mat-menu-item
+      >
+        <mat-icon svgIcon="mat:info"></mat-icon>
+        <span>Ver cambios</span>
+      </button>
+    }
+
     @if (mode === 1) {
       <button
         (click)="editInformations(row)"
@@ -192,11 +197,9 @@
         <mat-icon svgIcon="mat:edit"></mat-icon>
         <span>Editar</span>
       </button>
-      @if (
-        row.domBaunitCondition === "(Condominio) Matriz" ||
-        row.domBaunitCondition === "(Propiedad horizontal) Matriz"
-      ) {
-        <button 
+      @if (row.domBaunitCondition === "(Condominio) Matriz" ||
+      row.domBaunitCondition === "(Propiedad horizontal) Matriz") {
+        <button
           mat-menu-item
           (click)="editCadastralUnits(row)"
         >
