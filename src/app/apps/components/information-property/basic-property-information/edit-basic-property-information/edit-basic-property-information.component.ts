@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { environment } from "src/environments/environments";
 
 interface EditBasicPropertyInputs {
 
@@ -284,6 +285,10 @@ export class EditBasicPropertyInformationComponent implements OnInit {
         this.form.get(field)?.disable();
       }
     });
+    if(environment.titulo === 'Manizales'){
+      this.form.get('propertyRegistryOffice')?.disable();
+      this.form.get('propertyRegistryOffice')?.setValue('100');
+    }
   }
 
   editBasicInformationProperty() {
