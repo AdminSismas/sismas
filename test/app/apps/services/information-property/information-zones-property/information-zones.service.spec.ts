@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { InformationZonesService } from 'src/app/apps/services/information-property/information-zones-property/information-zones.service';
+import {
+  InformationZonesService
+} from '../../../../../../src/app/apps/services/information-property/information-zones-property/information-zones.service';
+
 
 describe(InformationZonesService.name, () => {
   let service: InformationZonesService;

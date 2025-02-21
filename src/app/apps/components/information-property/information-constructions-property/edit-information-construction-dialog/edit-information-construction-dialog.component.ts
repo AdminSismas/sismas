@@ -25,7 +25,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { CustomSelectorComponent } from '../../../general-components/custom-selector/custom-selector.component';
 import { environment } from 'src/environments/environments';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { InputComponent } from '../../../general-components/input/input.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 

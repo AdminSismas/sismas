@@ -1,8 +1,8 @@
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core'; // √
-import { ReactiveFormsModule, FormsModule, UntypedFormControl } from '@angular/forms';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core'; // √
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Observable, of, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 
 // recursos de vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -16,7 +16,7 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 
 // recursos de angular material
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
@@ -34,10 +34,12 @@ import { DomainCollection } from '../../../interfaces/general/domain-name.model'
 import { PageSortByData } from '../../../interfaces/general/page-sortBy-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { contentInfoDomainLadmCol } from '../../../interfaces/general/content-info-domainLadmCol.model';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../../constants/economic-mod-land/domain-ladm-col.constant';
-
-
-
+import {
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TABLE_COLUMN_PROPERTIES
+} from '../../../constants/economic-mod-land/domain-ladm-col.constant';
 
 
 @Component({

@@ -1,14 +1,14 @@
 // Angular framework
 import { ChangeDetectorRef, Component, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgForOf, NgIf, NgClass } from '@angular/common';
-import { Observable, BehaviorSubject, filter } from 'rxjs';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { BehaviorSubject, filter, Observable } from 'rxjs';
 // Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 // Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -31,8 +31,19 @@ import { DataSource } from 'src/app/apps/interfaces/information-property/snr-sou
 import { environment } from 'src/environments/environments';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { TYPEINFORMATION_EDITION, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES_SOURCE, TYPEINFORMATION_VISUAL, PAGE_OPTION__5_7_10, PAGE_SIZE_SORT } from '../../../constants/general/constant';
-import { InformationPersonPropertyComponent } from '../information-person-property/information-person-property.component';
+import {
+  PAGE,
+  PAGE_OPTION__5_7_10,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  PAGE_SIZE_SORT,
+  TABLE_COLUMN_PROPERTIES_SOURCE,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
+import {
+  InformationPersonPropertyComponent
+} from '../information-person-property/information-person-property.component';
 
 
 @Component({

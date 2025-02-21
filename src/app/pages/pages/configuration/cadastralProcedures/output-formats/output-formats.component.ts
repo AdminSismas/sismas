@@ -1,12 +1,11 @@
 import { Component, DestroyRef, inject, Input, TemplateRef, ViewChild } from '@angular/core';
-import { InConstructionComponent } from '../../../../../apps/components/general-components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { CommonModule, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -23,16 +22,16 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { OutFormatModel } from '../../../../../apps/interfaces/general/out-format.model';
 import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
 import {
-  PAGE, PAGE_SIZE,
+  MODAL_SMALL,
+  PAGE,
+  PAGE_OPTION__10_20_50_100,
+  PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_DOCUMENT_ASOCIETY,
   TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_SMALL,
-  PAGE_OPTION__10_20_50_100
+  TYPEINFORMATION_VISUAL
 } from '../../../../../apps/constants/general/constant';
-import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../../../auth/login/services/user.service';
 
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -60,11 +59,9 @@ export interface AddOutputFormats {
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
-    InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
-    InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
@@ -80,7 +77,7 @@ export interface AddOutputFormats {
     MatDatepickerModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatIconModule ,
+    MatIconModule,
     MatSortModule,
     MatTableModule,
     NgFor,
@@ -89,7 +86,7 @@ export interface AddOutputFormats {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   templateUrl: './output-formats.component.html',
   styleUrl: './output-formats.component.scss'

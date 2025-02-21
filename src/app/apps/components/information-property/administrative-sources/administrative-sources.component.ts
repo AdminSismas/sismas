@@ -1,22 +1,30 @@
 import { Component, computed, Input, OnInit, ViewChild } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import {
   AdministrativeSource,
   DeleteAdministrativeSourceParams,
   UpdateAdministrativeSource
 } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
+import {
+  AdministrativeSourcesService
+} from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
+import {
+  CreateAdministrativeSourceComponent
+} from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { COLUMNS_ADMINISTRATIVE_SOURCES } from '../../../constants/information-property/administrative-source.constants';
-import { MODAL_LARGE, MODAL_MEDIUM } from '../../../constants/general/constant';
+import {
+  COLUMNS_ADMINISTRATIVE_SOURCES
+} from '../../../constants/information-property/administrative-source.constants';
+import { MODAL_MEDIUM } from '../../../constants/general/constant';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { NgClass } from '@angular/common';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -113,7 +121,7 @@ export class AdministrativeSourcesComponent implements OnInit {
           this.dataSource.data = data;
         });
      }
-  } 
+  }
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {

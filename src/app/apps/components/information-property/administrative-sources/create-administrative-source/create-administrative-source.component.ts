@@ -17,7 +17,9 @@ import {
 } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { DynamicFormsComponent } from '../../../forms/dynamic-forms/dynamic-forms.component';
 import { JSONInput } from '../../../../interfaces/forms/dynamic-forms';
-import { INPUTS_ADMINISTRATIVE_SOURCE } from '../../../../constants/information-property/administrative-source.constants';
+import {
+  INPUTS_ADMINISTRATIVE_SOURCE
+} from '../../../../constants/information-property/administrative-source.constants';
 import { MatSelectModule } from '@angular/material/select';
 import {
   TerritorialOrganizationService

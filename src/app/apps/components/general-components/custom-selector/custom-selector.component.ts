@@ -1,6 +1,6 @@
 import { CommonModule, NgClass, NgForOf } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -56,18 +56,18 @@ export class CustomSelectorComponent {
     this.fetchOptions();
   }
 
-  
+
 
   fetchOptions(): void {
     this.loading = true;
-  
+
     let params = new HttpParams();
     if (this.queryParams && Object.keys(this.queryParams).length > 0) {
       Object.entries(this.queryParams).forEach(([key, value]) => {
         params = params.append(key, value.toString());
       });
     }
-  
+
     this.http.get<any[]>(this.apiUrl, { params }).subscribe({
       next: (data) => {
         this.options = data;

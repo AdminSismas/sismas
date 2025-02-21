@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { WorkHistoricalComponent } from 'src/app/pages/pages/operation-support/procedures/work-historical/work-historical.component';
+import {
+  WorkHistoricalComponent
+} from '../../../../../../../src/app/pages/pages/operation-support/procedures/work-historical/work-historical.component';
 
 describe('WorkHistoricalComponent', () => {
   let component: WorkHistoricalComponent;

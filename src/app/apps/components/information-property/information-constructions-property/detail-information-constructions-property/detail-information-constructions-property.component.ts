@@ -16,11 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { GUION, NAME_NO_DISPONIBLE, TWO_POINT_ } from '../../../../constants/general/constant';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../../header-cadastral-information-property/header-cadastral-information-property.component';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CcCalificacionUB } from '../../../../interfaces/information-property/cc-calificacion-ub';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -59,9 +55,6 @@ export interface Tile {
     MatDividerModule,
     MatIconModule,
     MatTabsModule,
-    VexPageLayoutContentDirective,
-    DatePipe,
-    HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
     NgForOf,
     MatGridListModule,

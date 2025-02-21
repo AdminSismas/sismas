@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { SweetAlert2Module, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -24,9 +24,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
 import { AttachmentService } from '../../../../../../../apps/services/bpm/core/document/main/attachment.service';
-import { ComboxColletionComponent } from '../../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import {
+  ComboxColletionComponent
+} from '../../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
 import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'vex-attachment-form',
   standalone: true,

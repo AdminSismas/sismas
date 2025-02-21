@@ -17,10 +17,7 @@ import { UserService } from './services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
-import {
-  ENVIRONMENT_RETIRO_IMG,
-  NAME_LOGO_IMG_SAN_VICENTE
-} from 'src/app/apps/constants/general/constant';
+import { ENVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/general/constant';
 
 @Component({
   selector: 'vex-login',

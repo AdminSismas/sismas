@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  computed,
+  inject,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
   TemplateRef,
-  ViewChild,
-  computed,
-  inject,
-  signal,
-  AfterViewInit,
-  ChangeDetectorRef
+  ViewChild
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -20,16 +19,9 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import {
-  MatDialog,
-  MatDialogModule
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import {
-  CommonModule,
-  NgForOf,
-  NgIf
-} from '@angular/common';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,15 +33,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import {
   AddEditInformatizonZonesPropertyComponent
 } from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
@@ -114,8 +101,7 @@ import { Observable } from 'rxjs';
     MatPaginatorModule,
     MatDialogModule,
     CommonModule,
-    MatTableModule,
-    CurrencyLandsPipe
+    MatTableModule
   ],
   templateUrl: './physical-zones-property.component.html',
   styleUrl: './physical-zones-property.component.scss'

@@ -1,25 +1,11 @@
-import {
-  Component,
-  OnInit,
-  Inject,
-  Input,
-  SecurityContext
-} from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Inject, Input, SecurityContext } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import {
-  DomSanitizer,
-  SafeResourceUrl,
-  SafeUrl
-} from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 // recursos de angular material
 import { MatIconModule } from '@angular/material/icon';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 

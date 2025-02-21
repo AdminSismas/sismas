@@ -5,13 +5,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { filter, map, take } from 'rxjs/operators';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 // Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -78,7 +72,9 @@ import { ProcessParticipant } from '../../../../apps/interfaces/bpm/process-part
 import { ProExecutionE } from '../../../../apps/interfaces/bpm/pro-execution-e';
 import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
-import { SendInformationRegisterService } from '../../../../apps/services/register-procedure/send-information-register.service';
+import {
+  SendInformationRegisterService
+} from '../../../../apps/services/register-procedure/send-information-register.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

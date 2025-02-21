@@ -9,7 +9,6 @@ import {
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { DatePipe, NgIf } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { BasicInformationAddress } from '../../../../interfaces/information-property/basic-information-address';
 import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from '../../../../constants/general/constant';
@@ -44,13 +43,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDialogTitle,
     MatDividerModule,
     MatIconModule,
-    NgIf,
     MatMenuModule,
     MatDialogContent,
-    DatePipe,
     MatCardModule,
     MatExpansionModule,
-    MatFormFieldModule,
+    MatFormFieldModule
   ],
   templateUrl: './detail-information-address.component.html',
   styleUrl: './detail-information-address.component.scss'

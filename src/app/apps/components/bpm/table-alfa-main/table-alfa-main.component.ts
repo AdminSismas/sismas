@@ -12,15 +12,17 @@ import {
   ViewChild
 } from '@angular/core';
 import {
-  LIST_SCHEMAS_CONTROL_CHANGES, LIST_SCHEMAS_CONTROL_TEMP,
+  LIST_SCHEMAS_CONTROL_CHANGES,
+  LIST_SCHEMAS_CONTROL_TEMP,
+  MODAL_LARGE,
+  MODAL_MEDIUM,
+  MODAL_SMALL,
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
-  TABLE_ALFA_MAIN_OPERATION_COLUMN, TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_LARGE,
-  MODAL_SMALL,
-  MODAL_MEDIUM
+  TABLE_ALFA_MAIN_OPERATION_COLUMN,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -52,7 +54,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
+import {
+  ModificationPropertyUnitsComponent
+} from '../modification-property-units/modification-property-units.component';
 
 @Component({
   selector: 'vex-table-alfa-main',

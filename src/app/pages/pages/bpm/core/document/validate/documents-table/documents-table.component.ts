@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
@@ -12,7 +12,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,10 +29,15 @@ import { AttachmentCollection } from '../../../../../../../apps/interfaces/docum
 import { contentInfoAttachment } from '../../../../../../../apps/interfaces/general/content-info-attachment.model';
 import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
-
-import { DocumentValidateComponent } from '../document-validate.component';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES, TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE } from '../../../../../../../apps/constants/general/attachment.constant';
+import {
+  ViewFileDocumentManagementComponent
+} from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import {
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE
+} from '../../../../../../../apps/constants/general/attachment.constant';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constant';
 

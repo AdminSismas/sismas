@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  computed,
+  inject,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
   TemplateRef,
-  ViewChild,
-  computed,
-  inject,
-  signal,
-  AfterViewInit,
-  ChangeDetectorRef
+  ViewChild
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -20,16 +19,9 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import {
-  MatDialog,
-  MatDialogModule
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import {
-  CommonModule,
-  NgForOf,
-  NgIf
-} from '@angular/common';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,22 +33,33 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
-import { MODAL_SMALL, NAME_NO_DISPONIBLE, NAVIGATION_ITEMS_INFORMACION_PROPERTIY, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC, TYPEINFORMATION_EDITION } from 'src/app/apps/constants/general/constant';
-import { DeleteInformationZonesPropertyComponent } from '../../delete-information-zones-property/delete-information-zones-property.component';
+import {
+  AddEditInformatizonZonesPropertyComponent
+} from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
+import {
+  MODAL_SMALL,
+  NAME_NO_DISPONIBLE,
+  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  PAGE_OPTION__10_20_50_100,
+  PAGE_SIZE,
+  TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
+  TYPEINFORMATION_EDITION
+} from 'src/app/apps/constants/general/constant';
+import {
+  DeleteInformationZonesPropertyComponent
+} from '../../delete-information-zones-property/delete-information-zones-property.component';
 import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
-import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
+import {
+  DetailInformationPropertyZonesComponent
+} from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { PAGE } from 'src/app/apps/constants/general/procedures.constant';
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';

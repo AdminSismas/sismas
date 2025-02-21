@@ -2,7 +2,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { startWith, map, Observable, takeUntil, Subject } from 'rxjs';
+import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 
 // Vex
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -20,26 +20,35 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 
 
-import { MatDialog, MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Custom
-import { Columns, DataSourceZoneManager, DisplayedColumns, GeoEconomicZone, RuralZone, UrbanZone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import {
+  Columns,
+  DataSourceZoneManager,
+  DisplayedColumns,
+  GeoEconomicZone,
+  RuralZone,
+  UrbanZone
+} from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from '../../../../../apps/constants/general/constant';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
-import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import { URBAN_COLUMNS, RURAL_COLUMNS, GEOECONOMICA_COLUMNS } from '../../../../../apps/constants/economic-mod-land/zone-constants';
+import {
+  TerritorialOrganizationService
+} from 'src/app/apps/services/territorial-organization/territorial-organization.service';
+import {
+  GEOECONOMICA_COLUMNS,
+  RURAL_COLUMNS,
+  URBAN_COLUMNS
+} from '../../../../../apps/constants/economic-mod-land/zone-constants';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
-import { ZoneManagerComponent } from '../../../../../apps/components/configuration/economic-mod-land/zone-manager/zone-manager.component';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
+import {
+  ZoneManagerComponent
+} from '../../../../../apps/components/configuration/economic-mod-land/zone-manager/zone-manager.component';
 
 @Component({
   selector: 'vex-economic-mod-land',
@@ -63,8 +72,6 @@ import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/ve
     VexSecondaryToolbarComponent,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
-
     /* Custom Components */
     ZoneManagerComponent
   ],

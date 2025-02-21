@@ -1,8 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  NavigationItem,
-  NavigationLink
-} from '../../../../core/navigation/navigation-item.interface';
+import { NavigationItem, NavigationLink } from '../../../../core/navigation/navigation-item.interface';
 import { filter, map, startWith } from 'rxjs/operators';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { NavigationService } from '../../../../core/navigation/navigation.service';
@@ -10,13 +7,7 @@ import { trackByRoute } from '@vex/utils/track-by';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRippleModule } from '@angular/material/core';
-import {
-  AsyncPipe,
-  NgClass,
-  NgFor,
-  NgIf,
-  NgTemplateOutlet
-} from '@angular/common';
+import { AsyncPipe, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'vex-navigation-item',

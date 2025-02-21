@@ -1,4 +1,3 @@
-
 import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
@@ -16,19 +15,16 @@ import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  PAGE_SIZE_OPTION_ADDRESS,
-  PAGE_SIZE_SORT,
-  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
-  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_SMALL,
-  TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
   PAGE_SIZE_OPTION_ADJACENT,
-  TABLE_COLUMN_PROPERTIES_ADJACENT
+  PAGE_SIZE_SORT,
+  TABLE_COLUMN_PROPERTIES_ADJACENT,
+  TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -54,12 +50,11 @@ import {
 } from '../../../interfaces/information-property/content-information-construction';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { DetailInformationConstructionsPropertyComponent } from '../information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
-import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from '../information-constructions-property/edit-information-constructions-property/edit-information-constructions-property.component';
-import { EditInformationConstructionDialogComponent } from '../information-constructions-property/edit-information-construction-dialog/edit-information-construction-dialog.component';
+import {
+  DetailInformationConstructionsPropertyComponent
+} from '../information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
 import { BasicInformationAdjacent } from 'src/app/apps/interfaces/information-property/basic-information-adjacent';
 import { Pegeable } from '../../../interfaces/general/pegeable.model';
 

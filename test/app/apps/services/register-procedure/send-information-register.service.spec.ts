@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
+import {
+  SendInformationRegisterService
+} from '../../../../../src/app/apps/services/register-procedure/send-information-register.service';
 
 
 describe(SendInformationRegisterService.name, () => {
@@ -13,5 +15,4 @@ describe(SendInformationRegisterService.name, () => {
   test('should be created', () => {
     expect(service).toBeTruthy();
   });
-
 });

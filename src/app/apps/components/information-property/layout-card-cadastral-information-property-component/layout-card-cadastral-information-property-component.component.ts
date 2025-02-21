@@ -1,28 +1,19 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogClose,
-  MatDialogRef,
-  MatDialogTitle
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogClose, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
-import { CadastralInformationPropertyComponent } from '../cadastral-information-property/cadastral-information-property.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import {
-  TWO_POINT_,
-  TYPEINFORMATION_VISUAL
-} from '../../../constants/general/constant';
+  CadastralInformationPropertyComponent
+} from '../cadastral-information-property/cadastral-information-property.component';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { TWO_POINT_, TYPEINFORMATION_VISUAL } from '../../../constants/general/constant';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
-import {
-  ObjectSchema,
-  TypeInformation
-} from '../../../interfaces/general/content-info';
+import { ObjectSchema, TypeInformation } from '../../../interfaces/general/content-info';
 import {
   CONSTANT_INFOMATION_PREDIAL,
   CONSTANT_INFOMATION_PREDIAL_HIST,
@@ -30,7 +21,9 @@ import {
   CONSTANT_INFOMATION_PREDIAL_TEMP
 } from '../../../constants/general/constantLabels';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 
 @Component({
   selector: 'vex-layout-card-cadastral-information-property-component',

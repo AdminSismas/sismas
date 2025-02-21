@@ -3,7 +3,6 @@ import {
   GeographicViewerEmbeddedComponent
 } from '../../../../../../src/app/apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 
-
 describe(GeographicViewerEmbeddedComponent.name, () => {
   let component: GeographicViewerEmbeddedComponent;
   let fixture: ComponentFixture<GeographicViewerEmbeddedComponent>;
@@ -12,7 +11,7 @@ describe(GeographicViewerEmbeddedComponent.name, () => {
     await TestBed.configureTestingModule({
       imports: [GeographicViewerEmbeddedComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(GeographicViewerEmbeddedComponent);
     component = fixture.componentInstance;

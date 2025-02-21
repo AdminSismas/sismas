@@ -1,17 +1,9 @@
 // Angular framework
 import { AsyncPipe } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  computed,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, computed, Input, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
 // Vex
-
 // Material
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,12 +13,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {
-  PAGE,
-  PAGE_OPTION__10_20_50_100,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION
-} from '../../../constants/general/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE } from '../../../constants/general/constant';
 
 // Custom
 import { CreateSignatureComponent } from './create-signature/create-signature.component';

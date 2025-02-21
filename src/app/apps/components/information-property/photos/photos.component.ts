@@ -1,6 +1,8 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from "../header-cadastral-information-property/header-cadastral-information-property.component";
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +11,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
-import { PhotosService, Photo } from 'src/app/apps/services/photos/photos.service';
+import { PhotosService } from 'src/app/apps/services/photos/photos.service';
 
 
 @Component({

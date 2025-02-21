@@ -13,8 +13,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TableDigitalizedSignaturesComponent } from 'src/app/apps/components/configuration/digitalized-signatures/table-digitalized-signatures.component';
-import { CreateSignatureComponent } from 'src/app/apps/components/configuration/digitalized-signatures/create-signature/create-signature.component';
+import {
+  TableDigitalizedSignaturesComponent
+} from 'src/app/apps/components/configuration/digitalized-signatures/table-digitalized-signatures.component';
+import {
+  CreateSignatureComponent
+} from 'src/app/apps/components/configuration/digitalized-signatures/create-signature/create-signature.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable } from 'rxjs';
 

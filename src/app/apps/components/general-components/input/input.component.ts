@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,9 +9,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputType } from '../../../interfaces/general/content-info';
@@ -22,8 +19,6 @@ import { InputType } from '../../../interfaces/general/content-info';
   imports: [
     ReactiveFormsModule,
     MatDialogModule,
-    NgFor,
-    NgIf,
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
@@ -31,9 +26,6 @@ import { InputType } from '../../../interfaces/general/content-info';
     MatFormFieldModule,
     MatInputModule,
     MatTabsModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective,
     MatSelectModule,
     MatTooltipModule,
     NgClass

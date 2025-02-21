@@ -1,14 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI ,PROCESO_CREAR_DIRECCION ,PROCESO_ACTUALIZAR_DIRECCION} from '../../../../constants/general/constant';
+import {
+  GUION,
+  NAME_NO,
+  NAME_NO_DISPONIBLE,
+  NAME_SI,
+  PROCESO_ACTUALIZAR_DIRECCION,
+  PROCESO_CREAR_DIRECCION
+} from '../../../../constants/general/constant';
 import { environment } from 'src/environments/environments';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { CreateBasicInformationAddress, DetailBasicInformationAddress } from 'src/app/apps/interfaces/information-property/detail-basic-information-address';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  CreateBasicInformationAddress,
+  DetailBasicInformationAddress
+} from 'src/app/apps/interfaces/information-property/detail-basic-information-address';
 import { BasicInformationAddress } from 'src/app/apps/interfaces/information-property/basic-information-address';
 import { lastValueFrom } from 'rxjs';
 import { stagger40ms } from '@vex/animations/stagger.animation';

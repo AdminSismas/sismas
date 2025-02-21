@@ -1,10 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, computed, inject, Input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  inject,
+  Input,
+  OnInit,
+  signal,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/general/constant';
+import {
+  MODAL_SMALL,
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TYPEINFORMATION_EDITION
+} from '../../../constants/general/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';

@@ -34,7 +34,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 // recursos de archivos locales
 import { contentInfoProcedures } from '../../../interfaces/general/content-info-procedures.model';
-import { MY_DATE_FORMATS, PAGE, PAGE_SIZE, TABLE_COLUMN_PROPERTIES } from '../../../constants/general/procedures.constant';
+import {
+  MY_DATE_FORMATS,
+  PAGE,
+  PAGE_SIZE,
+  TABLE_COLUMN_PROPERTIES
+} from '../../../constants/general/procedures.constant';
 import { ProceduresCollection } from '../../../interfaces/tables/procedures-progress.model';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProceduresService } from '../../../services/general/procedures.service';

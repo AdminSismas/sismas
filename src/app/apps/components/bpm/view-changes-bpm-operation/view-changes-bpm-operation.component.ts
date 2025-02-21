@@ -2,16 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import {
   MAT_DIALOG_DATA,
-  MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
-import { ComboxColletionComponent } from '../../general-components/combox-colletion/combox-colletion.component';
+import { NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputComponent } from '../../general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -21,8 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatListModule } from '@angular/material/list';
 import { CONSTANT_CHANGE_UNITED_PREDIAL } from '../../../constants/general/constantLabels';
 import { TWO_POINT_ } from '../../../constants/general/constant';
@@ -31,13 +26,9 @@ import { TWO_POINT_ } from '../../../constants/general/constant';
   selector: 'vex-view-changes-bpm-operation',
   standalone: true,
   imports: [
-    AsyncPipe,
-    ComboxColletionComponent,
     FormsModule,
-    InputComponent,
     MatAutocompleteModule,
     MatButtonModule,
-    MatDialogActions,
     MatDialogClose,
     MatDialogContent,
     MatDialogTitle,
@@ -49,12 +40,9 @@ import { TWO_POINT_ } from '../../../constants/general/constant';
     MatOptionModule,
     MatTabsModule,
     ReactiveFormsModule,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
     MatListModule,
     MatRippleModule,
     NgIf,
-    DatePipe,
     NgForOf
   ],
   templateUrl: './view-changes-bpm-operation.component.html',

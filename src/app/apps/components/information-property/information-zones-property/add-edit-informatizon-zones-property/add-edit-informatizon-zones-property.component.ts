@@ -3,7 +3,7 @@
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { SweetAlert2Module, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -22,7 +22,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
 import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/geo-economic-zone';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { InputComponent } from '../../../general-components/input/input.component';
 import { RuralPhysicalZone } from 'src/app/apps/interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from 'src/app/apps/interfaces/information-property/urban-physical-zone';

@@ -17,7 +17,9 @@ import {
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
-  TABLE_COLUMN_PROPERTIES_APPRAISALS, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
+  TABLE_COLUMN_PROPERTIES_APPRAISALS,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,7 +29,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { environment } from '../../../../../environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
@@ -82,7 +84,6 @@ import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
     MatMenuModule,
     MatCheckboxModule,
     FormsModule,
-    CurrencyPipe,
     MatRippleModule,
     CurrencyFormatPipe
   ],

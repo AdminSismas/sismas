@@ -3,8 +3,7 @@ import {
   DocumentViewerWorkHistoricalComponent
 } from '../../../../../../../../src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
 
-
-describe('DocumentViewerWorkHistoricalComponent', () => {
+describe(DocumentViewerWorkHistoricalComponent.name, () => {
   let component: DocumentViewerWorkHistoricalComponent;
   let fixture: ComponentFixture<DocumentViewerWorkHistoricalComponent>;
 

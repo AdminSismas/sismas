@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,7 +16,7 @@ import { ComboxColletionComponent } from '../../../general-components/combox-col
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { ParamsRrright, AddPropertyOwnerData, Owners } from 'src/app/apps/interfaces/bpm/changes-property-owner';
+import { AddPropertyOwnerData, Owners, ParamsRrright } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { PeopleService } from '../../../../services/users/people.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -16,7 +24,9 @@ import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+import {
+  CreatePeopleComponent
+} from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({

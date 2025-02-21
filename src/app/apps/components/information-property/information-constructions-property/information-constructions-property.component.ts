@@ -15,6 +15,7 @@ import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
@@ -23,8 +24,7 @@ import {
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
   TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_SMALL
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -53,10 +53,17 @@ import {
 } from './detail-information-constructions-property/detail-information-constructions-property.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from './edit-information-constructions-property/edit-information-constructions-property.component';
-import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
+import {
+  AddEditInformationConstructionI,
+  EditInformationConstructionsPropertyComponent
+} from './edit-information-constructions-property/edit-information-constructions-property.component';
+import {
+  BasicInformationConstruction
+} from 'src/app/apps/interfaces/information-property/basic-information-construction';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditInformationConstructionDialogComponent } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
+import {
+  EditInformationConstructionDialogComponent
+} from './edit-information-construction-dialog/edit-information-construction-dialog.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({

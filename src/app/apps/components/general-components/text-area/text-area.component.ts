@@ -1,5 +1,5 @@
-import { NgClass, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,12 +10,11 @@ import { getRandomInt } from '../../../utils/general';
   selector: 'vex-text-area',
   standalone: true,
   imports: [
-    NgIf,
     NgClass,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule,
+    MatIconModule
   ],
   templateUrl: './text-area.component.html',
   styleUrl: './text-area.component.scss',

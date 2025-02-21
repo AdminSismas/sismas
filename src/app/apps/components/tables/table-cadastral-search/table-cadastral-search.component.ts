@@ -12,22 +12,14 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormControl
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -51,21 +43,23 @@ import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { FilterCadastralSearchComponent } from './filter-cadastral-search/filter-cadastral-search.component';
 import {
+  INFORMATION_HISTORICAL,
+  LIST_SCHEMAS_CONTROL_HISTORY_PRIME,
   LIST_SCHEMAS_CONTROL_MAIN,
+  MODAL_LARGE,
+  MODAL_MEDIUM,
+  MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES,
-  TYPEINFORMATION_VISUAL,
-  MODAL_LARGE,
-  MODAL_MEDIUM,
-  MODAL_SMALL,
-  INFORMATION_HISTORICAL,
-  TITULO_PAGE_CADASTRAL_DA,
   TITULO_PAGE_AVANZADA,
-  LIST_SCHEMAS_CONTROL_HISTORY_PRIME
+  TITULO_PAGE_CADASTRAL_DA,
+  TYPEINFORMATION_VISUAL
 } from '../../../constants/general/constant';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import {
+  LayoutCardCadastralInformationPropertyComponentComponent
+} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';

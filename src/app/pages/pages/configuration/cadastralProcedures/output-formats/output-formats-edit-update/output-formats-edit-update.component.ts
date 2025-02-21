@@ -1,11 +1,13 @@
-import { AfterViewInit, Component, DestroyRef, Inject, inject, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import {  FooterTemplateModel, HeaderTemplateModel, OutFormatModel } from '../../../../../../apps/interfaces/general/out-format.model';
+import {
+  FooterTemplateModel,
+  HeaderTemplateModel,
+  OutFormatModel
+} from '../../../../../../apps/interfaces/general/out-format.model';
 
 import { QuillEditorComponent } from 'ngx-quill';
-import { CommonModule, NgClass, NgForOf, NgIf } from '@angular/common';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -14,7 +16,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatCardModule } from '@angular/material/card';
-import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,7 +24,6 @@ import { InputComponent } from '../../../../../../apps/components/general-compon
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../apps/constants/general/constant';
-
 
 
 // AddEditInformationDocumentAssociated
@@ -52,12 +53,9 @@ export interface AddOutputFormats{
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
     FormsModule,
-     NgClass,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     MatFormFieldModule,
-    InputComponent,
+    InputComponent
   ],
   templateUrl: './output-formats-edit-update.component.html',
   styleUrls: [

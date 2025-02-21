@@ -8,11 +8,7 @@ import {
   UntypedFormControl,
   Validators
 } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,17 +23,18 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '../../../../interfaces/general/search-data.model';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition
-} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
 import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { InputComponent } from '../../../general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { TerritorialOrganizationService } from '../../../../services/territorial-organization/territorial-organization.service';
+import {
+  TerritorialOrganizationService
+} from '../../../../services/territorial-organization/territorial-organization.service';
 import { Department } from '../../../../interfaces/territorial-organization/department.model';
 import { Municipality } from '../../../../interfaces/territorial-organization/municipality.model';
 import {
+  LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
+  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL,
   LIST_FORM_CADASTRAL_0,
   LIST_FORM_CADASTRAL_1,
   LIST_FORM_CADASTRAL_2,
@@ -46,10 +43,8 @@ import {
   LIST_FORM_CADASTRAL_5,
   LIST_ZONES_RURAL,
   NAME_CODENAME,
-  STRING_INFORMATION_NOT_FOUND,
-  LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
-  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL,
-  NUMERO_PREDIAL_NACIONAL
+  NUMERO_PREDIAL_NACIONAL,
+  STRING_INFORMATION_NOT_FOUND
 } from '../../../../constants/general/constant';
 import { Zone } from '../../../../interfaces/territorial-organization/zone.model';
 import { Sector } from '../../../../interfaces/territorial-organization/sector.model';

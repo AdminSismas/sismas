@@ -3,13 +3,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 // Vex
-
 // Material
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -17,10 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 // Custom
 import { DynamicFormsComponent } from '../../../forms/dynamic-forms/dynamic-forms.component';
 import { JSONInput } from '../../../../interfaces/forms/dynamic-forms';
-import {
-  CREATE_SIGNATURE_INPUTS,
-  SEARCH_INPUTS
-} from '../../../../constants/general/digitalized-signatures.constants';
+import { CREATE_SIGNATURE_INPUTS, SEARCH_INPUTS } from '../../../../constants/general/digitalized-signatures.constants';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

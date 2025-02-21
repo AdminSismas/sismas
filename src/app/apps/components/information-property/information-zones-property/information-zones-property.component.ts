@@ -1,28 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  computed,
+  inject,
   Input,
   OnChanges,
   OnInit,
+  signal,
   SimpleChanges,
   TemplateRef,
-  ViewChild,
-  computed,
-  inject,
-  signal,
-  AfterViewInit,
-  ChangeDetectorRef
+  ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
+  MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  TYPEINFORMATION_EDITION,
-  MODAL_SMALL
+  TYPEINFORMATION_EDITION
 } from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -30,19 +32,12 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import {
-  MatDialog,
-  MatDialogModule
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { Observable } from 'rxjs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import {
-  CommonModule,
-  NgForOf,
-  NgIf
-} from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -55,22 +50,27 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { DetailInformationPropertyZonesComponent } from './detail-information-property-zones/detail-information-property-zones.component';
+import {
+  DetailInformationPropertyZonesComponent
+} from './detail-information-property-zones/detail-information-property-zones.component';
 import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
-import { AddEditInformatizonZonesPropertyComponent } from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
+import {
+  AddEditInformatizonZonesPropertyComponent
+} from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { DeleteInformationZonesPropertyComponent } from './delete-information-zones-property/delete-information-zones-property.component';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
-import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
+import {
+  DeleteInformationZonesPropertyComponent
+} from './delete-information-zones-property/delete-information-zones-property.component';
+import {
+  GeoEconomicZonesPropertyComponent
+} from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
+import {
+  PhysicalZonesPropertyComponent
+} from './components-child/physical-zones-property/physical-zones-property.component';
 
 @Component({
   selector: 'vex-information-zones-property',
@@ -94,7 +94,6 @@ import { PhysicalZonesPropertyComponent } from './components-child/physical-zone
     MatInputModule,
     MatOptionModule,
     MatTabsModule,
-    NgForOf,
     NgIf,
     ReactiveFormsModule,
     MatSlideToggleModule,
@@ -109,7 +108,6 @@ import { PhysicalZonesPropertyComponent } from './components-child/physical-zone
     MatDialogModule,
     CommonModule,
     MatTableModule,
-    CurrencyLandsPipe,
     GeoEconomicZonesPropertyComponent,
     PhysicalZonesPropertyComponent
   ],
