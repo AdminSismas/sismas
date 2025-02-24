@@ -5,6 +5,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'vex-cadastral-management-records',
@@ -13,7 +14,8 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
     InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
+    VexSecondaryToolbarComponent,
+    MatIconButton
   ],
   templateUrl: './cadastral-management-records.component.html',
   styleUrl: './cadastral-management-records.component.scss'
