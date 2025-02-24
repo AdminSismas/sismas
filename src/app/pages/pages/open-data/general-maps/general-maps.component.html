@@ -13,97 +13,50 @@
       <vex-page-layout-content class="w-full justify-between sm:px-1 xl:px-5 py-2 container vexP-0">
         <form [formGroup]="form">
           <div class="flex flex-col sm:flex-row">
+
             <!-- Campo departamento -->
-            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1 my-form-field">
-              <mat-label>Departamentos</mat-label>
-              <input type="text"
-                     aria-label="Number"
-                     matInput
-                     formControlName="department"
-                     placeholder="Seleccione un departamento"
-                     [matAutocomplete]="autoDepartment">
-              <mat-autocomplete autoActiveFirstOption #autoDepartment="matAutocomplete" [panelWidth]="350"
-                                (optionSelected)="loadMunicipalitiesInformation($event.option.value, true)">
-                @if (filteredOptionsDepartments$ | async; as departments) {
-                  @for (option of departments; track option.divpolLvl1Code; ) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName }}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{ STRING_INFORMATION_NOT_FOUND }}
-                    </mat-option>
-                  }
-                } @else {
-                  <mat-option>
-                    {{ STRING_INFORMATION_NOT_FOUND }}
-                  </mat-option>
-                }
-              </mat-autocomplete>
-            </mat-form-field>
+            <vex-combox
+              idCombo="GeneralMapDepartment"
+              label="Departamentos"
+              placeholder="Seleccione un departamento"
+              [valueKey]="'codeName'"
+              [fielKey]="'codeName'"
+              [formControlNameCombobox]="'department'"
+              [options]="optionsDeparments"
+              (selectionChange)="loadMunicipalitiesInformation($event, true)"
+              cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
+              class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+            ></vex-combox>
 
             <!-- Campo municipio -->
-            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1 my-form-field">
-              <mat-label>Municipio</mat-label>
-              <input type="text"
-                     aria-label="Number"
-                     matInput
-                     formControlName="municipality"
-                     placeholder="Seleccione un municipio"
-                     [matAutocomplete]="autoMunicipality">
-              <mat-autocomplete autoActiveFirstOption #autoMunicipality="matAutocomplete" [panelWidth]="350"
-                                (optionSelected)="loadZonesInformation($event.option.value, true)">
-                @if (filteredOptionsMunicipalities$ | async; as municipalities) {
-                  @for (option of municipalities; track option.divpolLvl2Code; ) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName }}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{ STRING_INFORMATION_NOT_FOUND }}
-                    </mat-option>
-                  }
-                } @else {
-                  <mat-option>
-                    {{ STRING_INFORMATION_NOT_FOUND }}
-                  </mat-option>
-                }
-              </mat-autocomplete>
-            </mat-form-field>
+            <vex-combox
+              idCombo="GeneralMapMunicipy"
+              label="Municipio"
+              placeholder="Seleccione un municipio"
+              [valueKey]="'codeName'"
+              [fielKey]="'codeName'"
+              [formControlNameCombobox]="'municipality'"
+              [options]="optionsMunicipalities"
+              (selectionChange)="loadZonesInformation($event, true)"
+              cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
+              class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+            ></vex-combox>
 
             <!-- Campo zona -->
-            <mat-form-field class="sm:ml-2 sm:mr-2 flex-1 my-form-field">
-              <mat-label>Zona</mat-label>
-              <input type="text"
-                     aria-label="Number"
-                     matInput
-                     formControlName="zone"
-                     placeholder="Seleccione una zona"
-                     [matAutocomplete]="autoZone">
-              <mat-autocomplete autoActiveFirstOption #autoZone="matAutocomplete" [panelWidth]="350">
-                @if (filteredoptionsZones$ | async; as zones) {
-                  @for (option of zones; track option.id; ) {
-                    <mat-option
-                      [value]="option.codeName">
-                      {{ option.codeName }}
-                    </mat-option>
-                  } @empty {
-                    <mat-option>
-                      {{ STRING_INFORMATION_NOT_FOUND }}
-                    </mat-option>
-                  }
-                } @else {
-                  <mat-option>
-                    {{ STRING_INFORMATION_NOT_FOUND }}
-                  </mat-option>
-                }
-              </mat-autocomplete>
-            </mat-form-field>
+            <vex-combox
+              idCombo="GeneralMapZona"
+              label="Zona"
+              placeholder="Seleccione una zona"
+              [valueKey]="'codeName'"
+              [fielKey]="'codeName'"
+              [formControlNameCombobox]="'zone'"
+              [options]="optionsZones"
+              cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
+              class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+            ></vex-combox>
 
             <!-- Boton Buscar -->
-            <mat-dialog-actions align="center">
+            <mat-dialog-actions align="center" class="sm:ml-2 sm:mr-2">
               <button
                 (click)="searchccZoneBySelection()"
                 color="primary"

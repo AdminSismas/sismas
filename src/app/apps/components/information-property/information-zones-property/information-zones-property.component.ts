@@ -21,7 +21,7 @@ import {
   PAGE_SIZE,
   TYPEINFORMATION_EDITION,
   MODAL_SMALL
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -50,7 +50,7 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
-import { TypeInformation } from '../../../interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MatPaginator,

@@ -15,7 +15,7 @@ import { DataFolio } from '../../interfaces/information-property/snr-folio-info'
 import { DataSource } from '../../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../../interfaces/information-property/snr-person-info';
 import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
-import { ZoneBAUnit } from '../interfaces/information-property/zone-baunit';
+import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
 
 export const GUION = '-';
 export const SPACE = ' ';

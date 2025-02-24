@@ -48,7 +48,7 @@ import {
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_PHYSICAL,
   TYPEINFORMATION_EDITION
-} from 'src/app/apps/constants/constant';
+} from 'src/app/apps/constants/general/constant';
 import { DeleteInformationZonesPropertyComponent } from '../../delete-information-zones-property/delete-information-zones-property.component';
 import {
   ZoneBAUnit,
@@ -58,8 +58,8 @@ import { DetailInformationPropertyZonesComponent } from '../../detail-informatio
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { PAGE } from 'src/app/apps/constants/procedures.constant';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { PAGE } from 'src/app/apps/constants/general/procedures.constant';
+import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
 import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
 
