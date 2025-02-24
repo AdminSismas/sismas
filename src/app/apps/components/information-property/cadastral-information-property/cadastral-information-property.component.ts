@@ -228,9 +228,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
     this.divPolLv1 = this.baunitHead.cadastralNumber!.substring(0, 2);
     this.divPolLv2 = this.baunitHead.cadastralNumber!.substring(2, 5);
 
-    console.log(this.baunitHead);
-
-
     this.form = this.fb.group({
       history: [ null],
       

@@ -12,7 +12,7 @@ import { InfoOwners } from '../../interfaces/information-property/info-owners';
 import { PageSearchData } from '../../interfaces/page-search-data.model';
 import { ContentInformationConstruction, CreateBasicInformationConstruction } from '../../interfaces/information-property/content-information-construction';
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
-import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
+import { ZoneBAUnit, ZoneBAUnitResponse } from '../../interfaces/information-property/zone-baunit';
 import { EVIRONMENT_CC_DIRECCION } from '../../constants/constant';
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
@@ -197,7 +197,7 @@ export class InformationPropertyService {
 
   getByBauniFisica(
     id: string,
-  ): Observable<ZoneBAUnit[]> {
+  ): Observable<ZoneBAUnitResponse[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
     const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdFisicas}`;

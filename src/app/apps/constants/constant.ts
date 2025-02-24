@@ -15,6 +15,7 @@ import { DataFolio } from '../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../interfaces/information-property/snr-person-info';
 import { BasicInformationAdjacent } from '../interfaces/information-property/basic-information-adjacent';
+import { ZoneBAUnit } from '../interfaces/information-property/zone-baunit';
 
 export const GUION = '-';
 export const SPACE = ' ';
@@ -344,6 +345,44 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
   }
 ];
 
+export const TABLE_COLUMN_PROPERTIES_PHYSICAL: TableColumn<ZoneBAUnit>[] = [
+  {
+    label: 'Detalle',
+    property: 'details',
+    type: 'image',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Código',
+    property: 'zoneCode',
+    type: 'operationType',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Area',
+    property: 'baUnitZonaAreaE',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Vigencia',
+    property: 'vigencia',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Común',
+    property: 'esComun',
+    type: 'operationType',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  }
+];
+
 export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformationConstruction>[] = [
   {
     label: 'Detalle',
@@ -354,13 +393,13 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
   },
   {
     label: 'Código',
-    property: 'getZoneCode',
+    property: 'otro',
     type: 'badge',
     visible: true
   },
   {
     label: 'Área',
-    property: 'baUnitZonaArea',
+    property: 'baUnitZonaAreaE',
     type: 'text',
     visible: true
   },

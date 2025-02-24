@@ -2,14 +2,11 @@
 import {
   Component,
   Input,
-  OnChanges,
   OnInit,
-  SimpleChanges,
   TemplateRef,
   ViewChild,
   computed,
   inject,
-  signal,
   AfterViewInit,
   ChangeDetectorRef
 } from '@angular/core';
@@ -49,7 +46,6 @@ import {
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
 import { MODAL_SMALL, NAME_NO_DISPONIBLE, NAVIGATION_ITEMS_INFORMACION_PROPERTIY, PAGE_OPTION__10_20_50_100, PAGE_SIZE, TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC, TYPEINFORMATION_EDITION } from 'src/app/apps/constants/constant';
 import { DeleteInformationZonesPropertyComponent } from '../../delete-information-zones-property/delete-information-zones-property.component';
@@ -98,14 +94,12 @@ import { Observable } from 'rxjs';
     MatDialogModule,
     CommonModule,
     MatTableModule,
-    CurrencyLandsPipe
-
   ],
   templateUrl: './geo-economic-zones-property.component.html',
   styleUrl: './geo-economic-zones-property.component.scss'
 })
 export class GeoEconomicZonesPropertyComponent 
-implements OnInit, OnChanges, AfterViewInit {
+implements OnInit, AfterViewInit {
 
    isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     seeAcctionsComponents = false;
@@ -186,9 +180,7 @@ implements OnInit, OnChanges, AfterViewInit {
     protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
     protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
   
-    constructor(private readonly layoutService: VexLayoutService, private changeDetectorRef: ChangeDetectorRef) {
-      console.log('constructor', this.typeInformation);
-    }
+    constructor(private readonly layoutService: VexLayoutService, private changeDetectorRef: ChangeDetectorRef) {}
 
     get visibleColumns() {
       return this.columns
@@ -198,10 +190,10 @@ implements OnInit, OnChanges, AfterViewInit {
   
   
     getZoneCode(row: ZoneBAUnit): string {
-      if (row.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode) {
-        return row.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode.toString();
-      } else if (row.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode) {
-        return row.ccZonaHomoFisicaUr.zonaHomoFisicaUrCode;
+      if (row.zonaHomoFisicaRuCode) {
+        return row.zonaHomoFisicaRuCode?.toString();
+      } else if (row.zonaHomoFisicaUrCode) {
+        return row.zonaHomoFisicaUrCode;
       }
       return NAME_NO_DISPONIBLE;
     }
@@ -245,7 +237,6 @@ implements OnInit, OnChanges, AfterViewInit {
   
     captureBasicInformationSubscribe(result: BasicInformationProperty): void {
       this.dataBasicInformation = result;
-      console.log(this.dataBasicInformation.cadastralNumberFormat);
     }
   
     determinePropertyType(): string {
@@ -261,7 +252,6 @@ implements OnInit, OnChanges, AfterViewInit {
         9
       );
   
-      console.log('typeCode', typeCode);
       if (typeCode === '00') {
         return 'Rural';
       } else {
@@ -313,12 +303,6 @@ implements OnInit, OnChanges, AfterViewInit {
       this.searchInformationsZonesProperty();
       this.searchInformationsGeoeconomicZonesProperty();
       this.searchBasicInformationProperty();
-    }
-  
-    ngOnChanges(changes: SimpleChanges) {
-      if (changes['typeInformation']) {
-        console.log('typeInformation', this.typeInformation);
-      }
     }
   
     trackByProperty<T>(index: number, column: TableColumn<T>): string {
@@ -497,8 +481,6 @@ implements OnInit, OnChanges, AfterViewInit {
   
       const isEdit = data && data.baUnitZonaId;
   
-      console.log(this.baunitId);
-  
       this.matDialog
         .open(AddEditInformatizonZonesPropertyComponent, {
           ...MODAL_SMALL,
@@ -522,8 +504,6 @@ implements OnInit, OnChanges, AfterViewInit {
       const propertyType = 'Geoeconomica';
   
       const isEdit = data && data.baUnitZonaId;
-  
-      console.log(this.baunitId);
   
       this.matDialog
         .open(AddEditInformatizonZonesPropertyComponent, {

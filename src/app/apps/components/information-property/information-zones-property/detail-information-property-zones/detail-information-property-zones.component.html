@@ -2,14 +2,14 @@
   <h4 class="subheading-1 m-0 flex-auto">
     Código -
     <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralCode">
-      {{ data.zone.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode || NAME_NO_DISPONIBLE }}
+      {{ data.zone.zonaHomoFisicaUrCode || NAME_NO_DISPONIBLE }}
     </ng-container>
     <ng-template #ruralCode>
       <ng-container *ngIf="data.propertyType === 'Geoeconómica'; else finalCode">
-        {{ data.zone.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode || NAME_NO_DISPONIBLE }}
+        {{ data.zone.zonaHomoGeoEconomicaCode || NAME_NO_DISPONIBLE }}
       </ng-container>
       <ng-template #finalCode>
-        {{ data.zone.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode || NAME_NO_DISPONIBLE }}
+        {{ data.zone.zonaHomoFisicaRuCode || NAME_NO_DISPONIBLE }}
       </ng-template>
     </ng-template>
   </h4>
@@ -47,7 +47,7 @@
         {{ data.zone.ccZonaHomoFisicaUr?.domUsoSueloUrbanoTipo || NAME_NO_DISPONIBLE }}
       </ng-container>
       <ng-template #ruralUsoSuelo>
-        {{ data.zone.ccZonaHomoFisicaRu?.domUsoSueloRural || NAME_NO_DISPONIBLE }}
+        {{ data.zone.ccZonaHomoFisicaRu?.domUsoSueloRuralTipo || NAME_NO_DISPONIBLE }}
       </ng-template>
     </h2>
   </div>
@@ -60,7 +60,7 @@
         {{ data.zone.ccZonaHomoFisicaUr?.domInfluenciaVialUrbanaTipo || NAME_NO_DISPONIBLE }}
       </ng-container>
       <ng-template #ruralInfluencia>
-        {{ data.zone.ccZonaHomoFisicaRu?.domInfluenciaVialRural || NAME_NO_DISPONIBLE }}
+        {{ data.zone.ccZonaHomoFisicaRu?.domInfluenciaVialRuralTipo || NAME_NO_DISPONIBLE }}
       </ng-template>
     </h2>
   </div>
