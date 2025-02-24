@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
   computed,
   inject,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  TemplateRef,
-  ViewChild
+  AfterViewInit,
+  ChangeDetectorRef
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -33,39 +31,37 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import {
-  AddEditInformatizonZonesPropertyComponent
-} from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
+import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
 import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
+  TABLE_COLUMN_PROPERTIES_PHYSICAL,
   TYPEINFORMATION_EDITION
-} from 'src/app/apps/constants/general/constant';
+} from 'src/app/apps/constants/constant';
+import { DeleteInformationZonesPropertyComponent } from '../../delete-information-zones-property/delete-information-zones-property.component';
 import {
-  DeleteInformationZonesPropertyComponent
-} from '../../delete-information-zones-property/delete-information-zones-property.component';
-import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
-import {
-  DetailInformationPropertyZonesComponent
-} from '../../detail-information-property-zones/detail-information-property-zones.component';
+  ZoneBAUnit,
+  ZoneBAUnitResponse
+} from 'src/app/apps/interfaces/information-property/zone-baunit';
+import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import {
-  InformationPropertyService
-} from 'src/app/apps/services/territorial-organization/information-property.service';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { PAGE } from 'src/app/apps/constants/general/procedures.constant';
-import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
+import { PAGE } from 'src/app/apps/constants/procedures.constant';
+import { TypeInformation } from 'src/app/apps/interfaces/content-info';
 import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
-
 
 @Component({
   selector: 'vex-physical-zones-property',
@@ -106,8 +102,7 @@ import { Observable } from 'rxjs';
   templateUrl: './physical-zones-property.component.html',
   styleUrl: './physical-zones-property.component.scss'
 })
-export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterViewInit {
-
+export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents = false;
 
@@ -126,8 +121,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
-  columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC;
-
+  columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_PHYSICAL;
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatPaginator, { static: true }) paginator2?: MatPaginator;
@@ -151,14 +145,12 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
   dataSource: MatTableDataSource<ZoneBAUnit> =
     new MatTableDataSource<ZoneBAUnit>([]);
 
-
   dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnit> =
     new MatTableDataSource<ZoneBAUnit>([]);
   // columnsGeoeconomicZones = signal(this.TABLE_COLUMNS);
   // textColumnsGeoeconomicZones = computed(() =>
   //   this.columnsGeoeconomicZones().filter((column) => column.type === 'text')
   // );
-
 
   actionBtns = computed(() => {
     return [
@@ -187,24 +179,15 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
   protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
-  constructor(private readonly layoutService: VexLayoutService, private changeDetectorRef: ChangeDetectorRef) {
-    console.log('constructor', this.typeInformation);
-  }
+  constructor(
+    private readonly layoutService: VexLayoutService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)
       .map((column) => column.property);
-  }
-
-
-  getZoneCode(row: ZoneBAUnit): string {
-    if (row.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode) {
-      return row.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode.toString();
-    } else if (row.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode) {
-      return row.ccZonaHomoFisicaUr.zonaHomoFisicaUrCode;
-    }
-    return NAME_NO_DISPONIBLE;
   }
 
   getZonevalidity(row: ZoneBAUnit): string {
@@ -246,7 +229,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
 
   captureBasicInformationSubscribe(result: BasicInformationProperty): void {
     this.dataBasicInformation = result;
-    console.log(this.dataBasicInformation.cadastralNumberFormat);
   }
 
   determinePropertyType(): string {
@@ -262,7 +244,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
       9
     );
 
-    console.log('typeCode', typeCode);
     if (typeCode === '00') {
       return 'Rural';
     } else {
@@ -287,7 +268,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
       this.dataSourceGeoeconomicZones.sort = this.sort2;
     }
   }
-
 
   refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
     const { pageIndex, pageSize } = pageEvent;
@@ -316,12 +296,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
     this.searchBasicInformationProperty();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['typeInformation']) {
-      console.log('typeInformation', this.typeInformation);
-    }
-  }
-
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
   }
@@ -331,49 +305,47 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
       this.searchInformationsZonesProperty();
       this.searchInformationsGeoeconomicZonesProperty();
       this.searchBasicInformationProperty();
-
     }
   }
 
   searchInformationsZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
 
-    this.informationPropertyService.getByBauniFisica(this.baunitId)
-      .subscribe({
-        next: (result: ZoneBAUnit[]) => {
-          this.zoneBAUnit = result;
-          this.dataSource.data = this.zoneBAUnit;
-          this.totalPhysicalElements = this.zoneBAUnit.length;
+    this.informationPropertyService.getByBauniFisica(this.baunitId).subscribe({
+      next: (result: ZoneBAUnitResponse[]) => {
+        result.forEach((item: ZoneBAUnitResponse) => {
+          const zone = new ZoneBAUnit(item);
+          this.zoneBAUnit.push(zone);
+        });
+        this.dataSource.data = this.zoneBAUnit;
+        this.totalPhysicalElements = this.zoneBAUnit.length;
 
-          if (this.paginator) {
-            this.dataSource.paginator = this.paginator;
-            this.changeDetectorRef.markForCheck();
-          }
-        },
-        error: () => this.captureInformationSubscribeError()
-      });
+        if (this.paginator) {
+          this.dataSource.paginator = this.paginator;
+          this.changeDetectorRef.markForCheck();
+        }
+      },
+      error: () => this.captureInformationSubscribeError()
+    });
   }
-
 
   searchInformationsGeoeconomicZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
 
-    this.informationPropertyService.getByBauniEcono(this.baunitId)
-      .subscribe({
-        next: (result: ZoneBAUnit[]) => {
-          this.zoneBAUnitGeoeconomic = result;
-          this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
-          this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
+    this.informationPropertyService.getByBauniEcono(this.baunitId).subscribe({
+      next: (result: ZoneBAUnit[]) => {
+        this.zoneBAUnitGeoeconomic = result;
+        this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
+        this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
 
-          if (this.paginator2) {
-            this.dataSourceGeoeconomicZones.paginator = this.paginator2;
-            this.changeDetectorRef.detectChanges();
-          }
-        },
-        error: () => this.captureInformationSubscribeError()
-      });
+        if (this.paginator2) {
+          this.dataSourceGeoeconomicZones.paginator = this.paginator2;
+          this.changeDetectorRef.detectChanges();
+        }
+      },
+      error: () => this.captureInformationSubscribeError()
+    });
   }
-
 
   openInformationPropertyZone(zone: ZoneBAUnit, zoneType: string): void {
     if (zoneType === 'physical') {
@@ -407,7 +379,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
     this.zoneBAUnitGeoeconomic = [];
   }
 
-  captureInformationSubscribe(result: ZoneBAUnit[]): void {
+  captureInformationSubscribe(result: ZoneBAUnitResponse[]): void {
     this.zoneBAUnit = result;
     this.zoneBAUnitRural = this.filterByObject(result, 'ccZonaHomoFisicaRu');
     this.zoneBAUnitUrban = this.filterByObject(result, 'ccZonaHomoFisicaUr');
@@ -498,8 +470,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
 
     const isEdit = data && data.baUnitZonaId;
 
-    console.log(this.baunitId);
-
     this.matDialog
       .open(AddEditInformatizonZonesPropertyComponent, {
         ...MODAL_SMALL,
@@ -523,8 +493,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
     const propertyType = 'Geoeconomica';
 
     const isEdit = data && data.baUnitZonaId;
-
-    console.log(this.baunitId);
 
     this.matDialog
       .open(AddEditInformatizonZonesPropertyComponent, {
@@ -551,6 +519,4 @@ export class PhysicalZonesPropertyComponent implements OnInit, OnChanges, AfterV
     }
     return 'w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10';
   }
-
-
 }

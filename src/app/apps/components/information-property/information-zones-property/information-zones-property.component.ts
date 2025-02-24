@@ -1,43 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
   computed,
   inject,
-  Input,
-  OnChanges,
-  OnInit,
   signal,
-  SimpleChanges,
-  TemplateRef,
-  ViewChild
+  AfterViewInit,
+  ChangeDetectorRef
 } from '@angular/core';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
-  MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  TYPEINFORMATION_EDITION
-} from '../../../constants/general/constant';
+  TYPEINFORMATION_EDITION,
+  MODAL_SMALL
+} from '../../../constants/constant';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule
+} from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { Observable } from 'rxjs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { CommonModule, NgIf } from '@angular/common';
+import {
+  CommonModule,
+  NgIf
+} from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -48,29 +50,23 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
-import { TypeInformation } from '../../../interfaces/general/content-info';
+import { TypeInformation } from '../../../interfaces/content-info';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import {
-  DetailInformationPropertyZonesComponent
-} from './detail-information-property-zones/detail-information-property-zones.component';
+import { DetailInformationPropertyZonesComponent } from './detail-information-property-zones/detail-information-property-zones.component';
 import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
-import {
-  AddEditInformatizonZonesPropertyComponent
-} from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
+import { AddEditInformatizonZonesPropertyComponent } from './add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import {
-  DeleteInformationZonesPropertyComponent
-} from './delete-information-zones-property/delete-information-zones-property.component';
-import {
-  GeoEconomicZonesPropertyComponent
-} from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
-import {
-  PhysicalZonesPropertyComponent
-} from './components-child/physical-zones-property/physical-zones-property.component';
+import { DeleteInformationZonesPropertyComponent } from './delete-information-zones-property/delete-information-zones-property.component';
+import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
+import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
 
 @Component({
   selector: 'vex-information-zones-property',
@@ -115,7 +111,7 @@ import {
   styleUrl: './information-zones-property.component.scss'
 })
 export class InformationZonesPropertyComponent
-  implements OnInit, OnChanges, AfterViewInit
+  implements OnInit, AfterViewInit
 {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents = false;
@@ -255,9 +251,7 @@ export class InformationZonesPropertyComponent
   protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
-  constructor(private readonly layoutService: VexLayoutService, private changeDetectorRef: ChangeDetectorRef) {
-    console.log('constructor', this.typeInformation);
-  }
+  constructor(private readonly layoutService: VexLayoutService, private changeDetectorRef: ChangeDetectorRef) {}
 
   getZoneCode(row: ZoneBAUnit): string {
     if (row.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode) {
@@ -307,7 +301,6 @@ export class InformationZonesPropertyComponent
 
   captureBasicInformationSubscribe(result: BasicInformationProperty): void {
     this.dataBasicInformation = result;
-    console.log(this.dataBasicInformation.cadastralNumberFormat);
   }
 
   determinePropertyType(): string {
@@ -323,7 +316,6 @@ export class InformationZonesPropertyComponent
       9
     );
 
-    console.log('typeCode', typeCode);
     if (typeCode === '00') {
       return 'Rural';
     } else {
@@ -372,12 +364,6 @@ export class InformationZonesPropertyComponent
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     this.isExpandPanel(this.expandedComponent);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['typeInformation']) {
-      console.log('typeInformation', this.typeInformation);
-    }
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
@@ -555,8 +541,6 @@ export class InformationZonesPropertyComponent
 
     const isEdit = data && data.baUnitZonaId;
 
-    console.log(this.baunitId);
-
     this.matDialog
       .open(AddEditInformatizonZonesPropertyComponent, {
         ...MODAL_SMALL,
@@ -580,8 +564,6 @@ export class InformationZonesPropertyComponent
     const propertyType = 'Geoeconomica';
 
     const isEdit = data && data.baUnitZonaId;
-
-    console.log(this.baunitId);
 
     this.matDialog
       .open(AddEditInformatizonZonesPropertyComponent, {

@@ -46,44 +46,38 @@
           <!-- Mostrar tabla solo si hay datos -->
 
           <div
-          *ngIf="dataSource && dataSource.data.length > 0"
-          class="table-container overflow-x-auto w-full"
-        >
-        <!-- Tabla -->
-        <vex-physical-zones-property
-
-        [id]="id"
-        [expandedComponent]="expandedComponent"
-        [schema]="schema" 
-        [baunitId]="baunitId"
-        [editable]="editable"
-        [divPolLv1]="divPolLv1"
-        [divPolLv2]="divPolLv2"
-        [executionId]="executionId"
-        [typeInformation]="typeInformation"
-
-        ></vex-physical-zones-property>
-
-      </div>
-        
+            *ngIf="dataSource && dataSource.data.length > 0"
+            class="table-container overflow-x-auto w-full"
+          >
+            <!-- Tabla -->
+            <vex-physical-zones-property
+              [id]="id"
+              [expandedComponent]="expandedComponent"
+              [schema]="schema"
+              [baunitId]="baunitId"
+              [editable]="editable"
+              [divPolLv1]="divPolLv1"
+              [divPolLv2]="divPolLv2"
+              [executionId]="executionId"
+              [typeInformation]="typeInformation"
+            ></vex-physical-zones-property>
+          </div>
         </div>
 
         <div class="border-l-2 border-gray-300"></div>
 
         <!-- Second Table -->
-<vex-geo-economic-zones-property
-
-[id]="id"
-[expandedComponent]="expandedComponent"
-[schema]="schema" 
-[baunitId]="baunitId"
-[editable]="editable"
-[divPolLv1]="divPolLv1"
-[divPolLv2]="divPolLv2"
-[executionId]="executionId"
-[typeInformation]="typeInformation"
-></vex-geo-economic-zones-property>
-        
+        <vex-geo-economic-zones-property
+          [id]="id"
+          [expandedComponent]="expandedComponent"
+          [schema]="schema"
+          [baunitId]="baunitId"
+          [editable]="editable"
+          [divPolLv1]="divPolLv1"
+          [divPolLv2]="divPolLv2"
+          [executionId]="executionId"
+          [typeInformation]="typeInformation"
+        ></vex-geo-economic-zones-property>
       </div>
     </mat-panel-description>
   </mat-expansion-panel>

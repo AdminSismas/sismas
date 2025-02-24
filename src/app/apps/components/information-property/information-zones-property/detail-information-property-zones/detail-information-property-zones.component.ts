@@ -56,8 +56,6 @@ export class DetailInformationPropertyZonesComponent implements OnInit {
     if (this.data.zone === null || this.data.zone === undefined) {
       this.close();
     }
-    console.log('zone', this.data.zone);
-    console.log('Tipo de predio:', this.data.propertyType);
 
     this.cdr.detectChanges();
   }
