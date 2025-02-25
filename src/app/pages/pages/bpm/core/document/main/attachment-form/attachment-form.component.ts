@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { SweetAlert2Module, SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -23,10 +23,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
-import { AttachmentService } from '../service/attachment.service';
-import { ComboxColletionComponent } from 'src/app/apps/components/combox-colletion/combox-colletion.component';
-import { InputComponent } from 'src/app/apps/components/input/input.component';
+import { AttachmentService } from '../../../../../../../apps/services/bpm/core/document/main/attachment.service';
+import {
+  ComboxColletionComponent
+} from '../../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'vex-attachment-form',
   standalone: true,
@@ -65,7 +68,7 @@ import Swal from 'sweetalert2';
 })
 export class AttachmentFormComponent {
   @Output() dataUpdated = new EventEmitter<void>();
-  
+
   file: File | null = null;
   fileName = '';
   attachmentForm: FormGroup;
@@ -93,30 +96,30 @@ export class AttachmentFormComponent {
 
   onSelect(event: any) {
     console.log('event: ', event);
-    
+
     const maxSize = 50 * 1024 * 1024; // 50MB en bytes
-    
+
     const alreadySelectedFiles = [];
     const oversizedFiles = [];
-    
+
     const validFiles = event.addedFiles.filter((nuevoArchivo: File) => {
       const alreadySelected = this.uploadedFiles.some(
         (archivoExistente: File) =>
           archivoExistente.name === nuevoArchivo.name && archivoExistente.size === nuevoArchivo.size
       );
-      
+
       if (alreadySelected) {
         alreadySelectedFiles.push(nuevoArchivo);
       }
-      
+
       if (nuevoArchivo.size > maxSize) {
         oversizedFiles.push(nuevoArchivo);
       }
-      
+
       return !alreadySelected && nuevoArchivo.size <= maxSize;
     });
 
-  
+
     if (alreadySelectedFiles.length > 0) {
       this.snackbar.open('Algunos archivos ya han sido seleccionados.', 'OK', { duration: 5000 });
     }
@@ -125,7 +128,7 @@ export class AttachmentFormComponent {
       this.snackbar.open('Algunos archivos exceden el límite de tamaño de 50MB.', 'OK', { duration: 5000 });
     }
 
- 
+
     if (validFiles.length > 0) {
       this.uploadedFiles.push(...validFiles);
       this.attachmentForm.patchValue({ file: this.uploadedFiles });
@@ -147,7 +150,7 @@ export class AttachmentFormComponent {
       if (this.attachmentForm.get('file')?.invalid) errorMessage += '- Archivo\n';
       if (this.attachmentForm.get('attachmentType')?.invalid) errorMessage += '- Tipo de Documento\n';
       if (this.attachmentForm.get('description')?.invalid) errorMessage += '- Descripción\n';
-      
+
       this.errorMessage = errorMessage;
       this.errorForm.fire();
       return false;
@@ -159,25 +162,25 @@ export class AttachmentFormComponent {
     if (!this.validateForm()) {
       return;
     }
-  
+
     this.isLoading = true;
     this.isUploading = true;
-  
+
     const formData = new FormData();
     formData.append('file', this.uploadedFiles[0]);
     formData.append('executionId', this.data.executionId);
     formData.append('taskId', '0');
     formData.append('attachmentType', this.attachmentForm.get('attachmentType')?.value);
-  
+
     const description = this.attachmentForm.get('description')?.value;
     if (description) {
       formData.append('description', description);
     }
-  
+
 
     this.uploadTimeout = setTimeout(() => {
       if (this.isUploading) {
-        Swal.fire({  
+        Swal.fire({
           title: 'El envío está tardando demasiado',
           text: '¿Desea cancelar la operación o continuar esperando?',
           icon: 'warning',
@@ -191,8 +194,8 @@ export class AttachmentFormComponent {
         });
       }
     }, 15000);
-    
-  
+
+
 
     this.attachmentService.sendAttachment(formData).subscribe(
       response => {

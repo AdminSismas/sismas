@@ -4,16 +4,16 @@ import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { BehaviorSubject, catchError, Observable, Subject, throwError } from 'rxjs';
 import { BasicInformationProperty, UpdateBasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
-import { InformationPegeable } from '../../interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { BasicInformationAddress } from '../../interfaces/information-property/basic-information-address';
 import { CreateBasicInformationAddress, DetailBasicInformationAddress } from '../../interfaces/information-property/detail-basic-information-address';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
-import { PageSearchData } from '../../interfaces/page-search-data.model';
+import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 import { ContentInformationConstruction, CreateBasicInformationConstruction } from '../../interfaces/information-property/content-information-construction';
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
 import { ZoneBAUnit, ZoneBAUnitResponse } from '../../interfaces/information-property/zone-baunit';
-import { EVIRONMENT_CC_DIRECCION } from '../../constants/constant';
+import { EVIRONMENT_CC_DIRECCION } from '../../constants/general/constant';
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
@@ -68,13 +68,13 @@ export class InformationPropertyService {
       );
   }
 
-  getBasicInformationPropertyAddresses( executionId: string | null | undefined, baunitId: string | null | undefined,
+  getBasicInformationPropertyAddresses(executionId: string | null | undefined, baunitId: string | null | undefined,
     schema:string,
     page: number,pageSize: number
      ): Observable<BasicInformationAddress[]> {
-  
+
     let params: HttpParams = new HttpParams();
-   
+
     // {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}
     const url = `${this.basic_url}/ccDireccion/${schema}/${executionId}/${baunitId}?page=${page}&size=${pageSize}`;
     // const url = `${this.basic_url}${envi.basicAddress}`;
@@ -217,15 +217,15 @@ export class InformationPropertyService {
     );
   }
   getByDivPolUrbana(divpolLv1: string, divpolLv2: string): Observable<UrbanPhysicalZone[]> {
-    
+
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
-    
+
     const url = `${this.basic_url}${envi.ccZonaHomoFisicaUr}${envi.divpol}`;
-  
+
     console.log('url', url);
-    
+
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -393,7 +393,7 @@ export class InformationPropertyService {
   deleteBasicInformationPropertyAddress(direccionId: string): Observable<any> {
     const url = `${this.basic_url}${envi.ccDireccion}${direccionId}`;
     const httpParams: HttpParams = new HttpParams().set('version', '99999');
-    
+
     return this.httpClient.delete(url, { params: httpParams});
   }
 

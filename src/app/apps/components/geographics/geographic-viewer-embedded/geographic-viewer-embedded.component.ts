@@ -2,10 +2,10 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { LoadingAppComponent } from '../../loading-app/loading-app.component';
 import { Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
+import { LoadingAppComponent } from '../../general-components/loading-app/loading-app.component';
 
 @Component({
   selector: 'vex-geographic-viewer-embedded',

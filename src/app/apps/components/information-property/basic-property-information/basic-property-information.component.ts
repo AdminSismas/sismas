@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -21,13 +21,21 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE,NAME_NO_DISPONIBLE_CERO,TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/constant';
+import {
+  GUION,
+  MODAL_SMALL,
+  NAME_NO_DISPONIBLE,
+  NAME_NO_DISPONIBLE_CERO,
+  TYPEINFORMATION_EDITION
+} from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
-import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
+import {
+  EditBasicPropertyInformationComponent
+} from './edit-basic-property-information/edit-basic-property-information.component';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -88,7 +96,7 @@ export class BasicPropertyInformationComponent implements OnInit {
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-  
+
   }
 
   searchBasicInformationProperty():void {

@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, Input, OnInit, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,27 +20,42 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable } from 'rxjs';
-import { GeographicViewerComponent } from '../../../../../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { FilterCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
-import { LIST_SCHEMAS_CONTROL_MAIN, MODAL_LARGE, MODAL_MEDIUM, MODAL_SMALL, PAGE, PAGE_SIZE_OPTION, PAGE_SIZE_TABLE_CADASTRAL, TYPEINFORMATION_VISUAL } from 'src/app/apps/constants/constant';
-import { TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/procedures.constant';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import {
+  GeographicViewerComponent
+} from '../../../../../../apps/components/geographics/geographic/geographic-viewer/geographic-viewer.component';
+import {
+  LayoutCardCadastralInformationPropertyComponentComponent
+} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import {
+  LIST_SCHEMAS_CONTROL_MAIN,
+  MODAL_LARGE,
+  MODAL_MEDIUM,
+  MODAL_SMALL,
+  PAGE,
+  PAGE_SIZE_OPTION,
+  PAGE_SIZE_TABLE_CADASTRAL,
+  TYPEINFORMATION_VISUAL
+} from '../../../../../../apps/constants/general/constant';
+import { TABLE_COLUMN_PROPERTIES } from '../../../../../../apps/constants/general/procedures.constant';
+import { ContentInfoSchema } from '../../../../../../apps/interfaces/general/content-info-schema';
+import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
-import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
-import { SearchData } from 'src/app/apps/interfaces/search-data.model';
+import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
+import { SearchData } from '../../../../../../apps/interfaces/general/search-data.model';
 import { InfoTableService } from 'src/app/apps/services/general/info-table.service';
 import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';
-import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
+import {
+  SendInformationRegisterService
+} from 'src/app/apps/services/register-procedure/send-information-register.service';
 import { environment } from 'src/environments/environments';
+import {
+  FilterCadastralSearchComponent
+} from '../../../../../../apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 
 @Component({
   selector: 'vex-certificate-table',
@@ -48,8 +63,6 @@ import { environment } from 'src/environments/environments';
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
     VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
     MatButtonToggleModule,
     ReactiveFormsModule,
     VexPageLayoutContentDirective,
@@ -68,7 +81,7 @@ import { environment } from 'src/environments/environments';
     MatDialogModule,
     MatInputModule,
     MatTabsModule,
-    MatSelectModule,
+    MatSelectModule
   ],
   templateUrl: './certificate-table.component.html',
   styleUrl: './certificate-table.component.scss'

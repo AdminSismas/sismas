@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
@@ -18,7 +18,7 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatDialog, MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,14 +30,20 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentService } from '../../services/document-management.service';
-import { AttachmentCollection } from '../../interfaces/attachment.model';
-import { contentInfoAttachment } from '../../interfaces/content-info-attachment.model';
-import { InformationPegeable } from '../../interfaces/information-pegeable.model';
-import { ViewFileDocumentManagementComponent } from '../view-file-document-management/view-file-document-management.component';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../constants/attachment.constant';
-import { MODAL_SMALL } from '../../constants/constant';
-
+import { AttachmentService } from '../../services/documnet-management/document-management.service';
+import { AttachmentCollection } from '../../interfaces/documnet-management/attachment.model';
+import { contentInfoAttachment } from '../../interfaces/general/content-info-attachment.model';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import {
+  ViewFileDocumentManagementComponent
+} from '../general-components/view-file-document-management/view-file-document-management.component';
+import {
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TABLE_COLUMN_PROPERTIES
+} from '../../constants/general/attachment.constant';
+import { MODAL_SMALL } from '../../constants/general/constant';
 
 
 @Component({
@@ -173,15 +179,15 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value.trim().toLowerCase();
   }
 
-  
+
   viewPaginator(numRegister: number): void {
     if (numRegister < 3) {
       this.disablePaginator = false;
     }
   }
 
-  
-                    
+
+
   /* ------- Meth. Modal load file ------- */
   viewFile(metaData: contentInfoAttachment): void {
     this.dialog
@@ -205,7 +211,7 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
         console.log("Datos recibidos de la API1:", data);
         this.dataSource.data = data;
         this.totalElements = data.length;
-      
+
         this.viewPaginator(data.length);
       },
       error: (error) => {
@@ -214,7 +220,7 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
     });
   }
 
-  
+
 }
 
 

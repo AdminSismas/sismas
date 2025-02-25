@@ -1,4 +1,4 @@
-import { NAME_NO, NAME_SI } from '../../constants/constant';
+import { NAME_NO, NAME_SI } from '../../constants/general/constant';
 
 export class BasicInformationAddress {
   direccionId?: string;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { VexConfig, VexConfigName } from '@vex/config/vex-config.interface';
-import { ProTaskE } from '../../interfaces/pro-task-e';
+import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 
 @Injectable({
   providedIn: 'root'

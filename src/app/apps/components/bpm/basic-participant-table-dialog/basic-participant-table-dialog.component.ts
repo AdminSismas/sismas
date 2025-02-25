@@ -5,7 +5,9 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
-import { BasicParticipantTableComponent } from 'src/app/pages/pages/bpm/initiate-filing-procedure/components/basic-participant-table/basic-participant-table.component';
+import {
+  BasicParticipantTableComponent
+} from 'src/app/pages/pages/bpm/initiate-filing-procedure/components/basic-participant-table/basic-participant-table.component';
 
 @Component({
   selector: 'vex-basic-participant-table-dialog',

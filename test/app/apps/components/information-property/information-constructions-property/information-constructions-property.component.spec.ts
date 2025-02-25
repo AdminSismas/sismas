@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   InformationConstructionsPropertyComponent
 } from '../../../../../../src/app/apps/components/information-property/information-constructions-property/information-constructions-property.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 describe(InformationConstructionsPropertyComponent.name, () => {
@@ -10,7 +11,9 @@ describe(InformationConstructionsPropertyComponent.name, () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InformationConstructionsPropertyComponent]
+      imports: [
+        InformationConstructionsPropertyComponent, NoopAnimationsModule
+      ]
     })
       .compileComponents();
 
@@ -19,7 +22,7 @@ describe(InformationConstructionsPropertyComponent.name, () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

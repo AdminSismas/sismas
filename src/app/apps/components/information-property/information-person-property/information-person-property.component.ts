@@ -1,30 +1,20 @@
 // Angular framework
-import {
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgForOf, NgIf, NgClass } from '@angular/common';
-import { Observable, BehaviorSubject, filter } from 'rxjs';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { BehaviorSubject, filter, Observable } from 'rxjs';
 // Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 // Material
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -34,13 +24,13 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DataPerson, DialogPersonData } from 'src/app/apps/interfaces/information-property/snr-person-info';
 import {
   PAGE,
+  PAGE_OPTION__5_7_10,
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
-  TYPEINFORMATION_VISUAL,
   PAGE_SIZE_SORT,
-  PAGE_OPTION__5_7_10,
-  TABLE_COLUMN_PROPERTIES_PERSON
-} from 'src/app/apps/constants/constant';
+  TABLE_COLUMN_PROPERTIES_PERSON,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';

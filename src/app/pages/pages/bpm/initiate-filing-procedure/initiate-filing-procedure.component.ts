@@ -5,13 +5,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { filter, map, take } from 'rxjs/operators';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 // Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -44,7 +38,7 @@ import { BpmCoreService } from '../../../../apps/services/bpm/bpm-core.service';
 import { BpmDocument } from '../../../../apps/interfaces/bpm/bpm-document';
 import { BpmProcessService, PermissionVailable } from '../../../../apps/services/bpm/bpm-process.service';
 import { BpmTypeProcess } from '../../../../apps/interfaces/bpm/bpm-type-process';
-import { CollectionServicesService } from '../../../../apps/services/general/collection-services.service';
+import { CollectionServices } from '../../../../apps/services/general/collection.service';
 import {
   CONSTANT_FILING_PROCEDURES,
   CONSTANT_NAME_BAUNITID,
@@ -57,8 +51,8 @@ import {
   CONSTANT_NAME_RETURN,
   CONSTANT_NAME_ROOTING,
   CONSTANT_NAME_SI_
-} from '../../../../apps/constants/constantLabels';
-import { DomainCollection } from '../../../../apps/interfaces/domain-name.model';
+} from '../../../../apps/constants/general/constantLabels';
+import { DomainCollection } from '../../../../apps/interfaces/general/domain-name.model';
 import {
   DOMAIN_COLLETION_BPMPROCESSCATEGORY,
   GUION,
@@ -69,16 +63,18 @@ import {
   PANEL_ASSIGNED_TASKS,
   SPACE,
   TABLE_COLUMN_PROPERTIES
-} from '../../../../apps/constants/constant';
+} from '../../../../apps/constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
 import { MetadataBpm } from '../../../../apps/interfaces/bpm/metadata-bpm';
 import { ProcessCardComponent } from './components/process-card/process-card.component';
 import { ProcessParticipant } from '../../../../apps/interfaces/bpm/process-participant';
 import { ProExecutionE } from '../../../../apps/interfaces/bpm/pro-execution-e';
-import { ProTaskE } from '../../../../apps/interfaces/pro-task-e';
+import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
-import { SendInformationRegisterService } from '../../../../apps/services/register-procedure/send-information-register.service';
+import {
+  SendInformationRegisterService
+} from '../../../../apps/services/register-procedure/send-information-register.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -199,7 +195,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private snackBar: MatSnackBar,
     private router: Router,
-    private collectionServicesService: CollectionServicesService,
+    private collectionServicesService: CollectionServices,
     private sendInformation: SendInformationRegisterService,
     private bpmProcessService: BpmProcessService,
     private bpmCoreService: BpmCoreService,
@@ -380,7 +376,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
               duration: 10000
             }
           );
-        
+
           return;
         }
 

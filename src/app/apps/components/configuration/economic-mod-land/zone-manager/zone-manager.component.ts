@@ -8,14 +8,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { getZoneParams } from '../../../../constants/zone-constants';
+import { getZoneParams } from '../../../../constants/economic-mod-land/zone-constants';
 import { Zone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { CreateZoneComponent } from '../create-zone/create-zone.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 import { EconomicZoneComponent } from '../economic-zone/economic-zone.component';
-import { MODAL_SMALL } from 'src/app/apps/constants/constant';
+import { MODAL_SMALL } from '../../../../constants/general/constant';
 
 @Component({
   selector: 'zone-manager',

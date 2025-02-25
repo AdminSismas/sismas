@@ -46,18 +46,22 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 // Custom
-import { ComboxColletionComponent } from '../../../../../../apps/components/combox-colletion/combox-colletion.component';
-import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+import {
+  ComboxColletionComponent
+} from '../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import {
+  CreatePeopleComponent
+} from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
 import { InfoPerson } from '../../../../../../apps/interfaces/information-property/info-person';
 import { InformationPersonService } from '../../../../../../apps/services/bpm/information-person.service';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_BASIC_PRINCIPALS,
-  MODAL_SMALL
-} from '../../../../../../apps/constants/constant';
+  TABLE_COLUMN_BASIC_PRINCIPALS
+} from '../../../../../../apps/constants/general/constant';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
 
 @Component({

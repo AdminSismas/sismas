@@ -15,6 +15,7 @@ import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
@@ -23,9 +24,8 @@ import {
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
   TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_SMALL
-} from '../../../constants/constant';
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -43,8 +43,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
-import { PageSearchData } from '../../../interfaces/page-search-data.model';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import {
   ContentInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
@@ -52,11 +52,18 @@ import {
   DetailInformationConstructionsPropertyComponent
 } from './detail-information-constructions-property/detail-information-constructions-property.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TypeInformation } from '../../../interfaces/content-info';
-import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from './edit-information-constructions-property/edit-information-constructions-property.component';
-import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
+import { TypeInformation } from '../../../interfaces/general/content-info';
+import {
+  AddEditInformationConstructionI,
+  EditInformationConstructionsPropertyComponent
+} from './edit-information-constructions-property/edit-information-constructions-property.component';
+import {
+  BasicInformationConstruction
+} from 'src/app/apps/interfaces/information-property/basic-information-construction';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditInformationConstructionDialogComponent } from './edit-information-construction-dialog/edit-information-construction-dialog.component';
+import {
+  EditInformationConstructionDialogComponent
+} from './edit-information-construction-dialog/edit-information-construction-dialog.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({

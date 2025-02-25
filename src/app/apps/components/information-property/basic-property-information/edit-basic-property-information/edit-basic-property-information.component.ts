@@ -5,13 +5,15 @@ import { MAT_DIALOG_DATA, MatDialogClose, MatDialogModule, MatDialogRef } from '
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
-import { environment } from "src/environments/environments";
+import { environment } from 'src/environments/environments';
 
 interface EditBasicPropertyInputs {
 
@@ -73,7 +75,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
             group:'',
             groupName:'Identificación del predio'
           },
-           
+
             {
               name: 'cadastralNumber',
               label: 'Número predial',
@@ -113,7 +115,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
               // *****GRUPO "Propiedad y uso" ****
 
                 {
-                // DEBE SER LISTA TIPO 
+                // DEBE SER LISTA TIPO
                   name: 'domBaunitEconoDesti',
                   label: 'Destino económico',
                   collection: true,

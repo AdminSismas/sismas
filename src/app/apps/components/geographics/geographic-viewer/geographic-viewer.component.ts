@@ -1,13 +1,5 @@
 // Angular framework
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -27,10 +19,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 // Custom
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { environment as envi } from '../../../../../environments/environments';
 import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
-import { QueryParametersGeographicVie } from '../../../interfaces/query-parameters-geographic-vie';
+import { QueryParametersGeographicVie } from '../../../interfaces/geographics/query-parameters-geographic-vie';
 
 @Component({
   selector: 'vex-geographic-viewer-main',

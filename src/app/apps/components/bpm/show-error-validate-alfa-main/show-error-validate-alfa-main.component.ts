@@ -9,8 +9,6 @@ import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/f
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgIf } from '@angular/common';
-import { FluidMaxHeightDirective } from '../../../directives/fluid-max-height.directive';
-import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 
 @Component({
   selector: 'vex-show-error-validate-alfa-main',
@@ -25,9 +23,7 @@ import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.di
     FormsModule,
     MatInputModule,
     ReactiveFormsModule,
-    NgIf,
-    FluidMaxHeightDirective,
-    FluidMinHeightDirective
+    NgIf
   ],
   templateUrl: './show-error-validate-alfa-main.component.html',
   styleUrl: './show-error-validate-alfa-main.component.scss'

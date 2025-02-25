@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -13,14 +13,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/constant';
+import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/general/constant';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
-import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   TerritorialOrganizationService
 } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import { map, Observable, startWith, Subject } from 'rxjs';
+import { map, startWith, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
@@ -31,6 +31,7 @@ import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/ve
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { Zone } from '../../../../apps/interfaces/territorial-organization/zone.model';
+import { ComboboxComponent } from '../../../../apps/components/general-components/combobox/combobox.component';
 
 @Component({
   selector: 'vex-general-maps',
@@ -38,7 +39,6 @@ import { Zone } from '../../../../apps/interfaces/territorial-organization/zone.
   imports: [
     MatIconModule,
     VexBreadcrumbsComponent,
-    AsyncPipe,
     MatAutocompleteModule,
     MatButtonModule,
     MatDialogModule,
@@ -56,7 +56,8 @@ import { Zone } from '../../../../apps/interfaces/territorial-organization/zone.
     VexPageLayoutComponent,
     VexPageLayoutHeaderDirective,
     VexPageLayoutContentDirective,
-    FluidHeightDirective
+    FluidHeightDirective,
+    ComboboxComponent
   ],
   templateUrl: './general-maps.component.html',
   styleUrl: './general-maps.component.scss'
@@ -78,10 +79,6 @@ export class GeneralMapsComponent implements OnInit {
     municipality: ['', Validators.required],
     zone: ['']
   });
-
-  filteredOptionsDepartments$: Observable<Department[]> | undefined;
-  filteredOptionsMunicipalities$: Observable<Municipality[]> | undefined;
-  filteredoptionsZones$: Observable<Zone[]> | undefined;
 
   private destroy$ = new Subject<void>();
 
@@ -167,12 +164,6 @@ export class GeneralMapsComponent implements OnInit {
   captureDepartmentInformation(result: Department[]): void {
     result = result.map((dpto: Department) => new Department(dpto));
     this.optionsDeparments = result;
-
-    this.filteredOptionsDepartments$ = this.form.get('department')?.valueChanges.pipe(
-      startWith(''),
-      map((value): any[] => this.optionsDeparments.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
   }
 
   captureMunicipalityInformation(result: Municipality[], skipPreloadedValues: boolean | null) {
@@ -186,19 +177,6 @@ export class GeneralMapsComponent implements OnInit {
         this.form.get('municipality')?.patchValue(listOptions[0].codeName);
       }
     }
-    this.getObservableMunicipalities();
-  }
-
-  getObservableMunicipalities(){
-    // Filtrar las opciones de municipio para el autocompletado
-    this.filteredOptionsMunicipalities$ = this.form.get('municipality')?.valueChanges.pipe(
-      startWith(''),
-      map((value: string) =>
-        this.optionsMunicipalities.filter(
-          (option: Municipality) => option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
-        )
-      )
-    );
   }
 
   captureZoneInformation(result: Zone[], skipPreloadedValues: boolean | null) {
@@ -210,16 +188,6 @@ export class GeneralMapsComponent implements OnInit {
         this.form.get('zone')?.patchValue(listOptions[0].codeName);
       }
     }
-
-    // Filtrar las opciones de zona para el autocompletado
-    this.filteredoptionsZones$ = this.form.get('zone')?.valueChanges.pipe(
-      startWith(''),
-      map((value: string) =>
-        this.optionsZones.filter(
-          (option: Zone) => option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
-        )
-      )
-    );
   }
 
   private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
@@ -231,14 +199,5 @@ export class GeneralMapsComponent implements OnInit {
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
-
-  get department() {
-    return this.form.get('department');
-  }
-
-  get municipality() {
-    return this.form.get('municipality');
-  }
-
 
 }

@@ -3,46 +3,40 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 // Material
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogModule
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // Vex
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 // Custom
 import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
 import { CrudAlfaMainComponent } from '../crud-alfa-main/crud-alfa-main.component';
-import { DataAlfaMain } from 'src/app/apps/interfaces/data-alfa-main.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { DataAlfaMain } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
+import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
 import {
   LIST_SCHEMAS_CONTROL_CHANGES,
   MODAL_LARGE,
   PAGE,
-  PAGE_OPTION__1_5_10,
+  PAGE_OPTION__5_7_10,
   PAGE_SIZE,
   TYPEINFORMATION_EDITION,
   TYPEOPERATION_ADD,
   TYPEOPERATION_CREATE,
   TYPEOPERATION_DELETE
-} from 'src/app/apps/constants/constant';
-import { PageSearchData } from 'src/app/apps/interfaces/page-search-data.model';
-import { TABLE_COLUMNS } from 'src/app/apps/constants/modification-property-units.constants';
-import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/content-info';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/content-info-schema';
+} from 'src/app/apps/constants/general/constant';
+import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
+import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
+import {
+  LayoutCardCadastralInformationPropertyComponentComponent
+} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
+import { TABLE_COLUMNS } from '../../../constants/information-property/information-property-owners.constants';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -100,7 +94,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   totalElements = 0;
   PAGE = PAGE;
   PAGE_SIZE = PAGE_SIZE;
-  PAGE_OPTIONS = PAGE_OPTION__1_5_10;
+  PAGE_OPTIONS = PAGE_OPTION__5_7_10;
 
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
 

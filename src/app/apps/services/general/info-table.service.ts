@@ -3,8 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { SendGeneralRequestsService } from './send-general-requests.service';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
-import { InformationPegeable } from '../../interfaces/information-pegeable.model';
-import { PageSearchData } from '../../interfaces/page-search-data.model';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({

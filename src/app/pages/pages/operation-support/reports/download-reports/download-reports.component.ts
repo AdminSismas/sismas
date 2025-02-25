@@ -8,24 +8,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { InConstructionComponent } from 'src/app/apps/components/in-construction/in-construction.component';
 // import { PAGE_OPTION__10_20_50_100 } from 'src/app/apps/constants/constant';
 // import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
 // import { Content } from 'src/app/apps/interfaces/users/user';
-import { DownloadReportsService } from './services/download-reports.service';
-import { DownloadReport } from './interfaces/report.interface';
+import { DownloadReportsService } from '../../../../../apps/services/operation-support/reports/download-reports.service';
+import { DownloadReport } from '../../../../../apps/interfaces/operation-support/reports/report.interface';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
-import { MatToolbar } from '@angular/material/toolbar';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatDialogModule } from '@angular/material/dialog';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { MatDividerModule } from '@angular/material/divider';
+
 // import * as FileSaver from 'file-saver';
 
 
@@ -33,7 +27,6 @@ import { MatDividerModule } from '@angular/material/divider';
   selector: 'vex-download-reports',
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
     CommonModule,
     ReactiveFormsModule,
@@ -46,16 +39,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatMenuModule,
     MatDatepickerModule,
     MatCardModule,
-    MatToolbar,
     MatDialogModule,
-    MatDividerModule,
-  
-    /* Vex */
-    VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    VexPageLayoutHeaderDirective
+    MatDividerModule
     /* Custom */
   ],
   templateUrl: './download-reports.component.html',
@@ -69,9 +54,9 @@ export class DownloadReportsComponent {
   @Output() backToMaster = new EventEmitter<void>();
 
 
-  
+
   public displayedColumns: string[] = ['ficha', 'fecha_registro', 'area_catastral', 'npn'];
-  public dataSource = new MatTableDataSource<DownloadReport>(); 
+  public dataSource = new MatTableDataSource<DownloadReport>();
   public totalElements = 0;
   public page = 0;
   public pageSize = 10;
@@ -86,15 +71,15 @@ export class DownloadReportsComponent {
   constructor(private reportService: DownloadReportsService) {}
 
   ngOnInit(): void {
-    this.getReports('2021-06-01', '2021-07-01'); 
+    this.getReports('2021-06-01', '2021-07-01');
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-  
+
   getReports(startDate: string, endDate: string): void {
- 
+
     this.reportService.getReports(startDate, endDate).subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -102,9 +87,9 @@ export class DownloadReportsComponent {
 
         setTimeout(() => {
           if (this.paginator) {
-            this.paginator.length = this.totalElements; 
-            this.paginator.firstPage(); 
-            this.dataSource.paginator = this.paginator; 
+            this.paginator.length = this.totalElements;
+            this.paginator.firstPage();
+            this.dataSource.paginator = this.paginator;
           }
         });
       },
@@ -116,7 +101,7 @@ export class DownloadReportsComponent {
 
   pageEvent(event: PageEvent): void {
     this.pageSize = event.pageSize;
-    this.paginator.length = this.totalElements; 
+    this.paginator.length = this.totalElements;
   }
 
   applyFilter(event: Event) {
@@ -132,7 +117,7 @@ export class DownloadReportsComponent {
     }
   }
 
-  
+
   exportToExcel() {
     const dataToExport = this.dataSource.data.map((row: any) => ({
       Ficha: row.ficha,
@@ -140,18 +125,18 @@ export class DownloadReportsComponent {
       "Área Catastral": row.area_catastral,
       NPN: row.npn
     }));
-  
+
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
-    
 
-    const csvOutput = XLSX.utils.sheet_to_csv(ws, { FS: ',' }); 
-  
-  
+
+    const csvOutput = XLSX.utils.sheet_to_csv(ws, { FS: ',' });
+
+
     const blob = new Blob([csvOutput], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'reportes.csv');
   }
-  
+
 
 
   searchReports() {
@@ -171,6 +156,6 @@ export class DownloadReportsComponent {
   get isSearchDisabled(): boolean {
     return !this.startDate || !this.endDate;
   }
-  
+
 
 }

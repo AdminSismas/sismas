@@ -1,4 +1,3 @@
-
 import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
@@ -16,20 +15,17 @@ import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  PAGE_SIZE_OPTION_ADDRESS,
-  PAGE_SIZE_SORT,
-  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
-  TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_SMALL,
-  TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
   PAGE_SIZE_OPTION_ADJACENT,
-  TABLE_COLUMN_PROPERTIES_ADJACENT
-} from '../../../constants/constant';
+  PAGE_SIZE_SORT,
+  TABLE_COLUMN_PROPERTIES_ADJACENT,
+  TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -47,21 +43,20 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
-import { PageSearchData } from '../../../interfaces/page-search-data.model';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import {
   ContentInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TypeInformation } from '../../../interfaces/content-info';
-import { BasicInformationConstruction } from 'src/app/apps/interfaces/information-property/basic-information-construction';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { DetailInformationConstructionsPropertyComponent } from '../information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
-import { AddEditInformationConstructionI, EditInformationConstructionsPropertyComponent } from '../information-constructions-property/edit-information-constructions-property/edit-information-constructions-property.component';
-import { EditInformationConstructionDialogComponent } from '../information-constructions-property/edit-information-construction-dialog/edit-information-construction-dialog.component';
+import {
+  DetailInformationConstructionsPropertyComponent
+} from '../information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
 import { BasicInformationAdjacent } from 'src/app/apps/interfaces/information-property/basic-information-adjacent';
-import { Pegeable } from 'src/app/apps/interfaces/pegeable.model';
+import { Pegeable } from '../../../interfaces/general/pegeable.model';
 
 @Component({
   selector: 'vex-information-adjacent-property',
@@ -183,26 +178,26 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
     if (!this.schema || !this.baunitId) {
       return false;
     }
-  
+
     this.informationPropertyService.getBasicInformationPropertyAdjacent(this.baunitId).subscribe({
       next: (result: BasicInformationAdjacent[]) => this.captureInformationSubscribe(result),
       error: (err: any) => this.captureInformationSubscribeError(err),
     });
-  
+
     return true;
   }
-  
+
 
   captureInformationSubscribe(result: BasicInformationAdjacent[]): void {
     this.contentInformations = new InformationPegeable(
-      undefined, 
-      result.length, 
-      undefined, 
-      result.length, 
-      result.length, 
-      undefined, 
-      result.length === 0, 
-      result, 
+      undefined,
+      result.length,
+      undefined,
+      result.length,
+      result.length,
+      undefined,
+      result.length === 0,
+      result,
       {
         pageNumber: 0,
         pageSize: result.length,
@@ -220,7 +215,7 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
     } else {
       this.dataSource.data = [];
     }
-  
+
     this.totalElements = this.contentInformations?.totalElements ?? 0;
     this.page = this.contentInformations?.pageable?.pageNumber ?? 0;
   }

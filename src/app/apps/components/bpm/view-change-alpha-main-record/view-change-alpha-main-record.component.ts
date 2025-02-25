@@ -19,8 +19,8 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
-import { SearchData } from '../../../interfaces/search-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { SearchData } from '../../../interfaces/general/search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { CadastralChangeLog } from '../../../interfaces/bpm/cadastral-change-log';
 import {
@@ -28,10 +28,10 @@ import {
   PAGE_OPTION_UNIQUE,
   PAGE_SIZE_OPTION_UNIQUE,
   TABLE_COLUMN_CHANGES_BPM_OPERATION
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import { UntypedFormControl } from '@angular/forms';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { PageSearchData } from '../../../interfaces/page-search-data.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 

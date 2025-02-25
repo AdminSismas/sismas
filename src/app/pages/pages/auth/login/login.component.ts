@@ -1,14 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -26,10 +17,7 @@ import { UserService } from './services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
-import {
-  ENVIRONMENT_RETIRO_IMG,
-  NAME_LOGO_IMG_SAN_VICENTE
-} from 'src/app/apps/constants/constant';
+import { ENVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/general/constant';
 
 @Component({
   selector: 'vex-login',
@@ -55,7 +43,7 @@ import {
 export class LoginComponent {
   videoPath: string = environment.video;
   logoPath: string = environment.logo;
-  logoPathAlter = '';
+  logoPathAlter: string = '';
   form!: FormGroup;
   inputType = 'password';
   visible = false;
@@ -79,10 +67,10 @@ export class LoginComponent {
     });
 
     this.findLogo(this.logoPath);
-    
-    
+
+
   }
-  
+
 
   send() {
     if (this.form.valid) {
@@ -158,6 +146,7 @@ export class LoginComponent {
       );
     }
   }
+
 
   toggleVisibility() {
     if (this.visible) {

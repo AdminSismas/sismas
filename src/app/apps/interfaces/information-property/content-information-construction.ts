@@ -1,4 +1,4 @@
-import { NAME_NO_DISPONIBLE } from '../../constants/constant';
+import { NAME_NO_DISPONIBLE } from '../../constants/general/constant';
 
 export class ContentInformationConstruction {
   unitBuiltId?: number;

@@ -6,7 +6,7 @@ import {
   NgFor,
   NgIf
 } from '@angular/common';
-import { LoadingAppComponent } from '../../../../apps/components/loading-app/loading-app.component';
+import { LoadingAppComponent } from '../../../../apps/components/general-components/loading-app/loading-app.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -32,19 +32,19 @@ import {
   LISTO_FORM_BPM_CORE,
   MODAL_LARGE,
   MODAL_SMALL
-} from '../../../../apps/constants/constant';
+} from '../../../../apps/constants/general/constant';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
 import {
   BasicComponentTemplate,
   ComponentTemplate
 } from '../../../../apps/interfaces/bpm/render-template.types';
-import { ProFlow } from '../../../../apps/interfaces/pro-flow';
+import { ProFlow } from '../../../../apps/interfaces/bpm/pro-flow';
 import { BpmCoreService } from '../../../../apps/services/bpm/bpm-core.service';
-import { ProTaskE } from '../../../../apps/interfaces/pro-task-e';
+import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
 import { MatOptionModule } from '@angular/material/core';
 import { DynamicComponentsService } from '../../../../apps/services/bpm/dynamic-components.service';
-import { CONSTANT_NAME_ID } from '../../../../apps/constants/constantLabels';
+import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLabels';
 import { environment } from '../../../../../environments/environments';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
 import { MatDialog } from '@angular/material/dialog';

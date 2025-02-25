@@ -1,8 +1,8 @@
 // ANGULAR IMPORTS
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { Component, DestroyRef, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { FormBuilder, UntypedFormControl,FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 // ANGULAR MATERIAL IMPORTS
@@ -18,27 +18,25 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 // VEX IMPORTS
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 // CONSTANTS AND ENVIRONMENT IMPORTS
-import { PAGE, PAGE_OPTION__10_20_50_100, TYPEINFORMATION_EDITION } from 'src/app/apps/constants/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, TYPEINFORMATION_EDITION } from 'src/app/apps/constants/general/constant';
 import { environment } from 'src/environments/environments';
-import {  PAGE_SIZE,  TABLE_COLUMN_PROPERTIES, TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/procedures.constant';
+import { PAGE_SIZE, TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
 
 // COMPONENT IMPORTS
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
-import { InputComponent } from '../../input/input.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 
 // INTERFACES IMPORTS
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
-import { ProceduresCollection } from 'src/app/apps/interfaces/procedures-progress.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
+import { ProceduresCollection } from 'src/app/apps/interfaces/tables/procedures-progress.model';
+import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { PageProceduresData } from 'src/app/apps/interfaces/page-procedures-data.model';
-import { ProceduresService } from 'src/app/apps/services/procedures.service';
+import { PageProceduresData } from 'src/app/apps/interfaces/general/page-procedures-data.model';
+import { ProceduresService } from 'src/app/apps/services/general/procedures.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
@@ -46,8 +44,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { contentInfoProcedures } from 'src/app/apps/interfaces/content-info-procedures.model';
-import { EventEmitter } from '@angular/core';
+import { contentInfoProcedures } from 'src/app/apps/interfaces/general/content-info-procedures.model';
 import { MatSelectModule } from '@angular/material/select';
 
 export interface HistoryListBasic {
@@ -70,32 +67,27 @@ export interface HistoryListBasic {
       scaleFadeIn400ms
     ],
   imports: [
-     MatExpansionModule,
-     CdkAccordionModule,
-    VexPageLayoutHeaderDirective,
-     VexPageLayoutContentDirective,
-     HeaderCadastralInformationPropertyComponent,
+    MatExpansionModule,
+    CdkAccordionModule,
+    HeaderCadastralInformationPropertyComponent,
 
 
-     VexPageLayoutComponent,
-     VexPageLayoutContentDirective,
-     MatInputModule,
-     MatMenuModule,
-     MatPaginatorModule,
-     MatDatepickerModule,
-     MatCheckboxModule,
-     MatButtonModule,
-     MatIconModule ,
-     MatSortModule,
-     MatTableModule,
-     CommonModule,
-     MatDatepickerModule,
-     NgFor,
-     NgClass,
-     NgIf,
-     InputComponent,
-     ReactiveFormsModule,
-     MatSelectModule
+    MatInputModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSortModule,
+    MatTableModule,
+    CommonModule,
+    MatDatepickerModule,
+    NgFor,
+    NgClass,
+    NgIf,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   templateUrl: './historical-procedures.component.html',
   styleUrl: './historical-procedures.component.scss'
@@ -139,9 +131,9 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
       .subscribe((value) => this.onFilterChange(value));
       this.defaultTableData();
     }
-    
+
     ngOnDestroy() {
-      
+
     }
     isExpandPanel(expandedComponent: boolean): void {
       if (expandedComponent) {
@@ -150,11 +142,11 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
   }
 
   public informationDetail(value:any){
-  
+
         // if(this.urlView != '')
-  
+
         //   {
-  
+
         //     this.dialog
         //     .open(DocumentViewerWorkHistoricalComponent, {
         //       minWidth: '370px',
@@ -162,29 +154,29 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
         //       height: '86%',
         //       disableClose: true,
         //       data: { url: this.urlView}
-             
+
         //     });
-      
-     
-  
-         
-  
-  
-  
+
+
+
+
+
+
+
         //   } else {
-  
+
         //     console.log(value, 'Registro de la tabla');
-  
+
         //     this.proceduresService.viewDetailIdProcedures(
         //       +value.executionCode)
         //       .subscribe( result => {
         //         this.procedureDetail = result;
         //           this.seeTaskProperty(this.procedureDetail,+value.executionCode);
-                
+
         //       });
-  
+
         //   }
-    
+
   }
 
   onFilterChange(value: string) {
@@ -217,7 +209,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
 
   /* ------- Meth. Common ------- */
   objectParameters(): PageProceduresData {
-    
+
     const formValue: PageProceduresData =  {
       page: this.page,
       size: this.pageSize,
@@ -226,7 +218,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
       executionCode: '0' ,
       individualNumber:'',
     };
-    
+
     return formValue;
   }
 
@@ -239,18 +231,18 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
 
     private formatDate(date?: Date): string {
       if (!date) return '';
-      
+
       const day = this.padZero(date.getDate());
       const month = this.padZero(date.getMonth() + 1);
       const year = date.getFullYear();
-  
+
       return `${day}/${month}/${year}`;
     }
 
     private padZero(value: number): string {
       return value < 10 ? `0${value}` : value.toString();
     }
-  
+
 
     public defaultTableData(){
       const formValue: PageProceduresData =  {
@@ -285,12 +277,12 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
         complete: () => {
             console.log('Carga completa de datos');
         }
-      }); 
+      });
     }
 
   captureInformationSubscribe(data: InformationPegeable) {
-      this.contentInformations = data; 
-      this.captureInformationProceduresData(); 
+      this.contentInformations = data;
+      this.captureInformationProceduresData();
       this.proccessHistoryList(data);
   }
 
@@ -305,7 +297,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
       }));
       this.showListHistory.emit(listHistory);
     }
-  
+
   }
 
   transformDate(date: Date): string {
@@ -322,21 +314,21 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
               }));
               this.dataSource.data = data;
           }
-      
+
           if (this.contentInformations == null) {
               this.page = PAGE;
               return;
           }
-      
+
           if (this.contentInformations.totalElements) {
               this.totalElements = this.contentInformations.totalElements;
           }
-      
+
           if (this.contentInformations.pageable == null) {
               this.page = PAGE;
               return;
           }
-      
+
           if (this.contentInformations.pageable.pageNumber != null) {
               this.page = this.contentInformations.pageable.pageNumber;
           }

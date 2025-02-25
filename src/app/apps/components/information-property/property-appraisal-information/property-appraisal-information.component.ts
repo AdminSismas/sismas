@@ -17,8 +17,10 @@ import {
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
-  TABLE_COLUMN_PROPERTIES_APPRAISALS, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
-} from '../../../constants/constant';
+  TABLE_COLUMN_PROPERTIES_APPRAISALS,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,7 +29,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { environment } from '../../../../../environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
@@ -36,10 +38,10 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { InfoAppraisal } from '../../../interfaces/information-property/info-appraisal';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { PageSearchData } from '../../../interfaces/page-search-data.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { Observable } from 'rxjs';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -48,7 +50,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
-import { TypeInformation } from '../../../interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 
 @Component({
@@ -82,14 +84,13 @@ import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
     MatMenuModule,
     MatCheckboxModule,
     FormsModule,
-    CurrencyPipe,
     MatRippleModule,
     CurrencyFormatPipe
   ],
-  
+
   templateUrl: './property-appraisal-information.component.html',
   styleUrl: './property-appraisal-information.component.scss',
-  
+
 })
 export class PropertyAppraisalInformationComponent implements OnInit, AfterViewInit {
 

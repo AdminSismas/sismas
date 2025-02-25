@@ -12,16 +12,18 @@ import {
   ViewChild
 } from '@angular/core';
 import {
-  LIST_SCHEMAS_CONTROL_CHANGES, LIST_SCHEMAS_CONTROL_TEMP,
+  LIST_SCHEMAS_CONTROL_CHANGES,
+  LIST_SCHEMAS_CONTROL_TEMP,
+  MODAL_LARGE,
+  MODAL_MEDIUM,
+  MODAL_SMALL,
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
-  TABLE_ALFA_MAIN_OPERATION_COLUMN, TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL,
-  MODAL_LARGE,
-  MODAL_SMALL,
-  MODAL_MEDIUM
-} from '../../../constants/constant';
+  TABLE_ALFA_MAIN_OPERATION_COLUMN,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,8 +34,8 @@ import { NgClass, NgIf } from '@angular/common';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
-import { SearchData } from '../../../interfaces/search-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { SearchData } from '../../../interfaces/general/search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -43,7 +45,7 @@ import { Operation } from '../../../interfaces/bpm/operation';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
@@ -52,7 +54,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
+import {
+  ModificationPropertyUnitsComponent
+} from '../modification-property-units/modification-property-units.component';
 
 @Component({
   selector: 'vex-table-alfa-main',

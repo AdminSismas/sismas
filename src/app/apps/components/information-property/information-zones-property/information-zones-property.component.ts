@@ -21,7 +21,7 @@ import {
   PAGE_SIZE,
   TYPEINFORMATION_EDITION,
   MODAL_SMALL
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -50,7 +50,7 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
-import { TypeInformation } from '../../../interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MatPaginator,
@@ -215,7 +215,7 @@ export class InformationZonesPropertyComponent
         'actions'
       ];
     }
-    
+
     return [
       'viewDetail',
       'zoneCodeColumn',
@@ -331,7 +331,7 @@ export class InformationZonesPropertyComponent
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-  
+
     if (this.paginator2) {
       this.dataSourceGeoeconomicZones.paginator = this.paginator2;
       this.changeDetectorRef.detectChanges();
@@ -340,21 +340,21 @@ export class InformationZonesPropertyComponent
       this.dataSourceGeoeconomicZones.sort = this.sort2;
     }
   }
-  
+
 
   refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
     const { pageIndex, pageSize } = pageEvent;
-  
+
     if (paginatorId === 'paginator1') {
       this.page = pageIndex;
       this.pageSize = pageSize;
-      this.changeDetectorRef.markForCheck(); // 
+      this.changeDetectorRef.markForCheck(); //
     }
-  
+
     if (paginatorId === 'paginator2') {
       this.page2 = pageIndex;
       this.pageSize2 = pageSize;
-      this.changeDetectorRef.markForCheck(); // 
+      this.changeDetectorRef.markForCheck(); //
     }
   }
 
@@ -380,7 +380,7 @@ export class InformationZonesPropertyComponent
 
   searchInformationsZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
-  
+
     this.informationPropertyService.getByBauniFisica(this.baunitId)
       .subscribe({
         next: (result: ZoneBAUnit[]) => {
@@ -396,18 +396,18 @@ export class InformationZonesPropertyComponent
         error: () => this.captureInformationSubscribeError()
       });
   }
-  
+
 
   searchInformationsGeoeconomicZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
-  
+
     this.informationPropertyService.getByBauniEcono(this.baunitId)
       .subscribe({
         next: (result: ZoneBAUnit[]) => {
           this.zoneBAUnitGeoeconomic = result;
           this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
           this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
-  
+
           if (this.paginator2) {
             this.dataSourceGeoeconomicZones.paginator = this.paginator2;
             this.changeDetectorRef.detectChanges();
@@ -416,7 +416,7 @@ export class InformationZonesPropertyComponent
         error: () => this.captureInformationSubscribeError()
       });
   }
-  
+
 
   openInformationPropertyZone(zone: ZoneBAUnit, zoneType: string): void {
     if (zoneType === 'physical') {

@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TypeOperationAlfaMain } from '../../../interfaces/content-info';
+import { TypeOperationAlfaMain } from '../../../interfaces/general/content-info';
 import {
   PAGE,
   PAGE_OPTION_UNIQUE_7,
@@ -21,14 +21,14 @@ import {
   TYPEOPERATION_ADD,
   TYPEOPERATION_CREATE,
   TYPEOPERATION_DELETE
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import {
   CONSTANT_NAME_ADD_LABEL,
   CONSTANT_NAME_CREATE_LABEL,
   CONSTANT_NAME_DELETE_LABEL
-} from '../../../constants/constantLabels';
+} from '../../../constants/general/constantLabels';
 import { MatMenuModule } from '@angular/material/menu';
-import { ComboxColletionComponent } from '../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../general-components/combox-colletion/combox-colletion.component';
 import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -36,8 +36,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormCo
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import { filter, map, startWith } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
-import { DataAlfaMain } from '../../../interfaces/data-alfa-main.model';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { DataAlfaMain } from '../../../interfaces/bpm/data-alfa-main.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -50,7 +49,8 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';
 
 @Component({
   selector: 'vex-crud-alfa-main',
@@ -145,12 +145,12 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     this.loadingNpnlike();
 
     this.data$.pipe(filter<BaunitHead[]>(Boolean)).subscribe((dataList) => {
-      let data: BaunitHead[];
+      let dataBaunitHead: BaunitHead[];
       if (dataList != null && dataList.length > 0) {
         this.baunitHeads = dataList;
-        data = dataList.map((row: BaunitHead) => new BaunitHead(row));
-        this.dataSource.data = data;
-        this.totalElements = data.length;
+        dataBaunitHead = dataList.map((row: BaunitHead) => new BaunitHead(row));
+        this.dataSource.data = dataBaunitHead;
+        this.totalElements = dataBaunitHead.length;
       } else {
         this.baunitHeads = [];
         this.page = PAGE;

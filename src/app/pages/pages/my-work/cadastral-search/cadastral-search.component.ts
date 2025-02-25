@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TableCadastralSearchComponent } from '../../../../apps/components/table-cadastral-search/table-cadastral-search.component';
+import {
+  TableCadastralSearchComponent
+} from '../../../../apps/components/tables/table-cadastral-search/table-cadastral-search.component';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 

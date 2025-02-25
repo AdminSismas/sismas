@@ -1,5 +1,5 @@
 import { Component, computed, OnInit } from '@angular/core';
-import { InConstructionComponent } from '../../../../../apps/components/in-construction/in-construction.component';
+import { InConstructionComponent } from '../../../../../apps/components/general-components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -18,7 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PAGE_OPTION__10_20_50_100, MODAL_SMALL } from 'src/app/apps/constants/constant';
+import { PAGE_OPTION__10_20_50_100, MODAL_SMALL } from '../../../../../apps/constants/general/constant';
 
 @Component({
   selector: 'vex-workgroups',
@@ -64,7 +64,7 @@ export class WorkgroupsComponent implements OnInit {
         }
       ];
     });
-  
+
   // Paginación
   page = 0;
   pageSize = 10;
@@ -127,7 +127,7 @@ export class WorkgroupsComponent implements OnInit {
       this.showSnackBar('Error al editar el grupo'); // Mostrar mensaje de error en caso de fallo
     });
   }
-  
+
   // Método para cambiar de página
   onPageChange(event: any): void {
     this.page = event.pageIndex;
@@ -146,8 +146,8 @@ export class WorkgroupsComponent implements OnInit {
   private showSnackBar(message: string): void {
     this.snackBar.open(message, 'OK', {
       duration: 3000,
-      horizontalPosition: 'center',  
-      verticalPosition: 'bottom',  
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom',
     });
   }
 
@@ -159,7 +159,7 @@ export class WorkgroupsComponent implements OnInit {
           mode: 'edit'
         }
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           if (result.groupId) {

@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -10,10 +18,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PeopleService } from 'src/app/apps/services/people.service';
+import { PeopleService } from '../../../../services/users/people.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { MatDividerModule } from '@angular/material/divider';
 

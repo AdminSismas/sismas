@@ -1,12 +1,12 @@
 import { Component} from '@angular/core';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { INFORMATION_HISTORICAL, RULE_PAGE_HISTORICAL } from 'src/app/apps/constants/constant';
+import { INFORMATION_HISTORICAL, RULE_PAGE_HISTORICAL } from '../../../../apps/constants/general/constant';
 
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { TableCadastralSearchComponent } from 'src/app/apps/components/table-cadastral-search/table-cadastral-search.component';
+import { TableCadastralSearchComponent } from 'src/app/apps/components/tables/table-cadastral-search/table-cadastral-search.component';
 
 @Component({
   selector: 'vex-historical-information',
@@ -25,5 +25,5 @@ export class HistoricalInformationComponent  {
     titlePage: string = INFORMATION_HISTORICAL;
     rulePage: string = RULE_PAGE_HISTORICAL;
 
-  
+
 }

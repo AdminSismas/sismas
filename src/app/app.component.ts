@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TitleService } from './apps/services/tittle.service';
+import { TitleService } from './apps/services/general/tittle.service';
 import { SplashScreenService } from './apps/services/core/splash-screen.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { SplashScreenService } from './apps/services/core/splash-screen.service'
 export class AppComponent implements OnInit {
 
   private isLoadingVideo = false;
-  
+
 
   constructor(
     private titleService: TitleService,
@@ -26,14 +26,14 @@ export class AppComponent implements OnInit {
       window.name = 'geogestion';
     }
 
-   
+
     const splashContainer = document.getElementById('splash-container');
     const loadingText = document.querySelector('#vex-splash-screen h2.title');
     const loadingLoader = document.querySelector('.vex-splash-screen-loader');
-    
+
     if (splashContainer) {
       const logoPath = this.splashService.getLoadingLogo();
-      
+
 
       if (loadingText) {
         this.renderer.setStyle(loadingText, 'display', 'none');
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
       }
 
       if (logoPath.endsWith('.mp4')) {
-     
+
         if (loadingText) {
           this.renderer.setStyle(loadingText, 'display', 'block');
         }
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
           }
         });
       } else {
-     
+
         const img = this.renderer.createElement('img');
         this.renderer.setStyle(img, 'height', '100px');
         this.renderer.setAttribute(img, 'src', logoPath);

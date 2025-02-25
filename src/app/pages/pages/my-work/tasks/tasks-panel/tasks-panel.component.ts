@@ -32,12 +32,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
-import { CONSTANT_NAME_ID } from '../../../../../apps/constants/constantLabels';
+import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
 import { environment } from '../../../../../../environments/environments';
 import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
-import { InformationPegeable } from '../../../../../apps/interfaces/information-pegeable.model';
-import { LoadingAppComponent } from '../../../../../apps/components/loading-app/loading-app.component';
+import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
+import { LoadingAppComponent } from '../../../../../apps/components/general-components/loading-app/loading-app.component';
 import {
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
@@ -46,15 +46,15 @@ import {
   PANEL_ASSIGNED_TASKS,
   PANEL_DEVOLUTION_TASKS,
   PANEL_PRIORITIZED_TASKS
-} from '../../../../../apps/constants/constant';
-import { PageSearchData } from '../../../../../apps/interfaces/page-search-data.model';
-import { ProTask } from '../../../../../apps/interfaces/pro-task';
-import { ProTaskE } from '../../../../../apps/interfaces/pro-task-e';
+} from '../../../../../apps/constants/general/constant';
+import { PageSearchData } from '../../../../../apps/interfaces/general/page-search-data.model';
+import { ProTask } from '../../../../../apps/interfaces/bpm/pro-task';
+import { ProTaskE } from '../../../../../apps/interfaces/bpm/pro-task-e';
 import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
 import { TaskCardComponent } from '../components/task-card/task-card.component';
 import { TasksPanelService } from '../../../../../apps/services/bpm/tasks-panel.service';
-import { TaskResponseModel } from 'src/app/apps/interfaces/task-response.model';
-import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/task-retail-execute-response.model';
+import { TaskResponseModel } from '../../../../../apps/interfaces/bpm/task-response.model';
+import { TaskRetailExecuteResponseModel } from '../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailInformationTasksComponent } from '../components/detail-information-tasks/detail-information-tasks.component';
@@ -168,7 +168,7 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
 
       this.bpmProcessService.dataPermissions$.pipe(
         take(1),
-        distinctUntilChanged(),   
+        distinctUntilChanged(),
         )
         .subscribe((result) => {
           if(result && result.executionId && result.message){
@@ -215,7 +215,7 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
       let data: TaskRetailExecuteResponseModel[];
       this.contentTasksInformations = objTwo;
       console.log('objTwo', objTwo.content);
-  
+
       if (
         this.contentTasksInformations &&
         this.contentTasksInformations.content
@@ -229,7 +229,7 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
         this.seeTaskProperty(objOne, this.dataSource, id);
       }
     }
-  
+
 
     seeTaskProperty(
         value: TaskResponseModel,

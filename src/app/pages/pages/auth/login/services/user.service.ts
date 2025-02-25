@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 import { jwtDecode } from 'jwt-decode';
-import { environment } from 'src/environments/environments';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../../../environments/environments';
 
 
 @Injectable({
@@ -64,7 +64,7 @@ export class UserService {
         next: (res) => {
 
           user = res;
-         
+
         }
       });
 
@@ -75,7 +75,7 @@ export class UserService {
   getUserData(): number | null {
     return this.currentUserDataSubject.value;
   }
-  
+
 
 
   getUserInfo(username: string): Observable<UserDetails> {
@@ -85,7 +85,7 @@ export class UserService {
   }
 
   setUserData(user: UserDetails): void {
-    sessionStorage.setItem('ID', JSON.stringify(user.userId));  
+    sessionStorage.setItem('ID', JSON.stringify(user.userId));
     this.currentUserDataSubject.next(user.userId);
   }
 }

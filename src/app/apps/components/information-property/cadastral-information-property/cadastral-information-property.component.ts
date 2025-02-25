@@ -29,11 +29,13 @@ import {
 } from '../information-constructions-property/information-constructions-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { environment as envi } from '../../../../../environments/environments';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { PhotosComponent } from '../photos/photos.component';
 import { AlertsComponent } from '../alerts/alerts.component';
 import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
@@ -42,12 +44,19 @@ import {
   NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
   REFERENCE_COMPONENTS,
   TYPEINFORMATION_VISUAL
-} from '../../../constants/constant';
-import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
+} from '../../../constants/general/constant';
+import {
+  PropertyAppraisalInformationComponent
+} from '../property-appraisal-information/property-appraisal-information.component';
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
-import { TypeInformation } from '../../../interfaces/content-info';
-import { InformationAdjacentPropertyComponent } from '../information-adjacent-property/information-adjacent-property.component';
-import { HistoricalProceduresPropertyComponent, HistoryListBasic } from '../historical-procedures/historical-procedures.component';
+import { TypeInformation } from '../../../interfaces/general/content-info';
+import {
+  InformationAdjacentPropertyComponent
+} from '../information-adjacent-property/information-adjacent-property.component';
+import {
+  HistoricalProceduresPropertyComponent,
+  HistoryListBasic
+} from '../historical-procedures/historical-procedures.component';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
@@ -188,7 +197,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   public seeHisDropdown = false;
   public expand_tap_property_information = true;
   public expand_tap = false;
-  
+
   public listHistoryTemp: HistoryListBasic[] = [];
      form!: FormGroup;
 
@@ -230,7 +239,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
     this.form = this.fb.group({
       history: [ null],
-      
+
     });
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
@@ -276,7 +285,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
       (item) => item.label !== labelToRemove
     );
   }
-  
+
   spandTapSet(sedTap: boolean) {
     this.expand_tap = sedTap;
     return this.expand_tap;
@@ -287,7 +296,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
     if(this.listHistoryTemp.length > 0){
       this.seeHisDropdown = true;
       this.form.get('history')?.setValue(this.listHistoryTemp[0]);
-      this.updateContextComponent();  
+      this.updateContextComponent();
       this.spandTapSet(false);
       if(this.schema === 'hist') {
         this.expand_tap_property_information = false; // Expand the tap
@@ -348,5 +357,5 @@ export class CadastralInformationPropertyComponent implements OnInit {
     return false;
   }
 
-  
+
 }

@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   PropertyAppraisalInformationComponent
 } from '../../../../../../src/app/apps/components/information-property/property-appraisal-information/property-appraisal-information.component';
+
+
 describe(PropertyAppraisalInformationComponent.name, () => {
   let component: PropertyAppraisalInformationComponent;
   let fixture: ComponentFixture<PropertyAppraisalInformationComponent>;
@@ -17,7 +19,7 @@ describe(PropertyAppraisalInformationComponent.name, () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });

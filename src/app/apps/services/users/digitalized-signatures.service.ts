@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment as envi } from 'src/environments/environments';
-import { UsersSignatures } from '../../interfaces/digitalized-signatures';
+import { UsersSignatures } from '../../interfaces/users/digitalized-signatures';
 import { Observable } from 'rxjs';
 import { UserDetails } from '../../interfaces/user-details/user.model';
 

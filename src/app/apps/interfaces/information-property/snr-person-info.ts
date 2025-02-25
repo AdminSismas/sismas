@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { TypeInformation } from "../content-info";
+import { TypeInformation } from "../general/content-info";
 
 export class DataPerson {
     fid?: number;

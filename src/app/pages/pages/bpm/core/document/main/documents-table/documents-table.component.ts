@@ -1,6 +1,6 @@
 // Angular framework
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -13,7 +13,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialog, MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
@@ -26,16 +26,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Custom
-import { AttachmentCollection } from 'src/app/apps/interfaces/attachment.model';
-import { AttachmentService } from 'src/app/apps/services/document-management.service';
-import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
+import { AttachmentCollection } from '../../../../../../../apps/interfaces/documnet-management/attachment.model';
+import { AttachmentService } from '../../../../../../../apps/services/documnet-management/document-management.service';
+import { contentInfoAttachment } from '../../../../../../../apps/interfaces/general/content-info-attachment.model';
+import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/view-file-document-management/view-file-document-management.component';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from 'src/app/apps/constants/attachment.constant';
+import {
+  ViewFileDocumentManagementComponent
+} from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import {
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TABLE_COLUMN_PROPERTIES
+} from '../../../../../../../apps/constants/general/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
-import { MODAL_LARGE } from 'src/app/apps/constants/constant';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constant';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 

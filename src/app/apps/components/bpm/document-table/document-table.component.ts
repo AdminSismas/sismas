@@ -1,4 +1,4 @@
-import { Component, DestroyRef, Inject, inject, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
@@ -14,7 +14,7 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef  } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,17 +26,25 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentService } from 'src/app/apps/services/document-management.service';
-import { AttachmentCollection } from 'src/app/apps/interfaces/attachment.model';
-import { contentInfoAttachment } from 'src/app/apps/interfaces/content-info-attachment.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { ViewFileDocumentManagementComponent } from '../../view-file-document-management/view-file-document-management.component';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TABLE_COLUMN_PROPERTIES } from '../../../constants/attachment.constant';
-import { MODAL_LARGE } from '../../../constants/constant';
+import { AttachmentService } from '../../../services/documnet-management/document-management.service';
+import { AttachmentCollection } from '../../../interfaces/documnet-management/attachment.model';
+import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import {
+  ViewFileDocumentManagementComponent
+} from '../../general-components/view-file-document-management/view-file-document-management.component';
+import {
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TABLE_COLUMN_PROPERTIES
+} from '../../../constants/general/attachment.constant';
+import { MODAL_LARGE } from '../../../constants/general/constant';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
-
+import {
+  AttachmentFormComponent
+} from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 
 
 @Component({
@@ -135,8 +143,8 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
           disableClose: true,
           data: { executionId: this.data.executionId }
         });
-  
-  
+
+
         dialogRef.componentInstance.dataUpdated.subscribe(() => {
           console.log('Evento recibido, actualizando datos...');
           this.getDataFromDocumentManagementService();
@@ -237,7 +245,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'jpg':
       case 'gif':
       case 'bmp':
-        return 'mat:visibility'; 
+        return 'mat:visibility';
 
       case 'doc':
       case 'docx':
@@ -245,9 +253,9 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'xls':
       case 'zip':
       case 'rar':
-        return 'mat:cloud_download';  
+        return 'mat:cloud_download';
       default:
-        return 'mat:visibility'; 
+        return 'mat:visibility';
     }
   }
 
@@ -262,7 +270,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'jpg':
       case 'gif':
       case 'bmp':
-        return 'Ver archivo';  
+        return 'Ver archivo';
 
       case 'doc':
       case 'docx':
@@ -270,10 +278,10 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'xls':
       case 'zip':
       case 'rar':
-        return 'Descargar archivo'; 
+        return 'Descargar archivo';
 
       default:
-        return 'Ver archivo';  
+        return 'Ver archivo';
     }
   }
 
@@ -304,7 +312,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
 
   getFileIconColor(row: AttachmentCollection): string {
     const fileExtension = this.getFileExtension(row.originalFileName!);
-    
+
     // Colores para diferentes tipos de archivo
     switch (fileExtension) {
       case 'pdf':

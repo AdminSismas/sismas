@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from './send-general-requests.service';
 import { environment as envi, environment } from '../../../../environments/environments';
 import { map, Observable } from 'rxjs';
-import { InformationPegeable } from '../../interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PageSearchData } from '../../interfaces/page-search-data.model';
+import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class ValidateInformationBaunitService {
 
     const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8;'})
 
-    return this.http.get(url, { 
+    return this.http.get(url, {
       responseType: 'text',
       headers: headers
     });
@@ -63,7 +63,7 @@ export class ValidateInformationBaunitService {
         else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
           paramsA = paramsA.append('npnlike',`${page.searchData.block}`);
         }
-        
+
         // const url:string = `${environment.url}:${environment.port}${environment.baunit_npnlike}${value}`;
     const url = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
     return this.http.get<InformationPegeable>(url);
@@ -82,7 +82,7 @@ export class ValidateInformationBaunitService {
         else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
           paramsA = paramsA.append('npnlike',`${page.searchData.block}`);
         }
-        
+
         // const url:string = `${environment.url}:${environment.port}${environment.baunit_npnlike}${value}`;
     const url = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
     return this.http.get<InformationPegeable>(url);

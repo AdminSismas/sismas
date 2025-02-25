@@ -12,7 +12,7 @@ import {
   NAVIGATION_LOADER_PUBLIC_SERVICE
 } from '../../layouts/constants/constant-loader';
 import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
-import { ProTaskE } from '../../apps/interfaces/pro-task-e';
+import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
@@ -212,7 +212,7 @@ export class NavigationLoaderService {
         label: 'Servicio público',
         children: filteredPublicService,
         roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ','USER_SERV']
-        
+
       },
       {
         type: 'subheading',
@@ -236,7 +236,8 @@ export class NavigationLoaderService {
             route: () => this.layoutService.openConfigpanel(),
             icon: 'mat:settings'
           }
-        ]
+        ],
+        roles: ['ADMIN']
       }
     ];
     const accessibleNavigation = listItem.filter(

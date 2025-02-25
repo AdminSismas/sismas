@@ -1,10 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, computed, inject, Input, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  inject,
+  Input,
+  OnInit,
+  signal,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
-import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION, TYPEINFORMATION_EDITION, MODAL_SMALL } from '../../../constants/constant';
+import {
+  MODAL_SMALL,
+  PAGE,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION,
+  TYPEINFORMATION_EDITION
+} from '../../../constants/general/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
@@ -24,7 +40,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
-import { TypeInformation } from 'src/app/apps/interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { DetailAlertsComponent } from './detail-alerts/detail-alerts.component';
@@ -181,13 +197,13 @@ export class AlertsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  
+
   loadAlertsByBaunitId(): void {
     if (!this.baunitId) {
       console.warn('baunitId no proporcionado. No se pueden cargar las alertas.');
       return;
     }
-  
+
     this.alertsService.getAlertsByBaunitId(this.baunitId).subscribe(
       (alerts) => {
         this.alerts = alerts;
@@ -199,7 +215,7 @@ export class AlertsComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  
+
 
   openAlertDetails(alert: any): void {
     const dialogRef = this.matDialog.open(DetailAlertsComponent, {
@@ -207,14 +223,14 @@ export class AlertsComponent implements OnInit, AfterViewInit {
       disableClose: true,
       data: alert,
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Modal cerrado con resultado:', result);
       }
     });
   }
-  
+
 
   /**
    * On refresh paginator

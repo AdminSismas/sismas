@@ -19,10 +19,10 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { Content, User } from 'src/app/apps/interfaces/users/user';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
-import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
+import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PAGE_OPTION__10_20_50_100 } from 'src/app/apps/constants/constant';
+import { PAGE_OPTION__10_20_50_100 } from '../../../../../apps/constants/general/constant';
 
 @Component({
   selector: 'vex-users',
