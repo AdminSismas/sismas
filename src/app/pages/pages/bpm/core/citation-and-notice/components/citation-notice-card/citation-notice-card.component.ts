@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { NgIf } from '@angular/common';
-import { NAME_NO_DISPONIBLE, SPACE } from 'src/app/apps/constants/constant';
+import { NAME_NO_DISPONIBLE, SPACE } from 'src/app/apps/constants/general/constant';
 
 @Component({
   selector: 'vex-citation-notice-card',

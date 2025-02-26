@@ -6,15 +6,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { DatePipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../../../../../../../apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/constant';
+import { NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constant';
 
 export let contactIdCounter = 50;
 
@@ -34,8 +31,6 @@ export let contactIdCounter = 50;
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    DatePipe,
-    HeaderCadastralInformationPropertyComponent,
     MatExpansionModule
   ]
 })

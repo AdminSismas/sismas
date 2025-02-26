@@ -19,6 +19,10 @@ import {
   providedIn: 'root'
 })
 export class DynamicComponentsService {
+
+  constructor() {
+  }
+
   _listMap: ComponentTemplate[] = [
     {
       nameComponent: 'cadAlfaMainComponent',

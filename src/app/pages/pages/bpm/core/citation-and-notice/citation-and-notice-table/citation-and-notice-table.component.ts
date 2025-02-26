@@ -27,15 +27,15 @@ import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
 import { SelectionModel } from '@angular/cdk/collections';
-import { PageSearchData } from '../../../../../../apps/interfaces/page-search-data.model';
+import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
-import { InformationPegeable } from '../../../../../../apps/interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
 import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_CITATION_NOTICE_COLUMN
-} from '../../../../../../apps/constants/constant';
+} from '../../../../../../apps/constants/general/constant';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';

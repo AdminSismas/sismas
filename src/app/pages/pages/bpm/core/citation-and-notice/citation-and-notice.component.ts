@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -6,8 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import {
   CitationAndNoticeTableMenuComponent
 } from './citation-and-notice-table-menu/citation-and-notice-table-menu.component';
-import { CitationAndNoticeTableComponent } from './citation-and-notice-table/citation-and-notice-table.component';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -19,12 +18,8 @@ import { Router } from '@angular/router';
 import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ParticipantsProcessService } from '../../../../../apps/services/bpm/core/participants-process.service';
 import { ProcessParticipant } from '../../../../../apps/interfaces/bpm/process-participant';
-import { PageSearchData } from '../../../../../apps/interfaces/page-search-data.model';
 import { TypeProcessParticipant } from '../../../../../apps/interfaces/bpm/info-participants.interface';
-import { LoadingAppComponent } from '../../../../../apps/components/loading-app/loading-app.component';
 import { DetailsCitationNoticeComponent } from './components/details-citation-notice/details-citation-notice.component';
 import { CitationNoticeGridComponent } from './citation-notice-grid/citation-notice-grid.component';
 
@@ -40,10 +35,7 @@ import { CitationNoticeGridComponent } from './citation-notice-grid/citation-not
     ReactiveFormsModule,
     MatSidenavModule,
     CitationAndNoticeTableMenuComponent,
-    CitationAndNoticeTableComponent,
     AsyncPipe,
-    LoadingAppComponent,
-    NgIf,
     CitationNoticeGridComponent
   ]
 })

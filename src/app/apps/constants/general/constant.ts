@@ -1046,3 +1046,56 @@ export const TYPE_BOTTON_FOUR:TypeButtonAlfaMain = 'CRE_GEO';
 export const TYPE_BOTTON_FIVE:TypeButtonAlfaMain = 'DEL_GEO';
 
 
+
+export const TABLE_CITATION_NOTICE_COLUMN: TableColumn<ProcessParticipant>[] = [
+  {
+    label: '',
+    property: 'selected',
+    type: 'checkbox',
+    visible: true
+  },
+  {
+    label: '',
+    property: 'imageSrc',
+    type: 'image',
+    visible: true,
+    cssClasses: ['min-w-9']
+  },
+  {
+    label: 'Nombre',
+    property: 'fullName',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+  {
+    label: 'Documento',
+    property: 'individualNumber',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary']
+  },
+  {
+    label: 'Fecha',
+    property: 'individualUpdatedAt',
+    type: 'date',
+    visible: true,
+    cssClasses: ['text-secondary']
+  },
+  {
+    label: 'En calidad de',
+    property: 'bpmParticipation',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary']
+  },
+  {
+    label: 'Estados',
+    property: 'typeProcessParticipant',
+    type: 'button',
+    visible: true,
+    cssClasses: ['text-secondary', 'w-10']
+  },
+  { label: 'Acciones', property: 'menu', type: 'button', visible: true }
+];
+

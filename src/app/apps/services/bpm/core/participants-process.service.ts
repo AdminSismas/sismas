@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
-import { ProTaskE } from '../../../interfaces/pro-task-e';
-import { catchError, Observable } from 'rxjs';
-import { PageSearchData } from '../../../interfaces/page-search-data.model';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
+import { Observable } from 'rxjs';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { HttpParams } from '@angular/common/http';
-import { ProcessParticipant } from '../../../interfaces/bpm/process-participant';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 
 @Injectable({
   providedIn: 'root'

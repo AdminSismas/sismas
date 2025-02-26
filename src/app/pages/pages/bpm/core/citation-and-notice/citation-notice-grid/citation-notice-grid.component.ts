@@ -16,20 +16,22 @@ import { stagger20ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
-import { PageSearchData } from '../../../../../../apps/interfaces/page-search-data.model';
+import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
 import { ParticipantsProcessService } from '../../../../../../apps/services/bpm/core/participants-process.service';
 import { filter } from 'rxjs/operators';
-import { InformationPegeable } from '../../../../../../apps/interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Observable, ReplaySubject } from 'rxjs';
 import { CitationNoticeCardComponent } from '../components/citation-notice-card/citation-notice-card.component';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
-import { PAGE, PAGE_SIZE_OPTION_UNIQUE, PAGE_SIZE_TABLE_UNIQUE } from '../../../../../../apps/constants/constant';
+import {
+  PAGE,
+  PAGE_SIZE_OPTION_UNIQUE,
+  PAGE_SIZE_TABLE_UNIQUE
+} from '../../../../../../apps/constants/general/constant';
 
 @Component({
   selector: 'vex-citation-notice-grid',
@@ -50,13 +52,10 @@ import { PAGE, PAGE_SIZE_OPTION_UNIQUE, PAGE_SIZE_TABLE_UNIQUE } from '../../../
     MatIconModule,
     MatTabsModule,
     CitationNoticeCardComponent,
-    RouterLink,
-    RouterLinkActive,
     MatButtonModule,
     MatTooltipModule,
     NgIf,
     NgForOf,
-    FluidHeightDirective,
     MatPaginatorModule
   ]
 

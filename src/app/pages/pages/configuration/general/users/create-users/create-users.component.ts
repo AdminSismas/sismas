@@ -196,7 +196,6 @@ export class CreateUsersComponent implements OnInit {
           this.newUserForm?.get('individualId')?.setErrors({ individualIdExists: true });
           return false;
         }
-
         return true;
       }));
 
