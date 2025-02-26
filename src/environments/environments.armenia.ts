@@ -8,7 +8,8 @@ export const environment = {
     geoHistoria: "/geohistoria",
     dataOpen: "/datosAbiertos/",
     get: "/get/",
-    value: "/accessGeo/"
+    value: "/accessGeo/",
+    geo: "/geo"
   },
   active: "active",
   administrativeSource: "/fuenteadmin/",
