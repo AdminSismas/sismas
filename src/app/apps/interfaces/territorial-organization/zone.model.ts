@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/constant';
+import { GUION } from '../../constants/general/constant';
 
 export class Zone {
   id: string;
@@ -8,17 +8,17 @@ export class Zone {
 
 
   constructor(content?: any) {
-    this.id = content.id;
-    this.codigoZona = content.codigoZona;
-    this.nombreZona = content.nombreZona;
-    this.deptompio = content.deptompio;
+    this.id = content?.id || '';
+    this.codigoZona = content?.codigoZona || '';
+    this.nombreZona = content?.nombreZona || '';
+    this.deptompio = content?.deptompio || '';
   }
 
   set codeName(value: string) {
   }
 
   get codeName(): string {
-    let name: string = '';
+    const name = '';
     if (this.codigoZona && this.nombreZona) {
       return `${this.codigoZona}${GUION}${this.nombreZona}`;
     } else if (this.codigoZona) {

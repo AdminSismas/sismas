@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Angular framework
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
@@ -16,11 +18,9 @@ import { NgForOf, NgIf } from '@angular/common';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { NAVIGATION_ITEMS_INFORMACION_PROPERTIY, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL } from '../../../constants/constant';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
-import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import {
   InformationPropertyOwnersComponent
 } from '../information-property-owners/information-property-owners.component';
@@ -28,15 +28,36 @@ import {
   InformationConstructionsPropertyComponent
 } from '../information-constructions-property/information-constructions-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { environment as envi } from '../../../../../environments/environments';
+import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
+import {
+  InformationPropertyService
+} from 'src/app/apps/services/territorial-organization/information-property.service';
+import { PhotosComponent } from '../photos/photos.component';
+import { AlertsComponent } from '../alerts/alerts.component';
+import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
+import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
+import {
+  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  REFERENCE_COMPONENTS,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import {
   PropertyAppraisalInformationComponent
 } from '../property-appraisal-information/property-appraisal-information.component';
-import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { TypeInformation } from '../../../interfaces/content-info';
-import { ContentInfoSchema } from '../../../interfaces/content-info-schema';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { environment as envi } from '../../../../../environments/environments';
+import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
+import { TypeInformation } from '../../../interfaces/general/content-info';
+import {
+  InformationAdjacentPropertyComponent
+} from '../information-adjacent-property/information-adjacent-property.component';
+import {
+  HistoricalProceduresPropertyComponent,
+  HistoryListBasic
+} from '../historical-procedures/historical-procedures.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -75,7 +96,14 @@ import { environment as envi } from '../../../../../environments/environments';
     InformationZonesPropertyComponent,
     PropertyAppraisalInformationComponent,
     MatFormFieldModule,
-    InformationUnitPropertyComponent
+    InformationUnitPropertyComponent,
+    AdministrativeSourcesComponent,
+    PhotosComponent,
+    AlertsComponent,
+    SuperNotariadoPropertyComponent,
+    InformationAdjacentPropertyComponent,
+    HistoricalProceduresPropertyComponent,
+    MatSelectModule
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -89,21 +117,36 @@ export class CadastralInformationPropertyComponent implements OnInit {
     static: false
   })
   private informationUnitPropertyComponent?: ElementRef;
-  @ViewChild(InformationAddressesPropertyComponent, {
+  @ViewChild(AdministrativeSourcesComponent, {
     read: ElementRef,
     static: false
   })
-  private informationAddressesPropertyComponent?: ElementRef;
+  private administrativeSourcesComponent?: ElementRef;
   @ViewChild(InformationPropertyOwnersComponent, {
     read: ElementRef,
     static: false
   })
   private informationPropertyOwnersComponent?: ElementRef;
+  @ViewChild(SuperNotariadoPropertyComponent, {
+  read: ElementRef,
+    static: false
+  })
+  private superNotariadoPropertyComponent?: ElementRef;
+  @ViewChild(InformationAddressesPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationAddressesPropertyComponent?: ElementRef;
   @ViewChild(InformationConstructionsPropertyComponent, {
     read: ElementRef,
     static: false
   })
   private informationConstructionsPropertyComponent?: ElementRef;
+  @ViewChild(InformationAdjacentPropertyComponent, {
+    read: ElementRef,
+    static: false
+  })
+  private informationAdjacentPropertyComponent?: ElementRef;
   @ViewChild(PropertyAppraisalInformationComponent, {
     read: ElementRef,
     static: false
@@ -113,38 +156,91 @@ export class CadastralInformationPropertyComponent implements OnInit {
     read: ElementRef,
     static: false
   })
-
   private informationZonesPropertyComponent?: ElementRef;
+  @ViewChild(PhotosComponent, { read: ElementRef, static: false })
+  private photosComponent?: ElementRef;
+
+  private historicalProceduresPropertyComponent?: ElementRef;
+  @ViewChild(HistoricalProceduresPropertyComponent, { read: ElementRef, static: false })
+  private historyComponent?: ElementRef;
+
+  @ViewChild(AlertsComponent, { read: ElementRef, static: false })
+  private alertsComponent?: ElementRef;
 
 
   @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
-  @Input({ required: true }) public showTittle: boolean = true;
+  @Input({ required: true }) public showTittle = true;
   @Input({ required: true }) public label!: string;
-  @Input() public id: string = '';
-  @Input({ required: true }) public schema: string = '';
-  @Input({ required: true }) contentInfoSchema!: ContentInfoSchema
+  @Input() public id = '';
+  @Input({ required: true }) public schema = '';
+  @Input({ required: true }) contentInfoSchema!: ContentInfoSchema;
   @Input({ required: true }) public baunitCondition?: string;
+  @Input() public resources: string[] = [];
+
+  @Input() public rulePage = '';
 
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
-  idContainer: string = '';
+  idContainer = '';
   baunitId: string | null | undefined = null;
-  navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  divPolLv1!: string;
+  divPolLv2!: string;
+  navigationItems: { label: string; fragment: string }[] =
+    NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean, ZON?: boolean, CLN?: boolean } = {};
+
+  propertyRegistryOffice: string | null | undefined = null;
+  propertyRegistryNumber: string | null | undefined = null;
+
+  public viewProperties = false;
+  public showRulesPage = false;
+  public seeHisDropdown = false;
+  public expand_tap_property_information = true;
+  public expand_tap = false;
+
+  public listHistoryTemp: HistoryListBasic[] = [];
+     form!: FormGroup;
+
+
+  constructor(private informationPropertyService: InformationPropertyService,
+    private fb: FormBuilder){ }
 
   ngOnInit(): void {
-    if(!this.contentInfoSchema || !this.contentInfoSchema.content) {
+    this.infoResorces();
+    if (!this.contentInfoSchema || !this.contentInfoSchema.content) {
       return;
     }
 
-    if(this.schema !== `${envi.schemas.main}` && !this.contentInfoSchema.executionId){
+    if(this.schema === `${envi.schemas.temp}` && !this.contentInfoSchema.executionId ){
       return;
     }
+    this.informationPropertyService.showOptionsPersonStarted$
+    .subscribe(value2=>{
+      if(value2){
+        this.viewProperties = value2;
+        this.removeItem('Propietarios');
+      }
+    });
+    this.informationPropertyService.showOptionsRulePage$
+    .subscribe(value2=>{
+      if(value2){
+        console.log('this.navigationItems', this.navigationItems);
+        console.log('this.rulePage', this.rulePage);
 
-    this.baunitHead = this.contentInfoSchema.content
+        this.proccessRulePage();
+      }
+    });
+
+    this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
+    this.divPolLv1 = this.baunitHead.cadastralNumber!.substring(0, 2);
+    this.divPolLv2 = this.baunitHead.cadastralNumber!.substring(2, 5);
 
+    this.form = this.fb.group({
+      history: [ null],
 
+    });
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
@@ -158,6 +254,68 @@ export class CadastralInformationPropertyComponent implements OnInit {
     } else {
       this.id = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema;
       this.idContainer = this.getRandomInt(10000) + 'idCadastralInformation' + this.getRandomInt(50) + this.schema + 'Contenedor';
+    }
+
+  }
+  proccessRulePage() {
+    if(this.rulePage) {
+      if(this.rulePage === 'cadastralSearchDA') {
+        this.showRulesPage = true;
+        this.removeItem('Fotos');
+        this.removeItem('Alertas');
+        this.removeItem('Super notariado');
+        this.removeItem('Propietarios');
+      }
+
+    }
+  }
+
+  infoResorces(): void {
+    if (this.resources.length < 0) return;
+
+    const referenceComponents = REFERENCE_COMPONENTS;
+
+    referenceComponents.forEach((key) => {
+      this.editable[key as keyof typeof this.editable] = this.resources.includes(key);
+    });
+  }
+  // Método para eliminar el objeto con la etiqueta "Propietarios"
+  removeItem(labelToRemove: string): void {
+    this.navigationItems = this.navigationItems.filter(
+      (item) => item.label !== labelToRemove
+    );
+  }
+
+  spandTapSet(sedTap: boolean) {
+    this.expand_tap = sedTap;
+    return this.expand_tap;
+  }
+
+  showListHistory(list:HistoryListBasic[]){
+    this.listHistoryTemp = list;
+    if(this.listHistoryTemp.length > 0){
+      this.seeHisDropdown = true;
+      this.form.get('history')?.setValue(this.listHistoryTemp[0]);
+      this.updateContextComponent();
+      this.spandTapSet(false);
+      if(this.schema === 'hist') {
+        this.expand_tap_property_information = false; // Expand the tap
+      }
+
+    }
+  }
+
+  updateContextComponent(){
+    this.executionId = this.form.get('history')?.value?.executionId;
+    if(this.executionId){
+
+      this.spandTapSet(true);
+      this.expand_tap_property_information = true; // Expand the tap
+      setTimeout(() => {
+        this.spandTapSet(false);
+        this.expand_tap_property_information = false; // Expand the tap
+      }, 1300);
+
     }
   }
 
@@ -194,8 +352,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
       baunitCondition === '(Propiedad horizontal) Matriz'
     ) return true;
 
-    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de Unidad Predial')
+    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial');
 
     return false;
   }
+
+
 }

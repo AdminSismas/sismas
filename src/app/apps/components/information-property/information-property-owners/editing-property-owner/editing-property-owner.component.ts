@@ -1,6 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -9,12 +18,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
-import { ComboxColletionComponent } from '../../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PeopleService } from 'src/app/apps/services/people.service';
+import { PeopleService } from '../../../../services/users/people.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { DateTime } from 'luxon';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -38,6 +46,7 @@ import { MatDividerModule } from '@angular/material/divider';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditingPropertyOwnerComponent implements OnInit {
+  public maxDate = new Date();
   public form: FormGroup = this.fb.group({
     fraction: [0, [
       Validators.required,
@@ -45,9 +54,10 @@ export class EditingPropertyOwnerComponent implements OnInit {
       Validators.min(0),
       this.createFractionValidator()
     ]],
+    fractions_sum: [0],
     domRightType: ['', Validators.required],
     beginAt: [Date(), Validators.required],
-  })
+  });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogsData,
@@ -59,8 +69,16 @@ export class EditingPropertyOwnerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const formValues = this.data.rrrightInfo
-    this.form.reset(formValues)
+    const formValues = {...this.data.rrrightInfo!, fractions_sum: this.data.fractions_sum!};
+
+    if (formValues?.beginAt) {
+      formValues.beginAt = new Date(
+        this.data.rrrightInfo!.beginAt + 'T00:00:00-05:00'
+      );
+    }
+    console.log(formValues);
+    this.form.reset(formValues);
+    this.form.get('fractions_sum')!.disable();
   }
 
   close(): void {
@@ -69,43 +87,47 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
   editRrrightOwnerProperty(): any {
     if (this.form.invalid) {
-      this.snackbar.open('El valor de la fracción no es válido', 'CLOSE', { duration: 4000 })
+      this.snackbar.open('El valor de la fracción no es válido', 'CERRAR', { duration: 10000 });
       return;
     }
 
-    const values = this.form.value
+    const values = this.form.value;
 
     try {
-      values.beginAt = values.beginAt.toISOString().split('T')[0]
-    } catch (e) {
-      values.beginAt = values.beginAt
+      values.beginAt = values.beginAt.toISOString().split('T')[0];
+    } catch {
+      values.beginAt = values.beginAt as string;
     }
-    values.rightId = this.data.rightId
+    values.rightId = this.data.rightId;
 
-    const { number, domIndividualTypeNumber } = this.data.individual
+    const { number, domIndividualTypeNumber } = this.data.individual;
 
     this.peopleService.getPeopleTypeNumber({ number: number, individualTypeNumber: domIndividualTypeNumber })
       .subscribe((res: InfoPerson) => {
-        values.individual = { individualId: res.individualId }
+        values.individual = { individualId: res.individualId };
         this.rrrightService.updatePropertyOwner({
           executionId: this.data.executionId,
           baunitId: this.data.baunitId,
           schema: this.data.schema as string,
           params: values
         }).subscribe(() => {
-          this.snackbar.open('Propietario actualizado', 'CLOSE', { duration: 4000 })
-          this.close()
-        })
-      })
+          this.snackbar.open('Propietario actualizado', 'CERRAR', { duration: 10000 });
+          this.close();
+        });
+      });
   }
 
   private createFractionValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const fraction = Number(control.value)
+      const fraction = Number(control.value);
       if (fraction + this.data!.fractions_sum! > 1 || fraction < 0) {
-        return { 'invalidFraction': true }
+        return { 'invalidFraction': true };
       }
-      return null
-    }
+      return null;
+    };
+  }
+
+  get max(): number {
+    return 1 - this.data!.fractions_sum!;
   }
 }

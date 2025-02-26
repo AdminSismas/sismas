@@ -4,7 +4,7 @@ mat-expansion-panel-header.mat-expanded:focus {
 }
 
 .mat-expansion-panel:not(.mat-expanded),
-.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {;
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
   background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
 }
 
@@ -12,4 +12,40 @@ mat-expansion-panel-header.mat-expanded:focus {
 .mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
   background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
 }
+
+.column-titles {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* Alinea los títulos con las columnas */
+  margin-bottom: 8px; /* Espacio entre los títulos y las columnas */
+}
+
+.column-titles h3 {
+  width: 50%; /* Asegura que cada título ocupe la mitad del espacio */
+  text-align: center; /* Centra el texto de cada título */
+  font-weight: bold;
+  font-size: 14px; /* Ajusta el tamaño para que sea responsive */
+}
+
+@media (max-width: 768px) {
+  .column-titles {
+    flex-direction: column; /* Apila los títulos en dispositivos pequeños */
+    align-items: center;
+  }
+
+  .column-titles h3 {
+    width: 100%; /* Cada título ocupa el ancho completo */
+    margin-bottom: 4px; /* Añade un pequeño margen entre títulos */
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ml-2 {
+    margin-left: 0.5rem; /* Ajusta el valor según sea necesario */
+  }
+}
+
 

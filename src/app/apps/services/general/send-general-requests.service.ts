@@ -12,7 +12,8 @@ export class SendGeneralRequestsService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private authService: AuthService) { }
+              private authService: AuthService) {
+  }
 
   loadParamsMethodGet() {
     const token = this.authService.token;
@@ -22,7 +23,7 @@ export class SendGeneralRequestsService {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`
       }
     };
   }
@@ -34,7 +35,7 @@ export class SendGeneralRequestsService {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/text',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`
       }
     };
   }
@@ -42,38 +43,38 @@ export class SendGeneralRequestsService {
   loadMethodGetBody(obj: any) {
     const token = this.authService.token;
     const myHeaders = new Headers();
-    myHeaders.append("Access-Control-Allow-Origin", "*");
-    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append('Access-Control-Allow-Origin', '*');
+    myHeaders.append('Content-Type', 'application/json');
 
     return {
       method: 'GET',
       body: JSON.stringify(obj),
       headers: myHeaders,
-      redirect: "follow"
+      redirect: 'follow'
     };
   }
 
   loadMethodDeleteBody(obj: any) {
     const token = this.authService.token;
     const myHeaders = new Headers();
-    myHeaders.append("Access-Control-Allow-Origin", "*");
+    myHeaders.append('Access-Control-Allow-Origin', '*');
     return {
       method: 'DELETE',
       body: obj,
       headers: myHeaders,
-      redirect: "follow"
+      redirect: 'follow'
     };
   }
 
   loadParamsMethodPostFormData(obj: any) {
     const token = this.authService.token;
     const myHeaders = new Headers();
-    myHeaders.append("Access-Control-Allow-Origin", "*");
+    myHeaders.append('Access-Control-Allow-Origin', '*');
     return {
       method: 'POST',
       body: obj,
       headers: myHeaders,
-      redirect: "follow"
+      redirect: 'follow'
     };
   }
 
@@ -85,20 +86,20 @@ export class SendGeneralRequestsService {
         method: 'POST',
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
           //'Authorization': `Bearer ${token}`
         }
-      }
+      };
     } else {
       params = {
         method: 'POST',
         body: JSON.stringify(obj),
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
           //'Authorization': `Bearer ${token}`
         }
-      }
+      };
     }
     return params;
   }
@@ -116,6 +117,35 @@ export class SendGeneralRequestsService {
     };
   }
 
+  sendRequestsFetchGet(url: string): Observable<any> {
+    return this.http.get<any>(url);
+  }
+
+  sendRequestsGetText(url: string): Observable<any> {
+    return this.http.get(url, { responseType: 'text' });
+  }
+
+  async sendRequestsFetchGetAsync(url: string) {
+    return this.http.get<any>(url);
+  }
+
+  sendRequestsGetOption(url: string, options: any): Observable<any> {
+    return this.http.get<any>(url, options)
+      .pipe(
+        catchError((e) => {
+          if (e.status == 401) {
+            this.router.navigate([`${environment.auth_login}`]).then(r => {
+            });
+            if (e.error.mensaje) {
+              console.log(e.error.mensaje);
+            }
+          }
+          return throwError(() => e);
+        })
+      );
+  }
+
+
   sendRequestsFetch(url: string, params: any): Promise<any> {
     return fetch(url, params)
       .then(result => result.json())
@@ -128,35 +158,9 @@ export class SendGeneralRequestsService {
       .catch(error => (error));
   }
 
-  sendRequestsFetchGet(url: string): Observable<any> {
-    return this.http.get<any>(url);
-  }
-
-  async sendRequestsFetchGetAsync(url: string) {
-    return this.http.get<any>(url);
-  }
-
-  sendRequestsGetOption(url: string, options: any): Observable<any> {
-    return this.http.get<any>(url, options)
-      .pipe(
-        catchError((e) => {
-          if (e.status == 401) {
-            this.router.navigate([`${environment.auth_login}`]).then(r => {});
-            if (e.error.mensaje) {
-              console.log(e.error.mensaje);
-            }
-          }
-          return throwError(() => e);
-        })
-      );
-  }
-
-  
-
-  
 
   sendRequestsFetchPost(url: string): Observable<any> {
-    return this.http.post<any>(url, "");
+    return this.http.post<any>(url, '');
   }
 
   sendDeleteFetch(url: string): Observable<any> {

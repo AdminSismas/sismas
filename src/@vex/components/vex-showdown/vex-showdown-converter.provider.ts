@@ -5,7 +5,7 @@ import { VexShowdownConfig } from './vex-showdown-config.provider';
 /**
  * @internal
  */
-let { hasOwnProperty } = {};
+const { hasOwnProperty } = {};
 
 /**
  * ### Example
@@ -53,7 +53,7 @@ export class VexShowdownConverter extends Showdown.Converter {
    * @param options - A options object to set.
    */
   public setOptions(options: Showdown.ShowdownOptions): void {
-    for (let key in options) {
+    for (const key in options) {
       if (hasOwnProperty.call(options, key)) {
         this.setOption(key, options[key]);
       }

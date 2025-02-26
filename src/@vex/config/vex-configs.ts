@@ -31,8 +31,8 @@ const baseConfig: VexConfig = {
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'GEOGESTION',
-    imageUrl: 'assets/img/illustrations/it_support.svg',
+    title: 'SISMAS',
+    imageUrl: 'assets/img/illustrations/Sismas.png',
     showCollapsePin: true,
     user: {
       visible: true
@@ -43,6 +43,7 @@ const baseConfig: VexConfig = {
     state: 'expanded'
   },
   toolbar: {
+    visible: true,
     fixed: true,
     user: {
       visible: true
@@ -76,6 +77,7 @@ export const vexConfigs: VexConfigs = {
       }
     },
     toolbar: {
+      visible: false,
       user: {
         visible: false
       }

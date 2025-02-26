@@ -14,13 +14,9 @@ import { InformationPropertyService } from '../../../../services/territorial-org
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { GUION, NAME_NO_DISPONIBLE, TWO_POINT_ } from '../../../../constants/constant';
+import { GUION, NAME_NO_DISPONIBLE, TWO_POINT_ } from '../../../../constants/general/constant';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../../header-cadastral-information-property/header-cadastral-information-property.component';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CcCalificacionUB } from '../../../../interfaces/information-property/cc-calificacion-ub';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -59,9 +55,6 @@ export interface Tile {
     MatDividerModule,
     MatIconModule,
     MatTabsModule,
-    VexPageLayoutContentDirective,
-    DatePipe,
-    HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
     NgForOf,
     MatGridListModule,
@@ -77,7 +70,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
 
   data!: ContentInformationConstruction;
   dataCalification!: CcCalificacionUB[];
-  schema: string = `${environment.schemas.main}`;
+  schema = `${environment.schemas.main}`;
   baunitId!: string;
 
   constructor(
@@ -115,7 +108,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
       return;
     }
     this.informationPropertyService
-      .getDetailBasicInformationPropertyConstructions(this.schema, this.defaults.unitBuiltId)
+      .getDetailBasicInformationPropertyConstructions(this.defaults.unitBuiltId)
       .subscribe({
           next: (result: ContentInformationConstruction) => this.data = result,
           error: (err: any) => console.log('Consulta NOK.')
@@ -131,7 +124,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
     }
     this.informationPropertyService
       .getDetailBasicInformationPropertyCalificationConstructions(
-        this.schema, this.defaults.unitBuiltId, Number(this.defaults.baunitId))
+        this.defaults.unitBuiltId)
       .subscribe({
           next: (result: CcCalificacionUB[]) => this.dataCalification = result,
           error: (err: any) => console.log('Consulta NOK.')

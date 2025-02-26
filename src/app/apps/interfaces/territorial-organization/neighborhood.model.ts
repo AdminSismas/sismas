@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/constant';
+import { GUION } from '../../constants/general/constant';
 
 export class Neighborhood {
   id: string;
@@ -18,7 +18,7 @@ export class Neighborhood {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.codigoBarrio && this.nombreBarrio) {
       return `${this.codigoBarrio}${GUION}${this.nombreBarrio}`;
     } else if (this.codigoBarrio) {

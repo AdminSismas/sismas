@@ -5,6 +5,7 @@ export class InfoOwners {
   domRightType?:string;
   fraction?:number;
   beginAt?:string;
+  endsIn?:string;
   individual?: InfoPerson;
   hash?:string;
   createdBy?:string;
@@ -20,6 +21,7 @@ export class InfoOwners {
     this.domRightType = content.domRightType;
     this.fraction = content.fraction;
     this.beginAt = content.beginAt;
+    this.endsIn = content.endsIn;
     this.individual = content.individual;
     this.hash = content.hash;
     this.createdBy = content.createdBy;

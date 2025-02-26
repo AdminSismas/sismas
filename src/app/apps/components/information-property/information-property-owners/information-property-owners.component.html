@@ -10,7 +10,7 @@
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
     >
       <vex-header-cadastral-information-property
-        label="Información de los propietarios"
+        label="Propietarios"
         icon="mat:people"
         id="information-owners"
       >
@@ -21,94 +21,111 @@
       [id]="id + 'mat-panel-description-owners'"
     >
       <div class="flex flex-col w-full">
+        <!-- Botones de edición: Se muestran SIEMPRE en modo edición -->
         <div class="header-container m-2">
           @if (typeInformation === "edition") {
             <button
-              color="primary"
+              [ngClass]="!editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
+              [color]="editable ? 'primary' : ''"
               mat-raised-button
               type="button"
+              [disabled]="!editable"
               (click)="onClickOpenAddEditModal(dataSource)"
             >
-              Nueva
+              Nuevo
               <mat-icon svgIcon="mat:add"></mat-icon>
             </button>
           }
         </div>
-        <div class="table-container overflow-x-auto w-full">
-          <table
-            mat-table
-            [dataSource]="dataSource"
-            matSort
-            class="w-full"
-          >
-            <ng-container matColumnDef="viewDetail">
-              <th
-                *matHeaderCellDef
-                class="uppercase"
-                mat-header-cell
-                mat-sort-header
-              ></th>
-              <td
-                *matCellDef="let row"
-                mat-cell
-              >
-                <div
-                  class="flex align-middle text-center content-center items-center"
-                >
-                  <button
-                    class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
-                    mat-icon-button
-                    title="Detalles"
-                    (click)="openInformationPropertyOwner(row)"
-                  >
-                    <mat-icon
-                      class="icon-sm"
-                      svgIcon="mat:visibility"
-                    ></mat-icon>
-                  </button>
-                </div>
-              </td>
-            </ng-container>
-            @for (column of textColumns(); track column) {
-              <ng-container [matColumnDef]="column.property">
+
+        <!-- Mostrar mensaje si no hay propietarios -->
+        @if (!dataSource || dataSource.data.length === 0) {
+          <div class="flex justify-center items-center py-4">
+            <p class="text-gray-500 text-lg">No hay Propietarios para mostrar.</p>
+          </div>
+        }
+        
+        <!-- Mostrar tabla y paginador SOLO si hay datos -->
+        @if (dataSource && dataSource.data.length > 0) {
+          <div class="table-container overflow-x-auto w-full">
+            <table
+              mat-table
+              [dataSource]="dataSource"
+              matSort
+              class="w-full"
+            >
+              <ng-container matColumnDef="viewDetail">
                 <th
                   *matHeaderCellDef
-                  class="uppercase"
+                  mat-header-cell
                   mat-sort-header
+                ></th>
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                >
+                  <div
+                    class="flex align-middle text-center content-center items-center"
+                  >
+                    <button
+                      class="w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10"
+                      mat-icon-button
+                      title="Detalles"
+                      (click)="openInformationPropertyOwner(row)"
+                    >
+                      <mat-icon
+                        class="icon-sm"
+                        svgIcon="mat:visibility"
+                      ></mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+              @for (column of textColumns(); track column) {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    mat-sort-header
+                    mat-header-cell
+                  >
+                    {{ column.label }}
+                  </th>
+                  @if (individualInfo(column)) {
+                    <td
+                      *matCellDef="let row"
+                      mat-cell
+                    >
+                      {{ row.individual[column.property] }}
+                    </td>
+                  }
+                  @else {
+                    <td
+                      *matCellDef="let row"
+                      mat-cell
+                    >
+
+                      @if (column.property === 'beginAt') {
+                        {{ row[column.property] | date:'dd/MM/yyyy' }}
+                      }
+                      @else {
+                        {{ row[column.property] }}
+                      }
+                    </td>
+                  }
+                </ng-container>
+              }
+              <ng-container matColumnDef="actions">
+                <th
+                  *matHeaderCellDef
                   mat-header-cell
                 >
-                  {{ column.label }}
+                  Acciones
                 </th>
-                @if (individualInfo(column)) {
-                  <td
-                    *matCellDef="let row"
-                    mat-cell
-                  >
-                    {{ row.individual[column.property] }}
-                  </td>
-                 }
-                 @else {
-                   <td
-                     *matCellDef="let row"
-                     mat-cell
-                   >
-                     {{ row[column.property] }}
-                   </td>
-                 }
-              </ng-container>
-            }
-            <ng-container matColumnDef="actions">
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-              >
-                ACCIONES
-              </th>
-              <td
-                *matCellDef="let row"
-                class="w-10 text-secondary"
-                mat-cell
-              >
+                <td
+                  *matCellDef="let row"
+                  class="w-10 text-secondary"
+                  mat-cell
+                >
                   <button
                     mat-icon-button
                     [matMenuTriggerData]="{ infoOwner: row }"
@@ -117,58 +134,59 @@
                   >
                     <mat-icon svgIcon="mat:more_horiz"></mat-icon>
                   </button>
-              </td>
-            </ng-container>
-            <tr
-              mat-header-row
-              *matHeaderRowDef="visibleColumns()"
-            ></tr>
-            <tr
-              mat-row
-              @fadeInUp
-              class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-              *matRowDef="let row; columns: visibleColumns()"
-            ></tr>
-          </table>
-          <mat-menu
-            #actionsMenu="matMenu"
-            xPosition="before"
-            yPosition="below"
-          >
-            <ng-template
-              let-infoOwner="infoOwner"
-              matMenuContent
+                </td>
+              </ng-container>
+              <tr
+                mat-header-row
+                *matHeaderRowDef="visibleColumns()"
+              ></tr>
+              <tr
+                mat-row
+                @fadeInUp
+                class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+                *matRowDef="let row; columns: visibleColumns()"
+              ></tr>
+            </table>
+            <mat-menu
+              #actionsMenu="matMenu"
+              xPosition="before"
+              yPosition="below"
             >
-              @for (actionBtn of actionBtns(); track actionBtn.id) {
-                <button
-                  mat-menu-item
-                  (click)="onClickActionBtn(actionBtn.id, infoOwner)"
-                >
-                  <mat-icon [svgIcon]="actionBtn.icon" />
-                  <span>{{ actionBtn.label }}</span>
-                </button>
-              } @empty {
-                <button
-                  mat-menu-item
-                  disabled
-                >
-                  <span class="text-center">No options</span>
-                </button>
-              }
-            </ng-template>
-          </mat-menu>
-        </div>
-        <div class="paginator-container flex justify-center">
-          <mat-paginator
-            #paginator
-            [pageSizeOptions]="pageSizeOptions"
-            [length]="totalElements"
-            [pageSize]="pageSize"
-            [pageIndex]="page"
-            (page)="refreshPaginator($event)"
-            class="paginator"
-          />
-        </div>
+              <ng-template
+                let-infoOwner="infoOwner"
+                matMenuContent
+              >
+                @for (actionBtn of actionBtns(); track actionBtn.id) {
+                  <button
+                    mat-menu-item
+                    (click)="onClickActionBtn(actionBtn.id, infoOwner)"
+                  >
+                    <mat-icon [svgIcon]="actionBtn.icon" />
+                    <span>{{ actionBtn.label }}</span>
+                  </button>
+                } @empty {
+                  <button
+                    mat-menu-item
+                    disabled
+                  >
+                    <span class="text-center">No options</span>
+                  </button>
+                }
+              </ng-template>
+            </mat-menu>
+          </div>
+          <div class="paginator-container flex justify-center">
+            <mat-paginator
+              #paginator
+              [pageSizeOptions]="pageSizeOptions"
+              [length]="totalElements"
+              [pageSize]="pageSize"
+              [pageIndex]="page"
+              (page)="refreshPaginator($event)"
+              class="paginator"
+            ></mat-paginator>
+          </div>
+        }
       </div>
     </mat-panel-description>
   </mat-expansion-panel>

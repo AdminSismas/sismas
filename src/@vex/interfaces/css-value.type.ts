@@ -1,4 +1,4 @@
-export type CSSValue = {
+export interface CSSValue {
   value: number;
   unit: string;
-};
+}

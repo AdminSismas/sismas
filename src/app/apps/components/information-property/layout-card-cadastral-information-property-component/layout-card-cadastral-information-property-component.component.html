@@ -1,22 +1,31 @@
-<div class="flex items-center" mat-dialog-title>
-  <h2
-    class="headline m-0 flex-auto">
-   {{CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE + ' - ' + baunitHead?.domBaunitCondition }}
+<div
+  class="flex items-center"
+  mat-dialog-title
+>
+  <h2 class="headline m-0 flex-auto">
+    {{
+      CONSTANT_INFOMATION_PREDIAL +
+        TWO_POINT_ +
+        this.baunitHead?.baunitIdE +
+        " - " +
+        baunitHead?.domBaunitCondition
+    }}
   </h2>
 
-  <button
+  <!-- <button
     [matMenuTriggerFor]="settingsMenu"
     class="text-secondary"
     mat-icon-button
     type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
+  </button> -->
 
   <button
     class="text-secondary"
     mat-dialog-close
     mat-icon-button
-    type="button">
+    type="button"
+  >
     <mat-icon svgIcon="mat:close"></mat-icon>
   </button>
 </div>
@@ -24,18 +33,19 @@
 
 <vex-page-layout-content class="container-fluid p-0">
   <mat-tab-group (selectedTabChange)="onTabChange($event)">
-    @for(option of optionschemas; track option) {
+    @for (option of optionschemas; track option) {
       <mat-tab [label]="option.title">
         <vex-cadastral-information-property
           [id]="'Cadastralinformation_' + option.schema"
           [label]="option.title"
           [schema]="option.schema"
           [typeInformation]="typeInformation"
-          [contentInfoSchema]="this.defaults"
+          [contentInfoSchema]="defaults"
           [showTittle]="false"
           [baunitCondition]="baunitHead?.domBaunitCondition"
-        >
-        </vex-cadastral-information-property>
+          [resources]="defaults.resources!"
+          [rulePage]="rulePage"
+        ></vex-cadastral-information-property>
       </mat-tab>
     } @empty {
       <mat-tab label="No Data">
@@ -56,20 +66,23 @@
   </vex-cadastral-information-property>
 </vex-page-layout-content> -->
 
-
-<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+<mat-menu
+  #settingsMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Print</span>
+    <span>Imprimir</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Export</span>
+    <span>Exportar</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Delete</span>
+    <span>Borrar</span>
   </button>
 </mat-menu>

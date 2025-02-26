@@ -1,0 +1,33 @@
+<div class="flex justify-between items-center">
+  <h2 mat-dialog-title>Terceros afectados</h2>
+  <button
+    mat-icon-button
+    mat-dialog-close
+    type="button"
+    tabindex="-1"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>
+
+<mat-dialog-content class="h-full w-full">
+  <form [formGroup]="participationFormGroup">
+    <vex-basic-participant-table
+      class="w-full h-full"
+      [form]="participationFormGroup"
+      (processParticipants)="loadParticipants($event)"
+    ></vex-basic-participant-table>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    type="button"
+    color="primary"
+    (click)="closeDialog()"
+  >
+    Guardar
+  </button>
+</mat-dialog-actions>

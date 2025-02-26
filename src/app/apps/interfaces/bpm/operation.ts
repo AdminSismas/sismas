@@ -1,5 +1,5 @@
 import { BaunitHead } from '../information-property/baunit-head.model';
-import { TypeOperation } from '../content-info';
+import { TypeOperation } from '../general/content-info';
 
 export class Operation {
   operationType?:TypeOperation;
@@ -20,7 +20,7 @@ export class Operation {
   set registration(value:string) {}
 
   get registration(): string {
-    let name = '';
+    const name = '';
     if (this.baunitHead?.propertyRegistryOffice && this.baunitHead?.propertyRegistryNumber) {
       return `${this.baunitHead?.propertyRegistryOffice} - ${this.baunitHead?.propertyRegistryNumber}`;
     } else if (this.baunitHead?.propertyRegistryOffice) {

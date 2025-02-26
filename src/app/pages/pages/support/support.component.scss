@@ -1,0 +1,44 @@
+/* Contenedor principal de la tarjeta */
+.tarjeta-container {
+    border: 1px solid #111827; 
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0; /* Separación entre tarjetas */
+    background-color: #ffffff; /* Fondo claro */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+
+
+  .tarjeta-body {
+    font-size: 1rem;
+    text-align: left;
+    padding: 8px;
+    color: black;
+    border-radius: 4px;
+  }
+
+  .card-header {
+    background-color: #e7f6ed;
+    /* color: #af86f7; */
+    padding: 8px 16px;
+    border-radius: 12px;
+    display: inline-block;
+    font-weight: bold;
+    display: inline-block;
+    max-width: fit-content;
+  }
+
+  .header-background {
+    background-color: rgb(17, 24, 39) !important;;
+    color: white !important;;
+    font-weight: bold !important;;;
+  }
+
+  .education-header {
+    background-color: #daece5;
+    /* color: #af86f7; */
+    padding: 8px 16px;
+    border-radius: 12px;
+    display: inline-block;
+    font-weight: bold;
+  }

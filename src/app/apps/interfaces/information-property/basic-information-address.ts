@@ -1,4 +1,4 @@
-import { NAME_NO, NAME_SI } from '../../constants/constant';
+import { NAME_NO, NAME_SI } from '../../constants/general/constant';
 
 export class BasicInformationAddress {
   direccionId?: string;
@@ -16,7 +16,7 @@ export class BasicInformationAddress {
   set isMainAddress(value:boolean| undefined) {}
 
   get isMainAddress(): string {
-    let name:string = `${NAME_NO}`;
+    const name = `${NAME_NO}`;
     if (this.esDireccionPrincipal) {
       return `${NAME_SI}`;
     }

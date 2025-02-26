@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CertificateTableComponent } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-table/certificate-table.component';
+
+describe('CertificateTableComponent', () => {
+  let component: CertificateTableComponent;
+  let fixture: ComponentFixture<CertificateTableComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CertificateTableComponent]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(CertificateTableComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  test('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

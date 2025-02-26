@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/constant';
+import { GUION } from '../../constants/general/constant';
 
 export class Block {
   id: string;
@@ -18,7 +18,7 @@ export class Block {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.codigoManzana && this.nombreManzana) {
       return `${this.codigoManzana}${GUION}${this.nombreManzana}`;
     } else if (this.codigoManzana) {

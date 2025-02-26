@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/constant';
+import { GUION } from '../../constants/general/constant';
 
 export class Municipality {
   fkDivpolLvl1Code: string;
@@ -8,10 +8,10 @@ export class Municipality {
 
 
   constructor(content?: any) {
-    this.fkDivpolLvl1Code = content.fkDivpolLvl1Code;
-    this.divpolLvl2Code = content.divpolLvl2Code;
-    this.divpolLvl2Name = content.divpolLvl2Name;
-    this.divpolLvl2SecCode = content.divpolLvl2SecCode;
+    this.fkDivpolLvl1Code = content?.fkDivpolLvl1Code || '';
+    this.divpolLvl2Code = content?.divpolLvl2Code || '';
+    this.divpolLvl2Name = content?.divpolLvl2Name || '';
+    this.divpolLvl2SecCode = content?.divpolLvl2SecCode || '';
   }
 
 
@@ -19,7 +19,7 @@ export class Municipality {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.divpolLvl2SecCode && this.divpolLvl2Name) {
       return `${this.divpolLvl2SecCode}${GUION}${this.divpolLvl2Name}`;
     } else if (this.divpolLvl2SecCode) {

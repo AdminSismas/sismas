@@ -4,7 +4,7 @@
             <div>
                 <h1 class="title mt-0 mb-1">Mapas generales</h1>
                 <vex-breadcrumbs
-                [crumbs]="['Datos Abiertos', 'Mapas generales']"
+                [crumbs]="['Datos abiertos', 'Mapas generales']"
                 ></vex-breadcrumbs>
             </div>
         </div>
@@ -21,19 +21,19 @@
                     <input
                         matInput
                         [formControl]="searchCtrl"
-                        placeholder="Buscar archivo&hellip;"
+                        placeholder="Filtrar archivo"
                         type="text"/>
                 </mat-form-field>
-    
+
                 <!-- button filter -->
-                <button
+                <!-- <button
                     [matMenuTriggerFor]="columnFilterMenu"
                     mat-icon-button
-                    matTooltip="Filter Columns"
+                    matTooltip="Filtrar columnas"
                     type="button"
                     class="ml-4 flex-col">
                     <mat-icon matIconPrefix svgIcon="mat:filter_list"></mat-icon>
-                </button>
+                </button> -->
             </div>
 
             <!-- Table -->
@@ -42,7 +42,7 @@
                 <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
 
                     <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-                        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+                        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
                         <td *matCellDef="let row" (click)="viewFile(row)" class="uppeercase pl-1 pr-1" [ngClass]="column.cssClasses" mat-cell>
@@ -52,12 +52,12 @@
                     </ng-container>
 
                     <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-                        <th *matHeaderCellDef class="uppercase pl-1 pr-1" mat-header-cell mat-sort-header>
+                        <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
                             {{ column.label }}
                         </th>
                         <td *matCellDef="let row" (click)="viewFile(row)" class="uppeercase pl-1 pr-1" [ngClass]="column.cssClasses" mat-cell>
                             <mat-icon matIconPrefix *ngIf="column.property === 'originalFileName'" svgIcon="mat:picture_as_pdf" class="w-5 h-5 p-0 items-center justify-center text-red-600"></mat-icon>
-                            {{ row[column.property] | date:'short' }}
+                            {{ row[column.property] | date:'dd/MM/yyyy hh:mm:ss a' }}
                         </td>
                     </ng-container>
 

@@ -12,12 +12,15 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
-import { ClearInformationData } from '../../../interfaces/content-info';
+import { ClearInformationData } from '../../../interfaces/general/content-info';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { CONSTANT_MSG_ERROR_CLEAR_INFORMATION, CONSTANT_NAME_CONFIRMATION } from '../../../constants/constantLabels';
+import {
+  CONSTANT_MSG_ERROR_CLEAR_INFORMATION,
+  CONSTANT_NAME_CONFIRMATION
+} from '../../../constants/general/constantLabels';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TWO_POINT_ } from '../../../constants/constant';
+import { TWO_POINT_ } from '../../../constants/general/constant';
 
 @Component({
   selector: 'vex-clear-information-data',
@@ -71,14 +74,14 @@ export class ClearInformationDataComponent implements OnInit{
     if (objectform == null || !objectform.clearData) {
       this.snackbar.open(
         'Información no correspondiente, consulte al administrador.',
-        'CLOSE', { duration: 1000 }
+        'CERRAR', { duration: 10000 }
       );
     }
 
     if(objectform.clearData !== this.defaults?.keyWord){
       this.snackbar.open(
         'No se puede continuar palabra incorrecta, consulte al administrador.',
-        'CLOSE', { duration: 1000 }
+        'CERRAR', { duration: 10000 }
       );
       return;
     }

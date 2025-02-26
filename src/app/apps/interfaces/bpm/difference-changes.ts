@@ -1,4 +1,4 @@
-import { TypeOperation } from '../content-info';
+import { TypeOperation } from '../general/content-info';
 
 export class DifferenceChanges  {
   entity?:string;

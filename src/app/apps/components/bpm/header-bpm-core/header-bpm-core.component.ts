@@ -7,8 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { GeneralValidationsService } from '../../../services/validations/general-validations.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
-import { CONSTANT_NAME_RETURN } from '../../../constants/constantLabels';
-import { ProTaskE } from '../../../interfaces/pro-task-e';
+import { CONSTANT_NAME_RETURN, NAME_FILED, NAME_VERSION } from '../../../constants/general/constantLabels';
+import { MODAL_MEDIUM, MODAL_SMALL } from '../../../constants/general/constant';
+import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentTableComponent } from '../document-table/document-table.component';
@@ -30,9 +31,9 @@ import { CommentsComponent } from '../comments/comments.component';
 export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   crumbs: string[] = [];
 
-  @Input() public idHeader: string = '';
-  @Input() public icon: string = '';
-  @Input({ required: true }) id: string = '';
+  @Input() public idHeader = '';
+  @Input() public icon = '';
+  @Input({ required: true }) id = '';
   @Input({ required: true }) proTaskE: ProTaskE | null = null;
   @Output() returnPanelTask = new EventEmitter<boolean>();
 
@@ -51,6 +52,9 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
+    console.log('HeaderBpmCoreComponent', this.id, this.proTaskE);
+
     if (!this.id || this.id?.length <= 0 || !this.proTaskE) {
       return;
     }
@@ -69,21 +73,28 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
       .subscribe((result: ProTaskE) => {
         this.chargerCrumbs(result);
       });
+      console.log('flujo actual:', this.crumbs);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes["proTaskE"] && this.proTaskE) {
       this._crumbs$.next(this.proTaskE);
+      this.chargerCrumbs(this.proTaskE);
     }
   }
 
   chargerCrumbs(proTaskE: ProTaskE){
     this.crumbs = [];
     if(proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName){
-      this.crumbs.push(proTaskE.proTask?.flowDetail)
+      const flowDetailTtitle = `${NAME_FILED}: ${proTaskE.proTask?.flowDetail}` ;
+      this.crumbs.push(flowDetailTtitle);
+    }
+    if(proTaskE?.executionId){
+      const executionIdTtitle = `${NAME_VERSION}: ${proTaskE?.executionId}` ;
+      this.crumbs.push(executionIdTtitle);
     }
     if(proTaskE?.proTask?.flowName){
-      this.crumbs.push(proTaskE?.proTask?.flowName)
+      this.crumbs.push(proTaskE?.proTask?.flowName);
     }
   }
 
@@ -107,18 +118,18 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   openDialog(type: string): void {
     if (type === 'documents') {
       this.dialog.open(DocumentTableComponent, {
-        width: '60%',
+        ...MODAL_MEDIUM,
         data: {
           executionId: this.proTaskE?.executionId
         }
-      })
+      });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
-        width: '60%',
+        ...MODAL_SMALL,
         data: {
           executionId: this.proTaskE?.executionId
         }
-      })
+      });
     }
   }
 }

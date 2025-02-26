@@ -14,8 +14,8 @@
       name="selector_document"
       label="Tipo de documento"
       typeDomainName="IndividualTypeNumber"
-      placeholderDomainName="Seleccionar tipo documento&hellip;"
-      formControlNameCombobox="individualTypeNumber"
+      placeholderDomainName="Seleccionar tipo documento"
+      formControlNameCombobox="domIndividualTypeNumber"
       [hideRequiredMarker]="false"
       cssClasses="w-full"
     >
@@ -24,7 +24,7 @@
       <input
         matInput
         formControlName="number"
-        placeholder="Número de documento&hellip;"
+        placeholder="Número de documento"
         type="text"
         name="search"
         required
@@ -74,17 +74,18 @@
       label="Tipo derecho"
       formControlNameCombobox="domRightType"
       typeDomainName="RightType"
-      placeholderDomainName="Seleccionar tipo derecho&hellip;"
+      placeholderDomainName="Seleccionar tipo derecho"
       cssClasses="w-full"
     ></vex-combox-colletion>
     <mat-form-field class="col-span-2">
-      <mat-label>Fecha creación</mat-label>
+      <mat-label>Inicio de tenencia</mat-label>
       <input
         matInput
         [matDatepicker]="beginAt"
         formControlName="beginAt"
+        [max]="maxDate"
       />
-      <mat-hint>Formato Fecha: MM/DD/YYYY</mat-hint>
+      <mat-hint>Formato fecha: DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle
         matIconSuffix
         [for]="beginAt"

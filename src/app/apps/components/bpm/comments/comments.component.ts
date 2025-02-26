@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
@@ -8,19 +8,21 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 // recursos de angular material
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 // recursos de archivos locales
-import { CommentsService } from 'src/app/apps/services/comments.service';
-import { PageCommentsData } from 'src/app/apps/interfaces/page-comments-data.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/information-pegeable.model';
-import { contentInfoComments } from 'src/app/apps/interfaces/content-info-comments.model';
+import { CommentsService } from '../../../services/comments/comments.service';
+import { PageCommentsData } from '../../../interfaces/general/page-comments-data.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { contentInfoComments } from '../../../interfaces/general/content-info-comments.model';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 
 
 @Component({
@@ -44,15 +46,16 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/d
   ]
 })
 
-export class CommentsComponent {
+export class CommentsComponent implements OnInit {
   /* ============== ATRIBUTES ============== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  disablePaginator: boolean = true;
-  NumPage: number = 0;
-  NumSize: number = 5;
-  totalElements: number = 0;
+  disablePaginator = true;
+  NumPage = 0;
+  NumSize = 5;
+  totalElements = 0;
   pageSizeOptions: number[] = [5, 10, 20, 30];
-  executionId: string = '';
+  executionId = '';
+  user: DecodeJwt | null = null;
 
   body: contentInfoComments = {
     commentText: ''
@@ -74,6 +77,7 @@ export class CommentsComponent {
     private commentsService: CommentsService,
     private readonly layoutService: VexLayoutService,
     private alertSnakbar: MatSnackBar,
+    private userService: UserService,
     private fb: FormBuilder) {
     this.form = this.fb.group({
       newCommentText: [''],
@@ -83,6 +87,7 @@ export class CommentsComponent {
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.getDataFromDocumentManagementService();
+    this.user = this.userService.getUser();
   }
 
 
@@ -136,7 +141,7 @@ export class CommentsComponent {
   postDataCommentService(): void {
     if (!this.form.get('newCommentText')?.value.trim()) {
       this.alertSnakbar.open('El comentario está vacío', 'Close', {
-        duration: 3000,
+        duration: 10000,
         horizontalPosition: 'center'
       });
       return;
@@ -147,10 +152,10 @@ export class CommentsComponent {
     this.commentsService.postDataPropertyByComments(this.executionId, this.body).subscribe({
       next: (data: any) => {
         this.alertSnakbar.open('Comentario Enviado', 'Close', {
-          duration: 3000,
+          duration: 10000,
           horizontalPosition: 'center'
         });
-        this.getDataFromDocumentManagementService()
+        this.getDataFromDocumentManagementService();
         this.form.reset();
       },
       error: (err) => {
@@ -164,7 +169,7 @@ export class CommentsComponent {
     this.commentsService.deleteDataPropertyByComments(this.executionId, commentId).subscribe({
       next: (data: any) => {
         this.alertSnakbar.open('Comentario Eliminado', 'Close', {
-          duration: 3000,
+          duration: 10000,
           horizontalPosition: 'center'
         });
         this.getDataFromDocumentManagementService();

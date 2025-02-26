@@ -1,0 +1,58 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment as envi } from 'src/environments/environments';
+import { UsersSignatures } from '../../interfaces/users/digitalized-signatures';
+import { Observable } from 'rxjs';
+import { UserDetails } from '../../interfaces/user-details/user.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DigitalizedSignaturesService {
+
+  private base_url = `${envi.url}:${envi.port}${envi.bpm_users}`;
+
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  getUsersWithSignatures(page: number = 0, size: number = 10, sortBy: string = 'username'): Observable<UsersSignatures> {
+    const url = `${this.base_url}${envi.withSignaturesUsers}`;
+
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sortBy', sortBy);
+
+    return this.http.get<UsersSignatures>(url, { params });
+  }
+
+  getUsersWithoutSignatures(page: number = 0, size: number = 10, sortBy: string = 'username'): Observable<UsersSignatures> {
+    const url = `${this.base_url}${envi.withoutSignaturesUsers}`;
+
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('sortBy', sortBy);
+
+    return this.http.get<UsersSignatures>(url, { params });
+  }
+
+  addSignature(userId: number, formData: FormData): Observable<UserDetails[]> {
+    const url = `${this.base_url}/${userId}${envi.signatureUrl}`;
+
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' })
+
+    return this.http.patch<UserDetails[]>(url, formData, { headers });
+  }
+
+  deleteSignature(userId: number): Observable<UserDetails[]> {
+    const url = `${this.base_url}/${userId}${envi.signatureUrl}`;
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' })
+
+    const formData = new FormData();
+    formData.append('file', new Blob() ,'NULL');
+
+    return this.http.patch<UserDetails[]>(url, formData, { headers });
+  }
+}

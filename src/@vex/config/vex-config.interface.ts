@@ -48,6 +48,7 @@ export interface VexConfig {
     state: 'expanded' | 'collapsed';
   };
   toolbar: {
+    visible: boolean;
     fixed: boolean;
     user: {
       visible: boolean;

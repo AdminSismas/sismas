@@ -4,7 +4,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { TruncatePipe } from '../../../../../../apps/pipes/truncate-pipe.pipe';
 import { BpmTypeProcess } from '../../../../../../apps/interfaces/bpm/bpm-type-process';
 import { environment as envi } from '../../../../../../../environments/environments';
-import { NAME_NO_DISPONIBLE } from '../../../../../../apps/constants/constant';
+import { NAME_NO_DISPONIBLE } from '../../../../../../apps/constants/general/constant';
 import { SPACE } from '@angular/cdk/keycodes';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
@@ -24,7 +24,7 @@ import { NgIf } from '@angular/common';
 })
 export class ProcessCardComponent implements OnInit {
 
-  URL_ICON_BASE: string = `${envi.ulr_icon_base}`;
+  URL_ICON_BASE = `${envi.ulr_icon_base}`;
 
   @Input({ required: true }) public idCard: string | undefined = '';
   @Input({ required: true }) bpmTypeProcess!: BpmTypeProcess;

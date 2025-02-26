@@ -20,9 +20,14 @@
                  position="end">
       <vex-quickpanel></vex-quickpanel>
     </mat-sidenav>
+
     <mat-sidenav-content class="vex-layout-sidenav-content vex-layout-sidenav-content-custom">
-      <vex-toolbar [class.dark]="config.layout === 'vertical'" class="vex-toolbar"></vex-toolbar>
-      <main class="vex-layout-content vex-layout-content-custom">
+      <vex-toolbar *ngIf="config.toolbar.visible" [class.dark]="config.layout === 'vertical'" class="vex-toolbar"></vex-toolbar>
+
+      <main class="vex-layout-content vex-layout-content-custom"
+            [class.mt-0]="!config.toolbar.visible"
+            [ngClass]="!config.toolbar.visible ? ' vex-layout-content-mt' : ''"
+            >
         <router-outlet></router-outlet>
       </main>
       <vex-footer *ngIf="config.footer.visible" class="vex-footer"></vex-footer>

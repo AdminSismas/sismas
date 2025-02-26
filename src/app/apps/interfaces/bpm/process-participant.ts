@@ -23,7 +23,7 @@ export class ProcessParticipant {
   }
 
   get fullName(): string {
-    let name = '';
+    const name = '';
     if (this.individual?.fullName) {
       return `${this.individual.fullName}`;
     }
@@ -34,7 +34,7 @@ export class ProcessParticipant {
   }
 
   get individualNumber(): string {
-    let name = '';
+    const name = '';
     if (this.individual?.number) {
       return `${this.individual.number}`;
     }

@@ -11,13 +11,13 @@
       Crear persona
     </h2>
 
-    <button
+    <!-- <button
       [matMenuTriggerFor]="settingsMenu"
       class="text-secondary"
       mat-icon-button
       type="button">
       <mat-icon svgIcon="mat:more_vert"></mat-icon>
-    </button>
+    </button> -->
 
     <button
       class="text-secondary"
@@ -37,9 +37,9 @@
         name="domIndividualType"
         ubscriptSizing="dynamic"
         idComboCollection="typeNumberDocument"
-        label="tipo de persona"
+        label="Tipo de persona"
         typeDomainName="IndividualType"
-        placeholderDomainName="Selecciona el tipo de persona&hellip;"></vex-combox-colletion>
+        placeholderDomainName="Selecciona el tipo de persona"></vex-combox-colletion>
     </div>
 
     <div class="flex flex-col sm:flex-row mb-3 input__100">
@@ -49,7 +49,7 @@
         idComboCollection="typeNumberDocument"
         label="Tipo de documento"
         typeDomainName="IndividualTypeNumber"
-        placeholderDomainName="Seleccionar tipo documento&hellip;"></vex-combox-colletion>
+        placeholderDomainName="Seleccionar tipo documento"></vex-combox-colletion>
 
       <mat-form-field class="sm:ml-6">
         <mat-label>Número documento</mat-label>
@@ -63,7 +63,7 @@
         mat-flat-button
         class="ml-4 flex-none"
         (click)="personRegister()">
-        buscar
+        Buscar
       </button>
     </div>
 
@@ -73,7 +73,7 @@
         <input formControlName="firstName" matInput name="firstName" />
       </mat-form-field>
       <mat-form-field class="flex-auto sm:ml-6">
-        <mat-label>segundo nombre</mat-label>
+        <mat-label>Segundo nombre</mat-label>
         <input formControlName="middleName" matInput name="middleName" />
       </mat-form-field>
     </div>
@@ -91,7 +91,7 @@
 
     <div class="flex flex-col sm:flex-row">
       <mat-form-field class="flex-auto">
-        <mat-label>nombre compañía</mat-label>
+        <mat-label>Nombre compañía</mat-label>
         <input formControlName="companyName" matInput name="companyName" />
       </mat-form-field>
     </div>
@@ -105,7 +105,7 @@
         idComboCollection="typeNumberDocument"
         label="Grupo étnico"
         typeDomainName="IndividualEthnicGroup"
-        placeholderDomainName="Selecciona el grupo étnico&hellip;"></vex-combox-colletion>
+        placeholderDomainName="Selecciona el grupo étnico"></vex-combox-colletion>
 
       <div class="flex-auto">
         <vex-combox-colletion
@@ -115,7 +115,7 @@
           idComboCollection="typeNumberDocument"
           label="sexo"
           typeDomainName="IndividualSex"
-          placeholderDomainName="Seleccionar tipo género&hellip;"></vex-combox-colletion>
+          placeholderDomainName="Seleccionar tipo género"></vex-combox-colletion>
       </div>
     </div>
   </mat-dialog-content>
@@ -127,14 +127,14 @@
       color="primary"
       mat-flat-button
       type="submit">
-      Crear usuario
+      Crear persona
     </button>
     <button
       *ngIf="isUpdateMode()"
       color="primary"
       mat-flat-button
       type="submit">
-      Actualizar usuario
+      Actualizar persona
     </button>
   </mat-dialog-actions>
   <div *ngIf="menssage?.status" class="alert-danger alert-menssage">
@@ -145,16 +145,16 @@
 <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Print</span>
+    <span>Imprimir</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Export</span>
+    <span>Exportar</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Delete</span>
+    <span>Borrar</span>
   </button>
 </mat-menu>

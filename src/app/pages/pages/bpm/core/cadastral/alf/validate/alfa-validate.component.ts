@@ -5,28 +5,26 @@ import { MatDialogTitle } from '@angular/material/dialog';
 @Component({
   selector: 'vex-alfa-validate',
   standalone: true,
-  imports: [
-    Error500Component,
-    MatDialogTitle
-  ],
+  imports: [Error500Component, MatDialogTitle],
   templateUrl: './alfa-validate.component.html',
   styleUrl: './alfa-validate.component.scss'
 })
 export class AlfaValidateComponent implements OnInit {
-  @Input() public id: string = '';
-  constructor() {
-  }
+  @Input() public id = '';
+  @Input({ required: true }) public resources: string[] = [];
 
   ngOnInit() {
     if (this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(100000)
-        + 'AlfaMainComponent' + this.getRandomInt(10);
+      this.id =
+        this.id +
+        this.getRandomInt(100000) +
+        'AlfaMainComponent' +
+        this.getRandomInt(10);
     } else {
-      this.id = this.getRandomInt(10000)
-        + 'AlfaMainComponent' + this.getRandomInt(10);
+      this.id =
+        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
     }
   }
-
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);

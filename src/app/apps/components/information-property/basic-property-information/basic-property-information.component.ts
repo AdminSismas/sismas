@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,10 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { VexHighlightDirective } from '@vex/components/vex-highlight/vex-highlight.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -25,8 +21,22 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
-import { GUION, NAME_NO_DISPONIBLE } from '../../../constants/constant';
+import {
+  GUION,
+  MODAL_SMALL,
+  NAME_NO_DISPONIBLE,
+  NAME_NO_DISPONIBLE_CERO,
+  TYPEINFORMATION_EDITION
+} from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  EditBasicPropertyInformationComponent
+} from './edit-basic-property-information/edit-basic-property-information.component';
+import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
+import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -40,7 +50,7 @@ import { environment } from '../../../../../environments/environments';
     scaleFadeIn400ms,
   ],
   imports: [
-    AsyncPipe,
+    NgClass,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -49,18 +59,14 @@ import { environment } from '../../../../../environments/environments';
     MatInputModule,
     MatOptionModule,
     MatTabsModule,
-    NgForOf,
-    NgIf,
-    VexHighlightDirective,
     ReactiveFormsModule,
-    VexPageLayoutHeaderDirective,
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
     MatSlideToggleModule,
     MatCardModule,
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
-    DatePipe
+    DatePipe,
+    CurrencyLandsPipe,
+    MatDividerModule
   ],
   templateUrl: './basic-property-information.component.html',
   styleUrl: './basic-property-information.component.scss'
@@ -69,21 +75,28 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   data!:BasicInformationProperty;
 
-  @Input({ required: true }) id: string = '';
-  @Input() expandedComponent: boolean = true;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input() expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() propertyUnit: boolean = false;
+  @Input() propertyUnit = false;
+  @Input() typeInformation = 'visualization';
+  @Input() editable? = true;
 
-  constructor(private informationPropertyService:InformationPropertyService) {}
+  @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
+  @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(
+    private informationPropertyService:InformationPropertyService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema;
-    this.searchBasicInformationProperty();
+
   }
 
   searchBasicInformationProperty():void {
@@ -94,23 +107,59 @@ export class BasicPropertyInformationComponent implements OnInit {
     this.informationPropertyService.getBasicInformationProperty(
       this.schema , this.baunitId, this.executionId)
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
+        error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationProperty) => this.captureInformationSubscribe(result)
       });
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.data = new BasicInformationProperty();
   }
 
   captureInformationSubscribe(result: BasicInformationProperty): void {
     this.data = result;
+    this.propertyRegistryOffice.emit(this.data.propertyRegistryOffice);
+    this.propertyRegistryNumber.emit(this.data.propertyRegistryNumber);
+  }
+
+  editBasicInformationProperty(): void {
+    this.dialog.open(EditBasicPropertyInformationComponent, {
+      ...MODAL_SMALL,
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION},
+      disableClose: true // Ensure this is set to false or omitted
+    }).afterClosed()
+      .subscribe({
+        next: (result: BasicInformationProperty) => {
+          if(result && result?.baunitIdE) {
+            setTimeout(() => this.data = result, 300);
+          }
+        }
+      });
+      console.log(this.data, 'servicio con datos nuevos');
   }
 
   private getRandomInt(max: number):number {
     return Math.floor(Math.random() * max);
   }
 
+    openGeographicViewerMain(data: any): void {
+      this.dialog
+        .open(GeographicViewerComponent, {
+          ...MODAL_SMALL,
+          disableClose: true,
+          data: new ContentInfoSchema(data.baunitIdE, data)
+        })
+        .afterClosed();
+    }
+
+    isExpandPanel(expandedComponent: boolean): void {
+      if (expandedComponent) {
+        this.id = this.id + this.getRandomInt(10000) + this.schema;
+        this.searchBasicInformationProperty();
+      }
+    }
+
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
+  protected readonly NAME_NO_DISPONIBLE_CERO = NAME_NO_DISPONIBLE_CERO;
   protected readonly GUION = GUION;
 }

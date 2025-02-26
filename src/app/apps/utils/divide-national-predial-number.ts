@@ -1,4 +1,4 @@
-import { NationalPredialNumber } from '../interfaces/national-predial-number';
+import { NationalPredialNumber } from '../interfaces/information-property/national-predial-number';
 
 export function divideNpn(npnStr: string| null | undefined):NationalPredialNumber {
   if(npnStr === null || npnStr === undefined || npnStr.length <= 0){

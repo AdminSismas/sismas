@@ -1,11 +1,221 @@
 <vex-secondary-toolbar current="Formulario">
   <vex-breadcrumbs
-    [crumbs]="['Configuración','Trámites catastrales', 'Formatos de Salida']"
+    [crumbs]="['Configuración','Trámites catastrales', 'Formatos de salida']"
     class="flex-auto"></vex-breadcrumbs>
 
   <button class="ml-2" color="primary" mat-icon-button type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
   </button>
 </vex-secondary-toolbar>
-<vex-in-construction></vex-in-construction>
+<!-- <vex-in-construction></vex-in-construction> -->
+<vex-page-layout>
+
+  <vex-page-layout-content class="px-5 -mt-6">
+
+    <div class="w-full flex flex-col overflow-auto p-0">
+      <div class="px-4 h-16 border-b sticky left-0 flex items-center">
+        
+          <button
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="createEditDocumentTemplate()"
+          >
+            Nueva
+            <mat-icon svgIcon="mat:add"></mat-icon>
+          </button>
+        
+      </div>
+    </div>
+
+    <div class="card overflow-auto mt-8">
+
+      <!-- Tabla de dominios -->
+      <table
+          @stagger
+          [dataSource]="dataSource"
+          class="w-full"
+          mat-table
+          matSort>
+          <!-- Text Columns -->
+          <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+            <ng-container
+              *ngIf="column.type === 'text'"
+              [matColumnDef]="column.property">
+              <th *matHeaderCellDef
+                  mat-header-cell
+                  mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                {{ row[column.property] }}
+              </td>
+            </ng-container>
+
+            <ng-container
+              *ngIf="column.type === 'operationType'"
+              [matColumnDef]="column.property">
+              <th *matHeaderCellDef
+                  mat-header-cell
+                  mat-sort-header>
+                {{ column.label }}
+              </th>
+              <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+                <ng-container *ngIf="column.property === 'headerTemplate' && row.headerTemplate">
+                  {{ row.headerTemplate.outTemplateId }}
+                </ng-container>
+                <ng-container *ngIf="column.property === 'footerTemplate' && row.footerTemplate">
+                  {{ row.footerTemplate.outTemplateId }}
+                </ng-container>
+                <ng-container *ngIf="column.property !== 'headerTemplate' && column.property !== 'footerTemplate'">
+                  {{ row[column.property] }}
+                </ng-container>
+              </td>
+            </ng-container>
+          </ng-container>
+
+           <!-- Action Column -->
+          <ng-container matColumnDef="actions">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              mat-sort-header
+              class="pl-1 pr-1"
+            ></th>
+            <td
+              *matCellDef="let row"
+              class="w-10 text-secondary pl-1 pr-1"
+              mat-cell
+            >
+              <button
+                (click)="$event.stopPropagation()"
+                [matMenuTriggerData]="{ row: row }"
+                [matMenuTriggerFor]="actionsMenu"
+                mat-icon-button
+                type="button"
+              >
+                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+
+          <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+          <tr
+            *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            mat-row></tr>
+        </table>
+  
+
+   <!-- Paginador -->
+   <mat-paginator
+       #paginator
+       [class.hidden]="!(isDesktop$ | async)"
+       [pageSizeOptions]="pageSizeOptions"
+       [length]="totalElements"
+       [pageSize]="pageSize"
+       [pageIndex]="page"
+       (page)="refreshInformationPaginator($event)"
+       class="sticky left-0 flex flex-col">
+   </mat-paginator>
+
+    </div>
+
+  </vex-page-layout-content>
+
+</vex-page-layout>
+
+
+<mat-menu
+  #columnFilterMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
+  <button
+    (click)="toggleColumnVisibility(column, $event)"
+    *ngFor="let column of columns"
+    class="mat-menu-item block"
+  >
+    <mat-checkbox
+      (click)="$event.stopPropagation(); "
+      [(ngModel)]="column.visible"
+      color="primary"
+    >
+      {{ column.label }}
+    </mat-checkbox>
+  </button>
+</mat-menu>
+<mat-menu
+  #actionsMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
+      <ng-template
+        let-templateValue="row"
+        matMenuContent
+      >
+        <button
+          (click)="createEditDocumentTemplate(templateValue)"
+          mat-menu-item
+        >
+          <mat-icon svgIcon="mat:edit"></mat-icon>
+          <span>Editar</span>
+        </button>
+        <!-- <button
+          (click)="deleteInformations(templateValue)"
+          mat-menu-item
+        >
+          <mat-icon svgIcon="mat:delete"></mat-icon>
+          <span>Eliminar</span>
+        </button> -->
+      </ng-template>
+</mat-menu>
+
+<ng-template #confirmDialog>
+  <h2 matDialogTitle>Eliminar plantilla</h2>
+  <mat-dialog-content>
+    <p>Desea eliminar la plantilla?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions class="flex gap-1 justify-center">
+    <button
+      mat-button
+      matDialogClose
+      mat-raised-button
+      color="primary"
+    >
+      Cancelar
+    </button>
+    <button
+      mat-button
+      [matDialogClose]="'delete'"
+      mat-raised-button
+      color="warn"
+    >
+      Eliminar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+
+<swal
+  #deleteSwal
+  title="¡Éxito!"
+  text="Información eliminada con éxito"
+  icon="success"
+  [confirmButtonText]="'Cerrar'"
+  [confirmButtonColor]="'#3f51b5'"
+>
+</swal>
+
+<swal
+  #errorSwal
+  title="Error"
+  text="No fue posible eliminar la información"
+  icon="error"
+  [confirmButtonText]="'Cerrar'"
+  [confirmButtonColor]="'#3f51b5'"
+></swal>
+
 

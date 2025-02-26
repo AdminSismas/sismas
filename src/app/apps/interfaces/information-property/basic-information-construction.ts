@@ -1,4 +1,4 @@
-import { NAME_NO_DISPONIBLE} from '../../constants/constant';
+import { NAME_NO_DISPONIBLE} from '../../constants/general/constant';
 
 export class BasicInformationConstruction {
     unitBuiltId?: number;
@@ -35,7 +35,7 @@ export class BasicInformationConstruction {
     set typology(value: string) { }
 
     get typology(): string {
-        let name: string = `${NAME_NO_DISPONIBLE}`;
+        const name = `${NAME_NO_DISPONIBLE}`;
         if (this.domTipologiaTipo) {
             return `${this.domTipologiaTipo}`;
         }

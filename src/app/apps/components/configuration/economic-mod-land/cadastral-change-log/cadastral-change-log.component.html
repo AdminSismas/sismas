@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Registro de cambio</h2>
+<mat-divider class="border-slate-400"></mat-divider>
+<mat-dialog-content>
+  <vex-dynamic-forms
+    [inputs]="data.inputs"
+    [initValues]="data.data"
+    (formReady)="form = $event"
+  ></vex-dynamic-forms>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="submitForm()"
+  >
+    Registrar
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    mat-dialog-close
+  >
+    Cancelar
+  </button>
+</mat-dialog-actions>

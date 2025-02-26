@@ -1,0 +1,26 @@
+
+  .mat-header-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-container {
+    display: flex;
+    justify-content: space-between; /* Botón a la izquierda, input a la derecha */
+    align-items: center;
+    margin-bottom: 16px; /* Espaciado inferior */
+  }
+  
+  .btn-new {
+    padding: 10px 20px; /* Aumentar el relleno del botón */
+    font-weight: bold; /* Destacar el texto */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaciado entre el ícono y el texto */
+  }
+  
+  .search-field {
+    max-width: 400px; /* Ancho máximo del input */
+    width: 100%; /* Se ajusta al contenedor */
+    margin-left: auto; /* Asegura que el input esté alineado a la derecha */
+  }

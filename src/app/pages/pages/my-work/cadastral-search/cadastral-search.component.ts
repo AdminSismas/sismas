@@ -1,5 +1,9 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { TableCadastralSearchComponent } from '../../../../apps/components/table-cadastral-search/table-cadastral-search.component';
+import { Component, OnInit } from '@angular/core';
+import {
+  TableCadastralSearchComponent
+} from '../../../../apps/components/tables/table-cadastral-search/table-cadastral-search.component';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'vex-consult-properties',
@@ -10,16 +14,18 @@ import { TableCadastralSearchComponent } from '../../../../apps/components/table
   templateUrl: './cadastral-search.component.html',
   styleUrl: './cadastral-search.component.scss'
 })
-export class CadastralSearchComponent implements OnInit, AfterViewInit {
+export class CadastralSearchComponent implements OnInit {
 
-  constructor() {
+  constructor(
+    private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit(): void {
     //throw new Error('Method not implemented.');
-  }
-
-  ngAfterViewInit() {
+    this.route.params.pipe(map((params) => {
+      console.log(params);
+    }));
   }
 
 }

@@ -75,7 +75,7 @@ export interface UpdatePropertyOwner {
 
 export interface RrrightInfo {
   fraction: number;
-  beginAt: string;
+  beginAt: string | Date;
   domRightType: string;
 }
 

@@ -1,0 +1,11 @@
+
+/* Asegúrate de que no haya márgenes, rellenos o alturas que reserven espacio */
+.layout-container {
+  margin: 0;
+  padding: 0;
+  height: auto;
+}
+
+.vex-layout-content-mt {
+  margin-top: 0 !important;
+}

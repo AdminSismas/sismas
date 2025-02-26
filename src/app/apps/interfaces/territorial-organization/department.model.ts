@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/constant';
+import { GUION } from '../../constants/general/constant';
 
 export class Department {
   divpolLvl1Code: string | undefined;
@@ -6,16 +6,16 @@ export class Department {
   divpolLvl1SecCode: string | undefined;
 
   constructor(content?: any) {
-    this.divpolLvl1Code = content.divpolLvl1Code;
-    this.divpolLvl1Name = content.divpolLvl1Name;
-    this.divpolLvl1SecCode = content.divpolLvl1SecCode;
+    this.divpolLvl1Code = content?.divpolLvl1Code || '';
+    this.divpolLvl1Name = content?.divpolLvl1Name || '';
+    this.divpolLvl1SecCode = content?.divpolLvl1SecCode || '';
   }
 
   set codeName(value: string) {
   }
 
   get codeName(): string {
-    let name = '';
+    const name = '';
     if (this.divpolLvl1Code && this.divpolLvl1Name) {
       return `${this.divpolLvl1Code}${GUION}${this.divpolLvl1Name}`;
     } else if (this.divpolLvl1Code) {

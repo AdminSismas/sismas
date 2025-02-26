@@ -9,11 +9,10 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { QuillEditorComponent } from 'ngx-quill';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TypeOperationAlfaMain } from '../../../interfaces/content-info';
+import { TypeOperationAlfaMain } from '../../../interfaces/general/content-info';
 import {
   PAGE,
   PAGE_OPTION_UNIQUE_7,
@@ -22,14 +21,14 @@ import {
   TYPEOPERATION_ADD,
   TYPEOPERATION_CREATE,
   TYPEOPERATION_DELETE
-} from '../../../constants/constant';
+} from '../../../constants/general/constant';
 import {
   CONSTANT_NAME_ADD_LABEL,
   CONSTANT_NAME_CREATE_LABEL,
   CONSTANT_NAME_DELETE_LABEL
-} from '../../../constants/constantLabels';
+} from '../../../constants/general/constantLabels';
 import { MatMenuModule } from '@angular/material/menu';
-import { ComboxColletionComponent } from '../../combox-colletion/combox-colletion.component';
+import { ComboxColletionComponent } from '../../general-components/combox-colletion/combox-colletion.component';
 import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -37,8 +36,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormCo
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import { filter, map, startWith } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
-import { DataAlfaMain } from '../../../interfaces/data-alfa-main.model';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { DataAlfaMain } from '../../../interfaces/bpm/data-alfa-main.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -50,17 +48,20 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
+import { HttpErrorResponse } from '@angular/common/http';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';
 
 @Component({
   selector: 'vex-crud-alfa-main',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    CurrencyLandsPipe,
     MatDialogContent,
     MatDialogActions,
     MatIconModule,
     MatInputModule,
-    QuillEditorComponent,
     MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
@@ -91,15 +92,15 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   data$: Observable<BaunitHead[]> = this.subject$.asObservable();
   baunitHeads: BaunitHead[] = [];
 
-  optionsListNpnlilke: string[] = [];
-  optionsListNpnlilke$: Observable<string[]> | undefined;
+  optionsListNpnlike: string[] = [];
+  optionsListNpnlike$: Observable<string[]> | undefined;
   executionId!: string;
   typeOperation!: TypeOperationAlfaMain;
 
 
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN;
   page = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_OPTION_UNIQUE_7;
   pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
 
@@ -144,12 +145,12 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     this.loadingNpnlike();
 
     this.data$.pipe(filter<BaunitHead[]>(Boolean)).subscribe((dataList) => {
-      let data: BaunitHead[];
+      let dataBaunitHead: BaunitHead[];
       if (dataList != null && dataList.length > 0) {
         this.baunitHeads = dataList;
-        data = dataList.map((row: BaunitHead) => new BaunitHead(row));
-        this.dataSource.data = data;
-        this.totalElements = data.length;
+        dataBaunitHead = dataList.map((row: BaunitHead) => new BaunitHead(row));
+        this.dataSource.data = dataBaunitHead;
+        this.totalElements = dataBaunitHead.length;
       } else {
         this.baunitHeads = [];
         this.page = PAGE;
@@ -170,6 +171,11 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   loadingNpnlike() {
+    if (this.defaults?.addNpnLike) {
+      this.formAdd.get('addNpnLike')?.setValue(this.defaults.addNpnLike);
+      return;
+    };
+
     this.alfaMainService.loadingNpnlikeByExecutionId(this.executionId)
       .subscribe({
           next: (result: string[]) => this.captureDepartmentInformation(result)
@@ -178,10 +184,11 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   captureDepartmentInformation(result: string[]) {
-    this.optionsListNpnlilke = result;
-    this.optionsListNpnlilke$ = this.formAdd.get('addNpnLike')?.valueChanges.pipe(
+    this.optionsListNpnlike = result;
+    this.optionsListNpnlike$ = this.formAdd.get('addNpnLike')?.valueChanges.pipe(
       startWith(''),
-      map((value): any[] => this.optionsListNpnlilke.filter(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      map((value): any[] => this.optionsListNpnlike.filter(
         (option: string) => option?.toLowerCase().includes(value.toLowerCase() || ''))
       ));
   }
@@ -194,11 +201,11 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!this.formCreateDelete.value || !this.formCreateDelete.value.npnLike) {
       this.snackBar.open(
         'No se puede consultar información, con los datos suministrados.',
-        'CLOSE', { duration: 1000 }
+        'CERRAR', { duration: 10000 }
       );
       return;
     }
-    this.alfaMainService.loadingListBeaUnitheadByExecutionIdAndnpnlike(
+    this.alfaMainService.loadingListBeaUnitheadByExecutionIdAndNpnLike(
       this.executionId, this.formCreateDelete.value.npnLike)
       .subscribe((result: BaunitHead[]) => {
         this.subject$.next(result);
@@ -210,39 +217,64 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    let addNpnLike = this.formAdd.value.addNpnLike;
-    let bAunitCondition = this.formAdd.value.bAunitCondition;
+    const addNpnLike = this.formAdd.value.addNpnLike;
+    const bAunitCondition = this.formAdd.value.bAunitCondition;
     if(!addNpnLike || !bAunitCondition) {
       this.snackBar.open(
         'Para poder continuar diligencie los campos obligatorios',
-        'CLOSE', { duration: 1000 }
+        'CERRAR', { duration: 10000 }
       );
       return;
     }
 
-    this.alfaMainService.createTemporalBeaUnithead(
-      addNpnLike, this.executionId, bAunitCondition)
-      .then((result: any) => {
-        this.snackBar.open(
-          'Se creó una nueva unidad predial.',
-          'CLOSE', { duration: 1000 }
-        );
-        this.dialogRef.close();
+    this.alfaMainService.createTemporalBeaUnithead(addNpnLike, this.executionId, bAunitCondition)
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            'Se creó una nueva unidad predial.',
+            'CERRAR', { duration: 10000 }
+          );
+          this.dialogRef.close();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Error al crear la unidad predial.',
+            'CERRAR', { duration: 10000 }
+          );
+          throw error;
+        }
       });
+    // this.alfaMainService.createTemporalBeaUnithead(
+    //   addNpnLike, this.executionId, bAunitCondition)
+    //   .then(() => {
+    //     this.snackBar.open(
+    //       'Se creó una nueva unidad predial.',
+    //       'CLOSE', { duration: 10000 }
+    //     );
+    //     this.dialogRef.close();
+    //   });
   }
 
   createBeaUnitHeadUpdate(baunit: BaunitHead): void {
     if (!baunit || !baunit?.baunitIdE) {
       return;
     }
-    this.alfaMainService.createUpdateTemporalBeaUnithead(
-      baunit?.baunitIdE, this.executionId)
-      .then((result: any) => {
-        this.snackBar.open(
-          'Se creó una nueva unidad predial para actualizar.',
-          'CLOSE', { duration: 1000 }
-        );
-        this.loadPropertiesInformation();
+    this.alfaMainService.createUpdateTemporalBeaUnithead(baunit?.baunitIdE, this.executionId)
+      .subscribe({
+        next: (() => {
+          this.snackBar.open(
+            'Se creó una nueva unidad predial para actualizar.',
+            'CERRAR', { duration: 10000 }
+          );
+          this.loadPropertiesInformation();
+        }),
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Error al crear la unidad predial para actualizar.',
+            'CERRAR', { duration: 10000 }
+          );
+          throw error;
+        }
       });
   }
 
@@ -250,14 +282,22 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!baunit || !baunit?.baunitIdE) {
       return;
     }
-    this.alfaMainService.createDeleteTemporalBeaUnithead(
-      baunit?.baunitIdE, this.executionId)
-      .then((result: any) => {
-        this.snackBar.open(
-          'Se creó una nueva unidad predial para eliminar.',
-          'CLOSE', { duration: 1000 }
-        );
-        this.loadPropertiesInformation();
+    this.alfaMainService.createDeleteTemporalBeaUnithead(baunit?.baunitIdE, this.executionId)
+      .subscribe({
+        next: () => {
+          this.snackBar.open(
+            'Se creó una nueva unidad predial para eliminar.',
+            'CERRAR', { duration: 10000 }
+          );
+          this.loadPropertiesInformation();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.snackBar.open(
+            'Error al crear la unidad predial para eliminar.',
+            'CERRAR', { duration: 10000 }
+          );
+          throw error;
+        }
       });
   }
 
@@ -283,6 +323,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   masterToggle(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));

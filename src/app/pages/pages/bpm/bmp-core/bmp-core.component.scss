@@ -22,9 +22,33 @@
 
 
 
-@media (min-width: 1280px) {
-  .h-content-body-bpm,
-  .h-content-card-bpm, {
-    margin-top: calc(var(--vex-toolbar-height) + var(--vex-navigation-height));
-  }
+// @media (min-width: 1280px) {
+
+//   .h-content-body-bpm,
+//   .h-content-card-bpm, {
+//     margin-top: calc(var(--vex-toolbar-height) + var(--vex-navigation-height));
+//   }
+// }
+
+
+:root .p-4 {
+  padding: 3rem;
+  background-color: white;
+  align-content: center;
+  padding-left: 4px;
+}
+
+
+:root .p-2 {
+    padding: 3.5rem;
+    padding-right: 225px;
+    align-content: space-around;
+}
+
+.vex-footer-task {
+  transition: width 0.3s ease;
+}
+
+.vex-footer-task.expanded {
+  width: calc(100% - 262px); /* Ajusta este valor según el ancho del navbar */
 }

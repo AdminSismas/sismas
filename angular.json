@@ -1,6 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+
   "newProjectRoot": "projects",
   "projects": {
     "geoGestion": {
@@ -17,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/geoGestion",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,7 +29,6 @@
               "src/_redirects",
               "src/README.md",
               "src/CHANGELOG.md",
-              "src/.htaccess",
               {
                 "glob": "**/*.svg",
                 "input": "node_modules/@material-design-icons/svg",
@@ -39,26 +39,31 @@
               "src/styles.scss",
               "src/@vex/styles/tailwind.scss"
             ],
+
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "simplebar",
-              "highlight.js",
-              "faker",
-              "showdown",
-              "core-js",
-              "dom-set",
-              "dom-plane",
-              "angular-calendar/date-adapters/date-fns",
-              "calendar-utils/date-adapters/date-fns",
               "@mattlewis92/dom-autoscroller",
+              "angular-calendar/date-adapters/date-fns",
               "apexcharts",
+              "calendar-utils/date-adapters/date-fns",
               "can-use-dom",
+              "core-js",
+              "dom-plane",
+              "dom-set",
+              "faker",
+              "highlight.js",
               "lodash.debounce",
               "lodash.memoize",
               "lodash.throttle",
+              "lodash/debounce.js",
+              "lodash/throttle.js",
               "luxon",
+              "quill-delta",
               "quill",
-              "seedrandom"
+              "seedrandom",
+              "showdown",
+              "simplebar",
+              "sweetalert2"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -115,21 +120,165 @@
                   "with": "src/environments/environments.development.ts"
                 }
               ]
+            },
+            "armenia": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.armenia.ts"
+                }
+              ]
+            },
+            "manizales": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.manizales.ts"
+                }
+              ]
+            },
+            "masora": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.masora.ts"
+                }
+              ]
+            },
+            "barrancabermeja": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.barrancabermeja.ts"
+                }
+              ]
+            },
+            "test": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "8mb",
+                  "maximumError": "10mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.test.ts"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "geoGestion:build"
+            "buildTarget": "geoGestion:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
               "buildTarget": "geoGestion:build:production"
             },
-            "development": {
-              "browserTarget": "geoGestion:build:development"
+            "armenia": {
+              "buildTarget": "geoGestion:build:armenia"
+            },
+            "manizales": {
+              "buildTarget": "geoGestion:build:manizales"
+            },
+            "masora": {
+              "buildTarget": "geoGestion:build:masora"
+            },
+            "barrancabermeja": {
+              "buildTarget": "geoGestion:build:barrancabermeja"
+            },
+            "test": {
+              "buildTarget": "geoGestion:build:test"
             }
+
           }
         },
         "extract-i18n": {
@@ -142,13 +291,28 @@
           "builder": "@angular-devkit/build-angular:jest",
           "options": {
             "tsConfig": "tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

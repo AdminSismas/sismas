@@ -13,11 +13,14 @@ import {
   NAME_NO_DISPONIBLE,
   NAME_SELFVALUATIONVALUE,
   PAGE,
+  PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
-  TABLE_COLUMN_PROPERTIES_APPRAISALS, TYPEINFORMATION_EDITION, TYPEINFORMATION_VISUAL
-} from '../../../constants/constant';
+  TABLE_COLUMN_PROPERTIES_APPRAISALS,
+  TYPEINFORMATION_EDITION,
+  TYPEINFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,7 +29,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { CommonModule, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { environment } from '../../../../../environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
@@ -35,10 +38,10 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { InfoAppraisal } from '../../../interfaces/information-property/info-appraisal';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { PageSearchData } from '../../../interfaces/page-search-data.model';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { InformationPegeable } from '../../../interfaces/information-pegeable.model';
+import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { Observable } from 'rxjs';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -47,7 +50,8 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
-import { TypeInformation } from '../../../interfaces/content-info';
+import { TypeInformation } from '../../../interfaces/general/content-info';
+import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 
 @Component({
   selector: 'vex-property-appraisal-information',
@@ -61,6 +65,7 @@ import { TypeInformation } from '../../../interfaces/content-info';
     scaleFadeIn400ms
   ],
   imports: [
+    CommonModule,
     HeaderCadastralInformationPropertyComponent,
     MatExpansionModule,
     MatButtonModule,
@@ -79,29 +84,31 @@ import { TypeInformation } from '../../../interfaces/content-info';
     MatMenuModule,
     MatCheckboxModule,
     FormsModule,
-    CurrencyPipe,
-    MatRippleModule
+    MatRippleModule,
+    CurrencyFormatPipe
   ],
+
   templateUrl: './property-appraisal-information.component.html',
-  styleUrl: './property-appraisal-information.component.scss'
+  styleUrl: './property-appraisal-information.component.scss',
+
 })
 export class PropertyAppraisalInformationComponent implements OnInit, AfterViewInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id: string = '';
-  @Input({ required: false }) public expandedComponent: boolean = false;
-  @Input({ required: true }) schema: string = `${environment.schemas.main}`;
+  @Input({ required: true }) id = '';
+  @Input({ required: true }) public expandedComponent = true;
+  @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
 
   columns: TableColumn<InfoAppraisal>[] = TABLE_COLUMN_PROPERTIES_APPRAISALS;
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION_ADDRESS;
+  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
 
   dataSource!: MatTableDataSource<InfoAppraisal>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -168,7 +175,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   }
 
   private validatePropertyInList(listFirst: string[], listSecond: string[]): boolean {
-    let showProperty: boolean = false;
+    let showProperty = false;
     listFirst.forEach(e => {
       if (listSecond.includes(e)) {
         showProperty = true;

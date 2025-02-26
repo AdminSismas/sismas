@@ -4,13 +4,13 @@
     {{ CONSTANT_CHANGE_UNITED_PREDIAL + TWO_POINT_ + baunitIdE }}
   </h2>
 
-  <button
+  <!-- <button
     [matMenuTriggerFor]="settingsMenu"
     class="text-secondary"
     mat-icon-button
     type="button">
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
+  </button> -->
 
   <button
     class="text-secondary"
@@ -30,28 +30,31 @@
           <div class="flex justify-between">
             <div class="flex flex-auto text-left justify-start">
               <div class="w-full flex flex-row py-2">
-                <span class="title !text-black uppercase text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Objeto:    </span>
-                <span class="uppercase text-sm  "> {{ change.entity }}</span>
+                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Objeto:    </span>
+                <span class="text-sm"> {{ change.entity }}</span>
               </div>
             </div>
             <div class="flex flex-auto text-left justify-start">
               <div class="w-full flex flex-row py-2">
-                <span class="title !text-black uppercase text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Campo:    </span>
-                <span class="uppercase text-sm "> {{ change.field }}</span>
+                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Campo:    </span>
+                <span class="text-sm"> {{ change.field }}</span>
               </div>
             </div>
             <div class="flex flex-col ">
               <div *ngIf="change.operationType === 'CREATE'"
                    class="px-4 py-2 rounded-xl !bg-green-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                {{ change.operationType }}
+                <!-- {{ change.operationType }} -->
+                  Creado
               </div>
               <div *ngIf="change.operationType === 'UPDATE'"
                    class="px-4 py-2 rounded-xl !bg-primary-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                {{ change.operationType }}
+                <!-- {{ change.operationType }} -->
+                Agregado
               </div>
               <div *ngIf="change.operationType === 'DELETE'"
                    class="px-4 py-2 rounded-xl !bg-red-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                {{ change.operationType }}
+                <!-- {{ change.operationType }} -->
+                  Borrado
               </div>
             </div>
           </div>
@@ -60,8 +63,8 @@
           <div class="flex justify-between">
             <div class="flex flex-auto text-left justify-start">
               <div class="w-full flex flex-row py-2">
-                <span class="title !text-black uppercase text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Antes:    </span>
-                <span class="uppercase text-sm  "> {{ change.oldValue }}</span>
+                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Antes:    </span>
+                <span class="text-sm"> {{ change.oldValue }}</span>
               </div>
             </div>
           </div>
@@ -70,8 +73,8 @@
           <div class="flex justify-between">
             <div class="flex flex-auto text-left justify-start">
               <div class="w-full flex flex-row py-2">
-                <span class="title !text-black uppercase text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Después:    </span>
-                <span class="uppercase text-sm  "> {{ change.newValue }}</span>
+                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Después:    </span>
+                <span class="text-sm"> {{ change.newValue }}</span>
               </div>
             </div>
           </div>
@@ -89,16 +92,16 @@
 <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Print</span>
+    <span>Imprimir</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Export</span>
+    <span>Exportar</span>
   </button>
 
   <button mat-menu-item>
     <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Delete</span>
+    <span>Borrar</span>
   </button>
 </mat-menu>

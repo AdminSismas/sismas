@@ -10,7 +10,7 @@ describe(TasksPanelService.name, () => {
     service = TestBed.inject(TasksPanelService);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

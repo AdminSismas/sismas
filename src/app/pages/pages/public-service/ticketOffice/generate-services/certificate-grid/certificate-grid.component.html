@@ -1,0 +1,51 @@
+<div class="h-full flex flex-col">
+    <div class="p-6 pb-0 bg-foreground shadow-b flex-none border-b">
+      <div class="container px-0">
+        <h1 class="display-1 font-bold mt-0 mb-4 flex items-center">
+          <span @scaleIn
+            class="w-12 h-12 rounded-full text-primary-600 ltr:mr-4 rtl:ml-4 flex items-center justify-center bg-primary-600/10">
+            <mat-icon svgIcon="mat:description"></mat-icon>
+          </span>
+          <span @fadeInRight class="block">Certificados</span>
+          <div class="flex items-center ml-auto">
+  
+            <button class="flex-none hidden sm:inline-block" color="primary" mat-icon-button
+              matTooltip="Buscar certificados" type="button" (click)="toggleSearchInput()">
+              <mat-icon svgIcon="mat:search"></mat-icon>
+            </button>
+  
+            <input *ngIf="showSearchInput" type="text" placeholder="Buscar certificados..." [(ngModel)]="searchQuery"
+              (input)="filterCertificates()" class="ml-2 p-2 border rounded" style="font-size: 16px; color: black;" />
+  
+  
+            <!-- <button (click)="createCertificate()" class="ltr:ml-1 rtl:mr-1 flex-none sm:hidden" color="primary" mat-mini-fab
+              matTooltip="Añadir" type="button">
+              <mat-icon svgIcon="mat:add"></mat-icon>
+            </button>
+  
+            <button (click)="createCertificate()" class="ltr:ml-4 rtl:mr-4 flex-none hidden sm:flex justify-center items-center px-4 py-2"  color="primary" mat-flat-button type="button">
+              <span>Añadir</span>
+          </button> -->
+          </div>
+        </h1>
+      </div>
+    </div>
+  
+  
+    <div *ngIf="filteredCertificates.length > 0" @stagger class="overflow-y-auto flex-auto">
+      <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 container">
+
+        <vex-certificate-card
+        *ngFor="let certificate of filteredCertificates; trackBy: trackById"
+        (openCertificate)="openCertificate(certificate.id, certificate.id === 1 ? 'standard' : 'avaluo')"
+        @fadeInUp
+        [certificate]="certificate">
+      </vex-certificate-card>
+      </div>
+    </div>
+  
+    <div *ngIf="filteredCertificates.length === 0" @scaleFadeIn class="flex-auto flex flex-col items-center justify-center">
+      <img class="m-12 h-64" src="assets/img/illustrations/idea.svg" />
+      <h2 class="headline m-0 text-center">No hay certificados que coincidan con tus filtros</h2>
+    </div>
+  </div>

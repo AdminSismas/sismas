@@ -11,7 +11,7 @@ describe(GeneralValidationsService.name, () => {
     service = TestBed.inject(GeneralValidationsService);
   });
 
-  it('should be created', () => {
+  test('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

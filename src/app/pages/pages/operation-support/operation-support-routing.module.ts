@@ -37,6 +37,13 @@ const routes: VexRoutes = [
               import('./procedures/work-finished/work-finished.component').then(
                 (m) => m.WorkFinishedComponent
               )
+          },
+          {
+            path: 'workHistorical',
+            loadComponent: () =>
+              import('./procedures/work-historical/work-historical.component').then(
+                (m) => m.WorkHistoricalComponent
+              )
           }
         ]
       },
@@ -55,12 +62,25 @@ const routes: VexRoutes = [
           )
       },
       {
-        path: 'operationalAnalytics',
-        loadComponent: () =>
-          import('./operational-analytics/operational-analytics.component').then(
-            (m) => m.OperationalAnalyticsComponent
-          )
+      path: 'reports',
+      children: [
+        {
+          path: 'operationalAnalytics',
+          loadComponent: () =>
+            import('./reports/operational-analytics/operational-analytics.component').then(
+              (m) => m.OperationalAnalyticsComponent
+            )
+        },
+        {
+          path: 'downloadReports',
+          loadComponent: () =>
+            import('./reports/download-reports/report-master/report-master.component').then(
+              (m) => m.ReportMasterComponent
+            )
+        },
+        ]
       },
+      
       {
         path: '**',
         loadComponent: () =>

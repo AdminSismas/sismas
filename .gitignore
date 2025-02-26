@@ -25,7 +25,7 @@ speed-measure-plugin.json
 
 # IDE - VSCode
 .vscode/*
-!.vscode/settings.json
+.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
@@ -48,3 +48,10 @@ Thumbs.db
 
 /ARCHIVE/*
 .vscode/settings.json
+
+# script
+/script
+src/@vex/styles/_generated-themes.scss
+Guía para el Flujo de Trabajo Optimizado en Git.pdf
+src/app/GeoGestionV2.code-workspace
+GeoGestionV2.code-workspace

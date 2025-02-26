@@ -28,19 +28,19 @@ export class DeletePropertyOwnerComponent {
   ) {}
 
   deleteRrrightOwnerProperty(): void {
-    console.log('Eliminando propietario...')
+    console.log('Eliminando propietario...');
 
     const parameters: DeleteParamsRrright = {
       executionId: this.data.executionId,
       baunitId: this.data.baunitId,
       rightId: this.data.rightId
-    }
+    };
 
     this.rrrightService.deletePropertyOwner(parameters)
-      .subscribe((res: any) => console.log(res))
+      .subscribe((res: any) => console.log(res));
 
-    this.close()
-    this.snackbar.open('Propietario eliminado', 'CLOSE', { duration: 4000 })
+    this.close();
+    this.snackbar.open('Propietario eliminado', 'CERRAR', { duration: 10000 });
   }
 
   close() {
