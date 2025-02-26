@@ -35,9 +35,7 @@ export class AlertsService {
   getAlertsByBaunitId(baunitId: string): Observable<any[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', baunitId);
-
     const url = `${this.basic_url}/alert/baunitId`;
-
     return this.http.get<any[]>(url, { params }).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );

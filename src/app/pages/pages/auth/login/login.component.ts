@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,6 +18,7 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
 import { ENVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/general/constant';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-login',
@@ -56,7 +57,6 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private snackbar: MatSnackBar,
     private authService: AuthService,
     private userService: UserService,
     private navigationLoaderService: NavigationLoaderService,
@@ -78,6 +78,7 @@ export class LoginComponent {
 
       this.authService.login(email, password).subscribe({
         next: (response) => {
+
           if (response && response.token) {
             this.authService.saveToken(response.token);
 
@@ -87,18 +88,8 @@ export class LoginComponent {
             this.navigationLoaderService.loadInformationNavigation(user.role);
 
             this.userService.getUserInfo(user.sub).subscribe({
-              next: (res) => {
-                this.userService.setUserData(res);
-              },
-              error: () => {
-                this.snackbar.open(
-                  'Credenciales incorrectas. Intenta nuevamente.',
-                  'Error',
-                  {
-                    duration: 5000
-                  }
-                );
-              }
+              next: (res) => this.userService.setUserData(res),
+              error: () => this.alertCredentialIncorrect()
             });
 
             const redirectRoute =
@@ -108,43 +99,40 @@ export class LoginComponent {
 
             this.router.navigate([redirectRoute]).then(() => {
               this.authService.resetIdle();
-              this.snackbar.open(
-                `Bienvenido, ${user.role === 'GUEST' ? 'invitado' : 'usuario'} ;)`,
-                'Gracias',
-                {
-                  duration: 5000
-                }
-              );
+              Swal.fire({
+                position: 'center',
+                text: `Bienvenido, ${email}`,
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3000
+              }).then(() => {});
+
             });
           } else {
-            this.snackbar.open(
-              'Credenciales incorrectas. Intenta nuevamente.',
-              'Error',
-              {
-                duration: 5000
-              }
-            );
+            this.alertCredentialIncorrect();
           }
         },
-        error: () => {
-          this.snackbar.open(
-            'Credenciales incorrectas. Intenta nuevamente.',
-            'Error',
-            {
-              duration: 5000
-            }
-          );
-        }
+        error: () => this.alertCredentialIncorrect()
       });
     } else {
-      this.snackbar.open(
-        'Por favor, complete los campos correctamente.',
-        'Error',
-        {
-          duration: 10000
-        }
-      );
+      Swal.fire({
+        title: '¡Error!',
+        text: 'Por favor, complete los campos correctamente.',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 1000
+      }).then((result) => {});
     }
+  }
+
+  alertCredentialIncorrect(){
+    Swal.fire({
+      title: '¡Error!',
+      text: 'Credenciales incorrectas. Intenta nuevamente.',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 5000
+    }).then((result) => {});
   }
 
 

@@ -9,8 +9,31 @@
     <mat-tab-group class="overflow-hidden" dynamicHeight
                    animationDuration="500ms" preserveContent>
 
+      <!-- Informacion alfanumerica -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon
+            class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+            svgIcon="mat:archive"
+          ></mat-icon>
+          Información Alfanumérica
+        </ng-template>
+        <vex-alfa-main
+          [executionId]="executionId"
+          [resources]="[]"
+          [mode]="mode"
+        ></vex-alfa-main>
+      </mat-tab>
+
       <!-- Mapa Geografico -->
-      <mat-tab label="Mapa Geografico">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon
+            class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+            svgIcon="mat:map"
+          ></mat-icon>
+          Mapa Geografico
+        </ng-template>
         <div class="h-full flex flex-col container-fluid xl:px-1 xl:py-1 sm:px-3 sm:py-3" vexFluidHeight
              fluidHeight=220>
           <vex-geographic-viewer-embedded
@@ -20,15 +43,6 @@
             vexFluidHeight fluidHeight=215
           ></vex-geographic-viewer-embedded>
         </div>
-      </mat-tab>
-
-      <!-- Informacion alfanumerica -->
-      <mat-tab label="Información Alfanumérica">
-        <vex-alfa-main
-          [executionId]="executionId"
-          [resources]="[]"
-          [mode]="mode"
-        ></vex-alfa-main>
       </mat-tab>
 
     </mat-tab-group>

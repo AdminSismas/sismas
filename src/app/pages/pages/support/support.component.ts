@@ -1,18 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import {
-  FormGroup,
-  ReactiveFormsModule,
-  UntypedFormBuilder,
-  Validators
-} from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
@@ -26,10 +14,7 @@ import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms } from '@vex/animations/stagger.animation';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ModuloName } from './model/modulos.model';
 import { supportData } from './model/support.model';
@@ -46,7 +31,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { Modulo, Subvista, Vista } from './interfaces/module.model';
 import { MODULES } from './constants/modules.constant';
 import { UserService } from '../auth/login/services/user.service';
-import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @Component({
@@ -56,8 +41,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
   animations: [stagger80ms, fadeInUp400ms, scaleIn400ms, fadeInRight400ms],
   standalone: true,
   imports: [
-    VexSecondaryToolbarComponent,
-    VexBreadcrumbsComponent,
     MatButtonModule,
     MatIconModule,
     MatStepperModule,
@@ -76,7 +59,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     RouterOutlet,
     MatTabsModule,
     RouterModule,
-    NgxDropzoneModule,
+    NgxDropzoneModule
   ]
 })
 export class SupportComponent implements OnInit {
@@ -89,8 +72,8 @@ export class SupportComponent implements OnInit {
   verticalAccountFormGroup!: FormGroup;
   file: File | null = null;
   moduleName: ModuloName[] = []; // Define the property to hold modules names
-  modulo: Modulo[] = []; 
-  vista: Vista[] = []; 
+  modulo: Modulo[] = [];
+  vista: Vista[] = [];
   subvista: Subvista[] = [];
   user: DecodeJwt | null = null;
   userID: number | null = null;
@@ -141,7 +124,7 @@ export class SupportComponent implements OnInit {
 
     this.user = this.userService.getUser();
     this.userID = this.userService.getUserData();
- 
+
     this.loadModulos(); //return data
     this.cd.detectChanges();
     this.cd.markForCheck();
@@ -204,7 +187,7 @@ export class SupportComponent implements OnInit {
         this.supportLogsList = response.data as SupportLogs[];
         this.subjectSupportLogsList$.next(this.supportLogsList);
         this.cd.markForCheck();
-        this.cd.detectChanges(); 
+        this.cd.detectChanges();
       }
     });
 
@@ -244,7 +227,7 @@ export class SupportComponent implements OnInit {
               //                                                               this.refreshData();
               this.resetForm();
               this.supportLogsComponent.fetchTickets();
-              
+
             }
           });
         } else {
@@ -269,9 +252,9 @@ export class SupportComponent implements OnInit {
     Object.keys(this.verticalAccountFormGroup.controls).forEach((controlName) => {
       const control = this.verticalAccountFormGroup.get(controlName);
       if (control) {
-        control.markAsPristine(); 
-        control.markAsUntouched(); 
-        control.setErrors(null); 
+        control.markAsPristine();
+        control.markAsUntouched();
+        control.setErrors(null);
       }
     });
   }
@@ -307,5 +290,5 @@ export class SupportComponent implements OnInit {
   }
 
 
- 
+
 }

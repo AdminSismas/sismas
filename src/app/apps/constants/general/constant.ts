@@ -7,7 +7,12 @@ import { BasicComponentTemplate } from '../../interfaces/bpm/render-template.typ
 import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
 import { Operation } from '../../interfaces/bpm/operation';
 import { environment } from '../../../../environments/environments';
-import { TypeButtonAlfaMain, TypeInformation, TypeOperationAlfaMain } from '../../interfaces/general/content-info';
+import {
+  TypeButtonAlfaMain,
+  TypeInformation,
+  TypeOperationAlfaMain,
+  TypeOperationGeoMain
+} from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../../interfaces/general/out-format.model';
 import { TaskRetailExecuteResponseModel } from '../../interfaces/bpm/task-retail-execute-response.model';
@@ -100,6 +105,9 @@ export const NAME_LOGO_IMG_SAN_VICENTE = 'logo_san_vicente.png';
 export const TYPEOPERATION_ADD: TypeOperationAlfaMain = 'ADD' ;
 export const TYPEOPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
 export const TYPEOPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
+
+export const TYPEOPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
+export const TYPEOPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
@@ -1035,5 +1043,6 @@ export const TYPE_BOTTON_ONE:TypeButtonAlfaMain = 'AGR';
 export const TYPE_BOTTON_TWO:TypeButtonAlfaMain = 'CRE';
 export const TYPE_BOTTON_TREE:TypeButtonAlfaMain = 'BRR';
 export const TYPE_BOTTON_FOUR:TypeButtonAlfaMain = 'CRE_GEO';
+export const TYPE_BOTTON_FIVE:TypeButtonAlfaMain = 'DEL_GEO';
 
 

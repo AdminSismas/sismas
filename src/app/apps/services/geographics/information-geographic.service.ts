@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { environment, environment as envi } from '../../../../environments/environments';
+import { environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
 import { QueryParametersGeographicVie } from '../../interfaces/geographics/query-parameters-geographic-vie';
+import { ChangeControl } from '../../interfaces/bpm/change-control';
 
 @Injectable({
   providedIn: 'root'
@@ -38,12 +39,31 @@ export class InformationGeographicService {
 
   getViewGeneralMapByExecutionId(executionId: string, schema: string): Observable<any> {
     let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}`;
-    if (schema === `${environment.schemas.hist}`) {
+    if (schema === `${envi.schemas.hist}`) {
       url += `${envi.accessGeo.geoHistoria}${envi.accessGeo.get}${executionId}`;
-    } else if (schema === `${environment.schemas.temp}`) {
+    } else if (schema === `${envi.schemas.temp}`) {
       url += `${envi.accessGeo.geoTemporal}${envi.accessGeo.get}${executionId}`;
     }
     return this.requestsService.sendRequestsGetText(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
+
+  /**
+   * POST {{url}}:{{port}}/changeLog/temp/{{executionId}}/geo
+   * */
+  createGeographicChangesTemp(executionId: string): Observable<ChangeControl> {
+    return this.requestsService.sendRequestsFetchPost(
+      `${envi.url}:${envi.port}${envi.changeLog}${envi.schemas.temp}/${executionId}${envi.accessGeo.geo}`
+    );
+  }
+
+  /**
+   * DELETE {{url}}:{{port}}/changeLog/temp/{{executionId}}/geo
+   * */
+  deleteGeographicChangesTemp(executionId: string): Observable<void> {
+    return this.requestsService.sendDeleteFetch(
+      `${envi.url}:${envi.port}${envi.changeLog}${envi.schemas.temp}/${executionId}${envi.accessGeo.geo}`
+    );
+  }
+
 }

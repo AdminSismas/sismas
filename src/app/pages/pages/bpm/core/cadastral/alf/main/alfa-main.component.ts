@@ -13,14 +13,14 @@ import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_UNIQUE,
+  PAGE_OPTION_UNIQUE, TYPE_BOTTON_FIVE,
   TYPE_BOTTON_FOUR,
   TYPE_BOTTON_ONE,
   TYPE_BOTTON_TREE,
   TYPE_BOTTON_TWO,
   TYPEOPERATION_ADD,
-  TYPEOPERATION_CREATE,
-  TYPEOPERATION_DELETE
+  TYPEOPERATION_CREATE, TYPEOPERATION_CREATE_GEO,
+  TYPEOPERATION_DELETE, TYPEOPERATION_DELETE_GEO
 } from '../../../../../../../apps/constants/general/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
@@ -54,20 +54,31 @@ import {
   ClearInformationDataComponent
 } from '../../../../../../../apps/components/bpm/clear-information-data/clear-information-data.component';
 import {
-  CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
-  CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN
+  CONSTANT_KEYWORD_DELETE_ALFA_MAIN, CONSTANT_KEYWORD_DELETE_GEO_MAIN,
+  CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN,
+  CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN, CONSTANT_MSG_PLACEHOLDER_DELETE_GEO_MAIN,
+  CONSTANT_TEXT_DELETE_GEO_MAIN,
+  CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY, CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
 } from '../../../../../../../apps/constants/general/constantLabels';
 import { OperationContentInformation } from '../../../../../../../apps/interfaces/bpm/operation-content-information';
 import { Pegeable } from '../../../../../../../apps/interfaces/general/pegeable.model';
 import {
   ViewChangeAlphaMainRecordComponent
 } from '../../../../../../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
-import { TypeButtonAlfaMain, TypeOperationAlfaMain } from '../../../../../../../apps/interfaces/general/content-info';
+import {
+  TypeButtonAlfaMain,
+  TypeOperationAlfaMain,
+  TypeOperationGeoMain
+} from '../../../../../../../apps/interfaces/general/content-info';
 import {
   CrudAlfaMainComponent
 } from '../../../../../../../apps/components/bpm/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
+import {
+  InformationGeographicService
+} from '../../../../../../../apps/services/geographics/information-geographic.service';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -107,29 +118,26 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public mode:number = 1;
+  @Input({ required: false }) public mode: number = 1;
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-  _validateChangeLog$: ReplaySubject<ChangeControl> =
-    new ReplaySubject<ChangeControl>(1);
-  _createChangeLog$: ReplaySubject<ChangeControl> =
-    new ReplaySubject<ChangeControl>(1);
+  _validateChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
+  _createChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
 
-  validateChangeLog$: Observable<ChangeControl> =
-    this._validateChangeLog$.asObservable();
-  createChangeLog$: Observable<ChangeControl> =
-    this._createChangeLog$.asObservable();
+  validateChangeLog$: Observable<ChangeControl> = this._validateChangeLog$.asObservable();
+  createChangeLog$: Observable<ChangeControl> = this._createChangeLog$.asObservable();
 
   infoFatherURL!: string;
   contentInformations!: InformationPegeable;
+  changeGeoControl!: ChangeControl;
   listOperationContentInformation: OperationContentInformation[] = [];
 
   constructor(
     proFlow: ProFlow,
-    private snackbar: MatSnackBar,
     private alfaMainService: AlfaMainService,
     private infoGeneralService: SendInfoGeneralService,
+    private geographicService: InformationGeographicService,
     private router: Router,
     private dialog: MatDialog
   ) {
@@ -207,14 +215,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
         `${environment.schemas.temp}`
       )
       .subscribe({
-        error: () => {
-          this.snackbar.open(
-            'No se puede continuar la actividad error en la validación alfanumérica.',
-            'CERRAR',
-            { duration: 10000 }
-          );
-          return;
-        },
+        error: () => this.captureInformationChangeLogAlfaMainError(),
         next: (result: ChangeControl) => {
           if (!result) {
             this._validateChangeLog$.next(new ChangeControl());
@@ -259,11 +260,13 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   captureInformationChangeLogAlfaMainError() {
-    this.snackbar.open(
-      'No se puede continuar la actividad error en la validación alfanumérica.',
-      'CERRAR',
-      { duration: 10000 }
-    );
+    Swal.fire({
+      text: 'No se puede continuar la actividad error en la validación alfanumérica.',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1000
+    }).then(() => {
+    });
   }
 
   orderByInformationSubscribe() {
@@ -315,9 +318,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
+
 
   generateObjectPageSearchData(): PageSearchData {
     return new PageSearchData(
@@ -369,10 +370,13 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
           this.activateLoading();
         },
         error: (error: HttpErrorResponse) => {
-          this.snackbar.open(
-            'Error al eliminar la unidad predial.',
-            'CERRAR', { duration: 10000 }
-          );
+          Swal.fire({
+            text: 'Error al eliminar la unidad predial.',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 100
+          }).then(() => {
+          });
           throw error;
         }
       });
@@ -415,10 +419,88 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
 
-  executeCreateAlfaGeo(type: TypeOperationAlfaMain) {
-    if (type === TYPEOPERATION_ADD) {
-
+  executeCreateAlfaGeo(type: TypeOperationGeoMain) {
+    if (type === TYPEOPERATION_CREATE_GEO && this.executionId) {
+      this.geographicService.createGeographicChangesTemp(this.executionId)
+        .subscribe({
+          next: (result: ChangeControl) => {
+            if(result && result.changeLogId && result.changeLogId > 0) {
+              this.getAlertSuccess(
+                `Se ha logrado crear el cambio geo con el logId: ${result.changeLogId}`
+              )
+              return;
+            }
+            this.getAlertError('No se ha logrado eliminar el cambio geo');
+            return;
+          },
+          error: () => this.getAlertError('No se ha logrado eliminar el cambio geo')
+        });
     }
+  }
+
+  executeDeletedAlfaGeo(type: TypeOperationGeoMain) {
+    if (type === TYPEOPERATION_DELETE_GEO && this.executionId) {
+      Swal.fire({
+        titleText: CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN,
+        input: 'text',
+        inputPlaceholder: CONSTANT_MSG_PLACEHOLDER_DELETE_GEO_MAIN,
+        inputAttributes: { autocapitalize: 'off' },
+        showCancelButton: true,
+        confirmButtonText: CONSTANT_TEXT_DELETE_GEO_MAIN,
+        showLoaderOnConfirm: true,
+        preConfirm: async (text: string) => {
+          try {
+            return !text || text.length <= 0 ?
+              Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY) :
+              text;
+          } catch (error) {
+            Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL);
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed && result.value === CONSTANT_KEYWORD_DELETE_GEO_MAIN) {
+          this.geographicService.deleteGeographicChangesTemp(this.executionId)
+            .subscribe({
+              next: () => this.getAlertSuccess('Se ha logrado eliminar el cambio geo'),
+              error: () => this.getAlertError('No se ha logrado eliminar el cambio geo')
+            });
+        }
+      });
+    }
+  }
+
+  buttonsClass(btn: TypeButtonAlfaMain): string {
+    let color = '!bg-slate-400 !text-gray-100 opacity-60';
+    if (btn === 'AGR' && !this.disabledButton(btn)) {
+      color = '!text-white !bg-primary-600';
+    } else if ((btn === 'CRE' || btn === 'CRE_GEO') && !this.disabledButton(btn)) {
+      color = '!text-white !bg-green-600';
+    } else if ((btn === 'BRR' || btn === 'DEL_GEO') && !this.disabledButton(btn)) {
+      color = '!text-white !bg-red-600';
+    }
+    return `rounded-full py-2 px-6 title ${color}`;
+  }
+
+  getAlertSuccess(text: string) {
+    Swal.fire({
+      text: text,
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 1000
+    }).then(() => {
+    });
+  }
+
+  getAlertError(text: string) {
+    Swal.fire({
+      title: '¡Error!',
+      text: text,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 2000
+    }).then(() => {
+    });
   }
 
   private returnURLPrevious(url: string) {
@@ -429,17 +511,8 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     return this.resources.includes(btn);
   }
 
-  buttonsClass(btn: TypeButtonAlfaMain): string {
-    let color = '!bg-slate-400 !text-gray-100 opacity-60';
-    if (btn === 'AGR' && !this.disabledButton(btn)) {
-      color = '!text-white !bg-primary-600';
-    } else if ((btn === 'CRE'|| btn === 'CRE_GEO') && !this.disabledButton(btn)) {
-      color = '!text-white !bg-green-600';
-    } else if (btn === 'BRR' && !this.disabledButton(btn)) {
-      color = '!text-white !bg-red-600';
-    }
-
-    return `rounded-full py-2 px-6 title ${color}`;
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
   }
 
   protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
@@ -449,4 +522,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   protected readonly TYPE_BOTTON_TREE = TYPE_BOTTON_TREE;
   protected readonly TYPE_BOTTON_FOUR = TYPE_BOTTON_FOUR;
   protected readonly TYPE_BOTTON_ONE = TYPE_BOTTON_ONE;
+  protected readonly TYPE_BOTTON_FIVE = TYPE_BOTTON_FIVE;
+  protected readonly TYPEOPERATION_DELETE_GEO = TYPEOPERATION_DELETE_GEO;
+  protected readonly TYPEOPERATION_CREATE_GEO = TYPEOPERATION_CREATE_GEO;
 }

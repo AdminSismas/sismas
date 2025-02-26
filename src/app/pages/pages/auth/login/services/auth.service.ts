@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environments';
-import { Observable, catchError, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { UserService } from './user.service';
 import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from 'src/app/apps/constants/general/constant';
-
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +24,7 @@ export class AuthService {
   constructor(
     private http: HttpClient, private router: Router,
     private userService: UserService,
-    private idle: Idle,
-    snackbar: MatSnackBar,
+    private idle: Idle
   ) {
     idle.setIdle(IDLE_TIME_MINUTES * 60);
     idle.setTimeout(TIMEOUT_TIME_MINUTES * 60);
@@ -39,9 +37,13 @@ export class AuthService {
       if (timeout < 2) {
         wordTime = 'minuto';
       }
-      snackbar.open(`En ${Math.round(timeout)} ${wordTime} se cerrará la sesión por inactividad`, 'Cerrar', {
-        duration: 10000
-      });
+      Swal.fire({
+        position: 'center',
+        text: `En ${Math.round(timeout)} ${wordTime} se cerrará la sesión por inactividad`,
+        icon: 'warning',
+        showConfirmButton: false,
+        timer: 10000
+      }).then(() => {});
     });
 
     // Do something when the user becomes active again

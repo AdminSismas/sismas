@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
+import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { STRING_INFORMATION_NOT_FOUND } from '../../../../../../../apps/constants/general/constant';
 import {
@@ -11,8 +10,6 @@ import {
 } from '../../../../../../../apps/components/general-components/loading-app/loading-app.component';
 import { Observable, of } from 'rxjs';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AlfaMainService } from '../../../../../../../apps/services/bpm/core/alfa-main.service';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
 import { Router } from '@angular/router';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -27,6 +24,8 @@ import {
   GeographicViewerEmbeddedComponent
 } from '../../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { AlfaMainComponent } from '../../alf/main/alfa-main.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'vex-geo-main',
@@ -51,7 +50,10 @@ import { AlfaMainComponent } from '../../alf/main/alfa-main.component';
     LoadingAppComponent,
     FluidHeightDirective,
     GeographicViewerEmbeddedComponent,
-    AlfaMainComponent
+    AlfaMainComponent,
+    MatIcon,
+    MatTabLabel,
+    MatIconButton
   ],
   templateUrl: './geo-main.component.html',
   styleUrl: './geo-main.component.scss'
@@ -73,11 +75,8 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
 
   constructor(
     proFlow: ProFlow,
-    private snackbar: MatSnackBar,
-    private alfaMainService: AlfaMainService,
     private infoGeneralService: SendInfoGeneralService,
     private router: Router,
-    private dialog: MatDialog
   ) {
     if (proFlow?.flowId) {
       this.id += proFlow?.flowId;
@@ -113,7 +112,7 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
 
     setTimeout(() => {
       this.activateLoading(true);
-    }, 5000);
+    }, 4000);
 
   }
 
