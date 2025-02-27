@@ -21,14 +21,21 @@ export class DataAlfaMain {
   block?: string | null | undefined;
   sidewalk?: string | null | undefined;
 
-
   constructor(
     executionId: string,
     typeOperation: TypeOperationAlfaMain,
-    content?: any) {
+    content?: any
+  ) {
     this.executionId = executionId || '';
     this.typeOperation = typeOperation || null;
     this.addNpnLike = content?.addNpnLike?.trim() || '';
     this.bAunitCondition = content?.bAunitCondition?.trim() || '';
   }
+}
+
+export interface ModificationUnitProperties {
+  executionId: string;
+  baunitIdE: string;
+  npnMatrix: string;
+  resources: string[];
 }

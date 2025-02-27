@@ -114,8 +114,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     private readonly layoutService: VexLayoutService,
     private snackbar: MatSnackBar,
     private bpmCoreService: BpmCoreService
-  ) {
-  }
+  ) {}
 
   get visibleColumns() {
     return this.columns
@@ -308,7 +307,8 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
       data: {
         executionId: this.executionId,
         baunitIdE: row.baunitHead?.baunitIdE,
-        npnMatrix: row.baunitHead!.cadastralNumber
+        npnMatrix: row.baunitHead!.cadastralNumber,
+        resources: this.resources
       }
     });
   }

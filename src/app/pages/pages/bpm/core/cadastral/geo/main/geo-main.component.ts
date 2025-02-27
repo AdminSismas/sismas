@@ -25,7 +25,6 @@ import {
 } from '../../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { AlfaMainComponent } from '../../alf/main/alfa-main.component';
 import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
 
 @Component({
   selector: 'vex-geo-main',
@@ -53,7 +52,6 @@ import { MatIconButton } from '@angular/material/button';
     AlfaMainComponent,
     MatIcon,
     MatTabLabel,
-    MatIconButton
   ],
   templateUrl: './geo-main.component.html',
   styleUrl: './geo-main.component.scss'
