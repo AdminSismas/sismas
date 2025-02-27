@@ -62,8 +62,8 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
 
   public id: string = this.getRandomInt(1234).toString();
   public mode = 3;
-  public schema: string = `${environment.schemas.temp}`;
-  public executionIdGeo: string = '';
+  public schema = `${environment.schemas.temp}`;
+  public executionIdGeo = '';
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
