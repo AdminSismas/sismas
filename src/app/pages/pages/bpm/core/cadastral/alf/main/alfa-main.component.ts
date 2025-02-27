@@ -37,7 +37,6 @@ import { SendInfoGeneralService } from '../../../../../../../apps/services/gener
 import { environment } from '../../../../../../../../environments/environments';
 import { Router } from '@angular/router';
 import { ChangeControl } from '../../../../../../../apps/interfaces/bpm/change-control';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -118,7 +117,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public mode: number = 1;
+  @Input({ required: false }) public mode = 1;
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
@@ -265,8 +264,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 1000
-    }).then(() => {
-    });
+    }).then();
   }
 
   orderByInformationSubscribe() {
@@ -375,8 +373,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
             icon: 'error',
             showConfirmButton: false,
             timer: 100
-          }).then(() => {
-          });
+          }).then();
           throw error;
         }
       });
@@ -427,7 +424,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
             if(result && result.changeLogId && result.changeLogId > 0) {
               this.getAlertSuccess(
                 `Se ha logrado crear el cambio geo con el logId: ${result.changeLogId}`
-              )
+              );
               return;
             }
             this.getAlertError('No se ha logrado eliminar el cambio geo');
@@ -454,6 +451,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
               Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY) :
               text;
           } catch (error) {
+            console.log(error);
             Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL);
           }
         },
@@ -488,8 +486,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       icon: 'success',
       showConfirmButton: false,
       timer: 1000
-    }).then(() => {
-    });
+    }).then();
   }
 
   getAlertError(text: string) {
@@ -499,8 +496,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 2000
-    }).then(() => {
-    });
+    }).then();
   }
 
   private returnURLPrevious(url: string) {
@@ -508,7 +504,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   disabledButton(btn: TypeButtonAlfaMain): boolean {
-    return this.resources.includes(btn);
+    return !this.resources.includes(btn);
   }
 
   getRandomInt(max: number) {
