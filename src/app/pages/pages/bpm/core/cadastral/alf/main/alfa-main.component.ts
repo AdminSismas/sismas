@@ -15,10 +15,10 @@ import {
   PAGE,
   PAGE_OPTION_UNIQUE, TYPE_BOTTON_FIVE,
   TYPE_BOTTON_FOUR,
-  TYPE_BOTTON_ONE,
+  TYPE_BOTTON_ONE, TYPE_BOTTON_SIX,
   TYPE_BOTTON_TREE,
   TYPE_BOTTON_TWO,
-  TYPEOPERATION_ADD,
+  TYPEOPERATION_ADD, TYPEOPERATION_CALCULATE_BOUNDARIES,
   TYPEOPERATION_CREATE, TYPEOPERATION_CREATE_GEO,
   TYPEOPERATION_DELETE, TYPEOPERATION_DELETE_GEO
 } from '../../../../../../../apps/constants/general/constant';
@@ -78,6 +78,7 @@ import Swal from 'sweetalert2';
 import {
   InformationGeographicService
 } from '../../../../../../../apps/services/geographics/information-geographic.service';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -107,7 +108,8 @@ import {
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    TableAlfaMainComponent
+    TableAlfaMainComponent,
+    MatTooltip
   ],
   templateUrl: './alfa-main.component.html',
   styleUrl: './alfa-main.component.scss'
@@ -117,6 +119,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
+  @Input({ required: false }) public resourcesRemovers: string[] = [];
   @Input({ required: false }) public mode = 1;
 
   isExistDataInformations$: Observable<boolean> = of(false);
@@ -468,9 +471,15 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     }
   }
 
+  executeCalculateBoundaries(type: TypeOperationGeoMain){
+    if (type === TYPEOPERATION_CALCULATE_BOUNDARIES && this.executionId) {
+      this.getAlertSuccess('Calculo linderos inicia ejecucion a ejecutarse')
+    }
+  }
+
   buttonsClass(btn: TypeButtonAlfaMain): string {
     let color = '!bg-slate-400 !text-gray-100 opacity-60';
-    if (btn === 'AGR' && !this.disabledButton(btn)) {
+    if ((btn === 'AGR' || btn === 'CAL_BOU') && !this.disabledButton(btn)) {
       color = '!text-white !bg-primary-600';
     } else if ((btn === 'CRE' || btn === 'CRE_GEO') && !this.disabledButton(btn)) {
       color = '!text-white !bg-green-600';
@@ -507,6 +516,10 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     return !this.resources.includes(btn);
   }
 
+  buttonRemovers(btn: TypeButtonAlfaMain): boolean {
+    return !this.resourcesRemovers.includes(btn);
+  }
+
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
@@ -519,6 +532,8 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   protected readonly TYPE_BOTTON_FOUR = TYPE_BOTTON_FOUR;
   protected readonly TYPE_BOTTON_ONE = TYPE_BOTTON_ONE;
   protected readonly TYPE_BOTTON_FIVE = TYPE_BOTTON_FIVE;
+  protected readonly TYPE_BOTTON_SIX = TYPE_BOTTON_SIX;
   protected readonly TYPEOPERATION_DELETE_GEO = TYPEOPERATION_DELETE_GEO;
   protected readonly TYPEOPERATION_CREATE_GEO = TYPEOPERATION_CREATE_GEO;
+  protected readonly TYPEOPERATION_CALCULATE_BOUNDARIES = TYPEOPERATION_CALCULATE_BOUNDARIES;
 }

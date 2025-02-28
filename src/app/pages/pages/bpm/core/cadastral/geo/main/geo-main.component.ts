@@ -4,7 +4,10 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { STRING_INFORMATION_NOT_FOUND } from '../../../../../../../apps/constants/general/constant';
+import {
+  LIST_BUTTON_GEO_MAIN,
+  STRING_INFORMATION_NOT_FOUND
+} from '../../../../../../../apps/constants/general/constant';
 import {
   LoadingAppComponent
 } from '../../../../../../../apps/components/general-components/loading-app/loading-app.component';
@@ -51,7 +54,7 @@ import { MatIcon } from '@angular/material/icon';
     GeographicViewerEmbeddedComponent,
     AlfaMainComponent,
     MatIcon,
-    MatTabLabel,
+    MatTabLabel
   ],
   templateUrl: './geo-main.component.html',
   styleUrl: './geo-main.component.scss'
@@ -62,19 +65,19 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
   public mode = 3;
   public schema = `${environment.schemas.temp}`;
   public executionIdGeo = '';
+  public enableRefreshButton: boolean = true;
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-
   infoFatherURL!: string;
 
   constructor(
     proFlow: ProFlow,
     private infoGeneralService: SendInfoGeneralService,
-    private router: Router,
+    private router: Router
   ) {
     if (proFlow?.flowId) {
       this.id += proFlow?.flowId;
@@ -93,6 +96,9 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
       this.id =
         this.getRandomInt(10000) + 'GeoMainComponentAndTab' + this.getRandomInt(10);
     }
+
+    // Se sobre escribe los botones que se deben habilitar
+    this.resources = LIST_BUTTON_GEO_MAIN;
 
     this._infoFatherURL$
       .pipe(filter<string>(Boolean))

@@ -108,6 +108,7 @@ export const TYPEOPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
 
 export const TYPEOPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
 export const TYPEOPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
+export const TYPEOPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
@@ -1032,6 +1033,8 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
 
 export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'];
 
+export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['AGR', 'BRR', 'CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
+
 export const MODAL_LARGE ={ maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM ={ maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
 export const MODAL_SMALL ={ maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
@@ -1044,5 +1047,6 @@ export const TYPE_BOTTON_TWO:TypeButtonAlfaMain = 'CRE';
 export const TYPE_BOTTON_TREE:TypeButtonAlfaMain = 'BRR';
 export const TYPE_BOTTON_FOUR:TypeButtonAlfaMain = 'CRE_GEO';
 export const TYPE_BOTTON_FIVE:TypeButtonAlfaMain = 'DEL_GEO';
+export const TYPE_BOTTON_SIX:TypeButtonAlfaMain = 'CAL_BOU';
 
 

@@ -1,11 +1,16 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
 import { LoadingAppComponent } from '../../general-components/loading-app/loading-app.component';
+import { MatButton } from '@angular/material/button';
+import { TYPE_BOTTON_ONE, TYPE_BOTTON_TWO, TYPEOPERATION_CREATE } from '../../../constants/general/constant';
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'vex-geographic-viewer-embedded',
@@ -14,7 +19,12 @@ import { LoadingAppComponent } from '../../general-components/loading-app/loadin
     ReactiveFormsModule,
     AsyncPipe,
     LoadingAppComponent,
-    NgIf
+    NgIf,
+    MatButton,
+    NgClass,
+    VexPageLayoutContentDirective,
+    FluidHeightDirective,
+    MatIcon
   ],
   templateUrl: './geographic-viewer-embedded.component.html',
   styleUrl: './geographic-viewer-embedded.component.scss'
@@ -22,10 +32,11 @@ import { LoadingAppComponent } from '../../general-components/loading-app/loadin
 export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
 
   @Input({ required: false }) idComponent = 'GeneralMapContent1258446';
-  @Input({ required: false }) executionId: string| null | undefined;
+  @Input({ required: false }) executionId: string | null | undefined;
   @Input({ required: false }) ccZonaId: string | null | undefined;
   @Input({ required: false }) npn: string | null | undefined;
   @Input({ required: false }) schema: string | null | undefined;
+  @Input({ required: false }) enableRefreshButton: boolean = false;
 
   isExistDataInformations$: Observable<boolean> = of(false);
 
@@ -48,8 +59,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-   this.captureErrorResult();
-
+    this.captureErrorResult();
     if (changes['ccZonaId'] && this.ccZonaId && this.ccZonaId?.length > 0) {
       this.showMap = true;
       this.activateLoading();
@@ -78,7 +88,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     this.geographicService.getViewGeneralMapByExecutionId(executionId, schema)
       .subscribe({
         next: (result: any) => this.captureResult(result),
-        error: (error) => this.captureErrorResult(),
+        error: (error) => this.captureErrorResult()
       });
   }
 
@@ -86,7 +96,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     this.geographicService.getViewGeneralMapById(value)
       .subscribe({
         next: (result: any) => this.captureResult(result),
-        error: (error) => this.captureErrorResult(),
+        error: (error) => this.captureErrorResult()
       });
   }
 
@@ -94,7 +104,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     this.geographicService.getViewDataOpenMapByNpn(value)
       .subscribe({
         next: (result: any) => this.captureResult(result),
-        error: (error) => this.captureErrorResult(),
+        error: (error) => this.captureErrorResult()
       });
   }
 
@@ -109,6 +119,26 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     this.activateLoading(true);
   }
 
+  refreshMap() {
+    this.urlIframe = null;
+    this.showMap = true;
+    this.activateLoading();
+
+    if (this.ccZonaId && this.ccZonaId?.length > 0) {
+      this.getViewGeneralMap(this.ccZonaId);
+      return;
+    }
+
+    if (this.npn && this.npn?.length > 0) {
+      this.getViewDataOpenMap(this.npn);
+      return;
+    }
+
+    if (this.executionId && this.executionId?.length > 0 && this.schema && this.schema?.length > 0) {
+      this.getViewGeneralMapByExecutionId(this.executionId, this.schema);
+      return;
+    }
+  }
 
   activateLoading(value = false) {
     const valid = of(value);
@@ -119,4 +149,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     return Math.floor(Math.random() * max);
   }
 
+  protected readonly TYPE_BOTTON_TWO = TYPE_BOTTON_TWO;
+  protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
+  protected readonly TYPE_BOTTON_ONE = TYPE_BOTTON_ONE;
 }

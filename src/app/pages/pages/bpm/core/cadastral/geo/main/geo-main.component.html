@@ -34,13 +34,13 @@
           ></mat-icon>
           Mapa Geografico
         </ng-template>
-        <div class="h-full flex flex-col container-fluid xl:px-1 xl:py-1 sm:px-3 sm:py-3" vexFluidHeight
-             fluidHeight=220>
+        <div class="h-full flex flex-col container-fluid xl:px-1 xl:py-1 sm:px-3 sm:py-3" vexFluidHeight fluidHeight=197>
           <vex-geographic-viewer-embedded
             [idComponent]="id + 'vexGeographicViewerEmbeddedGeoTemporal'"
             [executionId]="executionIdGeo"
             [schema]="schema"
-            vexFluidHeight fluidHeight=215
+            [enableRefreshButton]="enableRefreshButton"
+            vexFluidHeight fluidHeight=195
           ></vex-geographic-viewer-embedded>
         </div>
       </mat-tab>

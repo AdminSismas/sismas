@@ -116,7 +116,7 @@ export class BmpCoreComponent implements OnInit {
   proFlow!: ProFlow;
   infoFatherURL!: string;
   resources: string[] = [];
-  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -164,7 +164,7 @@ export class BmpCoreComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '400px',
       data: { message },
-      disableClose: true 
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -198,13 +198,16 @@ export class BmpCoreComponent implements OnInit {
     const listComponents: ComponentTemplate[] = [];
     if (components?.length > 0) {
       components.forEach((component: BasicComponentTemplate) => {
-        const listTmp = this.listComponents.filter((x: ComponentTemplate) =>
+        const listTmp: ComponentTemplate[] = this.listComponents
+          .filter((x: ComponentTemplate) =>
           x.nameComponent.includes(component.name)
         );
+
         if (listTmp?.length > 0) {
           listTmp.forEach((x) => this.createObjectComponent(x, component));
           listComponents.push(...listTmp);
         }
+
       });
       this._components$.next(listComponents);
       this.activateLoading(true);

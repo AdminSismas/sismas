@@ -86,10 +86,8 @@ export class TasksPanelService {
 
   getResources(executionId: string): Observable<string[]> {
     const url = `${this.basic_url}${envi.bpmOperation.proflow_proExecution}${envi.bpmOperation.resources}${executionId}`;
-
     const headers: HttpHeaders = new HttpHeaders()
       .set('Content-Type', 'text/plain;charset=UTF-8');
-
     return  this.http.get(url, { headers, responseType: 'text' })
       .pipe(
         map((result: string) => result.split(',').map((resource: string) => resource.trim()))

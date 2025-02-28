@@ -9,7 +9,6 @@ export class ContentInfoSchema {
   content?: any;
   typeInformation?: TypeInformation;
   flagData?: string = '';
-
   resources?: string[] = [];
   rulePage?: string = '';
 
