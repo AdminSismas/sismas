@@ -145,7 +145,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
                   groupName:'Propiedad y uso'
                 },
                 {
-                  name: 'cadastralRegistryNumber',
+                  name: 'cadastralCreatedAt',
                   label: 'Inscripción catastral',
                   collection: false,
                   type: 'date',
@@ -259,7 +259,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     "domBaunitEconoDesti": ['',[ Validators.required]],
     "domBaunitType": ['',[ Validators.required]],
     "domBaunitCondition": ['', [Validators.required]],
-    "cadastralRegistryNumber": [''],
+    "cadastralCreatedAt": [''],
     "cadastralRegistryNumberTemp": [''],
 
     // *****GRUPO "Tamaños y áreas" ****
@@ -282,8 +282,18 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.reset(this.data);
+
+    const newCadastraCreatedAt = new Date(this.data.cadastralCreatedAt  + 'T00:00:00-05:00');
+    this.form.controls['cadastralCreatedAt'].setValue(newCadastraCreatedAt);
+
     Object.keys(this.form.controls).forEach(field => {
-      if (field !== 'propertyRegistryOffice' && field !== 'propertyRegistryNumber' && field !== 'domBaunitEconoDesti' && field !== 'domBaunitType' && field !== 'cadastralRegistryNumber') {
+      if (
+        field !== 'propertyRegistryOffice' &&
+        field !== 'propertyRegistryNumber' &&
+        field !== 'domBaunitEconoDesti' &&
+        field !== 'domBaunitType' &&
+        field !== 'cadastralCreatedAt'
+      ) {
         this.form.get(field)?.disable();
       }
     });
