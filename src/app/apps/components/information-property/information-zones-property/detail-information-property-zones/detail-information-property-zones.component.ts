@@ -17,7 +17,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from '../../../../constants/general/constant';
-import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-baunit';
+import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
 
 @Component({
   selector: 'vex-detail-information-property-zones',
@@ -46,11 +46,10 @@ import { ZoneBAUnit } from 'src/app/apps/interfaces/information-property/zone-ba
 export class DetailInformationPropertyZonesComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { zone: ZoneBAUnit, propertyType: string},
+    @Inject(MAT_DIALOG_DATA) public data: { zone: ZoneBAUnitFisica | ZoneBAUnitGeoeconomic, propertyType: string},
     private dialogRef: MatDialogRef<DetailInformationPropertyZonesComponent>,
     private cdr: ChangeDetectorRef
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (this.data.zone === null || this.data.zone === undefined) {

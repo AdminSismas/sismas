@@ -20,7 +20,7 @@ import { DataFolio } from '../../interfaces/information-property/snr-folio-info'
 import { DataSource } from '../../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../../interfaces/information-property/snr-person-info';
 import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
-import { ZoneBAUnit } from '../../interfaces/information-property/zone-baunit';
+import { ZoneBAUnitFisica } from '../../interfaces/information-property/zone-baunit';
 
 export const GUION = '-';
 export const SPACE = ' ';
@@ -354,7 +354,7 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentIn
   }
 ];
 
-export const TABLE_COLUMN_PROPERTIES_PHYSICAL: TableColumn<ZoneBAUnit>[] = [
+export const TABLE_COLUMN_PROPERTIES_PHYSICAL: TableColumn<ZoneBAUnitFisica>[] = [
   {
     label: 'Detalle',
     property: 'details',
@@ -364,8 +364,8 @@ export const TABLE_COLUMN_PROPERTIES_PHYSICAL: TableColumn<ZoneBAUnit>[] = [
   },
   {
     label: 'Código',
-    property: 'zoneCode',
-    type: 'operationType',
+    property: 'baUnitZonaId',
+    type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },
@@ -402,8 +402,8 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
   },
   {
     label: 'Código',
-    property: 'otro',
-    type: 'badge',
+    property: 'baUnitZonaId',
+    type: 'text',
     visible: true
   },
   {
@@ -424,13 +424,6 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
     type: 'operationType',
     visible: true
   },
-
-  {
-    label: 'Actions',
-    property: 'actions',
-    type: 'button',
-    visible: true
-  }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformationAdjacent>[] = [
@@ -1031,7 +1024,7 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   }
 ];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'];
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON'];
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['AGR', 'BRR', 'CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 

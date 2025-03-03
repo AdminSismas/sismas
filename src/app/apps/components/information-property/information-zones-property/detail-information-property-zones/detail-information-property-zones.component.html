@@ -1,10 +1,10 @@
 <div class="flex items-center" mat-dialog-title>
   <h4 class="subheading-1 m-0 flex-auto">
     Código -
-    <ng-container *ngIf="data.propertyType === 'Urbano'; else ruralCode">
+    <ng-container *ngIf="data.propertyType === 'Urbano'; else geoeconomicCode">
       {{ data.zone.zonaHomoFisicaUrCode || NAME_NO_DISPONIBLE }}
     </ng-container>
-    <ng-template #ruralCode>
+    <ng-template #geoeconomicCode>
       <ng-container *ngIf="data.propertyType === 'Geoeconómica'; else finalCode">
         {{ data.zone.zonaHomoGeoEconomicaCode || NAME_NO_DISPONIBLE }}
       </ng-container>
