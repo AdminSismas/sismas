@@ -1,15 +1,15 @@
 export const environment = {
   accessGeo: {
     area: "area",
+    dataOpen: "/datosAbiertos/",
     extentByCodigo: "extentByCodigo",
     extentByCodigoData: "extentByCodigoData",
     generalMap: "/mapaGeneral",
-    geoTemporal: "/geotemporal",
+    geo: "/geo",
     geoHistoria: "/geohistoria",
-    dataOpen: "/datosAbiertos/",
+    geoTemporal: "/geotemporal",
     get: "/get/",
-    value: "/accessGeo/",
-    geo: "/geo"
+    value: "/accessGeo/"
   },
   active: "active",
   administrativeSource: "/fuenteadmin/",
@@ -72,7 +72,7 @@ export const environment = {
     value: "/bpmProcess"
   },
   calificationUB: "/calificationUB",
-  ccDireccion: "/ccDireccion/",
+  ccDireccion: "/ccDireccion",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",
