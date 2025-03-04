@@ -121,7 +121,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   @Output() physicalZoneChange = new EventEmitter<void>();
   @Output() deletePhysicalZone = new EventEmitter<ZoneBAUnitFisica>();
 
-  columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_PHYSICAL;
+  columns: TableColumn<ZoneBAUnitFisica>[] = TABLE_COLUMN_PROPERTIES_PHYSICAL;
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -178,6 +178,14 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
     }
 
     return visibleColumns;
+  }
+
+  zonaHomoCode(zone: ZoneBAUnitFisica): string {
+    if (zone.ccZonaHomoFisicaRu) {
+      return zone.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode!;
+    } else {
+      return zone.ccZonaHomoFisicaUr!.zonaHomoFisicaUrCode!;
+    }
   }
 
   captureBasicInformationSubscribe(result: BasicInformationProperty): void {

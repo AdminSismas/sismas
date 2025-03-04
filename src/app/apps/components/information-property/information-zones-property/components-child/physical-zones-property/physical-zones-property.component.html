@@ -70,16 +70,25 @@
             >
               {{ column.label }}
             </th>
-            <td
-              mat-cell
-              *matCellDef="let row"
-            >
-              @if (column.type === "text") {
-                {{ row[column.property] }}
-              } @else if (column.type === "operationType") {
-                {{ row[column.property] ? "Sí" : "No" }}
-              }
-            </td>
+            @if (column.property !== 'zonaHomoCode') {
+              <td
+                mat-cell
+                *matCellDef="let row"
+              >
+                @if (column.type === "text") {
+                  {{ row[column.property] }}
+                } @else if (column.type === "operationType") {
+                  {{ row[column.property] ? "Sí" : "No" }}
+                }
+              </td>
+            } @else {
+              <td
+                mat-cell
+                *matCellDef="let row"
+              >
+                {{ zonaHomoCode(row) }}
+              </td>
+            }
           </ng-container>
         }
       }

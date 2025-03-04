@@ -364,7 +364,7 @@ export const TABLE_COLUMN_PROPERTIES_PHYSICAL: TableColumn<ZoneBAUnitFisica>[] =
   },
   {
     label: 'Código',
-    property: 'baUnitZonaId',
+    property: 'zonaHomoCode',
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
