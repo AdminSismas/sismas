@@ -72,7 +72,7 @@ export const environment = {
     value: "/bpmProcess"
   },
   calificationUB: "/calificationUB",
-  ccDireccion: "/ccDireccion/",
+  ccDireccion: "/ccDireccion",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",

@@ -1,19 +1,21 @@
 import { NAME_NO, NAME_SI } from '../../constants/general/constant';
 
 export class BasicInformationAddress {
+  baunitId: string;
+  executionId?: string | null;
   direccionId?: string;
   nombrePredio?: string;
-  esDireccionPrincipal?: boolean| undefined;
+  esDireccionPrincipal?: boolean;
   schema?: string;
 
   constructor(content?: any, schema?: string) {
+    this.baunitId = content.baunitId;
+    this.executionId = content.executionId;
     this.direccionId = content.direccionId;
     this.nombrePredio = content.nombrePredio;
     this.esDireccionPrincipal = content.esDireccionPrincipal;
     this.schema = schema;
   }
-
-  set isMainAddress(value:boolean| undefined) {}
 
   get isMainAddress(): string {
     const name = `${NAME_NO}`;

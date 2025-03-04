@@ -19,7 +19,6 @@ import {
   HttpErrorResponse,
   HttpParams
 } from '@angular/common/http';
-import { BasicInformationAddress } from '../../interfaces/information-property/basic-information-address';
 import {
   CreateBasicInformationAddress,
   DetailBasicInformationAddress
@@ -31,8 +30,10 @@ import {
   CreateBasicInformationConstruction
 } from '../../interfaces/information-property/content-information-construction';
 import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
-import { CreateBaunitZone, ZoneBAUnitResponse } from '../../interfaces/information-property/zone-baunit';
-import { EVIRONMENT_CC_DIRECCION } from '../../constants/general/constant';
+import {
+  CreateBaunitZone,
+  ZoneBAUnitResponse
+} from '../../interfaces/information-property/zone-baunit';
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
@@ -43,7 +44,6 @@ import { BasicInformationAdjacent } from '../../interfaces/information-property/
 })
 export class InformationPropertyService {
   basic_url = `${envi.url}:${envi.port}`;
-  public ccAddress: string = EVIRONMENT_CC_DIRECCION;
   private httpClient = inject(HttpClient);
 
   reloadTable$ = new Subject<boolean>();
@@ -95,23 +95,40 @@ export class InformationPropertyService {
     schema: string,
     page: number,
     pageSize: number
-  ): Observable<BasicInformationAddress[]> {
+  ): Observable<InformationPegeable> {
     const params: HttpParams = new HttpParams()
       .set('page', page)
       .set('size', pageSize);
-    // {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}
-    const url = `${this.basic_url}/ccDireccion/${schema}/${executionId}/${baunitId}`;
+
+    let url: string;
+    if (executionId) {
+      //       {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}?page=0&size=20
+      url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
+    } else {
+      //       {{url}}:{{port}}/ccDireccion/main/{{baunitId}}?page=0&size=10
+      url = `${this.basic_url}${envi.ccDireccion}/${schema}/${baunitId}`;
+    }
     // const url = `${this.basic_url}${envi.basicAddress}`;
 
     return this.http
-      .get<BasicInformationAddress[]>(url, { params })
+      .get<InformationPegeable>(url, { params })
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
   getDetailBasicInformationPropertyAddresses(
-    id: string | undefined
+    directionId: string,
+    schema: string,
+    baunitId?: number | string,
+    executionId?: string | null
   ): Observable<DetailBasicInformationAddress> {
-    const url = `${this.basic_url}${envi.ccDireccion}${id}`;
+    let url: string;
+    if (executionId){
+      //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
+      url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${directionId}`;
+    } else {
+      url = `${this.basic_url}${envi.ccDireccion}/${directionId}`;
+    }
+
     return this.requestsService
       .sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
@@ -311,7 +328,7 @@ export class InformationPropertyService {
     exeuctionId: string,
     baunitId: number,
     baUnitZonaId: number,
-    body: CreateBaunitZone,
+    body: CreateBaunitZone
   ): Observable<ZoneBAUnitResponse> {
     const url = `${this.basic_url}${envi.baUnitZona}/${envi.schemas.temp}/${exeuctionId}/${baunitId}/${baUnitZonaId}`;
 
@@ -321,7 +338,7 @@ export class InformationPropertyService {
   deleteBAUnitZones(
     executionId: string,
     baunitId: number,
-    baUnitZonaId: number,
+    baUnitZonaId: number
   ): Observable<void> {
     const url = `${this.basic_url}${envi.baUnitZona}/${envi.schemas.temp}/${executionId}/${baunitId}/${baUnitZonaId}`;
 
@@ -332,14 +349,18 @@ export class InformationPropertyService {
    * Update basic information address
    *
    * @param updateBasicInformationAddress
-   * @param id
+   * @param baunitId
    * @returns
    */
   updateBasicInformationPropertyAddress(
-    id: string,
+    baunitId: string,
+    schema: string,
+    executionId: string,
     updateBasicInformationAddress: Partial<DetailBasicInformationAddress>
   ): Observable<DetailBasicInformationAddress> {
-    const url = `${this.basic_url}${envi.ccDireccion}${id}`;
+    //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}
+    const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
+
     return this.httpClient.put<DetailBasicInformationAddress>(
       url,
       updateBasicInformationAddress
@@ -350,7 +371,7 @@ export class InformationPropertyService {
     id: string,
     updateBasicInformationConstruction: Partial<ContentInformationConstruction>
   ): Observable<ContentInformationConstruction> {
-    const url = `${this.basic_url}${envi.ccDireccion}${id}`;
+    const url = `${this.basic_url}${envi.ccDireccion}/${id}`;
     return this.httpClient.put<ContentInformationConstruction>(
       url,
       updateBasicInformationConstruction
@@ -390,14 +411,16 @@ export class InformationPropertyService {
    */
   createBasicInformationPropertyAddress(
     baunitId: string,
+    schema: string,
+    executionId: string,
     createBasicInformationAddress: CreateBasicInformationAddress
   ): Observable<DetailBasicInformationAddress> {
-    const url = `${this.basic_url}${this.ccAddress}`;
-    const httpParams: HttpParams = new HttpParams().set('baunitId', baunitId);
+
+    const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
+
     return this.httpClient.post<DetailBasicInformationAddress>(
       url,
       createBasicInformationAddress,
-      { params: httpParams }
     );
   }
 
@@ -443,11 +466,16 @@ export class InformationPropertyService {
    * @param id
    * @returns
    */
-  deleteBasicInformationPropertyAddress(direccionId: string): Observable<any> {
-    const url = `${this.basic_url}${envi.ccDireccion}${direccionId}`;
-    const httpParams: HttpParams = new HttpParams().set('version', '99999');
+  deleteBasicInformationPropertyAddress(
+    direccionId: string,
+    baunitId: string,
+    schema: string,
+    executionId: string,
+  ): Observable<any> {
+    //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
+    const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${direccionId}`;
 
-    return this.httpClient.delete(url, { params: httpParams });
+    return this.httpClient.delete(url);
   }
 
   deleteBasicInformationPropertyConstruction(

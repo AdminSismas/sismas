@@ -1,15 +1,17 @@
 import { Pegeable } from './pegeable.model';
 
 export class InformationPegeable {
-  totalPages: number | undefined;
-  totalElements: number | undefined;
-  last: boolean | undefined;
-  size: number | undefined;
-  numberOfElements: number | undefined;
-  first: boolean | undefined;
-  empty: boolean | undefined;
   content: any[];
-  pageable: Pegeable | undefined;
+  pageable?: Pegeable;
+  totalElements?: number;
+  totalPages?: number;
+  last?: boolean;
+  size?: number;
+  number?: number;
+  sort?: Sort;
+  numberOfElements?: number;
+  first?: boolean;
+  empty?: boolean;
 
   constructor(totalPages?: number, totalElements?: number, last?: boolean,
               size?: number, numberOfElements?: number, first?: boolean,
@@ -26,4 +28,10 @@ export class InformationPegeable {
   }
 
 
+}
+
+interface Sort {
+  empty: boolean;
+  sorted: boolean;
+  unsorted: boolean;
 }
