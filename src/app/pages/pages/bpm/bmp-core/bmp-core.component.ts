@@ -30,7 +30,6 @@ import {
   CONSTANT_VALIDATE_CHECK,
   CONSTANT_VALIDATE_OTHER,
   LISTO_FORM_BPM_CORE,
-  MODAL_LARGE,
   MODAL_SMALL
 } from '../../../../apps/constants/general/constant';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -160,10 +159,10 @@ export class BmpCoreComponent implements OnInit {
     this.activateLoading(true);
   }
 
-  confirmAction(action: () => void, message: string): void {
+  confirmAction(action: () => void, message: string, errors: string[]): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '400px',
-      data: { message },
+      width: errors.length > 0 ? '40%' :'400px',
+      data: { message, errors },
       disableClose: true
     });
 
@@ -176,11 +175,22 @@ export class BmpCoreComponent implements OnInit {
 
 
   onAccept(): void {
-    this.confirmAction(() => this.nextBpmCore(), '¿Está seguro que desea continuar a la siguiente tarea?');
+    const message = '¿Está seguro que desea continuar a la siguiente tarea?';
+
+    this.bpmCoreService.checkStatusBpmOperation(this.executionId)
+      .subscribe((result) => {
+        if (result.length > 0){
+          this.confirmAction(() => this.nextBpmCore(), message, result);
+          return;
+        }
+
+        this.confirmAction(() => this.nextBpmCore(), message, []);
+        return;
+      });
   }
 
   onReject(): void {
-    this.confirmAction(() => this.previewBpmCore(), '¿Está seguro que desea rechazar la tarea?');
+    this.confirmAction(() => this.previewBpmCore(), '¿Está seguro que desea rechazar la tarea?', []);
   }
 
   refreshComponentsDynamic(proFlow: ProFlow) {
@@ -322,7 +332,7 @@ export class BmpCoreComponent implements OnInit {
         queryParams: { executionId: result.executionId }
       });
       this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 10000 });
-      this.bpmProcessService.setPermissions(vailablePermission)
+      this.bpmProcessService.setPermissions(vailablePermission);
       return;
     }
   }
