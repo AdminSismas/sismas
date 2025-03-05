@@ -19,7 +19,7 @@ export class ValidateInformationBaunitService {
   ) { }
 
   getBaunitIdEInOtherProcess(baunitIdE: string):Observable<string> {
-    const url = `${this.basic_url}${envi.bpmOperation.value}${envi.checkProcess}${baunitIdE}`;
+    const url = `${this.basic_url}${envi.bpmOperation.value}/${envi.checkProcess}${baunitIdE}`;
 
     const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8;'})
 

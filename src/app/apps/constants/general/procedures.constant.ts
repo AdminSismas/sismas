@@ -55,6 +55,13 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[]= [
         visible: true,
         cssClasses: ['font-medium']
     },
+    {
+      label: 'Acciones',
+      property: 'actions',
+      type: 'button',
+      visible: true,
+      cssClasses: ['font-medium']
+    }
 ];
 export const TABLE_COLUMN_PROPERTIES_HISTORY: TableColumn<contentInfoProcedures>[]= [
     // {
@@ -78,7 +85,7 @@ export const TABLE_COLUMN_PROPERTIES_HISTORY: TableColumn<contentInfoProcedures>
         visible: true,
         cssClasses: ['font-medium']
     },
-   
+
     {
         label: 'Clase',
         property: 'bpmProcessCategory',

@@ -1,5 +1,13 @@
-import { Component, DestroyRef, inject, Input, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -9,13 +17,17 @@ import {
   Validators
 } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { debounceTime, distinctUntilChanged, Observable, Subscription, tap } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  Observable,
+  Subscription,
+  tap
+} from 'rxjs';
 
 // recursos de vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import {
-  VexPageLayoutContentDirective
-} from '../../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { VexPageLayoutContentDirective } from '../../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
@@ -26,11 +38,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 
 // recursos de archivos locales
 import { contentInfoProcedures } from '../../../interfaces/general/content-info-procedures.model';
@@ -47,25 +62,25 @@ import { PageProceduresData } from '../../../interfaces/general/page-procedures-
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { TaskResponseModel } from '../../../interfaces/bpm/task-response.model';
-import {
-  DetailInformationTasksComponent
-} from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MODAL_LARGE, MODAL_SMALL, PAGE_OPTION__10_20_50_100 } from '../../../constants/general/constant';
 import {
-  DocumentViewerWorkHistoricalComponent
-} from 'src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
-
+  MODAL_LARGE,
+  MODAL_SMALL,
+  PAGE_OPTION__10_20_50_100
+} from '../../../constants/general/constant';
+import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
+import { environment } from 'src/environments/environments';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-    selector: 'vex-table-procedures',
-    standalone: true,
-    templateUrl: './table-procedures.component.html',
-    styleUrl: './table-procedures.component.scss',
-    animations: [fadeInUp400ms, stagger40ms],
-    providers: [
-      { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    ],
+  selector: 'vex-table-procedures',
+  standalone: true,
+  templateUrl: './table-procedures.component.html',
+  styleUrl: './table-procedures.component.scss',
+  animations: [fadeInUp400ms, stagger40ms],
+  providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
   imports: [
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
@@ -82,66 +97,60 @@ import {
     CommonModule,
     FormsModule,
     MatDatepickerModule,
-    NgFor,
     NgClass,
     NgIf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SweetAlert2Module
   ]
 })
-export class TableProceduresComponent implements OnInit, OnDestroy {
+export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
   /* ============== ATRIBUTES ============== */
   /* ============== ATRIBUTES ============== */
-@Input() urlTable?: string = '';
-@Input() urlView?: string = '';
+  @Input() urlTable?: string = '';
+  @Input() urlView?: string = '';
 
-dataSource!: MatTableDataSource<ProceduresCollection>;
-searchCtrl: UntypedFormControl = new UntypedFormControl();
-isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-layoutCtrl = new UntypedFormControl('boxed');
-contentInformations!: InformationPegeable;
-disabledEndDate = false;
-private fBuilder = inject(FormBuilder);
-informationEjecution!: FormGroup;
-seeInfo= false;
-seeInfoDocument= false;
-public procedureDetail:TaskResponseModel= new TaskResponseModel();
+  dataSource!: MatTableDataSource<ProceduresCollection>;
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  layoutCtrl = new UntypedFormControl('boxed');
+  contentInformations!: InformationPegeable;
+  disabledEndDate = false;
+  informationEjecution!: FormGroup;
+  seeInfo = false;
+  seeInfoDocument = false;
+  public procedureDetail: TaskResponseModel = new TaskResponseModel();
 
-// Array para almacenar las suscripciones
-private subscriptions: Subscription  | undefined[] = [];
+  // Array para almacenar las suscripciones
+  private subscriptions: Subscription | undefined[] = [];
 
-@Input()
-  page:number = PAGE;
+  @Input()
+  page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   totalElements = 0;
   maxDate: Date = new Date(); // Fecha máxima permitida (hoy)
   maxStartDate: Date = new Date(); // Fecha máxima permitida para la fecha de inicio (un día antes de hoy)
 
-  columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES;
-
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
+  @ViewChild('confirmDelete') confirmDelete!: SwalComponent;
+  @ViewChild('errorDelete') errorDelete!: SwalComponent;
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
+    private fBuilder: FormBuilder,
     private dialog: MatDialog,
     private proceduresService: ProceduresService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
-    private alertSnakbar: MatSnackBar,
-
+    private alertSnakbar: MatSnackBar
   ) {
     this.dateAdapter.setLocale('es-CO');
   }
 
-
-   /* ============== METHODS ============== */
+  /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
-    console.log('componente');
     this.dataSource = new MatTableDataSource();
     // this.searchCtrl.valueChanges
     //   .pipe(takeUntilDestroyed(this.destroyRef))
@@ -159,24 +168,22 @@ private subscriptions: Subscription  | undefined[] = [];
     this.beginAtgreaterThanDate();
     this.beginAtEFormGreaterThanDate();
     this.defaultTableData();
-
   }
 
-   // Método para cancelar todas las suscripciones
-   ngOnDestroy() {
+  // Método para cancelar todas las suscripciones
+  ngOnDestroy() {
     // Cancelamos todas las suscripciones al destruir el componente
     console.log('Todas las suscripciones han sido canceladas');
   }
 
-    ngOnChanges(changes: SimpleChanges): void {
-      if (changes['urlTable']) {
-       this.urlTable = changes['urlTable'].currentValue;
-      }
-      if (changes['urlView']) {
-       console.log('urlView', changes['urlView']);
-      }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['urlTable']) {
+      this.urlTable = changes['urlTable'].currentValue;
     }
-
+    if (changes['urlView']) {
+      console.log('urlView', changes['urlView']);
+    }
+  }
 
   getOneDayBefore(date: Date): Date {
     const result = new Date(date);
@@ -184,184 +191,212 @@ private subscriptions: Subscription  | undefined[] = [];
     return result;
   }
 
-
-    // Método para generar una fecha un mes atrás a partir de una fecha actual proporcionada
-    getOneMonthAgo(date: Date): Date {
-      const result = new Date(date);
-      result.setMonth(result.getMonth() - 1);
-      return result;
-    }
-
+  // Método para generar una fecha un mes atrás a partir de una fecha actual proporcionada
+  getOneMonthAgo(date: Date): Date {
+    const result = new Date(date);
+    result.setMonth(result.getMonth() - 1);
+    return result;
+  }
 
   /**
    * Init information address form
    */
-private initForm(): void {
-  this.informationEjecution = this.fBuilder.group({
-    beginAtForm: this.fBuilder.control(null,[Validators.required]),
-    beginAtEForm: this.fBuilder.control(null,[Validators.required]),
-    executionCodeForm: this.fBuilder.control(0, [Validators.pattern(/^[0-9]*$/)]), // Solo letras y permite espacio
-    individualNumberPartForm: this.fBuilder.control( null, [Validators.pattern(/^[0-9]*$/)]),
-
+  private initForm(): void {
+    this.informationEjecution = this.fBuilder.group({
+      beginAtForm: this.fBuilder.control(null, [Validators.required]),
+      beginAtEForm: this.fBuilder.control(null, [Validators.required]),
+      executionCodeForm: this.fBuilder.control(0, [
+        Validators.pattern(/^[0-9]*$/)
+      ]), // Solo letras y permite espacio
+      individualNumberPartForm: this.fBuilder.control(null, [
+        Validators.pattern(/^[0-9]*$/)
+      ])
+    });
+    this.beginAtForm?.setValue(this.getOneMonthAgo(new Date()));
+    this.beginAtEForm?.setValue(new Date());
   }
-);
-  this.beginAtForm?.setValue(this.getOneMonthAgo(new Date()));
-  this.beginAtEForm?.setValue(new Date());
 
-}
+  /* ------- Meth. HTML ------- */
+  toggleColumnVisibility(
+    column: TableColumn<contentInfoProcedures>,
+    event: Event
+  ) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    column.visible = !column.visible;
+  }
 
+  trackByProperty<T>(index: number, column: TableColumn<T>) {
+    return column.property;
+  }
 
-    /* ------- Meth. HTML ------- */
-    toggleColumnVisibility(column: TableColumn<contentInfoProcedures>, event: Event) {
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      column.visible = !column.visible;
-    }
-
-    trackByProperty<T>(index: number, column: TableColumn<T>) {
-      return column.property;
-    }
-
-    get visibleColumns() {
-      return this.columns
-        .filter((column) => column.visible)
-        .map((column) => column.property);
-    }
-
-    refreshInformationpaginator(event: any): void {
-      if (event == null) {
-        return;
-      }
-      this.page = event.pageIndex;
-      this.pageSize = event.pageSize;
-      const data = this.objectParameters();
-      this.getDataFromProceduresService(data);
-    }
-
-    public informationDetail(value:any){
-
-      if(this.urlView != '')
-
-        {
-
-          this.dialog
-          .open(DocumentViewerWorkHistoricalComponent, {
-            ...MODAL_LARGE,
-            disableClose: true,
-            data: { url: this.urlView}
-
-          });
-
-        } else {
-
-          console.log(value, 'Registro de la tabla');
-
-          this.proceduresService.viewDetailIdProcedures(
-            +value.executionId)
-            .subscribe( result => {
-              this.procedureDetail = result;
-                this.seeTaskProperty(this.procedureDetail,+value.executionId);
-
-            });
-
+  get visibleColumns() {
+    return this.columns
+      .filter((column) => {
+        if (this.urlTable !== environment.active) {
+          return column.visible && column.property !== 'actions';
         }
+        return column.visible;
+      })
+      .map((column) => column.property);
+  }
 
+  get columns() {
+    return TABLE_COLUMN_PROPERTIES;
+  }
+
+  get actions() {
+    return [
+      // {
+      //   label: 'Reasignar',
+      //   icon: 'mat:swap_horiz',
+      //   action: (row: ProceduresCollection) =>
+      //     this.actionButtons('reassign', row)
+      // },
+      {
+        label: 'Anular',
+        icon: 'mat:block',
+        action: (row: ProceduresCollection) => this.actionButtons('cancel', row)
+      },
+      // {
+      //   label: 'Reclasificar',
+      //   icon: 'mat:delete',
+      //   action: (row: ProceduresCollection) =>
+      //     this.actionButtons('reclassify', row)
+      // },
+      // {
+      //   label: 'Mecanismo jurídico',
+      //   icon: 'mat:delete',
+      //   action: (row: ProceduresCollection) =>
+      //     this.actionButtons('mecanism', row)
+      // }
+    ];
+  }
+
+  refreshInformationpaginator(event: PageEvent): void {
+    if (event == null) {
+      return;
     }
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    const data = this.objectParameters();
+    this.getDataFromProceduresService(data);
+  }
 
-    seeTaskProperty(value:TaskResponseModel,taskId:number):void {
-      this.dialog.open(DetailInformationTasksComponent, {
-        ...MODAL_SMALL,
-        data: { taskId: taskId ,value }
+  informationDetail(value: ProceduresCollection) {
+    if (this.urlView != '') {
+      this.dialog.open(DocumentViewerWorkHistoricalComponent, {
+        ...MODAL_LARGE,
+        disableClose: true,
+        data: { url: this.urlView }
       });
+    } else {
+      console.log(value, 'Registro de la tabla');
+
+      this.proceduresService
+        .viewDetailIdProcedures(+value.executionId!)
+        .subscribe((result) => {
+          this.procedureDetail = result;
+          this.seeTaskProperty(this.procedureDetail, +value.executionId!);
+        });
     }
+  }
 
+  seeTaskProperty(value: TaskResponseModel, taskId: number): void {
+    this.dialog.open(DetailInformationTasksComponent, {
+      ...MODAL_SMALL,
+      data: { taskId: taskId, value }
+    });
+  }
 
-    public beginAtgreaterThanDate(){
-
-      this.beginAtForm?.valueChanges.pipe(
-        debounceTime(100),  // Espera 500 ms después del último cambio
+  public beginAtgreaterThanDate() {
+    this.beginAtForm?.valueChanges
+      .pipe(
+        debounceTime(100), // Espera 500 ms después del último cambio
         distinctUntilChanged(),
-        tap(value => {
+        tap((value) => {
+          const beginAtComparation = this.beginAtForm?.value
+            ? new Date(this.beginAtForm?.value)
+            : null;
+          const beginAtEComparation = this.beginAtEForm?.value
+            ? new Date(this.beginAtEForm?.value)
+            : null;
 
-          const beginAtComparation = this.beginAtForm?.value ? new Date(this.beginAtForm?.value): null ;
-          const beginAtEComparation = this.beginAtEForm?.value ? new Date(this.beginAtEForm?.value) : null ;
-
-            if (beginAtComparation && beginAtEComparation ){
-            if ( beginAtComparation.getTime() < beginAtEComparation.getTime()){
-
+          if (beginAtComparation && beginAtEComparation) {
+            if (beginAtComparation.getTime() < beginAtEComparation.getTime()) {
               // this.beginAtForm?.setErrors(null);
               // this.beginAtEForm?.reset();
               this.beginAtEForm?.markAsTouched();
               this.beginAtEForm?.markAsUntouched();
-            }else{
+            } else {
               this.beginAtForm?.setErrors({ dateComparison: true });
             }
           }
 
           // Aquí podrías realizar una llamada HTTP o cualquier otra operación
           console.log(value, 'executoingCode');
-
-        }))
-      .subscribe(data=>{
+        })
+      )
+      .subscribe((data) => {
         console.log(data, 'executoingCode');
       });
-    }
+  }
 
-    public beginAtEFormGreaterThanDate() {
-      this.beginAtEForm?.valueChanges.pipe(
-        debounceTime(100),  // Espera 100ms después del último cambio
+  public beginAtEFormGreaterThanDate() {
+    this.beginAtEForm?.valueChanges
+      .pipe(
+        debounceTime(100), // Espera 100ms después del último cambio
         distinctUntilChanged(),
         tap(() => {
-          const beginAtDate = this.beginAtForm?.value ? new Date(this.beginAtForm.value) : null;
-          const beginAtEDate = this.beginAtEForm?.value ? new Date(this.beginAtEForm.value) : null;
+          const beginAtDate = this.beginAtForm?.value
+            ? new Date(this.beginAtForm.value)
+            : null;
+          const beginAtEDate = this.beginAtEForm?.value
+            ? new Date(this.beginAtEForm.value)
+            : null;
 
-          if (beginAtDate && beginAtEDate ) {
-              if ( beginAtEDate.getTime() > beginAtDate.getTime()) {
-
-                this.beginAtEForm?.setErrors(null);
-              } else {
-                this.beginAtEForm?.setErrors({ dateComparison: true });
-              }
-        }
+          if (beginAtDate && beginAtEDate) {
+            if (beginAtEDate.getTime() > beginAtDate.getTime()) {
+              this.beginAtEForm?.setErrors(null);
+            } else {
+              this.beginAtEForm?.setErrors({ dateComparison: true });
+            }
+          }
           console.log('Validador de fecha', { beginAtDate, beginAtEDate });
         })
-      ).subscribe();
-    }
-
-
-
-    public executionCodeValidate(){
-       this.executionCodeForm?.valueChanges.pipe(
-
-        debounceTime(300),  // Espera 500 ms después del último cambio
-        distinctUntilChanged(), // Solo emite cuando el valor cambia
-        tap(value => {
-
-          console.log(value);
-          if(value !== '' && value !== 0  && value !== null){
-
-              this.individualNumberPartForm?.disable();
-              // this.individualNumberPartForm?.reset();
-              this.seeInfo = true;
-
-            }else{
-            this.individualNumberPartForm?.enable();
-              // this.individualNumberPartForm?.reset();
-              this.seeInfo = false;
-          }
-
-        }))
+      )
       .subscribe();
+  }
 
-    }
+  public executionCodeValidate() {
+    this.executionCodeForm?.valueChanges
+      .pipe(
+        debounceTime(300), // Espera 500 ms después del último cambio
+        distinctUntilChanged(), // Solo emite cuando el valor cambia
+        tap((value) => {
+          console.log(value);
+          if (value !== '' && value !== 0 && value !== null) {
+            this.individualNumberPartForm?.disable();
+            // this.individualNumberPartForm?.reset();
+            this.seeInfo = true;
+          } else {
+            this.individualNumberPartForm?.enable();
+            // this.individualNumberPartForm?.reset();
+            this.seeInfo = false;
+          }
+        })
+      )
+      .subscribe();
+  }
 
-    public individualNumberPartValid(){
-      this.individualNumberPartForm?.valueChanges.pipe(
-        debounceTime(300),  // Espera 300 ms después del último cambio
+  public individualNumberPartValid() {
+    this.individualNumberPartForm?.valueChanges
+      .pipe(
+        debounceTime(300), // Espera 300 ms después del último cambio
         distinctUntilChanged(), // Solo emite cuando el valor cambia
 
-        tap(value => {
-          if(value !== '' && value !== 0 && value !== null){
+        tap((value) => {
+          if (value !== '' && value !== 0 && value !== null) {
             // Deshabilitar el campo sin resetear su valor
             this.executionCodeForm?.disable();
             this.seeInfoDocument = true;
@@ -371,160 +406,199 @@ private initForm(): void {
             this.seeInfoDocument = false;
           }
         })
-      ).subscribe();
-    }
+      )
+      .subscribe();
+  }
 
-
-    public defaultTableData(){
+  public defaultTableData() {
     this.executionCodeForm?.setValue(0);
 
     this.individualNumberPartForm?.setValue('');
-    const formValue: PageProceduresData =  {
+    const formValue: PageProceduresData = {
       page: this.page,
       size: this.pageSize,
       beginAt: this.formatDate(this.getOneMonthAgo(new Date())),
       beginAtE: this.formatDate(new Date()),
       executionCode: '0',
-      individualNumber: '',
+      individualNumber: ''
     };
     // this.objectParameters();
     this.getDataFromProceduresService(formValue);
-    }
+  }
 
+  onSearch(): void {
+    const data = this.objectParameters();
+    this.getDataFromProceduresService(data);
+  }
 
-
-
-    onSearch():void {
-      const data = this.objectParameters();
-      this.getDataFromProceduresService(data);
-    }
-
-    validateDate(event: any): void {
-      const input = event.target.value;
-      const regex = /^[0-9\/]*$/; // Regex for numbers and slash
-      if (!regex.test(input)) {
-        event.target.value = input.replace(/[^0-9\/]/g, '');
-      }
-    }
-
-
-    validateNumber(event: any): void {
-      const input = event.target.value;
-      event.target.value = input.replace(/[^0-9]/g, '');
-    }
-
-
-
-
-    /* ------- Meth. Common ------- */
-    objectParameters(): PageProceduresData {
-
-    const formValue: PageProceduresData =  {
+  /* ------- Meth. Common ------- */
+  objectParameters(): PageProceduresData {
+    const formValue: PageProceduresData = {
       page: this.page,
       size: this.pageSize,
-      beginAt:  this.beginAtForm?.value ? this.formatDate(this.beginAtForm.value) : this.formatDate(this.getOneMonthAgo(new Date())) ,
-      beginAtE: this.beginAtEForm?.value ? this.formatDate(this.beginAtEForm.value) : this.formatDate(new Date()) ,
-      executionCode: this.executionCodeForm?.value ? this.executionCodeForm?.value : 0 ,
-      individualNumber: this.individualNumberPartForm?.value ? this.individualNumberPartForm?.value : '',
+      beginAt: this.beginAtForm?.value
+        ? this.formatDate(this.beginAtForm.value)
+        : this.formatDate(this.getOneMonthAgo(new Date())),
+      beginAtE: this.beginAtEForm?.value
+        ? this.formatDate(this.beginAtEForm.value)
+        : this.formatDate(new Date()),
+      executionCode: this.executionCodeForm?.value
+        ? this.executionCodeForm?.value
+        : 0,
+      individualNumber: this.individualNumberPartForm?.value
+        ? this.individualNumberPartForm?.value
+        : ''
     };
 
     return formValue;
   }
 
-
-    onFilterChange(value: string) {
-      if (!this.dataSource) {
-        return;
-      }
-      value = value.trim();
-      value = value.toLowerCase();
-      this.dataSource.filter = value;
+  onFilterChange(value: string) {
+    if (!this.dataSource) {
+      return;
     }
+    value = value.trim();
+    value = value.toLowerCase();
+    this.dataSource.filter = value;
+  }
 
-    private formatDate(date?: Date): string {
-      if (!date) return '';
+  private formatDate(date?: Date): string {
+    if (!date) return '';
 
-      const day = this.padZero(date.getDate());
-      const month = this.padZero(date.getMonth() + 1);
-      const year = date.getFullYear();
+    const day = this.padZero(date.getDate());
+    const month = this.padZero(date.getMonth() + 1);
+    const year = date.getFullYear();
 
-      return `${day}/${month}/${year}`;
-    }
+    return `${day}/${month}/${year}`;
+  }
 
-    private padZero(value: number): string {
-      return value < 10 ? `0${value}` : value.toString();
-    }
+  private padZero(value: number): string {
+    return value < 10 ? `0${value}` : value.toString();
+  }
 
+  /* ------- Meth. Modal load file ------- */
 
-    /* ------- Meth. Modal load file ------- */
-
-
-
-    /* ------- Meth. Services ------- */
-    getDataFromProceduresService(data:PageProceduresData) {
-      this.proceduresService.getFilterTableEjecutionService(data, this.urlTable || '')
+  /* ------- Meth. Services ------- */
+  getDataFromProceduresService(data: PageProceduresData) {
+    this.proceduresService
+      .getFilterTableEjecutionService(data, this.urlTable || '')
       .subscribe({
-        next: (result: any) => {
-            this.captureInformationSubscribe(result);
+        next: (result) => {
+          this.captureInformationSubscribe(result);
         },
         error: (error) => {
-            this.alertSnakbar.open('Hubo un error, verifique la información de los filtros', 'Close', {
+          this.alertSnakbar.open(
+            'Hubo un error, verifique la información de los filtros',
+            'Close',
+            {
               duration: 10000,
               horizontalPosition: 'center'
-            });
-            console.error('Hubo un error al obtener los datos: ', error);
+            }
+          );
+          console.error('Hubo un error al obtener los datos: ', error);
         },
         complete: () => {
-            console.log('Carga completa de datos');
+          console.log('Carga completa de datos');
         }
       });
+  }
+
+  captureInformationSubscribe(data: InformationPegeable) {
+    this.contentInformations = data;
+    this.captureInformationProceduresData();
+  }
+
+  captureInformationProceduresData() {
+    let data: contentInfoProcedures[];
+    if (
+      this.contentInformations != null &&
+      this.contentInformations.content != null
+    ) {
+      data = this.contentInformations.content.map(
+        (row: ProceduresCollection) =>
+          new contentInfoProcedures({
+            ...row,
+            name: row.process?.name,
+            processName: row.process?.name
+          })
+      );
+      this.dataSource.data = data;
     }
 
-    captureInformationSubscribe(data: InformationPegeable) {
-      this.contentInformations = data;
-      this.captureInformationProceduresData();
+    if (this.contentInformations == null) {
+      this.page = PAGE;
+      return;
     }
 
-    captureInformationProceduresData() {
-      let data: contentInfoProcedures[];
-      if (this.contentInformations != null && this.contentInformations.content != null) {
-          data = this.contentInformations.content.map((row: ProceduresCollection) => new contentInfoProcedures({
-              ...row,
-              name: row.process?.name,
-              processName: row.process?.name
-          }));
-          this.dataSource.data = data;
+    if (this.contentInformations.totalElements) {
+      this.totalElements = this.contentInformations.totalElements;
+    }
+
+    if (this.contentInformations.pageable == null) {
+      this.page = PAGE;
+      return;
+    }
+
+    if (this.contentInformations.pageable.pageNumber != null) {
+      this.page = this.contentInformations.pageable.pageNumber;
+    }
+  }
+
+  actionButtons(id: string, row: ProceduresCollection): void {
+    switch (id) {
+      case 'reassign':
+        this.reassignProcedure(row);
+        break;
+      case 'cancel':
+        this.cancelProcedure(row);
+        break;
+      case 'reclassify':
+        this.reclassifyProcedure(row);
+        break;
+      case 'mecanism':
+        this.mecanismProcedure(row);
+        break;
+    }
+  }
+  mecanismProcedure(row: ProceduresCollection) {
+    console.log(row);
+  }
+  reclassifyProcedure(row: ProceduresCollection) {
+    console.log(row);
+  }
+  cancelProcedure(row: ProceduresCollection) {
+    console.log(row);
+    this.confirmDelete.fire().then((result) => {
+      if (result.isConfirmed) {
+        this.proceduresService.cancelProcedure(row.executionId!)
+          .subscribe({
+            next: (result) => {
+              console.log(result);
+              const data = this.objectParameters();
+              this.getDataFromProceduresService(data);
+            },
+            error: (error: HttpErrorResponse) => {
+              console.log(error.message);
+              this.errorDelete.fire();
+            }
+          });
       }
+    });
+  }
+  reassignProcedure(row: ProceduresCollection) {
+    console.log(row);
+  }
 
-      if (this.contentInformations == null) {
-          this.page = PAGE;
-          return;
-      }
-
-      if (this.contentInformations.totalElements) {
-          this.totalElements = this.contentInformations.totalElements;
-      }
-
-      if (this.contentInformations.pageable == null) {
-          this.page = PAGE;
-          return;
-      }
-
-      if (this.contentInformations.pageable.pageNumber != null) {
-          this.page = this.contentInformations.pageable.pageNumber;
-      }
-    }
-
-    get beginAtForm(){
-      return this.informationEjecution.get('beginAtForm');
-    }
-    get beginAtEForm(){
-      return this.informationEjecution.get('beginAtEForm');
-    }
-    get executionCodeForm(){
-      return this.informationEjecution.get('executionCodeForm');
-    }
-    get individualNumberPartForm(){
-      return this.informationEjecution.get('individualNumberPartForm');
-    }
+  get beginAtForm() {
+    return this.informationEjecution.get('beginAtForm');
+  }
+  get beginAtEForm() {
+    return this.informationEjecution.get('beginAtEForm');
+  }
+  get executionCodeForm() {
+    return this.informationEjecution.get('executionCodeForm');
+  }
+  get individualNumberPartForm() {
+    return this.informationEjecution.get('individualNumberPartForm');
+  }
 }

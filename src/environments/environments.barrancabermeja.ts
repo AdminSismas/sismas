@@ -32,6 +32,7 @@ export const environment = {
   baunit_npnlike: "/baunit/npnlike",
   bAUnitCreate: "BAUnitCreate",
   bAUnitDelete: "BAUnitDelete",
+  baunitId: "/baunitId",
   baunitIdEcono: "/baunitIdEcono",
   baunitIdFisicas: "/baunitIdFisicas",
   baunits: "/baunits",
@@ -64,7 +65,7 @@ export const environment = {
     proTask_priority: "proTask/priority",
     resources: "resorces/",
     startProcess: "startProcess",
-    value: "/bpmOperation/"
+    value: "/bpmOperation"
   },
   bpmProcess: {
     category: "/category",
@@ -72,6 +73,7 @@ export const environment = {
     value: "/bpmProcess"
   },
   calificationUB: "/calificationUB",
+  cancel: "/cancel",
   ccDireccion: "/ccDireccion",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
@@ -110,7 +112,7 @@ export const environment = {
   port: "5001",
   post_path_viewer: "rest/config/setParams",
   production: true,
-  proExecution: "/proExecution/",
+  proExecution: "/proExecution",
   qbaunit_ccbarrio: "/qbaunit/ccbarrio",
   qbaunit_cccomuna: "/qbaunit/cccomuna",
   qbaunit_cccorr: "/qbaunit/cccorr",

@@ -13,7 +13,7 @@ import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 })
 export class TasksPanelService {
 
-  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
+  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}/`;
 
   private _listProtaskE = new BehaviorSubject<ProTaskE>({});
   listProtaskE$ = this._listProtaskE.asObservable();
