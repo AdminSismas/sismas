@@ -1024,7 +1024,7 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   }
 ];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON'];
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN'];
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['AGR', 'BRR', 'CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
