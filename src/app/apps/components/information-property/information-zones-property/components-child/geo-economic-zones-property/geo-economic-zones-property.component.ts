@@ -114,8 +114,7 @@ export class GeoEconomicZonesPropertyComponent
   @Input({ required: true }) public dataSource!: MatTableDataSource<ZoneBAUnitGeoeconomic>;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input({ required: true }) divPolLv1!: string;
-  @Input({ required: true }) divPolLv2!: string;
+  @Input({ required: true}) npn!: string;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
@@ -317,8 +316,7 @@ export class GeoEconomicZonesPropertyComponent
           executionId: this.executionId,
           isEdit,
           propertyType,
-          divpolLv1: this.divPolLv1,
-          divpolLv2: this.divPolLv2
+          npn: this.npn
         }
       })
       .afterClosed()

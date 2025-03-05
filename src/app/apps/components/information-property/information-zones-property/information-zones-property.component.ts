@@ -102,8 +102,7 @@ export class InformationZonesPropertyComponent implements OnInit {
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input({ required: true }) divPolLv1!: string;
-  @Input({ required: true }) divPolLv2!: string;
+  @Input({ required: true }) npn!: string;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
@@ -133,6 +132,13 @@ export class InformationZonesPropertyComponent implements OnInit {
     private readonly layoutService: VexLayoutService,
     private informationPropertyService: InformationPropertyService
   ) {}
+
+  get divPolLv1() {
+    return this.npn.substring(0, 2);
+  }
+  get divPolLv2() {
+    return this.npn.substring(2, 5);
+  }
 
   searchBasicInformationProperty(): void {
     if (!this.schema || !this.baunitId) {

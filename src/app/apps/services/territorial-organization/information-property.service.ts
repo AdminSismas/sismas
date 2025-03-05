@@ -300,16 +300,12 @@ export class InformationPropertyService {
   }
 
   getByDivPolGeoeconomica(
-    divpolLv1: string,
-    divpolLv2: string
+    npn: string
   ): Observable<GeoEconomicZone[]> {
-    let params: HttpParams = new HttpParams();
-    params = params.append('divpolLv1', `${divpolLv1}`);
-    params = params.append('divpolLv2', `${divpolLv2}`);
-    const url = `${this.basic_url}${envi.ccZonaHomoGeoEconomica}${envi.divpol}`;
+    // {{url}}:{{port}}/baUnitZona/baunitIdEcono/divpol/{{npn}}
+    const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}${envi.divpol}/${npn}`;
 
-    console.log('url', url);
-    return this.getData(url, params).pipe(
+    return this.http.get<GeoEconomicZone[]>(url).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
   }

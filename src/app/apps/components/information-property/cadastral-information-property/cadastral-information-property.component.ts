@@ -183,8 +183,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
   executionId: string | null | undefined;
   idContainer = '';
   baunitId: string | null | undefined = null;
-  divPolLv1!: string;
-  divPolLv2!: string;
   navigationItems: { label: string; fragment: string }[] =
     NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
   editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean, ZON?: boolean, CLN?: boolean } = {};
@@ -234,8 +232,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
     this.baunitHead = this.contentInfoSchema.content;
     this.baunitId = this.baunitHead.baunitIdE;
     this.executionId = this.contentInfoSchema.executionId;
-    this.divPolLv1 = this.baunitHead.cadastralNumber!.substring(0, 2);
-    this.divPolLv2 = this.baunitHead.cadastralNumber!.substring(2, 5);
 
     this.form = this.fb.group({
       history: [ null],

@@ -67,8 +67,9 @@ export interface AddZoneParameters {
   isEdit: boolean;
   executionId: string;
   propertyType: string;
-  divpolLv1: string;
-  divpolLv2: string;
+  divpolLv1?: string;
+  divpolLv2?: string;
+  npn?: string;
 }
 
 export interface ZoneBAUnitResponse {

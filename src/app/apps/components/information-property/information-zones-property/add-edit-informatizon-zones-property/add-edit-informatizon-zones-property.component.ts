@@ -101,8 +101,6 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
         baUnitZonaValor: this.data.zone.baUnitZonaValor,
       });
     }
-
-
   }
 
   compareZones(zone1: any, zone2: any): boolean {
@@ -240,7 +238,7 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   }
 
   getByDivPolUrbana(): void {
-    this.informationPropertyService.getByDivPolUrbana(this.data.divpolLv1, this.data.divpolLv2).subscribe((result: UrbanPhysicalZone[]) => {
+    this.informationPropertyService.getByDivPolUrbana(this.data.divpolLv1!, this.data.divpolLv2!).subscribe((result: UrbanPhysicalZone[]) => {
       this.divPolUrbana = result;
       console.log(this.divPolUrbana);
 
@@ -249,14 +247,16 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
 
 
   getByDivPolRural(): void {
-    this.informationPropertyService.getByDivPolRural(this.data.divpolLv1, this.data.divpolLv2).subscribe((result) => {
+    this.informationPropertyService.getByDivPolRural(this.data.divpolLv1!, this.data.divpolLv2!).subscribe((result) => {
       this.divPolRural = result;
       console.log(this.divPolRural);
     });
   }
 
   getByDivPolGeoeconomica(): void {
-    this.informationPropertyService.getByDivPolGeoeconomica(this.data.divpolLv1, this.data.divpolLv2).subscribe((result) => {
+    const npnLike = this.data.npn!.slice(0, 7);
+    console.log(npnLike);
+    this.informationPropertyService.getByDivPolGeoeconomica(npnLike).subscribe((result) => {
       this.divPolGeoeconomica = result;
       console.log(result);
     });
