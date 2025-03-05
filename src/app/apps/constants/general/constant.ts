@@ -402,7 +402,7 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
   },
   {
     label: 'Código',
-    property: 'baUnitZonaId',
+    property: 'zonaHomoGeoEconomicaCode',
     type: 'text',
     visible: true
   },
