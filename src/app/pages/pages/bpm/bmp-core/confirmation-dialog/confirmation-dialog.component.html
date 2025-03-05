@@ -1,6 +1,18 @@
 <h2 mat-dialog-title><strong>Confirmación</strong></h2>
 <mat-dialog-content class="py-4 px-6 text-gray-600">
-  <p>{{ data.message }}</p>
+  <p>{{ data.message }}</p><br>
+  @if (data.errors.length > 0){
+    <h3 class="text-red-500 text-center">Errores actuales en la tarea</h3>
+    <mat-divider class="border-red-500 mb-2"></mat-divider>
+    <ul>
+      @for (error of data.errors; track $index) {
+        <li>
+          <span class="text-slate-500 font-bold">{{ $index + 1 + ') '}}</span>
+          <span>{{ error }}.</span>
+        </li>
+      }
+    </ul>
+  }
 </mat-dialog-content>
 <mat-dialog-actions class="flex justify-end gap-3 p-4">
   <button mat-raised-button class="bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-md" (click)="close(false)">
