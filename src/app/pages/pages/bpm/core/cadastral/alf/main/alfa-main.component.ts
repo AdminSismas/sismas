@@ -14,10 +14,10 @@ import {
   MODAL_SMALL,
   PAGE,
   PAGE_OPTION_UNIQUE,
-  TYPE_BOTTON_SIX,
   TYPE_BUTTON_FIVE,
   TYPE_BUTTON_FOUR,
   TYPE_BUTTON_ONE,
+  TYPE_BUTTON_SIX,
   TYPE_BUTTON_TREE,
   TYPE_BUTTON_TWO,
   TYPE_OPERATION_ADD,
@@ -326,7 +326,6 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
 
-
   generateObjectPageSearchData(): PageSearchData {
     return new PageSearchData(
       PAGE,
@@ -430,7 +429,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       this.geographicService.createGeographicChangesTemp(this.executionId)
         .subscribe({
           next: (result: ChangeControl) => {
-            if(result && result.changeLogId && result.changeLogId > 0) {
+            if (result && result.changeLogId && result.changeLogId > 0) {
               this.getAlertSuccess(
                 `Se ha logrado crear el cambio geo con el logId: ${result.changeLogId}`
               );
@@ -477,9 +476,9 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     }
   }
 
-  executeCalculateBoundaries(type: TypeOperationGeoMain){
+  executeCalculateBoundaries(type: TypeOperationGeoMain) {
     if (type === TYPE_OPERATION_CALCULATE_BOUNDARIES && this.executionId) {
-      this.getAlertSuccess('Calculo linderos inicia ejecucion a ejecutarse')
+      this.getAlertSuccess('Calculo linderos inicia ejecucion a ejecutarse');
     }
   }
 
@@ -538,7 +537,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   protected readonly TYPE_BUTTON_FOUR = TYPE_BUTTON_FOUR;
   protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
   protected readonly TYPE_BUTTON_FIVE = TYPE_BUTTON_FIVE;
-  protected readonly TYPE_BUTTON_SIX = TYPE_BOTTON_SIX;
+  protected readonly TYPE_BUTTON_SIX = TYPE_BUTTON_SIX;
   protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
   protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
   protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;

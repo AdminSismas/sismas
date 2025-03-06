@@ -1044,7 +1044,7 @@ export const TYPE_BUTTON_TWO: TypeButtonAlfaMain = 'CRE';
 export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
 export const TYPE_BUTTON_FOUR: TypeButtonAlfaMain = 'CRE_GEO';
 export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
-export const TYPE_BOTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
+export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
 
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';

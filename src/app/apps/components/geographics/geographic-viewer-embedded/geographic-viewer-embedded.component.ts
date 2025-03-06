@@ -22,6 +22,11 @@ import { MatIcon } from '@angular/material/icon';
     MatButton,
     VexPageLayoutContentDirective,
     FluidHeightDirective,
+    MatIcon,
+    NgIf,
+    MatButton,
+    VexPageLayoutContentDirective,
+    FluidHeightDirective,
     MatIcon
   ],
   templateUrl: './geographic-viewer-embedded.component.html',
@@ -146,4 +151,5 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
+
 }
