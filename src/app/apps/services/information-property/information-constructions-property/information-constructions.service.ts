@@ -104,7 +104,7 @@ export class InformationConstructionsService {
   }
 
   getQualificationForTypology(selectedType: string, ): Observable<CcCalificacionUB[]> {
-    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}${envi.typologyType}/${selectedType}`;
+    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}${envi.typologyType}${selectedType}`;
     return this.requestsService.sendRequestsFetchGet(url).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );

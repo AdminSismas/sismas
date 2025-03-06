@@ -73,8 +73,9 @@ export const environment = {
     value: "/bpmProcess"
   },
   calificationUB: "/calificationUB",
+  typologyType: "/tipologiaTipo/",
+  ccDireccion: "/ccDireccion/",
   cancel: "/cancel",
-  ccDireccion: "/ccDireccion",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",
