@@ -172,7 +172,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   @ViewChild('formError') formError!: SwalComponent;
   @ViewChild('idError') idError!: SwalComponent;
   @ViewChild('qualificationError') qualificationError!: SwalComponent;
-  @ViewChild('warningDialog') warningDialog!: SwalComponent;
+  @ViewChild('warningQualificationDialog') warningQualificationDialog!: SwalComponent;
   @ViewChild('incompleteForm') incompleteForm!: SwalComponent;
   @ViewChild('notFoundValues') notFoundValues!: SwalComponent;
   @ViewChild('saveErrorDialog') saveErrorDialog!: SwalComponent;
@@ -180,13 +180,9 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   @ViewChild('successQualificationType') successQualificationType!: SwalComponent;
   @ViewChild('errorQualificationType') errorQualificationType!: SwalComponent;
   @ViewChild('closeDialog') closeDialog!: SwalComponent;
-  @ViewChild('closingDialog') private closingDialog!: SwalComponent;
-  @ViewChild('constructionSuccessDialog') private constructionSuccessDialog!: SwalComponent;
   @ViewChild('successDialog') private successDialog!: SwalComponent;
-  @ViewChild('errorDialog') private errorDialog!: SwalComponent;
   @ViewChild('validationErrorDialog') private validationErrorDialog!: SwalComponent;
   @ViewChild('calificationSuccessDialog') private calificationSuccessDialog!: SwalComponent;
-  @ViewChild('calificationErrorDialog') private calificationErrorDialog!: SwalComponent;
   @ViewChild('errorSaveDialog') private errorSaveDialog!: SwalComponent;
 
   constructor(
@@ -233,6 +229,14 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   ngAfterViewInit(): void {
   }
 
+
+  resetConstructionAndQualification(): void {
+    if (this.qualificationMode === TYPE_TRADITIONAL) {
+      this.traditionalRatingForm.reset();
+    } else {
+      this.typologyRatingForm.reset();
+    }
+  }
 
   // Guardar calificación
   saveConstructionAndQualification(): void {
@@ -391,10 +395,10 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     });
 
     setTimeout(() => {
-      if(idBath !== null && idBath !== undefined && idBath === 34){
+      if (idBath !== null && idBath !== undefined && idBath === 34) {
         this.toggleBathroomFields(idBath);
       }
-      if(idKitchen !== null && idKitchen !== undefined && idKitchen === 49){
+      if (idKitchen !== null && idKitchen !== undefined && idKitchen === 49) {
         this.toggleKitchenFields(idKitchen);
       }
     }, 2500);
@@ -459,13 +463,15 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   }
 
   toggleQualificationMode(mode: TypeQualificationMode): void {
-    if ((this.traditionalRatingForm.dirty && mode === TYPE_TYPOLOGY) || (this.typologyRatingForm.dirty && mode === TYPE_TRADITIONAL)) {
-      this.warningDialog.fire().then((result) => {
+    if ((this.traditionalRatingForm.dirty && mode === TYPE_TYPOLOGY) ||
+      (this.typologyRatingForm.dirty && mode === TYPE_TRADITIONAL) ||
+      (this.typeCrud === 'UPDATE' && this.qualificationsConstruction.length > 0)) {
+      this.warningQualificationDialog.fire().then((result) => {
         this.qualificationMode = mode;
-        if (mode === TYPE_TYPOLOGY) {
-          this.typologyRatingForm.reset();
-        } else {
-          this.traditionalRatingForm.reset();
+        this.typologyRatingForm.reset();
+        this.traditionalRatingForm.reset();
+        if (this.qualificationsConstruction != null && this.qualificationsConstruction.length > 0) {
+          this.qualificationsConstruction = [];
         }
       });
       return;

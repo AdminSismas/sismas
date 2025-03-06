@@ -135,7 +135,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<NgTemplateOutlet>;
+  @ViewChild('deletedConstruction') deletedConstruction!: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
@@ -279,13 +279,11 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   }
 
   deleteInformation(customer: any): void {
-    const dialogRef = this.dialog.open(this.confirmDialog);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+    this.deletedConstruction.fire().then((result) => {
+      if (result.isConfirmed) {
         const baunitId = this.baunitId ?? '';
         const executionId = this.executionId ?? '';
         const unitBuiltId = customer.unitBuiltId;
-
         this.constructionsService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
           next: () => {
             this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
