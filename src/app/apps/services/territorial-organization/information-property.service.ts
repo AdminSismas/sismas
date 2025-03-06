@@ -2,13 +2,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import {
-  BehaviorSubject,
-  catchError,
-  Observable,
-  Subject,
-  throwError
-} from 'rxjs';
+import { BehaviorSubject, catchError, Observable, Subject } from 'rxjs';
 import {
   BasicInformationProperty,
   UpdateBasicInformationProperty
@@ -16,20 +10,15 @@ import {
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import {
   HttpClient,
-  HttpErrorResponse,
   HttpParams
 } from '@angular/common/http';
 import {
+
   CreateBasicInformationAddress,
   DetailBasicInformationAddress
 } from '../../interfaces/information-property/detail-basic-information-address';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
-import {
-  ContentInformationConstruction,
-  CreateBasicInformationConstruction
-} from '../../interfaces/information-property/content-information-construction';
-import { CcCalificacionUB } from '../../interfaces/information-property/cc-calificacion-ub';
 import {
   CreateBaunitZone,
   ZoneBAUnitResponse
@@ -44,7 +33,6 @@ import { BasicInformationAdjacent } from '../../interfaces/information-property/
 })
 export class InformationPropertyService {
   basic_url = `${envi.url}:${envi.port}`;
-  private httpClient = inject(HttpClient);
 
   reloadTable$ = new Subject<boolean>();
   reloadTableStarted$: Observable<boolean> = this.reloadTable$.asObservable();
@@ -59,7 +47,8 @@ export class InformationPropertyService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);
@@ -122,7 +111,7 @@ export class InformationPropertyService {
     executionId?: string | null
   ): Observable<DetailBasicInformationAddress> {
     let url: string;
-    if (executionId){
+    if (executionId) {
       //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
       url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${directionId}`;
     } else {
@@ -133,6 +122,7 @@ export class InformationPropertyService {
       .sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
+
 
   getInformationPropertyOwners(
     schema: string,
@@ -150,26 +140,6 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  getBasicInformationPropertyConstructions(
-    page: PageSearchData,
-    schema: string,
-    executionId: string | null | undefined = null
-  ): Observable<InformationPegeable> {
-    let params: HttpParams = new HttpParams();
-    params = params.append('page', `${page.page}`);
-    params = params.append('size', `${page.size}`);
-    params = params.append('sortBy', `unitBuiltLabel`);
-    let url = `${this.basic_url}${envi.unitBuilt}/${schema}`;
-    if (!executionId || (executionId && schema === `${envi.schemas.main}`)) {
-      url += `/${page.searchData}`;
-    } else {
-      url += `/${executionId}/${page.searchData}`;
-    }
-    return this.getData(url, params).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
-    );
-  }
-
   getBasicInformationPropertyAdjacent(
     baunitId: string
   ): Observable<BasicInformationAdjacent[]> {
@@ -179,27 +149,6 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  // ${executionId}/${baunitId}
-  getDetailBasicInformationPropertyConstructions(
-    id: number | undefined
-  ): Observable<ContentInformationConstruction> {
-    const url = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
-
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
-  }
-
-  getDetailBasicInformationPropertyCalificationConstructions(
-    unitBuiltId: number | undefined
-  ): Observable<CcCalificacionUB[]> {
-    let params: HttpParams = new HttpParams();
-    params = params.append('unitBuiltId', `${unitBuiltId}`);
-    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
-    return this.getData(url, params).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
-    );
-  }
 
   getBasicInformationsAppraisalsProperty(
     page: PageSearchData,
@@ -267,6 +216,7 @@ export class InformationPropertyService {
       .get<ZoneBAUnitResponse[]>(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
+
   getByDivPolUrbana(
     divpolLv1: string,
     divpolLv2: string
@@ -354,34 +304,11 @@ export class InformationPropertyService {
     executionId: string,
     updateBasicInformationAddress: Partial<DetailBasicInformationAddress>
   ): Observable<DetailBasicInformationAddress> {
-    //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}
     const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
-
-    return this.httpClient.put<DetailBasicInformationAddress>(
+    return this.http.put<DetailBasicInformationAddress>(
       url,
       updateBasicInformationAddress
     );
-  }
-
-  updateBasicInformationPropertyConstruction(
-    id: string,
-    updateBasicInformationConstruction: Partial<ContentInformationConstruction>
-  ): Observable<ContentInformationConstruction> {
-    const url = `${this.basic_url}${envi.ccDireccion}/${id}`;
-    return this.httpClient.put<ContentInformationConstruction>(
-      url,
-      updateBasicInformationConstruction
-    );
-  }
-
-  updateConstruction(
-    executionId: number,
-    baunitId: number,
-    data: any
-  ): Observable<any> {
-    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    console.log('data', data);
-    return this.http.put(url, data);
   }
 
   updateBasicInformationProperty(
@@ -390,7 +317,6 @@ export class InformationPropertyService {
     body: UpdateBasicInformationProperty
   ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/temp/${executionId}/${baunitId}`;
-
     return this.http.put<BasicInformationProperty>(url, body).pipe(
       catchError((error) => {
         console.log('Error en la edición de los aspectos generales del predio');
@@ -398,6 +324,7 @@ export class InformationPropertyService {
       })
     );
   }
+
   /**
    * Create basic information address
    *
@@ -414,47 +341,10 @@ export class InformationPropertyService {
 
     const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
 
-    return this.httpClient.post<DetailBasicInformationAddress>(
+    return this.http.post<DetailBasicInformationAddress>(
       url,
-      createBasicInformationAddress,
+      createBasicInformationAddress
     );
-  }
-
-  createBasicInformationPropertyConstruction(
-    executionId: string,
-    baunitId: string,
-    createBasicInformationConstruction: CreateBasicInformationConstruction
-  ): Observable<ContentInformationConstruction> {
-    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-
-    return this.http
-      .post<ContentInformationConstruction>(
-        url,
-        createBasicInformationConstruction
-      )
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = 'Ocurrió un error inesperado.';
-
-          if (error.error && error.error.message) {
-            errorMessage = error.error.message;
-          } else if (error.error && error.error) {
-            errorMessage = error.error;
-          }
-
-          return throwError(() => new Error(errorMessage));
-        })
-      );
-  }
-
-  updateCalification(
-    executionId: string,
-    baunitId: string,
-    constructionId: number,
-    payload: { ccCalUBDom: { id: number } }[]
-  ): Observable<void> {
-    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}/${executionId}/${baunitId}/${constructionId}`;
-    return this.http.put<void>(url, payload);
   }
 
   /**
@@ -466,37 +356,12 @@ export class InformationPropertyService {
     direccionId: string,
     baunitId: string,
     schema: string,
-    executionId: string,
+    executionId: string
   ): Observable<any> {
     //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
     const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${direccionId}`;
 
-    return this.httpClient.delete(url);
-  }
-
-  deleteBasicInformationPropertyConstruction(
-    constructionId: string
-  ): Observable<any> {
-    const url = `${this.basic_url}${envi.ccDireccion}/${constructionId}`;
-    const httpParams: HttpParams = new HttpParams().set('version', '9999999');
-    return this.httpClient.delete(url, { params: httpParams });
-  }
-
-  deleteConstruction(
-    baunitId: string,
-    changeLogId: string,
-    unitBuiltId: number
-  ): Observable<any> {
-    const url = `${this.basic_url}${envi.unitBuilt}`;
-
-    const formData = new FormData();
-
-    formData.append('baunitId', baunitId.toString());
-    formData.append('changeLogId', changeLogId.toString());
-    formData.append('unitBuiltId', unitBuiltId.toString());
-    formData.append('word', 'borrar');
-
-    return this.httpClient.delete(url, { body: formData });
+    return this.http.delete(url);
   }
 
   private getData(url: string, params: any): Observable<any> {

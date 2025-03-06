@@ -55,11 +55,126 @@ export class GeneralValidationsService {
     return (control: AbstractControl): Record<string, any> | null => {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Reinicia la hora a 00:00:00
-      
+
       const inputDate = new Date(control.value);
       inputDate.setHours(0, 0, 0, 0);
-  
+
       return inputDate > today ? { 'futureDate': true } : null;
+    };
+  }
+
+  validateCapitalLettersOnly(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let value = this.patternValidator(control, '^[A-Z]+$');
+      return value != null && value ? { capitalLetter: true } : null
+    };
+  }
+
+  validateArea(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
+      return value != null && value ? { errorArea: true } : null
+    };
+  }
+
+  validateOnlyNumber(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
+      return value != null && value ? { onlyNumber: true } : null
+    };
+  }
+
+  validateNumberMax99(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let value = this.patternValidator(control, '^(?:[1-9]|[1-9][0-9])$');
+      return value != null && value ? { max99: true } : null
+    };
+  }
+
+  validateYearBetween1900And2099(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let value = this.patternValidator(control, '^(19|20)\\d{2}$');
+      return value != null && value ? { yearBetween1900And2099: true } : null
+    };
+  }
+
+  patternValidator(control: AbstractControl, pattern :string) {
+    if (!pattern || this.isEmptyInputValue(control.value)) {
+      return null;
+    }
+
+    let regex:RegExp | null = null;
+    let regexStr:string;
+    if (!this.isEmptyInputValue(pattern)) {
+      regexStr = '';
+      if (pattern.charAt(0) !== '^')
+        regexStr += '^';
+      regexStr += pattern;
+      if (pattern.charAt(pattern.length - 1) !== '$')
+        regexStr += '$';
+      regex = new RegExp(regexStr);
+    }
+    const value = control.value;
+    return !regex || regex.test(value) ? null : true;
+  }
+
+  nonZeroValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = parseFloat(control.value);
+      if (value <= 0) {
+        return { nonZero: true }; // Devuelve un error si el valor es 0 o menor
+      }
+      return null; // Sin errores
+    };
+  }
+
+  privateAreaValidator(totalAreaControlName: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formGroup = control.parent; // Obtén el grupo del formulario
+      if (!formGroup) {
+        return null; // Espera hasta que haya un formulario padre
+      }
+      const totalAreaControl = formGroup.get(totalAreaControlName);
+      if (!totalAreaControl) {
+        return null; // Asegúrate de que el control exista
+      }
+      const totalArea = parseFloat(totalAreaControl.value);
+      const privateArea = parseFloat(control.value);
+      if (privateArea > totalArea) {
+        return { privateAreaExceedsTotal: true }; // Devuelve un error si el área privada es mayor
+      }
+      return null; // Sin errores
+    };
+  }
+
+  isEmptyInputValue(value:any) {
+    return value == null ||
+      ((typeof value === 'string' || Array.isArray(value)) && value.length === 0);
+  }
+
+  yearNotInFutureValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const currentYear = new Date().getFullYear();
+      const enteredYear = parseInt(control.value, 10);
+      if (enteredYear > currentYear) {
+        return { yearInFuture: true };
+      }
+      return null;
     };
   }
 

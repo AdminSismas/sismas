@@ -21,7 +21,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 // CONSTANTS AND ENVIRONMENT IMPORTS
-import { PAGE, PAGE_OPTION__10_20_50_100, TYPEINFORMATION_EDITION } from 'src/app/apps/constants/general/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, TYPE_INFORMATION_EDITION } from 'src/app/apps/constants/general/constant';
 import { environment } from 'src/environments/environments';
 import { PAGE_SIZE, TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
 
@@ -100,7 +100,7 @@ export class HistoricalProceduresPropertyComponent implements OnInit, OnDestroy 
    @Input({ required: true }) baunitId: string | null | undefined = null;
    @Input() editable?: boolean;
    @Input() executionId: string | null | undefined = null;
-   @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
    @Output() showListHistory = new EventEmitter<HistoryListBasic[]>();
 
    dataSource!: MatTableDataSource<ProceduresCollection>;

@@ -40,8 +40,8 @@ import {
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { MatCardModule } from '@angular/material/card';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -119,7 +119,7 @@ export class InformationAddressesPropertyComponent
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
 
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
@@ -157,7 +157,8 @@ export class InformationAddressesPropertyComponent
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if (this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL)
+    if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL
+    )
       this.informationPropertyService.reloadTableStarted$.subscribe((value) => {
         if (value) {
           this.searchBasicInformationPropertyAddresses();
@@ -173,7 +174,7 @@ export class InformationAddressesPropertyComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['typeInformation'].currentValue) {
       const { currentValue: typeInformation } = changes['typeInformation'];
-      if (typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
+      if (typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
         this.pageSize = PAGE_SIZE;
         this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
         this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;

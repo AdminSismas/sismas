@@ -26,7 +26,7 @@ import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   NAME_NO_DISPONIBLE_CERO,
-  TYPEINFORMATION_EDITION
+  TYPE_INFORMATION_EDITION
 } from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
@@ -97,6 +97,13 @@ export class BasicPropertyInformationComponent implements OnInit {
       return;
     }
 
+    if (this.id?.length > 0) {
+      this.id = this.id + this.getRandomInt(10000) + this.schema +
+        'basic-property' + this.getRandomInt(10);
+    } else {
+      this.id = this.getRandomInt(100100) + this.schema +
+        + 'basic-property' + this.getRandomInt(10);
+    }
   }
 
   searchBasicInformationProperty():void {
@@ -125,7 +132,7 @@ export class BasicPropertyInformationComponent implements OnInit {
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
       ...MODAL_SMALL,
-      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION},
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION: TYPE_INFORMATION_EDITION},
       disableClose: true // Ensure this is set to false or omitted
     }).afterClosed()
       .subscribe({
@@ -154,7 +161,6 @@ export class BasicPropertyInformationComponent implements OnInit {
 
     isExpandPanel(expandedComponent: boolean): void {
       if (expandedComponent) {
-        this.id = this.id + this.getRandomInt(10000) + this.schema;
         this.searchBasicInformationProperty();
       }
     }

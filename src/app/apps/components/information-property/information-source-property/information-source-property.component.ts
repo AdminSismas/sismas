@@ -38,8 +38,8 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_SOURCE,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import {
   InformationPersonPropertyComponent
@@ -93,7 +93,7 @@ export class InformationSourcePropertyComponent {
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
   page: number = PAGE;
   totalElements: number = 0;
@@ -136,7 +136,7 @@ export class InformationSourcePropertyComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['typeInformation']) {
       const { currentValue: typeInformation } = changes['typeInformation'];
-      if (typeInformation === TYPEINFORMATION_VISUAL) {
+      if (typeInformation === TYPE_INFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
         this.pageSizeOptions = PAGE_OPTION__5_7_10;
         this.columns = TABLE_COLUMN_PROPERTIES_SOURCE;

@@ -1,39 +1,30 @@
-<div
-  class="flex items-center"
-  mat-dialog-title
-  *ngIf="showTittle"
-  [id]="id"
->
-  <h2 class="headline m-0 flex-auto">
-    {{ label }}
-  </h2>
-
-  <!-- <button
-    [matMenuTriggerFor]="settingsMenu"
-    class="text-secondary"
-    mat-icon-button
-    type="button"
-  >
-    <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button> -->
-
-  <button
-    class="text-secondary"
-    mat-dialog-close
-    mat-icon-button
-    type="button"
-  >
-    <mat-icon svgIcon="mat:close"></mat-icon>
-  </button>
-</div>
-<mat-divider
-  class="text-border"
-  *ngIf="showTittle"
-></mat-divider>
+@if (showTittle) {
+  <div class="flex items-center" mat-dialog-title [id]="id">
+    <h2 class="headline m-0 flex-auto">{{ label }}</h2>
+    <!-- <button
+      [matMenuTriggerFor]="settingsMenu"
+      class="text-secondary"
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon svgIcon="mat:more_vert"></mat-icon>
+    </button> -->
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="text-border"></mat-divider>
+}
 <mat-dialog-content
   [id]="idContainer"
+  [ngClass]="cssClasses"
   class="flex items-start justify-start gap-6 overflow-x-hidden"
->
+  vexFluidHeight fluidHeight=107>
   <div
     @stagger
     class="sticky top-20 flex-col flex-none w-2/12 hidden sm:flex"
@@ -53,26 +44,24 @@
     @stagger
     class="max-w-full w-10/12 flex flex-col gap-6"
   >
-  @if(schema === 'hist' && seeHisDropdown) {
-    <form [formGroup]="form" class="max-w-full w-10/12 flex flex-col gap-6">
-      <mat-form-field class="sm:ml-2 sm:mr-2 flex-1" >
-        <mat-label>Filtro de históricos</mat-label>
-        <mat-select formControlName="history" (selectionChange)="updateContextComponent()"
-        >
-          @for (
-            option of listHistoryTemp;
-            track option.executionId
-          ) {
-            <mat-option [value]="option">
-              {{ option.nameList }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+    @if (schema === 'hist' && seeHisDropdown) {
+      <form [formGroup]="form" class="max-w-full w-10/12 flex flex-col gap-6">
+        <mat-form-field class="sm:ml-2 sm:mr-2 flex-1">
+          <mat-label>Filtro de históricos</mat-label>
+          <mat-select formControlName="history" (selectionChange)="updateContextComponent()"
+          >
+            @for (option of listHistoryTemp;
+              track option.executionId) {
+              <mat-option [value]="option">
+                {{ option.nameList }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
 
-    </form>
+      </form>
 
-  }
+    }
     <vex-basic-property-information
       #basicAdministrativeUnitInformation{{schema}}
       [id]="'basicAdministrativeUnitInformation' + schema"
@@ -155,16 +144,16 @@
       [editable]="editable.CNS"
     ></vex-information-constructions-property>
     <vex-information-adjacent-property
-    [id]="'dataInformationAdjacentPropertyComponent' + schema"
-    #informationAdjacentPropertyComponent{{schema}}
-    [expandedComponent]="expand_tap"
-    [baunitId]="baunitId"
-    [schema]="schema"
-    [executionId]="executionId"
-    @fadeInUp
-    [typeInformation]="typeInformation"
-    [editable]="editable.CLN"
-  ></vex-information-adjacent-property>
+      [id]="'dataInformationAdjacentPropertyComponent' + schema"
+      #informationAdjacentPropertyComponent{{schema}}
+      [expandedComponent]="expand_tap"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      @fadeInUp
+      [typeInformation]="typeInformation"
+      [editable]="editable.CLN"
+    ></vex-information-adjacent-property>
     <vex-property-appraisal-information
       [id]="'dataIpropertyAppraisalInformationComponent' + schema"
       #propertyAppraisalInformationComponent{{schema}}
@@ -189,15 +178,15 @@
     ></vex-information-zones-property
     >
     <vex-historical-procedures-property
-    [id]="'historicalProceduresPropertyComponent' + schema"
-    #historicalProceduresPropertyComponent{{schema}}
-    [expandedComponent]="false"
-    [baunitId]="baunitId"
-    [schema]="schema"
-    [executionId]="executionId"
-    @fadeInUp
-    [typeInformation]="typeInformation"
-    (showListHistory)="showListHistory($event)"
+      [id]="'historicalProceduresPropertyComponent' + schema"
+      #historicalProceduresPropertyComponent{{schema}}
+      [expandedComponent]="false"
+      [baunitId]="baunitId"
+      [schema]="schema"
+      [executionId]="executionId"
+      @fadeInUp
+      [typeInformation]="typeInformation"
+      (showListHistory)="showListHistory($event)"
     ></vex-historical-procedures-property>
     @if (!showRulesPage) {
       <vex-photos
@@ -227,12 +216,10 @@
     }
   </div>
 </mat-dialog-content>
-
 <mat-menu
   #settingsMenu="matMenu"
   xPosition="before"
-  yPosition="below"
->
+  yPosition="below">
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
     <span>Imprimir</span>

@@ -12,12 +12,12 @@
             <!-- ADD BAUNIT-->
             <button
               class="rounded-full"
-              [ngClass]="buttonsClass(TYPE_BOTTON_ONE)"
+              [ngClass]="buttonsClass(TYPE_BUTTON_ONE)"
               color="primary"
               mat-raised-button
               type="button"
-              [disabled]="disabledButton(TYPE_BOTTON_ONE)"
-              (click)="executeCrudAlfaMain(TYPEOPERATION_CREATE)">
+              [disabled]="disabledButton(TYPE_BUTTON_ONE)"
+              (click)="executeCrudAlfaMain(TYPE_OPERATION_CREATE)">
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:add_circle_outline"
@@ -28,11 +28,11 @@
               <!-- CREATE BAUNIT-->
               <button
                 class="rounded-full"
-                [ngClass]="buttonsClass(TYPE_BOTTON_TWO)"
+                [ngClass]="buttonsClass(TYPE_BUTTON_TWO)"
                 mat-raised-button
                 type="button"
-                (click)="executeCrudAlfaMain(TYPEOPERATION_ADD)"
-                [disabled]="disabledButton(TYPE_BOTTON_TWO)">
+                (click)="executeCrudAlfaMain(TYPE_OPERATION_ADD)"
+                [disabled]="disabledButton(TYPE_BUTTON_TWO)">
                 <mat-icon
                   class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                   svgIcon="mat:add"
@@ -43,12 +43,12 @@
             <!-- EARSER BAUNIT-->
             <button
               class="rounded-full"
-              [ngClass]="buttonsClass(TYPE_BOTTON_TREE)"
+              [ngClass]="buttonsClass(TYPE_BUTTON_TREE)"
               color="warning"
               mat-raised-button
               type="button"
-              (click)="executeCrudAlfaMain(TYPEOPERATION_DELETE)"
-              [disabled]="disabledButton(TYPE_BOTTON_TREE)">
+              (click)="executeCrudAlfaMain(TYPE_OPERATION_DELETE)"
+              [disabled]="disabledButton(TYPE_BUTTON_TREE)">
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:delete"
@@ -72,11 +72,11 @@
             <!-- CREATE TEMPORAL GEO -->
             <button
               class="rounded-full"
-              [ngClass]="buttonsClass(TYPE_BOTTON_FOUR)"
+              [ngClass]="buttonsClass(TYPE_BUTTON_FOUR)"
               mat-raised-button
               type="button"
-              (click)="executeCreateAlfaGeo(TYPEOPERATION_CREATE_GEO)"
-              [disabled]="disabledButton(TYPE_BOTTON_FOUR)">
+              (click)="executeCreateAlfaGeo(TYPE_OPERATION_CREATE_GEO)"
+              [disabled]="disabledButton(TYPE_BUTTON_FOUR)">
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:add"
@@ -86,12 +86,12 @@
             <!-- DELETED TEMPORAL GEO -->
             <button
               class="rounded-full"
-              [ngClass]="buttonsClass(TYPE_BOTTON_FIVE)"
+              [ngClass]="buttonsClass(TYPE_BUTTON_FIVE)"
               color="warning"
               mat-raised-button
               type="button"
-              (click)="executeDeletedAlfaGeo(TYPEOPERATION_DELETE_GEO)"
-              [disabled]="disabledButton(TYPE_BOTTON_FIVE)">
+              (click)="executeDeletedAlfaGeo(TYPE_OPERATION_DELETE_GEO)"
+              [disabled]="disabledButton(TYPE_BUTTON_FIVE)">
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:delete"
@@ -101,12 +101,12 @@
             <!-- CALCULATE BOUNDARIES  -->
             <button
               class="rounded-full"
-              [ngClass]="buttonsClass(TYPE_BOTTON_SIX)"
+              [ngClass]="buttonsClass(TYPE_BUTTON_SIX)"
               color="primary"
               mat-raised-button
               type="button"
-              [disabled]="disabledButton(TYPE_BOTTON_SIX)"
-              (click)="executeCalculateBoundaries(TYPEOPERATION_CALCULATE_BOUNDARIES)">
+              [disabled]="disabledButton(TYPE_BUTTON_SIX)"
+              (click)="executeCalculateBoundaries(TYPE_OPERATION_CALCULATE_BOUNDARIES)">
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:data_usage"

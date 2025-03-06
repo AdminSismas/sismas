@@ -43,11 +43,11 @@ import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-inform
 import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_PHYSICAL,
-  TYPEINFORMATION_EDITION
+  TYPE_INFORMATION_EDITION
 } from 'src/app/apps/constants/general/constant';
 import {
   ZoneBAUnitFisica,
@@ -117,7 +117,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
     new MatTableDataSource<ZoneBAUnitFisica>([]);
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Output() physicalZoneChange = new EventEmitter<void>();
   @Output() deletePhysicalZone = new EventEmitter<ZoneBAUnitFisica>();
 
@@ -155,7 +155,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
     ];
   });
 
-  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
   constructor(
@@ -165,7 +165,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   ) {}
 
   get TYPEINFORMATION_EDITION() {
-    return TYPEINFORMATION_EDITION;
+    return TYPE_INFORMATION_EDITION;
   }
 
   get visibleColumns() {
@@ -173,7 +173,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
       .filter((column) => column.visible)
       .map((column) => column.property);
 
-    if (this.typeInformation === TYPEINFORMATION_EDITION) {
+    if (this.typeInformation === TYPE_INFORMATION_EDITION) {
       visibleColumns.push('actions');
     }
 

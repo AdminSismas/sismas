@@ -24,10 +24,10 @@ import {
   PAGE,
   PAGE_OPTION__5_7_10,
   PAGE_SIZE,
-  TYPEINFORMATION_EDITION,
-  TYPEOPERATION_ADD,
-  TYPEOPERATION_CREATE,
-  TYPEOPERATION_DELETE
+  TYPE_INFORMATION_EDITION,
+  TYPE_OPERATION_ADD,
+  TYPE_OPERATION_CREATE,
+  TYPE_OPERATION_DELETE
 } from 'src/app/apps/constants/general/constant';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
@@ -66,15 +66,15 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   columns: TableColumn<Operation>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
 
   get ADD(): TypeOperationAlfaMain {
-    return TYPEOPERATION_ADD;
+    return TYPE_OPERATION_ADD;
   }
 
   get CRE(): TypeOperationAlfaMain {
-    return TYPEOPERATION_CREATE;
+    return TYPE_OPERATION_CREATE;
   }
 
   get DEL(): TypeOperationAlfaMain {
-    return TYPEOPERATION_DELETE;
+    return TYPE_OPERATION_DELETE;
   }
 
   actions = [
@@ -177,7 +177,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
           row,
           this.data.executionId,
           LIST_SCHEMAS_CONTROL_CHANGES,
-          TYPEINFORMATION_EDITION,
+          TYPE_INFORMATION_EDITION,
           '',
           this.data.resources,
         )
@@ -193,7 +193,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   openCrudAlfaMain(type: TypeOperationAlfaMain) {
     const addNpnLike: string = this.data?.npnMatrix?.slice(0, -8) || '';
     let config = {};
-    if (type === TYPEOPERATION_ADD) {
+    if (type === TYPE_OPERATION_ADD) {
       config = {
         width: '30%',
         minHeight: '30%',

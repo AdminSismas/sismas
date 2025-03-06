@@ -45,11 +45,11 @@ import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-inform
 import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
-  TYPEINFORMATION_EDITION
+  TYPE_INFORMATION_EDITION
 } from 'src/app/apps/constants/general/constant';
 import { ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
@@ -117,7 +117,7 @@ export class GeoEconomicZonesPropertyComponent
   @Input({ required: true}) npn!: string;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
   @Output() deleteGeoeconomicZone = new EventEmitter<ZoneBAUnitGeoeconomic>;
   @Output() geoeconomicZoneChange = new EventEmitter<void>;
@@ -174,7 +174,7 @@ export class GeoEconomicZonesPropertyComponent
 
   private matDialog = inject(MatDialog);
 
-  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
   constructor(
@@ -183,7 +183,7 @@ export class GeoEconomicZonesPropertyComponent
   ) {}
 
   get TYPEINFORMATION_EDITION() {
-    return TYPEINFORMATION_EDITION;
+    return TYPE_INFORMATION_EDITION;
   } ;
 
   get visibleColumns() {
@@ -191,7 +191,7 @@ export class GeoEconomicZonesPropertyComponent
       .filter((column) => column.visible)
       .map((column) => column.property);
 
-    if (this.typeInformation === TYPEINFORMATION_EDITION) {
+    if (this.typeInformation === TYPE_INFORMATION_EDITION) {
       visibleColumns.push('actions');
     }
 

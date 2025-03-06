@@ -43,13 +43,23 @@ import {
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
 import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constant';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { stagger40ms } from '@vex/animations/stagger.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
 
 @Component({
   selector: 'vex-documents-main-table',
   standalone: true,
-  animations: [fadeInUp400ms, stagger40ms],
+  animations: [
+    fadeInRight400ms,
+    stagger80ms,
+    scaleIn400ms,
+    stagger40ms,
+    fadeInUp400ms,
+    scaleFadeIn400ms,
+  ],
   imports: [
     CommonModule,
     FormsModule,

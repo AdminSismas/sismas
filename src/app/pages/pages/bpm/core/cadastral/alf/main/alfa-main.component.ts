@@ -13,14 +13,19 @@ import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_UNIQUE, TYPE_BOTTON_FIVE,
-  TYPE_BOTTON_FOUR,
-  TYPE_BOTTON_ONE, TYPE_BOTTON_SIX,
-  TYPE_BOTTON_TREE,
-  TYPE_BOTTON_TWO,
-  TYPEOPERATION_ADD, TYPEOPERATION_CALCULATE_BOUNDARIES,
-  TYPEOPERATION_CREATE, TYPEOPERATION_CREATE_GEO,
-  TYPEOPERATION_DELETE, TYPEOPERATION_DELETE_GEO
+  PAGE_OPTION_UNIQUE,
+  TYPE_BOTTON_SIX,
+  TYPE_BUTTON_FIVE,
+  TYPE_BUTTON_FOUR,
+  TYPE_BUTTON_ONE,
+  TYPE_BUTTON_TREE,
+  TYPE_BUTTON_TWO,
+  TYPE_OPERATION_ADD,
+  TYPE_OPERATION_CALCULATE_BOUNDARIES,
+  TYPE_OPERATION_CREATE,
+  TYPE_OPERATION_CREATE_GEO,
+  TYPE_OPERATION_DELETE,
+  TYPE_OPERATION_DELETE_GEO
 } from '../../../../../../../apps/constants/general/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
@@ -53,11 +58,14 @@ import {
   ClearInformationDataComponent
 } from '../../../../../../../apps/components/bpm/clear-information-data/clear-information-data.component';
 import {
-  CONSTANT_KEYWORD_DELETE_ALFA_MAIN, CONSTANT_KEYWORD_DELETE_GEO_MAIN,
+  CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
+  CONSTANT_KEYWORD_DELETE_GEO_MAIN,
   CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN,
-  CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN, CONSTANT_MSG_PLACEHOLDER_DELETE_GEO_MAIN,
+  CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN,
+  CONSTANT_MSG_PLACEHOLDER_DELETE_GEO_MAIN,
   CONSTANT_TEXT_DELETE_GEO_MAIN,
-  CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY, CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
+  CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
+  CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
 } from '../../../../../../../apps/constants/general/constantLabels';
 import { OperationContentInformation } from '../../../../../../../apps/interfaces/bpm/operation-content-information';
 import { Pegeable } from '../../../../../../../apps/interfaces/general/pegeable.model';
@@ -78,7 +86,6 @@ import Swal from 'sweetalert2';
 import {
   InformationGeographicService
 } from '../../../../../../../apps/services/geographics/information-geographic.service';
-import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -108,8 +115,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    TableAlfaMainComponent,
-    MatTooltip
+    TableAlfaMainComponent
   ],
   templateUrl: './alfa-main.component.html',
   styleUrl: './alfa-main.component.scss'
@@ -395,7 +401,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
   executeCrudAlfaMain(type: TypeOperationAlfaMain) {
     let config = {};
-    if (type === TYPEOPERATION_ADD) {
+    if (type === TYPE_OPERATION_ADD) {
       config = {
         width: '30%',
         minHeight: '30%',
@@ -420,7 +426,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
 
   executeCreateAlfaGeo(type: TypeOperationGeoMain) {
-    if (type === TYPEOPERATION_CREATE_GEO && this.executionId) {
+    if (type === TYPE_OPERATION_CREATE_GEO && this.executionId) {
       this.geographicService.createGeographicChangesTemp(this.executionId)
         .subscribe({
           next: (result: ChangeControl) => {
@@ -439,7 +445,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   executeDeletedAlfaGeo(type: TypeOperationGeoMain) {
-    if (type === TYPEOPERATION_DELETE_GEO && this.executionId) {
+    if (type === TYPE_OPERATION_DELETE_GEO && this.executionId) {
       Swal.fire({
         titleText: CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN,
         input: 'text',
@@ -472,7 +478,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   executeCalculateBoundaries(type: TypeOperationGeoMain){
-    if (type === TYPEOPERATION_CALCULATE_BOUNDARIES && this.executionId) {
+    if (type === TYPE_OPERATION_CALCULATE_BOUNDARIES && this.executionId) {
       this.getAlertSuccess('Calculo linderos inicia ejecucion a ejecutarse')
     }
   }
@@ -524,16 +530,16 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     return Math.floor(Math.random() * max);
   }
 
-  protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
-  protected readonly TYPEOPERATION_DELETE = TYPEOPERATION_DELETE;
-  protected readonly TYPEOPERATION_ADD = TYPEOPERATION_ADD;
-  protected readonly TYPE_BOTTON_TWO = TYPE_BOTTON_TWO;
-  protected readonly TYPE_BOTTON_TREE = TYPE_BOTTON_TREE;
-  protected readonly TYPE_BOTTON_FOUR = TYPE_BOTTON_FOUR;
-  protected readonly TYPE_BOTTON_ONE = TYPE_BOTTON_ONE;
-  protected readonly TYPE_BOTTON_FIVE = TYPE_BOTTON_FIVE;
-  protected readonly TYPE_BOTTON_SIX = TYPE_BOTTON_SIX;
-  protected readonly TYPEOPERATION_DELETE_GEO = TYPEOPERATION_DELETE_GEO;
-  protected readonly TYPEOPERATION_CREATE_GEO = TYPEOPERATION_CREATE_GEO;
-  protected readonly TYPEOPERATION_CALCULATE_BOUNDARIES = TYPEOPERATION_CALCULATE_BOUNDARIES;
+  protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
+  protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
+  protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
+  protected readonly TYPE_BUTTON_TWO = TYPE_BUTTON_TWO;
+  protected readonly TYPE_BUTTON_TREE = TYPE_BUTTON_TREE;
+  protected readonly TYPE_BUTTON_FOUR = TYPE_BUTTON_FOUR;
+  protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
+  protected readonly TYPE_BUTTON_FIVE = TYPE_BUTTON_FIVE;
+  protected readonly TYPE_BUTTON_SIX = TYPE_BOTTON_SIX;
+  protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
+  protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
+  protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;
 }

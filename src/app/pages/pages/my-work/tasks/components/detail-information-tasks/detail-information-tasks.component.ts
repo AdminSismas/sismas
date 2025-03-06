@@ -38,8 +38,8 @@ import {
   PAGE_SIZE_SORT,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_COLUMN_PROPERTIES_EXECUTED,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../../../../apps/constants/general/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
@@ -114,7 +114,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       @Input({ required: true }) schema = `${environment.schemas.main}`;
       @Input({ required: true }) baunitId: string | null | undefined = null;
       @Input() executionId: string | null | undefined = null;
-      @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+      @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
       @Input() message: string = '';
       @Input() color: string = 'bg-blue-500'; // Color por defecto
@@ -203,7 +203,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
         return;
       }
       this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-      if(this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL) {
+      if(this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
         this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
         this.columns = TABLE_COLUMN_PROPERTIES_EXECUTED;

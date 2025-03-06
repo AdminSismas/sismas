@@ -54,7 +54,7 @@ import {
 } from '../../../../apps/constants/general/constantLabels';
 import { DomainCollection } from '../../../../apps/interfaces/general/domain-name.model';
 import {
-  DOMAIN_COLLETION_BPMPROCESSCATEGORY,
+  DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY,
   GUION,
   NAME_NO_DISPONIBLE,
   PAGE,
@@ -241,7 +241,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
 
   obtainsCollectionsListProcessByCategory() {
     const process = this.collectionServicesService.getDataDomainName(
-      DOMAIN_COLLETION_BPMPROCESSCATEGORY
+      DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY
     );
     process.subscribe({
       error: () => this._listBpmProcessCategory.next([]),

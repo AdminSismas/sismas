@@ -23,8 +23,8 @@ import {
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADJACENT,
   TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -110,7 +110,7 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
 
   columns: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
@@ -143,7 +143,7 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if(this.typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
+    if(this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADJACENT;
       this.columns = TABLE_COLUMN_PROPERTIES_ADJACENT;

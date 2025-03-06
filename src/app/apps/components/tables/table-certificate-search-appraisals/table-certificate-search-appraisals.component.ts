@@ -52,7 +52,7 @@ import {
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -263,7 +263,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
           LIST_SCHEMAS_CONTROL_MAIN,
-          TYPEINFORMATION_VISUAL,
+          TYPE_INFORMATION_VISUAL,
           '',
           [],
           this.rulePage

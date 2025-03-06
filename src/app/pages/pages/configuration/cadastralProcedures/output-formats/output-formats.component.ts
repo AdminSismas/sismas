@@ -28,9 +28,9 @@ import {
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
-  TABLE_COLUMN_DOCUMENT_ASOCIETY,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TABLE_COLUMN_DOCUMENT_ASSOCIATION,
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../../../apps/constants/general/constant';
 import { UserService } from '../../../auth/login/services/user.service';
 
@@ -100,12 +100,12 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     @Input({ required: true }) schema = `${environment.schemas.main}`;
     @Input({ required: true }) outTempplateId: number | null | undefined = null;
     @Input() executionId: string | null | undefined = null;
-    @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+    @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
     @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
     @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
-    columns: TableColumn<OutFormatModel>[] = TABLE_COLUMN_DOCUMENT_ASOCIETY;
+    columns: TableColumn<OutFormatModel>[] = TABLE_COLUMN_DOCUMENT_ASSOCIATION;
     page:number = PAGE;
     totalElements = 0;
     pageSize: number = PAGE_SIZE;
@@ -136,10 +136,10 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
       //   return;
       // }
       // this.id = this.id + this.getRandomInt(10000) + this.schema + this.outTempplateId;
-      if(this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL) {
+      if(this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
         this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
-        this.columns = TABLE_COLUMN_DOCUMENT_ASOCIETY;
+        this.columns = TABLE_COLUMN_DOCUMENT_ASSOCIATION;
       }
       this.searchDocumentoList();
     }

@@ -1,13 +1,13 @@
 export const environment = {
   accessGeo: {
     area: "area",
-    dataOpen: "/datosAbiertos/",
     extentByCodigo: "extentByCodigo",
     extentByCodigoData: "extentByCodigoData",
     generalMap: "/mapaGeneral",
-    geo: "/geo",
-    geoHistoria: "/geohistoria",
     geoTemporal: "/geotemporal",
+    geoHistoria: "/geohistoria",
+    dataOpen: "/datosAbiertos/",
+    geo: "/geo",
     get: "/get/",
     value: "/accessGeo/"
   },
@@ -147,11 +147,14 @@ export const environment = {
   unitBuild: "/unitBuild",
   unitBuilt: "/unitBuilt",
   urban_zones: "/ccZonaHomoFisicaUr",
-  url: "https://dev.api.sismas.com.co",
-  url_viewer: "https://masora.map.sismas.com.co:8081/mapstore/",
   user_exist: "/username/",
   valuation: "/valuation/",
   video: "assets/video/desarrollo.mp4",
   withoutSignaturesUsers: "/without-signature",
-  withSignaturesUsers: "/with-signature"
+  withSignaturesUsers: "/with-signature",
+  url: "https://dev.api.sismas.com.co",
+  url_viewer: "https://masora.map.sismas.com.co:8081/mapstore/",
+  url_domain_name: 'https://dev.api.sismas.com.co:5001/domain/name?',
+  getApiQualificationUrl: 'https://dev.api.sismas.com.co:5001/calificationUB/',
 };
+

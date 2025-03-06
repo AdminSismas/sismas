@@ -27,7 +27,9 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { Observable } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-
+import {
+  InformationConstructionsService
+} from '../../../../services/information-property/information-constructions-property/information-constructions.service';
 
 export interface Tile {
   color: string;
@@ -77,6 +79,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInformationConstruction | undefined,
     private dialogRef: MatDialogRef<DetailInformationConstructionsPropertyComponent>,
     private informationPropertyService: InformationPropertyService,
+    private inConstructionsService: InformationConstructionsService,
     private layoutService: VexLayoutService
   ) {
   }
@@ -107,8 +110,8 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
       this.close();
       return;
     }
-    this.informationPropertyService
-      .getDetailBasicInformationPropertyConstructions(this.defaults.unitBuiltId)
+
+    this.inConstructionsService.getDetailBasicInformationPropertyConstructions(this.defaults.unitBuiltId)
       .subscribe({
           next: (result: ContentInformationConstruction) => this.data = result,
           error: (err: any) => console.log('Consulta NOK.')
@@ -122,8 +125,8 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
       this.close();
       return;
     }
-    this.informationPropertyService
-      .getDetailBasicInformationPropertyCalificationConstructions(
+    this.inConstructionsService
+      .getDetailBasicInformationPropertyQualificationConstructions(
         this.defaults.unitBuiltId)
       .subscribe({
           next: (result: CcCalificacionUB[]) => this.dataCalification = result,

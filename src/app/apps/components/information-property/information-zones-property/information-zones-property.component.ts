@@ -4,11 +4,12 @@ import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   NAME_NO_DISPONIBLE,
-  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
-  TYPEINFORMATION_EDITION
+  TYPE_INFORMATION_EDITION,
+  MODAL_SMALL
 } from '../../../constants/general/constant';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -105,7 +106,7 @@ export class InformationZonesPropertyComponent implements OnInit {
   @Input({ required: true }) npn!: string;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
   @ViewChild('errorDelete') errorDelete!: SwalComponent;
 
@@ -125,7 +126,7 @@ export class InformationZonesPropertyComponent implements OnInit {
   dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnitGeoeconomic> =
     new MatTableDataSource<ZoneBAUnitGeoeconomic>([]);
 
-  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
   constructor(

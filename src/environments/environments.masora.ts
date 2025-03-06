@@ -1,13 +1,13 @@
 export const environment = {
   accessGeo: {
     area: "area",
-    dataOpen: "/datosAbiertos/",
     extentByCodigo: "extentByCodigo",
     extentByCodigoData: "extentByCodigoData",
     generalMap: "/mapaGeneral",
-    geo: "/geo",
-    geoHistoria: "/geohistoria",
     geoTemporal: "/geotemporal",
+    geoHistoria: "/geohistoria",
+    dataOpen: "/datosAbiertos/",
+    geo: "/geo",
     get: "/get/",
     value: "/accessGeo/"
   },
@@ -73,8 +73,9 @@ export const environment = {
     value: "/bpmProcess"
   },
   calificationUB: "/calificationUB",
+  typologyType: "/tipologiaTipo",
+  ccDireccion: "/ccDireccion/",
   cancel: "/cancel",
-  ccDireccion: "/ccDireccion",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",
@@ -147,11 +148,13 @@ export const environment = {
   unitBuild: "/unitBuild",
   unitBuilt: "/unitBuilt",
   urban_zones: "/ccZonaHomoFisicaUr",
-  url: "https://masora.api.sismas.com.co",
-  url_viewer: "https://masora.map.sismas.com.co:8081/mapstore/",
   user_exist: "/username/",
   valuation: "/valuation/",
   video: "assets/video/masora.mp4",
   withoutSignaturesUsers: "/without-signature",
-  withSignaturesUsers: "/with-signature"
+  withSignaturesUsers: "/with-signature",
+  url: "https://masora.api.sismas.com.co",
+  url_viewer: "https://masora.map.sismas.com.co:8081/mapstore/",
+  url_domain_name: 'https://masora.api.sismas.com.co:5001/domain/name?',
+  getApiQualificationUrl: 'https://masora.api.sismas.com.co:5001/calificationUB/',
 };

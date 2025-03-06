@@ -21,15 +21,13 @@
   Uncomment the below code and adjust the values to fit your colors, the application will automatically adjust
  */
 html {
-  // --vex-color-primary: blue;
-  // --vex-color-primary-contrast: white;
+  --mat-expansion-header-collapsed-state-height: 45px !important;
+  --mat-expansion-header-expanded-state-height: 48px !important;
+  --mat-table-header-container-height: 46px !important;
+  --mat-table-row-item-container-height: 50px !important;
 
-  // --vex-color-accent: yellow;
-  // --vex-color-accent-contrast: black;
-
-  // --vex-color-warn: yellow;
-  // --vex-color-warn-contrast: black;
 }
+
 body{
   top:0;
 }

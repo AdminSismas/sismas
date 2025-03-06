@@ -10,12 +10,7 @@
   >
     <!-- Type Properties Column -->
     <ng-container matColumnDef="operationType">
-      <th
-        *matHeaderCellDef
-        mat-header-cell
-        mat-sort-header
-        class="pl-1 pr-1"
-      ></th>
+      <th *matHeaderCellDef mat-header-cell class="pl-1 pr-1"></th>
       <td
         *matCellDef="let row"
         mat-cell class="px-3">
@@ -191,7 +186,7 @@
 
     @if (mode === 1) {
       <button
-        (click)="editInformations(row)"
+        (click)="editInformation(row)"
         mat-menu-item
       >
         <mat-icon svgIcon="mat:edit"></mat-icon>

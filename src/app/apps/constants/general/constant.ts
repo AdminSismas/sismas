@@ -8,10 +8,11 @@ import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
 import { Operation } from '../../interfaces/bpm/operation';
 import { environment } from '../../../../environments/environments';
 import {
+  CheckTypeQualificationMode,
   TypeButtonAlfaMain,
   TypeInformation,
-  TypeOperationAlfaMain,
-  TypeOperationGeoMain
+  TypeOperationAlfaMain, TypeOperationConstruction,
+  TypeOperationGeoMain, TypeQualificationMode, ValidateQualificationByDomBuiltType
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../../interfaces/general/out-format.model';
@@ -55,13 +56,13 @@ export const FORMAT_CURRENCY_COP = 'COP';
 export const FORMAT_CURRENCY_SIMBOL = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND = 'Información no disponible';
 
-export const PAGE_OPTION__1_5_10: number[] = [1,5,10];
-export const PAGE_OPTION__5_7_10: number[] = [5,7,10];
-export const PAGE_OPTION__10_20_50_100: number[] = [10,20,50,100];
+export const PAGE_OPTION__1_5_10: number[] = [1, 5, 10];
+export const PAGE_OPTION__5_7_10: number[] = [5, 7, 10];
+export const PAGE_OPTION__10_20_50_100: number[] = [10, 20, 50, 100];
 
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
-export const PAGE_SIZE_OPTION: number[] = [ PAGE_OPTION_UNIQUE, 20, 50, 100];
+export const PAGE_SIZE_OPTION: number[] = [PAGE_OPTION_UNIQUE, 20, 50, 100];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADJACENT: number[] = [5, PAGE_OPTION_UNIQUE];
@@ -69,7 +70,7 @@ export const PAGE_SIZE_SORT_FOLIO = 1;
 export const PAGE_SIZE_OPTION_FOLIO: number[] = [2, 5];
 
 export const STRUCTURE_HTML_HEADER =
-`<html>
+  `<html>
   <head>
      {style}
   </head>
@@ -77,23 +78,25 @@ export const STRUCTURE_HTML_HEADER =
 
 export const STRUCTURE_HTML_FOOTER = `</body></html>`;
 
+/**
+ * DOMAIN NAME
+ * **/
+export const DOMAIN_NAME_BUILT_USE = 'BuiltUse';
 
+export const PANEL_ASSIGNED_TASKS = 'assignedTasks';
+export const PANEL_DEVOLUTION_TASKS = 'returnedTasks';
+export const PANEL_PRIORITIZED_TASKS = 'prioritizedTasks';
+export const PROCESO_CREAR_DIRECCION = 'Nueva dirección';
+export const PROCESO_ACTUALIZAR_DIRECCION = 'Editar dirección';
 
-export const PANEL_ASSIGNED_TASKS = "assignedTasks";
-export const PANEL_DEVOLUTION_TASKS = "returnedTasks";
-export const PANEL_PRIORITIZED_TASKS = "prioritizedTasks";
-export const PROCESO_CREAR_DIRECCION = "Nueva dirección";
-export const PROCESO_ACTUALIZAR_DIRECCION = "Editar dirección";
+export const CONSTANT_VALIDATE_CHECK = 'checkStatusBpmOperation';
+export const CONSTANT_VALIDATE_OTHER = 'OTHER_CHECK';
+export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = 'Selección municipal';
+export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = 'Múltiples campos';
+export const NUMERO_PREDIAL_NACIONAL = 'Número Predial Nacional';
 
-export const CONSTANT_VALIDATE_CHECK = "checkStatusBpmOperation";
-export const CONSTANT_VALIDATE_OTHER = "OTHER_CHECK";
-export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = "Selección municipal";
-export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = "Múltiples campos";
-export const NUMERO_PREDIAL_NACIONAL = "Número Predial Nacional";
-
-
-export const TYPEINFORMATION_EDITION: TypeInformation = 'edition';
-export const TYPEINFORMATION_VISUAL: TypeInformation = 'visualization';
+export const TYPE_INFORMATION_EDITION: TypeInformation = 'edition';
+export const TYPE_INFORMATION_VISUAL: TypeInformation = 'visualization';
 export const EVIRONMENT_CC_DIRECCION = '/ccDireccion';
 export const ROL_GUEST = 'GUEST';
 export const ROL_USER_READ = 'USER_READ';
@@ -101,14 +104,13 @@ export const ROL_USER_READ = 'USER_READ';
 export const ENVIRONMENT_RETIRO_IMG = 'assets/img/logo/logo_El_retiro.png';
 export const NAME_LOGO_IMG_SAN_VICENTE = 'logo_san_vicente.png';
 
+export const TYPE_OPERATION_ADD: TypeOperationAlfaMain = 'ADD';
+export const TYPE_OPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
+export const TYPE_OPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
 
-export const TYPEOPERATION_ADD: TypeOperationAlfaMain = 'ADD' ;
-export const TYPEOPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
-export const TYPEOPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
-
-export const TYPEOPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
-export const TYPEOPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
-export const TYPEOPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
+export const TYPE_OPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
+export const TYPE_OPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
+export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
@@ -214,7 +216,7 @@ export const TABLE_COLUMN_INFORMATION_PROPERTIES: TableColumn<BaunitHead>[] = [
   }
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
-export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<OutFormatModel>[] = [
+export const TABLE_COLUMN_DOCUMENT_ASSOCIATION: TableColumn<OutFormatModel>[] = [
   {
     label: 'ID',
     property: 'outTemplateId',
@@ -226,7 +228,7 @@ export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<OutFormatModel>[] = [
     label: 'Codigo Template',
     property: 'templateCode',
     type: 'text',
-    visible: true,
+    visible: true
   },
   {
     label: 'Header',
@@ -251,8 +253,8 @@ export const TABLE_COLUMN_DOCUMENT_ASOCIETY: TableColumn<OutFormatModel>[] = [
   {
     label: 'Acciones',
     property: 'actions',
-     type: 'button',
-     visible: true
+    type: 'button',
+    visible: true
   }
 ];
 export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
@@ -479,7 +481,7 @@ export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResp
     property: 'daysFinish',
     type: 'currency',
     visible: true
-  },
+  }
 
 
 ];
@@ -497,70 +499,70 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT: TableColumn<BasicInformationAdjac
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: 'cadAlfaMainComponent',
-    pathForm : '/core/cadastral/alf/main.html',
+    pathForm: '/core/cadastral/alf/main.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
   },
   {
     name: 'cadAlfaMainComponent',
-    pathForm : '/core/cadastral/alf/validate.html',
+    pathForm: '/core/cadastral/alf/validate.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 2
   },
   {
     name: 'cadEcoCommitteeComponent',
-    pathForm : '/core/cadastral/eco/comite.html',
+    pathForm: '/core/cadastral/eco/comite.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadGeoMainComponent',
-    pathForm : '/core/cadastral/geo/main.html',
+    pathForm: '/core/cadastral/geo/main.html',
     serviceValidation: '',
     mode: 3
   },
   {
     name: 'cadGeoValidateComponent',
-    pathForm : '/core/cadastral/geo/validate.html',
+    pathForm: '/core/cadastral/geo/validate.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadResMainComponent',
-    pathForm : '/core/cadastral/res/main.html',
+    pathForm: '/core/cadastral/res/main.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadResValidateComponent',
-    pathForm : '/core/cadastral/res/validate.html',
+    pathForm: '/core/cadastral/res/validate.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadSynMainComponent',
-    pathForm : '/core/cadastral/syn/main.html',
+    pathForm: '/core/cadastral/syn/main.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'cadVisitComponent',
-    pathForm : '/core/cadastral/visita.html',
+    pathForm: '/core/cadastral/visita.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'docuMainComponent',
-    pathForm : '/core/document/main.html',
+    pathForm: '/core/document/main.html',
     serviceValidation: '',
     mode: 1
   },
   {
     name: 'docuValidateComponent',
-    pathForm : '/core/document/validate.html',
+    pathForm: '/core/document/validate.html',
     serviceValidation: '',
     mode: 1
-  },
+  }
 ];
 
 export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>[] = [
@@ -588,16 +590,16 @@ export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>
 ];
 
 
-export const NAME_VALIDITYVALUATIO =  'validityValuation';
-export const NAME_CADASTRALVALUATIONA =  'cadastralValuationAt';
-export const NAME_CADASTRALVALUATION =  'cadastralValuation';
-export const NAME_CADASTRALVALUATIONLAND =  'cadastralValuationLand';
-export const NAME_CADASTRALVALUATIONUNITS =  'cadastralValuationUnits';
-export const NAME_COMMERCIALVALUATION =  'commercialValuation';
-export const NAME_COMMERCIALVALUATIONLAND =  'commercialValuationLand';
-export const NAME_COMMERCIALVALUATIONUNITS = 'commercialValuationUnits';
-export const NAME_SELFVALUATIONVALUE =  'selfValuationValue';
-export const DOMAIN_COLLETION_BPMPROCESSCATEGORY =  'BpmProcessCategory';
+export const NAME_VALIDITY_VALUATION = 'validityValuation';
+export const NAME_CADASTRAL_VALUATION_AT = 'cadastralValuationAt';
+export const NAME_CADASTRAL_VALUATION = 'cadastralValuation';
+export const NAME_CADASTRAL_VALUATION_LAND = 'cadastralValuationLand';
+export const NAME_CADASTRAL_VALUATION_UNITS = 'cadastralValuationUnits';
+export const NAME_COMMERCIAL_VALUATION = 'commercialValuation';
+export const NAME_COMMERCIAL_VALUATION_LAND = 'commercialValuationLand';
+export const NAME_COMMERCIAL_VALUATION_UNITS = 'commercialValuationUnits';
+export const NAME_SELF_VALUATION_VALUE = 'selfValuationValue';
+export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY = 'BpmProcessCategory';
 
 
 export const LIST_GRID_APPRAISAL_1: string[] = [
@@ -627,7 +629,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'date',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Total',
@@ -635,7 +637,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Terreno',
@@ -643,7 +645,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Construcciones',
@@ -651,7 +653,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Total',
@@ -659,7 +661,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Terreno',
@@ -667,7 +669,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Construcciones',
@@ -675,7 +677,7 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     type: 'currency',
     visible: true,
     cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium','pl-1 pr-1']
+    cssClasses: ['font-medium', 'pl-1 pr-1']
   },
   {
     label: 'Total',
@@ -684,14 +686,14 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     visible: true,
     cssClassesHead: ['pl-1'],
     cssClasses: ['font-medium', 'pl-1']
-  },
+  }
 ];
 
 export const LIST_SCHEMAS_CONTROL_MAIN: string[] = [`${environment.schemas.main}`];
 export const LIST_SCHEMAS_CONTROL_TEMP: string[] = [`${environment.schemas.temp}`];
-export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`,`${environment.schemas.main}`];
-export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.main}`,`${environment.schemas.hist}`];
-export const LIST_SCHEMAS_CONTROL_HISTORY_PRIME: string[] = [`${environment.schemas.hist}`,`${environment.schemas.main}`];
+export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`, `${environment.schemas.main}`];
+export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.main}`, `${environment.schemas.hist}`];
+export const LIST_SCHEMAS_CONTROL_HISTORY_PRIME: string[] = [`${environment.schemas.hist}`, `${environment.schemas.main}`];
 
 
 export const LIST_ZONES_RURAL: string[] = ['00'];
@@ -720,10 +722,10 @@ export const LIST_FORM_CADASTRAL_5: string[] = [
 ];
 
 export const LIST_EXTRA_COLUMNS_APPRAISAL: string[] = [
-  'header-row-first-group', 'header-row-second-group', 'header-row-third-group','header-row-quartet-group'
+  'header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-quartet-group'
 ];
 
-export const NAVIGATION_ITEMS_INFORMACION_PROPERTIY: { label: string; fragment: string }[] = [
+export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment: string }[] = [
   {
     label: 'Aspectos generales',
     fragment: 'basicPropertyInformationComponent'
@@ -977,7 +979,7 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
-  },
+  }
   // {
   //   label: 'Fecha',
   //   property: 'fecha',
@@ -1028,18 +1030,71 @@ export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['AGR', 'BRR', 'CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
-export const MODAL_LARGE ={ maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
-export const MODAL_MEDIUM ={ maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
-export const MODAL_SMALL ={ maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
+export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
+export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
+export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
+export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
+export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
 
-export const TYPE_BOTTON_ONE:TypeButtonAlfaMain = 'AGR';
-export const TYPE_BOTTON_TWO:TypeButtonAlfaMain = 'CRE';
-export const TYPE_BOTTON_TREE:TypeButtonAlfaMain = 'BRR';
-export const TYPE_BOTTON_FOUR:TypeButtonAlfaMain = 'CRE_GEO';
-export const TYPE_BOTTON_FIVE:TypeButtonAlfaMain = 'DEL_GEO';
-export const TYPE_BOTTON_SIX:TypeButtonAlfaMain = 'CAL_BOU';
+export const TYPE_BUTTON_ONE: TypeButtonAlfaMain = 'AGR';
+export const TYPE_BUTTON_TWO: TypeButtonAlfaMain = 'CRE';
+export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
+export const TYPE_BUTTON_FOUR: TypeButtonAlfaMain = 'CRE_GEO';
+export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
+export const TYPE_BOTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
+
+export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
+export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
+
+export const TYPE_CREATE_CONSTRUCTION: TypeOperationConstruction = 'CREATE';
+
+export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
+    label: 'Tradicional',
+    type: TYPE_TRADITIONAL
+  };
+
+export const CHECK_TYPE_QUALIFICATION_MODE: CheckTypeQualificationMode[] = [
+  {
+    label: 'Tradicional',
+    type: TYPE_TRADITIONAL
+  },
+  {
+    label: 'Tipología',
+    type: TYPE_TYPOLOGY
+  }
+];
+
+export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualificationByDomBuiltType[] = [
+  {
+    domBuiltType :'Institucional',
+    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    shouldDisable: true
+  },
+  {
+    domBuiltType :'Comercial',
+    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    shouldDisable: true
+  },
+  {
+    domBuiltType :'Industrial',
+    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    shouldDisable: false
+  },
+  {
+    domBuiltType :'Anexo',
+    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    shouldDisable: false
+  },
+  {
+    domBuiltType :'Residencial',
+    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    shouldDisable: false
+  }
+];
+
+
 
 

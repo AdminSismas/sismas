@@ -1,13 +1,12 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
 import { LoadingAppComponent } from '../../general-components/loading-app/loading-app.component';
 import { MatButton } from '@angular/material/button';
-import { TYPE_BOTTON_ONE, TYPE_BOTTON_TWO, TYPEOPERATION_CREATE } from '../../../constants/general/constant';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 import { MatIcon } from '@angular/material/icon';
@@ -21,7 +20,6 @@ import { MatIcon } from '@angular/material/icon';
     LoadingAppComponent,
     NgIf,
     MatButton,
-    NgClass,
     VexPageLayoutContentDirective,
     FluidHeightDirective,
     MatIcon
@@ -148,8 +146,4 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
-
-  protected readonly TYPE_BOTTON_TWO = TYPE_BOTTON_TWO;
-  protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
-  protected readonly TYPE_BOTTON_ONE = TYPE_BOTTON_ONE;
 }

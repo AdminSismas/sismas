@@ -39,7 +39,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_VISUAL
 } from '../../../../../../apps/constants/general/constant';
 import { TABLE_COLUMN_PROPERTIES } from '../../../../../../apps/constants/general/procedures.constant';
 import { ContentInfoSchema } from '../../../../../../apps/interfaces/general/content-info-schema';
@@ -178,7 +178,7 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
         data: new ContentInfoSchema(
           data.baunitIdE, data, null,
           LIST_SCHEMAS_CONTROL_MAIN,
-          TYPEINFORMATION_VISUAL
+          TYPE_INFORMATION_VISUAL
         )
       })
       .afterClosed();

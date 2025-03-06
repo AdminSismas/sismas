@@ -19,7 +19,7 @@ import {
   PAGE,
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
-  TYPEINFORMATION_EDITION
+  TYPE_INFORMATION_EDITION
 } from '../../../constants/general/constant';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -82,7 +82,7 @@ export class AlertsComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
   alerts: any[] = [];
   dataSource = new MatTableDataSource<any>([]);

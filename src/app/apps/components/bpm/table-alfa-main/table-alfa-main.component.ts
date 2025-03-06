@@ -21,8 +21,8 @@ import {
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_ALFA_MAIN_OPERATION_COLUMN,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -197,7 +197,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
           operation?.baunitHead,
           this.executionId,
           LIST_SCHEMAS_CONTROL_CHANGES,
-          TYPEINFORMATION_VISUAL
+          TYPE_INFORMATION_VISUAL
 
         )
       })
@@ -225,7 +225,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
         });
   }
 
-  editInformations(operation: Operation): void {
+  editInformation(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
       this.snackbar.open(
         'No se puede ver la información de la unidad predial, consulte al administrador.',
@@ -242,7 +242,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
           operation?.baunitHead,
           this.executionId,
           LIST_SCHEMAS_CONTROL_TEMP,
-          TYPEINFORMATION_EDITION,
+          TYPE_INFORMATION_EDITION,
           '',
           this.resources
         )

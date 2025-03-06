@@ -7,6 +7,7 @@ import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angu
 import { CollectionServices } from '../../../services/general/collection.service';
 import { DomainCalificationCollection, DomainCollection } from '../../../interfaces/general/domain-name.model';
 import { MatTableModule } from '@angular/material/table';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'vex-combox-colletion',
@@ -23,7 +24,7 @@ import { MatTableModule } from '@angular/material/table';
   ],
   templateUrl: './combox-colletion.component.html',
   styleUrl: './combox-colletion.component.scss',
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class ComboxColletionComponent implements OnInit {
 
@@ -40,8 +41,11 @@ export class ComboxColletionComponent implements OnInit {
   @Input() public valueReturn: string | undefined = 'dispname';
   @Input() public hintValue: string | null = null;
   @Input() public hideRequiredMarker = true;
+  @Input() public queryParams: Record<string, string | number | boolean> = {};
 
-  @Output() stringEventEmitter = new EventEmitter<string>();
+  @Output() selectionChange = new EventEmitter<any>();
+
+  loading: boolean = false; // Indicador de carga
 
   constructor(
     private collectionServicesService: CollectionServices
@@ -49,15 +53,25 @@ export class ComboxColletionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.idComboCollection?.length > 0) {
-      this.idComboCollection = this.idComboCollection + this.getRandomInt(10000) + this.typeDomainName;
-    } else {
-      this.idComboCollection = this.getRandomInt(10000) + this.typeDomainName;
+    this.loading = true;
+    let textID: string = 'ValidateExtID' + this.getRandomInt(10);
+    if (this.validateFiel(this.typeDomainName)) {
+      textID = this.typeDomainName;
     }
-    this.obtainsCollectionsList();
-    this.obtainsCalificationCollectionsList();
+    if (this.idComboCollection?.length > 0) {
+      this.idComboCollection = this.idComboCollection + this.getRandomInt(10000) + textID;
+    } else {
+      this.idComboCollection = this.getRandomInt(10000) + textID;
+    }
 
-    this.cssClasses = !this.cssClasses ? 'mainClass': this.cssClasses;
+    if (this.validateFiel(this.typeDomainName)) {
+      this.obtainsCollectionsList();
+      this.obtainsCalificationCollectionsList();
+    } else if (this.queryParams && Object.keys(this.queryParams).length > 0) {
+      this.obtainsCollectionsListParams();
+    }
+
+    this.cssClasses = !this.cssClasses ? 'mainClass' : this.cssClasses;
   }
 
   obtainsCollectionsList() {
@@ -67,6 +81,18 @@ export class ComboxColletionComponent implements OnInit {
           (result: DomainCollection[]) => this.captureInformationSubscribe(result)
         );
     }
+  }
+
+  obtainsCollectionsListParams() {
+    let params: HttpParams = new HttpParams();
+    if (this.queryParams && Object.keys(this.queryParams).length > 0) {
+      Object.entries(this.queryParams).forEach(([key, value]) => {
+        params = params.append(key, value.toString());
+      });
+    }
+    this.collectionServicesService.getDataDomainNameParams(params).subscribe(
+      (result: DomainCollection[]) => this.captureInformationSubscribe(result)
+    );
   }
 
   obtainsCalificationCollectionsList() {
@@ -79,7 +105,6 @@ export class ComboxColletionComponent implements OnInit {
   }
 
   captureCalificationInformationSubscribe(result: DomainCalificationCollection[]) {
-
     this.calificationOptions = result;
   }
 
@@ -88,13 +113,18 @@ export class ComboxColletionComponent implements OnInit {
       result = result.filter(dmc => dmc.inactive === false);
     }
     this.options = result;
+    this.loading = false;
   }
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
 
-  returnEvent(value: string) {
-    this.stringEventEmitter.emit(value);
+  onSelectionChange(value: any) {
+    this.selectionChange.emit(value);
+  }
+
+  validateFiel(value: string | number | false | true) {
+    return value && value !== undefined && value !== null && value !== '';
   }
 }

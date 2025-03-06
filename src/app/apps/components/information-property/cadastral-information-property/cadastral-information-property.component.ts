@@ -14,7 +14,7 @@ import {
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
 import { MatListModule } from '@angular/material/list';
-import { NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgForOf } from '@angular/common';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -41,9 +41,9 @@ import { AlertsComponent } from '../alerts/alerts.component';
 import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
 import {
-  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   REFERENCE_COMPONENTS,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import {
   PropertyAppraisalInformationComponent
@@ -58,6 +58,7 @@ import {
   HistoryListBasic
 } from '../historical-procedures/historical-procedures.component';
 import { MatSelectModule } from '@angular/material/select';
+import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 
 @Component({
   selector: 'vex-cadastral-information-property',
@@ -90,7 +91,6 @@ import { MatSelectModule } from '@angular/material/select';
     BasicPropertyInformationComponent,
     InformationAddressesPropertyComponent,
     NgForOf,
-    NgIf,
     InformationPropertyOwnersComponent,
     InformationConstructionsPropertyComponent,
     InformationZonesPropertyComponent,
@@ -103,7 +103,9 @@ import { MatSelectModule } from '@angular/material/select';
     SuperNotariadoPropertyComponent,
     InformationAdjacentPropertyComponent,
     HistoricalProceduresPropertyComponent,
-    MatSelectModule
+    MatSelectModule,
+    FluidHeightDirective,
+    NgClass
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -168,13 +170,14 @@ export class CadastralInformationPropertyComponent implements OnInit {
   private alertsComponent?: ElementRef;
 
 
-  @Input({ required: true }) typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
+  @Input({ required: true }) typeInformation: TypeInformation = TYPE_INFORMATION_VISUAL;
   @Input({ required: true }) public showTittle = true;
   @Input({ required: true }) public label!: string;
   @Input() public id = '';
   @Input({ required: true }) public schema = '';
   @Input({ required: true }) contentInfoSchema!: ContentInfoSchema;
   @Input({ required: true }) public baunitCondition?: string;
+  @Input({ required: false }) public cssClasses?: string;
   @Input() public resources: string[] = [];
 
   @Input() public rulePage = '';
@@ -184,7 +187,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   idContainer = '';
   baunitId: string | null | undefined = null;
   navigationItems: { label: string; fragment: string }[] =
-    NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+    NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
   editable: { GNR?: boolean, FNA?: boolean, PRO?: boolean, CNS?: boolean, DIR?: boolean, ZON?: boolean, CLN?: boolean } = {};
 
   propertyRegistryOffice: string | null | undefined = null;
