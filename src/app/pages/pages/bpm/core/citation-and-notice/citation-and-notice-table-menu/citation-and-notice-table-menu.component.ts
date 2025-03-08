@@ -8,7 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   ProcessParticipantTableMenu,
   TypeProcessParticipant
-} from '../../../../../../apps/interfaces/bpm/info-participants.interface';
+} from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+import { LIST_CITATION_AND_NOTICE_TABLE_MENU } from '../../../../../../apps/constants/general/constant';
+import { getRandomInt } from '../../../../../../apps/utils/general';
 
 
 @Component({
@@ -29,45 +31,8 @@ import {
 export class CitationAndNoticeTableMenuComponent implements OnInit {
 
   @Input({ required: true }) id: string = '';
-  @Input() items: ProcessParticipantTableMenu[] = [
-    {
-      type: 'link',
-      id: 'all',
-      icon: 'mat:view_headline',
-      label: 'Consolidado'
-    },
-    {
-      type: 'subheading',
-      label: 'Estados'
-    },
-    {
-      type: 'link',
-      id: 'citation',
-      icon: 'mat:label',
-      label: 'Citar',
-      classes: {
-        icon: 'text-primary-600'
-      }
-    },
-    {
-      type: 'link',
-      id: 'notification',
-      icon: 'mat:label',
-      label: 'Notificar',
-      classes: {
-        icon: 'text-green-600'
-      }
-    },
-    {
-      type: 'link',
-      id: 'notice',
-      icon: 'mat:label',
-      label: 'Avisos',
-      classes: {
-        icon: 'text-amber-600'
-      }
-    }
-  ];
+  @Input() items: ProcessParticipantTableMenu[] = LIST_CITATION_AND_NOTICE_TABLE_MENU;
+
   @Output() filterChange = new EventEmitter<TypeProcessParticipant['type']>();
   @Output() openAddNew = new EventEmitter<void>();
 
@@ -77,11 +42,10 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.id?.length <= 0 ) {
+    if (this.id?.length <= 0) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + 'Menu';
-
+    this.id = this.id + getRandomInt(10000) + 'Menu';
   }
 
   setFilter(category: ProcessParticipantTableMenu['id']) {
@@ -102,9 +66,5 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
 
   isActive(category: ProcessParticipantTableMenu['id']) {
     return this.activeCategory === category;
-  }
-
-  getRandomInt(max: number):number {
-    return Math.floor(Math.random() * max);
   }
 }

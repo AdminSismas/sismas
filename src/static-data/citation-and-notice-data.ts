@@ -1,5 +1,6 @@
 import { ProcessParticipant } from '../app/apps/interfaces/bpm/process-participant';
 
+/**
 export const citationNotices: ProcessParticipant[] = [
   {
     participationId: 1,
@@ -512,3 +513,4 @@ export const citationNotices: ProcessParticipant[] = [
     starred: true
   },
 ];
+*/

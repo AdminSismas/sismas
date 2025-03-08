@@ -26,9 +26,6 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable } from 'rxjs';
 import {
-  GeographicViewerComponent
-} from '../../../../../../apps/components/geographics/geographic/geographic-viewer/geographic-viewer.component';
-import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import {
@@ -56,6 +53,9 @@ import { environment } from 'src/environments/environments';
 import {
   FilterCadastralSearchComponent
 } from '../../../../../../apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
+import {
+  GeographicViewerComponent
+} from '../../../../../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
 
 @Component({
   selector: 'vex-certificate-table',

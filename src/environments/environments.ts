@@ -65,7 +65,7 @@ export const environment = {
     proTask_priority: "proTask/priority",
     resources: "resorces/",
     startProcess: "startProcess",
-    participation:'participation/',
+    participation:'/participation/',
     value: "/bpmOperation"
   },
   bpmProcess: {

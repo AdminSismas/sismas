@@ -131,6 +131,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CrudAlfaMainComponent>
   ) {
+    this.destroyRef.onDestroy(() => {});
   }
 
   ngOnInit(): void {

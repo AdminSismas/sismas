@@ -3,8 +3,9 @@ import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/pro
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { NAME_NO_DISPONIBLE, SPACE } from 'src/app/apps/constants/general/constant';
+import { getRandomInt } from '../../../../../../../apps/utils/general';
 
 @Component({
   selector: 'vex-citation-notice-card',
@@ -13,7 +14,8 @@ import { NAME_NO_DISPONIBLE, SPACE } from 'src/app/apps/constants/general/consta
     MatIconModule,
     MatButtonModule,
     MatRippleModule,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './citation-notice-card.component.html',
   styleUrl: './citation-notice-card.component.scss'
@@ -37,9 +39,13 @@ export class CitationNoticeCardComponent implements OnInit {
 
   ngOnInit() {
     if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(10000);
+      this.id = this.id + getRandomInt(10000);
     } else {
-      this.id = this.getRandomInt(10000).toString();
+      this.id = getRandomInt(10000).toString();
+    }
+
+    if (this.processParticipant && this.processParticipant.participationId > 0) {
+      this.processParticipant.imageSrc = 'assets/img/icons/people/teacher.svg';
     }
   }
 
@@ -48,8 +54,16 @@ export class CitationNoticeCardComponent implements OnInit {
     this.toggleStar.emit(participationId);
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
+  get validateDomGuvStateNotified() {
+    return this.processParticipant?.viaGubernativa?.domGuvState === 'Notificado';
+  }
+
+  get validateDomGuvStateCitation() {
+    return this.processParticipant?.viaGubernativa?.domGuvState === 'Citacion';
+  }
+
+  get validateDomGuvStateNotice() {
+    return this.processParticipant?.viaGubernativa?.domGuvState === 'Aviso';
   }
 
 }

@@ -7,7 +7,7 @@ import {
   CitationAndNoticeTableMenuComponent
 } from './citation-and-notice-table-menu/citation-and-notice-table-menu.component';
 import { AsyncPipe } from '@angular/common';
-import { stagger40ms } from '@vex/animations/stagger.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,16 +19,30 @@ import { SendInfoGeneralService } from '../../../../../apps/services/general/sen
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProcessParticipant } from '../../../../../apps/interfaces/bpm/process-participant';
-import { TypeProcessParticipant } from '../../../../../apps/interfaces/bpm/info-participants.interface';
+import {
+  TypeProcessParticipant
+} from '../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 import { DetailsCitationNoticeComponent } from './components/details-citation-notice/details-citation-notice.component';
 import { CitationNoticeGridComponent } from './citation-notice-grid/citation-notice-grid.component';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { ProFlow } from '../../../../../apps/interfaces/bpm/pro-flow';
+import { getRandomInt } from 'src/app/apps/utils/general';
+import { CitationAndNoticeTableComponent } from './citation-and-notice-table/citation-and-notice-table.component';
 
 @Component({
   selector: 'vex-citation-and-notice',
   templateUrl: './citation-and-notice.component.html',
   styleUrl: './citation-and-notice.component.scss',
-  animations: [stagger40ms, scaleIn400ms, fadeInRight400ms],
   standalone: true,
+  animations: [
+    fadeInRight400ms,
+    stagger80ms,
+    scaleIn400ms,
+    stagger40ms,
+    fadeInUp400ms,
+    scaleFadeIn400ms
+  ],
   imports: [
     MatButtonModule,
     MatIconModule,
@@ -36,16 +50,19 @@ import { CitationNoticeGridComponent } from './citation-notice-grid/citation-not
     MatSidenavModule,
     CitationAndNoticeTableMenuComponent,
     AsyncPipe,
-    CitationNoticeGridComponent
+    CitationNoticeGridComponent,
+    CitationAndNoticeTableComponent
   ]
 })
 export class CitationAndNoticeComponent implements OnInit {
+  public id: string = getRandomInt(1234).toString();
 
   searchStr: UntypedFormControl = new UntypedFormControl();
 
-  @Input({ required: true }) public executionId: string = '';
+  @Input({ required: true }) public executionId:string = '';
+  @Input({ required: true }) public resources: string[] = [];
+  @Input({ required: false }) public mode = 1;
 
-  id: string = this.getRandomInt(1234).toString();
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
@@ -56,28 +73,36 @@ export class CitationAndNoticeComponent implements OnInit {
 
 
   constructor(
+    proFlow: ProFlow,
     private dialog: MatDialog,
     private router: Router,
     private readonly layoutService: VexLayoutService,
     private infoGeneralService: SendInfoGeneralService
   ) {
+    if (proFlow?.flowId) {
+      this.id += proFlow?.flowId;
+    }
+    if (proFlow?.mode) {
+      this.mode = proFlow?.mode;
+    }
+    this.destroyRef.onDestroy(() => {});
   }
 
   ngOnInit() {
     if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(10000);
+      this.id = this.id + getRandomInt(12000);
     } else {
-      this.id = this.getRandomInt(10000).toString();
+      this.id = getRandomInt(10000).toString();
     }
     this.layoutService.collapseSidenav();
     this.typeProcess = this.typeProcessDefault;
     this.executionId = '76';
     if (this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(100000)
-        + 'CitationNotificacionComponent' + this.getRandomInt(10);
+      this.id = this.id + getRandomInt(100000)
+        + 'CitationNotificacionComponent' + getRandomInt(10);
     } else {
-      this.id = this.getRandomInt(10000)
-        + 'CitationNotificacionComponent' + this.getRandomInt(10);
+      this.id = getRandomInt(10000)
+        + 'CitationNotificacionComponent' + getRandomInt(10);
     }
     this._infoFatherURL$
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -108,14 +133,6 @@ export class CitationAndNoticeComponent implements OnInit {
   }
 
   openMenu() {
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
-  isValueField(value: any) {
-    return value !== null && value !== undefined && value !== '';
   }
 
   returnPanelTask(isReturn: boolean) {

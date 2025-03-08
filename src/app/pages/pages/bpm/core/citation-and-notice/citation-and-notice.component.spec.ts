@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CitationAndNoticeComponent } from './citation-and-notice.component';
 
-describe('CitationAndNoticeComponent', () => {
+describe(CitationAndNoticeComponent.name, () => {
   let component: CitationAndNoticeComponent;
   let fixture: ComponentFixture<CitationAndNoticeComponent>;
 
@@ -11,7 +11,7 @@ describe('CitationAndNoticeComponent', () => {
       imports: [CitationAndNoticeComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(CitationAndNoticeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

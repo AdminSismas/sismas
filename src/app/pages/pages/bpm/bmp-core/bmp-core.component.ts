@@ -47,7 +47,9 @@ import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLab
 import { environment } from '../../../../../environments/environments';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ShowErrorValidateAlfaMainComponent } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
+import {
+  ShowErrorValidateAlfaMainComponent
+} from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
@@ -103,6 +105,7 @@ export class BmpCoreComponent implements OnInit {
     ComponentTemplate[]
   >(1);
   _proFlow$ = this.route.data.pipe(map(({ proFlow }) => proFlow));
+  _resources$ = this.route.data.pipe(map(({ resources }) => resources));
 
   components$: Observable<ComponentTemplate[]> =
     this._components$.asObservable();
@@ -126,30 +129,28 @@ export class BmpCoreComponent implements OnInit {
     private snackbar: MatSnackBar,
     private bpmCoreService: BpmCoreService,
     private infoGeneralService: SendInfoGeneralService,
-    private tasksPanelServices: TasksPanelService,
-     private bpmProcessService: BpmProcessService,
-  ) {}
+    private bpmProcessService: BpmProcessService
+  ) {
+  }
 
   async ngOnInit() {
     this.activateLoading();
     this.executionId = await firstValueFrom(this.executionId$);
     this.proFlow = await firstValueFrom(this._proFlow$);
     this.infoFatherURL = await firstValueFrom(this._infoFatherURL$);
-    this.resources = await firstValueFrom(this.tasksPanelServices.getResources(this.executionId));
+    this.resources = await firstValueFrom(this._resources$);
 
     if (!this.infoFatherURL) {
       this.returnURLPrevious(`${environment.myWork_cadastralSearch}`);
       return;
     }
 
-    this._infoProTaskE$
-      .pipe(filter<ProTaskE>(Boolean))
-      .subscribe((result: ProTaskE) => {
-        if (!result) {
-          this.returnPanelTask(true);
-          return;
-        }
-      });
+    this._infoProTaskE$.subscribe((result: ProTaskE) => {
+      if (!result) {
+        this.returnPanelTask(true);
+        return;
+      }
+    });
 
     const isValid: boolean = this.validateInformationComponent(this.proFlow);
     if (isValid) {
@@ -161,7 +162,7 @@ export class BmpCoreComponent implements OnInit {
 
   confirmAction(action: () => void, message: string, errors: string[]): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: errors.length > 0 ? '40%' :'400px',
+      width: errors.length > 0 ? '40%' : '400px',
       data: { message, errors },
       disableClose: true
     });
@@ -179,7 +180,7 @@ export class BmpCoreComponent implements OnInit {
 
     this.bpmCoreService.checkStatusBpmOperation(this.executionId)
       .subscribe((result) => {
-        if (result.length > 0){
+        if (result.length > 0) {
           this.confirmAction(() => this.nextBpmCore(), message, result);
           return;
         }
@@ -210,8 +211,8 @@ export class BmpCoreComponent implements OnInit {
       components.forEach((component: BasicComponentTemplate) => {
         const listTmp: ComponentTemplate[] = this.listComponents
           .filter((x: ComponentTemplate) =>
-          x.nameComponent.includes(component.name)
-        );
+            x.nameComponent.includes(component.name)
+          );
 
         if (listTmp?.length > 0) {
           listTmp.forEach((x) => this.createObjectComponent(x, component));
@@ -245,7 +246,8 @@ export class BmpCoreComponent implements OnInit {
     if (isReturn) {
       this.router
         .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
-        .then();
+        .then(() => {
+        });
     }
   }
 
@@ -323,19 +325,19 @@ export class BmpCoreComponent implements OnInit {
 
   captureInformationBpmCore(result: ProTaskE) {
     if (result?.proTask) {
-      if (result.proTask.taskId! < 0  ) {
-       const vailablePermission: PermissionVailable = {
-                    executionId: result.executionId?.toString() || '',
-                    message: result?.proTask?.flowName || ''
-                  };
-      this.router.navigate([environment.myWork_tasksPanel],{
-        queryParams: { executionId: result.executionId }
-      });
-      this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 10000 });
-      this.bpmProcessService.setPermissions(vailablePermission);
-      return;
+      if (result.proTask.taskId! < 0) {
+        const vailablePermission: PermissionVailable = {
+          executionId: result.executionId?.toString() || '',
+          message: result?.proTask?.flowName || ''
+        };
+        this.router.navigate([environment.myWork_tasksPanel], {
+          queryParams: { executionId: result.executionId }
+        });
+        this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 10000 });
+        this.bpmProcessService.setPermissions(vailablePermission);
+        return;
+      }
     }
-  }
 
 
     this.proTaskE_Bpm = result;

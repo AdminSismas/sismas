@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -86,6 +86,7 @@ import Swal from 'sweetalert2';
 import {
   InformationGeographicService
 } from '../../../../../../../apps/services/geographics/information-geographic.service';
+import { getRandomInt } from 'src/app/apps/utils/general';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -121,12 +122,14 @@ import {
   styleUrl: './alfa-main.component.scss'
 })
 export class AlfaMainComponent implements OnInit, AfterViewInit {
-  public id: string = this.getRandomInt(1234).toString();
+  public id: string = getRandomInt(1234).toString();
 
-  @Input({ required: true }) public executionId = '';
+  @Input({ required: true }) public executionId:string = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public resourcesRemovers: string[] = [];
   @Input({ required: false }) public mode = 1;
+
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
@@ -155,18 +158,15 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
+    this.destroyRef.onDestroy(() => {});
   }
 
   ngOnInit() {
     if (this.id?.length > 0) {
       this.id =
-        this.id +
-        this.getRandomInt(100000) +
-        'AlfaMainComponent' +
-        this.getRandomInt(10);
+        this.id + getRandomInt(100000) + 'AlfaMainComponent' + getRandomInt(10);
     } else {
-      this.id =
-        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
+      this.id = getRandomInt(10000) + 'AlfaMainComponent' + getRandomInt(10);
     }
 
     this._infoFatherURL$
@@ -523,10 +523,6 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
   buttonRemovers(btn: TypeButtonAlfaMain): boolean {
     return !this.resourcesRemovers.includes(btn);
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
   }
 
   protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;

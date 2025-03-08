@@ -1,25 +1,23 @@
 <div @stagger class="max-w-3xs w-full" [id]="id">
-  <div class="h-14 mb-6 flex px-6 sm:px-0 flex items-center" [id]="id + 'container-emmit'"
-       *ngIf="activeCategory">
-    <button
-      (click)="openAddNew.emit()"
-      *ngIf="activeCategory !== 'all'"
-      class="flex-auto"
-      color="primary"
-      mat-raised-button
-      type="button">
-      <mat-icon
-        class="ltr:-ml-4 ltr:mr-2 rtl:ml-2 icon-sm"
-        svgIcon="mat:add"></mat-icon>
-      <span
-        *ngIf="activeCategory === 'citation'"
-      >Notificar Masivo</span>
-      <span
-        *ngIf="activeCategory === 'notification'"
-      >Avisar Masivo</span>
-    </button>
-  </div>
-
+  @if (activeCategory !== 'all') {
+    <div class="h-14 mb-6 flex px-6 sm:px-0 items-center" [id]="id + 'container-emmit'">
+      <button
+        (click)="openAddNew.emit()"
+        class="flex-auto"
+        color="primary"
+        mat-raised-button
+        type="button">
+        <mat-icon
+          class="ltr:-ml-4 ltr:mr-2 rtl:ml-2 icon-sm"
+          svgIcon="mat:add"></mat-icon>
+        @if (activeCategory === 'citation') {
+          <span>Notificar Masivo</span>
+        } @else if (activeCategory === 'notification') {
+          <span>Avisar Masivo</span>
+        }
+      </button>
+    </div>
+  }
   <div class="px-6 sm:px-0" [id]="id + 'container'">
     <ng-container *ngFor="let item of items">
       <a

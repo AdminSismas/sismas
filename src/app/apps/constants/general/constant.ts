@@ -22,6 +22,7 @@ import { DataSource } from '../../interfaces/information-property/snr-source-inf
 import { DataPerson } from '../../interfaces/information-property/snr-person-info';
 import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
 import { ZoneBAUnitFisica } from '../../interfaces/information-property/zone-baunit';
+import { ProcessParticipantTableMenu } from '../../interfaces/bpm/citation-and-notice/info-participants.interface';
 
 export const GUION = '-';
 export const SPACE = ' ';
@@ -498,7 +499,7 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<BasicInformat
 export const TABLE_COLUMN_PROPERTIES_ADJACENT: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL;
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
-    name: 'cadAlfaMainComponent',
+    name: 'citationAndNoticeComponent',
     pathForm: '/core/cadastral/alf/main.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
@@ -864,6 +865,7 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
   },
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
+
 export const TABLE_COLUMN_PROPERTIES_FOLIO: TableColumn<DataFolio>[] = [
   {
     label: 'Matricula de matriz',
@@ -988,6 +990,7 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
   //   cssClasses: ['font-medium']
   // }
 ];
+
 export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   {
     label: 'Anotación',
@@ -1095,9 +1098,45 @@ export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualif
   }
 ];
 
-
-
-
+export const LIST_CITATION_AND_NOTICE_TABLE_MENU:ProcessParticipantTableMenu[] = [
+  {
+    type: 'link',
+    id: 'all',
+    icon: 'mat:view_headline',
+    label: 'Consolidado'
+  },
+  {
+    type: 'subheading',
+    label: 'Estados'
+  },
+  {
+    type: 'link',
+    id: 'citation',
+    icon: 'mat:label',
+    label: 'Citar',
+    classes: {
+      icon: 'text-primary-600'
+    }
+  },
+  {
+    type: 'link',
+    id: 'notification',
+    icon: 'mat:label',
+    label: 'Notificar',
+    classes: {
+      icon: 'text-green-600'
+    }
+  },
+  {
+    type: 'link',
+    id: 'notice',
+    icon: 'mat:label',
+    label: 'Avisos',
+    classes: {
+      icon: 'text-amber-600'
+    }
+  }
+];
 
 export const TABLE_CITATION_NOTICE_COLUMN: TableColumn<ProcessParticipant>[] = [
   {

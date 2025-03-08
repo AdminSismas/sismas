@@ -4,7 +4,7 @@
     @stagger
     class="overflow-y-auto flex-auto">
     <div
-      class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 container-fluid">
+      class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 container-fluid">
       <vex-citation-notice-card
         *ngFor="let participant of listParticipantsCards$ | async; trackBy: trackByParticipationId"
         [id]="participant.participationId + executionId + 'filteredCard'"

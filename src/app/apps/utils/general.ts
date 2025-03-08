@@ -10,7 +10,7 @@ export const getRandomInt = (max: number): number => {
   return Math.floor(Math.random() * max);
 };
 
-export const  indexArraylist = (obj:any, value:any) => {
+export const indexArraylist = (obj:any, value:any) => {
   if (validateVariable(obj) && obj.length > 0) {
     return obj.reduce((acc:any, el:any) => ({
       ...acc,

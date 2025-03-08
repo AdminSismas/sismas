@@ -32,6 +32,7 @@ import {
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE
 } from '../../../../../../apps/constants/general/constant';
+import { getRandomInt, validateVariable } from '../../../../../../apps/utils/general';
 
 @Component({
   selector: 'vex-citation-notice-grid',
@@ -98,9 +99,9 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + this.getRandomInt(10000);
+      this.id = this.id + getRandomInt(10000);
     } else {
-      this.id = this.getRandomInt(10000).toString();
+      this.id = getRandomInt(10000).toString();
     }
 
     this.dataContentInformations$.pipe(filter<InformationPegeable>(Boolean))
@@ -114,7 +115,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
       this.validateExecuteTypeProcess();
     }
 
-    if (changes['searchCtrl']) {
+    if (changes['searchCtrl'] && this.searchCtrl != null) {
       this.onFilterChange(this.searchCtrl);
     }
 
@@ -215,10 +216,11 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   onFilterChange(value: string): void {
     let listParticipantsChange: ProcessParticipant[] = [];
-    if (!this.isValueField(value)) {
+    if (!validateVariable(value)) {
       this._listParticipantsCards$.next(this.listParticipants);
       return;
     }
+
     value = value.trim();
     value = value.toLowerCase();
     listParticipantsChange = this.listParticipants
@@ -237,14 +239,6 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   generateObjectPageSearchData(): PageSearchData {
     return new PageSearchData(this.page, this.pageSize, null);
-  }
-
-  isValueField(value: any) {
-    return value !== null && value !== undefined && value !== '';
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
   }
 
   emitToggleStar(id: ProcessParticipant['participationId']) {

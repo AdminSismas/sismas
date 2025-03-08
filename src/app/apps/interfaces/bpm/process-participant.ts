@@ -4,7 +4,7 @@ import { GovernmentalChannel } from './governmental-channel';
 export class ProcessParticipant {
   participationId: number;
   bpmParticipation: string;
-  imageSrc: string = 'assets/img/avatars/1.jpg';
+  imageSrc: string;
   individual: InfoPerson;
   viaGubernativa?: GovernmentalChannel;
   selected?: boolean = false;
@@ -16,7 +16,7 @@ export class ProcessParticipant {
     this.individual = content?.individual || null;
     this.viaGubernativa = content?.viaGubernativa || null;
     this.selected = content?.selected || false;
-    this.imageSrc = 'assets/img/avatars/1.jpg';
+    this.imageSrc = content?.imageSrc || '';
   }
 
   set fullName(value: string) {

@@ -33,7 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
-import { environment } from '../../../../../../environments/environments';
+import { environment as envi, environment } from '../../../../../../environments/environments';
 import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
 import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
@@ -405,9 +405,9 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
     if (proTaskE && this.typePanel) {
       this.infoGeneralService.setFatherURL(this.typePanel);
       this.infoGeneralService.setInfoProTaskE(proTaskE);
-      this.router
-        .navigate([`${environment.bpm_bpmCore}`, proTaskE.executionId])
-        .then();
+      const url = `${environment.bpm_bpmCore}`;
+      this.router.navigate([url, proTaskE.executionId])
+        .then(() =>{});
     }
   }
 
