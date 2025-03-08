@@ -13,14 +13,19 @@ import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_UNIQUE, TYPE_BOTTON_FIVE,
-  TYPE_BOTTON_FOUR,
-  TYPE_BOTTON_ONE,
-  TYPE_BOTTON_TREE,
-  TYPE_BOTTON_TWO,
-  TYPEOPERATION_ADD,
-  TYPEOPERATION_CREATE, TYPEOPERATION_CREATE_GEO,
-  TYPEOPERATION_DELETE, TYPEOPERATION_DELETE_GEO
+  PAGE_OPTION_UNIQUE,
+  TYPE_BUTTON_FIVE,
+  TYPE_BUTTON_FOUR,
+  TYPE_BUTTON_ONE,
+  TYPE_BUTTON_SIX,
+  TYPE_BUTTON_TREE,
+  TYPE_BUTTON_TWO,
+  TYPE_OPERATION_ADD,
+  TYPE_OPERATION_CALCULATE_BOUNDARIES,
+  TYPE_OPERATION_CREATE,
+  TYPE_OPERATION_CREATE_GEO,
+  TYPE_OPERATION_DELETE,
+  TYPE_OPERATION_DELETE_GEO
 } from '../../../../../../../apps/constants/general/constant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
@@ -37,7 +42,6 @@ import { SendInfoGeneralService } from '../../../../../../../apps/services/gener
 import { environment } from '../../../../../../../../environments/environments';
 import { Router } from '@angular/router';
 import { ChangeControl } from '../../../../../../../apps/interfaces/bpm/change-control';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -54,11 +58,14 @@ import {
   ClearInformationDataComponent
 } from '../../../../../../../apps/components/bpm/clear-information-data/clear-information-data.component';
 import {
-  CONSTANT_KEYWORD_DELETE_ALFA_MAIN, CONSTANT_KEYWORD_DELETE_GEO_MAIN,
+  CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
+  CONSTANT_KEYWORD_DELETE_GEO_MAIN,
   CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN,
-  CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN, CONSTANT_MSG_PLACEHOLDER_DELETE_GEO_MAIN,
+  CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN,
+  CONSTANT_MSG_PLACEHOLDER_DELETE_GEO_MAIN,
   CONSTANT_TEXT_DELETE_GEO_MAIN,
-  CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY, CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
+  CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
+  CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
 } from '../../../../../../../apps/constants/general/constantLabels';
 import { OperationContentInformation } from '../../../../../../../apps/interfaces/bpm/operation-content-information';
 import { Pegeable } from '../../../../../../../apps/interfaces/general/pegeable.model';
@@ -118,7 +125,8 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public mode: number = 1;
+  @Input({ required: false }) public resourcesRemovers: string[] = [];
+  @Input({ required: false }) public mode = 1;
 
   isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
@@ -265,8 +273,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 1000
-    }).then(() => {
-    });
+    }).then();
   }
 
   orderByInformationSubscribe() {
@@ -317,7 +324,6 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       }, Object.create(null));
     }
   }
-
 
 
   generateObjectPageSearchData(): PageSearchData {
@@ -375,8 +381,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
             icon: 'error',
             showConfirmButton: false,
             timer: 100
-          }).then(() => {
-          });
+          }).then();
           throw error;
         }
       });
@@ -395,7 +400,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
   executeCrudAlfaMain(type: TypeOperationAlfaMain) {
     let config = {};
-    if (type === TYPEOPERATION_ADD) {
+    if (type === TYPE_OPERATION_ADD) {
       config = {
         width: '30%',
         minHeight: '30%',
@@ -420,14 +425,14 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
 
 
   executeCreateAlfaGeo(type: TypeOperationGeoMain) {
-    if (type === TYPEOPERATION_CREATE_GEO && this.executionId) {
+    if (type === TYPE_OPERATION_CREATE_GEO && this.executionId) {
       this.geographicService.createGeographicChangesTemp(this.executionId)
         .subscribe({
           next: (result: ChangeControl) => {
-            if(result && result.changeLogId && result.changeLogId > 0) {
+            if (result && result.changeLogId && result.changeLogId > 0) {
               this.getAlertSuccess(
                 `Se ha logrado crear el cambio geo con el logId: ${result.changeLogId}`
-              )
+              );
               return;
             }
             this.getAlertError('No se ha logrado eliminar el cambio geo');
@@ -439,7 +444,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   executeDeletedAlfaGeo(type: TypeOperationGeoMain) {
-    if (type === TYPEOPERATION_DELETE_GEO && this.executionId) {
+    if (type === TYPE_OPERATION_DELETE_GEO && this.executionId) {
       Swal.fire({
         titleText: CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN,
         input: 'text',
@@ -454,6 +459,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
               Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY) :
               text;
           } catch (error) {
+            console.log(error);
             Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL);
           }
         },
@@ -470,9 +476,15 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
     }
   }
 
+  executeCalculateBoundaries(type: TypeOperationGeoMain) {
+    if (type === TYPE_OPERATION_CALCULATE_BOUNDARIES && this.executionId) {
+      this.getAlertSuccess('Calculo linderos inicia ejecucion a ejecutarse');
+    }
+  }
+
   buttonsClass(btn: TypeButtonAlfaMain): string {
     let color = '!bg-slate-400 !text-gray-100 opacity-60';
-    if (btn === 'AGR' && !this.disabledButton(btn)) {
+    if ((btn === 'AGR' || btn === 'CAL_BOU') && !this.disabledButton(btn)) {
       color = '!text-white !bg-primary-600';
     } else if ((btn === 'CRE' || btn === 'CRE_GEO') && !this.disabledButton(btn)) {
       color = '!text-white !bg-green-600';
@@ -488,8 +500,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       icon: 'success',
       showConfirmButton: false,
       timer: 1000
-    }).then(() => {
-    });
+    }).then();
   }
 
   getAlertError(text: string) {
@@ -499,8 +510,7 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 2000
-    }).then(() => {
-    });
+    }).then();
   }
 
   private returnURLPrevious(url: string) {
@@ -508,21 +518,27 @@ export class AlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   disabledButton(btn: TypeButtonAlfaMain): boolean {
-    return this.resources.includes(btn);
+    return !this.resources.includes(btn);
+  }
+
+  buttonRemovers(btn: TypeButtonAlfaMain): boolean {
+    return !this.resourcesRemovers.includes(btn);
   }
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
 
-  protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
-  protected readonly TYPEOPERATION_DELETE = TYPEOPERATION_DELETE;
-  protected readonly TYPEOPERATION_ADD = TYPEOPERATION_ADD;
-  protected readonly TYPE_BOTTON_TWO = TYPE_BOTTON_TWO;
-  protected readonly TYPE_BOTTON_TREE = TYPE_BOTTON_TREE;
-  protected readonly TYPE_BOTTON_FOUR = TYPE_BOTTON_FOUR;
-  protected readonly TYPE_BOTTON_ONE = TYPE_BOTTON_ONE;
-  protected readonly TYPE_BOTTON_FIVE = TYPE_BOTTON_FIVE;
-  protected readonly TYPEOPERATION_DELETE_GEO = TYPEOPERATION_DELETE_GEO;
-  protected readonly TYPEOPERATION_CREATE_GEO = TYPEOPERATION_CREATE_GEO;
+  protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
+  protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
+  protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
+  protected readonly TYPE_BUTTON_TWO = TYPE_BUTTON_TWO;
+  protected readonly TYPE_BUTTON_TREE = TYPE_BUTTON_TREE;
+  protected readonly TYPE_BUTTON_FOUR = TYPE_BUTTON_FOUR;
+  protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
+  protected readonly TYPE_BUTTON_FIVE = TYPE_BUTTON_FIVE;
+  protected readonly TYPE_BUTTON_SIX = TYPE_BUTTON_SIX;
+  protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
+  protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
+  protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;
 }

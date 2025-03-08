@@ -7,9 +7,9 @@ export const environment = {
     geoTemporal: "/geotemporal",
     geoHistoria: "/geohistoria",
     dataOpen: "/datosAbiertos/",
+    geo: "/geo",
     get: "/get/",
-    value: "/accessGeo/",
-    geo: "/geo"
+    value: "/accessGeo/"
   },
   active: "active",
   administrativeSource: "/fuenteadmin/",
@@ -32,6 +32,7 @@ export const environment = {
   baunit_npnlike: "/baunit/npnlike",
   bAUnitCreate: "BAUnitCreate",
   bAUnitDelete: "BAUnitDelete",
+  baunitId: "/baunitId",
   baunitIdEcono: "/baunitIdEcono",
   baunitIdFisicas: "/baunitIdFisicas",
   baunits: "/baunits",
@@ -65,7 +66,7 @@ export const environment = {
     resources: "resorces/",
     startProcess: "startProcess",
     participation:'participation/',
-    value: "/bpmOperation/"
+    value: "/bpmOperation"
   },
   bpmProcess: {
     category: "/category",
@@ -73,7 +74,9 @@ export const environment = {
     value: "/bpmProcess"
   },
   calificationUB: "/calificationUB",
-  ccDireccion: "/ccDireccion/",
+  typologyType: "/tipologiaTipo/",
+  ccDireccion: "/ccDireccion",
+  cancel: "/cancel",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",
@@ -111,7 +114,7 @@ export const environment = {
   port: "5001",
   post_path_viewer: "rest/config/setParams",
   production: false,
-  proExecution: "/proExecution/",
+  proExecution: "/proExecution",
   qbaunit_ccbarrio: "/qbaunit/ccbarrio",
   qbaunit_cccomuna: "/qbaunit/cccomuna",
   qbaunit_cccorr: "/qbaunit/cccorr",
@@ -146,8 +149,6 @@ export const environment = {
   unitBuild: "/unitBuild",
   unitBuilt: "/unitBuilt",
   urban_zones: "/ccZonaHomoFisicaUr",
-  url: "https://dev.api.sismas.com.co",
-  url_viewer: "https://prediosplus.map.cadastre4world.com:8081/mapstore/",
   user_exist: "/username/",
   valuation: "/valuation/",
   video: "assets/video/desarrollo.mp4",
@@ -158,4 +159,8 @@ export const environment = {
     notified: '/notificar',
     notify: '/aviso'
   },
+  url: "https://dev.api.sismas.com.co",
+  url_viewer: "https://prediosplus.map.cadastre4world.com:8081/mapstore/",
+  url_domain_name: 'https://dev.api.sismas.com.co:5001/domain/name?',
+  getApiQualificationUrl: 'https://dev.api.sismas.com.co:5001/calificationUB/',
 };

@@ -1,8 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GeoEconomicZoneInfo, PhysicalZoneInfo } from '../../../interfaces/information-property/info-zones';
-import { ZoneBAUnit } from '../../../interfaces/information-property/zone-baunit';
+import { GeoEconomicZoneInfo } from '../../../interfaces/information-property/info-zones';
+import { ZoneBAUnitFisica } from '../../../interfaces/information-property/zone-baunit';
 import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
 import { environment as envi } from '../../../../../environments/environments';
 
@@ -17,7 +17,7 @@ export class InformationZonesService {
 
   constructor(private requestsService: SendGeneralRequestsService) { }
 
-  getByBauniFisica(baunitId: number): Observable<ZoneBAUnit> {
+  getByBauniFisica(baunitId: number): Observable<ZoneBAUnitFisica> {
     const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('baunitId', `${baunitId}`);
@@ -34,6 +34,7 @@ export class InformationZonesService {
     return this.getData(url, paramsR);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private getData(url: string, params: any): Observable<any> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }

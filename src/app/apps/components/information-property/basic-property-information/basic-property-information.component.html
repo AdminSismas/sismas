@@ -180,10 +180,10 @@
             @if (
               data !== null &&
               data !== undefined &&
-              data.cadastralRegistryNumber !== null &&
-              data.cadastralRegistryNumber
+              data.cadastralCreatedAt !== null &&
+              data.cadastralCreatedAt
             ) {
-              <span class="text-sm">{{ data.cadastralRegistryNumber }}</span>
+              <span class="text-sm">{{ data.cadastralCreatedAt | date: "dd/MM/yyyy" }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }

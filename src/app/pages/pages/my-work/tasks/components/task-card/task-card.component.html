@@ -44,13 +44,10 @@
 
   <!-- Contenedor de texto centrado -->
   <div
-    class="text-container text-center flex-grow"
+    class="text-container start-center flex-grow px-4"
     (click)="viewDetailTask(protaskE)">
-    <span>
-      {{ 'Detalle trámite' }}
-    </span>
     <span class="text-sm block">
-      {{ protaskE.proTask?.flowDetail }}
+     {{ 'Detalle trámite' }} - {{ protaskE.proTask?.flowDetail }}
     </span>
   </div>
 </div>

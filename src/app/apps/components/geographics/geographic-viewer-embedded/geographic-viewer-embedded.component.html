@@ -1,11 +1,46 @@
 @if (showMap) {
-  <iframe
-    *ngIf="urlIframe"
-    [id]="idComponent"
-    [src]="urlIframe"
-    class="w-full h-full min-h-[700px]"
-    width="100%" height="100%" style="border: none">
-  </iframe>
+
+  @if (!enableRefreshButton) {
+    <iframe
+      *ngIf="urlIframe"
+      [id]="idComponent"
+      [src]="urlIframe"
+      class="w-full h-full min-h-[700px]"
+      width="100%" height="100%" style="border: none">
+    </iframe>
+  } @else {
+
+    <vex-page-layout-content class="container-fluid px-0 py-0" vexFluidHeight fluidHeight=208>
+      <!-- REFRESH BUTTON GEOGRAPHIC MAP   -->
+      <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
+        <div class="rounded-tr rounded-br border-l-3 px-0 py-0 m-0 flex flex-col sm:flex-row items-center gap-3">
+          <span class="sm:flex-auto"></span>
+          <span class="sm:flex-auto xl:flex-1"></span>
+          <button
+            class="rounded-full grow xl:max-w-[160px] sm:min-w-[80px]"
+            color="primary"
+            mat-raised-button
+            type="button"
+            (click)="refreshMap()">
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
+              svgIcon="mat:refresh"
+            ></mat-icon>
+            <span>Refrescar</span>
+          </button>
+        </div>
+      </div>
+      <iframe
+        vexFluidHeight fluidHeight=269
+        *ngIf="urlIframe"
+        [id]="idComponent"
+        [src]="urlIframe"
+        class="w-full h-full min-h-[600px]"
+        width="100%" height="100%" style="border: none">
+      </iframe>
+    </vex-page-layout-content>
+
+  }
 
   <vex-loading-app
     *ngIf="(isExistDataInformations$ | async) === false && !urlIframe"

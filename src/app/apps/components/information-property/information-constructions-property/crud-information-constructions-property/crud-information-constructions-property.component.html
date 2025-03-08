@@ -1,0 +1,549 @@
+<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+  @if (this.crudInformationData && this.crudInformationData.type === 'UPDATE') {
+    <h3 class="subheading-2 m-0 flex-auto">
+      Editar Construcción
+    </h3>
+  } @else if (this.crudInformationData && this.crudInformationData.type === 'CREATE') {
+    <h3 class="title m-0 flex-auto">
+      Nueva Construcción
+    </h3>
+  }
+  <button class="text-secondary" mat-icon-button type="button" (click)="handleDialogClose()">
+    <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="text-border"></mat-divider>
+
+<mat-dialog-content class="p-0-cons">
+  <div @fadeInUp class="card overflow-hidden">
+    <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+      <ng-template matStepperIcon="edit">
+        <mat-icon svgIcon="mat:done_all"></mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="done">
+        <mat-icon svgIcon="mat:done_all"></mat-icon>
+      </ng-template>
+
+      <!-- Aspectos de Construcción -->
+      <mat-step [stepControl]="editForm">
+        <div [@stagger]="true" class="p-0 container-fluid">
+          <form [formGroup]="editForm">
+            <ng-template matStepLabel>Aspectos de Construcción</ng-template>
+            <div class="p-0 pb-1 container">
+              <div class="px-1 py-4 flex flex-col">
+                <div class="mt-1 flex flex-col sm:flex-row sm:gap-4 m-0">
+                  <vex-combox-custom-selector
+                    [idSelector]="'BuiltType' + 'dispname' + 15648"
+                    [label]="'Tipo de Construcción'"
+                    [placeholder]="'Seleccione el tipo...'"
+                    [apiUrl]="api_domainName"
+                    [queryParams]="{ domainName: 'BuiltType', active: true }"
+                    [valueKey]="'dispname'"
+                    [displayKey]="'dispname'"
+                    formControlName="domBuiltType"
+                    (selectionChange)="onTypeSelectionChange($event)"
+                    cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                    class="flex-auto"
+                  ></vex-combox-custom-selector>
+                  <vex-combox-custom-selector
+                    [idSelector]="'domBuiltUseControl' + 'dispname' + 15648"
+                    [label]="'Uso de Construcción'"
+                    [placeholder]="'Seleccione el uso...'"
+                    [options]="filteredBuiltUseOptions"
+                    [valueKey]="'dispname'"
+                    [displayKey]="'dispname'"
+                    formControlName="domBuiltUse"
+                    cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                    class="flex-auto"
+                  ></vex-combox-custom-selector>
+                </div>
+                <div class="mt-1 flex flex-col sm:flex-row sm:gap-4 m-0">
+                  <vex-input
+                    class="flex-auto"
+                    label="ID"
+                    type="text"
+                    idComboInput="unitBuiltLabel5445"
+                    [formControlNameInput]="'unitBuiltLabel'"
+                    [formControlInput]="validateUnitBuiltLabel"
+                    [hintValue]="CONSTANT_MSG_UNITBUILT_LABEL"
+                  ></vex-input>
+                  <vex-input
+                    class="flex-auto"
+                    label="Piso"
+                    type="text"
+                    idComboInput="unitBuiltFloors21323"
+                    [formControlNameInput]="'unitBuiltFloors'"
+                    [formControlInput]="validateUnitBuiltFloors"
+                    [hintValue]="CONSTANT_MSG_ONLY_ONE_99"
+                  ></vex-input>
+                  <vex-input
+                    class="flex-auto"
+                    label="Año"
+                    type="text"
+                    idComboInput="unitBuiltYear123213"
+                    [formControlNameInput]="'unitBuiltYear'"
+                    [formControlInput]="validateUnitBuiltYear"
+                    [hintValue]="CONSTANT_MSG_UNITBUILT_YEAR"
+                  ></vex-input>
+                </div>
+                <div class="mt-1 flex flex-col sm:flex-row sm:gap-4 m-0">
+                  <vex-input
+                    class="flex-auto"
+                    label="Área Total"
+                    type="text"
+                    idComboInput="unitBuiltArea2223"
+                    [formControlNameInput]="'unitBuiltArea'"
+                    [formControlInput]="validateUnitBuiltArea"
+                    [hintValue]="CONSTANT_MSG_TYPE_AREA"
+                  ></vex-input>
+                  <vex-input
+                    class="flex-auto"
+                    label="Área Privada"
+                    type="text"
+                    idComboInput="unitBuiltPrivateArea12123"
+                    [formControlNameInput]="'unitBuiltPrivateArea'"
+                    [formControlInput]="validateUnitBuiltPrivateArea"
+                    [hintValue]="CONSTANT_MSG_TYPE_AREA"
+                  ></vex-input>
+                </div>
+                <vex-text-area
+                  class="flex-1"
+                  label="Observación"
+                  idTextArea="unitBuiltObservation_Observation"
+                  [formControlNameInput]="'unitBuiltObservation'"
+                ></vex-text-area>
+              </div>
+            </div>
+            <div class="actions flex items-center justify-end gap-2">
+              <button color="primary" mat-raised-button matStepperNext
+                      [disabled]="editForm.invalid"
+                      (click)="saveConstruction()">
+                Continuar
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-step>
+
+      <!-- Calificación -->
+      <mat-step [stepControl]="activeQualificationForm">
+        <form [formGroup]="activeQualificationForm">
+          <ng-template matStepLabel>Calificación</ng-template>
+          <div class="actions flex items-center gap-2 pt-0">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="toggleQualificationMode(TYPE_TRADITIONAL)"
+              [class]="qualificationMode === TYPE_TRADITIONAL ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+              [disabled]="qualificationMode === TYPE_TRADITIONAL"
+            >
+              Tradicional
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="toggleQualificationMode(TYPE_TYPOLOGY)"
+              [class]="qualificationMode === TYPE_TYPOLOGY ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+              [disabled]="qualificationMode === TYPE_TYPOLOGY"
+            >
+              Tipología
+            </button>
+          </div>
+
+          @if (qualificationMode === TYPE_TRADITIONAL) {
+            <!-- Tradicional -->
+            <div class="mt-2 flex flex-col gap-2">
+              <div class="mt-0 flex flex-col gap-2">
+                <p><strong>Estructura</strong></p>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'arma' + 12354"
+                    [label]="'Armazón'"
+                    [placeholder]="'Escoger armazón'"
+                    [apiUrl]="getApiQualificationUrl('Armazon')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'structureFraming'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Muros' + 12354"
+                    [label]="'Muros'"
+                    [placeholder]="'Escoger muros'"
+                    [apiUrl]="getApiQualificationUrl('Muros')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'structureWalls'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'conseva_cuviertas' + 12354"
+                    [label]="'Cubierta'"
+                    [placeholder]="'Escoger cubierta'"
+                    [apiUrl]="getApiQualificationUrl('Cubierta')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'structureRoof'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'conseva_one' + 12354"
+                    [label]="'Conservación'"
+                    [placeholder]="'Escoger conservación'"
+                    [apiUrl]="getApiQualificationUrl('Conservacion_Cubierta')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'structureConservation'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+                </div>
+              </div>
+
+              <div class="mt-0 flex flex-col gap-2">
+
+                <p><strong>Acabados Principales</strong></p>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Fachadas' + 12354"
+                    [label]="'Fachadas'"
+                    [placeholder]="'Escoger fachada'"
+                    [apiUrl]="getApiQualificationUrl('Fachada')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'finishesFacades'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'muros_cubri' + 12354"
+                    [label]="'Cubrimiento de muros'"
+                    [placeholder]="'Escoger cubrimiento'"
+                    [apiUrl]="getApiQualificationUrl('Cubrimiento_Muros')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'finishesWalls'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Pisos' + 12354"
+                    [label]="'Pisos'"
+                    [placeholder]="'Escoger pisos'"
+                    [apiUrl]="getApiQualificationUrl('Piso')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'finishesFloors'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Conserva' + 12354"
+                    [label]="'Conservación'"
+                    [placeholder]="'Escoger conservación'"
+                    [apiUrl]="getApiQualificationUrl('Conservacion_Acabados')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'finishesConservation'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+                </div>
+
+              </div>
+
+              <div class="mt-0 flex flex-col gap-2">
+                <p><strong>Baño</strong></p>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Tamanio' + 12354"
+                    [label]="'Tamaño'"
+                    [placeholder]="'Escoger tamaño'"
+                    [apiUrl]="getApiQualificationUrl('Tamanio_Banio')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'bathSize'"
+                    (selectionChange)="toggleBathroomFields($event)"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Enchapes' + 12354"
+                    [label]="'Enchapes'"
+                    [placeholder]="'Escoger enchape'"
+                    [apiUrl]="getApiQualificationUrl('Enchape_Banio')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'bathEnchapes'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Mobiliario' + 12354"
+                    [label]="'Mobiliario'"
+                    [placeholder]="'Escoger mobiliario'"
+                    [apiUrl]="getApiQualificationUrl('Mobiliario_Banio')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'bathFurniture'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Conservación' + 12354"
+                    [label]="'Conservación'"
+                    [placeholder]="'Escoger conservación'"
+                    [apiUrl]="getApiQualificationUrl('Conservacion_Banio')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'bathConservation'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+                </div>
+              </div>
+
+              <div class="mt-0 flex flex-col gap-2">
+                <p><strong>Cocina</strong></p>
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Tamanio' + 12354"
+                    [label]="'Tamaño'"
+                    [placeholder]="'Escoger tamaño'"
+                    [apiUrl]="getApiQualificationUrl('Tamanio_Cocina')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'kitchenSize'"
+                    (selectionChange)="toggleKitchenFields($event)"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Enchapes' + 12354"
+                    [label]="'Enchapes'"
+                    [placeholder]="'Escoger enchape'"
+                    [apiUrl]="getApiQualificationUrl('Enchape_Cocina')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'kitchenEnchapes'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Mobiliario' + 12354"
+                    [label]="'Mobiliario'"
+                    [placeholder]="'Escoger mobiliario'"
+                    [apiUrl]="getApiQualificationUrl('Mobiliario_Cocina')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'kitchenFurniture'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Conservación' + 12354"
+                    [label]="'Conservación'"
+                    [placeholder]="'Escoger conservación'"
+                    [apiUrl]="getApiQualificationUrl('Conservacion_Cocina')"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    [formControlName]="'kitchenConservation'"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+                </div>
+              </div>
+
+            </div>
+          }
+          @if (qualificationMode === TYPE_TYPOLOGY) {
+            <!-- Tipología -->
+            <div class="mt-4 flex flex-col gap-2">
+              <p><strong>Tipología</strong></p>
+              <vex-combox-custom-selector
+                [idSelector]="'Tipologia ' + 12354"
+                [label]="'Tipología'"
+                [placeholder]="'Seleccione tipología...'"
+                [apiUrl]="getApiQualificationUrl('Tipologia')"
+                [displayKey]="'dispname'"
+                formControlName="domTipologiaTipo"
+              ></vex-combox-custom-selector>
+            </div>
+          }
+          <div class="actions flex items-center justify-end gap-2">
+            <button color="primary" mat-button matStepperPrevious type="button">
+              Atras
+            </button>
+            <button
+              class="px-2"
+              mat-raised-button
+              color="accent"
+              (click)="resetConstructionAndQualification()">
+              Borrar
+            </button>
+            <button
+              class="px-2"
+              mat-raised-button
+              color="primary"
+              (click)="saveConstructionAndQualification()">
+              Guardar
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+    </mat-horizontal-stepper>
+  </div>
+</mat-dialog-content>
+
+<swal
+  #saveConfirmDialog
+  title="¿Estás seguro?"
+  text="¿Deseas guardar los cambios realizados?"
+  icon="warning"
+  [showCancelButton]="true"
+  [confirmButtonText]="'Sí, guardar cambios'"
+  [cancelButtonText]="'Cancelar'"
+  [confirmButtonColor]="'#3085d6'"
+  [cancelButtonColor]="'#d33'">
+</swal>
+
+<swal
+  #successDialog
+  title="¡Guardado!"
+  text="Los datos se han actualizado correctamente."
+  icon="success"
+  [showConfirmButton]=false
+>
+</swal>
+
+<swal
+  #validationErrorDialog
+  title="¡Error!"
+  text="Por favor, corrige las validaciones del formulario."
+  icon="error"
+  [confirmButtonColor]="'#3f51b5'">
+</swal>
+
+<swal
+  #calificationSuccessDialog
+  title="¡Calificación Guardada!"
+  text="Los datos de la calificación han sido registrados."
+  icon="success"
+  [confirmButtonColor]="'#3f51b5'">
+</swal>
+
+<swal
+  #errorSaveDialog
+  title="¡Error!"
+  text="No se logro almacenar la informacion."
+  icon="error">
+</swal>
+
+<swal
+  #formError
+  title="Error"
+  icon="error"
+  text="Por favor, corrija los errores en el formulario para continuar."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #idError
+  title="Error"
+  icon="error"
+  text="El ID de la unidad básica no está definido."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #qualificationError
+  title="Error"
+  icon="error"
+  text="Modo de calificación no reconocido."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #warningQualificationDialog
+  title="Atención"
+  icon="warning"
+  text="Al cambiar de tipo de calificación se procedera a eliminar la informacion diligenciada en este formulario."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #incompleteForm
+  title="Error"
+  icon="error"
+  text="Por favor, completa todos los campos requeridos en la calificación tradicional."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #notFoundValues
+  title="Error"
+  icon="error"
+  text="No se encontraron valores válidos para enviar."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #saveErrorDialog
+  title="Error"
+  icon="error"
+  text="Ocurrió un error al guardar la calificación tradicional"
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #selectTypeError
+  title="Error"
+  icon="error"
+  text="Por favor, selecciona una tipología antes de continuar."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #successQualificationType
+  title="Calificación Completa"
+  icon="success"
+  text="La calificación por tipología se guardó correctamente."
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #errorQualificationType
+  title="Error"
+  icon="error"
+  text="Ocurrió un error al guardar la calificación por tipología"
+  confirmButtonColor="#3f51b5"
+></swal>
+
+<swal
+  #closeDialog
+  title="¿Está seguro de cerrar?"
+  text="Está a punto de cerrar el diálogo sin haber completado la calificación. Los cambios no se guardarán."
+  icon="warning"
+  [showCancelButton]="true"
+  [confirmButtonColor]="'#3085d6'"
+  [cancelButtonColor]="'#d33'"
+  [confirmButtonText]="'Sí, cerrar'"
+  [cancelButtonText]="'Cancelar'"
+></swal>

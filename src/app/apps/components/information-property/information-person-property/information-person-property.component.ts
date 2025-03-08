@@ -29,7 +29,7 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_PERSON,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -120,7 +120,7 @@ export class InformationPersonPropertyComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['typeInformation']) {
       const { currentValue: typeInformation } = changes['typeInformation'];
-      if (typeInformation === TYPEINFORMATION_VISUAL) {
+      if (typeInformation === TYPE_INFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
         this.pageSizeOptions = PAGE_OPTION__5_7_10;
         this.columns = TABLE_COLUMN_PROPERTIES_PERSON;

@@ -11,7 +11,7 @@ export const getRandomInt = (max: number): number => {
 };
 
 export const  indexArraylist = (obj:any, value:any) => {
-  if (validarVariable(obj) && obj.length > 0) {
+  if (validateVariable(obj) && obj.length > 0) {
     return obj.reduce((acc:any, el:any) => ({
       ...acc,
       [el[value]]: el,
@@ -19,6 +19,11 @@ export const  indexArraylist = (obj:any, value:any) => {
   }
 };
 
-export const validarVariable = (obj :string):boolean => {
+
+export const validateVariable = (obj :string | null | undefined):boolean => {
   return obj !== null && obj !== undefined && obj !== "" || ( typeof obj === 'object');
+};
+
+export const validateIsNumber = (val :any):boolean => {
+  return val !== null && val !== undefined && val !== "" && typeof val === 'number' && !isNaN(val);
 };

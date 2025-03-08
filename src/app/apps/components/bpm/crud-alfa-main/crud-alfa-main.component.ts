@@ -18,9 +18,9 @@ import {
   PAGE_OPTION_UNIQUE_7,
   STRING_INFORMATION_NOT_FOUND,
   TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN,
-  TYPEOPERATION_ADD,
-  TYPEOPERATION_CREATE,
-  TYPEOPERATION_DELETE
+  TYPE_OPERATION_ADD,
+  TYPE_OPERATION_CREATE,
+  TYPE_OPERATION_DELETE
 } from '../../../constants/general/constant';
 import {
   CONSTANT_NAME_ADD_LABEL,
@@ -194,7 +194,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   loadPropertiesInformation() {
-    if (this.typeOperation === TYPEOPERATION_ADD) {
+    if (this.typeOperation === TYPE_OPERATION_ADD) {
       return;
     }
 
@@ -339,11 +339,11 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       .map((column) => column.property);
   }
 
-  protected readonly TYPEOPERATION_ADD = TYPEOPERATION_ADD;
-  protected readonly TYPEOPERATION_CREATE = TYPEOPERATION_CREATE;
+  protected readonly TYPEOPERATION_ADD = TYPE_OPERATION_ADD;
+  protected readonly TYPEOPERATION_CREATE = TYPE_OPERATION_CREATE;
   protected readonly CONSTANT_NAME_ADD_LABEL = CONSTANT_NAME_ADD_LABEL;
   protected readonly CONSTANT_NAME_DELETE_LABEL = CONSTANT_NAME_DELETE_LABEL;
   protected readonly CONSTANT_NAME_CREATE_LABEL = CONSTANT_NAME_CREATE_LABEL;
   protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
-  protected readonly TYPEOPERATION_DELETE = TYPEOPERATION_DELETE;
+  protected readonly TYPEOPERATION_DELETE = TYPE_OPERATION_DELETE;
 }

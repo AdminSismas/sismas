@@ -3,12 +3,7 @@
   mat-dialog-title
 >
   <h2 class="headline m-0 flex-auto">
-    {{
-      CONSTANT_INFOMATION_PREDIAL +
-        TWO_POINT_ +
-        this.baunitHead?.baunitIdE +
-        " - " +
-        baunitHead?.domBaunitCondition
+    {{ CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE + " - " + baunitHead?.domBaunitCondition
     }}
   </h2>
 
@@ -31,40 +26,49 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 
-<vex-page-layout-content class="container-fluid p-0">
-  <mat-tab-group (selectedTabChange)="onTabChange($event)">
-    @for (option of optionschemas; track option) {
-      <mat-tab [label]="option.title">
-        <vex-cadastral-information-property
-          [id]="'Cadastralinformation_' + option.schema"
-          [label]="option.title"
-          [schema]="option.schema"
-          [typeInformation]="typeInformation"
-          [contentInfoSchema]="defaults"
-          [showTittle]="false"
-          [baunitCondition]="baunitHead?.domBaunitCondition"
-          [resources]="defaults.resources!"
-          [rulePage]="rulePage"
-        ></vex-cadastral-information-property>
-      </mat-tab>
-    } @empty {
-      <mat-tab label="No Data">
-        <h1 class="text-center">No tabs available.</h1>
-      </mat-tab>
-    }
-  </mat-tab-group>
-</vex-page-layout-content>
-
-<!-- <vex-page-layout-content class="container-fluid p-0" *ngIf="showOnlyOneSchema">
-  <vex-cadastral-information-property
-    [id]="'Cadastralinformation_' + this.optionschemas[0].schema"
-    [label]="this.optionschemas[0].tittle"
-    [schema]="this.optionschemas[0].schema"
-    [typeInformation]="typeInformation"
-    [contentInfoSchema]="this.defaults"
-    [showTittle]="false">
-  </vex-cadastral-information-property>
-</vex-page-layout-content> -->
+@if(optionschemas.length > 0 && typeInformation === TYPE_INFORMATION_VISUAL) {
+  <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
+    <mat-tab-group (selectedTabChange)="onTabChange($event)">
+      @for (option of optionschemas; track option) {
+        <mat-tab [label]="option.title">
+          <vex-cadastral-information-property
+            [id]="'Cadastralinformation_' + option.schema"
+            [label]="option.title"
+            [schema]="option.schema"
+            [typeInformation]="typeInformation"
+            [contentInfoSchema]="defaults"
+            [showTittle]="false"
+            [baunitCondition]="baunitHead?.domBaunitCondition"
+            [resources]="defaults.resources!"
+            [rulePage]="rulePage"
+            cssClasses = "mat-mdc-dialog-content_tab"
+            vexFluidHeight fluidHeight=105
+          ></vex-cadastral-information-property>
+        </mat-tab>
+      } @empty {
+        <mat-tab label="No Data">
+          <h1 class="text-center">No tabs available.</h1>
+        </mat-tab>
+      }
+    </mat-tab-group>
+  </vex-page-layout-content>
+} @else if (optionschemas.length === 1 && typeInformation === TYPE_INFORMATION_EDITION) {
+  <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
+    <vex-cadastral-information-property
+      [id]="'Cadastralinformation_' + optionschemas[0].schema"
+      [label]="optionschemas[0].title"
+      [schema]="optionschemas[0].schema"
+      [typeInformation]="typeInformation"
+      [contentInfoSchema]="defaults"
+      [showTittle]="false"
+      [baunitCondition]="baunitHead?.domBaunitCondition"
+      [resources]="defaults.resources!"
+      [rulePage]="rulePage"
+      cssClasses = "mat-mdc-dialog-content"
+      vexFluidHeight fluidHeight=105
+    ></vex-cadastral-information-property>
+  </vex-page-layout-content>
+}
 
 <mat-menu
   #settingsMenu="matMenu"

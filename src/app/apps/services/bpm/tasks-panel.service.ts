@@ -13,7 +13,7 @@ import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 })
 export class TasksPanelService {
 
-  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
+  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}/`;
 
   private _listProtaskE = new BehaviorSubject<ProTaskE>({});
   listProtaskE$ = this._listProtaskE.asObservable();
@@ -86,10 +86,8 @@ export class TasksPanelService {
 
   getResources(executionId: string): Observable<string[]> {
     const url = `${this.basic_url}${envi.bpmOperation.proflow_proExecution}${envi.bpmOperation.resources}${executionId}`;
-
     const headers: HttpHeaders = new HttpHeaders()
       .set('Content-Type', 'text/plain;charset=UTF-8');
-
     return  this.http.get(url, { headers, responseType: 'text' })
       .pipe(
         map((result: string) => result.split(',').map((resource: string) => resource.trim()))

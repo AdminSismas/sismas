@@ -1,5 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlContainer,
+  FormControl,
+  FormGroupDirective,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +18,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InputType } from '../../../interfaces/general/content-info';
+import { getRandomInt } from 'src/app/apps/utils/general';
+import {
+  CONSTANT_ERR_CAPITAL_LETTER,
+  CONSTANT_ERR_INVALID_AREA,
+  CONSTANT_ERR_INVALID_NUMBER, CONSTANT_ERR_INVALID_YEAR, CONSTANT_ERR_ONLY_ONE_99
+} from '../../../constants/general/constantsAlertLabel';
 
 @Component({
   selector: 'vex-input',
@@ -38,25 +50,57 @@ export class InputComponent implements OnInit {
 
   @Input() public idComboInput = '';
   @Input() public cssClasses?: string;
-  @Input() public label = '';
+  @Input() public label!: string | null;
   @Input() public formControlNameInput = '';
-  @Input() public icon = '';
+  @Input() public formControlInput:FormControl | null = null;
+  @Input() public icon!: string | null;
   @Input() type: InputType = 'text';
-  @Input() public hintValue: string |null = null;
+  @Input() public hintValue!: string | null;
   @Input() public hideRequiredMarker = true;
 
   constructor() { }
 
   ngOnInit(): void {
     if (this.idComboInput?.length>0) {
-      this.idComboInput = this.idComboInput + this.getRandomInt(10000) + this.formControlNameInput;
+      this.idComboInput = this.idComboInput + getRandomInt(10000) + this.formControlNameInput;
     } else {
-      this.idComboInput = this.getRandomInt(10000) + this.formControlNameInput;
+      this.idComboInput = getRandomInt(10000) + this.formControlNameInput;
     }
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
+  checkIsInValid(formControl: AbstractControl | null): boolean {
+    return !(
+      formControl && formControl.hasOwnProperty('status') && formControl.status === 'VALID' &&
+      formControl.errors === null
+    );
+  }
+
+  checkForErrorsIn(formControl: AbstractControl): string {
+    if (formControl.hasError('required')) {
+      return 'Campo requerido'
+    }
+
+    if (formControl.errors?.hasOwnProperty('capitalLetter') && formControl.errors?.['capitalLetter']) {
+      return CONSTANT_ERR_CAPITAL_LETTER;
+    }
+
+    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber']) {
+      return CONSTANT_ERR_INVALID_NUMBER;
+    }
+
+    if (formControl.errors?.hasOwnProperty('errorArea') && formControl.errors?.['errorArea']) {
+      return CONSTANT_ERR_INVALID_AREA;
+    }
+
+    if (formControl.errors?.hasOwnProperty('yearBetween1900And2099') && formControl.errors?.['yearBetween1900And2099']) {
+      return CONSTANT_ERR_INVALID_YEAR;
+    }
+
+    if (formControl.errors?.hasOwnProperty('max99') && formControl.errors?.['max99']) {
+      return CONSTANT_ERR_ONLY_ONE_99;
+    }
+
+    return '';
   }
 }
 

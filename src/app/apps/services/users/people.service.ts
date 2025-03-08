@@ -73,7 +73,7 @@ export class PeopleService {
     return this.requestsService.sendRequestsFetchPostBody(url, body);
   }
   private updateBody(url: any, body: any): Observable<InformationPegeable> {
-    return this.requestsService.sendRequestsUpdatePostBody(url, body);
+    return this.requestsService.sendRequestsUpdatePutBody(url, body);
   }
   private deleteBody(url: any): Observable<InformationPegeable> {
     return this.requestsService.sendDeleteFetch(url);

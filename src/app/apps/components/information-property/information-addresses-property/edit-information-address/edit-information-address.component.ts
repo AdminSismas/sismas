@@ -38,7 +38,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export interface AddEditInformationDataI {
   type: 'edit' | 'new';
   basicInformationAddress: BasicInformationAddress | undefined;
-  baunitId: string | undefined;
   hasMainAddress: boolean | undefined ;
 }
 
@@ -113,10 +112,14 @@ export class EditInformationAddressComponent implements OnInit {
       }else{
           this.procesoActual = PROCESO_ACTUALIZAR_DIRECCION;
       }
+      const { direccionId, baunitId, schema, executionId } = this.addEditInformationData.basicInformationAddress!;
       const detailBasicInformationAddress: DetailBasicInformationAddress =
         await lastValueFrom(
           this.informationPropertyService.getDetailBasicInformationPropertyAddresses(
-            this.addEditInformationData.basicInformationAddress?.direccionId
+            direccionId!,
+            schema!,
+            baunitId,
+            executionId
           )
         );
       this.detailBasicInformation.set(detailBasicInformationAddress);
@@ -132,8 +135,8 @@ export class EditInformationAddressComponent implements OnInit {
   }
 
   async onSubmitForm(): Promise<void> {
+    this.informationAddressForm.markAllAsTouched();
     if (this.informationAddressForm.invalid) {
-      this.informationAddressForm.markAllAsTouched();
       return;
     }
 
@@ -162,13 +165,15 @@ export class EditInformationAddressComponent implements OnInit {
         createBasicInformationAddress.nombrePredio = value?.nombrePredio;
         createBasicInformationAddress.complemento = '';
 
-        const baunitId: string = this.addEditInformationData.baunitId || '';
+        const baunitId: string = this.addEditInformationData.basicInformationAddress?.baunitId || '';
         if (!baunitId) {
           throw new Error('baunitId is not set.');
         }
         detailBasicInformationAddress = await lastValueFrom(
           this.informationPropertyService.createBasicInformationPropertyAddress(
             baunitId,
+            this.addEditInformationData.basicInformationAddress!.schema!,
+            this.addEditInformationData.basicInformationAddress!.executionId!,
             createBasicInformationAddress
           )
         );
@@ -187,22 +192,26 @@ export class EditInformationAddressComponent implements OnInit {
           createBasicInformationAddress = this.filterValueAddreDontStructuredModel(value);
         }
 
+        createBasicInformationAddress.direccionId = value?.direccionId;
         createBasicInformationAddress.domTipoDireccion = value?.domTipoDireccion;
         createBasicInformationAddress.esDireccionPrincipal = this.esDireccionPrincipal?.value;
         createBasicInformationAddress.codigoPostal = value?.codigoPostal;
         createBasicInformationAddress.nombrePredio = value?.nombrePredio;
         createBasicInformationAddress.complemento = '';
 
+        const { baunitId, schema, executionId } = this.addEditInformationData.basicInformationAddress!;
 
         detailBasicInformationAddress  = await lastValueFrom(
           this.informationPropertyService.updateBasicInformationPropertyAddress(
-            this.detailBasicInformation()?.direccionId as string,
+            baunitId,
+            schema!,
+            executionId!,
             createBasicInformationAddress
           )
         );
       }
       this.informationPropertyService.reloadTableSet(true);
-      this.dialogRef.close(detailBasicInformationAddress);
+      this.dialogRef.close(true);
     } catch (e) {
       console.error(e);
     }

@@ -1,53 +1,55 @@
 import { NAME_NO_DISPONIBLE } from '../../constants/general/constant';
+import { TypeOperationConstruction } from '../general/content-info';
 
 export class ContentInformationConstruction {
   unitBuiltId?: number;
-  domBuiltType?: string;
-  domBuiltUse?: string;
+  domBuiltType?: string | null;
+  domBuiltUse?: string | null;
   unitBuiltCode?: number;
-  unitBuiltLabel?: string;
+  unitBuiltLabel?: string | null;
   unitBuiltFloors?: number;
   unitBuiltYear?: number;
-  unitBuiltArea?: number;
+  unitBuiltArea?: number| null;
   unitBuiltScore?: number;
-  domTipologiaTipo?: string;
+  domTipologiaTipo?: string | null;
   unitBuiltValuation?: number;
   unitBuiltValuationM2?: number;
-  unitBuiltPrivateArea?: number;
-  unitBuiltObservation?: string;
-  hash?: string;
-  createdBy?: string;
-  createdAt?: string;
-  updatedBy?: string;
-  updatedAt?: string;
-  unitBuiltAreaE?: string;
+  unitBuiltPrivateArea?: number| null;
+  unitBuiltObservation?: string | null;
+  hash?: string | null;
+  createdBy?: string | null;
+  createdAt?: string | null;
+  updatedBy?: string | null;
+  updatedAt?: string | null;
+  unitBuiltAreaE?: string | null;
   schema?:string;
   baunitId?:string;
+  executionId: string | null | undefined = null;
 
 
-  constructor(content?: any,schema?:string, baunitId?: string) {
-    this.unitBuiltId = content.unitBuiltId;
-    this.domBuiltType = content.domBuiltType;
-    this.domBuiltUse = content.domBuiltUse;
-    this.unitBuiltCode = content.unitBuiltCode;
-    this.unitBuiltLabel = content.unitBuiltLabel;
-    this.unitBuiltFloors = content.unitBuiltFloors;
-    this.unitBuiltYear = content.unitBuiltYear;
-    this.unitBuiltArea = content.unitBuiltArea;
-    this.unitBuiltScore = content.unitBuiltScore;
-    this.domTipologiaTipo = content.domTipologiaTipo;
-    this.unitBuiltValuation = content.unitBuiltValuation;
-    this.unitBuiltValuationM2 = content.unitBuiltValuationM2;
-    this.unitBuiltPrivateArea = content.unitBuiltPrivateArea;
-    this.unitBuiltObservation = content.unitBuiltObservation;
-    this.hash = content.hash;
-    this.createdBy = content.createdBy;
-    this.createdAt = content.createdAt;
-    this.updatedBy = content.updatedBy;
-    this.updatedAt = content.updatedAt;
-    this.unitBuiltAreaE = content.unitBuiltAreaE;
-    this.schema = schema;
-    this.baunitId = baunitId;
+  constructor(content?: any, schema?:string | null, baunitId?: string | null | undefined) {
+    this.unitBuiltId = content?.unitBuiltId || 0;
+    this.domBuiltType = content?.domBuiltType || null;
+    this.domBuiltUse = content?.domBuiltUse || null;
+    this.unitBuiltCode = content?.unitBuiltCode || 0;
+    this.unitBuiltLabel = content?.unitBuiltLabel || null;
+    this.unitBuiltFloors = content?.unitBuiltFloors || 0;
+    this.unitBuiltYear = content?.unitBuiltYear || 0;
+    this.unitBuiltArea = content?.unitBuiltArea || 0;
+    this.unitBuiltScore = content?.unitBuiltScore || 0;
+    this.domTipologiaTipo = content?.domTipologiaTipo || null;
+    this.unitBuiltValuation = content?.unitBuiltValuation || 0;
+    this.unitBuiltValuationM2 = content?.unitBuiltValuationM2 || 0;
+    this.unitBuiltPrivateArea = content?.unitBuiltPrivateArea || 0;
+    this.unitBuiltObservation = content?.unitBuiltObservation || null;
+    this.hash = content?.hash || null;
+    this.createdBy = content?.createdBy || null;
+    this.createdAt = content?.createdAt || null;
+    this.updatedBy = content?.updatedBy || null;
+    this.updatedAt = content?.updatedAt || null;
+    this.unitBuiltAreaE = content?.unitBuiltAreaE || null;
+    this.schema = schema || '';
+    this.baunitId = baunitId || '';
   }
 
   set typology(value:string) {}
@@ -59,6 +61,11 @@ export class ContentInformationConstruction {
     }
     return name;
   }
+}
+
+export interface CrudInformationConstruction {
+  type:TypeOperationConstruction;
+  contentInformation: ContentInformationConstruction | null;
 }
 
 export interface CreateBasicInformationConstruction {

@@ -36,8 +36,8 @@ import {
   ROL_GUEST,
   ROL_USER_READ,
   TABLE_COLUMN_INFORMATION_PROPERTIES,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
@@ -118,7 +118,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_INFORMATION_PROPERTIES;
@@ -163,7 +163,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     if (
       this.typeInformation &&
-      this.typeInformation === TYPEINFORMATION_VISUAL
+      this.typeInformation === TYPE_INFORMATION_VISUAL
     ) {
     }
 

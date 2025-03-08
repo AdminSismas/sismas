@@ -6,9 +6,9 @@ import {
   TemplateRef,
   ViewChild,
   computed,
-  inject,
   AfterViewInit,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Output
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -19,7 +19,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,25 +43,24 @@ import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-inform
 import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  NAVIGATION_ITEMS_INFORMACION_PROPERTIY,
+  NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_PHYSICAL,
-  TYPEINFORMATION_EDITION
+  TYPE_INFORMATION_EDITION
 } from 'src/app/apps/constants/general/constant';
-import { DeleteInformationZonesPropertyComponent } from '../../delete-information-zones-property/delete-information-zones-property.component';
 import {
-  ZoneBAUnit,
-  ZoneBAUnitResponse
+  ZoneBAUnitFisica,
 } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { PAGE } from 'src/app/apps/constants/general/procedures.constant';
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
 import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
+import { EventEmitter } from '@angular/core';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-physical-zones-property',
@@ -75,29 +74,28 @@ import { Observable } from 'rxjs';
     scaleFadeIn400ms
   ],
   imports: [
-    MatExpansionModule,
     CdkAccordionModule,
     FormsModule,
     MatAutocompleteModule,
     MatButtonModule,
+    MatCardModule,
+    MatCardModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatOptionModule,
-    MatTabsModule,
-    NgForOf,
-    NgIf,
-    ReactiveFormsModule,
-    MatSlideToggleModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatCardModule,
-    MatRippleModule,
     MatMenuModule,
+    MatOptionModule,
     MatPaginatorModule,
-    MatDialogModule,
-    CommonModule,
-    MatTableModule
+    MatRippleModule,
+    MatSlideToggleModule,
+    MatTableModule,
+    MatTabsModule,
+    NgClass,
+    ReactiveFormsModule,
+    SweetAlert2Module
   ],
   templateUrl: './physical-zones-property.component.html',
   styleUrl: './physical-zones-property.component.scss'
@@ -106,51 +104,41 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents = false;
 
-  zoneBAUnit: ZoneBAUnit[] = [];
-  zoneBAUnitRural: ZoneBAUnit[] = [];
-  zoneBAUnitUrban: ZoneBAUnit[] = [];
-  zoneBAUnitGeoeconomic: ZoneBAUnit[] = [];
+  zoneBAUnit: ZoneBAUnitFisica[] = [];
+  zoneBAUnitRural: ZoneBAUnitFisica[] = [];
+  zoneBAUnitUrban: ZoneBAUnitFisica[] = [];
 
   @Input({ required: true }) id = '';
-  @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input({ required: true }) divPolLv1!: string;
   @Input({ required: true }) divPolLv2!: string;
+  @Input({ required: true }) dataSource: MatTableDataSource<ZoneBAUnitFisica> =
+    new MatTableDataSource<ZoneBAUnitFisica>([]);
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+  @Output() physicalZoneChange = new EventEmitter<void>();
+  @Output() deletePhysicalZone = new EventEmitter<ZoneBAUnitFisica>();
 
-  columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_PHYSICAL;
+  columns: TableColumn<ZoneBAUnitFisica>[] = TABLE_COLUMN_PROPERTIES_PHYSICAL;
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
-  @ViewChild(MatPaginator, { static: true }) paginator2?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort2?: MatSort;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog:
     | TemplateRef<any>
     | undefined;
+  @ViewChild('successCreate') successCreate!: SwalComponent;
+  @ViewChild('successDelete') successDelete!: SwalComponent;
+
 
   dataBasicInformation!: BasicInformationProperty;
   fractions_sum = 0;
   page: number = PAGE;
-  page2: number = PAGE;
   totalPhysicalElements = 0;
-  totalGeoElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSize2: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
-  pageSizeOptions2: number[] = PAGE_OPTION__10_20_50_100;
   rightIdSelected?: number;
-  dataSource: MatTableDataSource<ZoneBAUnit> =
-    new MatTableDataSource<ZoneBAUnit>([]);
-
-  dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnit> =
-    new MatTableDataSource<ZoneBAUnit>([]);
-  // columnsGeoeconomicZones = signal(this.TABLE_COLUMNS);
-  // textColumnsGeoeconomicZones = computed(() =>
-  //   this.columnsGeoeconomicZones().filter((column) => column.type === 'text')
-  // );
 
   actionBtns = computed(() => {
     return [
@@ -166,65 +154,38 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
       }
     ];
   });
-  addEditDialogContent = computed<{ title: string }>(() => {
-    const initialState: any = {
-      title: 'Nueva zona'
-    };
-    return { ...initialState };
-  });
 
-  private informationPropertyService = inject(InformationPropertyService);
-  private matDialog = inject(MatDialog);
-
-  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMACION_PROPERTIY;
+  protected readonly navigationItems = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 
   constructor(
     private readonly layoutService: VexLayoutService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private matDialog: MatDialog
   ) {}
 
+  get TYPEINFORMATION_EDITION() {
+    return TYPE_INFORMATION_EDITION;
+  }
+
   get visibleColumns() {
-    return this.columns
+    const visibleColumns =  this.columns
       .filter((column) => column.visible)
       .map((column) => column.property);
-  }
 
-  getZonevalidity(row: ZoneBAUnit): string {
-    if (row.ccZonaHomoFisicaRu?.vigencia) {
-      return row.ccZonaHomoFisicaRu.vigencia.toString();
-    } else if (row.ccZonaHomoFisicaUr?.vigencia) {
-      return row.ccZonaHomoFisicaUr.vigencia.toString();
-    }
-    return NAME_NO_DISPONIBLE;
-  }
-
-  getGeoeconomicZoneCode(row: ZoneBAUnit): string {
-    if (row.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode) {
-      return row.ccZonaHomoGeoEconomica.zonaHomoGeoEconomicaCode.toString();
-    }
-    return NAME_NO_DISPONIBLE;
-  }
-
-  getGeoeconomicZoneValidity(row: ZoneBAUnit): string {
-    if (row.ccZonaHomoGeoEconomica?.vigencia) {
-      return row.ccZonaHomoGeoEconomica.vigencia.toString();
-    }
-    return NAME_NO_DISPONIBLE;
-  }
-
-  searchBasicInformationProperty(): void {
-    if (!this.schema || !this.baunitId) {
-      return;
+    if (this.typeInformation === TYPE_INFORMATION_EDITION) {
+      visibleColumns.push('actions');
     }
 
-    this.informationPropertyService
-      .getBasicInformationProperty(this.schema, this.baunitId, this.executionId)
-      .subscribe({
-        error: () => this.captureInformationSubscribeError(),
-        next: (result: BasicInformationProperty) =>
-          this.captureBasicInformationSubscribe(result)
-      });
+    return visibleColumns;
+  }
+
+  zonaHomoCode(zone: ZoneBAUnitFisica): string {
+    if (zone.ccZonaHomoFisicaRu) {
+      return zone.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode!;
+    } else {
+      return zone.ccZonaHomoFisicaUr!.zonaHomoFisicaUrCode!;
+    }
   }
 
   captureBasicInformationSubscribe(result: BasicInformationProperty): void {
@@ -239,10 +200,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
       return '';
     }
 
-    const typeCode = this.dataBasicInformation.cadastralNumberFormat.substring(
-      7,
-      9
-    );
+    const typeCode = this.dataBasicInformation.cadastralNumberFormat.substring(7,9);
 
     if (typeCode === '00') {
       return 'Rural';
@@ -259,30 +217,14 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-
-    if (this.paginator2) {
-      this.dataSourceGeoeconomicZones.paginator = this.paginator2;
-      this.changeDetectorRef.detectChanges();
-    }
-    if (this.sort2) {
-      this.dataSourceGeoeconomicZones.sort = this.sort2;
-    }
   }
 
-  refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
+  refreshPaginator(pageEvent: PageEvent): void {
     const { pageIndex, pageSize } = pageEvent;
 
-    if (paginatorId === 'paginator1') {
-      this.page = pageIndex;
-      this.pageSize = pageSize;
-      this.changeDetectorRef.markForCheck(); //
-    }
-
-    if (paginatorId === 'paginator2') {
-      this.page2 = pageIndex;
-      this.pageSize2 = pageSize;
-      this.changeDetectorRef.markForCheck(); //
-    }
+    this.page = pageIndex;
+    this.pageSize = pageSize;
+    this.changeDetectorRef.markForCheck();
   }
 
   ngOnInit() {
@@ -290,123 +232,34 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    // this.isExpandPanel(this.expandedComponent);
-    this.searchInformationsZonesProperty();
-    this.searchInformationsGeoeconomicZonesProperty();
-    this.searchBasicInformationProperty();
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+  openInformationPropertyZone(zone: ZoneBAUnitFisica): void {
+    const propertyType = this.determinePropertyType();
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchInformationsZonesProperty();
-      this.searchInformationsGeoeconomicZonesProperty();
-      this.searchBasicInformationProperty();
-    }
-  }
-
-  searchInformationsZonesProperty(): void {
-    if (!this.schema || !this.baunitId) return;
-
-    this.informationPropertyService.getByBauniFisica(this.baunitId).subscribe({
-      next: (result: ZoneBAUnitResponse[]) => {
-        result.forEach((item: ZoneBAUnitResponse) => {
-          const zone = new ZoneBAUnit(item);
-          this.zoneBAUnit.push(zone);
-        });
-        this.dataSource.data = this.zoneBAUnit;
-        this.totalPhysicalElements = this.zoneBAUnit.length;
-
-        if (this.paginator) {
-          this.dataSource.paginator = this.paginator;
-          this.changeDetectorRef.markForCheck();
-        }
-      },
-      error: () => this.captureInformationSubscribeError()
-    });
-  }
-
-  searchInformationsGeoeconomicZonesProperty(): void {
-    if (!this.schema || !this.baunitId) return;
-
-    this.informationPropertyService.getByBauniEcono(this.baunitId).subscribe({
-      next: (result: ZoneBAUnit[]) => {
-        this.zoneBAUnitGeoeconomic = result;
-        this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
-        this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
-
-        if (this.paginator2) {
-          this.dataSourceGeoeconomicZones.paginator = this.paginator2;
-          this.changeDetectorRef.detectChanges();
-        }
-      },
-      error: () => this.captureInformationSubscribeError()
-    });
-  }
-
-  openInformationPropertyZone(zone: ZoneBAUnit, zoneType: string): void {
-    if (zoneType === 'physical') {
-      const propertyType = this.determinePropertyType();
-      const dialog = this.matDialog.open(
-        DetailInformationPropertyZonesComponent,
-        {
-          ...MODAL_SMALL,
-          disableClose: true,
-          data: { zone, propertyType }
-        }
-      );
-      dialog.afterClosed().subscribe((data: any) => console.log(data));
-    } else {
-      const dialog = this.matDialog.open(
-        DetailInformationPropertyZonesComponent,
-        {
-          ...MODAL_SMALL,
-          disableClose: true,
-          data: { zone, propertyType: 'Geoeconómica' }
-        }
-      );
-      dialog.afterClosed().subscribe((data: any) => console.log(data));
-    }
+    const dialog = this.matDialog.open(
+      DetailInformationPropertyZonesComponent,
+      {
+        ...MODAL_SMALL,
+        disableClose: true,
+        data: { zone, propertyType }
+      }
+    );
+    dialog.afterClosed().subscribe((data: any) => console.log(data));
   }
 
   captureInformationSubscribeError(): void {
     this.zoneBAUnit = [];
     this.zoneBAUnitRural = [];
     this.zoneBAUnitUrban = [];
-    this.zoneBAUnitGeoeconomic = [];
-  }
-
-  captureInformationSubscribe(result: ZoneBAUnitResponse[]): void {
-    this.zoneBAUnit = result;
-    this.zoneBAUnitRural = this.filterByObject(result, 'ccZonaHomoFisicaRu');
-    this.zoneBAUnitUrban = this.filterByObject(result, 'ccZonaHomoFisicaUr');
-    this.zoneBAUnitGeoeconomic = this.filterByObject(
-      result,
-      'ccZonaHomoGeoEconomica'
-    );
-    this.dataSource.data = this.zoneBAUnit;
-  }
-
-  captureGeoeconomicInformationSubscribe(result: ZoneBAUnit[]): void {
-    this.zoneBAUnit = result;
-    this.zoneBAUnitRural = this.filterByObject(result, 'ccZonaHomoFisicaRu');
-    this.zoneBAUnitUrban = this.filterByObject(result, 'ccZonaHomoFisicaUr');
-    this.zoneBAUnitGeoeconomic = this.filterByObject(
-      result,
-      'ccZonaHomoGeoEconomica'
-    );
-    this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
   }
 
   private getRandomInt(max: number): number {
     return Math.floor(Math.random() * max);
   }
 
-  filterByObject(result: ZoneBAUnit[], key: string): ZoneBAUnit[] {
-    return result.filter((zn: ZoneBAUnit) => this.validateObjet(zn, key));
+  filterByObject(result: ZoneBAUnitFisica[], key: string): ZoneBAUnitFisica[] {
+    return result.filter((zn: ZoneBAUnitFisica) => this.validateObjet(zn, key));
   }
 
   validateObjet(object: any, key: string) {
@@ -418,50 +271,16 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
     );
   }
 
-  onClickActionBtn(id: string, zone: ZoneBAUnit): void {
+  onClickPhysicalActionBtn(id: string, zone: ZoneBAUnitFisica): void {
     if (id === 'edit') {
-      this.onClickOpenAddEditModal(zone);
+      this.onClickOpenPhysicalAddEditModal(zone);
     }
     if (id === 'delete') {
-      this.matDialog
-        .open(DeleteInformationZonesPropertyComponent, {
-          ...MODAL_SMALL,
-          disableClose: true,
-          data: {
-            zone,
-            baunitId: this.baunitId,
-            baUnitZonaId: zone.baUnitZonaId
+        this.successDelete.fire().then((result) => {
+          if (result.isConfirmed){
+            this.deletePhysicalZone.emit(zone);
           }
-        })
-        .afterClosed()
-        .subscribe(() =>
-          setTimeout(() => this.searchInformationsZonesProperty(), 200)
-        );
-    }
-  }
-
-  onClickGeoconomicActionBtn(id: string, zone: ZoneBAUnit): void {
-    if (id === 'edit') {
-      this.onClickOpenGeoconomicAddEditModal(zone);
-    }
-    if (id === 'delete') {
-      this.matDialog
-        .open(DeleteInformationZonesPropertyComponent, {
-          ...MODAL_SMALL,
-          disableClose: true,
-          data: {
-            zone,
-            baunitId: this.baunitId,
-            baUnitZonaId: zone.baUnitZonaId
-          }
-        })
-        .afterClosed()
-        .subscribe(() =>
-          setTimeout(
-            () => this.searchInformationsGeoeconomicZonesProperty(),
-            200
-          )
-        );
+        });
     }
   }
 
@@ -477,6 +296,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
         data: {
           zone: data,
           baunitId: this.baunitId,
+          executionId: this.executionId,
           isEdit,
           propertyType,
           divpolLv1: this.divPolLv1,
@@ -484,13 +304,14 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
         }
       })
       .afterClosed()
-      .subscribe(() =>
-        setTimeout(() => this.searchInformationsZonesProperty(), 200)
-      );
+      .subscribe();
   }
 
-  onClickOpenGeoconomicAddEditModal(data: any): void {
-    const propertyType = 'Geoeconomica';
+  onClickOpenPhysicalAddEditModal(data?: ZoneBAUnitFisica): void {
+    let propertyType = 'Rural';
+    if (!data?.ccZonaHomoFisicaRu) {
+      propertyType = 'Urbano';
+    }
 
     const isEdit = data && data.baUnitZonaId;
 
@@ -501,6 +322,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
         data: {
           zone: data,
           baunitId: this.baunitId,
+          executionId: this.executionId,
           isEdit,
           propertyType,
           divpolLv1: this.divPolLv1,
@@ -508,8 +330,12 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
         }
       })
       .afterClosed()
-      .subscribe(() =>
-        setTimeout(() => this.searchInformationsGeoeconomicZonesProperty(), 200)
+      .subscribe(result =>{
+        if (result) {
+          this.successCreate.fire();
+          this.physicalZoneChange.emit();
+        }
+      }
       );
   }
 

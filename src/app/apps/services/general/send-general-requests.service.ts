@@ -145,7 +145,6 @@ export class SendGeneralRequestsService {
       );
   }
 
-
   sendRequestsFetch(url: string, params: any): Promise<any> {
     return fetch(url, params)
       .then(result => result.json())
@@ -167,6 +166,10 @@ export class SendGeneralRequestsService {
     return this.http.delete<any>(url);
   }
 
+  sendDeleteParams(url: string, params:any): Observable<any> {
+    return this.http.delete<any>(url, params);
+  }
+
   sendRequestsFetchGetBody(url: any, body: any): Observable<any> {
     return this.http.get<any>(url, body);
   }
@@ -175,8 +178,16 @@ export class SendGeneralRequestsService {
     return this.http.post<any>(url, body);
   }
 
-  sendRequestsUpdatePostBody(url: any, body: any): Observable<any> {
+  sendRequestsFetchPostBodyParams(url: any, body: any, params:any): Observable<any> {
+    return this.http.post<any>(url, body, params);
+  }
+
+  sendRequestsUpdatePutBody(url: any, body: any): Observable<any> {
     return this.http.put<any>(url, body);
+  }
+
+  sendRequestsUpdatePutBodyParams(url: any, body: any, params:any): Observable<any> {
+    return this.http.put<any>(url, body, params);
   }
 
   errorNotFound(error: HttpErrorResponse) {

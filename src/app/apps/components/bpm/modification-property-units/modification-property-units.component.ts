@@ -15,7 +15,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 // Custom
 import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
 import { CrudAlfaMainComponent } from '../crud-alfa-main/crud-alfa-main.component';
-import { DataAlfaMain } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
+import { DataAlfaMain, ModificationUnitProperties } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
 import {
@@ -24,10 +24,10 @@ import {
   PAGE,
   PAGE_OPTION__5_7_10,
   PAGE_SIZE,
-  TYPEINFORMATION_EDITION,
-  TYPEOPERATION_ADD,
-  TYPEOPERATION_CREATE,
-  TYPEOPERATION_DELETE
+  TYPE_INFORMATION_EDITION,
+  TYPE_OPERATION_ADD,
+  TYPE_OPERATION_CREATE,
+  TYPE_OPERATION_DELETE
 } from 'src/app/apps/constants/general/constant';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
@@ -36,7 +36,7 @@ import {
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
-import { TABLE_COLUMNS } from '../../../constants/information-property/information-property-owners.constants';
+import { MODIFYCATION_UNITS_TABLE_COLUMNS } from 'src/app/apps/constants/modification-property-units.constants';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -63,18 +63,18 @@ export class ModificationPropertyUnitsComponent implements OnInit {
     searchTerm: [''],
     selectedMatriz: ['']
   });
-  columns: TableColumn<Operation>[] = TABLE_COLUMNS;
+  columns: TableColumn<Operation>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
 
   get ADD(): TypeOperationAlfaMain {
-    return TYPEOPERATION_ADD;
+    return TYPE_OPERATION_ADD;
   }
 
   get CRE(): TypeOperationAlfaMain {
-    return TYPEOPERATION_CREATE;
+    return TYPE_OPERATION_CREATE;
   }
 
   get DEL(): TypeOperationAlfaMain {
-    return TYPEOPERATION_DELETE;
+    return TYPE_OPERATION_DELETE;
   }
 
   actions = [
@@ -100,7 +100,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { executionId: string; baunitIdE: string; npnMatrix: string },
+    public data: ModificationUnitProperties,
     private fb: FormBuilder,
     private alfaMainService: AlfaMainService,
     private dialog: MatDialog
@@ -167,8 +167,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   }
 
   editPropertyUnit(row: BaunitHead) {
-    console.log('Editando');
-    console.log(row);
+    console.log(this.data.resources);
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
         ...MODAL_LARGE,
@@ -178,7 +177,9 @@ export class ModificationPropertyUnitsComponent implements OnInit {
           row,
           this.data.executionId,
           LIST_SCHEMAS_CONTROL_CHANGES,
-          TYPEINFORMATION_EDITION
+          TYPE_INFORMATION_EDITION,
+          '',
+          this.data.resources,
         )
       })
       .afterClosed();
@@ -192,7 +193,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   openCrudAlfaMain(type: TypeOperationAlfaMain) {
     const addNpnLike: string = this.data?.npnMatrix?.slice(0, -8) || '';
     let config = {};
-    if (type === TYPEOPERATION_ADD) {
+    if (type === TYPE_OPERATION_ADD) {
       config = {
         width: '30%',
         minHeight: '30%',

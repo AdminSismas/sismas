@@ -25,6 +25,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-detail-information-address',
@@ -83,10 +84,18 @@ export class DetailInformationAddressComponent implements OnInit {
     if (this.defaults?.direccionId === null || this.defaults?.direccionId === undefined) {
       return;
     }
-    this.informationPropertyService.getDetailBasicInformationPropertyAddresses(this.defaults.direccionId)
-      .subscribe({
+    this.informationPropertyService.getDetailBasicInformationPropertyAddresses(
+      this.defaults.direccionId,
+      this.schema,
+      this.defaults.baunitId,
+      this.defaults.executionId
+    ).subscribe({
           next: (result: DetailBasicInformationAddress) => this.data = result,
-          error: (err: any) => console.log('Consulta NOK.')
+          error: (error: HttpErrorResponse) => {
+            if (error.status !== 500){
+              console.log(error.message);
+            }
+          }
         }
       );
   }

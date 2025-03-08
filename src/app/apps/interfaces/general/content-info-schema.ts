@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TypeInformation } from './content-info';
-import { TYPEINFORMATION_VISUAL } from '../../constants/general/constant';
+import { TYPE_INFORMATION_VISUAL } from '../../constants/general/constant';
 
 export class ContentInfoSchema {
   baunitIdE?: string | undefined = '';
@@ -9,7 +9,6 @@ export class ContentInfoSchema {
   content?: any;
   typeInformation?: TypeInformation;
   flagData?: string = '';
-
   resources?: string[] = [];
   rulePage?: string = '';
 
@@ -18,7 +17,7 @@ export class ContentInfoSchema {
     content: any = null,
     executionId: string | null = '',
     schemas: string[] = [],
-    typeInformation: TypeInformation = TYPEINFORMATION_VISUAL,
+    typeInformation: TypeInformation = TYPE_INFORMATION_VISUAL,
     flagData = '',
     resources: string[] = [],
     rulePage = ''

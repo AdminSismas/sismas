@@ -16,3 +16,13 @@ mat-expansion-panel-header.mat-expanded:focus {
 .mdc-dialog .mdc-dialog__content {
   padding: 15px 5px 15px 5px !important;
 }
+
+.mat-mdc-dialog-content {
+  min-height: 75vh !important;
+  max-height: 95vh !important;
+}
+
+.mat-mdc-dialog-content_tab {
+  min-height: 75vh !important;
+  max-height: 82vh !important;
+}

@@ -55,7 +55,7 @@ import {
   TABLE_COLUMN_PROPERTIES,
   TITULO_PAGE_AVANZADA,
   TITULO_PAGE_CADASTRAL_DA,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
@@ -297,7 +297,7 @@ export class TableCadastralSearchComponent
           data,
           null,
           LIST_SCHEMAS_CONTROL_MAIN,
-          TYPEINFORMATION_VISUAL,
+          TYPE_INFORMATION_VISUAL,
           '',
           [],
           this.rulePage
@@ -315,7 +315,7 @@ export class TableCadastralSearchComponent
             data,
             null,
             LIST_SCHEMAS_CONTROL_HISTORY_PRIME,
-            TYPEINFORMATION_VISUAL,
+            TYPE_INFORMATION_VISUAL,
             '',
             [],
             this.rulePage

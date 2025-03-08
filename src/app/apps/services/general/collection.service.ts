@@ -22,8 +22,18 @@ export class CollectionServices {
     return this.getData(`${this.basic_url}`,paramsR);
   }
 
-  getCalificationDataDomainName(domainName:string):Observable<DomainCalificationCollection[]> {
+  getDataDomainNameParams(params:HttpParams):Observable<DomainCollection[]> {
+    return this.getData(`${this.basic_url}`,params);
+  }
 
+  getAllDataAllBuiltUseOptions(domainName:string, active:boolean):Observable<DomainCollection[]> {
+    let paramsR:HttpParams = new HttpParams();
+    paramsR = paramsR.append('domainName', `${domainName}`);
+    paramsR = paramsR.append('active', active);
+    return this.getData(`${this.basic_url}`,paramsR);
+  }
+
+  getCalificationDataDomainName(domainName:string):Observable<DomainCalificationCollection[]> {
     return this.getCalificationData(`${this.calification_url}/${domainName}`);
   }
 

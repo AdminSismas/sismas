@@ -11,15 +11,15 @@ import {
   LIST_GRID_APPRAISAL_2,
   LIST_GRID_APPRAISAL_3,
   NAME_NO_DISPONIBLE,
-  NAME_SELFVALUATIONVALUE,
+  NAME_SELF_VALUATION_VALUE,
   PAGE,
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_APPRAISALS,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -102,7 +102,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
   columns: TableColumn<InfoAppraisal>[] = TABLE_COLUMN_PROPERTIES_APPRAISALS;
   page: number = PAGE;
@@ -131,7 +131,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if (this.typeInformation && this.typeInformation === TYPEINFORMATION_VISUAL) {
+    if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
     }
@@ -159,7 +159,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   get visibleColumnsSecondsRow() {
     let listadoSecondRow: string[] = LIST_EXTRA_COLUMNS_APPRAISAL;
     const listColumnVisible: string[] = this.visibleColumns;
-    if (!listColumnVisible.includes(NAME_SELFVALUATIONVALUE)) {
+    if (!listColumnVisible.includes(NAME_SELF_VALUATION_VALUE)) {
       listadoSecondRow = listadoSecondRow.filter(e => e !== 'header-row-quartet-group');
     }
     if (!this.validatePropertyInList(listColumnVisible, LIST_GRID_APPRAISAL_3)) {

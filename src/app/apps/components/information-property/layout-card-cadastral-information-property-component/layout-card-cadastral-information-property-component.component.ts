@@ -9,7 +9,7 @@ import {
   CadastralInformationPropertyComponent
 } from '../cadastral-information-property/cadastral-information-property.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { TWO_POINT_, TYPEINFORMATION_VISUAL } from '../../../constants/general/constant';
+import { TWO_POINT_, TYPE_INFORMATION_EDITION, TYPE_INFORMATION_VISUAL } from '../../../constants/general/constant';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
@@ -24,6 +24,7 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
 import {
   InformationPropertyService
 } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 
 @Component({
   selector: 'vex-layout-card-cadastral-information-property-component',
@@ -37,7 +38,8 @@ import {
     VexPageLayoutContentDirective,
     MatTabsModule,
     CadastralInformationPropertyComponent,
-    MatMenuModule
+    MatMenuModule,
+    FluidHeightDirective
   ],
   templateUrl:
     './layout-card-cadastral-information-property-component.component.html',
@@ -47,7 +49,7 @@ import {
 export class LayoutCardCadastralInformationPropertyComponentComponent
   implements OnInit, AfterViewInit
 {
-  typeInformation: TypeInformation = TYPEINFORMATION_VISUAL;
+  typeInformation: TypeInformation = TYPE_INFORMATION_VISUAL;
 
   optionschemas: ObjectSchema[] = [];
   baunitHead: BaunitHead | null = null;
@@ -166,4 +168,6 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
 
   protected readonly CONSTANT_INFOMATION_PREDIAL = CONSTANT_INFOMATION_PREDIAL;
   protected readonly TWO_POINT_ = TWO_POINT_;
+  protected readonly TYPE_INFORMATION_VISUAL = TYPE_INFORMATION_VISUAL;
+  protected readonly TYPE_INFORMATION_EDITION = TYPE_INFORMATION_EDITION;
 }

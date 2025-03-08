@@ -2,29 +2,29 @@
 // import { UrbanPhysicalZone } from './urban-physical-zone';
 import { GeoEconomicZone } from './geo-economic-zone';
 
-export class ZoneBAUnit {
+export class ZoneBAUnitFisica {
+  baUnitZonaType: 'Urbano' | 'Rural' | 'Geoeconomica';
   baUnitZonaId?: number;
   baUnitZonaArea?: number;
   ccZonaHomoFisicaRu?: CcZonaHomoFisica;
   zonaHomoFisicaRuCode?: string;
   ccZonaHomoFisicaUr?: CcZonaHomoFisica;
   zonaHomoFisicaUrCode?: string;
-  ccZonaHomoGeoEconomica?: GeoEconomicZone;
-  zonaHomoGeoEconomicaCode?: string;
+  ccZonaHomoGeoEconomica = null;
+  zonaHomoGeoEconomicaCode = null;
   baUnitZonaValor?: number;
   baUnitZonaAreaE?: string;
   esComun?: boolean;
   vigencia?: number;
 
   constructor( baunitZona: ZoneBAUnitResponse) {
+    this.baUnitZonaType = baunitZona.ccZonaHomoFisicaRu ? 'Rural' : 'Urbano';
     this.baUnitZonaId = baunitZona.baUnitZonaId;
     this.baUnitZonaArea = baunitZona.baUnitZonaArea;
     this.ccZonaHomoFisicaRu = baunitZona.ccZonaHomoFisicaRu;
     this.zonaHomoFisicaRuCode = baunitZona.ccZonaHomoFisicaRu?.zonaHomoFisicaRuCode;
     this.ccZonaHomoFisicaUr = baunitZona.ccZonaHomoFisicaUr;
     this.zonaHomoFisicaUrCode = baunitZona.ccZonaHomoFisicaUr?.zonaHomoFisicaUrCode;
-    this.ccZonaHomoGeoEconomica = baunitZona.ccZonaHomoGeoEconomica;
-    this.zonaHomoGeoEconomicaCode = baunitZona.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode;
     this.baUnitZonaValor = baunitZona.baUnitZonaValor;
     this.baUnitZonaAreaE = baunitZona.baUnitZonaAreaE;
     this.esComun = baunitZona.esComun;
@@ -33,13 +33,43 @@ export class ZoneBAUnit {
 
 }
 
+export class ZoneBAUnitGeoeconomic {
+  baUnitZonaType: 'Urbano' | 'Rural' | 'Geoeconomica';
+  baUnitZonaId?: number;
+  baUnitZonaArea?: number;
+  ccZonaHomoFisicaRu = null;
+  zonaHomoFisicaRuCode = null;
+  ccZonaHomoFisicaUr = null;
+  zonaHomoFisicaUrCode = null;
+  ccZonaHomoGeoEconomica?: GeoEconomicZone;
+  zonaHomoGeoEconomicaCode?: string;
+  baUnitZonaValor?: number;
+  baUnitZonaAreaE?: string;
+  esComun?: boolean;
+  vigencia?: number;
+
+  constructor( baunitZona: ZoneBAUnitResponse) {
+    this.baUnitZonaType = 'Geoeconomica';
+    this.baUnitZonaId = baunitZona.baUnitZonaId;
+    this.baUnitZonaArea = baunitZona.baUnitZonaArea;
+    this.ccZonaHomoGeoEconomica = baunitZona.ccZonaHomoGeoEconomica;
+    this.zonaHomoGeoEconomicaCode = baunitZona.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaCode;
+    this.baUnitZonaValor = baunitZona.baUnitZonaValor;
+    this.baUnitZonaAreaE = baunitZona.baUnitZonaAreaE;
+    this.esComun = baunitZona.esComun;
+    this.vigencia = baunitZona.ccZonaHomoGeoEconomica?.vigencia;
+  }
+}
+
 export interface AddZoneParameters {
-  zone: ZoneBAUnit;
+  zone?: ZoneBAUnitFisica | ZoneBAUnitGeoeconomic;
   baunitId: number;
   isEdit: boolean;
+  executionId: string;
   propertyType: string;
-  divpolLv1: string;
-  divpolLv2: string;
+  divpolLv1?: string;
+  divpolLv2?: string;
+  npn?: string;
 }
 
 export interface ZoneBAUnitResponse {
@@ -110,3 +140,11 @@ export interface CadastreChangeLog {
   domCadastreChangeTypeDescription: string;
 }
 
+export interface CreateBaunitZone {
+  baUnitZonaId?: number;
+  baUnitZonaArea?: number;
+  esComun?: boolean;
+  ccZonaHomoFisicaRu?: CcZonaHomoFisica | null;
+  ccZonaHomoFisicaUr?: CcZonaHomoFisica | null;
+  ccZonaHomoGeoEconomica?: CcZonaHomoGeoEconomica | null;
+}

@@ -145,7 +145,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
                   groupName:'Propiedad y uso'
                 },
                 {
-                  name: 'cadastralRegistryNumber',
+                  name: 'cadastralCreatedAt',
                   label: 'Inscripción catastral',
                   collection: false,
                   type: 'date',
@@ -170,7 +170,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
             // *****GRUPO "Tamaños y áreas" ****
 
               {
-                name: 'propertyRegistryAreaE',
+                name: 'propertyRegistryArea',
                 label: 'Área registral',
                 collection: false,
                 type: 'text',
@@ -179,7 +179,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
                 groupName:'Tamaños y áreas'
               },
               {
-                name: 'cadastralAreaE',
+                name: 'cadastralArea',
                 label: 'Área catastral',
                 collection: false,
                 type: 'text',
@@ -197,7 +197,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
                 groupName:'Tamaños y áreas'
               },
               {
-                name: 'cadAreaPrivateE',
+                name: 'cadAreaPrivate',
                 label: 'Área catastral privada',
                 collection: false,
                 type: 'text',
@@ -259,14 +259,14 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     "domBaunitEconoDesti": ['',[ Validators.required]],
     "domBaunitType": ['',[ Validators.required]],
     "domBaunitCondition": ['', [Validators.required]],
-    "cadastralRegistryNumber": [''],
+    "cadastralCreatedAt": [''],
     "cadastralRegistryNumberTemp": [''],
 
     // *****GRUPO "Tamaños y áreas" ****
-    "propertyRegistryAreaE": [''],
-    "cadastralAreaE": ['',[Validators.required,Validators.min(0)]],
+    "propertyRegistryArea": [''],
+    "cadastralArea": ['',[Validators.required,Validators.min(0)]],
     "cadlAreaCommonE": [''],
-    "cadAreaPrivateE": [''],
+    "cadAreaPrivate": [''],
     "cadastralAreaUnitbuilt": [''],
     "cadAreaUnitbuiltCommon": [''],
     "cadAreaUnitbuiltPrivate": [''],
@@ -282,8 +282,23 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.form.reset(this.data);
+
+    const newCadastraCreatedAt = new Date(this.data.cadastralCreatedAt  + 'T00:00:00-05:00');
+    this.form.controls['cadastralCreatedAt'].setValue(newCadastraCreatedAt);
+
+    const enableInputs: string[] = [
+      'propertyRegistryOffice',
+      'propertyRegistryNumber',
+      'domBaunitEconoDesti',
+      'domBaunitType',
+      'cadastralCreatedAt',
+      'cadAreaPrivate',
+      'propertyRegistryArea',
+      'cadastralArea'
+    ];
+
     Object.keys(this.form.controls).forEach(field => {
-      if (field !== 'propertyRegistryOffice' && field !== 'propertyRegistryNumber' && field !== 'domBaunitEconoDesti' && field !== 'domBaunitType' && field !== 'cadastralRegistryNumber') {
+      if ( !enableInputs.includes(field) ) {
         this.form.get(field)?.disable();
       }
     });
@@ -294,9 +309,10 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   }
 
   editBasicInformationProperty() {
+    console.log('valores formulario', this.form.value);
     this.informationPropretyService.updateBasicInformationProperty(
-      this.data.executionId as string,
-      this!.data!.baunitIdE as string,
+      this.data.executionId!,
+      this.data.baunitIdE!,
       this.form.value
     )
     .subscribe({

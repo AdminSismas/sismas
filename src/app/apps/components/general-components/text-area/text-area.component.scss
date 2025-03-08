@@ -1,3 +1,7 @@
 mat-form-field, textarea {
   width: 100%;
 }
+
+.mainClass {
+  @apply w-full sm:ml-2 sm:mr-2 flex-1
+}

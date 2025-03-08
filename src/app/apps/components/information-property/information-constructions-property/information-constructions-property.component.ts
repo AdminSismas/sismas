@@ -15,6 +15,7 @@ import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_DINAMIC_HEIGHT, MODAL_LARGE, MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
@@ -23,8 +24,8 @@ import {
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
-  TYPEINFORMATION_EDITION,
-  TYPEINFORMATION_VISUAL
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -46,7 +47,7 @@ import { InformationPropertyService } from '../../../services/territorial-organi
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import {
-  ContentInformationConstruction
+  ContentInformationConstruction, CrudInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
 import {
   DetailInformationConstructionsPropertyComponent
@@ -54,17 +55,16 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import {
-  AddEditInformationConstructionI,
-  EditInformationConstructionsPropertyComponent
-} from './edit-information-constructions-property/edit-information-constructions-property.component';
-import {
-  BasicInformationConstruction
-} from 'src/app/apps/interfaces/information-property/basic-information-construction';
+  CrudInformationConstructionsPropertyComponent
+} from './crud-information-constructions-property/crud-information-constructions-property.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  EditInformationConstructionDialogComponent
-} from './edit-information-construction-dialog/edit-information-construction-dialog.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
+import {
+  InformationConstructionsService
+} from '../../../services/information-property/information-constructions-property/information-constructions.service';
+import { filter } from 'rxjs/operators';
+import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -103,7 +103,7 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatTabsModule,
     MatTooltipModule,
     // Custom
-    HeaderCadastralInformationPropertyComponent,
+    HeaderCadastralInformationPropertyComponent
   ],
   templateUrl: './information-constructions-property.component.html',
   styleUrl: './information-constructions-property.component.scss'
@@ -111,6 +111,8 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 export class InformationConstructionsPropertyComponent implements OnInit, AfterViewInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  ltLg$: Observable<boolean> = this.layoutService.ltLg$;
+  ltMd$: Observable<boolean> = this.layoutService.ltMd$;
   contentInformations!: InformationPegeable;
 
   @Input({ required: true }) id = '';
@@ -118,30 +120,32 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPEINFORMATION_EDITION;
+  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
 
   columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
-  page:number = PAGE;
+  page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  configModalCrud: any = MODAL_DINAMIC_HEIGHT;
 
   dataSource!: MatTableDataSource<ContentInformationConstruction>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<NgTemplateOutlet>;
+  @ViewChild('deletedConstruction') deletedConstruction!: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private snackBar = inject(MatSnackBar);
+
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
-    private informationPropertyService: InformationPropertyService
+    private constructionsService: InformationConstructionsService
   ) {
   }
 
@@ -151,7 +155,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if(this.typeInformation === TYPEINFORMATION_VISUAL || !this.editable) {
+    if (this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
       this.columns = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS;
@@ -160,7 +164,27 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
+
+    this.isDesktop$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        this.configModalCrud = MODAL_DINAMIC_HEIGHT;
+      });
+
+    this.ltMd$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        this.configModalCrud = MODAL_MEDIUM;
+      });
+
+    this.ltMd$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        this.configModalCrud = MODAL_LARGE;
+      });
+
   }
+
   ngAfterViewInit() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
@@ -186,7 +210,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.informationPropertyService.getBasicInformationPropertyConstructions(
+    this.constructionsService.getBasicInformationPropertyConstructions(
       this.generateObjectPageSearchData(this.baunitId), this.schema, this.executionId)
       .subscribe({
         error: (err: any) => this.captureInformationSubscribeError(err),
@@ -232,7 +256,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     this.dataSource.data = [];
   }
 
-  openDetailInformationConstructionsProperty(data:ContentInformationConstruction){
+  openDetailInformationConstructionsProperty(data: ContentInformationConstruction) {
     if (this.baunitId === null || this.baunitId === undefined) {
       return;
     }
@@ -241,83 +265,27 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       .open(DetailInformationConstructionsPropertyComponent, {
         ...MODAL_SMALL,
         disableClose: true,
-        data: new ContentInformationConstruction(data,this.schema, this.baunitId)
+        data: new ContentInformationConstruction(data, this.schema, this.baunitId)
       })
       .afterClosed();
   }
 
-  openAddEditConstructionInformationPropertyDialog(
-    data?: ContentInformationConstruction
-  ): void {
-    const dialogData: AddEditInformationConstructionI = {
-      type: data ? 'edit' : 'new',
-      basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
-      baunitId: this.baunitId || undefined,
-      executionId: this.executionId || undefined
-    };
-
-    const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
-      ...MODAL_SMALL,
-      disableClose: true,
-      data: dialogData,
-    });
-
-    dialogRef.afterClosed().subscribe((result: ContentInformationConstruction) => {
-      if (result) {
-        if (dialogData.type === 'new') {
-
-          this.dataSource.data = [...this.dataSource.data, result];
-        } else {
-
-          const index = this.dataSource.data.findIndex((item) => item.unitBuiltId === result.unitBuiltId);
-          if (index !== -1) {
-            this.dataSource.data[index] = result;
-            this.dataSource._updateChangeSubscription();
-          }
-        }
-      }
-    });
-  }
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
+  openAddConstructionInformationProperty(): void {
+    this.executeEventAddEditConstructionInformation(null);
   }
 
-
-  editInformations(customer: any): void {
-    const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
-      ...MODAL_SMALL,
-      data: {
-        ...customer,
-        executionId: this.executionId,
-        baunitId: this.baunitId
-      }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
-
-        if (index !== -1) {
-
-          this.dataSource.data[index] = result;
-
-          this.dataSource.data = [...this.dataSource.data];
-        }
-      }
-    });
+  editInformation(customer: ContentInformationConstruction): void {
+    this.executeEventAddEditConstructionInformation(customer);
   }
 
-  deleteInformations(customer: any): void {
-    const dialogRef = this.dialog.open(this.confirmDialog);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+  deleteInformation(customer: any): void {
+    this.deletedConstruction.fire().then((result) => {
+      if (result.isConfirmed) {
         const baunitId = this.baunitId ?? '';
         const executionId = this.executionId ?? '';
         const unitBuiltId = customer.unitBuiltId;
-
-        this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
+        this.constructionsService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
           next: () => {
-
             this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
             this.deleteSwal.fire();
           },
@@ -325,6 +293,23 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
             this.errorSwal.fire();
           }
         });
+      }
+    });
+  }
+
+  executeEventAddEditConstructionInformation(content: ContentInformationConstruction | null) {
+    let data: ContentInformationConstruction = new ContentInformationConstruction(content, this.schema, this.baunitId);
+    data.executionId = this.executionId;
+
+    const dialogRefConstruction = this.dialog.open(
+      CrudInformationConstructionsPropertyComponent, {
+        ...this.configModalCrud,
+        disableClose: true,
+        data: { type: !content ? 'CREATE' : 'UPDATE', contentInformation: data }
+      });
+    dialogRefConstruction.afterClosed().subscribe((result: ContentInformationConstruction) => {
+      if (result && result.unitBuiltId != null && result.unitBuiltId > 0) {
+        this.searchInformationsConstructionsProperty();
       }
     });
   }
@@ -371,4 +356,9 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     }
     return '';
   }
+
+  trackByProperty<T>(index: number, column: TableColumn<T>): string {
+    return column.property;
+  }
+
 }

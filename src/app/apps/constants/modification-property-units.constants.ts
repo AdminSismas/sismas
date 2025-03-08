@@ -1,7 +1,7 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { Operation } from '../interfaces/bpm/operation';
 
-export const TABLE_COLUMNS: TableColumn<Operation>[] = [
+export const MODIFYCATION_UNITS_TABLE_COLUMNS: TableColumn<Operation>[] = [
   {
     label: 'Matrícula inmobiliaria',
     property: 'registration',
@@ -44,7 +44,7 @@ export const TABLE_COLUMNS: TableColumn<Operation>[] = [
     visible: false,
     cssClasses: ['text-secondary', 'font-medium']
   },
-  { 
+  {
     label: 'Acciones',
     property: 'actions',
     type: 'button',

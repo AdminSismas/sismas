@@ -15,7 +15,7 @@ export class BpmCoreService {
 
   private proTaskSubject = new ReplaySubject<ProTaskE>(1);
   proTask$ = this.proTaskSubject.asObservable();
-  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
+  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}/`;
 
   constructor(
     private requestsService: SendGeneralRequestsService,

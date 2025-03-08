@@ -5,8 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 // Material
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,10 +23,9 @@ import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/ge
 import {
   InformationPropertyService
 } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { InputComponent } from '../../../general-components/input/input.component';
 import { RuralPhysicalZone } from 'src/app/apps/interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from 'src/app/apps/interfaces/information-property/urban-physical-zone';
-import { AddZoneParameters } from 'src/app/apps/interfaces/information-property/zone-baunit';
+import { AddZoneParameters, CreateBaunitZone } from 'src/app/apps/interfaces/information-property/zone-baunit';
 
 @Component({
   selector: 'vex-add-edit-informatizon-zones-property',
@@ -38,8 +35,6 @@ import { AddZoneParameters } from 'src/app/apps/interfaces/information-property/
     ReactiveFormsModule,
     SweetAlert2Module,
     // Vex
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
     // Material
     MatButtonModule,
     MatCardModule,
@@ -54,7 +49,6 @@ import { AddZoneParameters } from 'src/app/apps/interfaces/information-property/
     MatSlideToggleModule,
     MatTabsModule,
     // Custom
-    InputComponent,
   ],
   templateUrl: './add-edit-informatizon-zones-property.component.html',
   styleUrl: './add-edit-informatizon-zones-property.component.scss'
@@ -79,6 +73,7 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('executionId', this.data.executionId);
     this.isEdit = this.data.isEdit;
     this.initializeForm();
 
@@ -106,8 +101,6 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
         baUnitZonaValor: this.data.zone.baUnitZonaValor,
       });
     }
-
-
   }
 
   compareZones(zone1: any, zone2: any): boolean {
@@ -129,12 +122,12 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   private initializeForm(): void {
 
     this.zoneBAUnitForm = this.fb.group({
-      baUnitZonaId: [this.data.zone?.baUnitZonaId || null],
+      // baUnitZonaId: [this.data.zone?.baUnitZonaId || null],
       baUnitZonaArea: [this.data.zone?.baUnitZonaArea || '', [Validators.required, this.numberValidator]],
+      esComun: [this.data.zone?.esComun || false],
       ccZonaHomoFisicaUr: [this.data.zone?.ccZonaHomoFisicaUr || null],
       ccZonaHomoFisicaRu: [this.data.zone?.ccZonaHomoFisicaRu || null],
       ccZonaHomoGeoEconomica: [this.data.zone?.ccZonaHomoGeoEconomica || null],
-      baUnitZonaValor: [this.data.zone?.baUnitZonaValor || '', [Validators.required, this.numberValidator]],
     });
 
 
@@ -181,14 +174,13 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
       const formValue = this.zoneBAUnitForm.value;
 
 
-      formValue.baUnitZonaArea = formValue.baUnitZonaArea.toString().replace(',', '.');
-      formValue.baUnitZonaValor = formValue.baUnitZonaValor.toString().replace(',', '.');
-
+      // formValue.baUnitZonaArea = `${formValue.baUnitZonaArea}`.replace(',', '.');
+      formValue.baUnitZonaArea = Number(formValue.baUnitZonaArea);
 
       let selectedZone = null;
-      const requestBody: any = {
+      const requestBody: CreateBaunitZone = {
         baUnitZonaArea: formValue.baUnitZonaArea,
-        baUnitZonaValor: formValue.baUnitZonaValor,
+        esComun: formValue.esComun,
       };
 
 
@@ -227,15 +219,16 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
 
 
       if (this.isEdit) {
-        this.informationPropertyService.updateBAUnitZones(formValue.baUnitZonaId, requestBody, this.data.baunitId, 2024)
+        const { baUnitZonaId } = this.data.zone!;
+        const { baunitId } = this.data;
+
+        this.informationPropertyService.updateBAUnitZones(this.data.executionId, baunitId, baUnitZonaId!, requestBody)
           .subscribe(response => {
-            console.log("Zona editada con éxito", response);
             this.dialogRef.close(response);
           });
       } else {
-        this.informationPropertyService.createBAUnitZones(requestBody, this.data.baunitId, 2024)
+        this.informationPropertyService.createBAUnitZones(requestBody, this.data.baunitId, this.data.executionId)
           .subscribe(response => {
-            console.log("Zona creada con éxito", response);
             this.dialogRef.close(response);
           });
       }
@@ -245,7 +238,7 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   }
 
   getByDivPolUrbana(): void {
-    this.informationPropertyService.getByDivPolUrbana(this.data.divpolLv1, this.data.divpolLv2).subscribe((result: UrbanPhysicalZone[]) => {
+    this.informationPropertyService.getByDivPolUrbana(this.data.divpolLv1!, this.data.divpolLv2!).subscribe((result: UrbanPhysicalZone[]) => {
       this.divPolUrbana = result;
       console.log(this.divPolUrbana);
 
@@ -254,20 +247,18 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
 
 
   getByDivPolRural(): void {
-    this.informationPropertyService.getByDivPolRural(this.data.divpolLv1, this.data.divpolLv2).subscribe((result) => {
+    this.informationPropertyService.getByDivPolRural(this.data.divpolLv1!, this.data.divpolLv2!).subscribe((result) => {
       this.divPolRural = result;
       console.log(this.divPolRural);
     });
   }
 
   getByDivPolGeoeconomica(): void {
-    this.informationPropertyService.getByDivPolGeoeconomica(this.data.divpolLv1, this.data.divpolLv2).subscribe((result) => {
+    const npnLike = this.data.npn!.slice(0, 7);
+    console.log(npnLike);
+    this.informationPropertyService.getByDivPolGeoeconomica(npnLike).subscribe((result) => {
       this.divPolGeoeconomica = result;
       console.log(result);
     });
   }
-
-
-
-
 }
