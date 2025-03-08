@@ -74,7 +74,7 @@ export const environment = {
   },
   calificationUB: "/calificationUB",
   typologyType: "/tipologiaTipo/",
-  ccDireccion: "/ccDireccion/",
+  ccDireccion: "/ccDireccion",
   cancel: "/cancel",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
