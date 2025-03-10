@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild
@@ -73,6 +72,7 @@ import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/opera
 import { environment } from 'src/environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ReassignProcedureComponent } from '../../procedures/reassign-procedure/reassign-procedure.component';
 
 @Component({
   selector: 'vex-table-procedures',
@@ -103,7 +103,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     SweetAlert2Module
   ]
 })
-export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
+export class TableProceduresComponent implements OnInit, OnChanges {
   /* ============== ATRIBUTES ============== */
   /* ============== ATRIBUTES ============== */
   @Input() urlTable?: string = '';
@@ -135,6 +135,8 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDelete') confirmDelete!: SwalComponent;
   @ViewChild('errorDelete') errorDelete!: SwalComponent;
+  @ViewChild('successReassign') successReassign!: SwalComponent;
+  @ViewChild('errorReassign') errorReassign!: SwalComponent;
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
@@ -170,18 +172,9 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
     this.defaultTableData();
   }
 
-  // Método para cancelar todas las suscripciones
-  ngOnDestroy() {
-    // Cancelamos todas las suscripciones al destruir el componente
-    console.log('Todas las suscripciones han sido canceladas');
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['urlTable']) {
       this.urlTable = changes['urlTable'].currentValue;
-    }
-    if (changes['urlView']) {
-      console.log('urlView', changes['urlView']);
     }
   }
 
@@ -247,12 +240,12 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
 
   get actions() {
     return [
-      // {
-      //   label: 'Reasignar',
-      //   icon: 'mat:swap_horiz',
-      //   action: (row: ProceduresCollection) =>
-      //     this.actionButtons('reassign', row)
-      // },
+      {
+        label: 'Reasignar',
+        icon: 'mat:swap_horiz',
+        action: (row: ProceduresCollection) =>
+          this.actionButtons('reassign', row)
+      },
       {
         label: 'Anular',
         icon: 'mat:block',
@@ -291,8 +284,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
         data: { url: this.urlView }
       });
     } else {
-      console.log(value, 'Registro de la tabla');
-
       this.proceduresService
         .viewDetailIdProcedures(+value.executionId!)
         .subscribe((result) => {
@@ -314,7 +305,7 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
       .pipe(
         debounceTime(100), // Espera 500 ms después del último cambio
         distinctUntilChanged(),
-        tap((value) => {
+        tap(() => {
           const beginAtComparation = this.beginAtForm?.value
             ? new Date(this.beginAtForm?.value)
             : null;
@@ -332,14 +323,9 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
               this.beginAtForm?.setErrors({ dateComparison: true });
             }
           }
-
-          // Aquí podrías realizar una llamada HTTP o cualquier otra operación
-          console.log(value, 'executoingCode');
         })
       )
-      .subscribe((data) => {
-        console.log(data, 'executoingCode');
-      });
+      .subscribe();
   }
 
   public beginAtEFormGreaterThanDate() {
@@ -362,7 +348,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
               this.beginAtEForm?.setErrors({ dateComparison: true });
             }
           }
-          console.log('Validador de fecha', { beginAtDate, beginAtEDate });
         })
       )
       .subscribe();
@@ -374,7 +359,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
         debounceTime(300), // Espera 500 ms después del último cambio
         distinctUntilChanged(), // Solo emite cuando el valor cambia
         tap((value) => {
-          console.log(value);
           if (value !== '' && value !== 0 && value !== null) {
             this.individualNumberPartForm?.disable();
             // this.individualNumberPartForm?.reset();
@@ -496,9 +480,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
             }
           );
           console.error('Hubo un error al obtener los datos: ', error);
-        },
-        complete: () => {
-          console.log('Carga completa de datos');
         }
       });
   }
@@ -560,33 +541,52 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
         break;
     }
   }
+
   mecanismProcedure(row: ProceduresCollection) {
     console.log(row);
   }
+
   reclassifyProcedure(row: ProceduresCollection) {
     console.log(row);
   }
+
   cancelProcedure(row: ProceduresCollection) {
-    console.log(row);
     this.confirmDelete.fire().then((result) => {
       if (result.isConfirmed) {
         this.proceduresService.cancelProcedure(row.executionId!)
           .subscribe({
-            next: (result) => {
-              console.log(result);
+            next: () => {
               const data = this.objectParameters();
               this.getDataFromProceduresService(data);
             },
             error: (error: HttpErrorResponse) => {
-              console.log(error.message);
               this.errorDelete.fire();
+              throw error.message;
             }
           });
       }
     });
   }
   reassignProcedure(row: ProceduresCollection) {
-    console.log(row);
+    this.dialog.open(ReassignProcedureComponent, {
+      ...MODAL_SMALL,
+      data: {
+        executionId: row.executionId,
+      }
+    }).afterClosed()
+      .subscribe({
+        next: (response: string | undefined) => {
+          if (response === 'success') {
+            this.successReassign.fire();
+            return;
+          }
+
+          if (response === 'error') {
+            this.errorReassign.fire();
+            return;
+          }
+        }
+      });
   }
 
   get beginAtForm() {

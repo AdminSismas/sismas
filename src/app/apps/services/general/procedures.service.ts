@@ -2,11 +2,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from './send-general-requests.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PageProceduresData } from '../../interfaces/general/page-procedures-data.model';
 import { Observable } from 'rxjs';
 import { ProceduresCollection } from '../../interfaces/tables/procedures-progress.model';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +52,7 @@ export class ProceduresService {
   ): Observable<InformationPegeable> {
     // const paramsR:HttpParams = new HttpParams();
     const urlComplete = `${this.basic_url}/${urlMain}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
-    console.log(urlComplete, 'URLS RUTA');
+
     return this.http.get<InformationPegeable>(urlComplete);
     //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
   }
@@ -60,7 +61,7 @@ export class ProceduresService {
     page: PageProceduresData
   ): Observable<ProceduresCollection[]> {
     const urlComplete = `${this.basic_url}/${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
-    console.log(urlComplete, 'URLS RUTA');
+
     return this.http.get<any>(urlComplete);
     //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
   }
@@ -106,5 +107,25 @@ export class ProceduresService {
     const url = `${this.basic_url}/${executionId}${environment.cancel}`;
 
     return this.http.put<string>(url, { responseType: 'text' });
+  }
+
+  reassignProcedure(
+    executionId: number,
+    username: string,
+    userId: number
+  ): Observable<ProTaskE> {
+    const url = `${environment.url}:${environment.port}${environment.bpmOperation.value}/${environment.bpmOperation.proTask}${environment.reassign}${executionId}`;
+
+    const body = new FormData();
+    body.append('username', username);
+    body.append('userId', `${userId}`);
+
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
+    console.log(body);
+
+    return this.http.put<ProTaskE>(url, body, {
+      headers
+    });
   }
 }

@@ -1,8 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
-import { Content, CreateOutput, CreateUserParams, User } from '../../interfaces/users/user';
+import { User, CreateOutput, CreateUserParams, InformationPagebleUser } from '../../interfaces/users/user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +15,16 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  getUsers(page = 0, size = 10, sortBy = 'username'): Observable<User> {
+  getUsers(page = 0, size = 10, sortBy = 'username'): Observable<InformationPagebleUser> {
     const url = `${this.base_url}`;
     const params: HttpParams = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
       .set('sortBy', sortBy);
 
-    return this.http.get<User>(url, { params })
+    return this.http.get<InformationPagebleUser>(url, { params })
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           console.log('Error en la obtención de la información de los usuarios');
           throw error;
         })
@@ -36,7 +36,7 @@ export class UserService {
 
     return this.http.get<boolean>(url)
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {
             return of(false);
           }
@@ -52,7 +52,7 @@ export class UserService {
 
     return this.http.get<boolean>(url)
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {
             return of(false);
           }
@@ -68,7 +68,7 @@ export class UserService {
 
     return this.http.get<boolean>(url)
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           if (error.status === 404) {
             return of(false);
           }
@@ -84,15 +84,15 @@ export class UserService {
     return this.http.post<CreateOutput>(url, params);
   }
 
-  updateUser(userId: number, email: string): Observable<Content> {
+  updateUser(userId: number, email: string): Observable<User> {
     const url = `${this.base_url}/${userId}`;
 
     const params: HttpParams = new HttpParams()
       .set('email', email);
 
-    return this.http.put<Content>(url, params)
+    return this.http.put<User>(url, params)
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           console.log('Error en la actualización del usuario');
           throw error;
         })
@@ -100,15 +100,15 @@ export class UserService {
 
   }
 
-  searchUser(value: string): Observable<Content> {
-    const url: string = `${this.base_url}${envi.user_exist}${value}`;
+  searchUser(value: string): Observable<User> {
+    const url = `${this.base_url}${envi.user_exist}${value}`;
 
 
-    return this.http.get<Content>(url)
+    return this.http.get<User>(url)
       .pipe(
-        map((res: Content) => {
+        map((res: User) => {
           if (res.individual && res.individual.fullName) {
-            res.fullName = res.individual.fullName
+            res.fullName = res.individual.fullName;
           }
           return res;
         })

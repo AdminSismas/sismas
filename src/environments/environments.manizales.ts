@@ -127,6 +127,7 @@ export const environment = {
   qbaunit_divpol_ccmpio: "/qbaunit/divpol/ccmpio",
   qbaunit_npnlike: "/baunit/npnlike",
   query_parameters_page: "../../#/context/prediosplus/11/",
+  reassign: "reassign/",
   refresh_navigation: "/myWork/cadastralSearch",
   root: "/",
   rrright: "/rrright/",
