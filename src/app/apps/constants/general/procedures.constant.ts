@@ -64,13 +64,13 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[]= [
     }
 ];
 export const TABLE_COLUMN_PROPERTIES_HISTORY: TableColumn<contentInfoProcedures>[]= [
-    // {
-    //     label: '',
-    //     property: 'detailDirection',
-    //     type: 'button',
-    //     visible: true,
-    //     cssClasses: ['text-secondary']
-    //   },
+    {
+        label: '',
+        property: 'detailDirection',
+        type: 'button',
+        visible: true,
+        cssClasses: ['text-secondary']
+      },
     {
         label: 'Versión',
         property: 'executionId',
@@ -180,7 +180,7 @@ export const TABLE_COLUMN_PROPERTIES_FINISHED: TableColumn<contentInfoProcedures
 
 
 
-import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDateFormats } from '@angular/material/core';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
     parse: {

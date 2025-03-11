@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   AfterViewInit,
   Component,
@@ -8,7 +9,6 @@ import {
   Input,
   OnInit,
   Output,
-  TemplateRef,
   ViewChild
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -56,9 +56,6 @@ import { UntypedFormControl } from '@angular/forms';
 import { TypeInformation } from '../../../../../../apps/interfaces/general/content-info';
 import { environment } from 'src/environments/environments';
 import { Observable, ReplaySubject } from 'rxjs';
-import {
-  InformationPropertyService
-} from 'src/app/apps/services/territorial-organization/information-property.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -74,7 +71,7 @@ import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'vex-detail-information-property-owner',
+  selector: 'vex-detail-information-tasks',
   standalone: true,
   animations: [
     fadeInRight400ms,
@@ -107,7 +104,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentTasksInformations!: InformationPegeable;
     public taskDetails:TaskResponseModel= new TaskResponseModel();
-    assignedSee: string = '';
+    assignedSee = '';
 
       @Input({ required: true }) id = '';
       @Input({ required: true }) public expandedComponent = true;
@@ -116,8 +113,8 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       @Input() executionId: string | null | undefined = null;
       @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
-      @Input() message: string = '';
-      @Input() color: string = 'bg-blue-500'; // Color por defecto
+      @Input() message = '';
+      @Input() color = 'bg-blue-500'; // Color por defecto
       @Output() closeModal = new EventEmitter<void>();
 
       columns: TableColumn<TaskRetailExecuteResponseModel>[] = TABLE_COLUMN_PROPERTIES_EXECUTED;
@@ -125,7 +122,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       totalElements = 0;
       pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
       pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
-      showAlert: boolean = false;
+      showAlert = false;
 
       _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);
       countAttachment$: Observable<number> = this._countAttachment$.asObservable();
@@ -138,7 +135,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
 
       @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
       @ViewChild(MatSort, { static: true }) sort?: MatSort;
-      @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
 
       private readonly destroyRef: DestroyRef = inject(DestroyRef);
       private snackBar = inject(MatSnackBar);
@@ -151,7 +147,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
-    private informationPropertyService: InformationPropertyService
   ) {
   }
 
@@ -271,7 +266,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
     viewExcuteTask(taskId:any){
       this.tasksPanelService.viewExecuteTaskId( this.generateObjectPageSearchData(taskId),taskId)
         .subscribe({
-          error: (err: any) => this.captureInformationSubscribeError(err),
+          error: () => this.captureInformationSubscribeError(),
           next: (executeTask: InformationPegeable) => {
             console.log('segundo servicio',executeTask);
             this.captureInformationSubscribeB(executeTask);
@@ -311,7 +306,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
 
     }
 
-    captureInformationSubscribeError(err: any): void {
+    captureInformationSubscribeError(): void {
       this.contentTasksInformations = new InformationPegeable();
       this.dataSource.data = [];
     }
@@ -369,7 +364,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit  {
       }
       this.page = event.pageIndex;
       this.pageSize = event.pageSize;
-      const  data = this.contentTasksInformations.content.map((row: ProceduresCollection) => new TaskRetailExecuteResponseModel({row}));
       if(this.data.taskId){
         this.viewExcuteTask(this.data.taskId);
       }

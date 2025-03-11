@@ -79,6 +79,19 @@ export class ProceduresService {
     return this.http.get<any>(urlComplete, { params });
   }
 
+  getBaunitHistoricProcedures (
+    baunitId: number | string,
+    page: PageProceduresData
+  ): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${environment.baunitId}/finish/${baunitId}`;
+
+    const params: HttpParams = new HttpParams()
+      .set('page', `${page.page!}`)
+      .set('size', `${page.size!}`);
+
+    return this.http.get<InformationPegeable>(url, { params });
+  }
+
   async sendRequestsFetchGetAsync(url: string) {
     return this.http.get<any>(url);
   }
