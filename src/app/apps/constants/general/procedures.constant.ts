@@ -59,7 +59,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[]= [
       label: 'Acciones',
       property: 'actions',
       type: 'button',
-      visible: true,
+      visible: false,
       cssClasses: ['font-medium']
     }
 ];
