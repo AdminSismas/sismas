@@ -1,0 +1,21 @@
+
+.accordion-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+.mat-expansion-panel-spacing{
+  margin: 6px 0;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: var(--mat-expansion-header-expanded-state-height);
+}
+
+.mat-expansion-panel-header {
+  height: var(--mat-expansion-header-collapsed-state-height);
+}

@@ -4,6 +4,7 @@ import { environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
 import { QueryParametersGeographicVie } from '../../interfaces/geographics/query-parameters-geographic-vie';
 import { ChangeControl } from '../../interfaces/bpm/change-control';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -25,19 +26,19 @@ export class InformationGeographicService {
     );
   }
 
-  getViewGeneralMapById(ccZonaId: string): Observable<any> {
+  getViewGeneralMapById(ccZonaId: string): Observable<string | null> {
     let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.generalMap}${envi.accessGeo.get}${ccZonaId}`;
     return this.requestsService.sendRequestsGetText(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+      .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }
 
-  getViewDataOpenMapByNpn(npn: string): Observable<any> {
+  getViewDataOpenMapByNpn(npn: string): Observable<string | null> {
     let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.dataOpen}${npn}`;
     return this.requestsService.sendRequestsGetText(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+      .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }
 
-  getViewGeneralMapByExecutionId(executionId: string, schema: string): Observable<any> {
+  getViewGeneralMapByExecutionId(executionId: string, schema: string): Observable<string | null> {
     let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}`;
     if (schema === `${envi.schemas.hist}`) {
       url += `${envi.accessGeo.geoHistoria}${envi.accessGeo.get}${executionId}`;
@@ -45,7 +46,7 @@ export class InformationGeographicService {
       url += `${envi.accessGeo.geoTemporal}${envi.accessGeo.get}${executionId}`;
     }
     return this.requestsService.sendRequestsGetText(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+      .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }
 
   /**
@@ -64,6 +65,19 @@ export class InformationGeographicService {
     return this.requestsService.sendDeleteFetch(
       `${envi.url}:${envi.port}${envi.changeLog}${envi.schemas.temp}/${executionId}${envi.accessGeo.geo}`
     );
+  }
+
+  errorNotFoundGeographicMap(error: HttpErrorResponse) {
+    if (error.status == HttpStatusCode.NotFound) {
+      return new Observable<any>((subscriber) => subscriber.complete());
+    }
+    if (error.status == HttpStatusCode.BadRequest) {
+      return new Observable<any>((subscriber) => {
+        subscriber.next(null);
+        subscriber.complete();
+      });
+    }
+    return throwError(() => error);
   }
 
 }

@@ -547,6 +547,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
         this.constructionData = result;
         this.unitBuiltId = result?.unitBuiltId;
         this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
+        this.updateInformationKitchenAndBathFields();
         this.isCreateOrUpdateConstruction = true;
         this.successDialog.fire();
       },
@@ -563,6 +564,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
         this.constructionData = result;
         this.unitBuiltId = result?.unitBuiltId;
         this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
+        this.updateInformationKitchenAndBathFields();
         this.isCreateOrUpdateConstruction = true;
         this.successDialog.fire();
       },
@@ -571,6 +573,11 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
         this.errorSaveDialog.fire();
       }
     });
+  }
+
+  updateInformationKitchenAndBathFields() {
+    this.traditionalRatingForm.get('bathFurniture')?.setValue(this.chargeQualificationConstruction('Mobiliario_Banio'));
+    this.traditionalRatingForm.get('kitchenFurniture')?.setValue(this.chargeQualificationConstruction('Mobiliario_Cocina'));
   }
 
   // Cerrar el diálogo

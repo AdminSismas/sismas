@@ -1,5 +1,6 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import { proFlowDataResolver } from './data-access/proFlowDataResolver';
+import { resourcesDataResolver } from './data-access/resourcesDataResolver';
 
 const routes: VexRoutes = [
   {
@@ -13,7 +14,7 @@ const routes: VexRoutes = [
       import('./../bpm/bmp-core/bmp-core.component').then(
         (m) => m.BmpCoreComponent
       ),
-    resolve: { proFlow: proFlowDataResolver }
+    resolve: { proFlow: proFlowDataResolver, resources: resourcesDataResolver }
   },
   {
     path: 'initiateFilingProcedure/:id',

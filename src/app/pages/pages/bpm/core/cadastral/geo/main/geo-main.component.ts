@@ -1,17 +1,7 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { AsyncPipe, NgIf } from '@angular/common';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import {
-  LIST_BUTTON_GEO_MAIN,
-  STRING_INFORMATION_NOT_FOUND
-} from '../../../../../../../apps/constants/general/constant';
-import {
-  LoadingAppComponent
-} from '../../../../../../../apps/components/general-components/loading-app/loading-app.component';
-import { Observable, of } from 'rxjs';
+import { LIST_BUTTON_GEO_MAIN } from '../../../../../../../apps/constants/general/constant';
+import { Observable } from 'rxjs';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
 import { Router } from '@angular/router';
@@ -20,14 +10,10 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { filter, take } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { environment } from '../../../../../../../../environments/environments';
-import { FluidHeightDirective } from '../../../../../../../apps/directives/fluid-height.directive';
-import {
-  GeographicViewerEmbeddedComponent
-} from '../../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
-import { AlfaMainComponent } from '../../alf/main/alfa-main.component';
-import { MatIcon } from '@angular/material/icon';
+import { getRandomInt } from '../../../../../../../apps/utils/general';
+import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
 
 @Component({
   selector: 'vex-geo-main',
@@ -41,36 +27,26 @@ import { MatIcon } from '@angular/material/icon';
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
-    NgIf,
-    VexPageLayoutComponent,
     FormsModule,
-    MatTab,
-    MatTabGroup,
     ReactiveFormsModule,
-    VexPageLayoutContentDirective,
-    LoadingAppComponent,
-    FluidHeightDirective,
-    GeographicViewerEmbeddedComponent,
-    AlfaMainComponent,
-    MatIcon,
-    MatTabLabel
+    TabAlfaGeoMainComponent
   ],
   templateUrl: './geo-main.component.html',
   styleUrl: './geo-main.component.scss'
 })
-export class GeoMainComponent implements OnInit, AfterViewInit {
+export class GeoMainComponent implements OnInit {
 
-  public id: string = this.getRandomInt(1234).toString();
-  public mode = 3;
+  public id: string = getRandomInt(1234).toString();
   public schema = `${environment.schemas.temp}`;
-  public executionIdGeo = '';
   public enableRefreshButton: boolean = true;
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
+  @Input({ required: false }) public resourcesRemovers: string[] = [];
+  @Input({ required: false }) public mode = 3;
 
-  isExistDataInformations$: Observable<boolean> = of(false);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   infoFatherURL!: string;
 
@@ -85,20 +61,25 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
+
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit() {
     if (this.id?.length > 0) {
       this.id =
         this.id +
-        this.getRandomInt(100000) + 'GeoMainComponentAndTab' + this.getRandomInt(10);
+        getRandomInt(104000) + 'GeoMainComponent' + getRandomInt(10);
     } else {
       this.id =
-        this.getRandomInt(10000) + 'GeoMainComponentAndTab' + this.getRandomInt(10);
+        getRandomInt(10000) + 'GeoMainComponent' + getRandomInt(10);
     }
 
     // Se sobre escribe los botones que se deben habilitar
-    this.resources = LIST_BUTTON_GEO_MAIN;
+    if (this.resources && this.resources.length > 0) {
+      LIST_BUTTON_GEO_MAIN.forEach(vl => this.resources.push(vl));
+    }
 
     this._infoFatherURL$
       .pipe(filter<string>(Boolean))
@@ -110,34 +91,6 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
       this.returnPanelTask(true);
       return false;
     }
-    setTimeout(() => {
-      this.executionIdGeo = this.executionId;
-    }, 100);
-
-    setTimeout(() => {
-      this.activateLoading(true);
-    }, 4000);
-
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      if (!this.infoFatherURL) {
-        this.returnURLPrevious(`${environment.myWork_cadastralSearch}`);
-        return;
-      }
-
-      if (!this.executionId) {
-        this.returnPanelTask(true);
-        return false;
-      }
-
-    }, 300);
-  }
-
-  activateLoading(value = false) {
-    const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(3));
   }
 
   returnPanelTask(isReturn: boolean) {
@@ -148,13 +101,4 @@ export class GeoMainComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
-  private returnURLPrevious(url: string) {
-    this.router.navigate([`${url}`]).then();
-  }
-
-  protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
 }
