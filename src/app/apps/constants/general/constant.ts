@@ -111,6 +111,10 @@ export const TYPE_OPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
 export const TYPE_OPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
 export const TYPE_OPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
 export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
+export const BASIC_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ', 'GUEST'];
+export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ'];
+export const ADMIN_ROLE_LIST: string[] = ['ADMIN'];
+
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {

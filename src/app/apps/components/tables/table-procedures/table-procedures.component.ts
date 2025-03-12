@@ -52,7 +52,8 @@ import {
   MY_DATE_FORMATS,
   PAGE,
   PAGE_SIZE,
-  TABLE_COLUMN_PROPERTIES
+  TABLE_COLUMN_PROPERTIES,
+  USERS_ACTIONS_ENABLED
 } from '../../../constants/general/procedures.constant';
 import { ProceduresCollection } from '../../../interfaces/tables/procedures-progress.model';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -73,6 +74,7 @@ import { environment } from 'src/environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReassignProcedureComponent } from '../../procedures/reassign-procedure/reassign-procedure.component';
+import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
 
 @Component({
   selector: 'vex-table-procedures',
@@ -119,6 +121,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   seeInfo = false;
   seeInfoDocument = false;
   public procedureDetail: TaskResponseModel = new TaskResponseModel();
+  userRole: string | undefined = this.getUserRole();
 
   // Array para almacenar las suscripciones
   private subscriptions: Subscription | undefined[] = [];
@@ -138,6 +141,19 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   @ViewChild('successReassign') successReassign!: SwalComponent;
   @ViewChild('errorReassign') errorReassign!: SwalComponent;
 
+  get visibleColumns() {
+    const validUser = this.userRole ? USERS_ACTIONS_ENABLED.includes(this.userRole) : false;
+
+    const columnsFiltered = this.columns.filter((column) => {
+      if (this.urlTable !== environment.active) {
+        return column.visible && column.property !== 'actions';
+      }
+      return column.visible && (column.property !== 'actions' || validUser);
+    });
+
+    return columnsFiltered.map((column) => column.property);
+  }
+
   /* ============== CONSTRUCTOR ============== */
   constructor(
     private fBuilder: FormBuilder,
@@ -145,7 +161,8 @@ export class TableProceduresComponent implements OnInit, OnChanges {
     private proceduresService: ProceduresService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
-    private alertSnakbar: MatSnackBar
+    private alertSnakbar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.dateAdapter.setLocale('es-CO');
   }
@@ -223,15 +240,11 @@ export class TableProceduresComponent implements OnInit, OnChanges {
     return column.property;
   }
 
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => {
-        if (this.urlTable !== environment.active) {
-          return column.visible && column.property !== 'actions';
-        }
-        return column.visible;
-      })
-      .map((column) => column.property);
+  getUserRole(): string | undefined {
+    const decodeToken = this.authService.getDecodedToken();
+    if (decodeToken) {
+      return decodeToken.role;
+    }
   }
 
   get columns() {
