@@ -22,7 +22,7 @@
     />
   }
   @if (icon && icon.length > 0) {
-    <mat-icon matIconPrefix [svgIcon]="icon"></mat-icon>
+    <mat-icon matSuffix [svgIcon]="icon"></mat-icon>
   }
   @if (hintValue && hintValue.length > 0 && checkIsInValid(formControlInput)) {
     <mat-hint class="mb-1">{{ hintValue }}</mat-hint>
