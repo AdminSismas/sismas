@@ -149,6 +149,7 @@ export const environment = {
   unitBuild: "/unitBuild",
   unitBuilt: "/unitBuilt",
   urban_zones: "/ccZonaHomoFisicaUr",
+  copy: "/copy",
   user_exist: "/username/",
   valuation: "/valuation/",
   video: "assets/video/desarrollo.mp4",

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -11,11 +11,13 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
-  MODAL_DINAMIC_HEIGHT, MODAL_LARGE, MODAL_MEDIUM,
+  MODAL_DINAMIC_HEIGHT,
+  MODAL_LARGE,
+  MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
@@ -43,11 +45,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
-import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import {
-  ContentInformationConstruction, CrudInformationConstruction
+  ContentInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
 import {
   DetailInformationConstructionsPropertyComponent
@@ -59,12 +60,10 @@ import {
 } from './crud-information-constructions-property/crud-information-constructions-property.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import Swal from 'sweetalert2';
 import {
   InformationConstructionsService
 } from '../../../services/information-property/information-constructions-property/information-constructions.service';
 import { filter } from 'rxjs/operators';
-import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -136,7 +135,10 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('deletedConstruction') deletedConstruction!: SwalComponent;
+  @ViewChild('copyConstruction') copyConstruction!: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
+  @ViewChild('copySwal') private copySwal!: SwalComponent;
+  @ViewChild('errorCopySwal') private errorCopySwal!: SwalComponent;
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
@@ -278,20 +280,31 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     this.executeEventAddEditConstructionInformation(customer);
   }
 
-  deleteInformation(customer: any): void {
+  deleteInformation(customer: ContentInformationConstruction): void {
     this.deletedConstruction.fire().then((result) => {
-      if (result.isConfirmed) {
-        const baunitId = this.baunitId ?? '';
-        const executionId = this.executionId ?? '';
-        const unitBuiltId = customer.unitBuiltId;
-        this.constructionsService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
+      if (result.isConfirmed && this.baunitId && this.executionId && customer.unitBuiltId) {
+        this.constructionsService.deleteConstruction(this.baunitId, this.executionId, customer.unitBuiltId).subscribe({
           next: () => {
-            this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
+            this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== customer.unitBuiltId);
             this.deleteSwal.fire();
           },
           error: () => {
             this.errorSwal.fire();
           }
+        });
+      }
+    });
+  }
+
+  copyInformation(customer: ContentInformationConstruction): void {
+    this.copyConstruction.fire().then((result) => {
+      if (result.isConfirmed && this.baunitId && this.executionId && customer.unitBuiltId) {
+        this.constructionsService.copyConstruction(this.baunitId, this.executionId, customer.unitBuiltId).subscribe({
+          next: () => {
+            this.copySwal.fire();
+            this.searchInformationsConstructionsProperty();
+          },
+          error: () => this.errorCopySwal.fire()
         });
       }
     });

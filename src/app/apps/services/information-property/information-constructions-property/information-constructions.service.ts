@@ -121,6 +121,13 @@ export class InformationConstructionsService {
     return this.requestsService.sendDeleteParams(url, { body: formData });
   }
 
+  //{{url}}:{{port}}/unitBuilt/temp/{{executionId}}/{{baunitId}}/{{unitBuiltId}}/copy
+  copyConstruction(baunitId: string, executionId: string, unitBuiltId: number): Observable<ContentInformationConstruction> {
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}${envi.copy}`;
+    return this.requestsService.sendRequestsUpdatePutBody(url, null
+    );
+  }
+
   private getData(url: string, params: any): Observable<any> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
