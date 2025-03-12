@@ -19,7 +19,6 @@ export class AuthService {
   private _token: string | null = null;
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
   private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
-  private lastPing?: Date | null;
 
   constructor(
     private http: HttpClient, private router: Router,
@@ -43,7 +42,7 @@ export class AuthService {
         icon: 'warning',
         showConfirmButton: false,
         timer: 10000
-      }).then(() => {});
+      }).then();
     });
 
     // Do something when the user becomes active again
@@ -74,7 +73,6 @@ export class AuthService {
   resetIdle() {
     this.idle.stop();
     this.idle.watch();
-    this.lastPing = null;
   }
 
   // Guardar el token
