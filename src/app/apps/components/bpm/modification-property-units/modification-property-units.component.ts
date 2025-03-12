@@ -19,7 +19,7 @@ import { DataAlfaMain, ModificationUnitProperties } from 'src/app/apps/interface
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
 import {
-  LIST_SCHEMAS_CONTROL_CHANGES,
+  LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
   PAGE,
   PAGE_OPTION__5_7_10,
@@ -176,7 +176,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
           row.baunitIdE,
           row,
           this.data.executionId,
-          LIST_SCHEMAS_CONTROL_CHANGES,
+          LIST_SCHEMAS_CONTROL_TEMP,
           TYPE_INFORMATION_EDITION,
           '',
           this.data.resources,
