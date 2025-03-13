@@ -396,7 +396,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
             this.snackBar.open(proTaskE.proTask.flowName!, 'Aceptar', {
               duration: 10000
             });
-            this.bpmProcessService.setPermissions(vailablePermission)
+            this.bpmProcessService.setPermissions(vailablePermission);
             return;
           }
         }

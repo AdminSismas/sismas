@@ -1,3 +1,4 @@
+import { BASIC_USERS_ROLE_LIST, CERTIFICATE_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constant';
 import { NavigationDropdown, NavigationLink } from '../../core/navigation/navigation-item.interface';
 
 export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[] = [
@@ -232,7 +233,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropd
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ], roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ', 'USER_SERV']
+    ], roles: BASIC_USERS_ROLE_LIST
   },
   {
     type: 'dropdown',
@@ -252,7 +253,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropd
         routerLinkActiveOptions: { exact: true }
       }
     ],
-    roles: ['ADMIN', 'USER_SERV']
+    roles: CERTIFICATE_USERS_ROLE_LIST
   }
 ];
 

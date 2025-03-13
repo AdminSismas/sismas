@@ -113,6 +113,7 @@ export const TYPE_OPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
 export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
 export const BASIC_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ', 'GUEST'];
 export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ'];
+export const CERTIFICATE_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV'];
 export const ADMIN_ROLE_LIST: string[] = ['ADMIN'];
 
 

@@ -2,25 +2,33 @@ import {
   AfterViewInit,
   Component,
   DestroyRef,
-  EventEmitter,
   inject,
-  Input,
   OnInit,
-  Output,
-  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -52,9 +60,7 @@ import {
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
@@ -62,11 +68,8 @@ import { SendInformationRegisterService } from '../../../services/register-proce
 import { ValidateInformationBaunitService } from '../../../services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterCertificateSearchComponent } from './filter-certificate-search/filter-certificate-search.component';
-import {
-  ViewFileDocumentManagementComponent
-} from '../../general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '../../general-components/view-file-document-management/view-file-document-management.component';
 import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
-
 
 @Component({
   selector: 'vex-table-certificate-search',
@@ -97,31 +100,13 @@ import { contentInfoAttachment } from '../../../interfaces/general/content-info-
     MatSelectModule
   ]
 })
-export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
-
-  @Output() search = new EventEmitter<void>();
-  @Output() viewProperty = new EventEmitter<any>();
-  @Output() viewDocument = new EventEmitter<any>();
-  @Input() searchedData: any; // Datos de búsqueda recibidos del diálogo principal
-
-  // Lógica para los botones
-  onSearchClick(): void {
-    this.search.emit();
-  }
-
-  onViewPropertyClick(property: any): void {
-    this.viewProperty.emit(property);
-  }
-
-  onViewDocumentClick(file: any): void {
-    this.viewDocument.emit(file);
-  }
-
+export class TableCertificateSearchComponent
+  implements OnInit, AfterViewInit
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
 
-  @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   page = PAGE;
   totalElements = 0;
@@ -129,7 +114,10 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
 
   dataSource!: MatTableDataSource<BaunitHead>;
-  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
+  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(
+    true,
+    []
+  );
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   initParams?: string;
 
@@ -139,30 +127,19 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private snackbar: MatSnackBar = inject(MatSnackBar);
+  private baunitService: ValidateInformationBaunitService = inject(
+    ValidateInformationBaunitService
+  );
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar,
     private infoTableService: InfoTableService,
     private readonly layoutService: VexLayoutService,
-    private sendInformation: SendInformationRegisterService,
-    private baunitService: ValidateInformationBaunitService
-  ) {
-  }
-// Datos de búsqueda recibidos del diálogo principal
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['searchData'] && this.searchData) {
-      this.applySearchFilter(this.searchData);
-    }
-  }
-
-  applySearchFilter(data: any): void {
-    console.log('Aplicando filtro en la tabla con los datos:', data);
-    // Aquí puedes implementar la lógica para filtrar la tabla
-  }
+    private sendInformation: SendInformationRegisterService
+  ) {}
 
   get visibleColumns() {
     return this.columns
@@ -180,16 +157,19 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       this.initParams = this.route.snapshot.queryParams['npn'];
       this.searValueData({}, this.initParams as string);
       setTimeout(() => {
-        this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          ...MODAL_LARGE,
-          disableClose: true,
-          data: new ContentInfoSchema(
-            this.dataSource.data[0].baunitIdE,
-            this.dataSource.data[0],
-            null,
-            LIST_SCHEMAS_CONTROL_MAIN,
-          )
-        });
+        this.dialog.open(
+          LayoutCardCadastralInformationPropertyComponentComponent,
+          {
+            ...MODAL_LARGE,
+            disableClose: true,
+            data: new ContentInfoSchema(
+              this.dataSource.data[0].baunitIdE,
+              this.dataSource.data[0],
+              null,
+              LIST_SCHEMAS_CONTROL_MAIN
+            )
+          }
+        );
       }, 300);
     }
   }
@@ -220,7 +200,9 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
         ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
-          data.baunitIdE, data, null,
+          data.baunitIdE,
+          data,
+          null,
           LIST_SCHEMAS_CONTROL_MAIN,
           TYPE_INFORMATION_VISUAL
         )
@@ -229,7 +211,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   }
 
   createAdvancedSearch(): void {
-    if(this.searchData){
+    if (this.searchData) {
       const cleanValue = this.cleanJsonValues(this.searchData);
       this.searchData = cleanValue;
     }
@@ -251,17 +233,18 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       });
   }
 
-  cleanJsonValues(data: any): any {
-    const cleanedData: any = {};
+cleanJsonValues(data: SearchData): SearchData {
+    const cleanedData: SearchData = {};
 
     // Iterar sobre las claves del JSON
     Object.keys(data).forEach((key) => {
-      const value = data[key];
+      const typedKey = key as keyof SearchData;
+      const value = data[typedKey];
       if (typeof value === 'string') {
         // Eliminar solo los guiones bajos (__) dejando los números
-        cleanedData[key] = value.replace(/_/g, '');
+        cleanedData[typedKey] = value.replace(/_/g, '');
       } else {
-        cleanedData[key] = value; // Mantener valores no string tal como están
+        cleanedData[typedKey] = value as string | undefined; // Mantener valores no string tal como están
       }
     });
     return cleanedData;
@@ -295,48 +278,52 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   }
 
   searchPropertiesByRegistration(data: SearchData): void {
-    this.infoTableService.getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByDocument(data: SearchData): void {
-    this.infoTableService.getDataPropertyByDocument(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByDocument(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByName(data: SearchData): void {
-    this.infoTableService.getDataPropertyByName(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByName(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByAddress(data: SearchData): void {
-    this.infoTableService.getDataPropertyByAddress(this.generateObjectPageSearchData(data))
+    this.infoTableService
+      .getDataPropertyByAddress(this.generateObjectPageSearchData(data))
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
   searchNationalPredialNumber(data: SearchData): void {
-    this.infoTableService.getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
+    this.infoTableService
+      .getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
@@ -351,14 +338,18 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       return true;
     }
 
-    if (this.isValidateField(searchData?.number) &&
-      this.isValidateField(searchData?.domIndividualTypeNumber)) {
+    if (
+      this.isValidateField(searchData?.number) &&
+      this.isValidateField(searchData?.domIndividualTypeNumber)
+    ) {
       this.searchPropertiesByDocument(this.searchData);
       return true;
     }
 
-    if (this.isValidateField(searchData?.firstName) &&
-      this.isValidateField(searchData?.lastName)) {
+    if (
+      this.isValidateField(searchData?.firstName) &&
+      this.isValidateField(searchData?.lastName)
+    ) {
       this.searchPropertiesByName(this.searchData);
       return true;
     }
@@ -368,8 +359,14 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       return true;
     }
 
-    if (searchData.sidewalk !== null && searchData.sidewalk !== undefined && searchData.sidewalk.length > 10 ||
-      searchData.block !== null && searchData.block !== undefined && searchData.block.length > 10) {
+    if (
+      (searchData.sidewalk !== null &&
+        searchData.sidewalk !== undefined &&
+        searchData.sidewalk.length > 10) ||
+      (searchData.block !== null &&
+        searchData.block !== undefined &&
+        searchData.block.length > 10)
+    ) {
       this.searchNationalPredialNumber(this.searchData);
       return true;
     }
@@ -381,20 +378,20 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  formatFieldValue(value:SearchData) {
+  formatFieldValue(value: SearchData) {
     const formattedValues = [
-     value.dpto,
-     value.mpio,
-     value.zonas,
-     value.sectorb,
-     value.comuna,
-     value.barrio,
-     value.manVer,
-     value.terreno,
-     value.condicion,
-     value.edificio,
-     value.piso,
-     value.unidadPredial
+      value.dpto,
+      value.mpio,
+      value.zonas,
+      value.sectorb,
+      value.comuna,
+      value.barrio,
+      value.manVer,
+      value.terreno,
+      value.condicion,
+      value.edificio,
+      value.piso,
+      value.unidadPredial
     ];
 
     let result;
@@ -408,15 +405,15 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
     this.searValueData(value, result);
   }
 
-  searValueData(searData:SearchData,data: string): void {
-    this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
-    .subscribe(value=>{
-      this.captureInformationSubscribe(value);
-    });
-  }
-
-
-  deleteInformations(customer: BaunitHead): void {
+  searValueData(searData: SearchData, data: string): void {
+    this.baunitService
+      .advancedSearchCadastral(
+        this.generateObjectPageSearchData(searData),
+        data
+      )
+      .subscribe((value) => {
+        this.captureInformationSubscribe(value);
+      });
   }
 
   onFilterChange(value: string): void {
@@ -443,9 +440,11 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.dataSource.data.forEach((row) => this.selection.select(row));
+    }
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
@@ -481,19 +480,20 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
 
   async initiateFilingProcedure(data: BaunitHead) {
     if (data && data?.baunitIdE) {
-      const available = await this.baunitService.getBaunitIdEInOtherProcess(data?.baunitIdE);
-      if (!available){
+      const available = await this.baunitService.getBaunitIdEInOtherProcess(
+        data?.baunitIdE
+      );
+      if (!available) {
         this.snackbar.open(
           'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-          'CERRAR', { duration: 5000 }
+          'CERRAR',
+          { duration: 5000 }
         );
         return;
       }
       const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
-      this.router.navigate([`${url}`, data.baunitIdE])
-        .then(r => {
-        });
+      this.router.navigate([`${url}`, data.baunitIdE]).then();
     }
   }
 
@@ -502,15 +502,13 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   }
 
   viewFile(metaData: contentInfoAttachment): void {
-    this.dialog
-      .open(ViewFileDocumentManagementComponent, {
-        ...MODAL_LARGE,
-        disableClose: true,
-        data: {
-          metaData: metaData,
-
-        }
-      });
+    this.dialog.open(ViewFileDocumentManagementComponent, {
+      ...MODAL_LARGE,
+      disableClose: true,
+      data: {
+        metaData: metaData
+      }
+    });
 
     this.dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
