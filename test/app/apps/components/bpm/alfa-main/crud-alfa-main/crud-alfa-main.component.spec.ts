@@ -13,13 +13,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { provideIcons } from '../../../../../../src/app/core/icons/icons.provider';
-import {
-  CrudAlfaMainComponent
-} from '../../../../../../src/app/apps/components/bpm/alfa-main/crud-alfa-main/crud-alfa-main.component';
-import { AlfaMainService } from '../../../../../../src/app/apps/services/bpm/core/alfa-main.service';
+import { provideIcons } from '../../../../../../../src/app/core/icons/icons.provider';
+import { CrudAlfaMainComponent } from 'src/app/apps/components/bpm/alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
-import { CurrencyLandsPipe } from '../../../../../../src/app/apps/pipes/currency-lands.pipe';
+import { CurrencyLandsPipe } from '../../../../../../../src/app/apps/pipes/currency-lands.pipe';
+import { AlfaMainService } from '../../../../../../../src/app/apps/services/bpm/core/alfa-main.service';
 
 describe(CrudAlfaMainComponent.name, () => {
   let component: CrudAlfaMainComponent;
