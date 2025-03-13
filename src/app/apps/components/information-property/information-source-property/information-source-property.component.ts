@@ -202,9 +202,7 @@ export class InformationSourcePropertyComponent {
         this.subject$.next(this.allSourceSnr.reverse());
         this.cdr.markForCheck();
       },
-      error: (error) => {
-        console.error('Error al obtener la información de fuente:', error);
-      }
+      error: () => {}
     });
   }
 

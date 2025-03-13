@@ -148,6 +148,7 @@ export const environment = {
   ulr_icon_base: "assets/img/icons/cadastral-logos/128x128/",
   unitBuild: "/unitBuild",
   unitBuilt: "/unitBuilt",
+  copy: "/copy",
   urban_zones: "/ccZonaHomoFisicaUr",
   user_exist: "/username/",
   valuation: "/valuation/",

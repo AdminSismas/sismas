@@ -34,7 +34,6 @@ export class SnrService {
 
         return this.http.get<DataSource[]>(url).pipe(
             catchError(error => {
-                console.error('Error al obtener la información de Fuente:', error);
                 return throwError(() => error); // Ajuste para TypeScript estricto
             })
         );

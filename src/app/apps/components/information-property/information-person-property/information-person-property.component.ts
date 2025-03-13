@@ -187,9 +187,7 @@ export class InformationPersonPropertyComponent {
         this.subject$.next(this.allPersonSnr.reverse());
         this.cdr.markForCheck();
       },
-      error: (error) => {
-        console.error('Error al obtener la información de fuente:', error);
-      }
+      error: () => {}
     });
   }
 }
