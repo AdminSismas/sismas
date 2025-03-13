@@ -1,3 +1,4 @@
+import { ComponentType } from "@angular/cdk/portal";
 
 export class Certificate {
   id: number;
@@ -5,6 +6,7 @@ export class Certificate {
   price: number;
   icon: string;
   type: string;
+  component: ComponentType<any>;
 
 
   constructor(certificate: any) {
@@ -13,6 +15,11 @@ export class Certificate {
     this.price = certificate.price;
     this.icon = certificate.icon;
     this.type = certificate.type;
+    this.component = certificate.component;
   }
+}
 
+export interface CertificateDialogData {
+  certificate: Certificate;
+  openSearch?: boolean;
 }

@@ -119,7 +119,7 @@ export class AuthService {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
     this.idle.stop();
-    this.router.navigate(['/login']).then(() => {
+    this.router.navigate(['/']).then(() => {
       window.history.pushState(null, '', window.location.href);
       window.onpopstate = function () {
         window.history.pushState(null, '', window.location.href);
