@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  AlfaMainInformationComponent
+} from '../../../../../../../src/app/apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
 
-import { AlfaMainInformationComponent } from './alfa-main-information.component';
 
-describe('AlfaMainInformationComponent', () => {
+describe(AlfaMainInformationComponent.name, () => {
   let component: AlfaMainInformationComponent;
   let fixture: ComponentFixture<AlfaMainInformationComponent>;
 
@@ -11,13 +13,13 @@ describe('AlfaMainInformationComponent', () => {
       imports: [AlfaMainInformationComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(AlfaMainInformationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  test('should create', () => {
     expect(component).toBeTruthy();
   });
 });
