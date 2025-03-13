@@ -218,7 +218,6 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
         {
           error: () => this.messageChangesNoAvailable(),
           next: (result: DifferenceChanges[]) => {
-            console.log("table-alfa-main:::: ",result);
             this.openDifferenceChangesProperty(
               result, this.executionId, operation?.baunitHead?.baunitIdE);
           }
