@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 /* -------------- IMPORTACIONES ARCHIVOS LOCALES -------------- */
@@ -9,51 +9,55 @@ import { CommentsCollection } from '../../interfaces/comments/comments.model';
 import { PageCommentsData } from '../../interfaces/general/page-comments-data.model';
 import { contentInfoComments } from '../../interfaces/general/content-info-comments.model';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-
-
-
-
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CommentsService {
-    /* -------------- ATRIBUTOS -------------- */
-    basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}/${environment.bpmOperation.comment}`;
+  /* -------------- ATRIBUTOS -------------- */
+  basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}/${environment.bpmOperation.comment}`;
 
-    /* -------------- CONSTRUCTRO -------------- */
-    constructor(private requestsService: SendGeneralRequestsService) {}
+  /* -------------- CONSTRUCTRO -------------- */
+  constructor(
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
+  ) {}
 
-    /* -------------- MÉTODOS -------------- */
-    getDataPropertyByComments(executionId: string, pegeData: PageCommentsData):Observable<CommentsCollection> {
-        let paramsComm:HttpParams = new HttpParams();
-        paramsComm = paramsComm.append('page', `${pegeData.NumPage}`);
-        paramsComm = paramsComm.append('size', `${pegeData.NumSize}`);
-        const url = `${this.basic_url}${executionId}`;
-        return this.getData(url, paramsComm);
-    }
+  /* -------------- MÉTODOS -------------- */
+  getDataPropertyByComments(
+    executionId: string,
+    pegeData: PageCommentsData
+  ): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${executionId}`;
 
-    postDataPropertyByComments(executionId: string, body: contentInfoComments) {
-        const url = `${this.basic_url}${executionId}`;
-        return this.fetchBody(url, body);
-    }
+    let params: HttpParams = new HttpParams();
+    params = params.append('page', `${pegeData.NumPage}`);
+    params = params.append('size', `${pegeData.NumSize}`);
 
-    deleteDataPropertyByComments(executionId: string, commentId: number) {
-        const url = `${this.basic_url}${executionId}/${commentId}`;
-        return this.deleteBody(url);
-    }
+    return this.http.get<InformationPegeable>(url, { params });
+  }
 
+  postDataPropertyByComments(executionId: string, body: contentInfoComments) {
+    const url = `${this.basic_url}${executionId}`;
+    return this.fetchBody(url, body);
+  }
 
-    /* -------------- MÉTODOS PRIVADOS -------------- */
-    private getData(url:string, params:any):Observable<CommentsCollection>{
-        return this.requestsService.sendRequestsGetOption(url, {params: params});
-    }
+  deleteDataPropertyByComments(executionId: string, commentId: number) {
+    const url = `${this.basic_url}${executionId}/${commentId}`;
+    return this.deleteBody(url);
+  }
 
-    private fetchBody(url: string, body: any): Observable<CommentsCollection> {
-        return this.requestsService.sendRequestsFetchPostBody(url, body);
-    }
+  /* -------------- MÉTODOS PRIVADOS -------------- */
+  private getData(url: string, params: any): Observable<CommentsCollection> {
+    return this.requestsService.sendRequestsGetOption(url, { params: params });
+  }
 
-    private deleteBody(url: string): Observable<CommentsCollection> {
-        return this.requestsService.sendDeleteFetch(url);
-    }
+  private fetchBody(url: string, body: any): Observable<CommentsCollection> {
+    return this.requestsService.sendRequestsFetchPostBody(url, body);
+  }
+
+  private deleteBody(url: string): Observable<CommentsCollection> {
+    return this.requestsService.sendDeleteFetch(url);
+  }
 }
