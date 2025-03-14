@@ -23,7 +23,7 @@ export class AuthService {
   constructor(
     private http: HttpClient, private router: Router,
     private userService: UserService,
-    private idle: Idle
+    private idle: Idle,
   ) {
     idle.setIdle(IDLE_TIME_MINUTES * 60);
     idle.setTimeout(TIMEOUT_TIME_MINUTES * 60);
@@ -115,10 +115,17 @@ export class AuthService {
 
   // Logout
   logout(): void {
+    // Borrar el valor de la variable _token
     this._token = null;
+
+    // Eliminar el token y el usuario del almacenamiento local
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
+
+    // Detener la verificación de inactividad
     this.idle.stop();
+
+    // Redirigir a la página de inicio
     this.router.navigate(['/']).then(() => {
       window.history.pushState(null, '', window.location.href);
       window.onpopstate = function () {

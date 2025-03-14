@@ -8,11 +8,10 @@ import {
   map,
   startWith,
   switchMap,
-  takeUntil
 } from 'rxjs/operators';
 import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
 import { VexPopoverService } from '@vex/components/vex-popover/vex-popover.service';
-import { interval, Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { SidenavUserMenuComponent } from './sidenav-user-menu/sidenav-user-menu.component';
 import { SidenavItemComponent } from './sidenav-item/sidenav-item.component';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
@@ -127,19 +126,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
     );
 
     this.searchRouteTouch();
-    interval(2000)
-      .pipe(
-        switchMap(() => this.navigationLoaderService.taskCounters$),
-        takeUntil(this.destroy$),
-        distinctUntilChanged()
-      )
-      .subscribe(() => {
-        console.log('Actualizando counters');
-        this.navigationService.refreshNavigationItems();
-      });
-      
-      this.navigationLoaderService.refreshCounters();
-      this.navigationLoaderService.startCountLoop();
+
+    this.navigationLoaderService.refreshCounters();
+    this.navigationLoaderService.startCountLoop();
   }
 
   ngOnDestroy(): void {
