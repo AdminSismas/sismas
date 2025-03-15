@@ -268,13 +268,12 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
     let executeIdIntoExecuteId: boolean = false;
     let data: contentInfoProcedures[];
 
-    if (this.contentInformations == null || (this.contentInformations.content == null || this.contentInformations.content.length <= 0) ||
-      !this.executionId) {
+    if (this.contentInformations == null || (this.contentInformations.content == null || this.contentInformations.content.length <= 0)) {
       this.page = PAGE;
       return;
     }
 
-    if (!this.isHistoricalComponent) {
+    if (!this.isHistoricalComponent && this.executionId) {
       data = this.contentInformations.content.filter((pr: ProceduresCollection) => pr.executionId?.toString() !== this.executionId);
       if (data == null || data.length === 0) {
         this.page = PAGE;
