@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { BehaviorSubject, catchError, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable } from 'rxjs';
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -33,8 +33,11 @@ export class TasksPanelService {
   getProTaskCount(): Observable<ProTaskE> {
     const url = `${this.basic_url}${envi.bpmOperation.proTask_count}`;
 
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<ProTaskE>(url)
+      .pipe(
+        catchError(error => this.requestsService.errorNotFound(error)),
+        distinctUntilChanged()
+      );
   }
 
   getProTaskAssigned(page: PageSearchData): Observable<InformationPegeable> {

@@ -1,6 +1,7 @@
 import { ProTask } from './pro-task';
 
 export class ProTaskE {
+  proTask?: ProTask;
   executionId?: number;
   flowId?: number;
   isBegin?: boolean;
@@ -9,7 +10,6 @@ export class ProTaskE {
   devolution?: number;
   priority?: number;
   icon?: string;
-  proTask?: ProTask;
 
 
   constructor(content?: any) {

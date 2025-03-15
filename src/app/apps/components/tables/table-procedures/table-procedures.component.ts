@@ -63,7 +63,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { TaskResponseModel } from '../../../interfaces/bpm/task-response.model';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   MODAL_LARGE,
   MODAL_SMALL,
@@ -75,6 +75,8 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReassignProcedureComponent } from '../../procedures/reassign-procedure/reassign-procedure.component';
 import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
+import { ComponentType } from '@angular/cdk/overlay';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-table-procedures',
@@ -84,25 +86,29 @@ import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.servic
   animations: [fadeInUp400ms, stagger40ms],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
   imports: [
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    MatInputModule,
-    MatMenuModule,
-    ReactiveFormsModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSortModule,
-    MatTableModule,
     CommonModule,
     FormsModule,
-    MatDatepickerModule,
     NgClass,
     NgIf,
     ReactiveFormsModule,
-    SweetAlert2Module
+    ReactiveFormsModule,
+    SweetAlert2Module,
+    // Vex
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
+    // Material
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule
   ]
 })
 export class TableProceduresComponent implements OnInit, OnChanges {
@@ -122,6 +128,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   seeInfoDocument = false;
   public procedureDetail: TaskResponseModel = new TaskResponseModel();
   userRole: string | undefined = this.getUserRole();
+  comment = '';
 
   // Array para almacenar las suscripciones
   private subscriptions: Subscription | undefined[] = [];
@@ -136,13 +143,17 @@ export class TableProceduresComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('commentDialog') commentDialog!: ComponentType<unknown>;
   @ViewChild('confirmDelete') confirmDelete!: SwalComponent;
   @ViewChild('errorDelete') errorDelete!: SwalComponent;
+  @ViewChild('successDelete') successDelete!: SwalComponent;
   @ViewChild('successReassign') successReassign!: SwalComponent;
   @ViewChild('errorReassign') errorReassign!: SwalComponent;
 
   get visibleColumns() {
-    const validUser = this.userRole ? USERS_ACTIONS_ENABLED.includes(this.userRole) : false;
+    const validUser = this.userRole
+      ? USERS_ACTIONS_ENABLED.includes(this.userRole)
+      : false;
 
     const columnsFiltered = this.columns.filter((column) => {
       if (this.urlTable !== environment.active) {
@@ -263,7 +274,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
         label: 'Anular',
         icon: 'mat:block',
         action: (row: ProceduresCollection) => this.actionButtons('cancel', row)
-      },
+      }
       // {
       //   label: 'Reclasificar',
       //   icon: 'mat:delete',
@@ -544,7 +555,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
         this.reassignProcedure(row);
         break;
       case 'cancel':
-        this.cancelProcedure(row);
+        this.addComment(row);
         break;
       case 'reclassify':
         this.reclassifyProcedure(row);
@@ -563,30 +574,56 @@ export class TableProceduresComponent implements OnInit, OnChanges {
     console.log(row);
   }
 
-  cancelProcedure(row: ProceduresCollection) {
+  addComment(row: ProceduresCollection) {
     this.confirmDelete.fire().then((result) => {
       if (result.isConfirmed) {
-        this.proceduresService.cancelProcedure(row.executionId!)
-          .subscribe({
-            next: () => {
-              const data = this.objectParameters();
-              this.getDataFromProceduresService(data);
-            },
-            error: (error: HttpErrorResponse) => {
-              this.errorDelete.fire();
-              throw error.message;
+        this.dialog
+          .open(this.commentDialog, {
+            ...MODAL_SMALL
+          })
+          .afterClosed()
+          .subscribe((response: boolean) => {
+            if (response) {
+              this.proceduresService
+                .commentProcedure(row.executionId!, this.comment)
+                .subscribe({
+                  next: () => {
+                    this.cancelProcedure(row.executionId!);
+                  },
+                  error: (error: HttpErrorResponse) => {
+                    this.errorDelete.fire();
+                    throw error.message;
+                  }
+                });
             }
           });
       }
     });
   }
-  reassignProcedure(row: ProceduresCollection) {
-    this.dialog.open(ReassignProcedureComponent, {
-      ...MODAL_SMALL,
-      data: {
-        executionId: row.executionId,
+
+  cancelProcedure(executionId: number) {
+    this.proceduresService.cancelProcedure(executionId).subscribe({
+      next: () => {
+        const data = this.objectParameters();
+        this.getDataFromProceduresService(data);
+        this.successDelete.fire();
+      },
+      error: (error: HttpErrorResponse) => {
+        this.errorDelete.fire();
+        throw error.message;
       }
-    }).afterClosed()
+    });
+  }
+
+  reassignProcedure(row: ProceduresCollection) {
+    this.dialog
+      .open(ReassignProcedureComponent, {
+        ...MODAL_SMALL,
+        data: {
+          executionId: row.executionId
+        }
+      })
+      .afterClosed()
       .subscribe({
         next: (response: string | undefined) => {
           if (response === 'success') {

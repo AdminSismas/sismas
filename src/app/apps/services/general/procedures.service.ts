@@ -105,6 +105,14 @@ export class ProceduresService {
       .replace('yyyy', String(year));
   }
 
+  commentProcedure(
+    executionId: number | string,
+    commentText: string
+  ): Observable<unknown> {
+    const url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.comment}${executionId}`;
+    return this.http.post<unknown>(url, { commentText });
+  }
+
   // {{url}}:{{port}}/bpmOperation/proExecution/{{executionId}}/cancel
   cancelProcedure(executionId: number): Observable<string> {
     const url = `${this.basic_url}/${executionId}${envi.cancel}`;

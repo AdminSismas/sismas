@@ -429,8 +429,10 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       this.dialog.open(CommentsComponent, {
         width: '60%',
         data: {
-          executionId: this.data?.value?.executionId
-        }
+          value: {
+            executionId: this.data?.value?.executionId
+          }
+        } as { value: { executionId: string } }
       });
     }
   }
