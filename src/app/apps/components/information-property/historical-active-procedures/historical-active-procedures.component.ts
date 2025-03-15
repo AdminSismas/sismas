@@ -1,14 +1,6 @@
 // ANGULAR IMPORTS
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import {
-  Component,
-  DestroyRef,
-  EventEmitter,
-  inject,
-  Input,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -30,19 +22,21 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 // CONSTANTS AND ENVIRONMENT IMPORTS
 import {
+  LIST_SCHEMAS_CONTROL_HISTORY, LIST_SCHEMAS_CONTROL_TEMP,
+  MODAL_LARGE,
   MODAL_SMALL,
   PAGE,
   PAGE_OPTION__10_20_50_100,
-  TYPE_INFORMATION_EDITION
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
 } from 'src/app/apps/constants/general/constant';
 import { environment } from 'src/environments/environments';
-import {
-  PAGE_SIZE,
-  TABLE_COLUMN_PROPERTIES_HISTORY
-} from 'src/app/apps/constants/general/procedures.constant';
+import { PAGE_SIZE, TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
 
 // COMPONENT IMPORTS
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 
 // INTERFACES IMPORTS
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
@@ -51,7 +45,6 @@ import { InformationPegeable } from 'src/app/apps/interfaces/general/information
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { PageProceduresData } from 'src/app/apps/interfaces/general/page-procedures-data.model';
 import { ProceduresService } from 'src/app/apps/services/general/procedures.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -61,19 +54,22 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { contentInfoProcedures } from 'src/app/apps/interfaces/general/content-info-procedures.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
-import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import {
+  DetailInformationTasksComponent
+} from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { TaskResponseModel } from 'src/app/apps/interfaces/bpm/task-response.model';
+import {
+  LayoutCardCadastralInformationPropertyComponentComponent
+} from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { getRandomInt } from 'src/app/apps/utils/general';
+import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import Swal from 'sweetalert2';
 
-export interface HistoryListBasic {
-  nameList: string;
-  executionId: number;
-  bpmProcessCategory: string;
-  processName: string;
-  lastupdated_at: string;
-}
 
 @Component({
-  selector: 'vex-historical-procedures-property',
+  selector: 'vex-historical-active-procedures-property',
   standalone: true,
   animations: [
     fadeInRight400ms,
@@ -105,18 +101,18 @@ export interface HistoryListBasic {
     ReactiveFormsModule,
     MatSelectModule
   ],
-  templateUrl: './historical-procedures.component.html',
-  styleUrl: './historical-procedures.component.scss'
+  templateUrl: './historical-active-procedures.component.html',
+  styleUrl: './historical-active-procedures.component.scss'
 })
-export class HistoricalProceduresPropertyComponent implements OnInit {
+export class HistoricalActiveProceduresPropertyComponent implements OnInit {
   @Input({ required: true }) id = '';
+  @Input({ required: true }) isHistoricalComponent!: boolean;
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
-  @Output() showListHistory = new EventEmitter<HistoryListBasic[]>();
 
   dataSource!: MatTableDataSource<ProceduresCollection>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -128,18 +124,22 @@ export class HistoricalProceduresPropertyComponent implements OnInit {
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   totalElements = 0;
-  columns: TableColumn<contentInfoProcedures>[] =
-    TABLE_COLUMN_PROPERTIES_HISTORY;
+  columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_HISTORY;
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private dialog: MatDialog = inject(MatDialog);
 
   constructor(
     private readonly layoutService: VexLayoutService,
     private proceduresService: ProceduresService,
-    private alertSnakbar: MatSnackBar
-  ) {}
+    private alfaMainService: AlfaMainService
+  ) {
+  }
 
   ngOnInit(): void {
+    if (this.id?.length <= 0 || this.baunitId == null) {
+      return;
+    }
+    this.id = this.id + getRandomInt(10057) + this.schema + (this.isHistoricalComponent ? 'historical' : 'active');
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -172,34 +172,36 @@ export class HistoricalProceduresPropertyComponent implements OnInit {
   trackByProperty<T>(index: number, column: TableColumn<T>) {
     return column.property;
   }
+
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)
       .map((column) => column.property);
   }
 
-  refreshInformationpaginator(event: PageEvent): void {
+  refreshInformationPaginator(event: PageEvent): void {
     if (event == null) {
       return;
     }
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
     const data = this.objectParameters();
-    this.getDataFromProceduresService(data);
+    if (this.isHistoricalComponent) {
+      this.getDataFromProceduresService(data);
+    } else {
+      this.getDataFromProceduresActiveService(data);
+    }
   }
 
   /* ------- Meth. Common ------- */
   objectParameters(): PageProceduresData {
-    const formValue: PageProceduresData = {
-      page: this.page,
-      size: this.pageSize,
-      beginAt: this.formatDate(this.getOneMonthAgo(new Date())),
-      beginAtE: this.formatDate(new Date()),
-      executionCode: '0',
-      individualNumber: ''
-    };
-
-    return formValue;
+    return new PageProceduresData(
+      this.page,
+      this.pageSize,
+      this.formatDate(this.getOneMonthAgo(new Date())),
+      this.formatDate(new Date()),
+      '0', ''
+    );
   }
 
   getOneMonthAgo(date: Date): Date {
@@ -232,91 +234,66 @@ export class HistoricalProceduresPropertyComponent implements OnInit {
       individualNumber: ''
     };
     if (this.baunitId != null) {
-      this.getDataFromProceduresService(formValue);
+      if (this.isHistoricalComponent) {
+        this.getDataFromProceduresService(formValue);
+      } else {
+        this.getDataFromProceduresActiveService(formValue);
+      }
     }
   }
 
   /* ------- Meth. Services ------- */
   getDataFromProceduresService(data: PageProceduresData) {
-    this.proceduresService
-      .getBaunitHistoricProcedures(this.baunitId!, data)
+    this.proceduresService.getBaUnitHistoricProcedures(this.baunitId!, data)
       .subscribe({
-        next: (result) => {
-          this.captureInformationSubscribe(result);
-        },
-        error: (error) => {
-          this.alertSnakbar.open(
-            'Hubo un error, verifique la información de los filtros',
-            'Close',
-            {
-              duration: 10000,
-              horizontalPosition: 'center'
-            }
-          );
-          console.error('Hubo un error al obtener los datos: ', error);
-        }
+        next: (result) => this.captureInformationSubscribe(result),
+        error: () => this.swalErrorCaptureInformationProcedures()
+      });
+  }
+
+  getDataFromProceduresActiveService(data: PageProceduresData) {
+    this.proceduresService.getBaUnitActiveProcedures(this.baunitId!, data)
+      .subscribe({
+        next: (result) => this.captureInformationSubscribe(result),
+        error: () => this.swalErrorCaptureInformationProcedures()
       });
   }
 
   captureInformationSubscribe(data: InformationPegeable) {
     this.contentInformations = data;
     this.captureInformationProceduresData();
-    this.proccessHistoryList(data);
-  }
-
-  proccessHistoryList(data: InformationPegeable): void {
-    if (data?.content.length > 1) {
-      const content = data.content as TaskResponseModel[];
-
-      const listHistory: HistoryListBasic[] = content.map((row) => ({
-        nameList:
-          'Versión: ' +
-          row.executionId! +
-          ' - Radicado: ' +
-          row.executionCode! +
-          ' - ' +
-          row.bpmProcessCategory! +
-          ' - ' +
-          row.processName! +
-          ' - ' +
-          this.transformDate(row.lastUpdateAt!),
-        executionId: row.executionId!,
-        bpmProcessCategory: row.bpmProcessCategory!,
-        processName: row.processName!,
-        lastupdated_at: this.transformDate(new Date(row.lastUpdateAt!))
-      }));
-      this.showListHistory.emit(listHistory);
-    }
-  }
-
-  transformDate(date: Date | string): string {
-    return this.proceduresService.formatDate(date);
   }
 
   captureInformationProceduresData() {
+    let executeIdIntoExecuteId: boolean = false;
     let data: contentInfoProcedures[];
-    if (
-      this.contentInformations != null &&
-      this.contentInformations.content != null
-    ) {
-      data = this.contentInformations.content.map(
-        (row: ProceduresCollection) =>
-          new contentInfoProcedures({
-            ...row,
-            name: row.process?.name,
-            processName: row.process?.name
-          })
-      );
-      this.dataSource.data = data;
-    }
 
-    if (this.contentInformations == null) {
+    if (this.contentInformations == null || (this.contentInformations.content == null || this.contentInformations.content.length <= 0) ||
+      !this.executionId) {
       this.page = PAGE;
       return;
     }
 
+    if (!this.isHistoricalComponent) {
+      data = this.contentInformations.content.filter((pr: ProceduresCollection) => pr.executionId?.toString() !== this.executionId);
+      if (data == null || data.length === 0) {
+        this.page = PAGE;
+        return;
+      }
+      executeIdIntoExecuteId = data.length !== this.contentInformations.content.length;
+    }
+
+    data = this.contentInformations.content.map(
+      (row: ProceduresCollection) =>
+        new contentInfoProcedures({
+          ...row,
+          name: row.process?.name,
+          processName: row.process?.name
+        })
+    );
+    this.dataSource.data = data;
     if (this.contentInformations.totalElements) {
-      this.totalElements = this.contentInformations.totalElements;
+      this.totalElements = executeIdIntoExecuteId ? (this.contentInformations.totalElements - 1) : this.contentInformations.totalElements;
     }
 
     if (this.contentInformations.pageable == null) {
@@ -328,4 +305,86 @@ export class HistoricalProceduresPropertyComponent implements OnInit {
       this.page = this.contentInformations.pageable.pageNumber;
     }
   }
+
+  openCadastralInformationProperty(data: contentInfoProcedures): void {
+    if (this.baunitId && data && data.executionId != null) {
+      const executionId: string = data.executionId.toString();
+      if (this.isHistoricalComponent) {
+        this.openInformationHistoryProcedures(executionId, this.baunitId);
+      } else {
+        this.openInformationActiveProcedures(executionId, this.baunitId);
+      }
+    }
+  }
+
+  openInformationHistoryProcedures(executionId: string, baunitId: string) {
+    if (!baunitId) {
+      return;
+    }
+    this.alfaMainService.getBaUnitHeadHistory(executionId, baunitId)
+      .subscribe({
+        next: (result: BaunitHead) => {
+          this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
+            ...MODAL_LARGE,
+            disableClose: true,
+            data: new ContentInfoSchema(
+              this.baunitId, result,
+              executionId,
+              LIST_SCHEMAS_CONTROL_HISTORY,
+              TYPE_INFORMATION_VISUAL,
+              '',
+              []
+            )
+          }).afterClosed();
+        },
+        error: () => this.swalErrorBaUnitHead(executionId)
+      });
+  }
+
+  openInformationActiveProcedures(executionId: string, baunitId: string) {
+    if (!baunitId) {
+      return;
+    }
+    this.alfaMainService.getBaUnitHeadTemporal(executionId, baunitId)
+      .subscribe({
+        next: (result: BaunitHead) => {
+          this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
+            ...MODAL_LARGE,
+            disableClose: true,
+            data: new ContentInfoSchema(
+              this.baunitId, result,
+              executionId,
+              LIST_SCHEMAS_CONTROL_TEMP,
+              TYPE_INFORMATION_VISUAL,
+              '',
+              []
+            )
+          }).afterClosed();
+        },
+        error: () => this.swalErrorBaUnitHead(executionId)
+      });
+  }
+
+  swalErrorBaUnitHead(executionId: string) {
+    Swal.fire({
+      title: '¡Error!',
+      text: 'Hubo un error, verifique la información de la unidad predial: ' + this.baunitId + ' y la version: ' + executionId,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1000
+    }).then((result) => {
+    });
+  }
+
+  swalErrorCaptureInformationProcedures() {
+    Swal.fire({
+      title: '¡Error!',
+      text: 'Hubo un error, verifique la información de los filtros',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1000
+    }).then((result) => {
+    });
+  }
+
 }

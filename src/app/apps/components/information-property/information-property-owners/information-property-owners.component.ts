@@ -55,6 +55,8 @@ import {
   FRACTION_DECIMALS,
   TABLE_COLUMNS
 } from '../../../constants/information-property/information-property-owners.constants';
+import { getRandomInt } from 'src/app/apps/utils/general';
+
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -81,7 +83,7 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
@@ -146,7 +148,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   constructor(
     private snackbar: MatSnackBar
-  ) { }
+  ) {
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -157,7 +160,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema;
+    this.id = this.id + getRandomInt(10000) + this.schema;
     this.isExpandPanel(this.expandedComponent);
 
     this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition' && this.editable;
@@ -219,7 +222,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         baunitId: this.baunitId,
         schema: this.schema,
         executionId: this.executionId
-      },
+      }
     }).afterClosed()
       .subscribe(() => {
         setTimeout(() => (this.loadInformationPropertyOwners(), 200));
@@ -271,10 +274,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     const { pageIndex, pageSize } = pageEvent || {};
     this.page = pageIndex ?? PAGE;
     this.pageSize = pageSize ?? PAGE_SIZE;
-  }
-
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
   }
 
   individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {
