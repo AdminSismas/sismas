@@ -323,6 +323,10 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
     this.alfaMainService.getBaUnitHeadHistory(executionId, baunitId)
       .subscribe({
         next: (result: BaunitHead) => {
+          if(result === null) {
+            this.swalErrorInformationProceduresNotFound();
+            return;
+          }
           this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
             ...MODAL_LARGE,
             disableClose: true,
@@ -347,6 +351,10 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
     this.alfaMainService.getBaUnitHeadTemporal(executionId, baunitId)
       .subscribe({
         next: (result: BaunitHead) => {
+          if(result === null) {
+            this.swalErrorInformationProceduresNotFound();
+            return;
+          }
           this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
             ...MODAL_LARGE,
             disableClose: true,
@@ -370,7 +378,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       text: 'Hubo un error, verifique la información de la unidad predial: ' + this.baunitId + ' y la version: ' + executionId,
       icon: 'error',
       showConfirmButton: false,
-      timer: 1000
+      timer: 3000
     }).then((result) => {
     });
   }
@@ -381,7 +389,18 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       text: 'Hubo un error, verifique la información de los filtros',
       icon: 'error',
       showConfirmButton: false,
-      timer: 1000
+      timer: 3000
+    }).then((result) => {
+    });
+  }
+
+  swalErrorInformationProceduresNotFound() {
+    Swal.fire({
+      title: '¡Error!',
+      text: 'Hubo un error al obtener la informacion, actualmente no se encuentra disponible',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 3000
     }).then((result) => {
     });
   }
