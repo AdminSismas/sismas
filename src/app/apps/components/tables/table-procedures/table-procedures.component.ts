@@ -146,6 +146,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   @ViewChild('commentDialog') commentDialog!: ComponentType<unknown>;
   @ViewChild('confirmDelete') confirmDelete!: SwalComponent;
   @ViewChild('errorDelete') errorDelete!: SwalComponent;
+  @ViewChild('commentError') commentError!: SwalComponent;
   @ViewChild('successDelete') successDelete!: SwalComponent;
   @ViewChild('successReassign') successReassign!: SwalComponent;
   @ViewChild('errorReassign') errorReassign!: SwalComponent;
@@ -584,7 +585,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
           .afterClosed()
           .subscribe((response: boolean) => {
             if (response) {
-              if (!this.comment) return this.errorDelete.fire();
+              if (!this.comment) return this.commentError.fire();
               this.proceduresService
                 .commentProcedure(row.executionId!, this.comment)
                 .subscribe({
