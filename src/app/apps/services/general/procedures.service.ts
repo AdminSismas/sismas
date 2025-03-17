@@ -109,7 +109,7 @@ export class ProceduresService {
     executionId: number | string,
     commentText: string
   ): Observable<unknown> {
-    const url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.comment}${executionId}`;
+    const url = `${envi.url}:${envi.port}${envi.bpmOperation.value}${envi.comment}${executionId}`;
     return this.http.post<unknown>(url, { commentText });
   }
 
