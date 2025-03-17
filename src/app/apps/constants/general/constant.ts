@@ -734,6 +734,7 @@ export const FRAGMENT_SUPER_NOTARIADO_PROPERTY: string = 'superNotariadoProperty
 export const FRAGMENT_BASIC_PROPERTY_INFORMATION: string = 'basicPropertyInformationComponent';
 export const FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY: string = 'historicalProceduresPropertyComponent';
 export const FRAGMENT_ACTIVE_PROCEDURES_PROPERTY: string = 'activeProceduresPropertyComponent';
+export const FRAGMENT_INFORMATION_UNIT_PROPERTY: string = 'informationUnitPropertyComponent';
 
 
 export const LIST_FRAGMENT_COMPONENTS_RULE_PAGE: string[] = [
@@ -748,7 +749,7 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment:
   },
   {
     label: 'Información de unidad predial',
-    fragment: 'informationUnitPropertyComponent'
+    fragment: FRAGMENT_INFORMATION_UNIT_PROPERTY
   },
   {
     label: 'Fuentes administrativas',

@@ -11,13 +11,13 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgClass, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION__5_7_10,
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADJACENT,
   PAGE_SIZE_SORT,
@@ -57,6 +57,7 @@ import {
 } from '../information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
 import { BasicInformationAdjacent } from 'src/app/apps/interfaces/information-property/basic-information-adjacent';
 import { Pegeable } from '../../../interfaces/general/pegeable.model';
+import { getRandomInt } from 'src/app/apps/utils/general';
 
 @Component({
   selector: 'vex-information-adjacent-property',
@@ -72,8 +73,6 @@ import { Pegeable } from '../../../interfaces/general/pegeable.model';
   imports: [
     FormsModule,
     NgClass,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     SweetAlert2Module,
     // Vex
@@ -95,15 +94,15 @@ import { Pegeable } from '../../../interfaces/general/pegeable.model';
     MatTabsModule,
     MatTooltipModule,
     // Custom
-    HeaderCadastralInformationPropertyComponent,
+    HeaderCadastralInformationPropertyComponent
   ],
   templateUrl: './information-adjacent-property.component.html',
   styleUrl: './information-adjacent-property.component.scss'
 })
-export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewInit{
+export class InformationAdjacentPropertyComponent implements OnInit, AfterViewInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  contentInformations!: InformationPegeable;
+  contentInformation!: InformationPegeable;
 
   @Input({ required: true }) id = '';
   @Input({ required: true }) public expandedComponent = true;
@@ -114,10 +113,10 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
   @Input() editable? = true;
 
   columns: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
-  page:number = PAGE;
+  page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions: number[] = PAGE_OPTION__5_7_10;
 
   dataSource!: MatTableDataSource<BasicInformationAdjacent>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -129,7 +128,7 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private snackBar = inject(MatSnackBar);
+
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
@@ -138,21 +137,29 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource();
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if(this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
+
+    this.dataSource = new MatTableDataSource();
+
+    this.id = getRandomInt(874524) + this.schema +
+      +'InformationAdjacentPropertyComponent' + getRandomInt(10) + this.baunitId;
+
+    if (this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADJACENT;
       this.columns = TABLE_COLUMN_PROPERTIES_ADJACENT;
     }
+
     this.isExpandPanel(this.expandedComponent);
+
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
+
   }
+
   ngAfterViewInit() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
@@ -170,26 +177,24 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
-      this.searchInformationsAdjacentProperty();
+      this.searchInformationAdjacentProperty();
     }
   }
 
-  searchInformationsAdjacentProperty(): boolean {
+  searchInformationAdjacentProperty(): boolean {
     if (!this.schema || !this.baunitId) {
       return false;
     }
-
     this.informationPropertyService.getBasicInformationPropertyAdjacent(this.baunitId).subscribe({
       next: (result: BasicInformationAdjacent[]) => this.captureInformationSubscribe(result),
-      error: (err: any) => this.captureInformationSubscribeError(err),
+      error: (err: any) => this.captureInformationSubscribeError(err)
     });
-
     return true;
   }
 
 
   captureInformationSubscribe(result: BasicInformationAdjacent[]): void {
-    this.contentInformations = new InformationPegeable(
+    this.contentInformation = new InformationPegeable(
       undefined,
       result.length,
       undefined,
@@ -210,22 +215,38 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
   }
 
   captureInformationAdjacentData(): void {
-    if (this.contentInformations && this.contentInformations.content) {
-      this.dataSource.data = this.contentInformations.content.map(row => new BasicInformationAdjacent(row));
-    } else {
-      this.dataSource.data = [];
+    let data: BasicInformationAdjacent[];
+    if (this.contentInformation == null) {
+      this.page = PAGE;
+      return;
     }
 
-    this.totalElements = this.contentInformations?.totalElements ?? 0;
-    this.page = this.contentInformations?.pageable?.pageNumber ?? 0;
+    if (this.contentInformation?.content != null) {
+      data = this.contentInformation.content;
+      data = data.map((row: BasicInformationAdjacent) => new BasicInformationAdjacent(row));
+      this.dataSource.data = data;
+    }
+
+    if (this.contentInformation.totalElements) {
+      this.totalElements = this.contentInformation.totalElements;
+    }
+
+    if (this.contentInformation.pageable == null) {
+      this.page = PAGE;
+      return;
+    }
+
+    if (this.contentInformation.pageable.pageNumber != null) {
+      this.page = this.contentInformation.pageable.pageNumber;
+    }
   }
 
   captureInformationSubscribeError(err: any): void {
-    this.contentInformations = new InformationPegeable();
+    this.contentInformation = new InformationPegeable();
     this.dataSource.data = [];
   }
 
-  openDetailInformationConstructionsProperty(data:ContentInformationConstruction){
+  openDetailInformationConstructionsProperty(data: ContentInformationConstruction) {
     if (this.baunitId === null || this.baunitId === undefined) {
       return;
     }
@@ -234,7 +255,7 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
       .open(DetailInformationConstructionsPropertyComponent, {
         ...MODAL_SMALL,
         disableClose: true,
-        data: new ContentInformationConstruction(data,this.schema, this.baunitId)
+        data: new ContentInformationConstruction(data, this.schema, this.baunitId)
       })
       .afterClosed();
   }
@@ -271,6 +292,7 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
     //   }
     // });
   }
+
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
   }
@@ -334,11 +356,7 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
     }
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
-
-    const validate: boolean = this.searchInformationsAdjacentProperty();
-    if (!validate) {
-      throw new Error('No fue posible actualizar los datos de la tabla');
-    }
+    this.searchInformationAdjacentProperty();
   }
 
   onFilterChange(value: string): void {
@@ -352,10 +370,6 @@ export class InformationAdjacentPropertyComponent  implements OnInit, AfterViewI
 
   private generateObjectPageSearchData(baunitId: string): PageSearchData {
     return new PageSearchData(this.page, this.pageSize, baunitId);
-  }
-
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
   }
 
   disabledClass(): string {

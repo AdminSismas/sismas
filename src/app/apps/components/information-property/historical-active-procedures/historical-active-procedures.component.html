@@ -2,7 +2,7 @@
                [id]="id">
   <mat-expansion-panel
     (opened)="isExpandPanel((expandedComponent = true))"
-    [expanded]="expandedComponent">
+    [expanded]="expandedComponent" [id]="id + 'HistoricalActiveProceduresPropertyComponent'">
     <mat-expansion-panel-header
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
     >
@@ -21,10 +21,11 @@
       }
     </mat-expansion-panel-header>
 
-    @if (dataSource && dataSource.data.length > 0) {
-      <div class="card overflow-auto mt-1" [id]="id + 'HistoricalActiveProceduresPropertyComponent'">
+    <div class="card overflow-auto mt-1">
+      @if (dataSource.data.length > 3) {
         <div class="px-4 h-16 border-b sticky left-0 flex items-center">
           <!-- Campo de búsqueda -->
+          <span class="flex-1"></span>
           <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-6 pb-6 flex flex-col">
             <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
             <input
@@ -34,26 +35,14 @@
               type="text" />
           </mat-form-field>
           <span class="flex-1"></span>
-          <!-- Paginador -->
-          @if (dataSource.data.length > 3) {
-            <mat-paginator
-              #paginator
-              [class.hidden]="!(isDesktop$ | async)"
-              [pageSizeOptions]="pageSizeOptions"
-              [length]="totalElements"
-              [pageSize]="pageSize"
-              [pageIndex]="page"
-              (page)="refreshInformationPaginator($event)"
-              class="sticky left-0 flex flex-col">
-            </mat-paginator>
-          }
         </div>
-
-        <!-- Tabla de dominios -->
+      }
+      <!-- Tabla de dominios -->
+      @if (dataSource.data.length > 0) {
         <table @stagger mat-table [dataSource]="dataSource" class="w-full " matSort>
 
           <!-- View button basic -->
-          <ng-container matColumnDef="detailDirection">
+          <ng-container matColumnDef="detailHistoricalActiveProcedures">
             <th mat-header-cell *matHeaderCellDef> Detalle</th> <!-- Encabezado -->
             <td *matCellDef="let row"
                 class="pl-1 pr-1"
@@ -108,17 +97,25 @@
           <tr mat-row *matRowDef="let element; columns: visibleColumns;" @fadeInUp
               class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"></tr>
         </table>
-      </div>
-    } @else {
-      <div class="flex justify-center items-center py-4">
-        <p class="text-gray-500 text-lg">
-          @if (isHistoricalComponent) {
-            No hay información histórica.
-          } @else {
-            No hay información de versiones activas.
-          }
-        </p>
-      </div>
-    }
+      }
+      @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
+        <div class="no-data-information text-gray-500 text-lg">
+          No hay informacion para mostrar.
+        </div>
+      }
+      @if (dataSource.data.length > 0) {
+        <!-- Paginador -->
+        <mat-paginator
+          #paginatorHistoricalActive
+          [class.hidden]="!(isDesktop$ | async)"
+          [pageSizeOptions]="pageSizeOptions"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="page"
+          (page)="refreshInformationPaginator($event)"
+          class="sticky left-0 flex flex-col">
+        </mat-paginator>
+      }
+    </div>
   </mat-expansion-panel>
 </mat-accordion>

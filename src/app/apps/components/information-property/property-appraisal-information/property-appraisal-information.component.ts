@@ -211,7 +211,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.informationPropertyService.getBasicInformationsAppraisalsProperty(
+    this.informationPropertyService.getBasicInformationAppraisalsProperty(
       this.generateObjectPageSearchData(this.baunitId), this.schema, this.executionId)
       .subscribe({
         error: (err: any) => this.captureInformationSubscribeError(err),

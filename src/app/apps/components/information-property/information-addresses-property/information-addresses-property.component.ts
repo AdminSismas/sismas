@@ -10,12 +10,8 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormControl
-} from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,11 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { lastValueFrom, Observable } from 'rxjs';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -44,7 +36,9 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { MatCardModule } from '@angular/material/card';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -69,6 +63,7 @@ import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
+import { getRandomInt } from 'src/app/apps/utils/general';
 
 @Component({
   selector: 'vex-information-addresses-property',
@@ -90,8 +85,6 @@ import { InformationPegeable } from 'src/app/apps/interfaces/general/information
     MatInputModule,
     MatOptionModule,
     MatTabsModule,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     MatTableModule,
     MatSortModule,
@@ -109,9 +102,7 @@ import { InformationPegeable } from 'src/app/apps/interfaces/general/information
   templateUrl: './information-addresses-property.component.html',
   styleUrl: './information-addresses-property.component.scss'
 })
-export class InformationAddressesPropertyComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+export class InformationAddressesPropertyComponent implements OnInit, AfterViewInit, OnChanges {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   @Input({ required: true }) id = '';
@@ -140,11 +131,13 @@ export class InformationAddressesPropertyComponent
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private snackBar = inject(MatSnackBar);
+
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private informationPropertyService: InformationPropertyService
-  ) {}
+  ) {
+  }
 
   get visibleColumns() {
     return this.columns
@@ -156,7 +149,7 @@ export class InformationAddressesPropertyComponent
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
+    this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
     if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL
     )
       this.informationPropertyService.reloadTableStarted$.subscribe((value) => {
@@ -382,7 +375,4 @@ export class InformationAddressesPropertyComponent
     this.dataSource.filter = value;
   }
 
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
-  }
 }

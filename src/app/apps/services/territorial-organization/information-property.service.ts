@@ -140,17 +140,14 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  getBasicInformationPropertyAdjacent(
-    baunitId: string
-  ): Observable<BasicInformationAdjacent[]> {
-    const url = `${this.basic_url}/ccColindante/${envi.baunit}/${baunitId}`;
-    return this.requestsService
-      .sendRequestsFetchGet(url)
+  getBasicInformationPropertyAdjacent( baunitId: string): Observable<BasicInformationAdjacent[]> {
+    const url = `${this.basic_url}${envi.ccColindante}${envi.baunit}/${baunitId}`;
+    return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
 
-  getBasicInformationsAppraisalsProperty(
+  getBasicInformationAppraisalsProperty(
     page: PageSearchData,
     schema: string,
     executionId: string | null | undefined = null

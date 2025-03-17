@@ -21,7 +21,6 @@ export class AdministrativeSourcesService {
     return this.http.get<AdministrativeSource[]>(url)
       .pipe(
         catchError(error => {
-          console.log('Error al obtener la información de fuentes administrativas main');
           throw error;
         })
       );
@@ -33,7 +32,6 @@ export class AdministrativeSourcesService {
     return this.http.get<AdministrativeSource[]>(url)
       .pipe(
         catchError(error => {
-          console.log('Error al obtener la información de fuentes administrativas temp');
           throw error;
         })
       );
@@ -45,7 +43,6 @@ export class AdministrativeSourcesService {
     return this.http.get<AdministrativeSource[]>(url)
       .pipe(
         catchError(error => {
-          console.log('Error al obtener la información de fuentes administrativas temp');
           throw error;
         })
       );
@@ -58,7 +55,6 @@ export class AdministrativeSourcesService {
     return this.http.get<AdministrativeSource>(url)
       .pipe(
         catchError(error => {
-          console.log('Error al obtener la información de fuentes administrativas');
           throw error;
         })
       );

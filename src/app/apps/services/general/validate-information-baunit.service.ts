@@ -53,7 +53,6 @@ export class ValidateInformationBaunitService {
 
 
   advancedSearchCadastral(page:PageSearchData,value:string):Observable<InformationPegeable> {
-
     let paramsA:HttpParams = new HttpParams();
         paramsA = paramsA.append('page', `${page.page}`);
         paramsA = paramsA.append('size', `${page.size}`);
@@ -63,7 +62,6 @@ export class ValidateInformationBaunitService {
         else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
           paramsA = paramsA.append('npnlike',`${page.searchData.block}`);
         }
-
         // const url:string = `${environment.url}:${environment.port}${environment.baunit_npnlike}${value}`;
     const url = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
     return this.http.get<InformationPegeable>(url);
@@ -72,7 +70,6 @@ export class ValidateInformationBaunitService {
   }
 
   historiAdvancedSearch(page:PageSearchData,value:string):Observable<InformationPegeable> {
-
     let paramsA:HttpParams = new HttpParams();
         paramsA = paramsA.append('page', `${page.page}`);
         paramsA = paramsA.append('size', `${page.size}`);
@@ -82,7 +79,6 @@ export class ValidateInformationBaunitService {
         else if (page.searchData.block !== null && page.searchData.block !== undefined && page.searchData.block.length > 10) {
           paramsA = paramsA.append('npnlike',`${page.searchData.block}`);
         }
-
         // const url:string = `${environment.url}:${environment.port}${environment.baunit_npnlike}${value}`;
     const url = `${this.basic_url}/baunit/npnlike?npnlike=${value}&page=${page.page}&size=${page.size}`;
     return this.http.get<InformationPegeable>(url);

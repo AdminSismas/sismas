@@ -83,7 +83,8 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSort
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'

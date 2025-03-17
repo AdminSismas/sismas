@@ -448,7 +448,7 @@ export class TableCertificateSearchAppraisalsComponent
   }
   searchPropertiesByBaunitIdE(baunit: string) {
     this.infoTableService
-      .getDataBaunitIdE(this.page, this.pageSize, baunit)
+      .getDataBaUnitIdE(this.page, this.pageSize, baunit)
       .subscribe({
         next: (result: InformationPegeable) =>
           this.captureInformationSubscribe(result),
