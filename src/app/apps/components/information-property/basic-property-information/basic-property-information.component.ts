@@ -149,7 +149,7 @@ export class BasicPropertyInformationComponent implements OnInit {
     return Math.floor(Math.random() * max);
   }
 
-    openGeographicViewerMain(data: any): void {
+    openGeographicViewerMain(data: BasicInformationProperty): void {
       this.dialog
         .open(GeographicViewerComponent, {
           ...MODAL_SMALL,

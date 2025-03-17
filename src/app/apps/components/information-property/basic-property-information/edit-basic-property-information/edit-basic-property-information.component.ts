@@ -49,7 +49,6 @@ interface InputsField {
   styles: ``
 })
 export class EditBasicPropertyInformationComponent implements OnInit {
-  groupedInputs: any;
   public maxDate = new Date();
 
   public inputs: EditBasicPropertyInputs[] = [
@@ -250,8 +249,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     "cadastralNumberFormat": ['', [Validators.required]],
     "cadastralNumber": ['', [Validators.required]],
     "cadastralLastNumber": ['', [Validators.min(0)]],
-    "propertyRegistryOffice": ['', [Validators.required]],
-    "propertyRegistryNumber": ['', [Validators.required]],
+    "propertyRegistryOffice": [''],
+    "propertyRegistryNumber": [''],
     "baunitIdOrigin": [''],
 
    // *****GRUPO "Propiedad y uso" ****
@@ -323,16 +322,5 @@ export class EditBasicPropertyInformationComponent implements OnInit {
         this.dialogRef.close(data);
       }
     });
-  }
-
-  groupInputsByGroupName(inputs: any[]): any {
-    return inputs.reduce((groups, input) => {
-      const groupName = input.groupName || 'Otros';
-      if (!groups[groupName]) {
-        groups[groupName] = [];
-      }
-      groups[groupName].push(input);
-      return groups;
-    }, {});
   }
 }
