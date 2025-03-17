@@ -184,3 +184,24 @@
     }
   </ng-template>
 </mat-menu>
+
+<swal
+  #confirmDialog
+  title="Eliminar propietario"
+  text="¿Está seguro que desea eliminar el propietario?"
+  icon="warning"
+  [showCancelButton]="true"
+  confirmButtonText="Eliminar"
+  confirmButtonColor="#ef4444"
+  cancelButtonText="Cancelar"
+  cancelButtonColor="#4f46e5"
+></swal>
+
+<swal
+  #successEdit
+  title="Edición exitosa"
+  text="Se ha editado la información del propietario exitosamente."
+  icon="success"
+  confirmButtonText="Aceptar"
+  confirmButtonColor="#4f46e5"
+></swal>
