@@ -3,7 +3,7 @@ import { TypeInformation } from './content-info';
 import { TYPE_INFORMATION_VISUAL } from '../../constants/general/constant';
 
 export class ContentInfoSchema {
-  baunitIdE?: string | undefined = '';
+  baunitIdE?: string | undefined | null = '';
   executionId?: string | undefined | null = '';
   schemas?: string[] = [];
   content?: any;
@@ -13,7 +13,7 @@ export class ContentInfoSchema {
   rulePage?: string = '';
 
   constructor(
-    baunitIdE?: string,
+    baunitIdE?: string | undefined | null,
     content: any = null,
     executionId: string | null = '',
     schemas: string[] = [],

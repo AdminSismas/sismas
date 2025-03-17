@@ -316,7 +316,7 @@ export class InformationPropertyService {
     baunitId: string,
     body: UpdateBasicInformationProperty
   ): Observable<BasicInformationProperty> {
-    const url = `${this.basic_url}/${envi.baunit}/temp/${executionId}/${baunitId}`;
+    const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.http.put<BasicInformationProperty>(url, body).pipe(
       catchError((error) => {
         console.log('Error en la edición de los aspectos generales del predio');

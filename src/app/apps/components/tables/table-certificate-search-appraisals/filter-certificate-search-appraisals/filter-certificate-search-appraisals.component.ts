@@ -42,7 +42,7 @@ import {
   LIST_FORM_CADASTRAL_4,
   LIST_FORM_CADASTRAL_5,
   LIST_ZONES_RURAL,
-  NAME_CODENAME,
+  NAME_CODENAME, RULE_PAGE_CADASTRAL_DA,
   STRING_INFORMATION_NOT_FOUND
 } from '../../../../constants/general/constant';
 import { Zone } from '../../../../interfaces/territorial-organization/zone.model';
@@ -196,7 +196,7 @@ export class FilterCertificateSearchAppraisalsComponent implements OnInit {
 
   proccessRulePage() {
     if(this.defaults && this.defaults.rulePage) {
-      if(this.defaults.rulePage === 'cadastralSearchDA') {
+      if(this.defaults.rulePage === RULE_PAGE_CADASTRAL_DA) {
        this.formDocumentType.disable()
        this.formNames.disable();
        this.seeRuleField = false;

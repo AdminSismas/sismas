@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environments';
+import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from './send-general-requests.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PageProceduresData } from '../../interfaces/general/page-procedures-data.model';
@@ -14,19 +14,20 @@ import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 })
 export class ProceduresService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.proExecution}`;
+  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}${envi.proExecution}`;
 
-  /* -------------- CONSTRUCTRO -------------- */
+  /* -------------- CONSTRUCTOR -------------- */
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByProcedures(
     page: PageProceduresData
   ): Observable<ProceduresCollection[]> {
-    const url = `${this.basic_url}${environment.active}`;
+    const url = `${this.basic_url}${envi.active}`;
 
     let paramsPP: HttpParams = new HttpParams();
     paramsPP = paramsPP.append('page', `${page.page}`);
@@ -50,56 +51,47 @@ export class ProceduresService {
     page: PageProceduresData,
     urlMain: string
   ): Observable<InformationPegeable> {
-    // const paramsR:HttpParams = new HttpParams();
     const urlComplete = `${this.basic_url}/${urlMain}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
-
     return this.http.get<InformationPegeable>(urlComplete);
-    //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
   }
 
   public getFilterTableHistoryService(
     page: PageProceduresData
   ): Observable<ProceduresCollection[]> {
-    const urlComplete = `${this.basic_url}/${environment.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
-
+    const urlComplete = `${this.basic_url}/${envi.active}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
     return this.http.get<any>(urlComplete);
-    //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
   }
-  public getFilterHistoryService(
-    page: PageProceduresData
-  ): Observable<ProceduresCollection[]> {
-    // /bpmOperation/proExecution/baunitId/active/{{baunitId}}?page=0&size=10
-    const urlComplete = `${this.basic_url}${environment.baunitId}/finish/${page.executionCode}`;
 
+  // /bpmOperation/proExecution/baunitId/active/{{baunitId}}?page=0&size=10
+  public getFilterHistoryService(page: PageProceduresData): Observable<ProceduresCollection[]> {
+    const urlComplete = `${this.basic_url}${envi.baunitId}${envi.finish}${page.executionCode}`;
     const params: HttpParams = new HttpParams()
       .set('page', page.page!.toString())
-     .set('size', page.size!.toString());
-
-
+      .set('size', page.size!.toString());
     return this.http.get<any>(urlComplete, { params });
   }
 
-  getBaunitHistoricProcedures (
-    baunitId: number | string,
-    page: PageProceduresData
-  ): Observable<InformationPegeable> {
-    const url = `${this.basic_url}${environment.baunitId}/finish/${baunitId}`;
 
+  //{{url}}:{{port}}/bpmOperation/proExecution/baunitId/finish/{{baunitId}}?page=0&size=10
+  getBaUnitHistoricProcedures(baUnitId: number | string, page: PageProceduresData): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${envi.baunitId}${envi.finish}${baUnitId}`;
     const params: HttpParams = new HttpParams()
       .set('page', `${page.page!}`)
       .set('size', `${page.size!}`);
-
     return this.http.get<InformationPegeable>(url, { params });
   }
 
-  async sendRequestsFetchGetAsync(url: string) {
-    return this.http.get<any>(url);
+  //{{url}}:{{port}}/bpmOperation/proExecution/baunitId/active/{{baunitId}}?page=0&size=10
+  getBaUnitActiveProcedures(baUnitId: number | string, page: PageProceduresData): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${envi.baunitId}/${envi.active}/${baUnitId}`;
+    const params: HttpParams = new HttpParams()
+      .set('page', `${page.page!}`)
+      .set('size', `${page.size!}`);
+    return this.http.get<InformationPegeable>(url, { params });
   }
 
   viewDetailIdProcedures(taskId: number): Observable<any> {
-    const urlProcedure = `${this.basic_url}/${taskId}`;
-
-    return this.http.get<any>(urlProcedure);
+    return this.http.get<any>(`${this.basic_url}/${taskId}`);
   }
 
   formatDate(date: Date | string, format = 'dd/MM/yyyy'): string {
@@ -118,16 +110,12 @@ export class ProceduresService {
     commentText: string
   ): Observable<unknown> {
     const url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.comment}${executionId}`;
-
     return this.http.post<unknown>(url, { commentText });
   }
 
-  cancelProcedure(
-    executionId: number,
-  ): Observable<string> {
-    // {{url}}:{{port}}/bpmOperation/proExecution/{{executionId}}/cancel
-    const url = `${this.basic_url}/${executionId}${environment.cancel}`;
-
+  // {{url}}:{{port}}/bpmOperation/proExecution/{{executionId}}/cancel
+  cancelProcedure(executionId: number): Observable<string> {
+    const url = `${this.basic_url}/${executionId}${envi.cancel}`;
     return this.http.put<string>(url, { responseType: 'text' });
   }
 
@@ -136,16 +124,11 @@ export class ProceduresService {
     username: string,
     userId: number
   ): Observable<ProTaskE> {
-    const url = `${environment.url}:${environment.port}${environment.bpmOperation.value}/${environment.bpmOperation.proTask}${environment.reassign}${executionId}`;
-
+    const url = `${envi.url}:${envi.port}${envi.bpmOperation.value}/${envi.bpmOperation.proTask}${envi.reassign}${executionId}`;
     const body = new FormData();
     body.append('username', username);
     body.append('userId', `${userId}`);
-
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-
-    console.log(body);
-
     return this.http.put<ProTaskE>(url, body, {
       headers
     });

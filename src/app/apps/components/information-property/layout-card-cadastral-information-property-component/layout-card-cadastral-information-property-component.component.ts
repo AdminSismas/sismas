@@ -9,22 +9,28 @@ import {
   CadastralInformationPropertyComponent
 } from '../cadastral-information-property/cadastral-information-property.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { TWO_POINT_, TYPE_INFORMATION_EDITION, TYPE_INFORMATION_VISUAL } from '../../../constants/general/constant';
+import {
+  RULE_PAGE_CADASTRAL_DA,
+  TWO_POINT_,
+  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_VISUAL
+} from '../../../constants/general/constant';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment as envi } from '../../../../../environments/environments';
 import { ObjectSchema, TypeInformation } from '../../../interfaces/general/content-info';
 import {
-  CONSTANT_INFOMATION_PREDIAL,
-  CONSTANT_INFOMATION_PREDIAL_HIST,
-  CONSTANT_INFOMATION_PREDIAL_MAIN,
-  CONSTANT_INFOMATION_PREDIAL_TEMP
+  CONSTANT_INFORMATION_PREDIAL,
+  CONSTANT_INFORMATION_PREDIAL_HIST,
+  CONSTANT_INFORMATION_PREDIAL_MAIN,
+  CONSTANT_INFORMATION_PREDIAL_TEMP
 } from '../../../constants/general/constantLabels';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import {
   InformationPropertyService
 } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-layout-card-cadastral-information-property-component',
@@ -46,20 +52,20 @@ import { FluidHeightDirective } from '../../../directives/fluid-height.directive
   styleUrl:
     './layout-card-cadastral-information-property-component.component.scss'
 })
-export class LayoutCardCadastralInformationPropertyComponentComponent
-  implements OnInit, AfterViewInit
-{
+export class LayoutCardCadastralInformationPropertyComponentComponent implements OnInit, AfterViewInit {
   typeInformation: TypeInformation = TYPE_INFORMATION_VISUAL;
 
-  optionschemas: ObjectSchema[] = [];
-  baunitHead: BaunitHead | null = null;
-  propertyUnit = false;
-  dataFlag = '';
-  rulePage = '';
+  optionSchemas: ObjectSchema[] = [];
+  baUnitHead: BaunitHead | null = null;
+  dataFlag: string = '';
+  rulePage: string = '';
+
+  schemaMain: string = `${envi.schemas.main}`;
+  schemaTemp: string = `${envi.schemas.temp}`;
+  schemaHist: string = `${envi.schemas.hist}`;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
-    private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>,
     private informationPropertyService: InformationPropertyService
   ) {
@@ -76,20 +82,15 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
       return;
     }
 
-    this.optionschemas = [];
+    this.optionSchemas = [];
     if (this.defaults.content != null) {
-      this.baunitHead = this.defaults.content;
+      this.baUnitHead = this.defaults.content;
     }
 
     this.defaults.schemas.forEach((schema: string) =>
       this.createObjectLayout(schema)
     );
-    //On init of component set type information according to the component
-    // this.setTypeInformation(0);
-
-    // if (this.defaults.typeInformation == 'visualization') }{
     this.typeInformation = this.defaults.typeInformation;
-    // }}
 
     if (this.defaults.flagData !== '') {
       this.dataFlag = this.defaults.flagData;
@@ -102,35 +103,36 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
   }
 
   proccessRulePage() {
-    if(this.defaults && this.defaults.rulePage) {
-      if(this.defaults.rulePage === 'cadastralSearchDA') {
-         this.rulePage = this.defaults.rulePage;
-         this.informationPropertyService.showRulePageSet(true);
+    if (this.defaults && this.defaults.rulePage) {
+      if (this.defaults.rulePage === RULE_PAGE_CADASTRAL_DA) {
+        this.rulePage = this.defaults.rulePage;
+        this.informationPropertyService.showRulePageSet(true);
       }
 
     }
   }
+
   createObjectLayout(schema: string): void {
     let title = '';
-    title =
-      schema === `${envi.schemas.main}`
-        ? CONSTANT_INFOMATION_PREDIAL_MAIN
-        : schema === `${envi.schemas.temp}`
-          ? CONSTANT_INFOMATION_PREDIAL_TEMP
-          : CONSTANT_INFOMATION_PREDIAL_HIST;
-    this.optionschemas.push({ schema, title });
+    if (schema === `${envi.schemas.main}`) {
+      title = CONSTANT_INFORMATION_PREDIAL_MAIN;
+    } else if (schema === `${envi.schemas.temp}`) {
+      title = CONSTANT_INFORMATION_PREDIAL_TEMP;
+    } else {
+      title = CONSTANT_INFORMATION_PREDIAL_HIST;
+    }
+    this.optionSchemas.push({ schema, title });
   }
 
   ngAfterViewInit(): void {
-    if (
-      this.defaults?.baunitIdE === null ||
-      this.defaults?.baunitIdE === undefined
-    ) {
-      this.snackBar.open('ID no válido no es posible continuar!', 'CERRAR', {
-        duration: 10000,
-        horizontalPosition: 'right'
-      });
-      this.close();
+    if (this.defaults?.baunitIdE === null || this.defaults?.baunitIdE === undefined) {
+      Swal.fire({
+        title: '¡Error!',
+        text: 'ID no válido no es posible continuar!',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 10000
+      }).then(() => this.close());
     }
   }
 
@@ -145,11 +147,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
    */
   onTabChange(matTabChangeEvent: MatTabChangeEvent): void {
     const { index = -1 } = matTabChangeEvent || {};
-    if (index >= 0 && this.optionschemas.length > 0) {
-      // const selectedOptionSchema: ObjectSchema = this.optionschemas[index];
-      // if (selectedOptionSchema) {
-      //   this.setTypeInformation(index);
-      // }
+    if (index >= 0 && this.optionSchemas.length > 0) {
     }
   }
 
@@ -157,8 +155,8 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
    * Set type of information depending on the schema type
    */
   private setTypeInformation(index: number): void {
-    if (Array.isArray(this.optionschemas) && this.optionschemas.length > 0) {
-      const optionSchema = this.optionschemas[index];
+    if (Array.isArray(this.optionSchemas) && this.optionSchemas.length > 0) {
+      const optionSchema = this.optionSchemas[index];
       this.typeInformation =
         optionSchema.schema === 'temp' ? 'edition' : 'visualization';
     } else {
@@ -166,8 +164,11 @@ export class LayoutCardCadastralInformationPropertyComponentComponent
     }
   }
 
-  protected readonly CONSTANT_INFOMATION_PREDIAL = CONSTANT_INFOMATION_PREDIAL;
+  protected readonly CONSTANT_INFORMATION_PREDIAL = CONSTANT_INFORMATION_PREDIAL;
   protected readonly TWO_POINT_ = TWO_POINT_;
   protected readonly TYPE_INFORMATION_VISUAL = TYPE_INFORMATION_VISUAL;
   protected readonly TYPE_INFORMATION_EDITION = TYPE_INFORMATION_EDITION;
+  protected readonly CONSTANT_INFORMATION_PREDIAL_MAIN = CONSTANT_INFORMATION_PREDIAL_MAIN;
+  protected readonly CONSTANT_INFORMATION_PREDIAL_TEMP = CONSTANT_INFORMATION_PREDIAL_TEMP;
+  protected readonly CONSTANT_INFORMATION_PREDIAL_HIST = CONSTANT_INFORMATION_PREDIAL_HIST;
 }

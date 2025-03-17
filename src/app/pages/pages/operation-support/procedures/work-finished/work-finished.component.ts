@@ -18,6 +18,6 @@ import { environment } from 'src/environments/environments';
   styleUrl: './work-finished.component.scss'
 })
 export class WorkFinishedComponent {
-  urlMain = environment.finish;
+  urlMain = environment.finished;
 
 }

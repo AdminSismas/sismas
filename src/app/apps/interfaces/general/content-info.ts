@@ -29,4 +29,12 @@ export interface ValidateQualificationByDomBuiltType {
   shouldDisable: boolean;
 }
 
+export interface HistoryListBasic {
+  nameList: string;
+  executionId: number;
+  bpmProcessCategory: string;
+  processName: string;
+  lastupdated_at: string;
+}
+
 

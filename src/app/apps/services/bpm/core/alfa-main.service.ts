@@ -41,11 +41,9 @@ export class AlfaMainService {
 
   getListAlfaMainOperationsUnitsByBaunitId(page: PageSearchData, executionId: string, baunitId: string): Observable<InformationPegeable> {
     const url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-
     const paramsR: HttpParams = new HttpParams()
       .set('page', `${page.page}`)
       .set('size', `${page.size}`);
-
       return this.http.get<InformationPegeable>(url, { params: paramsR });
   }
 
@@ -54,11 +52,8 @@ export class AlfaMainService {
     const formdata = new FormData();
     formdata.append('changeLogId', `${executionId}`);
     formdata.append('word', `${keyword}`);
-
     const url = `${this.basic_url}${envi.temporal}${envi.clearChangelog}`;
-
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-
     return this.http.delete(url, { body: formdata, headers });
   }
 
@@ -67,9 +62,7 @@ export class AlfaMainService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
-
     const url = `${this.basic_url}${envi.metrict_cadastral_change}${page.searchData}`;
-
     return this.getData(url, paramsR);
   }
 
@@ -104,9 +97,7 @@ export class AlfaMainService {
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-
     return this.http.post<InformationPegeable>(url, formData, { headers: headers });
   }
 
@@ -116,10 +107,28 @@ export class AlfaMainService {
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
-
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-
     return this.http.delete(url, { body: formData, headers });
+  }
+
+  /**
+   * TEMPORAL
+   *
+   * */
+  // {{url}}:{{port}}/baunit/temp/{{executionId}}/{{baunitId}}
+  getBaUnitHeadTemporal(executionId: string, baunitId: string): Observable<BaunitHead> {
+    const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+    return this.requestsService.sendRequestsFetchGet(url);
+  }
+
+  /**
+   * HISTORY
+   *
+   * */
+  // {{url}}:{{port}}/baunit/hist/{{executionId}}/{{baunitId}}
+  getBaUnitHeadHistory(executionId: string, baunitId: string): Observable<BaunitHead> {
+    const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.hist}/${executionId}/${baunitId}`;
+    return this.requestsService.sendRequestsFetchGet(url);
   }
 
   private getData(url: string, params: unknown): Observable<InformationPegeable> {

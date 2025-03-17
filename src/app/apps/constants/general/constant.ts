@@ -23,38 +23,36 @@ import { DataPerson } from '../../interfaces/information-property/snr-person-inf
 import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
 import { ZoneBAUnitFisica } from '../../interfaces/information-property/zone-baunit';
 
-export const GUION = '-';
-export const SPACE = ' ';
-export const TWO_POINT_ = ': ';
-export const NAME_NA = 'N/A';
-export const NAME_NO = 'NO';
-export const NAME_DATE = 'date';
-export const NAME_SI = 'SI';
-export const NAME_NO_DISPONIBLE = 'N/D';
-export const NAME_NO_DISPONIBLE_CERO = '0';
+export const GUION: string = '-';
+export const SPACE: string = ' ';
+export const TWO_POINT_: string = ': ';
+export const NAME_NA: string = 'N/A';
+export const NAME_NO: string = 'NO';
+export const NAME_DATE: string = 'date';
+export const NAME_SI: string = 'SI';
+export const NAME_NO_DISPONIBLE: string = 'N/D';
+export const NAME_NO_DISPONIBLE_CERO: string = '0';
 
-export const INDIVIDUAL_TYPE_NUMBER = 'NIT';
+export const INDIVIDUAL_TYPE_NUMBER: string = 'NIT';
 export const PAGE = 0;
 export const PAGE_SIZE = 10;
 export const PAGE_SIZE_TABLE_CADASTRAL = 10;
-export const TITULO_PAGE_CADASTRAL = 'Búsqueda catastral';
-export const TITULO_PAGE_AVANZADA = 'Búsqueda avanzada';
-
-export const URL_PAGE_CADASTRAL = 'Búsqueda catastral';
-
-export const RULE_PAGE_CADASTRAL_DA = 'cadastralSearchDA';
-export const TITULO_PAGE_CADASTRAL_DA = 'Búsqueda catastral DA';
-export const RULE_PAGE_HISTORICAL = 'historicalInformation';
-export const INFORMATION_HISTORICAL = 'Información histórica';
+export const TITULO_PAGE_CADASTRAL: string = 'Búsqueda catastral';
+export const TITULO_PAGE_AVANZADA: string = 'Búsqueda avanzada';
+export const URL_PAGE_CADASTRAL: string = 'Búsqueda catastral';
+export const RULE_PAGE_CADASTRAL_DA: string = 'cadastralSearchDA';
+export const TITULO_PAGE_CADASTRAL_DA: string = 'Búsqueda catastral DA';
+export const RULE_PAGE_HISTORICAL: string = 'historicalInformation';
+export const INFORMATION_HISTORICAL: string = 'Información histórica';
 
 
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
 export const PAGE_SIZE_TABLE_UNIQUE = 10;
 export const PAGE_SIZE_SORT = 5;
-export const NAME_CODENAME = 'codeName';
-export const FORMAT_CURRENCY_COP = 'COP';
-export const FORMAT_CURRENCY_SIMBOL = 'symbol';
-export const STRING_INFORMATION_NOT_FOUND = 'Información no disponible';
+export const NAME_CODENAME: string = 'codeName';
+export const FORMAT_CURRENCY_COP: string = 'COP';
+export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
+export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
 
 export const PAGE_OPTION__1_5_10: number[] = [1, 5, 10];
 export const PAGE_OPTION__5_7_10: number[] = [5, 7, 10];
@@ -81,28 +79,27 @@ export const STRUCTURE_HTML_FOOTER = `</body></html>`;
 /**
  * DOMAIN NAME
  * **/
-export const DOMAIN_NAME_BUILT_USE = 'BuiltUse';
+export const DOMAIN_NAME_BUILT_USE: string = 'BuiltUse';
+export const PANEL_ASSIGNED_TASKS: string = 'assignedTasks';
+export const PANEL_DEVOLUTION_TASKS: string = 'returnedTasks';
+export const PANEL_PRIORITIZED_TASKS: string = 'prioritizedTasks';
+export const PROCESO_CREAR_DIRECCION: string = 'Nueva dirección';
+export const PROCESO_ACTUALIZAR_DIRECCION: string = 'Editar dirección';
 
-export const PANEL_ASSIGNED_TASKS = 'assignedTasks';
-export const PANEL_DEVOLUTION_TASKS = 'returnedTasks';
-export const PANEL_PRIORITIZED_TASKS = 'prioritizedTasks';
-export const PROCESO_CREAR_DIRECCION = 'Nueva dirección';
-export const PROCESO_ACTUALIZAR_DIRECCION = 'Editar dirección';
-
-export const CONSTANT_VALIDATE_CHECK = 'checkStatusBpmOperation';
-export const CONSTANT_VALIDATE_OTHER = 'OTHER_CHECK';
-export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = 'Selección municipal';
-export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = 'Múltiples campos';
-export const NUMERO_PREDIAL_NACIONAL = 'Número Predial Nacional';
+export const CONSTANT_VALIDATE_CHECK: string = 'checkStatusBpmOperation';
+export const CONSTANT_VALIDATE_OTHER: string = 'OTHER_CHECK';
+export const LIMPIAR_CAMPOS_SELECCION_MUNICIPAL: string = 'Selección municipal';
+export const LIMPIAR_CAMPOS_MULTIPLES_CAMPOS: string = 'Múltiples campos';
+export const NUMERO_PREDIAL_NACIONAL: string = 'Número Predial Nacional';
 
 export const TYPE_INFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPE_INFORMATION_VISUAL: TypeInformation = 'visualization';
-export const EVIRONMENT_CC_DIRECCION = '/ccDireccion';
-export const ROL_GUEST = 'GUEST';
-export const ROL_USER_READ = 'USER_READ';
+export const EVIRONMENT_CC_DIRECCION:string = '/ccDireccion';
+export const ROL_GUEST:string = 'GUEST';
+export const ROL_USER_READ:string = 'USER_READ';
 
-export const ENVIRONMENT_RETIRO_IMG = 'assets/img/logo/logo_El_retiro.png';
-export const NAME_LOGO_IMG_SAN_VICENTE = 'logo_san_vicente.png';
+export const ENVIRONMENT_RETIRO_IMG:string = 'assets/img/logo/logo_El_retiro.png';
+export const NAME_LOGO_IMG_SAN_VICENTE:string = 'logo_san_vicente.png';
 
 export const TYPE_OPERATION_ADD: TypeOperationAlfaMain = 'ADD';
 export const TYPE_OPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
@@ -430,7 +427,7 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
     property: 'esComun',
     type: 'operationType',
     visible: true
-  },
+  }
 ];
 
 export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformationAdjacent>[] = [
@@ -595,16 +592,16 @@ export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>
 ];
 
 
-export const NAME_VALIDITY_VALUATION = 'validityValuation';
-export const NAME_CADASTRAL_VALUATION_AT = 'cadastralValuationAt';
-export const NAME_CADASTRAL_VALUATION = 'cadastralValuation';
-export const NAME_CADASTRAL_VALUATION_LAND = 'cadastralValuationLand';
-export const NAME_CADASTRAL_VALUATION_UNITS = 'cadastralValuationUnits';
-export const NAME_COMMERCIAL_VALUATION = 'commercialValuation';
-export const NAME_COMMERCIAL_VALUATION_LAND = 'commercialValuationLand';
-export const NAME_COMMERCIAL_VALUATION_UNITS = 'commercialValuationUnits';
-export const NAME_SELF_VALUATION_VALUE = 'selfValuationValue';
-export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY = 'BpmProcessCategory';
+export const NAME_VALIDITY_VALUATION:string = 'validityValuation';
+export const NAME_CADASTRAL_VALUATION_AT:string = 'cadastralValuationAt';
+export const NAME_CADASTRAL_VALUATION:string = 'cadastralValuation';
+export const NAME_CADASTRAL_VALUATION_LAND:string = 'cadastralValuationLand';
+export const NAME_CADASTRAL_VALUATION_UNITS:string = 'cadastralValuationUnits';
+export const NAME_COMMERCIAL_VALUATION:string = 'commercialValuation';
+export const NAME_COMMERCIAL_VALUATION_LAND:string = 'commercialValuationLand';
+export const NAME_COMMERCIAL_VALUATION_UNITS:string = 'commercialValuationUnits';
+export const NAME_SELF_VALUATION_VALUE:string = 'selfValuationValue';
+export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY:string = 'BpmProcessCategory';
 
 
 export const LIST_GRID_APPRAISAL_1: string[] = [
@@ -696,8 +693,8 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
 
 export const LIST_SCHEMAS_CONTROL_MAIN: string[] = [`${environment.schemas.main}`];
 export const LIST_SCHEMAS_CONTROL_TEMP: string[] = [`${environment.schemas.temp}`];
+export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.hist}`];
 export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`, `${environment.schemas.main}`];
-export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.main}`, `${environment.schemas.hist}`];
 export const LIST_SCHEMAS_CONTROL_HISTORY_PRIME: string[] = [`${environment.schemas.hist}`, `${environment.schemas.main}`];
 
 
@@ -730,10 +727,24 @@ export const LIST_EXTRA_COLUMNS_APPRAISAL: string[] = [
   'header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-quartet-group'
 ];
 
+export const FRAGMENT_INFORMATION_PROPERTY_OWNERS: string = 'informationPropertyOwnersComponent';
+export const FRAGMENT_PHOTOS: string = 'photosComponent';
+export const FRAGMENT_ALERTS: string = 'alertsComponent';
+export const FRAGMENT_SUPER_NOTARIADO_PROPERTY: string = 'superNotariadoPropertyComponent';
+export const FRAGMENT_BASIC_PROPERTY_INFORMATION: string = 'basicPropertyInformationComponent';
+export const FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY: string = 'historicalProceduresPropertyComponent';
+export const FRAGMENT_ACTIVE_PROCEDURES_PROPERTY: string = 'activeProceduresPropertyComponent';
+
+
+export const LIST_FRAGMENT_COMPONENTS_RULE_PAGE: string[] = [
+  FRAGMENT_PHOTOS, FRAGMENT_ALERTS, FRAGMENT_SUPER_NOTARIADO_PROPERTY,
+  FRAGMENT_INFORMATION_PROPERTY_OWNERS
+];
+
 export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment: string }[] = [
   {
     label: 'Aspectos generales',
-    fragment: 'basicPropertyInformationComponent'
+    fragment: FRAGMENT_BASIC_PROPERTY_INFORMATION
   },
   {
     label: 'Información de unidad predial',
@@ -745,11 +756,11 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment:
   },
   {
     label: 'Propietarios',
-    fragment: 'informationPropertyOwnersComponent'
+    fragment: FRAGMENT_INFORMATION_PROPERTY_OWNERS
   },
   {
     label: 'Super notariado',
-    fragment: 'superNotariadoPropertyComponent'
+    fragment: FRAGMENT_SUPER_NOTARIADO_PROPERTY
   },
   {
     label: 'Direcciones',
@@ -773,15 +784,19 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment:
   },
   {
     label: 'Trámites Históricos',
-    fragment: 'historicalProceduresPropertyComponent'
+    fragment: FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY
+  },
+  {
+    label: 'Trámites Activos',
+    fragment: FRAGMENT_ACTIVE_PROCEDURES_PROPERTY
   },
   {
     label: 'Fotos',
-    fragment: 'photosComponent'
+    fragment: FRAGMENT_PHOTOS
   },
   {
     label: 'Alertas',
-    fragment: 'alertsComponent'
+    fragment: FRAGMENT_ALERTS
   }
 ];
 
@@ -1057,9 +1072,9 @@ export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
 export const TYPE_CREATE_CONSTRUCTION: TypeOperationConstruction = 'CREATE';
 
 export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
-    label: 'Tradicional',
-    type: TYPE_TRADITIONAL
-  };
+  label: 'Tradicional',
+  type: TYPE_TRADITIONAL
+};
 
 export const CHECK_TYPE_QUALIFICATION_MODE: CheckTypeQualificationMode[] = [
   {
@@ -1074,28 +1089,28 @@ export const CHECK_TYPE_QUALIFICATION_MODE: CheckTypeQualificationMode[] = [
 
 export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualificationByDomBuiltType[] = [
   {
-    domBuiltType :'Institucional',
-    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    domBuiltType: 'Institucional',
+    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
     shouldDisable: true
   },
   {
-    domBuiltType :'Comercial',
-    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    domBuiltType: 'Comercial',
+    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
     shouldDisable: true
   },
   {
-    domBuiltType :'Industrial',
-    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    domBuiltType: 'Industrial',
+    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
     shouldDisable: false
   },
   {
-    domBuiltType :'Anexo',
-    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    domBuiltType: 'Anexo',
+    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
     shouldDisable: false
   },
   {
-    domBuiltType :'Residencial',
-    list :['kitchenConservation', 'kitchenEnchapes', 'kitchenSize','bathConservation', 'bathEnchapes', 'bathSize'],
+    domBuiltType: 'Residencial',
+    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
     shouldDisable: false
   }
 ];

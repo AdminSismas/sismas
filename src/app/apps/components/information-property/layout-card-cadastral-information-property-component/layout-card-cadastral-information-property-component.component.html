@@ -3,19 +3,18 @@
   mat-dialog-title
 >
   <h2 class="headline m-0 flex-auto">
-    {{
-      CONSTANT_INFOMATION_PREDIAL + TWO_POINT_ + this.baunitHead?.baunitIdE + " - " + baunitHead?.domBaunitCondition
-    }}
+    @if (optionSchemas.length > 1) {
+      {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition }}
+    } @else if (optionSchemas.length === 1) {
+      @if (optionSchemas[0].schema === schemaMain) {
+        {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition + " - " + CONSTANT_INFORMATION_PREDIAL_MAIN }}
+      } @else if (optionSchemas[0].schema === schemaTemp) {
+        {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition + " - " + CONSTANT_INFORMATION_PREDIAL_TEMP }}
+      } @else if (optionSchemas[0].schema === schemaHist) {
+        {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition + " - " + CONSTANT_INFORMATION_PREDIAL_HIST }}
+      }
+    }
   </h2>
-
-  <!-- <button
-    [matMenuTriggerFor]="settingsMenu"
-    class="text-secondary"
-    mat-icon-button
-    type="button">
-    <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button> -->
-
   <button
     class="text-secondary"
     mat-dialog-close
@@ -27,19 +26,19 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 
-@if (optionschemas.length > 1 && typeInformation === TYPE_INFORMATION_VISUAL) {
+@if (optionSchemas.length > 1 && typeInformation === TYPE_INFORMATION_VISUAL) {
   <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
     <mat-tab-group (selectedTabChange)="onTabChange($event)">
-      @for (option of optionschemas; track option) {
+      @for (option of optionSchemas; track option) {
         <mat-tab [label]="option.title">
           <vex-cadastral-information-property
-            [id]="'Cadastralinformation_' + option.schema"
+            [id]="'CadastralInformation_' + option.schema"
             [label]="option.title"
             [schema]="option.schema"
             [typeInformation]="typeInformation"
             [contentInfoSchema]="defaults"
             [showTittle]="false"
-            [baunitCondition]="baunitHead?.domBaunitCondition"
+            [baunitCondition]="baUnitHead?.domBaunitCondition"
             [resources]="defaults.resources!"
             [rulePage]="rulePage"
             cssClasses="mat-mdc-dialog-content_tab"
@@ -53,32 +52,32 @@
       }
     </mat-tab-group>
   </vex-page-layout-content>
-} @else if (optionschemas.length === 1 && typeInformation === TYPE_INFORMATION_VISUAL) {
+} @else if (optionSchemas.length === 1 && typeInformation === TYPE_INFORMATION_VISUAL) {
   <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
     <vex-cadastral-information-property
-      [id]="'Cadastralinformation_' + optionschemas[0].schema"
-      [label]="optionschemas[0].title"
-      [schema]="optionschemas[0].schema"
+      [id]="'CadastralInformation_' + optionSchemas[0].schema"
+      [label]="optionSchemas[0].title"
+      [schema]="optionSchemas[0].schema"
       [typeInformation]="typeInformation"
       [contentInfoSchema]="defaults"
       [showTittle]="false"
-      [baunitCondition]="baunitHead?.domBaunitCondition"
+      [baunitCondition]="baUnitHead?.domBaunitCondition"
       [resources]="defaults.resources!"
       [rulePage]="rulePage"
       cssClasses="mat-mdc-dialog-content"
       vexFluidHeight fluidHeight=105
     ></vex-cadastral-information-property>
   </vex-page-layout-content>
-} @else if (optionschemas.length === 1 && typeInformation === TYPE_INFORMATION_EDITION) {
+} @else if (optionSchemas.length === 1 && typeInformation === TYPE_INFORMATION_EDITION) {
   <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
     <vex-cadastral-information-property
-      [id]="'Cadastralinformation_' + optionschemas[0].schema"
-      [label]="optionschemas[0].title"
-      [schema]="optionschemas[0].schema"
+      [id]="'CadastralInformation_' + optionSchemas[0].schema"
+      [label]="optionSchemas[0].title"
+      [schema]="optionSchemas[0].schema"
       [typeInformation]="typeInformation"
       [contentInfoSchema]="defaults"
       [showTittle]="false"
-      [baunitCondition]="baunitHead?.domBaunitCondition"
+      [baunitCondition]="baUnitHead?.domBaunitCondition"
       [resources]="defaults.resources!"
       [rulePage]="rulePage"
       cssClasses="mat-mdc-dialog-content"
