@@ -114,7 +114,7 @@ import {
 })
 export class CadastralInformationPropertyComponent implements OnInit {
 
-  @ViewChild('basicAdministrativeUnitInformation', {
+  @ViewChild('basicPropertyInformationComponent', {
     read: ElementRef,
     static: false
   })
@@ -313,7 +313,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
     if (elementName === FRAGMENT_BASIC_PROPERTY_INFORMATION) {
       elem?.nativeElement.scrollIntoView({
-        top: elem.nativeElement.offsetTop - 20,
+        top: elem.nativeElement.offsetTop + 10,
         behavior: 'smooth'
       });
       return;
