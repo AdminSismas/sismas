@@ -381,7 +381,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       text: 'Hubo un error, verifique la información de los filtros',
       icon: 'error',
       showConfirmButton: false,
-      timer: 1001
+      timer: 1000
     }).then((result) => {
     });
   }
