@@ -584,6 +584,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
           .afterClosed()
           .subscribe((response: boolean) => {
             if (response) {
+              if (!this.comment) return this.errorDelete.fire();
               this.proceduresService
                 .commentProcedure(row.executionId!, this.comment)
                 .subscribe({
