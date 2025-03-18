@@ -501,6 +501,7 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<BasicInformat
 export const TABLE_COLUMN_PROPERTIES_ADJACENT: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL;
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
+    // name: 'cadAlfaMainComponent',
     name: 'citationAndNoticeComponent',
     pathForm: '/core/cadastral/alf/main.html',
     serviceValidation: 'checkStatusBpmOperation',

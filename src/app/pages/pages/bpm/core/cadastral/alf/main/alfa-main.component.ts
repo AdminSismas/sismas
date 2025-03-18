@@ -103,30 +103,4 @@ export class AlfaMainComponent implements OnInit {
         .then();
     }
   }
-
-
-  private returnURLPrevious(url: string) {
-    this.router.navigate([`${url}`]).then();
-  }
-
-  disabledButton(btn: TypeButtonAlfaMain): boolean {
-    return !this.resources.includes(btn);
-  }
-
-  buttonRemovers(btn: TypeButtonAlfaMain): boolean {
-    return !this.resourcesRemovers.includes(btn);
-  }
-
-  protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
-  protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
-  protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
-  protected readonly TYPE_BUTTON_TWO = TYPE_BUTTON_TWO;
-  protected readonly TYPE_BUTTON_TREE = TYPE_BUTTON_TREE;
-  protected readonly TYPE_BUTTON_FOUR = TYPE_BUTTON_FOUR;
-  protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
-  protected readonly TYPE_BUTTON_FIVE = TYPE_BUTTON_FIVE;
-  protected readonly TYPE_BUTTON_SIX = TYPE_BUTTON_SIX;
-  protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
-  protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
-  protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;
 }
