@@ -86,7 +86,7 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatMenuModule,
     MatPaginatorModule,
     MatDialogModule,
-    SweetAlert2Module
+    SweetAlert2Module,
     MatDialogModule,
     MatSort
   ],
