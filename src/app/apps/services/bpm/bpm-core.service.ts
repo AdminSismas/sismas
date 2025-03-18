@@ -59,7 +59,7 @@ export class BpmCoreService {
     return this.requestsService.sendRequestsFetchPost(url);
   }
 
-  bpmOperationStartProcess(proExecutionE: ProExecutionE): Observable<ProTaskE>  {
+  bpmOperationStartProcess(proExecutionE: ProExecutionE): Observable<ProTaskE> {
     const url = `${this.basic_url}${envi.bpmOperation.startProcess}`;
     return this.requestsService.sendRequestsFetchPostBody(url, proExecutionE)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
@@ -81,27 +81,23 @@ export class BpmCoreService {
     this.proTaskSubject.next(proTaskE);
   }
 
+  //{{url}}:{{port}}/temporal/clearBAUnit
   clearPropertyBpmOperation(executionId: string, baunitId: string): Observable<void> {
     const url = `${envi.url}:${envi.port}${envi.temporal}${envi.clearBaunit}`;
     const formData: FormData = new FormData();
     formData.append('changeLogId', executionId);
     formData.append('baunitId', baunitId);
-
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-
-    return this.http.delete<void>(url, {
-      body: formData,
-      headers
-    })
+    return this.http.delete<void>(url, { body: formData, headers })
       .pipe(catchError(error => {
         console.log('Error al remover la baunit');
         throw error;
       }));
-    }
+  }
 
-    bpmOperationGetFiled(executId: number): Observable<ProTaskE>  {
-      const url = `${this.basic_url}${envi.bpmOperation.value}${envi.bpmOperation.proTask}${executId}/active`;
-      return this.requestsService.sendRequestsFetchGet(url)
-        .pipe(catchError(error => this.requestsService.errorNotFound(error)));
-    }
+  bpmOperationGetFiled(executId: number): Observable<ProTaskE> {
+    const url = `${this.basic_url}${envi.bpmOperation.value}${envi.bpmOperation.proTask}${executId}/active`;
+    return this.requestsService.sendRequestsFetchGet(url)
+      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+  }
 }
