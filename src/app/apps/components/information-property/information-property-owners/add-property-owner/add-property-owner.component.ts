@@ -28,6 +28,7 @@ import {
   CreatePeopleComponent
 } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { Big } from 'big.js';
 
 @Component({
   selector: 'vex-add-property-owner',
@@ -82,8 +83,8 @@ export class AddPropertyOwnerComponent implements OnInit {
 
   ngOnInit(): void {
     this.fractions_sum = this.defaults.ownersData.reduce((acc: number, owner: Owners) => {
-      const fraction = Number(owner.fractionS);
-      return acc + fraction ;
+      const fraction = Big(owner.fractionS);
+      return fraction.plus(acc).toNumber();
     }, 0);
 
     this.secondForm.disable();

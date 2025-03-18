@@ -82,7 +82,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
   }
 
   close(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   editRrrightOwnerProperty(): any {
@@ -111,7 +111,6 @@ export class EditingPropertyOwnerComponent implements OnInit {
           schema: this.data.schema as string,
           params: values
         }).subscribe(() => {
-          this.snackbar.open('Propietario actualizado', 'CERRAR', { duration: 10000 });
           this.close();
         });
       });
