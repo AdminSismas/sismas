@@ -32,6 +32,8 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { DecodeJwt } from '../../../interfaces/user-details/user.model';
+import { CommentsCollection } from 'src/app/apps/interfaces/comments/comments.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -75,7 +77,7 @@ export class CommentsComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 20, 30];
   user: DecodeJwt | null = null;
 
-  executionId = '38';
+  executionId!: string;
   body: contentInfoComments = {
     commentText: ''
   };
@@ -95,7 +97,7 @@ export class CommentsComponent implements OnInit {
     private readonly layoutService: VexLayoutService,
     private alertSnakbar: MatSnackBar,
     private userService: UserService,
-     @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { value: { executionId: string } },
     private fb: FormBuilder ) {
       this.form = this.fb.group({
         newCommentText: [''],
@@ -139,7 +141,7 @@ export class CommentsComponent implements OnInit {
   getDataFromDocumentManagementService(): void {
     const pageData = this.generateObjectPageCommentsData();
     this.commentsService.getDataPropertyByComments(this.executionId, pageData).subscribe({ //this.generateObjectPageCommentsData()
-      next: (data: any) => {
+      next: (data) => {
         this.captureInformationSubscribe(data);
         this.viewPaginator(data.totalElements ?? 0);
       },
@@ -152,7 +154,7 @@ export class CommentsComponent implements OnInit {
   captureInformationSubscribe(data: InformationPegeable) {
     this.contentInformations = data;
     this.totalElements = data.totalElements ?? 0;
-    this.commentsData = (data.content || []).map((content: any) => new contentInfoComments(content));
+    this.commentsData = (data.content || []).map((content: CommentsCollection) => new contentInfoComments(content));
     this.viewPaginator(this.totalElements);
   }
 
@@ -169,7 +171,7 @@ export class CommentsComponent implements OnInit {
     }
 
     this.commentsService.postDataPropertyByComments(this.executionId, this.body).subscribe({
-      next: (data: any) => {
+      next: () => {
         this.alertSnakbar.open('Comentario Enviado', 'Close', {
           duration: 10000,
           horizontalPosition: 'center'
@@ -177,8 +179,8 @@ export class CommentsComponent implements OnInit {
         this.getDataFromDocumentManagementService();
         this.form.reset();
       },
-      error: (err: any) => {
-        console.error('Error al obtener los datos:', err);
+      error: (err: HttpErrorResponse) => {
+        console.error('Error al obtener los datos:', err.message);
       }
     });
   }
@@ -186,15 +188,15 @@ export class CommentsComponent implements OnInit {
 
   deletedDataCommentService(commentId: number): void {
     this.commentsService.deleteDataPropertyByComments(this.executionId, commentId).subscribe({
-      next: (data: any) => {
+      next: () => {
         this.alertSnakbar.open('Comentario Eliminado', 'Close', {
           duration: 10000,
           horizontalPosition: 'center'
         });
         this.getDataFromDocumentManagementService();
       },
-      error: (err: any) => {
-        console.error('Error al obtener los datos:', err);
+      error: (err: HttpErrorResponse) => {
+        console.error('Error al obtener los datos:', err.message);
       }
     });
   }

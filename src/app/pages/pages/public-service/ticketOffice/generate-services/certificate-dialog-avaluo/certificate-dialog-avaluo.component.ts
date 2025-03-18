@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,24 +15,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { Certificate } from '../interfaces/certificate.interface';
-import {
-  ViewFileDocumentManagementComponent
-} from '../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import {
-  TableCertificateSearchAppraisalsComponent
-} from 'src/app/apps/components/tables/table-certificate-search-appraisals/table-certificate-search-appraisals.component';
-import {
-  FilterCertificateSearchAppraisalsComponent
-} from 'src/app/apps/components/tables/table-certificate-search-appraisals/filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
+import { Certificate, CertificateDialogData } from '../interfaces/certificate.interface';
+import { ViewFileDocumentManagementComponent } from '../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { TableCertificateSearchAppraisalsComponent } from 'src/app/apps/components/tables/table-certificate-search-appraisals/table-certificate-search-appraisals.component';
+import { FilterCertificateSearchAppraisalsComponent } from 'src/app/apps/components/tables/table-certificate-search-appraisals/filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
 
 @Component({
   selector: 'vex-certificate-dialog-avaluo',
@@ -69,27 +62,24 @@ import {
   styleUrl: './certificate-dialog-avaluo.component.scss'
 })
 export class CertificateDialogAvaluoComponent implements OnInit {
-
   currentView: 'table' | 'search' | 'property' | 'document' = 'table';
   title = 'Certificados';
   searchData: any = {};
   selectedProperty: any;
   selectedFile: any;
   certificate!: Certificate;
- 
 
+  constructor(@Inject(MAT_DIALOG_DATA) private data: CertificateDialogData) {}
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private data: Certificate,
-    private fb: UntypedFormBuilder,
-    private cd: ChangeDetectorRef,
-    private snackbar: MatSnackBar,
-    private dialogRef: MatDialogRef<CertificateDialogAvaluoComponent>,
-  ) { }
+  get openSearch() {
+    if (this.data.openSearch) return true;
+
+    return false;
+  }
 
   ngOnInit() {
     if (this.data) {
-      this.certificate = this.data;
+      this.certificate = this.data.certificate;
       console.log(this.certificate.type);
     }
   }
@@ -137,6 +127,4 @@ export class CertificateDialogAvaluoComponent implements OnInit {
     this.currentView = 'table';
     this.title = 'Certificados';
   }
-
-
 }

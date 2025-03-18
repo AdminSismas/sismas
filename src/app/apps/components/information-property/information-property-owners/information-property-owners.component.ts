@@ -7,7 +7,6 @@ import {
   Input,
   OnInit,
   signal,
-  TemplateRef,
   ViewChild
 } from '@angular/core';
 import {
@@ -47,7 +46,6 @@ import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
-import { DeletePropertyOwnerComponent } from './delete-property-owner/delete-property-owner.component';
 import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
@@ -55,6 +53,12 @@ import {
   FRACTION_DECIMALS,
   TABLE_COLUMNS
 } from '../../../constants/information-property/information-property-owners.constants';
+import { getRandomInt } from 'src/app/apps/utils/general';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
+import { DeleteParamsRrright } from 'src/app/apps/interfaces/bpm/changes-property-owner';
+import Big from 'big.js';
+
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -82,6 +86,7 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatMenuModule,
     MatPaginatorModule,
     MatDialogModule,
+    SweetAlert2Module
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
@@ -100,7 +105,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
+  @ViewChild('confirmDialog', { static: true }) confirmDialog!: SwalComponent;
+  @ViewChild('successEdit', { static: true }) successEdit!: SwalComponent;
 
   fractions_sum = 0;
   fractions_decimals: number = FRACTION_DECIMALS;
@@ -145,8 +151,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   private matDialog = inject(MatDialog);
 
   constructor(
-    private snackbar: MatSnackBar
-  ) { }
+    private snackbar: MatSnackBar,
+    private rrrigthtService: RrrightService
+  ) {
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -157,7 +165,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema;
+    this.id = this.id + getRandomInt(10000) + this.schema;
     this.isExpandPanel(this.expandedComponent);
 
     this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition' && this.editable;
@@ -187,9 +195,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       );
       this.dataSource.data = infoOwners;
       this.fractions_sum = infoOwners.reduce((acc: number, owner: InfoOwners) => {
-        const fraction = Number(owner.fractionS);
-        const sum = acc + fraction;
-        return Math.round(sum * 100) / Math.pow(10, this.fractions_decimals);
+        const fraction = Big(owner.fractionS!);
+        return fraction.add(acc).toNumber();
       }, 0);
     } catch (e) {
       console.error(e);
@@ -219,7 +226,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         baunitId: this.baunitId,
         schema: this.schema,
         executionId: this.executionId
-      },
+      }
     }).afterClosed()
       .subscribe(() => {
         setTimeout(() => (this.loadInformationPropertyOwners(), 200));
@@ -230,21 +237,25 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   onClickActionBtn(id: string, infoOwner: InfoOwners) {
     this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
-      this.matDialog.open(DeletePropertyOwnerComponent, {
-        ...MODAL_SMALL,
-        data: {
-          baunitId: this.baunitId,
-          executionId: this.executionId,
-          rightId: this.rightIdSelected,
-          individual: infoOwner.individual
+      this.confirmDialog.fire().then((result) => {
+        if (result.isConfirmed) {
+          const parameters: DeleteParamsRrright = {
+                executionId: this.executionId!,
+                baunitId: this.baunitId!,
+                rightId: this.rightIdSelected!
+              };
+
+          this.rrrigthtService.deletePropertyOwner(parameters).subscribe(() => {
+            setTimeout(() => this.loadInformationPropertyOwners(), 200);
+          });
         }
-      }).afterClosed()
-        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
+      });
     } else if (id === 'edit') {
+      const fractions_sum = Big(this.fractions_sum);
       this.matDialog.open(EditingPropertyOwnerComponent, {
         ...MODAL_SMALL,
         data: {
-          fractions_sum: this.fractions_sum - Number(infoOwner.fractionS),
+          fractions_sum: fractions_sum.minus(infoOwner.fractionS!).toNumber(),
           rightId: this.rightIdSelected,
           executionId: this.executionId,
           baunitId: this.baunitId,
@@ -257,7 +268,12 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
           individual: infoOwner.individual
         }
       }).afterClosed()
-        .subscribe(() => setTimeout(() => this.loadInformationPropertyOwners(), 200));
+        .subscribe((response: boolean) => {
+          if (response) {
+            this.successEdit.fire();
+            setTimeout(() => this.loadInformationPropertyOwners(), 200);
+          }
+        });
     }
   }
 
@@ -271,10 +287,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
     const { pageIndex, pageSize } = pageEvent || {};
     this.page = pageIndex ?? PAGE;
     this.pageSize = pageSize ?? PAGE_SIZE;
-  }
-
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
   }
 
   individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {

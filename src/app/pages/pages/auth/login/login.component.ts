@@ -44,7 +44,7 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
   videoPath: string = environment.video;
   logoPath: string = environment.logo;
-  logoPathAlter: string = '';
+  logoPathAlter = '';
   form!: FormGroup;
   inputType = 'password';
   visible = false;
@@ -68,7 +68,7 @@ export class LoginComponent {
 
     this.findLogo(this.logoPath);
 
-
+    navigationLoaderService.stopCountLoop();
   }
 
 
@@ -105,7 +105,7 @@ export class LoginComponent {
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 3000
-              }).then(() => {});
+              }).then();
 
             });
           } else {
@@ -121,7 +121,7 @@ export class LoginComponent {
         icon: 'error',
         showConfirmButton: false,
         timer: 1000
-      }).then((result) => {});
+      }).then();
     }
   }
 
@@ -132,7 +132,7 @@ export class LoginComponent {
       icon: 'error',
       showConfirmButton: false,
       timer: 5000
-    }).then((result) => {});
+    }).then();
   }
 
 

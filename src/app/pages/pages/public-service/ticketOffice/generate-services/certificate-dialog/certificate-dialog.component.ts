@@ -19,7 +19,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { Certificate } from '../interfaces/certificate.interface';
+import { Certificate, CertificateDialogData } from '../interfaces/certificate.interface';
 import {
   ViewFileDocumentManagementComponent
 } from '../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
@@ -79,7 +79,7 @@ export class CertificateDialogComponent implements OnInit {
 
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: Certificate,
+    @Inject(MAT_DIALOG_DATA) private data: CertificateDialogData,
     private fb: UntypedFormBuilder,
     private cd: ChangeDetectorRef,
     private snackbar: MatSnackBar,
@@ -88,14 +88,8 @@ export class CertificateDialogComponent implements OnInit {
 
   ngOnInit() {
     if (this.data) {
-      this.certificate = this.data;
+      this.certificate = this.data.certificate;
     }
-  }
-
-  onSearch(data?: any): void {
-    this.currentView = 'search';
-    this.title = 'Búsqueda Avanzada';
-    this.searchData = data || {};
   }
 
   // Aplicar búsqueda
@@ -104,20 +98,6 @@ export class CertificateDialogComponent implements OnInit {
     this.currentView = 'table';
     this.title = 'Certificados';
     // Actualiza la tabla con los resultados
-  }
-
-  // Visualizar información predial
-  onViewProperty(property: any): void {
-    this.currentView = 'property';
-    this.title = 'Información Predial';
-    this.selectedProperty = property;
-  }
-
-  // Visualizar documento
-  onViewDocument(file: any): void {
-    this.currentView = 'document';
-    this.title = 'Visualizador de Documento';
-    this.selectedFile = file;
   }
 
   // Cerrar vistas secundarias

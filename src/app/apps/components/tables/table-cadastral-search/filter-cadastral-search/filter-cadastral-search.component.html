@@ -1,9 +1,6 @@
-<div
-  class="flex items-center"
-  mat-dialog-title
->
+<div class="flex items-center" mat-dialog-title>
   <h2 class="headline m-0 flex-auto">Búsqueda avanzada</h2>
-  
+
   <button
     class="text-secondary"
     mat-dialog-close
@@ -15,8 +12,7 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 <mat-dialog-content class="flex flex-col overflow-hidden">
-  <mat-tab-group
-    class="overflow-hidden"
+  <mat-tab-group class="overflow-hidden"
     (selectedTabChange)="clearFormFields($event)"
   >
     <!-- Búsqueda por segregación de número predial nacional -->
@@ -248,9 +244,7 @@
                 (click)="sendInformationTable()"
                 color="primary"
                 mat-flat-button
-                [disabled]=""
-                type="primary"
-              >
+                type="primary">
                 <mat-icon svgIcon="mat:search"></mat-icon>
                 Buscar
               </button>
@@ -267,12 +261,18 @@
     >
       <vex-page-layout class="overflow-hidden">
         <vex-page-layout-content
-          class="container-fluid p-0 overflow-hidden"
+          class="container-fluid p-0 overflow-hidden flex flex-col gap-2"
           style="padding-bottom: 0px"
         >
           <!--Búsqueda por círculo - matrícula / matrícula -->
-          <form [formGroup]="formRegistration">
-            <div class="flex flex-col sm:flex-row">
+          <form
+            [formGroup]="formRegistration"
+            class="border border-slate-400 rounded-md p-2"
+          >
+            <h3 class="text-base text-slate-500 mb-2">
+              Búsqueda por matrícula
+            </h3>
+            <div class="flex flex-col gap-4 sm:flex-row">
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-1"
                 label="Matrícula"
@@ -295,107 +295,123 @@
           </form>
 
           <!-- Búsqueda por documento y tipo -->
-           <div *ngIf="seeRuleField">
-             <form [formGroup]="formDocumentType">
-               <div class="flex flex-col sm:flex-row gap-4">
-                 <vex-combox-colletion
-                   idComboCollection="typeNumberDocument"
-                   label="Tipo de documento"
-                   formControlNameCombobox="domIndividualTypeNumber"
-                   typeDomainName="IndividualTypeNumber"
-                   placeholderDomainName="Tipo de documento"
-                 ></vex-combox-colletion>
-   
-                 <vex-input
-                   cssClasses="sm:ml-2 sm:mr-2 flex-1"
-                   label="Documento"
-                   type="text"
-                   idComboInput="numberID"
-                   formControlNameInput="number"
-                   icon="mat:assignment"
-                 ></vex-input>
-   
-                 <div class="sm:ml-2 sm:mr-2 flex-auto">
-                   <button
-                     color="primary"
-                     mat-raised-button
-                     type="button"
-                     (click)="searchByDocumentAndTypeNumber()"
-                   >
-                     <mat-icon svgIcon="mat:search"></mat-icon>Buscar
-                   </button>
-                 </div>
-               </div>
-             </form>
-           </div>
-           <div *ngIf="seeRuleField">
-             <!-- Búsqueda por nombre y apellidos o en su defecto por nombre de la compañía -->
-             <form [formGroup]="formNames">
-               <div class="flex flex-col sm:flex-row">
-                 <vex-input
-                   cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-                   label="Nombre"
-                   type="text"
-                   idComboInput="firstNameID"
-                   formControlNameInput="firstName"
-                   icon="mat:person"
-                 ></vex-input>
-   
-                 <vex-input
-                   cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-                   label="Otros nombres"
-                   type="text"
-                   idComboInput="middleNameeID"
-                   formControlNameInput="middleName"
-                   icon="mat:person"
-                 ></vex-input>
-               </div>
-               <div class="flex flex-col sm:flex-row">
-                 <vex-input
-                   cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-                   label="Apellido"
-                   type="text"
-                   idComboInput="lastNameID"
-                   formControlNameInput="lastName"
-                   icon="mat:person"
-                 ></vex-input>
-                 <vex-input
-                   cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-                   label="Otros apellidos"
-                   type="text"
-                   idComboInput="otherLastNameID"
-                   formControlNameInput="otherLastName"
-                   icon="mat:person"
-                 ></vex-input>
-               </div>
-   
-               <div class="flex flex-col sm:flex-row">
-                 <vex-input
-                   cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-                   label="Nombre compañía"
-                   type="text"
-                   idComboInput="companyNameID"
-                   formControlNameInput="companyName"
-                   icon="mat:location_city"
-                 ></vex-input>
-   
-                 <div class="sm:ml-2 sm:mr-2 flex-auto">
-                   <button
-                     color="primary"
-                     mat-raised-button
-                     type="button"
-                     (click)="searchByName()"
-                   >
-                     <mat-icon svgIcon="mat:search"></mat-icon>Buscar
-                   </button>
-                 </div>
-               </div>
-             </form>
-           </div>
+          <div *ngIf="seeRuleField">
+            <form
+              [formGroup]="formDocumentType"
+              class="border border-slate-400 rounded-md p-2"
+            >
+              <h3 class="text-base text-slate-500 mb-2">
+                Búsqueda por documento de propietario
+              </h3>
+              <div class="flex flex-col sm:flex-row gap-4">
+                <vex-combox-colletion
+                  idComboCollection="typeNumberDocument"
+                  label="Tipo de documento"
+                  formControlNameCombobox="domIndividualTypeNumber"
+                  typeDomainName="IndividualTypeNumber"
+                  placeholderDomainName="Tipo de documento"
+                ></vex-combox-colletion>
+
+                <vex-input
+                  cssClasses="sm:ml-2 sm:mr-2 flex-1"
+                  label="Documento"
+                  type="text"
+                  idComboInput="numberID"
+                  formControlNameInput="number"
+                  icon="mat:assignment"
+                ></vex-input>
+
+                <div class="sm:ml-2 sm:mr-2 flex-auto">
+                  <button
+                    color="primary"
+                    mat-raised-button
+                    type="button"
+                    (click)="searchByDocumentAndTypeNumber()"
+                  >
+                    <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div *ngIf="seeRuleField">
+            <!-- Búsqueda por nombre y apellidos o en su defecto por nombre de la compañía -->
+            <form
+              [formGroup]="formNames"
+              class="border border-slate-400 rounded-md p-2"
+            >
+              <h3 class="text-base text-slate-500 mb-2">
+                Búsqueda por nombre de propietario o nombre de compañía
+              </h3>
+              <div class="flex flex-col gap-4 sm:flex-row">
+                <vex-input
+                  cssClasses="sm:ml-2 sm:mr-2 flex-auto"
+                  label="Nombre"
+                  type="text"
+                  idComboInput="firstNameID"
+                  formControlNameInput="firstName"
+                  icon="mat:person"
+                ></vex-input>
+
+                <vex-input
+                  cssClasses="sm:ml-2 sm:mr-2 flex-auto"
+                  label="Otros nombres"
+                  type="text"
+                  idComboInput="middleNameeID"
+                  formControlNameInput="middleName"
+                  icon="mat:person"
+                ></vex-input>
+              </div>
+              <div class="flex flex-col gap-4 sm:flex-row">
+                <vex-input
+                  cssClasses="sm:ml-2 sm:mr-2 flex-auto"
+                  label="Apellido"
+                  type="text"
+                  idComboInput="lastNameID"
+                  formControlNameInput="lastName"
+                  icon="mat:person"
+                ></vex-input>
+                <vex-input
+                  cssClasses="sm:ml-2 sm:mr-2 flex-auto"
+                  label="Otros apellidos"
+                  type="text"
+                  idComboInput="otherLastNameID"
+                  formControlNameInput="otherLastName"
+                  icon="mat:person"
+                ></vex-input>
+              </div>
+
+              <div class="flex flex-col gap-4 sm:flex-row">
+                <vex-input
+                  cssClasses="sm:ml-2 sm:mr-2 flex-auto"
+                  label="Nombre compañía"
+                  type="text"
+                  idComboInput="companyNameID"
+                  formControlNameInput="companyName"
+                  icon="mat:location_city"
+                ></vex-input>
+
+                <div class="sm:ml-2 sm:mr-2 flex-auto">
+                  <button
+                    color="primary"
+                    mat-raised-button
+                    type="button"
+                    (click)="searchByName()"
+                  >
+                    <mat-icon svgIcon="mat:search"></mat-icon>Buscar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
 
           <!-- Búsqueda por dirección de texto -->
-          <form [formGroup]="formAddress">
-            <div class="flex flex-col sm:flex-row">
+          <form [formGroup]="formAddress" class="border border-slate-400 rounded-md p-2">
+            <h3 class="text-base text-slate-500 mb-2">
+              Búsqueda por dirección
+            </h3>
+            <div class="flex flex-col gap-4 sm:flex-row">
               <!--direccion-->
               <vex-input
                 cssClasses="sm:ml-2 sm:mr-2 flex-col"
@@ -614,21 +630,18 @@
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>
+
 <mat-menu
   #settingsMenu="matMenu"
-  xPosition="before"
-  yPosition="below"
->
+  xPosition="before" yPosition="below">
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
     <span>Imprimir</span>
   </button>
-
   <button mat-menu-item>
     <mat-icon svgIcon="mat:download"></mat-icon>
     <span>Exportar</span>
   </button>
-
   <button mat-menu-item>
     <mat-icon svgIcon="mat:delete"></mat-icon>
     <span>Borrar</span>

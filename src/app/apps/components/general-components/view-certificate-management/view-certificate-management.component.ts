@@ -1,11 +1,19 @@
 import { Component, Inject, Input, SecurityContext } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeUrl
+} from '@angular/platform-browser';
 
 // recursos de angular material
 import { MatIconModule } from '@angular/material/icon';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 
@@ -16,6 +24,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+
+export interface ViewCertificateManagementData {
+  baunitID: number;
+  typeCertificate: string;
+  documentNumber?: string;
+  documentType?: string;
+  fullName?: string;
+  title?: string;
+}
 
 @Component({
   selector: 'vex-view-certificate-management',
@@ -33,34 +50,27 @@ import { MatButtonModule } from '@angular/material/button';
     NgIf,
     MatIconModule,
     MatProgressSpinnerModule,
-MatButtonModule,
-
-
+    MatButtonModule
   ]
 })
 export class ViewCertificateManagementComponent {
-
-  isLoading: boolean = false;
-  errorMessage: string = '';
-  isErrorMessage: boolean = false;
-  @Input() public id = '';
+  isLoading = false;
+  errorMessage = '';
+  isErrorMessage = false;
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;
-  isVerified: boolean = false;
+  currentTitle = '';
+  isVerified = false;
   paymentForm: FormGroup;
   selectedFile: File | null = null;
-  currentTitle: string = 'Validación de pago';
-  currentIcon: string = 'mat:verified';
-  showWarning: boolean = false;
-  successMessage: string = '';
-
+  currentIcon = 'mat:verified';
+  showWarning = false;
+  successMessage = '';
   typeCertificate: string;
   documentNumber: string;
   documentType: string;
   fullName: string;
   baunitID: number;
-
-
   pdfUrl: SafeResourceUrl | string = '';
   loadSubscription: Subscription | undefined;
   fileType = '';
@@ -68,8 +78,9 @@ export class ViewCertificateManagementComponent {
   basic_url: string | undefined;
   basic_url_appraisals: string | undefined;
 
-
   private validReferences = ['123456', '987654', '456789'];
+
+  @Input() public id = '';
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -77,51 +88,47 @@ export class ViewCertificateManagementComponent {
     public dialogRef: MatDialogRef<ViewCertificateManagementComponent>,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA)
-    public data: {
-      documentNumber: string;
-      documentType: string;
-      fullName: string;
-      typeCertificate: string;
-      baunitID: number;
-    }
+    public data: ViewCertificateManagementData
   ) {
-    this.documentNumber = data.documentNumber;
-    this.documentType = data.documentType;
+    this.documentNumber = data.documentNumber || '';
+    this.documentType = data.documentType || '';
     this.fullName = data.fullName ? data.fullName.toUpperCase() : '';
     this.typeCertificate = data.typeCertificate;
-    this.baunitID = data.baunitID
+    this.baunitID = data.baunitID;
+    this.currentTitle = data.title || 'Validación de Pago';
 
     if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
       this.basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individualNumber}`;
     } else {
       this.basic_url_appraisals = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}/${this.baunitID}`;
     }
-this.paymentForm = this.fb.group({
-      reference: [''],
+    this.paymentForm = this.fb.group({
+      reference: ['']
     });
+  }
 
+  get hiddeReference() {
+    return this.typeCertificate === 'CERT_INST_PUBL';
   }
 
   validatePayment() {
     const reference = this.paymentForm.value.reference;
 
     if (!reference && !this.selectedFile) {
-      this.errorMessage = 'Debes ingresar un número de referencia o subir un comprobante.';
+      this.errorMessage =
+        'Debes ingresar un número de referencia o subir un comprobante.';
       this.isErrorMessage = true;
       setTimeout(() => (this.errorMessage = ''), 3000);
       return;
     }
-
 
     if (this.validReferences.includes(reference) || this.selectedFile) {
       this.errorMessage = 'Validación exitosa.';
       this.isErrorMessage = false;
       this.isVerified = true;
 
-
       this.currentTitle = 'Detalles del Certificado';
       this.currentIcon = 'mat:insert_drive_file';
-
 
       this.loadPdf();
 
@@ -133,11 +140,10 @@ this.paymentForm = this.fb.group({
     }
   }
 
-
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    this.selectedFile = fileInput.files![0];
   }
-
 
   getFileType(fileName: string): string {
     const extension = fileName.split('.').pop()?.toLowerCase();
@@ -152,8 +158,6 @@ this.paymentForm = this.fb.group({
     return 'unknown';
   }
 
-
-
   downloadPdfFromSafeUrl(): void {
     const unsafeUrl = this.sanitizer.sanitize(SecurityContext.URL, this.pdfUrl);
 
@@ -164,7 +168,6 @@ this.paymentForm = this.fb.group({
           const blobUrl = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = blobUrl;
-
 
           let fileName = '';
           if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
@@ -190,13 +193,16 @@ this.paymentForm = this.fb.group({
     }
   }
 
-
   loadPdf() {
     this.isLoading = true;
     this.errorMessage = '';
     this.isErrorMessage = false;
 
-    const url = this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA' ? this.basic_url : this.basic_url_appraisals;
+    const url =
+      this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA'
+        ? this.basic_url
+        : this.basic_url_appraisals;
+        
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${url}${queryParams}`;
 
@@ -204,35 +210,36 @@ this.paymentForm = this.fb.group({
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     // Realizar la solicitud HTTP y suscribirse a la respuesta
-    this.loadSubscription = this.http.get(fullUrl, { headers, responseType: 'blob' }).subscribe({
-      next: (response) => {
-        const blob = new Blob([response], { type: 'application/pdf' });
-        const blobUrl = URL.createObjectURL(blob);
-        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
-        this.isLoading = false; // Termina la carga
-        this.errorMessage = 'Certificado generado correctamente'; // Mensaje de éxito
-        this.isErrorMessage = false; // Mensaje de éxito, color verde
+    this.loadSubscription = this.http
+      .get(fullUrl, { headers, responseType: 'blob' })
+      .subscribe({
+        next: (response) => {
+          const blob = new Blob([response], { type: 'application/pdf' });
+          const blobUrl = URL.createObjectURL(blob);
+          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+          this.isLoading = false; // Termina la carga
+          this.errorMessage = 'Certificado generado correctamente'; // Mensaje de éxito
+          this.isErrorMessage = false; // Mensaje de éxito, color verde
 
-        // Desaparecer el mensaje después de 3 segundos
-        setTimeout(() => {
-          this.errorMessage = '';
-        }, 3000);
-      },
-      error: (error) => {
-        console.error('Error al cargar el documento PDF:', error);
-        this.pdfUrl = 'error';
-        this.isLoading = false; // Termina la carga
-        this.errorMessage = 'Error en generación de certificado'; // Mensaje de error
-        this.isErrorMessage = true; // Mensaje de error, color rojo
+          // Desaparecer el mensaje después de 3 segundos
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
+        },
+        error: (error) => {
+          console.error('Error al cargar el documento PDF:', error);
+          this.pdfUrl = 'error';
+          this.isLoading = false; // Termina la carga
+          this.errorMessage = 'Error en generación de certificado'; // Mensaje de error
+          this.isErrorMessage = true; // Mensaje de error, color rojo
 
-        // Cerrar el dialog automáticamente si ocurre un error
-        setTimeout(() => {
-          this.dialogRef.close(); // Cierra el dialog si hay un error
-        }, 3000);
-      }
-    });
+          // Cerrar el dialog automáticamente si ocurre un error
+          setTimeout(() => {
+            this.dialogRef.close(); // Cierra el dialog si hay un error
+          }, 3000);
+        }
+      });
   }
-
 
   cancelLoad() {
     this.isLoading = false;
@@ -240,8 +247,6 @@ this.paymentForm = this.fb.group({
     this.loadSubscription?.unsubscribe();
     this.dialogRef.close();
   }
-
-
 
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {

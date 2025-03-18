@@ -329,6 +329,48 @@
   }
 </mat-menu>
 
+<ng-template #commentDialog>
+  <div class="flex justify-between">
+    <h2 mat-dialog-title>Agregar comentario</h2>
+    <button
+      mat-icon-button
+      [mat-dialog-close]="false"
+    >
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="border-slate-400"></mat-divider>
+
+  <mat-dialog-content>
+    <mat-form-field class="w-full h-full">
+      <mat-label>Comentario</mat-label>
+      <input
+        type="text-area"
+        matInput
+        class="w-full h-full"
+        placeholder="Escriba el comentario relacionado a la anulación del trámite ..."
+        [(ngModel)]="comment"
+      />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button
+      mat-flat-button
+      color="primary"
+      [mat-dialog-close]="true"
+    >
+      Aceptar
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      [mat-dialog-close]="false"
+    >
+      Cancelar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
 <swal
   #confirmDelete
   title="Anular trámite"
@@ -346,6 +388,42 @@
   title="Anular trámite"
   icon="error"
   text="Se ha generado un error al anular el trámite"
+  confirmButtonColor="#3085d6"
+  confirmButtonText="Aceptar"
+></swal>
+
+<swal
+  #commentError
+  title="Error al anular trámite"
+  icon="error"
+  text="Se debe de agregar un comentario para anular el trámite"
+  confirmButtonColor="#3085d6"
+  confirmButtonText="Aceptar"
+></swal>
+
+<swal
+  #successDelete
+  title="Anular trámite"
+  icon="success"
+  text="Se ha anulado el trámite"
+  confirmButtonColor="#3085d6"
+  confirmButtonText="Aceptar"
+></swal>
+
+<swal
+  #successReassign
+  title="Reasignar trámite"
+  icon="success"
+  text="Se ha reasignado el trámite"
+  confirmButtonColor="#3085d6"
+  confirmButtonText="Aceptar"
+></swal>
+
+<swal
+  #errorReassign
+  title="Reasignar trámite"
+  icon="error"
+  text="Se ha generado un error al reasignar el trámite"
   confirmButtonColor="#3085d6"
   confirmButtonText="Aceptar"
 ></swal>

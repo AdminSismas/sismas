@@ -2,6 +2,7 @@ import { LayoutComponent } from './layouts/layout/layout.component';
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import { RoleGuard } from './pages/pages/auth/login/guards/role.guard';
 import { authGuard } from './guards/auth.guard';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from './apps/constants/general/constant';
 
 export const appRoutes: VexRoutes = [
   {
@@ -34,43 +35,43 @@ export const appRoutes: VexRoutes = [
         path: 'myWork',
         loadChildren: () => import('./pages/pages/my-work/my-work.routes'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV'] }
+        data: { roles: NOT_GUEST_USERS_ROLE_LIST }
       },
       {
         path: 'operationSupport',
         loadChildren: () => import('./pages/pages/operation-support/operation-support-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV'] }
+        data: { roles: NOT_GUEST_USERS_ROLE_LIST }
       },
       {
         path: 'openData',
         loadChildren: () => import('./pages/pages/open-data/open-data-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ', 'USER_SERV'] }
+        data: { roles: BASIC_USERS_ROLE_LIST }
       },
       {
         path: 'publicService',
         loadChildren: () => import('./pages/pages/public-service/public-service-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ', 'USER_SERV'] }
+        data: { roles: BASIC_USERS_ROLE_LIST }
       },
       {
         path: 'configuration',
         loadChildren: () => import('./pages/pages/configuration/configuration-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN'] }
+        data: { roles: ADMIN_ROLE_LIST }
       },
       {
         path: 'audit',
         loadChildren: () => import('./pages/pages/audit/audit-routing.module'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN'] }
+        data: { roles: ADMIN_ROLE_LIST }
       },
       {
         path: 'bpm',
         loadChildren: () => import('./pages/pages/bpm/bpm-routing'),
         canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV'] }
+        data: { roles: NOT_GUEST_USERS_ROLE_LIST }
       },
       {
         path: '**',

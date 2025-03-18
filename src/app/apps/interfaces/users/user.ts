@@ -1,5 +1,5 @@
-export interface User {
-  content: Content[];
+export interface InformationPagebleUser {
+  content: User[];
   pageable: Pageable;
   totalElements: number;
   totalPages: number;
@@ -12,7 +12,7 @@ export interface User {
   empty: boolean;
 }
 
-export interface Content {
+export interface User {
   userId: number;
   username: string;
   email: string;

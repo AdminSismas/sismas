@@ -14,12 +14,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 // Custom
 import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
-import { CrudAlfaMainComponent } from '../crud-alfa-main/crud-alfa-main.component';
+import { CrudAlfaMainComponent } from '../alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain, ModificationUnitProperties } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
 import {
-  LIST_SCHEMAS_CONTROL_CHANGES,
+  LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
   PAGE,
   PAGE_OPTION__5_7_10,
@@ -176,7 +176,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
           row.baunitIdE,
           row,
           this.data.executionId,
-          LIST_SCHEMAS_CONTROL_CHANGES,
+          LIST_SCHEMAS_CONTROL_TEMP,
           TYPE_INFORMATION_EDITION,
           '',
           this.data.resources,

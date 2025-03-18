@@ -16,6 +16,8 @@ import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constant';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +107,11 @@ export class NavigationLoaderService {
 
           this.taskCounters.next(counters);
           this.loadInformationNavigation(this.user!.role);
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.stopCountLoop();
+          }
         }
       });
     }
@@ -193,38 +200,38 @@ export class NavigationLoaderService {
           },
           ...NAVIGATION_LOADER_MY_WORK_3
         ],
-        roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV']
+        roles: NOT_GUEST_USERS_ROLE_LIST
       },
       {
         type: 'subheading',
         label: 'Apoyo operación',
         children: NAVIGATION_LOADER_OPERATION_SUPPORT,
-        roles: ['ADMIN', 'USER', 'USER_READ', 'USER_SERV']
+        roles: NOT_GUEST_USERS_ROLE_LIST
       },
       {
         type: 'subheading',
         label: 'Datos abiertos',
         children: NAVIGATION_LOADER_OPEN_DATA,
-        roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ', 'USER_SERV']
+        roles: BASIC_USERS_ROLE_LIST
       },
       {
         type: 'subheading',
         label: 'Servicio público',
         children: filteredPublicService,
-        roles: ['ADMIN', 'USER', 'GUEST', 'USER_READ','USER_SERV']
+        roles: BASIC_USERS_ROLE_LIST
 
       },
       {
         type: 'subheading',
         label: 'Configuración',
         children: NAVIGATION_LOADER_CONFIGURATION,
-        roles: ['ADMIN']
+        roles: ADMIN_ROLE_LIST
       },
       {
         type: 'subheading',
         label: 'Auditoría',
         children: NAVIGATION_LOADER_AUDIT,
-        roles: ['ADMIN']
+        roles: ADMIN_ROLE_LIST
       },
       {
         type: 'subheading',
@@ -237,7 +244,7 @@ export class NavigationLoaderService {
             icon: 'mat:settings'
           }
         ],
-        roles: ['ADMIN']
+        roles: ADMIN_ROLE_LIST
       }
     ];
     const accessibleNavigation = listItem.filter(

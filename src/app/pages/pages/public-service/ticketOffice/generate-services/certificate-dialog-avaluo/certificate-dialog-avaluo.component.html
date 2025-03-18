@@ -10,7 +10,7 @@
       <mat-icon svgIcon="mat:close"></mat-icon>
     </button>
   </div>
-  
+
   <mat-divider class="text-border"></mat-divider>
 
   <mat-dialog-content>
@@ -19,30 +19,31 @@
       <ng-container *ngSwitchCase="'table'">
         <vex-table-certificate-search-appraisals
           [certificateType]="certificate.type"
-          (search)="onSearch($event)" 
-          (viewDocument)="onViewDocument($event)" 
+          [openSearch]="openSearch"
+          (search)="onSearch($event)"
+          (viewDocument)="onViewDocument($event)"
           (viewProperty)="onViewProperty($event)">
         </vex-table-certificate-search-appraisals>
       </ng-container>
-  
+
       <!-- Filtro de búsqueda -->
       <ng-container *ngSwitchCase="'search'">
         <vex-filter-certificate-search-appraisals
-          (close)="closeSearch()" 
+          (close)="closeSearch()"
           (apply)="applySearch($event)">
         </vex-filter-certificate-search-appraisals>
       </ng-container>
-  
+
       <!-- Visualización de propiedad -->
       <ng-container *ngSwitchCase="'property'">
         <vex-layout-card-cadastral-information-property-component
           (close)="closePropertyView()">
         </vex-layout-card-cadastral-information-property-component>
       </ng-container>
-  
+
       <!-- Visualización de documento -->
       <ng-container *ngSwitchCase="'document'">
-        <vex-view-file-document-management 
+        <vex-view-file-document-management
           (close)="closeDocumentView()">
         </vex-view-file-document-management>
       </ng-container>

@@ -22,7 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { filter, map, take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
@@ -50,7 +50,6 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   ShowErrorValidateAlfaMainComponent
 } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
-import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';

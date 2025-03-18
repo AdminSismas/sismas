@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild
@@ -53,7 +52,8 @@ import {
   MY_DATE_FORMATS,
   PAGE,
   PAGE_SIZE,
-  TABLE_COLUMN_PROPERTIES
+  TABLE_COLUMN_PROPERTIES,
+  USERS_ACTIONS_ENABLED
 } from '../../../constants/general/procedures.constant';
 import { ProceduresCollection } from '../../../interfaces/tables/procedures-progress.model';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -63,7 +63,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { TaskResponseModel } from '../../../interfaces/bpm/task-response.model';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   MODAL_LARGE,
   MODAL_SMALL,
@@ -73,6 +73,10 @@ import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/opera
 import { environment } from 'src/environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ReassignProcedureComponent } from '../../procedures/reassign-procedure/reassign-procedure.component';
+import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
+import { ComponentType } from '@angular/cdk/overlay';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'vex-table-procedures',
@@ -82,28 +86,32 @@ import { HttpErrorResponse } from '@angular/common/http';
   animations: [fadeInUp400ms, stagger40ms],
   providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
   imports: [
-    VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    MatInputModule,
-    MatMenuModule,
-    ReactiveFormsModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSortModule,
-    MatTableModule,
     CommonModule,
     FormsModule,
-    MatDatepickerModule,
     NgClass,
     NgIf,
     ReactiveFormsModule,
-    SweetAlert2Module
+    ReactiveFormsModule,
+    SweetAlert2Module,
+    // Vex
+    VexPageLayoutComponent,
+    VexPageLayoutContentDirective,
+    // Material
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule
   ]
 })
-export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
+export class TableProceduresComponent implements OnInit, OnChanges {
   /* ============== ATRIBUTES ============== */
   /* ============== ATRIBUTES ============== */
   @Input() urlTable?: string = '';
@@ -119,6 +127,8 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
   seeInfo = false;
   seeInfoDocument = false;
   public procedureDetail: TaskResponseModel = new TaskResponseModel();
+  userRole: string | undefined = this.getUserRole();
+  comment = '';
 
   // Array para almacenar las suscripciones
   private subscriptions: Subscription | undefined[] = [];
@@ -133,8 +143,28 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('commentDialog') commentDialog!: ComponentType<unknown>;
   @ViewChild('confirmDelete') confirmDelete!: SwalComponent;
   @ViewChild('errorDelete') errorDelete!: SwalComponent;
+  @ViewChild('commentError') commentError!: SwalComponent;
+  @ViewChild('successDelete') successDelete!: SwalComponent;
+  @ViewChild('successReassign') successReassign!: SwalComponent;
+  @ViewChild('errorReassign') errorReassign!: SwalComponent;
+
+  get visibleColumns() {
+    const validUser = this.userRole
+      ? USERS_ACTIONS_ENABLED.includes(this.userRole)
+      : false;
+
+    const columnsFiltered = this.columns.filter((column) => {
+      if (this.urlTable !== environment.active) {
+        return column.visible && column.property !== 'actions';
+      }
+      return column.visible && (column.property !== 'actions' || validUser);
+    });
+
+    return columnsFiltered.map((column) => column.property);
+  }
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
@@ -143,7 +173,8 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
     private proceduresService: ProceduresService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
-    private alertSnakbar: MatSnackBar
+    private alertSnakbar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.dateAdapter.setLocale('es-CO');
   }
@@ -170,18 +201,9 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
     this.defaultTableData();
   }
 
-  // Método para cancelar todas las suscripciones
-  ngOnDestroy() {
-    // Cancelamos todas las suscripciones al destruir el componente
-    console.log('Todas las suscripciones han sido canceladas');
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['urlTable']) {
       this.urlTable = changes['urlTable'].currentValue;
-    }
-    if (changes['urlView']) {
-      console.log('urlView', changes['urlView']);
     }
   }
 
@@ -230,15 +252,11 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
     return column.property;
   }
 
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => {
-        if (this.urlTable !== environment.active) {
-          return column.visible && column.property !== 'actions';
-        }
-        return column.visible;
-      })
-      .map((column) => column.property);
+  getUserRole(): string | undefined {
+    const decodeToken = this.authService.getDecodedToken();
+    if (decodeToken) {
+      return decodeToken.role;
+    }
   }
 
   get columns() {
@@ -247,17 +265,17 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
 
   get actions() {
     return [
-      // {
-      //   label: 'Reasignar',
-      //   icon: 'mat:swap_horiz',
-      //   action: (row: ProceduresCollection) =>
-      //     this.actionButtons('reassign', row)
-      // },
+      {
+        label: 'Reasignar',
+        icon: 'mat:swap_horiz',
+        action: (row: ProceduresCollection) =>
+          this.actionButtons('reassign', row)
+      },
       {
         label: 'Anular',
         icon: 'mat:block',
         action: (row: ProceduresCollection) => this.actionButtons('cancel', row)
-      },
+      }
       // {
       //   label: 'Reclasificar',
       //   icon: 'mat:delete',
@@ -291,8 +309,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
         data: { url: this.urlView }
       });
     } else {
-      console.log(value, 'Registro de la tabla');
-
       this.proceduresService
         .viewDetailIdProcedures(+value.executionId!)
         .subscribe((result) => {
@@ -314,7 +330,7 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
       .pipe(
         debounceTime(100), // Espera 500 ms después del último cambio
         distinctUntilChanged(),
-        tap((value) => {
+        tap(() => {
           const beginAtComparation = this.beginAtForm?.value
             ? new Date(this.beginAtForm?.value)
             : null;
@@ -332,14 +348,9 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
               this.beginAtForm?.setErrors({ dateComparison: true });
             }
           }
-
-          // Aquí podrías realizar una llamada HTTP o cualquier otra operación
-          console.log(value, 'executoingCode');
         })
       )
-      .subscribe((data) => {
-        console.log(data, 'executoingCode');
-      });
+      .subscribe();
   }
 
   public beginAtEFormGreaterThanDate() {
@@ -362,7 +373,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
               this.beginAtEForm?.setErrors({ dateComparison: true });
             }
           }
-          console.log('Validador de fecha', { beginAtDate, beginAtEDate });
         })
       )
       .subscribe();
@@ -374,7 +384,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
         debounceTime(300), // Espera 500 ms después del último cambio
         distinctUntilChanged(), // Solo emite cuando el valor cambia
         tap((value) => {
-          console.log(value);
           if (value !== '' && value !== 0 && value !== null) {
             this.individualNumberPartForm?.disable();
             // this.individualNumberPartForm?.reset();
@@ -496,9 +505,6 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
             }
           );
           console.error('Hubo un error al obtener los datos: ', error);
-        },
-        complete: () => {
-          console.log('Carga completa de datos');
         }
       });
   }
@@ -550,7 +556,7 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
         this.reassignProcedure(row);
         break;
       case 'cancel':
-        this.cancelProcedure(row);
+        this.addComment(row);
         break;
       case 'reclassify':
         this.reclassifyProcedure(row);
@@ -560,33 +566,79 @@ export class TableProceduresComponent implements OnInit, OnDestroy, OnChanges {
         break;
     }
   }
+
   mecanismProcedure(row: ProceduresCollection) {
     console.log(row);
   }
+
   reclassifyProcedure(row: ProceduresCollection) {
     console.log(row);
   }
-  cancelProcedure(row: ProceduresCollection) {
-    console.log(row);
+
+  addComment(row: ProceduresCollection) {
     this.confirmDelete.fire().then((result) => {
       if (result.isConfirmed) {
-        this.proceduresService.cancelProcedure(row.executionId!)
-          .subscribe({
-            next: (result) => {
-              console.log(result);
-              const data = this.objectParameters();
-              this.getDataFromProceduresService(data);
-            },
-            error: (error: HttpErrorResponse) => {
-              console.log(error.message);
-              this.errorDelete.fire();
+        this.dialog
+          .open(this.commentDialog, {
+            ...MODAL_SMALL
+          })
+          .afterClosed()
+          .subscribe((response: boolean) => {
+            if (response) {
+              if (!this.comment) return this.commentError.fire();
+              this.proceduresService
+                .commentProcedure(row.executionId!, this.comment)
+                .subscribe({
+                  next: () => {
+                    this.cancelProcedure(row.executionId!);
+                  },
+                  error: (error: HttpErrorResponse) => {
+                    this.errorDelete.fire();
+                    throw error.message;
+                  }
+                });
             }
           });
       }
     });
   }
+
+  cancelProcedure(executionId: number) {
+    this.proceduresService.cancelProcedure(executionId).subscribe({
+      next: () => {
+        const data = this.objectParameters();
+        this.getDataFromProceduresService(data);
+        this.successDelete.fire();
+      },
+      error: (error: HttpErrorResponse) => {
+        this.errorDelete.fire();
+        throw error.message;
+      }
+    });
+  }
+
   reassignProcedure(row: ProceduresCollection) {
-    console.log(row);
+    this.dialog
+      .open(ReassignProcedureComponent, {
+        ...MODAL_SMALL,
+        data: {
+          executionId: row.executionId
+        }
+      })
+      .afterClosed()
+      .subscribe({
+        next: (response: string | undefined) => {
+          if (response === 'success') {
+            this.successReassign.fire();
+            return;
+          }
+
+          if (response === 'error') {
+            this.errorReassign.fire();
+            return;
+          }
+        }
+      });
   }
 
   get beginAtForm() {

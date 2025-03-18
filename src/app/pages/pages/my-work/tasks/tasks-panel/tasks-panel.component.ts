@@ -58,7 +58,10 @@ import { TaskRetailExecuteResponseModel } from '../../../../../apps/interfaces/b
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailInformationTasksComponent } from '../components/detail-information-tasks/detail-information-tasks.component';
-import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
+import {
+  BpmProcessService,
+  PermissionVailable
+} from 'src/app/apps/services/bpm/bpm-process.service';
 
 @Component({
   selector: 'vex-assigned-tasks',
@@ -96,26 +99,23 @@ import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm
   styleUrl: './tasks-panel.component.scss'
 })
 export class TasksPanelComponent implements OnInit {
-  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
-
-  isExistDataInformation = false;
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
+  contentTasksInformations!: InformationPegeable;
+  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  isExistDataInformation = false;
+  label = 'Tareas activas';
   listProTasksE: ProTaskE[] = [];
   listProTasksECards: ProTaskE[] = [];
-  page = PAGE;
-  totalElements = 0;
-  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  typePanel: string | null = null;
-  label = 'Tareas activas';
-  public taskOne: TaskResponseModel = new TaskResponseModel();
-  contentTasksInformations!: InformationPegeable;
-  dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
-
   searchCtrl: UntypedFormControl = new UntypedFormControl('search');
+  taskOne: TaskResponseModel = new TaskResponseModel();
+  typePanel: string | null = null;
 
-  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  // Paginator config
+  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
+  dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
+  page = PAGE;
+  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
+  totalElements = 0;
 
   subjectContentInformation$: ReplaySubject<InformationPegeable> =
     new ReplaySubject<InformationPegeable>(1);
@@ -123,8 +123,10 @@ export class TasksPanelComponent implements OnInit {
     this.subjectContentInformation$.asObservable();
   isExistDataInformation$: Observable<boolean> = of(false);
   resources: string[] = [];
+  verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
 
-verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
+  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private dialog: MatDialog,
@@ -135,14 +137,17 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
     private proTasksService: TasksPanelService,
     private infoGeneralService: SendInfoGeneralService
   ) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      const token = sessionStorage.getItem('token');
-      if (token) {
-        this.onRouteChange();
-      }
-    });
+    router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        take(1)
+      )
+      .subscribe(() => {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+          this.onRouteChange();
+        }
+      });
   }
 
   ngOnInit() {
@@ -166,23 +171,17 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
         this.captureInformationSubscribe(result);
       });
 
-      this.bpmProcessService.dataPermissions$.pipe(
-        take(1),
-        distinctUntilChanged(),
-        )
-        .subscribe((result) => {
-          if(result && result.executionId && result.message){
-            this.verificPermissionAvaliable = result;
-            this.viewDetailTask(this.verificPermissionAvaliable?.executionId);
-          }
+    this.bpmProcessService.dataPermissions$
+      .pipe(take(1), distinctUntilChanged())
+      .subscribe((result) => {
+        if (result && result.executionId && result.message) {
+          this.verificPermissionAvaliable = result;
+          this.viewDetailTask(+this.verificPermissionAvaliable?.executionId);
+        }
       });
   }
 
-  lauchModalTaskCard() {
-
-  }
-
-  viewDetailTask(value: any) {
+  viewDetailTask(value: number) {
     this.proTasksService.viewProTaskId(value).subscribe((result) => {
       this.taskOne = result;
       this.viewExecuteTask(this.taskOne);
@@ -190,16 +189,22 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
     console.log('viewDetailTask', value);
   }
 
-  viewExecuteTask(objOne: any) {
+  viewExecuteTask(objOne: TaskResponseModel) {
     this.proTasksService
       .viewExecuteTaskId(
-        this.generateObjectPageSearchDataTask(this.verificPermissionAvaliable?.executionId),
+        this.generateObjectPageSearchDataTask(
+          this.verificPermissionAvaliable?.executionId
+        ),
         this.verificPermissionAvaliable?.executionId
       )
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (objTwo: InformationPegeable) =>
-          this.captureInformationSubscribeTask(objOne, objTwo, +this.verificPermissionAvaliable?.executionId)
+          this.captureInformationSubscribeTask(
+            objOne,
+            objTwo,
+            +this.verificPermissionAvaliable?.executionId
+          )
       });
   }
 
@@ -208,50 +213,45 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
   }
 
   captureInformationSubscribeTask(
-      objOne: any,
-      objTwo: InformationPegeable,
-      id: number
-    ): void {
-      let data: TaskRetailExecuteResponseModel[];
-      this.contentTasksInformations = objTwo;
-      console.log('objTwo', objTwo.content);
+    objOne: TaskResponseModel,
+    objTwo: InformationPegeable,
+    id: number
+  ): void {
+    let data: TaskRetailExecuteResponseModel[];
+    this.contentTasksInformations = objTwo;
+    console.log('objTwo', objTwo.content);
 
-      if (
-        this.contentTasksInformations &&
-        this.contentTasksInformations.content
-      ) {
-        data = this.contentTasksInformations.content;
-        data = data.map(
-          (row: TaskRetailExecuteResponseModel) =>
-            new TaskRetailExecuteResponseModel(row)
-        );
-        this.dataSource.data = data;
-        this.seeTaskProperty(objOne, this.dataSource, id);
-      }
+    if (
+      this.contentTasksInformations &&
+      this.contentTasksInformations.content
+    ) {
+      data = this.contentTasksInformations.content;
+      data = data.map(
+        (row: TaskRetailExecuteResponseModel) =>
+          new TaskRetailExecuteResponseModel(row)
+      );
+      this.dataSource.data = data;
+      this.seeTaskProperty(objOne, id);
     }
+  }
 
-
-    seeTaskProperty(
-        value: TaskResponseModel,
-        taskExecuteDetail: any,
-        taskId: number,
-      ): void {
-        this.dialog.open(DetailInformationTasksComponent, {
-          // minWidth: '60%',
-          // minHeight: '70%',
-          // disableClose: true,
-          // minWidth:'370px',
-          width: '98%',
-          height: '86%',
-          data: {
-            taskId: taskId,
-            value,
-            taskExecuteDetail,
-            textAlert:  this.verificPermissionAvaliable ? this.verificPermissionAvaliable : null
-          }
-        });
+  seeTaskProperty(value: TaskResponseModel, taskId: number): void {
+    this.dialog.open(DetailInformationTasksComponent, {
+      // minWidth: '60%',
+      // minHeight: '70%',
+      // disableClose: true,
+      // minWidth:'370px',
+      width: '98%',
+      height: '86%',
+      data: {
+        taskId: taskId,
+        value,
+        textAlert: this.verificPermissionAvaliable
+          ? this.verificPermissionAvaliable
+          : null
       }
-
+    });
+  }
 
   onFilterChargeInformationByPanel() {
     this.activateLoading();
@@ -467,5 +467,4 @@ verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
 
     this.proTasksService.getChargerProTaskCount();
   }
-
 }

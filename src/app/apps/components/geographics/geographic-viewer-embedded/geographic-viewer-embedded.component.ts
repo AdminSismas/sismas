@@ -10,10 +10,24 @@ import { MatButton } from '@angular/material/button';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 import { MatIcon } from '@angular/material/icon';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { validateVariable } from '../../../utils/general';
 
 @Component({
   selector: 'vex-geographic-viewer-embedded',
   standalone: true,
+  animations: [
+    fadeInRight400ms,
+    stagger80ms,
+    scaleIn400ms,
+    stagger40ms,
+    fadeInUp400ms,
+    scaleFadeIn400ms
+  ],
   imports: [
     ReactiveFormsModule,
     AsyncPipe,
@@ -90,7 +104,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   getViewGeneralMapByExecutionId(executionId: string, schema: string) {
     this.geographicService.getViewGeneralMapByExecutionId(executionId, schema)
       .subscribe({
-        next: (result: any) => this.captureResult(result),
+        next: (result: string | null) => this.captureResult(result),
         error: (error) => this.captureErrorResult()
       });
   }
@@ -98,7 +112,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   getViewGeneralMap(value: string) {
     this.geographicService.getViewGeneralMapById(value)
       .subscribe({
-        next: (result: any) => this.captureResult(result),
+        next: (result: string | null) => this.captureResult(result),
         error: (error) => this.captureErrorResult()
       });
   }
@@ -106,14 +120,18 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   getViewDataOpenMap(value: string) {
     this.geographicService.getViewDataOpenMapByNpn(value)
       .subscribe({
-        next: (result: any) => this.captureResult(result),
+        next: (result: string | null) => this.captureResult(result),
         error: (error) => this.captureErrorResult()
       });
   }
 
-  captureResult(result: any) {
-    this.urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(result);
-    this.activateLoading(true);
+  captureResult(result: string | null) {
+    if (validateVariable(result) && result != null) {
+      this.urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(result);
+      this.activateLoading(true);
+      return;
+    }
+    this.captureErrorResult();
   }
 
   captureErrorResult() {
@@ -145,7 +163,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
 
   activateLoading(value = false) {
     const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(1));
+    this.isExistDataInformations$ = valid.pipe(take(3));
   }
 
   getRandomInt(max: number) {

@@ -4,6 +4,7 @@ import { contentInfoProcedures } from "../../interfaces/general/content-info-pro
 export const PAGE = 0;
 export const PAGE_SIZE = 10;
 export const PAGE_SIZE_OPTION: number[] = [5, 10, 20, 50];
+export const USERS_ACTIONS_ENABLED = ['USER_LEAD', 'ADMIN'];
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[]= [
     {
         label: 'Detalle',
@@ -64,13 +65,13 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[]= [
     }
 ];
 export const TABLE_COLUMN_PROPERTIES_HISTORY: TableColumn<contentInfoProcedures>[]= [
-    // {
-    //     label: '',
-    //     property: 'detailDirection',
-    //     type: 'button',
-    //     visible: true,
-    //     cssClasses: ['text-secondary']
-    //   },
+    {
+        label: '',
+        property: 'detailDirection',
+        type: 'button',
+        visible: true,
+        cssClasses: ['text-secondary']
+      },
     {
         label: 'Versión',
         property: 'executionId',
@@ -180,7 +181,7 @@ export const TABLE_COLUMN_PROPERTIES_FINISHED: TableColumn<contentInfoProcedures
 
 
 
-import { MatDateFormats, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDateFormats } from '@angular/material/core';
 
 export const MY_DATE_FORMATS: MatDateFormats = {
     parse: {

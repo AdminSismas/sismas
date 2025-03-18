@@ -13,14 +13,25 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule
+} from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -40,9 +51,7 @@ import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import {
-  FilterCertificateSearchAppraisalsComponent
-} from './filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
+import { FilterCertificateSearchAppraisalsComponent } from './filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
   MODAL_LARGE,
@@ -54,9 +63,7 @@ import {
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
@@ -68,13 +75,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService } from '../../../services/bpm/bpm-process.service';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from '../../../interfaces/user-details/user.model';
-import {
-  ViewFileDocumentManagementComponent
-} from '../../general-components/view-file-document-management/view-file-document-management.component';
-import {
-  ViewCertificateManagementComponent
-} from '../../general-components/view-certificate-management/view-certificate-management.component';
-
+import { ViewCertificateManagementComponent } from '../../general-components/view-certificate-management/view-certificate-management.component';
 
 @Component({
   selector: 'vex-table-certificate-search-appraisals',
@@ -109,36 +110,36 @@ import {
     CurrencyLandsPipe
   ]
 })
-export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterViewInit,OnChanges {
-
+export class TableCertificateSearchAppraisalsComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
   user: DecodeJwt | null = null;
+  titleArray: string[] = ['Mi trabajo'];
+  titleMenu = 'Búsqueda';
+  principaltitleMenu = 'Búsqueda avanzada';
+  seeAction = true;
+  dataSource!: MatTableDataSource<BaunitHead>;
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  initParams?: string;
+  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(
+    true,
+    []
+  );
 
-  @Input()
-  columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
+  // Paginator config
   page = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
-  titleArray: string[] = ['Mi trabajo'];
-  titleMenu: string = 'Búsqueda';
-  principaltitleMenu: string = 'Búsqueda avanzada';
-  seeAction:boolean = true;
+
+  @Input() columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   @Input() certificateType!: string;
-
-
-  dataSource!: MatTableDataSource<BaunitHead>;
-  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
-  searchCtrl: UntypedFormControl = new UntypedFormControl();
-  initParams?: string;
-
-
-
-  @Input() tituloPage?:string = '';
-  @Input() rulePage?:string = '';
-
+  @Input() openSearch = false;
+  @Input() tituloPage?: string = '';
+  @Input() rulePage?: string = '';
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -147,7 +148,6 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
 
   constructor(
     private router: Router,
-
     private bpmProcessService: BpmProcessService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -156,13 +156,10 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService,
-    private userService: UserService,
+    private userService: UserService
   ) {
-    console.log('TableCadastralSearchComponent , Configuracion');
     this.detectCurrentUrl();
   }
-
-  dialogRef!: MatDialogRef<ViewFileDocumentManagementComponent>;
 
   detectCurrentUrl(): void {
     const currentUrl = this.router.url;
@@ -171,13 +168,8 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
     console.log('Last Segment:', lastSegment);
     if (lastSegment === 'cadastralSearch') {
       this.titleAsing('Búsqueda catastral');
-      this.menuAsing('Búsqueda avanzada','Búsqueda catastral');
+      this.menuAsing('Búsqueda avanzada', 'Búsqueda catastral');
     }
-    // else{
-    //   this.titleAsing('Búsqueda catastral DA');
-    //   this.menuAsing('Búsqueda avanzada DA');
-
-    // }
   }
 
   getLastSegment(url: string): string {
@@ -203,17 +195,24 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
       this.initParams = this.route.snapshot.queryParams['npn'];
       this.searValueData({}, this.initParams as string);
       setTimeout(() => {
-        this.dialog.open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          ...MODAL_LARGE,
-          disableClose: true,
-          data: new ContentInfoSchema(
-            this.dataSource.data[0].baunitIdE,
-            this.dataSource.data[0],
-            null,
-            LIST_SCHEMAS_CONTROL_MAIN,
-          )
-        });
+        this.dialog.open(
+          LayoutCardCadastralInformationPropertyComponentComponent,
+          {
+            ...MODAL_LARGE,
+            disableClose: true,
+            data: new ContentInfoSchema(
+              this.dataSource.data[0].baunitIdE,
+              this.dataSource.data[0],
+              null,
+              LIST_SCHEMAS_CONTROL_MAIN
+            )
+          }
+        );
       }, 300);
+    }
+
+    if (this.openSearch) {
+      this.createAdvancedSearch();
     }
   }
 
@@ -227,28 +226,27 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
     }
   }
 
-   ngOnChanges(changes: SimpleChanges) {
-      if (changes['tituloPage'] && this.tituloPage) {
-        this.tituloPage = this.tituloPage ;
-        this.titleAsing(this.tituloPage);
-        this.menuAsing('Búsqueda avanzada DA',this.tituloPage);
-        this.seeAction = false;
-      }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tituloPage'] && this.tituloPage) {
+      this.titleAsing(this.tituloPage);
+      this.menuAsing('Búsqueda avanzada DA', this.tituloPage);
+      this.seeAction = false;
     }
+  }
 
   titleAsing(value: string): void {
     this.titleArray.push(value);
   }
 
-  menuAsing(title:string,principal:string): void {
-  this.titleMenu = title;
-  this.principaltitleMenu = principal;
+  menuAsing(title: string, principal: string): void {
+    this.titleMenu = title;
+    this.principaltitleMenu = principal;
   }
 
   openGeographicViewerMain(data: BaunitHead): void {
     this.dialog
       .open(GeographicViewerComponent, {
-          ...MODAL_SMALL,
+        ...MODAL_SMALL,
         disableClose: true,
         data: new ContentInfoSchema(data.baunitIdE, data)
       })
@@ -258,10 +256,12 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
   openCadastralInformationProperty(data: BaunitHead): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-          ...MODAL_LARGE,
+        ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
-          data.baunitIdE, data, null,
+          data.baunitIdE,
+          data,
+          null,
           LIST_SCHEMAS_CONTROL_MAIN,
           TYPE_INFORMATION_VISUAL,
           '',
@@ -273,7 +273,7 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
   }
 
   createAdvancedSearch(): void {
-    if(this.searchData){
+    if (this.searchData) {
       const cleanValue = this.cleanJsonValues(this.searchData);
       this.searchData = cleanValue;
     }
@@ -342,48 +342,52 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
   }
 
   searchPropertiesByRegistration(data: SearchData): void {
-    this.infoTableService.getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByRegistration(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByDocument(data: SearchData): void {
-    this.infoTableService.getDataPropertyByDocument(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByDocument(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByName(data: SearchData): void {
-    this.infoTableService.getDataPropertyByName(this.generateObjectPageSearchData(data))
-      .subscribe(
-        {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-        }
-      );
+    this.infoTableService
+      .getDataPropertyByName(this.generateObjectPageSearchData(data))
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
+      });
   }
 
   searchPropertiesByAddress(data: SearchData): void {
-    this.infoTableService.getDataPropertyByAddress(this.generateObjectPageSearchData(data))
+    this.infoTableService
+      .getDataPropertyByAddress(this.generateObjectPageSearchData(data))
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
   searchNationalPredialNumber(data: SearchData): void {
-    this.infoTableService.getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
+    this.infoTableService
+      .getDataNationalPredialNumber(this.generateObjectPageSearchData(data))
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
@@ -403,14 +407,18 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
       return true;
     }
 
-    if (this.isValidateField(searchData?.number) &&
-      this.isValidateField(searchData?.domIndividualTypeNumber)) {
+    if (
+      this.isValidateField(searchData?.number) &&
+      this.isValidateField(searchData?.domIndividualTypeNumber)
+    ) {
       this.searchPropertiesByDocument(this.searchData);
       return true;
     }
 
-    if (this.isValidateField(searchData?.firstName) &&
-      this.isValidateField(searchData?.lastName)) {
+    if (
+      this.isValidateField(searchData?.firstName) &&
+      this.isValidateField(searchData?.lastName)
+    ) {
       this.searchPropertiesByName(this.searchData);
       return true;
     }
@@ -420,8 +428,14 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
       return true;
     }
 
-    if (searchData.sidewalk !== null && searchData.sidewalk !== undefined && searchData.sidewalk.length > 10 ||
-      searchData.block !== null && searchData.block !== undefined && searchData.block.length > 10) {
+    if (
+      (searchData.sidewalk !== null &&
+        searchData.sidewalk !== undefined &&
+        searchData.sidewalk.length > 10) ||
+      (searchData.block !== null &&
+        searchData.block !== undefined &&
+        searchData.block.length > 10)
+    ) {
       this.searchNationalPredialNumber(this.searchData);
       return true;
     }
@@ -433,32 +447,38 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
     return false;
   }
   searchPropertiesByBaunitIdE(baunit: string) {
-    this.infoTableService.getDataBaunitIdE(this.page, this.pageSize, baunit)
+    this.infoTableService
+      .getDataBaunitIdE(this.page, this.pageSize, baunit)
       .subscribe({
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result),
         error: (error: HttpErrorResponse) => {
           this.captureInformationSubscribeError();
-          if(error.status === 404){
-            this.snackbar.open('No se encontró un predio con ese número', 'Cerrar', { duration: 5000 });
+          if (error.status === 404) {
+            this.snackbar.open(
+              'No se encontró un predio con ese número',
+              'Cerrar',
+              { duration: 5000 }
+            );
           }
         }
       });
   }
 
-  formatFieldValue(value:SearchData) {
+  formatFieldValue(value: SearchData) {
     const formattedValues = [
-     value.dpto,
-     value.mpio,
-     value.zonas,
-     value.sectorb,
-     value.comuna,
-     value.barrio,
-     value.manVer,
-     value.terreno,
-     value.condicion,
-     value.edificio,
-     value.piso,
-     value.unidadPredial
+      value.dpto,
+      value.mpio,
+      value.zonas,
+      value.sectorb,
+      value.comuna,
+      value.barrio,
+      value.manVer,
+      value.terreno,
+      value.condicion,
+      value.edificio,
+      value.piso,
+      value.unidadPredial
     ];
 
     let result;
@@ -472,11 +492,15 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
     this.searValueData(value, result);
   }
 
-  searValueData(searData:SearchData,data: string): void {
-    this.baunitService.advancedSearchCadastral(this.generateObjectPageSearchData(searData),data)
-    .subscribe(value=>{
-      this.captureInformationSubscribe(value);
-    });
+  searValueData(searData: SearchData, data: string): void {
+    this.baunitService
+      .advancedSearchCadastral(
+        this.generateObjectPageSearchData(searData),
+        data
+      )
+      .subscribe((value) => {
+        this.captureInformationSubscribe(value);
+      });
   }
 
   onFilterChange(value: string): void {
@@ -542,18 +566,20 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
 
   async initiateFilingProcedure(data: BaunitHead) {
     if (data && data?.baunitIdE) {
-      const available = await this.baunitService.getBaunitIdEInOtherProcess(data?.baunitIdE);
-      if (!available){
+      const available = await this.baunitService.getBaunitIdEInOtherProcess(
+        data?.baunitIdE
+      );
+      if (!available) {
         this.snackbar.open(
           'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-          'CERRAR', { duration: 10000 }
+          'CERRAR',
+          { duration: 10000 }
         );
         return;
       }
       const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
-      this.router.navigate([`${url}`, data.baunitIdE])
-        .then();
+      this.router.navigate([`${url}`, data.baunitIdE]).then();
     }
   }
 
@@ -569,28 +595,31 @@ export class TableCertificateSearchAppraisalsComponent implements OnInit, AfterV
   }
 
   viewFile(data: BaunitHead): void {
-
     const typeCertificate = this.certificateType;
 
     console.log('Data:', data.baunitIdE);
 
+    let title: string;
+
+    if ( typeCertificate === 'CERT_INST_PUBL'){
+      title = 'documento solicitud de una entidad';
+    } else {
+      title = 'pago';
+    }
+
     this.dialog.closeAll();
 
-    this.dialog
-      .open(ViewCertificateManagementComponent, {
-        minWidth: '370px',
-        width: '98%',
-        height: '86%',
-        disableClose: true,
-        data: {
-          baunitID: data.baunitIdE,
-          typeCertificate: typeCertificate
-
-
-        }
-      });
-
-    this.dialogRef.afterClosed().subscribe(() => {
+    this.dialog.open(ViewCertificateManagementComponent, {
+      minWidth: '370px',
+      width: '98%',
+      height: '86%',
+      disableClose: true,
+      data: {
+        baunitID: data.baunitIdE,
+        typeCertificate: typeCertificate,
+        title: title
+      }
+    }).afterClosed().subscribe(() => {
       console.log('The dialog was closed');
     });
   }

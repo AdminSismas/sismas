@@ -10,7 +10,7 @@ import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-for
 import { CREATE_USER_INPUTS, SEARCH_INPUTS } from '../../../../../../apps/constants/general/users.constants';
 import { JSONInput } from '../../../../../../apps/interfaces/forms/dynamic-forms';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { Content, CreateOutput, CreateUserDialogData, CreateUserParams } from 'src/app/apps/interfaces/users/user';
+import { User, CreateOutput, CreateUserDialogData, CreateUserParams } from 'src/app/apps/interfaces/users/user';
 import { PeopleService } from '../../../../../../apps/services/users/people.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import {
@@ -253,7 +253,7 @@ export class CreateUsersComponent implements OnInit {
   editUserService(): void {
     this.userService.updateUser(this.data.userId!, this.newUserForm!.value.email)
       .subscribe({
-        next: (result: Content) => {
+        next: (result: User) => {
           this.snackbar.open('Usuario actualizado', 'CERRAR', { duration: 10000 });
           this.dialogRef.close(result);
         },

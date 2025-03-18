@@ -6,7 +6,8 @@
       [id]="idComponent"
       [src]="urlIframe"
       class="w-full h-full min-h-[700px]"
-      width="100%" height="100%" style="border: none">
+      width="100%" height="100%" style="border: none"
+      @fadeInUp>
     </iframe>
   } @else {
 
@@ -36,7 +37,8 @@
         [id]="idComponent"
         [src]="urlIframe"
         class="w-full h-full min-h-[600px]"
-        width="100%" height="100%" style="border: none">
+        width="100%" height="100%" style="border: none"
+        @fadeInUp>
       </iframe>
     </vex-page-layout-content>
 
@@ -49,7 +51,31 @@
     [showImage]="true"></vex-loading-app>
 
 } @else {
-  <div class="no-data-information">
-    No hay información disponible
-  </div>
+  <vex-page-layout-content class="container-fluid px-0 py-0" vexFluidHeight fluidHeight=208>
+    <!-- REFRESH BUTTON GEOGRAPHIC MAP   -->
+    <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
+      <div class="rounded-tr rounded-br border-l-3 px-0 py-0 m-0 flex flex-col sm:flex-row items-center gap-3">
+        <span class="sm:flex-auto"></span>
+        <span class="sm:flex-auto xl:flex-1"></span>
+        <button
+          class="rounded-full grow xl:max-w-[160px] sm:min-w-[80px]"
+          color="primary"
+          mat-raised-button
+          type="button"
+          (click)="refreshMap()">
+          <mat-icon
+            class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
+            svgIcon="mat:refresh"
+          ></mat-icon>
+          <span>Refrescar</span>
+        </button>
+      </div>
+    </div>
+    <div
+      @scaleFadeIn
+      class="flex-auto flex flex-col items-center justify-center">
+      <img class="m-12 h-64" src="assets/img/illustrations/idea.svg" />
+      <h2 class="headline m-0 text-center">No hay información disponible</h2>
+    </div>
+  </vex-page-layout-content>
 }

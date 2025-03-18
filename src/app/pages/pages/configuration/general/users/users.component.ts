@@ -16,7 +16,7 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable, ReplaySubject } from 'rxjs';
-import { Content, User } from 'src/app/apps/interfaces/users/user';
+import { User, InformationPagebleUser } from 'src/app/apps/interfaces/users/user';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
@@ -51,7 +51,7 @@ import { PAGE_OPTION__10_20_50_100 } from '../../../../../apps/constants/general
 export class UsersComponent implements OnInit, AfterViewInit {
 
   public isDesktop$: Observable<boolean> = this.layoutSerices.isDesktop$;
-  public subject$: ReplaySubject<User> = new ReplaySubject<User>(1);
+  public subject$: ReplaySubject<InformationPagebleUser> = new ReplaySubject<InformationPagebleUser>(1);
   public actionBtns = computed(() => {
     return [
       {
@@ -64,7 +64,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   public searchCtrl: FormControl = new FormControl();
 
   public columns: { name: string, label: string }[] = USER_COLUMNS;
-  public dataSource: MatTableDataSource<Content> = new MatTableDataSource<Content>();
+  public dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   public displayedColumns: string[] = [];
   public totalElements = 0;
   public page = 0;
@@ -97,7 +97,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   getUsers(page = 0, size = 10): void {
     this.userService.getUsers(page, size)
       .subscribe({
-        next: (data: User) => {
+        next: (data: InformationPagebleUser) => {
           this.dataSourceFormat(data);
           this.totalElements = data.totalElements;
           this.page = page;
@@ -112,8 +112,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
       });
   }
 
-  dataSourceFormat(data: User): void {
-    this.dataSource.data = data.content.map((row: Content) => {
+  dataSourceFormat(data: InformationPagebleUser): void {
+    this.dataSource.data = data.content.map((row: User) => {
       return {
         ...row,
         fullName: row.individual.fullName
@@ -140,7 +140,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       }
     })
       .afterClosed()
-      .subscribe((result: User) => {
+      .subscribe((result: InformationPagebleUser) => {
         console.log(result);
         setTimeout(() =>{
           this.getUsers(this.page, this.pageSize);
@@ -148,7 +148,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       });
   }
 
-  actionMenuHandler(action: string, row: User) {
+  actionMenuHandler(action: string, row: InformationPagebleUser) {
     if (action === 'edit') {
       console.log('editing....');
       this.dialog.open(CreateUsersComponent, {
@@ -158,7 +158,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         }
       })
         .afterClosed()
-        .subscribe((result: User) => {
+        .subscribe((result: InformationPagebleUser) => {
           console.log(result);
           setTimeout(() =>{
             this.getUsers(this.page, this.pageSize);
