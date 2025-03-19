@@ -25,6 +25,15 @@
               />
             </mat-form-field>
             <span class="flex-1"></span>
+            <!-- Botón de filtro -->
+            <!-- <button
+                [matMenuTriggerFor]="columnFilterMenu"
+                mat-icon-button
+                matTooltip="Filtrar columnas"
+                type="button"
+                class="ml-4 flex-col">
+                <mat-icon svgIcon="mat:filter_list"></mat-icon>
+            </button> -->
           </div>
         }
         @if (dataSource.data.length > 0) {
@@ -182,18 +191,21 @@
 </mat-accordion>
 
 <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
-  <button
-    (click)="toggleColumnVisibility(column, $event)"
-    *ngFor="let column of columns"
-    class="mat-menu-item block">
-    <mat-checkbox
-      (click)="$event.stopPropagation()"
-      [(ngModel)]="column.visible"
-      color="primary">
-      {{ column.label }}
-    </mat-checkbox>
-  </button>
+  <ng-template let-customer="customer" matMenuContent>
+    <button
+      (click)="toggleColumnVisibility(customer, $event)"
+      *ngFor="let column of columns"
+      class="mat-menu-item block">
+      <mat-checkbox
+        (click)="$event.stopPropagation()"
+        [(ngModel)]="column.visible"
+        color="primary">
+        {{ column.label }}
+      </mat-checkbox>
+    </button>
+  </ng-template>
 </mat-menu>
+
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-customer="customer" matMenuContent>
     <button (click)="deleteInformations(customer)" mat-menu-item>

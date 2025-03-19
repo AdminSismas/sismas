@@ -20,7 +20,7 @@ import {
   MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10,
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
@@ -125,8 +125,8 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
   page: number = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSize: number = PAGE_SIZE_SORT;
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   configModalCrud: any = MODAL_DINAMIC_HEIGHT;
 
   dataSource!: MatTableDataSource<ContentInformationConstruction>;
@@ -159,7 +159,6 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     if (this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
       this.columns = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS;
     }
     this.isExpandPanel(this.expandedComponent);

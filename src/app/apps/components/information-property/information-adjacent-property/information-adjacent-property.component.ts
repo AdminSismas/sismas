@@ -11,25 +11,21 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgForOf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
-  MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__5_7_10,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION_ADJACENT,
+  PAGE_OPTION_5_7_10,
   PAGE_SIZE_SORT,
-  TABLE_COLUMN_PROPERTIES_ADJACENT,
   TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
+  TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL, TABLE_COLUMN_PROPERTIES_APPRAISALS,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -43,21 +39,17 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import {
   ContentInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import {
-  DetailInformationConstructionsPropertyComponent
-} from '../information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
 import { BasicInformationAdjacent } from 'src/app/apps/interfaces/information-property/basic-information-adjacent';
-import { Pegeable } from '../../../interfaces/general/pegeable.model';
 import { getRandomInt } from 'src/app/apps/utils/general';
+import { SelectionModel } from '@angular/cdk/collections';
+import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 
 @Component({
   selector: 'vex-information-adjacent-property',
@@ -75,8 +67,6 @@ import { getRandomInt } from 'src/app/apps/utils/general';
     NgClass,
     ReactiveFormsModule,
     SweetAlert2Module,
-    // Vex
-    // Material
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
@@ -93,8 +83,8 @@ import { getRandomInt } from 'src/app/apps/utils/general';
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
-    // Custom
-    HeaderCadastralInformationPropertyComponent
+    HeaderCadastralInformationPropertyComponent,
+    NgForOf
   ],
   templateUrl: './information-adjacent-property.component.html',
   styleUrl: './information-adjacent-property.component.scss'
@@ -110,15 +100,17 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
-  @Input() editable? = true;
+  @Input() editable: boolean | undefined = true;
 
   columns: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
   page: number = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__5_7_10;
+  pageSize: number = PAGE_SIZE_SORT;
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
 
   dataSource!: MatTableDataSource<BasicInformationAdjacent>;
+  selection: SelectionModel<BasicInformationAdjacent> = new SelectionModel<BasicInformationAdjacent>(
+    true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -130,7 +122,6 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private informationPropertyService: InformationPropertyService
   ) {
@@ -142,14 +133,11 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     }
 
     this.dataSource = new MatTableDataSource();
-
     this.id = getRandomInt(874524) + this.schema +
       +'InformationAdjacentPropertyComponent' + getRandomInt(10) + this.baunitId;
 
     if (this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
-      this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_SIZE_OPTION_ADJACENT;
-      this.columns = TABLE_COLUMN_PROPERTIES_ADJACENT;
+      this.columns = TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL;
     }
 
     this.isExpandPanel(this.expandedComponent);
@@ -169,12 +157,6 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     }
   }
 
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
-  }
-
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
       this.searchInformationAdjacentProperty();
@@ -185,32 +167,16 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.informationPropertyService.getBasicInformationPropertyAdjacent(this.baunitId).subscribe({
-      next: (result: BasicInformationAdjacent[]) => this.captureInformationSubscribe(result),
-      error: (err: any) => this.captureInformationSubscribeError(err)
+    this.informationPropertyService.getInformationPropertyAdjacent(
+      this.page, this.pageSize, this.baunitId).subscribe({
+      next: (result: InformationPegeable) => this.captureInformationSubscribe(result),
+      error: (err: any) => this.captureInformationSubscribeError()
     });
     return true;
   }
 
-
-  captureInformationSubscribe(result: BasicInformationAdjacent[]): void {
-    this.contentInformation = new InformationPegeable(
-      undefined,
-      result.length,
-      undefined,
-      result.length,
-      result.length,
-      undefined,
-      result.length === 0,
-      result,
-      {
-        pageNumber: 0,
-        pageSize: result.length,
-        offset: 0,
-        paged: true,
-        unpaged: false
-      } as Pegeable
-    );
+  captureInformationSubscribe(result: InformationPegeable): void {
+    this.contentInformation = result;
     this.captureInformationAdjacentData();
   }
 
@@ -241,28 +207,12 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     }
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.contentInformation = new InformationPegeable();
     this.dataSource.data = [];
   }
 
-  openDetailInformationConstructionsProperty(data: ContentInformationConstruction) {
-    if (this.baunitId === null || this.baunitId === undefined) {
-      return;
-    }
-
-    this.dialog
-      .open(DetailInformationConstructionsPropertyComponent, {
-        ...MODAL_SMALL,
-        disableClose: true,
-        data: new ContentInformationConstruction(data, this.schema, this.baunitId)
-      })
-      .afterClosed();
-  }
-
-  openAddEditConstructionInformationPropertyDialog(
-    data?: ContentInformationConstruction
-  ): void {
+  openAddEditConstructionInformationPropertyDialog(data?: ContentInformationConstruction): void {
     // const dialogData: AddEditInformationConstructionI = {
     //   type: data ? 'edit' : 'new',
     //   basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
@@ -293,12 +243,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     // });
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
-
-
-  editInformations(customer: any): void {
+  editInformation(customer: any): void {
     // const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
     //   ...MODAL_SMALL,
     //   data: {
@@ -307,32 +252,32 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     //     baunitId: this.baunitId
     //   }
     // });
-
+    //
     // dialogRef.afterClosed().subscribe((result) => {
     //   if (result) {
     //     const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
-
+    //
     //     if (index !== -1) {
-
+    //
     //       this.dataSource.data[index] = result;
-
+    //
     //       this.dataSource.data = [...this.dataSource.data];
     //     }
     //   }
     // });
   }
 
-  deleteInformations(customer: any): void {
+  deleteInformation(customer: any): void {
     // const dialogRef = this.dialog.open(this.confirmDialog);
     // dialogRef.afterClosed().subscribe((result) => {
     //   if (result) {
     //     const baunitId = this.baunitId ?? '';
     //     const executionId = this.executionId ?? '';
     //     const unitBuiltId = customer.unitBuiltId;
-
+    //
     //     this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
     //       next: () => {
-
+    //
     //         this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
     //         this.deleteSwal.fire();
     //       },
@@ -342,12 +287,6 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     //     });
     //   }
     // });
-  }
-
-  toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    column.visible = !column.visible;
   }
 
   refreshInformationPaginator(event: PageEvent): void {
@@ -368,14 +307,34 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     this.dataSource.filter = value;
   }
 
-  private generateObjectPageSearchData(baunitId: string): PageSearchData {
-    return new PageSearchData(this.page, this.pageSize, baunitId);
+  /** Where the number of selected elements matches the total number of rows. */
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
   }
 
-  disabledClass(): string {
-    if (!this.editable) {
-      return '!bg-slate-400 !text-gray-100 opacity-60';
-    }
-    return '';
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle(): void {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data
+        .forEach((row: BasicInformationAdjacent) => this.selection.select(row));
   }
+
+  toggleColumnVisibility(column: TableColumn<BasicInformationAdjacent>, event: Event) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    column.visible = !column.visible;
+  }
+
+  trackByProperty<T>(index: number, column: TableColumn<T>): string {
+    return column.property;
+  }
+
+  get visibleColumns() {
+    return this.columns.filter((column) => column.visible)
+      .map((column) => column.property);
+  }
+
 }

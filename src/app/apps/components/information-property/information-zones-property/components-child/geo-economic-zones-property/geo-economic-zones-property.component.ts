@@ -46,7 +46,7 @@ import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
   TYPE_INFORMATION_EDITION
@@ -142,8 +142,8 @@ export class GeoEconomicZonesPropertyComponent
   totalGeoElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSize2: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
-  pageSizeOptions2: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions2: number[] = PAGE_OPTION_10_20_50_100;
   rightIdSelected?: number;
 
   // columnsGeoeconomicZones = signal(this.TABLE_COLUMNS);

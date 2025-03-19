@@ -24,7 +24,7 @@ import { InformationPegeable } from '../../../../../apps/interfaces/general/info
 import {
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
@@ -109,7 +109,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     page:number = PAGE;
     totalElements = 0;
     pageSize: number = PAGE_SIZE;
-    pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+    pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
     userSesion:DecodeJwt | null = null;
 
     dataSource!: MatTableDataSource<OutFormatModel>;

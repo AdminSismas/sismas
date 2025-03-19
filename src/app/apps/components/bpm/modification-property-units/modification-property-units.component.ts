@@ -22,7 +22,7 @@ import {
   LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
   PAGE,
-  PAGE_OPTION__5_7_10,
+  PAGE_OPTION_5_7_10,
   PAGE_SIZE,
   TYPE_INFORMATION_EDITION,
   TYPE_OPERATION_ADD,
@@ -94,7 +94,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   totalElements = 0;
   PAGE = PAGE;
   PAGE_SIZE = PAGE_SIZE;
-  PAGE_OPTIONS = PAGE_OPTION__5_7_10;
+  PAGE_OPTIONS = PAGE_OPTION_5_7_10;
 
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
 

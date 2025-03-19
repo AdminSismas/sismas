@@ -6,7 +6,7 @@ import {
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE,
   TYPE_INFORMATION_EDITION,
   MODAL_SMALL
@@ -117,8 +117,8 @@ export class InformationZonesPropertyComponent implements OnInit {
   totalGeoElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSize2: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
-  pageSizeOptions2: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions2: number[] = PAGE_OPTION_10_20_50_100;
   rightIdSelected?: number;
   dataSource: MatTableDataSource<ZoneBAUnitFisica> =
     new MatTableDataSource<ZoneBAUnitFisica>([]);

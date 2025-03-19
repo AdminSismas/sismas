@@ -22,7 +22,7 @@ import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PAGE_OPTION__10_20_50_100 } from '../../../../../apps/constants/general/constant';
+import { PAGE_OPTION_10_20_50_100 } from '../../../../../apps/constants/general/constant';
 
 @Component({
   selector: 'vex-users',
@@ -69,7 +69,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   public totalElements = 0;
   public page = 0;
   public pageSize = 10;
-  public pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  public pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;

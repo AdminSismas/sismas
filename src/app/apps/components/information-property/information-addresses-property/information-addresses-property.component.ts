@@ -28,8 +28,8 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
-  PAGE_SIZE,
+  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10,
+  PAGE_SIZE, PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
   TYPE_INFORMATION_EDITION,
@@ -116,8 +116,8 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
   page: number = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSize: number = PAGE_SIZE_SORT;
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public hasMainAddress = false;
 
@@ -168,12 +168,8 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     if (changes['typeInformation'].currentValue) {
       const { currentValue: typeInformation } = changes['typeInformation'];
       if (typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
-        this.pageSize = PAGE_SIZE;
-        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
         this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
       } else {
-        this.pageSize = PAGE_SIZE;
-        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
         this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
       }
     }

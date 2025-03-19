@@ -4,18 +4,13 @@ import {
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
-  FORMAT_CURRENCY_COP,
-  FORMAT_CURRENCY_SIMBOL,
   LIST_EXTRA_COLUMNS_APPRAISAL,
   LIST_GRID_APPRAISAL_1,
   LIST_GRID_APPRAISAL_2,
   LIST_GRID_APPRAISAL_3,
-  NAME_NO_DISPONIBLE,
   NAME_SELF_VALUATION_VALUE,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION_ADDRESS,
+  PAGE_OPTION_5_7_10,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_APPRAISALS,
   TYPE_INFORMATION_EDITION,
@@ -52,6 +47,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
+import { getRandomInt } from '../../../utils/general';
 
 @Component({
   selector: 'vex-property-appraisal-information',
@@ -107,8 +103,8 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   columns: TableColumn<InfoAppraisal>[] = TABLE_COLUMN_PROPERTIES_APPRAISALS;
   page: number = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSize: number = PAGE_SIZE_SORT;
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
 
   dataSource!: MatTableDataSource<InfoAppraisal>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -130,10 +126,9 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
+    this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
     if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL) {
       this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
     }
     this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
@@ -279,13 +274,4 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   private generateObjectPageSearchData(baunitId: string): PageSearchData {
     return new PageSearchData(this.page, this.pageSize, baunitId);
   }
-
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
-  }
-
-  protected readonly LIST_EXTRA_COLUMNS_APPRAISAL = LIST_EXTRA_COLUMNS_APPRAISAL;
-  protected readonly FORMAT_CURRENCY_COP = FORMAT_CURRENCY_COP;
-  protected readonly FORMAT_CURRENCY_SIMBOL = FORMAT_CURRENCY_SIMBOL;
-  protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 }

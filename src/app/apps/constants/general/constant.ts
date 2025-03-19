@@ -54,9 +54,9 @@ export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
 
-export const PAGE_OPTION__1_5_10: number[] = [1, 5, 10];
-export const PAGE_OPTION__5_7_10: number[] = [5, 7, 10];
-export const PAGE_OPTION__10_20_50_100: number[] = [10, 20, 50, 100];
+export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
+export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
+export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
 
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
@@ -451,6 +451,12 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformat
   }
 ];
 
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<BasicInformationAdjacent>[] = [
+  ...TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+];
+
+
 export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
   {
     label: 'Detalle',
@@ -493,11 +499,6 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
-export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<BasicInformationAdjacent>[] = [
-  ...TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL,
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-];
-export const TABLE_COLUMN_PROPERTIES_ADJACENT: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL;
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: 'cadAlfaMainComponent',

@@ -24,7 +24,7 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DataPerson, DialogPersonData } from 'src/app/apps/interfaces/information-property/snr-person-info';
 import {
   PAGE,
-  PAGE_OPTION__5_7_10,
+  PAGE_OPTION_5_7_10,
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
@@ -122,11 +122,11 @@ export class InformationPersonPropertyComponent {
       const { currentValue: typeInformation } = changes['typeInformation'];
       if (typeInformation === TYPE_INFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
-        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.pageSizeOptions = PAGE_OPTION_5_7_10;
         this.columns = TABLE_COLUMN_PROPERTIES_PERSON;
       } else {
         this.pageSize = PAGE_SIZE_SORT;
-        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.pageSizeOptions = PAGE_OPTION_5_7_10;
         this.columns = TABLE_COLUMN_PROPERTIES_PERSON;
       }
     }

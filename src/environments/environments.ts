@@ -111,6 +111,7 @@ export const environment = {
   npnlike: "/npnlike",
   number: "number",
   operations: "/operations",
+  page: "/page/",
   password: "/password",
   port: "5001",
   post_path_viewer: "rest/config/setParams",
