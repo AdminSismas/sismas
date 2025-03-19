@@ -101,11 +101,7 @@
                               {{ option.dispname }}
                             </mat-option>
                           }
-                        } @else if (
-                          !propertyProcessingFormGroup.controls[
-                            "selectBpmProcessByCategory"
-                          ].touched
-                        ) {
+                        } @else if (!bpmProccessCategorySelected) {
                           @for (
                             option of listBpmProcessCategory;
                             track option.dispname

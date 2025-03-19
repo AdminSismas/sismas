@@ -157,6 +157,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   listBpmDocumentsProcess$: Observable<BpmDocument[]> =
     this._listBpmDocumentsProcess.asObservable();
   isExistListBpmTypeProcess$: Observable<boolean> = of(false);
+  bpmProccessCategorySelected = false;
 
   baunitIdE: string | null = null;
   baunitIdE$ = this.route.params.pipe(
@@ -270,6 +271,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   }
 
   loadBpmProcess(domainCollection: DomainCollection) {
+    this.bpmProccessCategorySelected = true;
     if (!domainCollection || !domainCollection?.code) {
       return;
     }
