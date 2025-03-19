@@ -57,6 +57,8 @@ import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import {
   ModificationPropertyUnitsComponent
 } from '../modification-property-units/modification-property-units.component';
+import Swal from 'sweetalert2';
+import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -107,13 +109,16 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('confirmRemoveDialog', { static: true}) confirmRemoveDialog!: SwalComponent;
   @ViewChild('confirmDeleteDialog', { static: true}) confirmDeleteDialog!: SwalComponent;
+  @ViewChild('confirmAddUpdateBaUnitHead', { static: true}) confirmAddUpdateBaUnitHead!: SwalComponent;
+
 
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
-    private snackbar: MatSnackBar,
-    private bpmCoreService: BpmCoreService
+    private bpmCoreService: BpmCoreService,
+    private alfaMainService: AlfaMainService,
   ) {}
 
   get visibleColumns() {
@@ -182,10 +187,12 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   openCadastralInformationProperty(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
-      this.snackbar.open(
-        'No se puede ver la información de la unidad predial, consulte al administrador.',
-        'CERRAR', { duration: 10000 }
-      );
+      Swal.fire({
+        text: 'No se puede ver la información de la unidad predial, consulte al administrador.',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 10000
+      }).then();
       return;
     }
     this.dialog
@@ -206,9 +213,8 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   viewChanges(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
-      this.snackbar.open(
-        'No se puede visualizar los cambios realizados, consulte al administrador.',
-        'CERRAR', { duration: 10000 }
+      this.msgErrorConsultingAdministration(
+        'No se puede visualizar los cambios realizados, consulte al administrador.'
       );
       return;
     }
@@ -226,9 +232,8 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   editInformation(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
-      this.snackbar.open(
-        'No se puede ver la información de la unidad predial, consulte al administrador.',
-        'CERRAR', { duration: 10000 }
+      this.msgErrorConsultingAdministration(
+        'No se puede ver la información de la unidad predial, consulte al administrador.'
       );
       return;
     }
@@ -249,9 +254,9 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
       .afterClosed();
   }
 
-  deleteInformation(operation: Operation): void {
+  removeInformation(operation: Operation): void {
     this.npnRemoving = operation.npnlike;
-    this.confirmDeleteDialog.fire().then((result) => {
+    this.confirmRemoveDialog.fire().then((result) => {
       if (result.isConfirmed) {
         this.bpmCoreService.clearPropertyBpmOperation(this.executionId, operation.baunitHead!.baunitIdE as string)
           .subscribe({
@@ -259,13 +264,41 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
               this.refreshData.emit();
             },
             error: (error: HttpErrorResponse) => {
-              this.snackbar.open(
-                'Error al eliminar la unidad predial.',
-                'CERRAR', { duration: 5000 }
-              );
+              this.msgErrorConsultingAdministration('Error al eliminar la unidad predial.');
               throw error;
             }
           });
+      }
+    });
+  }
+
+  changeTemporaryStateBeaUnitHead(operation: Operation): void {
+    this.npnRemoving = operation.npnlike;
+    if(operation.operationType === 'UPDATE'){
+      this.confirmDeleteDialog.fire().then((result) => {
+        if (result.isConfirmed) {
+          this.executeResultChangeTemporaryStateBeaUnitHead(operation);
+        }
+      });
+    }
+    else if (operation.operationType === 'DELETE'){
+      this.confirmAddUpdateBaUnitHead.fire().then((result) => {
+        if (result.isConfirmed) {
+          this.executeResultChangeTemporaryStateBeaUnitHead(operation);
+        }
+      });
+    }
+  }
+
+  executeResultChangeTemporaryStateBeaUnitHead(operation: Operation){
+    this.alfaMainService.changeTemporaryStateBeaUnitHeadByExistTemp(
+      operation.baunitHead!.baunitIdE as string, this.executionId).subscribe({
+      next: () => {
+        this.refreshData.emit();
+      },
+      error: (error: HttpErrorResponse) => {
+        this.msgErrorConsultingAdministration('Error al eliminar la unidad predial.');
+        throw error;
       }
     });
   }
@@ -290,9 +323,8 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   messageChangesNoAvailable() {
-    this.snackbar.open(
-      'Cambios realizados en el control de cambios no disponibles, consulte al administrador.',
-      'CERRAR', { duration: 10000 }
+    this.msgErrorConsultingAdministration(
+      'Cambios realizados en el control de cambios no disponibles, consulte al administrador.'
     );
   }
 
@@ -310,5 +342,14 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
         resources: this.resources
       }
     });
+  }
+
+  msgErrorConsultingAdministration(msg: string){
+    Swal.fire({
+      text: msg,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 10000
+    }).then();
   }
 }
