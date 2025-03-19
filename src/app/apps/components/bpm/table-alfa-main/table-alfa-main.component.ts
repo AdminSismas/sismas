@@ -291,9 +291,8 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   executeResultChangeTemporaryStateBeaUnitHead(operation: Operation){
-    this.alfaMainService.changeTemporaryStateBeaUnitHeadByExistTemp(this.executionId,
-      operation.baunitHead!.baunitIdE as string
-    ).subscribe({
+    this.alfaMainService.changeTemporaryStateBeaUnitHeadByExistTemp(
+      operation.baunitHead!.baunitIdE as string, this.executionId).subscribe({
       next: () => {
         this.refreshData.emit();
       },
