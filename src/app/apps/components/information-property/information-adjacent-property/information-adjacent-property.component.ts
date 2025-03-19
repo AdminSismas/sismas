@@ -19,7 +19,7 @@ import {
   PAGE_OPTION_5_7_10,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
-  TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL, TABLE_COLUMN_PROPERTIES_APPRAISALS,
+  TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
@@ -49,7 +49,6 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { BasicInformationAdjacent } from 'src/app/apps/interfaces/information-property/basic-information-adjacent';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { SelectionModel } from '@angular/cdk/collections';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 
 @Component({
   selector: 'vex-information-adjacent-property',
