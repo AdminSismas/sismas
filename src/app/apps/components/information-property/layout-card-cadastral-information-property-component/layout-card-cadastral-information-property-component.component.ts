@@ -56,12 +56,12 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
 
   optionSchemas: ObjectSchema[] = [];
   baUnitHead: BaunitHead | null = null;
-  dataFlag: string = '';
-  rulePage: string = '';
+  dataFlag = '';
+  rulePage = '';
 
-  schemaMain: string = `${envi.schemas.main}`;
-  schemaTemp: string = `${envi.schemas.temp}`;
-  schemaHist: string = `${envi.schemas.hist}`;
+  schemaMain = `${envi.schemas.main}`;
+  schemaTemp = `${envi.schemas.temp}`;
+  schemaHist = `${envi.schemas.hist}`;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
@@ -147,6 +147,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
   onTabChange(matTabChangeEvent: MatTabChangeEvent): void {
     const { index = -1 } = matTabChangeEvent || {};
     if (index >= 0 && this.optionSchemas.length > 0) {
+      // Non empty block
     }
   }
 

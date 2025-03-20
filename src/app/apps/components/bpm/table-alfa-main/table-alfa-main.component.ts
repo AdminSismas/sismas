@@ -38,7 +38,6 @@ import { InformationPegeable } from '../../../interfaces/general/information-peg
 import { SearchData } from '../../../interfaces/general/search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { Operation } from '../../../interfaces/bpm/operation';

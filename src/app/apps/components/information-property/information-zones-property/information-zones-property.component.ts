@@ -125,10 +125,14 @@ export class InformationZonesPropertyComponent implements OnInit {
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   pageSizeOptions2: number[] = PAGE_OPTION__10_20_50_100;
   rightIdSelected?: number;
-  dataSource: MatTableDataSource<ZoneBAUnitFisica> =
+  dataSourcePhysicalZones: MatTableDataSource<ZoneBAUnitFisica> =
+    new MatTableDataSource<ZoneBAUnitFisica>([]);
+  dataSourcePhysicalOrigin: MatTableDataSource<ZoneBAUnitFisica> =
     new MatTableDataSource<ZoneBAUnitFisica>([]);
 
   dataSourceGeoeconomicZones: MatTableDataSource<ZoneBAUnitGeoeconomic> =
+    new MatTableDataSource<ZoneBAUnitGeoeconomic>([]);
+  dataSourceGeoeconomicOrigin: MatTableDataSource<ZoneBAUnitGeoeconomic> =
     new MatTableDataSource<ZoneBAUnitGeoeconomic>([]);
 
   protected readonly navigationItems = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
@@ -174,13 +178,15 @@ export class InformationZonesPropertyComponent implements OnInit {
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
-      this.searchInformationsZonesProperty();
-      this.searchInformationsGeoeconomicZonesProperty();
+      this.searchInformationPhysicalZonesProperty();
+      this.searchInformationGeoeconomicZonesProperty();
+      this.searchInformationPhysicalZonesOrigin();
+      this.searchInformationGeoeconomicZonesOrigin();
       this.searchBasicInformationProperty();
     }
   }
 
-  searchInformationsZonesProperty(): void {
+  searchInformationPhysicalZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
 
     this.informationPropertyService
@@ -188,7 +194,22 @@ export class InformationZonesPropertyComponent implements OnInit {
       .subscribe({
         next: (result: ZoneBAUnitResponse[]) => {
           this.zoneBAUnit = this.capturePhysicZoneInformation(result);
-          this.dataSource.data = this.zoneBAUnit;
+          this.dataSourcePhysicalZones.data = this.zoneBAUnit;
+          this.totalPhysicalElements = result.length;
+        },
+        error: () => this.captureInformationSubscribeError()
+      });
+  }
+
+  searchInformationPhysicalZonesOrigin(): void {
+    if (!this.schema || !this.baunitId) return;
+
+    this.informationPropertyService
+      .getByBaunitFisicaOrigin(this.baunitId, this.schema, this.executionId)
+      .subscribe({
+        next: (result: ZoneBAUnitResponse[]) => {
+          this.zoneBAUnit = this.capturePhysicZoneInformation(result);
+          this.dataSourcePhysicalOrigin.data = this.zoneBAUnit;
           this.totalPhysicalElements = result.length;
         },
         error: () => this.captureInformationSubscribeError()
@@ -205,7 +226,7 @@ export class InformationZonesPropertyComponent implements OnInit {
     return zoneBAUnit;
   }
 
-  searchInformationsGeoeconomicZonesProperty(): void {
+  searchInformationGeoeconomicZonesProperty(): void {
     if (!this.schema || !this.baunitId) return;
 
     this.informationPropertyService
@@ -215,6 +236,22 @@ export class InformationZonesPropertyComponent implements OnInit {
           this.zoneBAUnitGeoeconomic =
             this.captureGeoeconomicZoneInformation(result);
           this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
+          this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
+        },
+        error: () => this.captureInformationSubscribeError()
+      });
+  }
+
+  searchInformationGeoeconomicZonesOrigin(): void {
+    if (!this.schema || !this.baunitId) return;
+
+    this.informationPropertyService
+      .getByBaunitEconoOrigin(this.baunitId, this.schema, this.executionId)
+      .subscribe({
+        next: (result: ZoneBAUnitResponse[]) => {
+          this.zoneBAUnitGeoeconomic =
+            this.captureGeoeconomicZoneInformation(result);
+          this.dataSourceGeoeconomicOrigin.data = this.zoneBAUnitGeoeconomic;
           this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
         },
         error: () => this.captureInformationSubscribeError()
@@ -258,15 +295,16 @@ export class InformationZonesPropertyComponent implements OnInit {
   }
 
   deleteZone(zone: ZoneBAUnitFisica | ZoneBAUnitGeoeconomic): void {
-    if (!this.schema ||!this.baunitId) return;
+    if (!this.schema || !this.baunitId) return;
 
     const baunitId = Number(this.baunitId);
 
-    this.informationPropertyService.deleteBAUnitZones(this.executionId!, baunitId, zone.baUnitZonaId!)
+    this.informationPropertyService
+      .deleteBAUnitZones(this.executionId!, baunitId, zone.baUnitZonaId!)
       .subscribe({
         next: () => {
-          this.searchInformationsZonesProperty();
-          this.searchInformationsGeoeconomicZonesProperty();
+          this.searchInformationPhysicalZonesProperty();
+          this.searchInformationGeoeconomicZonesProperty();
         },
         error: (error: HttpErrorResponse) => {
           this.errorDelete.fire();

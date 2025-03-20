@@ -1,6 +1,6 @@
 <div class="header-container m-2 flex items-center justify-between">
-  <span class="font-bold text-xl">Zonas físicas</span>
-  @if (typeInformation === "edition") {
+  <span class="font-bold text-lg capitalize">{{ tableTitle() }}</span>
+  @if (typeInformation === "edition" && !isOrigen()) {
     <button
       [ngClass]="disabledClass()"
       [disabled]="!editable"
@@ -166,7 +166,7 @@
     <mat-paginator
       #paginator
       [pageSizeOptions]="pageSizeOptions"
-      [length]="totalPhysicalElements"
+      [length]="totalPhysicalElements()"
       [pageSize]="pageSize"
       [pageIndex]="page"
       (page)="refreshPaginator($event)"
