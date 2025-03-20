@@ -14,7 +14,7 @@ import {
   TWO_POINT_,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { MatMenuModule } from '@angular/material/menu';
 import { environment as envi } from '../../../../../environments/environments';
 import { ObjectSchema, TypeInformation } from '../../../interfaces/general/content-info';

@@ -3,8 +3,7 @@
     <div class="w-full flex flex-col sm:flex-row justify-between px-6">
       <div>
         <h1 class="title mt-0 mb-1">{{ principalTitleMenu }}</h1>
-        <vex-breadcrumbs [crumbs]="titleArray">
-        </vex-breadcrumbs>
+        <vex-breadcrumbs [crumbs]="titleArray"></vex-breadcrumbs>
       </div>
     </div>
   </vex-page-layout-header>
@@ -37,20 +36,6 @@
               [fielKey]="'codeName'"
               [formControlNameCombobox]="'municipality'"
               [options]="optionsMunicipalities"
-              (selectionChange)="loadZonesInformation($event, true)"
-              cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
-              class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
-            ></vex-combox>
-
-            <!-- Campo zona -->
-            <vex-combox
-              idCombo="GeneralMapZona"
-              label="Zona"
-              placeholder="Seleccione una zona"
-              [valueKey]="'codeName'"
-              [fielKey]="'codeName'"
-              [formControlNameCombobox]="'zone'"
-              [options]="optionsZones"
               cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
               class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
             ></vex-combox>
@@ -58,7 +43,7 @@
             <!-- Boton Buscar -->
             <mat-dialog-actions align="center" class="sm:ml-2 sm:mr-2">
               <button
-                (click)="searchccZoneBySelection()"
+                (click)="searchMunicipalityBySelection()"
                 color="primary"
                 mat-flat-button
                 type="primary">
@@ -70,8 +55,8 @@
       </vex-page-layout-content>
       <div class="h-full flex flex-col" vexFluidHeight fluidHeight=195>
         <vex-geographic-viewer-embedded
-          idComponent="GeneralMapContent125844634534f4gfw"
-          [ccZonaId]="ccZonaId"
+          idComponent="ThmaticMapContent988564dsxw"
+          [thematicMapValue]="valueCodeMunicipality"
           vexFluidHeight fluidHeight=200
         ></vex-geographic-viewer-embedded>
       </div>

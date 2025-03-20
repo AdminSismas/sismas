@@ -20,7 +20,7 @@ import {
   CONSTANT_NAME_CONFIRMATION
 } from '../../../constants/general/constantLabels';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TWO_POINT_ } from '../../../constants/general/constant';
+import { TWO_POINT_ } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-clear-information-data',

@@ -61,7 +61,7 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_BASIC_PRINCIPALS
-} from '../../../../../../apps/constants/general/constant';
+} from '../../../../../../apps/constants/general/constants';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
 
 @Component({

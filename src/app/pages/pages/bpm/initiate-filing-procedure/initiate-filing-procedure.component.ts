@@ -62,7 +62,7 @@ import {
   PANEL_ASSIGNED_TASKS,
   SPACE,
   TABLE_COLUMN_PROPERTIES
-} from '../../../../apps/constants/general/constant';
+} from '../../../../apps/constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
 import { MetadataBpm } from '../../../../apps/interfaces/bpm/metadata-bpm';

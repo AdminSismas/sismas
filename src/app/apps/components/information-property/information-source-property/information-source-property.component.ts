@@ -40,7 +40,7 @@ import {
   TABLE_COLUMN_PROPERTIES_SOURCE,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import {
   InformationPersonPropertyComponent
 } from '../information-person-property/information-person-property.component';

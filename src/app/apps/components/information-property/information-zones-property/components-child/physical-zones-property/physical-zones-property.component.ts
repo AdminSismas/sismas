@@ -49,7 +49,7 @@ import {
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_PHYSICAL,
   TYPE_INFORMATION_EDITION
-} from 'src/app/apps/constants/general/constant';
+} from 'src/app/apps/constants/general/constants';
 import {
   ZoneBAUnitFisica,
 } from 'src/app/apps/interfaces/information-property/zone-baunit';

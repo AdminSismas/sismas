@@ -8,7 +8,7 @@ import { GeneralValidationsService } from '../../../services/validations/general
 import { Observable, ReplaySubject } from 'rxjs';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { CONSTANT_NAME_RETURN, NAME_FILED, NAME_VERSION } from '../../../constants/general/constantLabels';
-import { MODAL_MEDIUM, MODAL_SMALL } from '../../../constants/general/constant';
+import { MODAL_MEDIUM, MODAL_SMALL } from '../../../constants/general/constants';
 import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';

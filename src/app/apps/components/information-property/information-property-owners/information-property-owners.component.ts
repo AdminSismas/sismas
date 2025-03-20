@@ -20,7 +20,7 @@ import {
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TYPE_INFORMATION_EDITION
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';

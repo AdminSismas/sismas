@@ -11,7 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { BasicInformationAddress } from '../../../../interfaces/information-property/basic-information-address';
-import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from '../../../../constants/general/constant';
+import { GUION, NAME_NO, NAME_NO_DISPONIBLE, NAME_SI } from '../../../../constants/general/constants';
 import {
   DetailBasicInformationAddress
 } from '../../../../interfaces/information-property/detail-basic-information-address';

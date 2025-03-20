@@ -20,7 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AssistantsService } from 'src/app/core/crud/assistantsService.service';
 import { assistantData } from 'src/app/core/crud/assistantsData.model';
 import { contactsData } from 'src/static-data/contacts';
-import { MODAL_SMALL } from '../../../../../apps/constants/general/constant';
+import { MODAL_SMALL } from '../../../../../apps/constants/general/constants';
 
 
 @Component({

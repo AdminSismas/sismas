@@ -39,7 +39,7 @@ import {
   TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE
 } from '../../../../../../../apps/constants/general/attachment.constant';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constant';
+import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constants';
 
 
 @Component({

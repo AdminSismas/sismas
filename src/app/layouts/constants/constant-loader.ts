@@ -1,4 +1,4 @@
-import { BASIC_USERS_ROLE_LIST, CERTIFICATE_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constant';
+import { BASIC_USERS_ROLE_LIST, CERTIFICATE_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
 import { NavigationDropdown, NavigationLink } from '../../core/navigation/navigation-item.interface';
 
 export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[] = [
@@ -378,6 +378,15 @@ export const NAVIGATION_LOADER_AUDIT: (NavigationLink | NavigationDropdown)[] = 
     route: '/audit/cadastralManagementRecords',
     icon: 'mat:app_registration'
   }
+];
+
+export const NAVIGATION_THEMATIC_MAP: (NavigationLink | NavigationDropdown)[] = [
+  {
+    type: 'link',
+    label: 'Mapa',
+    route: '/thematicMap/map',
+    icon: 'mat:map'
+  },
 ];
 
 

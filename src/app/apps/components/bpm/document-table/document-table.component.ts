@@ -39,7 +39,7 @@ import {
   PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
 } from '../../../constants/general/attachment.constant';
-import { MODAL_LARGE } from '../../../constants/general/constant';
+import { MODAL_LARGE } from '../../../constants/general/constants';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import {

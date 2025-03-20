@@ -28,7 +28,7 @@ import {
   PAGE_OPTION_UNIQUE,
   PAGE_SIZE_OPTION_UNIQUE,
   TABLE_COLUMN_CHANGES_BPM_OPERATION
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { UntypedFormControl } from '@angular/forms';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';

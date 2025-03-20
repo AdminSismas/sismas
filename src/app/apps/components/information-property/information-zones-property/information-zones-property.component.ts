@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   NAME_NO_DISPONIBLE,
@@ -9,7 +11,7 @@ import {
   PAGE_OPTION__10_20_50_100,
   PAGE_SIZE,
   TYPE_INFORMATION_EDITION
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -42,8 +44,12 @@ import {
   ZoneBAUnitResponse
 } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
-import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
+import {
+  GeoEconomicZonesPropertyComponent
+} from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
+import {
+  PhysicalZonesPropertyComponent
+} from './components-child/physical-zones-property/physical-zones-property.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
