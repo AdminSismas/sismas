@@ -1,15 +1,31 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +43,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import {
+  LIST_SCHEMAS_CONTROL_CHANGES,
   LIST_SCHEMAS_CONTROL_MAIN,
   MODAL_LARGE,
   MODAL_SMALL,
@@ -41,15 +58,14 @@ import {
 } from '../../../constants/general/constant';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
-import { environment as envi, environment } from 'src/environments/environments';
 import {
-  SendInformationRegisterService
-} from 'src/app/apps/services/register-procedure/send-information-register.service';
+  environment as envi,
+  environment
+} from 'src/environments/environments';
+import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -57,16 +73,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { UnitPropertyInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
 import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
-import {
-  UnitPropertyInformationService
-} from '../../../services/territorial-organization/baunit-children-information.service';
-import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
+  Baunit,
+  BAunitLike
+} from 'src/app/apps/interfaces/information-property/baunit-npnlike';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-
 
 @Component({
   selector: 'vex-information-unit-property',
@@ -102,11 +116,10 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
     MatTabsModule,
     MatTooltipModule,
     // Custom
-    HeaderCadastralInformationPropertyComponent,
+    HeaderCadastralInformationPropertyComponent
   ]
 })
 export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
-
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
@@ -127,7 +140,10 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource!: MatTableDataSource<BaunitHead>;
-  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);
+  selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(
+    true,
+    []
+  );
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   user: DecodeJwt | null = null;
 
@@ -144,9 +160,8 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     private sendInformation: SendInformationRegisterService,
     private baunitService: ValidateInformationBaunitService,
     private unitPropertyInformationService: UnitPropertyInformationService,
-    private userService: UserService,
-  ) {
-  }
+    private userService: UserService
+  ) {}
 
   get visibleColumns() {
     return this.columns
@@ -154,18 +169,19 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
       .map((column) => column.property);
   }
 
+  get viewSchemas() {
+    return this.router.url.includes('bpm-core')
+      ? LIST_SCHEMAS_CONTROL_CHANGES
+      : LIST_SCHEMAS_CONTROL_MAIN;
+  }
+
   ngOnInit(): void {
     this.user = this.userService.getUser();
-    console.log(this.user,'user rol');
+    console.log(this.user, 'user rol');
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if (
-      this.typeInformation &&
-      this.typeInformation === TYPE_INFORMATION_VISUAL
-    ) {
-    }
 
     this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
@@ -199,23 +215,27 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   }
 
   searchUnitPropertyInformation(): void {
-    if (!this.schema || !this.baunitId ) {
+    if (!this.schema || !this.baunitId) {
       return;
     }
 
-    this.unitPropertyInformationService.getBaunitInformation(this.baunitId)
+    this.unitPropertyInformationService
+      .getBaunitInformation(this.baunitId)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: Baunit) =>
           this.unitPropertyInformationService
-            .getUnitPropertyInformation(result.cadastralNumber, this.page, this.pageSize)
+            .getUnitPropertyInformation(
+              result.cadastralNumber,
+              this.page,
+              this.pageSize
+            )
             .subscribe({
               error: () => this.captureInformationSubscribeError(),
               next: (result2: BAunitLike) =>
                 this.captureInformationSubscribe(result2)
             })
       });
-
   }
 
   openGeographicViewerMain(data: BaunitHead): void {
@@ -234,8 +254,11 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
         ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
-          data.baunitIdE, data, null,
-          LIST_SCHEMAS_CONTROL_MAIN,
+          data.baunitIdE,
+          data,
+          this.executionId,
+          this.viewSchemas,
+          TYPE_INFORMATION_VISUAL
         )
       })
       .afterClosed();
@@ -292,9 +315,11 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.dataSource.data.forEach((row) => this.selection.select(row));
+    }
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
@@ -317,19 +342,20 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   async initiateFilingProcedure(data: BaunitHead) {
     if (data && data?.baunitIdE) {
-      const available = await this.baunitService.getBaunitIdEInOtherProcess(data?.baunitIdE);
-      if (!available){
+      const available = await this.baunitService.getBaunitIdEInOtherProcess(
+        data?.baunitIdE
+      );
+      if (!available) {
         this.snackbar.open(
           'No se puede radicar un nuevo control de cambios, unidad predial ya se encuentra actualmente en otro.',
-          'CERRAR', { duration: 10000 }
+          'CERRAR',
+          { duration: 10000 }
         );
         return;
       }
       const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
-      this.router.navigate([`${url}`, data.baunitIdE])
-        .then(r => {
-        });
+      this.router.navigate([`${url}`, data.baunitIdE]).then();
     }
   }
 
