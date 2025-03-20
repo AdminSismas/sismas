@@ -50,7 +50,7 @@ import {
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
   TYPE_INFORMATION_EDITION
-} from 'src/app/apps/constants/general/constant';
+} from 'src/app/apps/constants/general/constants';
 import { ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';

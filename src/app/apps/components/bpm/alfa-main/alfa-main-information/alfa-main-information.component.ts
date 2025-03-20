@@ -45,7 +45,7 @@ import {
   TYPE_OPERATION_CREATE_GEO,
   TYPE_OPERATION_DELETE,
   TYPE_OPERATION_DELETE_GEO
-} from '../../../../constants/general/constant';
+} from '../../../../constants/general/constants';
 import { Pegeable } from '../../../../interfaces/general/pegeable.model';
 import { PageSearchData } from '../../../../interfaces/general/page-search-data.model';
 import { ClearInformationDataComponent } from '../../clear-information-data/clear-information-data.component';

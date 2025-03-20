@@ -31,7 +31,7 @@ import {
   LIST_ZONES_RURAL,
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
-} from '../../../../../apps/constants/general/constant';
+} from '../../../../../apps/constants/general/constants';
 import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
 import { map, Observable, startWith } from 'rxjs';
 import { Block } from 'src/app/apps/interfaces/territorial-organization/block.model';
@@ -54,6 +54,7 @@ import { divideNpn } from 'src/app/apps/utils/divide-national-predial-number';
 import {
   FilterCadastralSearchComponent
 } from 'src/app/apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
+import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../../apps/constants/general/constants';
 
 @Component({
   selector: 'vex-filter-historical-information',
@@ -329,8 +330,8 @@ export class FilterHistoricalInformationComponent implements OnInit {
     searchMunicipalSelection() {
       const searchData = this.validateFilterSearchCadastral();
       const searchDataFiltered: SearchData = new SearchData(searchData);
-      searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
-      searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
+      searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
+      searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
       searchDataFiltered.zone = this.captureCodeOfCodeNameAndID(searchData.zone, this.optionsZones);
       searchDataFiltered.sector = this.captureCodeOfCodeNameAndID(searchData.sector, this.optionsSectors);
       searchDataFiltered.community = this.captureCodeOfCodeNameAndID(searchData.community, this.optionsCommunities);
@@ -365,7 +366,7 @@ export class FilterHistoricalInformationComponent implements OnInit {
       }
       this._clearFormSelection(0);
       const dpto = this._filterInformationCode(
-        codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+        codeName, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
       if (dpto == null || dpto?.length <= 0) {
         return;
       }
@@ -381,7 +382,7 @@ export class FilterHistoricalInformationComponent implements OnInit {
       }
       this._clearFormSelection(1);
       const deptoMpio = this._filterInformationCode(
-        codeName, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
+        codeName, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
       if (deptoMpio == null || deptoMpio?.length <= 0) {
         return;
       }

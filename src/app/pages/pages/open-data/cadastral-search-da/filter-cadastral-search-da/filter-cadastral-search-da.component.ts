@@ -8,7 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -20,11 +20,23 @@ import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/sn
 // RECURSOS PERSONALES
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { ComboxColletionComponent } from '../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { InputComponent } from '../../../../../apps/components/general-components/input/input.component';
-import { LIMPIAR_CAMPOS_MULTIPLES_CAMPOS, LIMPIAR_CAMPOS_SELECCION_MUNICIPAL, LIST_FORM_CADASTRAL_0, LIST_FORM_CADASTRAL_1, LIST_FORM_CADASTRAL_2, LIST_FORM_CADASTRAL_3, LIST_FORM_CADASTRAL_4, LIST_FORM_CADASTRAL_5, LIST_ZONES_RURAL, NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from '../../../../../apps/constants/general/constant';
+import {
+  DIVPOLLVL2_CODE,
+  DIVPOLLVL_CODE,
+  LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
+  LIMPIAR_CAMPOS_SELECCION_MUNICIPAL,
+  LIST_FORM_CADASTRAL_0,
+  LIST_FORM_CADASTRAL_1,
+  LIST_FORM_CADASTRAL_2,
+  LIST_FORM_CADASTRAL_3,
+  LIST_FORM_CADASTRAL_4,
+  LIST_FORM_CADASTRAL_5,
+  LIST_ZONES_RURAL,
+  NAME_CODENAME,
+  STRING_INFORMATION_NOT_FOUND
+} from '../../../../../apps/constants/general/constants';
 import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
 import { Sidewalk } from 'src/app/apps/interfaces/territorial-organization/sidewalk.model';
 import { Neighborhood } from 'src/app/apps/interfaces/territorial-organization/neighborhood.model';
@@ -36,11 +48,12 @@ import { NationalPredialNumber } from '../../../../../apps/interfaces/informatio
 import { SearchData } from '../../../../../apps/interfaces/general/search-data.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CharacterValidateService } from '../../../../../apps/utils/character-validate.service';
-import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
+import {
+  TerritorialOrganizationService
+} from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { Zone } from 'src/app/apps/interfaces/territorial-organization/zone.model';
 import { divideNpn } from 'src/app/apps/utils/divide-national-predial-number';
 import { Block } from 'src/app/apps/interfaces/territorial-organization/block.model';
-
 
 
 @Component({
@@ -49,8 +62,6 @@ import { Block } from 'src/app/apps/interfaces/territorial-organization/block.mo
   imports: [
     CommonModule,
     AsyncPipe,
-    ComboxColletionComponent,
-    InputComponent,
     MatAutocompleteModule,
     MatButtonModule,
     MatDialogModule,
@@ -64,10 +75,7 @@ import { Block } from 'src/app/apps/interfaces/territorial-organization/block.mo
     MatTooltipModule,
     ReactiveFormsModule,
     VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
-    NgFor,
-    NgClass,
-    NgIf
+    VexPageLayoutContentDirective
   ],
   templateUrl: './filter-cadastral-search-da.component.html',
   styleUrl: './filter-cadastral-search-da.component.scss'
@@ -315,8 +323,8 @@ export class FilterCadastralSearchDaComponent implements OnInit {
   searchMunicipalSelection() {
     const searchData = this.validateFilterSearchCadastral();
     const searchDataFiltered: SearchData = new SearchData(searchData);
-    searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
-    searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
+    searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
+    searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
     searchDataFiltered.zone = this.captureCodeOfCodeNameAndID(searchData.zone, this.optionsZones);
     searchDataFiltered.sector = this.captureCodeOfCodeNameAndID(searchData.sector, this.optionsSectors);
     searchDataFiltered.community = this.captureCodeOfCodeNameAndID(searchData.community, this.optionsCommunities);
@@ -351,7 +359,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
     }
     this._clearFormSelection(0);
     const dpto = this._filterInformationCode(
-      codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+      codeName, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
     if (dpto == null || dpto?.length <= 0) {
       return;
     }
@@ -367,7 +375,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
     }
     this._clearFormSelection(1);
     const deptoMpio = this._filterInformationCode(
-      codeName, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
+      codeName, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
     if (deptoMpio == null || deptoMpio?.length <= 0) {
       return;
     }

@@ -47,7 +47,7 @@ import { CreatePeopleComponent } from './create-people/create-people.component';
 import { PeopleService } from '../../../../apps/services/users/people.service';
 import { MatSelectModule } from '@angular/material/select';
 import { ComboxColletionComponent } from '../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
-import { PAGE } from '../../../../apps/constants/general/constant';
+import { PAGE } from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';

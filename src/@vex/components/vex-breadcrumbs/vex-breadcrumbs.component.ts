@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { trackByValue } from '../../utils/track-by';
+import { trackByValue } from '@vex/utils/track-by';
 import { VexBreadcrumbComponent } from './vex-breadcrumb/vex-breadcrumb.component';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';

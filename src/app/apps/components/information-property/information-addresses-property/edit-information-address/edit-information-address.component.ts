@@ -12,7 +12,7 @@ import {
   NAME_SI,
   PROCESO_ACTUALIZAR_DIRECCION,
   PROCESO_CREAR_DIRECCION
-} from '../../../../constants/general/constant';
+} from '../../../../constants/general/constants';
 import { environment } from 'src/environments/environments';
 import {
   InformationPropertyService

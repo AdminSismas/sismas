@@ -46,7 +46,7 @@ import {
   MODAL_LARGE,
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
-} from '../../../../constants/general/constant';
+} from '../../../../constants/general/constants';
 import { Zone } from '../../../../interfaces/territorial-organization/zone.model';
 import { Sector } from '../../../../interfaces/territorial-organization/sector.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -63,6 +63,7 @@ import { InformationPersonService } from 'src/app/apps/services/bpm/information-
 import {
   ViewCertificateManagementComponent
 } from '../../../general-components/view-certificate-management/view-certificate-management.component';
+import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/constants';
 
 @Component({
   selector: 'vex-filter-certificate-search',
@@ -407,8 +408,8 @@ export class FilterCertificateSearchComponent implements OnInit {
   searchMunicipalSelection() {
     const searchData = this.validateFilterSearchCadastral();
     const searchDataFiltered: SearchData = new SearchData(searchData);
-    searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
-    searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
+    searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
+    searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
     searchDataFiltered.zone = this.captureCodeOfCodeNameAndID(searchData.zone, this.optionsZones);
     searchDataFiltered.sector = this.captureCodeOfCodeNameAndID(searchData.sector, this.optionsSectors);
     searchDataFiltered.community = this.captureCodeOfCodeNameAndID(searchData.community, this.optionsCommunities);
@@ -443,7 +444,7 @@ export class FilterCertificateSearchComponent implements OnInit {
     }
     this._clearFormSelection(0);
     const dpto = this._filterInformationCode(
-      codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+      codeName, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
     if (dpto == null || dpto?.length <= 0) {
       return;
     }
@@ -459,7 +460,7 @@ export class FilterCertificateSearchComponent implements OnInit {
     }
     this._clearFormSelection(1);
     const deptoMpio = this._filterInformationCode(
-      codeName, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code');
+      codeName, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
     if (deptoMpio == null || deptoMpio?.length <= 0) {
       return;
     }

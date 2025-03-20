@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { CommonModule } from '@angular/common';
@@ -13,16 +13,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/general/constant';
+import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/general/constants';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   TerritorialOrganizationService
 } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import { map, startWith, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DomSanitizer } from '@angular/platform-browser';
 import {
   GeographicViewerEmbeddedComponent
 } from '../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
@@ -32,6 +30,8 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { Zone } from '../../../../apps/interfaces/territorial-organization/zone.model';
 import { ComboboxComponent } from '../../../../apps/components/general-components/combobox/combobox.component';
+import { _filterInformationCode, getRandomInt } from '../../../../apps/utils/general';
+import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../apps/constants/general/constants';
 
 @Component({
   selector: 'vex-general-maps',
@@ -62,7 +62,7 @@ import { ComboboxComponent } from '../../../../apps/components/general-component
   templateUrl: './general-maps.component.html',
   styleUrl: './general-maps.component.scss'
 })
-export class GeneralMapsComponent implements OnInit {
+export class GeneralMapsComponent implements OnInit, OnDestroy {
 
   protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
   idGeneralMap = 'GeneralMapContent';
@@ -72,7 +72,7 @@ export class GeneralMapsComponent implements OnInit {
 
   ccZonaId: string | null = null;
   titleArray: string[] = ['Datos abiertos', 'Mapas generales'];
-  principaltitleMenu = 'Mapas generales';
+  principalTitleMenu = 'Mapas generales';
 
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
@@ -87,18 +87,16 @@ export class GeneralMapsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
-    private sanitizer: DomSanitizer
   ) {
   }
 
   ngOnInit() {
-    this.idGeneralMap = this.getRandomInt(10000) + 'GeneralMapViewer';
+    this.idGeneralMap = getRandomInt(10000) + 'GeneralMapViewer';
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => console.log(value));
+      .subscribe(() => {});
   }
 
   ngOnDestroy(): void {
@@ -137,7 +135,7 @@ export class GeneralMapsComponent implements OnInit {
     if (codeName?.length <= 0) {
       return;
     }
-    const dpto = this._filterInformationCode(codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+    const dpto = _filterInformationCode(codeName, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
     if (dpto == null || dpto?.length <= 0) {
       return;
     }
@@ -150,8 +148,8 @@ export class GeneralMapsComponent implements OnInit {
     if (codeName?.length <= 0) {
       return;
     }
-    const dpto = this._filterInformationCode(
-      codeName, this.optionsMunicipalities, NAME_CODENAME, 'divpolLvl2Code'
+    const dpto = _filterInformationCode(
+      codeName, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE
     );
     if (dpto == null || dpto?.length <= 0) {
       return;
@@ -188,16 +186,6 @@ export class GeneralMapsComponent implements OnInit {
         this.form.get('zone')?.patchValue(listOptions[0].codeName);
       }
     }
-  }
-
-  private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
-    const listOptions: any[] = options
-      .filter((option: any): boolean => option[keyValue] === code);
-    return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
   }
 
 }

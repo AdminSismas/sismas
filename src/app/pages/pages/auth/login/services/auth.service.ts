@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { UserService } from './user.service';
 import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
-import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from 'src/app/apps/constants/general/constant';
+import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from 'src/app/apps/constants/general/constants';
 import Swal from 'sweetalert2';
 
 @Injectable({

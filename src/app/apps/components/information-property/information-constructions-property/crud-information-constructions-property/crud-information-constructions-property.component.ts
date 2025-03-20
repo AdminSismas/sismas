@@ -63,7 +63,7 @@ import {
   TYPE_CREATE_CONSTRUCTION,
   TYPE_TRADITIONAL,
   TYPE_TYPOLOGY
-} from '../../../../constants/general/constant';
+} from '../../../../constants/general/constants';
 import { env } from '../../../../../../environments/enviromentsIA';
 
 

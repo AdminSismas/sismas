@@ -38,7 +38,7 @@ import {
   TABLE_COLUMN_INFORMATION_PROPERTIES,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi, environment } from 'src/environments/environments';

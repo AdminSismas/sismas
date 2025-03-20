@@ -21,7 +21,7 @@ import {
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_CREATE,
   TYPE_OPERATION_DELETE
-} from '../../../../constants/general/constant';
+} from '../../../../constants/general/constants';
 import {
   CONSTANT_NAME_ADD_LABEL,
   CONSTANT_NAME_CREATE_LABEL,

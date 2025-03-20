@@ -12,7 +12,7 @@ import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { MODAL_MEDIUM } from '../../../../../../apps/constants/general/constant';
+import { MODAL_MEDIUM } from '../../../../../../apps/constants/general/constants';
 import { CertificateDialogAvaluoComponent } from '../certificate-dialog-avaluo/certificate-dialog-avaluo.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { GENERAL_SERVICES_CERTIFICATES } from 'src/app/apps/constants/public-services/ticket-office/generate-services.constants';

@@ -9,14 +9,14 @@ import {
   NAVIGATION_LOADER_MY_WORK_3,
   NAVIGATION_LOADER_OPEN_DATA,
   NAVIGATION_LOADER_OPERATION_SUPPORT,
-  NAVIGATION_LOADER_PUBLIC_SERVICE
+  NAVIGATION_LOADER_PUBLIC_SERVICE, NAVIGATION_THEMATIC_MAP
 } from '../../layouts/constants/constant-loader';
 import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
 import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constant';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -219,7 +219,12 @@ export class NavigationLoaderService {
         label: 'Servicio público',
         children: filteredPublicService,
         roles: BASIC_USERS_ROLE_LIST
-
+      },
+      {
+        type: 'subheading',
+        label: 'Mapa temáticos',
+        children: NAVIGATION_THEMATIC_MAP,
+        roles: BASIC_USERS_ROLE_LIST
       },
       {
         type: 'subheading',

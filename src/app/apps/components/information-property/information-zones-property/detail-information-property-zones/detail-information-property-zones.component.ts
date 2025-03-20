@@ -16,7 +16,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
-import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from '../../../../constants/general/constant';
+import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from '../../../../constants/general/constants';
 import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
 
 @Component({

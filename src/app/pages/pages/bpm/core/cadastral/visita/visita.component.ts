@@ -22,7 +22,7 @@ import {
   BasicParticipantTableDialogComponent
 } from 'src/app/apps/components/bpm/basic-participant-table-dialog/basic-participant-table-dialog.component';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
-import { MODAL_LARGE, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '../../../../../../apps/constants/general/constant';
+import { MODAL_LARGE, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '../../../../../../apps/constants/general/constants';
 import { MatSort } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 

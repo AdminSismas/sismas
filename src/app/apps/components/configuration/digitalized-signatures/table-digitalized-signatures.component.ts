@@ -13,7 +13,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE } from '../../../constants/general/constant';
+import { PAGE, PAGE_OPTION__10_20_50_100, PAGE_SIZE } from '../../../constants/general/constants';
 
 // Custom
 import { CreateSignatureComponent } from './create-signature/create-signature.component';
