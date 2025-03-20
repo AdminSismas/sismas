@@ -144,6 +144,12 @@ export class NavigationLoaderService {
       }
     );
 
+    const filteredThematicMapService = NAVIGATION_THEMATIC_MAP.filter(
+      (item) => {
+        return !item.roles || item.roles.includes(role);
+      }
+    );
+
     const currentCounters = this.taskCounters.value;
 
     const listItem: NavigationItem[] = [
@@ -223,7 +229,7 @@ export class NavigationLoaderService {
       {
         type: 'subheading',
         label: 'Mapa temáticos',
-        children: NAVIGATION_THEMATIC_MAP,
+        children: filteredThematicMapService,
         roles: BASIC_USERS_ROLE_LIST
       },
       {
