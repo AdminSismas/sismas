@@ -45,7 +45,7 @@ import {
 } from '../../../../constants/general/constantsAlertLabel';
 import { GeneralValidationsService } from '../../../../services/validations/general-validations.service';
 import {
-  TypeOperationConstruction,
+  TypeOperation,
   TypeQualificationMode,
   ValidateQualificationByDomBuiltType
 } from '../../../../interfaces/general/content-info';
@@ -114,7 +114,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   executionId: string | null | undefined;
   baunitId: string | null | undefined;
   unitBuiltId!: number | null | undefined; // ID de la construcción creada
-  typeCrud: TypeOperationConstruction | null = null;
+  typeCrud: TypeOperation | null = null;
   api_domainName: string = `${environment.url_domain_name}`;
   qualificationMode: TypeQualificationMode | null = TYPE_TRADITIONAL;
   allBuiltUseOptions: any[] = [];
@@ -194,7 +194,6 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     private generalValidations: GeneralValidationsService,
     private validationsService: CommonGeneralValidationsService
   ) {
-
     this.domBuiltTypeControl = this.editForm.get('domBuiltType') as FormControl;
   }
 
@@ -204,20 +203,16 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     this.baunitId = this.crudInformationData?.contentInformation?.baunitId;
     this.unitBuiltId = this.crudInformationData?.contentInformation?.unitBuiltId;
 
-    if (!validateVariable(this.executionId) || !validateVariable(this.baunitId)) {
-      return;
-    }
-
-    if (!this.crudInformationData || !this.crudInformationData?.contentInformation ||
+    if (!validateVariable(this.executionId) || !validateVariable(this.baunitId) ||
+      !this.crudInformationData || !this.crudInformationData?.contentInformation ||
       this.typeCrud === 'DELETE') {
-      this.fetchAllBuiltUseOptions();
       return;
     }
 
     if (this.typeCrud === 'UPDATE') {
       this.constructionData = this.crudInformationData?.contentInformation;
-      this.changeDetailInformationConstruction(this.crudInformationData?.contentInformation);
-      this.getDetailQualificationConstruction(this.crudInformationData?.contentInformation);
+      this.changeDetailInformationConstruction(this.constructionData);
+      this.getDetailQualificationConstruction(this.constructionData);
     }
     this.fetchAllBuiltUseOptions();
 

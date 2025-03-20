@@ -26,7 +26,7 @@ import {
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
-import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
+import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
 
 @Injectable({
   providedIn: 'root'
@@ -140,7 +140,7 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  getBasicInformationPropertyAdjacent(baunitId: string): Observable<BasicInformationAdjacent[]> {
+  getBasicInformationPropertyAdjacent(baunitId: string): Observable<InformationAdjacent[]> {
     const url = `${this.basic_url}${envi.ccColindante}${envi.baunit}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));

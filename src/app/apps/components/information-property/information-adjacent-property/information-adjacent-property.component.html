@@ -30,7 +30,7 @@
                   [ngClass]=" !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
                   [color]="editable ? 'primary' : ''"
                   [disabled]="!editable"
-                  (click)="openAddEditConstructionInformationPropertyDialog()">
+                  (click)="addAdjacentInformationProperty()">
                   Nueva
                   <mat-icon svgIcon="mat:add"></mat-icon>
                 </button>
@@ -170,7 +170,7 @@
     let-customer="customer"
     matMenuContent>
     <button
-      (click)="editInformation(customer)"
+      (click)="editAdjacentInformationProperty(customer)"
       mat-menu-item>
       <mat-icon svgIcon="mat:edit"></mat-icon>
       <span>Editar</span>

@@ -1,13 +1,11 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
-  @if (this.crudInformationData && this.crudInformationData.type === 'UPDATE') {
-    <h3 class="subheading-2 m-0 flex-auto">
+  <h3 class="subheading-2 m-0 flex-auto">
+    @if (this.crudInformationData && this.crudInformationData.type === 'UPDATE') {
       Editar Construcción
-    </h3>
-  } @else if (this.crudInformationData && this.crudInformationData.type === 'CREATE') {
-    <h3 class="title m-0 flex-auto">
+    } @else if (this.crudInformationData && this.crudInformationData.type === 'CREATE') {
       Nueva Construcción
-    </h3>
-  }
+    }
+  </h3>
   <button class="text-secondary" mat-icon-button type="button" (click)="handleDialogClose()">
     <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
   </button>

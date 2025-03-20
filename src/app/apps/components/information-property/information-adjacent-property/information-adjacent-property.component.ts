@@ -15,6 +15,7 @@ import { NgClass, NgForOf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_OPTION_5_7_10,
   PAGE_SIZE_SORT,
@@ -24,7 +25,7 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constant';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -46,9 +47,12 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { BasicInformationAdjacent } from 'src/app/apps/interfaces/information-property/basic-information-adjacent';
+import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { SelectionModel } from '@angular/cdk/collections';
+import {
+  CrudInformationAdjacentPropertyComponent
+} from './crud-information-adjacent-property/crud-information-adjacent-property.component';
 
 @Component({
   selector: 'vex-information-adjacent-property',
@@ -101,26 +105,26 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable: boolean | undefined = true;
 
-  columns: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
+  columns: TableColumn<InformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
   pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
 
-  dataSource!: MatTableDataSource<BasicInformationAdjacent>;
-  selection: SelectionModel<BasicInformationAdjacent> = new SelectionModel<BasicInformationAdjacent>(
+  dataSource!: MatTableDataSource<InformationAdjacent>;
+  selection: SelectionModel<InformationAdjacent> = new SelectionModel<InformationAdjacent>(
     true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<NgTemplateOutlet>;
   @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
+    private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private informationPropertyService: InformationPropertyService
   ) {
@@ -180,7 +184,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   }
 
   captureInformationAdjacentData(): void {
-    let data: BasicInformationAdjacent[];
+    let data: InformationAdjacent[];
     if (this.contentInformation == null) {
       this.page = PAGE;
       return;
@@ -188,7 +192,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
 
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
-      data = data.map((row: BasicInformationAdjacent) => new BasicInformationAdjacent(row));
+      data = data.map((row: InformationAdjacent) => new InformationAdjacent(row));
       this.dataSource.data = data;
     }
 
@@ -211,59 +215,28 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     this.dataSource.data = [];
   }
 
-  openAddEditConstructionInformationPropertyDialog(data?: ContentInformationConstruction): void {
-    // const dialogData: AddEditInformationConstructionI = {
-    //   type: data ? 'edit' : 'new',
-    //   basicInformationConstruction: data ? new BasicInformationConstruction(data, this.schema) : undefined,
-    //   baunitId: this.baunitId || undefined,
-    //   executionId: this.executionId || undefined
-    // };
-
-    // const dialogRef = this.dialog.open(EditInformationConstructionsPropertyComponent, {
-    //   ...MODAL_SMALL,
-    //   disableClose: true,
-    //   data: dialogData,
-    // });
-
-    // dialogRef.afterClosed().subscribe((result: ContentInformationConstruction) => {
-    //   if (result) {
-    //     if (dialogData.type === 'new') {
-
-    //       this.dataSource.data = [...this.dataSource.data, result];
-    //     } else {
-
-    //       const index = this.dataSource.data.findIndex((item) => item.unitBuiltId === result.unitBuiltId);
-    //       if (index !== -1) {
-    //         this.dataSource.data[index] = result;
-    //         this.dataSource._updateChangeSubscription();
-    //       }
-    //     }
-    //   }
-    // });
+  addAdjacentInformationProperty(): void {
+    this.executeEventAddEditAdjacentInformationProperty(null);
   }
 
-  editInformation(customer: any): void {
-    // const dialogRef = this.dialog.open(EditInformationConstructionDialogComponent, {
-    //   ...MODAL_SMALL,
-    //   data: {
-    //     ...customer,
-    //     executionId: this.executionId,
-    //     baunitId: this.baunitId
-    //   }
-    // });
-    //
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     const index = this.dataSource.data.findIndex(item => item.unitBuiltId === result.unitBuiltId);
-    //
-    //     if (index !== -1) {
-    //
-    //       this.dataSource.data[index] = result;
-    //
-    //       this.dataSource.data = [...this.dataSource.data];
-    //     }
-    //   }
-    // });
+  editAdjacentInformationProperty(customer: ContentInformationConstruction): void {
+    this.executeEventAddEditAdjacentInformationProperty(customer);
+  }
+
+  executeEventAddEditAdjacentInformationProperty(customer: any): void {
+    const dialogRef = this.dialog.open(CrudInformationAdjacentPropertyComponent, {
+      ...MODAL_SMALL,
+      data: {
+        ...customer,
+        executionId: this.executionId,
+        baunitId: this.baunitId
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+
+      }
+    });
   }
 
   deleteInformation(customer: any): void {
@@ -318,10 +291,10 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data
-        .forEach((row: BasicInformationAdjacent) => this.selection.select(row));
+        .forEach((row: InformationAdjacent) => this.selection.select(row));
   }
 
-  toggleColumnVisibility(column: TableColumn<BasicInformationAdjacent>, event: Event) {
+  toggleColumnVisibility(column: TableColumn<InformationAdjacent>, event: Event) {
     event.stopPropagation();
     event.stopImmediatePropagation();
     column.visible = !column.visible;

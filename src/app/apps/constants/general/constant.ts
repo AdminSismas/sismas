@@ -11,7 +11,8 @@ import {
   CheckTypeQualificationMode,
   TypeButtonAlfaMain,
   TypeInformation,
-  TypeOperationAlfaMain, TypeOperationConstruction,
+  TypeOperation,
+  TypeOperationAlfaMain,
   TypeOperationGeoMain, TypeQualificationMode, ValidateQualificationByDomBuiltType
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
@@ -20,7 +21,7 @@ import { TaskRetailExecuteResponseModel } from '../../interfaces/bpm/task-retail
 import { DataFolio } from '../../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../../interfaces/information-property/snr-person-info';
-import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
+import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
 import { ZoneBAUnitFisica } from '../../interfaces/information-property/zone-baunit';
 
 export const GUION: string = '-';
@@ -430,7 +431,7 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
   }
 ];
 
-export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformationAdjacent>[] = [
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<InformationAdjacent>[] = [
   {
     label: 'Ficha',
     property: 'ccColindanteBaunitId',
@@ -451,7 +452,7 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformat
   }
 ];
 
-export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<BasicInformationAdjacent>[] = [
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<InformationAdjacent>[] = [
   ...TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
@@ -1071,7 +1072,7 @@ export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
 
-export const TYPE_CREATE_CONSTRUCTION: TypeOperationConstruction = 'CREATE';
+export const TYPE_CREATE_CONSTRUCTION: TypeOperation = 'CREATE';
 
 export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
   label: 'Tradicional',
