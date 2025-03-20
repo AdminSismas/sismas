@@ -103,7 +103,7 @@ export class FilterCadastralSearchComponent implements OnInit {
   optionsCommunities: Commune[] = [];
   optionsNeighborhoods: Neighborhood[] = [];
   optionsBlocks: Block[] = [];
-  seeRuleField: boolean = true;
+  seeRuleField = true;
 
   optionsSidewalks: Sidewalk[] = [];
   defaultData: SearchData = this.defaults?.searchData;
@@ -190,17 +190,17 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => console.log(value));
-      this.proccessRulePage()
+      this.proccessRulePage();
   }
 
   proccessRulePage() {
     if(this.defaults && this.defaults.rulePage) {
       if(this.defaults.rulePage === RULE_PAGE_CADASTRAL_DA) {
-       this.formDocumentType.disable()
+       this.formDocumentType.disable();
        this.formNames.disable();
        this.seeRuleField = false;
       }else{
-        this.formDocumentType.enable()
+        this.formDocumentType.enable();
        this.formNames.enable();
        this.seeRuleField = true;
 
@@ -217,7 +217,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     }
     this.openSnackbar(
       'No es posible la búsqueda por círculo - matrícula, datos no válidos',
-      'CERRAR',
+      'Aceptar',
       'end'
     );
   }
@@ -233,7 +233,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     }
     this.openSnackbar(
       'No es posible la búsqueda por documento y tipo de documento, datos no válidos',
-      'CERRAR',
+      'Aceptar',
       'end'
     );
   }
@@ -316,7 +316,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CERRAR',
+      'Aceptar',
       'end'
     );
     console.log(searchDataFiltered);
@@ -325,11 +325,11 @@ export class FilterCadastralSearchComponent implements OnInit {
   searchByName() {
     if (!this.formNames.invalid || this.formNames.get('companyName')?.value?.length > 0) {
       const searchData = {
-        firstName: this.firstName?.value.toUpperCase(),
-        middleName: this.middleName?.value.toUpperCase(),
-        lastName: this.lastName?.value.toUpperCase(),
-        otherLastName: this.otherLastName?.value.toUpperCase(),
-        companyName: this.companyName?.value.toUpperCase()
+        firstName: (this.firstName?.value || '').toUpperCase(),
+        middleName: (this.middleName?.value || '').toUpperCase(),
+        lastName: (this.lastName?.value || '').toUpperCase(),
+        otherLastName: (this.otherLastName?.value || '').toUpperCase(),
+        companyName: (this.companyName?.value || '').toUpperCase()
       };
 
       this.dialogRef.close(searchData);
@@ -352,7 +352,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por dirección, datos no válidos',
-      'CERRAR',
+      'Aceptar',
       'end'
     );
   }
@@ -475,7 +475,7 @@ export class FilterCadastralSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CERRAR',
+      'Aceptar',
       'end'
     );
     console.log(searchDataFiltered);
