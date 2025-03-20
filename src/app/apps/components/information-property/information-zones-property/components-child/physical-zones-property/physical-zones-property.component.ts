@@ -8,7 +8,8 @@ import {
   computed,
   AfterViewInit,
   ChangeDetectorRef,
-  Output
+  Output,
+  input
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -115,9 +116,12 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) divPolLv2!: string;
   @Input({ required: true }) dataSource: MatTableDataSource<ZoneBAUnitFisica> =
     new MatTableDataSource<ZoneBAUnitFisica>([]);
-  @Input() editable?: boolean;
+  @Input() editable? = false;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+  tableTitle = input<string>();
+  isOrigen = input<boolean>(false);
+
   @Output() physicalZoneChange = new EventEmitter<void>();
   @Output() deletePhysicalZone = new EventEmitter<ZoneBAUnitFisica>();
 
@@ -133,9 +137,8 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
 
 
   dataBasicInformation!: BasicInformationProperty;
-  fractions_sum = 0;
   page: number = PAGE;
-  totalPhysicalElements = 0;
+  totalPhysicalElements = input.required<number>();
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
   rightIdSelected?: number;
@@ -173,7 +176,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
       .filter((column) => column.visible)
       .map((column) => column.property);
 
-    if (this.typeInformation === TYPE_INFORMATION_EDITION) {
+    if (this.typeInformation === TYPE_INFORMATION_EDITION && this.editable) {
       visibleColumns.push('actions');
     }
 
