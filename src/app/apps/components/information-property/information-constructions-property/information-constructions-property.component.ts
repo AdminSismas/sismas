@@ -28,7 +28,7 @@ import {
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -258,16 +258,18 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     this.dataSource.data = [];
   }
 
-  openDetailInformationConstructionsProperty(data: ContentInformationConstruction) {
+  openDetailInformationConstructionsProperty(content: ContentInformationConstruction) {
     if (this.baunitId === null || this.baunitId === undefined) {
       return;
     }
+    let data: ContentInformationConstruction = new ContentInformationConstruction(content, this.schema, this.baunitId);
+    data.executionId = this.executionId;
 
     this.dialog
       .open(DetailInformationConstructionsPropertyComponent, {
         ...MODAL_SMALL,
         disableClose: true,
-        data: new ContentInformationConstruction(data, this.schema, this.baunitId)
+        data: { type: 'READ_ONLY', contentInformation: data }
       })
       .afterClosed();
   }

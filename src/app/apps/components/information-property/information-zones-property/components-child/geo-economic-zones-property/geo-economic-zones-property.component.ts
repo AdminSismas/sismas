@@ -10,7 +10,8 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  input
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -50,7 +51,7 @@ import {
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
   TYPE_INFORMATION_EDITION
-} from 'src/app/apps/constants/general/constant';
+} from 'src/app/apps/constants/general/constants';
 import { ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
@@ -111,16 +112,19 @@ export class GeoEconomicZonesPropertyComponent
 
   @Input({ required: true }) id = '';
   @Input({ required: true }) public expandedComponent = true;
-  @Input({ required: true }) public dataSource!: MatTableDataSource<ZoneBAUnitGeoeconomic>;
+  @Input({ required: true })
+  public dataSource!: MatTableDataSource<ZoneBAUnitGeoeconomic>;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input({ required: true}) npn!: string;
-  @Input() editable?: boolean;
+  @Input({ required: true }) npn!: string;
+  @Input() editable? = false;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+  tableTitle = input<string>();
+  isOrigen = input<boolean>(false);
 
-  @Output() deleteGeoeconomicZone = new EventEmitter<ZoneBAUnitGeoeconomic>;
-  @Output() geoeconomicZoneChange = new EventEmitter<void>;
+  @Output() deleteGeoeconomicZone = new EventEmitter<ZoneBAUnitGeoeconomic>();
+  @Output() geoeconomicZoneChange = new EventEmitter<void>();
 
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC;
 
@@ -137,19 +141,10 @@ export class GeoEconomicZonesPropertyComponent
   dataBasicInformation!: BasicInformationProperty;
   fractions_sum = 0;
   page: number = PAGE;
-  page2: number = PAGE;
-  totalPhysicalElements = 0;
-  totalGeoElements = 0;
+  totalGeoElements = input.required<number>();
   pageSize: number = PAGE_SIZE;
-  pageSize2: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
-  pageSizeOptions2: number[] = PAGE_OPTION__10_20_50_100;
   rightIdSelected?: number;
-
-  // columnsGeoeconomicZones = signal(this.TABLE_COLUMNS);
-  // textColumnsGeoeconomicZones = computed(() =>
-  //   this.columnsGeoeconomicZones().filter((column) => column.type === 'text')
-  // );
 
   actionBtns = computed(() => {
     return [
@@ -184,14 +179,14 @@ export class GeoEconomicZonesPropertyComponent
 
   get TYPEINFORMATION_EDITION() {
     return TYPE_INFORMATION_EDITION;
-  } ;
+  }
 
   get visibleColumns() {
     const visibleColumns = this.columns
       .filter((column) => column.visible)
       .map((column) => column.property);
 
-    if (this.typeInformation === TYPE_INFORMATION_EDITION) {
+    if (this.typeInformation === TYPE_INFORMATION_EDITION && this.editable) {
       visibleColumns.push('actions');
     }
 
@@ -246,20 +241,12 @@ export class GeoEconomicZonesPropertyComponent
     }
   }
 
-  refreshPaginator(pageEvent: PageEvent, paginatorId: string): void {
+  refreshPaginator(pageEvent: PageEvent): void {
     const { pageIndex, pageSize } = pageEvent;
 
-    if (paginatorId === 'paginator1') {
-      this.page = pageIndex;
-      this.pageSize = pageSize;
-      this.changeDetectorRef.markForCheck(); //
-    }
-
-    if (paginatorId === 'paginator2') {
-      this.page2 = pageIndex;
-      this.pageSize2 = pageSize;
-      this.changeDetectorRef.markForCheck(); //
-    }
+    this.page = pageIndex;
+    this.pageSize = pageSize;
+    this.changeDetectorRef.markForCheck(); //
   }
 
   ngOnInit() {
@@ -269,9 +256,7 @@ export class GeoEconomicZonesPropertyComponent
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
   }
 
-  openInformationPropertyZone(
-    zone: ZoneBAUnitGeoeconomic,
-  ): void {
+  openInformationPropertyZone(zone: ZoneBAUnitGeoeconomic): void {
     const dialog = this.matDialog.open(
       DetailInformationPropertyZonesComponent,
       {
@@ -292,12 +277,11 @@ export class GeoEconomicZonesPropertyComponent
       this.onClickOpenGeoconomicAddEditModal(zone);
     }
     if (id === 'delete') {
-      this.successDelete.fire()
-        .then((result) => {
-          if (result.isConfirmed){
-            this.deleteGeoeconomicZone.emit(zone);
-          }
-        });
+      this.successDelete.fire().then((result) => {
+        if (result.isConfirmed) {
+          this.deleteGeoeconomicZone.emit(zone);
+        }
+      });
     }
   }
 

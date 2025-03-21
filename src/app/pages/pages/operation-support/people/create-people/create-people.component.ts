@@ -25,7 +25,7 @@ import { PeopleService } from '../../../../../apps/services/users/people.service
 import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environments';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PAGE, PAGE_SIZE } from '../../../../../apps/constants/general/constant';
+import { PAGE, PAGE_SIZE } from '../../../../../apps/constants/general/constants';
 
 interface defaultData extends People {
   mode: 'create' | 'update';

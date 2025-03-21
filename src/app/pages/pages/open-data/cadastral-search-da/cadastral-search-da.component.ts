@@ -4,7 +4,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { RULE_PAGE_CADASTRAL_DA, TITULO_PAGE_CADASTRAL_DA } from '../../../../apps/constants/general/constant';
+import { RULE_PAGE_CADASTRAL_DA, TITULO_PAGE_CADASTRAL_DA } from '../../../../apps/constants/general/constants';
 import {
   TableCadastralSearchComponent
 } from 'src/app/apps/components/tables/table-cadastral-search/table-cadastral-search.component';

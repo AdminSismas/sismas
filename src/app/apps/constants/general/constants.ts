@@ -10,8 +10,8 @@ import { environment } from '../../../../environments/environments';
 import {
   CheckTypeQualificationMode,
   TypeButtonAlfaMain,
-  TypeInformation,
-  TypeOperationAlfaMain, TypeOperationConstruction,
+  TypeInformation, TypeOperation,
+  TypeOperationAlfaMain,
   TypeOperationGeoMain, TypeQualificationMode, ValidateQualificationByDomBuiltType
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
@@ -51,6 +51,8 @@ export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
 export const PAGE_SIZE_TABLE_UNIQUE = 10;
 export const PAGE_SIZE_SORT = 5;
 export const NAME_CODENAME: string = 'codeName';
+export const DIVPOLLVL_CODE: string = 'divpolLvl1Code';
+export const DIVPOLLVL2_CODE: string = 'divpolLvl2Code';
 export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
@@ -191,7 +193,7 @@ export const TABLE_COLUMN_INFORMATION_PROPERTIES: TableColumn<BaunitHead>[] = [
   },
   {
     label: 'Área terreno',
-    property: 'cadastralArea',
+    property: 'cadastralAreaE',
     type: 'text',
     visible: true,
     cssClasses: ['font-medium']
@@ -1073,7 +1075,8 @@ export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
 
-export const TYPE_CREATE_CONSTRUCTION: TypeOperationConstruction = 'CREATE';
+export const TYPE_CREATE: TypeOperation = 'CREATE';
+export const TYPE_READ_ONLY: TypeOperation = 'READ_ONLY';
 
 export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
   label: 'Tradicional',

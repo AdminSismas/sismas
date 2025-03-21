@@ -18,7 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PAGE_OPTION__10_20_50_100, MODAL_SMALL } from '../../../../../apps/constants/general/constant';
+import { PAGE_OPTION__10_20_50_100, MODAL_SMALL } from '../../../../../apps/constants/general/constants';
 
 @Component({
   selector: 'vex-workgroups',

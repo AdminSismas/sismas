@@ -49,6 +49,12 @@ export class InformationGeographicService {
       .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }
 
+  getViewThematicMapByCodeMunicipality(codeMunicipality: string): Observable<string | null> {
+    let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.generalMap}${envi.accessGeo.get}${codeMunicipality}`;
+    return this.requestsService.sendRequestsGetText(url)
+      .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
+  }
+
   /**
    * POST {{url}}:{{port}}/changeLog/temp/{{executionId}}/geo
    * */

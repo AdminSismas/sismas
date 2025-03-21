@@ -36,7 +36,7 @@ import { PageSortByData } from '../../../interfaces/general/page-sortBy-data.mod
 import { WorkflowCollection } from '../../../interfaces/bpm/workflow.model';
 import { WorkflowService } from '../../../services/bpm/workflow.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PAGE_OPTION__10_20_50_100 } from '../../../constants/general/constant';
+import { PAGE_OPTION__10_20_50_100 } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-table-workflow',

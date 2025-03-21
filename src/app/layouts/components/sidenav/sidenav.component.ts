@@ -24,7 +24,7 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { Router } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { STRING_INFORMATION_NOT_FOUND } from '../../../apps/constants/general/constant';
+import { STRING_INFORMATION_NOT_FOUND } from '../../../apps/constants/general/constants';
 import {
   FormBuilder,
   FormGroup,

@@ -1,40 +1,39 @@
-import { Validators } from "@angular/forms";
 import { JSONInput } from "../../interfaces/forms/dynamic-forms";
 import { TableColumn } from "@vex/interfaces/table-column.interface";
 import { ProcessParticipant } from "../../interfaces/bpm/process-participant";
 
 export const INPUT_FORM_VISIT: JSONInput[] = [
     {
-        name: 'description',
+        name: 'descripcion',
         label: 'Descripción',
         placeholder: 'Escribir la descripción de la solicitud del participante',
         element: 'input',
         type: 'textarea',
-        validators: [Validators.required],
+        validators: [],
     },
     {
-        name: 'addDocuments',
+        name: 'docAportados',
         label: 'Documentos aportados',
         placeholder: 'Seleccionar los documentos aportados con la solicitud',
         element: 'input',
         type: 'text',
-        validators: [Validators.required],
+        validators: [],
     },
     {
-        name: 'cadastralDocuments',
+        name: 'docCatastrales',
         label: 'Documentos catastrales',
         placeholder: 'Seleccionar los documentos catastrales',
         element: 'input',
         type: 'text',
-        validators: [Validators.required],
+        validators: [],
     },
     {
-        name: 'observations',
+        name: 'observaciones',
         label: 'Observaciones',
         placeholder: 'Escribir las observaciones',
         element: 'input',
         type: 'textarea',
-        validators: [Validators.required],
+        validators: [],
     },
     {
         name: 'thirdPartyAffected',

@@ -34,7 +34,11 @@ import {
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
-import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from '../../../../../apps/constants/general/constant';
+import {
+  DIVPOLLVL_CODE,
+  NAME_CODENAME,
+  STRING_INFORMATION_NOT_FOUND
+} from '../../../../../apps/constants/general/constants';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
 import {
@@ -159,7 +163,7 @@ export class EconomicModLandComponent implements OnInit{
     }
 
     const dpto = this._filterInformationCode(
-      codeName, this.optionsDeparments, NAME_CODENAME, 'divpolLvl1Code');
+      codeName, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
     if (dpto == null || dpto?.length <= 0) {
       return;
     }

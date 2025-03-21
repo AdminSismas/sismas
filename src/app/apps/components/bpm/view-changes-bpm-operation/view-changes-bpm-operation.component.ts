@@ -20,7 +20,7 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { CONSTANT_CHANGE_UNITED_PREDIAL } from '../../../constants/general/constantLabels';
-import { TWO_POINT_ } from '../../../constants/general/constant';
+import { TWO_POINT_ } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-view-changes-bpm-operation',

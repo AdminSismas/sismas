@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 import { EconomicZoneComponent } from '../economic-zone/economic-zone.component';
-import { MODAL_SMALL } from '../../../../constants/general/constant';
+import { MODAL_SMALL } from '../../../../constants/general/constants';
 
 @Component({
   selector: 'zone-manager',

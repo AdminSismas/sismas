@@ -27,7 +27,7 @@ import {
   NAME_NO_DISPONIBLE,
   NAME_NO_DISPONIBLE_CERO,
   TYPE_INFORMATION_EDITION
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import {

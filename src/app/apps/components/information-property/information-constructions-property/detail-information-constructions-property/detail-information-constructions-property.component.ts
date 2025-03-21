@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { environment } from '../../../../../../environments/environments';
 import {
-  ContentInformationConstruction
+  ContentInformationConstruction,
+  CrudInformationConstruction
 } from '../../../../interfaces/information-property/content-information-construction';
 import {
   MAT_DIALOG_DATA,
@@ -10,13 +11,12 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { InformationPropertyService } from '../../../../services/territorial-organization/information-property.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { GUION, NAME_NO_DISPONIBLE, TWO_POINT_ } from '../../../../constants/general/constant';
+import { NAME_NO_DISPONIBLE, TYPE_READ_ONLY } from '../../../../constants/general/constants';
 import { MatTabsModule } from '@angular/material/tabs';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CcCalificacionUB } from '../../../../interfaces/information-property/cc-calificacion-ub';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -30,6 +30,8 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import {
   InformationConstructionsService
 } from '../../../../services/information-property/information-constructions-property/information-constructions.service';
+import { TypeOperation } from '../../../../interfaces/general/content-info';
+import { validateIsNumber, validateVariable } from '../../../../utils/general';
 
 export interface Tile {
   color: string;
@@ -58,9 +60,7 @@ export interface Tile {
     MatIconModule,
     MatTabsModule,
     MatExpansionModule,
-    NgForOf,
     MatGridListModule,
-    NgIf,
     AsyncPipe
   ],
   templateUrl: './detail-information-constructions-property.component.html',
@@ -70,70 +70,59 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
-  data!: ContentInformationConstruction;
-  dataCalification!: CcCalificacionUB[];
-  schema = `${environment.schemas.main}`;
-  baunitId!: string;
+  executionId: string | null | undefined;
+  baunitId: string | null | undefined;
+  unitBuiltId!: number | null | undefined; // ID de la construcción creada
+  typeCrud: TypeOperation | null = null;
+  constructionData: ContentInformationConstruction | null = null;
+  dataCalification: CcCalificacionUB[] = [];
+  schema: string | null | undefined = `${environment.schemas.main}`;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: ContentInformationConstruction | undefined,
+    @Inject(MAT_DIALOG_DATA) public crudInformationData: CrudInformationConstruction | null,
     private dialogRef: MatDialogRef<DetailInformationConstructionsPropertyComponent>,
-    private informationPropertyService: InformationPropertyService,
-    private inConstructionsService: InformationConstructionsService,
+    private constructionsService: InformationConstructionsService,
     private layoutService: VexLayoutService
   ) {
   }
 
   ngOnInit() {
-    if (this.defaults === null || this.defaults === undefined) {
+    if (!this.crudInformationData || !this.crudInformationData?.contentInformation) {
       this.close();
       return;
     }
-    if (this.defaults?.baunitId === null || this.defaults?.baunitId === undefined) {
-      this.close();
-      return;
-    }
-    if (this.defaults?.unitBuiltId === null || this.defaults?.unitBuiltId === undefined) {
-      this.close();
-      return;
-    }
-    if (this.defaults?.schema !== null && this.defaults?.schema !== undefined) {
-      this.schema = this.defaults?.schema;
+    this.typeCrud = this.crudInformationData?.type || TYPE_READ_ONLY;
+    this.executionId = this.crudInformationData?.contentInformation?.executionId;
+    this.baunitId = this.crudInformationData?.contentInformation?.baunitId;
+    this.unitBuiltId = this.crudInformationData?.contentInformation?.unitBuiltId;
+    if (validateVariable(this.crudInformationData?.contentInformation?.schema)) {
+      this.schema = this.crudInformationData?.contentInformation?.schema;
     }
 
-    this.data = this.defaults;
-    this.loadDetailInformationCalificationConstructions();
+    if (!validateVariable(this.executionId) || !validateVariable(this.baunitId) ||
+      (this.unitBuiltId == null || !validateIsNumber(this.unitBuiltId))) {
+      this.close();
+      return;
+    }
+
+    this.constructionData = this.crudInformationData?.contentInformation;
+    this.loadDetailInformationCalificationConstructions(this.constructionData);
   }
 
-  loadDetailInformationConstructions(): void {
-    if (this.defaults?.unitBuiltId === null || this.defaults?.unitBuiltId === undefined) {
-      this.close();
+  loadDetailInformationCalificationConstructions(detailInformationConstruction: ContentInformationConstruction | null) {
+    if (!detailInformationConstruction) {
       return;
     }
 
-    this.inConstructionsService.getDetailBasicInformationPropertyConstructions(this.defaults.unitBuiltId)
-      .subscribe({
-          next: (result: ContentInformationConstruction) => this.data = result,
-          error: (err: any) => console.log('Consulta NOK.')
-        }
-      );
-  }
-
-  loadDetailInformationCalificationConstructions(): void {
-    if (this.defaults?.unitBuiltId === null || this.defaults?.unitBuiltId === undefined ||
-      this.defaults?.baunitId === null || this.defaults?.baunitId === undefined) {
-      this.close();
+    const executionId = detailInformationConstruction.executionId ?? null;
+    const baunitId = detailInformationConstruction.baunitId ?? null;
+    const unitBuiltId = detailInformationConstruction.unitBuiltId ?? null;
+    if (!executionId || !baunitId || !unitBuiltId) {
       return;
     }
-    this.inConstructionsService
-      .getDetailBasicInformationPropertyQualificationConstructions(
-        this.defaults.unitBuiltId)
-      .subscribe({
-          next: (result: CcCalificacionUB[]) => this.dataCalification = result,
-          error: (err: any) => console.log('Consulta NOK.')
-        }
-      );
-
+    this.constructionsService.getQualificationConstructions(
+      executionId, baunitId, unitBuiltId, this.schema)
+      .subscribe((result: CcCalificacionUB[]) => this.dataCalification = result);
   }
 
   close(): void {
@@ -141,6 +130,4 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
-  protected readonly TWO_POINT_ = TWO_POINT_;
-  protected readonly GUION = GUION;
 }

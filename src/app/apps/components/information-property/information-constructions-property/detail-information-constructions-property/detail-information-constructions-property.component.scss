@@ -17,6 +17,20 @@ mat-expansion-panel-header.mat-expanded:focus {
   height: var(--mat-expansion-header-expanded-state-height-geo-getion);
 }
 
-mat-grid-tile > div .mat-grid-tile-content {
-  height: var(--mat-expansion-header-expanded-state-height-geo-getion);
+mat-grid-tile {
+  @apply flex justify-start
 }
+
+mat-grid-tile > div .mat-grid-tile-content {
+  justify-content: flex-start;
+}
+
+::ng-deep mat-grid-tile div .mat-grid-tile-content {
+  justify-content: flex-start;
+}
+
+::ng-deep div .mat-grid-tile-content {
+  justify-content: flex-start;
+}
+
+

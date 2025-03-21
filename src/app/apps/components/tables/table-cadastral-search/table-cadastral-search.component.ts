@@ -56,7 +56,7 @@ import {
   TITULO_PAGE_AVANZADA,
   TITULO_PAGE_CADASTRAL_DA,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';

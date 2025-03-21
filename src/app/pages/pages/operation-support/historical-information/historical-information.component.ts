@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { INFORMATION_HISTORICAL, RULE_PAGE_HISTORICAL } from '../../../../apps/constants/general/constant';
+import { INFORMATION_HISTORICAL, RULE_PAGE_HISTORICAL } from '../../../../apps/constants/general/constants';
 
 
 import { MatCheckboxModule } from '@angular/material/checkbox';

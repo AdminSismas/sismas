@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { filter, map, take } from 'rxjs/operators';
+import { filter, map, startWith, take } from 'rxjs/operators';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 // Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -63,7 +62,7 @@ import {
   PANEL_ASSIGNED_TASKS,
   SPACE,
   TABLE_COLUMN_PROPERTIES
-} from '../../../../apps/constants/general/constant';
+} from '../../../../apps/constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
 import { MetadataBpm } from '../../../../apps/interfaces/bpm/metadata-bpm';
@@ -158,6 +157,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   listBpmDocumentsProcess$: Observable<BpmDocument[]> =
     this._listBpmDocumentsProcess.asObservable();
   isExistListBpmTypeProcess$: Observable<boolean> = of(false);
+  bpmProccessCategorySelected = false;
 
   baunitIdE: string | null = null;
   baunitIdE$ = this.route.params.pipe(
@@ -173,7 +173,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   informationClear = false;
 
   propertyProcessingFormGroup: UntypedFormGroup = this.formBuilder.group({
-    selectBpmProcessByCategory: [null, Validators.required],
+    selectBpmProcessByCategory: ['', Validators.required],
     selectBpmProcess: [null, Validators.required]
   });
 
@@ -237,6 +237,21 @@ export class InitiateFilingProcedureComponent implements OnInit {
       });
 
     this.obtainsCollectionsListProcessByCategory();
+    const selectBpmProcessByCategory =this.propertyProcessingFormGroup.controls['selectBpmProcessByCategory'];
+    this.listBpmProcessCategory$ = selectBpmProcessByCategory.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || ''))
+    );
+  }
+
+  private _filter(value: string | DomainCollection): DomainCollection[] {
+    if (!value) return this._listBpmProcessCategory.value;
+
+    const searchText = typeof value === 'string' ? value : value.dispname!;
+
+    const filterValue = searchText.toLowerCase();
+
+    return this._listBpmProcessCategory.value.filter((option) => option.dispname?.toLowerCase().includes(filterValue));
   }
 
   obtainsCollectionsListProcessByCategory() {
@@ -256,6 +271,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   }
 
   loadBpmProcess(domainCollection: DomainCollection) {
+    this.bpmProccessCategorySelected = true;
     if (!domainCollection || !domainCollection?.code) {
       return;
     }
@@ -459,8 +475,8 @@ export class InitiateFilingProcedureComponent implements OnInit {
     return type.name;
   }
 
-  getOptionText(option: any): string {
-    return option ? option.dispname : '';
+  getOptionText(option: DomainCollection): string {
+    return option ? option.dispname! : '';
   }
 
   showBpmProcess(value = false) {
@@ -474,6 +490,10 @@ export class InitiateFilingProcedureComponent implements OnInit {
 
   get validateParticipants() {
     return this.participants.length <= 0;
+  }
+
+  get listBpmProcessCategory() {
+    return this._listBpmProcessCategory.value;
   }
 
   createListMetadataBpm(): MetadataBpm[] {

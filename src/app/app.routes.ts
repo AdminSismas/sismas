@@ -2,7 +2,7 @@ import { LayoutComponent } from './layouts/layout/layout.component';
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import { RoleGuard } from './pages/pages/auth/login/guards/role.guard';
 import { authGuard } from './guards/auth.guard';
-import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from './apps/constants/general/constant';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from './apps/constants/general/constants';
 
 export const appRoutes: VexRoutes = [
   {
@@ -52,6 +52,12 @@ export const appRoutes: VexRoutes = [
       {
         path: 'publicService',
         loadChildren: () => import('./pages/pages/public-service/public-service-routing.module'),
+        canActivate: [RoleGuard],
+        data: { roles: BASIC_USERS_ROLE_LIST }
+      },
+      {
+        path: 'thematicMap',
+        loadChildren: () => import('./pages/pages/thematic-map/thematic-map-routing.module'),
         canActivate: [RoleGuard],
         data: { roles: BASIC_USERS_ROLE_LIST }
       },

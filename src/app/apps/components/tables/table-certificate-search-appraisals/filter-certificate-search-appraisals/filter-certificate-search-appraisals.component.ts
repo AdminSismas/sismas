@@ -44,7 +44,7 @@ import {
   LIST_ZONES_RURAL,
   NAME_CODENAME, RULE_PAGE_CADASTRAL_DA,
   STRING_INFORMATION_NOT_FOUND
-} from '../../../../constants/general/constant';
+} from '../../../../constants/general/constants';
 import { Zone } from '../../../../interfaces/territorial-organization/zone.model';
 import { Sector } from '../../../../interfaces/territorial-organization/sector.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -56,6 +56,7 @@ import { NationalPredialNumber } from '../../../../interfaces/information-proper
 import { divideNpn } from '../../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../../constants/general/constantLabels';
 import { CharacterValidateService } from '../../../../utils/character-validate.service';
+import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/constants';
 
 @Component({
   selector: 'vex-filter-certificate-search-appraisals',
@@ -429,13 +430,13 @@ export class FilterCertificateSearchAppraisalsComponent implements OnInit {
       searchData.department,
       this.optionsDepartments,
       NAME_CODENAME,
-      'divpolLvl1Code'
+      DIVPOLLVL_CODE
     );
     searchDataFiltered.municipality = this._filterInformationCode(
       searchData.municipality,
       this.optionsMunicipalities,
       NAME_CODENAME,
-      'divpolLvl2Code'
+      DIVPOLLVL2_CODE
     );
     searchDataFiltered.zone = this.captureCodeOfCodeNameAndID(
       searchData.zone,
@@ -499,7 +500,7 @@ export class FilterCertificateSearchAppraisalsComponent implements OnInit {
       codeName,
       this.optionsDepartments,
       NAME_CODENAME,
-      'divpolLvl1Code'
+      DIVPOLLVL_CODE
     );
     if (dpto == null || dpto?.length <= 0) {
       return;
@@ -518,7 +519,7 @@ export class FilterCertificateSearchAppraisalsComponent implements OnInit {
       codeName,
       this.optionsMunicipalities,
       NAME_CODENAME,
-      'divpolLvl2Code'
+      DIVPOLLVL2_CODE
     );
     if (deptoMpio == null || deptoMpio?.length <= 0) {
       return;

@@ -46,7 +46,7 @@ import {
   PANEL_ASSIGNED_TASKS,
   PANEL_DEVOLUTION_TASKS,
   PANEL_PRIORITIZED_TASKS
-} from '../../../../../apps/constants/general/constant';
+} from '../../../../../apps/constants/general/constants';
 import { PageSearchData } from '../../../../../apps/interfaces/general/page-search-data.model';
 import { ProTask } from '../../../../../apps/interfaces/bpm/pro-task';
 import { ProTaskE } from '../../../../../apps/interfaces/bpm/pro-task-e';

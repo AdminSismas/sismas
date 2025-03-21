@@ -1,6 +1,6 @@
 <div class="header-container m-2 flex items-center justify-between">
-  <span class="font-bold text-xl">Zonas geoeconómicas</span>
-  @if (typeInformation === "edition") {
+  <span class="font-bold text-lg capitalize">{{ tableTitle() }}</span>
+  @if (typeInformation === "edition" && !isOrigen()) {
     <button
       [ngClass]="disabledClass()"
       [disabled]="!editable"
@@ -148,11 +148,11 @@
   <div class="paginator-container flex justify-center">
     <mat-paginator
       #paginator2
-      [pageSizeOptions]="pageSizeOptions2"
-      [length]="totalGeoElements"
-      [pageSize]="pageSize2"
-      [pageIndex]="page2"
-      (page)="refreshPaginator($event, 'paginator2')"
+      [pageSizeOptions]="pageSizeOptions"
+      [length]="totalGeoElements()"
+      [pageSize]="pageSize"
+      [pageIndex]="page"
+      (page)="refreshPaginator($event)"
       class="paginator"
     />
   </div>

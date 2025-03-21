@@ -92,13 +92,28 @@
                         (optionSelected)="loadBpmProcess($event.option.value)"
                         [displayWith]="getOptionText"
                       >
-                        @for (
-                          option of listBpmProcessCategory$ | async;
-                          track option.dispname
-                        ) {
-                          <mat-option [value]="option">
-                            {{ option.dispname }}
-                          </mat-option>
+                        @if ((listBpmProcessCategory$ | async)?.length) {
+                          @for (
+                            option of listBpmProcessCategory$ | async;
+                            track option.dispname
+                          ) {
+                            <mat-option [value]="option">
+                              {{ option.dispname }}
+                            </mat-option>
+                          }
+                        } @else if (!bpmProccessCategorySelected) {
+                          @for (
+                            option of listBpmProcessCategory;
+                            track option.dispname
+                          ) {
+                            <mat-option [value]="option">
+                              {{ option.dispname }}
+                            </mat-option>
+                          }
+                        } @else {
+                          <mat-option disabled
+                            >No hay opciones que coincidan</mat-option
+                          >
                         }
                       </mat-autocomplete>
                     </mat-form-field>
