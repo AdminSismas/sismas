@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { BehaviorSubject, catchError, Observable, Subject } from 'rxjs';
@@ -8,8 +8,12 @@ import {
   UpdateBasicInformationProperty
 } from '../../interfaces/information-property/basic-information-property';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import {
+  HttpClient,
+  HttpParams
+} from '@angular/common/http';
+import {
+
   CreateBasicInformationAddress,
   DetailBasicInformationAddress
 } from '../../interfaces/information-property/detail-basic-information-address';
@@ -22,7 +26,7 @@ import {
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
-import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
+import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +47,8 @@ export class InformationPropertyService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);
@@ -118,6 +123,7 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
+
   getInformationPropertyOwners(
     schema: string,
     id: string,
@@ -134,16 +140,24 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  getBasicInformationPropertyAdjacent(
-    baunitId: string
-  ): Observable<BasicInformationAdjacent[]> {
-    const url = `${this.basic_url}/ccColindante/${envi.baunit}/${baunitId}`;
-    return this.requestsService
-      .sendRequestsFetchGet(url)
+  getBasicInformationPropertyAdjacent(baunitId: string): Observable<InformationAdjacent[]> {
+    const url = `${this.basic_url}${envi.ccColindante}${envi.baunit}/${baunitId}`;
+    return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  getBasicInformationsAppraisalsProperty(
+  getInformationPropertyAdjacent(page: number, size: number, baUnitId: string): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${envi.ccColindante}${envi.baunit}${envi.page}${baUnitId}`;
+    const params: HttpParams = new HttpParams()
+      .set('page', `${page}`)
+      .set('size', `${size}`);
+    return this.getData(url, params).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
+
+
+  getBasicInformationAppraisalsProperty(
     page: PageSearchData,
     schema: string,
     executionId: string | null | undefined = null
@@ -276,13 +290,14 @@ export class InformationPropertyService {
     );
   }
 
-  getByDivPolGeoeconomica(npn: string): Observable<GeoEconomicZone[]> {
+  getByDivPolGeoeconomica(
+    npn: string
+  ): Observable<GeoEconomicZone[]> {
     // {{url}}:{{port}}/baUnitZona/baunitIdEcono/divpol/{{npn}}
     const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}${envi.divpol}/${npn}`;
-
-    return this.http
-      .get<GeoEconomicZone[]>(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+    return this.http.get<GeoEconomicZone[]>(url).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
   }
 
   createBAUnitZones(

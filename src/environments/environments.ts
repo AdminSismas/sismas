@@ -78,7 +78,6 @@ export const environment = {
   ccDireccion: "/ccDireccion",
   ccReconocimientoPredial: "/ccReconocimientoPredial",
   ccColindante: "/ccColindante/",
-  cancel: "/cancel",
   ccZonaHomoFisicaRu: "/ccZonaHomoFisicaRu",
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",

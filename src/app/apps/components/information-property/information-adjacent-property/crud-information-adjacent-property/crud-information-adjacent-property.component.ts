@@ -9,10 +9,8 @@ import {
 } from '@angular/material/dialog';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
-import { MatStepLabel } from '@angular/material/stepper';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { TextAreaComponent } from '../../../general-components/text-area/text-area.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -25,9 +23,9 @@ import {
   CrudInformationAdjacent,
   InformationAdjacent
 } from '../../../../interfaces/information-property/information-adjacent';
-import { TYPE_CREATE_CONSTRUCTION } from '../../../../constants/general/constant';
 import { validateVariable } from '../../../../utils/general';
 import { TypeOperation } from '../../../../interfaces/general/content-info';
+import { TYPE_CREATE } from '../../../../constants/general/constants';
 
 @Component({
   selector: 'vex-crud-information-adjacent-property',
@@ -47,10 +45,8 @@ import { TypeOperation } from '../../../../interfaces/general/content-info';
     MatDivider,
     MatIcon,
     MatIconButton,
-    MatStepLabel,
     ReactiveFormsModule,
     SweetAlert2Module,
-    TextAreaComponent,
     MatDialogClose
   ],
   templateUrl: './crud-information-adjacent-property.component.html',
@@ -86,7 +82,7 @@ export class CrudInformationAdjacentPropertyComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.typeCrud = this.crudInformationData?.type || TYPE_CREATE_CONSTRUCTION;
+    this.typeCrud = this.crudInformationData?.type || TYPE_CREATE;
     this.executionId = this.crudInformationData?.contentInformation?.executionId;
     this.baUnitId = this.crudInformationData?.contentInformation?.baUnitId;
     this.ccColindanteBaunitId = this.crudInformationData?.contentInformation?.ccColindanteBaunitId;
