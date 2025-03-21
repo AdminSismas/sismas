@@ -40,7 +40,7 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   TYPE_INFORMATION_VISUAL
-} from '../../../../../../apps/constants/general/constant';
+} from '../../../../../../apps/constants/general/constants';
 import { TABLE_COLUMN_PROPERTIES } from '../../../../../../apps/constants/general/procedures.constant';
 import { ContentInfoSchema } from '../../../../../../apps/interfaces/general/content-info-schema';
 import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';

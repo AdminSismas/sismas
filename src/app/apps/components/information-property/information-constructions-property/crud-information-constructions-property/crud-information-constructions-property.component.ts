@@ -60,11 +60,10 @@ import {
   GUION,
   NAME_NO_DISPONIBLE,
   QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE,
-  TYPE_CREATE_CONSTRUCTION,
+  TYPE_CREATE,
   TYPE_TRADITIONAL,
   TYPE_TYPOLOGY
-} from '../../../../constants/general/constant';
-import { env } from '../../../../../../environments/enviromentsIA';
+} from '../../../../constants/general/constants';
 
 
 @Component({
@@ -116,6 +115,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   unitBuiltId!: number | null | undefined; // ID de la construcción creada
   typeCrud: TypeOperation | null = null;
   api_domainName: string = `${environment.url_domain_name}`;
+  schema: string = `${environment.schemas.temp}`;
   qualificationMode: TypeQualificationMode | null = TYPE_TRADITIONAL;
   allBuiltUseOptions: any[] = [];
   filteredBuiltUseOptions: any[] = [];
@@ -194,23 +194,31 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     private generalValidations: GeneralValidationsService,
     private validationsService: CommonGeneralValidationsService
   ) {
+
     this.domBuiltTypeControl = this.editForm.get('domBuiltType') as FormControl;
   }
 
   ngOnInit(): void {
-    this.typeCrud = this.crudInformationData?.type || TYPE_CREATE_CONSTRUCTION;
+    this.typeCrud = this.crudInformationData?.type || TYPE_CREATE;
     this.executionId = this.crudInformationData?.contentInformation?.executionId;
     this.baunitId = this.crudInformationData?.contentInformation?.baunitId;
     this.unitBuiltId = this.crudInformationData?.contentInformation?.unitBuiltId;
 
-    if (!validateVariable(this.executionId) || !validateVariable(this.baunitId) ||
-      !this.crudInformationData || !this.crudInformationData?.contentInformation ||
+    if (!validateVariable(this.executionId) || !validateVariable(this.baunitId)) {
+      return;
+    }
+
+    if (!this.crudInformationData || !this.crudInformationData?.contentInformation ||
       this.typeCrud === 'DELETE') {
+      this.fetchAllBuiltUseOptions();
       return;
     }
 
     if (this.typeCrud === 'UPDATE') {
       this.constructionData = this.crudInformationData?.contentInformation;
+      if(this.constructionData != null &&  this.crudInformationData?.contentInformation?.schema != null) {
+        this.schema = this.crudInformationData?.contentInformation?.schema;
+      }
       this.changeDetailInformationConstruction(this.constructionData);
       this.getDetailQualificationConstruction(this.constructionData);
     }
@@ -338,7 +346,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       if (!executionId || !baunitId || !unitBuiltId) {
         return;
       }
-      this.constructionsService.getQualificationConstructions(executionId, baunitId, unitBuiltId)
+      this.constructionsService.getQualificationConstructions(executionId, baunitId, unitBuiltId, this.schema)
         .subscribe((result: CcCalificacionUB[]) => {
           this.qualificationsConstruction = result;
           this.mapQualificationsConstruction = this.indexArraylistQualifications(this.qualificationsConstruction, 'domain');

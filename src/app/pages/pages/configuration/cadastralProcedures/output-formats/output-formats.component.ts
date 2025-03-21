@@ -31,7 +31,7 @@ import {
   TABLE_COLUMN_DOCUMENT_ASSOCIATION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../../../apps/constants/general/constant';
+} from '../../../../../apps/constants/general/constants';
 import { UserService } from '../../../auth/login/services/user.service';
 
 import { VexLayoutService } from '@vex/services/vex-layout.service';

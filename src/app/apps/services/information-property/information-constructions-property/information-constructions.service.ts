@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import {
-  ContentInformationConstruction, CreateBasicInformationConstruction
+  ContentInformationConstruction,
+  CreateBasicInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
 import { environment as envi } from '../../../../../environments/environments';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -89,12 +90,13 @@ export class InformationConstructionsService {
     );
   }
 
-  getQualificationConstructions(executionId: string, baunitId: string, unitBuiltId: number): Observable<CcCalificacionUB[]> {
-    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}`;
+  getQualificationConstructions(executionId: string, baunitId: string, unitBuiltId: number,
+                                schema: string | null | undefined = `${envi.schemas.temp}`): Observable<CcCalificacionUB[]> {
+    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${schema}/${executionId}/${baunitId}/${unitBuiltId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
-  getDetailBasicInformationPropertyQualificationConstructions(unitBuiltId: number | undefined,): Observable<CcCalificacionUB[]> {
+  getDetailBasicInformationPropertyQualificationConstructions(unitBuiltId: number | undefined): Observable<CcCalificacionUB[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('unitBuiltId', `${unitBuiltId}`);
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
@@ -103,7 +105,7 @@ export class InformationConstructionsService {
     );
   }
 
-  getQualificationForTypology(selectedType: string, ): Observable<CcCalificacionUB[]> {
+  getQualificationForTypology(selectedType: string): Observable<CcCalificacionUB[]> {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}${envi.typologyType}${selectedType}`;
     return this.requestsService.sendRequestsFetchGet(url).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))

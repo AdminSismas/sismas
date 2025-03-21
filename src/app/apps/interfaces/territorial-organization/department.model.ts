@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/general/constant';
+import { GUION } from '../../constants/general/constants';
 
 export class Department {
   divpolLvl1Code: string | undefined;

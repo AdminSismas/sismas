@@ -41,7 +41,7 @@ import {
   TABLE_COLUMN_PROPERTIES
 } from '../../../../../../../apps/constants/general/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
-import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constant';
+import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constants';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

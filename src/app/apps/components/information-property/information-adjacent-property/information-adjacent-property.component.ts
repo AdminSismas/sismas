@@ -23,7 +23,7 @@ import {
   TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';

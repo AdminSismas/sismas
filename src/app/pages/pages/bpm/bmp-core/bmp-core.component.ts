@@ -31,7 +31,7 @@ import {
   CONSTANT_VALIDATE_OTHER,
   LISTO_FORM_BPM_CORE,
   MODAL_SMALL
-} from '../../../../apps/constants/general/constant';
+} from '../../../../apps/constants/general/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
 import {

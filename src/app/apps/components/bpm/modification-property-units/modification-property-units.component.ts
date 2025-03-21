@@ -28,7 +28,7 @@ import {
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_CREATE,
   TYPE_OPERATION_DELETE
-} from 'src/app/apps/constants/general/constant';
+} from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
 import {

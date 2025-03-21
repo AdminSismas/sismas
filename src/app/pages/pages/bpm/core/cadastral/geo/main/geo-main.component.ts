@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LIST_BUTTON_GEO_MAIN } from '../../../../../../../apps/constants/general/constant';
+import { LIST_BUTTON_GEO_MAIN } from '../../../../../../../apps/constants/general/constants';
 import { Observable } from 'rxjs';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';

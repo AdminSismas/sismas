@@ -9,7 +9,7 @@ import {
   MODAL_LARGE,
   NAME_NO_DISPONIBLE,
   SPACE
-} from '../../../../../../apps/constants/general/constant';
+} from '../../../../../../apps/constants/general/constants';
 import { environment as envi } from '../../../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';

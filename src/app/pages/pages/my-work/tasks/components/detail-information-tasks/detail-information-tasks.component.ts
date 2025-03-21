@@ -40,7 +40,7 @@ import {
   TABLE_COLUMN_PROPERTIES_EXECUTED,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../../../../apps/constants/general/constant';
+} from '../../../../../../apps/constants/general/constants';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';

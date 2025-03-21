@@ -18,7 +18,8 @@ export class AlfaMainService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
   validateAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
@@ -44,11 +45,11 @@ export class AlfaMainService {
     const paramsR: HttpParams = new HttpParams()
       .set('page', `${page.page}`)
       .set('size', `${page.size}`);
-      return this.http.get<InformationPegeable>(url, { params: paramsR });
+    return this.http.get<InformationPegeable>(url, { params: paramsR });
   }
 
   //{{url}}:{{port}}/temporal/clearChangelog
-  clearInformationAlfaMain(executionId: string, keyword: string){
+  clearInformationAlfaMain(executionId: string, keyword: string) {
     const formdata = new FormData();
     formdata.append('changeLogId', `${executionId}`);
     formdata.append('word', `${keyword}`);
@@ -79,13 +80,12 @@ export class AlfaMainService {
   }
 
   //{{url}}:{{port}}/temporal/BAUnitCreate
-  createTemporalBeaUnithead(npnLike: string, executionId: string, bAunitCondition:string): Observable<InformationPegeable> {
+  createTemporalBeaUnithead(npnLike: string, executionId: string, bAunitCondition: string): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.temporal}${envi.bAUnitCreate}`;
     const formData = new FormData();
     formData.append('npnLike', `${npnLike}`);
     formData.append('changeLogId', `${executionId}`);
     formData.append('domBaunitCondition', `${bAunitCondition}`);
-
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
 
     return this.http.post<InformationPegeable>(url, formData, { headers: headers });
@@ -102,13 +102,21 @@ export class AlfaMainService {
   }
 
   //{{url}}:{{port}}/temporal/BAUnitDelete
-  createDeleteTemporalBeaUnithead(baunitId: string, executionId: string) {
-    const url = `${this.basic_url}${envi.temporal}${envi.bAUnitDelete}`;
-    const formData = new FormData();
-    formData.append('baunitId', `${baunitId}`);
-    formData.append('changeLogId', `${executionId}`);
-    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-    return this.http.delete(url, { body: formData, headers });
+  createDeleteTemporalBeaUnitHead(baUnitId: string, executionId: string) {
+    const  params: HttpParams = new HttpParams()
+      .set('baunitId', `${baUnitId}`)
+      .set('changeLogId', `${executionId}`);
+    return this.http.delete(
+      `${this.basic_url}${envi.temporal}${envi.bAUnitDelete}`, { params });
+  }
+
+  //{{url}}:{{port}}/temporal/BAUnitDeleteExistTemp
+  changeTemporaryStateBeaUnitHeadByExistTemp(baUnitId: string, executionId: string) {
+    const  params: HttpParams = new HttpParams()
+      .set('baunitId', `${baUnitId}`)
+      .set('changeLogId', `${executionId}`);
+    return this.http.delete(
+      `${this.basic_url}${envi.temporal}${envi.bAUnitDeleteExistTemp}`, { params });
   }
 
   /**

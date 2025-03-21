@@ -15,7 +15,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { validateVariable } from '../../../utils/general';
+import { getRandomInt, validateVariable } from '../../../utils/general';
 
 @Component({
   selector: 'vex-geographic-viewer-embedded',
@@ -51,6 +51,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   @Input({ required: false }) idComponent = 'GeneralMapContent1258446';
   @Input({ required: false }) executionId: string | null | undefined;
   @Input({ required: false }) ccZonaId: string | null | undefined;
+  @Input({ required: false }) thematicMapValue: string | null | undefined;
   @Input({ required: false }) npn: string | null | undefined;
   @Input({ required: false }) schema: string | null | undefined;
   @Input({ required: false }) enableRefreshButton: boolean = false;
@@ -69,14 +70,15 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     if (this.idComponent != null && this.idComponent?.length > 0) {
-      this.idComponent = this.idComponent + this.getRandomInt(10000);
+      this.idComponent = this.idComponent + getRandomInt(1000) + 'desdC2258446' + getRandomInt(4321);
     } else {
-      this.idComponent = this.getRandomInt(10000).toString();
+      this.idComponent = getRandomInt(10000) + 'desdC6558522' + getRandomInt(1234);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.captureErrorResult();
+
     if (changes['ccZonaId'] && this.ccZonaId && this.ccZonaId?.length > 0) {
       this.showMap = true;
       this.activateLoading();
@@ -98,6 +100,13 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
       return;
     }
 
+    if (changes['thematicMapValue'] && this.thematicMapValue && this.thematicMapValue?.length > 0) {
+      this.showMap = true;
+      this.activateLoading();
+      this.getViewGeneralThematicMap(this.thematicMapValue);
+      return;
+    }
+
     this.captureErrorResult();
   }
 
@@ -105,7 +114,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     this.geographicService.getViewGeneralMapByExecutionId(executionId, schema)
       .subscribe({
         next: (result: string | null) => this.captureResult(result),
-        error: (error) => this.captureErrorResult()
+        error: () => this.captureErrorResult()
       });
   }
 
@@ -113,7 +122,15 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     this.geographicService.getViewGeneralMapById(value)
       .subscribe({
         next: (result: string | null) => this.captureResult(result),
-        error: (error) => this.captureErrorResult()
+        error: () => this.captureErrorResult()
+      });
+  }
+
+  getViewGeneralThematicMap(value: string) {
+    this.geographicService.getViewThematicMapByCodeMunicipality(value)
+      .subscribe({
+        next: (result: string | null) => this.captureResult(result),
+        error: () => this.captureErrorResult()
       });
   }
 
@@ -159,15 +176,16 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
       this.getViewGeneralMapByExecutionId(this.executionId, this.schema);
       return;
     }
+
+    if (this.thematicMapValue && this.thematicMapValue?.length > 0) {
+      this.getViewGeneralThematicMap(this.thematicMapValue);
+      return;
+    }
   }
 
   activateLoading(value = false) {
     const valid = of(value);
     this.isExistDataInformations$ = valid.pipe(take(3));
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
   }
 
 }

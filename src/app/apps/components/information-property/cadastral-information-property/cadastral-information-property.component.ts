@@ -49,7 +49,7 @@ import {
   REFERENCE_COMPONENTS,
   RULE_PAGE_CADASTRAL_DA,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import {
   PropertyAppraisalInformationComponent
 } from '../property-appraisal-information/property-appraisal-information.component';

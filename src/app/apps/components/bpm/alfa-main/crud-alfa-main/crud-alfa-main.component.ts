@@ -21,7 +21,7 @@ import {
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_CREATE,
   TYPE_OPERATION_DELETE
-} from '../../../../constants/general/constant';
+} from '../../../../constants/general/constants';
 import {
   CONSTANT_NAME_ADD_LABEL,
   CONSTANT_NAME_CREATE_LABEL,
@@ -51,6 +51,7 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { CurrencyLandsPipe } from '../../../../pipes/currency-lands.pipe';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-crud-alfa-main',
@@ -126,7 +127,6 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: DataAlfaMain,
     private readonly layoutService: VexLayoutService,
-    private snackBar: MatSnackBar,
     private alfaMainService: AlfaMainService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CrudAlfaMainComponent>
@@ -199,10 +199,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     }
 
     if (!this.formCreateDelete.value || !this.formCreateDelete.value.npnLike) {
-      this.snackBar.open(
-        'No se puede consultar información, con los datos suministrados.',
-        'CERRAR', { duration: 10000 }
-      );
+      this.getAlertError('No se puede consultar información, con los datos suministrados.');
       return;
     }
     this.alfaMainService.loadingListBeaUnitheadByExecutionIdAndNpnLike(
@@ -213,34 +210,25 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitFormAdd(): void {
-    if(!this.formAdd.value) {
+    if (!this.formAdd.value) {
       return;
     }
 
     const addNpnLike = this.formAdd.value.addNpnLike;
     const bAunitCondition = this.formAdd.value.bAunitCondition;
-    if(!addNpnLike || !bAunitCondition) {
-      this.snackBar.open(
-        'Para poder continuar diligencie los campos obligatorios',
-        'CERRAR', { duration: 10000 }
-      );
+    if (!addNpnLike || !bAunitCondition) {
+      this.getAlertError('Para poder continuar diligencie los campos obligatorios');
       return;
     }
 
     this.alfaMainService.createTemporalBeaUnithead(addNpnLike, this.executionId, bAunitCondition)
       .subscribe({
         next: () => {
-          this.snackBar.open(
-            'Se creó una nueva unidad predial.',
-            'CERRAR', { duration: 10000 }
-          );
+          this.getAlertSuccess('Se creó una nueva unidad predial.');
           this.dialogRef.close();
         },
         error: (error: HttpErrorResponse) => {
-          this.snackBar.open(
-            'Error al crear la unidad predial.',
-            'CERRAR', { duration: 10000 }
-          );
+          this.getAlertError('Error al crear la unidad predial.');
           throw error;
         }
       });
@@ -262,17 +250,11 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     this.alfaMainService.createUpdateTemporalBeaUnithead(baunit?.baunitIdE, this.executionId)
       .subscribe({
         next: (() => {
-          this.snackBar.open(
-            'Se creó una nueva unidad predial para actualizar.',
-            'CERRAR', { duration: 10000 }
-          );
+          this.getAlertSuccess('Se creó una nueva unidad predial para actualizar.');
           this.loadPropertiesInformation();
         }),
         error: (error: HttpErrorResponse) => {
-          this.snackBar.open(
-            'Error al crear la unidad predial para actualizar.',
-            'CERRAR', { duration: 10000 }
-          );
+          this.getAlertError('Error al crear la unidad predial para actualizar.');
           throw error;
         }
       });
@@ -282,20 +264,14 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!baunit || !baunit?.baunitIdE) {
       return;
     }
-    this.alfaMainService.createDeleteTemporalBeaUnithead(baunit?.baunitIdE, this.executionId)
+    this.alfaMainService.createDeleteTemporalBeaUnitHead(baunit?.baunitIdE, this.executionId)
       .subscribe({
         next: () => {
-          this.snackBar.open(
-            'Se creó una nueva unidad predial para eliminar.',
-            'CERRAR', { duration: 10000 }
-          );
+          this.getAlertSuccess('Se creó una nueva unidad predial para eliminar.');
           this.loadPropertiesInformation();
         },
         error: (error: HttpErrorResponse) => {
-          this.snackBar.open(
-            'Error al crear la unidad predial para eliminar.',
-            'CERRAR', { duration: 10000 }
-          );
+          this.getAlertError('Error al crear la unidad predial para eliminar.');
           throw error;
         }
       });
@@ -331,6 +307,25 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {
     return column.property;
+  }
+
+  getAlertError(msg: string, timer: number = 10000) {
+    Swal.fire({
+      text: msg,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: timer
+    }).then();
+  }
+
+
+  getAlertSuccess(msg: string, timer: number = 10000) {
+    Swal.fire({
+      text: msg,
+      icon: 'success',
+      showConfirmButton: false,
+      timer: timer
+    }).then();
   }
 
   get visibleColumns() {

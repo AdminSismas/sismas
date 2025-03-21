@@ -17,7 +17,7 @@ import {
 } from '../../../../../../apps/components/general-components/loading-app/loading-app.component';
 import { environment } from '../../../../../../../environments/environments';
 import { Observable, of } from 'rxjs';
-import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constant';
+import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constants';
 import { filter, take } from 'rxjs/operators';
 import {
   AlfaMainInformationComponent

@@ -61,7 +61,7 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_BASIC_PRINCIPALS
-} from '../../../../../../apps/constants/general/constant';
+} from '../../../../../../apps/constants/general/constants';
 import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
 
 @Component({
@@ -197,7 +197,7 @@ export class BasicParticipantTableComponent
     if (!info.typeNumberDocument || !info.numberID) {
       this.snackbar.open(
         'Ingresar tipo documento o número de documento',
-        undefined,
+        'Aceptar',
         { duration: 10000 }
       );
       return;
@@ -260,7 +260,7 @@ export class BasicParticipantTableComponent
   addParticipantToList() {
     const typeParticipation = this.form.get('typeParticipation')?.value;
     if (!typeParticipation) {
-      this.snackbar.open('Seleccionar tipo de participación', undefined, {
+      this.snackbar.open('Seleccionar tipo de participación', 'Aceptar', {
         duration: 10000
       });
       return;
@@ -289,7 +289,7 @@ export class BasicParticipantTableComponent
           this.subject$.next(this.participants);
           return;
         }
-        this.snackbar.open('Participante ya agregado', undefined, {
+        this.snackbar.open('Participante ya agregado', 'Aceptar', {
           duration: 10000
         });
         return;

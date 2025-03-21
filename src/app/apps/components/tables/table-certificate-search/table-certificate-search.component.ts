@@ -59,7 +59,7 @@ import {
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from '../../../constants/general/constants';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';

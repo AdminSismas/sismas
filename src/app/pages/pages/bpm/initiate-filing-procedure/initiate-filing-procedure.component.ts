@@ -62,7 +62,7 @@ import {
   PANEL_ASSIGNED_TASKS,
   SPACE,
   TABLE_COLUMN_PROPERTIES
-} from '../../../../apps/constants/general/constant';
+} from '../../../../apps/constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
 import { MetadataBpm } from '../../../../apps/interfaces/bpm/metadata-bpm';
@@ -157,6 +157,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   listBpmDocumentsProcess$: Observable<BpmDocument[]> =
     this._listBpmDocumentsProcess.asObservable();
   isExistListBpmTypeProcess$: Observable<boolean> = of(false);
+  bpmProccessCategorySelected = false;
 
   baunitIdE: string | null = null;
   baunitIdE$ = this.route.params.pipe(
@@ -270,6 +271,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   }
 
   loadBpmProcess(domainCollection: DomainCollection) {
+    this.bpmProccessCategorySelected = true;
     if (!domainCollection || !domainCollection?.code) {
       return;
     }
