@@ -1,7 +1,6 @@
 
 export type TypeInformation = 'visualization' | 'edition';
-export type TypeOperation = 'CREATE' | 'UPDATE' | 'DELETE';
-export type TypeOperationConstruction = 'CREATE' | 'UPDATE' | 'DELETE';
+export type TypeOperation = 'CREATE' | 'UPDATE' | 'DELETE' | 'READ_ONLY';
 export type InputType = 'text' | 'number' | 'email' | 'password';
 export type TypeOperationAlfaMain = 'ADD' | 'CREATE' | 'DELETE';
 export type TypeOperationGeoMain = 'CREATE' | 'DELETE' | 'CAL_BOUND';
