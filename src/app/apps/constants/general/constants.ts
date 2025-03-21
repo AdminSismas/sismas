@@ -10,8 +10,8 @@ import { environment } from '../../../../environments/environments';
 import {
   CheckTypeQualificationMode,
   TypeButtonAlfaMain,
-  TypeInformation,
-  TypeOperationAlfaMain, TypeOperationConstruction,
+  TypeInformation, TypeOperation,
+  TypeOperationAlfaMain,
   TypeOperationGeoMain, TypeQualificationMode, ValidateQualificationByDomBuiltType
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
@@ -1071,7 +1071,8 @@ export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
 
-export const TYPE_CREATE_CONSTRUCTION: TypeOperationConstruction = 'CREATE';
+export const TYPE_CREATE: TypeOperation = 'CREATE';
+export const TYPE_READ_ONLY: TypeOperation = 'READ_ONLY';
 
 export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
   label: 'Tradicional',
