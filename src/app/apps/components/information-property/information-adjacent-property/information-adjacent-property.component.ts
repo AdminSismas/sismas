@@ -15,7 +15,7 @@ import { NgClass, NgForOf, NgTemplateOutlet } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
-  MODAL_SMALL,
+  MODAL_SMALL, MODAL_SMALL_LARGE,
   PAGE,
   PAGE_OPTION_5_7_10,
   PAGE_SIZE_SORT,
@@ -53,18 +53,14 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {
   CrudInformationAdjacentPropertyComponent
 } from './crud-information-adjacent-property/crud-information-adjacent-property.component';
+import {
+  InformationAdjacentPropertyService
+} from '../../../services/information-property/information-adjacent-property/information-adjacent-property.service';
 
 @Component({
   selector: 'vex-information-adjacent-property',
   standalone: true,
-  animations: [
-    fadeInRight400ms,
-    stagger80ms,
-    scaleIn400ms,
-    stagger40ms,
-    fadeInUp400ms,
-    scaleFadeIn400ms
-  ],
+  animations: [fadeInUp400ms, stagger40ms],
   imports: [
     FormsModule,
     NgClass,
@@ -106,6 +102,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   @Input() editable: boolean | undefined = true;
 
   columns: TableColumn<InformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
+
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
@@ -118,6 +115,8 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+
+  @ViewChild('deletedAdjacent') deletedAdjacent!: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
@@ -126,16 +125,16 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
-    private informationPropertyService: InformationPropertyService
+    private informationAdjacentService: InformationAdjacentPropertyService
   ) {
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource();
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
 
-    this.dataSource = new MatTableDataSource();
     this.id = getRandomInt(874524) + this.schema +
       +'InformationAdjacentPropertyComponent' + getRandomInt(10) + this.baunitId;
 
@@ -144,7 +143,6 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     }
 
     this.isExpandPanel(this.expandedComponent);
-
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
@@ -152,12 +150,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   }
 
   ngAfterViewInit() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
+    this.initialPaginatorAndSort();
   }
 
   isExpandPanel(expandedComponent: boolean): void {
@@ -170,10 +163,10 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.informationPropertyService.getInformationPropertyAdjacent(
+    this.informationAdjacentService.getInformationPropertyTemporalAdjacent(
       this.page, this.pageSize, this.baunitId).subscribe({
       next: (result: InformationPegeable) => this.captureInformationSubscribe(result),
-      error: (err: any) => this.captureInformationSubscribeError()
+      error: () => this.captureInformationSubscribeError()
     });
     return true;
   }
@@ -219,46 +212,42 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     this.executeEventAddEditAdjacentInformationProperty(null);
   }
 
-  editAdjacentInformationProperty(customer: ContentInformationConstruction): void {
-    this.executeEventAddEditAdjacentInformationProperty(customer);
+  editAdjacentInformationProperty(content: InformationAdjacent): void {
+    this.executeEventAddEditAdjacentInformationProperty(content);
   }
 
-  executeEventAddEditAdjacentInformationProperty(customer: any): void {
+  executeEventAddEditAdjacentInformationProperty(content: InformationAdjacent | null): void {
+    let data: InformationAdjacent = new InformationAdjacent(content, this.schema, this.baunitId);
+    data.executionId = this.executionId;
     const dialogRef = this.dialog.open(CrudInformationAdjacentPropertyComponent, {
-      ...MODAL_SMALL,
-      data: {
-        ...customer,
-        executionId: this.executionId,
-        baunitId: this.baunitId
-      }
+      ...MODAL_SMALL_LARGE,
+      disableClose: true,
+      data: { type: !content ? 'CREATE' : 'UPDATE', contentInformation: data }
     });
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-
+      if (result && result.ccColindanteBaunitId != null && result.ccColindanteBaunitId > 0) {
+        this.searchInformationAdjacentProperty();
       }
     });
   }
 
-  deleteInformation(customer: any): void {
-    // const dialogRef = this.dialog.open(this.confirmDialog);
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     const baunitId = this.baunitId ?? '';
-    //     const executionId = this.executionId ?? '';
-    //     const unitBuiltId = customer.unitBuiltId;
-    //
-    //     this.informationPropertyService.deleteConstruction(baunitId, executionId, unitBuiltId).subscribe({
-    //       next: () => {
-    //
-    //         this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== unitBuiltId);
-    //         this.deleteSwal.fire();
-    //       },
-    //       error: () => {
-    //         this.errorSwal.fire();
-    //       }
-    //     });
-    //   }
-    // });
+  deleteInformation(content: InformationAdjacent): void {
+    if (!content || !content?.ccColindanteBaunitId) {
+      return;
+    }
+    this.deletedAdjacent.fire().then((result) => {
+      if (result.isConfirmed && this.baunitId && this.executionId && content?.ccColindanteBaunitId) {
+        this.informationAdjacentService.deleteAdjacent(
+          this.executionId, this.schema, this.baunitId, content?.ccColindanteBaunitId
+        ).subscribe({
+          next: () => {
+            this.searchInformationAdjacentProperty();
+            this.deleteSwal.fire();
+          },
+          error: () => this.errorSwal.fire()
+        });
+      }
+    });
   }
 
   refreshInformationPaginator(event: PageEvent): void {
@@ -307,6 +296,15 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   get visibleColumns() {
     return this.columns.filter((column) => column.visible)
       .map((column) => column.property);
+  }
+
+  initialPaginatorAndSort() {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
 }

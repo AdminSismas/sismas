@@ -12,97 +12,54 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 
-<mat-dialog-content [@stagger]="true">
-  <div class="flex flex-col sm:flex-row gap-4">
-    <form [formGroup]="editForm">
-      <div @fadeInUp class="card flex-auto">
-        <!--          <div class="mt-1 flex flex-col sm:flex-row sm:gap-4 m-0">-->
-        <!--            <vex-combox-custom-selector-->
-        <!--              [idSelector]="'BuiltType' + 'dispname' + 15648"-->
-        <!--              [label]="'Tipo de Construcción'"-->
-        <!--              [placeholder]="'Seleccione el tipo...'"-->
-        <!--              [apiUrl]="api_domainName"-->
-        <!--              [queryParams]="{ domainName: 'BuiltType', active: true }"-->
-        <!--              [valueKey]="'dispname'"-->
-        <!--              [displayKey]="'dispname'"-->
-        <!--              formControlName="domBuiltType"-->
-        <!--              (selectionChange)="onTypeSelectionChange($event)"-->
-        <!--              cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"-->
-        <!--              class="flex-auto"-->
-        <!--            ></vex-combox-custom-selector>-->
-        <!--          </div>-->
-        <!--          <div class="mt-1 flex flex-col sm:flex-row sm:gap-4 m-0">-->
-        <!--            <vex-input-->
-        <!--              class="flex-auto"-->
-        <!--              label="ID"-->
-        <!--              type="text"-->
-        <!--              idComboInput="unitBuiltLabel5445"-->
-        <!--              [formControlNameInput]="'unitBuiltLabel'"-->
-        <!--              [formControlInput]="validateUnitBuiltLabel"-->
-        <!--              [hintValue]="CONSTANT_MSG_UNITBUILT_LABEL"-->
-        <!--            ></vex-input>-->
-        <!--            <vex-input-->
-        <!--              class="flex-auto"-->
-        <!--              label="Piso"-->
-        <!--              type="text"-->
-        <!--              idComboInput="unitBuiltFloors21323"-->
-        <!--              [formControlNameInput]="'unitBuiltFloors'"-->
-        <!--              [formControlInput]="validateUnitBuiltFloors"-->
-        <!--              [hintValue]="CONSTANT_MSG_ONLY_ONE_99"-->
-        <!--            ></vex-input>-->
-        <!--            <vex-input-->
-        <!--              class="flex-auto"-->
-        <!--              label="Año"-->
-        <!--              type="text"-->
-        <!--              idComboInput="unitBuiltYear123213"-->
-        <!--              [formControlNameInput]="'unitBuiltYear'"-->
-        <!--              [formControlInput]="validateUnitBuiltYear"-->
-        <!--              [hintValue]="CONSTANT_MSG_UNITBUILT_YEAR"-->
-        <!--            ></vex-input>-->
-        <!--          </div>-->
-        <!--          <div class="mt-1 flex flex-col sm:flex-row sm:gap-4 m-0">-->
-        <!--            <vex-input-->
-        <!--              class="flex-auto"-->
-        <!--              label="Área Total"-->
-        <!--              type="text"-->
-        <!--              idComboInput="unitBuiltArea2223"-->
-        <!--              [formControlNameInput]="'unitBuiltArea'"-->
-        <!--              [formControlInput]="validateUnitBuiltArea"-->
-        <!--              [hintValue]="CONSTANT_MSG_TYPE_AREA"-->
-        <!--            ></vex-input>-->
-        <!--            <vex-input-->
-        <!--              class="flex-auto"-->
-        <!--              label="Área Privada"-->
-        <!--              type="text"-->
-        <!--              idComboInput="unitBuiltPrivateArea12123"-->
-        <!--              [formControlNameInput]="'unitBuiltPrivateArea'"-->
-        <!--              [formControlInput]="validateUnitBuiltPrivateArea"-->
-        <!--              [hintValue]="CONSTANT_MSG_TYPE_AREA"-->
-        <!--            ></vex-input>-->
-      </div>
-
-      <!-- Botones de acción -->
-      <div class="flex items-center justify-end gap-2">
+<mat-dialog-content [@stagger]="true" class="flex flex-col px-2">
+  <form [formGroup]="editForm" (ngSubmit)="saveInformationAdjacent()">
+    <div class="flex flex-col sm:flex-row sm:gap-4">
+      <vex-combox-colletion
+        [idComboCollection]="'domPuntoCardinal' + 1254254"
+        formControlNameCombobox="domPuntoCardinal"
+        label="Tipo de punto cardinal"
+        typeDomainName="PuntoCardinal"
+        placeholderDomainName="Seleccionar un punto cardinal"
+        class="px-0 flex-1">
+      </vex-combox-colletion>
+    </div>
+    <div class="flex flex-col sm:flex-row sm:gap-4">
+      <vex-text-area
+        [idTextArea]="'colindante'+ 'colindanteLabel5445'"
+        label="Colindante"
+        [formControlNameTextArea]="'colindante'"
+        [formControlTextArea]="validateAdjacentText"
+        class="px-0 flex-1">
+      </vex-text-area>
+    </div>
+    <!-- Botones de acción -->
+    <mat-dialog-actions align="end">
+      <button mat-button
+              mat-dialog-close type="button"
+              [mat-dialog-close]="false">
+        Cancelar
+      </button>
+      @if (isCreate) {
         <button
-          color="warn"
-          type="button"
-          mat-flat-button
-          class="p-6 text-lg"
-          [mat-dialog-close]="false">
-          Cancelar
-        </button>
-        <button
-          color="primary"
           type="submit"
+          color="primary"
           mat-flat-button
-          class="p-6 text-lg"
-          (click)="saveInformacionAdjacent()">
-          Guardar
-          <mat-icon svgIcon="mat:save"></mat-icon>
+          [disabled]="editForm.invalid">
+          Crear
         </button>
-      </div>
-    </form>
-  </div>
+      }
+      @if (isUpdate) {
+        <button
+          type="submit"
+          color="primary"
+          mat-flat-button
+          [disabled]="editForm.invalid">
+          Actualizar
+        </button>
+      }
+    </mat-dialog-actions>
+  </form>
 </mat-dialog-content>
 
 <swal
@@ -239,3 +196,12 @@
   [confirmButtonText]="'Sí, cerrar'"
   [cancelButtonText]="'Cancelar'"
 ></swal>
+
+<swal
+  #validationErrorDialog
+  title="¡Error!"
+  text="Por favor, verifique la informacion ingresada."
+  icon="error"
+  [confirmButtonColor]="'#3f51b5'">
+</swal>
+

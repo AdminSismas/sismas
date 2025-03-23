@@ -18,7 +18,6 @@
     </mat-expansion-panel-header>
     <mat-panel-description class="py-0 px-0">
       <div class="w-full flex flex-col overflow-auto">
-
         @if (typeInformation === "edition" || dataSource && dataSource.data.length > 3) {
           <div class="px-4 h-16 border-b sticky left-0 flex items-center">
             <!-- Botón "Nueva" SIEMPRE visible en edición -->
@@ -57,105 +56,117 @@
           </div>
         }
         <!-- Mostrar tabla y paginador SOLO si hay datos -->
-        @if (dataSource.data.length > 0) {
-          <table @stagger [dataSource]="dataSource" class="w-full" mat-table matSort>
+        <table
+          @stagger
+          [dataSource]="dataSource"
+          class="w-full"
+          mat-table
+          matSort
+        >
 
-            <!-- Checkbox Column -->
-            <ng-container matColumnDef="checkbox">
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-                class="pl-1 pr-1"
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="checkbox">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              class="pl-1 pr-1"
+            >
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                color="primary"
               >
-                <mat-checkbox
-                  (change)="$event ? masterToggle() : null"
-                  [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()"
-                  color="primary"
-                >
-                </mat-checkbox>
-              </th>
-              <td
-                *matCellDef="let row"
-                class="w-4 pl-1 pr-1"
-                mat-cell
+              </mat-checkbox>
+            </th>
+            <td
+              *matCellDef="let row"
+              class="w-4 pl-1 pr-1"
+              mat-cell
+            >
+              <mat-checkbox
+                (change)="$event ? selection.toggle(row) : null"
+                (click)="$event.stopPropagation()"
+                [checked]="selection.isSelected(row)"
+                color="primary"
               >
-                <mat-checkbox
-                  (change)="$event ? selection.toggle(row) : null"
-                  (click)="$event.stopPropagation()"
-                  [checked]="selection.isSelected(row)"
-                  color="primary"
-                >
-                </mat-checkbox>
-              </td>
-            </ng-container>
+              </mat-checkbox>
+            </td>
+          </ng-container>
 
-            <!-- Columnas dinámicas -->
-            @for (column of columns; track trackByProperty) {
-              @if (column.type === 'text') {
-                <ng-container [matColumnDef]="column.property">
-                  <th *matHeaderCellDef mat-header-cell mat-sort-header>
-                    {{ column.label }}
-                  </th>
-                  <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
-                    {{ row[column.property] }}
-                  </td>
-                </ng-container>
-              }
+          <!-- Columnas dinámicas -->
+          @for (column of columns; track trackByProperty) {
+            @if (column.type === 'text') {
+              <ng-container [matColumnDef]="column.property">
+                <th
+                  *matHeaderCellDef
+                  class="pl-3 pr-3"
+                  mat-header-cell
+                  mat-sort-header
+                >
+                  {{ column.label }}
+                </th>
+                <td
+                  *matCellDef="let row"
+                  [ngClass]="column.cssClasses"
+                  mat-cell
+                  class="pl-3 pr-3"
+                >
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
             }
+          }
 
-            <!-- Action Column -->
-            <ng-container matColumnDef="actions">
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-                mat-sort-header
-              ></th>
-              <td
-                *matCellDef="let row"
-                class="w-10 text-secondary"
-                mat-cell
+          <!-- Action Column -->
+          <ng-container matColumnDef="actions">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              mat-sort-header
+            ></th>
+            <td
+              *matCellDef="let row"
+              class="w-10 text-secondary"
+              mat-cell
+            >
+              <button
+                (click)="$event.stopPropagation()"
+                [matMenuTriggerData]="{ customer: row }"
+                [matMenuTriggerFor]="actionsMenu"
+                mat-icon-button
+                type="button"
               >
-                <button
-                  (click)="$event.stopPropagation()"
-                  [matMenuTriggerData]="{ customer: row }"
-                  [matMenuTriggerFor]="actionsMenu"
-                  mat-icon-button
-                  type="button"
-                >
-                  <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-                </button>
-              </td>
-            </ng-container>
+                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-            <tr
-              *matHeaderRowDef="visibleColumns"
-              mat-header-row
-            ></tr>
-            <tr
-              *matRowDef="let row; columns: visibleColumns"
-              @fadeInUp
-              class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-              mat-row
-            ></tr>
-          </table>
-        }
+          <tr
+            *matHeaderRowDef="visibleColumns"
+            mat-header-row
+          ></tr>
+          <tr
+            *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            mat-row
+          ></tr>
+        </table>
         @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
           <div class="no-data-information">
             No hay colindantes para mostrar.
           </div>
         }
-        @if (dataSource.data.length > 0) {
-          <mat-paginator
-            #paginator
-            [pageSizeOptions]="pageSizeOptions"
-            [length]="totalElements"
-            [pageSize]="pageSize"
-            [pageIndex]="page"
-            (page)="refreshInformationPaginator($event)"
-            class="paginator"
-          ></mat-paginator>
-        }
+        <mat-paginator
+          #paginator
+          [pageSizeOptions]="pageSizeOptions"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="page"
+          (page)="refreshInformationPaginator($event)"
+          class="paginator"
+        ></mat-paginator>
       </div>
     </mat-panel-description>
   </mat-expansion-panel>
@@ -200,6 +211,17 @@
   </ng-template>
 </mat-menu>
 
+<swal
+  #deletedAdjacent
+  title="Eliminar Colindante"
+  text="¿Desea eliminar el colindante?"
+  icon="warning"
+  [showCancelButton]="true"
+  [confirmButtonText]="'Eliminar'"
+  [cancelButtonText]="'Cancelar'"
+  [confirmButtonColor]="'#3085d6'"
+  [cancelButtonColor]="'#d33'">
+</swal>
 
 
 <swal

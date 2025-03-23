@@ -142,7 +142,6 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private snackBar = inject(MatSnackBar);
 
   constructor(
     private dialog: MatDialog,
@@ -214,7 +213,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     this.constructionsService.getBasicInformationPropertyConstructions(
       this.generateObjectPageSearchData(this.baunitId), this.schema, this.executionId)
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
+        error: (err: any) => this.captureInformationSubscribeError(),
         next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
       });
     return true;
@@ -252,7 +251,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     }
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.contentInformations = new InformationPegeable();
     this.dataSource.data = [];
   }
@@ -286,12 +285,10 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
       if (result.isConfirmed && this.baunitId && this.executionId && customer.unitBuiltId) {
         this.constructionsService.deleteConstruction(this.baunitId, this.executionId, customer.unitBuiltId).subscribe({
           next: () => {
-            this.dataSource.data = this.dataSource.data.filter((row: any) => row.unitBuiltId !== customer.unitBuiltId);
             this.deleteSwal.fire();
+            this.searchInformationsConstructionsProperty();
           },
-          error: () => {
-            this.errorSwal.fire();
-          }
+          error: () => this.errorSwal.fire()
         });
       }
     });

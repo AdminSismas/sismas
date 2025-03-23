@@ -109,7 +109,7 @@ export class GeneralValidationsService {
         return null;
       }
       let value = this.patternValidator(control, '^(19|20)\\d{2}$');
-      return value != null && value ? { yearBetween1900And2099: true } : null
+      return value != null && value ? { yearBetween1900And2099: true } : null;
     };
   }
 
@@ -143,6 +143,20 @@ export class GeneralValidationsService {
     };
   }
 
+  min03Characters(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value: any = control.value;
+      return this.isValueField(value) && value.length <= 10 ? { min03Characters: true } : null
+    };
+  }
+
+  min10Characters(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value: any = control.value;
+      return this.isValueField(value) && value.length <= 10 ? { min10Characters: true } : null
+    };
+  }
+
   privateAreaValidator(totalAreaControlName: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup = control.parent; // Obtén el grupo del formulario
@@ -159,6 +173,23 @@ export class GeneralValidationsService {
         return { privateAreaExceedsTotal: true }; // Devuelve un error si el área privada es mayor
       }
       return null; // Sin errores
+    };
+  }
+
+  onlyTextAndNumber(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      let value = this.patternValidator(control, '[a-zA-Z0-9]*');
+      return value != null && value ? { onlyTextOrNumber: true } : null
+    };
+  }
+
+  onlyTextAndNumber1(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let regex = /^(?![^a-zA-Z0-9\u0B80-\u0BFF]).*$/;
+      return regex.test(control.value) ? null : { onlyTextOrNumber1: true };
     };
   }
 

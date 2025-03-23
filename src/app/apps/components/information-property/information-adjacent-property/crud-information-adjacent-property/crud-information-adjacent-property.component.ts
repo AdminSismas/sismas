@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
+  MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogRef,
@@ -9,16 +10,14 @@ import {
 } from '@angular/material/dialog';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { CollectionServices } from '../../../../services/general/collection.service';
 import { GeneralValidationsService } from '../../../../services/validations/general-validations.service';
-import { CommonGeneralValidationsService } from '../../../../services/general/common-general-validations.service';
 import {
   CrudInformationAdjacent,
   InformationAdjacent
@@ -26,6 +25,11 @@ import {
 import { validateVariable } from '../../../../utils/general';
 import { TypeOperation } from '../../../../interfaces/general/content-info';
 import { TYPE_CREATE } from '../../../../constants/general/constants';
+import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { TextAreaComponent } from '../../../general-components/text-area/text-area.component';
+import {
+  InformationAdjacentPropertyService
+} from '../../../../services/information-property/information-adjacent-property/information-adjacent-property.service';
 
 @Component({
   selector: 'vex-crud-information-adjacent-property',
@@ -47,7 +51,10 @@ import { TYPE_CREATE } from '../../../../constants/general/constants';
     MatIconButton,
     ReactiveFormsModule,
     SweetAlert2Module,
-    MatDialogClose
+    MatDialogClose,
+    ComboxColletionComponent,
+    MatDialogActions,
+    TextAreaComponent
   ],
   templateUrl: './crud-information-adjacent-property.component.html',
   styleUrl: './crud-information-adjacent-property.component.scss'
@@ -59,24 +66,28 @@ export class CrudInformationAdjacentPropertyComponent implements OnInit {
   ccColindanteBaunitId!: number | null | undefined; // ID del colindante
   typeCrud: TypeOperation | null = null;
   informationAdjacentData: InformationAdjacent | null = null;
+  isCreateOrUpdateAdjacent: boolean = false; // Estado de carga
 
   editForm: FormGroup = this.fb.group({
-    //   unitBuiltId: [this.crudInformationData?.contentInformation?.unitBuiltId ?? null],
-    //   domBuiltType: [this.crudInformationData?.contentInformation?.domBuiltType ?? null, Validators.required],
-    //   domBuiltUse: [this.crudInformationData?.contentInformation?.domBuiltUse ?? null, Validators.required],
-    //   unitBuiltLabel: [this.crudInformationData?.contentInformation?.unitBuiltLabel ?? null, [Validators.required, this.generalValidations.validateCapitalLettersOnly()]],// Solo letras mayúsculas
-    //   unitBuiltFloors: [this.crudInformationData?.contentInformation?.unitBuiltFloors ?? null, [Validators.required, this.generalValidations.validateNumberMax99()]],// Números del 1 al 99
+    domPuntoCardinal: this.fb.control(
+      this.crudInformationData?.contentInformation?.domPuntoCardinal ?? null,
+      [Validators.required]),
+    colindante: this.fb.control(
+      this.crudInformationData?.contentInformation?.colindante ?? null,
+      [Validators.required, this.generalValidations.min10Characters()])
   });
 
   @ViewChild('closeDialog') closeDialog!: SwalComponent;
+  @ViewChild('validationErrorDialog') private validationErrorDialog!: SwalComponent;
+  @ViewChild('successDialog') private successDialog!: SwalComponent;
+  @ViewChild('errorSaveDialog') private errorSaveDialog!: SwalComponent;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public crudInformationData: CrudInformationAdjacent | null,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CrudInformationAdjacentPropertyComponent>,
-    private collectionServicesService: CollectionServices,
     private generalValidations: GeneralValidationsService,
-    private validationsService: CommonGeneralValidationsService
+    private informationAdjacentService: InformationAdjacentPropertyService
   ) {
   }
 
@@ -97,6 +108,10 @@ export class CrudInformationAdjacentPropertyComponent implements OnInit {
       this.informationAdjacentData = this.crudInformationData?.contentInformation;
       this.changeDetailInformationConstruction(this.informationAdjacentData);
     }
+
+    this.editForm.valueChanges.subscribe(selectedValue => {
+      this.isCreateOrUpdateAdjacent = false;
+    });
   }
 
   changeDetailInformationConstruction(detailInformation: InformationAdjacent | null) {
@@ -109,12 +124,68 @@ export class CrudInformationAdjacentPropertyComponent implements OnInit {
     }
   }
 
-  saveInformacionAdjacent(){
+  saveInformationAdjacent() {
+    this.editForm.markAllAsTouched();
+    if (this.editForm.invalid) {
+      this.validationErrorDialog.fire();
+      return;
+    }
 
+    const formValues: InformationAdjacent = this.processFormValues(this.editForm.value);
+    if (this.typeCrud === 'UPDATE' && this.executionId && this.baUnitId) {
+      this.updateAdjacent(this.executionId, this.baUnitId, formValues);
+      return;
+    }
+    if (this.typeCrud === 'CREATE' && this.executionId && this.baUnitId) {
+      this.createAdjacent(this.executionId, this.baUnitId, formValues);
+      return;
+    }
+    this.isCreateOrUpdateAdjacent = false;
   }
 
+  createAdjacent(executionId: string, baunitId: string, formValues: InformationAdjacent) {
+    this.informationAdjacentService.createInformationPropertyAdjacent(
+      executionId, baunitId, formValues).subscribe({
+      next: (result: InformationAdjacent) => {
+        this.informationAdjacentData = result;
+        this.ccColindanteBaunitId = result?.ccColindanteBaunitId;
+        this.isCreateOrUpdateAdjacent = true;
+        this.closeSuccessDialog(this.informationAdjacentData);
+      },
+      error: () => {
+        this.isCreateOrUpdateAdjacent = false;
+        this.errorSaveDialog.fire();
+      }
+    });
+  }
+
+  updateAdjacent(executionId: string, baunitId: string, formValues: InformationAdjacent) {
+    this.informationAdjacentService.updateInformationPropertyAdjacent(
+      executionId, baunitId, formValues).subscribe({
+      next: (result: InformationAdjacent) => {
+        this.informationAdjacentData = result;
+        this.ccColindanteBaunitId = result?.ccColindanteBaunitId;
+        this.isCreateOrUpdateAdjacent = true;
+        this.closeSuccessDialog(this.informationAdjacentData);
+      },
+      error: () => {
+        this.isCreateOrUpdateAdjacent = false;
+        this.errorSaveDialog.fire();
+      }
+    });
+  }
+
+  closeSuccessDialog(result: InformationAdjacent) {
+    this.successDialog.fire().then(() => {
+      this.closedDialog(result);
+    });
+  }
 
   handleDialogClose(): void {
+    if (!this.isCreateOrUpdateAdjacent) {
+      this.closedDialog(this.informationAdjacentData);
+      return;
+    }
     this.closeDialog.fire().then((result) => {
       if (result.isConfirmed) {
         this.closedDialog(this.informationAdjacentData);
@@ -126,4 +197,25 @@ export class CrudInformationAdjacentPropertyComponent implements OnInit {
     this.dialogRef.close(dataInformation);
   }
 
+  private processFormValues(values: any): any {
+    if (this.isCreate) {
+      return new InformationAdjacent(values);
+    }
+    let data: InformationAdjacent = new InformationAdjacent(this.crudInformationData?.contentInformation);
+    data.domPuntoCardinal = values?.domPuntoCardinal;
+    data.colindante = values?.colindante;
+    return data;
+  }
+
+  get isCreate() {
+    return this.typeCrud === 'CREATE';
+  }
+
+  get isUpdate() {
+    return this.typeCrud === 'UPDATE';
+  }
+
+  get validateAdjacentText() {
+    return this.editForm.get('colindante') as FormControl;
+  }
 }
