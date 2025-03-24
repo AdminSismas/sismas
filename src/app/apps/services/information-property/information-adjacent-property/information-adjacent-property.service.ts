@@ -53,11 +53,10 @@ export class InformationAdjacentPropertyService {
   }
 
   deleteAdjacent(executionId: string, schema: string, baUnitId: string,
-                 ccColindanteBaunitId: number): Observable<void> {
-    const url = `${this.basic_url}${envi.ccColindante}`;
-    const formData = new FormData();
-    formData.append('word', 'borrar');
-    return this.requestsService.sendDeleteFetch(url);
+                 ccColindanteBaUnitId: number): Observable<void> {
+    return this.requestsService.sendDeleteFetch(
+      `${this.basic_url}${envi.ccColindante}${schema}/${executionId}/${baUnitId}/${ccColindanteBaUnitId}`
+    );
   }
 
 
