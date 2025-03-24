@@ -19,16 +19,13 @@ export class GeneralValidationsService {
     return (formGroup: AbstractControl<any>): ValidationErrors | null => {
       const fieldValue1: string = formGroup.get(field1)?.value || '';
       const fieldValue2: string = formGroup.get(field2)?.value || '';
-
       if (fieldValue1 !== fieldValue2) {
         formGroup.get(field2)?.setErrors({ notEquals: true});
         return {
           notEquals: true
         };
       }
-
       formGroup.get(field2)?.setErrors(null);
-
       return null;
     };
   }
@@ -37,16 +34,13 @@ export class GeneralValidationsService {
     return (formGroup: AbstractControl<any>): ValidationErrors | null => {
       const fieldValue1: string = formGroup.get(field1)?.value || '';
       const fieldValue2: string = formGroup.get(field2)?.value || '';
-
       if (fieldValue1 === fieldValue2) {
         formGroup.get(field2)?.setErrors({ isEquals: true});
         return {
           isEquals: true
         };
       }
-
       formGroup.get(field2)?.setErrors(null);
-
       return null;
     };
   }
@@ -55,10 +49,8 @@ export class GeneralValidationsService {
     return (control: AbstractControl): Record<string, any> | null => {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Reinicia la hora a 00:00:00
-
       const inputDate = new Date(control.value);
       inputDate.setHours(0, 0, 0, 0);
-
       return inputDate > today ? { 'futureDate': true } : null;
     };
   }
@@ -190,6 +182,36 @@ export class GeneralValidationsService {
       }
       let regex = /^(?![^a-zA-Z0-9\u0B80-\u0BFF]).*$/;
       return regex.test(control.value) ? null : { onlyTextOrNumber1: true };
+    };
+  }
+
+  onlyTextAndNumberGuionCommand(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let regex = /^[a-zA-Z0-9\s.,-]*$/;
+      return regex.test(control.value) ? null : { onlyTextAndNumberGuionCommand: true };
+    };
+  }
+
+  onlyNumber(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let regex = /^\d+$/;
+      return regex.test(control.value) ? null : { onlyNumber: true };
+    };
+  }
+
+  onlyLetters(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      let regex = /^[a-zA-Z]+$/;
+      return regex.test(control.value) ? null : { onlyLetters: true };
     };
   }
 

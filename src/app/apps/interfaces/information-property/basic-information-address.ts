@@ -1,7 +1,7 @@
 import { NAME_NO, NAME_SI } from '../../constants/general/constants';
 
 export class BasicInformationAddress {
-  baunitId: string;
+  baunitId?: string | null;
   executionId?: string | null;
   direccionId?: string;
   nombrePredio?: string;
@@ -9,12 +9,12 @@ export class BasicInformationAddress {
   schema?: string;
 
   constructor(content?: any, schema?: string) {
-    this.baunitId = content.baunitId;
-    this.executionId = content.executionId;
-    this.direccionId = content.direccionId;
-    this.nombrePredio = content.nombrePredio;
-    this.esDireccionPrincipal = content.esDireccionPrincipal;
-    this.schema = schema;
+    this.baunitId = content?.baunitId || '';
+    this.executionId = content?.executionId || '';
+    this.direccionId = content?.direccionId || '';
+    this.nombrePredio = content?.nombrePredio || '';
+    this.esDireccionPrincipal = content?.esDireccionPrincipal || '';
+    this.schema = schema || '';
   }
 
   get isMainAddress(): string {

@@ -34,7 +34,7 @@
                 "
                     [color]="editable ? 'primary' : ''"
                     [disabled]="!editable"
-                    (click)="openAddEditAddressInformationPropertyDialog()"
+                    (click)="addEditAddressInformationPropertyDialog()"
                   >
                     Nueva
                     <mat-icon svgIcon="mat:add"></mat-icon>
@@ -177,11 +177,8 @@
     matMenuContent
   >
     <button
-      (click)="
-        openAddEditAddressInformationPropertyDialog(basicInformationAddress)
-      "
-      mat-menu-item
-    >
+      (click)="editAddressInformationPropertyDialog(basicInformationAddress)"
+      mat-menu-item>
       <mat-icon svgIcon="mat:edit"></mat-icon>
       <span>Editar</span>
     </button>
@@ -205,15 +202,6 @@
   [cancelButtonText]="'Cancelar'"
   [confirmButtonColor]="'#3085d6'"
   [cancelButtonColor]="'#d33'"
-></swal>
-
-<swal
-  #successCreate
-  title="Dirección creada"
-  text="Dirección creada con exito"
-  icon="success"
-  confirmButtonText="Aceptar"
-  confirmButtonColor="#3085d6"
 ></swal>
 
 <swal

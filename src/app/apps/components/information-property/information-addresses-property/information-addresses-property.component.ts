@@ -27,9 +27,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_SMALL,
+  MODAL_SMALL_LARGE,
   PAGE,
-  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10,
-  PAGE_SIZE, PAGE_SIZE_SORT,
+  PAGE_OPTION_5_7_10,
+  PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
   TYPE_INFORMATION_EDITION,
@@ -56,14 +57,17 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
-  AddEditInformationDataI,
-  EditInformationAddressComponent
-} from './edit-information-address/edit-information-address.component';
+  AddEditInformationAddressComponent
+} from './add-edit-information-address/add-edit-information-address.component';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { getRandomInt } from 'src/app/apps/utils/general';
+import {
+  DetailBasicInformationAddress
+} from '../../../interfaces/information-property/detail-basic-information-address';
+import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
 
 @Component({
   selector: 'vex-information-addresses-property',
@@ -126,7 +130,6 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog!: SwalComponent;
-  @ViewChild('successCreate', { static: true }) successCreate!: SwalComponent;
   @ViewChild('successDelete', { static: true }) successDelete!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
@@ -139,25 +142,11 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
   ) {
   }
 
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
-  }
-
   ngOnInit() {
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
     this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
-    if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL
-    )
-      this.informationPropertyService.reloadTableStarted$.subscribe((value) => {
-        if (value) {
-          this.searchBasicInformationPropertyAddresses();
-        }
-      });
-
     this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -182,10 +171,6 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
   }
 
   deleteInformations(basicInformationAddress: BasicInformationAddress): void {
@@ -282,7 +267,6 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
 
   public filterAddressMain(result: BasicInformationAddress[]) {
     const direccionesPrincipales = result.filter((d) => d.esDireccionPrincipal);
-
     // Verifica que solo haya una dirección con "esDireccionPrincipal"
     if (direccionesPrincipales.length === 0) {
       this.hasMainAddress = false; // Desbloquea
@@ -296,50 +280,42 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
   }
 
   openAddressInformationProperty(data: BasicInformationAddress) {
-    const newData = {
-      ...data,
-      baunitId: this.baunitId,
-      executionId: this.executionId
-    };
+    let newData: BasicInformationAddress = new BasicInformationAddress(data, this.schema);
+    newData.baunitId = this.baunitId;
+    newData.executionId = this.executionId;
 
-    this.dialog
-      .open(DetailInformationAddressComponent, {
-        ...MODAL_SMALL,
-        disableClose: true,
-        data: new BasicInformationAddress(newData, this.schema)
-      })
+    this.dialog.open(DetailInformationAddressComponent, {
+      ...MODAL_SMALL_LARGE,
+      disableClose: true,
+      data: newData
+    })
       .afterClosed();
   }
 
-  /**
-   * Open add/edit address information dialog with form
-   *
-   * @param data
-   */
-  openAddEditAddressInformationPropertyDialog(
-    data?: BasicInformationAddress
-  ): void {
-    const newData = new BasicInformationAddress(
-      { ...data, baunitId: this.baunitId, executionId: this.executionId },
-      this.schema
-    );
+  addEditAddressInformationPropertyDialog(): void {
+    this.executeEventAddEditAddressInformationPropertyDialog(null);
+  }
 
-    const dialogData: AddEditInformationDataI = {
-      type: data ? 'edit' : 'new',
-      basicInformationAddress: newData,
-      hasMainAddress: this.hasMainAddress
-    };
-    const dialogRef = this.dialog.open(EditInformationAddressComponent, {
+  editAddressInformationPropertyDialog(content: BasicInformationAddress): void {
+    this.executeEventAddEditAddressInformationPropertyDialog(content);
+  }
+
+  executeEventAddEditAddressInformationPropertyDialog(content: BasicInformationAddress | null): void {
+    let newData = new BasicInformationAddress(content, this.schema);
+    newData.baunitId = this.baunitId;
+    newData.executionId = this.executionId;
+    const dialogRef = this.dialog.open(AddEditInformationAddressComponent, {
       ...MODAL_SMALL,
       disableClose: true,
-      data: dialogData
+      data: {
+        type: !content ? 'CREATE' : 'UPDATE',
+        basicInformationAddress: newData,
+        hasMainAddress: this.hasMainAddress
+      }
     });
-
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      //Update information address object
-      if (result) {
+    dialogRef.afterClosed().subscribe((result: DetailBasicInformationAddress) => {
+      if (result && result.direccionId) {
         this.searchBasicInformationPropertyAddresses();
-        this.successCreate.fire();
       }
     });
   }
@@ -369,6 +345,16 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     value = value.trim();
     value = value.toLowerCase();
     this.dataSource.filter = value;
+  }
+
+  trackByProperty<T>(index: number, column: TableColumn<T>): string {
+    return column.property;
+  }
+
+  get visibleColumns() {
+    return this.columns.filter(
+      (column) => column.visible)
+      .map((column) => column.property);
   }
 
 }

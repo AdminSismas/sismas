@@ -1,0 +1,239 @@
+<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+  <h3 class="subheading-2 m-0 flex-auto">
+    {{ procesoActual }}
+  </h3>
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+
+<mat-dialog-content [@stagger]="true" class="flex flex-col px-2">
+  <form [formGroup]="editForm" (ngSubmit)="saveInformationAddress()">
+    <div class="form-content">
+      <div class="form-content-item">
+        <vex-combox-colletion-form
+          idComboCollection="domTipoDireccion2132132133"
+          label="Tipo de dirección"
+          [formControlComboxColletion]="controlDomTypeAddress"
+          typeDomainName="TipoDireccion"
+          placeholderDomainName="Escoger tipo de dirección">
+        </vex-combox-colletion-form>
+      </div>
+      <div class="form-content-item">
+        <vex-input
+          idComboInput="codigoPostal1587434"
+          label="Código postal"
+          type="text"
+          formControlNameInput="codigoPostal"
+          [formControlInput]="controlCodePostal">
+        </vex-input>
+      </div>
+      <div class="form-content-item">
+        <vex-input
+          idComboInput="nombrePredio8784"
+          label="Nombre predio"
+          type="text"
+          formControlNameInput="nombrePredio"
+          [formControlInput]="controlNameProperties">
+        </vex-input>
+      </div>
+      <div class="form-content-item">
+        <mat-slide-toggle
+          id="esDireccionPrincipal12342423"
+          class="mx-2"
+          labelPosition="before"
+          formControlName="esDireccionPrincipal"
+          [formControl]="controlMainAddress"
+          color="primary">
+          Principal
+        </mat-slide-toggle>
+      </div>
+      <div class="form-content-item full">
+        <vex-text-area
+          idTextArea="direccionTexto"
+          class="flex-1"
+          label="Dirección"
+          formControlNameTextArea="direccionTexto"
+          [formControlTextArea]="controlTextAddress"></vex-text-area>
+      </div>
+    </div>
+
+    <!-- Principal Fields  -->
+    <mat-accordion class="flex flex-col py-0 px-0 mb-2">
+      <mat-expansion-panel [expanded]="formExpanded">
+        <mat-expansion-panel-header
+          class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+          <vex-header-cadastral-information-property
+            label="Principal"
+            icon="mat:edit_location"
+            id="information-main-principal">
+          </vex-header-cadastral-information-property>
+        </mat-expansion-panel-header>
+
+        <mat-panel-description class="py-0 px-0">
+          <div @fadeInUp class="flex-auto">
+            <div class="px-4 py-2 flex flex-col">
+              <div class="flex flex-col sm:flex-row sm:gap-4">
+                <vex-combox-colletion-form
+                  idComboCollection="domClaseViaPrincipal"
+                  label="Clase de vía principal"
+                  [formControlComboxColletion]="controlDomClaseViaPrincipal"
+                  typeDomainName="ClaseViaPrincipal"
+                  placeholderDomainName="Escoger clase vía principal"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto">
+                </vex-combox-colletion-form>
+                <vex-input
+                  idComboInput="letraViaPrincipal25841"
+                  label="Letra"
+                  type="text"
+                  formControlNameInput="letraViaPrincipal"
+                  [formControlInput]="controlLetterViaPrincipal"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto"></vex-input>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:gap-4">
+                <vex-input
+                  idComboInput="valorViaPrincipalww"
+                  label="Valor"
+                  type="text"
+                  formControlNameInput="valorViaPrincipal"
+                  [formControlInput]="controlValueViaPrincipal"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto"></vex-input>
+                <vex-combox-colletion-form
+                  idComboCollection="domSectorCiudad856756"
+                  label="Sector ciudad"
+                  typeDomainName="SectorCiudad"
+                  placeholderDomainName="Escoger sector ciudad"
+                  [formControlComboxColletion]="controlDomSectorCity"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto">
+                </vex-combox-colletion-form>
+              </div>
+            </div>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- Generadora Fields  -->
+    <mat-accordion class="flex flex-col py-0 px-0 mb-2">
+      <mat-expansion-panel [expanded]="formExpanded">
+        <mat-expansion-panel-header
+          class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center">
+          <vex-header-cadastral-information-property
+            label="Generadora"
+            icon="mat:edit_location"
+            id="information-main-principal">
+          </vex-header-cadastral-information-property>
+        </mat-expansion-panel-header>
+
+        <mat-panel-description>
+          <div @fadeInUp class="flex-auto">
+            <div class="px-4 py-2 flex flex-col">
+              <div class="flex flex-col sm:flex-row sm:gap-4">
+                <vex-input
+                  idComboInput="valorViaGeneradora25874"
+                  label="Valor"
+                  type="text"
+                  formControlNameInput="valorViaGeneradora"
+                  [formControlInput]="controlValueViaGeneradora"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto"></vex-input>
+                <vex-input
+                  idComboInput="numeroPredio9678gfas"
+                  label="Número predio"
+                  type="text"
+                  formControlNameInput="numeroPredio"
+                  [formControlInput]="controlNumberProperties"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto"></vex-input>
+              </div>
+              <div class="flex flex-col sm:flex-row sm:gap-4">
+                <vex-input
+                  label="Letra"
+                  type="text"
+                  idComboInput="letraViaGeneradora967867ghdf"
+                  formControlNameInput="letraViaGeneradora"
+                  [formControlInput]="controlLetterViaGeneradora"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto"></vex-input>
+                <vex-combox-colletion
+                  idComboCollection="domSectorPredio967845wer"
+                  label="Sector predio"
+                  typeDomainName="SectorPredio"
+                  placeholderDomainName="Escoger sector predio"
+                  formControlNameCombobox="domSectorPredio"
+                  cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+                  class="flex-auto"></vex-combox-colletion>
+              </div>
+            </div>
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- Botones de acción -->
+    <mat-dialog-actions align="end">
+      <button mat-button
+              mat-dialog-close type="button"
+              [mat-dialog-close]="false">
+        Cancelar
+      </button>
+      @if (isCreate) {
+        <!--        [disabled]="editForm.invalid"-->
+        <button
+          type="submit"
+          color="primary"
+          mat-flat-button>
+          Crear
+        </button>
+      }
+      @if (isUpdate) {
+        <!--        [disabled]="editForm.invalid"-->
+        <button
+          type="submit"
+          color="primary"
+          mat-flat-button>
+          Actualizar
+        </button>
+      }
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
+
+
+<swal
+  #successDialog
+  title="¡Guardado!"
+  text="Los datos se han actualizado correctamente."
+  icon="success"
+  [showConfirmButton]=false
+>
+</swal>
+
+<swal
+  #successCreate
+  title="Dirección creada"
+  text="Dirección creada con exito"
+  icon="success"
+  confirmButtonText="Aceptar"
+  confirmButtonColor="#3085d6"
+></swal>
+
+<swal
+  #errorSaveDialog
+  title="¡Error!"
+  text="No se logro almacenar la informacion."
+  icon="error">
+</swal>
+
+<swal
+  #validationErrorDialog
+  title="¡Error!"
+  text="Por favor, corrige las validaciones del formulario."
+  icon="error"
+  [confirmButtonColor]="'#3f51b5'">
+</swal>

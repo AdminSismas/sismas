@@ -48,11 +48,11 @@ export class ComboboxComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     if (this.idCombo?.length > 0) {
-      this.idCombo = this.idCombo + this.getRandomInt(100000)
-        + 'combox' + this.getRandomInt(10);
+      this.idCombo = this.idCombo + this.getRandomInt(14500)
+        + 'combox' + this.getRandomInt(10) + 'b32334';
     } else {
-      this.idCombo = this.getRandomInt(10000)
-        + 'combox' + this.getRandomInt(10);
+      this.idCombo = this.getRandomInt(18700)
+        + 'combox' + this.getRandomInt(10) + '23432f';
     }
   }
 

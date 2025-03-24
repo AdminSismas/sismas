@@ -22,6 +22,10 @@ import { DataSource } from '../../interfaces/information-property/snr-source-inf
 import { DataPerson } from '../../interfaces/information-property/snr-person-info';
 import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
 import { ZoneBAUnitFisica } from '../../interfaces/information-property/zone-baunit';
+import {
+  CreateBasicInformationAddress,
+  DetailBasicInformationAddress
+} from '../../interfaces/information-property/detail-basic-information-address';
 
 export const GUION: string = '-';
 export const SPACE: string = ' ';
@@ -96,12 +100,12 @@ export const NUMERO_PREDIAL_NACIONAL: string = 'Número Predial Nacional';
 
 export const TYPE_INFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPE_INFORMATION_VISUAL: TypeInformation = 'visualization';
-export const EVIRONMENT_CC_DIRECCION:string = '/ccDireccion';
-export const ROL_GUEST:string = 'GUEST';
-export const ROL_USER_READ:string = 'USER_READ';
+export const EVIRONMENT_CC_DIRECCION: string = '/ccDireccion';
+export const ROL_GUEST: string = 'GUEST';
+export const ROL_USER_READ: string = 'USER_READ';
 
-export const ENVIRONMENT_RETIRO_IMG:string = 'assets/img/logo/logo_El_retiro.png';
-export const NAME_LOGO_IMG_SAN_VICENTE:string = 'logo_san_vicente.png';
+export const ENVIRONMENT_RETIRO_IMG: string = 'assets/img/logo/logo_El_retiro.png';
+export const NAME_LOGO_IMG_SAN_VICENTE: string = 'logo_san_vicente.png';
 
 export const TYPE_OPERATION_ADD: TypeOperationAlfaMain = 'ADD';
 export const TYPE_OPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
@@ -595,16 +599,16 @@ export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>
 ];
 
 
-export const NAME_VALIDITY_VALUATION:string = 'validityValuation';
-export const NAME_CADASTRAL_VALUATION_AT:string = 'cadastralValuationAt';
-export const NAME_CADASTRAL_VALUATION:string = 'cadastralValuation';
-export const NAME_CADASTRAL_VALUATION_LAND:string = 'cadastralValuationLand';
-export const NAME_CADASTRAL_VALUATION_UNITS:string = 'cadastralValuationUnits';
-export const NAME_COMMERCIAL_VALUATION:string = 'commercialValuation';
-export const NAME_COMMERCIAL_VALUATION_LAND:string = 'commercialValuationLand';
-export const NAME_COMMERCIAL_VALUATION_UNITS:string = 'commercialValuationUnits';
-export const NAME_SELF_VALUATION_VALUE:string = 'selfValuationValue';
-export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY:string = 'BpmProcessCategory';
+export const NAME_VALIDITY_VALUATION: string = 'validityValuation';
+export const NAME_CADASTRAL_VALUATION_AT: string = 'cadastralValuationAt';
+export const NAME_CADASTRAL_VALUATION: string = 'cadastralValuation';
+export const NAME_CADASTRAL_VALUATION_LAND: string = 'cadastralValuationLand';
+export const NAME_CADASTRAL_VALUATION_UNITS: string = 'cadastralValuationUnits';
+export const NAME_COMMERCIAL_VALUATION: string = 'commercialValuation';
+export const NAME_COMMERCIAL_VALUATION_LAND: string = 'commercialValuationLand';
+export const NAME_COMMERCIAL_VALUATION_UNITS: string = 'commercialValuationUnits';
+export const NAME_SELF_VALUATION_VALUE: string = 'selfValuationValue';
+export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY: string = 'BpmProcessCategory';
 
 
 export const LIST_GRID_APPRAISAL_1: string[] = [
@@ -1121,6 +1125,44 @@ export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualif
   }
 ];
 
+export const DETAIL_BASIC_MODEL_ADDRESS: DetailBasicInformationAddress = {
+  // campos BASE
+  domTipoDireccion: '',
+  esDireccionPrincipal: false,
+  codigoPostal: '',
+  nombrePredio: '',
+  direccionTexto: '',
+  // PRINCIPAL
+  domClaseViaPrincipal: '',
+  letraViaPrincipal: '',
+  valorViaPrincipal: '',
+  domSectorCiudad: '',
+  // GENERADORA
+  letraViaGeneradora: '',
+  valorViaGeneradora: '',
+  complemento: '',
+  domSectorPredio: '',
+  numeroPredio: ''
+};
 
+export const CREATE_BASIC_MODEL_ADDRESS: CreateBasicInformationAddress = {
+  // campos BASE
+  domTipoDireccion: '',
+  esDireccionPrincipal: false,
+  codigoPostal: '',
+  numeroPredio: '',
+  direccionTexto: '',
+  // PRINCIPAL
+  domClaseViaPrincipal: '',
+  letraViaPrincipal: '',
+  valorViaPrincipal: '',
+  domSectorCiudad: '',
+  // GENERADORA
+  letraViaGeneradora: '',
+  valorViaGeneradora: '',
+  complemento: '',
+  nombrePredio: '',
+  domSectorPredio: ''
+};
 
 

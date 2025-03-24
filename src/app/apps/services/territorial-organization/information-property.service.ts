@@ -97,6 +97,7 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
+  // {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
   getDetailBasicInformationPropertyAddresses(
     directionId: string,
     schema: string,
@@ -105,15 +106,13 @@ export class InformationPropertyService {
   ): Observable<DetailBasicInformationAddress> {
     let url: string;
     if (executionId) {
-      //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
       url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${directionId}`;
     } else {
       url = `${this.basic_url}${envi.ccDireccion}/${directionId}`;
     }
-
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+    return this.requestsService.sendRequestsFetchGet(url).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
   }
 
 
@@ -308,8 +307,25 @@ export class InformationPropertyService {
   }
 
   /**
+   * Create basic information address
+   * @param baunitId
+   * @param createBasicInformationAddress
+   * @returns
+   */
+  createBasicInformationPropertyAddress(
+    baunitId: string,
+    schema: string,
+    executionId: string,
+    createBasicInformationAddress: Partial<CreateBasicInformationAddress>
+  ): Observable<DetailBasicInformationAddress> {
+    return this.http.post<DetailBasicInformationAddress>(
+      `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`,
+      createBasicInformationAddress
+    );
+  }
+
+  /**
    * Update basic information address
-   *
    * @param updateBasicInformationAddress
    * @param baunitId
    * @returns
@@ -320,9 +336,8 @@ export class InformationPropertyService {
     executionId: string,
     updateBasicInformationAddress: Partial<DetailBasicInformationAddress>
   ): Observable<DetailBasicInformationAddress> {
-    const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
     return this.http.put<DetailBasicInformationAddress>(
-      url,
+      `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`,
       updateBasicInformationAddress
     );
   }
@@ -341,26 +356,6 @@ export class InformationPropertyService {
     );
   }
 
-  /**
-   * Create basic information address
-   *
-   * @param baunitId
-   * @param createBasicInformationAddress
-   * @returns
-   */
-  createBasicInformationPropertyAddress(
-    baunitId: string,
-    schema: string,
-    executionId: string,
-    createBasicInformationAddress: CreateBasicInformationAddress
-  ): Observable<DetailBasicInformationAddress> {
-    const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
-
-    return this.http.post<DetailBasicInformationAddress>(
-      url,
-      createBasicInformationAddress
-    );
-  }
 
   /**
    * Delete basic information by direccionId
