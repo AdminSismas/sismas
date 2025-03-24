@@ -209,11 +209,10 @@
           <div class="flex flex-col gap-1">
             <span class="text-black text-sm">Área registral</span>
             <span class="text-black text-sm">Área catastral</span>
+            <span class="text-black text-sm">Área catastral geográfica</span>
             <span class="text-black text-sm">Área catastral común</span>
-            <span class="text-black text-sm">Área catastral privada</span
-            >
-            <span class="text-black text-sm">Área catastral construida</span
-            >
+            <span class="text-black text-sm">Área catastral privada</span>
+            <span class="text-black text-sm">Área catastral construida</span>
             <span class="text-black text-sm">Área catastral construida común</span>
             <span class="text-black text-sm">Área catastral construida Privada</span>
           </div>
@@ -235,6 +234,16 @@
               data.cadastralAreaE
             ) {
               <span class="text-sm">{{ data.cadastralAreaE | currencyLands  }}</span>
+            } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO   }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.cadastralAreaGeoE !== null &&
+              data.cadastralAreaGeoE
+              ) {
+              <span class="text-sm">{{ data.cadastralAreaGeoE | currencyLands  }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO   }}</span>
             }

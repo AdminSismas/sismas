@@ -50,7 +50,7 @@ export class InformationGeographicService {
   }
 
   getViewThematicMapByCodeMunicipality(codeMunicipality: string): Observable<string | null> {
-    let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.generalMap}${envi.accessGeo.get}${codeMunicipality}`;
+    let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.thematicMap}${envi.accessGeo.get}${codeMunicipality}`;
     return this.requestsService.sendRequestsGetText(url)
       .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }

@@ -34,6 +34,7 @@ export class BasicInformationProperty {
 
   propertyRegistryArea?: string;
   cadastralArea?: string;
+  cadastralAreaGeoE?: string;
   cadastralCreatedAt?: string;
   domBaunitProcessType?: string;
   cadastralLastMasiveEventAt?: string;
@@ -54,6 +55,7 @@ export class BasicInformationProperty {
     this.propertyRegistryNumber = content?.propertyRegistryNumber || '';
     this.propertyRegistryArea = content?.propertyRegistryArea || '';
     this.cadastralArea = content?.cadastralArea || '';
+    this.cadastralAreaGeoE = content?.cadastralAreaGeoE || '';
     this.cadastralNumber = content?.cadastralNumber || '';
     this.cadastralLastNumber = content?.cadastralLastNumber || '';
     this.cadastralRegistryNumberTemp = content?.cadastralRegistryNumberTemp || '';

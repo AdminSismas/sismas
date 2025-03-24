@@ -9,6 +9,7 @@ export const environment = {
     geoHistoria: "/geohistoria",
     geoTemporal: "/geotemporal",
     get: "/get/",
+    thematicMap: "/mapaTematico",
     value: "/accessGeo/"
   },
   active: "active",

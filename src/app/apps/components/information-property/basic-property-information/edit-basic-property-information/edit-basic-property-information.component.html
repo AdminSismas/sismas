@@ -1,13 +1,12 @@
-<!-- <h2 mat-dialog-title>Editar aspectos generales</h2> -->
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
-        <h2 class="headline m-0 flex-auto" style="margin: 9px;">
-          Editar aspectos generales
-        </h2>
-        <button class="text-secondary" mat-dialog-close mat-icon-button type="button" style="margin: 9px;">
-          <mat-icon svgIcon="mat:close"></mat-icon>
-        </button>
-      </div>
-<mat-divider class="text-border border-slate-400"></mat-divider>
+  <h3 class="subheading-2 m-0 flex-auto">
+    Editar aspectos generales
+  </h3>
+  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
 
 <mat-dialog-content>
   <form [formGroup]="form" class="grid grid-flow-row grid-cols-2 gap-x-4">
@@ -29,7 +28,7 @@
           ></vex-combox-colletion>
         </ng-container>
         <ng-container *ngIf="!input.collection && input.type === 'date'">
-          <mat-form-field >
+          <mat-form-field>
             <mat-label>{{ input.label }}</mat-label>
             <input
               matInput
