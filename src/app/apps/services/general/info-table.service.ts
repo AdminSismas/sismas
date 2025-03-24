@@ -74,12 +74,10 @@ export class InfoTableService {
     return this.getData(url,paramsA).pipe();
   }
 
-  getDataBaunitIdE(page: number, size: number, baunit: string): Observable<InformationPegeable> {
+  getDataBaUnitIdE(page: number, size: number, baunit: string): Observable<InformationPegeable> {
     const url = `${this.basic_url}${environment.baunit}`;
-    const params: HttpParams = new HttpParams()
-      .set('page', page)
-      .set('size', size)
-      .set('baunit', baunit);
+    const params: HttpParams = new HttpParams().set('page', page)
+      .set('size', size).set('baunit', baunit);
     return this.http.get<InformationPegeable>(url, { params });
   }
 

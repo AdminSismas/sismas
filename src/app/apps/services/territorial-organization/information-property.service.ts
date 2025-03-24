@@ -15,14 +15,11 @@ import {
 } from '../../interfaces/information-property/detail-basic-information-address';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
-import {
-  CreateBaunitZone,
-  ZoneBAUnitResponse
-} from '../../interfaces/information-property/zone-baunit';
+import { CreateBaunitZone, ZoneBAUnitResponse } from '../../interfaces/information-property/zone-baunit';
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
-import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
+import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +40,8 @@ export class InformationPropertyService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);
@@ -99,6 +97,7 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
+  // {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
   getDetailBasicInformationPropertyAddresses(
     directionId: string,
     schema: string,
@@ -107,16 +106,15 @@ export class InformationPropertyService {
   ): Observable<DetailBasicInformationAddress> {
     let url: string;
     if (executionId) {
-      //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
       url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${directionId}`;
     } else {
       url = `${this.basic_url}${envi.ccDireccion}/${directionId}`;
     }
-
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+    return this.requestsService.sendRequestsFetchGet(url).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
   }
+
 
   getInformationPropertyOwners(
     schema: string,
@@ -134,16 +132,7 @@ export class InformationPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  getBasicInformationPropertyAdjacent(
-    baunitId: string
-  ): Observable<BasicInformationAdjacent[]> {
-    const url = `${this.basic_url}/ccColindante/${envi.baunit}/${baunitId}`;
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
-  }
-
-  getBasicInformationsAppraisalsProperty(
+  getBasicInformationAppraisalsProperty(
     page: PageSearchData,
     schema: string,
     executionId: string | null | undefined = null
@@ -276,13 +265,14 @@ export class InformationPropertyService {
     );
   }
 
-  getByDivPolGeoeconomica(npn: string): Observable<GeoEconomicZone[]> {
+  getByDivPolGeoeconomica(
+    npn: string
+  ): Observable<GeoEconomicZone[]> {
     // {{url}}:{{port}}/baUnitZona/baunitIdEcono/divpol/{{npn}}
     const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}${envi.divpol}/${npn}`;
-
-    return this.http
-      .get<GeoEconomicZone[]>(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+    return this.http.get<GeoEconomicZone[]>(url).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
   }
 
   createBAUnitZones(
@@ -317,8 +307,25 @@ export class InformationPropertyService {
   }
 
   /**
+   * Create basic information address
+   * @param baunitId
+   * @param createBasicInformationAddress
+   * @returns
+   */
+  createBasicInformationPropertyAddress(
+    baunitId: string,
+    schema: string,
+    executionId: string,
+    createBasicInformationAddress: Partial<CreateBasicInformationAddress>
+  ): Observable<DetailBasicInformationAddress> {
+    return this.http.post<DetailBasicInformationAddress>(
+      `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`,
+      createBasicInformationAddress
+    );
+  }
+
+  /**
    * Update basic information address
-   *
    * @param updateBasicInformationAddress
    * @param baunitId
    * @returns
@@ -329,9 +336,8 @@ export class InformationPropertyService {
     executionId: string,
     updateBasicInformationAddress: Partial<DetailBasicInformationAddress>
   ): Observable<DetailBasicInformationAddress> {
-    const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
     return this.http.put<DetailBasicInformationAddress>(
-      url,
+      `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`,
       updateBasicInformationAddress
     );
   }
@@ -350,26 +356,6 @@ export class InformationPropertyService {
     );
   }
 
-  /**
-   * Create basic information address
-   *
-   * @param baunitId
-   * @param createBasicInformationAddress
-   * @returns
-   */
-  createBasicInformationPropertyAddress(
-    baunitId: string,
-    schema: string,
-    executionId: string,
-    createBasicInformationAddress: CreateBasicInformationAddress
-  ): Observable<DetailBasicInformationAddress> {
-    const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}`;
-
-    return this.http.post<DetailBasicInformationAddress>(
-      url,
-      createBasicInformationAddress
-    );
-  }
 
   /**
    * Delete basic information by direccionId

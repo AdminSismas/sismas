@@ -22,7 +22,14 @@ import { getRandomInt } from 'src/app/apps/utils/general';
 import {
   CONSTANT_ERR_CAPITAL_LETTER,
   CONSTANT_ERR_INVALID_AREA,
-  CONSTANT_ERR_INVALID_NUMBER, CONSTANT_ERR_INVALID_YEAR, CONSTANT_ERR_ONLY_ONE_99
+  CONSTANT_ERR_INVALID_NUMBER,
+  CONSTANT_ERR_INVALID_YEAR,
+  CONSTANT_ERR_MIN03_CHARACTERS,
+  CONSTANT_ERR_MIN10_CHARACTERS,
+  CONSTANT_ERR_ONLY_INVALID_LETTER,
+  CONSTANT_ERR_ONLY_INVALID_NUMBER,
+  CONSTANT_ERR_ONLY_ONE_99,
+  CONSTANT_ERR_ONLY_TEXT_NUMBER
 } from '../../../constants/general/constantsAlertLabel';
 
 @Component({
@@ -98,6 +105,30 @@ export class InputComponent implements OnInit {
 
     if (formControl.errors?.hasOwnProperty('max99') && formControl.errors?.['max99']) {
       return CONSTANT_ERR_ONLY_ONE_99;
+    }
+
+    if (formControl.errors?.hasOwnProperty('onlyTextOrNumber') && formControl.errors?.['onlyTextOrNumber']) {
+      return CONSTANT_ERR_ONLY_TEXT_NUMBER;
+    }
+
+    if (formControl.errors?.hasOwnProperty('min03Characters') && formControl.errors?.['min03Characters']) {
+      return CONSTANT_ERR_MIN03_CHARACTERS;
+    }
+
+    if (formControl.errors?.hasOwnProperty('min10Characters') && formControl.errors?.['min10Characters']) {
+      return CONSTANT_ERR_MIN10_CHARACTERS;
+    }
+
+    if (formControl.errors?.hasOwnProperty('onlyTextAndNumberGuionCommand') && formControl.errors?.['onlyTextAndNumberGuionCommand']) {
+      return CONSTANT_ERR_ONLY_INVALID_NUMBER;
+    }
+
+    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber']) {
+      return CONSTANT_ERR_ONLY_INVALID_NUMBER;
+    }
+
+    if (formControl.errors?.hasOwnProperty('onlyLetters') && formControl.errors?.['onlyLetters']) {
+      return CONSTANT_ERR_ONLY_INVALID_LETTER;
     }
 
     return '';

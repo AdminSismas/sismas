@@ -26,7 +26,7 @@ import {
   MODAL_LARGE,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10, PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from 'src/app/apps/constants/general/constants';
@@ -121,8 +121,8 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
   contentInformations!: InformationPegeable;
 
   page: number = PAGE;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSize: number = PAGE_SIZE_SORT;
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_HISTORY;
   private readonly destroyRef: DestroyRef = inject(DestroyRef);

@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/h
 import { AuthService } from '../../../pages/pages/auth/login/services/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 
 @Injectable({
   providedIn: 'root'

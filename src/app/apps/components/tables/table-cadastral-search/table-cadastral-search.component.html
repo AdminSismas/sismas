@@ -207,12 +207,8 @@
           mat-row
         ></tr>
       </table>
-      <div
-        *ngIf="
-          dataSource.data.length <= 0 || dataSource.filteredData.length <= 0
-        "
-        class="no-data-information"
-      >
+      <div *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0"
+        class="no-data-information">
         No hay información disponible
       </div>
       <mat-paginator

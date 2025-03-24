@@ -10,12 +10,8 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormControl
-} from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,25 +22,24 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { lastValueFrom, Observable } from 'rxjs';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_SMALL,
+  MODAL_SMALL_LARGE,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
-  PAGE_SIZE,
+  PAGE_OPTION_5_7_10,
+  PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
 import { MatCardModule } from '@angular/material/card';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -62,13 +57,17 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
-  AddEditInformationDataI,
-  EditInformationAddressComponent
-} from './edit-information-address/edit-information-address.component';
+  AddEditInformationAddressComponent
+} from './add-edit-information-address/add-edit-information-address.component';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
+import { getRandomInt } from 'src/app/apps/utils/general';
+import {
+  DetailBasicInformationAddress
+} from '../../../interfaces/information-property/detail-basic-information-address';
+import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
 
 @Component({
   selector: 'vex-information-addresses-property',
@@ -90,8 +89,6 @@ import { InformationPegeable } from 'src/app/apps/interfaces/general/information
     MatInputModule,
     MatOptionModule,
     MatTabsModule,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     MatTableModule,
     MatSortModule,
@@ -109,9 +106,7 @@ import { InformationPegeable } from 'src/app/apps/interfaces/general/information
   templateUrl: './information-addresses-property.component.html',
   styleUrl: './information-addresses-property.component.scss'
 })
-export class InformationAddressesPropertyComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+export class InformationAddressesPropertyComponent implements OnInit, AfterViewInit, OnChanges {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   @Input({ required: true }) id = '';
@@ -125,8 +120,8 @@ export class InformationAddressesPropertyComponent
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
   page: number = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSize: number = PAGE_SIZE_SORT;
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public hasMainAddress = false;
 
@@ -135,36 +130,23 @@ export class InformationAddressesPropertyComponent
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog!: SwalComponent;
-  @ViewChild('successCreate', { static: true }) successCreate!: SwalComponent;
   @ViewChild('successDelete', { static: true }) successDelete!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private snackBar = inject(MatSnackBar);
+
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private informationPropertyService: InformationPropertyService
-  ) {}
-
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
+  ) {
   }
 
   ngOnInit() {
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL
-    )
-      this.informationPropertyService.reloadTableStarted$.subscribe((value) => {
-        if (value) {
-          this.searchBasicInformationPropertyAddresses();
-        }
-      });
-
+    this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
     this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -175,12 +157,8 @@ export class InformationAddressesPropertyComponent
     if (changes['typeInformation'].currentValue) {
       const { currentValue: typeInformation } = changes['typeInformation'];
       if (typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
-        this.pageSize = PAGE_SIZE;
-        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
         this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
       } else {
-        this.pageSize = PAGE_SIZE;
-        this.pageSizeOptions = PAGE_OPTION__10_20_50_100;
         this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
       }
     }
@@ -193,10 +171,6 @@ export class InformationAddressesPropertyComponent
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
   }
 
   deleteInformations(basicInformationAddress: BasicInformationAddress): void {
@@ -293,7 +267,6 @@ export class InformationAddressesPropertyComponent
 
   public filterAddressMain(result: BasicInformationAddress[]) {
     const direccionesPrincipales = result.filter((d) => d.esDireccionPrincipal);
-
     // Verifica que solo haya una dirección con "esDireccionPrincipal"
     if (direccionesPrincipales.length === 0) {
       this.hasMainAddress = false; // Desbloquea
@@ -307,50 +280,42 @@ export class InformationAddressesPropertyComponent
   }
 
   openAddressInformationProperty(data: BasicInformationAddress) {
-    const newData = {
-      ...data,
-      baunitId: this.baunitId,
-      executionId: this.executionId
-    };
+    let newData: BasicInformationAddress = new BasicInformationAddress(data, this.schema);
+    newData.baunitId = this.baunitId;
+    newData.executionId = this.executionId;
 
-    this.dialog
-      .open(DetailInformationAddressComponent, {
-        ...MODAL_SMALL,
-        disableClose: true,
-        data: new BasicInformationAddress(newData, this.schema)
-      })
+    this.dialog.open(DetailInformationAddressComponent, {
+      ...MODAL_SMALL_LARGE,
+      disableClose: true,
+      data: newData
+    })
       .afterClosed();
   }
 
-  /**
-   * Open add/edit address information dialog with form
-   *
-   * @param data
-   */
-  openAddEditAddressInformationPropertyDialog(
-    data?: BasicInformationAddress
-  ): void {
-    const newData = new BasicInformationAddress(
-      { ...data, baunitId: this.baunitId, executionId: this.executionId },
-      this.schema
-    );
+  addEditAddressInformationPropertyDialog(): void {
+    this.executeEventAddEditAddressInformationPropertyDialog(null);
+  }
 
-    const dialogData: AddEditInformationDataI = {
-      type: data ? 'edit' : 'new',
-      basicInformationAddress: newData,
-      hasMainAddress: this.hasMainAddress
-    };
-    const dialogRef = this.dialog.open(EditInformationAddressComponent, {
+  editAddressInformationPropertyDialog(content: BasicInformationAddress): void {
+    this.executeEventAddEditAddressInformationPropertyDialog(content);
+  }
+
+  executeEventAddEditAddressInformationPropertyDialog(content: BasicInformationAddress | null): void {
+    let newData = new BasicInformationAddress(content, this.schema);
+    newData.baunitId = this.baunitId;
+    newData.executionId = this.executionId;
+    const dialogRef = this.dialog.open(AddEditInformationAddressComponent, {
       ...MODAL_SMALL,
       disableClose: true,
-      data: dialogData
+      data: {
+        type: !content ? 'CREATE' : 'UPDATE',
+        basicInformationAddress: newData,
+        hasMainAddress: this.hasMainAddress
+      }
     });
-
-    dialogRef.afterClosed().subscribe((result: boolean) => {
-      //Update information address object
-      if (result) {
+    dialogRef.afterClosed().subscribe((result: DetailBasicInformationAddress) => {
+      if (result && result.direccionId) {
         this.searchBasicInformationPropertyAddresses();
-        this.successCreate.fire();
       }
     });
   }
@@ -382,7 +347,14 @@ export class InformationAddressesPropertyComponent
     this.dataSource.filter = value;
   }
 
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
+  trackByProperty<T>(index: number, column: TableColumn<T>): string {
+    return column.property;
   }
+
+  get visibleColumns() {
+    return this.columns.filter(
+      (column) => column.visible)
+      .map((column) => column.property);
+  }
+
 }

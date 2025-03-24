@@ -33,7 +33,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   PAGE_SIZE_TABLE_UNIQUE,
@@ -123,7 +123,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
   showAlert = false;
 
   _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);

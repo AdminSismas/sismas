@@ -33,7 +33,7 @@ import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import {
   PAGE,
-  PAGE_OPTION__5_7_10,
+  PAGE_OPTION_5_7_10,
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
@@ -138,11 +138,11 @@ export class InformationSourcePropertyComponent {
       const { currentValue: typeInformation } = changes['typeInformation'];
       if (typeInformation === TYPE_INFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
-        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.pageSizeOptions = PAGE_OPTION_5_7_10;
         this.columns = TABLE_COLUMN_PROPERTIES_SOURCE;
       } else {
         this.pageSize = PAGE_SIZE_SORT;
-        this.pageSizeOptions = PAGE_OPTION__5_7_10;
+        this.pageSizeOptions = PAGE_OPTION_5_7_10;
         this.columns = TABLE_COLUMN_PROPERTIES_SOURCE;
       }
     }

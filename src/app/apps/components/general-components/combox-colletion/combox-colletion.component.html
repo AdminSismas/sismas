@@ -9,8 +9,7 @@
     [id]="idComboCollection"
     placeholder="{{placeholderDomainName}}"
     (selectionChange)="onSelectionChange($event.value)"
-    class="w-full px-4 h-auto"
-  >
+    class="w-full h-auto">
     <mat-option *ngFor="let option of options;" [value]="option.dispname">
       {{ option.dispname }}
     </mat-option>
