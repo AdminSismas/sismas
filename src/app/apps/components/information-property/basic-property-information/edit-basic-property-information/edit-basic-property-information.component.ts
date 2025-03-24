@@ -301,6 +301,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
         this.form.get(field)?.disable();
       }
     });
+
     if(environment.titulo === 'Manizales'){
       this.form.get('propertyRegistryOffice')?.disable();
       this.form.get('propertyRegistryOffice')?.setValue('100');
@@ -308,7 +309,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   }
 
   editBasicInformationProperty() {
-    console.log('valores formulario', this.form.value);
     this.informationPropretyService.updateBasicInformationProperty(
       this.data.executionId!,
       this.data.baunitIdE!,

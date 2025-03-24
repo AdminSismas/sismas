@@ -24,6 +24,7 @@ import { InputComponent } from '../../../../../../apps/components/general-compon
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../apps/constants/general/constants';
+import { MatIconButton } from '@angular/material/button';
 
 
 // AddEditInformationDocumentAssociated
@@ -55,7 +56,8 @@ export interface AddOutputFormats{
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    InputComponent
+    InputComponent,
+    MatIconButton
   ],
   templateUrl: './output-formats-edit-update.component.html',
   styleUrls: [
