@@ -49,6 +49,7 @@ import {
 import {
   InformationAdjacentPropertyService
 } from '../../../services/information-property/information-adjacent-property/information-adjacent-property.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-information-adjacent-property',
@@ -100,6 +101,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
   pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
+  classEdit: string = '!bg-slate-400 !text-gray-100 opacity-60';
 
   dataSource!: MatTableDataSource<InformationAdjacent>;
   selection: SelectionModel<InformationAdjacent> = new SelectionModel<InformationAdjacent>(
@@ -112,6 +114,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   @ViewChild('deletedAdjacent') deletedAdjacent!: SwalComponent;
   @ViewChild('deleteSwal') private deleteSwal!: SwalComponent;
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
+  @ViewChild('errorAdjacentSwal') private errorAdjacentSwal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -224,6 +227,23 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     });
   }
 
+  addAdjacentGeoInformationProperty(): void {
+    if (this.baunitId && this.executionId) {
+      this.informationAdjacentService.addInformationGeoPropertyAdjacent(
+        this.executionId, this.baunitId).subscribe({
+        next: (result: string) => {
+          Swal.fire({
+            text: result,
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 2000
+          }).then(() => this.searchInformationAdjacentProperty());
+        },
+        error: () => this.errorAdjacentSwal.fire()
+      });
+    }
+  }
+
   deleteInformation(content: InformationAdjacent): void {
     if (!content || !content?.ccColindanteBaunitId) {
       return;
@@ -270,7 +290,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    if (this.isAllSelected()){
+    if (this.isAllSelected()) {
       this.selection.clear();
     } else {
       this.dataSource.data
@@ -284,15 +304,6 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     column.visible = !column.visible;
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
-
-  get visibleColumns() {
-    return this.columns.filter((column) => column.visible)
-      .map((column) => column.property);
-  }
-
   initialPaginatorAndSort() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
@@ -300,6 +311,15 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
+  }
+
+  trackByProperty<T>(index: number, column: TableColumn<T>): string {
+    return column.property;
+  }
+
+  get visibleColumns() {
+    return this.columns.filter((column) => column.visible)
+      .map((column) => column.property);
   }
 
 }

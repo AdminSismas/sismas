@@ -14,6 +14,7 @@ export const environment = {
   },
   active: "active",
   administrativeSource: "/fuenteadmin/",
+  adjacent: "/colindante/",
   apiUrlToken: "/token/authenticate",
   auth_login: "/auth/login",
   awsConfig: {
