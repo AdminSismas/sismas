@@ -437,12 +437,12 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
 ];
 
 export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<InformationAdjacent>[] = [
-  {
-    label: 'Ficha',
-    property: 'ccColindanteBaunitId',
-    type: 'text',
-    visible: true
-  },
+  // {
+  //   label: 'Ficha',
+  //   property: 'ccColindanteBaunitId',
+  //   type: 'text',
+  //   visible: true
+  // },
   {
     label: 'Punto cardinal',
     property: 'domPuntoCardinal',

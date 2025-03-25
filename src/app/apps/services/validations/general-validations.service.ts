@@ -60,8 +60,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^[A-Z]+$');
-      return value != null && value ? { capitalLetter: true } : null
+      const value = this.patternValidator(control, '^[A-Z]+$');
+      return value != null && value ? { capitalLetter: true } : null;
     };
   }
 
@@ -70,8 +70,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
-      return value != null && value ? { errorArea: true } : null
+      const value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
+      return value != null && value ? { errorArea: true } : null;
     };
   }
 
@@ -80,8 +80,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
-      return value != null && value ? { onlyNumber: true } : null
+      const value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
+      return value != null && value ? { onlyNumber: true } : null;
     };
   }
 
@@ -90,8 +90,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^(?:[1-9]|[1-9][0-9])$');
-      return value != null && value ? { max99: true } : null
+      const value = this.patternValidator(control, '^(?:[1-9]|[1-9][0-9])$');
+      return value != null && value ? { max99: true } : null;
     };
   }
 
@@ -100,7 +100,7 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^(19|20)\\d{2}$');
+      const value = this.patternValidator(control, '^(19|20)\\d{2}$');
       return value != null && value ? { yearBetween1900And2099: true } : null;
     };
   }
@@ -138,14 +138,14 @@ export class GeneralValidationsService {
   min03Characters(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value: any = control.value;
-      return this.isValueField(value) && value.length <= 10 ? { min03Characters: true } : null
+      return this.isValueField(value) && value.length < 3 ? { min03Characters: true } : null;
     };
   }
 
   min10Characters(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value: any = control.value;
-      return this.isValueField(value) && value.length <= 10 ? { min10Characters: true } : null
+      return this.isValueField(value) && value.length <= 10 ? { min10Characters: true } : null;
     };
   }
 
@@ -170,8 +170,8 @@ export class GeneralValidationsService {
 
   onlyTextAndNumber(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      let value = this.patternValidator(control, '[a-zA-Z0-9]*');
-      return value != null && value ? { onlyTextOrNumber: true } : null
+      const value = this.patternValidator(control, '[a-zA-Z0-9]*');
+      return value != null && value ? { onlyTextOrNumber: true } : null;
     };
   }
 
@@ -180,7 +180,7 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let regex = /^(?![^a-zA-Z0-9\u0B80-\u0BFF]).*$/;
+      const regex = /^(?![^a-zA-Z0-9\u0B80-\u0BFF]).*$/;
       return regex.test(control.value) ? null : { onlyTextOrNumber1: true };
     };
   }
@@ -190,7 +190,7 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let regex = /^[a-zA-Z0-9\s.,-]*$/;
+      const regex = /^[a-zA-Z0-9\s.,-]*$/;
       return regex.test(control.value) ? null : { onlyTextAndNumberGuionCommand: true };
     };
   }
@@ -200,7 +200,7 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let regex = /^\d+$/;
+      const regex = /^\d+$/;
       return regex.test(control.value) ? null : { onlyNumber: true };
     };
   }
@@ -210,7 +210,7 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let regex = /^[a-zA-Z]+$/;
+      const regex = /^[a-zA-Z]+$/;
       return regex.test(control.value) ? null : { onlyLetters: true };
     };
   }

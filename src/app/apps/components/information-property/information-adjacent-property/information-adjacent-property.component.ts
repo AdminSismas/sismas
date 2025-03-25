@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -11,11 +11,11 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgClass, NgForOf, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgForOf } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
-  MODAL_SMALL, MODAL_SMALL_LARGE,
+  MODAL_SMALL_LARGE,
   PAGE,
   PAGE_OPTION_5_7_10,
   PAGE_SIZE_SORT,
@@ -27,11 +27,8 @@ import {
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
-import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
-import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { stagger40ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -39,11 +36,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
-import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import {
-  ContentInformationConstruction
-} from '../../../interfaces/information-property/content-information-construction';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -217,7 +210,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   }
 
   executeEventAddEditAdjacentInformationProperty(content: InformationAdjacent | null): void {
-    let data: InformationAdjacent = new InformationAdjacent(content, this.schema, this.baunitId);
+    const data: InformationAdjacent = new InformationAdjacent(content, this.schema, this.baunitId);
     data.executionId = this.executionId;
     const dialogRef = this.dialog.open(CrudInformationAdjacentPropertyComponent, {
       ...MODAL_SMALL_LARGE,
@@ -277,10 +270,12 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data
+    if (this.isAllSelected()){
+      this.selection.clear();
+    } else {
+      this.dataSource.data
         .forEach((row: InformationAdjacent) => this.selection.select(row));
+    }
   }
 
   toggleColumnVisibility(column: TableColumn<InformationAdjacent>, event: Event) {
