@@ -52,6 +52,14 @@ export class InformationAdjacentPropertyService {
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
+  //POST: {{url}}:{{port}}/changeLog/temp/{{executionId}}/geo/colindante/{{baunitId}}
+  addInformationGeoPropertyAdjacent(executionId: string, baUnitId: string): Observable<any> {
+    let url = `${this.basic_url}${envi.changeLog}${envi.schemas.temp}/${executionId}${envi.accessGeo.geo}${envi.adjacent}${baUnitId}`;
+    return this.requestsService.sendPostText(url).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
+
   deleteAdjacent(executionId: string, schema: string, baUnitId: string,
                  ccColindanteBaUnitId: number): Observable<void> {
     return this.requestsService.sendDeleteFetch(

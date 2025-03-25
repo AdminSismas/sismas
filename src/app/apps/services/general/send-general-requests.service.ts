@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpStatusCode } from '@angular/common/http';
 import { AuthService } from '../../../pages/pages/auth/login/services/auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environments';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -87,8 +86,8 @@ export class SendGeneralRequestsService {
         method: 'POST',
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json'
-          //'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
       };
     } else {
@@ -97,8 +96,8 @@ export class SendGeneralRequestsService {
         body: JSON.stringify(obj),
         headers: {
           'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json'
-          //'Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
       };
     }
@@ -158,6 +157,19 @@ export class SendGeneralRequestsService {
       .catch(error => (error));
   }
 
+  sendPost(url: any): Observable<any> {
+    return this.http.post(url, null);
+  }
+
+  sendPostText(url: any): Observable<string> {
+    return this.http.post(url, null, {
+      headers: new HttpHeaders({
+        'Accept': 'text/html, application/xhtml+xml, */*',
+        'Content-Type': 'text/plain; charset=utf-8'
+      }),
+      responseType: 'text' as 'text'
+    });
+  }
 
   sendRequestsFetchPost(url: string): Observable<any> {
     return this.http.post<any>(url, '');

@@ -23,16 +23,31 @@
             <!-- Botón "Nueva" SIEMPRE visible en edición -->
             @if (typeInformation === "edition") {
               <div class="flex-1">
-                <button
-                  mat-raised-button
-                  type="button"
-                  [ngClass]=" !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
-                  [color]="editable ? 'primary' : ''"
-                  [disabled]="!editable"
-                  (click)="addAdjacentInformationProperty()">
-                  Nueva
-                  <mat-icon svgIcon="mat:add"></mat-icon>
-                </button>
+                <div class="flex flex-col sm:flex-row sm:gap-4 xl:justify-center sm:justify-center">
+                  <button
+                    mat-raised-button
+                    type="button"
+                    [ngClass]=" !editable ? classEdit : ''"
+                    [color]="editable ? 'primary' : ''"
+                    [disabled]="!editable"
+                    (click)="addAdjacentInformationProperty()"
+                    class="px-2">
+                    Nueva
+                    <mat-icon svgIcon="mat:add"></mat-icon>
+                  </button>
+                  <button
+                    mat-raised-button
+                    type="button"
+                    [ngClass]=" !editable ? classEdit : ''"
+                    [color]="editable ? 'primary' : ''"
+                    [disabled]="!editable"
+                    (click)="addAdjacentGeoInformationProperty()"
+                    class="px-2">
+                    Origen Geográfico
+                    <mat-icon svgIcon="mat:add"></mat-icon>
+                  </button>
+                  <span class="flex-auto"></span>
+                </div>
               </div>
             } @else {
               <span class="flex-1"></span>
@@ -238,6 +253,15 @@
   #errorSwal
   title="Error"
   text="No fue posible eliminar la información"
+  icon="error"
+  [confirmButtonText]="'Cerrar'"
+  [confirmButtonColor]="'#3f51b5'"
+></swal>
+
+<swal
+  #errorAdjacentSwal
+  title="Error"
+  text="No fue posible insertar colindantes geograficos"
   icon="error"
   [confirmButtonText]="'Cerrar'"
   [confirmButtonColor]="'#3f51b5'"
