@@ -28,4 +28,22 @@ export class VisitaService {
         map((response: Reconocimiento) =>  ReconocimientoPredialMapper.mapReconocimiento(response))
       );
   }
+
+  sendTags(
+    executionId: string | number,
+    formValues: {
+      tag01: string,
+      tag02: string,
+      tag03: string,
+      tag04: string,
+      tag05: string
+    }
+  ): Observable<ReconocimientoPredial> {
+    const body = { executionId, ...formValues };
+
+    return this.http.post<Reconocimiento>(this.base_url, body)
+      .pipe(
+        map((response: Reconocimiento) =>  ReconocimientoPredialMapper.mapReconocimiento(response))
+      );
+  }
 }
