@@ -7,7 +7,7 @@
     <button
       mat-flat-button
       color="primary"
-      class="absolute top-4 left-4"
+      class="absolute top-2 left-2 xl:top-4 xl:left-4"
       (click)="reloadPdf()"
     >
       <mat-icon svgIcon="mat:refresh"></mat-icon>
@@ -18,7 +18,7 @@
         <!-- class="doc-viewer" -->
         <iframe
           [src]="pdfUrl()"
-          width="70%"
+          width="75%"
           height="100%"
         ></iframe>
       } @else if (!isLoading() && pdfUrl() === "error") {
@@ -38,11 +38,8 @@
       {{ secondTab() }}
     </ng-template>
     <div
-      class="flex flex-col items-center justify-center text-center w-full tab-body"
+      class="flex flex-col items-center text-center w-full tab-body py-4"
     >
-      <h1 class="text-center w-full text-3xl text-slate-700 underline mb-8">
-        Agregar tags
-      </h1>
       <vex-dynamic-forms
         class="w-3/5 lg:w-4/5"
         className="flex flex-col gap-2"
@@ -67,6 +64,15 @@
   title="Tags enviados"
   icon="success"
   text="Todos los tags se han enviado con exito."
+  confirmButtonText="Aceptar"
+  confirmButtonColor="primary"
+></swal>
+
+<swal
+  #errorSendTags
+  title="Tags no enviados"
+  icon="error"
+  text="Los tags no se han podido enviar."
   confirmButtonText="Aceptar"
   confirmButtonColor="primary"
 ></swal>

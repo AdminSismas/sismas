@@ -62,6 +62,7 @@ export class ResValidateComponent implements OnInit {
   private visitaService = inject(VisitaService);
 
   successSendTags = viewChild<SwalComponent>('successSendTags');
+  errorSendTags = viewChild<SwalComponent>('errorSendTags');
 
   get inputs() {
     return RES_VALIDATE_INPUTS;
@@ -117,6 +118,7 @@ export class ResValidateComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           console.log(error.message);
+          this.errorSendTags()!.fire();
         }
       });
   }
