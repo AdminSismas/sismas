@@ -1,61 +1,101 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialogTitle } from '@angular/material/dialog';
+import { Component, inject, input, OnInit, signal, viewChild } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { environment } from 'src/environments/environments';
-import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
+import { RES_VALIDATE_INPUTS } from 'src/app/apps/constants/bpm/res-validate.constants';
+import { FormGroup } from '@angular/forms';
+import { VisitaService } from 'src/app/apps/services/bpm/visita.service';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-res-validate',
   standalone: true,
-  imports: [MatDialogTitle, CommonModule],
+  imports: [
+    MatTabsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    DynamicFormsComponent,
+    SweetAlert2Module
+  ],
   templateUrl: './res-validate.component.html',
-  styleUrl: './res-validate.component.scss'
+  styles: `
+    .tab-body {
+      height: calc(100vh - 190px);
+    }
+  `
 })
 export class ResValidateComponent implements OnInit {
-  @Input() public id = '';
-  @Input() public executionId = '';
-  @Input({ required: true }) public resources: string[] = [];
+  executionId = input.required<string>();
+  resources = input.required<string[]>();
+  isLoading = signal<boolean>(true);
+  id = signal<string>('');
+  basic_url = signal(
+    `${environment.url}:${environment.port}/${'bpmResolution'}/${'preview'}/`
+  );
+  pdfUrl = signal<SafeUrl>('');
+  firstTab = signal<string>('Resolución generada');
+  secondTab = signal<string>('Textos resolución');
+  form = signal<FormGroup>(new FormGroup({}));
 
-  basic_url = `${environment.url}:${environment.port}/${'bpmResolution'}/${'preview'}/`;
-  pdfUrl: SafeUrl = '';
-  constructor(
-    private sanitizer: DomSanitizer,
-    private http: HttpClient
-  ) {}
+  private sanitizer = inject(DomSanitizer);
+  private http = inject(HttpClient);
+  private visitaService = inject(VisitaService);
+
+  successSendTags = viewChild<SwalComponent>('successSendTags');
+
+  get inputs() {
+    return RES_VALIDATE_INPUTS;
+  }
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id +
-        this.getRandomInt(100000) +
-        'AlfaMainComponent' +
-        this.getRandomInt(10);
-    } else {
-      this.id =
-        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
-    }
-
     this.loadPdf();
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
   loadPdf() {
-    const urlComplete = `${this.basic_url}${this.executionId}`;
+    const urlComplete = `${this.basic_url()}${this.executionId()}`;
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     this.http.get(urlComplete, { headers, responseType: 'blob' }).subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
-        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
+        this.pdfUrl.set(
+          this.sanitizer.bypassSecurityTrustResourceUrl(
+            URL.createObjectURL(blob)
+          )
+        );
+        this.isLoading.set(false);
       },
       error: () => {
+        this.isLoading.set(false);
         console.error('Error al cargar el documento PDF:');
-        this.pdfUrl = 'error';
+        this.pdfUrl.set('error');
       }
     });
+  }
+
+  reloadPdf() {
+    this.isLoading.set(true);
+    this.loadPdf();
+  }
+
+  saveTags() {
+    this.visitaService.sendTags(this.executionId(), this.form().value)
+      .subscribe({
+        next: () => {
+          this.successSendTags()!.fire();
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error.message);
+        }
+      });
+
+
   }
 }
