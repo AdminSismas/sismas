@@ -41,9 +41,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { Operation } from '../../../interfaces/bpm/operation';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
@@ -53,9 +51,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import {
-  ModificationPropertyUnitsComponent
-} from '../modification-property-units/modification-property-units.component';
+import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 
@@ -76,13 +72,14 @@ import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
     MatMenuModule,
     MatDialogModule,
     MatDividerModule,
-    SweetAlert2Module,
-],
+    SweetAlert2Module
+  ],
   templateUrl: './table-alfa-main.component.html',
   styleUrl: './table-alfa-main.component.scss'
 })
-export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges {
-
+export class TableAlfaMainComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   @Input({ required: true }) contentInformations!: InformationPegeable;
@@ -96,28 +93,32 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   searchData!: SearchData;
 
-  public page = PAGE;
-  public totalElements = 0;
-  public pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  public pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
-  public dataSource!: MatTableDataSource<Operation>;
-  public npnRemoving?: string;
+  page = PAGE;
+  totalElements = 0;
+  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
+  dataSource!: MatTableDataSource<Operation>;
+  npnRemoving?: string;
 
-  _contentInformations$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(0);
-  contentInformations$: Observable<InformationPegeable> = this._contentInformations$.asObservable();
+  _contentInformations$: ReplaySubject<InformationPegeable> =
+    new ReplaySubject<InformationPegeable>(0);
+  contentInformations$: Observable<InformationPegeable> =
+    this._contentInformations$.asObservable();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmRemoveDialog', { static: true}) confirmRemoveDialog!: SwalComponent;
-  @ViewChild('confirmDeleteDialog', { static: true}) confirmDeleteDialog!: SwalComponent;
-  @ViewChild('confirmAddUpdateBaUnitHead', { static: true}) confirmAddUpdateBaUnitHead!: SwalComponent;
-
+  @ViewChild('confirmRemoveDialog', { static: true })
+  confirmRemoveDialog!: SwalComponent;
+  @ViewChild('confirmDeleteDialog', { static: true })
+  confirmDeleteDialog!: SwalComponent;
+  @ViewChild('confirmAddUpdateBaUnitHead', { static: true })
+  confirmAddUpdateBaUnitHead!: SwalComponent;
 
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private bpmCoreService: BpmCoreService,
-    private alfaMainService: AlfaMainService,
+    private alfaMainService: AlfaMainService
   ) {}
 
   get visibleColumns() {
@@ -204,7 +205,6 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
           this.executionId,
           LIST_SCHEMAS_CONTROL_CHANGES,
           TYPE_INFORMATION_VISUAL
-
         )
       })
       .afterClosed();
@@ -217,16 +217,21 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
       );
       return;
     }
-    this.bpmCoreService.viewChangesBpmOperationTemp(
-      this.executionId, operation?.baunitHead?.baunitIdE)
-      .subscribe(
-        {
-          error: () => this.messageChangesNoAvailable(),
-          next: (result: DifferenceChanges[]) => {
-            this.openDifferenceChangesProperty(
-              result, this.executionId, operation?.baunitHead?.baunitIdE);
-          }
-        });
+    this.bpmCoreService
+      .viewChangesBpmOperationTemp(
+        this.executionId,
+        operation?.baunitHead?.baunitIdE
+      )
+      .subscribe({
+        error: () => this.messageChangesNoAvailable(),
+        next: (result: DifferenceChanges[]) => {
+          this.openDifferenceChangesProperty(
+            result,
+            this.executionId,
+            operation?.baunitHead?.baunitIdE
+          );
+        }
+      });
   }
 
   editInformation(operation: Operation): void {
@@ -257,13 +262,19 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     this.npnRemoving = operation.npnlike;
     this.confirmRemoveDialog.fire().then((result) => {
       if (result.isConfirmed) {
-        this.bpmCoreService.clearPropertyBpmOperation(this.executionId, operation.baunitHead!.baunitIdE as string)
+        this.bpmCoreService
+          .clearPropertyBpmOperation(
+            this.executionId,
+            operation.baunitHead!.baunitIdE as string
+          )
           .subscribe({
             next: () => {
               this.refreshData.emit();
             },
             error: (error: HttpErrorResponse) => {
-              this.msgErrorConsultingAdministration('Error al eliminar la unidad predial.');
+              this.msgErrorConsultingAdministration(
+                'Error al eliminar la unidad predial.'
+              );
               throw error;
             }
           });
@@ -273,14 +284,13 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
 
   changeTemporaryStateBeaUnitHead(operation: Operation): void {
     this.npnRemoving = operation.npnlike;
-    if(operation.operationType === 'UPDATE'){
+    if (operation.operationType === 'UPDATE') {
       this.confirmDeleteDialog.fire().then((result) => {
         if (result.isConfirmed) {
           this.executeResultChangeTemporaryStateBeaUnitHead(operation);
         }
       });
-    }
-    else if (operation.operationType === 'DELETE'){
+    } else if (operation.operationType === 'DELETE') {
       this.confirmAddUpdateBaUnitHead.fire().then((result) => {
         if (result.isConfirmed) {
           this.executeResultChangeTemporaryStateBeaUnitHead(operation);
@@ -289,21 +299,30 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     }
   }
 
-  executeResultChangeTemporaryStateBeaUnitHead(operation: Operation){
-    this.alfaMainService.changeTemporaryStateBeaUnitHeadByExistTemp(
-      operation.baunitHead!.baunitIdE as string, this.executionId).subscribe({
-      next: () => {
-        this.refreshData.emit();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.msgErrorConsultingAdministration('Error al eliminar la unidad predial.');
-        throw error;
-      }
-    });
+  executeResultChangeTemporaryStateBeaUnitHead(operation: Operation) {
+    this.alfaMainService
+      .changeTemporaryStateBeaUnitHeadByExistTemp(
+        operation.baunitHead!.baunitIdE as string,
+        this.executionId
+      )
+      .subscribe({
+        next: () => {
+          this.refreshData.emit();
+        },
+        error: (error: HttpErrorResponse) => {
+          this.msgErrorConsultingAdministration(
+            'Error al eliminar la unidad predial.'
+          );
+          throw error;
+        }
+      });
   }
 
-  openDifferenceChangesProperty(result: DifferenceChanges[],
-                                executionId:string, baunitIdE:string | undefined): void {
+  openDifferenceChangesProperty(
+    result: DifferenceChanges[],
+    executionId: string,
+    baunitIdE: string | undefined
+  ): void {
     if (!result || result.length <= 0) {
       this.messageChangesNoAvailable();
       return;
@@ -316,7 +335,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
       .open(ViewChangesBpmOperationComponent, {
         ...MODAL_SMALL,
         disableClose: true,
-        data:data
+        data: data
       })
       .afterClosed();
   }
@@ -343,7 +362,7 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
     });
   }
 
-  msgErrorConsultingAdministration(msg: string){
+  msgErrorConsultingAdministration(msg: string) {
     Swal.fire({
       text: msg,
       icon: 'error',
@@ -351,4 +370,25 @@ export class TableAlfaMainComponent implements OnInit, AfterViewInit, OnChanges 
       timer: 10000
     }).then();
   }
+
+  addRemoveIcon(operationType: string): string {
+    if (operationType === 'UPDATE') {
+      return 'mat:delete';
+    }
+    return 'mat:recycling';
+  }
+
+  addRemoveText(operationType: string): string {
+    if (operationType === 'UPDATE') {
+      return 'Borrar';
+    }
+    return 'Reincorporar';
+  }
+
+  // addRemoveOption(operationType: string): { text: string; icon: string } {
+  //   if (operationType === 'UPDATE') {
+  //     return { text: 'Borrar', icon: 'mat:delete' };
+  //   }
+  //   return { text: 'Reincorporar', icon: 'mat:recycling' };
+  // }
 }

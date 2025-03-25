@@ -193,7 +193,7 @@
       <button
         (click)="removeInformation(row)"
         mat-menu-item>
-        <mat-icon svgIcon="mat:delete"></mat-icon>
+        <mat-icon svgIcon="mat:backspace"></mat-icon>
         <span>Retirar</span>
       </button>
     }
@@ -202,14 +202,8 @@
       <button
         (click)="changeTemporaryStateBeaUnitHead(row)"
         mat-menu-item>
-        <mat-icon svgIcon="mat:delete"></mat-icon>
-        @if (row['operationType'] === 'UPDATE') {
-          <span>Borrar</span>
-        }
-
-        @if (row['operationType'] === 'DELETE') {
-          <span>Reincorporar</span>
-        }
+        <mat-icon [svgIcon]="addRemoveIcon(row['operationType'])"></mat-icon>
+        <span>{{ addRemoveText(row['operationType']) }}</span>
       </button>
     }
 
