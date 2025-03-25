@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
-import { Reconocimiento, ReconocimientoPredial, ReconocimientoPredialMapper } from '../../interfaces/bpm/visita.interface';
+import { Reconocimiento, ReconocimientoPredial, ReconocimientoPredialMapper, TagsReconocimiento } from '../../interfaces/bpm/visita.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,15 @@ export class VisitaService {
       );
   }
 
+  getTags(executionId: string | number): Observable<TagsReconocimiento> {
+    const url = `${this.base_url}${envi.getByExecution}/${executionId}`;
+
+    return this.http.get<Reconocimiento>(url)
+      .pipe(
+        map((response: Reconocimiento) =>  ReconocimientoPredialMapper.mapReconocimientoTags(response))
+      );
+  }
+
   sendTags(
     executionId: string | number,
     formValues: {
@@ -41,9 +50,6 @@ export class VisitaService {
   ): Observable<ReconocimientoPredial> {
     const body = { executionId, ...formValues };
 
-    return this.http.post<Reconocimiento>(this.base_url, body)
-      .pipe(
-        map((response: Reconocimiento) =>  ReconocimientoPredialMapper.mapReconocimiento(response))
-      );
+    return this.http.post<ReconocimientoPredial>(this.base_url, body);
   }
 }

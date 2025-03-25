@@ -47,6 +47,7 @@
         class="w-3/5 lg:w-4/5"
         className="flex flex-col gap-2"
         [inputs]="inputs"
+        [initValues]="initTags()"
         (formReady)="form.set($event)"
       ></vex-dynamic-forms>
       <button

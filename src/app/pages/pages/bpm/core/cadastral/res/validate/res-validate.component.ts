@@ -1,7 +1,18 @@
-import { Component, inject, input, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  signal,
+  viewChild
+} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { environment } from 'src/environments/environments';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders
+} from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +22,7 @@ import { RES_VALIDATE_INPUTS } from 'src/app/apps/constants/bpm/res-validate.con
 import { FormGroup } from '@angular/forms';
 import { VisitaService } from 'src/app/apps/services/bpm/visita.service';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TagsReconocimiento } from 'src/app/apps/interfaces/bpm/visita.interface';
 
 @Component({
   selector: 'vex-res-validate',
@@ -43,6 +55,7 @@ export class ResValidateComponent implements OnInit {
   firstTab = signal<string>('Resolución generada');
   secondTab = signal<string>('Textos resolución');
   form = signal<FormGroup>(new FormGroup({}));
+  initTags = signal<TagsReconocimiento>({});
 
   private sanitizer = inject(DomSanitizer);
   private http = inject(HttpClient);
@@ -56,6 +69,7 @@ export class ResValidateComponent implements OnInit {
 
   ngOnInit() {
     this.loadPdf();
+    this.getTags();
   }
 
   loadPdf() {
@@ -85,8 +99,18 @@ export class ResValidateComponent implements OnInit {
     this.loadPdf();
   }
 
+  getTags() {
+    this.visitaService.getTags(this.executionId()).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.initTags.set(response);
+      }
+    });
+  }
+
   saveTags() {
-    this.visitaService.sendTags(this.executionId(), this.form().value)
+    this.visitaService
+      .sendTags(this.executionId(), this.form().value)
       .subscribe({
         next: () => {
           this.successSendTags()!.fire();
@@ -95,7 +119,5 @@ export class ResValidateComponent implements OnInit {
           console.log(error.message);
         }
       });
-
-
   }
 }

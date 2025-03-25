@@ -41,12 +41,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   styles: ``
 })
 export class DynamicFormsComponent implements OnInit, OnChanges {
-  @Input({ required: true }) public inputs: JSONInput[] = [];
-  @Input() public initValues: any = {};
-  @Input() public className = '';
-  @Input() public disabled = false;
+  @Input({ required: true }) inputs: JSONInput[] = [];
+  @Input() className = '';
+  @Input() disabled = false;
+  @Input() initValues: any = {};
 
-  public form: FormGroup = new FormGroup({});
+ form: FormGroup = new FormGroup({});
   private dateFilters = new Map<string, (date: Date | null) => boolean>();
 
   @Output() formReady = new EventEmitter<FormGroup>();
@@ -61,8 +61,8 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
       this.form.disable();
     }
 
-    if (this.initValues) {
-      this.form.reset(this.initValues);
+    if (this.initValues()) {
+      this.form.reset(this.initValues());
     }
   }
 
@@ -73,6 +73,10 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
       } else {
         this.form.enable();
       }
+    }
+
+    if (changes['initValues'] && this.form) {
+      this.form.reset(this.initValues);
     }
   }
 
