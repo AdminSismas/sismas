@@ -31,6 +31,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import {
+  MODAL_MEDIUM,
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   PAGE_OPTION_10_20_50_100,
@@ -427,7 +428,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
-        width: '60%',
+        ...MODAL_MEDIUM,
         data: {
           value: {
             executionId: this.data?.value?.executionId
