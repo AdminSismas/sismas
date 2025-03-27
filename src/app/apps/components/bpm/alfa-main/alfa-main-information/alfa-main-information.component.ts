@@ -109,7 +109,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   public id: string = getRandomInt(1234).toString();
 
-  @Input({ required: true }) public executionId: string = '';
+  @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public resourcesRemovers: string[] = [];
   @Input({ required: false }) public mode = 1;
@@ -143,8 +143,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-    this.destroyRef.onDestroy(() => {
-    });
   }
 
   ngOnInit() {
@@ -230,7 +228,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   }
 
   getAlfaMain() {
-    console.log('Actualizando ...');
     this.alfaMainService
       .getListAlfaMainOperations(this.generateObjectPageSearchData())
       .subscribe({
@@ -303,9 +300,9 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
 
   indexArraylist(listObj: Operation[]) {
     if (listObj && listObj.length > 0) {
-      return listObj.reduce((acc, el: any) => {
-        acc[el.npnlike] = acc[el.npnlike] || [];
-        acc[el.npnlike].push(el);
+      return listObj.reduce((acc, el) => {
+        acc[el.npnlike!] = acc[el.npnlike!] || [];
+        acc[el.npnlike!].push(el);
         return acc;
       }, Object.create(null));
     }

@@ -167,7 +167,6 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   }
 
   editPropertyUnit(row: BaunitHead) {
-    console.log(this.data.resources);
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
         ...MODAL_LARGE,
