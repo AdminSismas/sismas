@@ -31,9 +31,10 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import {
+  MODAL_MEDIUM,
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   PAGE_SIZE_TABLE_UNIQUE,
@@ -123,7 +124,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
   showAlert = false;
 
   _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);
@@ -427,7 +428,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
-        width: '60%',
+        ...MODAL_MEDIUM,
         data: {
           value: {
             executionId: this.data?.value?.executionId

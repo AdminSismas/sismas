@@ -20,9 +20,13 @@ import { TaskRetailExecuteResponseModel } from '../../interfaces/bpm/task-retail
 import { DataFolio } from '../../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../../interfaces/information-property/snr-person-info';
-import { BasicInformationAdjacent } from '../../interfaces/information-property/basic-information-adjacent';
+import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
 import { ZoneBAUnitFisica } from '../../interfaces/information-property/zone-baunit';
 import { ProcessParticipantTableMenu } from '../../interfaces/bpm/citation-and-notice/info-participants.interface';
+import {
+  CreateBasicInformationAddress,
+  DetailBasicInformationAddress
+} from '../../interfaces/information-property/detail-basic-information-address';
 
 export const GUION: string = '-';
 export const SPACE: string = ' ';
@@ -57,9 +61,9 @@ export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
 
-export const PAGE_OPTION__1_5_10: number[] = [1, 5, 10];
-export const PAGE_OPTION__5_7_10: number[] = [5, 7, 10];
-export const PAGE_OPTION__10_20_50_100: number[] = [10, 20, 50, 100];
+export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
+export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
+export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
 
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
@@ -97,12 +101,12 @@ export const NUMERO_PREDIAL_NACIONAL: string = 'Número Predial Nacional';
 
 export const TYPE_INFORMATION_EDITION: TypeInformation = 'edition';
 export const TYPE_INFORMATION_VISUAL: TypeInformation = 'visualization';
-export const EVIRONMENT_CC_DIRECCION:string = '/ccDireccion';
-export const ROL_GUEST:string = 'GUEST';
-export const ROL_USER_READ:string = 'USER_READ';
+export const EVIRONMENT_CC_DIRECCION: string = '/ccDireccion';
+export const ROL_GUEST: string = 'GUEST';
+export const ROL_USER_READ: string = 'USER_READ';
 
-export const ENVIRONMENT_RETIRO_IMG:string = 'assets/img/logo/logo_El_retiro.png';
-export const NAME_LOGO_IMG_SAN_VICENTE:string = 'logo_san_vicente.png';
+export const ENVIRONMENT_RETIRO_IMG: string = 'assets/img/logo/logo_El_retiro.png';
+export const NAME_LOGO_IMG_SAN_VICENTE: string = 'logo_san_vicente.png';
 
 export const TYPE_OPERATION_ADD: TypeOperationAlfaMain = 'ADD';
 export const TYPE_OPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
@@ -433,10 +437,16 @@ export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformatio
   }
 ];
 
-export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformationAdjacent>[] = [
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<InformationAdjacent>[] = [
+  // {
+  //   label: 'Ficha',
+  //   property: 'ccColindanteBaunitId',
+  //   type: 'text',
+  //   visible: true
+  // },
   {
-    label: 'Ficha',
-    property: 'ccColindanteBaunitId',
+    label: 'Punto cardinal',
+    property: 'domPuntoCardinal',
     type: 'text',
     visible: true
   },
@@ -445,14 +455,14 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<BasicInformat
     property: 'colindante',
     type: 'text',
     visible: true
-  },
-  {
-    label: 'Punto cardinal',
-    property: 'domPuntoCardinal',
-    type: 'text',
-    visible: true
   }
 ];
+
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<InformationAdjacent>[] = [
+  ...TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+];
+
 
 export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
   {
@@ -496,11 +506,6 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
-export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<BasicInformationAdjacent>[] = [
-  ...TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL,
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-];
-export const TABLE_COLUMN_PROPERTIES_ADJACENT: TableColumn<BasicInformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL;
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     // name: 'cadAlfaMainComponent',
@@ -596,16 +601,16 @@ export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>
 ];
 
 
-export const NAME_VALIDITY_VALUATION:string = 'validityValuation';
-export const NAME_CADASTRAL_VALUATION_AT:string = 'cadastralValuationAt';
-export const NAME_CADASTRAL_VALUATION:string = 'cadastralValuation';
-export const NAME_CADASTRAL_VALUATION_LAND:string = 'cadastralValuationLand';
-export const NAME_CADASTRAL_VALUATION_UNITS:string = 'cadastralValuationUnits';
-export const NAME_COMMERCIAL_VALUATION:string = 'commercialValuation';
-export const NAME_COMMERCIAL_VALUATION_LAND:string = 'commercialValuationLand';
-export const NAME_COMMERCIAL_VALUATION_UNITS:string = 'commercialValuationUnits';
-export const NAME_SELF_VALUATION_VALUE:string = 'selfValuationValue';
-export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY:string = 'BpmProcessCategory';
+export const NAME_VALIDITY_VALUATION: string = 'validityValuation';
+export const NAME_CADASTRAL_VALUATION_AT: string = 'cadastralValuationAt';
+export const NAME_CADASTRAL_VALUATION: string = 'cadastralValuation';
+export const NAME_CADASTRAL_VALUATION_LAND: string = 'cadastralValuationLand';
+export const NAME_CADASTRAL_VALUATION_UNITS: string = 'cadastralValuationUnits';
+export const NAME_COMMERCIAL_VALUATION: string = 'commercialValuation';
+export const NAME_COMMERCIAL_VALUATION_LAND: string = 'commercialValuationLand';
+export const NAME_COMMERCIAL_VALUATION_UNITS: string = 'commercialValuationUnits';
+export const NAME_SELF_VALUATION_VALUE: string = 'selfValuationValue';
+export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY: string = 'BpmProcessCategory';
 
 
 export const LIST_GRID_APPRAISAL_1: string[] = [
@@ -738,6 +743,7 @@ export const FRAGMENT_SUPER_NOTARIADO_PROPERTY: string = 'superNotariadoProperty
 export const FRAGMENT_BASIC_PROPERTY_INFORMATION: string = 'basicPropertyInformationComponent';
 export const FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY: string = 'historicalProceduresPropertyComponent';
 export const FRAGMENT_ACTIVE_PROCEDURES_PROPERTY: string = 'activeProceduresPropertyComponent';
+export const FRAGMENT_INFORMATION_UNIT_PROPERTY: string = 'informationUnitPropertyComponent';
 
 
 export const LIST_FRAGMENT_COMPONENTS_RULE_PAGE: string[] = [
@@ -752,7 +758,7 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment:
   },
   {
     label: 'Información de unidad predial',
-    fragment: 'informationUnitPropertyComponent'
+    fragment: FRAGMENT_INFORMATION_UNIT_PROPERTY
   },
   {
     label: 'Fuentes administrativas',
@@ -1060,6 +1066,7 @@ export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', 
 export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
 export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
+export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
 export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
@@ -1121,6 +1128,47 @@ export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualif
     shouldDisable: false
   }
 ];
+
+export const DETAIL_BASIC_MODEL_ADDRESS: DetailBasicInformationAddress = {
+  // campos BASE
+  domTipoDireccion: '',
+  esDireccionPrincipal: false,
+  codigoPostal: '',
+  nombrePredio: '',
+  direccionTexto: '',
+  // PRINCIPAL
+  domClaseViaPrincipal: '',
+  letraViaPrincipal: '',
+  valorViaPrincipal: '',
+  domSectorCiudad: '',
+  // GENERADORA
+  letraViaGeneradora: '',
+  valorViaGeneradora: '',
+  complemento: '',
+  domSectorPredio: '',
+  numeroPredio: ''
+};
+
+export const CREATE_BASIC_MODEL_ADDRESS: CreateBasicInformationAddress = {
+  // campos BASE
+  domTipoDireccion: '',
+  esDireccionPrincipal: false,
+  codigoPostal: '',
+  numeroPredio: '',
+  direccionTexto: '',
+  // PRINCIPAL
+  domClaseViaPrincipal: '',
+  letraViaPrincipal: '',
+  valorViaPrincipal: '',
+  domSectorCiudad: '',
+  // GENERADORA
+  letraViaGeneradora: '',
+  valorViaGeneradora: '',
+  complemento: '',
+  nombrePredio: '',
+  domSectorPredio: ''
+};
+
 
 export const LIST_CITATION_AND_NOTICE_TABLE_MENU:ProcessParticipantTableMenu[] = [
   {

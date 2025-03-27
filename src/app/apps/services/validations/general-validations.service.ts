@@ -19,16 +19,13 @@ export class GeneralValidationsService {
     return (formGroup: AbstractControl<any>): ValidationErrors | null => {
       const fieldValue1: string = formGroup.get(field1)?.value || '';
       const fieldValue2: string = formGroup.get(field2)?.value || '';
-
       if (fieldValue1 !== fieldValue2) {
         formGroup.get(field2)?.setErrors({ notEquals: true});
         return {
           notEquals: true
         };
       }
-
       formGroup.get(field2)?.setErrors(null);
-
       return null;
     };
   }
@@ -37,16 +34,13 @@ export class GeneralValidationsService {
     return (formGroup: AbstractControl<any>): ValidationErrors | null => {
       const fieldValue1: string = formGroup.get(field1)?.value || '';
       const fieldValue2: string = formGroup.get(field2)?.value || '';
-
       if (fieldValue1 === fieldValue2) {
         formGroup.get(field2)?.setErrors({ isEquals: true});
         return {
           isEquals: true
         };
       }
-
       formGroup.get(field2)?.setErrors(null);
-
       return null;
     };
   }
@@ -55,10 +49,8 @@ export class GeneralValidationsService {
     return (control: AbstractControl): Record<string, any> | null => {
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Reinicia la hora a 00:00:00
-
       const inputDate = new Date(control.value);
       inputDate.setHours(0, 0, 0, 0);
-
       return inputDate > today ? { 'futureDate': true } : null;
     };
   }
@@ -68,8 +60,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^[A-Z]+$');
-      return value != null && value ? { capitalLetter: true } : null
+      const value = this.patternValidator(control, '^[A-Z]+$');
+      return value != null && value ? { capitalLetter: true } : null;
     };
   }
 
@@ -78,8 +70,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
-      return value != null && value ? { errorArea: true } : null
+      const value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
+      return value != null && value ? { errorArea: true } : null;
     };
   }
 
@@ -88,8 +80,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
-      return value != null && value ? { onlyNumber: true } : null
+      const value = this.patternValidator(control, '^[0-9]+([.,][0-9]+)?$');
+      return value != null && value ? { onlyNumber: true } : null;
     };
   }
 
@@ -98,8 +90,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^(?:[1-9]|[1-9][0-9])$');
-      return value != null && value ? { max99: true } : null
+      const value = this.patternValidator(control, '^(?:[1-9]|[1-9][0-9])$');
+      return value != null && value ? { max99: true } : null;
     };
   }
 
@@ -108,8 +100,8 @@ export class GeneralValidationsService {
       if (!control || !control.value) {
         return null;
       }
-      let value = this.patternValidator(control, '^(19|20)\\d{2}$');
-      return value != null && value ? { yearBetween1900And2099: true } : null
+      const value = this.patternValidator(control, '^(19|20)\\d{2}$');
+      return value != null && value ? { yearBetween1900And2099: true } : null;
     };
   }
 
@@ -143,6 +135,20 @@ export class GeneralValidationsService {
     };
   }
 
+  min03Characters(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value: any = control.value;
+      return this.isValueField(value) && value.length < 3 ? { min03Characters: true } : null;
+    };
+  }
+
+  min10Characters(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value: any = control.value;
+      return this.isValueField(value) && value.length <= 10 ? { min10Characters: true } : null;
+    };
+  }
+
   privateAreaValidator(totalAreaControlName: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup = control.parent; // Obtén el grupo del formulario
@@ -159,6 +165,53 @@ export class GeneralValidationsService {
         return { privateAreaExceedsTotal: true }; // Devuelve un error si el área privada es mayor
       }
       return null; // Sin errores
+    };
+  }
+
+  onlyTextAndNumber(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = this.patternValidator(control, '[a-zA-Z0-9]*');
+      return value != null && value ? { onlyTextOrNumber: true } : null;
+    };
+  }
+
+  onlyTextAndNumber1(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      const regex = /^(?![^a-zA-Z0-9\u0B80-\u0BFF]).*$/;
+      return regex.test(control.value) ? null : { onlyTextOrNumber1: true };
+    };
+  }
+
+  onlyTextAndNumberGuionCommand(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      const regex = /^[a-zA-Z0-9\s.,-]*$/;
+      return regex.test(control.value) ? null : { onlyTextAndNumberGuionCommand: true };
+    };
+  }
+
+  onlyNumber(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      const regex = /^\d+$/;
+      return regex.test(control.value) ? null : { onlyNumber: true };
+    };
+  }
+
+  onlyLetters(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      const regex = /^[a-zA-Z]+$/;
+      return regex.test(control.value) ? null : { onlyLetters: true };
     };
   }
 

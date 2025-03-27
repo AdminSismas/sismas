@@ -1,3 +1,6 @@
+import { BasicInformationAddress } from './basic-information-address';
+import { TypeOperation } from '../general/content-info';
+
 export class DetailBasicInformationAddress {
   direccionId?: string;
   esDireccionPrincipal?: any;
@@ -33,6 +36,12 @@ export class DetailBasicInformationAddress {
     this.domSectorPredio = content.domSectorPredio;
     this.direccionTexto = content.direccionTexto;
   }
+}
+
+export interface AddEditInformationDataI {
+  type: TypeOperation;
+  basicInformationAddress: BasicInformationAddress | null;
+  hasMainAddress: boolean | undefined;
 }
 
 export interface CreateBasicInformationAddress {

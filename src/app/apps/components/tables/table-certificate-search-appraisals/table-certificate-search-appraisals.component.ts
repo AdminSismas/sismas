@@ -58,7 +58,7 @@ import {
   MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
@@ -133,7 +133,7 @@ export class TableCertificateSearchAppraisalsComponent
   page = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
 
   @Input() columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   @Input() certificateType!: string;
@@ -448,7 +448,7 @@ export class TableCertificateSearchAppraisalsComponent
   }
   searchPropertiesByBaunitIdE(baunit: string) {
     this.infoTableService
-      .getDataBaunitIdE(this.page, this.pageSize, baunit)
+      .getDataBaUnitIdE(this.page, this.pageSize, baunit)
       .subscribe({
         next: (result: InformationPegeable) =>
           this.captureInformationSubscribe(result),

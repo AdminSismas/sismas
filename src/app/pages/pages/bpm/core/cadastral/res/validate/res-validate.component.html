@@ -1,17 +1,78 @@
-<div
-  class="h-full container flex items-center text-center"
-  mat-dialog-title
-  [id]="id"
->
-  <iframe
-    *ngIf="pdfUrl !== 'error'"
-    [src]="pdfUrl"
-    width="100%"
-    height="100%"
-    style="border: none"
-  ></iframe>
+<mat-tab-group class="min-h-full">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="mat:description"></mat-icon>
+      {{ firstTab() }}
+    </ng-template>
+    <button
+      mat-flat-button
+      color="primary"
+      class="absolute top-2 left-2 xl:top-4 xl:left-4"
+      (click)="reloadPdf()"
+    >
+      <mat-icon svgIcon="mat:refresh"></mat-icon>
+      Refrescar
+    </button>
+    <div class="flex items-center justify-center text-center tab-body">
+      @if (!isLoading() && pdfUrl() !== "error") {
+        <!-- class="doc-viewer" -->
+        <iframe
+          [src]="pdfUrl()"
+          width="75%"
+          height="100%"
+        ></iframe>
+      } @else if (!isLoading() && pdfUrl() === "error") {
+        <div class="flex justify-center items-center tab-body w-full">
+          <p>No se pudo cargar el documento PDF.</p>
+        </div>
+      } @else {
+        <div class="flex justify-center items-center tab-body w-full">
+          <mat-spinner diameter="32"></mat-spinner>
+        </div>
+      }
+    </div>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="mat:edit_note"></mat-icon>
+      {{ secondTab() }}
+    </ng-template>
+    <div
+      class="flex flex-col items-center text-center w-full tab-body py-4"
+    >
+      <vex-dynamic-forms
+        class="w-3/5 lg:w-4/5"
+        className="flex flex-col gap-2"
+        [inputs]="inputs"
+        [initValues]="initTags()"
+        (formReady)="form.set($event)"
+      ></vex-dynamic-forms>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="saveTags()"
+      >
+        <mat-icon svgIcon="mat:save"></mat-icon>
+        Guardar
+      </button>
+    </div>
+  </mat-tab>
+</mat-tab-group>
 
-  <div *ngIf="pdfUrl === 'error'">
-    <p>No se pudo cargar el documento PDF.</p>
-  </div>
-</div>
+<swal
+  #successSendTags
+  title="Tags enviados"
+  icon="success"
+  text="Todos los tags se han enviado con exito."
+  confirmButtonText="Aceptar"
+  confirmButtonColor="primary"
+></swal>
+
+<swal
+  #errorSendTags
+  title="Tags no enviados"
+  icon="error"
+  text="Los tags no se han podido enviar."
+  confirmButtonText="Aceptar"
+  confirmButtonColor="primary"
+></swal>

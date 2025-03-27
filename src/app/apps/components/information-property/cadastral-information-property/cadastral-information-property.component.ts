@@ -43,7 +43,7 @@ import { InformationZonesPropertyComponent } from '../information-zones-property
 import {
   FRAGMENT_BASIC_PROPERTY_INFORMATION,
   FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY,
-  FRAGMENT_INFORMATION_PROPERTY_OWNERS,
+  FRAGMENT_INFORMATION_PROPERTY_OWNERS, FRAGMENT_INFORMATION_UNIT_PROPERTY,
   LIST_FRAGMENT_COMPONENTS_RULE_PAGE,
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   REFERENCE_COMPONENTS,
@@ -327,7 +327,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
   showInformationUnitProperty(baunitCondition: string | undefined): boolean {
     if (baunitCondition === '(Condominio) Matriz' || baunitCondition === '(Propiedad horizontal) Matriz') return true;
-    this.navigationItems = this.navigationItems.filter((item) => item.label !== 'Información de unidad predial');
+    this.navigationItems = this.navigationItems.filter((item) => item.fragment !== FRAGMENT_INFORMATION_UNIT_PROPERTY);
     return false;
   }
 

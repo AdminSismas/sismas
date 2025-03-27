@@ -81,7 +81,8 @@ export class DetailInformationAddressComponent implements OnInit {
   }
 
   loadDetailInformationAddress(): void {
-    if (this.defaults?.direccionId === null || this.defaults?.direccionId === undefined) {
+    if (this.defaults?.direccionId === null || this.defaults?.direccionId === undefined ||
+      this.defaults?.baunitId === null || this.defaults?.baunitId === undefined) {
       return;
     }
     this.informationPropertyService.getDetailBasicInformationPropertyAddresses(
@@ -90,14 +91,14 @@ export class DetailInformationAddressComponent implements OnInit {
       this.defaults.baunitId,
       this.defaults.executionId
     ).subscribe({
-          next: (result: DetailBasicInformationAddress) => this.data = result,
-          error: (error: HttpErrorResponse) => {
-            if (error.status !== 500){
-              console.log(error.message);
-            }
+        next: (result: DetailBasicInformationAddress) => this.data = result,
+        error: (error: HttpErrorResponse) => {
+          if (error.status !== 500) {
+            console.log(error.message);
           }
         }
-      );
+      }
+    );
   }
 
   close(): void {

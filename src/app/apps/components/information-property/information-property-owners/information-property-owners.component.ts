@@ -17,8 +17,8 @@ import {
   MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
-  PAGE_SIZE,
+  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10,
+  PAGE_SIZE, PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION
 } from '../../../constants/general/constants';
 import { MatRippleModule } from '@angular/material/core';
@@ -86,7 +86,9 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatMenuModule,
     MatPaginatorModule,
     MatDialogModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    MatDialogModule,
+    MatSort
   ],
   templateUrl: './information-property-owners.component.html',
   styleUrl: './information-property-owners.component.scss'
@@ -112,8 +114,8 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   fractions_decimals: number = FRACTION_DECIMALS;
   page: number = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSize: number = PAGE_SIZE_SORT;
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   rightIdSelected?: number;
   dataSource: MatTableDataSource<InfoOwners> =
     new MatTableDataSource<InfoOwners>([]);

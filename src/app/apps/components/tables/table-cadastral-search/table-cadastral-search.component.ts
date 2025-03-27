@@ -50,7 +50,7 @@ import {
   MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION__10_20_50_100,
+  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES,
   TITULO_PAGE_AVANZADA,
@@ -109,8 +109,7 @@ import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-
   ]
 })
 export class TableCadastralSearchComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+  implements OnInit, AfterViewInit, OnChanges {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
@@ -122,7 +121,7 @@ export class TableCadastralSearchComponent
   page = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION__10_20_50_100;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
   titleArray: string[] = ['Mi trabajo'];
   titleMenu = 'Búsqueda avanzada';
   principalTitleMenu = 'Búsqueda avanzada';
@@ -147,7 +146,6 @@ export class TableCadastralSearchComponent
 
   constructor(
     private router: Router,
-
     private bpmProcessService: BpmProcessService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -158,18 +156,15 @@ export class TableCadastralSearchComponent
     private baunitService: ValidateInformationBaunitService,
     private userService: UserService
   ) {
-    console.log('TableCadastralSearchComponent , Configuración');
     this.detectCurrentUrl();
   }
 
   detectCurrentUrl(): void {
     const currentUrl = this.router.url;
-    console.log('Current URL:', currentUrl);
     const lastSegment = this.getLastSegment(currentUrl);
-    console.log('Last Segment:', lastSegment);
     if (lastSegment === 'cadastralSearch') {
-      this.titleAsing('Búsqueda catastral');
-      this.menuAsing('Búsqueda avanzada', 'Búsqueda catastral');
+      this.titleAssigned('Búsqueda catastral');
+      this.menuAssigned('Búsqueda avanzada', 'Búsqueda catastral');
     }
     // else{
     //   this.titleAsing('Búsqueda catastral DA');
@@ -182,6 +177,7 @@ export class TableCadastralSearchComponent
     const segments = url.split('/');
     return segments.pop() || '';
   }
+
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)
@@ -200,6 +196,7 @@ export class TableCadastralSearchComponent
     if (this.route.snapshot.queryParams['npn']) {
       this.initParams = this.route.snapshot.queryParams['npn'];
       this.searValueData({}, this.initParams as string);
+
       setTimeout(() => {
         this.dialog.open(
           LayoutCardCadastralInformationPropertyComponentComponent,
@@ -231,18 +228,18 @@ export class TableCadastralSearchComponent
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tituloPage'] && this.tituloPage) {
       this.tituloPage = this.tituloPage;
-      if(this.tituloPage === TITULO_PAGE_CADASTRAL_DA){
-        this.titleAsing(this.tituloPage);
-        this.menuAsing(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
+      if (this.tituloPage === TITULO_PAGE_CADASTRAL_DA) {
+        this.titleAssigned(this.tituloPage);
+        this.menuAssigned(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
         this.seeAction = false;
-      }else if(this.tituloPage === TITULO_PAGE_AVANZADA){
-        this.titleAsing(this.tituloPage);
-        this.menuAsing(TITULO_PAGE_AVANZADA, this.tituloPage);
+      } else if (this.tituloPage === TITULO_PAGE_AVANZADA) {
+        this.titleAssigned(this.tituloPage);
+        this.menuAssigned(TITULO_PAGE_AVANZADA, this.tituloPage);
         this.seeAction = false;
         // this.validateEndPoint()
-      }else{
-        this.titleAsing(this.tituloPage);
-        this.menuAsing('Búsqueda avanzada', this.tituloPage);
+      } else {
+        this.titleAssigned(this.tituloPage);
+        this.menuAssigned('Búsqueda avanzada', this.tituloPage);
         this.seeAction = false;
         this.seeActionHistory = false;
       }
@@ -256,22 +253,21 @@ export class TableCadastralSearchComponent
   }
 
   searHistoricalData(data: SearchData, value: string): void {
-    console.log(data);
     this.baunitService
       .historiAdvancedSearch(this.generateObjectPageSearchData(data), value)
-      .subscribe((value) => {
-        console.log(value);
-        this.captureInformationSubscribe(value);
+      .subscribe({
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
 
-
-  titleAsing(value: string): void {
+  titleAssigned(value: string): void {
     this.titleArray.push(value);
   }
 
-  menuAsing(title: string, principal: string): void {
+  menuAssigned(title: string, principal: string): void {
     this.titleMenu = title;
     this.principalTitleMenu = principal;
   }
@@ -287,24 +283,24 @@ export class TableCadastralSearchComponent
   }
 
   openCadastralInformationProperty(data: BaunitHead): void {
-    if(this.seeActionHistory){
+    if (this.seeActionHistory) {
       this.dialog
-      .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        ...MODAL_LARGE,
-        disableClose: true,
-        data: new ContentInfoSchema(
-          data.baunitIdE,
-          data,
-          null,
-          LIST_SCHEMAS_CONTROL_MAIN,
-          TYPE_INFORMATION_VISUAL,
-          '',
-          [],
-          this.rulePage
-        )
-      })
-      .afterClosed();
-    }else{
+        .open(LayoutCardCadastralInformationPropertyComponentComponent, {
+          ...MODAL_LARGE,
+          disableClose: true,
+          data: new ContentInfoSchema(
+            data.baunitIdE,
+            data,
+            null,
+            LIST_SCHEMAS_CONTROL_MAIN,
+            TYPE_INFORMATION_VISUAL,
+            '',
+            [],
+            this.rulePage
+          )
+        })
+        .afterClosed();
+    } else {
 
       this.dialog
         .open(LayoutCardCadastralInformationPropertyComponentComponent, {
@@ -370,15 +366,15 @@ export class TableCadastralSearchComponent
 
   captureInformationCadastralData(): void {
     let data: BaunitHead[];
+    if (this.contentInformation == null) {
+      this.page = PAGE;
+      return;
+    }
+
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
       data = data.map((row: BaunitHead) => new BaunitHead(row));
       this.dataSource.data = data;
-    }
-
-    if (this.contentInformation == null) {
-      this.page = PAGE;
-      return;
     }
 
     if (this.contentInformation.totalElements) {
@@ -452,7 +448,7 @@ export class TableCadastralSearchComponent
     const searchData: SearchData = this.searchData;
 
     if (searchData.baunitIdE) {
-      this.searchPropertiesByBaunitIdE(searchData.baunitIdE);
+      this.searchPropertiesByBaUnitIdE(searchData.baunitIdE);
       return true;
     }
 
@@ -500,9 +496,10 @@ export class TableCadastralSearchComponent
     }
     return false;
   }
-  searchPropertiesByBaunitIdE(baunit: string) {
+
+  searchPropertiesByBaUnitIdE(baunit: string) {
     this.infoTableService
-      .getDataBaunitIdE(this.page, this.pageSize, baunit)
+      .getDataBaUnitIdE(this.page, this.pageSize, baunit)
       .subscribe({
         next: (result: InformationPegeable) =>
           this.captureInformationSubscribe(result),
@@ -547,18 +544,12 @@ export class TableCadastralSearchComponent
   }
 
   searValueData(searData: SearchData, data: string): void {
-    this.baunitService
-      .advancedSearchCadastral(
-        this.generateObjectPageSearchData(searData),
-        data
-      )
-      .subscribe((value) => {
+    this.baunitService.advancedSearchCadastral(
+      this.generateObjectPageSearchData(searData),
+      data
+    ).subscribe((value) => {
         this.captureInformationSubscribe(value);
-      });
-    // if(this.setNewEndPoint){
-    //     this.searHistoricalData(searData,data)
-    // }else{
-    // }
+    });
   }
 
   onFilterChange(value: string): void {
@@ -623,11 +614,8 @@ export class TableCadastralSearchComponent
   }
 
   isBaunitValid(data: BaunitHead): void {
-    console.log('Iniciando validación de unidad predial');
-
     this.baunitService.getBaunitIdEInOtherProcess(data.baunitIdE!).subscribe({
       next: () => {
-        console.log('Unidad predial valida');
         // Si la validación es exitosa, procedemos a iniciar el trámite
         this.initiateFilingProcedure(data);
       },

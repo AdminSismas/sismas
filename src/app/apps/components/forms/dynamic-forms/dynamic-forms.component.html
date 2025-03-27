@@ -69,6 +69,15 @@
             {{ input.label }}
           </mat-checkbox>
         </mat-form-field>
+      } @else if (input.element === "textarea") {
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+          <mat-label>{{ input.label }}</mat-label>
+          <textarea
+            matInput
+            placeholder="{{ input.placeholder }}&hellip;"
+            [formControlName]="input.name"
+          ></textarea>
+        </mat-form-field>
       } @else if (input.element === "input") {
         <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
           <mat-label>{{ input.label }}</mat-label>
