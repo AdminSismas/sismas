@@ -5,7 +5,7 @@
   *ngIf="isExistDataInformations$ | async"
 >
   <vex-page-layout-content class="container-fluid px-5 py-3">
-    <div class="card" vexMinFluidHeight [fluidHeight]="mode === 3 ? 230: 220">
+    <div class="card" vexMinFluidHeight [fluidHeight]="mode === 3 ? 230: fluidHeight">
       <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
         <div class="rounded-tr rounded-br border-l-3 p-0 m-0 flex flex-col sm:flex-row items-center gap-3">
           @if (mode === 1 || mode === 3) {

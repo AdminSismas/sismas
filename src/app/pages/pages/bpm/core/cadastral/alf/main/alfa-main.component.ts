@@ -22,6 +22,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
+import { CONSTANT_ENABLE_TAB_GEOGRAFIC } from '../../../../../../../apps/constants/general/constants';
+import {
+  AlfaMainInformationComponent
+} from '../../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -44,13 +48,16 @@ import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-ma
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    TabAlfaGeoMainComponent
+    TabAlfaGeoMainComponent,
+    AlfaMainInformationComponent
   ],
   templateUrl: './alfa-main.component.html',
   styleUrl: './alfa-main.component.scss'
 })
 export class AlfaMainComponent implements OnInit {
-  public id: string = getRandomInt(12324).toString();
+
+  id: string = getRandomInt(12324).toString();
+  fluidHeight:string = '165';
 
   @Input({ required: true }) public executionId: string = '';
   @Input({ required: true }) public resources: string[] = [];
@@ -105,5 +112,7 @@ export class AlfaMainComponent implements OnInit {
     }
   }
 
-
+  get activateGeographicTab(){
+    return this.resources.length > 0 && this.resources.includes(CONSTANT_ENABLE_TAB_GEOGRAFIC);
+  }
 }

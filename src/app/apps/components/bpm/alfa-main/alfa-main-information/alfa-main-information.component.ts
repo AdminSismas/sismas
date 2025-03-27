@@ -107,12 +107,14 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
   styleUrl: './alfa-main-information.component.scss'
 })
 export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
+
   public id: string = getRandomInt(1234).toString();
 
   @Input({ required: true }) public executionId: string = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public resourcesRemovers: string[] = [];
   @Input({ required: false }) public mode = 1;
+  @Input({ required: false }) public fluidHeight: string = '220';
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
