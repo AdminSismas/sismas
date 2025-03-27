@@ -11,6 +11,7 @@ import { VisitaComponent } from '../../../pages/pages/bpm/core/cadastral/visita/
 import { DocumentMainComponent } from '../../../pages/pages/bpm/core/document/main/document-main.component';
 import { DocumentValidateComponent } from '../../../pages/pages/bpm/core/document/validate/document-validate.component';
 import { ComponentTemplate } from '../../interfaces/bpm/render-template.types';
+import { COMPONENT_ALFA_MAIN, COMPONENT_ALFA_VALIDATE } from '../../constants/general/constants';
 import {
   CitationAndNoticeComponent
 } from '../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
@@ -25,14 +26,14 @@ export class DynamicComponentsService {
 
   _listMap: ComponentTemplate[] = [
     {
-      nameComponent: 'cadAlfaMainComponent',
+      nameComponent: COMPONENT_ALFA_MAIN,
       component:AlfaMainComponent,
       loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/alf/main/alfa-main.component').then(
         (m) => m.AlfaMainComponent
       ),
     },
     {
-      nameComponent: 'cadAlfaValidateComponent',
+      nameComponent: COMPONENT_ALFA_VALIDATE,
       component:AlfaValidateComponent,
       loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component').then(
         (m) => m.AlfaValidateComponent
