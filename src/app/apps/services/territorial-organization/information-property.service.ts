@@ -243,8 +243,6 @@ export class InformationPropertyService {
 
     const url = `${this.basic_url}${envi.ccZonaHomoFisicaUr}${envi.divpol}`;
 
-    console.log('url', url);
-
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -259,7 +257,6 @@ export class InformationPropertyService {
     params = params.append('divpolLv2', `${divpolLv2}`);
     const url = `${this.basic_url}${envi.ccZonaHomoFisicaRu}${envi.divpol}`;
 
-    console.log('url', url);
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );

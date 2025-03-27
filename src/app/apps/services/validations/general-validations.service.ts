@@ -231,4 +231,28 @@ export class GeneralValidationsService {
     };
   }
 
+  oneOfBothFieldsRequired(field1Name: string, field2Name: string): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const field1 = formGroup.get(field1Name);
+      const field2 = formGroup.get(field2Name);
+
+      if (!field1 || !field2) {
+        return null; // Ensure both fields exist
+      }
+
+      const field1Value = field1.value;
+      const field2Value = field2.value;
+
+      if (!field1Value && !field2Value) {
+        return { oneOfBothRequired: true }; // At least one field must be filled
+      }
+
+      if (field1Value && field2Value) {
+        return { onlyOneAllowed: true }; // Only one field should be filled
+      }
+
+      return null; // No errors
+    };
+  }
+
 }
