@@ -161,18 +161,12 @@ export const environment = {
   unitBuild: "/unitBuild",
   unitBuilt: "/unitBuilt",
   urban_zones: "/ccZonaHomoFisicaUr",
+  url: "https://dev.api.sismas.com.co",
+  url_domain_name: "https://dev.api.sismas.com.co:5001/domain/name?",
+  url_viewer: "https://prediosplus.map.cadastre4world.com:8081/mapstore/",
   user_exist: "/username/",
   valuation: "/valuation/",
   video: "assets/video/desarrollo.mp4",
   withoutSignaturesUsers: "/without-signature",
-  withSignaturesUsers: "/with-signature",
-  typeNotification: {
-    cited: '/citar',
-    notified: '/notificar',
-    notify: '/aviso'
-  },
-  url: "https://dev.api.sismas.com.co",
-  url_viewer: "https://prediosplus.map.cadastre4world.com:8081/mapstore/",
-  url_domain_name: 'https://dev.api.sismas.com.co:5001/domain/name?',
-  getApiQualificationUrl: 'https://dev.api.sismas.com.co:5001/calificationUB/',
+  withSignaturesUsers: "/with-signature"
 };
