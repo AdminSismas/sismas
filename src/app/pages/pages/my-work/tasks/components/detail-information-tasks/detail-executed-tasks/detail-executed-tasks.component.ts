@@ -51,7 +51,6 @@ export class DetailExecutedTasksComponent implements OnInit {
 
 
     ngOnInit() {
-console.log('data desde el modal detalles ', this.data);
       if (this.data === null || this.data === undefined) {
         this.close();
         return;

@@ -265,7 +265,7 @@ export class GeoEconomicZonesPropertyComponent
         data: { zone, propertyType: 'Geoeconómica' }
       }
     );
-    dialog.afterClosed().subscribe((data: any) => console.log(data));
+    dialog.afterClosed().subscribe((data: any) => {});
   }
 
   private getRandomInt(max: number): number {

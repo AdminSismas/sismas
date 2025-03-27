@@ -73,7 +73,6 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('executionId', this.data.executionId);
     this.isEdit = this.data.isEdit;
     this.initializeForm();
 
@@ -240,8 +239,6 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   getByDivPolUrbana(): void {
     this.informationPropertyService.getByDivPolUrbana(this.data.divpolLv1!, this.data.divpolLv2!).subscribe((result: UrbanPhysicalZone[]) => {
       this.divPolUrbana = result;
-      console.log(this.divPolUrbana);
-
     });
   }
 
@@ -249,16 +246,13 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   getByDivPolRural(): void {
     this.informationPropertyService.getByDivPolRural(this.data.divpolLv1!, this.data.divpolLv2!).subscribe((result) => {
       this.divPolRural = result;
-      console.log(this.divPolRural);
     });
   }
 
   getByDivPolGeoeconomica(): void {
     const npnLike = this.data.npn!.slice(0, 7);
-    console.log(npnLike);
     this.informationPropertyService.getByDivPolGeoeconomica(npnLike).subscribe((result) => {
       this.divPolGeoeconomica = result;
-      console.log(result);
     });
   }
 }

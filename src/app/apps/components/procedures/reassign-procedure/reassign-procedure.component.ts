@@ -95,7 +95,6 @@ export class ReassignProcedureComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: (error: HttpErrorResponse) => {
-        console.log(error);
       }
     });
   }
@@ -107,14 +106,12 @@ export class ReassignProcedureComponent implements OnInit {
           this.dialogRef.close('success');
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message);
           this.dialogRef.close('error');
         }
       });
   }
 
   selectUser(row: RowUserAssign) {
-    console.log(row);
     this.selectedUser = row;
   }
 

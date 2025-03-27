@@ -1,11 +1,5 @@
 import { Component, inject, Injector, OnInit } from '@angular/core';
-import {
-  AsyncPipe,
-  NgClass,
-  NgComponentOutlet,
-  NgFor,
-  NgIf
-} from '@angular/common';
+import { AsyncPipe, NgClass, NgComponentOutlet } from '@angular/common';
 import { LoadingAppComponent } from '../../../../apps/components/general-components/loading-app/loading-app.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,10 +28,7 @@ import {
 } from '../../../../apps/constants/general/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
-import {
-  BasicComponentTemplate,
-  ComponentTemplate
-} from '../../../../apps/interfaces/bpm/render-template.types';
+import { BasicComponentTemplate, ComponentTemplate } from '../../../../apps/interfaces/bpm/render-template.types';
 import { ProFlow } from '../../../../apps/interfaces/bpm/pro-flow';
 import { BpmCoreService } from '../../../../apps/services/bpm/bpm-core.service';
 import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
@@ -69,8 +60,6 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     AsyncPipe,
     NgClass,
     NgComponentOutlet,
-    NgFor,
-    NgIf,
     ReactiveFormsModule,
     // Vex
     // Material
@@ -100,14 +89,11 @@ export class BmpCoreComponent implements OnInit {
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   isExistDataInformations$: Observable<boolean> = of(false);
-  _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<
-    ComponentTemplate[]
-  >(1);
+  _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<ComponentTemplate[]>(1);
   _proFlow$ = this.route.data.pipe(map(({ proFlow }) => proFlow));
   _resources$ = this.route.data.pipe(map(({ resources }) => resources));
 
-  components$: Observable<ComponentTemplate[]> =
-    this._components$.asObservable();
+  components$: Observable<ComponentTemplate[]> = this._components$.asObservable();
   executionId$ = this.route.params.pipe(
     map((params) => params[CONSTANT_NAME_ID])
   );

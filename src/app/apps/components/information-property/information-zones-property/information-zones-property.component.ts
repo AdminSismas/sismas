@@ -308,7 +308,6 @@ export class InformationZonesPropertyComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           this.errorDelete.fire();
-          console.log(error.message);
         }
       });
   }

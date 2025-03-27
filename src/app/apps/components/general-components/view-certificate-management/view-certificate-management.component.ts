@@ -202,7 +202,7 @@ export class ViewCertificateManagementComponent {
       this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA'
         ? this.basic_url
         : this.basic_url_appraisals;
-        
+
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${url}${queryParams}`;
 
@@ -252,8 +252,6 @@ export class ViewCertificateManagementComponent {
   urlPdfViewer(): SafeUrl {
     const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
     const fullUrl = `${this.basic_url}${queryParams}`;
-
-    console.log('fullUrl', fullUrl);
     return this.sanitizer.bypassSecurityTrustResourceUrl(fullUrl);
   }
 

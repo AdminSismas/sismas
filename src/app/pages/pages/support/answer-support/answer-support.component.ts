@@ -160,7 +160,6 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit {
 
     // this.dataSource = new MatTableDataSource();
     // if (this.currentUser) {
-    //   console.log("currentUser", this.currentUser);
     // } else {
     //   console.error("No user is logged in");
     // }
@@ -175,7 +174,6 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit {
     //     next: data => {
     //       distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)) // Compare previous and current values
     //       this.loadAllDataLogs(); // Load logs after subscription is set up
-    //       console.log("Received logs:", data);
     //     },
     //     error: err => {
     //       console.error("Error in logs subscription:", err);
@@ -211,7 +209,6 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit {
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe();
-      console.log('Unsubscribed from subjectSupportLogsList$');
     }
   }
 
@@ -274,7 +271,6 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit {
   // Load logs and merge with observations
   loadSupportLogs() {
     // if (!this.currentUser) {
-    //   console.error("Cannot load logs: User not logged in");
     //   return;
     // }
 
@@ -292,13 +288,11 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit {
     //       this.supportLogs = filteredLogs;
     //       this.combineDataSources(); // Merge after loading logs
     //       this.subjectSupportLogsList$.next(this.supportLogs);
-    //       console.log("Filtered Logs:", filteredLogs);
     //       this.cd.markForCheck();
     //       this.cd.detectChanges(); // Force refresh
     //     }
     //   },
     //   error: err => {
-    //     console.error("Error fetching support logs:", err);
     //   }
     // });
   }

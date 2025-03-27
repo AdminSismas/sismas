@@ -17,15 +17,12 @@ export class UrbanZoneService implements ZoneServices {
 
   getZones(divpolLv1: string, divpolLv2: string): Observable<UrbanZone[]> {
     const url = `${this.base_url}${envi.divpol}`;
-
     let params = new HttpParams();
     params = params.append('divpolLv1', divpolLv1);
     params = params.append('divpolLv2', divpolLv2);
-
     return this.http.get<UrbanZone[]>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error consultando zonas urbanas');
           throw error;
         })
       );
@@ -33,11 +30,9 @@ export class UrbanZoneService implements ZoneServices {
 
   createZone(params: Zone): Observable<UrbanZone> {
     const url = `${this.base_url}`;
-
     return this.http.post<UrbanZone>(url, params)
       .pipe(
         catchError((error: any) => {
-          console.log('Error creando zona física urbana');
           throw error;
         })
       );
@@ -45,13 +40,10 @@ export class UrbanZoneService implements ZoneServices {
 
   updateZone(params: UrbanZone): Observable<UrbanZone> {
     const id = params.zonaHomoFisicaUrId;
-
     const url = `${this.base_url}/${id}`;
-
     return this.http.put<UrbanZone>(url, params)
       .pipe(
         catchError((error: any) => {
-          console.log('Error actualizando zona física urbana');
           throw error;
         })
       );
@@ -65,7 +57,6 @@ export class UrbanZoneService implements ZoneServices {
     return this.http.delete<void>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error eliminando zona física urbana');
           throw error;
         })
       );

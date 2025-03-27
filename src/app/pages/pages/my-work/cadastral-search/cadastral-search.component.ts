@@ -24,7 +24,6 @@ export class CadastralSearchComponent implements OnInit {
   ngOnInit(): void {
     //throw new Error('Method not implemented.');
     this.route.params.pipe(map((params) => {
-      console.log(params);
     }));
   }
 

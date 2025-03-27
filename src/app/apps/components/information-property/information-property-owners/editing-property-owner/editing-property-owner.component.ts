@@ -76,7 +76,6 @@ export class EditingPropertyOwnerComponent implements OnInit {
         this.data.rrrightInfo!.beginAt + 'T00:00:00-05:00'
       );
     }
-    console.log(formValues);
     this.form.reset(formValues);
     this.form.get('fractions_sum')!.disable();
   }

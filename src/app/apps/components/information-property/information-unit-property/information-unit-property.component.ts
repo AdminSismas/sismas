@@ -177,7 +177,6 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.user = this.userService.getUser();
-    console.log(this.user, 'user rol');
     if (this.id?.length <= 0 || this.baunitId == null) {
       return;
     }

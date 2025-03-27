@@ -11,7 +11,8 @@ import { BaunitHead } from '../../../interfaces/information-property/baunit-head
 @Injectable({
   providedIn: 'root'
 })
-export class AlfaMainService {
+export class
+AlfaMainService {
 
   basic_url = `${envi.url}:${envi.port}`;
 
@@ -27,6 +28,7 @@ export class AlfaMainService {
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
+  //{{url}}:{{port}}/changeLog/temp/{{executionId}}
   createAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
     return this.requestsService.sendRequestsFetchPost(url);
@@ -142,6 +144,12 @@ export class AlfaMainService {
   private getData(url: string, params: unknown): Observable<InformationPegeable> {
     return this.requestsService.sendRequestsGetOption(url, { params: params })
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+  }
+
+  //{{url}}:{{port}}/{{executionId}}/excel/generate
+  getGenerateExcelMassive(executionId: string): Observable<void> {
+    const url = `${this.basic_url}/${executionId}/excel/generate`;
+    return this.requestsService.sendRequestsFetchGet(url);
   }
 
 }

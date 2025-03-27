@@ -80,7 +80,6 @@ export class CertificateDialogAvaluoComponent implements OnInit {
   ngOnInit() {
     if (this.data) {
       this.certificate = this.data.certificate;
-      console.log(this.certificate.type);
     }
   }
 

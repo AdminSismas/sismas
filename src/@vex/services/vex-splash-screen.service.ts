@@ -33,7 +33,6 @@ export class VexSplashScreenService {
 
   // refreshURL() {
   //   this.router.navigate([`${environment.root}`]).then(() => {
-  //     console.log(`Se refresca la pagina y se reinicia la url`);
   //   });
   // }
 

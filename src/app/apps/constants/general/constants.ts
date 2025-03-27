@@ -505,9 +505,11 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
+export const COMPONENT_ALFA_MAIN:string = 'cadAlfaMainComponent';
+
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
-    name: 'cadAlfaMainComponent',
+    name: COMPONENT_ALFA_MAIN,
     pathForm: '/core/cadastral/alf/main.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
@@ -1064,6 +1066,7 @@ export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
 export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
@@ -1074,6 +1077,8 @@ export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
 export const TYPE_BUTTON_FOUR: TypeButtonAlfaMain = 'CRE_GEO';
 export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
 export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
+export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD';  // Excel Download
+export const TYPE_BUTTON_EIGHT: TypeButtonAlfaMain = 'EXL'; // Excel Load
 
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
@@ -1165,4 +1170,6 @@ export const CREATE_BASIC_MODEL_ADDRESS: CreateBasicInformationAddress = {
   domSectorPredio: ''
 };
 
+export const LIST_EXTENSION_MASIVE_EXCEL: string[] = ['xlsx', 'xls'];
 
+export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_ALFA_MAIN];

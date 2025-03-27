@@ -4,16 +4,28 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { GeneralValidationsService } from '../../../services/validations/general-validations.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { CONSTANT_NAME_RETURN, NAME_FILED, NAME_VERSION } from '../../../constants/general/constantLabels';
-import { MODAL_MEDIUM, MODAL_SMALL } from '../../../constants/general/constants';
+import {
+  LIST_COMPONENT_ACTIVE_MASIVE_EXCEL,
+  MODAL_MEDIUM,
+  MODAL_SMALL, MODAL_SMALL_XS,
+  TYPE_BUTTON_EIGHT,
+  TYPE_BUTTON_SEVEN
+} from '../../../constants/general/constants';
 import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentTableComponent } from '../document-table/document-table.component';
 import { CommentsComponent } from '../comments/comments.component';
+import { ComponentTemplate } from '../../../interfaces/bpm/render-template.types';
+import { TypeButtonAlfaMain } from '../../../interfaces/general/content-info';
+import { getRandomInt } from 'src/app/apps/utils/general';
+import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import {
+  AttachmentExcelMassiveComponent
+} from '../alfa-main/attachment-excel-massive/attachment-excel-massive.component';
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -23,46 +35,51 @@ import { CommentsComponent } from '../comments/comments.component';
     ReactiveFormsModule,
     VexBreadcrumbsComponent,
     AsyncPipe,
-    MatButtonModule,
+    MatButtonModule
   ],
   templateUrl: './header-bpm-core.component.html',
   styleUrl: './header-bpm-core.component.scss'
 })
 export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   crumbs: string[] = [];
+  existButtonAlfaMain: boolean = false;
 
   @Input() public idHeader = '';
   @Input() public icon = '';
-  @Input({ required: true }) id = '';
+  @Input({ required: true }) executionId = '';
   @Input({ required: true }) proTaskE: ProTaskE | null = null;
+  @Input({ required: true }) components: ComponentTemplate[] | null = [];
+  @Input({ required: true }) public resources: string[] = [];
+  @Input({ required: false }) public mode = 1;
   @Output() returnPanelTask = new EventEmitter<boolean>();
 
   _countComment$: ReplaySubject<number> = new ReplaySubject<number>(0);
   _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);
+  _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<ComponentTemplate[]>(1);
+
   countComment$: Observable<number> = this._countComment$.asObservable();
   countAttachment$: Observable<number> = this._countAttachment$.asObservable();
   _crumbs$: ReplaySubject<ProTaskE> = new ReplaySubject<ProTaskE>(0);
   crumbs$: Observable<ProTaskE> = this._crumbs$.asObservable();
+  components$: Observable<ComponentTemplate[]> = this._components$.asObservable();
+
 
   constructor(
-    private validations: GeneralValidationsService,
+    private alfaMainService: AlfaMainService,
     private bpmCoreService: BpmCoreService,
     private dialog: MatDialog
   ) {
   }
 
   ngOnInit(): void {
-
-    console.log('HeaderBpmCoreComponent', this.id, this.proTaskE);
-
-    if (!this.id || this.id?.length <= 0 || !this.proTaskE) {
+    if (!this.executionId || this.executionId?.length <= 0 || !this.proTaskE) {
       return;
     }
 
     if (this.idHeader?.length > 0) {
-      this.idHeader = this.idHeader + this.getRandomInt(10000);
+      this.idHeader = this.idHeader + getRandomInt(10000);
     } else {
-      this.idHeader = this.getRandomInt(10000) + `${this.proTaskE?.executionId}` + `${this.proTaskE?.flowId}`;
+      this.idHeader = getRandomInt(10000) + `${this.proTaskE?.executionId}` + `${this.proTaskE?.flowId}`;
     }
 
     this.getInformationProTaskCountComment();
@@ -73,47 +90,64 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
       .subscribe((result: ProTaskE) => {
         this.chargerCrumbs(result);
       });
-      console.log('flujo actual:', this.crumbs);
+
+    this.components$
+      .pipe(filter<ComponentTemplate[]>(Boolean))
+      .subscribe((components: ComponentTemplate[] | null) => {
+        if (!components || components?.length > 0) {
+          this.validateComponents(components);
+          return;
+        }
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes["proTaskE"] && this.proTaskE) {
+
+    if (changes['proTaskE'] && this.proTaskE) {
       this._crumbs$.next(this.proTaskE);
       this.chargerCrumbs(this.proTaskE);
     }
+
+    if (changes['components'] && this.components && this.components.length > 0) {
+      this._components$.next(this.components);
+    }
+
   }
 
-  chargerCrumbs(proTaskE: ProTaskE){
+  chargerCrumbs(proTaskE: ProTaskE) {
     this.crumbs = [];
-    if(proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName){
-      const flowDetailTtitle = `${NAME_FILED}: ${proTaskE.proTask?.flowDetail}` ;
+    if (proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName) {
+      const flowDetailTtitle = `${NAME_FILED}: ${proTaskE.proTask?.flowDetail}`;
       this.crumbs.push(flowDetailTtitle);
     }
-    if(proTaskE?.executionId){
-      const executionIdTtitle = `${NAME_VERSION}: ${proTaskE?.executionId}` ;
+    if (proTaskE?.executionId) {
+      const executionIdTtitle = `${NAME_VERSION}: ${proTaskE?.executionId}`;
       this.crumbs.push(executionIdTtitle);
     }
-    if(proTaskE?.proTask?.flowName){
+    if (proTaskE?.proTask?.flowName) {
       this.crumbs.push(proTaskE?.proTask?.flowName);
     }
   }
 
+  validateComponents(components: ComponentTemplate[] | null) {
+    if (components != null && components?.length > 0) {
+      //validate Component in alfaMain
+      const listTmp: ComponentTemplate[] = components.filter((x: ComponentTemplate) =>
+        LIST_COMPONENT_ACTIVE_MASIVE_EXCEL.includes(x.nameComponent)
+      );
+      this.existButtonAlfaMain = listTmp !== null && listTmp?.length > 0;
+    }
+  }
+
   getInformationProTaskCountComment() {
-    this.bpmCoreService.getProTaskCountComment(this.id)
+    this.bpmCoreService.getProTaskCountComment(this.executionId)
       .subscribe((result: number) => this._countComment$.next(result));
   }
 
   getInformationProTaskCountAttachment() {
-    this.bpmCoreService.getProTaskCountAttachment(this.id)
+    this.bpmCoreService.getProTaskCountAttachment(this.executionId)
       .subscribe((result: number) => this._countAttachment$.next(result));
   }
-
-
-  private getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
-  protected readonly CONSTANT_NAME_RETURN = CONSTANT_NAME_RETURN;
 
   openDialog(type: string): void {
     if (type === 'documents') {
@@ -132,4 +166,36 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
       });
     }
   }
+
+  openDialogExcel(type: TypeButtonAlfaMain): void {
+    if (type === 'EXD') {
+      this.getInformationExcelDownload();
+    } else if (type === 'EXL') {
+      this.chargerInformationExcelMassive();
+    }
+  }
+
+  getInformationExcelDownload() {
+    this.alfaMainService.getGenerateExcelMassive(this.executionId)
+      .subscribe(() => {});
+  }
+
+  chargerInformationExcelMassive() {
+    this.dialog.open(AttachmentExcelMassiveComponent, {
+      ...MODAL_SMALL_XS,
+      data: this.proTaskE?.executionId
+    });
+  }
+
+  get downLoadExcelButton(): boolean {
+    return !this.resources.includes(TYPE_BUTTON_SEVEN) && this.existButtonAlfaMain;
+  }
+
+  get addExcelButton(): boolean {
+    return !this.resources.includes(TYPE_BUTTON_EIGHT) && this.existButtonAlfaMain;
+  }
+
+  protected readonly CONSTANT_NAME_RETURN = CONSTANT_NAME_RETURN;
+  protected readonly TYPE_BUTTON_SEVEN = TYPE_BUTTON_SEVEN;
+  protected readonly TYPE_BUTTON_EIGHT = TYPE_BUTTON_EIGHT;
 }

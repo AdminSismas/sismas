@@ -139,15 +139,12 @@ export class ContactsParamsComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-    console.log('Modal data:', this.data); // Verifica que los datos estén llegando correctamente
-
     this.loadAssistants(); // Carga los asistentes al inicializar el componente
     this.loadModelos(); // Carga los modelos al inicializar el componente
     this.loadVoces();  // Cargar las voces disponibles al inicializar el componente
 
     // Obtén los datos del usuario autenticado
-    // this.userAuthData = this.authService.getCurrentUser();
-    // console.log('Usuario', this.userAuthData);
+    // this.userAuthData = this.authService.getCurrentUser();;
 
     // Llama a la función `onVozChange` para la voz predeterminada
     if (this.form.get('id_modelo_voz')?.value) {
@@ -275,8 +272,6 @@ export class ContactsParamsComponent implements OnInit, AfterViewInit {
     const modeloSeleccionado = this.modelosFiltrados.find(modelo => modelo.id === id);
 
     if (modeloSeleccionado) {
-      console.log(`Empresa del modelo seleccionado: ${modeloSeleccionado.empresa}`);
-
       // Comparación directa con la empresa 'OpenAI'
       if (modeloSeleccionado.empresa === 'OpenAI') {
         this.mostrarTuerca = true;
@@ -314,10 +309,7 @@ export class ContactsParamsComponent implements OnInit, AfterViewInit {
       return false;
     });
   }
-
-  console.log('Modelos filtrados:', this.modelosFiltrados);
   const modeloActual = this.form.get('modelo_actual')?.value;
-
   if (modeloActual && !this.modelosFiltrados.some(modelo => modelo.id === modeloActual)) {
     this.form.patchValue({ modelo_actual: modeloActual });
   }
@@ -609,11 +601,7 @@ createVoice() {
   showFormErrors() {
     Object.keys(this.form.controls).forEach(key => {
       const controlErrors = this.form.get(key)?.errors;
-      if (controlErrors) {
-        console.log('Error en el campo:', key, controlErrors);
-      }
     });
-    console.log('Errores en el formulario:', this.form.errors);
   }
 
   // Método para manejar el envío del segundo formulario (Archivos)

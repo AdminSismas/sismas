@@ -509,9 +509,7 @@ cleanJsonValues(data: SearchData): SearchData {
         metaData: metaData
       }
     });
-
     this.dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
     });
   }
 }

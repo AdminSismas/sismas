@@ -138,7 +138,6 @@ export class AddPropertyOwnerComponent implements OnInit {
           this.close();
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error);
           if (error.status === 400) {
             this.snackbar.open(error.error, 'Aceptar', { duration: 5000 });
           }

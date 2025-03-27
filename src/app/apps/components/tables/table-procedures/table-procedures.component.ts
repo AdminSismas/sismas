@@ -568,11 +568,9 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   }
 
   mecanismProcedure(row: ProceduresCollection) {
-    console.log(row);
   }
 
   reclassifyProcedure(row: ProceduresCollection) {
-    console.log(row);
   }
 
   addComment(row: ProceduresCollection) {

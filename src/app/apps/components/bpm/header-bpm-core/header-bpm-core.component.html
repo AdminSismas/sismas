@@ -21,19 +21,15 @@
         <span>{{ CONSTANT_NAME_RETURN }}</span>
       </button>
     </h1>
-    <vex-breadcrumbs
-      class="mr-2"
-      [crumbs]="this.crumbs"
-    >
+    <vex-breadcrumbs class="mr-2" [crumbs]="this.crumbs">
     </vex-breadcrumbs>
     <button
-      color="secondary"
+      color="primary"
       mat-button
       type="button"
-      class="box bg-app-bar rounded caption min-w-3"
+      class="box rounded caption min-w-3"
       title="Comentarios"
-      (click)="openDialog('comments')"
-    >
+      (click)="openDialog('comments')">
       <mat-icon
         class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
         svgIcon="mat:insert_comment"
@@ -41,18 +37,45 @@
       <span class="box-text">{{ countComment$ | async }}</span>
     </button>
     <button
-      color="secondary"
+      color="primary"
       mat-button
       type="button"
-      class="box bg-app-bar rounded caption min-w-3"
+      class="box rounded caption min-w-3"
       title="Archivos"
-      (click)="openDialog('documents')"
-    >
+      (click)="openDialog('documents')">
       <mat-icon
         class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
         svgIcon="mat:attach_file"
       ></mat-icon>
       <span class="box-text">{{ countAttachment$ | async }}</span>
     </button>
+    @if ((mode === 1 || mode === 3) && downLoadExcelButton) {
+      <button
+        color="primary"
+        mat-button
+        type="button"
+        class="box rounded caption min-w-3"
+        title="Descargar Excel Masivo"
+        (click)="openDialogExcel(TYPE_BUTTON_SEVEN)">
+        <mat-icon
+          class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+          svgIcon="cust:excel-file"
+        ></mat-icon>
+      </button>
+    }
+    @if ((mode === 1 || mode === 3) && addExcelButton) {
+      <button
+        color="primary"
+        mat-button
+        type="button"
+        class="box rounded caption min-w-3"
+        title="Cargar Excel Masivo"
+        (click)="openDialogExcel(TYPE_BUTTON_EIGHT)">
+        <mat-icon
+          class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+          svgIcon="cust:excel-add"
+        ></mat-icon>
+      </button>
+    }
   </div>
 </div>

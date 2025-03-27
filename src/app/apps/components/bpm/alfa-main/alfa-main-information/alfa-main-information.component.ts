@@ -230,7 +230,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   }
 
   getAlfaMain() {
-    console.log('Actualizando ...');
     this.alfaMainService
       .getListAlfaMainOperations(this.generateObjectPageSearchData())
       .subscribe({
@@ -445,7 +444,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
               Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY) :
               text;
           } catch (error) {
-            console.log(error);
             Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL);
           }
         },

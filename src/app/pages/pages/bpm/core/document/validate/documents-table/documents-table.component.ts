@@ -200,7 +200,6 @@ export class DocumentsTableComponent implements AfterViewInit, OnInit {
         });
 
         this.dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
         });
       }
 
@@ -210,7 +209,6 @@ export class DocumentsTableComponent implements AfterViewInit, OnInit {
     getDataFromDocumentManagementService(): void {
       this.attachmentService.getDataPropertyByAttachment(this.executionId).subscribe({
         next: (data: any) => {
-          console.log("Datos recibidos de la API1 prueba:", data);
           this.dataSource.data = data;
           this.totalElements = data.length;
 
@@ -349,7 +347,6 @@ export class DocumentsTableComponent implements AfterViewInit, OnInit {
     }
 
     performActionOnSelected(): void {
-      console.log('Filas seleccionadas:', this.selection.selected);
       // Aquí puedes realizar cualquier acción con las filas seleccionadas
     }
 

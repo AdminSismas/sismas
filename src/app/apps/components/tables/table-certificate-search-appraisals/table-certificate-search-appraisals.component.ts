@@ -163,9 +163,7 @@ export class TableCertificateSearchAppraisalsComponent
 
   detectCurrentUrl(): void {
     const currentUrl = this.router.url;
-    console.log('Current URL:', currentUrl);
     const lastSegment = this.getLastSegment(currentUrl);
-    console.log('Last Segment:', lastSegment);
     if (lastSegment === 'cadastralSearch') {
       this.titleAsing('Búsqueda catastral');
       this.menuAsing('Búsqueda avanzada', 'Búsqueda catastral');
@@ -596,11 +594,7 @@ export class TableCertificateSearchAppraisalsComponent
 
   viewFile(data: BaunitHead): void {
     const typeCertificate = this.certificateType;
-
-    console.log('Data:', data.baunitIdE);
-
     let title: string;
-
     if ( typeCertificate === 'CERT_INST_PUBL'){
       title = 'documento solicitud de una entidad';
     } else {
@@ -620,7 +614,6 @@ export class TableCertificateSearchAppraisalsComponent
         title: title
       }
     }).afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
     });
   }
 }

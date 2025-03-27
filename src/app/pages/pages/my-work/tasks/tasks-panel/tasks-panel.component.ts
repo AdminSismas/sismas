@@ -186,7 +186,6 @@ export class TasksPanelComponent implements OnInit {
       this.taskOne = result;
       this.viewExecuteTask(this.taskOne);
     });
-    console.log('viewDetailTask', value);
   }
 
   viewExecuteTask(objOne: TaskResponseModel) {
@@ -219,8 +218,6 @@ export class TasksPanelComponent implements OnInit {
   ): void {
     let data: TaskRetailExecuteResponseModel[];
     this.contentTasksInformations = objTwo;
-    console.log('objTwo', objTwo.content);
-
     if (
       this.contentTasksInformations &&
       this.contentTasksInformations.content

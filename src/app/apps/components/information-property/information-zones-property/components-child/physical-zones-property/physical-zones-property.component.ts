@@ -248,7 +248,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
         data: { zone, propertyType }
       }
     );
-    dialog.afterClosed().subscribe((data: any) => console.log(data));
+    dialog.afterClosed().subscribe((data: any) => {});
   }
 
   captureInformationSubscribeError(): void {

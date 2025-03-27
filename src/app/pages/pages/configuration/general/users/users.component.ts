@@ -133,7 +133,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   openDialogAddUser(): void {
-    console.log('openDialogAddUser');
     this.dialog.open(CreateUsersComponent, {
       data: {
         mode: 'create'
@@ -141,7 +140,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
     })
       .afterClosed()
       .subscribe((result: InformationPagebleUser) => {
-        console.log(result);
         setTimeout(() =>{
           this.getUsers(this.page, this.pageSize);
         } , 300);
@@ -150,7 +148,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   actionMenuHandler(action: string, row: InformationPagebleUser) {
     if (action === 'edit') {
-      console.log('editing....');
       this.dialog.open(CreateUsersComponent, {
         data: {
           ...row,
@@ -159,13 +156,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
       })
         .afterClosed()
         .subscribe((result: InformationPagebleUser) => {
-          console.log(result);
           setTimeout(() =>{
             this.getUsers(this.page, this.pageSize);
           } , 300);
         });
-    } else if (action === 'delete') {
-      console.log('deleting....');
     }
   }
 
@@ -177,7 +171,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.userService.searchUser(this.searchCtrl.value)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.dataSource.data = [res];
         },
         error: (error: HttpErrorResponse) => {

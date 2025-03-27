@@ -86,7 +86,6 @@ export class CreateUsersComponent implements OnInit {
         next: (result: InfoPerson) => {
           this.individualValidator(result.individualId)
             .subscribe((resultValidation: boolean) => {
-              console.log(resultValidation);
               if (!resultValidation) {
                 this.individualFound = result;
                 this.searchFormDisabled = true;
@@ -108,7 +107,6 @@ export class CreateUsersComponent implements OnInit {
             }).afterClosed()
               .subscribe({
                 next: (result: any) => {
-                  console.log(result);
                 },
                 error: (error: any) => {
                   this.snackbar.open('Error al crear el individuo', 'CERRAR', { duration: 10000 });
@@ -132,7 +130,6 @@ export class CreateUsersComponent implements OnInit {
     }).afterClosed()
       .subscribe({
         next: (result: any) => {
-          console.log(result);
         },
         error: (error: any) => {
           this.snackbar.open('Error al crear el individuo', 'CERRAR', { duration: 10000 });
@@ -237,7 +234,6 @@ export class CreateUsersComponent implements OnInit {
   }
 
   editUser(): void {
-    console.log('Editando usuario ...');
     if (this.newUserForm!.invalid) {
       this.snackbar.open('Se deben diligenciar los datos del usuario', 'CERRAR', { duration: 10000 });
       return;

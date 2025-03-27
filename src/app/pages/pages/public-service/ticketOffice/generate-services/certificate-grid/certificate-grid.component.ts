@@ -106,7 +106,6 @@ export class CertificateGridComponent implements OnInit {
   //     if (response.success && response.data) {
   //       this.policies = response.data;
   //       this.filteredPolicies = [...this.policies]; // Inicializa la lista filtrada
-  //       console.log('Pólizas cargadas:', this.policies);
   //     }
   //   },
   //   error: (error) => {

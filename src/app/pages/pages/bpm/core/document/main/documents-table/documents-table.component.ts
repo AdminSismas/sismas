@@ -228,7 +228,6 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
     getDataFromDocumentManagementService(): void {
       this.attachmentService.getDataPropertyByAttachment(this.executionId).subscribe({
         next: (data: any) => {
-          console.log("Datos recibidos de la API1 prueba:", data);
           this.dataSource.data = data;
           this.totalElements = data.length;
 
@@ -355,7 +354,6 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
 
 
       dialogRef.componentInstance.dataUpdated.subscribe(() => {
-        console.log('Evento recibido, actualizando datos...');
         this.getDataFromDocumentManagementService();
       });
     }
@@ -380,7 +378,6 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
 
         this.attachmentService.deleteAttachment(this.executionId, row.id, row.originalFileName).subscribe({
           next: (response) => {
-            console.log('Archivo eliminado con éxito:', response);
             this.snackBar.open('Archivo eliminado con éxito', 'Cerrar', {
               duration: 10000,
               panelClass: ['snack-success'],

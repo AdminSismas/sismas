@@ -47,12 +47,10 @@ export class AuthService {
 
     // Do something when the user becomes active again
     idle.onIdleEnd.subscribe(() => {
-      console.log(new Date());
     });
 
     // Do something when the user has timed out
     idle.onTimeout.subscribe(() => {
-      console.log(new Date());
       this.logout();
     });
   }
@@ -156,7 +154,6 @@ export class AuthService {
     const decodedToken = this.getDecodedToken();
     if (decodedToken && decodedToken.sub) {
       const username = decodedToken.sub;
-      console.log('Haciendo solicitud para obtener el usuario', username);
       return this.http.get<UserDetails>(`${this.userUrl}${username}`).pipe(
         catchError(err => {
           console.error('Error al obtener el usuario', err);

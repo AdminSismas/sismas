@@ -130,7 +130,6 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     }
 
     ngOnInit() {
-      console.log('ngOnInit');
       this.dataSource = new MatTableDataSource();
       // if (this.id?.length <= 0 || this.baunitId == null) {
       //   return;
@@ -175,7 +174,6 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
     captureInformationSubscribe(result: InformationPegeable): void {
       this.contentInformations = result;
-      console.log('contentInformations', this.contentInformations);
       this.captureInformationConstructionData();
     }
 
@@ -226,8 +224,6 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
         documentAssociated: data ? new OutFormatModel(data, this.schema) : undefined,
         outTemplateId: data?.outTemplateId || this.outTempplateId || undefined,
       };
-      console.log('data', data);
-
       const dialogRef = this.dialog.open(OutputFormatsEditUpdateComponent, {
         ...MODAL_SMALL,
         disableClose: true,
@@ -236,17 +232,11 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          console.log('RESPUESTA DEL CREAR O ACTUALIZAR', result);
-          console.log('TIPO PROCESOS', dialogData.type);
-          console.log('documentAssociated', dialogData.documentAssociated);
-
-
           if(dialogData.type === 'new'){
             this.saveDocumento(result);
           }else{
             this.updateDocumento(result);
           }
-
         }
       });
     }
@@ -272,7 +262,6 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     }
 
     editInformations(valueTemplate: any): void {
-      console.log('valueTemplate valor de la tabla', valueTemplate);
       // const dialogRef = this.dialog.open(DocumentAssociatedEditUpdateComponent, {
       //   width: '58%',
       //   height: '80%',
@@ -284,7 +273,6 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
       // dialogRef.afterClosed().subscribe((result) => {
       //   if (result) {
-      //     console.log('result', result);
       //   }
       // });
     }
