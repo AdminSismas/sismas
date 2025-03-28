@@ -121,6 +121,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   tableTitle = input<string>();
   isOrigen = input<boolean>(false);
+  zoneType = input.required<'Urbano' | 'Rural'>();
 
   @Output() physicalZoneChange = new EventEmitter<void>();
   @Output() deletePhysicalZone = new EventEmitter<ZoneBAUnitFisica>();
@@ -240,7 +241,7 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   openInformationPropertyZone(zone: ZoneBAUnitFisica): void {
     const propertyType = this.determinePropertyType();
 
-    const dialog = this.matDialog.open(
+    this.matDialog.open(
       DetailInformationPropertyZonesComponent,
       {
         ...MODAL_SMALL,
@@ -248,7 +249,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
         data: { zone, propertyType }
       }
     );
-    dialog.afterClosed().subscribe((data: any) => {});
   }
 
   captureInformationSubscribeError(): void {
@@ -310,24 +310,20 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
       .subscribe();
   }
 
-  onClickOpenPhysicalAddEditModal(data?: ZoneBAUnitFisica): void {
-    let propertyType = 'Rural';
-    if (!data?.ccZonaHomoFisicaRu) {
-      propertyType = 'Urbano';
-    }
+  onClickOpenPhysicalAddEditModal(zone?: ZoneBAUnitFisica): void {
 
-    const isEdit = data && data.baUnitZonaId;
+    const isEdit = Boolean(zone && zone.baUnitZonaId);
 
     this.matDialog
       .open(AddEditInformatizonZonesPropertyComponent, {
         ...MODAL_SMALL,
         disableClose: true,
         data: {
-          zone: data,
+          zone,
           baunitId: this.baunitId,
           executionId: this.executionId,
           isEdit,
-          propertyType,
+          propertyType: this.zoneType(),
           divpolLv1: this.divPolLv1,
           divpolLv2: this.divPolLv2
         }

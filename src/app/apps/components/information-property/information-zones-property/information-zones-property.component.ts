@@ -149,6 +149,10 @@ export class InformationZonesPropertyComponent implements OnInit {
   get divPolLv2() {
     return this.npn.substring(2, 5);
   }
+  get zoneType() {
+    if (this.npn.substring(5, 7) === '00') return 'Rural';
+    return 'Urbano';
+  }
 
   searchBasicInformationProperty(): void {
     if (!this.schema || !this.baunitId) {

@@ -3,7 +3,7 @@
 import { GeoEconomicZone } from './geo-economic-zone';
 
 export class ZoneBAUnitFisica {
-  baUnitZonaType: 'Urbano' | 'Rural' | 'Geoeconomica';
+  baUnitZonaType: 'Urbana' | 'Rural' | 'Geoeconomica';
   baUnitZonaId?: number;
   baUnitZonaArea?: number;
   ccZonaHomoFisicaRu?: CcZonaHomoFisica;
@@ -18,7 +18,7 @@ export class ZoneBAUnitFisica {
   vigencia?: number;
 
   constructor( baunitZona: ZoneBAUnitResponse) {
-    this.baUnitZonaType = baunitZona.ccZonaHomoFisicaRu ? 'Rural' : 'Urbano';
+    this.baUnitZonaType = baunitZona.ccZonaHomoFisicaRu ? 'Rural' : 'Urbana';
     this.baUnitZonaId = baunitZona.baUnitZonaId;
     this.baUnitZonaArea = baunitZona.baUnitZonaArea;
     this.ccZonaHomoFisicaRu = baunitZona.ccZonaHomoFisicaRu;
@@ -34,7 +34,7 @@ export class ZoneBAUnitFisica {
 }
 
 export class ZoneBAUnitGeoeconomic {
-  baUnitZonaType: 'Urbano' | 'Rural' | 'Geoeconomica';
+  baUnitZonaType: 'Urbana' | 'Rural' | 'Geoeconomica';
   baUnitZonaId?: number;
   baUnitZonaArea?: number;
   ccZonaHomoFisicaRu = null;

@@ -506,6 +506,7 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
 export const COMPONENT_ALFA_MAIN:string = 'cadAlfaMainComponent';
+export const COMPONENT_ALFA_VALIDATE:string = 'cadAlfaValidateComponent';
 
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
@@ -515,7 +516,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 1
   },
   {
-    name: 'cadAlfaMainComponent',
+    name: COMPONENT_ALFA_MAIN,
     pathForm: '/core/cadastral/alf/validate.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 2
@@ -1056,9 +1057,20 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   }
 ];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN'];
+export const CONSTANT_ENABLE_TAB_GEOGRAFIC: TypeButtonAlfaMain = 'TAB_GEO';
+
+export const TYPE_BUTTON_ONE: TypeButtonAlfaMain = 'AGR';
+export const TYPE_BUTTON_TWO: TypeButtonAlfaMain = 'CRE';
+export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
+export const TYPE_BUTTON_FOUR: TypeButtonAlfaMain = 'CRE_GEO';
+export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
+export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
+export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD';  // Excel Download
+export const TYPE_BUTTON_EIGHT: TypeButtonAlfaMain = 'EXL'; // Excel Load
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
+
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN'];
 
 export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
@@ -1069,16 +1081,6 @@ export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeig
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
-
-
-export const TYPE_BUTTON_ONE: TypeButtonAlfaMain = 'AGR';
-export const TYPE_BUTTON_TWO: TypeButtonAlfaMain = 'CRE';
-export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
-export const TYPE_BUTTON_FOUR: TypeButtonAlfaMain = 'CRE_GEO';
-export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
-export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
-export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD';  // Excel Download
-export const TYPE_BUTTON_EIGHT: TypeButtonAlfaMain = 'EXL'; // Excel Load
 
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';

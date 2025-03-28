@@ -1,10 +1,17 @@
-<vex-tab-alfa-geo-main
-  [executionId]="executionId"
-  [resources]="resources"
-  [mode]="mode">
-</vex-tab-alfa-geo-main>
-<!--<vex-alfa-main-information-->
-<!--  [executionId]="executionId"-->
-<!--  [resources]="resources"-->
-<!--  [mode]="mode"-->
-<!--&gt;</vex-alfa-main-information>-->
+@if (activateGeographicTab) {
+  <vex-tab-alfa-geo-main
+    [id]="this.id + 'vex-tab-alfa-geo-main14'"
+    [executionId]="executionId"
+    [resources]="resources"
+    [mode]="mode">
+  </vex-tab-alfa-geo-main>
+} @else if (!activateGeographicTab) {
+  <vex-alfa-main-information
+    [id]="this.id + 'vex-tab-alfa-geo-main14'"
+    [executionId]="executionId"
+    [resources]="resources"
+    [mode]="mode"
+    [fluidHeight]="fluidHeight"
+  ></vex-alfa-main-information>
+}
+
