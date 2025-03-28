@@ -516,7 +516,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 1
   },
   {
-    name: COMPONENT_ALFA_VALIDATE,
+    name: COMPONENT_ALFA_MAIN,
     pathForm: '/core/cadastral/alf/validate.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 2
