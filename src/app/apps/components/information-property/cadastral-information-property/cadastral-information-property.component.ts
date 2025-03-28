@@ -248,10 +248,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
       return;
     }
 
-    if ((this.schema === this.schemaTemp && !this.contentInfoSchema.executionId) ||
-      (this.schema === this.schemaHist && !this.contentInfoSchema.executionId)) {
+    if ((this.schema === this.schemaTemp && !this.contentInfoSchema.executionId)) {
       return;
     }
+
     this.informationPropertyService.showOptionsPersonStarted$
       .subscribe(value2 => {
         if (value2) {
@@ -335,6 +335,13 @@ export class CadastralInformationPropertyComponent implements OnInit {
     if (this.schema !== this.schemaHist) return true;
     this.navigationItems = this.navigationItems.filter((item) => item.fragment !== FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY);
     return false;
+  }
+
+  get showDialogContent(): boolean {
+    console.log('execution id: ',this.executionId);
+    if (this.schema === this.schemaHist && !this.contentInfoSchema.executionId) return false;
+
+    return true;
   }
 
   removeListItem(listFragmentToRemove: string[]): void {

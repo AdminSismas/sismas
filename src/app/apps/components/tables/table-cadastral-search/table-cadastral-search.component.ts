@@ -283,7 +283,6 @@ export class TableCadastralSearchComponent
   }
 
   openCadastralInformationProperty(data: BaunitHead): void {
-    console.log(data);
     if (this.seeActionHistory) {
       this.dialog
         .open(LayoutCardCadastralInformationPropertyComponentComponent, {

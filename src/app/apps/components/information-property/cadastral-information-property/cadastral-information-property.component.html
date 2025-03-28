@@ -1,5 +1,9 @@
 @if (showTittle) {
-  <div class="flex items-center" mat-dialog-title [id]="id">
+  <div
+    class="flex items-center"
+    mat-dialog-title
+    [id]="id"
+  >
     <h2 class="headline m-0 flex-auto">{{ label }}</h2>
     <button
       class="text-secondary"
@@ -12,149 +16,192 @@
   </div>
   <mat-divider class="text-border"></mat-divider>
 }
-<mat-dialog-content
-  [id]="idContainer"
-  [ngClass]="cssClasses"
-  class="flex items-start justify-start gap-6 overflow-x-hidden"
-  vexFluidHeight fluidHeight=107>
-  <div @stagger style="top: 18px"
-       class="sticky top-20 flex-col flex-none w-2/12 hidden sm:flex">
-    @for (item of navigationItems; track $index) {
-      <div (click)="scrollTo(item.fragment)"
-           class="px-3 py-2 rounded-xl hover:bg-hover transition cursor-pointer relative"
-           matRipple>
-        {{ item.label }}
-      </div>
-    }
-  </div>
-
-  <div
-    @stagger
-    class="max-w-full w-10/12 flex flex-col gap-6"
+@if (showDialogContent) {
+  <mat-dialog-content
+    [id]="idContainer"
+    [ngClass]="cssClasses"
+    class="flex items-start justify-start gap-6 overflow-x-hidden"
+    vexFluidHeight
+    fluidHeight="107"
   >
+    <div
+      @stagger
+      style="top: 18px"
+      class="sticky top-20 flex-col flex-none w-2/12 hidden sm:flex"
+    >
+      @for (item of navigationItems; track $index) {
+        <div
+          (click)="scrollTo(item.fragment)"
+          class="px-3 py-2 rounded-xl hover:bg-hover transition cursor-pointer relative"
+          matRipple
+        >
+          {{ item.label }}
+        </div>
+      }
+    </div>
 
-    <vex-basic-property-information
-      #basicPropertyInformationComponent
-      [id]="'basicAdministrativeUnitInformation' + schema + '12' + executionId"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      [editable]="editable.GNR"
-      [expandedComponent]="expand_tap_property_information"
-      (propertyRegistryOffice)="propertyRegistryOffice = $event"
-      (propertyRegistryNumber)="propertyRegistryNumber = $event"
-      @fadeInUp
-    ></vex-basic-property-information>
-    @if (showInformationUnitProperty(baunitCondition)) {
-      <vex-information-unit-property
-        #unitPropertyInformationComponent
-        [id]="'informationUnitProperty' + schema + '12' + executionId"
+    <div
+      @stagger
+      class="max-w-full w-10/12 flex flex-col gap-6"
+    >
+      <vex-basic-property-information
+        #basicPropertyInformationComponent
+        [id]="
+          'basicAdministrativeUnitInformation' + schema + '12' + executionId
+        "
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        [typeInformation]="typeInformation"
+        [editable]="editable.GNR"
+        [expandedComponent]="expand_tap_property_information"
+        (propertyRegistryOffice)="propertyRegistryOffice = $event"
+        (propertyRegistryNumber)="propertyRegistryNumber = $event"
+        @fadeInUp
+      ></vex-basic-property-information>
+      @if (showInformationUnitProperty(baunitCondition)) {
+        <vex-information-unit-property
+          #unitPropertyInformationComponent
+          [id]="'informationUnitProperty' + schema + '12' + executionId"
+          [expandedComponent]="expand_tap"
+          [baunitId]="baunitId"
+          [schema]="schema"
+          [executionId]="executionId"
+          @fadeInUp
+          [typeInformation]="typeInformation"
+        ></vex-information-unit-property>
+      }
+      <vex-administrative-sources
+        #administrativeSourcesComponent
+        [id]="'administrativeSources' + schema + '12' + executionId"
+        [expandedComponent]="expand_tap"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        [editable]="editable.FNA"
+        @fadeInUp
+        [typeInformation]="typeInformation"
+      >
+      </vex-administrative-sources>
+      @if (!showRulesPage) {
+        <vex-information-property-owners
+          #informationPropertyOwnersComponent
+          [id]="'dataInformationPropertyOwners' + schema + '12' + executionId"
+          [expandedComponent]="expand_tap"
+          [baunitId]="baunitId"
+          [schema]="schema"
+          [executionId]="executionId"
+          [typeInformation]="typeInformation"
+          [editable]="editable.PRO"
+          @fadeInUp
+        ></vex-information-property-owners>
+        <super-notariado-property
+          #superNotariadoPropertyComponent
+          [id]="'superNotariadoPropertyComponent' + schema + '12' + executionId"
+          [propertyRegistryNumber]="propertyRegistryOffice"
+          [propertyRegistryOffice]="propertyRegistryNumber"
+          [baunitId]="baunitId"
+          [schema]="schema"
+          [executionId]="executionId"
+          [expandedComponent]="expand_tap"
+          @fadeInUp
+        ></super-notariado-property>
+      }
+      <vex-information-addresses-property
+        #informationAddressesPropertyComponent
+        [id]="'basicInformationpropertyAddresses' + schema + '12' + executionId"
         [expandedComponent]="expand_tap"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
         @fadeInUp
         [typeInformation]="typeInformation"
-      ></vex-information-unit-property>
-    }
-    <vex-administrative-sources
-      #administrativeSourcesComponent
-      [id]="'administrativeSources' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [editable]="editable.FNA"
-      @fadeInUp
-      [typeInformation]="typeInformation"
-    >
-    </vex-administrative-sources>
-    @if (!showRulesPage) {
-      <vex-information-property-owners
-        #informationPropertyOwnersComponent
-        [id]="'dataInformationPropertyOwners' + schema + '12' + executionId"
+        [editable]="editable.DIR"
+      ></vex-information-addresses-property>
+      <vex-information-constructions-property
+        #informationConstructionsPropertyComponent
+        [id]="
+          'dataInformationConstructionsPropertyComponent' +
+          schema +
+          '12' +
+          executionId
+        "
+        [expandedComponent]="expand_tap"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        @fadeInUp
+        [typeInformation]="typeInformation"
+        [editable]="editable.CNS"
+      ></vex-information-constructions-property>
+      <vex-information-adjacent-property
+        #informationAdjacentPropertyComponent
+        [id]="
+          'dataInformationAdjacentPropertyComponent' +
+          schema +
+          '12' +
+          executionId
+        "
+        [expandedComponent]="expand_tap"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        @fadeInUp
+        [typeInformation]="typeInformation"
+        [editable]="editable.CLN"
+      ></vex-information-adjacent-property>
+      <vex-property-appraisal-information
+        #propertyAppraisalInformationComponent
+        [id]="
+          'dataIpropertyAppraisalInformationComponent' +
+          schema +
+          '12' +
+          executionId
+        "
+        [expandedComponent]="expand_tap"
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+        @fadeInUp
+        [typeInformation]="typeInformation"
+      ></vex-property-appraisal-information>
+      <vex-information-zones-property
+        #informationZonesPropertyComponent
+        [id]="'informationZonesPropertyComponent' + schema + '12' + executionId"
         [expandedComponent]="expand_tap"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
         [typeInformation]="typeInformation"
-        [editable]="editable.PRO"
+        [editable]="editable.ZON"
+        [npn]="baunitHead.cadastralNumber!"
         @fadeInUp
-      ></vex-information-property-owners>
-      <super-notariado-property
-        #superNotariadoPropertyComponent
-        [id]="'superNotariadoPropertyComponent' + schema + '12' + executionId"
-        [propertyRegistryNumber]="propertyRegistryOffice"
-        [propertyRegistryOffice]="propertyRegistryNumber"
-        [baunitId]="baunitId"
-        [schema]="schema"
-        [executionId]="executionId"
-        [expandedComponent]="expand_tap"
-        @fadeInUp
-      ></super-notariado-property>
-    }
-    <vex-information-addresses-property
-      #informationAddressesPropertyComponent
-      [id]="'basicInformationpropertyAddresses' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      @fadeInUp
-      [typeInformation]="typeInformation"
-      [editable]="editable.DIR"
-    ></vex-information-addresses-property>
-    <vex-information-constructions-property
-      #informationConstructionsPropertyComponent
-      [id]="'dataInformationConstructionsPropertyComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      @fadeInUp
-      [typeInformation]="typeInformation"
-      [editable]="editable.CNS"
-    ></vex-information-constructions-property>
-    <vex-information-adjacent-property
-      #informationAdjacentPropertyComponent
-      [id]="'dataInformationAdjacentPropertyComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      @fadeInUp
-      [typeInformation]="typeInformation"
-      [editable]="editable.CLN"
-    ></vex-information-adjacent-property>
-    <vex-property-appraisal-information
-      #propertyAppraisalInformationComponent
-      [id]="'dataIpropertyAppraisalInformationComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      @fadeInUp
-      [typeInformation]="typeInformation"
-    ></vex-property-appraisal-information>
-    <vex-information-zones-property
-      #informationZonesPropertyComponent
-      [id]="'informationZonesPropertyComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      [editable]="editable.ZON"
-      [npn]="baunitHead.cadastralNumber!"
-      @fadeInUp
-    ></vex-information-zones-property
-    >
-    @if (showInformationHistoricalProcedures) {
+      ></vex-information-zones-property>
+      @if (showInformationHistoricalProcedures) {
+        <vex-historical-active-procedures-property
+          #historicalProceduresPropertyComponent
+          [id]="
+            'historicalProceduresPropertyComponent' +
+            schema +
+            '12' +
+            executionId
+          "
+          [isHistoricalComponent]="true"
+          [expandedComponent]="false"
+          [baunitId]="baunitId"
+          [schema]="schema"
+          [executionId]="executionId"
+          [typeInformation]="typeInformation"
+          @fadeInUp
+        >
+        </vex-historical-active-procedures-property>
+      }
       <vex-historical-active-procedures-property
-        #historicalProceduresPropertyComponent
-        [id]="'historicalProceduresPropertyComponent' + schema + '12' + executionId"
-        [isHistoricalComponent]="true"
+        #activeProceduresPropertyComponent
+        [id]="
+          'activeProceduresPropertyComponent' + schema + '12345' + executionId
+        "
+        [isHistoricalComponent]="false"
         [expandedComponent]="false"
         [baunitId]="baunitId"
         [schema]="schema"
@@ -163,51 +210,40 @@
         @fadeInUp
       >
       </vex-historical-active-procedures-property>
-    }
-    <vex-historical-active-procedures-property
-      #activeProceduresPropertyComponent
-      [id]="'activeProceduresPropertyComponent' + schema + '12345' + executionId"
-      [isHistoricalComponent]="false"
-      [expandedComponent]="false"
-      [baunitId]="baunitId"
-      [schema]="schema"
-      [executionId]="executionId"
-      [typeInformation]="typeInformation"
-      @fadeInUp
-    >
-    </vex-historical-active-procedures-property>
-    @if (!showRulesPage) {
-      <vex-photos
-        #photosComponent
-        [id]="'photos' + schema + '12' + executionId"
-        [expandedComponent]="expand_tap"
-        [baunitId]="baunitId"
-        [schema]="schema"
-        [executionId]="executionId"
-        [typeInformation]="typeInformation"
-        @fadeInUp
-      >
-      </vex-photos>
-    }
-    @if (!showRulesPage) {
-      <vex-alerts
-        #alertsComponent
-        [id]="'alerts' + schema"
-        [expandedComponent]="expand_tap"
-        [baunitId]="baunitId"
-        [schema]="schema"
-        [executionId]="executionId"
-        [typeInformation]="typeInformation"
-        @fadeInUp
-      >
-      </vex-alerts>
-    }
-  </div>
-</mat-dialog-content>
+      @if (!showRulesPage) {
+        <vex-photos
+          #photosComponent
+          [id]="'photos' + schema + '12' + executionId"
+          [expandedComponent]="expand_tap"
+          [baunitId]="baunitId"
+          [schema]="schema"
+          [executionId]="executionId"
+          [typeInformation]="typeInformation"
+          @fadeInUp
+        >
+        </vex-photos>
+      }
+      @if (!showRulesPage) {
+        <vex-alerts
+          #alertsComponent
+          [id]="'alerts' + schema"
+          [expandedComponent]="expand_tap"
+          [baunitId]="baunitId"
+          [schema]="schema"
+          [executionId]="executionId"
+          [typeInformation]="typeInformation"
+          @fadeInUp
+        >
+        </vex-alerts>
+      }
+    </div>
+  </mat-dialog-content>
+}
 <mat-menu
   #settingsMenu="matMenu"
   xPosition="before"
-  yPosition="below">
+  yPosition="below"
+>
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
     <span>Imprimir</span>
