@@ -29,6 +29,7 @@ import {
 } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { Big } from 'big.js';
+import { MODAL_SMALL_LARGE } from '../../../../constants/general/constants';
 
 @Component({
   selector: 'vex-add-property-owner',
@@ -150,6 +151,8 @@ export class AddPropertyOwnerComponent implements OnInit {
     this.snackbar.open('Creando usuario', 'CERRAR', { duration: 10000 });
 
     this.dialog.open(CreatePeopleComponent, {
+      ...MODAL_SMALL_LARGE,
+      disableClose: true,
       data: {
         ...newCustomer,
         mode: 'create'

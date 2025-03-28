@@ -33,7 +33,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { People as People } from '../../../../apps/interfaces/users/people.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable, ReplaySubject,lastValueFrom } from 'rxjs';
+import { Observable, ReplaySubject, lastValueFrom } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSort } from '@angular/material/sort';
@@ -46,8 +46,10 @@ import { CreatePeopleComponent } from './create-people/create-people.component';
 // imports from service people
 import { PeopleService } from '../../../../apps/services/users/people.service';
 import { MatSelectModule } from '@angular/material/select';
-import { ComboxColletionComponent } from '../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
-import { PAGE } from '../../../../apps/constants/general/constants';
+import {
+  ComboxColletionComponent
+} from '../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import { MODAL_SMALL_LARGE, PAGE } from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -77,7 +79,7 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
     ReactiveFormsModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
-    MatDialogModule,
+    MatDialogModule
   ],
   templateUrl: './people.component.html',
   styleUrl: './people.component.scss'
@@ -158,14 +160,16 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   contentInformation!: InformationPegeable;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
   // constructor del componente
   constructor(
     private dialog: MatDialog,
     private peopleService: PeopleService,
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
-    private userService: UserService,
-  ) {}
+    private userService: UserService
+  ) {
+  }
 
   ngOnInit() {
     this.user = this.userService.getUser();
@@ -193,27 +197,27 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // eliminación de personas
   deleteCustomer(customer: People) {
-      const dialogRef = this.dialog.open(this.confirmDialog);
+    const dialogRef = this.dialog.open(this.confirmDialog);
 
-      dialogRef.afterClosed().subscribe(async (data: any) => {
-        if (data === 'delete' && customer.individualId) {
-          let msg: string = 'Información eliminada con éxito.';
-          try {
-            await lastValueFrom(
-              this.peopleService.getDeletePeopleId(
-                customer.individualId
-              )
-            );
-            this.dataSource.data = this.dataSource.data.filter((row: People) => {
-              return row.individualId !== customer.individualId;
-            });
-          } catch (e) {
-            msg = 'Antes de eliminar la persona se debe eliminar el usuario o la participación.';
-          }
-          this.snackbar.open(msg, 'CERRAR', { duration: 10000 });
+    dialogRef.afterClosed().subscribe(async (data: any) => {
+      if (data === 'delete' && customer.individualId) {
+        let msg: string = 'Información eliminada con éxito.';
+        try {
+          await lastValueFrom(
+            this.peopleService.getDeletePeopleId(
+              customer.individualId
+            )
+          );
+          this.dataSource.data = this.dataSource.data.filter((row: People) => {
+            return row.individualId !== customer.individualId;
+          });
+        } catch (e) {
+          msg = 'Antes de eliminar la persona se debe eliminar el usuario o la participación.';
         }
-      });
-    }
+        this.snackbar.open(msg, 'CERRAR', { duration: 10000 });
+      }
+    });
+  }
 
   deleteCustomers(customers: People[]) {
     customers.forEach((c) => this.deleteCustomer(c));
@@ -222,7 +226,10 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   // creación de personas
   createCustomer() {
     this.dialog
-      .open(CreatePeopleComponent)
+      .open(CreatePeopleComponent, {
+        ...MODAL_SMALL_LARGE,
+        disableClose: true
+      })
       .afterClosed()
       .subscribe((customer: People) => {
         /**
@@ -243,6 +250,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   updateCustomer(customer: People) {
     this.dialog
       .open(CreatePeopleComponent, {
+        ...MODAL_SMALL_LARGE,
+        disableClose: true,
         data: {
           ...customer,
           mode: 'update'
@@ -296,6 +305,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
                 { duration: 10000 }
               );
               this.dialog.open(CreatePeopleComponent, {
+                ...MODAL_SMALL_LARGE,
+                disableClose: true,
                 data: {
                   mode: 'create',
                   domIndividualTypeNumber: this.infoDoc,

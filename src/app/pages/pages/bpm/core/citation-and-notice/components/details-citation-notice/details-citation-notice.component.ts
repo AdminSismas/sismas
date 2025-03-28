@@ -6,12 +6,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { TitleCasePipe } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constant';
+import { NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constants';
+import { getRandomInt } from 'src/app/apps/utils/general';
 
 export let contactIdCounter = 50;
 
@@ -24,14 +25,14 @@ export let contactIdCounter = 50;
     ReactiveFormsModule,
     MatDialogModule,
     MatButtonModule,
-    NgIf,
     MatIconModule,
     MatMenuModule,
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    TitleCasePipe
   ]
 })
 export class DetailsCitationNoticeComponent implements OnInit {
@@ -39,32 +40,8 @@ export class DetailsCitationNoticeComponent implements OnInit {
   id: string = '';
   participationId!: number;
 
-  form = this.fb.group({
-    name: this.fb.control('', {
-      nonNullable: true
-    }),
-    email: this.fb.control('', {
-      nonNullable: true
-    }),
-    phone: this.fb.control('', {
-      nonNullable: true
-    }),
-    company: this.fb.control('', {
-      nonNullable: true
-    }),
-    notes: this.fb.control('', {
-      nonNullable: true
-    }),
-    birthday: this.fb.control('', {
-      nonNullable: true
-    })
-  });
-
   constructor(
-    @Inject(MAT_DIALOG_DATA) public processParticipant: ProcessParticipant,
-    private dialogRef: MatDialogRef<DetailsCitationNoticeComponent>,
-    private fb: FormBuilder
-  ) {
+    @Inject(MAT_DIALOG_DATA) public processParticipant: ProcessParticipant) {
   }
 
   ngOnInit() {
@@ -72,14 +49,11 @@ export class DetailsCitationNoticeComponent implements OnInit {
       return;
     }
     this.participationId = this.processParticipant.participationId;
-    this.id = this.id + this.getRandomInt(10000);
+    this.id = this.id + getRandomInt(10000);
   }
 
-  get isEdit(): boolean {
-    return !!this.participationId;
-  }
-  private getRandomInt(max: number):number {
-    return Math.floor(Math.random() * max);
+  editProcessParticipant(){
+
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

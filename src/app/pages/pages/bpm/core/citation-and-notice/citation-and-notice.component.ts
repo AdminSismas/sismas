@@ -28,7 +28,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProFlow } from '../../../../../apps/interfaces/bpm/pro-flow';
 import { getRandomInt } from 'src/app/apps/utils/general';
-import { CitationAndNoticeTableComponent } from './citation-and-notice-table/citation-and-notice-table.component';
+import { MODAL_SMALL_LARGE } from '../../../../../apps/constants/general/constants';
 
 @Component({
   selector: 'vex-citation-and-notice',
@@ -50,8 +50,7 @@ import { CitationAndNoticeTableComponent } from './citation-and-notice-table/cit
     MatSidenavModule,
     CitationAndNoticeTableMenuComponent,
     AsyncPipe,
-    CitationNoticeGridComponent,
-    CitationAndNoticeTableComponent
+    CitationNoticeGridComponent
   ]
 })
 export class CitationAndNoticeComponent implements OnInit {
@@ -66,8 +65,8 @@ export class CitationAndNoticeComponent implements OnInit {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-  typeProcessDefault: TypeProcessParticipant['type'] = 'ALL';
-  typeProcess!: string;
+  typeProcessDefault: TypeProcessParticipant = 'ALL';
+  typeProcess!: TypeProcessParticipant;
   searchStr$ = this.searchStr.valueChanges.pipe(debounceTime(10));
   infoFatherURL!: string;
 
@@ -116,8 +115,8 @@ export class CitationAndNoticeComponent implements OnInit {
 
   openDetailProcessParticipant(data?: ProcessParticipant) {
     this.dialog.open(DetailsCitationNoticeComponent, {
+      ...MODAL_SMALL_LARGE,
       data: data || null,
-      width: '600px'
     });
   }
 
@@ -128,7 +127,7 @@ export class CitationAndNoticeComponent implements OnInit {
     // }
   }
 
-  setData(type: TypeProcessParticipant['type']) {
+  setData(type: TypeProcessParticipant) {
     this.typeProcess = type;
   }
 

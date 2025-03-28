@@ -56,7 +56,7 @@ import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid
 import { InfoPerson } from '../../../../../../apps/interfaces/information-property/info-person';
 import { InformationPersonService } from '../../../../../../apps/services/bpm/information-person.service';
 import {
-  MODAL_SMALL,
+  MODAL_SMALL, MODAL_SMALL_LARGE,
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
@@ -212,7 +212,8 @@ export class BasicParticipantTableComponent
             this.form.get('personCompleted')?.patchValue('');
             this.dialog
               .open(CreatePeopleComponent, {
-                ...MODAL_SMALL,
+                ...MODAL_SMALL_LARGE,
+                disableClose: true,
                 data: {
                   domIndividualTypeNumber: info.typeNumberDocument,
                   number: info.numberID,

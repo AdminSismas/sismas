@@ -1,10 +1,10 @@
-import { Component, DestroyRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
-import { NgClass, NgIf } from '@angular/common';
-import { NAME_NO_DISPONIBLE, SPACE } from 'src/app/apps/constants/general/constant';
+import { NgClass, TitleCasePipe } from '@angular/common';
+import { NAME_NO_DISPONIBLE, SPACE } from 'src/app/apps/constants/general/constants';
 import { getRandomInt } from '../../../../../../../apps/utils/general';
 
 @Component({
@@ -14,8 +14,8 @@ import { getRandomInt } from '../../../../../../../apps/utils/general';
     MatIconModule,
     MatButtonModule,
     MatRippleModule,
-    NgIf,
-    NgClass
+    NgClass,
+    TitleCasePipe
   ],
   templateUrl: './citation-notice-card.component.html',
   styleUrl: './citation-notice-card.component.scss'
@@ -39,9 +39,9 @@ export class CitationNoticeCardComponent implements OnInit {
 
   ngOnInit() {
     if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + getRandomInt(10000);
+      this.id = this.id + getRandomInt(10000) + this.processParticipant.participationId;
     } else {
-      this.id = getRandomInt(10000).toString();
+      this.id = getRandomInt(10000).toString() + this.processParticipant.participationId;
     }
 
     if (this.processParticipant && this.processParticipant.participationId > 0) {

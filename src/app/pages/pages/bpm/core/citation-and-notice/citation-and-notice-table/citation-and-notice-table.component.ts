@@ -35,7 +35,7 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_CITATION_NOTICE_COLUMN
-} from '../../../../../../apps/constants/general/constant';
+} from '../../../../../../apps/constants/general/constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';

@@ -1,72 +1,69 @@
-<form [formGroup]="form">
-  <div class="flex items-center" mat-dialog-title>
-    <h2 class="headline m-0 flex-auto">
-      {{ form.controls.name.value || "New Contact" }}
-    </h2>
-
+<div class="flex items-center" mat-dialog-title>
+  <div class="toolbar text-default w-full px-6 lg:pl-0 lg:pr-0 flex gap-3 items-start">
+    <h3 class="subheading-2 m-0 flex-col">
+      {{ processParticipant.fullName | titlecase }}
+    </h3>
     <button
       class="text-secondary"
-      mat-dialog-close
       mat-icon-button
+      title="Editar Participante"
+      (click)="editProcessParticipant()"
       type="button">
-      <mat-icon svgIcon="mat:close"></mat-icon>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
     </button>
+    <span class="flex-1"></span>
   </div>
 
-  <mat-divider class="text-border"></mat-divider>
-
-  <mat-dialog-content class="flex flex-col">
-
-    <div class="w-full flex flex-col pt-2">
-      <div class="flex justify-between">
-        <div class="flex flex-col gap-1">
-          <span class="text-black uppercase text-sm">Tipo de participante</span>
-          <span class="text-black uppercase text-sm">Número de documento</span>
-          <span class="text-black uppercase text-sm">Nombre 1</span>
-          <span class="text-black uppercase text-sm">Apellido 1</span>
-          <span class="text-black uppercase text-sm">Número de contacto</span>
-          <span class="text-black uppercase text-sm">Direccion</span>
-        </div>
-        <div class="flex flex-col gap-1">
-          @if (processParticipant !== null && processParticipant !== undefined &&
-          processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null &&
-          processParticipant.individual.domIndividualTypeNumber !== undefined) {
-            <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
-          } @else {
-            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-          }
-          @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null &&
-          processParticipant.individual.number !== null && processParticipant.individual.number !== undefined) {
-            <span class="text-sm">{{ processParticipant.individual.number }}</span>
-          } @else {
-            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-          }
-        </div>
-        <div class="flex flex-col gap-1">
-          <span class="text-black uppercase text-sm">Tipo Documento</span>
-          <span class="text-black uppercase text-sm">Sexo</span>
-          <span class="text-black uppercase text-sm">Nombre 2</span>
-          <span class="text-black uppercase text-sm">Apellido 2</span>
-          <span class="text-black uppercase text-sm">Correo Electronico</span>
-        </div>
-        <div class="flex flex-col gap-1">
-          @if (processParticipant !== null && processParticipant !== undefined &&
-          processParticipant.individual !== null && processParticipant.individual) {
-            <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
-          } @else {
-            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
-          }
-        </div>
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content class="flex flex-col">
+  <div class="w-full flex flex-col pt-2">
+    <div class="flex justify-between">
+      <div class="flex flex-col gap-1">
+        <span class="text-black capitalize text-sm">Tipo de participante</span>
+        <span class="text-black capitalize text-sm">Número de documento</span>
+        <span class="text-black capitalize text-sm">Nombre 1</span>
+        <span class="text-black capitalize text-sm">Apellido 1</span>
+        <span class="text-black capitalize text-sm">Número de contacto</span>
+        <span class="text-black capitalize text-sm">Direccion</span>
+      </div>
+      <div class="flex flex-col gap-1">
+        @if (processParticipant !== null && processParticipant !== undefined &&
+        processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null &&
+        processParticipant.individual.domIndividualTypeNumber !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null &&
+        processParticipant.individual.number !== null && processParticipant.individual.number !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.number }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-black capitalize text-sm">Tipo Documento</span>
+        <span class="text-black capitalize text-sm">Sexo</span>
+        <span class="text-black capitalize text-sm">Nombre 2</span>
+        <span class="text-black capitalize text-sm">Apellido 2</span>
+        <span class="text-black capitalize text-sm">Correo Electronico</span>
+      </div>
+      <div class="flex flex-col gap-1">
+        @if (processParticipant !== null && processParticipant !== undefined &&
+        processParticipant.individual !== null && processParticipant.individual) {
+          <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
       </div>
     </div>
-
-  </mat-dialog-content>
-
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">Cancel</button>
-    <button color="primary" mat-flat-button type="submit">
-      <ng-container *ngIf="isEdit">Update Contact</ng-container>
-      <ng-container *ngIf="!isEdit">Create Contact</ng-container>
-    </button>
-  </mat-dialog-actions>
-</form>
+  </div>
+</mat-dialog-content>

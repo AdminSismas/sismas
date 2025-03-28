@@ -31,8 +31,11 @@ import {
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE
-} from '../../../../../../apps/constants/general/constant';
+} from '../../../../../../apps/constants/general/constants';
 import { getRandomInt, validateVariable } from '../../../../../../apps/utils/general';
+import {
+  TypeProcessParticipant
+} from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 
 @Component({
   selector: 'vex-citation-notice-grid',
@@ -67,7 +70,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   @Input({ required: true }) public id: string | undefined = '';
   @Input({ required: true }) executionId!: string;
-  @Input({ required: true }) typeProcess: string | undefined = '';
+  @Input({ required: true }) typeProcess!: TypeProcessParticipant;
   @Input() searchCtrl: string = '';
 
   listParticipants: ProcessParticipant[] = [];
@@ -118,21 +121,23 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     if (changes['searchCtrl'] && this.searchCtrl != null) {
       this.onFilterChange(this.searchCtrl);
     }
-
-    console.log(changes);
   }
 
   validateExecuteTypeProcess() {
-    switch (this.typeProcess) {
-      case 'CITADO':
-        return this.getInformationCitedAssigned();
-      case 'NOTIFICADO':
-        return this.getInformationNotifiedAssigned();
-      case 'AVISO':
-        return this.getInformationNotifyAssigned();
-      default:
-        return this.getInformationAssignedTasks();
+    if(!this.typeProcess) {
+      return;
     }
+
+    if (this.typeProcess === 'CITADO') {
+      return this.getInformationCitedAssigned();
+    }
+    if (this.typeProcess === 'NOTIFICADO') {
+      return this.getInformationNotifiedAssigned();
+    }
+    if (this.typeProcess === 'AVISO') {
+      return this.getInformationNotifyAssigned();
+    }
+    return this.getInformationAssignedTasks();
   }
 
   getInformationAssignedTasks() {

@@ -156,6 +156,11 @@ export const environment = {
   tasksAssigned: "/assignedTasks",
   temporal: "/temporal/",
   titulo: "Desarrollo",
+  typeNotification: {
+    cited: '/citar',
+    notified: '/notificar',
+    notify: '/aviso'
+  },
   typologyType: "/tipologiaTipo/",
   ulr_icon_base: "assets/img/icons/cadastral-logos/128x128/",
   unitBuild: "/unitBuild",

@@ -16,6 +16,7 @@ import { UserService } from 'src/app/apps/services/users/user.service';
 import {
   CreatePeopleComponent
 } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+import { MODAL_SMALL_LARGE } from '../../../../../../apps/constants/general/constants';
 
 @Component({
   selector: 'vex-create-users',
@@ -100,6 +101,8 @@ export class CreateUsersComponent implements OnInit {
           if (error.status === 404) {
             this.snackbar.open('Creando persona', 'CERRAR', { duration: 10000 });
             this.dialog.open(CreatePeopleComponent, {
+              ...MODAL_SMALL_LARGE,
+              disableClose: true,
               data: {
                 number: this.searchForm!.value.number,
                 domIndividualTypeNumber: this.searchForm!.value.individualTypeNumber,
@@ -124,6 +127,8 @@ export class CreateUsersComponent implements OnInit {
     this.snackbar.open('Creando usuario', 'CERRAR', { duration: 10000 });
 
     this.dialog.open(CreatePeopleComponent, {
+      ...MODAL_SMALL_LARGE,
+      disableClose: true,
       data: {
         number: this.searchForm!.value.number,
         domIndividualTypeNumber: this.searchForm!.value.individualTypeNumber,

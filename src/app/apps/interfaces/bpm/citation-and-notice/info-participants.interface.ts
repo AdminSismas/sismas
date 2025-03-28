@@ -1,7 +1,5 @@
 
-export interface TypeProcessParticipant {
-  type: 'ALL' | 'CITADO' | 'AVISO' | 'NOTIFICADO' | 'FINALIZADO';
-}
+export type TypeProcessParticipant = 'ALL' | 'CITADO' | 'AVISO' | 'NOTIFICADO' | 'FINALIZADO';
 
 export interface ProcessParticipantTableMenu {
   type: 'link' | 'subheading';

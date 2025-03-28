@@ -9,7 +9,7 @@ import {
   ProcessParticipantTableMenu,
   TypeProcessParticipant
 } from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
-import { LIST_CITATION_AND_NOTICE_TABLE_MENU } from '../../../../../../apps/constants/general/constant';
+import { LIST_CITATION_AND_NOTICE_TABLE_MENU } from '../../../../../../apps/constants/general/constants';
 import { getRandomInt } from '../../../../../../apps/utils/general';
 
 
@@ -33,7 +33,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
   @Input({ required: true }) id: string = '';
   @Input() items: ProcessParticipantTableMenu[] = LIST_CITATION_AND_NOTICE_TABLE_MENU;
 
-  @Output() filterChange = new EventEmitter<TypeProcessParticipant['type']>();
+  @Output() filterChange = new EventEmitter<TypeProcessParticipant>();
   @Output() openAddNew = new EventEmitter<void>();
 
   activeCategory: ProcessParticipantTableMenu['id'] = 'all';

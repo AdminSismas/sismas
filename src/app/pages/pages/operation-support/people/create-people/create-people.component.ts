@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
 import {
-  FormBuilder,
+  FormBuilder, FormControl,
   ReactiveFormsModule,
   Validator,
   Validators
@@ -26,6 +26,10 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environments';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PAGE, PAGE_SIZE } from '../../../../../apps/constants/general/constants';
+import {
+  ComboxColletionFormComponent
+} from '../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
+import { InputComponent } from '../../../../../apps/components/general-components/input/input.component';
 
 interface defaultData extends People {
   mode: 'create' | 'update';
@@ -43,7 +47,9 @@ interface defaultData extends People {
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    ComboxColletionComponent
+    ComboxColletionComponent,
+    ComboxColletionFormComponent,
+    InputComponent
   ],
   templateUrl: './create-people.component.html',
   styleUrl: './create-people.component.scss'
@@ -409,4 +415,48 @@ export class CreatePeopleComponent implements OnInit {
 
     this.updateValidators();
   }
+
+  get controlDomIndividualType() {
+    return this.form.get('domIndividualType') as FormControl;
+  }
+
+  get controlDomIndividualTypeNumber() {
+    return this.form.get('domIndividualTypeNumber') as FormControl;
+  }
+
+  get controlNumber() {
+    return this.form.get('number') as FormControl;
+  }
+
+  get controlFirstName() {
+    return this.form.get('firstName') as FormControl;
+  }
+  get controlMiddleName() {
+    return this.form.get('middleName') as FormControl;
+  }
+
+  get controlLastName() {
+    return this.form.get('lastName') as FormControl;
+  }
+
+  get controlOtherLastName() {
+    return this.form.get('otherLastName') as FormControl;
+  }
+
+  get controlDomIndividualEthnicGroup() {
+    return this.form.get('domIndividualEthnicGroup') as FormControl;
+  }
+
+  get controlIndividualSex() {
+    return this.form.get('domIndividualSex') as FormControl;
+  }
+
+  get controlCompanyName() {
+    return this.form.get('companyName') as FormControl;
+  }
+
+
+
+
+
 }
