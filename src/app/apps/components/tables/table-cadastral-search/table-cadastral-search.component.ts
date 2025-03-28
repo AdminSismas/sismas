@@ -114,7 +114,7 @@ export class TableCadastralSearchComponent
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
   user: DecodeJwt | null = null;
-  setNewEndPoint: boolean = false;
+  setNewEndPoint = false;
 
   @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -227,7 +227,7 @@ export class TableCadastralSearchComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tituloPage'] && this.tituloPage) {
-      this.tituloPage = this.tituloPage;
+      // this.tituloPage = this.tituloPage;
       if (this.tituloPage === TITULO_PAGE_CADASTRAL_DA) {
         this.titleAssigned(this.tituloPage);
         this.menuAssigned(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
@@ -283,6 +283,7 @@ export class TableCadastralSearchComponent
   }
 
   openCadastralInformationProperty(data: BaunitHead): void {
+    console.log(data);
     if (this.seeActionHistory) {
       this.dialog
         .open(LayoutCardCadastralInformationPropertyComponentComponent, {
