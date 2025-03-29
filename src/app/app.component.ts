@@ -1,31 +1,35 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TitleService } from './apps/services/general/tittle.service';
 import { SplashScreenService } from './apps/services/core/splash-screen.service';
+import { LoadingAppComponent } from './apps/components/general-components/loading-app/loading-app.component';
+import { LoadingServiceService } from './apps/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [RouterOutlet]
+  imports: [RouterOutlet, LoadingAppComponent]
 })
 export class AppComponent implements OnInit {
 
-  private isLoadingVideo = false;
-
+  isLoading = this.loadingServiceService.isLoading;
+  textLoading = this.loadingServiceService.textLoading;
 
   constructor(
+    private loadingServiceService: LoadingServiceService,
     private titleService: TitleService,
     private splashService: SplashScreenService,
     private renderer: Renderer2
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
+    this.loadingServiceService.activateLoading(false);
     this.titleService.setTitle();
     if (window.name !== 'geogestion') {
       window.name = 'geogestion';
     }
-
 
     const splashContainer = document.getElementById('splash-container');
     const loadingText = document.querySelector('#vex-splash-screen h2.title');
@@ -73,6 +77,7 @@ export class AppComponent implements OnInit {
           if (loadingLoader) {
             this.renderer.setStyle(loadingLoader, 'display', 'none');
           }
+          this.loadingServiceService.activateLoading(false);
         });
       } else {
 

@@ -10,7 +10,6 @@
       @fadeInUp>
     </iframe>
   } @else {
-
     <vex-page-layout-content class="container-fluid px-0 py-0" vexFluidHeight fluidHeight=208>
       <!-- REFRESH BUTTON GEOGRAPHIC MAP   -->
       <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
@@ -41,14 +40,7 @@
         @fadeInUp>
       </iframe>
     </vex-page-layout-content>
-
   }
-
-  <vex-loading-app
-    *ngIf="(isExistDataInformations$ | async) === false && !urlIframe"
-    #vexSplashScreen
-    idLoading="vexSplashScreen"
-    [showImage]="true"></vex-loading-app>
 
 } @else {
   <vex-page-layout-content class="container-fluid px-0 py-0" vexFluidHeight fluidHeight=208>

@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DOCUMENT, NgIf } from '@angular/common';
 import { filter, take } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
@@ -7,26 +7,22 @@ import { animate, AnimationBuilder, style } from '@angular/animations';
 @Component({
   selector: 'vex-loading-app',
   standalone: true,
-  imports: [
-    NgIf
-  ],
+  imports: [],
   templateUrl: './loading-app.component.html',
   styleUrl: './loading-app.component.scss'
 })
-export class LoadingAppComponent  {
+export class LoadingAppComponent implements OnInit, OnChanges {
 
   splashScreenElem?: HTMLElement;
-  @Input({ required: true }) idLoading = 'vexSplashScreen';
-  @Input({ required: true }) showImage = true;
+  @Input({ required: false }) idLoading = 'vexSplashScreen';
+  @Input({ required: false }) textLoading = 'Cargando ...';
 
   constructor(
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
     private animationBuilder: AnimationBuilder
   ) {
-    this.splashScreenElem =
-      this.document.body.querySelector(this.idLoading) ?? undefined;
-
+    this.splashScreenElem = this.document.body.querySelector(this.idLoading) ?? undefined;
     if (this.splashScreenElem) {
       this.router.events
         .pipe(
@@ -34,6 +30,18 @@ export class LoadingAppComponent  {
           take(1)
         )
         .subscribe(() => this.hide());
+    }
+  }
+
+  ngOnInit(): void {
+    if(this.textLoading && this.textLoading?.length <= 0) {
+      this.textLoading ='Cargando ...';
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['textLoading'] && this.textLoading && this.textLoading?.length <= 0) {
+      this.textLoading ='Cargando ...';
     }
   }
 

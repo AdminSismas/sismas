@@ -62,6 +62,7 @@ import {
   BpmProcessService,
   PermissionVailable
 } from 'src/app/apps/services/bpm/bpm-process.service';
+import { LoadingServiceService } from '../../../../../apps/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-assigned-tasks',
@@ -121,12 +122,13 @@ export class TasksPanelComponent implements OnInit {
     new ReplaySubject<InformationPegeable>(1);
   dataContentInformation$: Observable<InformationPegeable> =
     this.subjectContentInformation$.asObservable();
-  isExistDataInformation$: Observable<boolean> = of(false);
   resources: string[] = [];
   verificPermissionAvaliable: PermissionVailable = {} as PermissionVailable;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
+
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
 
   constructor(
     private dialog: MatDialog,
@@ -152,7 +154,7 @@ export class TasksPanelComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    this.activateLoading();
+    this.loadingServiceService.activateLoading(true);
     this.activatedRoute.params.subscribe((params) => {
       this.typePanel = params[CONSTANT_NAME_ID];
       this.resetPaginator();
@@ -251,7 +253,7 @@ export class TasksPanelComponent implements OnInit {
   }
 
   onFilterChargeInformationByPanel() {
-    this.activateLoading();
+    this.loadingServiceService.activateLoading(true);
     let state = false;
 
     if (!this.typePanel) {
@@ -352,14 +354,14 @@ export class TasksPanelComponent implements OnInit {
     this.contentInformation = new InformationPegeable();
     this.listProTasksE = [];
     this.listProTasksECards = [];
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading(false);
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
     this.isExistDataInformation = true;
     this.contentInformation = result;
     this.orderByInformationSubscribe();
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading(false);
   }
 
   orderByInformationSubscribe() {
@@ -443,11 +445,6 @@ export class TasksPanelComponent implements OnInit {
     this.label = 'Información no Encontrada';
   }
 
-  activateLoading(value = false) {
-    const valid = of(value);
-    this.isExistDataInformation$ = valid.pipe(take(3));
-  }
-
   private resetPaginator(): void {
     this.page = PAGE;
     this.pageSize = PAGE_SIZE_TABLE_UNIQUE;
@@ -458,7 +455,7 @@ export class TasksPanelComponent implements OnInit {
   }
 
   private onRouteChange() {
-    this.activateLoading();
+    this.loadingServiceService.activateLoading(true);
     this.resetPaginator();
     this.onFilterChargeInformationByPanel();
 
