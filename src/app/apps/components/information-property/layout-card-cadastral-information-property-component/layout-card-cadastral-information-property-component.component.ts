@@ -93,7 +93,6 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
 
     if (this.defaults.flagData !== '') {
       this.dataFlag = this.defaults.flagData;
-      console.log(this.defaults.flagData, 'bandera para validar y ocultar ');
       if (this.defaults.flagData === 'openDataFlag') {
         this.informationPropertyService.showOptionsPersonSet(true);
       }

@@ -198,7 +198,6 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
       });
 
       this.dialogRef.afterClosed().subscribe(() => {
-        console.log('The dialog was closed');
       });
     }
 
@@ -208,7 +207,6 @@ export class DocumnetManagementComponent implements OnInit, AfterViewInit {
   getDataFromDocumentManagementService(): void {
     this.attachmentService.getDataPropertyByAttachment("37").subscribe({
       next: (data: AttachmentCollection[]) => {
-        console.log("Datos recibidos de la API1:", data);
         this.dataSource.data = data;
         this.totalElements = data.length;
 

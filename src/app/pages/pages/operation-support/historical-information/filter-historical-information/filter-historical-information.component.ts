@@ -164,11 +164,10 @@ export class FilterHistoricalInformationComponent implements OnInit {
     }
 
     ngOnInit() {
-      console.log(this.defaults,'valor de retorno');
       this.loadDepartmentalInformation();
       this.searchCtrl.valueChanges
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((value) => console.log(value));
+        .subscribe((value) => {});
     }
 
     searchRegistrationNumber() {
@@ -239,7 +238,6 @@ export class FilterHistoricalInformationComponent implements OnInit {
         'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
         'CERRAR', 'end'
       );
-      console.log(searchDataFiltered);
     }
 
     searchByName() {
@@ -261,8 +259,6 @@ export class FilterHistoricalInformationComponent implements OnInit {
     }
 
     public clearFormFields(value:any){
-      console.log('value',value?.tab?.textLabel );
-
       if(value?.tab?.textLabel === 'Selección Municipal'){
         this.clearMultipleFields();
         this.formatFieldValue();
@@ -349,7 +345,6 @@ export class FilterHistoricalInformationComponent implements OnInit {
         'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
         'CERRAR', 'end'
       );
-      console.log(searchDataFiltered);
     }
 
 

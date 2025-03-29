@@ -1,9 +1,4 @@
-<vex-page-layout
-  [id]="this.id"
-  mode="card"
-  class="pb-0"
-  *ngIf="isExistDataInformations$ | async"
->
+<vex-page-layout [id]="this.id" mode="card" class="pb-0">
 
   <vex-page-layout-content class="container-fluid px-1 py-1">
     <mat-tab-group class="overflow-hidden" dynamicHeight
@@ -50,11 +45,3 @@
   </vex-page-layout-content>
 
 </vex-page-layout>
-
-<vex-loading-app
-  *ngIf="(isExistDataInformations$ | async) === false"
-  #vexSplashScreen
-  idLoading="vexSplashScreen"
-  [showImage]="true"
->
-</vex-loading-app>

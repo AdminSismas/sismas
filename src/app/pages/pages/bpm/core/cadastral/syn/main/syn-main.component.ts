@@ -44,9 +44,6 @@ export class SynMainComponent implements OnInit {
   }
 
   syncChanges() {
-    console.log('Sync changes');
-    console.log('Execution ID:', this.executionId);
-
     this.syncMainService.synchronizeChanges(this.executionId).subscribe({
       next: () => {
         this.snackbar.open('Cambios sincronizados', 'Aceptar', {

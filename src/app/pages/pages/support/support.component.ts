@@ -146,7 +146,6 @@ export class SupportComponent implements OnInit {
     // ).subscribe({
     //   next: filteredLogs => {
     //     this.subjectSupportLogsList$.next(filteredLogs);
-    //     console.log("Filtered Logs:", filteredLogs);
     //     this.cd.detectChanges();
     //   },
     //   error: err => {
@@ -160,7 +159,6 @@ export class SupportComponent implements OnInit {
 
   loadVistas(id_modulo: number) {
     this.supportService.getVistas(id_modulo).subscribe((response) => {
-        console.log("response_getvistas_supportcomponent", response)
         if (response.success) {
             this.viewName = response.data || [];
              this.cd.detectChanges();
@@ -209,12 +207,7 @@ export class SupportComponent implements OnInit {
   onSubmit() {
     if (this.verticalAccountFormGroup.valid) {
       const formData = this.verticalAccountFormGroup.value;
-      console.log('FormData:', formData);
-
       formData.id_cliente = this.userID;
-
-      console.log('FormData:', formData);
-
       this.supportService.insertTicket(formData).subscribe(response => {
         if (response.success) {
           Swal.fire({
@@ -260,8 +253,6 @@ export class SupportComponent implements OnInit {
   }
 
   onSelect(event: any) {
-    console.log('event: ', event);
-
     const file = event.addedFiles.filter((nuevoArchivo: File) => {
 
       return !this.uploadedFiles.some((archivoExistente: File) =>
@@ -282,7 +273,6 @@ export class SupportComponent implements OnInit {
   }
 
   onRemove(event: any) {
-    console.log('event: ', event);
     const index = this.uploadedFiles.indexOf(event);
     if (index > -1) {
       this.uploadedFiles.splice(index, 1);

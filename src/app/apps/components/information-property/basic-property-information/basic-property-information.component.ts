@@ -142,7 +142,6 @@ export class BasicPropertyInformationComponent implements OnInit {
           }
         }
       });
-      console.log(this.data, 'servicio con datos nuevos');
   }
 
   private getRandomInt(max: number):number {

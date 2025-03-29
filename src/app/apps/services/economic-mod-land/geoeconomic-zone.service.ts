@@ -25,7 +25,6 @@ export class GeoeconomicZoneService implements ZoneServices {
     return this.http.get<GeoEconomicZone[]>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error consultando zonas urbanas');
           throw error;
         })
       );
@@ -37,7 +36,6 @@ export class GeoeconomicZoneService implements ZoneServices {
     return this.http.post<GeoEconomicZone>(url, params)
       .pipe(
         catchError((error: any) => {
-          console.log('Error creando zona geoeconómica');
           throw error;
         })
       );
@@ -50,7 +48,6 @@ export class GeoeconomicZoneService implements ZoneServices {
     return this.http.put<GeoEconomicZone>(url, params)
       .pipe(
         catchError((error: any) => {
-          console.log('Error actualizando zona física urbana');
           throw error;
         })
       );
@@ -64,7 +61,6 @@ export class GeoeconomicZoneService implements ZoneServices {
     return this.http.delete<void>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error eliminando zona física urbana');
           throw error;
         })
       );
@@ -74,11 +70,9 @@ export class GeoeconomicZoneService implements ZoneServices {
     const url = `${this.base_url}${envi.geoeconomic_values}`;
     const params = new HttpParams()
       .set('zonaHomoGeoEconomicaId', id);
-
     return this.http.get<GeoEconomicZoneDetails>(url, { params })
       .pipe(
         catchError((error: any) => {
-          console.log('Error consultando detalles de zona geoeconómica');
           throw error;
         })
       );

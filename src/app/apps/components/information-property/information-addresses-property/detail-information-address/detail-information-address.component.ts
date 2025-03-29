@@ -94,7 +94,6 @@ export class DetailInformationAddressComponent implements OnInit {
         next: (result: DetailBasicInformationAddress) => this.data = result,
         error: (error: HttpErrorResponse) => {
           if (error.status !== 500) {
-            console.log(error.message);
           }
         }
       }

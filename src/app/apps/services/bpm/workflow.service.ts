@@ -37,9 +37,6 @@ export class WorkflowService {
 
   createWorkflow(params: WorkflowCollection): Observable<WorkflowCollection> {
     const url = `${this.basic_url}`;
-
-    console.log("params: ", params);
-
     return this.http.post<WorkflowCollection>(url, params)
       .pipe(
         catchError((error: any) =>{

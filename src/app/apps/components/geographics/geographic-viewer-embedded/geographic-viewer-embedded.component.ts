@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AsyncPipe, NgIf } from '@angular/common';
@@ -16,6 +16,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { getRandomInt, validateVariable } from '../../../utils/general';
+import { LoadingServiceService } from '../../../services/general/loading-service.service';
 
 @Component({
   selector: 'vex-geographic-viewer-embedded',
@@ -56,10 +57,10 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   @Input({ required: false }) schema: string | null | undefined;
   @Input({ required: false }) enableRefreshButton: boolean = false;
 
-  isExistDataInformations$: Observable<boolean> = of(false);
-
   urlIframe: SafeResourceUrl | string | null = null;
   showMap: boolean = false;
+
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
 
   constructor(
     private geographicService: InformationGeographicService,
@@ -81,28 +82,28 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
 
     if (changes['ccZonaId'] && this.ccZonaId && this.ccZonaId?.length > 0) {
       this.showMap = true;
-      this.activateLoading();
+      this.loadingServiceService.activateLoading(true);
       this.getViewGeneralMap(this.ccZonaId);
       return;
     }
 
     if (changes['npn'] && this.npn && this.npn?.length > 0) {
       this.showMap = true;
-      this.activateLoading();
+      this.loadingServiceService.activateLoading(true);
       this.getViewDataOpenMap(this.npn);
       return;
     }
 
     if (changes['executionId'] && this.executionId && this.executionId?.length > 0 && this.schema && this.schema?.length > 0) {
       this.showMap = true;
-      this.activateLoading();
+      this.loadingServiceService.activateLoading(true);
       this.getViewGeneralMapByExecutionId(this.executionId, this.schema);
       return;
     }
 
     if (changes['thematicMapValue'] && this.thematicMapValue && this.thematicMapValue?.length > 0) {
       this.showMap = true;
-      this.activateLoading();
+      this.loadingServiceService.activateLoading(true);
       this.getViewGeneralThematicMap(this.thematicMapValue);
       return;
     }
@@ -145,7 +146,7 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   captureResult(result: string | null) {
     if (validateVariable(result) && result != null) {
       this.urlIframe = this.sanitizer.bypassSecurityTrustResourceUrl(result);
-      this.activateLoading(true);
+      this.loadingServiceService.activateLoading(false);
       return;
     }
     this.captureErrorResult();
@@ -154,13 +155,13 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   captureErrorResult() {
     this.showMap = false;
     this.urlIframe = null;
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading(false);
   }
 
   refreshMap() {
     this.urlIframe = null;
     this.showMap = true;
-    this.activateLoading();
+    this.loadingServiceService.activateLoading(true);
 
     if (this.ccZonaId && this.ccZonaId?.length > 0) {
       this.getViewGeneralMap(this.ccZonaId);
@@ -181,11 +182,6 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
       this.getViewGeneralThematicMap(this.thematicMapValue);
       return;
     }
-  }
-
-  activateLoading(value = false) {
-    const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(3));
   }
 
 }

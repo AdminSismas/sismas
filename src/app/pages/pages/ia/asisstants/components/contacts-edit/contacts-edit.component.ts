@@ -90,12 +90,10 @@ export class AssistantsEditComponent implements OnInit {
     if (this.data && this.data.id) {
       // Modo 'update' si defaults tiene un id
       this.mode = 'update';
-      console.log('Defaults UPDATE:', this.data);
       this.form.patchValue(this.data);
     } else {
       // Modo 'create' si no hay defaults o no tiene un id
       this.mode = 'create';
-      console.log('Modo CREATE');
     }
     this.traerEmpresas();
   }
@@ -213,7 +211,6 @@ export class AssistantsEditComponent implements OnInit {
           });
         } else {
           this.errorUpdate.fire();
-          console.log('Error al actualizar el Asistente: ' + response);
         }
       },
       error: err => {
@@ -297,7 +294,6 @@ export class AssistantsEditComponent implements OnInit {
           this.dialogRef.close(response.data);
           this.successCreate.fire();
         } else {
-          console.log('Error al crear el Asistente: ' + response.message);
           this.errorCreate.fire();
         }
       },
@@ -325,7 +321,6 @@ export class AssistantsEditComponent implements OnInit {
           this.dialogRef.close(response.data);
           this.successCreate.fire();
         } else {
-          console.log('Error al crear el Asistente: ' + response.message);
           this.errorCreate.fire();
         }
       },

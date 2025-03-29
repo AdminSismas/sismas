@@ -371,10 +371,8 @@ export class InitiateFilingProcedureComponent implements OnInit {
       metadataList,
       attachmentsList
     );
-    console.log(proExecutionE);
     this.bpmCoreService.bpmOperationStartProcess(proExecutionE).subscribe({
       next: (proTaskE: ProTaskE) => {
-        console.log(proTaskE);
         this.bpmProcessService.setPermissions({ executionId: '', message: '' });
         if (proTaskE?.executionId && proTaskE.proTask?.taskId !== -1) {
           this.infoGeneralService.setFatherURL(PANEL_ASSIGNED_TASKS);
@@ -419,7 +417,6 @@ export class InitiateFilingProcedureComponent implements OnInit {
         this.snackBar.open('ERROR, DESCONOCIDO');
       },
       error: (err: HttpErrorResponse) => {
-        console.log(err);
         this.snackBar.open(err?.error, 'CERRAR', {
           duration: 10000,
           horizontalPosition: 'right'

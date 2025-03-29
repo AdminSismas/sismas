@@ -21,12 +21,9 @@ export class AssistantsService {
 
   listAssistant(idEmpresa: number): Observable<{ success: boolean, message: string, data?: assistantData[] }> {
     const body = { idEmpresa };
-    console.log("consultando empresa:", idEmpresa);
     return this.http.post<{ success: boolean, message: string, data: any }>(`${this.api_sql}?assistants`, body).pipe(
       map(response => {
-        console.log('API response:', response);
         if (response.success) {
-          console.log('API response data:', response.data);
           const assistants: assistantData[] = Array.isArray(response.data) ? response.data.map((item: any) => ({
             id: item.id,
             idempresa: item.idempresa,
@@ -69,7 +66,6 @@ export class AssistantsService {
             empresa_modelo: item.empresa_modelo
           })) : [];
           this.assistantsSubject.next(assistants);
-          console.log('Mapped assistants:', assistants);
           return { success: true, message: 'Asistentes encontrados', data: assistants };
         } else {
           return { success: false, message: 'No hay asistentes', data: [] };

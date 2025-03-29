@@ -83,9 +83,9 @@ import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 })
 export class SupportLogsComponent implements OnInit, AfterViewInit {
 
-  private apiTickets = `${env.url_base}${env.api}${env.module.soporte}`;  
+  private apiTickets = `${env.url_base}${env.api}${env.module.soporte}`;
   userID: number | null = null;
-  
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -130,8 +130,8 @@ export class SupportLogsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.sort.active = 'id';     
-    this.sort.direction = 'desc'; 
+    this.sort.active = 'id';
+    this.sort.direction = 'desc';
     this.dataSource.sort = this.sort;
   }
 
@@ -144,13 +144,11 @@ export class SupportLogsComponent implements OnInit, AfterViewInit {
         this.dataSource.data = response.data;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        console.log('Tickets cargados:', this.dataSource.data);
       },
       (error) => {
-        console.error('Error al cargar los tickets', error);
       }
     );
-   
+
   }
 
   applyFilter(value: string) {

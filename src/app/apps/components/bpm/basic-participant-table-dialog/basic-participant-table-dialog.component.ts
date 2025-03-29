@@ -47,7 +47,6 @@ export class BasicParticipantTableDialogComponent {
   }
 
   closeDialog() {
-    console.log(this.participants);
     this.dialogRef.close(this.participants);
   }
 }

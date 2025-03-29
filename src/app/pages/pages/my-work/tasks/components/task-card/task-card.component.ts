@@ -87,7 +87,6 @@ export class TaskCardComponent implements OnInit {
       this.taskOne = result;
       this.viewExecuteTask(this.taskOne);
     });
-    console.log('viewDetailTask', value);
   }
 
   viewExecuteTask(objOne: any) {
@@ -110,8 +109,6 @@ export class TaskCardComponent implements OnInit {
   ): void {
     let data: TaskRetailExecuteResponseModel[];
     this.contentTasksInformations = objTwo;
-    console.log('objTwo', objTwo.content);
-
     if (
       this.contentTasksInformations &&
       this.contentTasksInformations.content

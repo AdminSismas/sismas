@@ -86,7 +86,6 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (result: QueryParametersGeographicVie) => {
           this.queryParameters = new QueryParametersGeographicVie(result);
-          console.log(result);
           this.formatElementOfForm();
         },
         error: (error) => {
@@ -126,7 +125,6 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
     }
     this.postForm.nativeElement.action = `${envi.url_viewer}${envi.post_path_viewer}`;
     this.postForm.nativeElement.submit();
-    console.log(this.postForm.nativeElement);
     this.dialogRef.close();
   }
 

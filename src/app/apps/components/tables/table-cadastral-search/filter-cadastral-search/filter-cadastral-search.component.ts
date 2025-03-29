@@ -190,7 +190,7 @@ export class FilterCadastralSearchComponent implements OnInit {
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => console.log(value));
+      .subscribe((value) => {});
       this.proccessRulePage();
   }
 
@@ -320,7 +320,6 @@ export class FilterCadastralSearchComponent implements OnInit {
       'Aceptar',
       'end'
     );
-    console.log(searchDataFiltered);
   }
 
   searchByName() {
@@ -359,8 +358,6 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   public clearFormFields(value: any) {
-    console.log('value', value?.tab?.textLabel);
-
     if (value?.tab?.textLabel === LIMPIAR_CAMPOS_SELECCION_MUNICIPAL) {
       this.clearMunicipalSelection();
       this.formatFieldValue();
@@ -479,7 +476,6 @@ export class FilterCadastralSearchComponent implements OnInit {
       'Aceptar',
       'end'
     );
-    console.log(searchDataFiltered);
   }
 
   loadDepartmentalInformation() {
@@ -532,7 +528,6 @@ export class FilterCadastralSearchComponent implements OnInit {
     codeName: string,
     skipPreloadedValues: boolean | null
   ) {
-    console.log(codeName === '00');
     if (codeName?.length <= 0) {
       return;
     }

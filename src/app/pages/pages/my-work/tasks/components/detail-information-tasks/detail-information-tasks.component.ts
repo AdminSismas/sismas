@@ -230,7 +230,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
 
   checkNegativeDays(): void {
     if (this.data && this.isNegative(this.data.daysFinish)) {
-      console.log('Días negativos:', this.data.daysFinish);
       // Aquí puedes actualizar el valor de los días si es negativo
       this.data.daysFinish = Math.abs(this.data.daysFinish);
     }
@@ -242,7 +241,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       .subscribe(result => {
         this.taskDetails = result;
         this.id = this.taskDetails.executionId ? String(this.taskDetails.executionId) : '';
-        console.log('primer servicio', this.taskDetails);
         this.getInformationProTaskCountComment();
         this.getInformationProTaskCountAttachment();
         this.viewExcuteTask(executionId);
@@ -254,7 +252,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     this.tasksPanelService.viewProTaskId(
       executionId)
       .subscribe(result => {
-        console.log('Tercer servicio result', result);
         this.assignedSee = result.assignee;
       });
   }
@@ -265,7 +262,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (executeTask: InformationPegeable) => {
-          console.log('segundo servicio', executeTask);
           this.captureInformationSubscribeB(executeTask);
         }
       });
@@ -274,7 +270,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   captureInformationSubscribeB(executeTask: InformationPegeable): void {
     let data: TaskRetailExecuteResponseModel[];
     this.contentTasksInformations = executeTask;
-    console.log('executeTask', executeTask.content);
 
     if (this.contentTasksInformations && this.contentTasksInformations.content) {
       data = this.contentTasksInformations.content;

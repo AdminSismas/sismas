@@ -18,7 +18,7 @@ export class SupportService {
   private supportingSubject = new BehaviorSubject<supportData[]>([]);
   private supportingLogsSubject = new BehaviorSubject<SupportLogs[]>([]);
   //private apiTickets = 'https://tickets.cic-ware.com/api/v1/tickets';
-  private apiTickets = `${env.url_base}${env.api}${env.module.soporte}`;  
+  private apiTickets = `${env.url_base}${env.api}${env.module.soporte}`;
   supportLog$ = this.supportingLogsSubject.asObservable();
   support$ = this.supportingSubject.asObservable();
   supportLogs: SupportLogs[] = [];
@@ -32,16 +32,16 @@ export class SupportService {
 
   // insertTicket(formData: any): Observable<{ success: boolean; message: string; data?: any }> {
   //   const headers = new HttpHeaders({
-  //     Authorization: 'AYR5gnSy5rIf8Y02H9RNnf28CVHYb1DnD8LaDYjkmG8bhc1Q-oATMSVF3WVTcWtl', 
+  //     Authorization: 'AYR5gnSy5rIf8Y02H9RNnf28CVHYb1DnD8LaDYjkmG8bhc1Q-oATMSVF3WVTcWtl',
   //     'Content-Type': 'application/json',
   //   });
 
   //   const body = {
   //     title: formData.titulo,
   //     group: 'Administrativos',
-  //     priority_id: 2, 
-  //     state: 'new', 
-  //     customer_id: 9, 
+  //     priority_id: 2,
+  //     state: 'new',
+  //     customer_id: 9,
   //     article: {
   //       subject: formData.asunto,
   //       body: formData.observacion,
@@ -57,22 +57,19 @@ export class SupportService {
   //   ).pipe(
   //     map(response => {
   //       if (response.success) {
-  //         console.log('API_RESPONSE_supportcreated:', response.data);
   //         return { success: true, message: 'Soporte creado', data: response.data };
   //       } else {
-  //         console.log('API_RESPONSE_support_notcreated:', response.data);
   //         return { success: false, message: response.message, data: null };
   //       }
   //     }),
   //     catchError(error => {
-  //       console.error('API error:', error);
   //       return of({ success: false, message: error.message, data: null });
   //     })
   //   );
   // }
 
   insertTicket(formData: any): Observable<any> {
-    const apiUrl = `${this.apiTickets}`; 
+    const apiUrl = `${this.apiTickets}`;
     return this.http.post(apiUrl, formData);
   }
 
@@ -80,26 +77,23 @@ export class SupportService {
     const params = new HttpParams().set('customer_id', customerId.toString());
     return this.http.get<any>(`${this.apiTickets}`, { params });
 }
-  
+
 
   createSupportRequest(request: supportData): Observable<{ success: boolean; message: string; data?: any }> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<{ success: boolean; message: string; data?: any }>(
       `${this.api_mddw}?newSupport`,
-       request, 
+       request,
        { headers })
        .pipe(
       map(response => {
         if (response.success) {
-          console.log('API_RESPONSE_supportcreated:', response.data);
           return { success: true, message: 'Soporte creado', data: response.data };
         } else {
-          console.log('API_RESPONSE_support_notcreated:', response.data);
           return { success: false, message: response.message, data: null };
         }
       }),
       catchError(error => {
-        console.error('API error:', error);
         return of({ success: false, message: error.message, data: null });
       })
     );
@@ -115,7 +109,7 @@ export class SupportService {
         if (response.success) {
           // Map the response to the StatusName type
           this.updateLogsInList(response.data);
-          const supportlogs: SupportLogs[] = Array.isArray(response.data) ? 
+          const supportlogs: SupportLogs[] = Array.isArray(response.data) ?
             response.data.map((item: any) => ({
               id: item.id,
               id_soporte: item.id_soporte,
@@ -124,7 +118,6 @@ export class SupportService {
               respuesta: item.respuesta,
               fecha_hora: item.fecha_hora
             })) : [];
-            console.log(response.data);
           return { success: true, message: 'Logs de soporte encontrados', data: supportlogs };
         } else {
           return { success: false, message: 'No hay logs de soporte', data: [] };
@@ -146,7 +139,7 @@ export class SupportService {
       map(response => {
         if (response.success) {
           // Map the response to the StatusName type
-          const moduloNames: ModuloName[] = Array.isArray(response.data) ? 
+          const moduloNames: ModuloName[] = Array.isArray(response.data) ?
             response.data.map((item: any) => ({
               id: item.id,
               modulo: item.modulo
@@ -162,14 +155,13 @@ export class SupportService {
       })
     );
   }
-  getVistas(id_modulo: number): 
+  getVistas(id_modulo: number):
     Observable<{
        success: boolean; message: string; data?: any }> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.get<{ success: boolean; message: string; data: any }>(`${this.api_sql}?getVistas=${id_modulo}`, { headers }).pipe(
       map(response => {
         if (response.success) {
-          console.log('API_RESPONSE: OKAY', response.data);
           return { success: true, message: 'Vistas encontradas', data: response.data };
         } else {
           return { success: false, message: 'No hay Vistas', data: [] };
@@ -184,18 +176,16 @@ export class SupportService {
 
   sendEmail(vista_name: string, modulo_name: string, nombre: string, observacion: string): Observable<{
      success: boolean, message: string }> {
-    const body = { 
-      vista_name, 
-      modulo_name, 
-      nombre, 
+    const body = {
+      vista_name,
+      modulo_name,
+      nombre,
       observacion
     };
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log('API_REQUEST_BODY:', body);
     return this.http.post<{ success: boolean, message: string, data: any }>(`${this.api_mail}`, body, { headers }).pipe(
       map(response => {
         if (response.success) {
-          console.log('API_REQUEST_RESPONSE:', response.data);
           return { success: true, message: 'Correo enviado correctamente' };
         } else {
           return { success: false, message: 'Error al enviar el correo' };

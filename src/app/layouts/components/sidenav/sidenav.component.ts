@@ -149,7 +149,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
         )
       )
       .subscribe((result) => {
-        console.log('result', result);
       });
   }
   navigateToCadastralSearch() {
@@ -241,6 +240,5 @@ export class SidenavComponent implements OnInit, OnDestroy {
     if (this.listRouteItem[0] === undefined) {
       this.listRouteItem.splice(0, 1);
     }
-    console.log('listRouteItem', this.listRouteItem);
   }
 }

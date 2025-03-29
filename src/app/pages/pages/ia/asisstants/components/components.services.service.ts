@@ -69,8 +69,6 @@ export class ComponentsServicesService {
 
     return this.http.put<{ success: boolean; message: string; data: assistantData | null }>(`${this.api_sql}?updateparam=${id}`, payload, { headers }).pipe(
       map(response => {
-        console.log('API response updates:', response);
-
         if (response.success && response.data) {
           this.updateAssistantInList(response.data);
           return { success: true, message: 'Parámetros actualizados', data: response.data };
@@ -100,7 +98,6 @@ export class ComponentsServicesService {
 
     return this.http.post<{ success: boolean; message: string; data?: any }>(`${this.api_sql}?createIntructions`,data,{ headers }).pipe(
       map(response => {
-        console.log('API response create: ', response);
         if (response.success) {
           return { success: true, message: 'Instrucciones creadas exitosamente', data: response.data };
         } else {
@@ -119,7 +116,6 @@ export class ComponentsServicesService {
 
     return this.http.post<{ success: boolean; message: string; data?: any }>(`${this.api_sql}?createVoice`,data,{ headers }).pipe(
       map(response => {
-        console.log('API response:', response);
         if (response.success) {
           return { success: true, message: 'Voz creada exitosamente', data: response.data };
         } else {
@@ -139,7 +135,6 @@ export class ComponentsServicesService {
     return this.http.get<{ success: boolean, message: string, data: any }>(`${this.api_sql}?getCompanies`, { headers }).pipe(
       map(response => {
         if (response.success) {
-          console.log('empresas encontrado:', response.data);
           return { success: true, message: 'empresas encontrado', data: response.data };
         } else {
           return { success: false, message: 'No hay perfil', data: [] };
@@ -176,7 +171,6 @@ export class ComponentsServicesService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<{ success: boolean; message: string; data?: any }>(`${this.api_sql}?generateAsistants`,generateAsistant,{ headers }).pipe(
       map(response => {
-        console.log('API response:', response);
         if (response.success) {
           return { success: true, message: 'Creado exitosamente', data: response.data };
         } else {

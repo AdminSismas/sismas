@@ -208,7 +208,6 @@ export class AlertsComponent implements OnInit, AfterViewInit {
       (alerts) => {
         this.alerts = alerts;
         this.dataSource.data = this.alerts;
-        // console.log('Alertas cargadas:', this.alerts);
       },
       (error) => {
         console.error('Error al obtener alertas:', error);
@@ -226,7 +225,6 @@ export class AlertsComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Modal cerrado con resultado:', result);
       }
     });
   }

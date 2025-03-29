@@ -185,8 +185,6 @@ export class ModificationPropertyUnitsComponent implements OnInit {
   }
 
   deletePropertyUnit(row: Operation) {
-    console.log('Borrando');
-    console.log(row);
   }
 
   openCrudAlfaMain(type: TypeOperationAlfaMain) {

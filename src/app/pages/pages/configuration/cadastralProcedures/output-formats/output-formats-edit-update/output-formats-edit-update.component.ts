@@ -106,15 +106,11 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
       private sanitizer: DomSanitizer,
        private userService:UserService
     ) {
-      // console.log('addEditDocumentInformationData: ', this.addEditDocumentInformationData);
-      console.log('defaults: ', this.defaults);
-
       this.form.get('content')?.setValue(this.defaults.documentAssociated?.htmlTemplate
       )
     }
 
     ngOnInit() {
-      console.log('defaults: ', this.defaults);
       this.getUserSession();
       if (this.defaults.type === 'edit') {
         const htmlService = `${this.defaults.documentAssociated?.htmlTemplate}`;
@@ -123,9 +119,6 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
         // Configurar contenido inicial para Quill
         this.setQuillContent(htmlService);
         this.form.get('content')?.setValue(htmlService);
-
-        console.log('this.defaults.documentAssociated?.headerTemplateId: ', this.defaults.documentAssociated?.headerTemplate);
-
         const headerIdSet = this.defaults.documentAssociated?.headerTemplate?.outTemplateId;
         this.form.get('headerTemplateId')?.setValue(headerIdSet);
 

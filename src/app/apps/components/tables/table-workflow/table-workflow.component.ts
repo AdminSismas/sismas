@@ -172,14 +172,11 @@ export class TableWorkflowComponent implements OnInit, AfterViewInit {
     this.workflowService.getDataPropertyByWorkflow(paramsWF)
       .subscribe({
         next: (result: any) => {
-          console.log("datos de api: ", result);
           this.captureInformationSubscribe(result);
         },
         error: (error) => {
-          console.error('Hubo un error al obtener los datos: ', error);
         },
         complete: () => {
-          console.log('Carga completa de datos');
         }
       });
   }
@@ -194,7 +191,6 @@ export class TableWorkflowComponent implements OnInit, AfterViewInit {
     if (this.contentInformation != null && this.contentInformation.content != null) {
       // data = this.contentInformations.content.map((row: contentInfoWorkflow) => new contentInfoWorkflow(row));
       data = this.contentInformation.content;
-      console.log("data: ", data);
       this.dataSource.data = data;
     }
 
@@ -242,7 +238,6 @@ export class TableWorkflowComponent implements OnInit, AfterViewInit {
     this.workflowService.createWorkflow(params)
       .subscribe({
         next: (result: WorkflowCollection) => {
-          console.log("result: ", result);
           this.getDataFromWorkflowService();
           this.snackbar.open('Flujo de trabajo creado', 'CERRAR', { duration: 10000 });
         },

@@ -240,9 +240,7 @@ export class InformationPropertyService {
     let params: HttpParams = new HttpParams();
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
-
     const url = `${this.basic_url}${envi.ccZonaHomoFisicaUr}${envi.divpol}`;
-
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -256,7 +254,6 @@ export class InformationPropertyService {
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
     const url = `${this.basic_url}${envi.ccZonaHomoFisicaRu}${envi.divpol}`;
-
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
@@ -347,7 +344,6 @@ export class InformationPropertyService {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.http.put<BasicInformationProperty>(url, body).pipe(
       catchError((error) => {
-        console.log('Error en la edición de los aspectos generales del predio');
         throw error;
       })
     );

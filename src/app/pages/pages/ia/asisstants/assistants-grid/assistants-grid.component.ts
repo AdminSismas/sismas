@@ -103,10 +103,8 @@ export class AssistantsGridComponent implements OnInit {
         } else {
           this.assistants = [];
         }
-        console.log('oninit:', this.assistants);
       },
       error: (error) => {
-        console.log(error);
         this.assistants = [];
       }
     });

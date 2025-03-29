@@ -79,10 +79,7 @@ export class ChangePasswordComponent implements OnInit {
 
   changePassword(): void {
     this.form.markAllAsTouched();
-
     if (!this.validForm()) return;
-
-    console.log(this.form.value);
     this.dialogRef.close();
     this.changePasswordService();
   }
@@ -129,7 +126,6 @@ export class ChangePasswordComponent implements OnInit {
         response = true;
         break;
       case 'newPassword':
-        console.log('Validando el nuevo password');
         if (invalid && touched ) {
           this.newPasswordError = errors?.['required']
             ? 'Por favor, introduce tu nueva contraseña'
@@ -161,7 +157,6 @@ export class ChangePasswordComponent implements OnInit {
 
     this.passwordService.changePassword(username, lastPassword, newPassword).subscribe({
       next: (res) => {
-        console.log(res);
         this.snackbar.open('Contraseña cambiada correctamente', 'CERRAR', {
           duration: 10000
         });
