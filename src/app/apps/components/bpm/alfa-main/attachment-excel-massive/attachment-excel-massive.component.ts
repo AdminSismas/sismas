@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -7,7 +7,6 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { AttachmentService } from '../../../../services/bpm/core/document/main/attachment.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -18,11 +17,25 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { getRandomInt } from '../../../../utils/general';
 import { LIST_EXTENSION_MASIVE_EXCEL } from '../../../../constants/general/constants';
 import Swal from 'sweetalert2';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AlfaMainService } from '../../../../services/bpm/core/alfa-main.service';
+import { LoadingServiceService } from '../../../../services/general/loading-service.service';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
 @Component({
   selector: 'vex-attachment-exel-massive',
   standalone: true,
+  animations: [
+    fadeInRight400ms,
+    stagger80ms,
+    scaleIn400ms,
+    stagger40ms,
+    fadeInUp400ms,
+    scaleFadeIn400ms
+  ],
   imports: [
     MatDialogClose,
     MatIconButton,
@@ -35,8 +48,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatButton,
     MatDialogActions,
-    MatDialogTitle,
-    MatProgressSpinner
+    MatDialogTitle
   ],
   templateUrl: './attachment-excel-massive.component.html',
   styleUrl: './attachment-excel-massive.component.scss'
@@ -44,15 +56,16 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 export class AttachmentExcelMassiveComponent implements OnInit {
 
   id: string = getRandomInt(1264).toString() + '-attachmentExcelMassive';
-  isLoading = false;
   isUploading = false;
   file: File | null = null;
   uploadedFiles: File[] = [];
 
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+
   constructor(
     public dialogRef: MatDialogRef<AttachmentExcelMassiveComponent>,
     @Inject(MAT_DIALOG_DATA) public executionId: number,
-    private attachmentService: AttachmentService
+    private alfaMainService: AlfaMainService
   ) {
   }
 
@@ -79,7 +92,6 @@ export class AttachmentExcelMassiveComponent implements OnInit {
     const maxSize = 50 * 1024 * 1024; // 50MB en bytes
     const alreadySelectedFiles = [];
     const oversizedFiles = [];
-
     const validFilesExtension = event.addedFiles.filter((nuevoArchivo: File) => {
       const extension = nuevoArchivo.name.split('.')[1].toLowerCase();
       return !LIST_EXTENSION_MASIVE_EXCEL.includes(extension);
@@ -104,11 +116,9 @@ export class AttachmentExcelMassiveComponent implements OnInit {
       if (alreadySelected) {
         alreadySelectedFiles.push(nuevoArchivo);
       }
-
       if (nuevoArchivo.size > maxSize) {
         oversizedFiles.push(nuevoArchivo);
       }
-
       return !alreadySelected && nuevoArchivo.size <= maxSize;
     });
 
@@ -143,12 +153,43 @@ export class AttachmentExcelMassiveComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
+    this.loadingServiceService.chargeTextLoading('Cargardo Excel Masivo...');
+    this.loadingServiceService.activateLoading(true);
     this.isUploading = true;
 
     const formData = new FormData();
     formData.append('file', this.uploadedFiles[0]);
     formData.append('executionId', this.executionId.toString());
 
+    this.alfaMainService.loadingExcelMassive(this.executionId.toString(), formData).subscribe({
+      next: () => {
+        this.cancelLoading();
+        Swal.fire({
+          text: 'Archivo cargado correctamente en el tramite',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 4000
+        }).then(() => this.cancelUpload(true));
+      },
+      error: () => {
+        this.cancelLoading();
+        Swal.fire({
+          text: 'Error al cargar excel masivo, consulte al administrador',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 3000
+        }).then(() => this.cancelUpload(null));
+      }
+    });
+  }
+
+  cancelLoading(){
+    this.loadingServiceService.activateLoading(false);
+    this.loadingServiceService.chargeTextLoading('');
+  }
+
+  cancelUpload(value:boolean | null) {
+    this.isUploading = false;
+    this.dialogRef.close(value);
   }
 }

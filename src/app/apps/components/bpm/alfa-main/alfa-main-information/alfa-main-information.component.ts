@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { AfterViewInit, Component, computed, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { NgClass, NgIf } from '@angular/common';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
-import { LoadingAppComponent } from '../../../general-components/loading-app/loading-app.component';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -14,7 +13,7 @@ import { TableAlfaMainComponent } from '../../table-alfa-main/table-alfa-main.co
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { getRandomInt } from '../../../../utils/general';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { ChangeControl } from '../../../../interfaces/bpm/change-control';
 import { InformationPegeable } from '../../../../interfaces/general/information-pegeable.model';
 import { OperationContentInformation } from '../../../../interfaces/bpm/operation-content-information';
@@ -24,12 +23,12 @@ import { SendInfoGeneralService } from '../../../../services/general/send-info-g
 import { InformationGeographicService } from '../../../../services/geographics/information-geographic.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { filter, take } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { environment } from '../../../../../../environments/environments';
 import Swal from 'sweetalert2';
 import { Operation } from '../../../../interfaces/bpm/operation';
 import {
-  MAX_PAGE_SIZE_TABLE_UNIQUE,
+  MAX_PAGE_SIZE_TABLE_UNIQUE, MODAL_DINAMIC_HEIGHT,
   MODAL_SMALL,
   PAGE,
   PAGE_OPTION_UNIQUE,
@@ -75,6 +74,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { LoadingServiceService } from '../../../../services/general/loading-service.service';
 
 @Component({
   selector: 'vex-alfa-main-information',
@@ -88,9 +88,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     FluidMinHeightDirective,
-    LoadingAppComponent,
     MatAccordion,
     MatButton,
     MatExpansionPanel,
@@ -117,8 +115,11 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   @Input({ required: false }) public fluidHeight: string = '220';
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  private alfaMainService: AlfaMainService = inject(AlfaMainService);
 
-  isExistDataInformations$: Observable<boolean> = of(false);
+
+  refreshData$: Observable<boolean> = this.alfaMainService.refreshData$;
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   _validateChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
   _createChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
@@ -133,7 +134,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
 
   constructor(
     proFlow: ProFlow,
-    private alfaMainService: AlfaMainService,
     private infoGeneralService: SendInfoGeneralService,
     private geographicService: InformationGeographicService,
     private router: Router,
@@ -164,6 +164,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       return false;
     }
 
+    this.loadingServiceService.activateLoading(true);
     this.validateChangeLogAlfaMain();
 
     this.validateChangeLog$
@@ -184,6 +185,15 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
           return;
         }
         this.getAlfaMain();
+      });
+
+
+    this.refreshData$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.getAlfaMain();
+        }
       });
   }
 
@@ -242,14 +252,14 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   captureInformationSubscribeError(): void {
     this.contentInformations = new InformationPegeable();
     this.listOperationContentInformation = [];
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading();
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
     this.contentInformations = result;
     this.listOperationContentInformation = [];
     this.orderByInformationSubscribe();
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading();
   }
 
   captureInformationChangeLogAlfaMainError() {
@@ -319,10 +329,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     );
   }
 
-  activateLoading(value = false) {
-    const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(3));
-  }
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
@@ -358,7 +364,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
           this.contentInformations = new InformationPegeable();
           this.listOperationContentInformation = [];
           this.validateChangeLogAlfaMain();
-          this.activateLoading();
+          this.loadingServiceService.activateLoading();
         },
         error: (error: HttpErrorResponse) => {
           Swal.fire({

@@ -10,7 +10,8 @@ import { CONSTANT_NAME_RETURN, NAME_FILED, NAME_VERSION } from '../../../constan
 import {
   LIST_COMPONENT_ACTIVE_MASIVE_EXCEL,
   MODAL_MEDIUM,
-  MODAL_SMALL, MODAL_SMALL_XS,
+  MODAL_SMALL,
+  MODAL_SMALL_XS,
   TYPE_BUTTON_EIGHT,
   TYPE_BUTTON_SEVEN
 } from '../../../constants/general/constants';
@@ -176,15 +177,20 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   getInformationExcelDownload() {
-    this.alfaMainService.getGenerateExcelMassive(this.executionId)
-      .subscribe(() => {});
+    this.alfaMainService.getGenerateExcelMassive(this.executionId);
   }
 
   chargerInformationExcelMassive() {
     this.dialog.open(AttachmentExcelMassiveComponent, {
       ...MODAL_SMALL_XS,
+      disableClose: true,
       data: this.proTaskE?.executionId
-    });
+    }).afterClosed()
+      .subscribe((res: boolean) => {
+        if (res) {
+          this.alfaMainService.refresh();
+        }
+      });
   }
 
   get downLoadExcelButton(): boolean {

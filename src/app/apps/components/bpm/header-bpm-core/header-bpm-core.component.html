@@ -24,55 +24,51 @@
     <vex-breadcrumbs class="mr-2" [crumbs]="this.crumbs">
     </vex-breadcrumbs>
     <button
+      class="box min-w-3"
       color="primary"
       mat-button
       type="button"
-      class="box rounded caption min-w-3"
       title="Comentarios"
       (click)="openDialog('comments')">
       <mat-icon
         class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-        svgIcon="mat:insert_comment"
-      ></mat-icon>
+        svgIcon="mat:insert_comment"></mat-icon>
       <span class="box-text">{{ countComment$ | async }}</span>
     </button>
     <button
+      class="box min-w-3"
       color="primary"
       mat-button
       type="button"
-      class="box rounded caption min-w-3"
       title="Archivos"
       (click)="openDialog('documents')">
       <mat-icon
         class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-        svgIcon="mat:attach_file"
-      ></mat-icon>
+        svgIcon="mat:attach_file"></mat-icon>
       <span class="box-text">{{ countAttachment$ | async }}</span>
     </button>
     @if ((mode === 1 || mode === 3) && downLoadExcelButton) {
       <button
+        class="box min-w-1"
         color="primary"
         mat-button
         type="button"
-        class="box rounded caption min-w-3"
         title="Descargar Excel Masivo"
         (click)="openDialogExcel(TYPE_BUTTON_SEVEN)">
         <mat-icon
-          class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
           svgIcon="cust:excel-file"
         ></mat-icon>
       </button>
     }
     @if ((mode === 1 || mode === 3) && addExcelButton) {
       <button
+        class="box min-w-1"
         color="primary"
         mat-button
         type="button"
-        class="box rounded caption min-w-3"
         title="Cargar Excel Masivo"
         (click)="openDialogExcel(TYPE_BUTTON_EIGHT)">
         <mat-icon
-          class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
           svgIcon="cust:excel-add"
         ></mat-icon>
       </button>

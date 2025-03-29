@@ -1,6 +1,5 @@
 import { Component, inject, Injector, OnInit } from '@angular/core';
 import { AsyncPipe, NgClass, NgComponentOutlet } from '@angular/common';
-import { LoadingAppComponent } from '../../../../apps/components/general-components/loading-app/loading-app.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -44,6 +43,7 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -73,8 +73,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     MatTooltipModule,
     // Custom
     FluidHeightDirective,
-    HeaderBpmCoreComponent,
-    LoadingAppComponent
+    HeaderBpmCoreComponent
   ],
   templateUrl: './bmp-core.component.html',
   styleUrl: './bmp-core.component.scss'
@@ -83,12 +82,13 @@ export class BmpCoreComponent implements OnInit {
   private listComponents = inject(
     DynamicComponentsService
   ).getDynamicComponents();
+
   private readonly injector = inject(Injector);
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
 
   _infoProTaskE$: Observable<ProTaskE> = this.infoGeneralService.infoProTaskE$;
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  isExistDataInformations$: Observable<boolean> = of(false);
   _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<ComponentTemplate[]>(1);
   _proFlow$ = this.route.data.pipe(map(({ proFlow }) => proFlow));
   _resources$ = this.route.data.pipe(map(({ resources }) => resources));
@@ -119,7 +119,7 @@ export class BmpCoreComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.activateLoading();
+    this.loadingServiceService.activateLoading(true);
     this.executionId = await firstValueFrom(this.executionId$);
     this.proFlow = await firstValueFrom(this._proFlow$);
     this.infoFatherURL = await firstValueFrom(this._infoFatherURL$);
@@ -142,7 +142,7 @@ export class BmpCoreComponent implements OnInit {
       this.refreshComponentsDynamic(this.proFlow);
       return;
     }
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading(false);
   }
 
   confirmAction(action: () => void, message: string, errors: string[]): void {
@@ -206,7 +206,7 @@ export class BmpCoreComponent implements OnInit {
 
       });
       this._components$.next(listComponents);
-      this.activateLoading(true);
+      this.loadingServiceService.activateLoading(false);
     }
   }
 
@@ -236,7 +236,7 @@ export class BmpCoreComponent implements OnInit {
   }
 
   nextBpmCore() {
-    this.activateLoading();
+    this.loadingServiceService.activateLoading(true);
     if (this.proFlow) {
       const pathForm = this.proFlow?.preform?.pathForm;
       if (!pathForm) {
@@ -271,7 +271,7 @@ export class BmpCoreComponent implements OnInit {
   checkStatusBpmOperation() {
     this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
       error: () => {
-        this.activateLoading(true);
+        this.loadingServiceService.activateLoading(false);
         this.activateSnapError(
           'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar',
           3000
@@ -287,7 +287,7 @@ export class BmpCoreComponent implements OnInit {
           ...MODAL_SMALL,
           data: result
         });
-        this.activateLoading(true);
+        this.loadingServiceService.activateLoading(false);
       }
     });
   }
@@ -300,7 +300,7 @@ export class BmpCoreComponent implements OnInit {
   }
 
   previewBpmCore() {
-    this.activateLoading();
+    this.loadingServiceService.activateLoading(true);
     this.bpmCoreService.getPreviewOperation(this.executionId).subscribe({
       error: (error: HttpErrorResponse) => this.captureInformationSubscribeError(error),
       next: (result: ProTaskE) => this.captureInformationBpmCore(result)
@@ -328,7 +328,7 @@ export class BmpCoreComponent implements OnInit {
     this.executionId = result.executionId?.toString() || '';
     this.getNewProFlow(result.flowId!.toString());
     this.infoGeneralService.setInfoProTaskE(result);
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading(false);
   }
 
   getNewProFlow(flowId: string) {
@@ -342,11 +342,11 @@ export class BmpCoreComponent implements OnInit {
 
   captureInformationSubscribeError(error: HttpErrorResponse): void {
     if (error.status === 400) {
-      this.activateLoading(true);
+      this.loadingServiceService.activateLoading(false);
       this.snackbar.open(error.error, 'Aceptar', { duration: 10000 });
       this.router.navigate([environment.myWork_tasksPanel]);
     }
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading(false);
     this.activateSnapError(
       'Error ejecutando servicio de continuar flujo Bpm o retroceder, no es posible continuar',
       3000
@@ -368,14 +368,9 @@ export class BmpCoreComponent implements OnInit {
     return obj;
   }
 
-  activateLoading(value = false) {
-    const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(3));
-  }
-
   activateSnapError(msg: string, timer = 1000) {
     this.snackbar.open(msg, '', { duration: timer });
-    this.activateLoading(true);
+    this.loadingServiceService.activateLoading(false);
   }
 
   private returnURLPrevious(url: string) {

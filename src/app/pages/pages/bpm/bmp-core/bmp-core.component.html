@@ -10,25 +10,17 @@
   </vex-header-bpm-core>
 
   <div class="h-full flex flex-col" vexFluidHeight fluidHeight=140>
-    @if (isExistDataInformations$ | async) {
-      <div @stagger class="overflow-y-auto flex-auto">
-        @for (comp of components$ | async; track comp) {
-          <ng-container>
-            <ng-container
-              [ngComponentOutlet]="comp.component"
-              [ngComponentOutletInjector]="comp.componentData"
-              [ngComponentOutletInputs]="comp.inputs"
-            ></ng-container>
-          </ng-container>
-        }
-      </div>
-    }
-    @if ((isExistDataInformations$ | async) === false) {
-      <vex-loading-app
-        #vexSplashScreen
-        idLoading="vexSplashScreen"
-        [showImage]="true"></vex-loading-app>
-    }
+    <div @stagger class="overflow-y-auto flex-auto">
+      @for (comp of components$ | async; track comp) {
+        <ng-container>
+          <ng-container
+            [ngComponentOutlet]="comp.component"
+            [ngComponentOutletInjector]="comp.componentData"
+            [ngComponentOutletInputs]="comp.inputs"
+          ></ng-container>
+        </ng-container>
+      }
+    </div>
   </div>
 </div>
 <!-- style="padding-right: 262px" -->
