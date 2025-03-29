@@ -30,7 +30,6 @@ export class ChatService {
     this.http.post<ChatApiResponse>(url, {}).subscribe(
       response => {
         if (response.success === 1) {
-          console.log('Fetched chats:', response.data);
           this.chatsSubject.next(response.data); // Actualizar los chats
         } else {
           console.error('Error fetching chats:', response.message || 'Unknown error');
@@ -48,7 +47,6 @@ export class ChatService {
     return this.chats$.pipe(
       map(chats => {
         const chat = chats.find(chat => chat.id.toString() === chatId);
-        console.log('Found chat:', chat);  // Añadir esta línea para depurar
         return chat;
       })
     );

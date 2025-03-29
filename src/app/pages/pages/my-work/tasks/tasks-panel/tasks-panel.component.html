@@ -1,5 +1,4 @@
-<div class="w-full h-full flex flex-col shadow-md"
-     *ngIf="isExistDataInformation$ | async">
+<div class="w-full h-full flex flex-col shadow-md">
   <vex-header-tasks
     id="assignedTasks"
     [label]="label"
@@ -35,7 +34,7 @@
   </div>
 </div>
 
-<div class="vex-footer vex-footer-task w-100 p-0" *ngIf="isExistDataInformation$ | async">
+<div class="vex-footer vex-footer-task w-100 p-0">
   <div class="footer-left">
     <!-- Opcional: Contenido adicional, como texto o iconos -->
     <!-- <span>Información extra</span> -->
@@ -49,13 +48,3 @@
     (page)="refreshInformationPaginator($event)">
   </mat-paginator>
 </div>
-
-
-
-
-
-<vex-loading-app
-  *ngIf="(isExistDataInformation$ | async) === false"
-  #vexSplashScreen
-  idLoading="vexSplashScreen"
-  [showImage]="true"></vex-loading-app>

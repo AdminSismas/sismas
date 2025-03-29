@@ -19,9 +19,6 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
   paramsPP = paramsPP.append('page', `${page.page}`);
   paramsPP = paramsPP.append('size', `${page.size}`);
   const urlComplete = `${this.basic_url}/bpmOutTemplate?page=${page.page}&size=${page.size}&sortBy=templateCode`;
-  console.log('link: ',urlComplete);
-
-  // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
   return  this.http.get<any>(urlComplete);
 }
 
@@ -31,9 +28,6 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
     paramsPP = paramsPP.append('page', `${page.page}`);
     paramsPP = paramsPP.append('size', `${page.size}`);
     const urlComplete = `${this.basic_url}/bpmOutTemplate`;
-    console.log('link: ',urlComplete);
-
-    // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
     return  this.http.post<any>(urlComplete,value);
   }
 
@@ -43,19 +37,12 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
     paramsPP = paramsPP.append('page', `${page.page}`);
     paramsPP = paramsPP.append('size', `${page.size}`);
     const urlComplete = `${this.basic_url}/bpmOutTemplate/${value.outTemplateId}`;
-    console.log('link: ',urlComplete);
-
-    // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
     return  this.http.patch<any>(urlComplete,value);
   }
 
   setUDocumentoAsocietyDelete(outTemplateId:any):Observable<any> {
     let paramsPP:HttpParams = new HttpParams();
-
     const urlComplete = `${this.basic_url}/bpmOutTemplate/${outTemplateId}`;
-    console.log('link: ',urlComplete);
-
-    // console.log('link: ',`${this.basic_url}?` + paramsPP.toString());
     return  this.http.delete<InformationPegeable>(urlComplete);
   }
 }

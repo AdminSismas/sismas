@@ -56,7 +56,6 @@ export class ContactsCardComponent implements OnInit {
       if (response.success) {
         // Filtra los usuarios para que solo aquellos con status 1 se muestren
         this.allusers = (response.data || []).filter(assistant => assistant.status === 1);
-        console.log('Loaded Assistants:', this.allusers);
         this.subject$.next(this.allusers);
         this.cdr.markForCheck();
       }

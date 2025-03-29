@@ -25,7 +25,6 @@ export class UserService {
     return this.http.get<InformationPagebleUser>(url, { params })
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          console.log('Error en la obtención de la información de los usuarios');
           throw error;
         })
       );
@@ -40,7 +39,6 @@ export class UserService {
           if (error.status === 404) {
             return of(false);
           }
-          console.log('Error en la verificación del nombre de usuario');
           throw error;
         })
       );
@@ -56,7 +54,6 @@ export class UserService {
           if (error.status === 404) {
             return of(false);
           }
-          console.log('Error en la verificación del correo electrónico');
           throw error;
         })
       );
@@ -72,7 +69,6 @@ export class UserService {
           if (error.status === 404) {
             return of(false);
           }
-          console.log('Error en la verificación de la información del individuo');
           throw error;
         })
       );
@@ -93,7 +89,6 @@ export class UserService {
     return this.http.put<User>(url, params)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          console.log('Error en la actualización del usuario');
           throw error;
         })
       );

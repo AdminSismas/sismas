@@ -137,7 +137,6 @@ export class TableDigitalizedSignaturesComponent
   }
 
   editingDigitalizedSignatures(row: UserDetails) {
-    console.log(row);
     this.dialog
       .open(CreateSignatureComponent, {
         data: {

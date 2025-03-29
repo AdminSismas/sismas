@@ -107,10 +107,8 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
       .pipe(
         map((paramMap) => paramMap.get('chatId')),
         switchMap((chatId) => {
-          console.log('Chat ID:', chatId);  // Añadir esta línea
           return this.chatService.getChat(chatId!).pipe(
             catchError(() => {
-              console.error('Error fetching chat');  // Añadir esta línea
               return of(undefined);
             })
           );
@@ -118,7 +116,6 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
         filter((chat): chat is Chat => !!chat),
       )
       .subscribe((chat) => {
-        console.log('Chat data:', chat);  // Añadir esta línea
         this.chat = chat;
         this.chat.unreadCount = 0;
         this.messages = [];
@@ -204,7 +201,6 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
           // Manejo de BI: Sanitizar la URL antes de usarla
           if (response.mostrar_bi && response.mostrar_bi !== 'no') {
             this.biUrl = this.sanitizer.bypassSecurityTrustResourceUrl(response.mostrar_bi);  // Sanitize the BI URL
-            console.log('URL del BI:', this.biUrl);
           }
         } else {
           this.messages.push({ id: this.messages.length + 1, from: 'other', text: 'Error: ' + response.message, timestamp: new Date().toLocaleTimeString() });

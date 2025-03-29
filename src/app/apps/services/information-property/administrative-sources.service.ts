@@ -69,7 +69,6 @@ export class AdministrativeSourcesService {
     return this.http.post<AdministrativeSource>(url, administrativeSource)
       .pipe(
         catchError(error => {
-          console.log('Error al crear la fuente administrativa');
           throw error;
         })
       );
@@ -83,7 +82,6 @@ export class AdministrativeSourcesService {
     return this.http.put<AdministrativeSource>(url, params)
       .pipe(
         catchError(error => {
-          console.log('Error al actualizar la fuente administrativa');
           throw error;
         })
       );
@@ -108,7 +106,6 @@ export class AdministrativeSourcesService {
     })
       .pipe(
         catchError(error => {
-          console.log('Error al eliminar la fuente administrativa');
           throw error;
         })
       );

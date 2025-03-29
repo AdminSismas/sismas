@@ -197,10 +197,8 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
             this.captureInformationSubscribe(result); // se llama el método para que capturar la información de la API
         },
         error: (error) => {
-            console.error('Hubo un error al obtener los datos: ', error);
         },
         complete: () => {
-            console.log('Carga completa de datos');
         }
     });
   }
@@ -216,7 +214,6 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
     let data: contentInfoDomainLadmCol[];
     if (this.contentInformations != null && this.contentInformations.content != null) {
       data = this.contentInformations.content.map((row: contentInfoDomainLadmCol) => new contentInfoDomainLadmCol(row)); // se mapea la información de la API para mostrarla en la tabla cambiando de tipo de dato
-      console.log("data: ", data);
       this.dataSource.data = data;
     }
     // funcionamiento de paginador, navegación entre vistas de registros en tabla

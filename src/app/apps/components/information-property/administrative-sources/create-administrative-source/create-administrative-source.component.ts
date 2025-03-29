@@ -265,14 +265,10 @@ export class CreateAdministrativeSourceComponent
       if (!control.errors) return;
       errorList.push(control.errors);
     });
-
-    console.log(errorList);
-
     if (errorList.some((error) => error.required)) {
       this.snackbar.open('Por favor, completa todos los campos', 'Aceptar', { duration: 5000 });
       return;
     }
-
     if (errorList.some((error) => error.futureDate)) {
       this.snackbar.open('La fecha de inicio no puede ser mayor a la fecha actual', 'Aceptar', { duration: 5000 });
       return;

@@ -15,7 +15,6 @@ export class DocumentValidateComponent implements OnInit {
   @Input({ required: true }) public resources: string[] = [];
 
   ngOnInit() {
-    console.log(this.executionId);
     if (this.id?.length > 0) {
       this.id =
         this.id +

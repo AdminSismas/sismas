@@ -503,7 +503,6 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       });
 
     this.dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
     });
   }
 }

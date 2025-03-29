@@ -66,7 +66,7 @@ import Swal from 'sweetalert2';
   templateUrl: './attachment-form.component.html',
   styleUrl: './attachment-form.component.scss'
 })
-export class AttachmentFormComponent {
+export class AttachmentFormComponent  {
   @Output() dataUpdated = new EventEmitter<void>();
 
   file: File | null = null;
@@ -95,8 +95,6 @@ export class AttachmentFormComponent {
   }
 
   onSelect(event: any) {
-    console.log('event: ', event);
-
     const maxSize = 50 * 1024 * 1024; // 50MB en bytes
 
     const alreadySelectedFiles = [];
@@ -135,7 +133,6 @@ export class AttachmentFormComponent {
       this.attachmentForm.get('file')?.updateValueAndValidity();
     }
   }
-
 
   onRemove(event: any) {
     const index = this.uploadedFiles.indexOf(event);

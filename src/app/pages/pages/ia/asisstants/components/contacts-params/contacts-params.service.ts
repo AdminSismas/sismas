@@ -35,7 +35,6 @@ export class ContactsParamsService {
   //   const headers = new HttpHeaders().set('Content-Type', 'application/json');
   //   return this.http.post<{ success: boolean; message: string; data?: any }>(`${this.api_sql}?generateAsistants`,generateAsistant,{ headers }).pipe(
   //     map(response => {
-  //       console.log('API response:', response);
   //       if (response.success) {
   //         return { success: true, message: 'Creado exitosamente', data: response.data };
   //       } else {

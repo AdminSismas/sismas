@@ -59,7 +59,7 @@ export class SidenavItemComponent implements OnInit, OnChanges {
     private router: Router,
     private cd: ChangeDetectorRef,
     private navigationService: NavigationService,
-    
+
   ) {
   }
 
@@ -69,7 +69,6 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // console.log(this.item,'this.item desde side nav Item ');
     this.routerItems.push(this.item);
     this.navigationService.menuItemList(this.item);
     this.router.events
@@ -88,7 +87,7 @@ export class SidenavItemComponent implements OnInit, OnChanges {
       .subscribe((item) => this.onOpenChange(item));
 
 
-      
+
 
   }
 

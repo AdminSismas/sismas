@@ -27,6 +27,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-tab-alfa-geo-main',
@@ -67,11 +68,11 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public mode = 0;
 
-  isExistDataInformations$: Observable<boolean> = of(false);
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   infoFatherURL!: string;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
 
   constructor(
     proFlow: ProFlow,
@@ -85,11 +86,13 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
       this.mode = proFlow?.mode;
     }
 
-    this.destroyRef.onDestroy(() => {});
+    this.destroyRef.onDestroy(() => {
+    });
 
   }
 
   ngOnInit() {
+    this.loadingServiceService.activateLoading(true);
     if (this.id?.length > 0) {
       this.id =
         this.id +
@@ -100,7 +103,7 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
     }
 
     // Se sobre escribe los botones que se deben habilitar cuando se formulario geo
-    if(this.mode === 3) {
+    if (this.mode === 3) {
       if (this.resources && this.resources.length > 0) {
         LIST_BUTTON_GEO_MAIN.forEach(vl => this.resources.push(vl));
       }
@@ -121,7 +124,7 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
     }, 100);
 
     setTimeout(() => {
-      this.activateLoading(true);
+      this.loadingServiceService.activateLoading(false);
     }, 3000);
 
 
@@ -140,11 +143,6 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
       }
 
     }, 300);
-  }
-
-  activateLoading(value = false) {
-    const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(3));
   }
 
   returnPanelTask(isReturn: boolean) {

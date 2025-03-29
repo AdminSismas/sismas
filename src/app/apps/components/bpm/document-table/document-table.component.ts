@@ -144,9 +144,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
           data: { executionId: this.data.executionId }
         });
 
-
         dialogRef.componentInstance.dataUpdated.subscribe(() => {
-          console.log('Evento recibido, actualizando datos...');
           this.getDataFromDocumentManagementService();
         });
   }
@@ -212,7 +210,6 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       });
 
     this.dialogRef.afterClosed().subscribe(() => {
-      console.log('The dialog was closed');
     });
   }
 
@@ -222,10 +219,8 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   getDataFromDocumentManagementService(): void {
     this.attachmentService.getDataPropertyByAttachment(this.data.executionId).subscribe({
       next: (data: AttachmentCollection[]) => {
-        console.log("Datos recibidos de la API1:", data);
         this.dataSource.data = data;
         this.totalElements = data.length;
-
         this.viewPaginator(data.length);
       },
       error: (error) => {

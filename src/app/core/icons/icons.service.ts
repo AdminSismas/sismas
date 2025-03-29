@@ -34,6 +34,11 @@ export class IconsService {
               `assets/img/icons/flags/${name}.svg`
             );
 
+          case 'cust':
+            return this.domSanitizer.bypassSecurityTrustResourceUrl(
+              `assets/img/icons/custom-logos/${name}.svg`
+            );
+
           default:
             return null;
         }

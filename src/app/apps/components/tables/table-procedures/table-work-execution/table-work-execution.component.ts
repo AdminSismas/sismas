@@ -151,9 +151,6 @@ export class TableWorkExecutionComponent implements OnInit {
   }
 
   onSearch():void {
-    console.log(this.informationAddressForm);
-    console.log(this.informationAddressForm.value);
-
     // this.getDataFromProceduresService();
   }
 
@@ -200,8 +197,6 @@ export class TableWorkExecutionComponent implements OnInit {
   }
 
   public informationDetail(value:any){
-    console.log(value, 'Registro de la tabla');
-
     this.proceduresService.viewDetailIdProcedures(
       +value.executionCode)
       .subscribe( result => {
@@ -226,7 +221,6 @@ export class TableWorkExecutionComponent implements OnInit {
             name: row.process?.name,
             processName: row.process?.name
         }));
-        console.log("data: ", data);
         this.dataSource.data = data;
     }
 

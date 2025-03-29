@@ -86,7 +86,6 @@ export class DocumentViewerWorkHistoricalComponent {
 
 
   loadPdf() {
-    console.log('Cargando PDF desde:', this.url);
     const token = sessionStorage.getItem('token');
     if (!token) {
       console.error('Token no encontrado. Asegúrate de estar autenticado.');

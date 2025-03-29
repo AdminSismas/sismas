@@ -1,17 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
-import { catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { ChangeControl } from '../../../interfaces/bpm/change-control';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlfaMainService {
+
+  private _refreshData = new BehaviorSubject<boolean>(false);
+  refreshData$ = this._refreshData.asObservable();
 
   basic_url = `${envi.url}:${envi.port}`;
 
@@ -21,12 +26,17 @@ export class AlfaMainService {
   ) {
   }
 
+  refresh() {
+    this._refreshData.next(true);
+  }
+
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
   validateAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
+  //{{url}}:{{port}}/changeLog/temp/{{executionId}}
   createAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
     return this.requestsService.sendRequestsFetchPost(url);
@@ -103,7 +113,7 @@ export class AlfaMainService {
 
   //{{url}}:{{port}}/temporal/BAUnitDelete
   createDeleteTemporalBeaUnitHead(baUnitId: string, executionId: string) {
-    const  params: HttpParams = new HttpParams()
+    const params: HttpParams = new HttpParams()
       .set('baunitId', `${baUnitId}`)
       .set('changeLogId', `${executionId}`);
     return this.http.delete(
@@ -112,7 +122,7 @@ export class AlfaMainService {
 
   //{{url}}:{{port}}/temporal/BAUnitDeleteExistTemp
   changeTemporaryStateBeaUnitHeadByExistTemp(baUnitId: string, executionId: string) {
-    const  params: HttpParams = new HttpParams()
+    const params: HttpParams = new HttpParams()
       .set('baunitId', `${baUnitId}`)
       .set('changeLogId', `${executionId}`);
     return this.http.delete(
@@ -144,4 +154,26 @@ export class AlfaMainService {
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
+  //{{url}}:{{port}}/temporal/{{executionId}}/excel/generate
+  getGenerateExcelMassive(executionId: string) {
+    this.http.get(`${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.generate}`,
+      { responseType: 'blob' }).subscribe({
+      next: (response) => {
+        const blob = new Blob([response], { type: 'application/octet-stream' });
+        saveAs(blob, `massiveDownload_${executionId}.xlsx`);
+      },
+      error: () => {
+      }
+    });
+  }
+
+
+  //{{url}}:{{port}}/temporal/{{executionId}}/excel/load
+  loadingExcelMassive(executionId: string, formData: FormData) {
+    return this.requestsService.sendRequestsFetchPostBody(
+      `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.load}`,
+      formData).pipe(
+      catchError((error) => this.requestsService.errorNotFound(error))
+    );
+  }
 }

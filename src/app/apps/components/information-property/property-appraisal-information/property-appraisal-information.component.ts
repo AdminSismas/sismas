@@ -180,7 +180,6 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   }
 
   deleteInformations(customer: any): void {
-    console.log(customer);
   }
 
   isExpandPanel(expandedComponent: boolean): void {

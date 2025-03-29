@@ -1,30 +1,26 @@
 <div class="w-full h-full flex flex-col h-content-body-bpm">
   <vex-header-bpm-core
     idHeader="bpm-coreID"
-    [id]="executionId$ | async"
+    [executionId]="executionId$ | async"
     [proTaskE]="_infoProTaskE$ | async"
+    [components]="components$ | async"
+    [resources]="resources"
     icon="mat:contacts"
     (returnPanelTask)="returnPanelTask($event)">
   </vex-header-bpm-core>
 
   <div class="h-full flex flex-col" vexFluidHeight fluidHeight=140>
-    <div
-      @stagger
-      class="overflow-y-auto flex-auto"
-      *ngIf="isExistDataInformations$ | async">
-      <ng-container *ngFor="let comp of components$ | async">
-        <ng-container
-          [ngComponentOutlet]="comp.component"
-          [ngComponentOutletInjector]="comp.componentData"
-          [ngComponentOutletInputs]="comp.inputs"
-        ></ng-container>
-      </ng-container>
+    <div @stagger class="overflow-y-auto flex-auto">
+      @for (comp of components$ | async; track comp) {
+        <ng-container>
+          <ng-container
+            [ngComponentOutlet]="comp.component"
+            [ngComponentOutletInjector]="comp.componentData"
+            [ngComponentOutletInputs]="comp.inputs"
+          ></ng-container>
+        </ng-container>
+      }
     </div>
-    <vex-loading-app
-      *ngIf="(isExistDataInformations$ | async) === false"
-      #vexSplashScreen
-      idLoading="vexSplashScreen"
-      [showImage]="true"></vex-loading-app>
   </div>
 </div>
 <!-- style="padding-right: 262px" -->

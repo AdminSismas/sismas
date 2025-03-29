@@ -518,7 +518,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 1
   },
   {
-    name: COMPONENT_ALFA_VALIDATE,
+    name: COMPONENT_ALFA_MAIN,
     pathForm: '/core/cadastral/alf/validate.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 2
@@ -1069,6 +1069,8 @@ export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
 export const TYPE_BUTTON_FOUR: TypeButtonAlfaMain = 'CRE_GEO';
 export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
 export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
+export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD';  // Excel Download
+export const TYPE_BUTTON_EIGHT: TypeButtonAlfaMain = 'EXL'; // Excel Load
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
@@ -1080,6 +1082,7 @@ export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
 export const MODAL_DYNAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
@@ -1173,6 +1176,9 @@ export const CREATE_BASIC_MODEL_ADDRESS: CreateBasicInformationAddress = {
   domSectorPredio: ''
 };
 
+export const LIST_EXTENSION_MASIVE_EXCEL: string[] = ['xlsx', 'xls'];
+
+export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_ALFA_MAIN];
 
 export const LIST_CITATION_AND_NOTICE_TABLE_MENU:ProcessParticipantTableMenu[] = [
   {

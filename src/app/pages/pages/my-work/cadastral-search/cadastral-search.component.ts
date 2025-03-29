@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   TableCadastralSearchComponent
 } from '../../../../apps/components/tables/table-cadastral-search/table-cadastral-search.component';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
+import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-consult-properties',
@@ -16,15 +17,16 @@ import { map } from 'rxjs';
 })
 export class CadastralSearchComponent implements OnInit {
 
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+
   constructor(
     private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    //throw new Error('Method not implemented.');
+    this.loadingServiceService.activateLoading(false);
     this.route.params.pipe(map((params) => {
-      console.log(params);
     }));
   }
 

@@ -212,7 +212,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         disableClose: true,
         data: owner
       });
-    dialog.afterClosed().subscribe((data: any) => console.log(data));
+    dialog.afterClosed().subscribe((data: any) => {});
   }
 
   onClickOpenAddEditModal(data: any): void {

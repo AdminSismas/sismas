@@ -192,7 +192,6 @@ export class CreatePeopleComponent implements OnInit {
         });
       },
       error: (error) => {
-        console.log(error);
       }
     });
   }
@@ -307,7 +306,6 @@ export class CreatePeopleComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (error) => {
-        console.log(error);
       }
     });
 

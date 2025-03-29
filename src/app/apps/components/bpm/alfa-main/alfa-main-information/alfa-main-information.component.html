@@ -1,9 +1,4 @@
-<vex-page-layout
-  [id]="this.id"
-  mode="card"
-  class="pb-0"
-  *ngIf="isExistDataInformations$ | async"
->
+<vex-page-layout [id]="this.id" mode="card" class="pb-0">
   <vex-page-layout-content class="container-fluid px-5 py-3">
     <div class="card" vexMinFluidHeight [fluidHeight]="mode === 3 ? 230: fluidHeight">
       <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
@@ -178,10 +173,4 @@
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
-<vex-loading-app
-  *ngIf="(isExistDataInformations$ | async) === false"
-  #vexSplashScreen
-  idLoading="vexSplashScreen"
-  [showImage]="true">
-</vex-loading-app>
 

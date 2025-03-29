@@ -116,7 +116,6 @@ export class ChatComponent implements OnInit {
     // Llama a fetchChats() al iniciar el componente
     this.route.paramMap.subscribe(params => {
       const assistantId = params.get('id');
-      console.log('Assistant ID:', assistantId); // Añadir esta línea para depurar
       if (assistantId) {
         this.chatService.fetchChats(assistantId); // Llama al servicio con el ID del asistente
       }

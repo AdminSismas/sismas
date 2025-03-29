@@ -4,6 +4,7 @@ import { DOCUMENT } from '@angular/common';
 import { filter, take } from 'rxjs/operators';
 import { animate, AnimationBuilder, style } from '@angular/animations';
 import { environment } from '../../environments/environments';
+import { LoadingServiceService } from '../../app/apps/services/general/loading-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class VexSplashScreenService {
   constructor(
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
-    private animationBuilder: AnimationBuilder
+    private animationBuilder: AnimationBuilder,
+    private loadingServiceService: LoadingServiceService,
   ) {
     this.splashScreenElem =
       this.document.body.querySelector('#vex-splash-screen') ?? undefined;
@@ -26,7 +28,10 @@ export class VexSplashScreenService {
           filter((event) => event instanceof NavigationEnd),
           take(1)
         )
-        .subscribe(() => this.hide());
+        .subscribe(() => {
+          this.loadingServiceService.hide();
+          this.hide()
+        });
     }
   }
 

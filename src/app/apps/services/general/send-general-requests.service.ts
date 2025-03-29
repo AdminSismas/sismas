@@ -136,9 +136,6 @@ export class SendGeneralRequestsService {
           if (e.status == 401) {
             this.router.navigate([`${environment.auth_login}`]).then(r => {
             });
-            if (e.error.mensaje) {
-              console.log(e.error.mensaje);
-            }
           }
           return throwError(() => e);
         })
