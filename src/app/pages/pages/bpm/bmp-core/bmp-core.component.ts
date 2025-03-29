@@ -283,7 +283,6 @@ export class BmpCoreComponent implements OnInit {
   checkStatusBpmOperation() {
     this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
       error: () => {
-        this.loadingServiceService.activateLoading(false);
         this.getAlertError(
           'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar',
           3000
@@ -370,7 +369,6 @@ export class BmpCoreComponent implements OnInit {
       });
       return;
     }
-    this.loadingServiceService.activateLoading(false);
     this.getAlertError(
       'Error ejecutando servicio de continuar flujo Bpm o retroceder, no es posible continuar',
       3000
@@ -392,12 +390,8 @@ export class BmpCoreComponent implements OnInit {
     return obj;
   }
 
-  activateLoading(value = false) {
-    const valid = of(value);
-    this.isExistDataInformations$ = valid.pipe(take(3));
-  }
-
   getAlertError(msg: string, timer: number = 1000, showConfirmButton: boolean = false) {
+    this.loadingServiceService.activateLoading(false);
     Swal.fire({
       title: '¡Error!',
       text: msg,
@@ -406,7 +400,6 @@ export class BmpCoreComponent implements OnInit {
       timer: timer
     }).then(() => {
     });
-    this.loadingServiceService.activateLoading(false);
   }
 
   private returnURLPrevious(url: string) {

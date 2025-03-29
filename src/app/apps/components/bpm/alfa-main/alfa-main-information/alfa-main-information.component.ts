@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import {
@@ -28,7 +28,7 @@ import { environment } from '../../../../../../environments/environments';
 import Swal from 'sweetalert2';
 import { Operation } from '../../../../interfaces/bpm/operation';
 import {
-  MAX_PAGE_SIZE_TABLE_UNIQUE, MODAL_DINAMIC_HEIGHT,
+  MAX_PAGE_SIZE_TABLE_UNIQUE,
   MODAL_SMALL,
   PAGE,
   PAGE_OPTION_UNIQUE,

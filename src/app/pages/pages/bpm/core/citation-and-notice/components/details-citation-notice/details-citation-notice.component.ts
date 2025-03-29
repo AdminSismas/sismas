@@ -11,8 +11,9 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constants';
+import { MODAL_SMALL_LARGE, NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constants';
 import { getRandomInt } from 'src/app/apps/utils/general';
+import { CreatePeopleComponent } from '../../../../../operation-support/people/create-people/create-people.component';
 
 export let contactIdCounter = 50;
 
@@ -53,7 +54,18 @@ export class DetailsCitationNoticeComponent implements OnInit {
   }
 
   editProcessParticipant(){
-
+    this.dialog.open(CreatePeopleComponent, {
+      ...MODAL_SMALL_LARGE,
+      disableClose: true,
+      data: {
+        ...newCustomer,
+        mode: 'create'
+      }
+    })
+      .afterClosed()
+      .subscribe((customer: { number: string; individualTypeNumber: string; }) => {
+        this.form.reset(customer);
+      });
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
