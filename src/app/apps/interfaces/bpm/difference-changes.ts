@@ -11,7 +11,7 @@ export class DifferenceChanges  {
   executionId?:string;
 
 
-  constructor(content?: any, executionId?:string, baunitIdE?:string) {
+  constructor(content?: any, executionId?:string, baunitIdE?:string | null) {
     this.entity = content?.entity || '';
     this.field = content?.field || '';
     this.oldValue = content?.oldValue || '';
