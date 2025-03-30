@@ -4,6 +4,7 @@ import { DefaultExport } from '@angular/router';
 
 export interface ComponentTemplate {
   nameComponent: string,
+  pathForm?: string | null;
   component: Type<any>,
   loadComponent?: () => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>,
   inputs?:Record<string, unknown>,
