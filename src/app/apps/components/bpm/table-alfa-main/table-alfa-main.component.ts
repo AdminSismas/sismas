@@ -15,8 +15,8 @@ import {
   LIST_SCHEMAS_CONTROL_CHANGES,
   LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
-  MODAL_MEDIUM,
-  MODAL_SMALL,
+  MODAL_MEDIUM, MODAL_MIN_MEDIUM_ALL,
+  MODAL_SMALL, MODAL_SMALL_XS,
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
@@ -41,7 +41,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { Operation } from '../../../interfaces/bpm/operation';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import {
+  LayoutCardCadastralInformationPropertyComponentComponent
+} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
@@ -51,7 +53,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
+import {
+  ModificationPropertyUnitsComponent
+} from '../modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 
@@ -78,8 +82,7 @@ import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
   styleUrl: './table-alfa-main.component.scss'
 })
 export class TableAlfaMainComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+  implements OnInit, AfterViewInit, OnChanges {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   @Input({ required: true }) contentInformations!: InformationPegeable;
@@ -119,7 +122,8 @@ export class TableAlfaMainComponent
     private readonly layoutService: VexLayoutService,
     private bpmCoreService: BpmCoreService,
     private alfaMainService: AlfaMainService
-  ) {}
+  ) {
+  }
 
   get visibleColumns() {
     return this.columns
@@ -328,12 +332,12 @@ export class TableAlfaMainComponent
       return;
     }
 
-    const data: DifferenceChanges[] = result.map((row: DifferenceChanges) => {
-      return new DifferenceChanges(row, executionId, baunitIdE);
-    });
+    const data: DifferenceChanges[] = result.map((row: DifferenceChanges) =>
+      new DifferenceChanges(row, executionId, baunitIdE)
+    );
     this.dialog
       .open(ViewChangesBpmOperationComponent, {
-        ...MODAL_SMALL,
+        ...MODAL_MIN_MEDIUM_ALL,
         disableClose: true,
         data: data
       })

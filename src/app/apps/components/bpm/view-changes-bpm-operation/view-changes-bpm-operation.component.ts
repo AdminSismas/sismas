@@ -7,7 +7,6 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { NgForOf, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,7 +19,7 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { CONSTANT_CHANGE_UNITED_PREDIAL } from '../../../constants/general/constantLabels';
-import { TWO_POINT_ } from '../../../constants/general/constants';
+import { TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION, TWO_POINT_ } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-view-changes-bpm-operation',
@@ -41,9 +40,7 @@ import { TWO_POINT_ } from '../../../constants/general/constants';
     MatTabsModule,
     ReactiveFormsModule,
     MatListModule,
-    MatRippleModule,
-    NgIf,
-    NgForOf
+    MatRippleModule
   ],
   templateUrl: './view-changes-bpm-operation.component.html',
   styleUrl: './view-changes-bpm-operation.component.scss'
@@ -72,4 +69,5 @@ export class ViewChangesBpmOperationComponent implements OnInit {
 
   protected readonly CONSTANT_CHANGE_UNITED_PREDIAL = CONSTANT_CHANGE_UNITED_PREDIAL;
   protected readonly TWO_POINT_ = TWO_POINT_;
+  protected readonly columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
 }

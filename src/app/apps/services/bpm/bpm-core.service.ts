@@ -71,9 +71,21 @@ export class BpmCoreService {
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
+  /*
+  * Compare Temporal
+  * */
   //{{url}}:{{port}}/compare/temp/{{executionId}}/{{baunitId}}
   viewChangesBpmOperationTemp(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     const url = `${envi.url}:${envi.port}${envi.compare_temp}${executionId}/${baunitId}`;
+    return this.requestsService.sendRequestsFetchGet(url);
+  }
+
+  /*
+  * Compare History
+  * */
+  //{{url}}:{{port}}/compare/hist/{{executionId}}/{{baunitId}}
+  viewChangesBpmOperationHistory(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
+    const url = `${envi.url}:${envi.port}${envi.compare_hist}${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
