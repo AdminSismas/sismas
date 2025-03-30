@@ -90,6 +90,7 @@ export const environment = {
   clearChangelog: "clearChangelog",
   comment: "/comment/",
   compare_temp: "/compare/temp/",
+  compare_hist: "/compare/hist/",
   copy: "/copy",
   divpol: "/divpol",
   domain_domain: "/domain",

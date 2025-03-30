@@ -68,6 +68,7 @@ export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [PAGE_OPTION_UNIQUE, 20, 50, 100];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
+export const PAGE_SIZE_OPTION_BASIC: number[] = [PAGE_OPTION_UNIQUE, 15, 20];
 export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADJACENT: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
@@ -506,12 +507,14 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
 export const COMPONENT_ALFA_MAIN:string = 'cadAlfaMainComponent';
+export const COMPONENT_PATH_FORM_ALFA_MAIN:string = '/core/cadastral/alf/main.html';
+
 export const COMPONENT_ALFA_VALIDATE:string = 'cadAlfaValidateComponent';
 
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: COMPONENT_ALFA_MAIN,
-    pathForm: '/core/cadastral/alf/main.html',
+    pathForm: COMPONENT_PATH_FORM_ALFA_MAIN,
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
   },
@@ -1079,6 +1082,7 @@ export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', h
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
 export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
+export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
@@ -1174,4 +1178,4 @@ export const CREATE_BASIC_MODEL_ADDRESS: CreateBasicInformationAddress = {
 
 export const LIST_EXTENSION_MASIVE_EXCEL: string[] = ['xlsx', 'xls'];
 
-export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_ALFA_MAIN];
+export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_PATH_FORM_ALFA_MAIN];

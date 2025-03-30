@@ -134,7 +134,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
     if (components != null && components?.length > 0) {
       //validate Component in alfaMain
       const listTmp: ComponentTemplate[] = components.filter((x: ComponentTemplate) =>
-        LIST_COMPONENT_ACTIVE_MASIVE_EXCEL.includes(x.nameComponent)
+        x.pathForm != null && LIST_COMPONENT_ACTIVE_MASIVE_EXCEL.includes(x.pathForm)
       );
       this.existButtonAlfaMain = listTmp !== null && listTmp?.length > 0;
     }

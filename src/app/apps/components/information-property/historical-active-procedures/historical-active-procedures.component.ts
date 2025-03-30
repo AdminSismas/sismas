@@ -23,8 +23,8 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 // CONSTANTS AND ENVIRONMENT IMPORTS
 import {
   LIST_SCHEMAS_CONTROL_HISTORY, LIST_SCHEMAS_CONTROL_TEMP,
-  MODAL_LARGE,
-  MODAL_SMALL,
+  MODAL_LARGE, MODAL_MIN_MEDIUM_ALL,
+  MODAL_SMALL, MODAL_SMALL_XS,
   PAGE,
   PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10, PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
@@ -66,6 +66,11 @@ import { getRandomInt } from 'src/app/apps/utils/general';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import Swal from 'sweetalert2';
+import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
+import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
+import {
+  ViewChangesBpmOperationComponent
+} from '../../bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
 
 
 @Component({
@@ -105,14 +110,22 @@ import Swal from 'sweetalert2';
   styleUrl: './historical-active-procedures.component.scss'
 })
 export class HistoricalActiveProceduresPropertyComponent implements OnInit {
+
   @Input({ required: true }) id = '';
   @Input({ required: true }) isHistoricalComponent!: boolean;
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
+  @Input({ required: true }) baunitId: string | null = null;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private readonly layoutService: VexLayoutService = inject(VexLayoutService);
+  private proceduresService: ProceduresService = inject(ProceduresService);
+  private alfaMainService: AlfaMainService = inject(AlfaMainService);
+  private dialog: MatDialog = inject(MatDialog);
+  private bpmCoreService: BpmCoreService = inject(BpmCoreService);
 
   dataSource!: MatTableDataSource<ProceduresCollection>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -125,14 +138,8 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
   pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_HISTORY;
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private dialog: MatDialog = inject(MatDialog);
 
-  constructor(
-    private readonly layoutService: VexLayoutService,
-    private proceduresService: ProceduresService,
-    private alfaMainService: AlfaMainService
-  ) {
+  constructor() {
   }
 
   ngOnInit(): void {
@@ -323,7 +330,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
     this.alfaMainService.getBaUnitHeadHistory(executionId, baunitId)
       .subscribe({
         next: (result: BaunitHead) => {
-          if(result === null) {
+          if (result === null) {
             this.swalErrorInformationProceduresNotFound();
             return;
           }
@@ -351,7 +358,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
     this.alfaMainService.getBaUnitHeadTemporal(executionId, baunitId)
       .subscribe({
         next: (result: BaunitHead) => {
-          if(result === null) {
+          if (result === null) {
             this.swalErrorInformationProceduresNotFound();
             return;
           }
@@ -370,6 +377,42 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
         },
         error: () => this.swalErrorBaUnitHead(executionId)
       });
+  }
+
+  openCompareHistoryWithMain(data: contentInfoProcedures) {
+    if (this.baunitId && data && data.executionId != null) {
+      const executionId: string = data.executionId.toString();
+      this.bpmCoreService.viewChangesBpmOperationHistory(executionId, this.baunitId)
+        .subscribe({
+          error: () => this.messageChangesNoAvailable(),
+          next: (result: DifferenceChanges[]) => {
+            if (!result || result.length <= 0) {
+              this.messageChangesNoAvailable();
+              return;
+            }
+            const data: DifferenceChanges[] = result.map((row: DifferenceChanges) =>
+              new DifferenceChanges(row, executionId, this.baunitId)
+            );
+            this.dialog
+              .open(ViewChangesBpmOperationComponent, {
+                ...MODAL_MIN_MEDIUM_ALL,
+                disableClose: true,
+                data: data
+              })
+              .afterClosed();
+          },
+        });
+    }
+  }
+
+  messageChangesNoAvailable() {
+    Swal.fire({
+      text: 'Cambios realizados en el control de cambios no disponibles, consulte al administrador.',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 10000
+    }).then((result) => {
+    });
   }
 
   swalErrorBaUnitHead(executionId: string) {
