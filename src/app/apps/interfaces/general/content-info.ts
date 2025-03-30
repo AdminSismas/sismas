@@ -1,3 +1,13 @@
+export type Element =
+  | 'input'
+  | 'select'
+  | 'toggle'
+  | 'date'
+  | 'file'
+  | 'textarea'
+  | 'autocomplete'
+  | 'collection'
+  | 'checkbox';
 
 export type TypeInformation = 'visualization' | 'edition';
 export type TypeOperation = 'CREATE' | 'UPDATE' | 'DELETE' | 'READ_ONLY';

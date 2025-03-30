@@ -1,4 +1,6 @@
-export interface Reconocimiento {
+import { RecognitionPropertyService } from '../../services/bpm/recognition-property.service';
+
+export interface RecognitionProperty {
   ccReconocimientoPredialId: number;
   descripcion?: string;
   docAportados?: string;
@@ -17,7 +19,7 @@ export interface Reconocimiento {
   updatedBy?: Date;
 }
 
-export interface ReconocimientoPredial {
+export interface RecognitionPropertyBasic {
   ccReconocimientoPredialId: number;
   descripcion: string;
   docAportados: string;
@@ -25,7 +27,7 @@ export interface ReconocimientoPredial {
   observaciones: string;
 }
 
-export interface TagsReconocimiento {
+export interface TagsRecognition {
   tag01?: string;
   tag02?: string;
   tag03?: string;
@@ -33,8 +35,8 @@ export interface TagsReconocimiento {
   tag05?: string;
 }
 
-export class ReconocimientoPredialMapper {
-  static mapReconocimiento(item: Reconocimiento): ReconocimientoPredial {
+export class RecognitionPropertyMapper {
+  static mapRecognitionProperty(item: RecognitionProperty): RecognitionPropertyBasic {
     return {
       ccReconocimientoPredialId: item.ccReconocimientoPredialId,
       descripcion: item.descripcion || '',
@@ -44,7 +46,7 @@ export class ReconocimientoPredialMapper {
     };
   }
 
-  static mapReconocimientoTags(item: Reconocimiento): TagsReconocimiento {
+  static mapRecognitionPropertyTags(item: RecognitionProperty): TagsRecognition {
     return {
       tag01: item.tag01 || '',
       tag02: item.tag02 || '',

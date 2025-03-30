@@ -1,0 +1,45 @@
+.vex-footer-task {
+  width: 100%;
+  padding-left: 20px!important;
+  padding-right: 20px!important;
+}
+
+.vex-footer {
+  background: var(--vex-toolbar-background);
+  box-shadow: var(--vex-footer-elevation);
+  position: fixed;
+}
+
+.vex-footer {
+  bottom: 65px;
+  width: calc(100% - var(--vex-sidenav-width));
+  padding: 10px 20px;
+  z-index: 10; /* Asegura que el footer quede encima del contenido */
+  display: flex;
+  justify-content: center; /* Alinea los elementos a los extremos */
+  align-items: center; /* Centra verticalmente el contenido del footer */
+}
+
+
+@media (max-width: 1366px) {
+  .vex-footer {
+    padding: 10px 15px; /* Ajusta el espaciado para pantallas más pequeñas */
+    justify-content: space-between; /* Asegura que todo esté bien distribuido */
+  }
+
+  mat-paginator {
+    min-width: 220px; /* Reduce el ancho mínimo */
+  }
+}
+
+@media (max-width: 1024px) {
+  .vex-footer {
+    flex-wrap: wrap; /* Permite que el contenido se ajuste en varias líneas si es necesario */
+    justify-content: center; /* Centra el contenido en pantallas pequeñas */
+  }
+
+  mat-paginator {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    border-radius: 4px; /* Reduce el radio para pantallas pequeñas */
+  }
+}

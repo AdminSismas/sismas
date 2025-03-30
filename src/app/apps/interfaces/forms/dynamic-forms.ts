@@ -1,15 +1,5 @@
 import { Validators } from '@angular/forms';
-
-type Element =
-  | 'input'
-  | 'select'
-  | 'toggle'
-  | 'date'
-  | 'file'
-  | 'textarea'
-  | 'autocomplete'
-  | 'collection'
-  | 'checkbox';
+import { Element } from '../general/content-info';
 
 export interface JSONInput {
   name: string;
@@ -20,5 +10,6 @@ export interface JSONInput {
   validators: Validators[];
   autocompleteOptions?: string[];
   cssClasses?: string;
+  verticalComponent?: boolean | null;
   options?: { value: string; label: string }[];
 }

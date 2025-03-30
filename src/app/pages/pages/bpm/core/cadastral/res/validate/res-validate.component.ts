@@ -20,9 +20,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
 import { RES_VALIDATE_INPUTS } from 'src/app/apps/constants/bpm/res-validate.constants';
 import { FormGroup } from '@angular/forms';
-import { VisitaService } from 'src/app/apps/services/bpm/visita.service';
+import { RecognitionPropertyService } from '../../../../../../../apps/services/bpm/recognition-property.service';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { TagsReconocimiento } from 'src/app/apps/interfaces/bpm/visita.interface';
+import { TagsRecognition } from 'src/app/apps/interfaces/bpm/visita.interface';
 
 @Component({
   selector: 'vex-res-validate',
@@ -55,11 +55,11 @@ export class ResValidateComponent implements OnInit {
   firstTab = signal<string>('Resolución generada');
   secondTab = signal<string>('Textos resolución');
   form = signal<FormGroup>(new FormGroup({}));
-  initTags = signal<TagsReconocimiento>({});
+  initTags = signal<TagsRecognition>({});
 
   private sanitizer = inject(DomSanitizer);
   private http = inject(HttpClient);
-  private visitaService = inject(VisitaService);
+  private recognitionProperty: RecognitionPropertyService = inject(RecognitionPropertyService);
 
   successSendTags = viewChild<SwalComponent>('successSendTags');
   errorSendTags = viewChild<SwalComponent>('errorSendTags');
@@ -101,7 +101,7 @@ export class ResValidateComponent implements OnInit {
   }
 
   getTags() {
-    this.visitaService.getTags(this.executionId()).subscribe({
+    this.recognitionProperty.getRecognitionPropertyTags(this.executionId()).subscribe({
       next: (response) => {
         console.log(response);
         this.initTags.set(response);
@@ -110,7 +110,7 @@ export class ResValidateComponent implements OnInit {
   }
 
   saveTags() {
-    this.visitaService
+    this.recognitionProperty
       .sendTags(this.executionId(), this.form().value)
       .subscribe({
         next: () => {

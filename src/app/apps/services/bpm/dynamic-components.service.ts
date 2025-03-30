@@ -7,7 +7,7 @@ import { GeoValidateComponent } from '../../../pages/pages/bpm/core/cadastral/ge
 import { ResMainComponent } from '../../../pages/pages/bpm/core/cadastral/res/main/res-main.component';
 import { ResValidateComponent } from '../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component';
 import { SynMainComponent } from '../../../pages/pages/bpm/core/cadastral/syn/main/syn-main.component';
-import { VisitaComponent } from '../../../pages/pages/bpm/core/cadastral/visita/visita.component';
+import { RecognitionPropertyInformation } from '../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
 import { DocumentMainComponent } from '../../../pages/pages/bpm/core/document/main/document-main.component';
 import { DocumentValidateComponent } from '../../../pages/pages/bpm/core/document/validate/document-validate.component';
 import { ComponentTemplate } from '../../interfaces/bpm/render-template.types';
@@ -75,10 +75,10 @@ export class DynamicComponentsService {
       ),
     },
     {
-      nameComponent: 'cadVisitComponent',
-      component:VisitaComponent,
-      loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/visita/visita.component').then(
-        (m) => m.VisitaComponent
+      nameComponent: 'cadRecognitionPropertyInformation',
+      component:RecognitionPropertyInformation,
+      loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component').then(
+        (m) => m.RecognitionPropertyInformation
       ),
     },
     {

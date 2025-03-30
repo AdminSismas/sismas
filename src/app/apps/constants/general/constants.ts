@@ -558,7 +558,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 1
   },
   {
-    name: 'cadVisitComponent',
+    name: 'cadRecognitionPropertyInformation',
     pathForm: '/core/cadastral/visita.html',
     serviceValidation: '',
     mode: 1

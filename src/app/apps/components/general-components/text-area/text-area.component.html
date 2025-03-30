@@ -9,13 +9,15 @@
   @if (formControlNameTextArea && formControlTextArea == null) {
     <textarea
       matInput
-      [formControlName]="formControlNameTextArea">
+      [formControlName]="formControlNameTextArea"
+      [placeholder]="placeholder">
     </textarea>
   } @else if (formControlNameTextArea && formControlTextArea != null) {
     <textarea
       matInput
       [formControlName]="formControlNameTextArea"
-      [formControl]="formControlTextArea">
+      [formControl]="formControlTextArea"
+      [placeholder]="placeholder">
     </textarea>
   }
   @if (icon && icon.length > 0) {

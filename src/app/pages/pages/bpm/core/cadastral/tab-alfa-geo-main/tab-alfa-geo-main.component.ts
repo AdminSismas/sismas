@@ -85,10 +85,7 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-
-    this.destroyRef.onDestroy(() => {
-    });
-
+    this.destroyRef.onDestroy(() => {});
   }
 
   ngOnInit() {
