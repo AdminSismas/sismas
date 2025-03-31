@@ -48,13 +48,6 @@ const routes: VexRoutes = [
         ]
       },
       {
-        path: 'historicalInformation',
-        loadComponent: () =>
-          import('./historical-information/historical-information.component').then(
-            (m) => m.HistoricalInformationComponent
-          )
-      },
-      {
         path: 'workAssignment',
         loadComponent: () =>
           import('./work-assignment/work-assignment.component').then(
@@ -80,7 +73,7 @@ const routes: VexRoutes = [
         },
         ]
       },
-      
+
       {
         path: '**',
         loadComponent: () =>

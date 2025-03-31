@@ -135,12 +135,6 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDr
   },
   {
     type: 'link',
-    label: 'Información histórica',
-    route: '/operationSupport/historicalInformation',
-    icon: 'mat:app_registration'
-  },
-  {
-    type: 'link',
     label: 'Asignación de trabajo',
     route: '/operationSupport/workAssignment',
     icon: 'mat:assignment_turned_in'
