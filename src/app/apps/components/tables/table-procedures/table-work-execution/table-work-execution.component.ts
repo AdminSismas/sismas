@@ -1,6 +1,19 @@
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Observable } from 'rxjs';
 
@@ -26,7 +39,11 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,20 +53,16 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TaskResponseModel } from '../../../../interfaces/bpm/task-response.model';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  DetailInformationTasksComponent
-} from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-
+import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { MODAL_SMALL } from 'src/app/apps/constants/general/constants';
 
 @Component({
-    selector: 'vex-table-execution',
-    standalone: true,
-    templateUrl: './table-work-execution.component.html',
-    styleUrl: './table-work-execution.component.scss',
-    animations: [fadeInUp400ms, stagger40ms],
-    providers: [
-      { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    ],
+  selector: 'vex-table-execution',
+  standalone: true,
+  templateUrl: './table-work-execution.component.html',
+  styleUrl: './table-work-execution.component.scss',
+  animations: [fadeInUp400ms, stagger40ms],
+  providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
   imports: [
     VexPageLayoutComponent,
     MatTableModule,
@@ -82,16 +95,17 @@ export class TableWorkExecutionComponent implements OnInit {
   contentInformations!: InformationPegeable;
   private fBuilder = inject(FormBuilder);
   informationAddressForm!: FormGroup;
-  seeInfo= false;
-  textInfo = 'Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem';
-  public procedureDetail:TaskResponseModel= new TaskResponseModel();
+  seeInfo = false;
+  textInfo =
+    'Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem';
+  public procedureDetail: TaskResponseModel = new TaskResponseModel();
   // beginAt!: Date;
   // beginAtE!: Date;
   // executionCode: string = '';
   // individualNumber: string = '';
 
   @Input()
-  page:number = PAGE;
+  page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
@@ -104,28 +118,26 @@ export class TableWorkExecutionComponent implements OnInit {
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
-     private dialog: MatDialog,
+    private dialog: MatDialog,
     private proceduresService: ProceduresService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
-    private alertSnakbar: MatSnackBar,
+    private alertSnakbar: MatSnackBar
   ) {
     this.dateAdapter.setLocale('es-CO');
   }
-
 
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
-
-
   }
 
-
-
   /* ------- Meth. HTML ------- */
-  toggleColumnVisibility(column: TableColumn<contentInfoAttachment>, event: Event) {
+  toggleColumnVisibility(
+    column: TableColumn<contentInfoAttachment>,
+    event: Event
+  ) {
     event.stopPropagation();
     event.stopImmediatePropagation();
     column.visible = !column.visible;
@@ -141,39 +153,17 @@ export class TableWorkExecutionComponent implements OnInit {
       .map((column) => column.property);
   }
 
-  refreshInformationpaginator(event: any): void {
+  refreshInformationpaginator(event: PageEvent): void {
     if (event == null) {
       return;
     }
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
-
   }
 
-  onSearch():void {
+  onSearch(): void {
     // this.getDataFromProceduresService();
   }
-
-  validateDate(event: any): void {
-    const input = event.target.value;
-    const regex = /^[0-9\/]*$/; // Regex for numbers and slash
-    if (!regex.test(input)) {
-      event.target.value = input.replace(/[^0-9\/]/g, '');
-    }
-  }
-
-  validateNumber(event: any): void {
-    const input = event.target.value;
-    event.target.value = input.replace(/[^0-9]/g, '');
-  }
-
-
-
-
-
-
-
-
 
   onFilterChange(value: string) {
     if (!this.dataSource) {
@@ -184,75 +174,77 @@ export class TableWorkExecutionComponent implements OnInit {
     this.dataSource.filter = value;
   }
 
-
   private padZero(value: number): string {
     return value < 10 ? `0${value}` : value.toString();
   }
-
-
 
   captureInformationSubscribe(data: InformationPegeable) {
     this.contentInformations = data;
     this.captureInformationProceduresData();
   }
 
-  public informationDetail(value:any){
-    this.proceduresService.viewDetailIdProcedures(
-      +value.executionCode)
-      .subscribe( result => {
+  public informationDetail(value: ProceduresCollection) {
+    this.proceduresService
+      .viewDetailIdProcedures(+value.executionCode!)
+      .subscribe((result) => {
         this.procedureDetail = result;
-          this.seeTaskProperty(this.procedureDetail,+value.executionCode);
-
+        this.seeTaskProperty(this.procedureDetail, +value.executionCode!);
       });
   }
 
-   seeTaskProperty(value:TaskResponseModel,taskId:number):void {
-        this.dialog.open(DetailInformationTasksComponent, {
-          width: '50%',
-          data: { taskId: taskId ,value }
-        });
-      }
+  seeTaskProperty(value: TaskResponseModel, taskId: number): void {
+    this.dialog.open(DetailInformationTasksComponent, {
+      ...MODAL_SMALL,
+      data: { taskId: taskId, value }
+    });
+  }
 
   captureInformationProceduresData() {
     let data: contentInfoProcedures[];
-    if (this.contentInformations != null && this.contentInformations.content != null) {
-        data = this.contentInformations.content.map((row: ProceduresCollection) => new contentInfoProcedures({
+    if (
+      this.contentInformations != null &&
+      this.contentInformations.content != null
+    ) {
+      data = this.contentInformations.content.map(
+        (row: ProceduresCollection) =>
+          new contentInfoProcedures({
             ...row,
             name: row.process?.name,
             processName: row.process?.name
-        }));
-        this.dataSource.data = data;
+          })
+      );
+      this.dataSource.data = data;
     }
 
     if (this.contentInformations == null) {
-        this.page = PAGE;
-        return;
+      this.page = PAGE;
+      return;
     }
 
     if (this.contentInformations.totalElements) {
-        this.totalElements = this.contentInformations.totalElements;
+      this.totalElements = this.contentInformations.totalElements;
     }
 
     if (this.contentInformations.pageable == null) {
-        this.page = PAGE;
-        return;
+      this.page = PAGE;
+      return;
     }
 
     if (this.contentInformations.pageable.pageNumber != null) {
-        this.page = this.contentInformations.pageable.pageNumber;
+      this.page = this.contentInformations.pageable.pageNumber;
     }
   }
 
-  get beginAtForm(){
+  get beginAtForm() {
     return this.informationAddressForm.get('beginAtForm');
   }
-  get beginAtEForm(){
+  get beginAtEForm() {
     return this.informationAddressForm.get('beginAtEForm');
   }
-  get executionCodeForm(){
+  get executionCodeForm() {
     return this.informationAddressForm.get('executionCodeForm');
   }
-  get individualNumberPartForm(){
+  get individualNumberPartForm() {
     return this.informationAddressForm.get('individualNumberPartForm');
   }
 }

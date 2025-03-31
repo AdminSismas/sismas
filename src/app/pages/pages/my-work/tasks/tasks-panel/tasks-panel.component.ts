@@ -28,6 +28,7 @@ import { FluidHeightDirective } from '../../../../../apps/directives/fluid-heigh
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
 import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
 import {
+  MODAL_SMALL,
   PAGE,
   PAGE_SIZE_OPTION_BASIC,
   PAGE_SIZE_TABLE_CADASTRAL,
@@ -226,8 +227,7 @@ export class TasksPanelComponent implements OnInit {
       // minHeight: '70%',
       // disableClose: true,
       // minWidth:'370px',
-      width: '98%',
-      height: '86%',
+      ...MODAL_SMALL,
       data: {
         taskId: taskId,
         value,

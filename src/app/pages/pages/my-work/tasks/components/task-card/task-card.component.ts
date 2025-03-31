@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { TruncatePipe } from '../../../../../../apps/pipes/truncate-pipe.pipe';
 import {
-  MODAL_LARGE,
+  MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   SPACE
 } from '../../../../../../apps/constants/general/constants';
@@ -73,7 +73,7 @@ export class TaskCardComponent implements OnInit {
       // minHeight: '70%',
       // disableClose: true,
       // minWidth:'370px',
-      ...MODAL_LARGE,
+      ...MODAL_SMALL,
       data: {
         taskId: taskId,
         value,
