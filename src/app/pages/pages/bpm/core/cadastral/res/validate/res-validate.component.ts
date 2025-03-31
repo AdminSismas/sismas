@@ -110,8 +110,17 @@ export class ResValidateComponent implements OnInit {
   }
 
   saveTags() {
+    const { value } = this.form();
+
+    Object.keys(value).forEach((key) => {
+      if (!value[key]) return;
+
+      const tag = `${value[key]}`.replace(/\n/g, '<br>');
+      value[key] = tag;
+    });
+
     this.visitaService
-      .sendTags(this.executionId(), this.form().value)
+      .sendTags(this.executionId(), value)
       .subscribe({
         next: () => {
           this.successSendTags()!.fire();
