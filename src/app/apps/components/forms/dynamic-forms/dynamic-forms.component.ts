@@ -44,7 +44,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
   @Input({ required: true }) inputs: JSONInput[] = [];
   @Input() className = '';
   @Input() disabled = false;
-  @Input() initValues: any = {};
+  @Input() initValues: any | null = {};
 
  form: FormGroup = new FormGroup({});
   private dateFilters = new Map<string, (date: Date | null) => boolean>();
@@ -61,7 +61,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
       this.form.disable();
     }
 
-    if (this.initValues()) {
+    if (this.initValues != null && this.initValues()) {
       this.form.reset(this.initValues());
     }
   }

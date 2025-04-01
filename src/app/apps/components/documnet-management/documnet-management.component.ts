@@ -43,7 +43,7 @@ import {
   PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
 } from '../../constants/general/attachment.constant';
-import { MODAL_SMALL } from '../../constants/general/constant';
+import { MODAL_SMALL } from '../../constants/general/constants';
 
 
 @Component({
