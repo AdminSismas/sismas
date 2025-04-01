@@ -110,6 +110,7 @@ import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-
 })
 export class TableCadastralSearchComponent
   implements OnInit, AfterViewInit, OnChanges {
+
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;

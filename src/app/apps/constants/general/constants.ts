@@ -10,9 +10,12 @@ import { environment } from '../../../../environments/environments';
 import {
   CheckTypeQualificationMode,
   TypeButtonAlfaMain,
-  TypeInformation, TypeOperation,
+  TypeInformation,
+  TypeOperation,
   TypeOperationAlfaMain,
-  TypeOperationGeoMain, TypeQualificationMode, ValidateQualificationByDomBuiltType
+  TypeOperationGeoMain,
+  TypeQualificationMode,
+  ValidateQualificationByDomBuiltType
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../../interfaces/general/out-format.model';
@@ -59,6 +62,7 @@ export const DIVPOLLVL2_CODE: string = 'divpolLvl2Code';
 export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
+export const CONSTANT_TYPE_PARTICIPATION_THIRDPARTY: string = 'Tercero Afectado';
 
 export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
 export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
@@ -812,6 +816,35 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment:
     label: 'Alertas',
     fragment: FRAGMENT_ALERTS
   }
+];
+
+export const TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY: TableColumn<ProcessParticipant>[] = [
+  {
+    label: 'Documento',
+    property: 'individualNumber',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Nombre participante',
+    property: 'fullName',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Participación',
+    property: 'bpmParticipation',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  }
+];
+
+export const TABLE_COLUMN_PRINCIPANTS_TABLE: TableColumn<ProcessParticipant>[] = [
+  ...TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] = [

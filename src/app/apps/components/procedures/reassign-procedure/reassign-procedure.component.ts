@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { TABLE_REASSIGN_PROCEDURE } from 'src/app/apps/constants/procedures/procedures.constants';
-import { InformationPagebleUser } from 'src/app/apps/interfaces/users/user';
+import { InformationPageableUser } from 'src/app/apps/interfaces/users/user';
 import { ProceduresService } from 'src/app/apps/services/general/procedures.service';
 import { UserService } from 'src/app/apps/services/users/user.service';
 
@@ -45,7 +45,7 @@ interface RowUserAssign {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReassignProcedureComponent implements OnInit {
-  dataUser: InformationPagebleUser = {} as InformationPagebleUser;
+  dataUser: InformationPageableUser = {} as InformationPageableUser;
   dataSource: RowUserAssign[] = [];
   dataSource$: RowUserAssign[] = [];
   selectedUser: RowUserAssign | null = null;
@@ -81,7 +81,7 @@ export class ReassignProcedureComponent implements OnInit {
 
   getAllUsers(): void {
     this.userService.getUsers(0, 1000).subscribe({
-      next: (res: InformationPagebleUser) => {
+      next: (res: InformationPageableUser) => {
         this.dataUser = res;
         this.dataSource = (this.dataUser.content || []).map((user) => {
           return {

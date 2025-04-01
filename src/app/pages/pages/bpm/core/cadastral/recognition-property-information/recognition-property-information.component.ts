@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { filter, Observable, pairwise, startWith, Subscription } from 'rxjs';
+import { filter, Observable, Subscription } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -21,19 +21,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   INPUT_FORM_VISIT,
   TABLE_COLUMN_THIRD_PARTY
-} from '../../../../../../apps/constants/information-property/cadastral-visit.constants';
+} from '../../../../../../apps/constants/information-property/cadastral-recognition.constants';
 import { JSONInput } from '../../../../../../apps/interfaces/forms/dynamic-forms';
 import {
-  BasicParticipantTableDialogComponent
-} from 'src/app/apps/components/bpm/basic-participant-table-dialog/basic-participant-table-dialog.component';
+  ParticipantTableDialogComponent
+} from '../../../../../../apps/components/bpm/participant-table-dialog/participant-table-dialog.component';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
-import {
-  MODAL_LARGE,
-  MODAL_SMALL,
-  PAGE,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION
-} from '../../../../../../apps/constants/general/constants';
+import { MODAL_DINAMIC_HEIGHT, PAGE, PAGE_SIZE } from '../../../../../../apps/constants/general/constants';
 import { MatSort } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,7 +35,6 @@ import { RecognitionPropertyService } from '../../../../../../apps/services/bpm/
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { getRandomInt } from '../../../../../../apps/utils/general';
 import { environment } from '../../../../../../../environments/environments';
 import { ProFlow } from '../../../../../../apps/interfaces/bpm/pro-flow';
 import { SendInfoGeneralService } from '../../../../../../apps/services/general/send-info-general.service';
@@ -51,12 +44,14 @@ import { DynamicFormsComponent } from '../../../../../../apps/components/forms/d
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
+import { RecognitionProperty, RecognitionPropertyBasic } from '../../../../../../apps/interfaces/bpm/visita.interface';
+import { ThirdPartyAffectedParticipant } from '../../../../../../apps/interfaces/general/content-info';
 import {
-  RecognitionProperty,
-  RecognitionPropertyBasic,
-  TagsRecognition
-} from '../../../../../../apps/interfaces/bpm/visita.interface';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+  ParticipantTableComponent
+} from '../../../../../../apps/components/general-components/participant-table/participant-table.component';
+import { getRandomInt } from '../../../../../../apps/utils/general';
+import { ParticipantsServiceService } from '../../../../../../apps/services/users/participants-service.service';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'vex-recognition-property-information',
@@ -77,21 +72,22 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     VexPageLayoutComponent,
     DynamicFormsComponent,
     VexPageLayoutContentDirective,
-    MatSort,
-    FluidMinHeightDirective
+    FluidMinHeightDirective,
+    ParticipantTableComponent
   ],
   templateUrl: './recognition-property-information.component.html',
   styleUrl: './recognition-property-information.component.scss'
 })
 export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterViewInit {
 
-  @Input({ required: true }) public executionId = '';
+  @Input({ required: true }) public executionId: string = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public mode = 0;
-  @Input({ required: false }) public fluidHeight: string = '220';
+  @Input({ required: false }) public fluidHeight: string = '180';
 
   private thirdPartyAffected$: Subscription | undefined;
   private recognitionProperty: RecognitionPropertyService = inject(RecognitionPropertyService);
+  private participantsService: ParticipantsServiceService = inject(ParticipantsServiceService);
   private dialog: MatDialog = inject(MatDialog);
   private infoGeneralService: SendInfoGeneralService = inject(SendInfoGeneralService);
   private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
@@ -104,16 +100,13 @@ export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterV
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   infoFatherURL!: string;
   inputFormVisit: JSONInput[] = INPUT_FORM_VISIT;
-  dataSource: MatTableDataSource<ProcessParticipant> = new MatTableDataSource<ProcessParticipant>([]);
   columns: TableColumn<ProcessParticipant>[] = TABLE_COLUMN_THIRD_PARTY;
 
   form = signal<FormGroup>(new FormGroup({}));
   totalElements = signal(0);
   initRecognitionProperty = signal<RecognitionProperty | RecognitionPropertyBasic | null>(null);
+  existThirdPartyAffected = signal(false);
 
-
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild('invalidForm') invalidForm!: SwalComponent;
   @ViewChild('successSave') successSave!: SwalComponent;
 
@@ -155,14 +148,6 @@ export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterV
   }
 
   ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
-
     setTimeout(() => {
       if (!this.infoFatherURL) {
         this.returnURLPrevious(`${environment.myWork_cadastralSearch}`);
@@ -178,7 +163,15 @@ export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterV
 
     this.thirdPartyAffected.valueChanges.subscribe((value) => {
       if (value) {
-        this.onThirdPartyAffectedTrue();
+        if (!this.existThirdPartyAffected()) {
+          this.onThirdPartyAffectedTrue();
+          return;
+        }
+        this.confirmAction(
+          () => this.onThirdPartyAffectedTrue(),
+          'Actualmente hay terceros afectados en el tramite,¿Deseas agregar alguno nuevo?',
+          'info'
+        );
       }
     });
   }
@@ -189,30 +182,21 @@ export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterV
     }
   }
 
-  onFormReady(form: FormGroup) {
-    if (this.thirdPartyAffected$) {
-      this.thirdPartyAffected$.unsubscribe();
-    }
-    this.thirdPartyAffected$ = this.form().get('thirdPartyAffected')
-      ?.valueChanges.pipe(
-        startWith(false),
-        pairwise(),
-        filter(([prev, current]) => prev === false && current === true)
-      )
-      .subscribe(() => {
-        this.onThirdPartyAffectedTrue();
+  onThirdPartyAffectedTrue() {
+    let obj: ThirdPartyAffectedParticipant = { executionId: this.executionId, thirdPartyAffected: true };
+    this.dialog.open(ParticipantTableDialogComponent, {
+      ...MODAL_DINAMIC_HEIGHT,
+      disableClose: true,
+      data: obj
+    }).afterClosed()
+      .subscribe((result: ProcessParticipant[]) => {
+        if (result?.length > 0 && this.thirdPartyAffected?.value) {
+          this.participantsService.getExistThirdPartyAffected(this.executionId)
+            .subscribe((response: boolean) => this.existThirdPartyAffected.set(response));
+        }
       });
   }
 
-  onThirdPartyAffectedTrue() {
-    this.dialog.open(BasicParticipantTableDialogComponent, {
-      ...MODAL_SMALL
-    })
-      .afterClosed()
-      .subscribe((result: ProcessParticipant[]) => {
-        this.dataSource.data = result;
-      });
-  }
 
   saveForm() {
     if (this.form().invalid) {
@@ -232,28 +216,23 @@ export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterV
   }
 
   getRecognitionProperty() {
-    this.recognitionProperty.getRecognitionProperty(this.executionId).subscribe({
-      next: (response: RecognitionProperty) => {
-        if (response) {
-          this.initRecognitionProperty.set(response);
+    this.recognitionProperty.getRecognitionProperty(this.executionId)
+      .subscribe((response: RecognitionProperty) => this.getExistThirdPartyAffected(response));
+  }
+
+  getExistThirdPartyAffected(response: RecognitionProperty | null) {
+    this.participantsService.getExistThirdPartyAffected(this.executionId)
+      .subscribe((responseThirdPartyAffected: boolean) => {
+        if (response != null) {
+          response.thirdPartyAffected = responseThirdPartyAffected;
+        } else {
+          this.thirdPartyAffected?.setValue(responseThirdPartyAffected);
         }
-      }
-    });
+        this.existThirdPartyAffected.set(responseThirdPartyAffected);
+        this.initRecognitionProperty.set(response);
+      });
   }
 
-  get page() {
-    return PAGE;
-  }
-
-  get pageSize() {
-    return PAGE_SIZE;
-  }
-
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
-  }
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
@@ -270,4 +249,21 @@ export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterV
   get thirdPartyAffected() {
     return this.form().get('thirdPartyAffected') as FormControl;
   }
+
+  confirmAction(action: () => void, message: string,
+                icon: SweetAlertIcon | undefined): void {
+    Swal.fire({
+      text: message,
+      icon: icon,
+      showConfirmButton: true,
+      showDenyButton: true,
+      confirmButtonText: `Aceptar`,
+      denyButtonText: `Cerrar`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        action();
+      }
+    });
+  }
+
 }

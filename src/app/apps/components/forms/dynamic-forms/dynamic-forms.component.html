@@ -1,110 +1,106 @@
 @if (form) {
   <form [formGroup]="form" [ngClass]="cssClassesForm(className)" class="py-2">
-    <div class="form-content">
-      @for (input of inputs; track input.name) {
-        <div [ngClass]="cssClassesVerticalComponent(input)">
-          @if (input.element === "collection") {
-            <vex-combox-colletion
-              [label]="input.label"
-              [formControlNameCombobox]="input.name"
-              [typeDomainName]="input.type"
-              placeholderDomainName="{{ input.placeholder }}&hellip;"
-              [idComboCollection]="input.name"
-              [cssClasses]="cssClassesInput(input.cssClasses)"
-              [ngClass]="cssClassesInput(input.cssClasses)"
-            ></vex-combox-colletion>
-          }
-
-          @if (input.element === "date") {
-            <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
-              <mat-label>{{ input.label }}</mat-label>
-              <input
-                matInput
-                [matDatepicker]="picker"
-                placeholder="{{ input.placeholder }}&hellip;"
-                [formControlName]="input.name"
-                [matDatepickerFilter]="getDateFiler(input.name)"
-              />
-              <mat-datepicker-toggle
-                matIconSuffix
-                [for]="picker"
-              ></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          }
-
-          @if (input.element === "file") {
-            <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
-              <mat-label>{{ input.label }}</mat-label>
-              <ngx-mat-file-input
-                [formControlName]="input.name"
-                [accept]="input.type ? input.type : ''"
-                [multiple]="false"
-                color="primary"
-              ></ngx-mat-file-input>
-            </mat-form-field>
-          }
-
-          @if (input.element === "select") {
-            <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)">
-              <mat-label>{{ input.label }}</mat-label>
-              <mat-select
-                [formControlName]="input.name"
-                [id]="input.name"
-                placeholder="{{ input.placeholder }}&hellip;"
-              >
-                @for (option of input.options; track $index) {
-                  <mat-option [value]="option.value">{{ option.label }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          }
-
-          @if (input.element === "toggle") {
-            <mat-slide-toggle
-              [formControlName]="input.name"
-              [labelPosition]="labelPositionToggle(input)"
-            >{{ input.label }}
-            </mat-slide-toggle
-            >
-          }
-
-          @if (input.element === "checkbox") {
-            <mat-form-field>
-              <mat-checkbox
-                [formControlName]="input.name"
-                [id]="input.name"
-                [ngClass]="cssClassesInput(input.cssClasses)"
-              >
-                {{ input.label }}
-              </mat-checkbox>
-            </mat-form-field>
-          }
-
-          @if (input.element === "textarea") {
-            <vex-text-area
-              [idTextArea]="input.name"
-              [label]="input.label"
-              [formControlNameTextArea]="input.name"
-              [placeholder]="input.placeholder"
-              [cssClasses]="cssClassesInput(input.cssClasses)"
-              [ngClass]="cssClassesInput(input.cssClasses)">
-            </vex-text-area>
-          }
-
-          @if (input.element === "input") {
-            <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
-              <mat-label>{{ input.label }}</mat-label>
-              <input
-                matInput
-                [type]="input.type"
-                placeholder="{{ input.placeholder }}&hellip;"
-                [formControlName]="input.name"
-              />
-            </mat-form-field>
-          }
-        </div>
+    @for (input of inputs; track input.name) {
+      @if (input.element === "collection") {
+        <vex-combox-colletion
+          [label]="input.label"
+          [formControlNameCombobox]="input.name"
+          [typeDomainName]="input.type"
+          placeholderDomainName="{{ input.placeholder }}&hellip;"
+          [idComboCollection]="input.name"
+          [cssClasses]="cssClassesInput(input.cssClasses)"
+          [ngClass]="cssClassesInput(input.cssClasses)"
+        ></vex-combox-colletion>
       }
-    </div>
+
+      @if (input.element === "date") {
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+          <mat-label>{{ input.label }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="{{ input.placeholder }}&hellip;"
+            [formControlName]="input.name"
+            [matDatepickerFilter]="getDateFiler(input.name)"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      }
+
+      @if (input.element === "file") {
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+          <mat-label>{{ input.label }}</mat-label>
+          <ngx-mat-file-input
+            [formControlName]="input.name"
+            [accept]="input.type ? input.type : ''"
+            [multiple]="false"
+            color="primary"
+          ></ngx-mat-file-input>
+        </mat-form-field>
+      }
+
+      @if (input.element === "select") {
+        <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)">
+          <mat-label>{{ input.label }}</mat-label>
+          <mat-select
+            [formControlName]="input.name"
+            [id]="input.name"
+            placeholder="{{ input.placeholder }}&hellip;"
+          >
+            @for (option of input.options; track $index) {
+              <mat-option [value]="option.value">{{ option.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+
+      @if (input.element === "toggle") {
+        <mat-slide-toggle
+          [formControlName]="input.name"
+          [labelPosition]="labelPositionToggle(input)"
+        >{{ input.label }}
+        </mat-slide-toggle
+        >
+      }
+
+      @if (input.element === "checkbox") {
+        <mat-form-field>
+          <mat-checkbox
+            [formControlName]="input.name"
+            [id]="input.name"
+            [ngClass]="cssClassesInput(input.cssClasses)"
+          >
+            {{ input.label }}
+          </mat-checkbox>
+        </mat-form-field>
+      }
+
+      @if (input.element === "textarea") {
+        <vex-text-area
+          [idTextArea]="input.name"
+          [label]="input.label"
+          [formControlNameTextArea]="input.name"
+          [placeholder]="input.placeholder"
+          [cssClasses]="cssClassesInput(input.cssClasses)"
+          [ngClass]="cssClassesInput(input.cssClasses)">
+        </vex-text-area>
+      }
+
+      @if (input.element === "input") {
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+          <mat-label>{{ input.label }}</mat-label>
+          <input
+            matInput
+            [type]="input.type"
+            placeholder="{{ input.placeholder }}&hellip;"
+            [formControlName]="input.name"
+          />
+        </mat-form-field>
+      }
+    }
   </form>
 }

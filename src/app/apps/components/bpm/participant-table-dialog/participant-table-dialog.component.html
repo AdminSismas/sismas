@@ -2,7 +2,7 @@
   <h2 mat-dialog-title>Terceros afectados</h2>
   <button
     mat-icon-button
-    mat-dialog-close
+    (click)="closeDialog()"
     type="button"
     tabindex="-1"
   >
@@ -13,21 +13,14 @@
 
 <mat-dialog-content class="h-full w-full">
   <form [formGroup]="participationFormGroup">
-    <vex-basic-participant-table
+    <vex-participant-table
       class="w-full h-full"
+      [id]="'participants' + executionId"
       [form]="participationFormGroup"
+      [executionId]="executionId"
+      [visualAllTable]="true"
+      [thirdPartyAffected]="thirdPartyAffected"
       (processParticipants)="loadParticipants($event)"
-    ></vex-basic-participant-table>
+    ></vex-participant-table>
   </form>
 </mat-dialog-content>
-
-<mat-dialog-actions align="center">
-  <button
-    mat-flat-button
-    type="button"
-    color="primary"
-    (click)="closeDialog()"
-  >
-    Guardar
-  </button>
-</mat-dialog-actions>

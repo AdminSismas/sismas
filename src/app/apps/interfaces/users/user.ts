@@ -1,4 +1,4 @@
-export interface InformationPagebleUser {
+export interface InformationPageableUser {
   content: User[];
   pageable: Pageable;
   totalElements: number;

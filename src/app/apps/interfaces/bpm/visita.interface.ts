@@ -6,6 +6,7 @@ export interface RecognitionProperty {
   docAportados?: string;
   docCatastrales?: string;
   observaciones?: string;
+  thirdPartyAffected?:boolean;
   tag01?: string;
   tag02?: string;
   tag03?: string;
@@ -25,6 +26,7 @@ export interface RecognitionPropertyBasic {
   docAportados: string;
   docCatastrales: string;
   observaciones: string;
+  thirdPartyAffected:boolean;
 }
 
 export interface TagsRecognition {

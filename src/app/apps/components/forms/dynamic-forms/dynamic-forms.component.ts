@@ -116,14 +116,6 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
     }
   }
 
-  cssClassesVerticalComponent(inpunt: JSONInput): string {
-    if (inpunt?.verticalComponent != null && inpunt?.verticalComponent) {
-      return 'form-content-item';
-    } else {
-      return 'w-full';
-    }
-  }
-
   cssClassesInput(cssClasses: string | undefined): string {
     if (cssClasses) {
       return cssClasses;

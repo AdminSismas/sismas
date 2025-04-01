@@ -1,7 +1,8 @@
-<vex-page-layout [id]="this.id" mode="card" class="px-[4rem] py-3">
+<vex-page-layout [id]="this.id" mode="card" class="px-3 py-3">
   <vex-page-layout-content class="card w-full h-full">
-    <div class="container w-full h-full flex flex-col"
-         vexMinFluidHeight [fluidHeight]="mode === 3 ? 230: fluidHeight">
+    <div
+      class="container w-full h-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden"
+         vexMinFluidHeight [fluidHeight]="mode === 3 ? 200: fluidHeight" [overflowY]="'hidden'">
       <vex-dynamic-forms
         [inputs]="inputFormVisit"
         [initValues]="initRecognitionProperty()"
@@ -10,7 +11,7 @@
         class="w-full py-4"
       ></vex-dynamic-forms>
 
-      @if (dataSource.data.length > 0) {
+      @if (existThirdPartyAffected()) {
         <h2 class="title mt-6 mb-4 flex items-center">
       <span
         @scaleIn
@@ -23,54 +24,28 @@
       </span>
           <span class="block"> Participantes </span>
         </h2>
-        <table
-          @stagger
-          [dataSource]="dataSource"
-          class="w-full"
-          mat-table
-          matSort
-        >
-          @for (column of columns; track column.property) {
-            <ng-container [matColumnDef]="column.property">
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-                class="!bg-slate-300 !py-2"
-              >
-                {{ column.label }}
-              </th>
-              <td
-                *matCellDef="let row"
-                mat-cell
-              >
-                {{ row[column.property] }}
-              </td>
-            </ng-container>
-          }
-          <tr
-            mat-header-row
-            *matHeaderRowDef="visibleColumns"
-          ></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: visibleColumns"
-            @fadeInUp
-          ></tr>
-        </table>
+        <vex-participant-table
+          class="w-full h-full"
+          [id]="'visualThirdPartyAffected' + executionId"
+          [executionId]="executionId"
+          [visualAllTable]="false"
+          [thirdPartyAffected]="true"
+        ></vex-participant-table>
       }
+
+      <div class="w-100 p-0 items-center justify-center text-center">
+        <button
+          mat-raised-button
+          class="grow max-w-xs px-6 py-5"
+          color="primary"
+          (click)="saveForm()">
+          <mat-icon svgIcon="mat:save" class="!w-6 !h-6"></mat-icon>
+          Guardar
+        </button>
+      </div>
     </div>
   </vex-page-layout-content>
 </vex-page-layout>
-<div class="vex-footer vex-footer-task w-100 p-0 items-center justify-center text-center">
-  <button
-    mat-raised-button
-    class="grow max-w-xs px-6 py-5"
-    color="primary"
-    (click)="saveForm()">
-    <mat-icon svgIcon="mat:save" class="!w-6 !h-6"></mat-icon>
-    Guardar
-  </button>
-</div>
 
 <swal
   #invalidForm

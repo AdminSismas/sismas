@@ -46,4 +46,9 @@ export interface HistoryListBasic {
   lastupdated_at: string;
 }
 
+export interface ThirdPartyAffectedParticipant {
+  executionId: string;
+  thirdPartyAffected: boolean;
+}
+
 
