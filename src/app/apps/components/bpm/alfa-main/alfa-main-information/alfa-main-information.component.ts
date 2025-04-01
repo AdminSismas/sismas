@@ -35,6 +35,7 @@ import {
   PAGE_OPTION_UNIQUE,
   TYPE_BUTTON_FIVE,
   TYPE_BUTTON_FOUR,
+  TYPE_BUTTON_NINE,
   TYPE_BUTTON_ONE,
   TYPE_BUTTON_SIX,
   TYPE_BUTTON_TREE,
@@ -488,6 +489,8 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       color = '!text-white !bg-green-600';
     } else if ((btn === 'BRR' || btn === 'DEL_GEO') && !this.disabledButton(btn)) {
       color = '!text-white !bg-red-600';
+    } else if ((btn === 'VIGEN') && !this.disabledButton(btn)) {
+      color = '!bg-teal-500 !text-slate-100';
     }
     return `rounded-full py-2 px-6 title ${color}`;
   }
@@ -555,12 +558,13 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
   protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
   protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
+  protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
   protected readonly TYPE_BUTTON_TWO = TYPE_BUTTON_TWO;
   protected readonly TYPE_BUTTON_TREE = TYPE_BUTTON_TREE;
   protected readonly TYPE_BUTTON_FOUR = TYPE_BUTTON_FOUR;
-  protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
   protected readonly TYPE_BUTTON_FIVE = TYPE_BUTTON_FIVE;
   protected readonly TYPE_BUTTON_SIX = TYPE_BUTTON_SIX;
+  protected readonly TYPE_BUTTON_VALIDITY = TYPE_BUTTON_NINE;
   protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
   protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
   protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;

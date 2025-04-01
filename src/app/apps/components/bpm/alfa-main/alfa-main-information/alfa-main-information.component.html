@@ -130,19 +130,20 @@
           @if (mode === 1) {
             <button
               mat-raised-button
+              [ngClass]="buttonsClass(TYPE_BUTTON_VALIDITY)"
+              (click)="validityProcedure()"
+              [disabled]="disabledButton(TYPE_BUTTON_VALIDITY)"
+            >
+              <mat-icon svgIcon="mat:edit_calendar"></mat-icon>
+              Vigencia
+            </button>
+            <button
+              mat-raised-button
               color="accent"
               (click)="clearInformationAlfaMain()"
             >
               <mat-icon svgIcon="mat:restart_alt"></mat-icon>
               <span>Reiniciar</span>
-            </button>
-            <button
-              mat-raised-button
-              class="!bg-teal-500 !text-slate-100"
-              (click)="validityProcedure()"
-            >
-            <mat-icon svgIcon="mat:edit_calendar"></mat-icon>
-              Vigencia
             </button>
           }
         </div>
