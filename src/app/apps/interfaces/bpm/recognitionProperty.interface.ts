@@ -1,5 +1,3 @@
-import { RecognitionPropertyService } from '../../services/bpm/recognition-property.service';
-
 export interface RecognitionProperty {
   ccReconocimientoPredialId: number;
   descripcion?: string;
@@ -45,6 +43,7 @@ export class RecognitionPropertyMapper {
       docAportados: item.docAportados || '',
       docCatastrales: item.docCatastrales || '',
       observaciones: item.observaciones || '',
+      thirdPartyAffected: item.thirdPartyAffected || false
     };
   }
 
