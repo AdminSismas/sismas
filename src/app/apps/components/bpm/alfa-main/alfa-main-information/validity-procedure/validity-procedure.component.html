@@ -1,0 +1,57 @@
+<div class="flex justify-between">
+  <h1 mat-dialog-title>Editar vigencia</h1>
+  <button
+    mat-icon-button
+    mat-dialog-close
+    tabindex="-1"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="bg-slate-400 mb-4"></mat-divider>
+
+<mat-dialog-content>
+  <form class="flex flex-col gap-4 w-full" [formGroup]="validityForm">
+    <mat-form-field>
+      <mat-label>Vigencia fiscal</mat-label>
+      <mat-select formControlName="validity">
+        @for (option of validityOptions(); track $index) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Inscripción catastral</mat-label>
+      <input
+        matInput
+        [matDatepicker]="datepicker"
+        formControlName="beginAt"
+        [max]="maxDate()"
+      />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="datepicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker> </mat-datepicker>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="sendDialogButton()"
+  >
+    Aceptar
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    mat-dialog-close
+  >
+    Cancelar
+  </button>
+</mat-dialog-actions>

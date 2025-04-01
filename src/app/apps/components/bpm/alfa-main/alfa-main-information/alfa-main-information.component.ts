@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import {
@@ -23,13 +23,14 @@ import { SendInfoGeneralService } from '../../../../services/general/send-info-g
 import { InformationGeographicService } from '../../../../services/geographics/information-geographic.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { environment } from '../../../../../../environments/environments';
 import Swal from 'sweetalert2';
 import { Operation } from '../../../../interfaces/bpm/operation';
 import {
-  MAX_PAGE_SIZE_TABLE_UNIQUE, MODAL_DINAMIC_HEIGHT,
+  MAX_PAGE_SIZE_TABLE_UNIQUE,
   MODAL_SMALL,
+  MODAL_SMALL_XS,
   PAGE,
   PAGE_OPTION_UNIQUE,
   TYPE_BUTTON_FIVE,
@@ -75,6 +76,8 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { LoadingServiceService } from '../../../../services/general/loading-service.service';
+import { ValidityProcedureComponent } from './validity-procedure/validity-procedure.component';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-alfa-main-information',
@@ -99,7 +102,8 @@ import { LoadingServiceService } from '../../../../services/general/loading-serv
     TableAlfaMainComponent,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
-    NgClass
+    NgClass,
+    SweetAlert2Module
   ],
   templateUrl: './alfa-main-information.component.html',
   styleUrl: './alfa-main-information.component.scss'
@@ -112,7 +116,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public resourcesRemovers: string[] = [];
   @Input({ required: false }) public mode = 1;
-  @Input({ required: false }) public fluidHeight: string = '220';
+  @Input({ required: false }) public fluidHeight = '220';
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
@@ -131,6 +135,9 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   contentInformations!: InformationPegeable;
   changeGeoControl!: ChangeControl;
   listOperationContentInformation: OperationContentInformation[] = [];
+
+  @ViewChild('successValidityProcedure') public successValidityProcedure!: SwalComponent;
+  @ViewChild('errorValidityProcedure') public errorValidityProcedure!: SwalComponent;
 
   constructor(
     proFlow: ProFlow,
@@ -449,7 +456,8 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
             return !text || text.length <= 0 ?
               Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY) :
               text;
-          } catch (error) {
+          } catch {
+            // Handle the error appropriately, e.g., log it to an external service or remove this line in production.
             Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL);
           }
         },
@@ -513,6 +521,35 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
 
   buttonRemovers(btn: TypeButtonAlfaMain): boolean {
     return !this.resourcesRemovers.includes(btn);
+  }
+
+  validityProcedure() {
+    let validateChangeLog: ChangeControl = new ChangeControl();
+    this.validateChangeLog$.pipe(take(1)).subscribe({
+      next: (result: ChangeControl) => {
+        validateChangeLog = result;
+      }
+    });
+
+    this.dialog.open(ValidityProcedureComponent, {
+      ...MODAL_SMALL_XS,
+      data: {
+        executionId: this.executionId,
+        validateChangeLog
+      }
+    }).afterClosed()
+    .subscribe({
+      next: (result: boolean) => {
+        if (result) {
+          this.validateChangeLogAlfaMain();
+          this.successValidityProcedure.fire();
+        }
+
+        if (result === false) {
+          this.errorValidityProcedure.fire();
+        }
+      }
+    });
   }
 
   protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
