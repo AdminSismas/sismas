@@ -3,6 +3,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  signal,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -78,6 +79,12 @@ import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.servic
 import { ComponentType } from '@angular/cdk/overlay';
 import { MatDividerModule } from '@angular/material/divider';
 
+interface MenuActions {
+  label: string;
+  icon: string;
+  action: (row: contentInfoProcedures) => void;
+}
+
 @Component({
   selector: 'vex-table-procedures',
   standalone: true,
@@ -117,7 +124,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   @Input() urlTable?: string = '';
   @Input() urlView?: string = '';
 
-  dataSource!: MatTableDataSource<ProceduresCollection>;
+  dataSource!: MatTableDataSource<contentInfoProcedures>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   layoutCtrl = new UntypedFormControl('boxed');
@@ -129,6 +136,33 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   public procedureDetail: TaskResponseModel = new TaskResponseModel();
   userRole: string | undefined = this.getUserRole();
   comment = '';
+  readonly actions: MenuActions[] = [
+    {
+      label: 'Reasignar',
+      icon: 'mat:swap_horiz',
+      action: (row: contentInfoProcedures) =>
+        this.actionButtons('reassign', row)
+    },
+    {
+      label: 'Anular',
+      icon: 'mat:block',
+      action: (row: contentInfoProcedures) => this.actionButtons('cancel', row)
+    },
+    {
+      label: 'Prioridad',
+      icon: 'mat:warning',
+      action: (row: contentInfoProcedures) =>
+        this.actionButtons('priority', row)
+    },
+    {
+      label: 'Quitar prioridad',
+      icon: 'mat:assignment_returned',
+      action: (row: contentInfoProcedures) =>
+        this.actionButtons('no-priority', row)
+    }
+  ];
+
+  menuOptions = signal<MenuActions[]>([]);
 
   // Array para almacenar las suscripciones
   private subscriptions: Subscription | undefined[] = [];
@@ -150,6 +184,8 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   @ViewChild('successDelete') successDelete!: SwalComponent;
   @ViewChild('successReassign') successReassign!: SwalComponent;
   @ViewChild('errorReassign') errorReassign!: SwalComponent;
+  @ViewChild('successChangePriority') successChangePriority!: SwalComponent;
+  @ViewChild('errorChangePriority') errorChangePriority!: SwalComponent;
 
   get visibleColumns() {
     const validUser = this.userRole
@@ -261,34 +297,6 @@ export class TableProceduresComponent implements OnInit, OnChanges {
 
   get columns() {
     return TABLE_COLUMN_PROPERTIES;
-  }
-
-  get actions() {
-    return [
-      {
-        label: 'Reasignar',
-        icon: 'mat:swap_horiz',
-        action: (row: ProceduresCollection) =>
-          this.actionButtons('reassign', row)
-      },
-      {
-        label: 'Anular',
-        icon: 'mat:block',
-        action: (row: ProceduresCollection) => this.actionButtons('cancel', row)
-      }
-      // {
-      //   label: 'Reclasificar',
-      //   icon: 'mat:delete',
-      //   action: (row: ProceduresCollection) =>
-      //     this.actionButtons('reclassify', row)
-      // },
-      // {
-      //   label: 'Mecanismo jurídico',
-      //   icon: 'mat:delete',
-      //   action: (row: ProceduresCollection) =>
-      //     this.actionButtons('mecanism', row)
-      // }
-    ];
   }
 
   refreshInformationpaginator(event: PageEvent): void {
@@ -550,27 +558,34 @@ export class TableProceduresComponent implements OnInit, OnChanges {
     }
   }
 
-  actionButtons(id: string, row: ProceduresCollection): void {
-    switch (id) {
+  actionButtons(action: string, row: ProceduresCollection): void {
+    switch (action) {
       case 'reassign':
         this.reassignProcedure(row);
         break;
       case 'cancel':
         this.addComment(row);
         break;
-      case 'reclassify':
-        this.reclassifyProcedure(row);
+      case 'priority':
+        this.priorityProcedure(row);
         break;
-      case 'mecanism':
-        this.mecanismProcedure(row);
+      case 'no-priority':
+        this.priorityProcedure(row);
         break;
     }
   }
 
-  mecanismProcedure(row: ProceduresCollection) {
-  }
-
-  reclassifyProcedure(row: ProceduresCollection) {
+  priorityProcedure(row: ProceduresCollection) {
+    this.proceduresService.changePriority(row.executionId!)
+      .subscribe({
+        next: () => {
+          this.successChangePriority.fire();
+          this.defaultTableData();
+        },
+        error: () => {
+          this.errorChangePriority.fire();
+        }
+      });
   }
 
   addComment(row: ProceduresCollection) {
@@ -637,6 +652,18 @@ export class TableProceduresComponent implements OnInit, OnChanges {
           }
         }
       });
+  }
+
+  filteredActions(row: contentInfoProcedures): void {
+    if (!row.bpmPriority || row.bpmPriority === 1) {
+      return this.menuOptions.set(
+        this.actions.filter((action) => action.label !== 'Quitar prioridad')
+      );
+    }
+
+    return this.menuOptions.set(
+      this.actions.filter((action) => action.label !== 'Prioridad')
+    );
   }
 
   get beginAtForm() {
