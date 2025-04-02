@@ -48,6 +48,7 @@ export const RULE_PAGE_CADASTRAL_DA: string = 'cadastralSearchDA';
 export const TITULO_PAGE_CADASTRAL_DA: string = 'Búsqueda catastral DA';
 export const RULE_PAGE_HISTORICAL: string = 'historicalInformation';
 export const INFORMATION_HISTORICAL: string = 'Información histórica';
+export const INFORMATION_NOT_FOUND: string = 'Información No disponible';
 
 
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;

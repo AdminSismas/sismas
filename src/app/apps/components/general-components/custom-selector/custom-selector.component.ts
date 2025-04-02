@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { SendGeneralRequestsService } from '../../../services/general/send-general-requests.service';
 import { catchError, Observable } from 'rxjs';
+import { INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-combox-custom-selector',
@@ -141,4 +142,6 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
+
+  protected readonly INFORMATION_NOT_FOUND = INFORMATION_NOT_FOUND;
 }

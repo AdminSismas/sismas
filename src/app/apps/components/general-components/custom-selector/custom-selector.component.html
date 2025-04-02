@@ -23,6 +23,10 @@
           {{ option[displayKey] }}
         </mat-option>
       }
+    } @empty {
+      <mat-option disabled>
+        {{ INFORMATION_NOT_FOUND }}
+      </mat-option>
     }
     <!-- Mensaje de carga -->
     @if (loading) {
