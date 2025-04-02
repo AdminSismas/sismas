@@ -40,7 +40,7 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 <mat-dialog-content class="p-0 m-0">
-  @if (message != null && message !== '' && showAlert) {
+  @if (message !== null && message !== '' && showAlert) {
     <div [ngClass]="color" class="top-0 left-0 w-full p-4 flex items-center justify-between z-50">
       <span class="text-white">{{ message }}</span>
     </div>

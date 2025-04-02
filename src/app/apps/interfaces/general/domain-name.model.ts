@@ -7,13 +7,28 @@ export class DomainCollection {
   description?: string;
 
 
-  constructor(domainId: number, domainName: string, code: string, inactive: boolean, dispname: string, description: string) {
-    this.domainId = domainId;
-    this.domainName = domainName;
-    this.code = code;
-    this.inactive = inactive;
-    this.dispname = dispname;
-    this.description = description;
+  constructor(content?: any) {
+    this.domainId = content?.domainId || '';
+    this.domainName = content?.domainName || '';
+    this.code = content?.code || '';
+    this.inactive = content?.inactive || '';
+    this.dispname = content?.dispname || '';
+    this.description = content?.description || '';
+  }
+
+  set domainCode(value: string) {
+  }
+
+  get domainCode(): string {
+    let domainCode = '';
+    try {
+      if (this.code !== null && this.code !== undefined && this.code !== '' && this.code.includes('.')) {
+        domainCode = this.code.split('.')[1];
+      }
+    } catch (error) {
+      domainCode = '';
+    }
+    return domainCode;
   }
 }
 
@@ -21,10 +36,9 @@ export class DomainCollection {
 export class DomainCalificationCollection {
   Id?: number;
   domain?: string;
-  dispname?: string;  
+  dispname?: string;
   colombiaCode?: number;
   description?: string;
-
 
 
   constructor(Id: number, domain: string, dispname: string, colombiaCode: number, description: string) {
@@ -33,7 +47,7 @@ export class DomainCalificationCollection {
     this.dispname = dispname;
     this.colombiaCode = colombiaCode;
     this.description = description;
- 
-   
+
+
   }
 }

@@ -51,6 +51,7 @@ export const RULE_PAGE_CADASTRAL_DA: string = 'cadastralSearchDA';
 export const TITULO_PAGE_CADASTRAL_DA: string = 'Búsqueda catastral DA';
 export const RULE_PAGE_HISTORICAL: string = 'historicalInformation';
 export const INFORMATION_HISTORICAL: string = 'Información histórica';
+export const INFORMATION_NOT_FOUND: string = 'Información No disponible';
 
 
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
@@ -510,10 +511,10 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
-export const COMPONENT_ALFA_MAIN:string = 'cadAlfaMainComponent';
-export const COMPONENT_PATH_FORM_ALFA_MAIN:string = '/core/cadastral/alf/main.html';
+export const COMPONENT_ALFA_MAIN: string = 'cadAlfaMainComponent';
+export const COMPONENT_PATH_FORM_ALFA_MAIN: string = '/core/cadastral/alf/main.html';
 
-export const COMPONENT_ALFA_VALIDATE:string = 'cadAlfaValidateComponent';
+export const COMPONENT_ALFA_VALIDATE: string = 'cadAlfaValidateComponent';
 
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
@@ -1103,6 +1104,7 @@ export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
 export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
 export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD';  // Excel Download
 export const TYPE_BUTTON_EIGHT: TypeButtonAlfaMain = 'EXL'; // Excel Load
+export const TYPE_BUTTON_NINE: TypeButtonAlfaMain = 'VIGEN';
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
@@ -1121,6 +1123,7 @@ export const TIMEOUT_TIME_MINUTES = 15;
 
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
+export const TYPE_ANNEX: TypeQualificationMode = 'ANNEX';
 
 export const TYPE_CREATE: TypeOperation = 'CREATE';
 export const TYPE_READ_ONLY: TypeOperation = 'READ_ONLY';
@@ -1140,6 +1143,15 @@ export const CHECK_TYPE_QUALIFICATION_MODE: CheckTypeQualificationMode[] = [
     type: TYPE_TYPOLOGY
   }
 ];
+
+export const CONSTRUCTION_TYPE: string = 'domBuiltType';
+export const CONSTRUCTION_USE: string = 'domBuiltUse';
+
+export const QUALIFICATIONS_DOMBUILT_TYPE_ANEXX: ValidateQualificationByDomBuiltType = {
+  domBuiltType: 'Anexo',
+  list: [],
+  shouldDisable: false
+};
 
 export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualificationByDomBuiltType[] = [
   {

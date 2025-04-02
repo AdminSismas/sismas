@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
@@ -7,7 +7,6 @@ import { InformationPegeable } from '../../../interfaces/general/information-peg
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { ChangeControl } from '../../../interfaces/bpm/change-control';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { DomSanitizer } from '@angular/platform-browser';
 import { saveAs } from 'file-saver';
 
 @Injectable({
@@ -161,8 +160,6 @@ export class AlfaMainService {
       next: (response) => {
         const blob = new Blob([response], { type: 'application/octet-stream' });
         saveAs(blob, `massiveDownload_${executionId}.xlsx`);
-      },
-      error: () => {
       }
     });
   }
@@ -175,5 +172,17 @@ export class AlfaMainService {
       formData).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
+  }
+
+  getValidityOptions(executionId: string): Observable<string[]> {
+    const url = `${this.basic_url}${envi.temporal}${envi.validity}/${executionId}`;
+
+    return this.http.get<string[]>(url);
+  }
+
+  changeValidityProcedure(executionId: string, body: ChangeControl): Observable<ChangeControl> {
+    const url = `${this.basic_url}${envi.changeLog}${envi.schemas.temp}/${executionId}`;
+
+    return this.http.put<ChangeControl>(url, body);
   }
 }

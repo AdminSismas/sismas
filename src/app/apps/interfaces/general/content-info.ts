@@ -14,8 +14,8 @@ export type TypeOperation = 'CREATE' | 'UPDATE' | 'DELETE' | 'READ_ONLY';
 export type InputType = 'text' | 'number' | 'email' | 'password';
 export type TypeOperationAlfaMain = 'ADD' | 'CREATE' | 'DELETE';
 export type TypeOperationGeoMain = 'CREATE' | 'DELETE' | 'CAL_BOUND';
-export type TypeButtonAlfaMain = 'AGR' | 'CRE' | 'BRR' | 'CRE_GEO' | 'DEL_GEO' | 'CAL_BOU' | 'TAB_GEO' | 'EXD' | 'EXL';
-export type TypeQualificationMode = 'TRADITIONAL' | 'TYPOLOGY' ;
+export type TypeButtonAlfaMain = 'AGR' | 'CRE' | 'BRR' | 'CRE_GEO' | 'DEL_GEO' | 'CAL_BOU' | 'TAB_GEO' | 'EXD' | 'EXL' | 'VIGEN';
+export type TypeQualificationMode = 'TRADITIONAL' | 'TYPOLOGY' | 'ANNEX' ;
 
 export interface ObjectSchema {
   schema: string;

@@ -100,18 +100,44 @@ export class ResValidateComponent implements OnInit {
     this.loadPdf();
   }
 
+  brToLineJumps(tags: TagsRecognition) {
+    Object.keys(tags).forEach((key) => {
+      const valueTag = (tags as Record<string, string>)[key];
+      if (!valueTag) return;
+
+      const tag = `${valueTag}`.replace(/<br>/g, '\n');
+      (tags as Record<string, string>)[key] = tag;
+      return;
+    });
+    this.initTags.set(tags);
+  }
+
   getTags() {
     this.recognitionProperty.getRecognitionPropertyTags(this.executionId()).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.initTags.set(response);
+      next: (tags) => {
+        this.brToLineJumps(tags);
       }
     });
   }
 
+  lineJumpsToBr(tags: TagsRecognition) {
+    Object.keys(tags).forEach((key) => {
+        const valueTag = (tags as Record<string, string>)[key];
+        if (!valueTag) return;
+
+        const tag = `${valueTag}`.replace(/\n/g, '<br>');
+        (tags as Record<string, string>)[key] = tag;
+        return;
+      });
+  }
+
   saveTags() {
+    const { value } = this.form();
+
+    this.lineJumpsToBr(value);
+
     this.recognitionProperty
-      .sendTags(this.executionId(), this.form().value)
+      .sendTags(this.executionId(), value)
       .subscribe({
         next: () => {
           this.successSendTags()!.fire();

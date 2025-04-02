@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
 import { environment } from '../../../../../../../../environments/environments';
 import { Router } from '@angular/router';
@@ -54,17 +55,16 @@ import {
   templateUrl: './alfa-main.component.html',
   styleUrl: './alfa-main.component.scss'
 })
-export class AlfaMainComponent implements OnInit {
+export class AlfaMainComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
 
   id: string = getRandomInt(12324).toString();
-  fluidHeight:string = '165';
+  fluidHeight = '165';
 
-  @Input({ required: true }) public executionId: string = '';
+  @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public resourcesRemovers: string[] = [];
   @Input({ required: false }) public mode = 1;
-
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   infoFatherURL!: string;
@@ -77,11 +77,10 @@ export class AlfaMainComponent implements OnInit {
     if (proFlow?.flowId) {
       this.id += proFlow?.flowId;
     }
+
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-    this.destroyRef.onDestroy(() => {
-    });
   }
 
   ngOnInit() {
@@ -93,7 +92,7 @@ export class AlfaMainComponent implements OnInit {
     }
 
     this._infoFatherURL$
-      .pipe(filter<string>(Boolean))
+      .pipe(filter<string>(Boolean), takeUntil(this.destroy$))
       .subscribe((result: string) => {
         this.infoFatherURL = result;
       });
@@ -103,6 +102,12 @@ export class AlfaMainComponent implements OnInit {
       return false;
     }
   }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {

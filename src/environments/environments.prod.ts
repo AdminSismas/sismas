@@ -13,8 +13,8 @@ export const environment = {
     value: "/accessGeo/"
   },
   active: "active",
-  administrativeSource: "/fuenteadmin/",
   adjacent: "/colindante/",
+  administrativeSource: "/fuenteadmin/",
   apiUrlToken: "/token/authenticate",
   auth_login: "/auth/login",
   awsConfig: {
@@ -89,8 +89,8 @@ export const environment = {
   clearBaunit: "clearBAUnit",
   clearChangelog: "clearChangelog",
   comment: "/comment/",
-  compare_temp: "/compare/temp/",
   compare_hist: "/compare/hist/",
+  compare_temp: "/compare/temp/",
   copy: "/copy",
   divpol: "/divpol",
   domain_domain: "/domain",
@@ -168,6 +168,7 @@ export const environment = {
   url_domain_name: "https://prediosplus.api.cadastre4world.com:5001/domain/name?",
   url_viewer: "https://prediosplus.map.cadastre4world.com:8081/mapstore/",
   user_exist: "/username/",
+  validity: "validity",
   valuation: "/valuation/",
   video: "assets/video/desarrollo.mp4",
   withoutSignaturesUsers: "/without-signature",

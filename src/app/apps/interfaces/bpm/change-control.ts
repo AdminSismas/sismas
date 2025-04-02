@@ -4,8 +4,8 @@ export class ChangeControl {
   resolutionAt?:string;
   rooting?:string;
   rootingAt?:string;
-  validity?:string;
-  beginAt?:string;
+  validity?:string | null;
+  beginAt?:string | null;
   domCadastreChangeTypeDescription?:string;
 
 
