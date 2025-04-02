@@ -1,8 +1,16 @@
-<vex-page-layout [id]="this.id" mode="card" class="pb-0">
+<vex-page-layout
+  [id]="this.id"
+  mode="card"
+  class="pb-0"
+>
   <vex-page-layout-content class="container-fluid px-5 py-3">
-    <div class="card" vexMinFluidHeight [fluidHeight]="mode === 3 ? 230: fluidHeight">
-      <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
-        <div class="rounded-tr rounded-br border-l-3 p-0 m-0 flex flex-col sm:flex-row items-center gap-3">
+    <div
+      class="card"
+      vexMinFluidHeight
+      [fluidHeight]="mode === 3 ? 230 : fluidHeight"
+    >
+      <div class="px-5 py-3 sm:min-w-full md:min-w-[300px]">
+        <div class="p-0 m-0 flex flex-col sm:flex-row items-center gap-3">
           @if (mode === 1 || mode === 3) {
             <!-- ADD BAUNIT-->
             <button
@@ -12,7 +20,8 @@
               mat-raised-button
               type="button"
               [disabled]="disabledButton(TYPE_BUTTON_ONE)"
-              (click)="executeCrudAlfaMain(TYPE_OPERATION_CREATE)">
+              (click)="executeCrudAlfaMain(TYPE_OPERATION_CREATE)"
+            >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:add_circle_outline"
@@ -26,7 +35,8 @@
               mat-raised-button
               type="button"
               (click)="executeCrudAlfaMain(TYPE_OPERATION_ADD)"
-              [disabled]="disabledButton(TYPE_BUTTON_TWO)">
+              [disabled]="disabledButton(TYPE_BUTTON_TWO)"
+            >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:add"
@@ -41,7 +51,8 @@
               mat-raised-button
               type="button"
               (click)="executeCrudAlfaMain(TYPE_OPERATION_DELETE)"
-              [disabled]="disabledButton(TYPE_BUTTON_TREE)">
+              [disabled]="disabledButton(TYPE_BUTTON_TREE)"
+            >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:delete"
@@ -54,12 +65,13 @@
             color="primary"
             mat-raised-button
             type="button"
-            (click)="analyzeChangesOperationAlfaMain()">
+            (click)="analyzeChangesOperationAlfaMain()"
+          >
             <mat-icon
               class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
               svgIcon="mat:analytics"
             ></mat-icon>
-            <span>Analizar cambio</span>
+            <span>Analizar</span>
           </button>
           @if (mode === 3) {
             <!-- CREATE TEMPORAL GEO -->
@@ -69,7 +81,8 @@
               mat-raised-button
               type="button"
               (click)="executeCreateAlfaGeo(TYPE_OPERATION_CREATE_GEO)"
-              [disabled]="disabledButton(TYPE_BUTTON_FOUR)">
+              [disabled]="disabledButton(TYPE_BUTTON_FOUR)"
+            >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:add"
@@ -84,7 +97,8 @@
               mat-raised-button
               type="button"
               (click)="executeDeletedAlfaGeo(TYPE_OPERATION_DELETE_GEO)"
-              [disabled]="disabledButton(TYPE_BUTTON_FIVE)">
+              [disabled]="disabledButton(TYPE_BUTTON_FIVE)"
+            >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:delete"
@@ -99,7 +113,10 @@
               mat-raised-button
               type="button"
               [disabled]="disabledButton(TYPE_BUTTON_SIX)"
-              (click)="executeCalculateBoundaries(TYPE_OPERATION_CALCULATE_BOUNDARIES)">
+              (click)="
+                executeCalculateBoundaries(TYPE_OPERATION_CALCULATE_BOUNDARIES)
+              "
+            >
               <mat-icon
                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
                 svgIcon="mat:data_usage"
@@ -112,15 +129,21 @@
           <span class="sm:flex-auto xl:flex-1"></span>
           @if (mode === 1) {
             <button
-              class="rounded-full py-2 title flex-1 items-end xl:max-w-[180px] sm:min-w-[80px] !text-white !bg-amber-600"
               mat-raised-button
-              type="button"
-              (click)="clearInformationAlfaMain()">
-              <mat-icon
-                class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
-                svgIcon="mat:restart_alt"
-              ></mat-icon>
-              <span>Reinicia cambio</span>
+              [ngClass]="buttonsClass(TYPE_BUTTON_VALIDITY)"
+              (click)="validityProcedure()"
+              [disabled]="disabledButton(TYPE_BUTTON_VALIDITY)"
+            >
+              <mat-icon svgIcon="mat:edit_calendar"></mat-icon>
+              Vigencia
+            </button>
+            <button
+              mat-raised-button
+              color="accent"
+              (click)="clearInformationAlfaMain()"
+            >
+              <mat-icon svgIcon="mat:restart_alt"></mat-icon>
+              <span>Reiniciar</span>
             </button>
           }
         </div>
@@ -134,16 +157,24 @@
           listOperationContentInformation.length > 0
         "
       >
-        @for (obj of listOperationContentInformation;
+        @for (
+          obj of listOperationContentInformation;
           track obj;
-          let index = $index) {
-          <mat-expansion-panel [expanded]="index === 0" class="py-0 px-0">
+          let index = $index
+        ) {
+          <mat-expansion-panel
+            [expanded]="index === 0"
+            class="py-0 px-0"
+          >
             <mat-expansion-panel-header
-              class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center">
+              class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center"
+            >
               <div class="w-full px-0 py-0 flex text-start items-center">
                 <h4 class="subheading-1 mb-1 mt-1 w-full flex items-center">
-                  <span @scaleIn
-                        class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10">
+                  <span
+                    @scaleIn
+                    class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10"
+                  >
                     <mat-icon
                       svgIcon="mat:description"
                       class="icon-xs"
@@ -152,7 +183,7 @@
                   <span
                     @fadeInRight
                     class="block"
-                  >Manzana o vereda - {{ obj.npnlike }}</span
+                    >Manzana o vereda - {{ obj.npnlike }}</span
                   >
                 </h4>
               </div>
@@ -174,3 +205,22 @@
   </vex-page-layout-content>
 </vex-page-layout>
 
+<swal
+  #successValidityProcedure
+  title="Vigencia exitosa"
+  text="La vigencia se ha actualizado con exito."
+  icon="success"
+  confirmButtonColor="primary"
+  confirmButtonText="Aceptar"
+  [showCancelButton]="false"
+></swal>
+
+<swal
+  #errorValidityProcedure
+  title="Error vigencia"
+  text="Se produjo un error al actualizar la vigencia."
+  icon="error"
+  confirmButtonColor="warn"
+  confirmButtonText="Aceptar"
+  [showCancelButton]="false"
+></swal>
