@@ -1,7 +1,7 @@
 // Angular framework
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 // Material
@@ -56,14 +56,21 @@ import {
 import { validateIsNumber, validateVariable } from '../../../../utils/general';
 // Custom
 import {
+  CONSTRUCTION_TYPE,
+  CONSTRUCTION_USE,
   DOMAIN_NAME_BUILT_USE,
   GUION,
   NAME_NO_DISPONIBLE,
-  QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE,
+  QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE, QUALIFICATIONS_DOMBUILT_TYPE_ANEXX, TYPE_ANNEX,
   TYPE_CREATE,
   TYPE_TRADITIONAL,
   TYPE_TYPOLOGY
 } from '../../../../constants/general/constants';
+import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
+import { contentInfoComments } from '../../../../interfaces/general/content-info-comments.model';
+import { ReplaySubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { ChangeControl } from '../../../../interfaces/bpm/change-control';
 
 
 @Component({
@@ -108,17 +115,20 @@ import {
   templateUrl: './crud-information-constructions-property.component.html',
   styleUrl: './crud-information-constructions-property.component.scss'
 })
-export class CrudInformationConstructionsPropertyComponent implements OnInit, AfterViewInit {
+export class CrudInformationConstructionsPropertyComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  urlBasic: string = `${environment.getApiQualificationUrl}`;
+  api_domainName: string = `${environment.url_domain_name}`;
+  schema: string = `${environment.schemas.temp}`;
 
   executionId: string | null | undefined;
   baunitId: string | null | undefined;
   unitBuiltId!: number | null | undefined; // ID de la construcción creada
   typeCrud: TypeOperation | null = null;
-  api_domainName: string = `${environment.url_domain_name}`;
-  schema: string = `${environment.schemas.temp}`;
+  annexUrl: string = '';
   qualificationMode: TypeQualificationMode | null = TYPE_TRADITIONAL;
-  allBuiltUseOptions: any[] = [];
-  filteredBuiltUseOptions: any[] = [];
+  allBuiltUseOptions: DomainCollection[] = [];
+  filteredBuiltUseOptions: DomainCollection[] = [];
   isCreateOrUpdateConstruction: boolean = false; // Estado de carga
 
   constructionData: ContentInformationConstruction | null = null;
@@ -165,8 +175,12 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   typologyRatingForm: FormGroup = this.fb.group({
     domTipologiaTipo: [null, Validators.required]
   });
+  typeAnexxForm: FormGroup = this.fb.group({
+    domTypeAnexx: [null, Validators.required]
+  });
 
-  domBuiltTypeControl!: FormControl;
+  _useOptions$ = new ReplaySubject<boolean>(1);
+  useOptions$ = this._useOptions$.asObservable();
 
   @ViewChild('stepper') stepper!: MatStepper;
   @ViewChild('formError') formError!: SwalComponent;
@@ -192,10 +206,12 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     private collectionServicesService: CollectionServices,
     private constructionsService: InformationConstructionsService,
     private generalValidations: GeneralValidationsService,
-    private validationsService: CommonGeneralValidationsService
+    private validationsService: CommonGeneralValidationsService,
+    private destroyRef: DestroyRef
   ) {
-
-    this.domBuiltTypeControl = this.editForm.get('domBuiltType') as FormControl;
+    this.destroyRef.onDestroy(() => {
+      console.log('UserProfile destruction');
+    });
   }
 
   ngOnInit(): void {
@@ -214,30 +230,35 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       return;
     }
 
-    if (this.typeCrud === 'UPDATE') {
-      this.constructionData = this.crudInformationData?.contentInformation;
-      if(this.constructionData != null &&  this.crudInformationData?.contentInformation?.schema != null) {
-        this.schema = this.crudInformationData?.contentInformation?.schema;
-      }
-      this.changeDetailInformationConstruction(this.constructionData);
-      this.getDetailQualificationConstruction(this.constructionData);
-    }
     this.fetchAllBuiltUseOptions();
 
-    this.domBuiltTypeControl.valueChanges.subscribe((value) => {
-      this.toggleKitchenAndBathFields(value);
-    });
+    this.useOptions$.pipe(filter<boolean>(Boolean))
+      .subscribe(() => {
+        if (!this.crudInformationData || !this.crudInformationData?.contentInformation) {
+          return;
+        }
+
+        if (this.typeCrud === 'UPDATE') {
+          this.constructionData = this.crudInformationData?.contentInformation;
+          if (this.constructionData != null && this.crudInformationData?.contentInformation?.schema != null) {
+            this.schema = this.crudInformationData?.contentInformation?.schema;
+          }
+          this.changeDetailInformationConstruction(this.constructionData);
+          this.getDetailQualificationConstruction(this.constructionData);
+        }
+      });
   }
 
   ngAfterViewInit(): void {
   }
 
-
   resetConstructionAndQualification(): void {
     if (this.qualificationMode === TYPE_TRADITIONAL) {
       this.traditionalRatingForm.reset();
-    } else {
+    } else if (this.qualificationMode === TYPE_TYPOLOGY) {
       this.typologyRatingForm.reset();
+    } else {
+      this.typeAnexxForm.reset();
     }
   }
 
@@ -245,8 +266,10 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   saveConstructionAndQualification(): void {
     if (this.qualificationMode === TYPE_TRADITIONAL) {
       this.saveTraditionalRating();
-    } else {
+    } else if (this.qualificationMode === TYPE_TYPOLOGY) {
       this.saveTypologyQualification();
+    } else {
+      this.saveTypologyAnexx();
     }
   }
 
@@ -265,30 +288,37 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       this.incompleteForm.fire();
       return;
     }
+    this.saveGeneralQualification(this.traditionalRatingForm.value);
+  }
 
+  saveTypologyAnexx() {
+    if (this.typeAnexxForm.invalid || !this.executionId || !this.baunitId || !this.unitBuiltId) {
+      this.typeAnexxForm.markAllAsTouched();
+      this.incompleteForm.fire();
+      return;
+    }
+    this.saveGeneralQualification(this.typeAnexxForm.value);
+  }
+
+  saveGeneralQualification(formValue: any) {
+    if (!this.executionId || !this.baunitId || !this.unitBuiltId) {
+      return;
+    }
     try {
-      const formValue = this.traditionalRatingForm.value;
       const listQualification: CcCalificacionUB[] = Object.values(formValue)
         .filter((id): id is number => typeof id === 'number' && !isNaN(id))
         .map((id: number) => ({ ccCalUBDom: { id } }));
-
       if (!listQualification || listQualification.length === 0) {
         this.notFoundValues.fire();
         return;
       }
-
       this.constructionsService.updateQualification(this.executionId, this.baunitId, this.unitBuiltId, listQualification)
         .subscribe({
-          next: () => {
-            this.calificationSuccessDialog.fire().then(() => this.closedDialog(this.constructionData));
-          },
-          error: () => {
-            this.errorSaveDialog.fire();
-          }
+          next: () => this.calificationSuccessDialog.fire().then(() => this.closedDialog(this.constructionData)),
+          error: () => this.errorSaveDialog.fire()
         });
     } catch (error) {
       this.saveErrorDialog.fire();
-      console.error(error);
     }
   }
 
@@ -333,6 +363,13 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       Object.entries(detailInformationConstruction).forEach(([key, value]) => {
         if (this.editForm.controls[key]) {
           this.editForm.controls[key].setValue(value);
+
+          if (key === 'domBuiltType') {
+            this.toggleKitchenAndBathFields(value);
+            this.filteredBuiltUseOptions = this.allBuiltUseOptions.filter((option: DomainCollection) => option?.code && option?.code.startsWith(value));
+          } else if (key === 'domBuiltUse') {
+            this.validateDomBuilTypeAnnex(value);
+          }
         }
       });
     }
@@ -358,6 +395,10 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   refreshTraditionalRatingForm() {
     let idBath = this.chargeQualificationConstruction('Tamanio_Banio');
     let idKitchen = this.chargeQualificationConstruction('Tamanio_Cocina');
+
+    this.typeAnexxForm = this.fb.group({
+      domTypeAnexx: [this.chargeQualificationConstructionAnexx()]
+    });
 
     this.traditionalRatingForm = this.fb.group({
       structureFraming: [this.chargeQualificationConstruction('Armazon')],
@@ -443,6 +484,25 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     return id;
   }
 
+  chargeQualificationConstructionAnexx() {
+    let id: number | null | undefined = null;
+    if (this.qualificationsConstruction && this.qualificationsConstruction.length === 1 &&
+      this.mapQualificationsConstruction != null) {
+      try {
+        let qualification: CcCalificacionUB = this.qualificationsConstruction[0];
+        if (qualification && qualification?.ccCalUBDom) {
+          id = qualification.ccCalUBDom.id;
+          if (validateIsNumber(id) && id != null && id > 0) {
+            return id;
+          }
+        }
+      } catch (e) {
+        return null;
+      }
+    }
+    return id;
+  }
+
   toggleKitchenAndBathFields(domBuiltType: string | null | undefined): void {
     if (validateVariable(domBuiltType)) {
       QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE.forEach(
@@ -488,13 +548,26 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       this.editForm.get('domBuiltUse')?.setValue(null); // Resetea el valor del uso
       return;
     }
-
     const selectedTypeDispname = selectedType; // Valor seleccionado
-    this.filteredBuiltUseOptions = this.allBuiltUseOptions.filter((option) =>
-      option.code.startsWith(selectedTypeDispname)
+    this.filteredBuiltUseOptions = this.allBuiltUseOptions.filter(
+      (option: DomainCollection) => option?.code && option?.code.startsWith(selectedTypeDispname)
     );
-
     this.editForm.get('domBuiltUse')?.setValue(null); // Resetea el valor del uso
+  }
+
+  validateDomBuilTypeAnnex(domBuiltUse: string | null) {
+    let domBuiltType: string | null = null;
+    if (domBuiltUse) {
+      domBuiltType = this.editForm.get('domBuiltType')?.value;
+      if (domBuiltType && domBuiltType === QUALIFICATIONS_DOMBUILT_TYPE_ANEXX.domBuiltType) {
+        const list = this.allBuiltUseOptions.filter(
+          (option: DomainCollection) => domBuiltType && domBuiltUse && option?.code &&
+            option?.code.startsWith(domBuiltType) && option?.code.endsWith(domBuiltUse)
+        );
+        this.annexUrl = list.length >= 1 ? this.urlBasic + `${list[0].domainCode}` : '';
+        this.toggleQualificationMode(TYPE_ANNEX);
+      }
+    }
   }
 
   // Procesar valores del formulario
@@ -507,9 +580,10 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
 
   private fetchAllBuiltUseOptions(): void {
     this.collectionServicesService.getAllDataAllBuiltUseOptions(DOMAIN_NAME_BUILT_USE, true).subscribe({
-      next: (data) => {
-        this.allBuiltUseOptions = data;
+      next: (data: DomainCollection[]) => {
+        this.allBuiltUseOptions = (data || []).map((content: DomainCollection) => new DomainCollection(content));
         this.filteredBuiltUseOptions = data;
+        this._useOptions$.next(true);
       },
       error: (err) => {
       }
@@ -537,11 +611,16 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   }
 
   get activeQualificationForm(): FormGroup {
-    return this.qualificationMode === TYPE_TRADITIONAL ? this.traditionalRatingForm : this.typologyRatingForm;
+    if (this.qualificationMode === TYPE_TRADITIONAL) {
+      return this.traditionalRatingForm;
+    } else if (this.qualificationMode === TYPE_TYPOLOGY) {
+      return this.typologyRatingForm;
+    }
+    return this.typeAnexxForm;
   }
 
   getApiQualificationUrl(domain: string): string {
-    return `${environment.getApiQualificationUrl}${domain}`;
+    return `${this.urlBasic}${domain}`;
   }
 
   createConstruction(executionId: string, baunitId: string, formValues: ContentInformationConstruction) {
@@ -597,6 +676,9 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     }
   };
 
+  ngOnDestroy(): void {
+  }
+
   protected readonly GUION = GUION;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
   protected readonly CONSTANT_MSG_UNITBUILT_LABEL = CONSTANT_MSG_UNITBUILT_LABEL;
@@ -605,4 +687,5 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   protected readonly CONSTANT_MSG_ONLY_ONE_99 = CONSTANT_MSG_ONLY_ONE_99;
   protected readonly TYPE_TYPOLOGY = TYPE_TYPOLOGY;
   protected readonly TYPE_TRADITIONAL = TYPE_TRADITIONAL;
+  protected readonly TYPE_ANNEX = TYPE_ANNEX;
 }

@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { SendGeneralRequestsService } from '../../../services/general/send-general-requests.service';
 import { catchError, Observable } from 'rxjs';
-import { MatTooltip } from '@angular/material/tooltip';
+import { INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-combox-custom-selector',
@@ -19,8 +19,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatSelectModule,
     ReactiveFormsModule,
     MatTableModule,
-    NgClass,
-    MatTooltip
+    NgClass
   ],
   templateUrl: './custom-selector.component.html',
   styleUrl: './custom-selector.component.scss',
@@ -39,6 +38,7 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
   @Input() label: string = 'Seleccione una opción'; // Etiqueta del selector
   @Input() placeholder: string = ''; // Placeholder del selector
   @Input() apiUrl!: string; // URL para obtener las opciones
+  @Input() apiUrlDynamic!: string; // URL para obtener las opciones dinamico
   @Input() valueKey: string = 'value'; // Clave para el `value` del mat-option
   @Input({ required: true }) displayKey: string = 'label'; // Clave para el texto del mat-option
   @Input() cssClasses: string = ''; // Clases CSS dinámicas
@@ -53,7 +53,8 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
   value: any; // Valor del selector
   disabled: boolean = false; // Estado de deshabilitado
 
-  constructor(private requestsService: SendGeneralRequestsService) {}
+  constructor(private requestsService: SendGeneralRequestsService) {
+  }
 
   ngOnInit(): void {
     if (this.idSelector?.length > 0) {
@@ -63,12 +64,26 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
       this.idSelector = this.getRandomInt(10000)
         + 'customSelector' + this.getRandomInt(10);
     }
-    if(this.apiUrl) {
-      this.fetchOptions();
-    }
+    this.chargeSelect();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['apiUrlDynamic'] && !this.apiUrlDynamic && this.apiUrlDynamic.length <= 0) {
+      this.options = [];
+      return;
+    }
+
+    if (changes['apiUrlDynamic'] && this.apiUrlDynamic && this.apiUrlDynamic.length > 0) {
+      this.apiUrl = this.apiUrlDynamic;
+      this.chargeSelect();
+      return;
+    }
+  }
+
+  chargeSelect(): void {
+    if (this.apiUrl) {
+      this.fetchOptions();
+    }
   }
 
   fetchOptions(): void {
@@ -119,10 +134,14 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
-  private onChange = (value: any) => {};
-  private onTouched = () => {};
+  private onChange = (value: any) => {
+  };
+  private onTouched = () => {
+  };
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
+
+  protected readonly INFORMATION_NOT_FOUND = INFORMATION_NOT_FOUND;
 }
