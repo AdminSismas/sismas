@@ -123,6 +123,15 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit, 
       .subscribe((participants) => {
         this.dataSource.data = participants;
       });
+
+    this.participantsService.chargeInfoSubject$.subscribe((result: boolean | null) => {
+      if (result !== null && result) {
+        this.obtainInformationThirdPartyAffected();
+      }
+      return;
+    });
+
+
     this.obtainInformationThirdPartyAffected();
   }
 
