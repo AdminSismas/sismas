@@ -7,7 +7,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { firstValueFrom, Observable, of, ReplaySubject } from 'rxjs';
+import { firstValueFrom, Observable, ReplaySubject } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
@@ -25,7 +25,6 @@ import {
   LISTO_FORM_BPM_CORE,
   MODAL_SMALL
 } from '../../../../apps/constants/general/constants';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
 import { BasicComponentTemplate, ComponentTemplate } from '../../../../apps/interfaces/bpm/render-template.types';
 import { ProFlow } from '../../../../apps/interfaces/bpm/pro-flow';
@@ -43,7 +42,6 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 
 @Component({
@@ -242,8 +240,7 @@ export class BmpCoreComponent implements OnInit {
     if (isReturn) {
       this.router
         .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
-        .then(() => {
-        });
+        .then();
     }
   }
 
@@ -333,8 +330,7 @@ export class BmpCoreComponent implements OnInit {
           icon: 'success',
           showConfirmButton: true,
           timer: 10000
-        }).then(() => {
-        });
+        }).then();
         this.bpmProcessService.setPermissions(vailablePermission);
         return;
       }
@@ -382,7 +378,7 @@ export class BmpCoreComponent implements OnInit {
   ) {
     obj.nameComponent = component.name;
     obj.pathForm = component.pathForm;
-    obj.inputs = { executionId: this.executionId, resources: this.resources };
+    obj.inputs = { executionId: this.executionId, resources: this.resources, mode: component.mode };
     this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
       providers: [{ provide: ProFlow, useValue: this.proFlow }],
@@ -391,7 +387,7 @@ export class BmpCoreComponent implements OnInit {
     return obj;
   }
 
-  getAlertError(msg: string, timer: number = 1000, showConfirmButton: boolean = false) {
+  getAlertError(msg: string, timer = 1000, showConfirmButton = false) {
     this.loadingServiceService.activateLoading(false);
     Swal.fire({
       title: '¡Error!',
@@ -399,8 +395,7 @@ export class BmpCoreComponent implements OnInit {
       icon: 'error',
       showConfirmButton: showConfirmButton,
       timer: timer
-    }).then(() => {
-    });
+    }).then();
   }
 
   private returnURLPrevious(url: string) {

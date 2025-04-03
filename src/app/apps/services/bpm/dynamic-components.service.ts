@@ -94,6 +94,13 @@ export class DynamicComponentsService {
       loadComponent: () => import('../../../pages/pages/bpm/core/document/validate/document-validate.component').then(
         (m) => m.DocumentValidateComponent
       ),
+    },
+    {
+      nameComponent: 'cadResNoProcedeComponent',
+      component:ResValidateComponent,
+      loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component').then(
+        (m) => m.ResValidateComponent
+      ),
     }
   ];
 

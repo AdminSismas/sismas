@@ -70,16 +70,17 @@ export const environment = {
     startProcess: "startProcess",
     value: "/bpmOperation"
   },
+  bpmParticipation: {
+    participation: "/participation",
+    thirdPartyAffected: "/terceroAfectado",
+    value: "/bpmParticipation"
+  },
   bpmProcess: {
     category: "/category",
     prodocumentStr: "/prodocumentStr/",
     value: "/bpmProcess"
   },
-  bpmParticipation: {
-    value: '/bpmParticipation',
-    participation:'/participation',
-    thirdPartyAffected:'/terceroAfectado'
-  },
+  bpmResolution: "/bpmResolution",
   calificationUB: "/calificationUB",
   cancel: "/cancel",
   ccColindante: "/ccColindante/",
@@ -124,6 +125,7 @@ export const environment = {
   myWork_cadastralSearch: "/myWork/cadastralSearch",
   myWork_cadastralSearchDa: "/openData/cadastralSearchDA",
   myWork_tasksPanel: "/myWork/tasks/tasksPanel/",
+  noprocede: "/noprocede",
   notFound: "/not-found",
   npnlike: "/npnlike",
   number: "number",
@@ -132,6 +134,7 @@ export const environment = {
   password: "/password",
   port: "5001",
   post_path_viewer: "rest/config/setParams",
+  preview: "/preview",
   production: false,
   proExecution: "/proExecution",
   qbaunit_ccbarrio: "/qbaunit/ccbarrio",
