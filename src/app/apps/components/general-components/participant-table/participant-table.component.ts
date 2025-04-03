@@ -152,13 +152,6 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
         this.processParticipants.emit(participants);
       });
 
-    this.participantsService.chargeInfoSubject$.subscribe((result: boolean | null) => {
-      if (result !== null && result) {
-        this.searchInformation();
-      }
-      return;
-    });
-
     this.searchInformation();
   }
 
