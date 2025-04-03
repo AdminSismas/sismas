@@ -13,7 +13,6 @@ import { saveAs } from 'file-saver';
   providedIn: 'root'
 })
 export class AlfaMainService {
-
   private _refreshData = new BehaviorSubject<boolean>(false);
   refreshData$ = this._refreshData.asObservable();
 
@@ -22,26 +21,33 @@ export class AlfaMainService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {
-  }
+  ) {}
 
   refresh() {
     this._refreshData.next(true);
   }
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
-  validateAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
+  validateAlfaMainOperations(
+    executionId: string,
+    schemas: string
+  ): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
-  createAlfaMainOperations(executionId: string, schemas: string): Observable<ChangeControl> {
+  createAlfaMainOperations(
+    executionId: string,
+    schemas: string
+  ): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
     return this.requestsService.sendRequestsFetchPost(url);
   }
 
-  getListAlfaMainOperations(page: PageSearchData): Observable<InformationPegeable> {
+  getListAlfaMainOperations(
+    page: PageSearchData
+  ): Observable<InformationPegeable> {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
@@ -49,7 +55,11 @@ export class AlfaMainService {
     return this.getData(url, paramsR);
   }
 
-  getListAlfaMainOperationsUnitsByBaunitId(page: PageSearchData, executionId: string, baunitId: string): Observable<InformationPegeable> {
+  getListAlfaMainOperationsUnitsByBaunitId(
+    page: PageSearchData,
+    executionId: string,
+    baunitId: string
+  ): Observable<InformationPegeable> {
     const url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     const paramsR: HttpParams = new HttpParams()
       .set('page', `${page.page}`)
@@ -68,7 +78,9 @@ export class AlfaMainService {
   }
 
   //{{url}}:{{port}}/metrict/CadastreChangeLog/{{executionId}}?page=0&size=30
-  analyzeChangesBpmOperationAlfaMain(page: PageSearchData): Observable<InformationPegeable> {
+  analyzeChangesBpmOperationAlfaMain(
+    page: PageSearchData
+  ): Observable<InformationPegeable> {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
@@ -83,13 +95,20 @@ export class AlfaMainService {
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike/18001010100000099/baunits
-  loadingListBeaUnitheadByExecutionIdAndNpnLike(executionId: string, npnLike: string): Observable<BaunitHead[]> {
+  loadingListBeaUnitheadByExecutionIdAndNpnLike(
+    executionId: string,
+    npnLike: string
+  ): Observable<BaunitHead[]> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}/${npnLike}${envi.baunits}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   //{{url}}:{{port}}/temporal/BAUnitCreate
-  createTemporalBeaUnithead(npnLike: string, executionId: string, bAunitCondition: string): Observable<InformationPegeable> {
+  createTemporalBeaUnithead(
+    npnLike: string,
+    executionId: string,
+    bAunitCondition: string
+  ): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.temporal}${envi.bAUnitCreate}`;
     const formData = new FormData();
     formData.append('npnLike', `${npnLike}`);
@@ -97,17 +116,24 @@ export class AlfaMainService {
     formData.append('domBaunitCondition', `${bAunitCondition}`);
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
 
-    return this.http.post<InformationPegeable>(url, formData, { headers: headers });
+    return this.http.post<InformationPegeable>(url, formData, {
+      headers: headers
+    });
   }
 
   //{{url}}:{{port}}/temporal/BAUnitUpdate
-  createUpdateTemporalBeaUnithead(baunitId: string, executionId: string): Observable<InformationPegeable> {
+  createUpdateTemporalBeaUnithead(
+    baunitId: string,
+    executionId: string
+  ): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.temporal}${envi.bAUnitUpdate}`;
     const formData = new FormData();
     formData.append('baunitId', `${baunitId}`);
     formData.append('changeLogId', `${executionId}`);
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-    return this.http.post<InformationPegeable>(url, formData, { headers: headers });
+    return this.http.post<InformationPegeable>(url, formData, {
+      headers: headers
+    });
   }
 
   //{{url}}:{{port}}/temporal/BAUnitDelete
@@ -116,16 +142,23 @@ export class AlfaMainService {
       .set('baunitId', `${baUnitId}`)
       .set('changeLogId', `${executionId}`);
     return this.http.delete(
-      `${this.basic_url}${envi.temporal}${envi.bAUnitDelete}`, { params });
+      `${this.basic_url}${envi.temporal}${envi.bAUnitDelete}`,
+      { params }
+    );
   }
 
   //{{url}}:{{port}}/temporal/BAUnitDeleteExistTemp
-  changeTemporaryStateBeaUnitHeadByExistTemp(baUnitId: string, executionId: string) {
+  changeTemporaryStateBeaUnitHeadByExistTemp(
+    baUnitId: string,
+    executionId: string
+  ) {
     const params: HttpParams = new HttpParams()
       .set('baunitId', `${baUnitId}`)
       .set('changeLogId', `${executionId}`);
     return this.http.delete(
-      `${this.basic_url}${envi.temporal}${envi.bAUnitDeleteExistTemp}`, { params });
+      `${this.basic_url}${envi.temporal}${envi.bAUnitDeleteExistTemp}`,
+      { params }
+    );
   }
 
   /**
@@ -133,7 +166,10 @@ export class AlfaMainService {
    *
    * */
   // {{url}}:{{port}}/baunit/temp/{{executionId}}/{{baunitId}}
-  getBaUnitHeadTemporal(executionId: string, baunitId: string): Observable<BaunitHead> {
+  getBaUnitHeadTemporal(
+    executionId: string,
+    baunitId: string
+  ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
@@ -143,35 +179,48 @@ export class AlfaMainService {
    *
    * */
   // {{url}}:{{port}}/baunit/hist/{{executionId}}/{{baunitId}}
-  getBaUnitHeadHistory(executionId: string, baunitId: string): Observable<BaunitHead> {
+  getBaUnitHeadHistory(
+    executionId: string,
+    baunitId: string
+  ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.hist}/${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
-  private getData(url: string, params: unknown): Observable<InformationPegeable> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params })
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+  private getData(
+    url: string,
+    params: unknown
+  ): Observable<InformationPegeable> {
+    return this.requestsService
+      .sendRequestsGetOption(url, { params: params })
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/excel/generate
   getGenerateExcelMassive(executionId: string) {
-    this.http.get(`${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.generate}`,
-      { responseType: 'blob' }).subscribe({
-      next: (response) => {
-        const blob = new Blob([response], { type: 'application/octet-stream' });
-        saveAs(blob, `massiveDownload_${executionId}.xlsx`);
-      }
-    });
+    this.http
+      .get(
+        `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.generate}`,
+        { responseType: 'blob' }
+      )
+      .subscribe({
+        next: (response) => {
+          const blob = new Blob([response], {
+            type: 'application/octet-stream'
+          });
+          saveAs(blob, `massiveDownload_${executionId}.xlsx`);
+        }
+      });
   }
-
 
   //{{url}}:{{port}}/temporal/{{executionId}}/excel/load
   loadingExcelMassive(executionId: string, formData: FormData) {
-    return this.requestsService.sendRequestsFetchPostBody(
-      `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.load}`,
-      formData).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
-    );
+    return this.requestsService
+      .sendRequestsFetchPostBody(
+        `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.load}`,
+        formData
+      )
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
   getValidityOptions(executionId: string): Observable<string[]> {
@@ -180,9 +229,29 @@ export class AlfaMainService {
     return this.http.get<string[]>(url);
   }
 
-  changeValidityProcedure(executionId: string, body: ChangeControl): Observable<ChangeControl> {
+  changeValidityProcedure(
+    executionId: string,
+    body: ChangeControl
+  ): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${envi.schemas.temp}/${executionId}`;
 
     return this.http.put<ChangeControl>(url, body);
+  }
+
+  autoAppraisalExecution(
+    executionId: string,
+    baunitId: string,
+    parameters: {
+      selfValuationValue: string;
+      validity: string;
+    }
+  ): Observable<void> {
+    const url = `${this.basic_url}${envi.temporal}${executionId}${envi.selfvaluation}/${baunitId}`;
+
+    const params = new HttpParams()
+      .set('selfValuationValue', parameters.selfValuationValue)
+      .set('validity', parameters.validity);
+
+    return this.http.put<void>(url, {}, { params });
   }
 }

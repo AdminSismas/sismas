@@ -160,6 +160,7 @@ export const environment = {
     main: "main",
     temp: "temp"
   },
+  selfvaluation: "/selfvaluation",
   serviciosTaquilla: "/serviciosTaquilla",
   signatureUrl: "/signatureUrl",
   snr: "/snr",
