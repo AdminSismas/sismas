@@ -1,78 +1,81 @@
-<mat-tab-group class="min-h-full">
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon svgIcon="mat:description"></mat-icon>
-      {{ firstTab() }}
-    </ng-template>
-    <button
-      mat-flat-button
-      color="primary"
-      class="absolute top-2 left-2 xl:top-4 xl:left-4"
-      (click)="reloadPdf()"
-    >
-      <mat-icon svgIcon="mat:refresh"></mat-icon>
-      Refrescar
-    </button>
-    <div class="flex items-center justify-center text-center tab-body">
-      @if (!isLoading() && pdfUrl() !== "error") {
-        <!-- class="doc-viewer" -->
-        <iframe
-          [src]="pdfUrl()"
-          width="75%"
-          height="100%"
-        ></iframe>
-      } @else if (!isLoading() && pdfUrl() === "error") {
-        <div class="flex justify-center items-center tab-body w-full">
-          <p>No se pudo cargar el documento PDF.</p>
-        </div>
-      } @else {
-        <div class="flex justify-center items-center tab-body w-full">
-          <mat-spinner diameter="32"></mat-spinner>
-        </div>
-      }
-    </div>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon svgIcon="mat:edit_note"></mat-icon>
-      {{ secondTab() }}
-    </ng-template>
-    <div
-      class="flex flex-col items-center text-center w-full tab-body py-4"
-    >
-      <vex-dynamic-forms
-        class="w-3/5 lg:w-4/5"
-        className="flex flex-col gap-2"
-        [inputs]="inputs"
-        [initValues]="initTags()"
-        (formReady)="form.set($event)"
-      ></vex-dynamic-forms>
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="saveTags()"
-      >
-        <mat-icon svgIcon="mat:save"></mat-icon>
-        Guardar
-      </button>
-    </div>
-  </mat-tab>
-</mat-tab-group>
+<vex-page-layout [id]="idComponent" mode="card" class="pb-0">
 
-<swal
-  #successSendTags
-  title="Tags enviados"
-  icon="success"
-  text="Todos los tags se han enviado con exito."
-  confirmButtonText="Aceptar"
-  confirmButtonColor="primary"
-></swal>
+  <vex-page-layout-content class="container-fluid px-1 py-1">
 
-<swal
-  #errorSendTags
-  title="Tags no enviados"
-  icon="error"
-  text="Los tags no se han podido enviar."
-  confirmButtonText="Aceptar"
-  confirmButtonColor="primary"
-></swal>
+    <mat-tab-group class="min-h-full" dynamicHeight animationDuration="500ms" preserveContent>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon svgIcon="mat:description"></mat-icon>
+          {{ firstTab() }}
+        </ng-template>
+        <div class="h-full flex flex-col container-fluid xl:px-1 xl:py-1 sm:px-3 sm:py-3" vexFluidHeight
+             fluidHeight=197>
+          <div class="flex items-center justify-center text-center tab-body w-full h-full">
+            <vex-page-layout-content class="container-fluid px-3 py-0 w-full h-full" vexMaxFluidHeight fluidHeight=207>
+              <!-- REFRESH BUTTON -->
+              <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
+                <div
+                  class="rounded-tr rounded-br border-l-3 px-0 py-0 m-0 flex flex-col sm:flex-row items-center gap-3">
+                  <span class="sm:flex-auto"></span>
+                  <span class="sm:flex-auto xl:flex-1"></span>
+                  <button class="rounded-full grow xl:max-w-[160px] sm:min-w-[80px]" color="primary" mat-raised-button
+                          type="button" (click)="reloadPdf()">
+                    <mat-icon class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm" svgIcon="mat:refresh"></mat-icon>
+                    <span>Refrescar</span>
+                  </button>
+                </div>
+              </div>
+              @if (!isLoading() && pdfUrl() !== "error") {
+                <iframe [id]="idComponent + executionId() + 'sssss'" vexMaxFluidHeight fluidHeight=269 [src]="pdfUrl()"
+                        class="w-full h-full min-h-[350px]"></iframe>
+              } @else if (!isLoading() && pdfUrl() === "error") {
+                <div class="flex justify-center items-center tab-body w-full">
+                  <p>No se pudo cargar el documento PDF.</p>
+                </div>
+              } @else {
+                <div class="flex justify-center items-center tab-body w-full">
+                  <mat-spinner diameter="32"></mat-spinner>
+                </div>
+              }
+            </vex-page-layout-content>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon svgIcon="mat:edit_note"></mat-icon>
+          {{ secondTab() }}
+        </ng-template>
+        <vex-page-layout-content class="card w-full h-full">
+          <div class="container-fluid p-0" vexFluidHeight fluidHeight=200>
+            <div
+              class="container-fluid mt-3 mb-1 px-[5rem] py-0 w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden">
+              <vex-dynamic-forms [inputs]="inputs" [initValues]="initTags()" (formReady)="form.set($event)"
+                                 className="pt-3 pb-1 grid grid-cols-2 gap-4 sm:grip-row overflow-hidden items-center justify-center w-100 px-2"
+                                 class="w-full pt-4"></vex-dynamic-forms>
+            </div>
+            <div class="container w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden">
+              <vex-table-third-party-affected [executionId]="executionId()" [readOnly]="true">
+              </vex-table-third-party-affected>
+              <div class="w-full max-w-4xl p-4 flex items-center justify-center text-center gap-4 mx-auto mt-2">
+                <button mat-raised-button class="grow max-w-xs px-6 py-5" color="primary" (click)="saveTags()">
+                  <mat-icon svgIcon="mat:save" class="!w-6 !h-6"></mat-icon>
+                  Guardar
+                </button>
+              </div>
+            </div>
+          </div>
+        </vex-page-layout-content>
+      </mat-tab>
+    </mat-tab-group>
+
+  </vex-page-layout-content>
+
+</vex-page-layout>
+
+<swal #successSendTags title="Tags enviados" icon="success" text="Todos los tags se han enviado con exito."
+      confirmButtonText="Aceptar" confirmButtonColor="primary"></swal>
+
+<swal #errorSendTags title="Tags no enviados" icon="error" text="Los tags no se han podido enviar."
+      confirmButtonText="Aceptar" confirmButtonColor="primary"></swal>

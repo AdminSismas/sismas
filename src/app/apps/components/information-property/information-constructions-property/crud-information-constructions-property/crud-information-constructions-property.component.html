@@ -52,6 +52,7 @@
                     [valueKey]="'dispname'"
                     [displayKey]="'dispname'"
                     formControlName="domBuiltUse"
+                    (selectionChange)="validateDomBuilTypeAnnex($event)"
                     cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
                     class="flex-auto"
                   ></vex-combox-custom-selector>
@@ -128,26 +129,28 @@
       <mat-step [stepControl]="activeQualificationForm">
         <form [formGroup]="activeQualificationForm">
           <ng-template matStepLabel>Calificación</ng-template>
-          <div class="actions flex items-center gap-2 pt-0">
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="toggleQualificationMode(TYPE_TRADITIONAL)"
-              [class]="qualificationMode === TYPE_TRADITIONAL ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
-              [disabled]="qualificationMode === TYPE_TRADITIONAL"
-            >
-              Tradicional
-            </button>
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="toggleQualificationMode(TYPE_TYPOLOGY)"
-              [class]="qualificationMode === TYPE_TYPOLOGY ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
-              [disabled]="qualificationMode === TYPE_TYPOLOGY"
-            >
-              Tipología
-            </button>
-          </div>
+          @if (qualificationMode === TYPE_TYPOLOGY || qualificationMode === TYPE_TRADITIONAL){
+            <div class="actions flex items-center gap-2 pt-0">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="toggleQualificationMode(TYPE_TRADITIONAL)"
+                [class]="qualificationMode === TYPE_TRADITIONAL ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+                [disabled]="qualificationMode === TYPE_TRADITIONAL"
+              >
+                Tradicional
+              </button>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="toggleQualificationMode(TYPE_TYPOLOGY)"
+                [class]="qualificationMode === TYPE_TYPOLOGY ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+                [disabled]="qualificationMode === TYPE_TYPOLOGY"
+              >
+                Tipología
+              </button>
+            </div>
+          }
 
           @if (qualificationMode === TYPE_TRADITIONAL) {
             <!-- Tradicional -->
@@ -204,9 +207,7 @@
                   ></vex-combox-custom-selector>
                 </div>
               </div>
-
               <div class="mt-0 flex flex-col gap-2">
-
                 <p><strong>Acabados Principales</strong></p>
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
                   <vex-combox-custom-selector
@@ -257,9 +258,7 @@
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
                 </div>
-
               </div>
-
               <div class="mt-0 flex flex-col gap-2">
                 <p><strong>Baño</strong></p>
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
@@ -313,7 +312,6 @@
                   ></vex-combox-custom-selector>
                 </div>
               </div>
-
               <div class="mt-0 flex flex-col gap-2">
                 <p><strong>Cocina</strong></p>
                 <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
@@ -367,21 +365,48 @@
                   ></vex-combox-custom-selector>
                 </div>
               </div>
-
             </div>
           }
+
           @if (qualificationMode === TYPE_TYPOLOGY) {
             <!-- Tipología -->
-            <div class="mt-4 flex flex-col gap-2">
-              <p><strong>Tipología</strong></p>
-              <vex-combox-custom-selector
-                [idSelector]="'Tipologia ' + 12354"
-                [label]="'Tipología'"
-                [placeholder]="'Seleccione tipología...'"
-                [apiUrl]="getApiQualificationUrl('Tipologia')"
-                [displayKey]="'dispname'"
-                formControlName="domTipologiaTipo"
-              ></vex-combox-custom-selector>
+            <div class="mt-2 flex flex-col gap-2">
+              <div class="mt-0 flex flex-col gap-2">
+                <p><strong>Tipología</strong></p>
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-3">
+                  <vex-combox-custom-selector
+                    [idSelector]="'Tipologia ' + 12354"
+                    [label]="'Tipología'"
+                    [placeholder]="'Seleccione tipología...'"
+                    [apiUrl]="getApiQualificationUrl('Tipologia')"
+                    [displayKey]="'dispname'"
+                    formControlName="domTipologiaTipo"
+                  ></vex-combox-custom-selector>
+                </div>
+              </div>
+            </div>
+          }
+
+          @if (qualificationMode === TYPE_ANNEX) {
+            <!-- Anexo -->
+            <div class="mt-2 flex flex-col gap-2">
+              <div class="mt-0 flex flex-col gap-3">
+                <p><strong>Anexos</strong></p>
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <vex-combox-custom-selector
+                    class="flex-auto"
+                    [idSelector]="'Anexxxo ' + 98765"
+                    [label]="'Anexos'"
+                    [placeholder]="'Seleccione un anexo...'"
+                    [apiUrlDynamic]="annexUrl"
+                    [valueKey]="'id'"
+                    [displayKey]="'dispname'"
+                    formControlName="domTypeAnexx"
+                    cssClasses="custom-class"
+                  ></vex-combox-custom-selector>
+                  <span class="flex-auto"></span>
+                </div>
+              </div>
             </div>
           }
           <div class="actions flex items-center justify-end gap-2">

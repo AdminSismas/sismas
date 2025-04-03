@@ -7,6 +7,7 @@ import { PageSearchData } from '../../interfaces/general/page-search-data.model'
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
+import { TablaContent } from '../../interfaces/bpm/table-procedure-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,9 +70,9 @@ export class TasksPanelService {
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
-  viewTaskId(taskId: number): Observable<any> {
+  viewTaskId(taskId: number): Observable<TablaContent> {
     const urlTask = `${this.basic_url}${envi.bpmOperation.proExecution}${taskId}`;
-    return this.http.get<any>(urlTask);
+    return this.http.get<TablaContent>(urlTask);
   }
 
   viewProTaskId(taskId: number): Observable<any> {

@@ -1,10 +1,7 @@
 @if (form) {
-  <form
-    [formGroup]="form"
-    [ngClass]="cssClassesForm(className)"
-  >
+  <form [formGroup]="form" [ngClass]="cssClassesForm(className)" class="py-2">
     @for (input of inputs; track input.name) {
-      @if (input.element === "collection") {
+      @if (input.element === "collection" && !input.noVisibleComponent) {
         <vex-combox-colletion
           [label]="input.label"
           [formControlNameCombobox]="input.name"
@@ -14,7 +11,9 @@
           [cssClasses]="cssClassesInput(input.cssClasses)"
           [ngClass]="cssClassesInput(input.cssClasses)"
         ></vex-combox-colletion>
-      } @else if (input.element === "date") {
+      }
+
+      @if (input.element === "date" && !input.noVisibleComponent) {
         <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
           <mat-label>{{ input.label }}</mat-label>
           <input
@@ -30,7 +29,9 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-      } @else if (input.element === "file") {
+      }
+
+      @if (input.element === "file" && !input.noVisibleComponent) {
         <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
           <mat-label>{{ input.label }}</mat-label>
           <ngx-mat-file-input
@@ -40,7 +41,9 @@
             color="primary"
           ></ngx-mat-file-input>
         </mat-form-field>
-      } @else if (input.element === "select") {
+      }
+
+      @if (input.element === "select" && !input.noVisibleComponent) {
         <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)">
           <mat-label>{{ input.label }}</mat-label>
           <mat-select
@@ -53,13 +56,18 @@
             }
           </mat-select>
         </mat-form-field>
-      } @else if (input.element === "toggle") {
+      }
+
+      @if (input.element === "toggle" && !input.noVisibleComponent) {
         <mat-slide-toggle
           [formControlName]="input.name"
           [labelPosition]="labelPositionToggle(input)"
-          >{{ input.label }}</mat-slide-toggle
+        >{{ input.label }}
+        </mat-slide-toggle
         >
-      } @else if (input.element === "checkbox") {
+      }
+
+      @if (input.element === "checkbox" && !input.noVisibleComponent) {
         <mat-form-field>
           <mat-checkbox
             [formControlName]="input.name"
@@ -69,16 +77,20 @@
             {{ input.label }}
           </mat-checkbox>
         </mat-form-field>
-      } @else if (input.element === "textarea") {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
-          <mat-label>{{ input.label }}</mat-label>
-          <textarea
-            matInput
-            placeholder="{{ input.placeholder }}&hellip;"
-            [formControlName]="input.name"
-          ></textarea>
-        </mat-form-field>
-      } @else if (input.element === "input") {
+      }
+
+      @if (input.element === "textarea" && !input.noVisibleComponent) {
+        <vex-text-area
+          [idTextArea]="input.name"
+          [label]="input.label"
+          [formControlNameTextArea]="input.name"
+          [placeholder]="input.placeholder"
+          [cssClasses]="cssClassesInput(input.cssClasses)"
+          [ngClass]="cssClassesInput(input.cssClasses)">
+        </vex-text-area>
+      }
+
+      @if (input.element === "input" && !input.noVisibleComponent) {
         <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
           <mat-label>{{ input.label }}</mat-label>
           <input

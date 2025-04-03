@@ -27,6 +27,11 @@ export class LoadingServiceService {
     setTimeout(() => this.hide(), timer);
   }
 
+  deActivate(timer: number = 3000) {
+    this.isLoading.set(true);
+    setTimeout(() => this.hide(), timer);
+  }
+
   show() {
     this.isLoading.set(true);
   }

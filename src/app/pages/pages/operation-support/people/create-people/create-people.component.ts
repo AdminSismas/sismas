@@ -1,17 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
-import {
-  FormBuilder, FormControl,
-  ReactiveFormsModule,
-  Validator,
-  Validators
-} from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { People as People } from '../../../../../apps/interfaces/users/people.model';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,23 +11,39 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
-import { ComboxColletionComponent } from '../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
 import { PeopleService } from '../../../../../apps/services/users/people.service';
-import { firstValueFrom } from 'rxjs';
-import { environment } from 'src/environments/environments';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PAGE, PAGE_SIZE } from '../../../../../apps/constants/general/constants';
 import {
   ComboxColletionFormComponent
 } from '../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
 import { InputComponent } from '../../../../../apps/components/general-components/input/input.component';
+import { validateVariable } from '../../../../../apps/utils/general';
+import Swal from 'sweetalert2';
+import { InfoPerson } from '../../../../../apps/interfaces/information-property/info-person';
+import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
 interface defaultData extends People {
   mode: 'create' | 'update';
 }
+
 @Component({
   selector: 'vex-create-people',
   standalone: true,
+  animations: [
+    fadeInRight400ms,
+    stagger80ms,
+    scaleIn400ms,
+    stagger40ms,
+    fadeInUp400ms,
+    scaleFadeIn400ms
+  ],
   imports: [
     ReactiveFormsModule,
     MatDialogModule,
@@ -47,7 +54,6 @@ interface defaultData extends People {
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    ComboxColletionComponent,
     ComboxColletionFormComponent,
     InputComponent
   ],
@@ -86,13 +92,16 @@ export class CreatePeopleComponent implements OnInit {
     value: ''
   };
 
+  private _createPeople = new BehaviorSubject<boolean>(false);
+  createPeople$ = this._createPeople.asObservable();
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: defaultData | undefined,
     private dialogRef: MatDialogRef<CreatePeopleComponent>,
     private fb: FormBuilder,
-    private peopleServcie: PeopleService,
-    private alertSnakbar: MatSnackBar
-  ) {}
+    private peopleServcie: PeopleService
+  ) {
+  }
 
   ngOnInit() {
     if (this.defaults) {
@@ -108,6 +117,14 @@ export class CreatePeopleComponent implements OnInit {
     }
     this.disablesTypePople();
     this.form.patchValue(this.defaults);
+
+    this.createPeople$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.sendCreatePeople();
+        }
+      });
   }
 
   save() {
@@ -118,9 +135,7 @@ export class CreatePeopleComponent implements OnInit {
     }
   }
 
-  async createPeople() {
-    const people = this.form.value;
-
+  createPeople() {
     // validaciones si existe un campo requerido
     if (!this.form.valid) {
       this.menssage = {
@@ -166,29 +181,24 @@ export class CreatePeopleComponent implements OnInit {
         return;
       }
     }
-
     /* NOTA: validamos el usuario */
-    this.personRegister();
+    this.personRegister(true);
+  }
 
+  sendCreatePeople() {
     this.menssage.status = false;
-
-    // enviamos los datos para el envío de datos
-
-    const url_basic = `${environment.url}:${environment.port}${environment.individualNumber}`;
-
-    const dataCreate = {
-      url: url_basic,
-      body: people
-    };
-    const resApi = this.peopleServcie.userCreate(dataCreate).subscribe({
+    this.peopleServcie.createPeople(this.form.value).subscribe({
       next: (res) => {
-        this.alertSnakbar.open('Persona registrada', 'CERRAR', {
-          duration: 10000,
-          horizontalPosition: 'right'
-        });
-        this.dialogRef.close({
-          number: this.form.get('number')?.value,
-          domIndividualTypeNumber: this.form.get('domIndividualTypeNumber')?.value,
+        Swal.fire({
+          text: 'Persona registrada',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 10000
+        }).then(value => {
+          this.dialogRef.close({
+            number: this.form.get('number')?.value,
+            domIndividualTypeNumber: this.form.get('domIndividualTypeNumber')?.value
+          });
         });
       },
       error: (error) => {
@@ -196,57 +206,81 @@ export class CreatePeopleComponent implements OnInit {
     });
   }
 
-  async personRegister() {
+  personRegister(createPeople: boolean = false) {
     this.menssage = {
       status: false,
       value: ''
     };
-    //información de número de documento
-    if (
-      this.form.get('number')?.value !== '' &&
-      this.form.get('domIndividualTypeNumber')?.value !== ''
-    ) {
-      const obj = {
-        number: this.form.get('number')?.value,
-        individualTypeNumber: this.form.get('domIndividualTypeNumber')?.value,
-        page: this.page,
-        size: this.size
-      };
+    let numberID: string | null = this.form.get('number')?.value;
+    let typeDocument: string | null | undefined = this.form.get('domIndividualTypeNumber')?.value;
 
-      let datosClient: any;
-      try {
-        datosClient = await firstValueFrom(
-          this.peopleServcie.getPeopleTypeNumber(obj)
-        );
-      } catch (error) {
-        console.error(error);
-      }
-      //si es exite id entonces devolvemos el error
-      if (this.mode !== 'update') {
-        if (datosClient) {
+    //información de número de documento
+    if (numberID == null || !validateVariable(numberID) ||
+      typeDocument == null || !validateVariable(typeDocument)) {
+      Swal.fire({
+        text: 'Ingresar tipo documento o número de documento',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 10000
+      }).then();
+      return;
+    }
+    this.getPeople(numberID, typeDocument, createPeople);
+  }
+
+  getPeople(numberID: string, typeDocument: string, createPeople: boolean = false) {
+    const obj = {
+      number: numberID,
+      individualTypeNumber: typeDocument,
+      page: this.page,
+      size: this.size
+    };
+
+    this.peopleServcie.getPeopleTypeNumber(obj).subscribe({
+      error: (error: HttpErrorResponse) => {
+        if (error.status == HttpStatusCode.NotFound) {
+          if (createPeople) {
+            this._createPeople.next(true);
+            return;
+          }
+          Swal.fire({
+            text: 'No se encontro persona a consultar.',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 10000
+          }).then(() => {
+            this.validateTypePople();
+          });
+          return;
+        }
+      },
+      next: (result: InfoPerson) => {
+        if (this.mode !== 'update' && result) {
           this.disablesTypePople();
           this.menssage = {
             status: true,
             value: 'La persona ya se encuentra registrada'
           };
           return;
-        } else {
-          this.validateTypePople();
+        }
+        if (createPeople) {
+          this._createPeople.next(true);
           return;
         }
-      } else {
         this.validateTypePople();
-        return;
       }
-    }
+    });
   }
 
   updatePeople() {
+    const { individualId } = this.form.value;
     const people = this.form.value;
+    if (!individualId || individualId === '') {
+      return;
+    }
     //validamos que el input de palabra
     if (this.form.get('firstName')?.value !== '') {
       const validate = this.validateSingleWord(this.form.get('firstName')?.value);
-
       if (validate) {
         this.menssage.status = true;
         this.menssage.value = 'El nombre no puede tener espacios';
@@ -284,26 +318,17 @@ export class CreatePeopleComponent implements OnInit {
         'Customer ID does not exist, this customer cannot be updated'
       );
     }
-
     this.menssage.status = false;
-
-    const url_basic = `${environment.url}:${environment.port}${environment.individualNumber}/${this.form.get('individualId')?.value}?baunitId=TESTS`;
-
     people.number = this.defaults.number;
     people.domIndividualType = this.defaults.domIndividualType;
-
-    const dataCreate = {
-      url: url_basic,
-      body: people
-    };
-
-    this.peopleServcie.userEdit(dataCreate).subscribe({
+    this.peopleServcie.userEdit(individualId.toString(), people).subscribe({
       next: (res) => {
-        this.alertSnakbar.open('Persona actualizada', 'CERRAR', {
-          duration: 10000,
-          horizontalPosition: 'right'
-        });
-        this.dialogRef.close();
+        Swal.fire({
+          text: 'Persona actualizada',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 10000
+        }).then(value => this.dialogRef.close());
       },
       error: (error) => {
       }
@@ -353,6 +378,7 @@ export class CreatePeopleComponent implements OnInit {
       this.form.get(key)?.updateValueAndValidity();
     });
   }
+
   // validar nit
   validateNit(nit: any): boolean {
     const word = nit;
@@ -429,6 +455,7 @@ export class CreatePeopleComponent implements OnInit {
   get controlFirstName() {
     return this.form.get('firstName') as FormControl;
   }
+
   get controlMiddleName() {
     return this.form.get('middleName') as FormControl;
   }
@@ -452,9 +479,6 @@ export class CreatePeopleComponent implements OnInit {
   get controlCompanyName() {
     return this.form.get('companyName') as FormControl;
   }
-
-
-
 
 
 }

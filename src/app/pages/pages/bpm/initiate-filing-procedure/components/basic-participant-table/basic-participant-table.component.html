@@ -125,30 +125,11 @@
           </button>
         </td>
       </ng-container>
-
-      <ng-container matColumnDef="empty-row">
-        <td
-          *matCellDef="let row"
-          class="w-10 text-secondary pl-2 pr-2"
-          mat-cell
-        >
-          No data
-        </td>
-      </ng-container>
-
-      <tr
-        mat-header-row
-        *matHeaderRowDef="visibleColumns"
-        class="bg-app-bar border-b sticky"
+      <tr *matHeaderRowDef="visibleColumns" mat-header-row
+          class="bg-app-bar border-b sticky"
       ></tr>
       <tr
-        *matRowDef="
-          let row;
-          columns: dataSource.data.length > 0 &&
-          dataSource.filteredData.length > 0
-            ? visibleColumns
-            : ['empty-row']
-        "
+        *matRowDef="let row; columns: visibleColumns"
         @fadeInUp
         class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
         mat-row

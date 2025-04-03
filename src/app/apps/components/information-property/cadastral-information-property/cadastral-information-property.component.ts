@@ -214,7 +214,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   baunitHead!: BaunitHead;
   executionId: string | null | undefined;
   idContainer = '';
-  baunitId: string | null | undefined = null;
+  baunitId: string | null = null;
   navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
   editable: {
     GNR?: boolean,
@@ -248,6 +248,11 @@ export class CadastralInformationPropertyComponent implements OnInit {
       return;
     }
 
+    this.baunitHead = this.contentInfoSchema.content;
+    this.baunitId = this.baunitHead?.baunitIdE || null;
+    this.executionId = this.contentInfoSchema.executionId;
+
+
     if ((this.schema === this.schemaTemp && !this.contentInfoSchema.executionId) ||
       (this.schema === this.schemaHist && !this.contentInfoSchema.executionId)) {
       return;
@@ -265,10 +270,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
           this.processRulePage();
         }
       });
-
-    this.baunitHead = this.contentInfoSchema.content;
-    this.baunitId = this.baunitHead.baunitIdE;
-    this.executionId = this.contentInfoSchema.executionId;
 
     this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
       top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,

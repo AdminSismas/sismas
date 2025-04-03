@@ -1,17 +1,7 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
-  <h2
-    class="headline m-0 flex-auto">
+  <h3 class="headline m-0 flex-auto">
     {{ CONSTANT_CHANGE_UNITED_PREDIAL + TWO_POINT_ + baunitIdE }}
-  </h2>
-
-  <!-- <button
-    [matMenuTriggerFor]="settingsMenu"
-    class="text-secondary"
-    mat-icon-button
-    type="button">
-    <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button> -->
-
+  </h3>
   <button
     class="text-secondary"
     mat-dialog-close
@@ -21,87 +11,85 @@
   </button>
 </div>
 <mat-divider class="text-border"></mat-divider>
+
 <mat-dialog-content class="items-start justify-between vex-layout-content vex-layout-content-custom">
-  <div class="container-fluid overflow-hidden">
-    <div class="flex flex-col container-fluid" *ngIf="listChanges && listChanges.length >= 0">
-      <div class="card overflow-auto sm:mr-6 my-2 mx-3 p-4 mat-elevation-z3"
-           *ngFor="let change of listChanges;">
-        <div class="w-full flex flex-col pt-0">
-          <div class="flex justify-between">
-            <div class="flex flex-auto text-left justify-start">
-              <div class="w-full flex flex-row py-2">
-                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Objeto:    </span>
-                <span class="text-sm"> {{ change.entity }}</span>
-              </div>
-            </div>
-            <div class="flex flex-auto text-left justify-start">
-              <div class="w-full flex flex-row py-2">
-                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Campo:    </span>
-                <span class="text-sm"> {{ change.field }}</span>
-              </div>
-            </div>
-            <div class="flex flex-col ">
-              <div *ngIf="change.operationType === 'CREATE'"
-                   class="px-4 py-2 rounded-xl !bg-green-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                <!-- {{ change.operationType }} -->
-                  Creado
-              </div>
-              <div *ngIf="change.operationType === 'UPDATE'"
-                   class="px-4 py-2 rounded-xl !bg-primary-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                <!-- {{ change.operationType }} -->
-                Agregado
-              </div>
-              <div *ngIf="change.operationType === 'DELETE'"
-                   class="px-4 py-2 rounded-xl !bg-red-600 !text-white inline-flex self-end max-h-[40px] min-w-[90px]">
-                <!-- {{ change.operationType }} -->
-                  Borrado
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-full flex flex-col pt-0">
-          <div class="flex justify-between">
-            <div class="flex flex-auto text-left justify-start">
-              <div class="w-full flex flex-row py-2">
-                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Antes:    </span>
-                <span class="text-sm"> {{ change.oldValue }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-full flex flex-col pt-0">
-          <div class="flex justify-between">
-            <div class="flex flex-auto text-left justify-start">
-              <div class="w-full flex flex-row py-2">
-                <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Después:    </span>
-                <span class="text-sm"> {{ change.newValue }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+  @if (!listChanges || listChanges.length <= 0) {
+    <div class="w-full flex flex-col justify-between pt-2">
+      <div class="no-data-information text-gray-500 text-lg">
+        <h3 class="subheading-2 m-0 flex-auto">
+          Información No disponible
+        </h3>
       </div>
     </div>
-    <div class="w-full flex flex-col justify-between pt-2"
-         *ngIf="!listChanges || listChanges.length <= 0">
-      <h2 class="title mb-1 mt-1 w-full flex items-center">
-        <span class="block">Información No disponible</span>
-      </h2>
+  } @else {
+    <div class="container-fluid overflow-hidden">
+      @for (change of listChanges; track change) {
+        <div class="flex flex-col container-fluid">
+          <div class="card overflow-auto my-1 mx-2 py-2 px-4 mat-elevation-z3">
+            <div class="w-full flex flex-col pt-0">
+              <div class="flex justify-between gap-3">
+                <div class="flex flex-auto text-left justify-start sm:min-w-[410px]">
+                  <div class="w-full flex flex-row py-2">
+                    <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Objeto:    </span>
+                    <span class="text-sm"> {{ change.entity }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-auto text-left justify-start sm:min-w-[410px]">
+                  <div class="w-full flex flex-row py-2">
+                    <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Campo:    </span>
+                    <span class="text-sm"> {{ change.field }}</span>
+                  </div>
+                </div>
+                <div class="flex flex-col text-center item-center sm:min-w-[100px] xl:min-w-[85px]">
+
+
+                  @if (change.operationType === 'CREATE') {
+                    <div
+                      class="rounded px-2 py-1 font-medium text-xs flex-none text-green-600 bg-green-600/10">
+                      {{ 'Creado' }}
+                    </div>
+                  }
+
+                  @if (change.operationType === 'UPDATE') {
+                    <div
+                      class="rounded px-2 py-1 font-medium text-xs flex-none text-cyan-600 bg-cyan-600/10">
+                      {{ 'Agregado' }}
+                    </div>
+                  }
+
+                  @if (change.operationType === 'DELETE') {
+                    <div
+                      class="rounded px-2 py-1 font-medium text-xs flex-none text-red-600 bg-red-600/10">
+                      {{ 'Borrado' }}
+                    </div>
+                  }
+
+                </div>
+              </div>
+            </div>
+            <div class="w-full flex flex-col pt-0">
+              <div class="flex justify-between">
+                <div class="flex flex-auto text-left justify-start">
+                  <div class="w-full flex flex-row py-1">
+                    <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Antes:    </span>
+                    <span class="text-sm"> {{ change.oldValue }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="w-full flex flex-col pt-0">
+              <div class="flex justify-between">
+                <div class="flex flex-auto text-left justify-start">
+                  <div class="w-full flex flex-row py-1">
+                    <span class="title !text-black text-sm pr-5 min-w-[100px] sm:min-w-[85px]">Después:    </span>
+                    <span class="text-sm"> {{ change.newValue }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </div>
-  </div>
+  }
 </mat-dialog-content>
-<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Imprimir</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Exportar</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Borrar</span>
-  </button>
-</mat-menu>

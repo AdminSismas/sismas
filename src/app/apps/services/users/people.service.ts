@@ -5,6 +5,7 @@ import { SendGeneralRequestsService } from '../general/send-general-requests.ser
 import { Observable } from 'rxjs';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { InfoPerson } from '../../interfaces/information-property/info-person';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,8 @@ export class PeopleService {
 
   constructor(
     private requestsService: SendGeneralRequestsService
-  ) {}
+  ) {
+  }
 
   getAllPeople(params?: any) {
     let paramsR: HttpParams = new HttpParams();
@@ -24,16 +26,16 @@ export class PeopleService {
     return this.getData(urlP, paramsR);
   }
 
-  getPeopleTypeNumber( params: any ): Observable<InfoPerson> {
+  getPeopleTypeNumber(params: any): Observable<InfoPerson> {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', params.number);
     paramsR = paramsR.append(
       'individualTypeNumber',
       params.individualTypeNumber
     );
-
-    const urlP = `${this.url_basic}${environment.individualTypeNumber}`;
-    return this.getData(urlP, paramsR);
+    return this.getData(
+      `${this.url_basic}${environment.individualTypeNumber}`,
+      paramsR);
   }
 
   getPeopleNumber(params: any) {
@@ -42,18 +44,21 @@ export class PeopleService {
   }
 
   // editamos el usuario
-  userEdit(params: any) {
-    const body = params.body;
-    const url = params.url;
-    return this.updateBody(url, body);
+  userEdit(id: string, body: any) {
+    return this.updateBody(
+      `${environment.url}:${environment.port}${environment.individualNumber}/${id}?baunitId=TESTS`,
+      body
+    );
   }
 
   // creamos el usuario
-  userCreate(params: any) {
-    const body = params.body;
-    const url = params.url;
-    return this.fetchBody(url, body);
+ createPeople(body: any) {
+    return this.fetchBody(
+      `${environment.url}:${environment.port}${environment.individualNumber}`, body
+    );
   }
+
+
 
   getDeletePeopleId(params: number) {
     const urlP: string = `${this.url_basic}${environment.individualNumber}/${params}?version=99999`;
@@ -72,9 +77,11 @@ export class PeopleService {
   private fetchBody(url: any, body: any): Observable<InformationPegeable> {
     return this.requestsService.sendRequestsFetchPostBody(url, body);
   }
+
   private updateBody(url: any, body: any): Observable<InformationPegeable> {
     return this.requestsService.sendRequestsUpdatePutBody(url, body);
   }
+
   private deleteBody(url: any): Observable<InformationPegeable> {
     return this.requestsService.sendDeleteFetch(url);
   }

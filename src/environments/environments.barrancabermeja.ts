@@ -13,8 +13,8 @@ export const environment = {
     value: "/accessGeo/"
   },
   active: "active",
-  administrativeSource: "/fuenteadmin/",
   adjacent: "/colindante/",
+  administrativeSource: "/fuenteadmin/",
   apiUrlToken: "/token/authenticate",
   auth_login: "/auth/login",
   awsConfig: {
@@ -75,6 +75,11 @@ export const environment = {
     prodocumentStr: "/prodocumentStr/",
     value: "/bpmProcess"
   },
+  bpmParticipation: {
+    value: '/bpmParticipation',
+    participation:'/participation',
+    thirdPartyAffected:'/terceroAfectado'
+  },
   calificationUB: "/calificationUB",
   cancel: "/cancel",
   ccColindante: "/ccColindante/",
@@ -84,11 +89,13 @@ export const environment = {
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",
   changeLog: "/changeLog/",
+  changePriority: "changePriority/",
   check: "/check",
   checkProcess: "checkProcess/",
   clearBaunit: "clearBAUnit",
   clearChangelog: "clearChangelog",
   comment: "/comment/",
+  compare_hist: "/compare/hist/",
   compare_temp: "/compare/temp/",
   copy: "/copy",
   divpol: "/divpol",
@@ -167,6 +174,7 @@ export const environment = {
   url_domain_name: "https://barrancabermeja.map.sismas.com.co:5001/domain/name?",
   url_viewer: "https://barrancabermeja.map.sismas.com.co:8081/mapstore/",
   user_exist: "/username/",
+  validity: "validity",
   valuation: "/valuation/",
   video: "assets/video/barrancabermeja.mp4",
   withoutSignaturesUsers: "/without-signature",

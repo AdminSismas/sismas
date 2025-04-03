@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component, DestroyRef,
+  EventEmitter, inject,
+  Input,
+  OnChanges, OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -6,7 +14,11 @@ import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, ReplaySubject } from 'rxjs';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
-import { CONSTANT_NAME_RETURN, NAME_FILED, NAME_VERSION } from '../../../constants/general/constantLabels';
+import {
+  CONSTANT_NAME_RETURN,
+  NAME_FILED,
+  NAME_VERSION
+} from '../../../constants/general/constantLabels';
 import {
   LIST_COMPONENT_ACTIVE_MASIVE_EXCEL,
   MODAL_MEDIUM,
@@ -27,6 +39,10 @@ import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import {
   AttachmentExcelMassiveComponent
 } from '../alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import {
+  DetailInformationTasksComponent
+} from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -41,9 +57,10 @@ import {
   templateUrl: './header-bpm-core.component.html',
   styleUrl: './header-bpm-core.component.scss'
 })
-export class HeaderBpmCoreComponent implements OnInit, OnChanges {
+export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   crumbs: string[] = [];
-  existButtonAlfaMain: boolean = false;
+  actions: Record<string, () => void> = {};
+  existButtonAlfaMain = false;
 
   @Input() public idHeader = '';
   @Input() public icon = '';
@@ -56,7 +73,9 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
 
   _countComment$: ReplaySubject<number> = new ReplaySubject<number>(0);
   _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);
-  _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<ComponentTemplate[]>(1);
+  _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<
+    ComponentTemplate[]
+  >(1);
 
   countComment$: Observable<number> = this._countComment$.asObservable();
   countAttachment$: Observable<number> = this._countAttachment$.asObservable();
@@ -64,12 +83,17 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   crumbs$: Observable<ProTaskE> = this._crumbs$.asObservable();
   components$: Observable<ComponentTemplate[]> = this._components$.asObservable();
 
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private alfaMainService: AlfaMainService,
     private bpmCoreService: BpmCoreService,
+    private tasksPanelService: TasksPanelService,
     private dialog: MatDialog
   ) {
+
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit(): void {
@@ -80,7 +104,10 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
     if (this.idHeader?.length > 0) {
       this.idHeader = this.idHeader + getRandomInt(10000);
     } else {
-      this.idHeader = getRandomInt(10000) + `${this.proTaskE?.executionId}` + `${this.proTaskE?.flowId}`;
+      this.idHeader =
+        getRandomInt(10000) +
+        `${this.proTaskE?.executionId}` +
+        `${this.proTaskE?.flowId}`;
     }
 
     this.getInformationProTaskCountComment();
@@ -103,16 +130,18 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
     if (changes['proTaskE'] && this.proTaskE) {
       this._crumbs$.next(this.proTaskE);
       this.chargerCrumbs(this.proTaskE);
     }
 
-    if (changes['components'] && this.components && this.components.length > 0) {
+    if (
+      changes['components'] &&
+      this.components &&
+      this.components.length > 0
+    ) {
       this._components$.next(this.components);
     }
-
   }
 
   chargerCrumbs(proTaskE: ProTaskE) {
@@ -120,6 +149,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
     if (proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName) {
       const flowDetailTtitle = `${NAME_FILED}: ${proTaskE.proTask?.flowDetail}`;
       this.crumbs.push(flowDetailTtitle);
+      this.actions[flowDetailTtitle] = () => this.openDialogDetailProcedure(proTaskE.executionId!);
     }
     if (proTaskE?.executionId) {
       const executionIdTtitle = `${NAME_VERSION}: ${proTaskE?.executionId}`;
@@ -130,23 +160,42 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
     }
   }
 
+  openDialogDetailProcedure(taskId: number) {
+    this.tasksPanelService.viewTaskId(taskId)
+      .subscribe({
+        next: (result) => {
+          this.dialog.open(DetailInformationTasksComponent, {
+            ...MODAL_SMALL,
+            data: {
+              taskId,
+              value: result
+            }
+          });
+        }
+      });
+  }
+
   validateComponents(components: ComponentTemplate[] | null) {
     if (components != null && components?.length > 0) {
       //validate Component in alfaMain
-      const listTmp: ComponentTemplate[] = components.filter((x: ComponentTemplate) =>
-        LIST_COMPONENT_ACTIVE_MASIVE_EXCEL.includes(x.nameComponent)
+      const listTmp: ComponentTemplate[] = components.filter(
+        (x: ComponentTemplate) =>
+          x.pathForm != null &&
+          LIST_COMPONENT_ACTIVE_MASIVE_EXCEL.includes(x.pathForm)
       );
       this.existButtonAlfaMain = listTmp !== null && listTmp?.length > 0;
     }
   }
 
   getInformationProTaskCountComment() {
-    this.bpmCoreService.getProTaskCountComment(this.executionId)
+    this.bpmCoreService
+      .getProTaskCountComment(this.executionId)
       .subscribe((result: number) => this._countComment$.next(result));
   }
 
   getInformationProTaskCountAttachment() {
-    this.bpmCoreService.getProTaskCountAttachment(this.executionId)
+    this.bpmCoreService
+      .getProTaskCountAttachment(this.executionId)
       .subscribe((result: number) => this._countAttachment$.next(result));
   }
 
@@ -181,11 +230,13 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   chargerInformationExcelMassive() {
-    this.dialog.open(AttachmentExcelMassiveComponent, {
-      ...MODAL_SMALL_XS,
-      disableClose: true,
-      data: this.proTaskE?.executionId
-    }).afterClosed()
+    this.dialog
+      .open(AttachmentExcelMassiveComponent, {
+        ...MODAL_SMALL_XS,
+        disableClose: true,
+        data: this.proTaskE?.executionId
+      })
+      .afterClosed()
       .subscribe((res: boolean) => {
         if (res) {
           this.alfaMainService.refresh();
@@ -194,11 +245,30 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   }
 
   get downLoadExcelButton(): boolean {
-    return !this.resources.includes(TYPE_BUTTON_SEVEN) && this.existButtonAlfaMain;
+    return (
+      !this.resources.includes(TYPE_BUTTON_SEVEN) && this.existButtonAlfaMain
+    );
   }
 
   get addExcelButton(): boolean {
-    return !this.resources.includes(TYPE_BUTTON_EIGHT) && this.existButtonAlfaMain;
+    return (
+      !this.resources.includes(TYPE_BUTTON_EIGHT) && this.existButtonAlfaMain
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this._countComment$) {
+      this._countComment$.unsubscribe();
+    }
+    if (this._countAttachment$) {
+      this._countAttachment$.unsubscribe();
+    }
+    if (this._crumbs$) {
+      this._crumbs$.unsubscribe();
+    }
+    if (this._components$) {
+      this._components$.unsubscribe();
+    }
   }
 
   protected readonly CONSTANT_NAME_RETURN = CONSTANT_NAME_RETURN;

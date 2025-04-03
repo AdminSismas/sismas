@@ -133,4 +133,10 @@ export class ProceduresService {
       headers
     });
   }
+
+  changePriority(executionId: string | number): Observable<ProTaskE> {
+    const url = `${envi.url}:${envi.port}${envi.bpmOperation.value}/${envi.bpmOperation.proTask}${envi.changePriority}${executionId}`;
+
+    return this.http.put<ProTaskE>(url, {});
+  }
 }

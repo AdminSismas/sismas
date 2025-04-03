@@ -21,116 +21,113 @@
   <mat-divider class="text-border"></mat-divider>
 
   <mat-dialog-content class="p-6 container-fluid flex flex-col">
-    <div class="flex-col sm:flex-row gap-6">
-      <div @fadeInUp class="flex flex-col pl-0 pr-2">
-        <div class="flex flex-col sm:flex-row gap-6 px-2">
-          <vex-combox-colletion-form
-            idComboCollection="typeNumberDocument896767855234"
-            label="Tipo de persona"
-            [formControlComboxColletion]="controlDomIndividualType"
-            typeDomainName="IndividualType"
-            placeholderDomainName="Selecciona el tipo de persona"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto"></vex-combox-colletion-form>
-          <vex-combox-colletion-form
-            idComboCollection="domIndividualTypeNumber896767855234"
-            label="Tipo de documento"
-            [formControlComboxColletion]="controlDomIndividualTypeNumber"
-            typeDomainName="IndividualTypeNumber"
-            placeholderDomainName="Seleccionar tipo documento"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto"></vex-combox-colletion-form>
-          <vex-input
-            idComboInput="nombrePredio8784"
-            label="Número documento"
-            type="text"
-            formControlNameInput="number"
-            [formControlInput]="controlNumber"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto">
-          </vex-input>
-          <button
-            color="primary"
-            aria-label=""
-            type="button"
-            mat-flat-button
-            class="ml-4 flex-none xl:mt-2"
-            (click)="personRegister()"
-          >
-            <mat-icon
-              class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-              svgIcon="mat:search"></mat-icon>
-            <span>Buscar</span>
-          </button>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-6">
-          <vex-input
-            idComboInput="firstName84"
-            label="Nombre"
-            type="text"
-            formControlNameInput="firstName"
-            [formControlInput]="controlFirstName"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto">
-          </vex-input>
-          <vex-input
-            idComboInput="middleName2384"
-            label="Segundo nombre"
-            type="text"
-            formControlNameInput="middleName"
-            [formControlInput]="controlMiddleName"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto">
-          </vex-input>
-          <vex-input
-            idComboInput="lastNameeName2384"
-            label="Apellido"
-            type="text"
-            formControlNameInput="lastName"
-            [formControlInput]="controlLastName"
-            ssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto">
-          </vex-input>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-6">
-          <vex-input
-            idComboInput="otherLastNameeeName2384"
-            label="Segundo apellido"
-            type="text"
-            formControlNameInput="otherLastName"
-            [formControlInput]="controlOtherLastName"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto">
-          </vex-input>
-          <vex-combox-colletion-form
-            idComboCollection="typeNumbearDocument896767855234"
-            label="Grupo étnico"
-            [formControlComboxColletion]="controlDomIndividualEthnicGroup"
-            typeDomainName="IndividualEthnicGroup"
-            placeholderDomainName="Selecciona el grupo étnico"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto"></vex-combox-colletion-form>
-
-          <vex-combox-colletion-form
-            idComboCollection="ttypeNumberDocumentearDocument896767855234"
-            label="sexo"
-            [formControlComboxColletion]="controlIndividualSex"
-            typeDomainName="IndividualSex"
-            placeholderDomainName="Seleccionar tipo género"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto"></vex-combox-colletion-form>
-        </div>
-        <div class="flex flex-col sm:flex-row">
-          <vex-input
-            idComboInput="companyNameeeeName2384"
-            label="Nombre compañía"
-            type="text"
-            formControlNameInput="companyName"
-            [formControlInput]="controlCompanyName"
-            cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-            class="flex-auto">
-          </vex-input>
-        </div>
+    <div @fadeInUp class="flex flex-col pl-0 pr-2">
+      <div class="flex flex-col sm:flex-row px-3 gap-6">
+        <vex-combox-colletion-form
+          idComboCollection="typeNumberDocument896767855234"
+          label="Tipo de persona"
+          [formControlComboxColletion]="controlDomIndividualType"
+          typeDomainName="IndividualType"
+          placeholderDomainName="Selecciona el tipo de persona"
+          cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
+          class="flex-auto"></vex-combox-colletion-form>
+        <vex-combox-colletion-form
+          idComboCollection="domIndividualTypeNumber896767855234"
+          label="Tipo de documento"
+          [formControlComboxColletion]="controlDomIndividualTypeNumber"
+          typeDomainName="IndividualTypeNumber"
+          placeholderDomainName="Seleccionar tipo documento"
+          cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
+          class="flex-auto"></vex-combox-colletion-form>
+        <vex-input
+          idComboInput="nombrePredio8784"
+          label="Número documento"
+          type="text"
+          formControlNameInput="number"
+          [formControlInput]="controlNumber"
+          cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
+          class="flex-auto">
+        </vex-input>
+        <button
+          color="primary"
+          aria-label=""
+          type="button"
+          mat-flat-button
+          class="ml-4 flex-none xl:mt-2"
+          (click)="personRegister()"
+        >
+          <mat-icon
+            class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+            svgIcon="mat:search"></mat-icon>
+          <span>Buscar</span>
+        </button>
+      </div>
+      <div class="flex flex-col sm:flex-row px-1 gap-6">
+        <vex-input
+          idComboInput="firstName84"
+          label="Nombre"
+          type="text"
+          formControlNameInput="firstName"
+          [formControlInput]="controlFirstName"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
+        <vex-input
+          idComboInput="middleName2384"
+          label="Segundo nombre"
+          type="text"
+          formControlNameInput="middleName"
+          [formControlInput]="controlMiddleName"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
+        <vex-input
+          idComboInput="lastNameeName2384"
+          label="Apellido"
+          type="text"
+          formControlNameInput="lastName"
+          [formControlInput]="controlLastName"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
+      </div>
+      <div class="flex flex-col sm:flex-row px-1 gap-6">
+        <vex-input
+          idComboInput="otherLastNameeeName2384"
+          label="Segundo apellido"
+          type="text"
+          formControlNameInput="otherLastName"
+          [formControlInput]="controlOtherLastName"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
+        <vex-input
+          idComboInput="companyNameeeeName2384"
+          label="Nombre compañía"
+          type="text"
+          formControlNameInput="companyName"
+          [formControlInput]="controlCompanyName"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
+      </div>
+      <div class="flex flex-col sm:flex-row px-4 gap-6">
+        <vex-combox-colletion-form
+          idComboCollection="typeNumbearDocument896767855234"
+          label="Grupo étnico"
+          [formControlComboxColletion]="controlDomIndividualEthnicGroup"
+          typeDomainName="IndividualEthnicGroup"
+          placeholderDomainName="Selecciona el grupo étnico"
+          cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
+          class="flex-auto"></vex-combox-colletion-form>
+        <vex-combox-colletion-form
+          idComboCollection="ttypeNumberDocumentearDocument896767855234"
+          label="sexo"
+          [formControlComboxColletion]="controlIndividualSex"
+          typeDomainName="IndividualSex"
+          placeholderDomainName="Seleccionar tipo género"
+          cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
+          class="flex-auto"></vex-combox-colletion-form>
       </div>
     </div>
   </mat-dialog-content>

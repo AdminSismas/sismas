@@ -212,6 +212,7 @@
                     [matMenuTriggerData]="{ row: row }"
                     mat-icon-button
                     title="Acciones de trámite"
+                    (click)="filteredActions(row)"
                   >
                     <mat-icon
                       class="icon-sm"
@@ -278,7 +279,7 @@
       <!-- Paginador -->
       <mat-paginator
         #paginator
-        [class.hidden]="!(isDesktop$ | async)"
+        [class.hidden]="(isDesktop$ | async) === false"
         [pageSizeOptions]="pageSizeOptions"
         [length]="totalElements"
         [pageSize]="pageSize"
@@ -296,7 +297,7 @@
     matMenuContent
     let-row="row"
   >
-    @for (action of actions; track action.label) {
+    @for (action of menuOptions(); track action.label) {
       <button
         mat-menu-item
         (click)="action.action(row)"
@@ -305,28 +306,26 @@
         {{ action.label }}
       </button>
     }
-  </ng-template>
-</mat-menu>
-
-<mat-menu
-  #columnFilterMenu="matMenu"
-  xPosition="before"
-  yPosition="below"
->
-  @for (column of columns; track column.property) {
-    <button
-      (click)="toggleColumnVisibility(column, $event)"
-      class="mat-menu-item block"
-    >
-      <mat-checkbox
-        (click)="$event.stopPropagation()"
-        [(ngModel)]="column.visible"
-        color="primary"
+    <!-- <span>{{ row | json }}</span> -->
+    <!-- @if (row.bpmPriority === 0) {
+      <button
+        mat-menu-item
+        (click)="actionButtons('priority', row)"
       >
-        {{ column.label }}
-      </mat-checkbox>
-    </button>
-  }
+        <mat-icon svgIcon="mat:warning"></mat-icon>
+        Prioridad
+      </button>
+    }
+    @else {
+      <button
+        mat-menu-item
+        (click)="actionButtons('no-priority', row)"
+      >
+        <mat-icon svgIcon="mat:assignment_returned"></mat-icon>
+        Quitar prioridad
+      </button>
+    } -->
+  </ng-template>
 </mat-menu>
 
 <ng-template #commentDialog>
@@ -424,6 +423,24 @@
   title="Reasignar trámite"
   icon="error"
   text="Se ha generado un error al reasignar el trámite"
+  confirmButtonColor="#3085d6"
+  confirmButtonText="Aceptar"
+></swal>
+
+<swal
+  #successChangePriority
+  title="Cambio de prioridad"
+  icon="success"
+  text="Se ha cambiado la prioridad del trámite con exito"
+  confirmButtonColor="#3085d6"
+  confirmButtonText="Aceptar"
+></swal>
+
+<swal
+  #errorChangePriority
+  title="Cambio de prioridad"
+  icon="error"
+  text="Se ha producido un error al cambiar la prioridad del trámite"
   confirmButtonColor="#3085d6"
   confirmButtonText="Aceptar"
 ></swal>

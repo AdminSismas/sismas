@@ -51,6 +51,7 @@
               "dom-plane",
               "dom-set",
               "faker",
+              "file-saver",
               "highlight.js",
               "lodash.debounce",
               "lodash.memoize",

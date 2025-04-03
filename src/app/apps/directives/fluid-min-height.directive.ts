@@ -17,7 +17,7 @@ import { debounceTime, fromEvent, Subscription, throttleTime } from 'rxjs';
 export class FluidMinHeightDirective implements AfterViewInit, OnDestroy {
   @Input() minHeight!: number;
   @Input({ transform: numberAttribute, alias: 'fluidHeight' }) topOffset!: number;
-  @HostBinding('style.overflow-y') overflowY = 'auto';
+  @Input({ required: false }) overflowY: string = 'auto';
 
   private domElement: HTMLElement;
   private resizeSub: Subscription;
@@ -41,6 +41,11 @@ export class FluidMinHeightDirective implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(){
     this.resizeSub.unsubscribe();
+  }
+
+  @HostBinding('class')
+  get overflow() {
+    return `overflow-y-${this.overflowY}`;
   }
 
   private setHeight() {

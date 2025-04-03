@@ -17,6 +17,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { TextAreaComponent } from '../../general-components/text-area/text-area.component';
 
 @Component({
   selector: 'vex-dynamic-forms',
@@ -24,7 +25,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   imports: [
     NgClass,
     ReactiveFormsModule,
-    /* Material */
     MatAutocompleteModule,
     MatCheckbox,
     MatDatepickerModule,
@@ -33,25 +33,26 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatNativeDateModule,
     MatSelectModule,
     MatSlideToggleModule,
-    /* Custom */
     ComboxColletionComponent,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    TextAreaComponent
   ],
   templateUrl: './dynamic-forms.component.html',
-  styles: ``
+  styleUrl: './dynamic-forms.component.scss',
 })
 export class DynamicFormsComponent implements OnInit, OnChanges {
   @Input({ required: true }) inputs: JSONInput[] = [];
   @Input() className = '';
   @Input() disabled = false;
-  @Input() initValues: any = {};
+  @Input() initValues: any | null = {};
 
- form: FormGroup = new FormGroup({});
+  form: FormGroup = new FormGroup({});
   private dateFilters = new Map<string, (date: Date | null) => boolean>();
 
   @Output() formReady = new EventEmitter<FormGroup>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -61,7 +62,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
       this.form.disable();
     }
 
-    if (this.initValues()) {
+    if (this.initValues != null && this.initValues()) {
       this.form.reset(this.initValues());
     }
   }

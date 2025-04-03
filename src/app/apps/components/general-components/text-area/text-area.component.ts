@@ -41,6 +41,7 @@ export class TextAreaComponent implements OnInit {
   @Input() public idTextArea = '';
   @Input() public cssClasses = '';
   @Input() public label = '';
+  @Input() public placeholder = '';
   @Input() public formControlNameTextArea = '';
   @Input() public formControlTextArea:FormControl | null = null;
   @Input() public icon!: string | null;

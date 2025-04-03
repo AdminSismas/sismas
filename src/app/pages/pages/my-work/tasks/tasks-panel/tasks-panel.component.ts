@@ -1,15 +1,9 @@
 // Angular framework
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { AsyncPipe, LowerCasePipe, NgFor, NgIf } from '@angular/common';
-import {
-  Component,
-  DestroyRef,
-  inject,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { LowerCasePipe, NgFor, NgIf } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
 import { distinctUntilChanged, filter, take } from 'rxjs/operators';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 // Vex
@@ -23,11 +17,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -37,10 +27,10 @@ import { environment as envi, environment } from '../../../../../../environments
 import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
 import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
-import { LoadingAppComponent } from '../../../../../apps/components/general-components/loading-app/loading-app.component';
 import {
+  MODAL_SMALL,
   PAGE,
-  PAGE_SIZE_OPTION_UNIQUE,
+  PAGE_SIZE_OPTION_BASIC,
   PAGE_SIZE_TABLE_CADASTRAL,
   PAGE_SIZE_TABLE_UNIQUE,
   PANEL_ASSIGNED_TASKS,
@@ -57,11 +47,10 @@ import { TaskResponseModel } from '../../../../../apps/interfaces/bpm/task-respo
 import { TaskRetailExecuteResponseModel } from '../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { DetailInformationTasksComponent } from '../components/detail-information-tasks/detail-information-tasks.component';
 import {
-  BpmProcessService,
-  PermissionVailable
-} from 'src/app/apps/services/bpm/bpm-process.service';
+  DetailInformationTasksComponent
+} from '../components/detail-information-tasks/detail-information-tasks.component';
+import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 import { LoadingServiceService } from '../../../../../apps/services/general/loading-service.service';
 
 @Component({
@@ -76,7 +65,6 @@ import { LoadingServiceService } from '../../../../../apps/services/general/load
     scaleFadeIn400ms
   ],
   imports: [
-    AsyncPipe,
     LowerCasePipe,
     NgFor,
     NgIf,
@@ -93,7 +81,6 @@ import { LoadingServiceService } from '../../../../../apps/services/general/load
     // Custom
     FluidHeightDirective,
     HeaderTasksComponent,
-    LoadingAppComponent,
     TaskCardComponent
   ],
   templateUrl: './tasks-panel.component.html',
@@ -112,7 +99,7 @@ export class TasksPanelComponent implements OnInit {
   typePanel: string | null = null;
 
   // Paginator config
-  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
+  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_BASIC;
   dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
   page = PAGE;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
@@ -240,8 +227,7 @@ export class TasksPanelComponent implements OnInit {
       // minHeight: '70%',
       // disableClose: true,
       // minWidth:'370px',
-      width: '98%',
-      height: '86%',
+      ...MODAL_SMALL,
       data: {
         taskId: taskId,
         value,

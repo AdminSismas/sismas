@@ -10,9 +10,12 @@ import { environment } from '../../../../environments/environments';
 import {
   CheckTypeQualificationMode,
   TypeButtonAlfaMain,
-  TypeInformation, TypeOperation,
+  TypeInformation,
+  TypeOperation,
   TypeOperationAlfaMain,
-  TypeOperationGeoMain, TypeQualificationMode, ValidateQualificationByDomBuiltType
+  TypeOperationGeoMain,
+  TypeQualificationMode,
+  ValidateQualificationByDomBuiltType
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../../interfaces/general/out-format.model';
@@ -49,6 +52,7 @@ export const RULE_PAGE_CADASTRAL_DA: string = 'cadastralSearchDA';
 export const TITULO_PAGE_CADASTRAL_DA: string = 'Búsqueda catastral DA';
 export const RULE_PAGE_HISTORICAL: string = 'historicalInformation';
 export const INFORMATION_HISTORICAL: string = 'Información histórica';
+export const INFORMATION_NOT_FOUND: string = 'Información No disponible';
 
 
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
@@ -60,15 +64,18 @@ export const DIVPOLLVL2_CODE: string = 'divpolLvl2Code';
 export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
+export const CONSTANT_TYPE_PARTICIPATION_THIRDPARTY: string = 'Tercero Afectado';
 
 export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
 export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
 export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
 
+export const PAGE_OPTION_UNIQUE_5 = 5;
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [PAGE_OPTION_UNIQUE, 20, 50, 100];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
+export const PAGE_SIZE_OPTION_BASIC: number[] = [PAGE_OPTION_UNIQUE, 15, 20];
 export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_ADJACENT: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
@@ -506,8 +513,10 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentI
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
-export const COMPONENT_ALFA_MAIN:string = 'cadAlfaMainComponent';
-export const COMPONENT_ALFA_VALIDATE:string = 'cadAlfaValidateComponent';
+export const COMPONENT_ALFA_MAIN: string = 'cadAlfaMainComponent';
+export const COMPONENT_PATH_FORM_ALFA_MAIN: string = '/core/cadastral/alf/main.html';
+
+export const COMPONENT_ALFA_VALIDATE: string = 'cadAlfaValidateComponent';
 
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
@@ -560,7 +569,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 1
   },
   {
-    name: 'cadVisitComponent',
+    name: 'cadRecognitionPropertyInformation',
     pathForm: '/core/cadastral/visita.html',
     serviceValidation: '',
     mode: 1
@@ -811,6 +820,35 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment:
     label: 'Alertas',
     fragment: FRAGMENT_ALERTS
   }
+];
+
+export const TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY: TableColumn<ProcessParticipant>[] = [
+  {
+    label: 'Documento',
+    property: 'individualNumber',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Nombre participante',
+    property: 'fullName',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Participación',
+    property: 'bpmParticipation',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  }
+];
+
+export const TABLE_COLUMN_PRINCIPANTS_TABLE: TableColumn<ProcessParticipant>[] = [
+  ...TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] = [
@@ -1071,6 +1109,7 @@ export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
 export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
 export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD';  // Excel Download
 export const TYPE_BUTTON_EIGHT: TypeButtonAlfaMain = 'EXL'; // Excel Load
+export const TYPE_BUTTON_NINE: TypeButtonAlfaMain = 'VIGEN';
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
@@ -1081,13 +1120,16 @@ export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', 
 export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
-export const MODAL_DYNAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_DINAMIC_HEIGHT_AUTO = { maxWidth: '100%', minWidth: '60%' };
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
+export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
 export const TYPE_TYPOLOGY: TypeQualificationMode = 'TYPOLOGY';
 export const TYPE_TRADITIONAL: TypeQualificationMode = 'TRADITIONAL';
+export const TYPE_ANNEX: TypeQualificationMode = 'ANNEX';
 
 export const TYPE_CREATE: TypeOperation = 'CREATE';
 export const TYPE_READ_ONLY: TypeOperation = 'READ_ONLY';
@@ -1107,6 +1149,15 @@ export const CHECK_TYPE_QUALIFICATION_MODE: CheckTypeQualificationMode[] = [
     type: TYPE_TYPOLOGY
   }
 ];
+
+export const CONSTRUCTION_TYPE: string = 'domBuiltType';
+export const CONSTRUCTION_USE: string = 'domBuiltUse';
+
+export const QUALIFICATIONS_DOMBUILT_TYPE_ANEXX: ValidateQualificationByDomBuiltType = {
+  domBuiltType: 'Anexo',
+  list: [],
+  shouldDisable: false
+};
 
 export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualificationByDomBuiltType[] = [
   {
@@ -1178,7 +1229,7 @@ export const CREATE_BASIC_MODEL_ADDRESS: CreateBasicInformationAddress = {
 
 export const LIST_EXTENSION_MASIVE_EXCEL: string[] = ['xlsx', 'xls'];
 
-export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_ALFA_MAIN];
+export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_PATH_FORM_ALFA_MAIN];
 
 export const LIST_CITATION_AND_NOTICE_TABLE_MENU:ProcessParticipantTableMenu[] = [
   {

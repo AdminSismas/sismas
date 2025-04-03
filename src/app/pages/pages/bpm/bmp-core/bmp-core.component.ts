@@ -381,6 +381,7 @@ export class BmpCoreComponent implements OnInit {
     component: BasicComponentTemplate
   ) {
     obj.nameComponent = component.name;
+    obj.pathForm = component.pathForm;
     obj.inputs = { executionId: this.executionId, resources: this.resources };
     this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
