@@ -182,6 +182,7 @@ export class BmpCoreComponent implements OnInit {
           return;
         }
 
+        this.executeAppraise();
         this.confirmAction(
           () => this.nextBpmCore(),
           '¿Está seguro que desea continuar a la siguiente tarea?',
@@ -292,7 +293,6 @@ export class BmpCoreComponent implements OnInit {
       next: (result: string[]) => {
         if (!result || result.length <= 0) {
           this.executeBpmNextBpmCore();
-          this.executeAppraise();
           return;
         }
 
