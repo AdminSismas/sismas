@@ -520,8 +520,7 @@ export const COMPONENT_ALFA_VALIDATE: string = 'cadAlfaValidateComponent';
 
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
-    // name: COMPONENT_ALFA_MAIN,
-    name: 'citationAndNoticeComponent',
+    name: COMPONENT_ALFA_MAIN,
     pathForm: '/core/cadastral/alf/main.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
@@ -585,7 +584,14 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     pathForm: '/core/document/validate.html',
     serviceValidation: '',
     mode: 1
-  }
+  },
+  {
+    // name: COMPONENT_ALFA_MAIN,
+    name: 'citationAndNoticeComponent',
+    pathForm: '/core/cadastral/alf/main.html',
+    serviceValidation: 'checkStatusBpmOperation',
+    mode: 1
+  },
 ];
 
 export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>[] = [
