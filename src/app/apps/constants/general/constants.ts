@@ -586,9 +586,8 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 1
   },
   {
-    // name: COMPONENT_ALFA_MAIN,
     name: 'citationAndNoticeComponent',
-    pathForm: '/core/cadastral/alf/main.html',
+    pathForm: '/core/cadastral/notificacion.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
   },
@@ -1126,7 +1125,7 @@ export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', 
 export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
-export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_DYNAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
 export const MODAL_DINAMIC_HEIGHT_AUTO = { maxWidth: '100%', minWidth: '60%' };
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };

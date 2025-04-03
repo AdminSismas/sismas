@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -58,7 +58,7 @@ export class CitationAndNoticeComponent implements OnInit {
 
   searchStr: UntypedFormControl = new UntypedFormControl();
 
-  @Input({ required: true }) public executionId:string = '';
+  @Input({ required: true }) public executionId: string = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public mode = 1;
 
@@ -76,7 +76,8 @@ export class CitationAndNoticeComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private readonly layoutService: VexLayoutService,
-    private infoGeneralService: SendInfoGeneralService
+    private infoGeneralService: SendInfoGeneralService,
+    private cdr: ChangeDetectorRef
   ) {
     if (proFlow?.flowId) {
       this.id += proFlow?.flowId;
@@ -84,7 +85,8 @@ export class CitationAndNoticeComponent implements OnInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-    this.destroyRef.onDestroy(() => {});
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit() {
@@ -93,7 +95,6 @@ export class CitationAndNoticeComponent implements OnInit {
     } else {
       this.id = getRandomInt(10000).toString();
     }
-    this.layoutService.collapseSidenav();
     this.typeProcess = this.typeProcessDefault;
     this.executionId = '76';
     if (this.id?.length > 0) {
@@ -111,12 +112,17 @@ export class CitationAndNoticeComponent implements OnInit {
       this.returnPanelTask(true);
       return false;
     }
+    //
+    this.cdr.markForCheck(); //
+    setTimeout(() => {
+      this.layoutService.collapseSidenav();
+    }, 0);
   }
 
   openDetailProcessParticipant(data?: ProcessParticipant) {
     this.dialog.open(DetailsCitationNoticeComponent, {
       ...MODAL_SMALL_LARGE,
-      data: data || null,
+      data: data || null
     });
   }
 

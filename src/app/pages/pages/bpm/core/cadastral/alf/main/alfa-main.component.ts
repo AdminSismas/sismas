@@ -1,4 +1,3 @@
-
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -81,7 +80,6 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-    this.destroyRef.onDestroy(() => {});
   }
 
   ngOnInit() {
@@ -118,7 +116,7 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
     }
   }
 
-  get activateGeographicTab(){
+  get activateGeographicTab() {
     return this.resources.length > 0 && this.resources.includes(CONSTANT_ENABLE_TAB_GEOGRAFIC);
   }
 }

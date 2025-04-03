@@ -108,7 +108,11 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     }
 
     this.dataContentInformations$.pipe(filter<InformationPegeable>(Boolean))
-      .subscribe((result) => {
+      .subscribe((result: InformationPegeable) => {
+        if (result != null && (result.content == null || result.content.length > 0)) {
+          this.captureInformationSubscribeError();
+          return;
+        }
         this.captureInformationSubscribe(result);
       });
   }
@@ -124,7 +128,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
   }
 
   validateExecuteTypeProcess() {
-    if(!this.typeProcess) {
+    if (!this.typeProcess) {
       return;
     }
 
@@ -172,8 +176,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   getInformationNotifyAssigned() {
     this.participantsProcess.getParticipantsNotifyProcess(this.generateObjectPageSearchData(), this.executionId)
-      .subscribe(
-        {
+      .subscribe({
           error: (err: any) => this.captureInformationSubscribeError(),
           next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
         }

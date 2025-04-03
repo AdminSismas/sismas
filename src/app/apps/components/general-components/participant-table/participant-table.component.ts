@@ -34,7 +34,7 @@ import { ComboxColletionComponent } from '../combox-colletion/combox-colletion.c
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
-  MODAL_DINAMIC_HEIGHT,
+  MODAL_DYNAMIC_HEIGHT,
   PAGE,
   PAGE_OPTION_UNIQUE_7,
   TABLE_COLUMN_PRINCIPANTS_TABLE
@@ -318,7 +318,7 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     this.form?.get('personCompleted')?.reset();
     this.dialog
       .open(CreatePeopleComponent, {
-        ...MODAL_DINAMIC_HEIGHT,
+        ...MODAL_DYNAMIC_HEIGHT,
         disableClose: true,
         data: {
           domIndividualTypeNumber: info.typeNumberDocument,
