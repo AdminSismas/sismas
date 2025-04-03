@@ -20,6 +20,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
 import {
+  COMPONENT_PATH_FORM_ALFA_MAIN,
   CONSTANT_VALIDATE_CHECK,
   CONSTANT_VALIDATE_OTHER,
   LISTO_FORM_BPM_CORE,
@@ -43,6 +44,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
+import { InformationPropertyService } from '../../../../apps/services/territorial-organization/information-property.service';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -112,6 +114,7 @@ export class BmpCoreComponent implements OnInit {
     private readonly layoutService: VexLayoutService,
     private bpmCoreService: BpmCoreService,
     private infoGeneralService: SendInfoGeneralService,
+    private informationProperty: InformationPropertyService,
     private bpmProcessService: BpmProcessService
   ) {
   }
@@ -264,6 +267,7 @@ export class BmpCoreComponent implements OnInit {
         this.executeBpmNextBpmCore();
         return;
       }
+
       switch (serviceValidation) {
         case CONSTANT_VALIDATE_CHECK:
           this.checkStatusBpmOperation();
@@ -288,6 +292,7 @@ export class BmpCoreComponent implements OnInit {
       next: (result: string[]) => {
         if (!result || result.length <= 0) {
           this.executeBpmNextBpmCore();
+          this.executeAppraise();
           return;
         }
 
@@ -298,6 +303,24 @@ export class BmpCoreComponent implements OnInit {
         this.loadingServiceService.activateLoading(false);
       }
     });
+  }
+
+  executeAppraise() {
+    if (!this.proFlow.preform || !this.proFlow.preform.pathForm) return;
+
+    const pathForm = this.proFlow.preform.pathForm;
+    if (pathForm !== COMPONENT_PATH_FORM_ALFA_MAIN) return;
+
+    this.informationProperty.executeAppraisalProcess(this.executionId)
+      .subscribe({
+        next: (response) => {
+          console.log('Realizado el avalúo con respuesta: ', response);
+        },
+        error: (error) => {
+          console.error('Error al realizar el avalúo: ', error);
+        }
+      });
+
   }
 
   executeBpmNextBpmCore() {

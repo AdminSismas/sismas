@@ -179,7 +179,7 @@ export const environment = {
   url_viewer: "https://armenia.map.sismas.com.co:8081/mapstore/",
   user_exist: "/username/",
   validity: "validity",
-  valuation: "/valuation/",
+  valuation: "/valuation",
   video: "assets/video/armenia.mp4",
   withoutSignaturesUsers: "/without-signature",
   withSignaturesUsers: "/with-signature"
