@@ -23,6 +23,11 @@ import { InfoPerson } from '../../../../../apps/interfaces/information-property/
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
 interface defaultData extends People {
   mode: 'create' | 'update';
@@ -31,6 +36,14 @@ interface defaultData extends People {
 @Component({
   selector: 'vex-create-people',
   standalone: true,
+  animations: [
+    fadeInRight400ms,
+    stagger80ms,
+    scaleIn400ms,
+    stagger40ms,
+    fadeInUp400ms,
+    scaleFadeIn400ms
+  ],
   imports: [
     ReactiveFormsModule,
     MatDialogModule,

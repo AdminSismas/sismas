@@ -7,46 +7,85 @@ export const INPUT_FORM_VISIT: JSONInput[] = [
     name: 'descripcion',
     label: 'Descripción',
     placeholder: 'Escribir la descripción de la solicitud del participante',
-    element: 'input',
+    element: 'textarea',
     type: 'textarea',
     validators: [],
-    cssClasses: 'flex sm:flex-col w-full h-full'
+    cssClasses: 'flex flex-auto w-full h-full '
   },
   {
     name: 'docAportados',
     label: 'Documentos aportados',
     placeholder: 'Seleccionar los documentos aportados con la solicitud',
-    element: 'input',
-    type: 'text',
+    element: 'textarea',
+    type: 'textarea',
     validators: [],
-    cssClasses: 'flex sm:flex-col xl:flex-1 w-full h-full'
+    cssClasses: 'flex flex-auto w-full h-full '
   },
   {
     name: 'docCatastrales',
     label: 'Documentos catastrales',
     placeholder: 'Seleccionar los documentos catastrales',
-    element: 'input',
-    type: 'text',
+    element: 'textarea',
+    type: 'textarea',
     validators: [],
-    cssClasses: 'flex sm:flex-col xl:flex-1 w-full h-full'
+    cssClasses: 'flex flex-auto w-full h-full '
   },
   {
     name: 'observaciones',
     label: 'Observaciones',
     placeholder: 'Escribir las observaciones',
-    element: 'input',
+    element: 'textarea',
     type: 'textarea',
     validators: [],
-    cssClasses: 'flex sm:flex-auto w-full h-full'
+    cssClasses: 'flex flex-auto w-full h-full '
+  }
+];
+
+export const RES_VALIDATE_INPUTS: JSONInput[] = [
+  {
+    name: 'tag01',
+    label: 'Tag 1',
+    placeholder: 'Escribir primer tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto w-full h-full '
   },
   {
-    name: 'thirdPartyAffected',
-    label: 'Terceros afectados',
-    placeholder: '',
-    element: 'toggle',
-    type: 'before',
+    name: 'tag02',
+    label: 'Tag 2',
+    placeholder: 'Escribir segundo tag',
+    element: 'textarea',
+    type: 'text',
     validators: [],
-    cssClasses: 'flex sm:flex-auto w-full h-full'
+    cssClasses: 'flex flex-auto w-full h-full '
+  },
+  {
+    name: 'tag03',
+    label: 'Tag 3',
+    placeholder: 'Escribir tercero tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto w-full h-full '
+  },
+  {
+    name: 'tag04',
+    label: 'Tag 4',
+    placeholder: 'Escribir cuarto tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto w-full h-full '
+  },
+  {
+    name: 'tag05',
+    label: 'Tag 5',
+    placeholder: 'Escribir quinto tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto sm:flow-row w-full h-full '
   }
 ];
 

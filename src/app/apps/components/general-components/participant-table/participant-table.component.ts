@@ -3,9 +3,9 @@ import {
   Component,
   DestroyRef,
   EventEmitter,
-  forwardRef,
   inject,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild
@@ -17,7 +17,6 @@ import {
   FormGroup,
   FormGroupDirective,
   FormsModule,
-  NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   UntypedFormControl
 } from '@angular/forms';
@@ -37,13 +36,10 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_DINAMIC_HEIGHT,
   PAGE,
-  PAGE_OPTION_UNIQUE,
-  PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_PRINCIPANTS_TABLE,
-  TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY
+  PAGE_OPTION_UNIQUE_7,
+  TABLE_COLUMN_PRINCIPANTS_TABLE
 } from '../../../constants/general/constants';
 import { Observable, ReplaySubject } from 'rxjs';
-import { SelectionModel } from '@angular/cdk/collections';
 import { InfoPerson } from '../../../interfaces/information-property/info-person';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPersonService } from '../../../services/bpm/information-person.service';
@@ -63,7 +59,6 @@ import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
-import { FluidMaxHeightDirective } from '../../../directives/fluid-max-height.directive';
 
 @Component({
   selector: 'vex-participant-table',
@@ -91,21 +86,13 @@ import { FluidMaxHeightDirective } from '../../../directives/fluid-max-height.di
     ComboxColletionComponent,
     FluidMinHeightDirective,
     FluidMinHeightDirective,
-    NgClass,
-    FluidMaxHeightDirective
+    NgClass
   ],
   templateUrl: './participant-table.component.html',
   styleUrl: './participant-table.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ParticipantTableComponent),
-      multi: true
-    }
-  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ParticipantTableComponent implements OnInit, AfterViewInit {
+export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
@@ -115,20 +102,18 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) executionId = '';
   @Input({ required: true }) thirdPartyAffected: boolean = false;
   @Input() columns: TableColumn<ProcessParticipant>[] = TABLE_COLUMN_PRINCIPANTS_TABLE;
-  @Input({ required: true }) visualAllTable: boolean = true;
+
   @Output() processParticipants = new EventEmitter<ProcessParticipant[]>();
+
+
   page = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE_TABLE_CADASTRAL;
-  pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE];
+  pageSize: number = PAGE_OPTION_UNIQUE_7;
+  pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
   dataSource!: MatTableDataSource<ProcessParticipant>;
-  selection = new SelectionModel<ProcessParticipant>(true, []);
 
-  subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
-    ProcessParticipant[]
-  >(1);
+  subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<ProcessParticipant[]>(1);
   data$: Observable<ProcessParticipant[]> = this.subject$.asObservable();
-  participants: ProcessParticipant[] = [];
   person!: InfoPerson | null;
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -144,6 +129,9 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit {
     private participantsService: ParticipantsServiceService,
     private dialog: MatDialog
   ) {
+
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit(): void {
@@ -151,10 +139,6 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit {
       return;
     }
     this.id = this.id + getRandomInt(12340) + this.executionId + 'ParticipantTableComponent1234';
-
-    if (!this.visualAllTable) {
-      this.columns = TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY;
-    }
 
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges
@@ -167,6 +151,14 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit {
         this.dataSource.data = participants;
         this.processParticipants.emit(participants);
       });
+
+    this.participantsService.chargeInfoSubject$.subscribe((result: boolean | null) => {
+      if (result !== null && result) {
+        this.searchInformation();
+      }
+      return;
+    });
+
     this.searchInformation();
   }
 
@@ -373,10 +365,10 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit {
     }
 
     this.contentInformation = new InformationPegeable(
-      result?.length / PAGE_OPTION_UNIQUE, result?.length, false,
+      result?.length / PAGE_OPTION_UNIQUE_7, result?.length, false,
       result?.length, result?.length, true, result?.length > 0,
       result,
-      new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE)
+      new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE_7)
     );
     this.captureInformationData();
   }
@@ -451,7 +443,6 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit {
     }
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
-
     this.searchInformation();
   }
 
@@ -460,6 +451,12 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit {
       this.obtainInformationThirdPartyAffected();
     } else {
       this.obtainInformationParticipants();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.subject$) {
+      this.subject$.unsubscribe();
     }
   }
 }

@@ -1,26 +1,19 @@
 <div class="flex justify-between items-center">
   <h2 mat-dialog-title>Terceros afectados</h2>
-  <button
-    mat-icon-button
-    (click)="closeDialog()"
-    type="button"
-    tabindex="-1"
-  >
+  <button mat-icon-button (click)="closeDialog()" type="button" tabindex="-1">
     <mat-icon svgIcon="mat:close"></mat-icon>
   </button>
 </div>
 <mat-divider></mat-divider>
 
-<mat-dialog-content class="h-full w-full">
+<mat-dialog-content class="h-full w-full" vexMinFluidHeight fluidHeight="530">
   <form [formGroup]="participationFormGroup">
     <vex-participant-table
       class="w-full h-full"
       [id]="'participants' + executionId"
       [form]="participationFormGroup"
       [executionId]="executionId"
-      [visualAllTable]="true"
       [thirdPartyAffected]="thirdPartyAffected"
-      (processParticipants)="loadParticipants($event)"
-    ></vex-participant-table>
+      (processParticipants)="loadParticipants($event)"></vex-participant-table>
   </form>
 </mat-dialog-content>

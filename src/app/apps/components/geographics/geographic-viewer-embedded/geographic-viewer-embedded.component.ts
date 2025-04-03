@@ -1,11 +1,8 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Observable, of } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { NgIf } from '@angular/common';
 import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
-import { LoadingAppComponent } from '../../general-components/loading-app/loading-app.component';
 import { MatButton } from '@angular/material/button';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
@@ -31,8 +28,6 @@ import { LoadingServiceService } from '../../../services/general/loading-service
   ],
   imports: [
     ReactiveFormsModule,
-    AsyncPipe,
-    LoadingAppComponent,
     NgIf,
     MatButton,
     VexPageLayoutContentDirective,

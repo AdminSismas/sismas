@@ -11,14 +11,10 @@ import {
   GeographicViewerEmbeddedComponent
 } from '../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
-import { AsyncPipe, NgIf } from '@angular/common';
-import {
-  LoadingAppComponent
-} from '../../../../../../apps/components/general-components/loading-app/loading-app.component';
 import { environment } from '../../../../../../../environments/environments';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constants';
-import { filter, take } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import {
   AlfaMainInformationComponent
 } from '../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
@@ -49,9 +45,6 @@ import { LoadingServiceService } from '../../../../../../apps/services/general/l
     MatTabLabel,
     GeographicViewerEmbeddedComponent,
     FluidHeightDirective,
-    NgIf,
-    LoadingAppComponent,
-    AsyncPipe,
     AlfaMainInformationComponent
   ],
   templateUrl: './tab-alfa-geo-main.component.html',

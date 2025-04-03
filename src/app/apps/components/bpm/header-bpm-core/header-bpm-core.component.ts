@@ -1,8 +1,8 @@
 import {
-  Component,
-  EventEmitter,
+  Component, DestroyRef,
+  EventEmitter, inject,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit,
   Output,
   SimpleChanges
@@ -36,9 +36,13 @@ import { ComponentTemplate } from '../../../interfaces/bpm/render-template.types
 import { TypeButtonAlfaMain } from '../../../interfaces/general/content-info';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
-import { AttachmentExcelMassiveComponent } from '../alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+import {
+  AttachmentExcelMassiveComponent
+} from '../alfa-main/attachment-excel-massive/attachment-excel-massive.component';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
-import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import {
+  DetailInformationTasksComponent
+} from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -53,7 +57,7 @@ import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tas
   templateUrl: './header-bpm-core.component.html',
   styleUrl: './header-bpm-core.component.scss'
 })
-export class HeaderBpmCoreComponent implements OnInit, OnChanges {
+export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   crumbs: string[] = [];
   actions: Record<string, () => void> = {};
   existButtonAlfaMain = false;
@@ -77,15 +81,20 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
   countAttachment$: Observable<number> = this._countAttachment$.asObservable();
   _crumbs$: ReplaySubject<ProTaskE> = new ReplaySubject<ProTaskE>(0);
   crumbs$: Observable<ProTaskE> = this._crumbs$.asObservable();
-  components$: Observable<ComponentTemplate[]> =
-    this._components$.asObservable();
+  components$: Observable<ComponentTemplate[]> = this._components$.asObservable();
+
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private alfaMainService: AlfaMainService,
     private bpmCoreService: BpmCoreService,
     private tasksPanelService: TasksPanelService,
     private dialog: MatDialog
-  ) {}
+  ) {
+
+    this.destroyRef.onDestroy(() => {
+    });
+  }
 
   ngOnInit(): void {
     if (!this.executionId || this.executionId?.length <= 0 || !this.proTaskE) {
@@ -245,6 +254,21 @@ export class HeaderBpmCoreComponent implements OnInit, OnChanges {
     return (
       !this.resources.includes(TYPE_BUTTON_EIGHT) && this.existButtonAlfaMain
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this._countComment$) {
+      this._countComment$.unsubscribe();
+    }
+    if (this._countAttachment$) {
+      this._countAttachment$.unsubscribe();
+    }
+    if (this._crumbs$) {
+      this._crumbs$.unsubscribe();
+    }
+    if (this._components$) {
+      this._components$.unsubscribe();
+    }
   }
 
   protected readonly CONSTANT_NAME_RETURN = CONSTANT_NAME_RETURN;

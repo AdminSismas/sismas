@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -8,6 +8,7 @@ import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '../../../constants/gener
 import { ThirdPartyAffectedParticipant } from '../../../interfaces/general/content-info';
 import { ParticipantTableComponent } from '../../general-components/participant-table/participant-table.component';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
+import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 
 @Component({
   selector: 'vex-basic-participant-table-dialog',
@@ -19,12 +20,13 @@ import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-particip
     MatDialogModule,
     MatDividerModule,
     MatIconModule,
-    ParticipantTableComponent
+    ParticipantTableComponent,
+    FluidMinHeightDirective
   ],
   templateUrl: './participant-table-dialog.component.html',
   styleUrl: './participant-table-dialog.component.scss',
 })
-export class ParticipantTableDialogComponent implements OnInit {
+export class ParticipantTableDialogComponent implements OnInit,OnDestroy {
 
   executionId: string = '';
   thirdPartyAffected:boolean = false;
@@ -35,12 +37,15 @@ export class ParticipantTableDialogComponent implements OnInit {
     personCompleted: [{ value: '', disabled: true }]
   });
   participants: ProcessParticipant[] = [];
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ThirdPartyAffectedParticipant,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<ParticipantTableDialogComponent>
   ) {
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit(): void {
@@ -57,5 +62,8 @@ export class ParticipantTableDialogComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close(this.participants);
+  }
+
+  ngOnDestroy(): void {
   }
 }

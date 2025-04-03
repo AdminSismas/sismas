@@ -11,5 +11,6 @@ export interface JSONInput {
   autocompleteOptions?: string[];
   cssClasses?: string;
   verticalComponent?: boolean | null;
+  noVisibleComponent?: boolean | null;
   options?: { value: string; label: string }[];
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, Subject, throwError } from 'rxjs';
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
@@ -13,9 +13,16 @@ import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
 export class ParticipantsServiceService {
   private url_basic = `${envi.url}:${envi.port}`;
 
+  private chargeInfoSubject = new BehaviorSubject<boolean | null>(false);
+  chargeInfoSubject$ = this.chargeInfoSubject.asObservable();
+
   constructor(
     private requestsService: SendGeneralRequestsService
   ) {
+  }
+
+  changeInfoParticipants(value:boolean | null){
+    this.chargeInfoSubject.next(value);
   }
 
   getAllParticipants(page: PageSearchData, executionId: string): Observable<InformationPegeable> {

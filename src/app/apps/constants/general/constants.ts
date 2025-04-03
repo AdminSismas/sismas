@@ -69,6 +69,7 @@ export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
 export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
 export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
 
+export const PAGE_OPTION_UNIQUE_5 = 5;
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [PAGE_OPTION_UNIQUE, 20, 50, 100];
@@ -1116,6 +1117,7 @@ export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
 export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_DINAMIC_HEIGHT_AUTO = { maxWidth: '100%', minWidth: '60%' };
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
 export const IDLE_TIME_MINUTES = 10;
