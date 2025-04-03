@@ -27,7 +27,7 @@
               </div>
               @if (!isLoading() && pdfUrl() !== "error") {
                 <iframe [id]="idComponent + executionId() + 'sssss'" vexMaxFluidHeight fluidHeight=269 [src]="pdfUrl()"
-                        class="w-full h-full min-h-[500px]"></iframe>
+                        class="w-full h-full min-h-[350px]"></iframe>
               } @else if (!isLoading() && pdfUrl() === "error") {
                 <div class="flex justify-center items-center tab-body w-full">
                   <p>No se pudo cargar el documento PDF.</p>
