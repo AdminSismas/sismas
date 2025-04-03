@@ -42,6 +42,7 @@ import {
 } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 
@@ -111,7 +112,6 @@ export class BmpCoreComponent implements OnInit {
     private validations: GeneralValidationsService,
     private router: Router,
     private readonly layoutService: VexLayoutService,
-    private snackbar: MatSnackBar,
     private bpmCoreService: BpmCoreService,
     private infoGeneralService: SendInfoGeneralService,
     private bpmProcessService: BpmProcessService
@@ -145,43 +145,54 @@ export class BmpCoreComponent implements OnInit {
     this.loadingServiceService.activateLoading(false);
   }
 
-  confirmAction(action: () => void, message: string, errors: string[]): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: errors.length > 0 ? '40%' : '400px',
-      data: { message, errors },
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+  confirmAction(action: () => void, message: string,
+                icon: SweetAlertIcon | undefined): void {
+    Swal.fire({
+      text: message,
+      icon: icon,
+      showConfirmButton: true,
+      showDenyButton: true,
+      confirmButtonText: `Aceptar`,
+      denyButtonText: `Cerrar`
+    }).then((result) => {
+      if (result.isConfirmed) {
         action();
       }
     });
   }
 
+  onReject(): void {
+    this.confirmAction(
+      () => this.previewBpmCore(),
+      '¿Está seguro que desea rechazar la tarea?',
+      'warning'
+    );
+  }
 
   onAccept(): void {
-    const message = '¿Está seguro que desea continuar a la siguiente tarea?';
-
     this.bpmCoreService.checkStatusBpmOperation(this.executionId)
       .subscribe((result) => {
         if (result.length > 0) {
-          this.confirmAction(() => this.nextBpmCore(), message, result);
+          this.dialog.open(ShowErrorValidateAlfaMainComponent, {
+            ...MODAL_SMALL,
+            data: result
+          });
+          this.loadingServiceService.activateLoading(false);
           return;
         }
 
-        this.confirmAction(() => this.nextBpmCore(), message, []);
+        this.confirmAction(
+          () => this.nextBpmCore(),
+          '¿Está seguro que desea continuar a la siguiente tarea?',
+          'info'
+        );
         return;
       });
   }
 
-  onReject(): void {
-    this.confirmAction(() => this.previewBpmCore(), '¿Está seguro que desea rechazar la tarea?', []);
-  }
-
   refreshComponentsDynamic(proFlow: ProFlow) {
     if (!proFlow || !proFlow.preform || !proFlow.preform.pathForm) {
-      this.activateSnapError(
+      this.getAlertError(
         'Error valor inválido, no es posible continuar',
         3000
       );
@@ -221,7 +232,7 @@ export class BmpCoreComponent implements OnInit {
         !this.validations.isNotValueFieldZero(proFlow.flowId)) ||
       !this.validations.isValueField(proFlow.preform?.pathForm)
     ) {
-      this.activateSnapError('Error valor inválido, no es posible continuar');
+      this.getAlertError('Error valor inválido, no es posible continuar');
       return false;
     }
     return true;
@@ -231,7 +242,8 @@ export class BmpCoreComponent implements OnInit {
     if (isReturn) {
       this.router
         .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
-        .then();
+        .then(() => {
+        });
     }
   }
 
@@ -271,8 +283,7 @@ export class BmpCoreComponent implements OnInit {
   checkStatusBpmOperation() {
     this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
       error: () => {
-        this.loadingServiceService.activateLoading(false);
-        this.activateSnapError(
+        this.getAlertError(
           'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar',
           3000
         );
@@ -317,7 +328,13 @@ export class BmpCoreComponent implements OnInit {
         this.router.navigate([environment.myWork_tasksPanel], {
           queryParams: { executionId: result.executionId }
         });
-        this.snackbar.open(result.proTask!.flowName!, 'Aceptar', { duration: 10000 });
+        Swal.fire({
+          text: result.proTask!.flowName!,
+          icon: 'success',
+          showConfirmButton: true,
+          timer: 10000
+        }).then(() => {
+        });
         this.bpmProcessService.setPermissions(vailablePermission);
         return;
       }
@@ -343,11 +360,16 @@ export class BmpCoreComponent implements OnInit {
   captureInformationSubscribeError(error: HttpErrorResponse): void {
     if (error.status === 400) {
       this.loadingServiceService.activateLoading(false);
-      this.snackbar.open(error.error, 'Aceptar', { duration: 10000 });
-      this.router.navigate([environment.myWork_tasksPanel]);
+      Swal.fire({
+        text: error.error,
+        showConfirmButton: true,
+        timer: 10000
+      }).then(() => {
+        this.router.navigate([environment.myWork_tasksPanel]);
+      });
+      return;
     }
-    this.loadingServiceService.activateLoading(false);
-    this.activateSnapError(
+    this.getAlertError(
       'Error ejecutando servicio de continuar flujo Bpm o retroceder, no es posible continuar',
       3000
     );
@@ -369,9 +391,16 @@ export class BmpCoreComponent implements OnInit {
     return obj;
   }
 
-  activateSnapError(msg: string, timer = 1000) {
-    this.snackbar.open(msg, '', { duration: timer });
+  getAlertError(msg: string, timer: number = 1000, showConfirmButton: boolean = false) {
     this.loadingServiceService.activateLoading(false);
+    Swal.fire({
+      title: '¡Error!',
+      text: msg,
+      icon: 'error',
+      showConfirmButton: showConfirmButton,
+      timer: timer
+    }).then(() => {
+    });
   }
 
   private returnURLPrevious(url: string) {

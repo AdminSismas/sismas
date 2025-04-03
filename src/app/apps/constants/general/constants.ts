@@ -10,9 +10,12 @@ import { environment } from '../../../../environments/environments';
 import {
   CheckTypeQualificationMode,
   TypeButtonAlfaMain,
-  TypeInformation, TypeOperation,
+  TypeInformation,
+  TypeOperation,
   TypeOperationAlfaMain,
-  TypeOperationGeoMain, TypeQualificationMode, ValidateQualificationByDomBuiltType
+  TypeOperationGeoMain,
+  TypeQualificationMode,
+  ValidateQualificationByDomBuiltType
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../../interfaces/general/out-format.model';
@@ -60,11 +63,13 @@ export const DIVPOLLVL2_CODE: string = 'divpolLvl2Code';
 export const FORMAT_CURRENCY_COP: string = 'COP';
 export const FORMAT_CURRENCY_SIMBOL: string = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND: string = 'Información no disponible';
+export const CONSTANT_TYPE_PARTICIPATION_THIRDPARTY: string = 'Tercero Afectado';
 
 export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
 export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
 export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
 
+export const PAGE_OPTION_UNIQUE_5 = 5;
 export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [PAGE_OPTION_UNIQUE, 20, 50, 100];
@@ -562,7 +567,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 1
   },
   {
-    name: 'cadVisitComponent',
+    name: 'cadRecognitionPropertyInformation',
     pathForm: '/core/cadastral/visita.html',
     serviceValidation: '',
     mode: 1
@@ -813,6 +818,35 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment:
     label: 'Alertas',
     fragment: FRAGMENT_ALERTS
   }
+];
+
+export const TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY: TableColumn<ProcessParticipant>[] = [
+  {
+    label: 'Documento',
+    property: 'individualNumber',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Nombre participante',
+    property: 'fullName',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Participación',
+    property: 'bpmParticipation',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  }
+];
+
+export const TABLE_COLUMN_PRINCIPANTS_TABLE: TableColumn<ProcessParticipant>[] = [
+  ...TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] = [
@@ -1083,6 +1117,7 @@ export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
 export const MODAL_DINAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_DINAMIC_HEIGHT_AUTO = { maxWidth: '100%', minWidth: '60%' };
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
 export const IDLE_TIME_MINUTES = 10;

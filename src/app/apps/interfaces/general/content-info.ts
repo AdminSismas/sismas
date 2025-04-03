@@ -1,3 +1,13 @@
+export type Element =
+  | 'input'
+  | 'select'
+  | 'toggle'
+  | 'date'
+  | 'file'
+  | 'textarea'
+  | 'autocomplete'
+  | 'collection'
+  | 'checkbox';
 
 export type TypeInformation = 'visualization' | 'edition';
 export type TypeOperation = 'CREATE' | 'UPDATE' | 'DELETE' | 'READ_ONLY';
@@ -34,6 +44,11 @@ export interface HistoryListBasic {
   bpmProcessCategory: string;
   processName: string;
   lastupdated_at: string;
+}
+
+export interface ThirdPartyAffectedParticipant {
+  executionId: string;
+  thirdPartyAffected: boolean;
 }
 
 

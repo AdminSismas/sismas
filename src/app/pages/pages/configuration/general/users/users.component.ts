@@ -16,7 +16,7 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable, ReplaySubject } from 'rxjs';
-import { User, InformationPagebleUser } from 'src/app/apps/interfaces/users/user';
+import { User, InformationPageableUser } from 'src/app/apps/interfaces/users/user';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
@@ -51,7 +51,7 @@ import { PAGE_OPTION_10_20_50_100 } from '../../../../../apps/constants/general/
 export class UsersComponent implements OnInit, AfterViewInit {
 
   public isDesktop$: Observable<boolean> = this.layoutSerices.isDesktop$;
-  public subject$: ReplaySubject<InformationPagebleUser> = new ReplaySubject<InformationPagebleUser>(1);
+  public subject$: ReplaySubject<InformationPageableUser> = new ReplaySubject<InformationPageableUser>(1);
   public actionBtns = computed(() => {
     return [
       {
@@ -97,7 +97,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   getUsers(page = 0, size = 10): void {
     this.userService.getUsers(page, size)
       .subscribe({
-        next: (data: InformationPagebleUser) => {
+        next: (data: InformationPageableUser) => {
           this.dataSourceFormat(data);
           this.totalElements = data.totalElements;
           this.page = page;
@@ -112,7 +112,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       });
   }
 
-  dataSourceFormat(data: InformationPagebleUser): void {
+  dataSourceFormat(data: InformationPageableUser): void {
     this.dataSource.data = data.content.map((row: User) => {
       return {
         ...row,
@@ -139,14 +139,14 @@ export class UsersComponent implements OnInit, AfterViewInit {
       }
     })
       .afterClosed()
-      .subscribe((result: InformationPagebleUser) => {
+      .subscribe((result: InformationPageableUser) => {
         setTimeout(() =>{
           this.getUsers(this.page, this.pageSize);
         } , 300);
       });
   }
 
-  actionMenuHandler(action: string, row: InformationPagebleUser) {
+  actionMenuHandler(action: string, row: InformationPageableUser) {
     if (action === 'edit') {
       this.dialog.open(CreateUsersComponent, {
         data: {
@@ -155,7 +155,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         }
       })
         .afterClosed()
-        .subscribe((result: InformationPagebleUser) => {
+        .subscribe((result: InformationPageableUser) => {
           setTimeout(() =>{
             this.getUsers(this.page, this.pageSize);
           } , 300);

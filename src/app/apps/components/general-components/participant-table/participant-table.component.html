@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row lg:gap-1 sm:gap-6 sm:mt-3 lg:mt-2">
+<div class="flex flex-col sm:flex-row lg:gap-1 sm:gap-6 sm:mt-3 lg:mt-2" [id]="id">
   <vex-combox-colletion
     idComboCollection="typeNumberDocument"
     label="Tipo de documento"
@@ -63,43 +63,46 @@
     </button>
   </div>
 </div>
-<div
-  class="flex flex-col px-2 py-4 pt-0 sm:flex-row"
-  vexMinFluidHeight
-  fluidHeight="470"
->
-  <div class="w-full overflow-auto mat-elevation-z3">
+<div class="card h-full flex flex-col mat-elevation-z3">
+  <div class="w-full flex flex-col justify-between py-0 overflow-auto" vexMinFluidHeight fluidHeight="700">
     <table
       @stagger
       [dataSource]="dataSource"
       class="w-full"
       mat-table
-      matSort
-    >
+      matSort>
       <!-- Text Columns -->
-      <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-        <ng-container
-          *ngIf="column.type === 'text'"
-          [matColumnDef]="column.property"
-        >
-          <th
-            *matHeaderCellDef
-            class="items-center"
-            mat-header-cell
-            mat-sort-header
-          >
-            {{ column.label }}
-          </th>
+      @for (column of columns; track trackByProperty) {
+        @if (column.type === 'text') {
+          <ng-container [matColumnDef]="column.property">
+            <th
+              *matHeaderCellDef
+              class="items-center"
+              mat-header-cell
+              mat-sort-header
+            >
+              {{ column.label }}
+            </th>
+            <td
+              *matCellDef="let row"
+              [ngClass]="column.cssClasses"
+              mat-cell
+              class="pl-2 pr-2"
+            >
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        }
+      } @empty {
+        <ng-container>
           <td
-            *matCellDef="let row"
-            [ngClass]="column.cssClasses"
-            mat-cell
-            class="pl-2 pr-2"
-          >
-            {{ row[column.property] }}
+            *matCellDef="let row" class="w-10 text-secondary pl-2 pr-2" mat-cell>
+            <div class="no-data-information text-gray-500 text-lg flex flex-col sm:flex-row w-full">
+              No hay información disponible
+            </div>
           </td>
         </ng-container>
-      </ng-container>
+      }
 
       <!-- Action Column -->
       <ng-container matColumnDef="actions">
@@ -125,8 +128,11 @@
           </button>
         </td>
       </ng-container>
-      <tr *matHeaderRowDef="visibleColumns" mat-header-row
-          class="bg-app-bar border-b sticky"
+
+      <tr
+        mat-header-row
+        *matHeaderRowDef="visibleColumns"
+        class="bg-app-bar border-b sticky"
       ></tr>
       <tr
         *matRowDef="let row; columns: visibleColumns"
@@ -135,36 +141,45 @@
         mat-row
       ></tr>
     </table>
-    <div
-      *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0"
-      class="no-data-information"
-    >
-      No hay información disponible
-    </div>
+    @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
+      <div class="no-data-information items-center justify-center h-full w-full m-auto">
+        No hay información disponible
+      </div>
+    }
+  </div>
+  <div class="flex flex-col sm:flex-row w-full left-0">
+    <div class="flex-1"></div>
     <mat-paginator
-      #paginatorBasic
+      #paginatorBasicTable
       [pageSizeOptions]="pageSizeOptions"
+      [length]="totalElements"
       [pageSize]="pageSize"
+      [pageIndex]="page"
+      (page)="refreshInformationPaginator($event)"
       class="sticky left-0"
     ></mat-paginator>
   </div>
 </div>
-
 <mat-menu
   #actionsMenu="matMenu"
   xPosition="before"
-  yPosition="below"
->
+  yPosition="below">
   <ng-template
-    let-customer="customer"
-    matMenuContent
-  >
+    let-customer="customer" matMenuContent>
+    @if (!this.thirdPartyAffected) {
+      <button
+        (click)="editParticipantToList(customer)"
+        mat-menu-item>
+        <mat-icon svgIcon="mat:edit"></mat-icon>
+        <span>Editar</span>
+      </button>
+    }
     <button
-      (click)="deleteInformations(customer)"
-      mat-menu-item
-    >
+      (click)="deleteInformation(customer)"
+      mat-menu-item>
       <mat-icon svgIcon="mat:delete"></mat-icon>
       <span>Retirar</span>
     </button>
+
   </ng-template>
 </mat-menu>

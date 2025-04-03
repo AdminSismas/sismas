@@ -75,6 +75,11 @@ export const environment = {
     prodocumentStr: "/prodocumentStr/",
     value: "/bpmProcess"
   },
+  bpmParticipation: {
+    value: '/bpmParticipation',
+    participation:'/participation',
+    thirdPartyAffected:'/terceroAfectado'
+  },
   calificationUB: "/calificationUB",
   cancel: "/cancel",
   ccColindante: "/ccColindante/",

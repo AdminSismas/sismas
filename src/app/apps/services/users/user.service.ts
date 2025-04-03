@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
-import { User, CreateOutput, CreateUserParams, InformationPagebleUser } from '../../interfaces/users/user';
+import { User, CreateOutput, CreateUserParams, InformationPageableUser } from '../../interfaces/users/user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +15,14 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  getUsers(page = 0, size = 10, sortBy = 'username'): Observable<InformationPagebleUser> {
+  getUsers(page = 0, size = 10, sortBy = 'username'): Observable<InformationPageableUser> {
     const url = `${this.base_url}`;
     const params: HttpParams = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
       .set('sortBy', sortBy);
 
-    return this.http.get<InformationPagebleUser>(url, { params })
+    return this.http.get<InformationPageableUser>(url, { params })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           throw error;
