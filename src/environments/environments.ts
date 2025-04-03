@@ -89,6 +89,7 @@ export const environment = {
   ccZonaHomoFisicaUr: "/ccZonaHomoFisicaUr",
   ccZonaHomoGeoEconomica: "/ccZonaHomoGeoEconomica",
   changeLog: "/changeLog/",
+  changePriority: "changePriority/",
   check: "/check",
   checkProcess: "checkProcess/",
   clearBaunit: "clearBAUnit",

@@ -7,6 +7,7 @@ export class contentInfoProcedures {
     suspendedDays: number;
     dueDate: string;
     executionId?: number;
+    bpmPriority?: number;
 
 
     constructor(content?: any) {
@@ -18,5 +19,6 @@ export class contentInfoProcedures {
         this.suspendedDays = content.suspendedDays;
         this.dueDate = content.dueDate;
         this.executionId = content.executionId;
+        this.bpmPriority = content.bpmPriority;
     }
 }
