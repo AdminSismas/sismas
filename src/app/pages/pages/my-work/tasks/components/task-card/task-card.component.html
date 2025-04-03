@@ -71,9 +71,11 @@
       class="text-container start-center flex-grow px-4"
       (click)="viewDetailTask(protaskE)"
     >
-      <span class="text-sm block">
-        {{ "Detalle trámite" }} - {{ protaskE.proTask?.flowDetail }} - {{ protaskE.executionId}}
-      </span>
+      <div class="text-sm block">
+        <span class="w-full text-center font-bold">{{ "Detalle trámite" }}</span>
+        <br>
+        <span>Rad: {{ protaskE.proTask?.flowDetail }} - Ver: {{ protaskE.executionId}}</span>
+      </div>
     </div>
   </div>
 </div>

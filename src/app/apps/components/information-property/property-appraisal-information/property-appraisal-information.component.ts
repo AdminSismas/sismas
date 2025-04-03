@@ -121,7 +121,7 @@ export class PropertyAppraisalInformationComponent
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input({ required: true }) editable!: boolean;
+  @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
@@ -181,9 +181,11 @@ export class PropertyAppraisalInformationComponent
       })
       .map((column) => column.property);
 
-    if (this.typeInformation === TYPE_INFORMATION_EDITION && this.editable)
-      return [...visibleColumns, 'actions'];
-    else return visibleColumns;
+    return visibleColumns;
+
+    // if (this.typeInformation === TYPE_INFORMATION_EDITION && this.editable)
+    //   return [...visibleColumns, 'actions'];
+    // else return visibleColumns;
   }
 
   get visibleColumnsSecondsRow() {

@@ -1115,7 +1115,7 @@ export const TYPE_BUTTON_NINE: TypeButtonAlfaMain = 'VIGEN';
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN'];
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL'];
 
 export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
