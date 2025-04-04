@@ -70,17 +70,17 @@ export const environment = {
     startProcess: "startProcess",
     value: "/bpmOperation"
   },
-  bpmParticipation: {
-    participation: "/participation",
-    thirdPartyAffected: "/terceroAfectado",
-    value: "/bpmParticipation"
-  },
   bpmProcess: {
     category: "/category",
     prodocumentStr: "/prodocumentStr/",
     value: "/bpmProcess"
   },
   bpmResolution: "/bpmResolution",
+  bpmParticipation: {
+    value: '/bpmParticipation',
+    participation:'/participation/',
+    thirdPartyAffected:'/terceroAfectado'
+  },
   calificationUB: "/calificationUB",
   cancel: "/cancel",
   ccColindante: "/ccColindante/",
@@ -98,6 +98,7 @@ export const environment = {
   comment: "/comment/",
   compare_hist: "/compare/hist/",
   compare_temp: "/compare/temp/",
+  contact: "/contact",
   copy: "/copy",
   divpol: "/divpol",
   domain_domain: "/domain",
@@ -169,6 +170,11 @@ export const environment = {
   tasksAssigned: "/assignedTasks",
   temporal: "/temporal/",
   titulo: "Armenia",
+  typeNotification: {
+    cited: '/citar',
+    notified: '/notificar',
+    notify: '/aviso'
+  },
   typologyType: "/tipologiaTipo/",
   ulr_icon_base: "assets/img/icons/cadastral-logos/128x128/",
   unitBuild: "/unitBuild",
