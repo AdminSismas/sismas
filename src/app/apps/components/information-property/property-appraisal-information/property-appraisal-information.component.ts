@@ -1,13 +1,20 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   LIST_EXTRA_COLUMNS_APPRAISAL,
   LIST_GRID_APPRAISAL_1,
   LIST_GRID_APPRAISAL_2,
   LIST_GRID_APPRAISAL_3,
+  MODAL_SMALL_XS,
   NAME_SELF_VALUATION_VALUE,
   PAGE,
   PAGE_OPTION_5_7_10,
@@ -20,12 +27,26 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CommonModule, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  CommonModule,
+  DatePipe,
+  NgClass,
+  NgForOf,
+  NgIf
+} from '@angular/common';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { environment } from '../../../../../environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog } from '@angular/material/dialog';
@@ -48,6 +69,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 import { getRandomInt } from '../../../utils/general';
+import { AutoAppraisalComponent } from './auto-appraisal/auto-appraisal.component';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'vex-property-appraisal-information',
@@ -81,15 +104,16 @@ import { getRandomInt } from '../../../utils/general';
     MatCheckboxModule,
     FormsModule,
     MatRippleModule,
-    CurrencyFormatPipe
+    CurrencyFormatPipe,
+    SweetAlert2Module
   ],
 
   templateUrl: './property-appraisal-information.component.html',
-  styleUrl: './property-appraisal-information.component.scss',
-
+  styleUrl: './property-appraisal-information.component.scss'
 })
-export class PropertyAppraisalInformationComponent implements OnInit, AfterViewInit {
-
+export class PropertyAppraisalInformationComponent
+  implements OnInit, AfterViewInit
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
@@ -97,6 +121,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
+  @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
@@ -111,6 +136,8 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('successAutoAppraisal') successAutoAppraisal!: SwalComponent;
+  @ViewChild('errorAutoAppraisal') errorAutoAppraisal!: SwalComponent;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -118,8 +145,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private informationPropertyService: InformationPropertyService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -127,7 +153,10 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
       return;
     }
     this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
-    if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL) {
+    if (
+      this.typeInformation &&
+      this.typeInformation === TYPE_INFORMATION_VISUAL
+    ) {
       this.pageSize = PAGE_SIZE_SORT;
     }
     this.isExpandPanel(this.expandedComponent);
@@ -146,40 +175,62 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   }
 
   get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
+    const visibleColumns = this.columns
+      .filter((column) => {
+        return column.visible;
+      })
       .map((column) => column.property);
+
+    return visibleColumns;
+
+    // if (this.typeInformation === TYPE_INFORMATION_EDITION && this.editable)
+    //   return [...visibleColumns, 'actions'];
+    // else return visibleColumns;
   }
 
   get visibleColumnsSecondsRow() {
     let listadoSecondRow: string[] = LIST_EXTRA_COLUMNS_APPRAISAL;
     const listColumnVisible: string[] = this.visibleColumns;
     if (!listColumnVisible.includes(NAME_SELF_VALUATION_VALUE)) {
-      listadoSecondRow = listadoSecondRow.filter(e => e !== 'header-row-quartet-group');
+      listadoSecondRow = listadoSecondRow.filter(
+        (e) => e !== 'header-row-quartet-group'
+      );
     }
-    if (!this.validatePropertyInList(listColumnVisible, LIST_GRID_APPRAISAL_3)) {
-      listadoSecondRow = listadoSecondRow.filter(e => e !== 'header-row-third-group');
+    if (
+      !this.validatePropertyInList(listColumnVisible, LIST_GRID_APPRAISAL_3)
+    ) {
+      listadoSecondRow = listadoSecondRow.filter(
+        (e) => e !== 'header-row-third-group'
+      );
     }
-    if (!this.validatePropertyInList(listColumnVisible, LIST_GRID_APPRAISAL_2)) {
-      listadoSecondRow = listadoSecondRow.filter(e => e !== 'header-row-second-group');
+    if (
+      !this.validatePropertyInList(listColumnVisible, LIST_GRID_APPRAISAL_2)
+    ) {
+      listadoSecondRow = listadoSecondRow.filter(
+        (e) => e !== 'header-row-second-group'
+      );
     }
-    if (!this.validatePropertyInList(listColumnVisible, LIST_GRID_APPRAISAL_1)) {
-      listadoSecondRow = listadoSecondRow.filter(e => e !== 'header-row-first-group');
+    if (
+      !this.validatePropertyInList(listColumnVisible, LIST_GRID_APPRAISAL_1)
+    ) {
+      listadoSecondRow = listadoSecondRow.filter(
+        (e) => e !== 'header-row-first-group'
+      );
     }
     return listadoSecondRow;
   }
 
-  private validatePropertyInList(listFirst: string[], listSecond: string[]): boolean {
+  private validatePropertyInList(
+    listFirst: string[],
+    listSecond: string[]
+  ): boolean {
     let showProperty = false;
-    listFirst.forEach(e => {
+    listFirst.forEach((e) => {
       if (listSecond.includes(e)) {
         showProperty = true;
       }
     });
     return showProperty;
-  }
-
-  deleteInformations(customer: any): void {
   }
 
   isExpandPanel(expandedComponent: boolean): void {
@@ -205,16 +256,21 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.informationPropertyService.getBasicInformationAppraisalsProperty(
-      this.generateObjectPageSearchData(this.baunitId), this.schema, this.executionId)
+    this.informationPropertyService
+      .getBasicInformationAppraisalsProperty(
+        this.generateObjectPageSearchData(this.baunitId),
+        this.schema,
+        this.executionId
+      )
       .subscribe({
-        error: (err: any) => this.captureInformationSubscribeError(err),
-        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+        error: () => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result)
       });
     return true;
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.contentInformations = new InformationPegeable();
     this.dataSource.data = [];
   }
@@ -268,6 +324,28 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     value = value.trim();
     value = value.toLowerCase();
     this.dataSource.filter = value;
+  }
+
+  deleteInformations(customer: InfoAppraisal) {
+    console.log(customer);
+  }
+
+  autoAppraisal() {
+    this.dialog.open(AutoAppraisalComponent, {
+      ...MODAL_SMALL_XS,
+      data: {
+        executionId: this.executionId,
+        baunitId: this.baunitId
+      }
+    }).afterClosed()
+      .subscribe((result: boolean | undefined) => {
+        if (result === true) {
+          this.successAutoAppraisal.fire();
+          this.searchInformationsAppraisalsProperty();
+        } else if (result === false) {
+          this.errorAutoAppraisal.fire();
+        }
+      });
   }
 
   private generateObjectPageSearchData(baunitId: string): PageSearchData {

@@ -1,0 +1,58 @@
+<div class="flex justify-between">
+  <h2 matDialogTitle>Autoavalúo</h2>
+  <button
+    mat-icon-button
+    tabindex="-1"
+    mat-dialog-close
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="bg-slate-400"></mat-divider>
+
+<mat-dialog-content>
+  <form
+    [formGroup]="autoAppraisalForm()"
+    class="flex flex-col w-full"
+  >
+    <mat-form-field>
+      <mat-label>Vigencia</mat-label>
+      <mat-select formControlName="validity">
+        @for (option of validityOptions(); track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Autoavalúo</mat-label>
+      <span matTextPrefix>$ &nbsp;</span>
+      <input
+        #selfValuationValue
+        class="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        matInput
+        type="number"
+        formControlName="selfValuationValue"
+      />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <section class="flex gap-4">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="sendAppraisalForm()"
+    >
+      Aceptar
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      mat-dialog-close
+    >
+      Cancelar
+    </button>
+  </section>
+</mat-dialog-actions>

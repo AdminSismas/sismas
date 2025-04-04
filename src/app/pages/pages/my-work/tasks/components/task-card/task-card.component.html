@@ -2,28 +2,51 @@
   <div
     (click)="openProtaskE.emit(protaskE)"
     class="p-4 py-2 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
-    matRipple>
+    matRipple
+  >
     <div class="flex items-center container px-0 h-20">
-      <img [src]="URL_ICON_BASE + protaskE.icon" class="avatar h-16 w-16 mx-auto flex bg-transparent to-transparent" alt="" />
-      <span class="items-center text-center min-h-[35px] subheading-1 leading-none">
-            @if (protaskE.proTask === null || protaskE.proTask === undefined || protaskE.proTask.processName == null) {
-              {{ NAME_NO_DISPONIBLE }}
-            } @else {
-              {{ protaskE.proTask.processName | truncate: 70 }}
-            }
-            </span>
+      <img
+        [src]="URL_ICON_BASE + protaskE.icon"
+        class="avatar h-16 w-16 mx-auto flex bg-transparent to-transparent"
+        alt=""
+      />
+      <span
+        class="items-center text-center min-h-[35px] subheading-1 leading-none"
+      >
+        @if (
+          protaskE.proTask === null ||
+          protaskE.proTask === undefined ||
+          !protaskE.proTask.processName
+        ) {
+          {{ NAME_NO_DISPONIBLE }}
+        } @else {
+          {{ protaskE.proTask.processName | truncate: 70 }}
+        }
+      </span>
     </div>
-    <h4 class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[30px]"
-        title="{{ protaskE.proTask?.flowName }}">
-      @if (protaskE.proTask === null || protaskE.proTask === undefined || protaskE.proTask.flowName == null) {
+    <h4
+      class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[30px]"
+      title="{{ protaskE.proTask?.flowName }}"
+    >
+      @if (
+        protaskE.proTask === null ||
+        protaskE.proTask === undefined ||
+        !protaskE.proTask.flowName
+      ) {
         {{ NAME_NO_DISPONIBLE }}
       } @else {
         {{ protaskE.proTask.flowName | truncate: 70 }}
       }
     </h4>
-    <h5 class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[20px]"
-        title="{{ protaskE.proTask?.flowName }}">
-      @if (protaskE.proTask === null || protaskE.proTask === undefined || protaskE.proTask.daysBeginS == null) {
+    <h5
+      class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[20px]"
+      title="{{ protaskE.proTask?.flowName }}"
+    >
+      @if (
+        protaskE.proTask === null ||
+        protaskE.proTask === undefined ||
+        !protaskE.proTask.daysBeginS
+      ) {
         {{ NAME_NO_DISPONIBLE }}
       } @else {
         {{ protaskE.proTask.daysBeginS | truncate: 70 }}
@@ -32,25 +55,27 @@
   </div>
 
   <div
-  (click)="openDetailProtaskE.emit(protaskE.executionId)"
-  class="bg-app-bar p-2 flex items-center justify-between cursor-pointer">
+    (click)="openDetailProtaskE.emit(protaskE.executionId)"
+    class="bg-app-bar p-2 flex items-center justify-between cursor-pointer"
+  >
+    <!-- Ícono alineado a la izquierda -->
+    <mat-icon
+      class="icon-xs ltr:mr-2 rtl:ml-2"
+      svgIcon="mat:settings"
+      style="margin-right: 8px"
+    >
+    </mat-icon>
 
-  <!-- Ícono alineado a la izquierda -->
-  <mat-icon
-    class="icon-xs ltr:mr-2 rtl:ml-2"
-    svgIcon="mat:settings"
-    style="margin-right: 8px;">
-  </mat-icon>
-
-  <!-- Contenedor de texto centrado -->
-  <div
-    class="text-container start-center flex-grow px-4"
-    (click)="viewDetailTask(protaskE)">
-    <span class="text-sm block">
-     {{ 'Detalle trámite' }} - {{ protaskE.proTask?.flowDetail }}
-    </span>
+    <!-- Contenedor de texto centrado -->
+    <div
+      class="text-container start-center flex-grow px-4"
+      (click)="viewDetailTask(protaskE)"
+    >
+      <div class="text-sm block">
+        <span class="w-full text-center font-bold">{{ "Detalle trámite" }}</span>
+        <br>
+        <span>Rad: {{ protaskE.proTask?.flowDetail }} - Ver: {{ protaskE.executionId}}</span>
+      </div>
+    </div>
   </div>
 </div>
-
-</div>
-

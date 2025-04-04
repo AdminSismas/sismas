@@ -15,11 +15,13 @@ import {
 } from '../../interfaces/information-property/detail-basic-information-address';
 import { InfoOwners } from '../../interfaces/information-property/info-owners';
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
-import { CreateBaunitZone, ZoneBAUnitResponse } from '../../interfaces/information-property/zone-baunit';
+import {
+  CreateBaunitZone,
+  ZoneBAUnitResponse
+} from '../../interfaces/information-property/zone-baunit';
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
-import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +42,7 @@ export class InformationPropertyService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {
-  }
+  ) {}
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);
@@ -110,11 +111,10 @@ export class InformationPropertyService {
     } else {
       url = `${this.basic_url}${envi.ccDireccion}/${directionId}`;
     }
-    return this.requestsService.sendRequestsFetchGet(url).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
-    );
+    return this.requestsService
+      .sendRequestsFetchGet(url)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
-
 
   getInformationPropertyOwners(
     schema: string,
@@ -141,7 +141,7 @@ export class InformationPropertyService {
     params = params.append('page', `${page.page}`);
     params = params.append('size', `${page.size}`);
     params = params.append('sortBy', `validityValuation`);
-    let url = `${this.basic_url}${envi.valuation}${schema}`;
+    let url = `${this.basic_url}${envi.valuation}/${schema}`;
     if (!executionId || (executionId && schema === `${envi.schemas.main}`)) {
       url += `/${page.searchData}`;
     } else {
@@ -150,6 +150,14 @@ export class InformationPropertyService {
     return this.getData(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
+  }
+
+  executeAppraisalProcess(executionId: string): Observable<unknown> {
+    const url = `${this.basic_url}${envi.temporal}${executionId}${envi.valuation}`;
+
+    return this.http
+      .post(url, {})
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
   getBasicInformationPropertyZones(
@@ -259,14 +267,12 @@ export class InformationPropertyService {
     );
   }
 
-  getByDivPolGeoeconomica(
-    npn: string
-  ): Observable<GeoEconomicZone[]> {
+  getByDivPolGeoeconomica(npn: string): Observable<GeoEconomicZone[]> {
     // {{url}}:{{port}}/baUnitZona/baunitIdEcono/divpol/{{npn}}
     const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}${envi.divpol}/${npn}`;
-    return this.http.get<GeoEconomicZone[]>(url).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
-    );
+    return this.http
+      .get<GeoEconomicZone[]>(url)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
   createBAUnitZones(
@@ -348,7 +354,6 @@ export class InformationPropertyService {
       })
     );
   }
-
 
   /**
    * Delete basic information by direccionId

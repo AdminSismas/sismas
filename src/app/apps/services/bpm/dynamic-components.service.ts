@@ -103,6 +103,13 @@ export class DynamicComponentsService {
       ),
     },
     {
+      nameComponent: 'cadResNoProcedeComponent',
+      component:ResValidateComponent,
+      loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component').then(
+        (m) => m.ResValidateComponent
+      ),
+    },
+    {
       nameComponent: 'citationAndNoticeComponent',
       component:CitationAndNoticeComponent,
       loadComponent: () => import('../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component').then(

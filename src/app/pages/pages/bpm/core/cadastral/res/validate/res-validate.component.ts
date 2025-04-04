@@ -1,7 +1,15 @@
-import { Component, inject, input, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnInit,
+  signal,
+  viewChild
+} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { environment } from 'src/environments/environments';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpErrorResponse} from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,28 +23,15 @@ import {
   RecognitionPropertyBasic,
   TagsRecognition
 } from '../../../../../../../apps/interfaces/bpm/recognitionProperty.interface';
-import { getRandomInt } from '../../../../../../../apps/utils/general';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../../../../../apps/directives/fluid-height.directive';
 import { FluidMaxHeightDirective } from '../../../../../../../apps/directives/fluid-max-height.directive';
-import {
-  INPUT_FORM_VISIT,
-  RES_VALIDATE_INPUTS
-} from '../../../../../../../apps/constants/information-property/cadastral-recognition.constants';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { ThirdPartyAffectedParticipant } from '../../../../../../../apps/interfaces/general/content-info';
-import { ParticipantsServiceService } from '../../../../../../../apps/services/users/participants-service.service';
-import { MatDialog } from '@angular/material/dialog';
-import {
-  ParticipantTableDialogComponent
-} from '../../../../../../../apps/components/bpm/participant-table-dialog/participant-table-dialog.component';
-import { MODAL_MEDIUM } from '../../../../../../../apps/constants/general/constants';
-import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
+import { RES_VALIDATE_INPUTS } from '../../../../../../../apps/constants/information-property/cadastral-recognition.constants';
 import { LoadingServiceService } from '../../../../../../../apps/services/general/loading-service.service';
-import {
-  TableThirdPartyAffectedComponent
-} from '../../../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { TableThirdPartyAffectedComponent } from '../../../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { ResService } from 'src/app/apps/services/bpm/core/res.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'vex-res-validate',
@@ -59,10 +54,19 @@ import {
   styleUrl: './res-validate.component.scss'
 })
 export class ResValidateComponent implements OnInit {
-
-  idComponent: string = getRandomInt(123459887).toString();
   executionId = input.required<string>();
   resources = input.required<string[]>();
+  mode = input.required<1 | 2>();
+
+  private sanitizer = inject(DomSanitizer);
+  private resService = inject(ResService);
+  private recognitionProperty: RecognitionPropertyService = inject(
+    RecognitionPropertyService
+  );
+  private loadingServiceService: LoadingServiceService = inject(
+    LoadingServiceService
+  );
+
   isLoading = signal<boolean>(true);
   id = signal<string>('');
   basic_url = signal(
@@ -72,28 +76,15 @@ export class ResValidateComponent implements OnInit {
   firstTab = signal<string>('Resolución generada');
   secondTab = signal<string>('Textos resolución');
   form = signal<FormGroup>(new FormGroup({}));
-  initTags = signal<TagsRecognition | RecognitionProperty | RecognitionPropertyBasic | null>(null);
-
-  private sanitizer = inject(DomSanitizer);
-  private http = inject(HttpClient);
-  private recognitionProperty: RecognitionPropertyService = inject(RecognitionPropertyService);
-  private dialog: MatDialog = inject(MatDialog);
-  private participantsService: ParticipantsServiceService = inject(ParticipantsServiceService);
-  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  initTags = signal<
+    TagsRecognition | RecognitionProperty | RecognitionPropertyBasic | null
+  >(null);
+  existThirdPartyAffected = signal(false);
 
   successSendTags = viewChild<SwalComponent>('successSendTags');
   errorSendTags = viewChild<SwalComponent>('errorSendTags');
 
-  existThirdPartyAffected = signal(false);
-
   ngOnInit() {
-    if (this.idComponent?.length > 0) {
-      this.idComponent =
-        this.idComponent + getRandomInt(1345789) + 'validate24' + getRandomInt(10);
-    } else {
-      this.idComponent = getRandomInt(987541) + 'validate24' + getRandomInt(10);
-    }
-
     this.loadingServiceService.activateLoading(true);
     this.loadPdf();
     this.getTags();
@@ -101,10 +92,15 @@ export class ResValidateComponent implements OnInit {
   }
 
   loadPdf() {
-    const urlComplete = `${this.basic_url()}${this.executionId()}`;
-    const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.get(urlComplete, { headers, responseType: 'blob' }).subscribe({
+
+    let subscription: Observable<Blob>;
+    if (this.mode() === 1){
+      subscription = this.resService.getResValidateDoc(this.executionId());
+    } else {
+      subscription = this.resService.getNoProcedeDoc(this.executionId());
+    }
+
+    subscription.subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         this.pdfUrl.set(
@@ -140,11 +136,13 @@ export class ResValidateComponent implements OnInit {
   }
 
   getTags() {
-    this.recognitionProperty.getRecognitionPropertyTags(this.executionId()).subscribe({
-      next: (tags) => {
-        this.brToLineJumps(tags);
-      }
-    });
+    this.recognitionProperty
+      .getRecognitionPropertyTags(this.executionId())
+      .subscribe({
+        next: (tags) => {
+          this.brToLineJumps(tags);
+        }
+      });
   }
 
   lineJumpsToBr(tags: TagsRecognition) {
@@ -163,20 +161,18 @@ export class ResValidateComponent implements OnInit {
 
     this.lineJumpsToBr(value);
 
-    this.recognitionProperty
-      .sendTags(this.executionId(), value)
-      .subscribe({
-        next: () => {
-          this.successSendTags()!.fire();
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(error.message);
-          this.errorSendTags()!.fire();
-        }
-      });
+    this.recognitionProperty.sendTags(this.executionId(), value).subscribe({
+      next: () => {
+        this.successSendTags()!.fire();
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error.message);
+        this.errorSendTags()!.fire();
+      }
+    });
   }
+
   get inputs() {
     return RES_VALIDATE_INPUTS;
   }
-
 }

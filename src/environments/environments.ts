@@ -75,6 +75,7 @@ export const environment = {
     prodocumentStr: "/prodocumentStr/",
     value: "/bpmProcess"
   },
+  bpmResolution: "/bpmResolution",
   bpmParticipation: {
     value: '/bpmParticipation',
     participation:'/participation/',
@@ -125,6 +126,7 @@ export const environment = {
   myWork_cadastralSearch: "/myWork/cadastralSearch",
   myWork_cadastralSearchDa: "/openData/cadastralSearchDA",
   myWork_tasksPanel: "/myWork/tasks/tasksPanel/",
+  noprocede: "/noprocede",
   notFound: "/not-found",
   npnlike: "/npnlike",
   number: "number",
@@ -133,6 +135,7 @@ export const environment = {
   password: "/password",
   port: "5001",
   post_path_viewer: "rest/config/setParams",
+  preview: "/preview",
   production: false,
   proExecution: "/proExecution",
   qbaunit_ccbarrio: "/qbaunit/ccbarrio",
@@ -158,6 +161,7 @@ export const environment = {
     main: "main",
     temp: "temp"
   },
+  selfvaluation: "/selfvaluation",
   serviciosTaquilla: "/serviciosTaquilla",
   signatureUrl: "/signatureUrl",
   snr: "/snr",
@@ -181,7 +185,7 @@ export const environment = {
   url_viewer: "https://prediosplus.map.cadastre4world.com:8081/mapstore/",
   user_exist: "/username/",
   validity: "validity",
-  valuation: "/valuation/",
+  valuation: "/valuation",
   video: "assets/video/desarrollo.mp4",
   withoutSignaturesUsers: "/without-signature",
   withSignaturesUsers: "/with-signature"

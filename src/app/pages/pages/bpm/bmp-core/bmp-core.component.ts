@@ -7,7 +7,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { firstValueFrom, Observable, of, ReplaySubject } from 'rxjs';
+import { firstValueFrom, Observable, ReplaySubject } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,17 +15,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
 import {
+  COMPONENT_PATH_FORM_ALFA_MAIN,
   CONSTANT_VALIDATE_CHECK,
   CONSTANT_VALIDATE_OTHER,
   LISTO_FORM_BPM_CORE,
   MODAL_SMALL
 } from '../../../../apps/constants/general/constants';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
 import { BasicComponentTemplate, ComponentTemplate } from '../../../../apps/interfaces/bpm/render-template.types';
 import { ProFlow } from '../../../../apps/interfaces/bpm/pro-flow';
@@ -43,8 +43,8 @@ import {
 import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
+import { InformationPropertyService } from '../../../../apps/services/territorial-organization/information-property.service';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -116,6 +116,7 @@ export class BmpCoreComponent implements OnInit {
     private readonly layoutService: VexLayoutService,
     private bpmCoreService: BpmCoreService,
     private infoGeneralService: SendInfoGeneralService,
+    private informationProperty: InformationPropertyService,
     private bpmProcessService: BpmProcessService
   ) {
   }
@@ -183,6 +184,7 @@ export class BmpCoreComponent implements OnInit {
           return;
         }
 
+        this.executeAppraise();
         this.confirmAction(
           () => this.nextBpmCore(),
           '¿Está seguro que desea continuar a la siguiente tarea?',
@@ -272,6 +274,7 @@ export class BmpCoreComponent implements OnInit {
         this.executeBpmNextBpmCore();
         return;
       }
+
       switch (serviceValidation) {
         case CONSTANT_VALIDATE_CHECK:
           this.checkStatusBpmOperation();
@@ -308,6 +311,24 @@ export class BmpCoreComponent implements OnInit {
     });
   }
 
+  executeAppraise() {
+    if (!this.proFlow.preform || !this.proFlow.preform.pathForm) return;
+
+    const pathForm = this.proFlow.preform.pathForm;
+    if (pathForm !== COMPONENT_PATH_FORM_ALFA_MAIN) return;
+
+    this.informationProperty.executeAppraisalProcess(this.executionId)
+      .subscribe({
+        next: (response) => {
+          console.log('Realizado el avalúo con respuesta: ', response);
+        },
+        error: (error) => {
+          console.error('Error al realizar el avalúo: ', error);
+        }
+      });
+
+  }
+
   executeBpmNextBpmCore() {
     this.bpmCoreService.getNextOperation(this.executionId).subscribe({
       error: (error: HttpErrorResponse) => this.captureInformationSubscribeError(error),
@@ -338,8 +359,7 @@ export class BmpCoreComponent implements OnInit {
           icon: 'success',
           showConfirmButton: true,
           timer: 10000
-        }).then(() => {
-        });
+        }).then();
         this.bpmProcessService.setPermissions(vailablePermission);
         return;
       }
@@ -387,7 +407,7 @@ export class BmpCoreComponent implements OnInit {
   ) {
     obj.nameComponent = component.name;
     obj.pathForm = component.pathForm;
-    obj.inputs = { executionId: this.executionId, resources: this.resources };
+    obj.inputs = { executionId: this.executionId, resources: this.resources, mode: component.mode };
     this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
       providers: [{ provide: ProFlow, useValue: this.proFlow }],
@@ -396,7 +416,7 @@ export class BmpCoreComponent implements OnInit {
     return obj;
   }
 
-  getAlertError(msg: string, timer: number = 1000, showConfirmButton: boolean = false) {
+  getAlertError(msg: string, timer = 1000, showConfirmButton = false) {
     this.loadingServiceService.activateLoading(false);
     Swal.fire({
       title: '¡Error!',
@@ -404,8 +424,7 @@ export class BmpCoreComponent implements OnInit {
       icon: 'error',
       showConfirmButton: showConfirmButton,
       timer: timer
-    }).then(() => {
-    });
+    }).then();
   }
 
   private returnURLPrevious(url: string) {

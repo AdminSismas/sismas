@@ -519,7 +519,7 @@ export const COMPONENT_ALFA_VALIDATE: string = 'cadAlfaValidateComponent';
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   {
     name: COMPONENT_ALFA_MAIN,
-    pathForm: '/core/cadastral/alf/main.html',
+    pathForm: COMPONENT_PATH_FORM_ALFA_MAIN,
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
   },
@@ -582,6 +582,12 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     pathForm: '/core/document/validate.html',
     serviceValidation: '',
     mode: 1
+  },
+  {
+    name: 'cadResNoProcedeComponent',
+    pathForm: '/core/cadastral/res/noprocede.html',
+    serviceValidation: '',
+    mode: 2
   },
   {
     name: 'citationAndNoticeComponent',
@@ -1098,7 +1104,7 @@ export const TYPE_BUTTON_NINE: TypeButtonAlfaMain = 'VIGEN';
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN'];
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL'];
 
 export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
