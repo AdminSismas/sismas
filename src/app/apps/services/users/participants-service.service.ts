@@ -55,14 +55,14 @@ export class ParticipantsServiceService {
 
   updateParticipantByExecutionId(executionId: string, body: ProcessParticipant): Observable<ProcessParticipant> {
     return this.requestsService.sendRequestsUpdatePutBody(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}/${executionId}`,
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`,
       body
     );
   }
 
   deleteParticipantByExecutionId(executionId: string, participationId: string): Observable<void> {
     return this.requestsService.sendDeleteFetch(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}/${executionId}/${participationId}`
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}/${participationId}`
     );
   }
 
