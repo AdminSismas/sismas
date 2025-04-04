@@ -45,15 +45,13 @@ export class PeopleService {
     return this.getDataFetch(urlP);
   }
 
-  // editamos el usuario
-  userEdit(id: string, body: any) {
-    return this.updateBody(
+  userEdit(id: string, body: any): Observable<InfoPerson> {
+    return this.requestsService.sendRequestsUpdatePutBody(
       `${environment.url}:${environment.port}${environment.individualNumber}/${id}?baunitId=TESTS`,
       body
     );
   }
 
-  // creamos el usuario
   createPeople(body: any) {
     return this.fetchBody(
       `${environment.url}:${environment.port}${environment.individualNumber}`, body
@@ -71,6 +69,13 @@ export class PeopleService {
     ).pipe(
       catchError(error => this.errorNotFoundContact(error))
     );
+  }
+
+  updateContact(individualId: number, obj: InfoContact): Observable<InfoContact> {
+    return this.requestsService.sendRequestsUpdatePutBody(
+      `${this.url_basic}${environment.contact}/${individualId}`, obj)
+      .pipe(catchError(error => this.requestsService.errorNotFound(error))
+      );
   }
 
 

@@ -139,7 +139,6 @@ export class GeneralMapsComponent implements OnInit, OnDestroy {
     if (dpto == null || dpto?.length <= 0) {
       return;
     }
-
     this.territorialOrganizationService.getDataMunicipalities(dpto)
       .subscribe((result: Municipality[]) => this.captureMunicipalityInformation(result, skipPreloadedValues));
   }
@@ -165,10 +164,8 @@ export class GeneralMapsComponent implements OnInit, OnDestroy {
   }
 
   captureMunicipalityInformation(result: Municipality[], skipPreloadedValues: boolean | null) {
-    // Mapear los municipios y almacenarlos
     this.optionsMunicipalities = result.map((mncp: Municipality) => new Municipality(mncp));
-    // Si ya hay un municipio seleccionado y no se deben saltar los valores pre-cargados
-    const selectedMunicipality = this.form.get('municipality')?.value; // Usar .value para acceder al valor
+    const selectedMunicipality = this.form.get('municipality')?.value;
     if (selectedMunicipality && !skipPreloadedValues) {
       const listOptions: Municipality[] = this.optionsMunicipalities.filter((option: Municipality) => option.divpolLvl2Code === selectedMunicipality);
       if (listOptions?.length > 0) {

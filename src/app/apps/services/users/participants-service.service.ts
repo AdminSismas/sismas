@@ -48,7 +48,7 @@ export class ParticipantsServiceService {
 
   saveParticipantByExecutionId(executionId: string, body: ProcessParticipant): Observable<ProcessParticipant> {
     return this.requestsService.sendRequestsFetchPostBody(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}/${executionId}`,
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`,
       body
     );
   }
