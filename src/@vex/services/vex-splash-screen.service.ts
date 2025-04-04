@@ -22,7 +22,6 @@ export class VexSplashScreenService {
       this.document.body.querySelector('#vex-splash-screen') ?? undefined;
 
     if (this.splashScreenElem) {
-      // this.refreshURL();
 
       this.router.events
         .pipe(
@@ -35,11 +34,6 @@ export class VexSplashScreenService {
         });
     }
   }
-
-  // refreshURL() {
-  //   this.router.navigate([`${environment.root}`]).then(() => {
-  //   });
-  // }
 
   hide() {
     const player = this.animationBuilder

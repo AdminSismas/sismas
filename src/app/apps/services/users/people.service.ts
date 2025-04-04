@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { InfoPerson } from '../../interfaces/information-property/info-person';
+import { People } from '../../interfaces/users/people.model';
+import { InfoContact } from '../../interfaces/information-property/info-contact';
 
 @Injectable({
   providedIn: 'root'
@@ -52,17 +54,23 @@ export class PeopleService {
   }
 
   // creamos el usuario
- createPeople(body: any) {
+  createPeople(body: any) {
     return this.fetchBody(
       `${environment.url}:${environment.port}${environment.individualNumber}`, body
     );
   }
 
-
-
   getDeletePeopleId(params: number) {
     const urlP: string = `${this.url_basic}${environment.individualNumber}/${params}?version=99999`;
     return this.deleteBody(urlP);
+  }
+
+  getContactByIndividualId(individualId: number): Observable<InfoContact> {
+    return this.requestsService.sendRequestsFetchGet(
+      `${this.url_basic}${environment.contact}/${individualId}`
+    ).pipe(
+      catchError(error => this.errorNotFoundContact(error))
+    );
   }
 
 
@@ -84,5 +92,15 @@ export class PeopleService {
 
   private deleteBody(url: any): Observable<InformationPegeable> {
     return this.requestsService.sendDeleteFetch(url);
+  }
+
+  errorNotFoundContact(error: HttpErrorResponse) {
+    if (error.status == HttpStatusCode.NotFound) {
+      return new Observable<any>((subscriber) => {
+        subscriber.next(new InfoContact());
+        subscriber.complete();
+      });
+    }
+    return throwError(() => error);
   }
 }

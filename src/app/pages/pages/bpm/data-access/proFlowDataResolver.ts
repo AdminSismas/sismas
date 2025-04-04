@@ -15,8 +15,7 @@ export const proFlowDataResolver: ResolveFn<ProFlow> = (
   return inject(BpmCoreService).getProFlowProExecution(route.paramMap.get(CONSTANT_NAME_ID)!)
     .pipe(
       catchError((err: any) => {
-        router.navigateByUrl(`${environment.notFound}`).then(r => {
-        });
+        router.navigateByUrl(`${environment.notFound}`).then(() => {});
         return EMPTY;
       })
     );

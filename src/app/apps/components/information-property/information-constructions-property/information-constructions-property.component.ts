@@ -15,7 +15,7 @@ import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
-  MODAL_DINAMIC_HEIGHT,
+  MODAL_DYNAMIC_HEIGHT,
   MODAL_LARGE,
   MODAL_MEDIUM,
   MODAL_SMALL,
@@ -127,7 +127,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
   pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
-  configModalCrud: any = MODAL_DINAMIC_HEIGHT;
+  configModalCrud: any = MODAL_DYNAMIC_HEIGHT;
 
   dataSource!: MatTableDataSource<ContentInformationConstruction>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -168,7 +168,7 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     this.isDesktop$
       .pipe(filter<boolean>(Boolean))
       .subscribe((result: boolean) => {
-        this.configModalCrud = MODAL_DINAMIC_HEIGHT;
+        this.configModalCrud = MODAL_DYNAMIC_HEIGHT;
       });
 
     this.ltMd$

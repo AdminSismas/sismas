@@ -14,7 +14,7 @@ const routes: VexRoutes = [
       import('./../bpm/bmp-core/bmp-core.component').then(
         (m) => m.BmpCoreComponent
       ),
-    resolve: { proFlow: proFlowDataResolver, resources: resourcesDataResolver }
+    resolve: { proFlow: proFlowDataResolver, resources : resourcesDataResolver }
   },
   {
     path: 'initiateFilingProcedure/:id',

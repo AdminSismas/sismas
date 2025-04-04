@@ -104,19 +104,16 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.defaults) {
-      if (this.defaults.mode === 'update') {
-        this.validateTypePople();
-        this.mode = 'update';
-      } else if (this.defaults.mode === 'create') {
-        this.mode = 'create';
-        this.form.reset(this.defaults);
-      }
-    } else {
+    if (!this.defaults) {
       this.defaults = {} as defaultData;
+    }
+    this.mode = this.defaults?.mode;
+    if (this.mode === 'create') {
+      this.form.reset(this.defaults);
     }
     this.disablesTypePople();
     this.form.patchValue(this.defaults);
+    this.validateTypePeople();
 
     this.createPeople$
       .pipe(filter<boolean>(Boolean))
@@ -249,7 +246,7 @@ export class CreatePeopleComponent implements OnInit {
             showConfirmButton: false,
             timer: 10000
           }).then(() => {
-            this.validateTypePople();
+            this.validateTypePeople();
           });
           return;
         }
@@ -267,7 +264,7 @@ export class CreatePeopleComponent implements OnInit {
           this._createPeople.next(true);
           return;
         }
-        this.validateTypePople();
+        this.validateTypePeople();
       }
     });
   }
@@ -342,7 +339,6 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   isUpdateMode() {
-    // this.validateTypePople();
     return this.mode === 'update';
   }
 
@@ -388,55 +384,51 @@ export class CreatePeopleComponent implements OnInit {
   }
 
 
-  validateTypePople(): void {
+  validateTypePeople(): void {
     // validar los tipos de campos según los valores de los formularios
     this.clearValidatorsTow();
+    let type = this.form.get('domIndividualType')?.value;
+    if (type === 'Persona natural') {
+      this.form.get('firstName')?.setValidators(Validators.required);
+      this.form.get('lastName')?.setValidators(Validators.required);
+      this.form.get('number')?.setValidators(Validators.required);
+      this.form
+        .get('domIndividualTypeNumber')
+        ?.setValidators(Validators.required);
 
-    this.form.get('domIndividualType')?.valueChanges.subscribe((type) => {
-      /* NOTA: hay que llevarse esta validación a otra función para que podamos validar después */
-      if (type === 'Persona natural') {
-        this.form.get('firstName')?.setValidators(Validators.required);
-        this.form.get('lastName')?.setValidators(Validators.required);
-        this.form.get('number')?.setValidators(Validators.required);
-        this.form
-          .get('domIndividualTypeNumber')
-          ?.setValidators(Validators.required);
-
-        if (this.mode === 'update') {
-          this.form.get('number')?.disable();
-          this.form.get('domIndividualType')?.disable();
-        }
-
-        this.form.get('firstName')?.enable();
-        this.form.get('lastName')?.enable();
-        this.form.get('middleName')?.enable();
-        this.form.get('otherLastName')?.enable();
-        this.form.get('domIndividualEthnicGroup')?.enable();
-        this.form.get('domIndividualSex')?.enable();
-        this.form.get('companyName')?.disable();
-      } else if (type === 'Persona jurídica') {
-        this.form.get('companyName')?.setValidators(Validators.required);
-        this.form.get('companyName')?.enable();
-        this.form.get('number')?.setValidators(Validators.required);
-        this.form
-          .get('domIndividualTypeNumber')
-          ?.setValidators(Validators.required);
-
-        if (this.mode === 'update') {
-          this.form.get('number')?.disable();
-          this.form.get('domIndividualType')?.disable();
-        }
-
-        this.form.get('firstName')?.disable();
-        this.form.get('lastName')?.disable();
-        this.form.get('domIndividualEthnicGroup')?.disable();
-        this.form.get('domIndividualSex')?.disable();
-        this.form.get('middleName')?.disable();
-        this.form.get('otherLastName')?.disable();
+      if (this.mode === 'update') {
+        this.form.get('number')?.disable();
+        this.form.get('domIndividualType')?.disable();
       }
-      this.form.get('domIndividualType')?.setValidators(Validators.required);
-    });
 
+      this.form.get('firstName')?.enable();
+      this.form.get('lastName')?.enable();
+      this.form.get('middleName')?.enable();
+      this.form.get('otherLastName')?.enable();
+      this.form.get('domIndividualEthnicGroup')?.enable();
+      this.form.get('domIndividualSex')?.enable();
+      this.form.get('companyName')?.disable();
+    } else if (type === 'Persona jurídica') {
+      this.form.get('companyName')?.setValidators(Validators.required);
+      this.form.get('companyName')?.enable();
+      this.form.get('number')?.setValidators(Validators.required);
+      this.form
+        .get('domIndividualTypeNumber')
+        ?.setValidators(Validators.required);
+
+      if (this.mode === 'update') {
+        this.form.get('number')?.disable();
+        this.form.get('domIndividualType')?.disable();
+      }
+
+      this.form.get('firstName')?.disable();
+      this.form.get('lastName')?.disable();
+      this.form.get('domIndividualEthnicGroup')?.disable();
+      this.form.get('domIndividualSex')?.disable();
+      this.form.get('middleName')?.disable();
+      this.form.get('otherLastName')?.disable();
+    }
+    this.form.get('domIndividualType')?.setValidators(Validators.required);
     this.updateValidators();
   }
 

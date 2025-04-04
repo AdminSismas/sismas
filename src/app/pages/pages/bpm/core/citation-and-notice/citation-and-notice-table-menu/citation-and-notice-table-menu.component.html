@@ -1,0 +1,48 @@
+<div @stagger class="max-w-3xs w-full" [id]="id">
+  @if (activeCategory !== 'all') {
+    <div class="h-14 mb-6 flex px-6 sm:px-0 items-center" [id]="id + 'container-emmit'">
+      <button
+        (click)="openMassiveProcessParticipant.emit(activeCategory)"
+        class="flex-auto"
+        color="primary"
+        mat-raised-button
+        type="button">
+        <mat-icon
+          class="ltr:-ml-4 ltr:mr-2 rtl:ml-2 icon-sm"
+          svgIcon="mat:add"></mat-icon>
+        @if (activeCategory === 'notice') {
+          <span>Citar Masivo</span>
+        } @else if (activeCategory === 'citation') {
+          <span>Notificar Masivo</span>
+        } @else {
+          <span>Avisar Masivo</span>
+        }
+      </button>
+    </div>
+  }
+  <div class="px-6 sm:px-0" [id]="id + 'container'">
+    <ng-container *ngFor="let item of items">
+      <a
+        (click)="setFilter(item.id)"
+        *ngIf="item.type === 'link'"
+        @fadeInRight
+        [ngClass]="{ 'bg-primary-600/10 text-primary-600': isActive(item.id) }"
+        class="rounded h-10 px-4 cursor-pointer hover:bg-primary-600/10 mt-1 font-medium flex items-center transition duration-200 ease-out"
+        matRipple>
+        <mat-icon
+          *ngIf="item.icon"
+          [ngClass]="item.classes?.icon"
+          [svgIcon]="item.icon"
+          class="ltr:mr-3 rtl:ml-3"></mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+
+      <h3
+        *ngIf="item.type === 'subheading'"
+        @fadeInRight
+        class="caption text-secondary font-medium mb-0 mt-6">
+        {{ item.label }}
+      </h3>
+    </ng-container>
+  </div>
+</div>

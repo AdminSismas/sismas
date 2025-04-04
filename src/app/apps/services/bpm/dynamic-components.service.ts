@@ -12,11 +12,18 @@ import { DocumentMainComponent } from '../../../pages/pages/bpm/core/document/ma
 import { DocumentValidateComponent } from '../../../pages/pages/bpm/core/document/validate/document-validate.component';
 import { ComponentTemplate } from '../../interfaces/bpm/render-template.types';
 import { COMPONENT_ALFA_MAIN, COMPONENT_ALFA_VALIDATE } from '../../constants/general/constants';
+import {
+  CitationAndNoticeComponent
+} from '../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DynamicComponentsService {
+
+  constructor() {
+  }
+
   _listMap: ComponentTemplate[] = [
     {
       nameComponent: COMPONENT_ALFA_MAIN,
@@ -100,6 +107,13 @@ export class DynamicComponentsService {
       component:ResValidateComponent,
       loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component').then(
         (m) => m.ResValidateComponent
+      ),
+    },
+    {
+      nameComponent: 'citationAndNoticeComponent',
+      component:CitationAndNoticeComponent,
+      loadComponent: () => import('../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component').then(
+        (m) => m.CitationAndNoticeComponent
       ),
     }
   ];

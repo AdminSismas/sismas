@@ -1,0 +1,111 @@
+<div class="flex items-center" mat-dialog-title>
+  <div class="toolbar text-default w-full px-6 lg:pl-0 lg:pr-0 flex gap-3 items-start">
+    <h3 class="title m-0 flex-col items-center justify-content-center sm:mt-1 xl:mt-3">
+      {{ processParticipant.fullName | titlecase }}
+    </h3>
+    <button
+      class="text-secondary"
+      mat-icon-button
+      title="Editar Participante"
+      (click)="editProcessParticipant()"
+      type="button">
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+    </button>
+    <span class="flex-1"></span>
+  </div>
+
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+<mat-dialog-content class="flex flex-col">
+  <div class="w-full flex flex-col pt-2">
+    <div class="flex justify-between">
+      <div class="flex flex-col gap-1">
+        <span class="text-black capitalize text-sm">Tipo de participante</span>
+        <span class="text-black capitalize text-sm">Número de documento</span>
+        <span class="text-black capitalize text-sm">Nombre 1</span>
+        <span class="text-black capitalize text-sm">Apellido 1</span>
+        <span class="text-black capitalize text-sm">Número de contacto</span>
+        <span class="text-black capitalize text-sm">Direccion</span>
+      </div>
+      <div class="flex flex-col gap-1">
+        <!-- Tipo de participante  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null && processParticipant.individual.domIndividualTypeNumber !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- Número de documento  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.number !== null && processParticipant.individual.number !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.number }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- Nombre 1  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.firstName !== null && processParticipant.individual.firstName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.firstName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- Apellido 1  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.lastName !== null && processParticipant.individual.lastName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.lastName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- Número de contacto  -->
+        @if (contact !== null && contact !== undefined && contact.phoneNumber !== null) {
+          <span class="text-sm">{{ contact.phoneNumber }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- direcion  -->
+        @if (contact !== null && contact !== undefined && contact.address !== null && contact.address !== undefined) {
+          <span class="text-sm">{{ contact.address }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+      </div>
+      <div class="flex flex-col gap-1">
+        <span class="text-black capitalize text-sm">Tipo Documento</span>
+        <span class="text-black capitalize text-sm">Sexo</span>
+        <span class="text-black capitalize text-sm">Nombre 2</span>
+        <span class="text-black capitalize text-sm">Apellido 2</span>
+        <span class="text-black capitalize text-sm">Correo Electronico</span>
+      </div>
+      <div class="flex flex-col gap-1">
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null && processParticipant.individual.domIndividualTypeNumber !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualSex !== null && processParticipant.individual.domIndividualSex !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.domIndividualSex }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.middleName !== null && processParticipant.individual.middleName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.middleName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.otherLastName !== null && processParticipant.individual.otherLastName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.otherLastName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (contact !== null && contact !== undefined && contact.email !== null && contact.email !== undefined) {
+          <span class="text-sm">{{ contact.email }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
