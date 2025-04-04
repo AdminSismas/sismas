@@ -25,7 +25,7 @@ import {
   CONSTANT_ERR_INVALID_NUMBER,
   CONSTANT_ERR_INVALID_YEAR,
   CONSTANT_ERR_MIN03_CHARACTERS,
-  CONSTANT_ERR_MIN10_CHARACTERS,
+  CONSTANT_ERR_MIN10_CHARACTERS, CONSTANT_ERR_ONLY_INVALID_EMAIL,
   CONSTANT_ERR_ONLY_INVALID_LETTER,
   CONSTANT_ERR_ONLY_INVALID_NUMBER,
   CONSTANT_ERR_ONLY_ONE_99,
@@ -129,6 +129,10 @@ export class InputComponent implements OnInit {
 
     if (formControl.errors?.hasOwnProperty('onlyLetters') && formControl.errors?.['onlyLetters']) {
       return CONSTANT_ERR_ONLY_INVALID_LETTER;
+    }
+
+    if (formControl.errors?.hasOwnProperty('invalidEmail') && formControl.errors?.['invalidEmail']) {
+      return CONSTANT_ERR_ONLY_INVALID_EMAIL;
     }
 
     return '';

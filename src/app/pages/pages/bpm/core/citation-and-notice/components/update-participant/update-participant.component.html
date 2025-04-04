@@ -1,7 +1,7 @@
 <form (ngSubmit)="updatePeople()" [formGroup]="form">
   <div class="flex items-center" mat-dialog-title>
     <h2 class="headline m-0 flex-auto">
-      {{label}}
+      {{ label }}
     </h2>
 
     <button
@@ -16,8 +16,8 @@
   <mat-divider class="text-border"></mat-divider>
 
   <mat-dialog-content class="p-6 container-fluid flex flex-col">
-    <div @fadeInUp class="flex flex-col pl-0 pr-2">
-      <div class="flex flex-col sm:flex-row px-3 gap-6">
+    <div @fadeInUp class="flex flex-col px-3">
+      <div class="flex flex-col sm:flex-row px-3 gap-3">
         <vex-combox-colletion-form
           idComboCollection="typeNumberDocument896767855234"
           label="Tipo de persona"
@@ -44,7 +44,7 @@
           class="flex-auto">
         </vex-input>
       </div>
-      <div class="flex flex-col sm:flex-row px-1 gap-6">
+      <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
         <vex-input
           idComboInput="firstName84"
           label="Nombre"
@@ -73,7 +73,7 @@
           class="flex-auto">
         </vex-input>
       </div>
-      <div class="flex flex-col sm:flex-row px-1 gap-6">
+      <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
         <vex-input
           idComboInput="otherLastNameeeName2384"
           label="Segundo apellido"
@@ -93,7 +93,7 @@
           class="flex-auto">
         </vex-input>
       </div>
-      <div class="flex flex-col sm:flex-row px-4 gap-6">
+      <div class="flex flex-col sm:flex-row pl-3 px-1 gap-3">
         <vex-combox-colletion-form
           idComboCollection="typeNumbearDocument896767855234"
           label="Grupo étnico"
@@ -110,6 +110,63 @@
           placeholderDomainName="Seleccionar tipo género"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
           class="flex-auto"></vex-combox-colletion-form>
+      </div>
+      <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
+        <!-- Campo departamento -->
+        <vex-combox
+          idCombo="GeneralMapDepartment"
+          label="Departamentos"
+          placeholder="Seleccione un departamento"
+          [valueKey]="'divpolLvl1Code'"
+          [fielKey]="'codeName'"
+          [formControlNameCombobox]="'divpolLv1'"
+          [options]="optionsDeparment"
+          (selectionChange)="loadMunicipalitiesInformation($event, true)"
+          cssClasses="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+          class="flex-auto"></vex-combox>
+        <!-- Campo municipio -->
+        <vex-combox
+          idCombo="GeneralMapMunicipy"
+          label="Municipio"
+          placeholder="Seleccione un municipio"
+          [valueKey]="'divpolLvl2SecCode'"
+          [fielKey]="'codeName'"
+          [formControlNameCombobox]="'divpolLv2'"
+          [options]="optionsMunicipalities"
+          cssClasses="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+          class="flex-auto"></vex-combox>
+      </div>
+      <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
+        <!--  phoneNumber -->
+        <vex-input
+          idComboInput="phoneNumber35235234"
+          label="Numero telefono"
+          type="text"
+          formControlNameInput="phoneNumber"
+          [formControlInput]="controlPhoneNumber"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
+        <!--   email  -->
+        <vex-input
+          idComboInput="email6789678f"
+          label="Email"
+          type="text"
+          formControlNameInput="email"
+          [formControlInput]="controlEmail"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
+        <!--   address    -->
+        <vex-input
+          idComboInput="addressa34254354534"
+          label="Direccion"
+          type="text"
+          formControlNameInput="address"
+          [formControlInput]="controlAddress"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
+          class="flex-auto">
+        </vex-input>
       </div>
     </div>
   </mat-dialog-content>

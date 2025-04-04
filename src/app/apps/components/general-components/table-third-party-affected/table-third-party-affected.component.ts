@@ -18,7 +18,7 @@ import {
   MODAL_MEDIUM,
   PAGE,
   PAGE_OPTION_UNIQUE_7,
-  TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY
+  TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY, TYPE_BUTTON_ONE, TYPE_OPERATION_CREATE
 } from '../../../constants/general/constants';
 import { ProcessParticipant } from '../../../interfaces/bpm/process-participant';
 import { ParticipantsServiceService } from '../../../services/users/participants-service.service';
@@ -308,4 +308,6 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit, 
     }).then();
   }
 
+  protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
+  protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
 }

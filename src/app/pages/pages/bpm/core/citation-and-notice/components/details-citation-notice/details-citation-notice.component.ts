@@ -43,7 +43,7 @@ export class DetailsCitationNoticeComponent implements OnInit {
   id: string = getRandomInt(5258445) + 'DetailsCitationNoticeComponent';
   participationId!: number;
   individualId!: number;
-  contact!: InfoContact
+  contact!: InfoContact;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public processParticipant: ProcessParticipant,
@@ -73,13 +73,17 @@ export class DetailsCitationNoticeComponent implements OnInit {
       disableClose: true,
       data: {
         domIndividualTypeNumber: individualTypeNumber,
+        contact: this.contact,
         number: number,
         mode: 'update'
       }
-    }).afterClosed().subscribe(
-      (result: { number: string; individualTypeNumber: string }) => {
-
-      });
+    }).afterClosed().subscribe((result: InfoPerson) => {
+      if (result && result?.individualId > 0) {
+        this.processParticipant.individual = result;
+        this.individualId = result?.individualId;
+        this.getContactParticipation();
+      }
+    });
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

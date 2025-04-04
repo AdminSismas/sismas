@@ -16,3 +16,4 @@ export const CONSTANT_ERR_MIN10_CHARACTERS = 'Error, Ingresar minimo 10 caracter
 export const CONSTANT_ERR_MIN03_CHARACTERS = 'Error, Ingresar minimo 3 caracteres ';
 export const CONSTANT_ERR_ONLY_INVALID_NUMBER = 'Error, Solo se permiten números.';
 export const CONSTANT_ERR_ONLY_INVALID_LETTER = 'Error, Solo se permiten letras.';
+export const CONSTANT_ERR_ONLY_INVALID_EMAIL = 'Error, Email invalido.';

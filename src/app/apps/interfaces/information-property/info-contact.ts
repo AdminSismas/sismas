@@ -11,7 +11,7 @@ export class InfoContact {
   notificationByEmail: boolean | null;
 
   constructor(content?: any) {
-    this.individualId = content?.individualId || 0;
+    this.individualId = content?.individualId || -55;
     this.divpolLv1 = content?.divpolLv1 || '';
     this.divpolLv2 = content?.divpolLv2 || '';
     this.divpolLv3 = content?.divpolLv3 || '';
