@@ -1,27 +1,27 @@
 <div class="w-full h-full flex flex-col shadow-md vex-layout-content" [id]="id">
-  <div
-    *ngIf="((listParticipantsCards$ | async)?.length ?? 0) > 0"
-    @stagger
-    class="overflow-y-auto flex-auto">
+  @if (((listParticipantsCards$ | async)?.length ?? 0) > 0) {
     <div
-      class="py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 container-fluid">
-      <vex-citation-notice-card
-        *ngFor="let participant of listParticipantsCards$ | async; trackBy: trackByParticipationId"
-        [id]="participant.participationId + executionId + 'filteredCard'"
-        (openDetailProcessParticipant)="openDetailProcessParticipant.emit(participant)"
-        (toggleStar)="emitToggleStar(participant.participationId)"
-        [processParticipant]="participant"
-        @fadeInUp>
-      </vex-citation-notice-card>
+      @stagger
+      class="overflow-y-auto flex-auto">
+      <div
+        class="px-2 py-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 container-fluid">
+        <vex-citation-notice-card
+          *ngFor="let participant of listParticipantsCards$ | async; trackBy: trackByParticipationId"
+          [id]="participant.participationId + executionId + 'filteredCard'"
+          (openDetailProcessParticipant)="openDetailProcessParticipant.emit(participant)"
+          [processParticipant]="participant"
+          @fadeInUp>
+        </vex-citation-notice-card>
+      </div>
     </div>
-  </div>
-  <div
-    *ngIf="((listParticipantsCards$ | async)?.length ?? 0) === 0"
-    @scaleFadeIn
-    class="flex-auto flex flex-col items-center justify-center">
-    <img class="m-12 h-64" [src]="'./assets/img/illustrations/idea.svg'" alt="" />
-    <h2 class="headline m-0 text-center">
-      {{ 'No hay Participantes del proceso que coincidan con tu búsqueda' }}
-    </h2>
-  </div>
+  } @else {
+    <div
+      @scaleFadeIn
+      class="flex-auto flex flex-col items-center justify-center">
+      <img class="m-12 h-64" [src]="notFoundImageSrc()" alt="" />
+      <h2 class="headline m-0 text-center">
+        {{ 'No hay Participantes del proceso que coincidan con tu búsqueda' }}
+      </h2>
+    </div>
+  }
 </div>

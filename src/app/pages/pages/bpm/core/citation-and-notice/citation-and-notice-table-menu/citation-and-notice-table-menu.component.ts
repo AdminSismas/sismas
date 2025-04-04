@@ -35,6 +35,7 @@ export class CitationAndNoticeTableMenuComponent implements OnInit {
 
   @Output() filterChange = new EventEmitter<TypeProcessParticipant>();
   @Output() openAddNew = new EventEmitter<void>();
+  @Output() openMassiveProcessParticipant = new EventEmitter<ProcessParticipantTableMenu['id']>();
 
   activeCategory: ProcessParticipantTableMenu['id'] = 'all';
 

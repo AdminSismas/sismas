@@ -35,16 +35,39 @@
         <span class="text-black capitalize text-sm">Direccion</span>
       </div>
       <div class="flex flex-col gap-1">
-        @if (processParticipant !== null && processParticipant !== undefined &&
-        processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null &&
-        processParticipant.individual.domIndividualTypeNumber !== undefined) {
+        <!-- Tipo de participante  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null && processParticipant.individual.domIndividualTypeNumber !== undefined) {
           <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
         } @else {
           <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
         }
-        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null &&
-        processParticipant.individual.number !== null && processParticipant.individual.number !== undefined) {
+        <!-- Número de documento  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.number !== null && processParticipant.individual.number !== undefined) {
           <span class="text-sm">{{ processParticipant.individual.number }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- Nombre 1  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.firstName !== null && processParticipant.individual.firstName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.firstName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- Apellido 1  -->
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.lastName !== null && processParticipant.individual.lastName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.lastName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- Número de contacto  -->
+        @if (contact !== null && contact !== undefined && contact.phoneNumber !== null) {
+          <span class="text-sm">{{ contact.phoneNumber }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        <!-- direcion  -->
+        @if (contact !== null && contact !== undefined && contact.address !== null && contact.address !== undefined) {
+          <span class="text-sm">{{ contact.address }}</span>
         } @else {
           <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
         }
@@ -57,9 +80,28 @@
         <span class="text-black capitalize text-sm">Correo Electronico</span>
       </div>
       <div class="flex flex-col gap-1">
-        @if (processParticipant !== null && processParticipant !== undefined &&
-        processParticipant.individual !== null && processParticipant.individual) {
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null && processParticipant.individual.domIndividualTypeNumber !== undefined) {
           <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualSex !== null && processParticipant.individual.domIndividualSex !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.domIndividualSex }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.middleName !== null && processParticipant.individual.middleName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.middleName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.otherLastName !== null && processParticipant.individual.otherLastName !== undefined) {
+          <span class="text-sm">{{ processParticipant.individual.otherLastName }}</span>
+        } @else {
+          <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+        }
+        @if (contact !== null && contact !== undefined && contact.email !== null && contact.email !== undefined) {
+          <span class="text-sm">{{ contact.email }}</span>
         } @else {
           <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
         }

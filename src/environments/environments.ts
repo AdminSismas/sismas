@@ -68,7 +68,6 @@ export const environment = {
     proTask_priority: "proTask/priority",
     resources: "resorces/",
     startProcess: "startProcess",
-    participation:'/participation/',
     value: "/bpmOperation"
   },
   bpmProcess: {
@@ -78,7 +77,7 @@ export const environment = {
   },
   bpmParticipation: {
     value: '/bpmParticipation',
-    participation:'/participation',
+    participation:'/participation/',
     thirdPartyAffected:'/terceroAfectado'
   },
   calificationUB: "/calificationUB",
@@ -98,6 +97,7 @@ export const environment = {
   comment: "/comment/",
   compare_hist: "/compare/hist/",
   compare_temp: "/compare/temp/",
+  contact: "/contact",
   copy: "/copy",
   divpol: "/divpol",
   domain_domain: "/domain",

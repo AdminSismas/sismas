@@ -1,3 +1,5 @@
+import { TypeOperationPeople } from '../general/content-info';
+
 export class InfoPerson {
   individualId: number;
   number: string;
@@ -37,3 +39,8 @@ export class InfoPerson {
     this.fullName = content.fullName || '';
   }
 }
+
+export interface ExtraInfoPerson extends InfoPerson {
+  mode: TypeOperationPeople | null;
+}
+

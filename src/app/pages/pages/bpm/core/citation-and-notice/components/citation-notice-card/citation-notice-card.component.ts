@@ -1,11 +1,18 @@
-import { Component, DestroyRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { NgClass, TitleCasePipe } from '@angular/common';
-import { NAME_NO_DISPONIBLE, SPACE } from 'src/app/apps/constants/general/constants';
+import {
+  CONSTANTE_ADVERTISEMENT,
+  CONSTANTE_CITATION,
+  CONSTANTE_NOTIFIED, LIST_NOTIFICATIONS,
+  NAME_NO_DISPONIBLE,
+  SPACE
+} from 'src/app/apps/constants/general/constants';
 import { getRandomInt } from '../../../../../../../apps/utils/general';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'vex-citation-notice-card',
@@ -15,25 +22,22 @@ import { getRandomInt } from '../../../../../../../apps/utils/general';
     MatButtonModule,
     MatRippleModule,
     NgClass,
-    TitleCasePipe
+    TitleCasePipe,
+    MatTooltip
   ],
   templateUrl: './citation-notice-card.component.html',
   styleUrl: './citation-notice-card.component.scss'
 })
 export class CitationNoticeCardComponent implements OnInit {
 
-  protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
-  protected readonly SPACE = SPACE;
-
   @Input({ required: true }) public id: string | undefined = '';
   @Input({ required: true }) processParticipant!: ProcessParticipant;
-
-  @Output() toggleStar = new EventEmitter<ProcessParticipant['participationId']>();
   @Output() openDetailProcessParticipant = new EventEmitter<ProcessParticipant['participationId']>();
+
+  imageSrc = signal('assets/img/icons/people/teacher.svg');
 
   constructor(private destroyRef: DestroyRef) {
     destroyRef.onDestroy(() => {
-      console.log('Card participan destruction');
     });
   }
 
@@ -45,25 +49,38 @@ export class CitationNoticeCardComponent implements OnInit {
     }
 
     if (this.processParticipant && this.processParticipant.participationId > 0) {
-      this.processParticipant.imageSrc = 'assets/img/icons/people/teacher.svg';
+      this.processParticipant.imageSrc = this.imageSrc();
     }
   }
 
-  emitToggleStar(event: MouseEvent, participationId: ProcessParticipant['participationId']) {
+  executeNotification(event: MouseEvent, participationId: ProcessParticipant['participationId']) {
     event.stopPropagation();
-    this.toggleStar.emit(participationId);
   }
 
-  get validateDomGuvStateNotified() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === 'Notificado';
+  executeCitation(event: MouseEvent, participationId: ProcessParticipant['participationId']) {
+    event.stopPropagation();
+  }
+
+  executeAdvertisement(event: MouseEvent, participationId: ProcessParticipant['participationId']) {
+    event.stopPropagation();
+  }
+
+  get validateNotFoundGuvState() {
+    return (!this.processParticipant?.viaGubernativa || !this.processParticipant?.viaGubernativa?.domGuvState) ||
+      !LIST_NOTIFICATIONS.includes(this.processParticipant?.viaGubernativa?.domGuvState);
   }
 
   get validateDomGuvStateCitation() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === 'Citacion';
+    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_CITATION;
+  }
+
+  get validateDomGuvStateNotified() {
+    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_NOTIFIED;
   }
 
   get validateDomGuvStateNotice() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === 'Aviso';
+    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_ADVERTISEMENT;
   }
 
+  protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 }

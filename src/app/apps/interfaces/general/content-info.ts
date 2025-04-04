@@ -16,6 +16,7 @@ export type TypeOperationAlfaMain = 'ADD' | 'CREATE' | 'DELETE';
 export type TypeOperationGeoMain = 'CREATE' | 'DELETE' | 'CAL_BOUND';
 export type TypeButtonAlfaMain = 'AGR' | 'CRE' | 'BRR' | 'CRE_GEO' | 'DEL_GEO' | 'CAL_BOU' | 'TAB_GEO' | 'EXD' | 'EXL' | 'VIGEN';
 export type TypeQualificationMode = 'TRADITIONAL' | 'TYPOLOGY' | 'ANNEX' ;
+export type TypeOperationPeople = 'create' | 'update';
 
 export interface ObjectSchema {
   schema: string;

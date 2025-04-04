@@ -20,6 +20,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProcessParticipant } from '../../../../../apps/interfaces/bpm/process-participant';
 import {
+  ProcessParticipantTableMenu,
   TypeProcessParticipant
 } from '../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 import { DetailsCitationNoticeComponent } from './components/details-citation-notice/details-citation-notice.component';
@@ -28,7 +29,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProFlow } from '../../../../../apps/interfaces/bpm/pro-flow';
 import { getRandomInt } from 'src/app/apps/utils/general';
-import { MODAL_SMALL_LARGE } from '../../../../../apps/constants/general/constants';
+import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../apps/constants/general/constants';
 
 @Component({
   selector: 'vex-citation-and-notice',
@@ -96,7 +97,6 @@ export class CitationAndNoticeComponent implements OnInit {
       this.id = getRandomInt(10000).toString();
     }
     this.typeProcess = this.typeProcessDefault;
-    this.executionId = '76';
     if (this.id?.length > 0) {
       this.id = this.id + getRandomInt(100000)
         + 'CitationNotificacionComponent' + getRandomInt(10);
@@ -121,23 +121,18 @@ export class CitationAndNoticeComponent implements OnInit {
 
   openDetailProcessParticipant(data?: ProcessParticipant) {
     this.dialog.open(DetailsCitationNoticeComponent, {
-      ...MODAL_SMALL_LARGE,
+      ...MODAL_SMALL_DETAIL_NOTIFICE,
+      disableClose: true,
       data: data || null
     });
-  }
-
-  toggleStar(id: ProcessParticipant['participationId']) {
-    // const participants = this.tableData.find((c) => c.id === id);
-    // if (participants) {
-    //   participants.starred = !contact.starred;
-    // }
   }
 
   setData(type: TypeProcessParticipant) {
     this.typeProcess = type;
   }
 
-  openMenu() {
+  openMassiveProcessParticipant(type: ProcessParticipantTableMenu['id']) {
+    let type1 = type;
   }
 
   returnPanelTask(isReturn: boolean) {

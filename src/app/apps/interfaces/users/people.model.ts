@@ -1,3 +1,5 @@
+import { TypeOperationPeople } from "../general/content-info";
+
 export class People {
   id: number;
   individualId: number;
@@ -31,4 +33,11 @@ export class People {
     this.domIndividualTypeNumber = customer.domIndividualTypeNumber;
     this.domIndividualEthnicGroup = customer.domIndividualEthnicGroup;
   }
+}
+
+
+
+export interface ExtraInfoPeople extends People {
+  mode: TypeOperationPeople;
+  onlyModifyContact: boolean | null;
 }

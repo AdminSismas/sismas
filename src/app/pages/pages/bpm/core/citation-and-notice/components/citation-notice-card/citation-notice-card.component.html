@@ -3,55 +3,56 @@
     (click)="openDetailProcessParticipant.emit(processParticipant.participationId)"
     class="p-4 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
     matRipple>
-    <img src="{{processParticipant.imageSrc}}" class="avatar size-24 mx-auto" alt="" />
-
-    <h2 class="title mb-1 mt-3">{{ processParticipant.bpmParticipation }}</h2>
-    <div class="body-2 text-secondary flex items-center justify-center">
+    <img [src]="imageSrc()" class="avatar h-11 w-11 mx-auto" alt="" />
+    <div class="flex items-center justify-center">
+      <h4 class="subheading-2">{{ processParticipant.bpmParticipation }}</h4>
+    </div>
+    <div class="flex items-center justify-center">
       <mat-icon
         class="ltr:mr-1 rtl:ml-1 icon-xs"
         svgIcon="mat:receipt_long"></mat-icon>
-      <span>{{ processParticipant.individual.domIndividualTypeNumber | titlecase }}
-        - {{ processParticipant.individualNumber }}</span>
+      <h6 class="body-2 text-secondary">
+        {{ processParticipant.individual.domIndividualTypeNumber | titlecase }}
+        - {{ processParticipant.individualNumber }}
+      </h6>
     </div>
-
-    <div class="body-2 text-secondary flex items-center justify-center">
+    <div class="flex items-center justify-center">
       <mat-icon
         class="ltr:mr-1 rtl:ml-1 icon-xs"
         svgIcon="mat:people"></mat-icon>
-      <span>{{ processParticipant.fullName | titlecase }}</span>
+      <h6 class="body-2 text-secondary">{{ processParticipant.fullName | titlecase }}</h6>
     </div>
 
+    @if (validateNotFoundGuvState) {
+      <div
+        class="rounded px-2 py-1 font-medium text-xs flex-none text-secondary-600 bg-secondary-600/10 absolute top-2 right-2">
+        <!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
+        {{ 'Pendiente' }}
+      </div>
+    }
+
     @if (validateDomGuvStateNotified) {
-      <button
-        (click)="emitToggleStar($event, processParticipant.participationId)"
-        class="absolute top-2 right-2"
-        mat-icon-button
-        type="button">
-        <mat-icon svgIcon="mat:label"
-                  class="ltr:mr-3 rtl:ml-3 text-green-600"></mat-icon>
-      </button>
+      <div
+        class="rounded px-2 py-1 font-medium text-xs flex-none text-green-600 bg-green-600/10 absolute top-2 right-2">
+<!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
+        {{ 'Notificado' }}
+      </div>
     }
 
     @if (validateDomGuvStateCitation) {
-      <button
-        (click)="emitToggleStar($event, processParticipant.participationId)"
-        class="absolute top-2 right-2"
-        mat-icon-button
-        type="button">
-        <mat-icon svgIcon="mat:label"
-                  class="ltr:mr-3 rtl:ml-3 text-primary-600"></mat-icon>
-      </button>
+      <div
+        class="rounded px-2 py-1 font-medium text-xs flex-none text-primary-600 bg-primary-600/10 absolute top-2 right-2">
+<!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
+        {{ 'Citado' }}
+      </div>
     }
 
     @if (validateDomGuvStateNotice) {
-      <button
-        (click)="emitToggleStar($event, processParticipant.participationId)"
-        class="absolute top-2 right-2"
-        mat-icon-button
-        type="button">
-        <mat-icon svgIcon="mat:label"
-                  class="ltr:mr-3 rtl:ml-3 text-amber-600"></mat-icon>
-      </button>
+      <div
+        class="rounded px-2 py-1 font-medium text-xs flex-none text-amber-600 bg-amber-600/10 absolute top-2 right-2">
+<!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
+        {{ 'Avisado' }}
+      </div>
     }
   </div>
 
@@ -59,29 +60,35 @@
     <div class="p-0 grid grid-cols-3 gap-3">
       <button
         type="button" mat-icon-button
-        color="primary"
+        color="accent"
         class="p-0"
-        [disabled]="validateDomGuvStateNotified"
+        matTooltip="Citar participante"
+        matTooltipPosition="below"
+        [disabled]="validateDomGuvStateCitation"
         [ngClass]="validateDomGuvStateCitation ? 'text-primary' : 'text-secondary'"
-        (click)="emitToggleStar($event, processParticipant.participationId)">
-        <mat-icon svgIcon="mat:event_note"></mat-icon>
+        (click)="executeCitation($event, processParticipant.participationId)">
+        <mat-icon svgIcon="mat:notifications"></mat-icon>
       </button>
       <button
         type="button" mat-icon-button
-        color="accent"
+        color="primary"
         class="p-0"
-        [disabled]="validateDomGuvStateCitation"
-        [ngClass]="validateDomGuvStateCitation ? 'text-accent' : 'text-secondary'"
-        (click)="emitToggleStar($event, processParticipant.participationId)">
-        <mat-icon svgIcon="mat:notifications"></mat-icon>
+        matTooltip="Notificar participante"
+        matTooltipPosition="below"
+        [disabled]="validateDomGuvStateNotified"
+        [ngClass]="validateDomGuvStateCitation ? 'text-green' : 'text-secondary'"
+        (click)="executeNotification($event, processParticipant.participationId)">
+        <mat-icon svgIcon="mat:event_note"></mat-icon>
       </button>
       <button
         type="button" mat-icon-button
         color="purple"
         class="p-0"
+        matTooltip="Avisar participante"
+        matTooltipPosition="below"
         [disabled]="validateDomGuvStateNotice"
-        [ngClass]="validateDomGuvStateCitation ? 'text-purple' : 'text-secondary'"
-        (click)="emitToggleStar($event, processParticipant.participationId)">
+        [ngClass]="validateDomGuvStateCitation ? 'text-amber' : 'text-secondary'"
+        (click)="executeAdvertisement($event, processParticipant.participationId)">
         <mat-icon svgIcon="mat:chat"></mat-icon>
       </button>
     </div>

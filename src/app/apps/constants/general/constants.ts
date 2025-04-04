@@ -42,9 +42,9 @@ export const NAME_NO_DISPONIBLE: string = 'N/D';
 export const NAME_NO_DISPONIBLE_CERO: string = '0';
 
 export const INDIVIDUAL_TYPE_NUMBER: string = 'NIT';
-export const PAGE = 0;
-export const PAGE_SIZE = 10;
-export const PAGE_SIZE_TABLE_CADASTRAL = 10;
+export const PAGE: number = 0;
+export const PAGE_SIZE: number = 10;
+export const PAGE_SIZE_TABLE_CADASTRAL: number = 10;
 export const TITULO_PAGE_CADASTRAL: string = 'Búsqueda catastral';
 export const TITULO_PAGE_AVANZADA: string = 'Búsqueda avanzada';
 export const URL_PAGE_CADASTRAL: string = 'Búsqueda catastral';
@@ -55,9 +55,9 @@ export const INFORMATION_HISTORICAL: string = 'Información histórica';
 export const INFORMATION_NOT_FOUND: string = 'Información No disponible';
 
 
-export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
-export const PAGE_SIZE_TABLE_UNIQUE = 10;
-export const PAGE_SIZE_SORT = 5;
+export const MAX_PAGE_SIZE_TABLE_UNIQUE: number = 1000;
+export const PAGE_SIZE_TABLE_UNIQUE: number = 10;
+export const PAGE_SIZE_SORT: number = 5;
 export const NAME_CODENAME: string = 'codeName';
 export const DIVPOLLVL_CODE: string = 'divpolLvl1Code';
 export const DIVPOLLVL2_CODE: string = 'divpolLvl2Code';
@@ -70,9 +70,9 @@ export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
 export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
 export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
 
-export const PAGE_OPTION_UNIQUE_5 = 5;
-export const PAGE_OPTION_UNIQUE_7 = 7;
-export const PAGE_OPTION_UNIQUE = 10;
+export const PAGE_OPTION_UNIQUE_5: number = 5;
+export const PAGE_OPTION_UNIQUE_7: number = 7;
+export const PAGE_OPTION_UNIQUE: number = 10;
 export const PAGE_SIZE_OPTION: number[] = [PAGE_OPTION_UNIQUE, 20, 50, 100];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_OPTION_BASIC: number[] = [PAGE_OPTION_UNIQUE, 15, 20];
@@ -470,7 +470,6 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<InformationAd
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
-
 export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
   {
     label: 'Detalle',
@@ -515,7 +514,6 @@ export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformati
 
 export const COMPONENT_ALFA_MAIN: string = 'cadAlfaMainComponent';
 export const COMPONENT_PATH_FORM_ALFA_MAIN: string = '/core/cadastral/alf/main.html';
-
 export const COMPONENT_ALFA_VALIDATE: string = 'cadAlfaValidateComponent';
 
 export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
@@ -590,7 +588,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     pathForm: '/core/cadastral/notificacion.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
-  },
+  }
 ];
 
 export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>[] = [
@@ -617,7 +615,6 @@ export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>
   }
 ];
 
-
 export const NAME_VALIDITY_VALUATION: string = 'validityValuation';
 export const NAME_CADASTRAL_VALUATION_AT: string = 'cadastralValuationAt';
 export const NAME_CADASTRAL_VALUATION: string = 'cadastralValuation';
@@ -629,15 +626,12 @@ export const NAME_COMMERCIAL_VALUATION_UNITS: string = 'commercialValuationUnits
 export const NAME_SELF_VALUATION_VALUE: string = 'selfValuationValue';
 export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY: string = 'BpmProcessCategory';
 
-
 export const LIST_GRID_APPRAISAL_1: string[] = [
   'validityValuation', 'cadastralValuationAt'
 ];
-
 export const LIST_GRID_APPRAISAL_2: string[] = [
   'cadastralValuation', 'cadastralValuationLand', 'cadastralValuationUnits'
 ];
-
 export const LIST_GRID_APPRAISAL_3: string[] = [
   'commercialValuation', 'commercialValuationLand', 'commercialValuationUnits'
 ];
@@ -723,32 +717,25 @@ export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.hi
 export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`, `${environment.schemas.main}`];
 export const LIST_SCHEMAS_CONTROL_HISTORY_PRIME: string[] = [`${environment.schemas.hist}`, `${environment.schemas.main}`];
 
-
 export const LIST_ZONES_RURAL: string[] = ['00'];
 export const LIST_FORM_CADASTRAL_0: string[] = [
   'municipality', 'zone', 'sector', 'community', 'neighborhood', 'block', 'sidewalk'
 ];
-
 export const LIST_FORM_CADASTRAL_1: string[] = [
   'zone', 'sector', 'community', 'neighborhood', 'block', 'sidewalk'
 ];
-
 export const LIST_FORM_CADASTRAL_2: string[] = [
   'sector', 'community', 'neighborhood', 'block', 'sidewalk'
 ];
-
 export const LIST_FORM_CADASTRAL_3: string[] = [
   'community', 'neighborhood', 'block', 'sidewalk'
 ];
-
 export const LIST_FORM_CADASTRAL_4: string[] = [
   'neighborhood', 'block', 'sidewalk'
 ];
-
 export const LIST_FORM_CADASTRAL_5: string[] = [
   'block', 'sidewalk'
 ];
-
 export const LIST_EXTRA_COLUMNS_APPRAISAL: string[] = [
   'header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-quartet-group'
 ];
@@ -761,7 +748,6 @@ export const FRAGMENT_BASIC_PROPERTY_INFORMATION: string = 'basicPropertyInforma
 export const FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY: string = 'historicalProceduresPropertyComponent';
 export const FRAGMENT_ACTIVE_PROCEDURES_PROPERTY: string = 'activeProceduresPropertyComponent';
 export const FRAGMENT_INFORMATION_UNIT_PROPERTY: string = 'informationUnitPropertyComponent';
-
 
 export const LIST_FRAGMENT_COMPONENTS_RULE_PAGE: string[] = [
   FRAGMENT_PHOTOS, FRAGMENT_ALERTS, FRAGMENT_SUPER_NOTARIADO_PROPERTY,
@@ -850,12 +836,10 @@ export const TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY: TableColumn<ProcessPartici
     cssClasses: ['text-secondary', 'font-medium']
   }
 ];
-
 export const TABLE_COLUMN_PRINCIPANTS_TABLE: TableColumn<ProcessParticipant>[] = [
   ...TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
-
 export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] = [
   {
     label: 'Documento',
@@ -880,7 +864,6 @@ export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] = 
   },
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
-
 export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
   {
     label: '',
@@ -1065,7 +1048,6 @@ export const TABLE_COLUMN_PROPERTIES_SOURCE: TableColumn<DataSource>[] = [
   //   cssClasses: ['font-medium']
   // }
 ];
-
 export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
   {
     label: 'Anotación',
@@ -1103,9 +1085,7 @@ export const TABLE_COLUMN_PROPERTIES_PERSON: TableColumn<DataPerson>[] = [
     cssClasses: ['font-medium']
   }
 ];
-
 export const CONSTANT_ENABLE_TAB_GEOGRAFIC: TypeButtonAlfaMain = 'TAB_GEO';
-
 export const TYPE_BUTTON_ONE: TypeButtonAlfaMain = 'AGR';
 export const TYPE_BUTTON_TWO: TypeButtonAlfaMain = 'CRE';
 export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
@@ -1129,6 +1109,7 @@ export const MODAL_DYNAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeig
 export const MODAL_DINAMIC_HEIGHT_AUTO = { maxWidth: '100%', minWidth: '60%' };
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
+export const MODAL_SMALL_DETAIL_NOTIFICE = { minWidth: '40%', minHeight: '30%' };
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
@@ -1236,7 +1217,14 @@ export const LIST_EXTENSION_MASIVE_EXCEL: string[] = ['xlsx', 'xls'];
 
 export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_PATH_FORM_ALFA_MAIN];
 
-export const LIST_CITATION_AND_NOTICE_TABLE_MENU:ProcessParticipantTableMenu[] = [
+export const CONSTANTE_NOTIFIED: string = 'Notificado';
+export const CONSTANTE_CITATION: string = 'Citacion';
+export const CONSTANTE_ADVERTISEMENT: string = 'Aviso';
+
+export const LIST_NOTIFICATIONS: string[] = [CONSTANTE_NOTIFIED, CONSTANTE_CITATION, CONSTANTE_ADVERTISEMENT];
+
+
+export const LIST_CITATION_AND_NOTICE_TABLE_MENU: ProcessParticipantTableMenu[] = [
   {
     type: 'link',
     id: 'all',

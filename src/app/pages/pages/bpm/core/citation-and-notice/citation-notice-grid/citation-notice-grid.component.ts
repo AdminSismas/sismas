@@ -6,11 +6,11 @@ import {
   Input,
   OnChanges,
   OnInit,
-  Output,
+  Output, signal,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf } from '@angular/common';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 import { stagger20ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -23,7 +23,7 @@ import { InformationPegeable } from '../../../../../../apps/interfaces/general/i
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { Observable, ReplaySubject } from 'rxjs';
+import { EMPTY, Observable, ReplaySubject } from 'rxjs';
 import { CitationNoticeCardComponent } from '../components/citation-notice-card/citation-notice-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -36,6 +36,7 @@ import { getRandomInt, validateVariable } from '../../../../../../apps/utils/gen
 import {
   TypeProcessParticipant
 } from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-citation-notice-grid',
@@ -58,7 +59,6 @@ import {
     CitationNoticeCardComponent,
     MatButtonModule,
     MatTooltipModule,
-    NgIf,
     NgForOf,
     MatPaginatorModule
   ]
@@ -66,19 +66,18 @@ import {
 })
 export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
-  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
+  listParticipants: ProcessParticipant[] = [];
+  totalElements: number = 0;
+  page = PAGE;
+  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
+  contentInformation!: InformationPegeable;
+  notFoundImageSrc = signal('assets/img/illustrations/idea.svg');
 
   @Input({ required: true }) public id: string | undefined = '';
   @Input({ required: true }) executionId!: string;
   @Input({ required: true }) typeProcess!: TypeProcessParticipant;
   @Input() searchCtrl: string = '';
 
-  listParticipants: ProcessParticipant[] = [];
-  totalElements: number = 0;
-  page = PAGE;
-  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-
-  @Output() toggleStar = new EventEmitter<ProcessParticipant['participationId']>();
   @Output() openDetailProcessParticipant = new EventEmitter<ProcessParticipant>();
   @Output() changePageSearchData = new EventEmitter<PageSearchData>();
 
@@ -90,14 +89,13 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
   _listParticipantsCards$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<ProcessParticipant[]>(1);
   listParticipantsCards$: Observable<ProcessParticipant[]> = this._listParticipantsCards$.asObservable();
 
-  isExistDataInformations: boolean = false;
-  contentInformations!: InformationPegeable;
-
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  private participantsProcess: ParticipantsProcessService = inject(ParticipantsProcessService);
 
-  constructor(
-    private participantsProcess: ParticipantsProcessService
-  ) {
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit() {
@@ -106,15 +104,18 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     } else {
       this.id = getRandomInt(10000).toString();
     }
+    this.loadingServiceService.activateLoading(true);
 
     this.dataContentInformations$.pipe(filter<InformationPegeable>(Boolean))
       .subscribe((result: InformationPegeable) => {
-        if (result != null && (result.content == null || result.content.length > 0)) {
-          this.captureInformationSubscribeError();
+        if (result != null && (result.content == null || result.content.length <= 0)) {
+          this.captureNotInformationSubscribeError();
           return;
         }
         this.captureInformationSubscribe(result);
       });
+
+    this.loadingServiceService.deActivate(3000);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -131,24 +132,22 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     if (!this.typeProcess) {
       return;
     }
-
     if (this.typeProcess === 'CITADO') {
       return this.getInformationCitedAssigned();
-    }
-    if (this.typeProcess === 'NOTIFICADO') {
+    } else if (this.typeProcess === 'NOTIFICADO') {
       return this.getInformationNotifiedAssigned();
-    }
-    if (this.typeProcess === 'AVISO') {
+    } else if (this.typeProcess === 'AVISO') {
       return this.getInformationNotifyAssigned();
+    } else {
+      return this.getInformationAssignedTasks();
     }
-    return this.getInformationAssignedTasks();
   }
 
   getInformationAssignedTasks() {
     this.participantsProcess.getParticipantsProcess(this.generateObjectPageSearchData(), this.executionId)
       .subscribe(
         {
-          error: (err: any) => this.captureInformationSubscribeError(),
+          error: (err: any) => this.captureNotInformationSubscribeError(),
           next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
         }
       );
@@ -156,9 +155,8 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   getInformationCitedAssigned() {
     this.participantsProcess.getParticipantsCitedProcess(this.generateObjectPageSearchData(), this.executionId)
-      .subscribe(
-        {
-          error: (err: any) => this.captureInformationSubscribeError(),
+      .subscribe({
+          error: (err: any) => this.captureNotInformationSubscribeError(),
           next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
         }
       );
@@ -168,7 +166,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     this.participantsProcess.getParticipantsNotifiedProcess(this.generateObjectPageSearchData(), this.executionId)
       .subscribe(
         {
-          error: (err: any) => this.captureInformationSubscribeError(),
+          error: (err: any) => this.captureNotInformationSubscribeError(),
           next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
         }
       );
@@ -177,47 +175,46 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
   getInformationNotifyAssigned() {
     this.participantsProcess.getParticipantsNotifyProcess(this.generateObjectPageSearchData(), this.executionId)
       .subscribe({
-          error: (err: any) => this.captureInformationSubscribeError(),
+          error: (err: any) => this.captureNotInformationSubscribeError(),
           next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
         }
       );
   }
 
-  captureInformationSubscribeError(): void {
-    this.isExistDataInformations = false;
-    this.contentInformations = new InformationPegeable();
+  captureNotInformationSubscribeError(): void {
+    this.listParticipants = [];
+    this.contentInformation = new InformationPegeable();
+    this._listParticipantsCards$.next([]);
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
-    this.isExistDataInformations = true;
-    this.contentInformations = result;
+    this.contentInformation = result;
     this.orderByInformationSubscribe();
   }
 
   orderByInformationSubscribe() {
     let data: ProcessParticipant[];
-    if (this.contentInformations?.content != null) {
-      data = this.contentInformations.content;
+    if (this.contentInformation?.content != null) {
+      data = this.contentInformation.content;
       data = data.map((row: ProcessParticipant) => new ProcessParticipant(row));
       this.listParticipants = data;
       this._listParticipantsCards$.next(data);
-
-      if (this.contentInformations == null) {
+      if (this.contentInformation == null) {
         this.page = PAGE;
         return;
       }
 
-      if (this.contentInformations.totalElements) {
-        this.totalElements = this.contentInformations.totalElements;
+      if (this.contentInformation.totalElements) {
+        this.totalElements = this.contentInformation.totalElements;
       }
 
-      if (this.contentInformations.pageable == null) {
+      if (this.contentInformation.pageable == null) {
         this.page = PAGE;
         return;
       }
 
-      if (this.contentInformations.pageable.pageNumber != null) {
-        this.page = this.contentInformations.pageable.pageNumber;
+      if (this.contentInformation.pageable.pageNumber != null) {
+        this.page = this.contentInformation.pageable.pageNumber;
       }
     }
   }
@@ -249,12 +246,9 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     return new PageSearchData(this.page, this.pageSize, null);
   }
 
-  emitToggleStar(id: ProcessParticipant['participationId']) {
-    this.toggleStar.emit(id);
-  }
-
   trackByParticipationId(index: number, participant: ProcessParticipant): number | undefined {
     return participant.participationId;
   }
 
+  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
 }

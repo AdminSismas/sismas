@@ -89,6 +89,8 @@ export class BmpCoreComponent implements OnInit {
 
   _infoProTaskE$: Observable<ProTaskE> = this.infoGeneralService.infoProTaskE$;
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
+
+  sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<ComponentTemplate[]>(1);
   _proFlow$ = this.route.data.pipe(map(({ proFlow }) => proFlow));
@@ -238,10 +240,13 @@ export class BmpCoreComponent implements OnInit {
     return true;
   }
 
-  returnPanelTask(isReturn: boolean) {
+  async returnPanelTask(isReturn: boolean) {
     if (isReturn) {
-      this.router
-        .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
+      let isCollapse: boolean = await firstValueFrom(this.sidenavCollapsed$);
+      if (isCollapse) {
+        this.layoutService.expandSidenav();
+      }
+      this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
         .then(() => {
         });
     }

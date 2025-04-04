@@ -2,7 +2,7 @@
   @if (activeCategory !== 'all') {
     <div class="h-14 mb-6 flex px-6 sm:px-0 items-center" [id]="id + 'container-emmit'">
       <button
-        (click)="openAddNew.emit()"
+        (click)="openMassiveProcessParticipant.emit(activeCategory)"
         class="flex-auto"
         color="primary"
         mat-raised-button
@@ -10,9 +10,11 @@
         <mat-icon
           class="ltr:-ml-4 ltr:mr-2 rtl:ml-2 icon-sm"
           svgIcon="mat:add"></mat-icon>
-        @if (activeCategory === 'citation') {
+        @if (activeCategory === 'notice') {
+          <span>Citar Masivo</span>
+        } @else if (activeCategory === 'citation') {
           <span>Notificar Masivo</span>
-        } @else if (activeCategory === 'notification') {
+        } @else {
           <span>Avisar Masivo</span>
         }
       </button>

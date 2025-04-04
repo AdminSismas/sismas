@@ -11,7 +11,7 @@ import { InformationPegeable } from '../../../interfaces/general/information-peg
 })
 export class ParticipantsProcessService {
 
-  basic_url: string = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
+  basic_url: string = `${envi.url}:${envi.port}${envi.bpmParticipation.value}`;
 
   constructor(
     private requestsService: SendGeneralRequestsService
@@ -22,7 +22,7 @@ export class ParticipantsProcessService {
     let paramsA: HttpParams = new HttpParams();
     paramsA = paramsA.append('page', `${page.page}`);
     paramsA = paramsA.append('size', `${page.size}`);
-    const url: string = `${this.basic_url}${envi.bpmOperation.participation}${executionId}`;
+    const url: string = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}`;
     return this.getData(url, paramsA);
   }
 
@@ -30,7 +30,7 @@ export class ParticipantsProcessService {
     let paramsA: HttpParams = new HttpParams();
     paramsA = paramsA.append('page', `${page.page}`);
     paramsA = paramsA.append('size', `${page.size}`);
-    const url: string = `${this.basic_url}${envi.bpmOperation.participation}${executionId}${envi.typeNotification.cited}`;
+    const url: string = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}${envi.typeNotification.cited}`;
     return this.getData(url, paramsA);
   }
 
@@ -38,7 +38,7 @@ export class ParticipantsProcessService {
     let paramsA: HttpParams = new HttpParams();
     paramsA = paramsA.append('page', `${page.page}`);
     paramsA = paramsA.append('size', `${page.size}`);
-    const url: string = `${this.basic_url}${envi.bpmOperation.participation}${executionId}${envi.typeNotification.notified}`;
+    const url: string = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}${envi.typeNotification.notified}`;
     return this.getData(url, paramsA);
   }
 
@@ -46,7 +46,7 @@ export class ParticipantsProcessService {
     let paramsA: HttpParams = new HttpParams();
     paramsA = paramsA.append('page', `${page.page}`);
     paramsA = paramsA.append('size', `${page.size}`);
-    const url: string = `${this.basic_url}${envi.bpmOperation.participation}${executionId}${envi.typeNotification.notify}`;
+    const url: string = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}${envi.typeNotification.notify}`;
     return this.getData(url, paramsA);
   }
 
