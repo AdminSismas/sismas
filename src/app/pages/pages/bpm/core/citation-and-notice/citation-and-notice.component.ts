@@ -76,7 +76,6 @@ export class CitationAndNoticeComponent implements OnInit {
     proFlow: ProFlow,
     private dialog: MatDialog,
     private router: Router,
-    private readonly layoutService: VexLayoutService,
     private infoGeneralService: SendInfoGeneralService,
     private cdr: ChangeDetectorRef
   ) {
@@ -114,9 +113,6 @@ export class CitationAndNoticeComponent implements OnInit {
     }
     //
     this.cdr.markForCheck(); //
-    setTimeout(() => {
-      this.layoutService.collapseSidenav();
-    }, 0);
   }
 
   openDetailProcessParticipant(data?: ProcessParticipant) {

@@ -115,14 +115,13 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
         this.captureInformationSubscribe(result);
       });
 
-    this.loadingServiceService.deActivate(3000);
+    this.loadingServiceService.deActivate(1000);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['typeProcess']) {
       this.validateExecuteTypeProcess();
     }
-
     if (changes['searchCtrl'] && this.searchCtrl != null) {
       this.onFilterChange(this.searchCtrl);
     }
@@ -145,12 +144,10 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   getInformationAssignedTasks() {
     this.participantsProcess.getParticipantsProcess(this.generateObjectPageSearchData(), this.executionId)
-      .subscribe(
-        {
-          error: (err: any) => this.captureNotInformationSubscribeError(),
-          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
-        }
-      );
+      .subscribe({
+        error: (err: any) => this.captureNotInformationSubscribeError(),
+        next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
+      });
   }
 
   getInformationCitedAssigned() {
@@ -196,7 +193,11 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     let data: ProcessParticipant[];
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
-      data = data.map((row: ProcessParticipant) => new ProcessParticipant(row));
+      data = data.map((row: ProcessParticipant) => {
+        let dt = new ProcessParticipant(row);
+        dt.executionId = this.executionId;
+        return dt;
+      });
       this.listParticipants = data;
       this._listParticipantsCards$.next(data);
       if (this.contentInformation == null) {

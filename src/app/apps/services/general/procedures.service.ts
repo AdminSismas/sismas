@@ -113,6 +113,12 @@ export class ProceduresService {
     return this.http.post<unknown>(url, { commentText });
   }
 
+  // {{url}}:{{port}}/bpmOperation/proExecution/{{executionId}}
+  getProcedure(executionId: number | string): Observable<ProceduresCollection> {
+    const url = `${this.basic_url}/${executionId}`;
+    return this.http.get<ProceduresCollection>(url);
+  }
+
   // {{url}}:{{port}}/bpmOperation/proExecution/{{executionId}}/cancel
   cancelProcedure(executionId: number): Observable<string> {
     const url = `${this.basic_url}/${executionId}${envi.cancel}`;

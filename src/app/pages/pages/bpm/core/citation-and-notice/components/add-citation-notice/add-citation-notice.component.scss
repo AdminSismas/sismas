@@ -1,0 +1,17 @@
+
+.custom-slide-toggle {
+  margin: 0 4px;
+  /* Ajusta el margen entre los toggles, si es necesario */
+
+  .mat-slide-toggle-bar {
+    background-color: rgba(33, 150, 243, 0.5) !important;
+  }
+
+  .mat-slide-toggle-thumb {
+    background-color: #2196F3 !important;
+  }
+
+  .mat-slide-toggle-checked .mat-slide-toggle-thumb {
+    background-color: #1976D2 !important;
+  }
+}
