@@ -30,7 +30,7 @@ export const CONSTANT_INFORMATION_PREDIAL_MAIN = 'Información predial vigente';
 export const CONSTANT_INFORMATION_PREDIAL_TEMP = 'Información predial temporal';
 export const CONSTANT_INFORMATION_PREDIAL_HIST = 'Información predial histórico';
 
-export const CONSTANT_CHANGE_UNITED_PREDIAL = ' Cambios unidad predial catastral ';
+export const CONSTANT_CHANGE_UNITED_PREDIAL = ' Cambios información predial catastral: ';
 
 export const CONSTANT_MSG_ERROR_CLEAR_INFORMATION ='Se necesita agregar la palabra correspondiente para poder continuar';
 

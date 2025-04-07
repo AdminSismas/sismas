@@ -1,6 +1,6 @@
 <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
   <h3 class="headline m-0 flex-auto">
-    {{ CONSTANT_CHANGE_UNITED_PREDIAL + TWO_POINT_ + baunitIdE }}
+    {{ dialogTitle }}
   </h3>
   <button
     class="text-secondary"
@@ -45,22 +45,22 @@
 
                   @if (change.operationType === 'CREATE') {
                     <div
-                      class="rounded px-2 py-1 font-medium text-xs flex-none text-green-600 bg-green-600/10">
-                      {{ 'Creado' }}
+                      class="rounded px-2 py-1 font-medium text-xs flex-none text-white bg-green-600">
+                      Creado
                     </div>
                   }
 
                   @if (change.operationType === 'UPDATE') {
                     <div
-                      class="rounded px-2 py-1 font-medium text-xs flex-none text-cyan-600 bg-cyan-600/10">
-                      {{ 'Agregado' }}
+                      class="rounded px-2 py-1 font-medium text-xs flex-none text-white bg-primary-600">
+                       Actualizado
                     </div>
                   }
 
                   @if (change.operationType === 'DELETE') {
                     <div
-                      class="rounded px-2 py-1 font-medium text-xs flex-none text-red-600 bg-red-600/10">
-                      {{ 'Borrado' }}
+                      class="rounded px-2 py-1 font-medium text-xs flex-none text-white bg-red-600">
+                      Borrado
                     </div>
                   }
 

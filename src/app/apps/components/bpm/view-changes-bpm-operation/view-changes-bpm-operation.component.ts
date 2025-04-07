@@ -4,7 +4,6 @@ import {
   MAT_DIALOG_DATA,
   MatDialogClose,
   MatDialogContent,
-  MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +18,7 @@ import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { CONSTANT_CHANGE_UNITED_PREDIAL } from '../../../constants/general/constantLabels';
-import { TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION, TWO_POINT_ } from '../../../constants/general/constants';
+import { TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-view-changes-bpm-operation',
@@ -53,7 +52,6 @@ export class ViewChangesBpmOperationComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: DifferenceChanges[],
-    private dialogRef: MatDialogRef<ViewChangesBpmOperationComponent>,
   ) {
   }
 
@@ -62,12 +60,14 @@ export class ViewChangesBpmOperationComponent implements OnInit {
       this.listChanges = [...this.defaults];
 
       this.executionId = this.defaults[0].executionId;
-      this.baunitIdE = this.defaults[0].executionId;
+      this.baunitIdE = this.defaults[0].baunitIdE;
     }
 
   }
 
-  protected readonly CONSTANT_CHANGE_UNITED_PREDIAL = CONSTANT_CHANGE_UNITED_PREDIAL;
-  protected readonly TWO_POINT_ = TWO_POINT_;
+  get dialogTitle(): string {
+    return `${CONSTANT_CHANGE_UNITED_PREDIAL}${this.baunitIdE}, Versión: ${this.executionId}`;
+  }
+
   protected readonly columns = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
 }
