@@ -7,7 +7,7 @@ import { NgClass, TitleCasePipe } from '@angular/common';
 import {
   CONSTANTE_CITATION,
   CONSTANTE_CITED,
-  CONSTANTE_NOTIFIED,
+  CONSTANTE_NOTIFIED, LIST_NOTICE_NOTIFICATIONS,
   LIST_NOTIFICATIONS,
   MODAL_DYNAMIC_HEIGHT,
   NAME_NO_DISPONIBLE
@@ -98,8 +98,7 @@ export class CitationNoticeCardComponent implements OnInit {
   }
 
   get validateNotFoundGuvState() {
-    return (!this.processParticipant?.viaGubernativa || !this.processParticipant?.viaGubernativa?.domGuvState) ||
-      LIST_NOTIFICATIONS.includes(this.processParticipant?.viaGubernativa?.domGuvState);
+    return !this.processParticipant?.viaGubernativa || !this.processParticipant?.viaGubernativa?.domGuvState;
   }
 
   get validateDomGuvStateCitation() {
@@ -110,8 +109,12 @@ export class CitationNoticeCardComponent implements OnInit {
     return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_CITED;
   }
 
-  get validateDomGuvStateNotice() {
+  get validateNotifiedCompleted() {
     return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_NOTIFIED;
+  }
+
+  get validateDomGuvStateNotice() {
+    return this.processParticipant?.viaGubernativa?.domGuvState && LIST_NOTICE_NOTIFICATIONS.includes(this.processParticipant?.viaGubernativa?.domGuvState);
   }
 
   get classValidateDomGuvStateCitation() {
@@ -123,7 +126,7 @@ export class CitationNoticeCardComponent implements OnInit {
   }
 
   get classValidateDomGuvStateNotice() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_NOTIFIED ? 'text-amber' : 'text-secondary';
+    return this.processParticipant?.viaGubernativa?.domGuvState && LIST_NOTICE_NOTIFICATIONS.includes(this.processParticipant?.viaGubernativa?.domGuvState) ? 'text-amber' : 'text-secondary';
   }
 
   getAlertError(text: string) {

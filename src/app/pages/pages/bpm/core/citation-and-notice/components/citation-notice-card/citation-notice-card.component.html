@@ -11,7 +11,7 @@
       <mat-icon
         class="ltr:mr-1 rtl:ml-1 icon-xs"
         svgIcon="mat:receipt_long"></mat-icon>
-      <span class="sm:text-xs lg::text-sm xl:text-sm text-secondary">
+      <span class="sm:text-xs text-secondary">
         {{ processParticipant.individual.domIndividualTypeNumber | titlecase }}
         - {{ processParticipant.individualNumber }}
       </span>
@@ -21,13 +21,19 @@
         class="ltr:mr-1 rtl:ml-1 icon-xs"
         svgIcon="mat:people"></mat-icon>
       <span
-        class="sm:text-xs lg::text-sm xl:text-sm text-secondary">{{ processParticipant.fullName | titlecase }}</span>
+        class="sm:text-xs text-secondary">{{ processParticipant.fullName | titlecase }}</span>
     </div>
+
+    @if (validateNotifiedCompleted) {
+      <div
+        class="rounded px-2 py-1 font-medium text-xs flex-none text-gray-600 bg-gray-600/10 absolute top-2 right-2">
+        {{ 'Notificado' }}
+      </div>
+    }
 
     @if (validateNotFoundGuvState) {
       <div
         class="rounded px-2 py-1 font-medium text-xs flex-none text-secondary-600 bg-secondary-600/10 absolute top-2 right-2">
-        <!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
         {{ 'Pendiente' }}
       </div>
     }
@@ -35,7 +41,6 @@
     @if (validateDomGuvStateNotified) {
       <div
         class="rounded px-2 py-1 font-medium text-xs flex-none text-green-600 bg-green-600/10 absolute top-2 right-2">
-        <!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
         {{ 'Notificar' }}
       </div>
     }
@@ -43,7 +48,6 @@
     @if (validateDomGuvStateCitation) {
       <div
         class="rounded px-2 py-1 font-medium text-xs flex-none text-primary-600 bg-primary-600/10 absolute top-2 right-2">
-        <!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
         {{ 'Citar' }}
       </div>
     }

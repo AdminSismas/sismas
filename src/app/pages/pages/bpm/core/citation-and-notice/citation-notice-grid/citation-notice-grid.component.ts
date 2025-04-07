@@ -122,7 +122,6 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     if (changes['typeProcess']) {
       this.validateExecuteTypeProcess();
     }
-
     if (changes['searchCtrl'] && this.searchCtrl != null) {
       this.onFilterChange(this.searchCtrl);
     }
@@ -145,12 +144,10 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   getInformationAssignedTasks() {
     this.participantsProcess.getParticipantsProcess(this.generateObjectPageSearchData(), this.executionId)
-      .subscribe(
-        {
-          error: (err: any) => this.captureNotInformationSubscribeError(),
-          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
-        }
-      );
+      .subscribe({
+        error: (err: any) => this.captureNotInformationSubscribeError(),
+        next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
+      });
   }
 
   getInformationCitedAssigned() {
@@ -197,7 +194,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
       data = data.map((row: ProcessParticipant) => {
-        let dt = new ProcessParticipant(row)
+        let dt = new ProcessParticipant(row);
         dt.executionId = this.executionId;
         return dt;
       });

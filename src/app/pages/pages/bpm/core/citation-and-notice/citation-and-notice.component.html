@@ -27,13 +27,13 @@
 
   <div class="mt-1 pt-0 overflow-hidden flex-1 flex container-fluid px-0">
     <mat-drawer-container class="bg-transparent flex-auto flex">
-      <mat-drawer-content class="p-6 pt-0 flex-auto flex items-start">
+      <mat-drawer-content class="p-3 pt-0 flex-auto flex items-start">
         <vex-citation-notice-table-menu
           [id]="executionId + 'Menu2Notificacion'"
           (filterChange)="setData($event)"
           (openAddNew)="openDetailProcessParticipant()"
           (openMassiveProcessParticipant)="openMassiveProcessParticipant($event)"
-          class="hidden sm:block ltr:mr-6 rtl:ml-6">
+          class="hidden sm:block ltr:mr-3 rtl:ml-3">
         </vex-citation-notice-table-menu>
         <div class="card h-full overflow-hidden flex-auto">
           <vex-citation-notice-grid
