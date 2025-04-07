@@ -115,7 +115,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
         this.captureInformationSubscribe(result);
       });
 
-    this.loadingServiceService.deActivate(3000);
+    this.loadingServiceService.deActivate(1000);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -196,7 +196,11 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
     let data: ProcessParticipant[];
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
-      data = data.map((row: ProcessParticipant) => new ProcessParticipant(row));
+      data = data.map((row: ProcessParticipant) => {
+        let dt = new ProcessParticipant(row)
+        dt.executionId = this.executionId;
+        return dt;
+      });
       this.listParticipants = data;
       this._listParticipantsCards$.next(data);
       if (this.contentInformation == null) {

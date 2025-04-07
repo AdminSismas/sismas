@@ -3,18 +3,19 @@
     @for (input of inputs; track input.name) {
       @if (input.element === "collection" && !input.noVisibleComponent) {
         <vex-combox-colletion
+          [idComboCollection]="input.name + $index"
           [label]="input.label"
           [formControlNameCombobox]="input.name"
           [typeDomainName]="input.type"
           placeholderDomainName="{{ input.placeholder }}&hellip;"
-          [idComboCollection]="input.name"
           [cssClasses]="cssClassesInput(input.cssClasses)"
           [ngClass]="cssClassesInput(input.cssClasses)"
         ></vex-combox-colletion>
       }
 
       @if (input.element === "date" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
+                        [id]="input.name + $index">
           <mat-label>{{ input.label }}</mat-label>
           <input
             matInput
@@ -32,7 +33,8 @@
       }
 
       @if (input.element === "file" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
+                        [id]="input.name + $index">
           <mat-label>{{ input.label }}</mat-label>
           <ngx-mat-file-input
             [formControlName]="input.name"
@@ -44,7 +46,8 @@
       }
 
       @if (input.element === "select" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)">
+        <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)"
+                        [id]="input.name + $index">
           <mat-label>{{ input.label }}</mat-label>
           <mat-select
             [formControlName]="input.name"
@@ -60,6 +63,7 @@
 
       @if (input.element === "toggle" && !input.noVisibleComponent) {
         <mat-slide-toggle
+          [id]="input.name + $index"
           [formControlName]="input.name"
           [labelPosition]="labelPositionToggle(input)"
         >{{ input.label }}
@@ -68,7 +72,7 @@
       }
 
       @if (input.element === "checkbox" && !input.noVisibleComponent) {
-        <mat-form-field>
+        <mat-form-field [id]="input.name + $index">
           <mat-checkbox
             [formControlName]="input.name"
             [id]="input.name"
@@ -81,7 +85,7 @@
 
       @if (input.element === "textarea" && !input.noVisibleComponent) {
         <vex-text-area
-          [idTextArea]="input.name"
+          [idTextArea]="input.name + $index"
           [label]="input.label"
           [formControlNameTextArea]="input.name"
           [placeholder]="input.placeholder"
@@ -91,7 +95,8 @@
       }
 
       @if (input.element === "input" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)">
+        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
+                        [id]="input.name + $index">
           <mat-label>{{ input.label }}</mat-label>
           <input
             matInput

@@ -1228,11 +1228,19 @@ export const LIST_EXTENSION_MASIVE_EXCEL: string[] = ['xlsx', 'xls'];
 
 export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_PATH_FORM_ALFA_MAIN];
 
-export const CONSTANTE_NOTIFIED: string = 'Notificado';
-export const CONSTANTE_CITATION: string = 'Citacion';
-export const CONSTANTE_ADVERTISEMENT: string = 'Aviso';
+export const CONSTANTE_TYPE_PROCESS_PARTICIPANT_ALL: string = 'all';
+export const CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED: string = 'citation';
+export const CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED: string = 'notification';
+export const CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTICE: string = 'notice';
 
-export const LIST_NOTIFICATIONS: string[] = [CONSTANTE_NOTIFIED, CONSTANTE_CITATION, CONSTANTE_ADVERTISEMENT];
+export const CONSTANTE_CITATION: string = 'Citacion';
+export const CONSTANTE_CITED: string = 'Citado';
+export const CONSTANTE_NOTIFIED: string = 'Notificado';
+export const CONSTANTE_ADVERTISEMENT: string = 'Aviso';
+export const CONSTANTE_UNPIN_NOTICE: string = 'Desfijar Aviso';
+export const CONSTANTE_PIN_NOTICE: string = 'Fijar Aviso';
+
+export const LIST_NOTIFICATIONS: string[] = [CONSTANTE_ADVERTISEMENT, CONSTANTE_UNPIN_NOTICE, CONSTANTE_PIN_NOTICE];
 
 
 export const LIST_CITATION_AND_NOTICE_TABLE_MENU: ProcessParticipantTableMenu[] = [

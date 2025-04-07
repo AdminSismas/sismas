@@ -36,8 +36,8 @@
       </div>
       <div class="flex flex-col gap-1">
         <!-- Tipo de participante  -->
-        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null && processParticipant.individual.domIndividualTypeNumber !== undefined) {
-          <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
+        @if (processParticipant !== null && processParticipant !== undefined && processParticipant.bpmParticipation !== null && processParticipant.bpmParticipation !== undefined) {
+          <span class="text-sm">{{ processParticipant.bpmParticipation }}</span>
         } @else {
           <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
         }

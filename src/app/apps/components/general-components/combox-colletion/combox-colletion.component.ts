@@ -40,7 +40,8 @@ export class ComboxColletionComponent implements OnInit {
   @Input() public cssClasses?: string;
   @Input() public valueReturn: string | undefined = 'dispname';
   @Input() public hintValue: string | null = null;
-  @Input() public hideRequiredMarker = true;
+  @Input() public hideRequiredMarker:boolean = true;
+  @Input() public validateInactiveCollection:boolean = false;
   @Input() public queryParams: Record<string, string | number | boolean> = {};
 
   @Output() selectionChange = new EventEmitter<any>();
@@ -99,17 +100,17 @@ export class ComboxColletionComponent implements OnInit {
     if (this.typeCalificationDomainName != null && this.typeCalificationDomainName.length > 0) {
       this.collectionServicesService.getCalificationDataDomainName(this.typeCalificationDomainName)
         .subscribe(
-          (result: DomainCalificationCollection[]) => this.captureCalificationInformationSubscribe(result)
+          (result: DomainCalificationCollection[]) => this.captureQualificationInformationSubscribe(result)
         );
     }
   }
 
-  captureCalificationInformationSubscribe(result: DomainCalificationCollection[]) {
+  captureQualificationInformationSubscribe(result: DomainCalificationCollection[]) {
     this.calificationOptions = result;
   }
 
   captureInformationSubscribe(result: DomainCollection[]) {
-    if (result != null && result.length > 0) {
+    if (result != null && result.length > 0 && this.validateInactiveCollection) {
       result = result.filter(dmc => dmc.inactive === false);
     }
     this.options = result;

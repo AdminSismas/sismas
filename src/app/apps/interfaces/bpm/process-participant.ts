@@ -1,14 +1,17 @@
 import { InfoPerson } from '../information-property/info-person';
 import { GovernmentalChannel } from './governmental-channel';
+import { ProcessParticipantTableMenu } from './citation-and-notice/info-participants.interface';
 
 export class ProcessParticipant {
+
   participationId: number;
   bpmParticipation: string;
   imageSrc: string;
   individual: InfoPerson;
   viaGubernativa?: GovernmentalChannel;
   selected?: boolean = false;
-
+  executionId?: string | null = null;
+  typeCategory?: ProcessParticipantTableMenu['id']| null = null;
 
   constructor(content?: any) {
     this.participationId = content?.participationId || 0;

@@ -1,0 +1,173 @@
+<form (ngSubmit)="save()" [formGroup]="activeTypeCategoryForm">
+  <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">
+      @if (typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED) {
+        {{ labelCited }} - {{ processParticipant.fullName | titlecase }}
+      } @else if (typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED) {
+        {{ labelNotice }} - {{ processParticipant.fullName | titlecase }}
+      }
+    </h2>
+
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button">
+      <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="text-border"></mat-divider>
+  <mat-dialog-content class="flex flex-col">
+    <div class="w-full flex flex-col pb-2 xl:pl-5 xl:pr-5 sm:gap-3">
+      <div class="flex justify-between sm:ml-2 sm:mr-2  xl:ml-4 xl:mr-4">
+        <div class="flex flex-col gap-1">
+          <span class="text-black capitalize text-sm">Nombre</span>
+          <span class="text-black capitalize text-sm">Tipo Documento</span>
+          <span class="text-black capitalize text-sm">Número de documento</span>
+        </div>
+        <div class="flex flex-col gap-1">
+          <!-- Nombre  -->
+          @if (processParticipant !== null && processParticipant !== undefined && processParticipant.fullName !== null && true && processParticipant.fullName !== undefined) {
+            <span class="text-sm">{{ processParticipant.fullName }}</span>
+          } @else {
+            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+          }
+          @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.domIndividualTypeNumber !== null && processParticipant.individual.domIndividualTypeNumber !== undefined) {
+            <span class="text-sm">{{ processParticipant.individual.domIndividualTypeNumber }}</span>
+          } @else {
+            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+          }
+          <!-- Número de documento  -->
+          @if (processParticipant !== null && processParticipant !== undefined && processParticipant.individual !== null && processParticipant.individual.number !== null && processParticipant.individual.number !== undefined) {
+            <span class="text-sm">{{ processParticipant.individual.number }}</span>
+          } @else {
+            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+          }
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="text-black capitalize text-sm">Tipo de participante</span>
+          <span class="text-black capitalize text-sm">Numero Radicado</span>
+          <span class="text-black capitalize text-sm">Fecha Radicado</span>
+        </div>
+        <div class="flex flex-col gap-1">
+          <!-- Tipo de participante  -->
+          @if (processParticipant !== null && processParticipant !== undefined && processParticipant.bpmParticipation !== null && processParticipant.bpmParticipation !== undefined) {
+            <span class="text-sm">{{ processParticipant.bpmParticipation }}</span>
+          } @else {
+            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+          }
+          @if (procedure !== null && procedure.executionCode !== null && procedure.executionCode !== undefined) {
+            <span class="text-sm">{{ procedure.executionCode }}</span>
+          } @else {
+            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+          }
+          @if (procedure !== null && procedure.dueDate !== null && procedure.dueDate !== undefined) {
+            <span class="text-sm">{{ procedure.dueDate | date: 'dd/MM/yyyy' }}</span>
+          } @else {
+            <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+          }
+        </div>
+      </div>
+    </div>
+    @if (typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED) {
+      <div class="w-full flex flex-col sm:flex-row sm:gap-3">
+        <vex-combox-colletion-form
+          idComboCollection="CitationMethodt89676785523454"
+          label="Citado por"
+          [formControlComboxColletion]="controlDomCitationMethod"
+          typeDomainName="CitationMethod"
+          placeholderDomainName="Selecione un tipo de citacion"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+          class="flex-auto xl:pl-2 xl:pr-2">
+        </vex-combox-colletion-form>
+        <mat-form-field
+          [id]="'unitBuicitationDate445'"
+          class="flex-auto xl:pl-1 xl:pr-3"
+          appearance="outline">
+          <mat-label>{{ 'Fecha Citacion' }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepickerRef"
+            placeholder="{{ 'Seleccionar una fecha' }}&hellip;"
+            [max]="maxDate"
+            [formControlName]="'citationDate'"
+            [formControl]="controlCitationDate"
+            [min]="minDate"
+          />
+          <mat-datepicker-toggle
+            [for]="datepickerRef"
+            class="block"
+            matIconPrefix></mat-datepicker-toggle>
+          <mat-datepicker #datepickerRef></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <vex-text-area
+        idTextArea="citation998225844"
+        label="Nota"
+        formControlNameTextArea="citationNote"
+        [formControlTextArea]="controlCitationNote"
+        class="px-0 flex-auto w-full">
+      </vex-text-area>
+    } @else if (typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED) {
+      <div class="w-full flex flex-col sm:flex-row sm:gap-3">
+        <vex-combox-colletion-form
+          idComboCollection="NotificationMethowwwdt89676785523454"
+          label="Notificado por"
+          [formControlComboxColletion]="controlDomNotificationMethod"
+          typeDomainName="NotificationMethod"
+          placeholderDomainName="Selecione un tipo de notificacion"
+          cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
+          class="flex-auto xl:pl-2 xl:pr-2">
+        </vex-combox-colletion-form>
+        <mat-form-field
+          [id]="'12NotificationDa25te445'"
+          class="flex-auto xl:pl-1 xl:pr-3"
+          appearance="outline">
+          <mat-label>{{ 'Fecha Notificacion' }}</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepickerRefNoti"
+            placeholder="{{ 'Seleccionar una fecha' }}&hellip;"
+            [max]="maxDate"
+            formControlName="notificationDate"
+            [formControl]="controlNotificationDate"
+            [min]="minDate"
+          />
+          <mat-datepicker-toggle
+            [for]="datepickerRefNoti"
+            class="block"
+            matIconPrefix></mat-datepicker-toggle>
+          <mat-datepicker #datepickerRefNoti></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <vex-text-area
+        idTextArea="notificationNote1255778"
+        label="Nota"
+        formControlNameTextArea="notificationNote"
+        [formControlTextArea]="controlNotificationNote"
+        class="px-0 flex-auto w-full">
+      </vex-text-area>
+      <div class="w-full flex flex-col sm:flex-row sm:gap-3">
+        <mat-slide-toggle
+          [id]="'resignationTermsNotification28811387'"
+          formControlName="resignationTerms"
+          [formControl]="controlResignationTerms"
+          labelPosition="before"
+          class="xl:pl-1 xl:pr-1 ml-1 mr-3 custom-slide-toggle">
+          Renuncia a Terminos
+        </mat-slide-toggle>
+      </div>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">Cancelar</button>
+    <button color="primary" mat-flat-button type="submit">
+      @if (typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED) {
+        Actualizar Citacion
+      } @else if (typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED) {
+        Actualizar Notificacion
+      }
+    </button>
+  </mat-dialog-actions>
+</form>
+

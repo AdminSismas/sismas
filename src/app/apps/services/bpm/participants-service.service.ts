@@ -6,6 +6,7 @@ import { BehaviorSubject, catchError, map, Observable, Subject, throwError } fro
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
+import { GovernmentalChannel } from '../../interfaces/bpm/governmental-channel';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class ParticipantsServiceService {
   ) {
   }
 
-  changeInfoParticipants(value:boolean | null){
+  changeInfoParticipants(value: boolean | null) {
     this.chargeInfoSubject.next(value);
   }
 
@@ -56,6 +57,26 @@ export class ParticipantsServiceService {
   updateParticipantByExecutionId(executionId: string, body: ProcessParticipant): Observable<ProcessParticipant> {
     return this.requestsService.sendRequestsUpdatePutBody(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`,
+      body
+    );
+  }
+
+  updateGovernmentalChannelCitedParticipantByExecutionId(
+    executionId: string,
+    body: GovernmentalChannel,
+    participationId: number | string): Observable<void> {
+    return this.requestsService.sendRequestsUpdatePutBody(
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.cited}/${participationId}`,
+      body
+    );
+  }
+
+  updateGovernmentalChannelNotifiedParticipantByExecutionId(
+    executionId: string,
+    body: GovernmentalChannel,
+    participationId: number | string): Observable<void> {
+    return this.requestsService.sendRequestsUpdatePutBody(
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.notified}/${participationId}`,
       body
     );
   }

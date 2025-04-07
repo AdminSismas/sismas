@@ -86,7 +86,8 @@ export class ComboxColletionFormComponent implements OnInit, OnDestroy {
   @Input() public cssClasses?: string;
   @Input() public valueReturn: string | undefined = 'dispname';
   @Input() public hintValue: string | null = null;
-  @Input() public hideRequiredMarker = true;
+  @Input() public hideRequiredMarker:boolean = true;
+  @Input() public validateInactiveCollection:boolean = false;
   @Input() public queryParams: Record<string, string | number | boolean> = {};
   @Output() selectionChange = new EventEmitter<any>();
 
@@ -155,7 +156,7 @@ export class ComboxColletionFormComponent implements OnInit, OnDestroy {
   }
 
   captureInformationSubscribe(result: DomainCollection[]) {
-    if (result != null && result.length > 0) {
+    if (result != null && result.length > 0 && this.validateInactiveCollection) {
       result = result.filter(dmc => dmc.inactive === false);
     }
     this.options = result;
