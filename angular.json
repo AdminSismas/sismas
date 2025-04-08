@@ -230,6 +230,60 @@
                 }
               ]
             },
+            "quimbaya": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.quimbaya.ts"
+                }
+              ]
+            },
+            "montenegro": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.montenegro.ts"
+                }
+              ]
+            },
             "test": {
               "optimization": false,
               "outputHashing": "all",
@@ -275,6 +329,12 @@
             },
             "barrancabermeja": {
               "buildTarget": "geoGestion:build:barrancabermeja"
+            },
+            "quimbaya": {
+              "buildTarget": "geoGestion:build:quimbaya"
+            },
+            "montenegro": {
+              "buildTarget": "geoGestion:build:montenegro"
             },
             "test": {
               "buildTarget": "geoGestion:build:test"
