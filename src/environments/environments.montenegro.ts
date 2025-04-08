@@ -163,6 +163,7 @@ export const environment = {
       temp: "temp"
     },
     selfvaluation: "/selfvaluation",
+    sequentialCode: "/sequentialCode",
     serviciosTaquilla: "/serviciosTaquilla",
     signatureUrl: "/signatureUrl",
     snr: "/snr",
