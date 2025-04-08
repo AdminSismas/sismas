@@ -24,10 +24,20 @@ import {
   PAGE,
   PAGE_OPTION_5_7_10,
   PAGE_SIZE,
+  TYPE_BUTTON_FIVE,
+  TYPE_BUTTON_FOUR,
+  TYPE_BUTTON_NINE,
+  TYPE_BUTTON_ONE,
+  TYPE_BUTTON_SIX,
+  TYPE_BUTTON_TREE,
+  TYPE_BUTTON_TWO,
   TYPE_INFORMATION_EDITION,
   TYPE_OPERATION_ADD,
+  TYPE_OPERATION_CALCULATE_BOUNDARIES,
   TYPE_OPERATION_CREATE,
-  TYPE_OPERATION_DELETE
+  TYPE_OPERATION_CREATE_GEO,
+  TYPE_OPERATION_DELETE,
+  TYPE_OPERATION_DELETE_GEO
 } from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
@@ -37,6 +47,7 @@ import {
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { MODIFYCATION_UNITS_TABLE_COLUMNS } from 'src/app/apps/constants/modification-property-units.constants';
+import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -50,32 +61,23 @@ import { MODIFYCATION_UNITS_TABLE_COLUMNS } from 'src/app/apps/constants/modific
     MatIconModule,
     MatTableModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FluidHeightDirective
     // Custom
   ],
   templateUrl: './modification-property-units.component.html',
   styleUrl: './modification-property-units.component.scss'
 })
 export class ModificationPropertyUnitsComponent implements OnInit {
+
   properties$!: MatTableDataSource<InformationPegeable>;
   filteredProperties$!: Observable<InformationPegeable>;
   searchForm: FormGroup = this.fb.group({
     searchTerm: [''],
     selectedMatriz: ['']
   });
+
   columns: TableColumn<Operation>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
-
-  get ADD(): TypeOperationAlfaMain {
-    return TYPE_OPERATION_ADD;
-  }
-
-  get CRE(): TypeOperationAlfaMain {
-    return TYPE_OPERATION_CREATE;
-  }
-
-  get DEL(): TypeOperationAlfaMain {
-    return TYPE_OPERATION_DELETE;
-  }
 
   actions = [
     {
@@ -234,4 +236,18 @@ export class ModificationPropertyUnitsComponent implements OnInit {
       }
     });
   }
+
+  protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
+  protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
+  protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
+  protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;
+  protected readonly TYPE_BUTTON_ONE = TYPE_BUTTON_ONE;
+  protected readonly TYPE_BUTTON_FIVE = TYPE_BUTTON_FIVE;
+  protected readonly TYPE_BUTTON_SIX = TYPE_BUTTON_SIX;
+  protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
+  protected readonly TYPE_BUTTON_FOUR = TYPE_BUTTON_FOUR;
+  protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
+  protected readonly TYPE_BUTTON_TWO = TYPE_BUTTON_TWO;
+  protected readonly TYPE_BUTTON_VALIDITY = TYPE_BUTTON_NINE;
+  protected readonly TYPE_BUTTON_TREE = TYPE_BUTTON_TREE;
 }
