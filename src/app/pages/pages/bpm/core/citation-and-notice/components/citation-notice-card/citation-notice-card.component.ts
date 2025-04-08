@@ -7,8 +7,8 @@ import { NgClass, TitleCasePipe } from '@angular/common';
 import {
   CONSTANTE_CITATION,
   CONSTANTE_CITED,
-  CONSTANTE_NOTIFIED, LIST_NOTICE_NOTIFICATIONS,
-  LIST_NOTIFICATIONS,
+  CONSTANTE_NOTIFIED,
+  LIST_NOTICE_NOTIFICATIONS,
   MODAL_DYNAMIC_HEIGHT,
   NAME_NO_DISPONIBLE
 } from 'src/app/apps/constants/general/constants';

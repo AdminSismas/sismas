@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -65,7 +65,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './update-participant.component.html',
   styleUrl: './update-participant.component.scss'
 })
-export class UpdateParticipantComponent implements OnInit {
+export class UpdateParticipantComponent implements OnInit,OnDestroy {
   label: string = 'Actualizar Participante';
 
   optionsDeparment: Department[] = [];
@@ -454,5 +454,9 @@ export class UpdateParticipantComponent implements OnInit {
 
   get controlAddress() {
     return this.form.get('address') as FormControl;
+  }
+
+  ngOnDestroy(): void {
+    this._obtainInfoContact.unsubscribe();
   }
 }

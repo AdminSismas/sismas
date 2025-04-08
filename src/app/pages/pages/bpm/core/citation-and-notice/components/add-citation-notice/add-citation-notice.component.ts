@@ -1,13 +1,5 @@
-import { Component, forwardRef, Inject, OnInit, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { Component, Inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
@@ -29,7 +21,7 @@ import {
   CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED,
   NAME_NO_DISPONIBLE
 } from '../../../../../../../apps/constants/general/constants';
-import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import {
   ComboxColletionFormComponent
 } from '../../../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
@@ -66,8 +58,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     ComboxColletionFormComponent,
     DatePipe,
     TextAreaComponent,
-    MatSlideToggle,
-    AsyncPipe
+    MatSlideToggle
   ],
   templateUrl: './add-citation-notice.component.html',
   styleUrl: './add-citation-notice.component.scss'
