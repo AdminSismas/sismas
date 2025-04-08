@@ -187,7 +187,7 @@ export const environment = {
     user_exist: "/username/",
     validity: "validity",
     valuation: "/valuation",
-    video: "assets/video/masora.mp4",
+    video: "assets/video/quimbaya.mp4",
     withoutSignaturesUsers: "/without-signature",
     withSignaturesUsers: "/with-signature"
   };
