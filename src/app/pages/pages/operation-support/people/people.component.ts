@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   AfterViewInit,
   Component,
@@ -14,7 +15,6 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -46,18 +46,17 @@ import { CreatePeopleComponent } from './create-people/create-people.component';
 // imports from service people
 import { PeopleService } from '../../../../apps/services/users/people.service';
 import { MatSelectModule } from '@angular/material/select';
+import { ComboxColletionComponent } from '../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
 import {
-  ComboxColletionComponent
-} from '../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
-import { MODAL_SMALL_LARGE, PAGE } from '../../../../apps/constants/general/constants';
+  MODAL_SMALL_LARGE,
+  PAGE
+} from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { UserService } from '../../auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-
 
 @Component({
   selector: 'vex-people',
@@ -103,7 +102,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   // @ViewChild('confirmDialog') private confirmDialog!: SwalComponent;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog!: TemplateRef<any>;
+  @ViewChild('confirmDialog', { static: true })
+  confirmDialog!: TemplateRef<any>;
   // personalización de las columnas de las tablas
   @Input()
   columns: TableColumn<People>[] = [
@@ -168,8 +168,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private snackbar: MatSnackBar,
     private userService: UserService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.user = this.userService.getUser();
@@ -178,12 +177,12 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     this.refreshData();
   }
 
-  // obtenemos los datos para el select
-  getOpcionSelect(opcion: any): { key: string; value: string } {
-    const key = Object.keys(opcion)[0];
-    const value = opcion[key];
-    return { key, value };
-  }
+  // // obtenemos los datos para el select
+  // getOpcionSelect(opcion: any): { key: string; value: string } {
+  //   const key = Object.keys(opcion)[0];
+  //   const value = opcion[key];
+  //   return { key, value };
+  // }
 
   ngAfterViewInit() {
     if (this.paginator) {
@@ -199,20 +198,19 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   deleteCustomer(customer: People) {
     const dialogRef = this.dialog.open(this.confirmDialog);
 
-    dialogRef.afterClosed().subscribe(async (data: any) => {
+    dialogRef.afterClosed().subscribe(async (data) => {
       if (data === 'delete' && customer.individualId) {
-        let msg: string = 'Información eliminada con éxito.';
+        let msg = 'Información eliminada con éxito.';
         try {
           await lastValueFrom(
-            this.peopleService.getDeletePeopleId(
-              customer.individualId
-            )
+            this.peopleService.getDeletePeopleId(customer.individualId)
           );
           this.dataSource.data = this.dataSource.data.filter((row: People) => {
             return row.individualId !== customer.individualId;
           });
-        } catch (e) {
-          msg = 'Antes de eliminar la persona se debe eliminar el usuario o la participación.';
+        } catch {
+          msg =
+            'Antes de eliminar la persona se debe eliminar el usuario o la participación.';
         }
         this.snackbar.open(msg, 'CERRAR', { duration: 10000 });
       }
@@ -228,7 +226,10 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     this.dialog
       .open(CreatePeopleComponent, {
         ...MODAL_SMALL_LARGE,
-        disableClose: true
+        disableClose: true,
+        data: {
+          mode: 'create'
+        }
       })
       .afterClosed()
       .subscribe((customer: People) => {
@@ -283,7 +284,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       return;
     }
     value = value.trim();
-    value = value.toLowerCase();
+    // value = value.toLowerCase();
     if (this.infoDoc !== 'Id') {
       if (value !== '') {
         const obj = {
@@ -364,9 +365,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if (this.isAllSelected()) this.selection.clear();
+    else this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>) {
