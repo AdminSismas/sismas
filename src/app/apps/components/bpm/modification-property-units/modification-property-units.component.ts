@@ -54,7 +54,7 @@ import { MODIFYCATION_UNITS_TABLE_COLUMNS } from 'src/app/apps/constants/modific
     // Custom
   ],
   templateUrl: './modification-property-units.component.html',
-  styles: ``
+  styleUrl: './modification-property-units.component.scss'
 })
 export class ModificationPropertyUnitsComponent implements OnInit {
   properties$!: MatTableDataSource<InformationPegeable>;
