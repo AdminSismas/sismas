@@ -70,18 +70,18 @@ export const environment = {
     startProcess: "startProcess",
     value: "/bpmOperation"
   },
+  bpmParticipation: {
+    guv: "/guv",
+    participation: "/participation/",
+    thirdPartyAffected: "/terceroAfectado",
+    value: "/bpmParticipation"
+  },
   bpmProcess: {
     category: "/category",
     prodocumentStr: "/prodocumentStr/",
     value: "/bpmProcess"
   },
   bpmResolution: "/bpmResolution",
-  bpmParticipation: {
-    value: '/bpmParticipation',
-    participation:'/participation/',
-    thirdPartyAffected:'/terceroAfectado',
-    guv: '/guv'
-  },
   calificationUB: "/calificationUB",
   cancel: "/cancel",
   ccColindante: "/ccColindante/",
@@ -171,6 +171,7 @@ export const environment = {
   synchronize: "/synchronize",
   tasksAssigned: "/assignedTasks",
   temporal: "/temporal/",
+  term: "/term",
   titulo: "Masora",
   typeNotification: {
     cited: "/citar",

@@ -23,7 +23,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
-import { environment as envi, environment } from '../../../../../../environments/environments';
+import { environment } from '../../../../../../environments/environments';
 import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
 import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
@@ -38,7 +38,6 @@ import {
   PANEL_PRIORITIZED_TASKS
 } from '../../../../../apps/constants/general/constants';
 import { PageSearchData } from '../../../../../apps/interfaces/general/page-search-data.model';
-import { ProTask } from '../../../../../apps/interfaces/bpm/pro-task';
 import { ProTaskE } from '../../../../../apps/interfaces/bpm/pro-task-e';
 import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
 import { TaskCardComponent } from '../components/task-card/task-card.component';
@@ -97,6 +96,8 @@ export class TasksPanelComponent implements OnInit {
   searchCtrl: UntypedFormControl = new UntypedFormControl('search');
   taskOne: TaskResponseModel = new TaskResponseModel();
   typePanel: string | null = null;
+  showHeaders = false;
+  filterTask = '';
 
   // Paginator config
   protected readonly pageSizeOptions = PAGE_SIZE_OPTION_BASIC;
@@ -116,6 +117,7 @@ export class TasksPanelComponent implements OnInit {
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  private first_label = '';
 
   constructor(
     private dialog: MatDialog,
@@ -135,6 +137,8 @@ export class TasksPanelComponent implements OnInit {
         const token = sessionStorage.getItem('token');
         if (token) {
           this.onRouteChange();
+          this.showHeaders = false;
+
         }
       });
   }
@@ -247,21 +251,31 @@ export class TasksPanelComponent implements OnInit {
       return state;
     }
 
+    if (this.filterTask) {
+      this.label = 'Tareas filtradas';
+      this.onFilterChange(this.filterTask);
+      state = true;
+      return state;
+    }
+
     switch (this.typePanel) {
       case PANEL_ASSIGNED_TASKS: {
         this.label = 'Tareas activas';
+        this.first_label = 'Tareas activas';
         this.getInformationAssignedTasks();
         state = true;
         break;
       }
       case PANEL_DEVOLUTION_TASKS: {
         this.label = 'Tareas devueltas';
+        this.first_label = 'Tareas devueltas';
         this.getInformationTaskDevolution();
         state = true;
         break;
       }
       case PANEL_PRIORITIZED_TASKS: {
         this.label = 'Tareas priorizadas';
+        this.first_label = 'Tareas priorizadas';
         this.getInformationTaskPriority();
         state = true;
         break;
@@ -279,30 +293,33 @@ export class TasksPanelComponent implements OnInit {
   onFilterChange(value: string): void {
     if (!value) {
       this.listProTasksECards = this.listProTasksE;
+      this.showHeaders = false;
+      this.filterTask = '';
+      this.label = this.first_label;
+      this.resetPanel();
       return;
     }
 
-    value = value.trim();
-    value = value.toLowerCase();
-    this.listProTasksECards = this.listProTasksE.filter(
-      (protaskE: ProTaskE) => {
-        if (protaskE.proTask && value?.length >= 3) {
-          return this.filterObject(protaskE.proTask, value);
-        }
-        return protaskE;
-      }
-    );
+    this.filterTask = value;
+
+    const pageable = { page: `${this.page}`, size: `${this.pageSize}` };
+
+    this.proTasksService.getSearchTask(this.filterTask, pageable)
+      .subscribe({
+        next: (result: InformationPegeable) => {
+          this.captureInformationSubscribe(result);
+          this.showHeaders = true;
+          this.label = 'Tareas filtradas';
+        },
+        error: () => this.captureInformationSubscribeError()
+      });
   }
 
-  filterObject(proTask: ProTask, value: string) {
-    return (
-      proTask !== null &&
-      proTask !== undefined &&
-      (proTask.processName?.toLowerCase().includes(value) ||
-        proTask.flowName?.toLowerCase().includes(value) ||
-        proTask.daysBeginS?.toLowerCase().startsWith(value) ||
-        proTask.flowDetail?.toLowerCase().startsWith(value))
-    );
+  resetPanel() {
+    this.page = PAGE;
+    this.pageSize = PAGE_SIZE_TABLE_UNIQUE;
+    this.totalElements = 0;
+    this.onFilterChargeInformationByPanel();
   }
 
   getInformationAssignedTasks() {
@@ -392,7 +409,7 @@ export class TasksPanelComponent implements OnInit {
       this.infoGeneralService.setInfoProTaskE(proTaskE);
       const url = `${environment.bpm_bpmCore}`;
       this.router.navigate([url, proTaskE.executionId])
-        .then(() =>{});
+        .then();
     }
   }
 
@@ -432,6 +449,7 @@ export class TasksPanelComponent implements OnInit {
   }
 
   private resetPaginator(): void {
+    this.filterTask = '';
     this.page = PAGE;
     this.pageSize = PAGE_SIZE_TABLE_UNIQUE;
     if (this.paginator) {

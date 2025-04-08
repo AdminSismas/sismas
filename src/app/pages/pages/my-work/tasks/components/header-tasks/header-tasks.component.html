@@ -16,8 +16,9 @@
         svgIcon="mat:search"></mat-icon>
       <input
         [formControl]="searchStr"
+        [value]="filterValue"
         class="border-0 h-12 outline-none ltr:pl-4 rtl:pr-4 placeholder:text-secondary bg-foreground flex-auto"
-        [placeholder]="'Filtrar ' + label.toLowerCase()"
+        placeholder="Buscardor general de tareas"
         type="text" />
     </div>
   </div>
