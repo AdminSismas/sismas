@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpParams,
+  HttpStatusCode
+} from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { catchError, Observable, throwError } from 'rxjs';
@@ -15,9 +21,9 @@ export class PeopleService {
   private url_basic = `${environment.url}:${environment.port}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService
-  ) {
-  }
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
+  ) {}
 
   getAllPeople(params?: any) {
     let paramsR: HttpParams = new HttpParams();
@@ -37,7 +43,8 @@ export class PeopleService {
     );
     return this.getData(
       `${this.url_basic}${environment.individualTypeNumber}`,
-      paramsR);
+      paramsR
+    );
   }
 
   getPeopleNumber(params: any) {
@@ -54,7 +61,8 @@ export class PeopleService {
 
   createPeople(body: any) {
     return this.fetchBody(
-      `${environment.url}:${environment.port}${environment.individualNumber}`, body
+      `${environment.url}:${environment.port}${environment.individualNumber}`,
+      body
     );
   }
 
@@ -64,20 +72,24 @@ export class PeopleService {
   }
 
   getContactByIndividualId(individualId: number): Observable<InfoContact> {
-    return this.requestsService.sendRequestsFetchGet(
-      `${this.url_basic}${environment.contact}/${individualId}`
-    ).pipe(
-      catchError(error => this.errorNotFoundContact(error))
-    );
+    return this.requestsService
+      .sendRequestsFetchGet(
+        `${this.url_basic}${environment.contact}/${individualId}`
+      )
+      .pipe(catchError((error) => this.errorNotFoundContact(error)));
   }
 
-  updateContact(individualId: number, obj: InfoContact): Observable<InfoContact> {
-    return this.requestsService.sendRequestsUpdatePutBody(
-      `${this.url_basic}${environment.contact}/${individualId}`, obj)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error))
-      );
+  updateContact(
+    individualId: number,
+    obj: InfoContact
+  ): Observable<InfoContact> {
+    return this.requestsService
+      .sendRequestsUpdatePutBody(
+        `${this.url_basic}${environment.contact}/${individualId}`,
+        obj
+      )
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
-
 
   private getData(url: string, params: any): Observable<InfoPerson> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
@@ -107,5 +119,13 @@ export class PeopleService {
       });
     }
     return throwError(() => error);
+  }
+
+  getSequencialCode(): Observable<string> {
+    const url = `${this.url_basic}${environment.individualNumber}${environment.sequentialCode}`;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8;'});
+
+    return this.http.get(url, { responseType: 'text' , headers });
   }
 }

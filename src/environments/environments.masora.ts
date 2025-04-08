@@ -163,6 +163,7 @@ export const environment = {
     temp: "temp"
   },
   selfvaluation: "/selfvaluation",
+  sequentialCode: "/sequentialCode",
   serviciosTaquilla: "/serviciosTaquilla",
   signatureUrl: "/signatureUrl",
   snr: "/snr",
@@ -172,9 +173,9 @@ export const environment = {
   temporal: "/temporal/",
   titulo: "Masora",
   typeNotification: {
-    cited: '/citar',
-    notified: '/notificar',
-    notify: '/aviso'
+    cited: "/citar",
+    notified: "/notificar",
+    notify: "/aviso"
   },
   typologyType: "/tipologiaTipo/",
   ulr_icon_base: "assets/img/icons/cadastral-logos/128x128/",

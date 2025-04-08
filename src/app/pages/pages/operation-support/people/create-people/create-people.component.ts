@@ -1,8 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Inject, OnInit } from '@angular/core';
 
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { People as People } from '../../../../../apps/interfaces/users/people.model';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,10 +22,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { PeopleService } from '../../../../../apps/services/users/people.service';
-import { PAGE, PAGE_SIZE } from '../../../../../apps/constants/general/constants';
 import {
-  ComboxColletionFormComponent
-} from '../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
+  PAGE,
+  PAGE_SIZE
+} from '../../../../../apps/constants/general/constants';
+import { ComboxColletionFormComponent } from '../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
 import { InputComponent } from '../../../../../apps/components/general-components/input/input.component';
 import { validateVariable } from '../../../../../apps/utils/general';
 import Swal from 'sweetalert2';
@@ -58,7 +69,8 @@ interface defaultData extends People {
     InputComponent
   ],
   templateUrl: './create-people.component.html',
-  styleUrl: './create-people.component.scss'
+  styleUrl: './create-people.component.scss',
+
 })
 export class CreatePeopleComponent implements OnInit {
   typeDocument = 'tipo';
@@ -93,6 +105,7 @@ export class CreatePeopleComponent implements OnInit {
   };
 
   private _createPeople = new BehaviorSubject<boolean>(false);
+  isSecuencial = false;
   createPeople$ = this._createPeople.asObservable();
 
   constructor(
@@ -100,16 +113,16 @@ export class CreatePeopleComponent implements OnInit {
     private dialogRef: MatDialogRef<CreatePeopleComponent>,
     private fb: FormBuilder,
     private peopleServcie: PeopleService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (!this.defaults) {
       this.defaults = {} as defaultData;
     }
-    this.mode = this.defaults?.mode;
+    this.mode = this.defaults?.mode ?? 'create';
     if (this.mode === 'create') {
       this.form.reset(this.defaults);
+      this.domIndividualTypeNumberChange(this.defaults?.domIndividualTypeNumber);
     }
     this.disablesTypePople();
     this.form.patchValue(this.defaults);
@@ -134,7 +147,7 @@ export class CreatePeopleComponent implements OnInit {
 
   createPeople() {
     // validaciones si existe un campo requerido
-    if (!this.form.valid) {
+    if (this.form.invalid) {
       this.menssage = {
         status: true,
         value: 'Completa los campos requeridos'
@@ -144,7 +157,9 @@ export class CreatePeopleComponent implements OnInit {
 
     //validamos que el input de palabra
     if (this.form.get('firstName')?.value !== '') {
-      const validate = this.validateSingleWord(this.form.get('firstName')?.value);
+      const validate = this.validateSingleWord(
+        this.form.get('firstName')?.value
+      );
 
       if (validate) {
         this.menssage.status = true;
@@ -184,36 +199,43 @@ export class CreatePeopleComponent implements OnInit {
 
   sendCreatePeople() {
     this.menssage.status = false;
-    this.peopleServcie.createPeople(this.form.value).subscribe({
-      next: (res) => {
+    const body = { ...this.form.value, number: this.form.get('number')?.value };
+
+    this.peopleServcie.createPeople(body).subscribe({
+      next: () => {
         Swal.fire({
           text: 'Persona registrada',
           icon: 'success',
           showConfirmButton: false,
           timer: 10000
-        }).then(value => {
+        }).then(() => {
           this.dialogRef.close({
             number: this.form.get('number')?.value,
-            domIndividualTypeNumber: this.form.get('domIndividualTypeNumber')?.value
+            domIndividualTypeNumber: this.form.get('domIndividualTypeNumber')
+              ?.value
           });
         });
-      },
-      error: (error) => {
       }
     });
   }
 
-  personRegister(createPeople: boolean = false) {
+  personRegister(createPeople = false) {
     this.menssage = {
       status: false,
       value: ''
     };
-    let numberID: string | null = this.form.get('number')?.value;
-    let typeDocument: string | null | undefined = this.form.get('domIndividualTypeNumber')?.value;
+    const numberID: string | null = this.form.get('number')?.value;
+    const typeDocument: string | null | undefined = this.form.get(
+      'domIndividualTypeNumber'
+    )?.value;
 
     //información de número de documento
-    if (numberID == null || !validateVariable(numberID) ||
-      typeDocument == null || !validateVariable(typeDocument)) {
+    if (
+      numberID == null ||
+      !validateVariable(numberID) ||
+      typeDocument == null ||
+      !validateVariable(typeDocument)
+    ) {
       Swal.fire({
         text: 'Ingresar tipo documento o número de documento',
         icon: 'error',
@@ -225,7 +247,7 @@ export class CreatePeopleComponent implements OnInit {
     this.getPeople(numberID, typeDocument, createPeople);
   }
 
-  getPeople(numberID: string, typeDocument: string, createPeople: boolean = false) {
+  getPeople(numberID: string, typeDocument: string, createPeople = false) {
     const obj = {
       number: numberID,
       individualTypeNumber: typeDocument,
@@ -277,7 +299,9 @@ export class CreatePeopleComponent implements OnInit {
     }
     //validamos que el input de palabra
     if (this.form.get('firstName')?.value !== '') {
-      const validate = this.validateSingleWord(this.form.get('firstName')?.value);
+      const validate = this.validateSingleWord(
+        this.form.get('firstName')?.value
+      );
       if (validate) {
         this.menssage.status = true;
         this.menssage.value = 'El nombre no puede tener espacios';
@@ -319,15 +343,13 @@ export class CreatePeopleComponent implements OnInit {
     people.number = this.defaults.number;
     people.domIndividualType = this.defaults.domIndividualType;
     this.peopleServcie.userEdit(individualId.toString(), people).subscribe({
-      next: (res) => {
+      next: () => {
         Swal.fire({
           text: 'Persona actualizada',
           icon: 'success',
           showConfirmButton: false,
           timer: 10000
-        }).then(value => this.dialogRef.close());
-      },
-      error: (error) => {
+        }).then(() => this.dialogRef.close());
       }
     });
 
@@ -362,6 +384,7 @@ export class CreatePeopleComponent implements OnInit {
 
   clearValidatorsTow(): void {
     const llaves = Object.keys(this.form.controls);
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < llaves.length; i++) {
       this.form.get(llaves[i])?.clearValidators();
       this.form.get(llaves[i])?.updateValueAndValidity();
@@ -383,11 +406,10 @@ export class CreatePeopleComponent implements OnInit {
     return aWord;
   }
 
-
   validateTypePeople(): void {
     // validar los tipos de campos según los valores de los formularios
     this.clearValidatorsTow();
-    let type = this.form.get('domIndividualType')?.value;
+    const type = this.form.get('domIndividualType')?.value;
     if (type === 'Persona natural') {
       this.form.get('firstName')?.setValidators(Validators.required);
       this.form.get('lastName')?.setValidators(Validators.required);
@@ -432,6 +454,46 @@ export class CreatePeopleComponent implements OnInit {
     this.updateValidators();
   }
 
+  domIndividualTypeNumberChange(event: string) {
+    if (!event) return;
+
+    if (event === 'Secuencial') {
+      this.controlNumber.disable();
+      this.isSecuencial = true;
+      return;
+    }
+    this.isSecuencial = false;
+    this.controlNumber.enable();
+  }
+
+  createSecuentialPerson() {
+    if (this.form.controls['domIndividualTypeNumber'].value !== 'Secuencial') return;
+
+    if (this.form.invalid) {
+      Swal.fire({
+        text: 'Completa los campos requeridos',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 10000
+      });
+      return;
+    }
+
+    this.peopleServcie.getSequencialCode().subscribe({
+      next: (result: string) => {
+        const controlNames = Object.keys(this.form.controls);
+
+        controlNames.forEach((key) => {
+          if (key === 'number') {
+            this.form.get('number')?.setValue(result);
+            return;
+          }
+          this.form.get(key)?.enable();
+        });
+      }
+    });
+  }
+
   get controlDomIndividualType() {
     return this.form.get('domIndividualType') as FormControl;
   }
@@ -471,6 +533,4 @@ export class CreatePeopleComponent implements OnInit {
   get controlCompanyName() {
     return this.form.get('companyName') as FormControl;
   }
-
-
 }

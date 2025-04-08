@@ -1,10 +1,17 @@
-<form (ngSubmit)="save()" [formGroup]="form">
-
-  <div class="flex items-center" mat-dialog-title>
+<form
+  (ngSubmit)="save()"
+  [formGroup]="form"
+>
+  <div
+    class="flex items-center"
+    mat-dialog-title
+  >
     <h2 class="headline m-0 flex-auto">
       @if (form.controls.firstName.value || form.controls.lastName.value) {
         {{ form.controls.firstName.value + " " + form.controls.lastName.value }}
-      } @else if (!form.controls.firstName.value && !form.controls.lastName.value) {
+      } @else if (
+        !form.controls.firstName.value && !form.controls.lastName.value
+      ) {
         Crear persona
       }
     </h2>
@@ -13,7 +20,8 @@
       class="text-secondary"
       mat-dialog-close
       mat-icon-button
-      type="button">
+      type="button"
+    >
       <mat-icon svgIcon="mat:close"></mat-icon>
     </button>
   </div>
@@ -21,7 +29,10 @@
   <mat-divider class="text-border"></mat-divider>
 
   <mat-dialog-content class="p-6 container-fluid flex flex-col">
-    <div @fadeInUp class="flex flex-col pl-0 pr-2">
+    <div
+      @fadeInUp
+      class="flex flex-col pl-0 pr-2"
+    >
       <div class="flex flex-col sm:flex-row px-3 gap-6">
         <vex-combox-colletion-form
           idComboCollection="typeNumberDocument896767855234"
@@ -30,8 +41,9 @@
           typeDomainName="IndividualType"
           placeholderDomainName="Selecciona el tipo de persona"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          (selectionChange)="validateTypePeople()"
-          class="flex-auto"></vex-combox-colletion-form>
+          class="flex-auto"
+          ></vex-combox-colletion-form>
+          <!-- (selectionChange)="validateTypePeople()" -->
         <vex-combox-colletion-form
           idComboCollection="domIndividualTypeNumber896767855234"
           label="Tipo de documento"
@@ -39,7 +51,9 @@
           typeDomainName="IndividualTypeNumber"
           placeholderDomainName="Seleccionar tipo documento"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto"></vex-combox-colletion-form>
+          class="flex-auto"
+          (selectionChange)="domIndividualTypeNumberChange($event)"
+        ></vex-combox-colletion-form>
         <vex-input
           idComboInput="nombrePredio8784"
           label="Número documento"
@@ -47,21 +61,40 @@
           formControlNameInput="number"
           [formControlInput]="controlNumber"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto">
-        </vex-input>
-        <button
-          color="primary"
-          aria-label=""
-          type="button"
-          mat-flat-button
-          class="ml-4 flex-none xl:mt-2"
-          (click)="personRegister()"
+          class="flex-auto"
         >
-          <mat-icon
-            class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
-            svgIcon="mat:search"></mat-icon>
-          <span>Buscar</span>
-        </button>
+        </vex-input>
+        @if (isSecuencial) {
+          <button
+            color="primary"
+            aria-label=""
+            type="button"
+            mat-flat-button
+            class="ml-4 flex-none xl:mt-2"
+            (click)="createSecuentialPerson()"
+          >
+            <mat-icon
+              class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+              svgIcon="mat:edit"
+            ></mat-icon>
+            <span>Crear secuencial</span>
+          </button>
+        }@else{
+          <button
+            color="primary"
+            aria-label=""
+            type="button"
+            mat-flat-button
+            class="ml-4 flex-none xl:mt-2"
+            (click)="personRegister()"
+          >
+            <mat-icon
+              class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+              svgIcon="mat:search"
+            ></mat-icon>
+            <span>Buscar</span>
+          </button>
+        }
       </div>
       <div class="flex flex-col sm:flex-row px-1 gap-6">
         <vex-input
@@ -71,7 +104,8 @@
           formControlNameInput="firstName"
           [formControlInput]="controlFirstName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <vex-input
           idComboInput="middleName2384"
@@ -80,7 +114,8 @@
           formControlNameInput="middleName"
           [formControlInput]="controlMiddleName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <vex-input
           idComboInput="lastNameeName2384"
@@ -89,7 +124,8 @@
           formControlNameInput="lastName"
           [formControlInput]="controlLastName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
       </div>
       <div class="flex flex-col sm:flex-row px-1 gap-6">
@@ -100,7 +136,8 @@
           formControlNameInput="otherLastName"
           [formControlInput]="controlOtherLastName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <vex-input
           idComboInput="companyNameeeeName2384"
@@ -109,7 +146,8 @@
           formControlNameInput="companyName"
           [formControlInput]="controlCompanyName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
       </div>
       <div class="flex flex-col sm:flex-row px-4 gap-6">
@@ -120,7 +158,8 @@
           typeDomainName="IndividualEthnicGroup"
           placeholderDomainName="Selecciona el grupo étnico"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto"></vex-combox-colletion-form>
+          class="flex-auto"
+        ></vex-combox-colletion-form>
         <vex-combox-colletion-form
           idComboCollection="ttypeNumberDocumentearDocument896767855234"
           label="sexo"
@@ -128,34 +167,50 @@
           typeDomainName="IndividualSex"
           placeholderDomainName="Seleccionar tipo género"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto"></vex-combox-colletion-form>
+          class="flex-auto"
+        ></vex-combox-colletion-form>
       </div>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">Cancel</button>
+    <button
+      mat-button
+      mat-dialog-close
+      type="button"
+    >
+      Cancel
+    </button>
     <button
       *ngIf="isCreateMode()"
       color="primary"
       mat-flat-button
-      type="submit">
+      type="submit"
+    >
       Crear persona
     </button>
     <button
       *ngIf="isUpdateMode()"
       color="primary"
       mat-flat-button
-      type="submit">
+      type="submit"
+    >
       Actualizar persona
     </button>
   </mat-dialog-actions>
-  <div *ngIf="menssage?.status" class="alert-danger alert-menssage">
+  <div
+    *ngIf="menssage?.status"
+    class="alert-danger alert-menssage"
+  >
     <p>{{ menssage.value }}</p>
   </div>
 </form>
 
-<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+<mat-menu
+  #settingsMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
     <span>Imprimir</span>
