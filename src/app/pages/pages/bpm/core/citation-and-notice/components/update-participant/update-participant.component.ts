@@ -65,7 +65,7 @@ import { filter } from 'rxjs/operators';
   templateUrl: './update-participant.component.html',
   styleUrl: './update-participant.component.scss'
 })
-export class UpdateParticipantComponent implements OnInit,OnDestroy {
+export class UpdateParticipantComponent implements OnInit, OnDestroy {
   label: string = 'Actualizar Participante';
 
   optionsDeparment: Department[] = [];
@@ -86,9 +86,9 @@ export class UpdateParticipantComponent implements OnInit,OnDestroy {
     domIndividualEthnicGroup: [this.defaults?.domIndividualEthnicGroup || ''],
     divpolLv1: [this.defaults?.contact?.divpolLv1 || '', Validators.required],
     divpolLv2: [this.defaults?.contact?.divpolLv2 || '', Validators.required],
-    phoneNumber: [this.defaults?.contact?.phoneNumber || '', this.generalValidations.onlyNumber()],
-    email: [this.defaults?.contact?.email || '', this.generalValidations.emailValidator()],
-    address: [this.defaults?.contact?.address || '', this.generalValidations.min03Characters()]
+    phoneNumber: [this.defaults?.contact?.phoneNumber || '', [Validators.required, this.generalValidations.onlyNumber()]],
+    email: [this.defaults?.contact?.email || '', [Validators.required, this.generalValidations.emailValidator()]],
+    address: [this.defaults?.contact?.address || '',[Validators.required, this.generalValidations.min03Characters()]]
   });
   mode: TypeOperationPeople | null = 'update';
 
@@ -292,7 +292,7 @@ export class UpdateParticipantComponent implements OnInit,OnDestroy {
     }
     this.changeInfo(this.defaults);
     this.form.patchValue(this.defaults);
-    if (this.defaults?.contact?.divpolLv2) {
+    if (this.defaults?.contact?.divpolLv1) {
       this.loadMunicipalitiesInformation(this.defaults?.contact?.divpolLv1, false);
     }
     this.disableDocumentAndType();
@@ -316,16 +316,7 @@ export class UpdateParticipantComponent implements OnInit,OnDestroy {
     if (!code || code?.length <= 0) {
       return;
     }
-    let mncp = null;
-    if(!skipPreloadedValues) {
-      mncp = code;
-    } else {
-      mncp = _filterInformationCode(code, this.optionsMunicipalities, DIVPOLLVL2SEC_CODE, DIVPOLLVL2_CODE);
-    }
-    if (mncp == null || mncp?.length <= 0) {
-      return;
-    }
-    this.territorialOrganizationService.getDataMunicipalities(mncp)
+    this.territorialOrganizationService.getDataMunicipalities(code)
       .subscribe((result: Municipality[]) => this.captureMunicipalityInformation(result, skipPreloadedValues));
   }
 

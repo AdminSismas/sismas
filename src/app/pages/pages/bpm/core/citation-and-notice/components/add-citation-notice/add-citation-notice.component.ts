@@ -37,6 +37,8 @@ import {
   ProcessParticipantTableMenu
 } from '../../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { InfoContact } from '../../../../../../../apps/interfaces/information-property/info-contact';
+import { PeopleService } from '../../../../../../../apps/services/users/people.service';
 
 @Component({
   selector: 'vex-add-citation-notice',
@@ -75,7 +77,9 @@ export class AddCitationNoticeComponent implements OnInit {
   executionId!: string;
   participant?: ProcessParticipant;
   participationId!: number;
+  individualId!: number;
   procedure: ProceduresCollection | null = null;
+  contact!: InfoContact;
 
   formCitation: FormGroup = this.fb.group({
     guvId: [this.processParticipant?.viaGubernativa?.guvId || ''],
@@ -104,7 +108,8 @@ export class AddCitationNoticeComponent implements OnInit {
     private dialogRef: MatDialogRef<AddCitationNoticeComponent>,
     private fb: FormBuilder,
     private readonly procedureService: ProceduresService,
-    private readonly participantsService: ParticipantsServiceService
+    private readonly participantsService: ParticipantsServiceService,
+    private peopleService: PeopleService
   ) {
   }
 
@@ -113,13 +118,27 @@ export class AddCitationNoticeComponent implements OnInit {
       return;
     }
     this.participationId = this.processParticipant.participationId;
+    this.individualId = this.processParticipant?.individual?.individualId;
     if (this.processParticipant?.typeCategory) {
       this.typeCategory.set(this.processParticipant.typeCategory);
     }
     if (this.processParticipant?.executionId) {
       this.executionId = this.processParticipant?.executionId;
-      this.obtainProcedure();
+      this.getContactParticipation();
     }
+  }
+
+
+  getContactParticipation() {
+    this.peopleService.getContactByIndividualId(this.individualId)
+      .subscribe((res: InfoContact) => {
+        this.contact = res;
+        if(!this.contact || !this.contact?.phoneNumber || !this.contact?.address) {
+          this.getAlertErrorConfirm('Error, No se encontro informacion de contacto del participante no es posible continuar');
+          return;
+        }
+        this.obtainProcedure();
+      });
   }
 
   obtainProcedure(): void {
@@ -250,6 +269,15 @@ export class AddCitationNoticeComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     }).then();
+  }
+
+  getAlertErrorConfirm(text: string) {
+    Swal.fire({
+      title: '¡Error!',
+      text: text,
+      icon: 'error',
+      showConfirmButton: true
+    }).then(() => this.dialogRef.close(true));
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
