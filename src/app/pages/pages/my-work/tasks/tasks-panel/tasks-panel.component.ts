@@ -252,7 +252,7 @@ export class TasksPanelComponent implements OnInit {
     }
 
     if (this.filterTask) {
-      this.label = 'Tareas filtradas';
+      this.label = 'Resultado de búsqueda de tareas';
       this.onFilterChange(this.filterTask);
       state = true;
       return state;
@@ -309,7 +309,7 @@ export class TasksPanelComponent implements OnInit {
         next: (result: InformationPegeable) => {
           this.captureInformationSubscribe(result);
           this.showHeaders = true;
-          this.label = 'Tareas filtradas';
+          this.label = 'Resultado de búsqueda de tareas';
         },
         error: () => this.captureInformationSubscribeError()
       });
