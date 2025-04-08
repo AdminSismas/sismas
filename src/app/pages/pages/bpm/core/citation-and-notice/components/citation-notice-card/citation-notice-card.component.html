@@ -3,9 +3,9 @@
     (click)="openDetailProcessParticipant.emit(processParticipant.participationId)"
     class="pl-2 pr-2 pt-3 pb-2 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
     matRipple>
-    <img [src]="imageSrc()" class="avatar h-11 w-11 mx-auto" alt="" />
-    <div class="flex items-center justify-center">
-      <h4 class="subheading-2">{{ processParticipant.bpmParticipation }}</h4>
+<!--    <img [src]="imageSrc()" class="avatar h-11 w-11 mx-auto" alt="" />-->
+    <div class="flex items-center justify-center min-h-3 pt-4">
+      <h4 class="subheading-2 pl-2">{{ processParticipant.bpmParticipation }}</h4>
     </div>
     <div class="flex items-center justify-center">
       <mat-icon

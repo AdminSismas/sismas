@@ -95,4 +95,14 @@ export class TasksPanelService {
         map((result: string) => result.split(',').map((resource: string) => resource.trim()))
       );
   }
+
+  getSearchTask(term: string, pageable = { page: '0', size: '10' }): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${envi.bpmOperation.proTask}${term}${envi.term}`;
+
+    const params = new HttpParams()
+      .set('page', pageable.page.toString())
+      .set('size', pageable.size.toString());
+
+    return this.http.get<InformationPegeable>(url, { params });
+  }
 }

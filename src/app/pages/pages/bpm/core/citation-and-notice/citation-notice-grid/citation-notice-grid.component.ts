@@ -4,7 +4,7 @@ import {
   EventEmitter,
   inject,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit,
   Output, signal,
   SimpleChanges,
@@ -64,7 +64,7 @@ import { LoadingServiceService } from '../../../../../../apps/services/general/l
   ]
 
 })
-export class CitationNoticeGridComponent implements OnInit, OnChanges {
+export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy {
 
   listParticipants: ProcessParticipant[] = [];
   totalElements: number = 0;
@@ -249,6 +249,11 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges {
 
   trackByParticipationId(index: number, participant: ProcessParticipant): number | undefined {
     return participant.participationId;
+  }
+
+  ngOnDestroy(): void {
+    this._dataContentInformations$.unsubscribe();
+    this._listParticipantsCards$.unsubscribe();
   }
 
   protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;

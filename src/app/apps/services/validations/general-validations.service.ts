@@ -138,7 +138,10 @@ export class GeneralValidationsService {
   min03Characters(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value: any = control.value;
-      return this.isValueField(value) && value.length < 3 ? { min03Characters: true } : null;
+      if(this.isValueField(value) && value.length < 3){
+        return { min03Characters: true };
+      }
+      return null;
     };
   }
 

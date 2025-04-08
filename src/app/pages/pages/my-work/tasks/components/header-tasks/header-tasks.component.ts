@@ -6,9 +6,7 @@ import {
   Input,
   OnChanges,
   OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+  Output} from '@angular/core';
 import {
   ControlContainer,
   FormGroupDirective,
@@ -23,6 +21,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'vex-header-tasks',
@@ -49,12 +48,10 @@ export class HeaderTasksComponent implements OnInit, OnChanges {
   @Input() public idHeader = '';
   @Input() public label = 'Tareas';
   @Input() public icon = '';
+  @Input() public filterValue = '';
 
   @Output() outSearchStr = new EventEmitter<string>();
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  constructor() {
-  }
 
   ngOnInit(): void {
     if (this.idHeader?.length > 0) {
@@ -64,13 +61,16 @@ export class HeaderTasksComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-
+  ngOnChanges(): void {
     this.searchStr.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        debounceTime(500)
+      )
       .subscribe((value) => {
         if (this.isValueField(value)) {
-          this.outSearchStr.emit(value);
+          this.filterValue = value;
+          this.outSearchStr.emit(this.filterValue);
         }
       });
   }
@@ -79,7 +79,7 @@ export class HeaderTasksComponent implements OnInit, OnChanges {
     return Math.floor(Math.random() * max);
   }
 
-  private isValueField(value: any) {
+  private isValueField(value: string) {
     return value !== null && value !== undefined;
   }
 }

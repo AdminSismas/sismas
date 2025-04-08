@@ -31,6 +31,7 @@ import { TaskRetailExecuteResponseModel } from '../../../../../../apps/interface
 export class TaskCardComponent implements OnInit {
   @Input({ required: true }) public idCard: string | undefined = '';
   @Input({ required: true }) protaskE!: ProTaskE;
+  @Input() public showHeader = false;
   @Output() openProtaskE: EventEmitter<ProTaskE> = new EventEmitter<ProTaskE>();
   @Output() openDetailProtaskE: EventEmitter<number | undefined> =
     new EventEmitter<ProTaskE['executionId']>();
@@ -44,7 +45,6 @@ export class TaskCardComponent implements OnInit {
   public taskExecuteDetail: TaskRetailExecuteResponseModel = new TaskRetailExecuteResponseModel();
   contentTasksInformations!: InformationPegeable;
   dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
-
   constructor(
     private dialog: MatDialog,
     private tasksPanelService: TasksPanelService

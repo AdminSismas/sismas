@@ -3,6 +3,7 @@
     id="assignedTasks"
     [label]="label"
     icon="mat:contacts"
+    [filterValue]="filterTask"
     (outSearchStr)="onFilterChange($event)">
   </vex-header-tasks>
   <div class="h-full flex flex-col" vexFluidHeight fluidHeight=147>
@@ -16,6 +17,7 @@
           *ngFor="let proTaskE of listProTasksECards; trackBy: trackByExecutionId"
           [idCard]="proTaskE.executionId?.toString()"
           [protaskE]="proTaskE"
+          [showHeader]="showHeaders"
           (openProtaskE)="openBpmCodeProtaskE($event)"
           (openDetailProtaskE)="openDetailProtaskE($event)"
           @fadeInUp></vex-task-card>

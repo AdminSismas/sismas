@@ -1,13 +1,5 @@
-import { Component, forwardRef, Inject, OnInit, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { Component, Inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
@@ -29,7 +21,7 @@ import {
   CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED,
   NAME_NO_DISPONIBLE
 } from '../../../../../../../apps/constants/general/constants';
-import { AsyncPipe, DatePipe, TitleCasePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe } from '@angular/common';
 import {
   ComboxColletionFormComponent
 } from '../../../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
@@ -45,6 +37,8 @@ import {
   ProcessParticipantTableMenu
 } from '../../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { InfoContact } from '../../../../../../../apps/interfaces/information-property/info-contact';
+import { PeopleService } from '../../../../../../../apps/services/users/people.service';
 
 @Component({
   selector: 'vex-add-citation-notice',
@@ -66,8 +60,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
     ComboxColletionFormComponent,
     DatePipe,
     TextAreaComponent,
-    MatSlideToggle,
-    AsyncPipe
+    MatSlideToggle
   ],
   templateUrl: './add-citation-notice.component.html',
   styleUrl: './add-citation-notice.component.scss'
@@ -84,7 +77,9 @@ export class AddCitationNoticeComponent implements OnInit {
   executionId!: string;
   participant?: ProcessParticipant;
   participationId!: number;
+  individualId!: number;
   procedure: ProceduresCollection | null = null;
+  contact!: InfoContact;
 
   formCitation: FormGroup = this.fb.group({
     guvId: [this.processParticipant?.viaGubernativa?.guvId || ''],
@@ -113,7 +108,8 @@ export class AddCitationNoticeComponent implements OnInit {
     private dialogRef: MatDialogRef<AddCitationNoticeComponent>,
     private fb: FormBuilder,
     private readonly procedureService: ProceduresService,
-    private readonly participantsService: ParticipantsServiceService
+    private readonly participantsService: ParticipantsServiceService,
+    private peopleService: PeopleService
   ) {
   }
 
@@ -122,13 +118,27 @@ export class AddCitationNoticeComponent implements OnInit {
       return;
     }
     this.participationId = this.processParticipant.participationId;
+    this.individualId = this.processParticipant?.individual?.individualId;
     if (this.processParticipant?.typeCategory) {
       this.typeCategory.set(this.processParticipant.typeCategory);
     }
     if (this.processParticipant?.executionId) {
       this.executionId = this.processParticipant?.executionId;
-      this.obtainProcedure();
+      this.getContactParticipation();
     }
+  }
+
+
+  getContactParticipation() {
+    this.peopleService.getContactByIndividualId(this.individualId)
+      .subscribe((res: InfoContact) => {
+        this.contact = res;
+        if(!this.contact || !this.contact?.phoneNumber || !this.contact?.address) {
+          this.getAlertErrorConfirm('Error, No se encontro informacion de contacto del participante no es posible continuar');
+          return;
+        }
+        this.obtainProcedure();
+      });
   }
 
   obtainProcedure(): void {
@@ -259,6 +269,15 @@ export class AddCitationNoticeComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     }).then();
+  }
+
+  getAlertErrorConfirm(text: string) {
+    Swal.fire({
+      title: '¡Error!',
+      text: text,
+      icon: 'error',
+      showConfirmButton: true
+    }).then(() => this.dialogRef.close(true));
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

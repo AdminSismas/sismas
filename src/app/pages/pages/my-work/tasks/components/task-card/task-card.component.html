@@ -1,4 +1,26 @@
-<div class="card overflow-hidden min-h-[180px] shadow-md" [id]="idCard">
+<div
+  class="card overflow-hidden min-h-[180px] shadow-md"
+  [id]="idCard"
+>
+  @if (showHeader) {
+    <header
+      class="w-full text-center"
+      [class.bg-green-600]="protaskE.proTask!.bpmPriority === 1 && !protaskE.proTask!.devolution"
+      [class.bg-primary-600]="protaskE.proTask!.bpmPriority! > 1"
+      [class.bg-red-600]="protaskE.proTask!.devolution && protaskE.proTask!.bpmPriority! === 1"
+      >
+      <!-- [class.bg-gray-600]="protaskE.devolution" -->
+      <h2 class="text-white">
+        @if (protaskE.proTask!.bpmPriority! === 1 && !protaskE.proTask!.devolution) {
+          Activa
+        }@else if (protaskE.proTask!.bpmPriority! > 1) {
+          Priorizada
+        } @else {
+          Devuelta
+        }
+      </h2>
+    </header>
+  }
   <div
     (click)="openProtaskE.emit(protaskE)"
     class="p-4 py-2 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
@@ -72,9 +94,14 @@
       (click)="viewDetailTask(protaskE)"
     >
       <div class="text-sm block">
-        <span class="w-full text-center font-bold">{{ "Detalle trámite" }}</span>
-        <br>
-        <span>Rad: {{ protaskE.proTask?.flowDetail }} - Ver: {{ protaskE.executionId}}</span>
+        <span class="w-full text-center font-bold">{{
+          "Detalle trámite"
+        }}</span>
+        <br />
+        <span
+          >Rad: {{ protaskE.proTask?.flowDetail }} - Ver:
+          {{ protaskE.executionId }}</span
+        >
       </div>
     </div>
   </div>
