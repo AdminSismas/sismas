@@ -207,15 +207,19 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   addParticipantToList() {
+    let listPersonExist: ProcessParticipant[] = [];
     const typeParticipation = this.form?.get('typeParticipation')?.value;
     const person: InfoPerson | null = this.person;
 
     if (!person || !typeParticipation) {
       return;
     }
-    const list = this.contentInformation?.content;
-    if (list != null && list.length > 1) {
-      const listPersonExist: ProcessParticipant[] = list.filter((user: ProcessParticipant) => user.individual.individualId === person?.individualId);
+    const list: ProcessParticipant[] = this.contentInformation?.content;
+    if (list != null && list.length >= 1) {
+      listPersonExist = list.filter((user: ProcessParticipant) => user.individual.individualId === person?.individualId);
+      if (!listPersonExist || listPersonExist.length <= 0) {
+        listPersonExist = list.filter((user: ProcessParticipant) => user.individual.number === person?.number && user.individual.domIndividualTypeNumber === person?.domIndividualTypeNumber);
+      }
       if (listPersonExist && listPersonExist.length > 0) {
         Swal.fire({
           text: 'La persona que desea registrar como participante ya existe en el tramite',
