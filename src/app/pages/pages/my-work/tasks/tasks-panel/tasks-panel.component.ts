@@ -300,6 +300,11 @@ export class TasksPanelComponent implements OnInit {
       return;
     }
 
+    if (!this.filterTask) {
+      this.page = PAGE;
+      this.pageSize = PAGE_SIZE_TABLE_UNIQUE;
+    }
+
     this.filterTask = value;
 
     const pageable = { page: `${this.page}`, size: `${this.pageSize}` };
