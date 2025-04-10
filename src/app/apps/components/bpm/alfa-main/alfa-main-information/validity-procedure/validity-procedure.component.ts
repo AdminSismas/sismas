@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { AlfaMainService } from '../../../../../services/bpm/core/alfa-main.service';
 import { ChangeControl } from 'src/app/apps/interfaces/bpm/change-control';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 
 interface DialogDataValidity {
   executionId: string;
@@ -30,7 +31,8 @@ interface DialogDataValidity {
     MatDatepickerModule,
     ReactiveFormsModule
   ],
-  templateUrl: './validity-procedure.component.html'
+  templateUrl: './validity-procedure.component.html',
+  providers: [provideMomentDateAdapter()]
 })
 export class ValidityProcedureComponent implements OnInit{
 
@@ -52,10 +54,8 @@ export class ValidityProcedureComponent implements OnInit{
   }
 
   resetValidityForm() {
-    const beginAt = new Date(this.data.validateChangeLog.beginAt!);
-    beginAt.setDate(beginAt.getDate() + 1);
     this.validityForm.patchValue({
-      beginAt: beginAt.toISOString(),
+      beginAt: this.data.validateChangeLog.beginAt,
       validity: this.data.validateChangeLog.validity
     });
   }
