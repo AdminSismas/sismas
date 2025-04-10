@@ -109,6 +109,7 @@ export class TableAlfaMainComponent
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+
   @ViewChild('confirmRemoveDialog', { static: true })
   confirmRemoveDialog!: SwalComponent;
   @ViewChild('confirmDeleteDialog', { static: true })

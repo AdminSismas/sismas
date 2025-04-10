@@ -1,6 +1,6 @@
 // ANGULAR IMPORTS
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 // VEX IMPORTS
@@ -139,7 +139,12 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
   totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_HISTORY;
 
+  @ViewChild(MatPaginator, { read: true }) paginatorHistoricalActive?: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort?: MatSort;
+
   constructor() {
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit(): void {
@@ -400,7 +405,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
                 data: data
               })
               .afterClosed();
-          },
+          }
         });
     }
   }

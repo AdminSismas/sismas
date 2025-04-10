@@ -127,8 +127,9 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
 
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginatorAddresses?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+
   @ViewChild('confirmDialog', { static: true }) confirmDialog!: SwalComponent;
   @ViewChild('successDelete', { static: true }) successDelete!: SwalComponent;
 
@@ -165,8 +166,8 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
   }
 
   ngAfterViewInit() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+    if (this.paginatorAddresses) {
+      this.dataSource.paginator = this.paginatorAddresses;
     }
     if (this.sort) {
       this.dataSource.sort = this.sort;

@@ -1,6 +1,6 @@
 // Angular Framework
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AfterViewInit, Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 // Material
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -31,7 +31,7 @@ import {
   TYPE_BUTTON_SIX,
   TYPE_BUTTON_TREE,
   TYPE_BUTTON_TWO,
-  TYPE_INFORMATION_EDITION,
+  TYPE_INFORMATION_EDITION, TYPE_INFORMATION_VISUAL,
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_CALCULATE_BOUNDARIES,
   TYPE_OPERATION_CREATE,
@@ -40,7 +40,7 @@ import {
   TYPE_OPERATION_DELETE_GEO
 } from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
-import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
+import { TypeInformation, TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
@@ -48,6 +48,13 @@ import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { MODIFYCATION_UNITS_TABLE_COLUMNS } from 'src/app/apps/constants/modification-property-units.constants';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
+import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
+import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { environment } from '../../../../../environments/environments';
+import { MatFormField, MatPrefix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -62,16 +69,35 @@ import { FluidHeightDirective } from '../../../directives/fluid-height.directive
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
-    FluidHeightDirective
+    FluidHeightDirective,
+    FluidMinHeightDirective,
+    VexPageLayoutContentDirective,
+    MatSortHeader,
+    MatFormField,
+    MatInput,
+    MatPrefix,
+    ReactiveFormsModule
     // Custom
   ],
   templateUrl: './modification-property-units.component.html',
   styleUrl: './modification-property-units.component.scss'
 })
-export class ModificationPropertyUnitsComponent implements OnInit {
+export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit {
 
-  properties$!: MatTableDataSource<InformationPegeable>;
-  filteredProperties$!: Observable<InformationPegeable>;
+
+  executionId: string | null = null;
+  baUnitId: string | null = null;
+  // Configuration paginator
+  totalElements = 0;
+  PAGE = PAGE;
+  PAGE_SIZE = PAGE_SIZE;
+  PAGE_OPTIONS = PAGE_OPTION_5_7_10;
+
+  dataSource!: MatTableDataSource<BaunitHead>;
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  contentInformation!: InformationPegeable;
+
+  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   searchForm: FormGroup = this.fb.group({
     searchTerm: [''],
     selectedMatriz: ['']
@@ -79,93 +105,62 @@ export class ModificationPropertyUnitsComponent implements OnInit {
 
   columns: TableColumn<Operation>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
 
-  actions = [
-    {
-      label: 'Editar',
-      icon: 'mat:edit',
-      action: (row: Operation) => this.editPropertyUnit(row)
-    },
-    {
-      label: 'Borrar',
-      icon: 'mat:delete',
-      action: (row: Operation) => this.deletePropertyUnit(row)
-    }
-  ];
-
-  // Configuration paginator
-  totalElements = 0;
-  PAGE = PAGE;
-  PAGE_SIZE = PAGE_SIZE;
-  PAGE_OPTIONS = PAGE_OPTION_5_7_10;
-
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: ModificationUnitProperties,
+    public dataInformationUnitProperties: ModificationUnitProperties,
+    private dialog: MatDialog,
     private fb: FormBuilder,
-    private alfaMainService: AlfaMainService,
-    private dialog: MatDialog
-  ) {}
+    private readonly layoutService: VexLayoutService,
+    private alfaMainService: AlfaMainService
+  ) {
+  }
 
   ngOnInit(): void {
-    this.properties$ = new MatTableDataSource();
-    this.getPropertiesUnits();
+    this.dataSource = new MatTableDataSource();
 
-    this.properties$.paginator = this.paginator;
+    if (this.dataInformationUnitProperties?.executionId) {
+      this.executionId = this.dataInformationUnitProperties?.executionId;
+    }
+
+    if (this.dataInformationUnitProperties?.executionId) {
+      this.executionId = this.dataInformationUnitProperties?.executionId;
+    }
+
+    if (this.dataInformationUnitProperties?.baunitIdE) {
+      this.baUnitId = this.dataInformationUnitProperties?.baunitIdE;
+    }
+
+    this.getPropertiesUnits();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
+
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
   }
 
   getPropertiesUnits(): void {
-    const page = new PageSearchData(
-      this.PAGE,
-      this.PAGE_SIZE,
-      this.data.executionId
-    );
-
-    this.alfaMainService
-      .getListAlfaMainOperationsUnitsByBaunitId(
-        page,
-        this.data.executionId,
-        this.data.baunitIdE
-      )
-      .subscribe({
-        next: (result: InformationPegeable) => {
-          this.properties$.data = result.content;
-          this.totalElements = result.totalElements!;
-        }
-      });
-  }
-
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
-  }
-
-  statusMessage(value: string): string {
-    switch (value) {
-      case 'CREATE':
-        return 'Agregado';
-      case 'UPDATE':
-        return 'Modificado';
-      case 'DELETE':
-        return 'Eliminado';
-      default:
-        return '';
+    if (!this.baUnitId) {
+      return;
     }
+    const page = new PageSearchData(this.PAGE, this.PAGE_SIZE, this.executionId);
+    this.alfaMainService.getListAlfaMainOperationsUnitsByBaUnitId(
+      page, this.executionId, this.baUnitId).subscribe({
+      next: (result) => this.captureInformationSubscribe(result),
+      next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+    });
   }
 
-  statusClass(value: string): string {
-    switch (value) {
-      case 'CREATE':
-        return 'px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-green-600';
-      case 'UPDATE':
-        return 'px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-primary-600';
-      case 'DELETE':
-        return 'px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-red-600';
-      default:
-        return '';
-    }
+  captureInformationSubscribe(result: InformationPegeable): void {
+    this.contentInformations = result;
+    this.captureInformationCadastralData();
   }
 
   editPropertyUnit(row: BaunitHead) {
@@ -180,7 +175,7 @@ export class ModificationPropertyUnitsComponent implements OnInit {
           LIST_SCHEMAS_CONTROL_TEMP,
           TYPE_INFORMATION_EDITION,
           '',
-          this.data.resources,
+          this.data.resources
         )
       })
       .afterClosed();
@@ -224,17 +219,36 @@ export class ModificationPropertyUnitsComponent implements OnInit {
       event.pageSize,
       this.data.executionId
     );
-    this.alfaMainService.getListAlfaMainOperationsUnitsByBaunitId(
+    this.alfaMainService.getListAlfaMainOperationsUnitsByBaUnitId(
       page,
       this.data.executionId,
       this.data.baunitIdE
     )
-    .subscribe({
-      next: (result: InformationPegeable) => {
-        this.properties$.data = result.content;
-        this.totalElements = result.totalElements!;
-      }
-    });
+      .subscribe({
+        next: (result: InformationPegeable) => {
+          this.dataSource.data = result.content;
+          this.totalElements = result.totalElements!;
+        }
+      });
+  }
+
+  openCadastralInformationProperty(data: BaunitHead): void {
+    this.dialog
+      .open(LayoutCardCadastralInformationPropertyComponentComponent, {
+        ...MODAL_LARGE,
+        disableClose: true,
+        data: new ContentInfoSchema(
+          data.baunitIdE, data,
+          this.executionId,
+          this.viewSchemas(),
+          TYPE_INFORMATION_VISUAL
+        )
+      })
+      .afterClosed();
+  }
+
+  get visibleColumns() {
+    return this.columns.filter((column) => column.visible).map((column) => column.property);
   }
 
   protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;

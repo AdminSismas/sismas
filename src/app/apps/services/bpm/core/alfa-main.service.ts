@@ -21,7 +21,8 @@ export class AlfaMainService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   refresh() {
     this._refreshData.next(true);
@@ -55,15 +56,15 @@ export class AlfaMainService {
     return this.getData(url, paramsR);
   }
 
-  getListAlfaMainOperationsUnitsByBaunitId(
-    page: PageSearchData,
-    executionId: string,
-    baunitId: string
-  ): Observable<InformationPegeable> {
-    const url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    const paramsR: HttpParams = new HttpParams()
-      .set('page', `${page.page}`)
-      .set('size', `${page.size}`);
+  getListAlfaMainOperationsUnitsByBaUnitId(
+    page: PageSearchData, executionId: string | null, baunitId: string ): Observable<InformationPegeable> {
+    let url = '';
+    if(!executionId) {
+      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+    } else {
+      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.main}/${baunitId}`;
+    }
+    const paramsR: HttpParams = new HttpParams().set('page', `${page.page}`).set('size', `${page.size}`);
     return this.http.get<InformationPegeable>(url, { params: paramsR });
   }
 

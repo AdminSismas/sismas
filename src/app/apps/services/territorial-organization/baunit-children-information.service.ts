@@ -18,9 +18,7 @@ export class UnitPropertyInformationService {
 
   getBaunitInformation( baunitId: string ): Observable<Baunit> {
     let url = `${this.basic_url}${envi.baunit_baunitId}`;
-
     url += `?baunitId=${baunitId}`;
-
     return this.requestsService
       .sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));

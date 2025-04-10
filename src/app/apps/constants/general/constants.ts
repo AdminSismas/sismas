@@ -227,15 +227,7 @@ export const TABLE_COLUMN_INFORMATION_PROPERTIES: TableColumn<BaunitHead>[] = [
     type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: '',
-    property: 'empty-row',
-    type: 'empty-row',
-    visible: false,
-    cssClasses: ['text-secondary', 'font-medium']
   }
-  // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 export const TABLE_COLUMN_DOCUMENT_ASSOCIATION: TableColumn<OutFormatModel>[] = [
   {
