@@ -562,7 +562,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       if (domBuiltType && domBuiltType === QUALIFICATIONS_DOMBUILT_TYPE_ANEXX.domBuiltType) {
         const list = this.allBuiltUseOptions.filter(
           (option: DomainCollection) => domBuiltType && domBuiltUse && option?.code &&
-            option?.code.startsWith(domBuiltType) && option?.code.endsWith(domBuiltUse)
+            option?.code.startsWith(domBuiltType) && option?.dispname === domBuiltUse
         );
         this.annexUrl = list.length >= 1 ? this.urlBasic + `${list[0].domainCode}` : '';
         this.toggleQualificationMode(TYPE_ANNEX);
