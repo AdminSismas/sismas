@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
-import { DatePipe, NgClass, PercentPipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,17 +20,13 @@ import {
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
-import {
-  BasicInformationProperty,
-  CrudBasicInformationProperty
-} from '../../../interfaces/information-property/basic-information-property';
+import { BasicInformationProperty } from '../../../interfaces/information-property/basic-information-property';
 import {
   GUION,
   MODAL_SMALL,
-  MODAL_MIN_SMALL_25, MODAL_MIN_SMALL_35_25, MODAL_MIN_SMALL_40_25,
   NAME_NO_DISPONIBLE,
   NAME_NO_DISPONIBLE_CERO,
-  TYPE_UPDATE_PROPERTY_UNIT, MODAL_MEDIUM_SMALL
+  TYPE_INFORMATION_EDITION
 } from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,7 +37,6 @@ import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { MatDividerModule } from '@angular/material/divider';
-import { getRandomInt } from '../../../utils/general';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -52,7 +47,7 @@ import { getRandomInt } from '../../../utils/general';
     scaleIn400ms,
     stagger40ms,
     fadeInUp400ms,
-    scaleFadeIn400ms
+    scaleFadeIn400ms,
   ],
   imports: [
     NgClass,
@@ -71,15 +66,14 @@ import { getRandomInt } from '../../../utils/general';
     MatExpansionModule,
     DatePipe,
     CurrencyLandsPipe,
-    MatDividerModule,
-    PercentPipe
+    MatDividerModule
   ],
   templateUrl: './basic-property-information.component.html',
   styleUrl: './basic-property-information.component.scss'
 })
 export class BasicPropertyInformationComponent implements OnInit {
 
-  data!: BasicInformationProperty;
+  data!:BasicInformationProperty;
 
   @Input({ required: true }) id = '';
   @Input() expandedComponent = true;
@@ -93,14 +87,10 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
   @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
 
-  existDetailGroup = signal<boolean>(false);
-  existMasterGroup = signal<boolean>(false);
-
   constructor(
-    private informationPropertyService: InformationPropertyService,
+    private informationPropertyService:InformationPropertyService,
     private dialog: MatDialog
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.id?.length <= 0 || this.baunitId == null) {
@@ -108,21 +98,21 @@ export class BasicPropertyInformationComponent implements OnInit {
     }
 
     if (this.id?.length > 0) {
-      this.id = this.id + getRandomInt(10000) + this.schema +
-        'basic-property' + getRandomInt(10);
+      this.id = this.id + this.getRandomInt(10000) + this.schema +
+        'basic-property' + this.getRandomInt(10);
     } else {
-      this.id = getRandomInt(100100) + this.schema +
-        +'basic-property' + getRandomInt(10);
+      this.id = this.getRandomInt(100100) + this.schema +
+        + 'basic-property' + this.getRandomInt(10);
     }
   }
 
-  searchBasicInformationProperty(): void {
-    if (!this.schema || !this.baunitId) {
+  searchBasicInformationProperty():void {
+    if(!this.schema || !this.baunitId) {
       return;
     }
 
     this.informationPropertyService.getBasicInformationProperty(
-      this.schema, this.baunitId, this.executionId)
+      this.schema , this.baunitId, this.executionId)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationProperty) => this.captureInformationSubscribe(result)
@@ -134,12 +124,6 @@ export class BasicPropertyInformationComponent implements OnInit {
   }
 
   captureInformationSubscribe(result: BasicInformationProperty): void {
-    if (result.detailGroup !== null && result.detailGroup !== undefined) {
-      this.existDetailGroup.set(true);
-    }
-    if (result.masterGroup !== null && result.masterGroup !== undefined) {
-      this.existMasterGroup.set(true);
-    }
     this.data = result;
     this.propertyRegistryOffice.emit(this.data.propertyRegistryOffice);
     this.propertyRegistryNumber.emit(this.data.propertyRegistryNumber);
@@ -147,57 +131,38 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   editBasicInformationProperty(): void {
     this.dialog.open(EditBasicPropertyInformationComponent, {
-      ...MODAL_MEDIUM_SMALL,
-      data: { executionId: this.executionId, ...this.data},
+      ...MODAL_SMALL,
+      data: { executionId: this.executionId ,...this.data, TYPEINFORMATION_EDITION: TYPE_INFORMATION_EDITION},
       disableClose: true // Ensure this is set to false or omitted
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
-          if (result && result?.baunitIdE) {
+          if(result && result?.baunitIdE) {
             setTimeout(() => this.data = result, 300);
           }
         }
       });
   }
 
-  editDetailGroupProperty(): void {
-    if(this.existDetailGroup() && this.executionId) {
-      let data:BasicInformationProperty = this.data;
-      data.executionId = this.executionId
-      let dataBasicInformationProperty:CrudBasicInformationProperty = {
-        type:TYPE_UPDATE_PROPERTY_UNIT,
-        contentInformation : data
+  private getRandomInt(max: number):number {
+    return Math.floor(Math.random() * max);
+  }
+
+    openGeographicViewerMain(data: BasicInformationProperty): void {
+      this.dialog
+        .open(GeographicViewerComponent, {
+          ...MODAL_SMALL,
+          disableClose: true,
+          data: new ContentInfoSchema(data.baunitIdE, data)
+        })
+        .afterClosed();
+    }
+
+    isExpandPanel(expandedComponent: boolean): void {
+      if (expandedComponent) {
+        this.searchBasicInformationProperty();
       }
-      this.dialog.open(EditBasicPropertyInformationComponent, {
-        ...MODAL_MIN_SMALL_40_25,
-        disableClose: true,
-        data: dataBasicInformationProperty
-      }).afterClosed()
-        .subscribe({
-          next: (result: BasicInformationProperty) => {
-            if (result && result?.baunitIdE) {
-              setTimeout(() => this.data = result, 300);
-            }
-          }
-        });
     }
-  }
-
-  openGeographicViewerMain(data: BasicInformationProperty): void {
-    this.dialog
-      .open(GeographicViewerComponent, {
-        ...MODAL_SMALL,
-        disableClose: true,
-        data: new ContentInfoSchema(data.baunitIdE, data)
-      })
-      .afterClosed();
-  }
-
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchBasicInformationProperty();
-    }
-  }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
   protected readonly NAME_NO_DISPONIBLE_CERO = NAME_NO_DISPONIBLE_CERO;

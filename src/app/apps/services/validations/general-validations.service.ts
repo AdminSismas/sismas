@@ -266,14 +266,4 @@ export class GeneralValidationsService {
     };
   }
 
-  createFractionValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const fraction = Number(control.value);
-      if (fraction > 1 || fraction < 0) {
-        return { 'invalidFraction': true };
-      }
-      return null;
-    };
-  }
-
 }
