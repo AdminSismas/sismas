@@ -347,7 +347,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     this.informationPropretyService.updateBasicInformationProperty(
       this.executionId, this.baunitIdE, obj).subscribe({
       next: (data: BasicInformationProperty) => {
-        this.getAlertSuccess('Se ha actualizado el coeficiente de propiedad correctamente', data);
+        this.getAlertSuccess('Se ha actualizado los aspectos generales del predio', data);
       }
     });
   }
