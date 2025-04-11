@@ -42,9 +42,8 @@
       [formGroup]="formAdd"
       (ngSubmit)="onSubmitFormAdd()"
     >
-      <div class="flex flex-col">
-        <mat-form-field
-          class="sm:ml-2 sm:mr-2 flex-1 min-w-[200px] sm:min-w-[400px]">
+      <div class="px-2 py-2 flex flex-col">
+        <mat-form-field class="sm:ml-2 sm:mr-2">
           <mat-label>Manzanas</mat-label>
           <input
             type="text"
@@ -67,8 +66,6 @@
             }
           </mat-autocomplete>
         </mat-form-field>
-      </div>
-      <div class="flex flex-col">
         @if (operationBaUnitHead === null || operationBaUnitHead.baunitHead == null) {
           <vex-combox-colletion
             idComboCollection="BaunitCondition{{ this.executionId }}"
@@ -76,8 +73,9 @@
             formControlNameCombobox="bAunitCondition"
             typeDomainName="BaunitCondition"
             placeholderDomainName="Seleccione un tipo de predio"
-            cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-          ></vex-combox-colletion>
+            cssClasses="w-full sm:ml-0 sm:mr-2"
+            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2">
+          </vex-combox-colletion>
         } @else {
           <vex-combox-colletion
             idComboCollection="BaunitConditionExternal{{ this.executionId }}"
@@ -85,8 +83,9 @@
             formControlNameCombobox="bAunitCondition"
             placeholderDomainName="Seleccione un tipo de predio"
             [optionsExternal]="baunitConditionOptions"
-            cssClasses="sm:ml-2 sm:mr-2 flex-auto"
-          ></vex-combox-colletion>
+            cssClasses="w-full sm:ml-0 sm:mr-2"
+            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2">
+          </vex-combox-colletion>
         }
       </div>
       <mat-dialog-actions align="center">

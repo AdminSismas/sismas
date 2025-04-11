@@ -53,6 +53,8 @@ import {
 } from '../../../services/territorial-organization/baunit-children-information.service';
 import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
 import { getRandomInt } from '../../../utils/general';
+import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 
 @Component({
   selector: 'vex-information-unit-property',
@@ -119,7 +121,8 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private unitPropertyInformationService: UnitPropertyInformationService
+    private unitPropertyInformationService: UnitPropertyInformationService,
+    private alfaMainService: AlfaMainService
   ) {
     this.destroyRef.onDestroy(() => {
     });
@@ -148,10 +151,13 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
-      this.searchBaUnitIdInformation();
+      if (this.executionId) {
+        this.searchUnitPropertyInformationTemp();
+      } else {
+        this.searchBaUnitIdInformation();
+      }
     }
   }
 
@@ -168,14 +174,27 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     });
   }
 
+  searchUnitPropertyInformationTemp(): void {
+    if (!this.baunitId || !this.executionId) {
+      return;
+    }
+    const page = new PageSearchData(this.page, this.pageSize, this.executionId);
+    this.alfaMainService.getListAlfaMainOperationsUnitsByBaUnitId(
+      page, this.executionId, this.baunitId).subscribe({
+      error: () => this.captureInformationSubscribeError(),
+      next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+    });
+  }
+
   searchUnitPropertyInformation(result: Baunit): void {
     if (!this.schema || !this.baunitId || !result) {
       return;
     }
-    this.unitPropertyInformationService.getUnitPropertyInformation(result.cadastralNumber, this.page, this.pageSize)
+    const page = new PageSearchData(this.page, this.pageSize, this.executionId);
+    this.unitPropertyInformationService.getListUnitPropertyInformation(page, result.cadastralNumber)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result2: BAunitLike) =>
+        next: (result2: InformationPegeable) =>
           this.captureInformationSubscribe(result2)
       });
   }

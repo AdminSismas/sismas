@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { DatePipe, NgClass, PercentPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -26,11 +26,16 @@ import {
 } from '../../../interfaces/information-property/basic-information-property';
 import {
   GUION,
+  LIST_SCHEMAS_CONTROL_MAIN,
+  LIST_SCHEMAS_CONTROL_TEMP,
+  MODAL_LARGE,
   MODAL_MEDIUM_SMALL,
   MODAL_MIN_SMALL_40_25,
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  NAME_NO_DISPONIBLE_CERO, TYPE_UPDATE,
+  NAME_NO_DISPONIBLE_CERO,
+  TYPE_INFORMATION_VISUAL,
+  TYPE_UPDATE,
   TYPE_UPDATE_PROPERTY_UNIT
 } from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
@@ -43,6 +48,12 @@ import { GeographicViewerComponent } from '../../geographics/geographic-viewer/g
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { MatDividerModule } from '@angular/material/divider';
 import { getRandomInt } from '../../../utils/general';
+import {
+  LayoutCardCadastralInformationPropertyComponentComponent
+} from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -94,6 +105,8 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
   @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
 
+  private alfaMainService: AlfaMainService = inject(AlfaMainService);
+
   existDetailGroup = signal<boolean>(false);
   existMasterGroup = signal<boolean>(false);
 
@@ -116,6 +129,13 @@ export class BasicPropertyInformationComponent implements OnInit {
         +'basic-property' + getRandomInt(10);
     }
   }
+
+  isExpandPanel(expandedComponent: boolean): void {
+    if (expandedComponent) {
+      this.searchBasicInformationProperty();
+    }
+  }
+
 
   searchBasicInformationProperty(): void {
     if (!this.schema || !this.baunitId) {
@@ -203,10 +223,57 @@ export class BasicPropertyInformationComponent implements OnInit {
       .afterClosed();
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchBasicInformationProperty();
+  openCadastralMasterGroupE(): void {
+    let masterGroupE: string | null | undefined = this.data?.detailGroup?.masterGroupE;
+    if (!masterGroupE || !this.executionId) {
+      return;
     }
+    this.alfaMainService.getBaUnitHeadTemporal(this.executionId, masterGroupE)
+      .subscribe({
+        next: (result: BaunitHead) => {
+          if (result === null) {
+            this.swalErrorInformationProceduresNotFound();
+            return;
+          }
+          let schemas: string[] = [];
+          schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
+          let dataInfo: ContentInfoSchema = new ContentInfoSchema(
+            masterGroupE, result, this.executionId, schemas, TYPE_INFORMATION_VISUAL
+          );
+          dataInfo.levelInfo = 3;
+          this.dialog
+            .open(LayoutCardCadastralInformationPropertyComponentComponent, {
+              ...MODAL_LARGE,
+              disableClose: true,
+              data: dataInfo
+            })
+            .afterClosed();
+        },
+        error: () => this.swalErrorBaUnitHead(this.executionId, masterGroupE)
+      });
+  }
+
+  swalErrorBaUnitHead(executionId: string | null | undefined,
+                      baunitId: string | null | undefined) {
+    Swal.fire({
+      title: '¡Error!',
+      text: 'Hubo un error, verifique la información de la unidad predial: ' + baunitId + ' y la version: ' + executionId,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 3000
+    }).then((result) => {
+    });
+  }
+
+  swalErrorInformationProceduresNotFound() {
+    Swal.fire({
+      title: '¡Error!',
+      text: 'Hubo un error al obtener la informacion, actualmente no se encuentra disponible',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 3000
+    }).then((result) => {
+    });
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

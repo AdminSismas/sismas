@@ -4,6 +4,8 @@ import { HttpParams } from '@angular/common/http';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { catchError, Observable, tap } from 'rxjs';
 import { Baunit, BAunitLike } from '../../interfaces/information-property/baunit-npnlike';
+import { PageSearchData } from '../../interfaces/general/page-search-data.model';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,34 +18,25 @@ export class UnitPropertyInformationService {
     private requestsService: SendGeneralRequestsService
   ) { }
 
+  //{{url}}:{{port}}/baunit/baunitId
   getBaunitInformation( baunitId: string ): Observable<Baunit> {
     let url = `${this.basic_url}${envi.baunit_baunitId}`;
-
     url += `?baunitId=${baunitId}`;
-
     return this.requestsService
       .sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
-  getUnitPropertyInformation(
-    npn: string, page = 0, size = 7
-  ): Observable<BAunitLike> {
+
+  //{{url}}:{{port}}/baunit/npnlike
+  getListUnitPropertyInformation(page: PageSearchData, npn: string): Observable<InformationPegeable> {
     let url = `${this.basic_url}${envi.baunit_npnlike}`;
-
     const npnlike: string = npn.toString().slice(0, 22);
-    const pageString: string = page.toString();
-    const sizeString: string = size.toString();
-
-    const params: HttpParams = new HttpParams()
-      .set('npnlike', npnlike)
-      .set('page', pageString)
-      .set('size', sizeString);
-
-    url += `?${params.toString()}`;
-
-    return this.requestsService
-      .sendRequestsFetchGet(url)
+    const paramsR: HttpParams = new HttpParams()
+      .set('npnlike', `${npnlike}`)
+      .set('page', `${page.page}`)
+      .set('size', `${page.size}`);
+    return this.requestsService.sendRequestsGetOption(url, { params: paramsR })
       .pipe(
         catchError(error => this.requestsService.errorNotFound(error)),
         tap((result: BAunitLike) => {

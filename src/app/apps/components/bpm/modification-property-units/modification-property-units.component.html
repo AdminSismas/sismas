@@ -10,32 +10,32 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 
-<vex-page-layout-content class="container-fluid p-2 h-full w-full" vexFluidHeight fluidHeight=275>
+<vex-page-layout-content class="container-fluid p-2 h-full w-full" vexFluidHeight fluidHeight=265>
   <div class="" vexMinFluidHeight [fluidHeight]="350">
     <div class="px-1 py-3 sm:min-w-full md:min-w-[300px]">
       <div class="p-0 m-0 flex flex-col sm:flex-row items-center gap-3">
         <div class="flex-1 flex-col gap-3">
           <button
             mat-raised-button
-            class="rounded-full ml-1 mr-1 py-2 px-3 title !text-white !bg-primary-600 flex-auto"
-            (click)="openCrudAlfaMain(TYPE_OPERATION_ADD)"
-          >
-            <mat-icon
-              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
-              svgIcon="mat:add_circle_outline"
-            ></mat-icon>
-            Agregar
-          </button>
-          <button
-            mat-raised-button
             class="rounded-full ml-1 mr-1 py-2 px-3 title !text-white !bg-green-600 flex-auto"
-            (click)="openCrudAlfaMain(TYPE_OPERATION_CREATE)"
+            (click)="openCrudAlfaMain(TYPE_OPERATION_ADD)"
           >
             <mat-icon
               class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
               svgIcon="mat:add"
             ></mat-icon>
             Crear
+          </button>
+          <button
+            mat-raised-button
+            class="rounded-full ml-1 mr-1 py-2 px-3 title !text-white !bg-primary-600 flex-auto"
+            (click)="openCrudAlfaMain(TYPE_OPERATION_CREATE)"
+          >
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+              svgIcon="mat:add_circle_outline"
+            ></mat-icon>
+            Agregar
           </button>
           <button
             mat-raised-button

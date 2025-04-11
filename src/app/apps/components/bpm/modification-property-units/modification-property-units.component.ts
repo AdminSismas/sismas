@@ -241,16 +241,15 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   openCadastralInformationProperty(data: BaunitHead): void {
     let schemas: string[] = [];
     schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
+    let dataInfo: ContentInfoSchema = new ContentInfoSchema(
+      data.baunitIdE, data, this.executionId, schemas, TYPE_INFORMATION_VISUAL
+    );
+    dataInfo.levelInfo = 2;
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
         ...MODAL_LARGE,
         disableClose: true,
-        data: new ContentInfoSchema(
-          data.baunitIdE, data,
-          this.executionId,
-          schemas,
-          TYPE_INFORMATION_VISUAL
-        )
+        data: dataInfo
       })
       .afterClosed();
   }

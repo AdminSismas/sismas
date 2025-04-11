@@ -59,9 +59,9 @@ export class AlfaMainService {
     page: PageSearchData, executionId: string | null, baunitId: string ): Observable<InformationPegeable> {
     let url = '';
     if(!executionId) {
-      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    } else {
       url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.main}/${baunitId}`;
+    } else {
+      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     }
     const paramsR: HttpParams = new HttpParams().set('page', `${page.page}`).set('size', `${page.size}`);
     return this.http.get<InformationPegeable>(url, { params: paramsR });
@@ -167,9 +167,7 @@ export class AlfaMainService {
    * */
   // {{url}}:{{port}}/baunit/temp/{{executionId}}/{{baunitId}}
   getBaUnitHeadTemporal(
-    executionId: string,
-    baunitId: string
-  ): Observable<BaunitHead> {
+    executionId: string, baunitId: string ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }

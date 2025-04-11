@@ -74,10 +74,12 @@
             <span class="text-black text-sm">Número predial (F)</span>
             <span class="text-black text-sm">Número predial</span>
             <span class="text-black text-sm">Número predial anterior</span>
-            <!-- <span class="text-black text-sm">Tipo</span> -->
             <span class="text-black text-sm">Matrícula inmobiliaria</span>
             <span class="text-black text-sm">Nupre</span>
             <span class="text-black text-sm">N° Ficha</span>
+            @if (existDetailGroup()) {
+              <span class="text-black text-sm">N° Ficha Matriz</span>
+            }
           </div>
           <div class="flex flex-col gap-1">
             @if (data !== null &&
@@ -96,7 +98,6 @@
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
-
             @if (data !== null &&
             data !== undefined &&
             data.cadastralLastNumber !== null &&
@@ -127,7 +128,6 @@
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
-
             @if (data !== null &&
             data !== undefined &&
             data.baunitIdE !== null &&
@@ -137,6 +137,16 @@
                 }}</span>
             } @else {
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+            @if (existDetailGroup() && data !== null && data !== undefined &&
+            data.detailGroup !== null && data.detailGroup !== undefined &&
+            data.detailGroup.masterGroupE !== null && data.detailGroup.masterGroupE !== undefined) {
+              <div class="flex-1 align-content-start">
+                <button color="primary" mat-button type="button" class="min-w-[3rem] w-1/6 min-h-[1rem]"
+                        (click)="openCadastralMasterGroupE()">
+                  <span>{{ data.detailGroup.masterGroupE }}</span>
+                </button>
+              </div>
             }
 
           </div>

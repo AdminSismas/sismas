@@ -5,6 +5,7 @@ export class BasicDetailGroup {
   percentageGroupS?: string;
   percentage_group?: number;
   unitNumber?: number;
+  masterGroupE?: string;
 
   constructor(content?: any) {
     this.buildNumber = content?.buildNumber || 0;
@@ -12,5 +13,6 @@ export class BasicDetailGroup {
     this.percentageGroupS = content?.percentageGroupS || '';
     this.percentage_group = content?.percentage_group || 0;
     this.unitNumber = content?.unitNumber || 0;
+    this.masterGroupE = content?.masterGroupE || '';
   }
 }

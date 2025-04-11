@@ -46,7 +46,7 @@
       (propertyRegistryNumber)="propertyRegistryNumber = $event"
       @fadeInUp
     ></vex-basic-property-information>
-    @if (showInformationUnitProperty(baunitCondition)) {
+    @if (showInformationUnitProperty(baunitCondition) && levelInfo !== 3) {
       <vex-information-unit-property
         #unitPropertyInformationComponent
         [id]="'informationUnitProperty' + schema + '12' + executionId"

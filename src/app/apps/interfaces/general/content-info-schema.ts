@@ -11,6 +11,7 @@ export class ContentInfoSchema {
   flagData?: string = '';
   resources?: string[] = [];
   rulePage?: string = '';
+  levelInfo?: number = 0;
 
   constructor(
     baunitIdE?: string | undefined | null,
