@@ -67,8 +67,8 @@ const routes: VexRoutes = [
         {
           path: 'downloadReports',
           loadComponent: () =>
-            import('./reports/download-reports/report-master/report-master.component').then(
-              (m) => m.ReportMasterComponent
+            import('./reports/download-reports/report-manager/report-manager.component').then(
+              (m) => m.ReportManagerComponent
             )
         },
         ]
