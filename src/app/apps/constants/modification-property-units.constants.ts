@@ -3,7 +3,7 @@ import { Operation } from '../interfaces/bpm/operation';
 
 export const MODIFYCATION_UNITS_TABLE_COLUMNS: TableColumn<Operation>[] = [
   {
-    label: 'Ver acciones',
+    label: '',
     property: 'viewMap',
     type: 'button',
     visible: true,

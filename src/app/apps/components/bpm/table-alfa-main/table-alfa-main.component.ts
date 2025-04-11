@@ -362,7 +362,8 @@ export class TableAlfaMainComponent
         executionId: this.executionId,
         baunitIdE: row.baunitHead?.baunitIdE,
         npnMatrix: row.baunitHead!.cadastralNumber,
-        resources: this.resources
+        resources: this.resources,
+        operationBaUnitHead: row
       }
     });
   }

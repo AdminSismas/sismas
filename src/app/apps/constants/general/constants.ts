@@ -124,6 +124,21 @@ export const TYPE_OPERATION_ADD: TypeOperationAlfaMain = 'ADD';
 export const TYPE_OPERATION_CREATE: TypeOperationAlfaMain = 'CREATE';
 export const TYPE_OPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
 
+export const CONSTANT_TYPEDOMAIN_BAUNITCONDITION: string = 'BaunitCondition';
+
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ: string = '(Propiedad horizontal) Matriz';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PH_: string = 'PH.';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ: string = 'PH.Matriz';
+
+export const CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATRIZ: string = '(Condominio) Matriz';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_CO_: string = 'Condominio.';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATZ: string = 'Condominio.Matriz';
+
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATRIZ: string = '(Parque cementerio) Matriz';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_: string = 'Parque_Cementerio.';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATZ: string = 'Parque_Cementerio.Matriz';
+
+
 export const TYPE_OPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
 export const TYPE_OPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
 export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
@@ -1113,6 +1128,9 @@ export const MODAL_DINAMIC_HEIGHT_AUTO = { maxWidth: '100%', minWidth: '60%' };
 export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
 export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
 export const MODAL_SMALL_DETAIL_NOTIFICE = { minWidth: '40%', minHeight: '30%' };
+export const MODAL_MIN_SMALL_40_25 = { maxWidth: '100%', minWidth: '40%', minHeight: '25%'};
+export const MODAL_MIN_SMALL_35_25 = { maxWidth: '100%', minWidth: '35%', minHeight: '25%'};
+export const MODAL_MIN_SMALL_25 = { maxWidth: '100%', minWidth: '25%', minHeight: '25%'};
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
@@ -1122,6 +1140,7 @@ export const TYPE_ANNEX: TypeQualificationMode = 'ANNEX';
 
 export const TYPE_CREATE: TypeOperation = 'CREATE';
 export const TYPE_READ_ONLY: TypeOperation = 'READ_ONLY';
+export const TYPE_UPDATE_PROPERTY_UNIT: TypeOperation = 'UPDATE_UND';
 
 export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
   label: 'Tradicional',
