@@ -1,7 +1,8 @@
-<mat-form-field class="w-full"
-                [id]="idComboCollection + 'matFormField'"
-                [ngClass]="cssClasses"
-                [hideRequiredMarker]="hideRequiredMarker">
+<mat-form-field
+  [id]="idComboCollection + 'matFormField'"
+  [ngClass]="cssClasses"
+  [hideRequiredMarker]="hideRequiredMarker"
+                class="w-full">
   <mat-label>{{ label }}</mat-label>
   <mat-select
     [formControlName]="formControlNameCombobox"
@@ -9,19 +10,13 @@
     placeholder="{{placeholderDomainName}}"
     (selectionChange)="onSelectionChange($event.value)"
     class="w-full h-auto">
-    @for (option of options; track option) {
-      <mat-option [value]="option.dispname">
-        {{ option.dispname }}
-      </mat-option>
-    }
+    <mat-option *ngFor="let option of options;" [value]="option.dispname">
+      {{ option.dispname }}
+    </mat-option>
     <!-- Mensaje de carga -->
-    @if (loading) {
-      <mat-option disabled>
-        Cargando...
-      </mat-option>
-    }
+    <mat-option *ngIf="loading" disabled>
+      Cargando...
+    </mat-option>
   </mat-select>
-  @if (hintValue && hintValue.length > 0) {
-    <mat-hint>{{ hintValue }}</mat-hint>
-  }
+  <mat-hint *ngIf="hintValue && hintValue.length > 0">{{ hintValue }}</mat-hint>
 </mat-form-field>

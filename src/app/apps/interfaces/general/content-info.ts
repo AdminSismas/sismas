@@ -10,7 +10,7 @@ export type Element =
   | 'checkbox';
 
 export type TypeInformation = 'visualization' | 'edition';
-export type TypeOperation = 'CREATE' | 'UPDATE' | 'DELETE' | 'READ_ONLY' | 'UPDATE_UND';
+export type TypeOperation = 'CREATE' | 'UPDATE' | 'DELETE' | 'READ_ONLY';
 export type InputType = 'text' | 'number' | 'email' | 'password';
 export type TypeOperationAlfaMain = 'ADD' | 'CREATE' | 'DELETE';
 export type TypeOperationGeoMain = 'CREATE' | 'DELETE' | 'CAL_BOUND';
@@ -51,21 +51,5 @@ export interface ThirdPartyAffectedParticipant {
   executionId: string;
   thirdPartyAffected: boolean;
 }
-
-export interface EditBasicPropertyInputs {
-  groupName?: string;
-  fields?: InputsField[];
-}
-
-export interface InputsField {
-  name: string;
-  label: string;
-  placeholder: string;
-  collection: boolean;
-  type: string;
-  group: string;
-  groupName: string;
-}
-
 
 

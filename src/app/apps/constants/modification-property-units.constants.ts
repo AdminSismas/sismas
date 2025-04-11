@@ -3,13 +3,6 @@ import { Operation } from '../interfaces/bpm/operation';
 
 export const MODIFYCATION_UNITS_TABLE_COLUMNS: TableColumn<Operation>[] = [
   {
-    label: '',
-    property: 'viewMap',
-    type: 'button',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
     label: 'Matrícula inmobiliaria',
     property: 'registration',
     type: 'text',
@@ -42,6 +35,13 @@ export const MODIFYCATION_UNITS_TABLE_COLUMNS: TableColumn<Operation>[] = [
     property: 'domBaunitEconoDesti',
     type: 'text',
     visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: '',
+    property: 'empty-row',
+    type: 'empty-row',
+    visible: false,
     cssClasses: ['text-secondary', 'font-medium']
   },
   {

@@ -1,5 +1,4 @@
 import { TypeOperationAlfaMain } from '../general/content-info';
-import { Operation } from './operation';
 
 export class DataAlfaMain {
   executionId?: string;
@@ -21,7 +20,6 @@ export class DataAlfaMain {
   neighborhood?: string | null | undefined;
   block?: string | null | undefined;
   sidewalk?: string | null | undefined;
-  operationBaUnitHead?: Operation | null | undefined;
 
   constructor(
     executionId: string,
@@ -40,5 +38,4 @@ export interface ModificationUnitProperties {
   baunitIdE: string;
   npnMatrix: string;
   resources: string[];
-  operationBaUnitHead: Operation
 }

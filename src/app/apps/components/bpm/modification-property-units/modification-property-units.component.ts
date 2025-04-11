@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+// Angular Framework
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+// Material
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -8,34 +10,24 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+// Vex
 import { TableColumn } from '@vex/interfaces/table-column.interface';
+// Custom
 import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
 import { CrudAlfaMainComponent } from '../alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain, ModificationUnitProperties } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
 import {
-  LIST_SCHEMAS_CONTROL_MAIN,
   LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
   PAGE,
   PAGE_OPTION_5_7_10,
   PAGE_SIZE,
-  TYPE_BUTTON_FIVE,
-  TYPE_BUTTON_FOUR,
-  TYPE_BUTTON_NINE,
-  TYPE_BUTTON_ONE,
-  TYPE_BUTTON_SIX,
-  TYPE_BUTTON_TREE,
-  TYPE_BUTTON_TWO,
   TYPE_INFORMATION_EDITION,
-  TYPE_INFORMATION_VISUAL,
   TYPE_OPERATION_ADD,
-  TYPE_OPERATION_CALCULATE_BOUNDARIES,
   TYPE_OPERATION_CREATE,
-  TYPE_OPERATION_CREATE_GEO,
-  TYPE_OPERATION_DELETE,
-  TYPE_OPERATION_DELETE_GEO
+  TYPE_OPERATION_DELETE
 } from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
@@ -45,150 +37,132 @@ import {
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { MODIFYCATION_UNITS_TABLE_COLUMNS } from 'src/app/apps/constants/modification-property-units.constants';
-import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
-import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { MatSort, MatSortHeader } from '@angular/material/sort';
-import { MatFormField, MatPrefix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { stagger40ms } from '@vex/animations/stagger.animation';
 
 @Component({
   selector: 'vex-modification-property-units',
   standalone: true,
-  animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    // Vex
+    // Material
     MatButtonModule,
     MatDialogModule,
     MatDividerModule,
     MatIconModule,
     MatTableModule,
     MatMenuModule,
-    MatPaginatorModule,
-    FluidHeightDirective,
-    FluidMinHeightDirective,
-    VexPageLayoutContentDirective,
-    MatSortHeader,
-    MatFormField,
-    MatInput,
-    MatPrefix,
-    ReactiveFormsModule,
-    MatSort
+    MatPaginatorModule
     // Custom
   ],
   templateUrl: './modification-property-units.component.html',
-  styleUrl: './modification-property-units.component.scss'
+  styles: ``
 })
-export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit {
-
-  executionId: string | null = null;
-  baUnitId: string | null = null;
-  operationBaUnitHead: Operation | null = null;
-  // Configuration paginator
-  totalElements = 0;
-  page = PAGE;
-  pageSize = PAGE_SIZE;
-  pageSizeOptions = PAGE_OPTION_5_7_10;
-
-  dataSource!: MatTableDataSource<BaunitHead>;
-  searchCtrl: UntypedFormControl = new UntypedFormControl();
-  contentInformation!: InformationPegeable;
-
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-
+export class ModificationPropertyUnitsComponent implements OnInit {
+  properties$!: MatTableDataSource<InformationPegeable>;
+  filteredProperties$!: Observable<InformationPegeable>;
   searchForm: FormGroup = this.fb.group({
     searchTerm: [''],
     selectedMatriz: ['']
   });
-
   columns: TableColumn<Operation>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
 
+  get ADD(): TypeOperationAlfaMain {
+    return TYPE_OPERATION_ADD;
+  }
+
+  get CRE(): TypeOperationAlfaMain {
+    return TYPE_OPERATION_CREATE;
+  }
+
+  get DEL(): TypeOperationAlfaMain {
+    return TYPE_OPERATION_DELETE;
+  }
+
+  actions = [
+    {
+      label: 'Editar',
+      icon: 'mat:edit',
+      action: (row: Operation) => this.editPropertyUnit(row)
+    },
+    {
+      label: 'Borrar',
+      icon: 'mat:delete',
+      action: (row: Operation) => this.deletePropertyUnit(row)
+    }
+  ];
+
+  // Configuration paginator
+  totalElements = 0;
+  PAGE = PAGE;
+  PAGE_SIZE = PAGE_SIZE;
+  PAGE_OPTIONS = PAGE_OPTION_5_7_10;
+
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public dataInformationUnitProperties: ModificationUnitProperties,
-    private dialog: MatDialog,
+    public data: ModificationUnitProperties,
     private fb: FormBuilder,
-    private readonly layoutService: VexLayoutService,
-    private alfaMainService: AlfaMainService
-  ) {
-  }
+    private alfaMainService: AlfaMainService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource();
-    if (this.dataInformationUnitProperties?.executionId) {
-      this.executionId = this.dataInformationUnitProperties?.executionId;
-    }
-    if (this.dataInformationUnitProperties?.executionId) {
-      this.executionId = this.dataInformationUnitProperties?.executionId;
-    }
-    if (this.dataInformationUnitProperties?.baunitIdE) {
-      this.baUnitId = this.dataInformationUnitProperties?.baunitIdE;
-    }
-    if (this.dataInformationUnitProperties?.operationBaUnitHead) {
-      this.operationBaUnitHead = this.dataInformationUnitProperties?.operationBaUnitHead;
-    }
+    this.properties$ = new MatTableDataSource();
     this.getPropertiesUnits();
-  }
 
-  ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
+    this.properties$.paginator = this.paginator;
   }
 
   getPropertiesUnits(): void {
-    if (!this.baUnitId) {
-      return;
-    }
-    const page = new PageSearchData(this.page, this.pageSize, this.executionId);
-    this.alfaMainService.getListAlfaMainOperationsUnitsByBaUnitId(
-      page, this.executionId, this.baUnitId).subscribe({
-      error: () => this.captureInformationSubscribeError(),
-      next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
-    });
+    const page = new PageSearchData(
+      this.PAGE,
+      this.PAGE_SIZE,
+      this.data.executionId
+    );
+
+    this.alfaMainService
+      .getListAlfaMainOperationsUnitsByBaunitId(
+        page,
+        this.data.executionId,
+        this.data.baunitIdE
+      )
+      .subscribe({
+        next: (result: InformationPegeable) => {
+          this.properties$.data = result.content;
+          this.totalElements = result.totalElements!;
+        }
+      });
   }
 
-  captureInformationSubscribeError(): void {
-    this.contentInformation = new InformationPegeable();
-    this.dataSource.data = [];
+  get visibleColumns() {
+    return this.columns
+      .filter((column) => column.visible)
+      .map((column) => column.property);
   }
 
-  captureInformationSubscribe(result: InformationPegeable): void {
-    this.contentInformation = result;
-    this.captureInformationData();
+  statusMessage(value: string): string {
+    switch (value) {
+      case 'CREATE':
+        return 'Agregado';
+      case 'UPDATE':
+        return 'Modificado';
+      case 'DELETE':
+        return 'Eliminado';
+      default:
+        return '';
+    }
   }
 
-  captureInformationData(): void {
-    let data: BaunitHead[];
-    if (this.contentInformation?.content != null) {
-      data = this.contentInformation.content;
-      this.dataSource.data = data;
-    }
-
-    if (this.contentInformation == null || (this.contentInformation.content == null || this.contentInformation.content.length <= 0)) {
-      this.page = PAGE;
-      return;
-    }
-
-    if (this.contentInformation.totalElements) {
-      this.totalElements = this.contentInformation.totalElements;
-    }
-
-    if (this.contentInformation.pageable == null) {
-      this.page = PAGE;
-      return;
-    }
-
-    if (this.contentInformation.pageable.pageNumber != null) {
-      this.page = this.contentInformation.pageable.pageNumber;
+  statusClass(value: string): string {
+    switch (value) {
+      case 'CREATE':
+        return 'px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-green-600';
+      case 'UPDATE':
+        return 'px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-primary-600';
+      case 'DELETE':
+        return 'px-4 py-2 rounded-xl !text-white inline-flex self-end max-h-[40px] min-w-[90px] !bg-red-600';
+      default:
+        return '';
     }
   }
 
@@ -200,11 +174,11 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
         data: new ContentInfoSchema(
           row.baunitIdE,
           row,
-          this.executionId,
+          this.data.executionId,
           LIST_SCHEMAS_CONTROL_TEMP,
           TYPE_INFORMATION_EDITION,
           '',
-          this.dataInformationUnitProperties.resources
+          this.data.resources,
         )
       })
       .afterClosed();
@@ -214,66 +188,50 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   }
 
   openCrudAlfaMain(type: TypeOperationAlfaMain) {
-    if (!this.executionId) {
-      return;
-    }
-    const addNpnLike: string = this.dataInformationUnitProperties?.npnMatrix?.slice(0, -8) || '';
+    const addNpnLike: string = this.data?.npnMatrix?.slice(0, -8) || '';
     let config = {};
-    let data: DataAlfaMain = new DataAlfaMain(this.executionId, type, addNpnLike ? { addNpnLike } : null);
-    data.operationBaUnitHead = this.operationBaUnitHead;
     if (type === TYPE_OPERATION_ADD) {
       config = {
         width: '30%',
         minHeight: '30%',
         disableClose: true,
-        data: data
+        data: new DataAlfaMain(
+          this.data.executionId,
+          type,
+          addNpnLike ? { addNpnLike } : null
+        )
       };
     } else {
       config = {
         width: '70%',
         height: '90%',
         disableClose: true,
-        data: data
+        data: new DataAlfaMain(
+          this.data.executionId,
+          type,
+          addNpnLike ? { addNpnLike } : null
+        )
       };
     }
     this.dialog.open(CrudAlfaMainComponent, config);
   }
 
-  refreshPaginator(event: PageEvent) {
-    if (event == null) {
-      return;
-    }
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.getPropertiesUnits();
+  onPageChange(event: PageEvent) {
+    const page = new PageSearchData(
+      event.pageIndex,
+      event.pageSize,
+      this.data.executionId
+    );
+    this.alfaMainService.getListAlfaMainOperationsUnitsByBaunitId(
+      page,
+      this.data.executionId,
+      this.data.baunitIdE
+    )
+    .subscribe({
+      next: (result: InformationPegeable) => {
+        this.properties$.data = result.content;
+        this.totalElements = result.totalElements!;
+      }
+    });
   }
-
-  openCadastralInformationProperty(data: BaunitHead): void {
-    let schemas: string[] = [];
-    schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
-    this.dialog
-      .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-        ...MODAL_LARGE,
-        disableClose: true,
-        data: new ContentInfoSchema(
-          data.baunitIdE, data,
-          this.executionId,
-          schemas,
-          TYPE_INFORMATION_VISUAL
-        )
-      })
-      .afterClosed();
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
-
-  get visibleColumns() {
-    return this.columns.filter((column) => column.visible).map((column) => column.property);
-  }
-
-  protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
-  protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
-  protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
 }
