@@ -30,7 +30,7 @@ import {
   MODAL_MIN_SMALL_40_25,
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  NAME_NO_DISPONIBLE_CERO,
+  NAME_NO_DISPONIBLE_CERO, TYPE_UPDATE,
   TYPE_UPDATE_PROPERTY_UNIT
 } from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
@@ -153,7 +153,7 @@ export class BasicPropertyInformationComponent implements OnInit {
     let data: BasicInformationProperty = this.data;
     data.executionId = this.executionId;
     let dataBasicInformationProperty: CrudBasicInformationProperty = {
-      type: TYPE_UPDATE_PROPERTY_UNIT,
+      type: TYPE_UPDATE,
       contentInformation: data
     };
     this.dialog.open(EditBasicPropertyInformationComponent, {

@@ -1141,6 +1141,7 @@ export const TYPE_ANNEX: TypeQualificationMode = 'ANNEX';
 export const TYPE_CREATE: TypeOperation = 'CREATE';
 export const TYPE_READ_ONLY: TypeOperation = 'READ_ONLY';
 export const TYPE_UPDATE_PROPERTY_UNIT: TypeOperation = 'UPDATE_UND';
+export const TYPE_UPDATE: TypeOperation = 'UPDATE';
 
 export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
   label: 'Tradicional',
