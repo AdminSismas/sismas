@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { CommonModule, NgClass, NgForOf } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { CollectionServices } from '../../../services/general/collection.service';
-import { DomainCalificationCollection, DomainCollection } from '../../../interfaces/general/domain-name.model';
+import { DomainCollection } from '../../../interfaces/general/domain-name.model';
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';
+import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
 
 @Component({
   selector: 'vex-combox-colletion',
@@ -16,7 +17,6 @@ import { HttpParams } from '@angular/common/http';
     MatFormFieldModule,
     MatOptionModule,
     MatSelectModule,
-    NgForOf,
     ReactiveFormsModule,
     MatTableModule,
     NgClass,
@@ -26,10 +26,9 @@ import { HttpParams } from '@angular/common/http';
   styleUrl: './combox-colletion.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ComboxColletionComponent implements OnInit {
+export class ComboxColletionComponent implements OnInit, OnChanges {
 
   options: DomainCollection[] = [];
-  calificationOptions: DomainCalificationCollection[] = [];
 
   @Input() public label = '';
   @Input() public formControlNameCombobox = '';
@@ -43,6 +42,7 @@ export class ComboxColletionComponent implements OnInit {
   @Input() public hideRequiredMarker:boolean = true;
   @Input() public validateInactiveCollection:boolean = false;
   @Input() public queryParams: Record<string, string | number | boolean> = {};
+  @Input() public optionsExternal: DomainCollection[] = [];
 
   @Output() selectionChange = new EventEmitter<any>();
 
@@ -67,7 +67,6 @@ export class ComboxColletionComponent implements OnInit {
 
     if (this.validateFiel(this.typeDomainName)) {
       this.obtainsCollectionsList();
-      this.obtainsCalificationCollectionsList();
     } else if (this.queryParams && Object.keys(this.queryParams).length > 0) {
       this.obtainsCollectionsListParams();
     }
@@ -96,25 +95,19 @@ export class ComboxColletionComponent implements OnInit {
     );
   }
 
-  obtainsCalificationCollectionsList() {
-    if (this.typeCalificationDomainName != null && this.typeCalificationDomainName.length > 0) {
-      this.collectionServicesService.getCalificationDataDomainName(this.typeCalificationDomainName)
-        .subscribe(
-          (result: DomainCalificationCollection[]) => this.captureQualificationInformationSubscribe(result)
-        );
-    }
-  }
-
-  captureQualificationInformationSubscribe(result: DomainCalificationCollection[]) {
-    this.calificationOptions = result;
-  }
-
   captureInformationSubscribe(result: DomainCollection[]) {
     if (result != null && result.length > 0 && this.validateInactiveCollection) {
       result = result.filter(dmc => dmc.inactive === false);
     }
     this.options = result;
     this.loading = false;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['optionsExternal'] && this.optionsExternal.length > 0 && !this.validateFiel(this.typeDomainName)
+     && (!this.queryParams || Object.keys(this.queryParams).length <= 0)) {
+      this.captureInformationSubscribe(this.optionsExternal);
+    }
   }
 
   getRandomInt(max: number) {
@@ -128,4 +121,6 @@ export class ComboxColletionComponent implements OnInit {
   validateFiel(value: string | number | false | true) {
     return value && value !== undefined && value !== null && value !== '';
   }
+
+  protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
 }

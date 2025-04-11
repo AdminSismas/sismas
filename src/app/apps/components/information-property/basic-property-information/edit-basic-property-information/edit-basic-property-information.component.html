@@ -1,70 +1,113 @@
-<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
-  <h3 class="subheading-2 m-0 flex-auto">
-    Editar aspectos generales
-  </h3>
-  <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
-    <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
-  </button>
-</div>
-<mat-divider class="text-border"></mat-divider>
+<form (ngSubmit)="editBasicInformationProperty()" [formGroup]="activeTypeCategoryForm">
+  <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+    @if (typeCategory() === TYPE_UPDATE_PROPERTY_COEFFICIENT) {
+      <h3 class="title m-0 flex-auto">
+        Editar unidad predial
+      </h3>
+    } @else {
+      <h2 class="headline m-0 flex-auto">
+        Editar aspectos generales
+      </h2>
+    }
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button">
+      <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="text-border"></mat-divider>
 
-<mat-dialog-content>
-  <form [formGroup]="form" class="grid grid-flow-row grid-cols-2 gap-x-4">
-    <!-- Recorrer los grupos -->
-    <ng-container *ngFor="let group of inputs">
-      <!-- Título del grupo -->
-      <h3 class="col-span-2 text-black text-center text-sm" style="margin: 16px;">{{ group.groupName }}</h3>
-
-      <!-- Recorrer los campos del grupo -->
-      <ng-container *ngFor="let input of group.fields">
-        <ng-container *ngIf="input.collection">
-          <vex-combox-colletion
-            [label]="input.label"
-            [formControlNameCombobox]="input.name"
-            [typeDomainName]="input.type"
-            [placeholderDomainName]="input.placeholder"
-            [idComboCollection]="input.name"
-            cssClasses="w-full"
-          ></vex-combox-colletion>
+  <mat-dialog-content class="container-fluid p-2 h-full w-full">
+    @if (typeCategory() === TYPE_UPDATE_PROPERTY_COEFFICIENT) {
+      <div class="grid grid-flow-row grid-cols-2 gap-x-2 pb-5">
+        <vex-input
+          idComboInput="buildNumberDetailGruop456{{executionId}}"
+          label="Numero del edificio"
+          type="number"
+          formControlNameInput="buildNumber"
+          [formControlInput]="controlBuildNumber">
+        </vex-input>
+        <vex-input
+          idComboInput="floorNumberDetailGruop456456{{executionId}}"
+          label="Numero del piso"
+          type="number"
+          formControlNameInput="floorNumber"
+          [formControlInput]="controlFloorNumber">
+        </vex-input>
+      </div>
+      <div class="grid grid-flow-row grid-cols-2 gap-x-2 pb-5">
+        <vex-input
+          idComboInput="unitNumberDetailGruop4566{{executionId}}"
+          label="Numero de la unidad predial"
+          type="number"
+          formControlNameInput="unitNumber"
+          [formControlInput]="controlUnitNumber">
+        </vex-input>
+        <vex-input
+          idComboInput="percentageGroupDetailGruop8456{{executionId}}"
+          label="Coeficiente copropiedad"
+          type="number"
+          formControlNameInput="percentageGroup"
+          [formControlInput]="controlPercentageGroup">
+        </vex-input>
+      </div>
+    } @else {
+      <div class="grid grid-flow-row grid-cols-2 gap-x-4" vexMinFluidHeight [fluidHeight]="275">
+        <!-- Recorrer los grupos -->
+        <ng-container *ngFor="let group of inputs">
+          <!-- Título del grupo -->
+          <h3 class="col-span-2 text-black text-center text-sm" style="margin: 16px;">{{ group.groupName }}</h3>
+          <!-- Recorrer los campos del grupo -->
+          <ng-container *ngFor="let input of group.fields">
+            <ng-container *ngIf="input.collection">
+              <vex-combox-colletion
+                [label]="input.label"
+                [formControlNameCombobox]="input.name"
+                [typeDomainName]="input.type"
+                [placeholderDomainName]="input.placeholder"
+                [idComboCollection]="input.name"
+                cssClasses="w-full"
+              ></vex-combox-colletion>
+            </ng-container>
+            <ng-container *ngIf="!input.collection && input.type === 'date'">
+              <mat-form-field>
+                <mat-label>{{ input.label }}</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="beginAt"
+                  [formControlName]="input.name"
+                  [max]="maxDate"
+                />
+                <mat-hint>Formato fecha: DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="beginAt"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #beginAt></mat-datepicker>
+              </mat-form-field>
+            </ng-container>
+            <ng-container *ngIf="!input.collection && input.type !== 'date'">
+              <mat-form-field>
+                <mat-label>{{ input.label }}</mat-label>
+                <input
+                  matInput
+                  [type]="input.type"
+                  [placeholder]="input.placeholder"
+                  [formControlName]="input.name"
+                />
+              </mat-form-field>
+            </ng-container>
+          </ng-container>
         </ng-container>
-        <ng-container *ngIf="!input.collection && input.type === 'date'">
-          <mat-form-field>
-            <mat-label>{{ input.label }}</mat-label>
-            <input
-              matInput
-              [matDatepicker]="beginAt"
-              [formControlName]="input.name"
-              [max]="maxDate"
-            />
-            <mat-hint>Formato fecha: DD/MM/YYYY</mat-hint>
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="beginAt"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #beginAt></mat-datepicker>
-          </mat-form-field>
-        </ng-container>
-        <ng-container *ngIf="!input.collection && input.type !== 'date'">
-          <mat-form-field>
-            <mat-label>{{ input.label }}</mat-label>
-            <input
-              matInput
-              [type]="input.type"
-              [placeholder]="input.placeholder"
-              [formControlName]="input.name"
-            />
-          </mat-form-field>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-
-    <mat-dialog-actions align="center" class="col-span-2 py-2">
-      <button mat-flat-button color="primary" (click)="editBasicInformationProperty()">
+      </div>
+    }
+    <mat-dialog-actions align="end" class="pt-2">
+      <button mat-button mat-dialog-close type="button">Cancelar</button>
+      <button color="primary" mat-flat-button type="submit">
         Aceptar
       </button>
-      <button mat-flat-button mat-dialog-close color="warn">
-        Cancelar
-      </button>
     </mat-dialog-actions>
-  </form>
-</mat-dialog-content>
+  </mat-dialog-content>
+</form>

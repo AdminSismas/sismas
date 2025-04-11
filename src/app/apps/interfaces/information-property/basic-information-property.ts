@@ -1,3 +1,7 @@
+import { BasicDetailGroup } from './basic-detail-group';
+import { BasicMasterGroup } from './basic-master-group';
+import { TypeOperation } from '../general/content-info';
+
 export class BasicInformationProperty {
 
   // GRUPO "Identificación del predio"
@@ -42,8 +46,8 @@ export class BasicInformationProperty {
   hash?: string;
   createdBy?: string;
   createdAt?: string;
-  masterGroup?: string;
-  detailGroup?: string;
+  masterGroup?: BasicMasterGroup;
+  detailGroup?: BasicDetailGroup;
   cadNumDetail?: string;
   npnlike?: string;
   baunitIdE?: string;
@@ -82,8 +86,8 @@ export class BasicInformationProperty {
     this.updatedBy = content?.updatedBy || '';
     this.updatedBy = content?.updatedBy || '';
     this.updatedAt = content?.updatedAt || '';
-    this.masterGroup = content?.masterGroup || '';
-    this.detailGroup = content?.detailGroup || '';
+    this.masterGroup = content?.masterGroup || null;
+    this.detailGroup = content?.detailGroup || null;
     this.cadastralNumberFormat = content?.cadastralNumberFormat || '';
     this.cadNumDetail = content?.cadNumDetail || '';
     this.npnlike = content?.npnlike || '';
@@ -94,6 +98,10 @@ export class BasicInformationProperty {
   }
 }
 
+export interface CrudBasicInformationProperty {
+  type:TypeOperation;
+  contentInformation: BasicInformationProperty | null;
+}
 export interface UpdateBasicInformationProperty {
   propertyRegistryOffice:      string;
   propertyRegistryNumber:      string;
