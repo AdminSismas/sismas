@@ -11,9 +11,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TypeOperationAlfaMain } from '../../../../interfaces/general/content-info';
 import {
+  CONSTANT_TYPEDOMAIN_BAUNITCONDITION,
+  CONSTANT_TYPEDOMAIN_DISPNAME_CO_,
+  CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATRIZ,
+  CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATZ,
+  CONSTANT_TYPEDOMAIN_DISPNAME_PC_,
+  CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATRIZ,
+  CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATZ,
+  CONSTANT_TYPEDOMAIN_DISPNAME_PH_,
+  CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ,
+  CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ,
   PAGE,
   PAGE_OPTION_UNIQUE_7,
   STRING_INFORMATION_NOT_FOUND,
@@ -52,6 +61,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { CurrencyLandsPipe } from '../../../../pipes/currency-lands.pipe';
 import Swal from 'sweetalert2';
+import { Operation } from '../../../../interfaces/bpm/operation';
+import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
+import { CollectionServices } from '../../../../services/general/collection.service';
 
 @Component({
   selector: 'vex-crud-alfa-main',
@@ -88,6 +100,8 @@ import Swal from 'sweetalert2';
 })
 export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
 
+  baunitConditionOptions: DomainCollection[] = [];
+
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   subject$: ReplaySubject<BaunitHead[]> = new ReplaySubject<BaunitHead[]>(1);
   data$: Observable<BaunitHead[]> = this.subject$.asObservable();
@@ -97,6 +111,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   optionsListNpnlike$: Observable<string[]> | undefined;
   executionId!: string;
   typeOperation!: TypeOperationAlfaMain;
+  operationBaUnitHead: Operation | null = null;
 
 
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN;
@@ -126,6 +141,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: DataAlfaMain,
+    private collectionServicesService: CollectionServices,
     private readonly layoutService: VexLayoutService,
     private alfaMainService: AlfaMainService,
     private fb: FormBuilder,
@@ -142,6 +158,10 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource();
     this.executionId = this.defaults.executionId;
     this.typeOperation = this.defaults?.typeOperation;
+    if (this.defaults?.operationBaUnitHead) {
+      this.operationBaUnitHead = this.defaults?.operationBaUnitHead;
+      this.obtainsCollectionsListUnitProperty();
+    }
 
     this.loadingNpnlike();
 
@@ -233,15 +253,6 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
           throw error;
         }
       });
-    // this.alfaMainService.createTemporalBeaUnithead(
-    //   addNpnLike, this.executionId, bAunitCondition)
-    //   .then(() => {
-    //     this.snackBar.open(
-    //       'Se creó una nueva unidad predial.',
-    //       'CLOSE', { duration: 10000 }
-    //     );
-    //     this.dialogRef.close();
-    //   });
   }
 
   createBeaUnitHeadUpdate(baunit: BaunitHead): void {
@@ -327,6 +338,28 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       showConfirmButton: false,
       timer: timer
     }).then();
+  }
+
+  obtainsCollectionsListUnitProperty() {
+    this.collectionServicesService.getDataDomainName(CONSTANT_TYPEDOMAIN_BAUNITCONDITION)
+      .subscribe((result: DomainCollection[]) => this.captureCollectionsListUnitProperty(result)
+      );
+  }
+
+  captureCollectionsListUnitProperty(result: DomainCollection[]) {
+    let data:DomainCollection[] = [];
+    if(this.typeOperation === this.TYPEOPERATION_ADD && this.operationBaUnitHead &&
+    this.operationBaUnitHead.baunitHead) {
+      let domBaunitCondition = this.operationBaUnitHead.baunitHead?.domBaunitCondition;
+      if(domBaunitCondition === CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ){
+        data = result.filter(dm => dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PH_) && !dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ));
+      } else if(domBaunitCondition === CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATRIZ){
+        data = result.filter(dm => dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_CO_) && !dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATZ));
+      } else if(domBaunitCondition === CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATRIZ){
+        data = result.filter(dm => dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PC_) && !dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATZ));
+      }
+      this.baunitConditionOptions = data;
+    }
   }
 
   get visibleColumns() {

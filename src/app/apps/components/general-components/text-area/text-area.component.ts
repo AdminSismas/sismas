@@ -119,6 +119,10 @@ export class TextAreaComponent implements OnInit {
       return CONSTANT_ERR_ONLY_INVALID_LETTER;
     }
 
+    if (formControl.errors?.hasOwnProperty('max') && formControl.errors?.['max']) {
+      return 'Error, valor maximo: ' + formControl.errors?.['max'].max + ' valor actual: ' + formControl.errors?.['max'].actual;
+    }
+
     return '';
   }
 

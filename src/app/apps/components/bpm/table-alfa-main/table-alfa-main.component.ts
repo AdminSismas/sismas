@@ -109,6 +109,7 @@ export class TableAlfaMainComponent
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+
   @ViewChild('confirmRemoveDialog', { static: true })
   confirmRemoveDialog!: SwalComponent;
   @ViewChild('confirmDeleteDialog', { static: true })
@@ -356,11 +357,13 @@ export class TableAlfaMainComponent
   editCadastralUnits(row: Operation) {
     this.dialog.open(ModificationPropertyUnitsComponent, {
       ...MODAL_MEDIUM,
+      disableClose: true,
       data: {
         executionId: this.executionId,
         baunitIdE: row.baunitHead?.baunitIdE,
         npnMatrix: row.baunitHead!.cadastralNumber,
-        resources: this.resources
+        resources: this.resources,
+        operationBaUnitHead: row
       }
     });
   }

@@ -42,7 +42,8 @@ export class InformationPropertyService {
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {}
+  ) {
+  }
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);
@@ -343,16 +344,20 @@ export class InformationPropertyService {
   }
 
   updateBasicInformationProperty(
-    executionId: string,
-    baunitId: string,
-    body: UpdateBasicInformationProperty
+    executionId: string, baunitId: string, body: UpdateBasicInformationProperty
   ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http.put<BasicInformationProperty>(url, body).pipe(
-      catchError((error) => {
-        throw error;
-      })
-    );
+    return this.http.put<BasicInformationProperty>(url, body)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error))
+      );
+  }
+
+  updateBasicCoefficientInformationProperty(
+    executionId: string, baunitId: string, body: BasicInformationProperty): Observable<BasicInformationProperty> {
+    const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+    return this.http.put<BasicInformationProperty>(url, body)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error))
+      );
   }
 
   /**
