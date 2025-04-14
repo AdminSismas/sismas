@@ -55,18 +55,6 @@ export class AlfaMainService {
     return this.getData(url, paramsR);
   }
 
-  getListAlfaMainOperationsUnitsByBaUnitId(
-    page: PageSearchData, executionId: string | null, baunitId: string ): Observable<InformationPegeable> {
-    let url = '';
-    if(!executionId) {
-      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.main}/${baunitId}`;
-    } else {
-      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    }
-    const paramsR: HttpParams = new HttpParams().set('page', `${page.page}`).set('size', `${page.size}`);
-    return this.http.get<InformationPegeable>(url, { params: paramsR });
-  }
-
   //{{url}}:{{port}}/temporal/clearChangelog
   clearInformationAlfaMain(executionId: string, keyword: string) {
     const formdata = new FormData();
@@ -159,6 +147,17 @@ export class AlfaMainService {
       `${this.basic_url}${envi.temporal}${envi.bAUnitDeleteExistTemp}`,
       { params }
     );
+  }
+
+
+  /**
+   * MAIN
+   *
+   * */
+  // {{url}}:{{port}}/baunit/main/{{executionId}}/{{baunitId}}
+  getBaUnitHead(baunitId: string ): Observable<BaunitHead> {
+    const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.main}/${baunitId}`;
+    return this.requestsService.sendRequestsFetchGet(url);
   }
 
   /**

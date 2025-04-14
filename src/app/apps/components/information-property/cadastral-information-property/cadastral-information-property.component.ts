@@ -198,7 +198,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
   })
   private alertsComponent?: ElementRef;
 
-
   @Input({ required: true }) typeInformation: TypeInformation = TYPE_INFORMATION_VISUAL;
   @Input({ required: true }) public showTittle = true;
   @Input({ required: true }) public label!: string;

@@ -40,14 +40,17 @@
               <span class="flex-1"></span>
             </div>
           }
-          <table @stagger [dataSource]="dataSource" class="w-full" mat-table matSort>
+          <table
+            @stagger
+            [dataSource]="dataSource"
+            class="w-full"
+            mat-table
+            matSort>
             <ng-container matColumnDef="viewMap">
-              <th
-                *matHeaderCellDef
-                class="pl-1 pr-1"
-                mat-header-cell
-                mat-sort-header
-              ></th>
+              <th *matHeaderCellDef
+                  class=" pl-1 pr-1"
+                  mat-header-cell
+                  mat-sort-header></th>
               <td
                 *matCellDef="let row"
                 class="pl-1 pr-1"
@@ -67,42 +70,40 @@
                 </div>
               </td>
             </ng-container>
+
             <!-- Text Columns -->
-            <ng-container
-              *ngFor="let column of columns; trackBy: trackByProperty"
-            >
-              <ng-container
-                *ngIf="column.type === 'text'"
-                [matColumnDef]="column.property"
-              >
-                <th
-                  *matHeaderCellDef
-                  class="pl-1 pr-1"
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                  class="pl-1 pr-1"
-                >
-                  {{ row[column.property] }}
-                </td>
-              </ng-container>
-            </ng-container>
-            <tr
-              *matHeaderRowDef="visibleColumns"
-              mat-header-row
-            ></tr>
-            <tr
-              *matRowDef="let row; columns: visibleColumns"
-              @fadeInUp
-              class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
-              mat-row
-            ></tr>
+            @for (column of columns; track trackByProperty) {
+              @if (column.type === "text") {
+                <ng-container [matColumnDef]="column.property">
+                  <th *matHeaderCellDef
+                      class="pl-1 pr-1" mat-header-cell mat-sort-header>
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses" mat-cell class="pl-1 pr-1">
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              } @else if (column.type === "percentage") {
+                <ng-container [matColumnDef]="column.property">
+                  <th *matHeaderCellDef
+                      class="pl-1 pr-1"
+                      mat-header-cell
+                      mat-sort-header>
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                    class="pl-1 pr-1">
+                    {{ row[column.property] | percent:'1.1-15' }}
+                  </td>
+                </ng-container>
+              }
+            }
+            <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
           </table>
           @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
             <div class="no-data-information text-gray-500 text-lg">

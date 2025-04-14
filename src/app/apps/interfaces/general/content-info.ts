@@ -1,3 +1,5 @@
+import { ContentInfoSchema } from './content-info-schema';
+
 export type Element =
   | 'input'
   | 'select'
@@ -21,6 +23,7 @@ export type TypeOperationPeople = 'create' | 'update';
 export interface ObjectSchema {
   schema: string;
   title: string;
+  defaultObject: ContentInfoSchema;
 }
 
 export interface ClearInformationData {

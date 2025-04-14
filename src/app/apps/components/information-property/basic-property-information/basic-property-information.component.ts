@@ -225,32 +225,52 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   openCadastralMasterGroupE(): void {
     let masterGroupE: string | null | undefined = this.data?.detailGroup?.masterGroupE;
-    if (!masterGroupE || !this.executionId) {
+    if (!masterGroupE) {
       return;
     }
-    this.alfaMainService.getBaUnitHeadTemporal(this.executionId, masterGroupE)
-      .subscribe({
-        next: (result: BaunitHead) => {
-          if (result === null) {
-            this.swalErrorInformationProceduresNotFound();
-            return;
-          }
-          let schemas: string[] = [];
-          schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
-          let dataInfo: ContentInfoSchema = new ContentInfoSchema(
-            masterGroupE, result, this.executionId, schemas, TYPE_INFORMATION_VISUAL
-          );
-          dataInfo.levelInfo = 3;
-          this.dialog
-            .open(LayoutCardCadastralInformationPropertyComponentComponent, {
-              ...MODAL_LARGE,
-              disableClose: true,
-              data: dataInfo
-            })
-            .afterClosed();
-        },
-        error: () => this.swalErrorBaUnitHead(this.executionId, masterGroupE)
+
+    if (!this.executionId) {
+      this.openCadastralMasterGroupEMain(masterGroupE);
+      return;
+    }
+
+    this.alfaMainService.getBaUnitHeadTemporal(this.executionId, masterGroupE).subscribe({
+      next: (result: BaunitHead) => this.executeOpenCadastralMaster(result, masterGroupE),
+      error: () => this.swalErrorBaUnitHead(this.executionId, masterGroupE)
       });
+  }
+
+  openCadastralMasterGroupEMain(masterGroupE: string | null | undefined) {
+    if (!masterGroupE) {
+      return;
+    }
+    this.alfaMainService.getBaUnitHead(masterGroupE).subscribe({
+      next: (result: BaunitHead) => this.executeOpenCadastralMaster(result, masterGroupE),
+      error: () => this.swalErrorBaUnitHead(this.executionId, masterGroupE)
+    });
+  }
+
+  executeOpenCadastralMaster(result: BaunitHead, masterGroupE: string | null | undefined) {
+    if (!masterGroupE) {
+      return;
+    }
+    if (result === null) {
+      this.swalErrorInformationProceduresNotFound();
+      return;
+    }
+    let schemas: string[] = [];
+    schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
+    let dataInfo: ContentInfoSchema = new ContentInfoSchema(
+      masterGroupE, result, this.executionId, schemas, TYPE_INFORMATION_VISUAL
+    );
+    dataInfo.levelInfo = 3;
+    this.dialog
+      .open(LayoutCardCadastralInformationPropertyComponentComponent, {
+        ...MODAL_LARGE,
+        disableClose: true,
+        data: dataInfo
+      })
+      .afterClosed();
   }
 
   swalErrorBaUnitHead(executionId: string | null | undefined,

@@ -200,50 +200,6 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   }
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
-export const TABLE_COLUMN_INFORMATION_PROPERTIES: TableColumn<BaunitHead>[] = [
-  {
-    label: 'Ver acciones',
-    property: 'viewMap',
-    type: 'button',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Matrícula inmobiliaria',
-    property: 'registration',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Número predial',
-    property: 'cadastralNumber',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
-  },
-  {
-    label: 'Área terreno',
-    property: 'cadastralAreaE',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
-  },
-  {
-    label: 'Condición',
-    property: 'domBaunitCondition',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Destino económico',
-    property: 'domBaunitEconoDesti',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  }
-];
 export const TABLE_COLUMN_DOCUMENT_ASSOCIATION: TableColumn<OutFormatModel>[] = [
   {
     label: 'ID',

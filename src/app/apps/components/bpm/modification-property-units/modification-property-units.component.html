@@ -72,7 +72,7 @@
           matSort>
           <ng-container matColumnDef="viewMap">
             <th *matHeaderCellDef
-                class="!bg-slate-300 pl-1 pr-1"
+                class="pl-1 pr-1"
                 mat-header-cell
                 mat-sort-header></th>
             <td
@@ -99,33 +99,36 @@
             @if (column.type === "text") {
               <ng-container [matColumnDef]="column.property">
                 <th *matHeaderCellDef
-                    class="!bg-slate-300 pl-1 pr-1"
+                    class="pl-1 pr-1" mat-header-cell mat-sort-header>
+                  {{ column.label }}
+                </th>
+                <td
+                  *matCellDef="let row"
+                  [ngClass]="column.cssClasses" mat-cell class="pl-1 pr-1">
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
+            } @else if (column.type === "percentage") {
+              <ng-container [matColumnDef]="column.property">
+                <th *matHeaderCellDef
+                    class=" pl-1 pr-1"
                     mat-header-cell
                     mat-sort-header>
                   {{ column.label }}
                 </th>
-                @if (column.property === "registration") {
-                  <td
-                    *matCellDef="let row"
-                    mat-cell
-                    class="pl-1 pr-1">
-                    {{ row.propertyRegistryOffice }} - {{ row.propertyRegistryNumber }}
-                  </td>
-                } @else {
-                  <td
-                    *matCellDef="let row"
-                    mat-cell
-                    class="pl-1 pr-1">
-                    {{ row[column.property] }}
-                  </td>
-                }
+                <td
+                  *matCellDef="let row"
+                  mat-cell
+                  class="pl-1 pr-1">
+                  {{ row[column.property] | percent:'1.1-15' }}
+                </td>
               </ng-container>
             }
           }
           <!-- Action Column -->
           <ng-container matColumnDef="actions">
             <th *matHeaderCellDef
-                class="!bg-slate-300 pl-1 pr-1"
+                class="pl-1 pr-1"
                 mat-header-cell
                 mat-sort-header>
             </th>

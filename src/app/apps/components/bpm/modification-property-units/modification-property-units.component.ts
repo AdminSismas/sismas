@@ -9,7 +9,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
 import { CrudAlfaMainComponent } from '../alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain, ModificationUnitProperties } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
@@ -33,8 +32,9 @@ import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
-import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
-import { MODIFYCATION_UNITS_TABLE_COLUMNS } from 'src/app/apps/constants/modification-property-units.constants';
+import {
+  MODIFYCATION_UNITS_TABLE_COLUMNS
+} from '../../../constants/information-property/modification-property-units.constants';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -44,6 +44,11 @@ import { MatInput } from '@angular/material/input';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
+import {
+  UnitPropertyInformationService
+} from '../../../services/territorial-organization/baunit-children-information.service';
+import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
+import { NgClass, PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -65,7 +70,9 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
     MatInput,
     MatPrefix,
     ReactiveFormsModule,
-    MatSort
+    MatSort,
+    PercentPipe,
+    NgClass
     // Custom
   ],
   templateUrl: './modification-property-units.component.html',
@@ -82,7 +89,7 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   pageSize = PAGE_SIZE;
   pageSizeOptions = PAGE_OPTION_5_7_10;
 
-  dataSource!: MatTableDataSource<BaunitHead>;
+  dataSource!: MatTableDataSource<BaUnitHeadPercentage>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   contentInformation!: InformationPegeable;
 
@@ -93,7 +100,7 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
     selectedMatriz: ['']
   });
 
-  columns: TableColumn<Operation>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
+  columns: TableColumn<BaUnitHeadPercentage>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
 
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -101,10 +108,10 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public dataInformationUnitProperties: ModificationUnitProperties,
+    private unitPropertyInformationService: UnitPropertyInformationService,
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private readonly layoutService: VexLayoutService,
-    private alfaMainService: AlfaMainService
+    private readonly layoutService: VexLayoutService
   ) {
   }
 
@@ -139,7 +146,7 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
       return;
     }
     const page = new PageSearchData(this.page, this.pageSize, this.executionId);
-    this.alfaMainService.getListAlfaMainOperationsUnitsByBaUnitId(
+    this.unitPropertyInformationService.getListPropertyUnitsByBaUnitIdV2(
       page, this.executionId, this.baUnitId).subscribe({
       error: () => this.captureInformationSubscribeError(),
       next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
@@ -157,9 +164,10 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   }
 
   captureInformationData(): void {
-    let data: BaunitHead[];
+    let data: BaUnitHeadPercentage[];
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
+      data = data.map((row: BaUnitHeadPercentage) => new BaUnitHeadPercentage(row));
       this.dataSource.data = data;
     }
 
@@ -182,14 +190,14 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
     }
   }
 
-  editPropertyUnit(row: BaunitHead) {
+  editPropertyUnit(row: BaUnitHeadPercentage) {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
         ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
-          row.baunitIdE,
-          row,
+          row.baunitHead?.baunitIdE,
+          row.baunitHead,
           this.executionId,
           LIST_SCHEMAS_CONTROL_TEMP,
           TYPE_INFORMATION_EDITION,
@@ -238,11 +246,11 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
     this.getPropertiesUnits();
   }
 
-  openCadastralInformationProperty(data: BaunitHead): void {
+  openCadastralInformationProperty(data: BaUnitHeadPercentage): void {
     let schemas: string[] = [];
     schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
     let dataInfo: ContentInfoSchema = new ContentInfoSchema(
-      data.baunitIdE, data, this.executionId, schemas, TYPE_INFORMATION_VISUAL
+      data.baunitHead?.baunitIdE, data.baunitHead, this.executionId, schemas, TYPE_INFORMATION_VISUAL
     );
     dataInfo.levelInfo = 2;
     this.dialog

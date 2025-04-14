@@ -87,7 +87,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
     }
 
     this.defaults.schemas.forEach((schema: string) =>
-      this.createObjectLayout(schema)
+      this.createObjectLayout(schema, this.defaults)
     );
     this.typeInformation = this.defaults.typeInformation;
 
@@ -110,16 +110,18 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
     }
   }
 
-  createObjectLayout(schema: string): void {
+  createObjectLayout(schema: string, defaults: ContentInfoSchema): void {
+    let defaultObject: ContentInfoSchema = { ...defaults };
     let title = '';
     if (schema === `${envi.schemas.main}`) {
       title = CONSTANT_INFORMATION_PREDIAL_MAIN;
+      defaultObject.executionId = null;
     } else if (schema === `${envi.schemas.temp}`) {
       title = CONSTANT_INFORMATION_PREDIAL_TEMP;
     } else {
       title = CONSTANT_INFORMATION_PREDIAL_HIST;
     }
-    this.optionSchemas.push({ schema, title });
+    this.optionSchemas.push({ schema, title, defaultObject });
   }
 
   ngAfterViewInit(): void {

@@ -5,7 +5,6 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -14,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, PercentPipe } from '@angular/common';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
@@ -26,10 +25,9 @@ import {
   LIST_SCHEMAS_CONTROL_CHANGES,
   LIST_SCHEMAS_CONTROL_MAIN,
   MODAL_LARGE,
-  PAGE, PAGE_OPTION_5_7_10,
-  PAGE_SIZE_OPTION, PAGE_SIZE_SORT,
-  PAGE_SIZE_TABLE_CADASTRAL,
-  TABLE_COLUMN_INFORMATION_PROPERTIES,
+  PAGE,
+  PAGE_OPTION_5_7_10,
+  PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
@@ -51,10 +49,12 @@ import {
 import {
   UnitPropertyInformationService
 } from '../../../services/territorial-organization/baunit-children-information.service';
-import { Baunit, BAunitLike } from 'src/app/apps/interfaces/information-property/baunit-npnlike';
 import { getRandomInt } from '../../../utils/general';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
-import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import {
+  TABLE_COLUMN_UNITS_TABLE_COLUMNS
+} from '../../../constants/information-property/modification-property-units.constants';
+import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
 
 @Component({
   selector: 'vex-information-unit-property',
@@ -65,8 +65,6 @@ import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
   imports: [
     FormsModule,
     NgClass,
-    NgFor,
-    NgIf,
     ReactiveFormsModule,
     // Vex
     // Material
@@ -90,16 +88,16 @@ import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
     MatTabsModule,
     MatTooltipModule,
     // Custom
-    HeaderCadastralInformationPropertyComponent
+    HeaderCadastralInformationPropertyComponent,
+    PercentPipe
   ]
 })
 export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
-  dataSource!: MatTableDataSource<BaunitHead>;
+  dataSource!: MatTableDataSource<BaUnitHeadPercentage>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
-  baunitData!: Baunit;
 
   @Input({ required: true }) id = '';
   @Input({ required: true }) expandedComponent = false;
@@ -112,7 +110,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   pageSize: number = PAGE_SIZE_SORT;
   pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   totalElements = 0;
-  columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_INFORMATION_PROPERTIES;
+  columns: TableColumn<BaUnitHeadPercentage>[] = TABLE_COLUMN_UNITS_TABLE_COLUMNS;
 
   @ViewChild(MatPaginator, { read: true }) paginatorUnitProperty?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -121,8 +119,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private unitPropertyInformationService: UnitPropertyInformationService,
-    private alfaMainService: AlfaMainService
+    private unitPropertyInformationService: UnitPropertyInformationService
   ) {
     this.destroyRef.onDestroy(() => {
     });
@@ -153,50 +150,20 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
-      if (this.executionId) {
-        this.searchUnitPropertyInformationTemp();
-      } else {
-        this.searchBaUnitIdInformation();
-      }
+      this.searchUnitPropertyInformationTemp();
     }
-  }
-
-  searchBaUnitIdInformation(): void {
-    if (!this.schema || !this.baunitId) {
-      return;
-    }
-    this.unitPropertyInformationService.getBaunitInformation(this.baunitId).subscribe({
-      error: () => this.captureInformationSubscribeError(),
-      next: (result: Baunit) => {
-        this.baunitData = result;
-        this.searchUnitPropertyInformation(result);
-      }
-    });
   }
 
   searchUnitPropertyInformationTemp(): void {
-    if (!this.baunitId || !this.executionId) {
+    if (!this.baunitId) {
       return;
     }
     const page = new PageSearchData(this.page, this.pageSize, this.executionId);
-    this.alfaMainService.getListAlfaMainOperationsUnitsByBaUnitId(
+    this.unitPropertyInformationService.getListPropertyUnitsByBaUnitIdV2(
       page, this.executionId, this.baunitId).subscribe({
       error: () => this.captureInformationSubscribeError(),
       next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
     });
-  }
-
-  searchUnitPropertyInformation(result: Baunit): void {
-    if (!this.schema || !this.baunitId || !result) {
-      return;
-    }
-    const page = new PageSearchData(this.page, this.pageSize, this.executionId);
-    this.unitPropertyInformationService.getListUnitPropertyInformation(page, result.cadastralNumber)
-      .subscribe({
-        error: () => this.captureInformationSubscribeError(),
-        next: (result2: InformationPegeable) =>
-          this.captureInformationSubscribe(result2)
-      });
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
@@ -205,10 +172,10 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   }
 
   captureInformationCadastralData(): void {
-    let data: BaunitHead[];
+    let data: BaUnitHeadPercentage[];
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
-      data = data.map((row: BaunitHead) => new BaunitHead(row));
+      data = data.map((row: BaUnitHeadPercentage) => new BaUnitHeadPercentage(row));
       this.dataSource.data = data;
     }
 
@@ -274,7 +241,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     }
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.searchUnitPropertyInformation(this.baunitData);
+    this.searchUnitPropertyInformationTemp();
   }
 
   get visibleColumns() {

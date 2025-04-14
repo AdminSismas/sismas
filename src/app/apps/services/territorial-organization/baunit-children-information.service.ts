@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { catchError, Observable, tap } from 'rxjs';
 import { Baunit, BAunitLike } from '../../interfaces/information-property/baunit-npnlike';
@@ -15,8 +15,9 @@ export class UnitPropertyInformationService {
   basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService
-  ) { }
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
+  ) {}
 
   //{{url}}:{{port}}/baunit/baunitId
   getBaunitInformation( baunitId: string ): Observable<Baunit> {
@@ -46,4 +47,32 @@ export class UnitPropertyInformationService {
         })
       );
   }
+
+  //{{url}}:{{port}}/baunit/headBaunitByMaster/main/{baunitId}
+  getListPropertyUnitsByBaUnitId(
+    page: PageSearchData, executionId: string | null | undefined, baunitId: string ): Observable<InformationPegeable> {
+    let url = '';
+    if(!executionId) {
+      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.main}/${baunitId}`;
+    } else {
+      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}/${executionId}/${baunitId}`;
+    }
+    const paramsR: HttpParams = new HttpParams().set('page', `${page.page}`).set('size', `${page.size}`);
+    return this.http.get<InformationPegeable>(url, { params: paramsR });
+  }
+
+  // {{url}}:{{port}}/baunit/headBaunitByMaster/main/v2/{{baunitId}}?page=0&size=10
+  // {{url}}:{{port}}/baunit/headBaunitByMaster/temp/v2/{{executionId}}/{{baunitId}}?page=0&size=10
+  getListPropertyUnitsByBaUnitIdV2(
+    page: PageSearchData, executionId: string | null | undefined, baunitId: string ): Observable<InformationPegeable> {
+    let url = '';
+    if(!executionId) {
+      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.main}${envi.v2}/${baunitId}`;
+    } else {
+      url = `${this.basic_url}/${envi.baunit}${envi.headBaunitByMaster}/${envi.schemas.temp}${envi.v2}/${executionId}/${baunitId}`;
+    }
+    const paramsR: HttpParams = new HttpParams().set('page', `${page.page}`).set('size', `${page.size}`);
+    return this.http.get<InformationPegeable>(url, { params: paramsR });
+  }
+
 }
