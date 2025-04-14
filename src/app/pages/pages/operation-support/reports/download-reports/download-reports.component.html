@@ -1,6 +1,9 @@
 <div class="card pt-6 px-6 pb-4 shadow-lg rounded-lg bg-white relative">
-
-  <button (click)="goBack()" mat-icon-button class="absolute top-4 left-4">
+  <button
+    (click)="goBack()"
+    mat-icon-button
+    class="absolute top-4 left-4"
+  >
     <mat-icon class="text-gray-600">arrow_back</mat-icon>
   </button>
 
@@ -8,98 +11,185 @@
     <span class="text-primary-600">{{ categoryName }}</span>
   </div>
 
-
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 mt-6">
-
-
+  <div
+    class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-4 mt-6"
+  >
     <mat-form-field class="flex-1 sm:max-w-xs">
       <mat-label>Fecha Inicial</mat-label>
-      <input matInput [matDatepicker]="startPicker" (dateChange)="updateDate($event, 'start')" readonly>
-      <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <input
+        matInput
+        [matDatepicker]="startPicker"
+        (dateChange)="updateDate($event, 'start')"
+        readonly
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="startPicker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #startPicker></mat-datepicker>
     </mat-form-field>
 
-
     <mat-form-field class="flex-1 sm:max-w-xs">
       <mat-label>Fecha Final</mat-label>
-      <input matInput [matDatepicker]="endPicker" (dateChange)="updateDate($event, 'end')" readonly>
-      <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <input
+        matInput
+        [matDatepicker]="endPicker"
+        (dateChange)="updateDate($event, 'end')"
+        readonly
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="endPicker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
 
-
-    <button (click)="searchReports()" color="primary" mat-flat-button type="button" class="w-full sm:w-auto sm:ml-4"
-      [disabled]="isSearchDisabled">
+    <button
+      (click)="searchReports()"
+      color="primary"
+      mat-flat-button
+      type="button"
+      class="w-full sm:w-auto sm:ml-4"
+      [disabled]="isSearchDisabled"
+    >
       <mat-icon svgIcon="mat:search"></mat-icon>
       Buscar
     </button>
-
-
-
-
   </div>
-
 </div>
 
-
 <div class="card overflow-auto mt-4">
-
-  <div class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center justify-between">
-
-
-    <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-6 pb-6 flex flex-col">
-      <mat-icon matIconPrefix svgIcon="mat:search"></mat-icon>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar reporte" type="text">
+  <div
+    class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center justify-between"
+  >
+    <mat-form-field
+      subscriptSizing="dynamic"
+      class="pl-1 pr-1 pt-6 pb-6 flex flex-col"
+    >
+      <mat-icon
+        matIconPrefix
+        svgIcon="mat:search"
+      ></mat-icon>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Buscar reporte"
+        type="text"
+      />
     </mat-form-field>
 
-
-    <button (click)="exportToExcel()" color="primary" mat-flat-button type="button" class="w-full sm:w-auto sm:ml-4"
-      [disabled]="isExportDisabled">
+    <button
+      (click)="exportToExcel()"
+      color="primary"
+      mat-flat-button
+      type="button"
+      class="w-full sm:w-auto sm:ml-4"
+      [disabled]="isExportDisabled"
+    >
       <mat-icon svgIcon="mat:publish"></mat-icon>
       Exportar
     </button>
-
-
-
-
-
   </div>
 
-
   <!-- Tabla de dominios -->
-  <table mat-table [dataSource]="dataSource" class="w-full " matSort>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="w-full"
+    matSort
+  >
     <!-- Columnas -->
     <ng-container matColumnDef="ficha">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Ficha</th>
-      <td mat-cell *matCellDef="let element">{{ element.ficha }}</td>
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        Ficha
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+      >
+        {{ element.ficha }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="fecha_registro">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Registro</th>
-      <td mat-cell *matCellDef="let element">{{ element.fecha_registro | date:'yyyy-MM-dd' }}</td>
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        Fecha Registro
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+      >
+        {{ element.fecha_registro | date: "yyyy-MM-dd" }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="area_catastral">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Área Catastral</th>
-      <td mat-cell *matCellDef="let element">{{ element.area_catastral }} m²</td>
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        Área Catastral
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+      >
+        {{ element.area_catastral }} m²
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="npn">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>NPN</th>
-      <td mat-cell *matCellDef="let element">{{ element.npn }}</td>
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+      >
+        NPN
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+      >
+        {{ element.npn }}
+      </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="displayedColumns"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
   </table>
 
-  <div *ngIf="dataSource?.data?.length === 0" class="text-center text-gray-500 py-4">
+  <div
+    *ngIf="dataSource?.data?.length === 0"
+    class="text-center text-gray-500 py-4"
+  >
     <mat-icon class="text-gray-400">info</mat-icon>
-    <p class="mt-2">No hay reportes disponibles para el periodo seleccionado.</p>
+    <p class="mt-2">
+      No hay reportes disponibles para el periodo seleccionado.
+    </p>
   </div>
 
   <!-- Paginador -->
-  <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons [length]="totalElements" [pageSize]="pageSize"
-    (page)="pageEvent($event)">
+  <mat-paginator
+    [pageSizeOptions]="pageSizeOptions"
+    showFirstLastButtons
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    (page)="pageEvent($event)"
+  >
   </mat-paginator>
 </div>
