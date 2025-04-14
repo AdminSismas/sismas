@@ -198,13 +198,13 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openCadastralInformationProperty(data: BaunitHead): void {
+  openCadastralInformationProperty(data: BaUnitHeadPercentage): void {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
         ...MODAL_LARGE,
         disableClose: true,
         data: new ContentInfoSchema(
-          data.baunitIdE, data,
+          data.baunitHead?.baunitIdE, data.baunitHead,
           this.executionId,
           this.viewSchemas(),
           TYPE_INFORMATION_VISUAL
