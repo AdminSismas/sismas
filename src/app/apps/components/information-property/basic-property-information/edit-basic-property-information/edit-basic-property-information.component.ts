@@ -1,7 +1,18 @@
 import { Component, Inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogClose, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogClose,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import {
@@ -10,27 +21,38 @@ import {
   UpdateBasicInformationProperty
 } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
-import {
-  InformationPropertyService
-} from 'src/app/apps/services/territorial-organization/information-property.service';
-import { CommonModule } from '@angular/common';
+import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { environment } from 'src/environments/environments';
-import { EditBasicPropertyInputs, TypeOperation } from '../../../../interfaces/general/content-info';
+import {
+  EditBasicPropertyInputs,
+  TypeOperation
+} from '../../../../interfaces/general/content-info';
 import { TYPE_UPDATE_PROPERTY_UNIT } from '../../../../constants/general/constants';
 import { InputComponent } from '../../../general-components/input/input.component';
 import Swal from 'sweetalert2';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
-import {
-  FORM_INPUT_BASIC_PROPERTY
-} from '../../../../constants/information-property/basic-property-information.constants';
+import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-property/basic-property-information.constants';
+
+enum BaunitCondition {
+  'Bien de uso público' = 'Bien de uso público',
+  '(Condominio) Matriz' = '(Condominio) Matriz',
+  '(Condominio) Unidad predial' = '(Condominio) Unidad predial',
+  'Informal' = 'Informal',
+  'Mejora' = 'Mejora',
+  'No propiedad horizontal' = 'No propiedad horizontal',
+  '(Parque cementerio) Matriz' = '(Parque cementerio) Matriz',
+  '(Parque Cementerio) Unidad predial' = '(Parque Cementerio) Unidad predial',
+  '(Propiedad horizontal) Matriz' = '(Propiedad horizontal) Matriz',
+  '(Propiedad horizontal) Unidad Predial' = '(Propiedad horizontal) Unidad Predial',
+  'Vía' = 'Vía'
+}
 
 @Component({
   selector: 'vex-edit-basic-property-information',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatDialogModule,
     MatDialogClose,
@@ -47,7 +69,6 @@ import {
   styles: ``
 })
 export class EditBasicPropertyInformationComponent implements OnInit {
-
   executionId!: string;
   baunitIdE!: string;
   contentInformation: BasicInformationProperty | null = null;
@@ -58,55 +79,120 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
   form: FormGroup = this.fb.group({
     // GRUPO "Identificación del predio"
-    'cadastralNumberFormat': ['', [Validators.required]],
-    'cadastralNumber': ['', [Validators.required]],
-    'cadastralLastNumber': ['', [Validators.min(0)]],
-    'propertyRegistryOffice': [''],
-    'propertyRegistryNumber': [''],
-    'baunitIdOrigin': [''],
+    cadastralNumberFormat: ['', [Validators.required]],
+    cadastralNumber: ['', [Validators.required]],
+    cadastralLastNumber: ['', [Validators.min(0)]],
+    propertyRegistryOffice: [''],
+    propertyRegistryNumber: [''],
+    baunitIdOrigin: [''],
 
     // *****GRUPO "Propiedad y uso" ****
 
-    'domBaunitEconoDesti': ['', [Validators.required]],
-    'domBaunitType': ['', [Validators.required]],
-    'domBaunitCondition': ['', [Validators.required]],
-    'cadastralCreatedAt': [''],
-    'cadastralRegistryNumberTemp': [''],
+    domBaunitEconoDesti: ['', [Validators.required]],
+    domBaunitType: ['', [Validators.required]],
+    domBaunitCondition: ['', [Validators.required]],
+    cadastralCreatedAt: [''],
+    cadastralRegistryNumberTemp: [''],
 
     // *****GRUPO "Tamaños y áreas" ****
-    'propertyRegistryArea': [''],
-    'cadastralArea': ['', [Validators.required, Validators.min(0)]],
-    'cadlAreaCommonE': [''],
-    'cadAreaPrivate': [''],
-    'cadastralAreaUnitbuilt': [''],
-    'cadAreaUnitbuiltCommon': [''],
-    'cadAreaUnitbuiltPrivate': [''],
+    propertyRegistryArea: [''],
+    cadastralArea: ['', [Validators.required, Validators.min(0)]],
+    cadAreaCommon: [''],
+    cadAreaPrivate: [''],
+    cadastralAreaUnitbuilt: [''],
+    cadAreaUnitbuiltCommon: [''],
+    cadAreaUnitbuiltPrivate: [''],
 
     // *****GRUPO "Seguimientos y actualizaciones" ****
 
-    'cadastralLastEventAt': [''],
-    'cadastralLastEventCode': [''],
-    'updatedBy': [''],
-    'updatedAt': ['']
-
+    cadastralLastEventAt: [''],
+    cadastralLastEventCode: [''],
+    updatedBy: [''],
+    updatedAt: ['']
   });
 
   formDetailGroup: FormGroup = this.fb.group({
-    buildNumber: [this.contentInformation?.detailGroup?.buildNumber || null, [Validators.required, Validators.min(0), Validators.max(99)]],
-    floorNumber: [this.contentInformation?.detailGroup?.floorNumber || null, [Validators.required, Validators.min(0), Validators.max(99)]],
-    unitNumber: [this.contentInformation?.detailGroup?.unitNumber || null, [Validators.required, Validators.min(0), Validators.max(9999)]],
-    percentageGroup: [this.contentInformation?.detailGroup?.percentage_group || null, [Validators.required, Validators.min(0), Validators.max(100)]]
+    buildNumber: [
+      this.contentInformation?.detailGroup?.buildNumber || null,
+      [Validators.required, Validators.min(0), Validators.max(99)]
+    ],
+    floorNumber: [
+      this.contentInformation?.detailGroup?.floorNumber || null,
+      [Validators.required, Validators.min(0), Validators.max(99)]
+    ],
+    unitNumber: [
+      this.contentInformation?.detailGroup?.unitNumber || null,
+      [Validators.required, Validators.min(0), Validators.max(9999)]
+    ],
+    percentageGroup: [
+      this.contentInformation?.detailGroup?.percentage_group || null,
+      [Validators.required, Validators.min(0), Validators.max(100)]
+    ]
   });
 
+  private readonly areasByBaunitConditions: Record<BaunitCondition, string[]> =
+    {
+      'Bien de uso público': [
+        'propertyRegistryArea',
+        'cadAreaPrivate',
+        'cadAreaUnitbuiltPrivate'
+      ],
+      '(Condominio) Matriz': [
+        'propertyRegistryArea',
+        'cadAreaCommon',
+        'cadAreaUnitbuiltCommon'
+      ],
+      '(Condominio) Unidad predial': [
+        'propertyRegistryArea',
+        'cadAreaPrivate',
+        'cadAreaUnitbuiltPrivate'
+      ],
+      Informal: [
+        'propertyRegistryArea',
+        'cadAreaPrivate',
+        'cadAreaUnitbuiltPrivate'
+      ],
+      Mejora: ['propertyRegistryArea', 'cadAreaUnitbuiltPrivate'],
+      'No propiedad horizontal': [
+        'propertyRegistryArea',
+        'cadAreaPrivate',
+        'cadAreaUnitbuiltPrivate'
+      ],
+      '(Parque cementerio) Matriz': [
+        'propertyRegistryArea',
+        'cadAreaCommon',
+        'cadAreaUnitbuiltCommon'
+      ],
+      '(Parque Cementerio) Unidad predial': [
+        'propertyRegistryArea',
+        'cadAreaPrivate',
+        'cadAreaUnitbuiltPrivate'
+      ],
+      '(Propiedad horizontal) Matriz': [
+        'propertyRegistryArea',
+        'cadAreaCommon',
+        'cadAreaUnitbuiltCommon'
+      ],
+      '(Propiedad horizontal) Unidad Predial': [
+        'propertyRegistryArea',
+        'cadAreaUnitbuiltCommon'
+      ],
+      Vía: ['propertyRegistryArea', 'cadAreaPrivate', 'cadAreaUnitbuiltPrivate']
+    };
+
+  private areasEnabledByBaunitConditions: string[] = [];
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public dataBasicInformationProperty: CrudBasicInformationProperty,
+    @Inject(MAT_DIALOG_DATA)
+    public dataBasicInformationProperty: CrudBasicInformationProperty,
     private fb: FormBuilder,
     private informationPropretyService: InformationPropertyService,
-    private dialogRef: MatDialogRef<EditBasicPropertyInformationComponent>) {
-  }
+    private dialogRef: MatDialogRef<EditBasicPropertyInformationComponent>
+  ) {}
 
   ngOnInit(): void {
-    this.contentInformation = this.dataBasicInformationProperty?.contentInformation;
+    this.contentInformation =
+      this.dataBasicInformationProperty?.contentInformation;
     if (this.contentInformation?.executionId) {
       this.executionId = this.contentInformation?.executionId;
     }
@@ -118,9 +204,16 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       this.chargerInfoPropertyUnit();
       return;
     }
-
+    if (this.contentInformation?.domBaunitCondition) {
+      this.areasEnabledByBaunitConditions =
+        this.areasByBaunitConditions[
+          this.contentInformation.domBaunitCondition as BaunitCondition
+        ];
+    }
     this.form.reset(this.contentInformation);
-    const newCadastraCreatedAt = new Date(this.contentInformation?.cadastralCreatedAt + 'T00:00:00-05:00');
+    const newCadastraCreatedAt = new Date(
+      this.contentInformation?.cadastralCreatedAt + 'T00:00:00-05:00'
+    );
     this.form.controls['cadastralCreatedAt'].setValue(newCadastraCreatedAt);
     const enableInputs: string[] = [
       'propertyRegistryOffice',
@@ -128,11 +221,9 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       'domBaunitEconoDesti',
       'domBaunitType',
       'cadastralCreatedAt',
-      'cadAreaPrivate',
-      'propertyRegistryArea',
-      'cadastralArea'
+      ...this.areasEnabledByBaunitConditions
     ];
-    Object.keys(this.form.controls).forEach(field => {
+    Object.keys(this.form.controls).forEach((field) => {
       if (!enableInputs.includes(field)) {
         this.form.get(field)?.disable();
       }
@@ -151,7 +242,9 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     if (this.typeCategory() === TYPE_UPDATE_PROPERTY_UNIT) {
       basicInformation = this.contentInformation;
       if (!basicInformation) {
-        this.getAlertError('Informacion no encontrada, consulte al administrador');
+        this.getAlertError(
+          'Informacion no encontrada, consulte al administrador'
+        );
         return;
       }
       this.updateInformationPropertyUnit(basicInformation);
@@ -164,24 +257,31 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     if (!obj) {
       return;
     }
-    this.informationPropretyService.updateBasicInformationProperty(
-      this.executionId, this.baunitIdE, obj).subscribe({
-      next: (data: BasicInformationProperty) => {
-        this.getAlertSuccess('Se ha actualizado los aspectos generales del predio', data);
-      }
-    });
+    this.informationPropretyService
+      .updateBasicInformationProperty(this.executionId, this.baunitIdE, obj)
+      .subscribe({
+        next: (data: BasicInformationProperty) => {
+          this.getAlertSuccess(
+            'Se ha actualizado los aspectos generales del predio',
+            data
+          );
+        }
+      });
   }
 
   updateInformationPropertyUnit(obj: BasicInformationProperty) {
     if (!obj || !obj.detailGroup) {
       return;
     }
-    const { percentageGroup, buildNumber, floorNumber, unitNumber } = this.formDetailGroup.value;
+    const { percentageGroup, buildNumber, floorNumber, unitNumber } =
+      this.formDetailGroup.value;
     if (!percentageGroup) {
-      this.getAlertError('Informacion no encontrada, consulte al administrador');
+      this.getAlertError(
+        'Informacion no encontrada, consulte al administrador'
+      );
       return;
     }
-    const percentageCoefficient: number = (parseFloat(percentageGroup) / 100);
+    const percentageCoefficient: number = parseFloat(percentageGroup) / 100;
     if (percentageCoefficient <= 0) {
       this.getAlertError('Valor de coeficiente de propiedad no permitido');
       return;
@@ -192,25 +292,44 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     obj.detailGroup.unitNumber = unitNumber;
     obj.detailGroup.percentage_group = percentageCoefficient;
     obj.detailGroup.percentageGroupS = percentageCoefficient.toString();
-    this.informationPropretyService.updateBasicCoefficientInformationProperty(
-      this.executionId, this.baunitIdE, obj).subscribe({
-      next: (data: BasicInformationProperty) => {
-        this.getAlertSuccess('Se ha actualizado los aspectos generales del predio', data);
-      }
-    });
+    this.informationPropretyService
+      .updateBasicCoefficientInformationProperty(
+        this.executionId,
+        this.baunitIdE,
+        obj
+      )
+      .subscribe({
+        next: (data: BasicInformationProperty) => {
+          this.getAlertSuccess(
+            'Se ha actualizado los aspectos generales del predio',
+            data
+          );
+        }
+      });
   }
 
   chargerInfoPropertyUnit() {
-    if (!this.contentInformation?.detailGroup || !this.contentInformation?.detailGroup?.percentage_group) {
+    if (
+      !this.contentInformation?.detailGroup ||
+      !this.contentInformation?.detailGroup?.percentage_group
+    ) {
       return;
     }
-    let coefficient: number = (this.contentInformation?.detailGroup?.percentage_group * 100);
+    const coefficient: number =
+      this.contentInformation?.detailGroup?.percentage_group * 100;
     this.controlPercentageGroup.setValue(coefficient);
-    this.controlBuildNumber.setValue(this.contentInformation?.detailGroup?.buildNumber);
-    this.controlFloorNumber.setValue(this.contentInformation?.detailGroup?.floorNumber);
-    this.controlUnitNumber.setValue(this.contentInformation?.detailGroup?.unitNumber);
+    this.controlBuildNumber.setValue(
+      this.contentInformation?.detailGroup?.buildNumber
+    );
+    this.controlFloorNumber.setValue(
+      this.contentInformation?.detailGroup?.floorNumber
+    );
+    this.controlUnitNumber.setValue(
+      this.contentInformation?.detailGroup?.unitNumber
+    );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getAlertSuccess(text: string, data: any) {
     Swal.fire({
       text: text,
@@ -253,5 +372,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     return this.formDetailGroup.get('percentageGroup') as FormControl;
   }
 
-  protected readonly TYPE_UPDATE_PROPERTY_COEFFICIENT = TYPE_UPDATE_PROPERTY_UNIT;
+  protected readonly TYPE_UPDATE_PROPERTY_COEFFICIENT =
+    TYPE_UPDATE_PROPERTY_UNIT;
 }

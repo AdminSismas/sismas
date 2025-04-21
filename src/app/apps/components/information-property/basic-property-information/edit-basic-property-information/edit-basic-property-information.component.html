@@ -1,20 +1,26 @@
-<form (ngSubmit)="editBasicInformationProperty()" [formGroup]="activeTypeCategoryForm">
-  <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+<form
+  (ngSubmit)="editBasicInformationProperty()"
+  [formGroup]="activeTypeCategoryForm"
+>
+  <div
+    class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
+    mat-dialog-title
+  >
     @if (typeCategory() === TYPE_UPDATE_PROPERTY_COEFFICIENT) {
-      <h3 class="title m-0 flex-auto">
-        Editar unidad predial
-      </h3>
+      <h3 class="title m-0 flex-auto">Editar unidad predial</h3>
     } @else {
-      <h2 class="headline m-0 flex-auto">
-        Editar aspectos generales
-      </h2>
+      <h2 class="headline m-0 flex-auto">Editar aspectos generales</h2>
     }
     <button
       class="text-secondary"
       mat-dialog-close
       mat-icon-button
-      type="button">
-      <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
+      type="button"
+    >
+      <mat-icon
+        svgIcon="mat:close"
+        class="icon-xs"
+      ></mat-icon>
     </button>
   </div>
   <mat-divider class="text-border"></mat-divider>
@@ -23,45 +29,60 @@
     @if (typeCategory() === TYPE_UPDATE_PROPERTY_COEFFICIENT) {
       <div class="grid grid-flow-row grid-cols-2 gap-x-2 pb-5">
         <vex-input
-          idComboInput="buildNumberDetailGruop456{{executionId}}"
+          idComboInput="buildNumberDetailGruop456{{ executionId }}"
           label="Numero del edificio"
           type="number"
           formControlNameInput="buildNumber"
-          [formControlInput]="controlBuildNumber">
+          [formControlInput]="controlBuildNumber"
+        >
         </vex-input>
         <vex-input
-          idComboInput="floorNumberDetailGruop456456{{executionId}}"
+          idComboInput="floorNumberDetailGruop456456{{ executionId }}"
           label="Numero del piso"
           type="number"
           formControlNameInput="floorNumber"
-          [formControlInput]="controlFloorNumber">
+          [formControlInput]="controlFloorNumber"
+        >
         </vex-input>
       </div>
       <div class="grid grid-flow-row grid-cols-2 gap-x-2 pb-5">
         <vex-input
-          idComboInput="unitNumberDetailGruop4566{{executionId}}"
+          idComboInput="unitNumberDetailGruop4566{{ executionId }}"
           label="Numero de la unidad predial"
           type="number"
           formControlNameInput="unitNumber"
-          [formControlInput]="controlUnitNumber">
+          [formControlInput]="controlUnitNumber"
+        >
         </vex-input>
         <vex-input
-          idComboInput="percentageGroupDetailGruop8456{{executionId}}"
+          idComboInput="percentageGroupDetailGruop8456{{ executionId }}"
           label="Coeficiente copropiedad"
           type="number"
           formControlNameInput="percentageGroup"
-          [formControlInput]="controlPercentageGroup">
+          [formControlInput]="controlPercentageGroup"
+        >
         </vex-input>
       </div>
     } @else {
-      <div class="grid grid-flow-row grid-cols-2 gap-x-4" vexMinFluidHeight [fluidHeight]="275">
+      <div
+        class="grid grid-flow-row grid-cols-6 gap-x-4"
+        vexMinFluidHeight
+        [fluidHeight]="275"
+      >
         <!-- Recorrer los grupos -->
-        <ng-container *ngFor="let group of inputs">
+        @for (group of inputs; track $index) {
           <!-- Título del grupo -->
-          <h3 class="col-span-2 text-black text-center text-sm" style="margin: 16px;">{{ group.groupName }}</h3>
+          <h3
+            class="col-span-full text-black text-center text-sm"
+            style="margin: 16px"
+          >
+            {{ group.groupName }}
+          </h3>
           <!-- Recorrer los campos del grupo -->
-          <ng-container *ngFor="let input of group.fields">
-            <ng-container *ngIf="input.collection">
+          @for (input of group.fields; track $index) {
+            @if (input.name === '(espacio vacio)'){
+              <div class="w-full -col-end-1"></div>
+            } @else if (input.collection) {
               <vex-combox-colletion
                 [label]="input.label"
                 [formControlNameCombobox]="input.name"
@@ -69,10 +90,14 @@
                 [placeholderDomainName]="input.placeholder"
                 [idComboCollection]="input.name"
                 cssClasses="w-full"
+                [class.col-span-3]="group.groupName !== 'Tamaños y áreas'"
+                [class.col-span-2]="group.groupName === 'Tamaños y áreas'"
               ></vex-combox-colletion>
-            </ng-container>
-            <ng-container *ngIf="!input.collection && input.type === 'date'">
-              <mat-form-field>
+            } @else if (input.type === "date") {
+              <mat-form-field
+                [class.col-span-3]="group.groupName !== 'Tamaños y áreas'"
+                [class.col-span-2]="group.groupName === 'Tamaños y áreas'"
+              >
                 <mat-label>{{ input.label }}</mat-label>
                 <input
                   matInput
@@ -87,9 +112,11 @@
                 ></mat-datepicker-toggle>
                 <mat-datepicker #beginAt></mat-datepicker>
               </mat-form-field>
-            </ng-container>
-            <ng-container *ngIf="!input.collection && input.type !== 'date'">
-              <mat-form-field>
+            } @else {
+              <mat-form-field
+                [class.col-span-3]="group.groupName !== 'Tamaños y áreas'"
+                [class.col-span-2]="group.groupName === 'Tamaños y áreas'"
+              >
                 <mat-label>{{ input.label }}</mat-label>
                 <input
                   matInput
@@ -98,14 +125,27 @@
                   [formControlName]="input.name"
                 />
               </mat-form-field>
-            </ng-container>
-          </ng-container>
-        </ng-container>
+            }
+          }
+        }
       </div>
     }
-    <mat-dialog-actions align="end" class="pt-2">
-      <button mat-button mat-dialog-close type="button">Cancelar</button>
-      <button color="primary" mat-flat-button type="submit">
+    <mat-dialog-actions
+      align="end"
+      class="pt-2"
+    >
+      <button
+        mat-button
+        mat-dialog-close
+        type="button"
+      >
+        Cancelar
+      </button>
+      <button
+        color="primary"
+        mat-flat-button
+        type="submit"
+      >
         Aceptar
       </button>
     </mat-dialog-actions>

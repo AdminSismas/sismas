@@ -41,8 +41,8 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         group: '',
         groupName: 'Identificación del predio'
       },
-// *********** estos dos campo contituyen matricula inmobiliaria**********
-// *********** estos dos campo contituyen matricula inmobiliaria**********
+      // *********** estos dos campo contituyen matricula inmobiliaria**********
+      // *********** estos dos campo contituyen matricula inmobiliaria**********
       {
         name: 'baunitIdOrigin',
         label: 'Nupre',
@@ -123,20 +123,11 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         groupName: 'Tamaños y áreas'
       },
       {
-        name: 'cadastralArea',
-        label: 'Área catastral',
+        name: '(espacio vacio)',
+        label: '',
         collection: false,
-        type: 'text',
-        placeholder: 'Área catastral',
-        group: '',
-        groupName: 'Tamaños y áreas'
-      },
-      {
-        name: 'cadlAreaCommonE',
-        label: 'Área catastral común',
-        collection: false,
-        type: 'text',
-        placeholder: 'Área catastral común',
+        type: '',
+        placeholder: '',
         group: '',
         groupName: 'Tamaños y áreas'
       },
@@ -150,11 +141,29 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         groupName: 'Tamaños y áreas'
       },
       {
-        name: 'cadastralAreaUnitbuilt',
-        label: 'Área catastral construida',
+        name: 'cadAreaCommon',
+        label: 'Área catastral común',
         collection: false,
         type: 'text',
-        placeholder: 'Área catastral construida',
+        placeholder: 'Área catastral común',
+        group: '',
+        groupName: 'Tamaños y áreas'
+      },
+      {
+        name: 'cadastralArea',
+        label: 'Área catastral',
+        collection: false,
+        type: 'text',
+        placeholder: 'Área catastral',
+        group: '',
+        groupName: 'Tamaños y áreas'
+      },
+      {
+        name: 'cadAreaUnitbuiltPrivate',
+        label: 'Área catastral construida Privada',
+        collection: false,
+        type: 'text',
+        placeholder: 'Área catastral construida Privada',
         group: '',
         groupName: 'Tamaños y áreas'
       },
@@ -168,11 +177,11 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         groupName: 'Tamaños y áreas'
       },
       {
-        name: 'cadAreaUnitbuiltPrivate',
-        label: 'Área catastral construida Privada',
+        name: 'cadastralAreaUnitbuilt',
+        label: 'Área catastral construida',
         collection: false,
         type: 'text',
-        placeholder: 'Área catastral construida Privada',
+        placeholder: 'Área catastral construida',
         group: '',
         groupName: 'Tamaños y áreas'
       }

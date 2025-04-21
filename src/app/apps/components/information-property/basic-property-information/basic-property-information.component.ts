@@ -170,9 +170,9 @@ export class BasicPropertyInformationComponent implements OnInit {
     if (!this.executionId) {
       return;
     }
-    let data: BasicInformationProperty = this.data;
+    const data: BasicInformationProperty = this.data;
     data.executionId = this.executionId;
-    let dataBasicInformationProperty: CrudBasicInformationProperty = {
+    const dataBasicInformationProperty: CrudBasicInformationProperty = {
       type: TYPE_UPDATE,
       contentInformation: data
     };
@@ -192,9 +192,9 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   editDetailGroupProperty(): void {
     if (this.existDetailGroup() && this.executionId) {
-      let data: BasicInformationProperty = this.data;
+      const data: BasicInformationProperty = this.data;
       data.executionId = this.executionId;
-      let dataBasicInformationProperty: CrudBasicInformationProperty = {
+      const dataBasicInformationProperty: CrudBasicInformationProperty = {
         type: TYPE_UPDATE_PROPERTY_UNIT,
         contentInformation: data
       };
@@ -224,7 +224,7 @@ export class BasicPropertyInformationComponent implements OnInit {
   }
 
   openCadastralMasterGroupE(): void {
-    let masterGroupE: string | null | undefined = this.data?.detailGroup?.masterGroupE;
+    const masterGroupE: string | null | undefined = this.data?.detailGroup?.masterGroupE;
     if (!masterGroupE) {
       return;
     }
@@ -260,7 +260,7 @@ export class BasicPropertyInformationComponent implements OnInit {
     }
     let schemas: string[] = [];
     schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
-    let dataInfo: ContentInfoSchema = new ContentInfoSchema(
+    const dataInfo: ContentInfoSchema = new ContentInfoSchema(
       masterGroupE, result, this.executionId, schemas, TYPE_INFORMATION_VISUAL
     );
     dataInfo.levelInfo = 3;
@@ -281,8 +281,7 @@ export class BasicPropertyInformationComponent implements OnInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 3000
-    }).then((result) => {
-    });
+    }).then();
   }
 
   swalErrorInformationProceduresNotFound() {
@@ -292,8 +291,7 @@ export class BasicPropertyInformationComponent implements OnInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 3000
-    }).then((result) => {
-    });
+    }).then();
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
