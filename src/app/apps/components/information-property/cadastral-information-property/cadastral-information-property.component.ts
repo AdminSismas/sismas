@@ -230,8 +230,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;
 
-  schemaTemp: string = `${envi.schemas.temp}`;
-  schemaHist: string = `${envi.schemas.hist}`;
+  schemaTemp = `${envi.schemas.temp}`;
+  schemaHist = `${envi.schemas.hist}`;
 
   public viewProperties = false;
   public showRulesPage = false;

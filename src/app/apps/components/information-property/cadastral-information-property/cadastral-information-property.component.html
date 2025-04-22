@@ -180,12 +180,12 @@
     @if (!showRulesPage) {
       <vex-photos
         #photosComponent
-        [id]="'photos' + schema + '12' + executionId"
         [expandedComponent]="expand_tap"
-        [baunitId]="baunitId"
+        [baunitId]="baunitId!"
         [schema]="schema"
         [executionId]="executionId"
         [typeInformation]="typeInformation"
+        [npn]="baunitHead.cadastralNumber!"
         @fadeInUp
       >
       </vex-photos>

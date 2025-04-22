@@ -1,7 +1,7 @@
-<mat-accordion class="flex flex-col py-0 px-0 mb-2 classPhotos" [id]="id">
+<mat-accordion class="flex flex-col py-0 px-0 mb-2 classPhotos">
   <mat-expansion-panel
-  (opened)="isExpandPanel((expandedComponent = true))"
-  [expanded]="expandedComponent"
+    (opened)="isExpandPanel(true)"
+    [expanded]="expandedComponent()"
   >
     <mat-expansion-panel-header
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
@@ -13,15 +13,15 @@
       ></vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
 
-    <div *ngIf="!loading; else loadingTemplate" class="center-img">
-      <div *ngIf="images.length > 0; else noImagesTemplate" class="py-8 px-6 footer">
+    <div *ngIf="!loading(); else loadingTemplate" class="center-img">
+      <div *ngIf="images().length > 0; else noImagesTemplate" class="py-8 px-6 footer">
         <div class="relative overflow-hidden h-auto">
           <div
             class="flex transition-transform duration-500 space-x-4"
             [style.transform]="'translateX(' + (-currentIndex * 100) + '%)'"
           >
             <img
-              *ngFor="let image of images; let i = index"
+              *ngFor="let image of images(); let i = index"
               [src]="image"
               [alt]="'Imagen ' + (i + 1)"
               class="w-full h-auto object-cover rounded-lg"
@@ -58,31 +58,3 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-
-
-
-<ng-template #confirmDeleteDialog>
-  <h2 mat-dialog-title>¿Está seguro de eliminar la fuente administrativa?</h2>
-  <mat-divider class="text-border border-slate-400"></mat-divider>
-  <mat-dialog-content class="flex flex-col items-center py-4 lg:px-8">
-    <span class="text-lg">¿Está seguro de eliminar esta fuente administrativa?</span>
-    <!-- <strong class="text-lg">{{ selectedFuente?.numeroFuente }}</strong> -->
-  </mat-dialog-content>
-  <!-- <mat-dialog-actions align="center">
-    <button
-      mat-flat-button
-      mat-dialog-close
-      color="primary"
-      [mat-dialog-close]="true"
-    >
-      Eliminar
-    </button>
-    <buttonz
-      mat-flat-button
-      mat-dialog-close
-      color="warn"
-    >
-      Cancelar
-    </button>
-  </mat-dialog-actions> -->
-</ng-template>
