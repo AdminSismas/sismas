@@ -1,0 +1,50 @@
+<section class="h-full">
+  <div class="h-full w-full relative">
+    <button
+      #prevButton
+      class="absolute z-10 top-1/2 -translate-y-1/2 left-[20%]"
+      mat-fab
+      color="primary"
+      (click)="changeImage(-1)"
+      disabled
+    >
+      <mat-icon svgIcon="mat:chevron_left"></mat-icon>
+    </button>
+    <button
+      #nextButton
+      class="absolute z-10 top-1/2 -translate-y-1/2 right-[20%]"
+      mat-fab
+      color="primary"
+      (click)="changeImage(1)"
+    >
+      <mat-icon svgIcon="mat:chevron_right"></mat-icon>
+    </button>
+    <ul
+      #slides
+      class="m-0 p-0 list-none"
+    >
+      @for (image of images(); let i = $index; track i) {
+        @if (i === 0) {
+          <li
+            class="slide flex justify-center items-center"
+            data-active
+          >
+            <img
+              [src]="image"
+              [alt]="'Imagen ' + i"
+              class="block h-full object-cover object-center shadow-md shadow-black"
+            />
+          </li>
+        } @else {
+          <li class="slide flex justify-center items-center">
+            <img
+              [src]="image"
+              [alt]="'Imagen ' + i"
+              class="block h-full object-cover object-center shadow-md shadow-black"
+            />
+          </li>
+        }
+      }
+    </ul>
+  </div>
+</section>
