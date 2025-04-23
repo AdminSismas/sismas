@@ -1,11 +1,11 @@
-@if (activateGeographicTab) {
+@if (activateGeographicTab()) {
   <vex-tab-alfa-geo-main
     [id]="this.id + 'vex-tab-alfa-geo-main14'"
     [executionId]="executionId"
     [resources]="resources"
     [mode]="mode">
   </vex-tab-alfa-geo-main>
-} @else if (!activateGeographicTab) {
+} @else if (!activateGeographicTab()) {
   <vex-alfa-main-information
     [id]="this.id + 'vex-tab-alfa-geo-main14'"
     [executionId]="executionId"

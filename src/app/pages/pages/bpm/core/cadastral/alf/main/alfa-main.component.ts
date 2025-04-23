@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -59,6 +59,7 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
 
   id: string = getRandomInt(12324).toString();
   fluidHeight = '165';
+  activateGeographicTab = signal<boolean>(false);
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
@@ -100,6 +101,10 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
       this.returnPanelTask(true);
       return false;
     }
+
+    if(this.resources.length > 0 && this.resources.includes(CONSTANT_ENABLE_TAB_GEOGRAFIC)) {
+     this.activateGeographicTab.set(true);
+    }
   }
 
   ngOnDestroy() {
@@ -114,9 +119,5 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
         .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
         .then();
     }
-  }
-
-  get activateGeographicTab() {
-    return this.resources.length > 0 && this.resources.includes(CONSTANT_ENABLE_TAB_GEOGRAFIC);
   }
 }
