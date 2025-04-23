@@ -186,13 +186,12 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public dataBasicInformationProperty: CrudBasicInformationProperty,
     private fb: FormBuilder,
-    private informationPropretyService: InformationPropertyService,
-    private dialogRef: MatDialogRef<EditBasicPropertyInformationComponent>
-  ) {}
+    private informationPropertyService: InformationPropertyService,
+    private dialogRef: MatDialogRef<EditBasicPropertyInformationComponent>) {
+  }
 
   ngOnInit(): void {
-    this.contentInformation =
-      this.dataBasicInformationProperty?.contentInformation;
+    this.contentInformation = this.dataBasicInformationProperty?.contentInformation;
     if (this.contentInformation?.executionId) {
       this.executionId = this.contentInformation?.executionId;
     }
@@ -257,7 +256,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     if (!obj) {
       return;
     }
-    this.informationPropretyService
+    this.informationPropertyService
       .updateBasicInformationProperty(this.executionId, this.baunitIdE, obj)
       .subscribe({
         next: (data: BasicInformationProperty) => {
@@ -273,14 +272,20 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     if (!obj || !obj.detailGroup) {
       return;
     }
-    const { percentageGroup, buildNumber, floorNumber, unitNumber } =
+    let { percentageGroup, buildNumber, floorNumber, unitNumber } =
       this.formDetailGroup.value;
     if (!percentageGroup) {
       this.getAlertError(
-        'Informacion no encontrada, consulte al administrador'
+        'Valor de coeficiente de propiedad no encontrada'
       );
       return;
     }
+
+    if (!buildNumber || (!floorNumber || parseFloat(floorNumber) <= 0) || (!unitNumber || parseFloat(unitNumber) <= 0)) {
+      this.getAlertError('Informacion no encontrada');
+      return;
+    }
+
     const percentageCoefficient: number = parseFloat(percentageGroup) / 100;
     if (percentageCoefficient <= 0) {
       this.getAlertError('Valor de coeficiente de propiedad no permitido');
@@ -292,7 +297,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     obj.detailGroup.unitNumber = unitNumber;
     obj.detailGroup.percentage_group = percentageCoefficient;
     obj.detailGroup.percentageGroupS = percentageCoefficient.toString();
-    this.informationPropretyService
+    this.informationPropertyService
       .updateBasicCoefficientInformationProperty(
         this.executionId,
         this.baunitIdE,
@@ -309,24 +314,19 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   }
 
   chargerInfoPropertyUnit() {
-    if (
-      !this.contentInformation?.detailGroup ||
-      !this.contentInformation?.detailGroup?.percentage_group
-    ) {
+    if (!this.contentInformation?.detailGroup) {
       return;
     }
-    const coefficient: number =
-      this.contentInformation?.detailGroup?.percentage_group * 100;
-    this.controlPercentageGroup.setValue(coefficient);
-    this.controlBuildNumber.setValue(
-      this.contentInformation?.detailGroup?.buildNumber
-    );
-    this.controlFloorNumber.setValue(
-      this.contentInformation?.detailGroup?.floorNumber
-    );
-    this.controlUnitNumber.setValue(
-      this.contentInformation?.detailGroup?.unitNumber
-    );
+
+    if(this.contentInformation?.detailGroup?.percentage_group &&
+      this.contentInformation?.detailGroup?.percentage_group !== 0) {
+      let coefficient: number = (this.contentInformation?.detailGroup?.percentage_group * 100);
+      this.controlPercentageGroup.setValue(coefficient);
+    }
+
+    this.controlBuildNumber.setValue(this.contentInformation?.detailGroup?.buildNumber);
+    this.controlFloorNumber.setValue(this.contentInformation?.detailGroup?.floorNumber);
+    this.controlUnitNumber.setValue(this.contentInformation?.detailGroup?.unitNumber);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -372,6 +372,5 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     return this.formDetailGroup.get('percentageGroup') as FormControl;
   }
 
-  protected readonly TYPE_UPDATE_PROPERTY_COEFFICIENT =
-    TYPE_UPDATE_PROPERTY_UNIT;
+  protected readonly TYPE_UPDATE_PROPERTY_COEFFICIENT = TYPE_UPDATE_PROPERTY_UNIT;
 }

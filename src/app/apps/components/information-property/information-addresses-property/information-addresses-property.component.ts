@@ -2,7 +2,7 @@
 import {
   AfterViewInit,
   Component,
-  DestroyRef,
+  DestroyRef, forwardRef,
   inject,
   Input,
   OnChanges,
@@ -11,7 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -104,7 +104,14 @@ import { InformationAdjacent } from '../../../interfaces/information-property/in
     SweetAlert2Module
   ],
   templateUrl: './information-addresses-property.component.html',
-  styleUrl: './information-addresses-property.component.scss'
+  styleUrl: './information-addresses-property.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InformationAddressesPropertyComponent),
+      multi: true
+    }
+  ],
 })
 export class InformationAddressesPropertyComponent implements OnInit, AfterViewInit, OnChanges {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;

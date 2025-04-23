@@ -2,7 +2,7 @@
 import {
   AfterViewInit,
   Component,
-  computed,
+  computed, forwardRef,
   inject,
   Input,
   OnInit,
@@ -58,6 +58,7 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 import { DeleteParamsRrright } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import Big from 'big.js';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
@@ -91,7 +92,14 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
     MatSort
   ],
   templateUrl: './information-property-owners.component.html',
-  styleUrl: './information-property-owners.component.scss'
+  styleUrl: './information-property-owners.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InformationPropertyOwnersComponent),
+      multi: true
+    }
+  ],
 })
 export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit {
 

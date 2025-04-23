@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, forwardRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -24,7 +24,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { stagger40ms } from '@vex/animations/stagger.animation';
@@ -80,7 +80,14 @@ import Swal from 'sweetalert2';
     NgForOf
   ],
   templateUrl: './information-adjacent-property.component.html',
-  styleUrl: './information-adjacent-property.component.scss'
+  styleUrl: './information-adjacent-property.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InformationAdjacentPropertyComponent),
+      multi: true
+    }
+  ],
 })
 export class InformationAdjacentPropertyComponent implements OnInit, AfterViewInit {
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, forwardRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -29,7 +29,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
@@ -105,7 +105,14 @@ import { filter } from 'rxjs/operators';
     HeaderCadastralInformationPropertyComponent
   ],
   templateUrl: './information-constructions-property.component.html',
-  styleUrl: './information-constructions-property.component.scss'
+  styleUrl: './information-constructions-property.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InformationConstructionsPropertyComponent),
+      multi: true
+    }
+  ],
 })
 export class InformationConstructionsPropertyComponent implements OnInit, AfterViewInit {
 

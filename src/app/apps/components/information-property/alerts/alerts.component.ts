@@ -2,7 +2,7 @@
 import {
   AfterViewInit,
   Component,
-  computed,
+  computed, forwardRef,
   inject,
   Input,
   OnInit,
@@ -44,6 +44,7 @@ import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { DetailAlertsComponent } from './detail-alerts/detail-alerts.component';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'endsIn' |'fractionS' | 'domRightType'> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
@@ -73,7 +74,14 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'endsIn' |'
     MatDialogModule,
   ],
   templateUrl: './alerts.component.html',
-  styleUrl: './alerts.component.scss'
+  styleUrl: './alerts.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AlertsComponent),
+      multi: true
+    }
+  ]
 })
 export class AlertsComponent implements OnInit, AfterViewInit {
 

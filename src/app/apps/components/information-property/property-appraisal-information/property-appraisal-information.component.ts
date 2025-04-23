@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  DestroyRef,
+  DestroyRef, forwardRef,
   inject,
   Input,
   OnInit,
@@ -43,7 +43,7 @@ import {
   NgIf
 } from '@angular/common';
 import {
-  FormsModule,
+  FormsModule, NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   UntypedFormControl
 } from '@angular/forms';
@@ -107,13 +107,17 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     CurrencyFormatPipe,
     SweetAlert2Module
   ],
-
   templateUrl: './property-appraisal-information.component.html',
-  styleUrl: './property-appraisal-information.component.scss'
+  styleUrl: './property-appraisal-information.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PropertyAppraisalInformationComponent),
+      multi: true
+    }
+  ],
 })
-export class PropertyAppraisalInformationComponent
-  implements OnInit, AfterViewInit
-{
+export class PropertyAppraisalInformationComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 

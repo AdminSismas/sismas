@@ -1,4 +1,4 @@
-import { Component, computed, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, computed, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   HeaderCadastralInformationPropertyComponent
@@ -28,6 +28,7 @@ import { MODAL_MEDIUM } from '../../../constants/general/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { NgClass } from '@angular/common';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'vex-administrative-sources',
@@ -45,7 +46,14 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SweetAlert2Module
   ],
   templateUrl: './administrative-sources.component.html',
-  styleUrl: './administrative-sources.component.scss'
+  styleUrl: './administrative-sources.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AdministrativeSourcesComponent),
+      multi: true
+    }
+  ],
 })
 export class AdministrativeSourcesComponent implements OnInit {
   @Input() public id = '';

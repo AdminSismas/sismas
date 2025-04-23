@@ -75,4 +75,17 @@ export class UnitPropertyInformationService {
     return this.http.get<InformationPegeable>(url, { params: paramsR });
   }
 
+  createBaUnitCreateDetail(
+    baunitIdMaster: string, executionId: string, domBaunitCondition: string,
+    buildNumber: string, floorNumber: string): Observable<void> {
+    const formData = new FormData();
+    formData.append('baunitIdMaster', `${baunitIdMaster}`);
+    formData.append('changeLogId', `${executionId}`);
+    formData.append('domBaunitCondition', `${domBaunitCondition}`);
+    formData.append('buildNumber', `${buildNumber}`);
+    formData.append('floorNumber', `${floorNumber}`);
+    let url = `${this.basic_url}${envi.temporal}${envi.bAUnitCreateDetail}`;
+    return this.requestsService.sendRequestsFetchPostBody(url, formData)
+      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+  }
 }

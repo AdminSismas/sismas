@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -49,6 +49,10 @@ import {
 } from '../../../services/territorial-organization/baunit-children-information.service';
 import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
 import { NgClass, PercentPipe } from '@angular/common';
+import { CrudPropertyUnitsComponent } from './crud-property-units/crud-property-units.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -72,7 +76,8 @@ import { NgClass, PercentPipe } from '@angular/common';
     ReactiveFormsModule,
     MatSort,
     PercentPipe,
-    NgClass
+    NgClass,
+    SweetAlert2Module
     // Custom
   ],
   templateUrl: './modification-property-units.component.html',
@@ -88,29 +93,24 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   page = PAGE;
   pageSize = PAGE_SIZE;
   pageSizeOptions = PAGE_OPTION_5_7_10;
-
   dataSource!: MatTableDataSource<BaUnitHeadPercentage>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   contentInformation!: InformationPegeable;
-
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-
-  searchForm: FormGroup = this.fb.group({
-    searchTerm: [''],
-    selectedMatriz: ['']
-  });
-
   columns: TableColumn<BaUnitHeadPercentage>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
+
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  @ViewChild('confirmRemoveDialog', { static: true }) confirmRemoveDialog!: SwalComponent;
+  @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: SwalComponent;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public dataInformationUnitProperties: ModificationUnitProperties,
     private unitPropertyInformationService: UnitPropertyInformationService,
     private dialog: MatDialog,
-    private fb: FormBuilder,
     private readonly layoutService: VexLayoutService
   ) {
   }
@@ -130,6 +130,10 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
       this.operationBaUnitHead = this.dataInformationUnitProperties?.operationBaUnitHead;
     }
     this.getPropertiesUnits();
+
+    this.searchCtrl.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => this.onFilterChange(value));
   }
 
   ngAfterViewInit(): void {
@@ -208,17 +212,38 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
       .afterClosed();
   }
 
-  deletePropertyUnit(row: Operation) {
+  deletePropertyUnit(row: BaUnitHeadPercentage) {
+    this.confirmRemoveDialog.fire().then((result) => {
+      if (result.isConfirmed) {
+        // this.bpmCoreService
+        //   .clearPropertyBpmOperation(
+        //     this.executionId,
+        //     operation.baunitHead!.baunitIdE as string
+        //   )
+        //   .subscribe({
+        //     next: () => {
+        //       this.refreshData.emit();
+        //     },
+        //     error: (error: HttpErrorResponse) => {
+        //       this.msgErrorConsultingAdministration(
+        //         'Error al eliminar la unidad predial.'
+        //       );
+        //       throw error;
+        //     }
+        //   });
+      }
+    });
   }
 
   openCrudAlfaMain(type: TypeOperationAlfaMain) {
     if (!this.executionId) {
       return;
     }
-    const addNpnLike: string = this.dataInformationUnitProperties?.npnMatrix?.slice(0, -8) || '';
     let config = {};
+    const addNpnLike: string = this.dataInformationUnitProperties?.npnMatrix?.slice(0, -8) || '';
     let data: DataAlfaMain = new DataAlfaMain(this.executionId, type, addNpnLike ? { addNpnLike } : null);
     data.operationBaUnitHead = this.operationBaUnitHead;
+
     if (type === TYPE_OPERATION_ADD) {
       config = {
         width: '30%',
@@ -226,15 +251,26 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
         disableClose: true,
         data: data
       };
-    } else {
-      config = {
-        width: '70%',
-        height: '90%',
-        disableClose: true,
-        data: data
-      };
+      this.dialog.open(CrudPropertyUnitsComponent, config)
+        .afterClosed()
+        .subscribe((result: boolean) => {
+          if (result) {
+            this.getPropertiesUnits();
+          }
+        });
+      return;
     }
-    this.dialog.open(CrudAlfaMainComponent, config);
+    config = {
+      width: '70%',
+      height: '90%',
+      disableClose: true,
+      data: data
+    };
+    this.dialog.open(CrudAlfaMainComponent, config)
+      .afterClosed()
+      .subscribe(() => {
+        this.getPropertiesUnits();
+      });
   }
 
   refreshPaginator(event: PageEvent) {
@@ -260,6 +296,15 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
         data: dataInfo
       })
       .afterClosed();
+  }
+
+  onFilterChange(value: string) {
+    if (!this.dataSource) {
+      return;
+    }
+
+    value = value.toLowerCase();
+    this.dataSource.filter = value;
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {

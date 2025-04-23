@@ -8,7 +8,7 @@ import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
 import { Operation } from '../../interfaces/bpm/operation';
 import { environment } from '../../../../environments/environments';
 import {
-  CheckTypeQualificationMode,
+  CheckTypeQualificationMode, NavigationItemCadastralInfo,
   TypeButtonAlfaMain,
   TypeInformation,
   TypeOperation,
@@ -728,7 +728,7 @@ export const LIST_FRAGMENT_COMPONENTS_RULE_PAGE: string[] = [
   FRAGMENT_INFORMATION_PROPERTY_OWNERS
 ];
 
-export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: { label: string; fragment: string }[] = [
+export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: NavigationItemCadastralInfo[] = [
   {
     label: 'Aspectos generales',
     fragment: FRAGMENT_BASIC_PROPERTY_INFORMATION
@@ -1076,6 +1076,7 @@ export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR'
 
 export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
+export const MODAL_MEDIUM_H90 = { maxWidth: '100%', width: '80%', minHeight: '90%', height: '90%' };
 export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
 export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
 export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };

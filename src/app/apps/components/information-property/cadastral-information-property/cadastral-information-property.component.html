@@ -19,7 +19,7 @@
   vexFluidHeight fluidHeight=107>
   <div @stagger style="top: 18px"
        class="sticky top-20 flex-col flex-none w-2/12 hidden sm:flex">
-    @for (item of navigationItems; track $index) {
+    @for (item of navigationItems; track item;) {
       <div (click)="scrollTo(item.fragment)"
            class="px-3 py-2 rounded-xl hover:bg-hover transition cursor-pointer relative"
            matRipple>
@@ -28,11 +28,7 @@
     }
   </div>
 
-  <div
-    @stagger
-    class="max-w-full w-10/12 flex flex-col gap-6"
-  >
-
+  <div @stagger class="max-w-full w-10/12 flex flex-col gap-6">
     <vex-basic-property-information
       #basicPropertyInformationComponent
       [id]="'basicAdministrativeUnitInformation' + schema + '12' + executionId"
@@ -46,7 +42,7 @@
       (propertyRegistryNumber)="propertyRegistryNumber = $event"
       @fadeInUp
     ></vex-basic-property-information>
-    @if (showInformationUnitProperty(baunitCondition) && levelInfo !== 3) {
+    @if (showInformationUnitProperty && levelInfo !== 3) {
       <vex-information-unit-property
         #unitPropertyInformationComponent
         [id]="'informationUnitProperty' + schema + '12' + executionId"

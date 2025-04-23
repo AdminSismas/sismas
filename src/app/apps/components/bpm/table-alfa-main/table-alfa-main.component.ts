@@ -15,7 +15,7 @@ import {
   LIST_SCHEMAS_CONTROL_CHANGES,
   LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
-  MODAL_MEDIUM, MODAL_MIN_MEDIUM_ALL,
+  MODAL_MEDIUM, MODAL_MEDIUM_H90, MODAL_MIN_MEDIUM_ALL,
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
@@ -109,10 +109,8 @@ export class TableAlfaMainComponent
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmRemoveDialog', { static: true })
-  confirmRemoveDialog!: SwalComponent;
-  @ViewChild('confirmDeleteDialog', { static: true })
-  confirmDeleteDialog!: SwalComponent;
+  @ViewChild('confirmRemoveDialog', { static: true }) confirmRemoveDialog!: SwalComponent;
+  @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: SwalComponent;
   @ViewChild('confirmAddUpdateBaUnitHead', { static: true })
   confirmAddUpdateBaUnitHead!: SwalComponent;
 
@@ -355,7 +353,7 @@ export class TableAlfaMainComponent
 
   editCadastralUnits(row: Operation) {
     this.dialog.open(ModificationPropertyUnitsComponent, {
-      ...MODAL_MEDIUM,
+      ...MODAL_MEDIUM_H90,
       disableClose: true,
       data: {
         executionId: this.executionId,

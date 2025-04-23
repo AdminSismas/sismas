@@ -1,8 +1,8 @@
 // ANGULAR IMPORTS
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, forwardRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
-import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 // ANGULAR MATERIAL IMPORTS
@@ -107,7 +107,14 @@ import {
     MatSelectModule
   ],
   templateUrl: './historical-active-procedures.component.html',
-  styleUrl: './historical-active-procedures.component.scss'
+  styleUrl: './historical-active-procedures.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => HistoricalActiveProceduresPropertyComponent),
+      multi: true
+    }
+  ],
 })
 export class HistoricalActiveProceduresPropertyComponent implements OnInit {
 

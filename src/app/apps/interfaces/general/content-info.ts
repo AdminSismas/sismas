@@ -70,5 +70,10 @@ export interface InputsField {
   groupName: string;
 }
 
+export interface NavigationItemCadastralInfo {
+  label: string;
+  fragment: string;
+}
+
 
 

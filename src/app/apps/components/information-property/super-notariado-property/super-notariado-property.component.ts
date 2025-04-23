@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, ViewChild } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   HeaderCadastralInformationPropertyComponent
@@ -10,6 +10,7 @@ import {
   InformationSourcePropertyComponent
 } from '../information-source-property/information-source-property.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'super-notariado-property',
@@ -25,7 +26,14 @@ import { MatDividerModule } from '@angular/material/divider';
     InformationSourcePropertyComponent
   ],
   templateUrl: './super-notariado-property.component.html',
-  styleUrl: './super-notariado-property.component.scss'
+  styleUrl: './super-notariado-property.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SuperNotariadoPropertyComponent),
+      multi: true
+    }
+  ],
 })
 export class SuperNotariadoPropertyComponent {
 

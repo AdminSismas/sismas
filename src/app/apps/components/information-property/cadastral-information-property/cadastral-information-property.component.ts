@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
@@ -54,7 +54,7 @@ import {
   PropertyAppraisalInformationComponent
 } from '../property-appraisal-information/property-appraisal-information.component';
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
-import { TypeInformation } from '../../../interfaces/general/content-info';
+import { NavigationItemCadastralInfo, TypeInformation } from '../../../interfaces/general/content-info';
 import {
   InformationAdjacentPropertyComponent
 } from '../information-adjacent-property/information-adjacent-property.component';
@@ -110,6 +110,13 @@ import {
     MatSelectModule,
     FluidHeightDirective,
     NgClass
+  ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CadastralInformationPropertyComponent),
+      multi: true
+    }
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
@@ -215,7 +222,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   executionId: string | null | undefined;
   idContainer = '';
   baunitId: string | null = null;
-  navigationItems: { label: string; fragment: string }[] = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
+  navigationItems: NavigationItemCadastralInfo[] = NAVIGATION_ITEMS_INFORMATION_PROPERTIES;
   editable: {
     GNR?: boolean,
     FNA?: boolean,
@@ -327,8 +334,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
     });
   }
 
-  showInformationUnitProperty(baunitCondition: string | undefined): boolean {
-    if (baunitCondition === '(Condominio) Matriz' || baunitCondition === '(Propiedad horizontal) Matriz') return true;
+  get showInformationUnitProperty(): boolean {
+    if (this.baunitCondition === '(Condominio) Matriz' || this.baunitCondition === '(Propiedad horizontal) Matriz') return true;
     this.navigationItems = this.navigationItems.filter((item) => item.fragment !== FRAGMENT_INFORMATION_UNIT_PROPERTY);
     return false;
   }

@@ -1,6 +1,8 @@
-import { Component, OnInit, input, signal } from '@angular/core';
+import { Component, forwardRef, input, OnInit, signal } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import {
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +11,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { PhotosService } from 'src/app/apps/services/photos/photos.service';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+
 import { CarouselComponent } from '../../general-components/carousel/carousel.component';
 
 @Component({
@@ -26,7 +30,14 @@ import { CarouselComponent } from '../../general-components/carousel/carousel.co
     CommonModule,
     CarouselComponent
   ],
-  templateUrl: './photos.component.html'
+  templateUrl: './photos.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PhotosComponent),
+      multi: true
+    }
+  ]
 })
 export class PhotosComponent implements OnInit {
   images = signal<string[]>([]);
@@ -40,7 +51,8 @@ export class PhotosComponent implements OnInit {
   typeInformation = input<string>('');
   npn = input.required<string>();
 
-  constructor(private photosService: PhotosService) {}
+  constructor(private photosService: PhotosService) {
+  }
 
   ngOnInit(): void {
     this.isExpandPanel(this.expandedComponent());

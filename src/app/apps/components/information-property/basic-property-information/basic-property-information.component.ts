@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, EventEmitter, forwardRef, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { DatePipe, NgClass, PercentPipe } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -87,7 +87,14 @@ import Swal from 'sweetalert2';
     PercentPipe
   ],
   templateUrl: './basic-property-information.component.html',
-  styleUrl: './basic-property-information.component.scss'
+  styleUrl: './basic-property-information.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => BasicPropertyInformationComponent),
+      multi: true
+    }
+  ],
 })
 export class BasicPropertyInformationComponent implements OnInit {
 
