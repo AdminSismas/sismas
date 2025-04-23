@@ -377,6 +377,7 @@ export class BmpCoreComponent implements OnInit {
     this.bpmCoreService.getProFlow(flowId).subscribe((result: ProFlow) => {
       const isValid: boolean = this.validateInformationComponent(result);
       if (isValid) {
+        this.proFlow = result;
         this.refreshComponentsDynamic(result);
       }
     });
