@@ -9,7 +9,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { PhotosService } from 'src/app/apps/services/photos/photos.service';
-import { environment } from '../../../../../environments/environments.test';
 import { CarouselComponent } from '../../general-components/carousel/carousel.component';
 
 @Component({
@@ -63,11 +62,7 @@ export class PhotosComponent implements OnInit {
     const municipioId = this.npn().slice(2, 5);
 
     this.photosService.listNamePhotos(this.baunitId(), municipioId).subscribe({
-      next: (fileNames) => {
-        const urlFiles = fileNames.map(
-          (fileName) =>
-            `${environment.url}:${environment.port}/bpmAttachment/baunit/${this.baunitId()}/photos/${fileName}?municipioId=${municipioId}`
-        );
+      next: (urlFiles) => {
         this.images.set(urlFiles);
         this.loading.set(false);
       }
