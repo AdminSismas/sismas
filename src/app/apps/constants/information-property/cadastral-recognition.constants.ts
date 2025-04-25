@@ -86,7 +86,52 @@ export const RES_VALIDATE_INPUTS: JSONInput[] = [
     type: 'text',
     validators: [],
     cssClasses: 'flex flex-auto sm:flow-row w-full h-full '
-  }
+  },
+  {
+    name: 'tag06',
+    label: 'Tag 6',
+    placeholder: 'Escribir sexto tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto sm:flow-row w-full h-full '
+  },
+  {
+    name: 'tag07',
+    label: 'Tag 7',
+    placeholder: 'Escribir septimo tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto sm:flow-row w-full h-full '
+  },
+  {
+    name: 'tag08',
+    label: 'Tag 8',
+    placeholder: 'Escribir octavo tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto sm:flow-row w-full h-full '
+  },
+  {
+    name: 'tag09',
+    label: 'Tag 9',
+    placeholder: 'Escribir noveno tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto sm:flow-row w-full h-full '
+  },
+  {
+    name: 'tag10',
+    label: 'Tag 10',
+    placeholder: 'Escribir decimo tag',
+    element: 'textarea',
+    type: 'text',
+    validators: [],
+    cssClasses: 'flex flex-auto sm:flow-row w-full h-full '
+  },
 ];
 
 export const TABLE_COLUMN_THIRD_PARTY: TableColumn<ProcessParticipant>[] = [
