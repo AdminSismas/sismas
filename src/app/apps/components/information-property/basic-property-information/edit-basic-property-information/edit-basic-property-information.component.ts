@@ -17,8 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import {
   BasicInformationProperty,
-  CrudBasicInformationProperty,
-  UpdateBasicInformationProperty
+  CrudBasicInformationProperty
 } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
@@ -34,20 +33,8 @@ import { InputComponent } from '../../../general-components/input/input.componen
 import Swal from 'sweetalert2';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-property/basic-property-information.constants';
-
-enum BaunitCondition {
-  'Bien de uso público' = 'Bien de uso público',
-  '(Condominio) Matriz' = '(Condominio) Matriz',
-  '(Condominio) Unidad predial' = '(Condominio) Unidad predial',
-  'Informal' = 'Informal',
-  'Mejora' = 'Mejora',
-  'No propiedad horizontal' = 'No propiedad horizontal',
-  '(Parque cementerio) Matriz' = '(Parque cementerio) Matriz',
-  '(Parque Cementerio) Unidad predial' = '(Parque Cementerio) Unidad predial',
-  '(Propiedad horizontal) Matriz' = '(Propiedad horizontal) Matriz',
-  '(Propiedad horizontal) Unidad Predial' = '(Propiedad horizontal) Unidad Predial',
-  'Vía' = 'Vía'
-}
+import { BaunitCondition } from 'src/app/apps/constants/general/constants';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'vex-edit-basic-property-information',
@@ -187,11 +174,12 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     public dataBasicInformationProperty: CrudBasicInformationProperty,
     private fb: FormBuilder,
     private informationPropertyService: InformationPropertyService,
-    private dialogRef: MatDialogRef<EditBasicPropertyInformationComponent>) {
-  }
+    private dialogRef: MatDialogRef<EditBasicPropertyInformationComponent>
+  ) {}
 
   ngOnInit(): void {
-    this.contentInformation = this.dataBasicInformationProperty?.contentInformation;
+    this.contentInformation =
+      this.dataBasicInformationProperty?.contentInformation;
     if (this.contentInformation?.executionId) {
       this.executionId = this.contentInformation?.executionId;
     }
@@ -209,6 +197,10 @@ export class EditBasicPropertyInformationComponent implements OnInit {
           this.contentInformation.domBaunitCondition as BaunitCondition
         ];
     }
+    this.getReadyForm();
+  }
+
+  getReadyForm() {
     this.form.reset(this.contentInformation);
     const newCadastraCreatedAt = new Date(
       this.contentInformation?.cadastralCreatedAt + 'T00:00:00-05:00'
@@ -231,6 +223,53 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       this.form.get('propertyRegistryOffice')?.disable();
       this.form.get('propertyRegistryOffice')?.setValue('100');
     }
+
+    this.createSumatoryEvents();
+  }
+
+  createSumatoryEvents() {
+    const areasParametersName: (keyof BasicInformationProperty)[] = [
+      'cadAreaCommon',
+      'cadAreaPrivate',
+      'cadAreaUnitbuiltCommon',
+      'cadAreaUnitbuiltPrivate'
+    ];
+    areasParametersName.forEach((parameter) => {
+      this.sumatoryEvent(parameter);
+    });
+  }
+
+  sumatoryEvent(parameter: keyof BasicInformationProperty) {
+    const subscription: Subscription | undefined = this.form
+      .get(parameter)
+      ?.valueChanges.subscribe({
+        next: (value) => {
+          let counterParameterName: keyof BasicInformationProperty;
+          if (parameter.includes('Common')) {
+            counterParameterName = parameter.replace('Common', 'Private') as keyof BasicInformationProperty;
+          } else {
+            counterParameterName = parameter.replace('Private', 'Common') as keyof BasicInformationProperty;
+          }
+
+          const areaValue = this.form.value[counterParameterName] || 0;
+          const sum = +value + +areaValue;
+          const totalAreaParameterName = this.sumatoryParameterName(parameter);
+
+          this.form.get(totalAreaParameterName)?.setValue(sum);
+        },
+        complete: () => subscription?.unsubscribe()
+      });
+  }
+
+  sumatoryParameterName(areaParameterName: keyof BasicInformationProperty): 'cadastralArea' | 'cadastralAreaUnitbuilt' {
+    if (areaParameterName === 'cadAreaCommon' || areaParameterName === 'cadAreaPrivate') {
+      return 'cadastralArea';
+    }
+    if (areaParameterName === 'cadAreaUnitbuiltCommon' || areaParameterName === 'cadAreaUnitbuiltPrivate') {
+      return 'cadastralAreaUnitbuilt';
+    }
+
+    return 'cadastralArea';
   }
 
   editBasicInformationProperty() {
@@ -252,7 +291,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     }
   }
 
-  updateInformationProperty(obj: UpdateBasicInformationProperty) {
+  updateInformationProperty(obj: BasicInformationProperty) {
     if (!obj) {
       return;
     }
@@ -272,16 +311,20 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     if (!obj || !obj.detailGroup) {
       return;
     }
-    let { percentageGroup, buildNumber, floorNumber, unitNumber } =
+    const { percentageGroup, buildNumber, floorNumber, unitNumber } =
       this.formDetailGroup.value;
     if (!percentageGroup) {
-      this.getAlertError(
-        'Valor de coeficiente de propiedad no encontrada'
-      );
+      this.getAlertError('Valor de coeficiente de propiedad no encontrada');
       return;
     }
 
-    if (!buildNumber || (!floorNumber || parseFloat(floorNumber) <= 0) || (!unitNumber || parseFloat(unitNumber) <= 0)) {
+    if (
+      !buildNumber ||
+      !floorNumber ||
+      parseFloat(floorNumber) <= 0 ||
+      !unitNumber ||
+      parseFloat(unitNumber) <= 0
+    ) {
       this.getAlertError('Informacion no encontrada');
       return;
     }
@@ -318,15 +361,24 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       return;
     }
 
-    if(this.contentInformation?.detailGroup?.percentage_group &&
-      this.contentInformation?.detailGroup?.percentage_group !== 0) {
-      let coefficient: number = (this.contentInformation?.detailGroup?.percentage_group * 100);
+    if (
+      this.contentInformation?.detailGroup?.percentage_group &&
+      this.contentInformation?.detailGroup?.percentage_group !== 0
+    ) {
+      const coefficient: number =
+        this.contentInformation?.detailGroup?.percentage_group * 100;
       this.controlPercentageGroup.setValue(coefficient);
     }
 
-    this.controlBuildNumber.setValue(this.contentInformation?.detailGroup?.buildNumber);
-    this.controlFloorNumber.setValue(this.contentInformation?.detailGroup?.floorNumber);
-    this.controlUnitNumber.setValue(this.contentInformation?.detailGroup?.unitNumber);
+    this.controlBuildNumber.setValue(
+      this.contentInformation?.detailGroup?.buildNumber
+    );
+    this.controlFloorNumber.setValue(
+      this.contentInformation?.detailGroup?.floorNumber
+    );
+    this.controlUnitNumber.setValue(
+      this.contentInformation?.detailGroup?.unitNumber
+    );
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -372,5 +424,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     return this.formDetailGroup.get('percentageGroup') as FormControl;
   }
 
-  protected readonly TYPE_UPDATE_PROPERTY_COEFFICIENT = TYPE_UPDATE_PROPERTY_UNIT;
+  protected readonly TYPE_UPDATE_PROPERTY_COEFFICIENT =
+    TYPE_UPDATE_PROPERTY_UNIT;
 }

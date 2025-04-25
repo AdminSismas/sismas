@@ -4,9 +4,7 @@ import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { BehaviorSubject, catchError, Observable, Subject } from 'rxjs';
 import {
-  BasicInformationProperty,
-  UpdateBasicInformationProperty
-} from '../../interfaces/information-property/basic-information-property';
+  BasicInformationProperty} from '../../interfaces/information-property/basic-information-property';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
@@ -343,20 +341,25 @@ export class InformationPropertyService {
   }
 
   updateBasicInformationProperty(
-    executionId: string, baunitId: string, body: UpdateBasicInformationProperty
+    executionId: string,
+    baunitId: string,
+    body: BasicInformationProperty
   ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http.put<BasicInformationProperty>(url, body)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error))
-      );
+    return this.http
+      .put<BasicInformationProperty>(url, body)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
   updateBasicCoefficientInformationProperty(
-    executionId: string, baunitId: string, body: BasicInformationProperty): Observable<BasicInformationProperty> {
+    executionId: string,
+    baunitId: string,
+    body: BasicInformationProperty
+  ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http.put<BasicInformationProperty>(url, body)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error))
-      );
+    return this.http
+      .put<BasicInformationProperty>(url, body)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
   /**
