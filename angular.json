@@ -59,6 +59,7 @@
               "lodash/debounce.js",
               "lodash/throttle.js",
               "luxon",
+              "moment",
               "quill-delta",
               "quill",
               "seedrandom",

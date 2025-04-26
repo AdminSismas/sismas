@@ -23,11 +23,16 @@ export class BasicInformationProperty {
    // *****GRUPO "Tamaños y áreas" ****
   propertyRegistryAreaE?: string;
   cadastralAreaE?: string;
+  cadastralArea?: string | number;
   cadAreaCommonE?: string;
+  cadAreaCommon?: string | number;
   cadAreaPrivateE?: string;
-  cadastralAreaUnitbuilt?: string;
-  cadAreaUnitbuiltCommon?: string;
-  cadAreaUnitbuiltPrivate?: string;
+  cadAreaPrivate?: string | number;
+  cadastralAreaUnitbuilt?: string | number;
+  cadAreaUnitbuiltCommonE?: string;
+  cadAreaUnitbuiltCommon?: string | number;
+  cadAreaUnitbuiltPrivateE?: string;
+  cadAreaUnitbuiltPrivate?: string |  number;
 
   // *****GRUPO "Seguimientos y actualizaciones" ****
   cadastralLastEventAt?: string;
@@ -37,7 +42,6 @@ export class BasicInformationProperty {
 
 
   propertyRegistryArea?: string;
-  cadastralArea?: string;
   cadastralAreaGeoE?: string;
   cadastralCreatedAt?: string;
   domBaunitProcessType?: string;

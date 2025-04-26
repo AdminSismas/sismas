@@ -1306,3 +1306,16 @@ export const TABLE_CITATION_NOTICE_COLUMN: TableColumn<ProcessParticipant>[] = [
   { label: 'Acciones', property: 'menu', type: 'button', visible: true }
 ];
 
+export enum BaunitCondition {
+  'Bien de uso público' = 'Bien de uso público',
+  '(Condominio) Matriz' = '(Condominio) Matriz',
+  '(Condominio) Unidad predial' = '(Condominio) Unidad predial',
+  'Informal' = 'Informal',
+  'Mejora' = 'Mejora',
+  'No propiedad horizontal' = 'No propiedad horizontal',
+  '(Parque cementerio) Matriz' = '(Parque cementerio) Matriz',
+  '(Parque Cementerio) Unidad predial' = '(Parque Cementerio) Unidad predial',
+  '(Propiedad horizontal) Matriz' = '(Propiedad horizontal) Matriz',
+  '(Propiedad horizontal) Unidad Predial' = '(Propiedad horizontal) Unidad Predial',
+  'Vía' = 'Vía'
+}
