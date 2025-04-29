@@ -1,12 +1,11 @@
-import { Component, Input, OnInit, OnDestroy, signal } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
-import { Observable } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
 import { environment } from '../../../../../../../../environments/environments';
