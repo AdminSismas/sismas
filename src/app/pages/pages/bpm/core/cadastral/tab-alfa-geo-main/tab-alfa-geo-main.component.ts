@@ -57,8 +57,10 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
   public executionIdGeo = '';
   public enableRefreshButton: boolean = true;
 
-  @Input({ required: true }) public executionId = '';
+  @Input({ required: true }) public executionId: string = '';
   @Input({ required: true }) public resources: string[] = [];
+  @Input({ required: false }) public textTabAlfaMain: string = 'Información Alfanumérica';
+  @Input({ required: false }) public textTabGeoMain: string = 'Mapa Geografico';
   @Input({ required: false }) public mode = 0;
 
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
@@ -78,7 +80,8 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-    this.destroyRef.onDestroy(() => {});
+    this.destroyRef.onDestroy(() => {
+    });
   }
 
   ngOnInit() {

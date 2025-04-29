@@ -14,6 +14,10 @@ import { filter } from 'rxjs/operators';
 import { environment } from '../../../../../../../../environments/environments';
 import { getRandomInt } from '../../../../../../../apps/utils/general';
 import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
+import {
+  CONSTANT_TEXT_ALFA_MAIN_GEO,
+  CONSTANT_TEXT_GEO_MAIN_GEO
+} from '../../../../../../../apps/constants/general/constantLabels';
 
 @Component({
   selector: 'vex-geo-main',
@@ -101,4 +105,6 @@ export class GeoMainComponent implements OnInit {
     }
   }
 
+  protected readonly CONSTANT_TEXT_ALFA_MAIN_GEO = CONSTANT_TEXT_ALFA_MAIN_GEO;
+  protected readonly CONSTANT_TEXT_GEO_MAIN_GEO = CONSTANT_TEXT_GEO_MAIN_GEO;
 }

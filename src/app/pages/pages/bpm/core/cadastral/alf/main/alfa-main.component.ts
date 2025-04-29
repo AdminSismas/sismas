@@ -26,6 +26,10 @@ import { CONSTANT_ENABLE_TAB_GEOGRAFIC } from '../../../../../../../apps/constan
 import {
   AlfaMainInformationComponent
 } from '../../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+import {
+  CONSTANT_TEXT_ALFA_MAIN_ALFA,
+  CONSTANT_TEXT_GEO_MAIN_ALFA
+} from '../../../../../../../apps/constants/general/constantLabels';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -119,4 +123,7 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
   get activateGeographicTab() {
     return this.resources.length > 0 && this.resources.includes(CONSTANT_ENABLE_TAB_GEOGRAFIC);
   }
+
+  protected readonly CONSTANT_TEXT_GEO_MAIN_ALFA = CONSTANT_TEXT_GEO_MAIN_ALFA;
+  protected readonly CONSTANT_TEXT_ALFA_MAIN_ALFA = CONSTANT_TEXT_ALFA_MAIN_ALFA;
 }
