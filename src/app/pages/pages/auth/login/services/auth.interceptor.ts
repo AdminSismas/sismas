@@ -52,14 +52,24 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         throw error;
       }
 
+      if (error.status === 500) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error en el servidor',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3085d6',
+        });
+
+        throw error;
+      }
+
       try {
         error = JSON.parse(error.error);
       } catch {
         error = error.error;
       }
       const errorMessage = error ? error.message : 'Ha ocurrido un error';
-
-      console.log(errorMessage);
 
       Swal.fire({
         icon: 'error',

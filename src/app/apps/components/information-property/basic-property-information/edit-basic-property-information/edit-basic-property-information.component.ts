@@ -214,6 +214,9 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       'cadastralCreatedAt',
       ...this.areasEnabledByBaunitConditions
     ];
+    if (this.dataBasicInformationProperty.npnEdit) {
+      enableInputs.push('cadastralNumber');
+    }
     Object.keys(this.form.controls).forEach((field) => {
       if (!enableInputs.includes(field)) {
         this.form.get(field)?.disable();
