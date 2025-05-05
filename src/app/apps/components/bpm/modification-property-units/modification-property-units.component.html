@@ -26,27 +26,6 @@
             ></mat-icon>
             Crear
           </button>
-          <button
-            mat-raised-button
-            class="rounded-full ml-1 mr-1 py-2 px-3 title !text-white !bg-primary-600 flex-auto"
-            (click)="openCrudAlfaMain(TYPE_OPERATION_CREATE)"
-          >
-            <mat-icon
-              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
-              svgIcon="mat:add_circle_outline"
-            ></mat-icon>
-            Agregar
-          </button>
-          <button
-            mat-raised-button
-            class="rounded-full ml-1 mr-1 py-2 px-3 title !text-white !bg-red-600 flex-auto"
-            (click)="openCrudAlfaMain(TYPE_OPERATION_DELETE)">
-            <mat-icon
-              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
-              svgIcon="mat:delete"
-            ></mat-icon>
-            Borrar
-          </button>
         </div>
         @if (dataSource && dataSource.data.length > 0) {
           <mat-form-field subscriptSizing="dynamic" class="pl-1 pr-1 pt-1 pb-1 flex flex-col">

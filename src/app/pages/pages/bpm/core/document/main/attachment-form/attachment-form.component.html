@@ -22,7 +22,7 @@
 <mat-dialog-content class="relative" [class.loading]="isLoading">
   <!-- Spinner para la carga -->
   <div *ngIf="isLoading" class="full-screen-spinner">
-    <mat-spinner diameter="50"></mat-spinner>  
+    <mat-spinner diameter="50"></mat-spinner>
   </div>
 
   <!-- Formulario de adjuntos -->
@@ -45,6 +45,7 @@
                 formControlNameCombobox="attachmentType"
                 typeDomainName="BpmAttachmentType"
                 placeholderDomainName="Escoger tipo"
+                cssClasses="w-full"
               ></vex-combox-colletion>
             </div>
             <mat-error

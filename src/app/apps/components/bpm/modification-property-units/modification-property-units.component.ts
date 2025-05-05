@@ -236,7 +236,7 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   }
 
   openCrudAlfaMain(type: TypeOperationAlfaMain) {
-    if (!this.executionId) {
+    if (!this.executionId || type !== TYPE_OPERATION_ADD) {
       return;
     }
     let config = {};
@@ -244,32 +244,18 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
     let data: DataAlfaMain = new DataAlfaMain(this.executionId, type, addNpnLike ? { addNpnLike } : null);
     data.operationBaUnitHead = this.operationBaUnitHead;
 
-    if (type === TYPE_OPERATION_ADD) {
-      config = {
-        width: '30%',
-        minHeight: '30%',
-        disableClose: true,
-        data: data
-      };
-      this.dialog.open(CrudPropertyUnitsComponent, config)
-        .afterClosed()
-        .subscribe((result: boolean) => {
-          if (result) {
-            this.getPropertiesUnits();
-          }
-        });
-      return;
-    }
     config = {
-      width: '70%',
-      height: '90%',
+      width: '30%',
+      minHeight: '30%',
       disableClose: true,
       data: data
     };
-    this.dialog.open(CrudAlfaMainComponent, config)
+    this.dialog.open(CrudPropertyUnitsComponent, config)
       .afterClosed()
-      .subscribe(() => {
-        this.getPropertiesUnits();
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.getPropertiesUnits();
+        }
       });
   }
 

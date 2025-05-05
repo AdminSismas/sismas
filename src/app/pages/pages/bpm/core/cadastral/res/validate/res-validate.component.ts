@@ -75,6 +75,7 @@ export class ResValidateComponent implements OnInit {
   pdfUrl = signal<SafeUrl>('');
   firstTab = signal<string>('Resolución generada');
   secondTab = signal<string>('Textos resolución');
+  thirdTab = signal<string>('Participantes');
   form = signal<FormGroup>(new FormGroup({}));
   initTags = signal<
     TagsRecognition | RecognitionProperty | RecognitionPropertyBasic | null

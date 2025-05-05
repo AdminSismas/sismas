@@ -1,12 +1,11 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
-import { Observable } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
 import { environment } from '../../../../../../../../environments/environments';
@@ -26,6 +25,10 @@ import { CONSTANT_ENABLE_TAB_GEOGRAFIC } from '../../../../../../../apps/constan
 import {
   AlfaMainInformationComponent
 } from '../../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+import {
+  CONSTANT_TEXT_ALFA_MAIN_ALFA,
+  CONSTANT_TEXT_GEO_MAIN_ALFA
+} from '../../../../../../../apps/constants/general/constantLabels';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -59,6 +62,7 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
 
   id: string = getRandomInt(12324).toString();
   fluidHeight = '165';
+  activateGeographicTab = signal<boolean>(false);
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
@@ -100,6 +104,10 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
       this.returnPanelTask(true);
       return false;
     }
+
+    if(this.resources.length > 0 && this.resources.includes(CONSTANT_ENABLE_TAB_GEOGRAFIC)) {
+     this.activateGeographicTab.set(true);
+    }
   }
 
   ngOnDestroy() {
@@ -116,7 +124,6 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
     }
   }
 
-  get activateGeographicTab() {
-    return this.resources.length > 0 && this.resources.includes(CONSTANT_ENABLE_TAB_GEOGRAFIC);
-  }
+  protected readonly CONSTANT_TEXT_GEO_MAIN_ALFA = CONSTANT_TEXT_GEO_MAIN_ALFA;
+  protected readonly CONSTANT_TEXT_ALFA_MAIN_ALFA = CONSTANT_TEXT_ALFA_MAIN_ALFA;
 }

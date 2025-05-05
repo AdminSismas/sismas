@@ -93,29 +93,43 @@
               ></vex-dynamic-forms>
             </div>
             <div
-              class="container w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden"
+              class="w-full max-w-4xl p-4 flex items-center justify-center text-center gap-4 mx-auto mt-2"
+            >
+              <button
+                mat-raised-button
+                class="grow max-w-xs px-6 py-5"
+                color="primary"
+                (click)="saveTags()"
+              >
+                <mat-icon
+                  svgIcon="mat:save"
+                  class="!w-6 !h-6"
+                ></mat-icon>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </vex-page-layout-content>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon svgIcon="mat:edit_note"></mat-icon>
+          {{ thirdTab() }}
+        </ng-template>
+        <vex-page-layout-content class="card w-full h-full">
+          <div
+            class="container-fluid p-0"
+            vexFluidHeight
+            fluidHeight="200"
+          >
+            <div
+              class="container w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden py-4"
             >
               <vex-table-third-party-affected
                 [executionId]="executionId()"
                 [readOnly]="true"
               >
               </vex-table-third-party-affected>
-              <div
-                class="w-full max-w-4xl p-4 flex items-center justify-center text-center gap-4 mx-auto mt-2"
-              >
-                <button
-                  mat-raised-button
-                  class="grow max-w-xs px-6 py-5"
-                  color="primary"
-                  (click)="saveTags()"
-                >
-                  <mat-icon
-                    svgIcon="mat:save"
-                    class="!w-6 !h-6"
-                  ></mat-icon>
-                  Guardar
-                </button>
-              </div>
             </div>
           </div>
         </vex-page-layout-content>

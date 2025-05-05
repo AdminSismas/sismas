@@ -252,8 +252,10 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       .getListAlfaMainOperations(this.generateObjectPageSearchData())
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) =>
-          this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) =>{
+          console.log(result);
+          this.captureInformationSubscribe(result);
+        }
       });
   }
 
@@ -282,10 +284,11 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   orderByInformationSubscribe() {
     let data: Operation[];
     this.listOperationContentInformation = [];
-    if (this.contentInformations?.content != null) {
+    if (!this.contentInformations?.content || this.contentInformations.content.length > 0) {
       data = this.contentInformations.content;
       data = data.map((row: Operation) => new Operation(row));
       const indexOperation = this.indexArraylist(data);
+      console.log(indexOperation);
       const result = Object.keys(indexOperation).map((key) => [
         key,
         indexOperation[key]
@@ -315,6 +318,14 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         return;
       }
       this.listOperationContentInformation = [];
+    } else {
+      Swal.fire({
+        title: '¡Error!',
+        text: 'No se puede continuar porque no se encuentra información que validar.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6',
+      });
     }
   }
 

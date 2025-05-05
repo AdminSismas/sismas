@@ -37,3 +37,10 @@ export const CONSTANT_MSG_ERROR_CLEAR_INFORMATION ='Se necesita agregar la palab
 export const CONSTANT_NAME_ADD_LABEL = 'Crear un nuevo predio';
 export const CONSTANT_NAME_CREATE_LABEL = 'Agregar predios modificados al control de cambios';
 export const CONSTANT_NAME_DELETE_LABEL = 'Agregar predios eliminados al control de cambios';
+
+export const CONSTANT_TEXT_GEO_MAIN_GEO = 'Mapa Geografico';
+export const CONSTANT_TEXT_ALFA_MAIN_GEO = 'Información Geografica de Predios';
+
+export const CONSTANT_TEXT_GEO_MAIN_ALFA = 'Mapa Geografico';
+export const CONSTANT_TEXT_ALFA_MAIN_ALFA = 'Información Alfanumérica de Predios';
+

@@ -5,7 +5,11 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 // recursos de angular material
 import { MatIconModule } from '@angular/material/icon';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 
@@ -58,8 +62,8 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.urlSafe = this.urlPdfViewer();
     this.fileType = this.getFileType(this.originalFileName);
+    this.urlSafe = this.urlPdfViewer();
 
     if (this.fileType === 'txt') {
       this.loadTextFile();
@@ -71,7 +75,8 @@ export class ViewFileDocumentManagementComponent implements OnInit {
       this.fileType === 'zip' ||
       this.fileType === 'rar' ||
       this.fileType === 'dwg' ||
-      this.fileType === 'shp'
+      this.fileType === 'shp' ||
+      this.fileType === 'tiff'
     ) {
       this.downloadFile();
     }
@@ -81,8 +86,9 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   getFileType(fileName: string): string {
     const extension = fileName.split('.').pop()?.toLowerCase();
     if (['pdf'].includes(extension!)) return 'pdf';
-    if (['jpg', 'jpeg', 'png', 'bmp', 'tiff', 'gif'].includes(extension!))
+    if (['jpg', 'jpeg', 'png', 'bmp', 'gif'].includes(extension!))
       return 'image';
+    if (['tif', 'tiff'].includes(extension!)) return 'tiff';
     if (['txt'].includes(extension!)) return 'txt';
     if (['xlsx'].includes(extension!)) return 'xlsx';
     if (['docx'].includes(extension!)) return 'docx';
@@ -109,6 +115,7 @@ export class ViewFileDocumentManagementComponent implements OnInit {
         console.error('Error al cargar el archivo de texto', err)
       );
   }
+
   downloadFile(): void {
     const urlComplete = `${this.basic_url}${this.executionId}/${this.idAttachment}/${this.originalFileName}`;
 

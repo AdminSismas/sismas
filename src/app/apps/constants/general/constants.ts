@@ -1072,7 +1072,7 @@ export const TYPE_BUTTON_NINE: TypeButtonAlfaMain = 'VIGEN';
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL'];
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL', 'NPN'];
 
 export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
@@ -1306,3 +1306,16 @@ export const TABLE_CITATION_NOTICE_COLUMN: TableColumn<ProcessParticipant>[] = [
   { label: 'Acciones', property: 'menu', type: 'button', visible: true }
 ];
 
+export enum BaunitCondition {
+  'Bien de uso público' = 'Bien de uso público',
+  '(Condominio) Matriz' = '(Condominio) Matriz',
+  '(Condominio) Unidad predial' = '(Condominio) Unidad predial',
+  'Informal' = 'Informal',
+  'Mejora' = 'Mejora',
+  'No propiedad horizontal' = 'No propiedad horizontal',
+  '(Parque cementerio) Matriz' = '(Parque cementerio) Matriz',
+  '(Parque Cementerio) Unidad predial' = '(Parque Cementerio) Unidad predial',
+  '(Propiedad horizontal) Matriz' = '(Propiedad horizontal) Matriz',
+  '(Propiedad horizontal) Unidad Predial' = '(Propiedad horizontal) Unidad Predial',
+  'Vía' = 'Vía'
+}
