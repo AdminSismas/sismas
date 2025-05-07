@@ -27,7 +27,7 @@ const baseConfig: VexConfig = {
     }
   },
   direction: 'ltr',
-  imgSrc: '//vex-landing.visurel.com/assets/img/layouts/apollo.png',
+  imgSrc: '',
   layout: 'horizontal',
   boxed: false,
   sidenav: {
@@ -67,7 +67,7 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.poseidon,
     name: 'Poseidon',
     bodyClass: 'vex-layout-poseidon',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/poseidon.png',
+    imgSrc: '',
     sidenav: {
       user: {
         visible: true
@@ -94,7 +94,7 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.hermes,
     name: 'Hermes',
     bodyClass: 'vex-layout-hermes',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/hermes.png',
+    imgSrc: '',
     layout: 'vertical',
     boxed: true,
     sidenav: {
@@ -117,7 +117,7 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.ares,
     name: 'Ares',
     bodyClass: 'vex-layout-ares',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/ares.png',
+    imgSrc: '',
     sidenav: {
       user: {
         visible: false
@@ -140,7 +140,7 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.zeus,
     name: 'Zeus',
     bodyClass: 'vex-layout-zeus',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/zeus.png',
+    imgSrc: '',
     sidenav: {
       state: 'collapsed'
     }
@@ -149,7 +149,7 @@ export const vexConfigs: VexConfigs = {
     id: VexConfigName.ikaros,
     name: 'Ikaros',
     bodyClass: 'vex-layout-ikaros',
-    imgSrc: '//vex-landing.visurel.com/assets/img/layouts/ikaros.png',
+    imgSrc: '',
     layout: 'vertical',
     boxed: true,
     sidenav: {
