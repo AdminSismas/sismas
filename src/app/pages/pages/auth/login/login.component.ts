@@ -43,6 +43,7 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent {
   videoPath: string = environment.video;
+  videoPathWebm: string = environment.videoWebm;
   logoPath: string = environment.logo;
   logoPathAlter = '';
   form!: FormGroup;

@@ -195,6 +195,7 @@ export const environment = {
   validity: 'validity',
   valuation: '/valuation',
   video: 'assets/video/masora.mp4',
+  videoWebm: 'assets/video/masora.webm',
   withoutSignaturesUsers: '/without-signature',
   withSignaturesUsers: '/with-signature'
 };

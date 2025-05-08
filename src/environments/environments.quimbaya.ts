@@ -195,6 +195,7 @@ export const environment = {
   validity: 'validity',
   valuation: '/valuation',
   video: 'assets/video/quimbaya.mp4',
+  videoWebm: 'assets/video/quimbaya.webm',
   withoutSignaturesUsers: '/without-signature',
   withSignaturesUsers: '/with-signature'
 };
