@@ -1,8 +1,9 @@
-<video autoplay muted loop playsinline id="bg-video" preload="auto">
-  <source [attr.src]="videoPath" type="video/mp4">
-  <source [attr.src]="videoPathWebm" type="video/webm">
-  Tu navegador no soporta video HTML5.
-</video>
+<div class="video-background">
+  <video autoplay muted loop id="bg-video">
+    <source [attr.src]="videoPath" type="video/mp4">
+    Tu navegador no soporta video HTML5.
+  </video>
+</div>
 
 <div class="w-full h-full bg-pattern flex flex-col items-center justify-center">
   <div @fadeInUp class="card overflow-hidden w-full max-w-md">
