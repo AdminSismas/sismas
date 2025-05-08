@@ -106,6 +106,7 @@ export interface CrudBasicInformationProperty {
   type:TypeOperation;
   contentInformation: BasicInformationProperty | null;
   npnEdit?: boolean;
+  areaEdit?: boolean;
 }
 export interface UpdateBasicInformationProperty {
   propertyRegistryOffice:      string;

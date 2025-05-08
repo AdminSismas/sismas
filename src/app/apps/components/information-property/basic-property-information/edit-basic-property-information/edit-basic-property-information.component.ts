@@ -192,10 +192,12 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       return;
     }
     if (this.contentInformation?.domBaunitCondition) {
-      this.areasEnabledByBaunitConditions =
-        this.areasByBaunitConditions[
-          this.contentInformation.domBaunitCondition as BaunitCondition
-        ];
+      this.areasEnabledByBaunitConditions = this.dataBasicInformationProperty
+        .areaEdit
+        ? this.areasByBaunitConditions[
+            this.contentInformation.domBaunitCondition as BaunitCondition
+          ]
+        : [];
     }
     this.getReadyForm();
   }
@@ -249,9 +251,15 @@ export class EditBasicPropertyInformationComponent implements OnInit {
         next: (value) => {
           let counterParameterName: keyof BasicInformationProperty;
           if (parameter.includes('Common')) {
-            counterParameterName = parameter.replace('Common', 'Private') as keyof BasicInformationProperty;
+            counterParameterName = parameter.replace(
+              'Common',
+              'Private'
+            ) as keyof BasicInformationProperty;
           } else {
-            counterParameterName = parameter.replace('Private', 'Common') as keyof BasicInformationProperty;
+            counterParameterName = parameter.replace(
+              'Private',
+              'Common'
+            ) as keyof BasicInformationProperty;
           }
 
           const areaValue = this.form.value[counterParameterName] || 0;
@@ -264,11 +272,19 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       });
   }
 
-  sumatoryParameterName(areaParameterName: keyof BasicInformationProperty): 'cadastralArea' | 'cadastralAreaUnitbuilt' {
-    if (areaParameterName === 'cadAreaCommon' || areaParameterName === 'cadAreaPrivate') {
+  sumatoryParameterName(
+    areaParameterName: keyof BasicInformationProperty
+  ): 'cadastralArea' | 'cadastralAreaUnitbuilt' {
+    if (
+      areaParameterName === 'cadAreaCommon' ||
+      areaParameterName === 'cadAreaPrivate'
+    ) {
       return 'cadastralArea';
     }
-    if (areaParameterName === 'cadAreaUnitbuiltCommon' || areaParameterName === 'cadAreaUnitbuiltPrivate') {
+    if (
+      areaParameterName === 'cadAreaUnitbuiltCommon' ||
+      areaParameterName === 'cadAreaUnitbuiltPrivate'
+    ) {
       return 'cadastralAreaUnitbuilt';
     }
 
