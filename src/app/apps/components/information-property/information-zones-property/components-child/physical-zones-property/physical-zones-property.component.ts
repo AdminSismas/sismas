@@ -2,12 +2,9 @@
 import {
   Component,
   Input,
-  OnInit,
   TemplateRef,
   ViewChild,
   computed,
-  AfterViewInit,
-  ChangeDetectorRef,
   Output,
   input
 } from '@angular/core';
@@ -21,23 +18,10 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { NgClass } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatCardModule } from '@angular/material/card';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { AddEditInformatizonZonesPropertyComponent } from '../../add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
@@ -45,8 +29,6 @@ import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
-  PAGE_OPTION_10_20_50_100,
-  PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_PHYSICAL,
   TYPE_INFORMATION_EDITION
 } from 'src/app/apps/constants/general/constants';
@@ -56,7 +38,6 @@ import {
 import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { PAGE } from 'src/app/apps/constants/general/procedures.constant';
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
 import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
@@ -76,32 +57,20 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   ],
   imports: [
     CdkAccordionModule,
-    FormsModule,
-    MatAutocompleteModule,
     MatButtonModule,
-    MatCardModule,
-    MatCardModule,
     MatDialogModule,
     MatExpansionModule,
-    MatExpansionModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
     MatMenuModule,
-    MatOptionModule,
-    MatPaginatorModule,
-    MatRippleModule,
-    MatSlideToggleModule,
     MatTableModule,
     MatTabsModule,
     NgClass,
-    ReactiveFormsModule,
     SweetAlert2Module
   ],
   templateUrl: './physical-zones-property.component.html',
   styleUrl: './physical-zones-property.component.scss'
 })
-export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
+export class PhysicalZonesPropertyComponent {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents = false;
 
@@ -109,7 +78,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
   zoneBAUnitRural: ZoneBAUnitFisica[] = [];
   zoneBAUnitUrban: ZoneBAUnitFisica[] = [];
 
-  @Input({ required: true }) id = '';
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input({ required: true }) divPolLv1!: string;
@@ -128,8 +96,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
 
   columns: TableColumn<ZoneBAUnitFisica>[] = TABLE_COLUMN_PROPERTIES_PHYSICAL;
 
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmDialog', { static: true }) confirmDialog:
     | TemplateRef<any>
     | undefined;
@@ -138,11 +104,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
 
 
   dataBasicInformation!: BasicInformationProperty;
-  page: number = PAGE;
-  totalPhysicalElements = input.required<number>();
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
-  rightIdSelected?: number;
 
   actionBtns = computed(() => {
     return [
@@ -164,7 +125,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
 
   constructor(
     private readonly layoutService: VexLayoutService,
-    private changeDetectorRef: ChangeDetectorRef,
     private matDialog: MatDialog
   ) {}
 
@@ -213,31 +173,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-      this.changeDetectorRef.detectChanges();
-    }
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
-  }
-
-  refreshPaginator(pageEvent: PageEvent): void {
-    const { pageIndex, pageSize } = pageEvent;
-
-    this.page = pageIndex;
-    this.pageSize = pageSize;
-    this.changeDetectorRef.markForCheck();
-  }
-
-  ngOnInit() {
-    if (this.id?.length <= 0 || this.baunitId == null) {
-      return;
-    }
-    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-  }
-
   openInformationPropertyZone(zone: ZoneBAUnitFisica): void {
     const propertyType = this.determinePropertyType();
 
@@ -255,10 +190,6 @@ export class PhysicalZonesPropertyComponent implements OnInit, AfterViewInit {
     this.zoneBAUnit = [];
     this.zoneBAUnitRural = [];
     this.zoneBAUnitUrban = [];
-  }
-
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
   }
 
   filterByObject(result: ZoneBAUnitFisica[], key: string): ZoneBAUnitFisica[] {

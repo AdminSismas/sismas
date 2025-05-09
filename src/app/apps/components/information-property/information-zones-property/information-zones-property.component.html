@@ -18,12 +18,11 @@
       <div class="flex w-full justify-between">
         <!-- Tabla -->
         <vex-physical-zones-property
-          class="w-full px-8 border-r border-gray-300"
+          class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
           tableTitle="físicas alfanuméricas"
           [id]="id"
           [dataSource]="dataSourcePhysicalZones"
           [zoneType]="zoneType"
-          [totalPhysicalElements]="totalPhysicalElements"
           [schema]="schema"
           [baunitId]="baunitId"
           [editable]="editable"
@@ -37,11 +36,9 @@
 
         <!-- Second Table -->
         <vex-geo-economic-zones-property
-          class="w-full px-8 border-l border-gray-300"
+          class="w-full px-8 border-l border-gray-300 max-h-80 overflow-hidden"
           tableTitle="geoeconómicas alfanuméricas"
-          [id]="id"
           [dataSource]="dataSourceGeoeconomicZones"
-          [totalGeoElements]="totalGeoElements"
           [expandedComponent]="expandedComponent"
           [schema]="schema"
           [npn]="npn"
@@ -58,13 +55,12 @@
       <div class="flex w-full justify-between border-t-2 border-gray-300">
         <!-- Tabla -->
         <vex-physical-zones-property
-          class="w-full px-8 border-r border-gray-300"
+          class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
           tableTitle="físicas de origen geográfico"
           [isOrigen]="true"
           [id]="id"
           [dataSource]="dataSourcePhysicalOrigin"
           [zoneType]="zoneType"
-          [totalPhysicalElements]="totalPhysicalElements"
           [schema]="schema"
           [baunitId]="baunitId"
           [divPolLv1]="divPolLv1"
@@ -77,12 +73,10 @@
 
         <!-- Second Table -->
         <vex-geo-economic-zones-property
-          class="w-full px-8 border-l border-gray-300"
+          class="w-full px-8 border-l border-gray-300 max-h-80 overflow-hidden"
           tableTitle="geoeconómicas de origen geográfico"
           [isOrigen]="true"
-          [id]="id"
           [dataSource]="dataSourceGeoeconomicOrigin"
-          [totalGeoElements]="totalGeoElements"
           [expandedComponent]="expandedComponent"
           [schema]="schema"
           [npn]="npn"
