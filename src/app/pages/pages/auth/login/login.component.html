@@ -1,42 +1,82 @@
 <div class="video-background">
-  <video autoplay muted loop id="bg-video">
-    <source [attr.src]="videoPath" type="video/mp4">
+  <video
+    autoplay
+    muted
+    loop
+    id="bg-video"
+  >
+    <source
+      [attr.src]="videoPath"
+      type="video/mp4"
+    />
     Tu navegador no soporta video HTML5.
   </video>
 </div>
 
 <div class="w-full h-full bg-pattern flex flex-col items-center justify-center">
-  <div @fadeInUp class="card overflow-hidden w-full max-w-md">
+  <div
+    @fadeInUp
+    class="card overflow-hidden w-full max-w-md"
+  >
     <div class="p-6 pb-0 flex flex-col items-center justify-center">
       <div class="fill-current text-center">
         <h1 class="title m-0">Bienvenido</h1>
-        <br>
-        <img class="logo-large" src="../../../../assets/img/logo/logo_sismas.png" alt="logo" />
+        <br />
+        <img
+          class="logo-large"
+          src="../../../../assets/img/logo/logo_sismas.png"
+          alt="logo"
+        />
       </div>
     </div>
 
     <div class="text-center mt-4">
-      
-      <h4 class="body-2 text-secondary m-0">Inicia sesión con tus credenciales para continuar.</h4>
+      <h4 class="body-2 text-secondary m-0">
+        Inicia sesión con tus credenciales para continuar.
+      </h4>
     </div>
 
-    <div [formGroup]="form" class="p-6 flex flex-col gap-4">
+    <div
+      [formGroup]="form"
+      class="p-6 flex flex-col gap-4"
+    >
       <div class="flex flex-col">
         <mat-form-field class="flex-1">
           <mat-label>Usuario</mat-label>
-          <input formControlName="email" matInput required />
+          <input
+            formControlName="email"
+            matInput
+            required
+          />
           <mat-error *ngIf="form.controls['email'].hasError('required')">
             Se necesita un usuario válido para iniciar sesión
           </mat-error>
         </mat-form-field>
-        <br/>
+        <br />
 
         <mat-form-field class="flex-1">
           <mat-label>Contraseña</mat-label>
-          <input [type]="inputType" formControlName="password" matInput required />
-          <button (click)="toggleVisibility()" mat-icon-button matIconSuffix matTooltip="Toggle Visibility" type="button">
-            <mat-icon *ngIf="visible" svgIcon="mat:visibility"></mat-icon>
-            <mat-icon *ngIf="!visible" svgIcon="mat:visibility_off"></mat-icon>
+          <input
+            [type]="inputType"
+            formControlName="password"
+            matInput
+            required
+          />
+          <button
+            (click)="toggleVisibility()"
+            mat-icon-button
+            matIconSuffix
+            matTooltip="Toggle Visibility"
+            type="button"
+          >
+            <mat-icon
+              *ngIf="visible"
+              svgIcon="mat:visibility"
+            ></mat-icon>
+            <mat-icon
+              *ngIf="!visible"
+              svgIcon="mat:visibility_off"
+            ></mat-icon>
           </button>
           <mat-hint>Haga clic en el ojo para cambiar la visibilidad</mat-hint>
           <mat-error *ngIf="form.controls['password'].hasError('required')">
@@ -46,15 +86,46 @@
       </div>
 
       <div class="flex items-center justify-between">
-        <mat-checkbox class="caption" color="primary" >Recuérdame</mat-checkbox>
-        <a [routerLink]="['/auth/forgot-password']" class="caption">¿Olvidaste la contraseña?</a>
+        <mat-checkbox
+          class="caption"
+          color="primary"
+          >Recuérdame</mat-checkbox
+        >
+        <a
+          [routerLink]="['/auth/forgot-password']"
+          class="caption"
+          >¿Olvidaste la contraseña?</a
+        >
       </div>
 
-      <button (click)="send()" color="primary" style="background-color: #1a3a45;" mat-raised-button type="button">Ingresar</button>
+      @if (loading) {
+        <div class="flex justify-center items-center">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+      } @else {
+        <button
+          (click)="send()"
+          color="primary"
+          style="background-color: #1a3a45"
+          mat-raised-button
+          type="button"
+        >
+          Ingresar
+        </button>
+      }
       <div class="p-6 pb-0 flex flex-col items-center justify-center">
         <div class="fill-current text-center">
-          <img *ngIf="seeLogoRetiro" class="logo-large" [attr.src]="logoPathAlter" alt="logo" />
-          <img class="logo-large" [attr.src]="logoPath" alt="logo" />
+          <img
+            *ngIf="seeLogoRetiro"
+            class="logo-large"
+            [attr.src]="logoPathAlter"
+            alt="logo"
+          />
+          <img
+            class="logo-large"
+            [attr.src]="logoPath"
+            alt="logo"
+          />
         </div>
       </div>
     </div>
