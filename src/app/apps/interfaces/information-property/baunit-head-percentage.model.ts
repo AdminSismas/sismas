@@ -8,6 +8,7 @@ export class BaUnitHeadPercentage {
   domBaunitEconoDesti?: string;
   registration?: string;
   percentageGroup?: number;
+  operationType?: string;
 
   constructor(content?: any) {
     this.baunitHead = content?.baunitHead ? new BaunitHead(content?.baunitHead) : null;
@@ -16,6 +17,7 @@ export class BaUnitHeadPercentage {
     this.domBaunitCondition = content?.baunitHead?.domBaunitCondition || '';
     this.domBaunitEconoDesti = content?.baunitHead?.domBaunitEconoDesti || '';
     this.percentageGroup = content?.percentageGroup || 0;
+    this.operationType = content?.operationType || '';
 
     if (this.baunitHead?.propertyRegistryOffice && this.baunitHead?.propertyRegistryOffice.length > 0 &&
       this.baunitHead?.propertyRegistryNumber && this.baunitHead?.propertyRegistryNumber.length > 0) {

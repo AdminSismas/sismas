@@ -111,8 +111,7 @@ export class TableAlfaMainComponent
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmRemoveDialog', { static: true }) confirmRemoveDialog!: SwalComponent;
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: SwalComponent;
-  @ViewChild('confirmAddUpdateBaUnitHead', { static: true })
-  confirmAddUpdateBaUnitHead!: SwalComponent;
+  @ViewChild('confirmAddUpdateBaUnitHead', { static: true }) confirmAddUpdateBaUnitHead!: SwalComponent;
 
   constructor(
     private dialog: MatDialog,

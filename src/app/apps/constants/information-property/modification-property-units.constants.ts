@@ -4,7 +4,7 @@ import { BaUnitHeadPercentage } from '../../interfaces/information-property/baun
 import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
 
 
-export const TABLE_COLUMN_UNITS_TABLE_COLUMNS: TableColumn<BaunitHead>[] = [
+export const TABLE_COLUMN_UNITS_TABLE_COLUMNS: TableColumn<BaUnitHeadPercentage>[] = [
   {
     label: '',
     property: 'viewMap',
@@ -57,6 +57,13 @@ export const TABLE_COLUMN_UNITS_TABLE_COLUMNS: TableColumn<BaunitHead>[] = [
 ];
 
 export const MODIFYCATION_UNITS_TABLE_COLUMNS: TableColumn<BaUnitHeadPercentage>[] = [
+  {
+    label: '',
+    property: 'operationType',
+    type: 'operationType',
+    visible: true,
+    cssClasses: []
+  },
   ...TABLE_COLUMN_UNITS_TABLE_COLUMNS,
   {
     label: 'Acciones',

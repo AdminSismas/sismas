@@ -49,16 +49,33 @@
           class="w-full"
           mat-table
           matSort>
+
+          <!-- Type Properties Column -->
+          <ng-container matColumnDef="operationType">
+            <th *matHeaderCellDef mat-header-cell class="pl-1 pr-1"></th>
+            <td *matCellDef="let row" mat-cell class="px-3">
+              @if (row['operationType'] === 'CREATE') {
+                <div class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-green-600">
+                  Creado
+                </div>
+              }
+              @if (row['operationType'] === 'UPDATE') {
+                <div class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-primary-600">
+                  Agregado
+                </div>
+              }
+              @if (row['operationType'] === 'DELETE') {
+                <div class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-red-600">
+                  Borrado
+                </div>
+              }
+            </td>
+          </ng-container>
+
           <ng-container matColumnDef="viewMap">
-            <th *matHeaderCellDef
-                class="pl-1 pr-1"
-                mat-header-cell
+            <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell
                 mat-sort-header></th>
-            <td
-              *matCellDef="let row"
-              class="pl-1 pr-1"
-              mat-cell
-            >
+            <td *matCellDef="let row" class="pl-1 pr-1" mat-cell>
               <div class="flex">
                 <button
                   (click)="openCadastralInformationProperty(row)"
@@ -77,28 +94,20 @@
           @for (column of columns; track trackByProperty) {
             @if (column.type === "text") {
               <ng-container [matColumnDef]="column.property">
-                <th *matHeaderCellDef
-                    class="pl-1 pr-1" mat-header-cell mat-sort-header>
+                <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
                   {{ column.label }}
                 </th>
                 <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses" mat-cell class="pl-1 pr-1">
+                  *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell class="pl-1 pr-1">
                   {{ row[column.property] }}
                 </td>
               </ng-container>
             } @else if (column.type === "percentage") {
               <ng-container [matColumnDef]="column.property">
-                <th *matHeaderCellDef
-                    class=" pl-1 pr-1"
-                    mat-header-cell
-                    mat-sort-header>
+                <th *matHeaderCellDef class=" pl-1 pr-1" mat-header-cell mat-sort-header>
                   {{ column.label }}
                 </th>
-                <td
-                  *matCellDef="let row"
-                  mat-cell
-                  class="pl-1 pr-1">
+                <td *matCellDef="let row" mat-cell class="pl-1 pr-1">
                   {{ row[column.property] | percent:'1.1-15' }}
                 </td>
               </ng-container>
@@ -147,18 +156,19 @@
 
 <mat-menu #actionsMenu="matMenu">
   <ng-template matMenuContent let-row="row">
-    <button
-      (click)="editPropertyUnit(row)"
-      mat-menu-item>
-      <mat-icon svgIcon="mat:edit"></mat-icon>
-      <span>Editar</span>
-    </button>
-
+    @if (row['operationType'] !== TYPE_OPERATION_DELETE) {
+      <button
+        (click)="editPropertyUnit(row)"
+        mat-menu-item>
+        <mat-icon svgIcon="mat:edit"></mat-icon>
+        <span>Editar</span>
+      </button>
+    }
     <button
       (click)="deletePropertyUnit(row)"
       mat-menu-item>
-      <mat-icon svgIcon="mat:delete"></mat-icon>
-      <span>Borrar</span>
+      <mat-icon [svgIcon]="addRemoveIcon(row['operationType'])"></mat-icon>
+      <span>{{ addRemoveText(row['operationType']) }}</span>
     </button>
   </ng-template>
 </mat-menu>
@@ -183,6 +193,18 @@
   icon="warning"
   [showCancelButton]="true"
   [confirmButtonText]="'Sí, eliminar'"
+  [cancelButtonText]="'Cancelar'"
+  [confirmButtonColor]="'#3085d6'"
+  [cancelButtonColor]="'#d33'"
+></swal>
+
+<swal
+  #confirmAddUpdateBaUnitHead
+  title="Confirmar reincorporacion"
+  text="¿Está seguro que desea reincorporar esta unidad predial?"
+  icon="info"
+  [showCancelButton]="true"
+  [confirmButtonText]="'Sí, reincorporar'"
   [cancelButtonText]="'Cancelar'"
   [confirmButtonColor]="'#3085d6'"
   [cancelButtonColor]="'#d33'"

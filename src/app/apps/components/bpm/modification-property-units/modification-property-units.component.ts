@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, DestroyRef, inject, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,7 +9,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { CrudAlfaMainComponent } from '../alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { DataAlfaMain, ModificationUnitProperties } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
@@ -19,12 +18,11 @@ import {
   MODAL_LARGE,
   PAGE,
   PAGE_OPTION_5_7_10,
-  PAGE_SIZE,
+  PAGE_SIZE, TYPE_CREATE,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL,
-  TYPE_OPERATION_ADD,
-  TYPE_OPERATION_CREATE,
-  TYPE_OPERATION_DELETE
+  TYPE_OPERATION_ADD, TYPE_OPERATION_CREATE,
+  TYPE_OPERATION_DELETE, TYPE_UPDATE
 } from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
@@ -50,9 +48,12 @@ import {
 import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
 import { NgClass, PercentPipe } from '@angular/common';
 import { CrudPropertyUnitsComponent } from './crud-property-units/crud-property-units.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
+import Swal from 'sweetalert2';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -105,11 +106,14 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @ViewChild('confirmRemoveDialog', { static: true }) confirmRemoveDialog!: SwalComponent;
   @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: SwalComponent;
+  @ViewChild('confirmAddUpdateBaUnitHead', { static: true }) confirmAddUpdateBaUnitHead!: SwalComponent;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public dataInformationUnitProperties: ModificationUnitProperties,
     private unitPropertyInformationService: UnitPropertyInformationService,
+    private bpmCoreService: BpmCoreService,
+    private alfaMainService: AlfaMainService,
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService
   ) {
@@ -212,29 +216,6 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
       .afterClosed();
   }
 
-  deletePropertyUnit(row: BaUnitHeadPercentage) {
-    this.confirmRemoveDialog.fire().then((result) => {
-      if (result.isConfirmed) {
-        // this.bpmCoreService
-        //   .clearPropertyBpmOperation(
-        //     this.executionId,
-        //     operation.baunitHead!.baunitIdE as string
-        //   )
-        //   .subscribe({
-        //     next: () => {
-        //       this.refreshData.emit();
-        //     },
-        //     error: (error: HttpErrorResponse) => {
-        //       this.msgErrorConsultingAdministration(
-        //         'Error al eliminar la unidad predial.'
-        //       );
-        //       throw error;
-        //     }
-        //   });
-      }
-    });
-  }
-
   openCrudAlfaMain(type: TypeOperationAlfaMain) {
     if (!this.executionId || type !== TYPE_OPERATION_ADD) {
       return;
@@ -284,11 +265,51 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
       .afterClosed();
   }
 
+  deletePropertyUnit(row: BaUnitHeadPercentage) {
+    if (row.operationType === TYPE_CREATE) {
+      this.confirmRemoveDialog.fire().then((result) => {
+        if (result.isConfirmed && this.executionId) {
+          this.bpmCoreService.clearPropertyBpmOperation(this.executionId, row.baunitHead!.baunitIdE as string)
+            .subscribe({
+              next: () => this.getPropertiesUnits(),
+              error: () => this.getAlertError('Error al eliminar la unidad predial.')
+            });
+        }
+      });
+      return;
+    }
+
+    if (row.operationType === TYPE_UPDATE) {
+      this.confirmDeleteDialog.fire().then((result) => {
+        if (result.isConfirmed && this.executionId) {
+          this.executeResultChangeTemporaryStateBeaUnitHead(row);
+        }
+      });
+      return;
+    }
+
+    this.confirmAddUpdateBaUnitHead.fire().then((result) => {
+      if (result.isConfirmed && this.executionId) {
+        this.executeResultChangeTemporaryStateBeaUnitHead(row);
+      }
+    });
+  }
+
+  executeResultChangeTemporaryStateBeaUnitHead(row: BaUnitHeadPercentage) {
+    if (!this.executionId) {
+      return;
+    }
+    this.alfaMainService.changeTemporaryStateBeaUnitHeadByExistTemp(
+      row.baunitHead!.baunitIdE as string, this.executionId).subscribe({
+      next: () => this.getPropertiesUnits(),
+      error: () => this.getAlertError('Error al eliminar la unidad predial.')
+    });
+  }
+
   onFilterChange(value: string) {
     if (!this.dataSource) {
       return;
     }
-
     value = value.toLowerCase();
     this.dataSource.filter = value;
   }
@@ -301,7 +322,24 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
     return this.columns.filter((column) => column.visible).map((column) => column.property);
   }
 
-  protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
+  addRemoveIcon(operationType: string): string {
+    return operationType === TYPE_OPERATION_DELETE ? 'mat:recycling' : 'mat:delete';
+  }
+
+  addRemoveText(operationType: string): string {
+    return operationType === TYPE_OPERATION_DELETE ? 'Reincorporar' : 'Borrar';
+  }
+
+  getAlertError(text: string) {
+    Swal.fire({
+      title: '¡Error!',
+      text: text,
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 2000
+    }).then();
+  }
+
   protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
   protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
 }
