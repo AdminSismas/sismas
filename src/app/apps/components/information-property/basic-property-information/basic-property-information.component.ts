@@ -109,6 +109,7 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input() typeInformation = 'visualization';
   @Input() editable? = true;
   @Input() editNpn? = false;
+  @Input() editArea? = false;
 
   @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
   @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
@@ -183,7 +184,8 @@ export class BasicPropertyInformationComponent implements OnInit {
     const dataBasicInformationProperty: CrudBasicInformationProperty = {
       type: TYPE_UPDATE,
       contentInformation: data,
-      npnEdit: this.editNpn
+      npnEdit: this.editNpn,
+      areaEdit: this.editArea
     };
     this.dialog.open(EditBasicPropertyInformationComponent, {
       ...MODAL_MEDIUM_SMALL,

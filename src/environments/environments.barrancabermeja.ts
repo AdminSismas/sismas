@@ -195,6 +195,7 @@ export const environment = {
   validity: 'validity',
   valuation: '/valuation',
   video: 'assets/video/barrancabermeja.mp4',
+  videoWebm: 'assets/video/barrancabermeja.webm',
   withoutSignaturesUsers: '/without-signature',
   withSignaturesUsers: '/with-signature'
 };

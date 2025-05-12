@@ -19,6 +19,7 @@ import { NavigationLoaderService } from 'src/app/core/navigation/navigation-load
 import { jwtDecode } from 'jwt-decode';
 import { ENVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/general/constants';
 import Swal from 'sweetalert2';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'vex-login',
@@ -28,21 +29,23 @@ import Swal from 'sweetalert2';
   animations: [fadeInUp400ms],
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    NgIf,
     MatButtonModule,
-    MatTooltipModule,
-    MatIconModule,
     MatCheckboxModule,
-    RouterLink,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatSidenavModule
+    MatTooltipModule,
+    NgIf,
+    ReactiveFormsModule,
+    RouterLink,
   ]
 })
 export class LoginComponent {
   videoPath: string = environment.video;
+  videoPathWebm: string = environment.videoWebm;
   logoPath: string = environment.logo;
   logoPathAlter = '';
   form!: FormGroup;
@@ -52,6 +55,7 @@ export class LoginComponent {
   idleState = 'NOT_STARTED';
   countdown?: number | null;
   lastPing?: Date | null;
+  loading = false;
 
   constructor(
     private router: Router,
@@ -76,6 +80,7 @@ export class LoginComponent {
     if (this.form.valid) {
       const { email, password } = this.form.value;
 
+      this.loading = true;
       this.authService.login(email, password).subscribe({
         next: (response) => {
 
@@ -84,6 +89,7 @@ export class LoginComponent {
 
             const user: DecodeJwt = jwtDecode(response.token);
             this.userService.setUser(user);
+            this.loading = false;
 
             this.navigationLoaderService.loadInformationNavigation(user.role);
 

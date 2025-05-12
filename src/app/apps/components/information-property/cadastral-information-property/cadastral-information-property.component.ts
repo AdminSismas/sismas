@@ -232,7 +232,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
     ZON?: boolean,
     CLN?: boolean,
     AUTAVAL?: boolean,
-    NPN?: boolean
+    NPN?: boolean,
+    AREA?: boolean
   } = {};
 
   propertyRegistryOffice: string | null | undefined = null;

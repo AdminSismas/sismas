@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -8,8 +8,6 @@ import {
   NAME_NO_DISPONIBLE,
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE,
-  PAGE_OPTION_10_20_50_100,
-  PAGE_SIZE,
   TYPE_INFORMATION_EDITION
 } from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
@@ -24,18 +22,12 @@ import { InformationPropertyService } from '../../../services/territorial-organi
 import { Observable } from 'rxjs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { CommonModule } from '@angular/common';
-import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatOptionModule, MatRippleModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import {
@@ -50,7 +42,6 @@ import {
 import {
   PhysicalZonesPropertyComponent
 } from './components-child/physical-zones-property/physical-zones-property.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
@@ -65,30 +56,18 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     scaleFadeIn400ms
   ],
   imports: [
-    MatExpansionModule,
     CdkAccordionModule,
-    FormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatOptionModule,
-    MatTabsModule,
-    ReactiveFormsModule,
-    MatSlideToggleModule,
-    MatCardModule,
-    HeaderCadastralInformationPropertyComponent,
-    MatExpansionModule,
-    HeaderCadastralInformationPropertyComponent,
-    MatCardModule,
-    MatRippleModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatDialogModule,
     CommonModule,
-    MatTableModule,
     GeoEconomicZonesPropertyComponent,
+    HeaderCadastralInformationPropertyComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTableModule,
+    MatTabsModule,
     PhysicalZonesPropertyComponent,
     SweetAlert2Module
   ],
@@ -102,7 +81,7 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     }
   ],
 })
-export class InformationZonesPropertyComponent implements OnInit {
+export class InformationZonesPropertyComponent {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents = false;
 
@@ -125,13 +104,6 @@ export class InformationZonesPropertyComponent implements OnInit {
   dataBasicInformation!: BasicInformationProperty;
   page: number = PAGE;
   page2: number = PAGE;
-  totalPhysicalElements = 0;
-  totalGeoElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSize2: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
-  pageSizeOptions2: number[] = PAGE_OPTION_10_20_50_100;
-  rightIdSelected?: number;
   dataSourcePhysicalZones: MatTableDataSource<ZoneBAUnitFisica> =
     new MatTableDataSource<ZoneBAUnitFisica>([]);
   dataSourcePhysicalOrigin: MatTableDataSource<ZoneBAUnitFisica> =
@@ -179,14 +151,6 @@ export class InformationZonesPropertyComponent implements OnInit {
     this.dataBasicInformation = result;
   }
 
-  ngOnInit() {
-    if (this.id?.length <= 0 || this.baunitId == null) {
-      return;
-    }
-    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    this.isExpandPanel(this.expandedComponent);
-  }
-
   isExpandPanel(expandedComponent: boolean): void {
     if (expandedComponent) {
       this.searchInformationPhysicalZonesProperty();
@@ -206,7 +170,6 @@ export class InformationZonesPropertyComponent implements OnInit {
         next: (result: ZoneBAUnitResponse[]) => {
           this.zoneBAUnit = this.capturePhysicZoneInformation(result);
           this.dataSourcePhysicalZones.data = this.zoneBAUnit;
-          this.totalPhysicalElements = result.length;
         },
         error: () => this.captureInformationSubscribeError()
       });
@@ -221,7 +184,6 @@ export class InformationZonesPropertyComponent implements OnInit {
         next: (result: ZoneBAUnitResponse[]) => {
           this.zoneBAUnit = this.capturePhysicZoneInformation(result);
           this.dataSourcePhysicalOrigin.data = this.zoneBAUnit;
-          this.totalPhysicalElements = result.length;
         },
         error: () => this.captureInformationSubscribeError()
       });
@@ -247,7 +209,6 @@ export class InformationZonesPropertyComponent implements OnInit {
           this.zoneBAUnitGeoeconomic =
             this.captureGeoeconomicZoneInformation(result);
           this.dataSourceGeoeconomicZones.data = this.zoneBAUnitGeoeconomic;
-          this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
         },
         error: () => this.captureInformationSubscribeError()
       });
@@ -263,7 +224,6 @@ export class InformationZonesPropertyComponent implements OnInit {
           this.zoneBAUnitGeoeconomic =
             this.captureGeoeconomicZoneInformation(result);
           this.dataSourceGeoeconomicOrigin.data = this.zoneBAUnitGeoeconomic;
-          this.totalGeoElements = this.zoneBAUnitGeoeconomic.length;
         },
         error: () => this.captureInformationSubscribeError()
       });
@@ -286,10 +246,6 @@ export class InformationZonesPropertyComponent implements OnInit {
     this.zoneBAUnitRural = [];
     this.zoneBAUnitUrban = [];
     this.zoneBAUnitGeoeconomic = [];
-  }
-
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
   }
 
   filterByObject(result: ZoneBAUnitFisica[], key: string): ZoneBAUnitFisica[] {
@@ -317,7 +273,7 @@ export class InformationZonesPropertyComponent implements OnInit {
           this.searchInformationPhysicalZonesProperty();
           this.searchInformationGeoeconomicZonesProperty();
         },
-        error: (error: HttpErrorResponse) => {
+        error: () => {
           this.errorDelete.fire();
         }
       });
