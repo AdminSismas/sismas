@@ -1,23 +1,36 @@
-name: Deploy to Test on Push to Main
+name: Deploy to Test on Push to Despliegue-Desarrollo
 on:
   push:
     branches:
-      - main
+      - despliegue-desarrollo
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
         with:
-          node-version: v20.9.0
+          ref: despliegue-desarrollo
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli@18
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Watch Node and Angular versions
+        run: |
+          node -v
+          npm -v
+          ng version
+
       - name: Build Angular App
-        run: npm run build -- --configuration=test
+        run: ng build --configuration=test
       - name: Install sshpass
         run: |
           sudo apt-get update
