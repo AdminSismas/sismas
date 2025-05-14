@@ -156,6 +156,12 @@
 
 <mat-menu #actionsMenu="matMenu">
   <ng-template matMenuContent let-row="row">
+    <button
+      (click)="viewChanges(row)" mat-menu-item>
+      <mat-icon svgIcon="mat:info"></mat-icon>
+      <span>Ver cambios</span>
+    </button>
+
     @if (row['operationType'] !== TYPE_OPERATION_DELETE) {
       <button
         (click)="editPropertyUnit(row)"

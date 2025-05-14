@@ -200,9 +200,24 @@ export class SendGeneralRequestsService {
     return this.http.put<any>(url, body, params);
   }
 
-  errorNotFound(error: HttpErrorResponse) {
-    if (error.status == HttpStatusCode.NotFound) {
+  errorNotFound(error: HttpErrorResponse | any) {
+    if (error.status == HttpStatusCode.NotFound || error.statusCode == HttpStatusCode.NotFound) {
       return new Observable<any>((subscriber) => subscriber.complete());
+    }
+    return throwError(() => error);
+  }
+
+  errorBadRequest(error: HttpErrorResponse | any) {
+    let errMsg: string | null = null;
+    if (error != null && error['statusCode'] != null) {
+      errMsg = error.data != null && error.data?.error ? error.data?.error : error.message;
+    } else if(error instanceof HttpErrorResponse) {
+      errMsg = error?.message ? error?.message : error.toString();
+    } else if(error != null && error?.message != null) {
+      errMsg = error?.message;
+    }
+    if(errMsg) {
+      return throwError(() => errMsg);
     }
     return throwError(() => error);
   }

@@ -6,7 +6,7 @@ import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 import { ProFlow } from '../../interfaces/bpm/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
 import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -74,19 +74,32 @@ export class BpmCoreService {
   /*
   * Compare Temporal
   * */
+
   //{{url}}:{{port}}/compare/temp/{{executionId}}/{{baunitId}}
   viewChangesBpmOperationTemp(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     const url = `${envi.url}:${envi.port}${envi.compare_temp}${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.requestsService.sendRequestsFetchGet(url)
+      .pipe(catchError((error: Response | any) => {
+        if (error.status == HttpStatusCode.BadRequest || error.statusCode == HttpStatusCode.BadRequest) {
+          return this.requestsService.errorBadRequest(error);
+        }
+        return this.requestsService.errorNotFound(error);
+      }));
   }
-
   /*
   * Compare History
   * */
+
   //{{url}}:{{port}}/compare/hist/{{executionId}}/{{baunitId}}
   viewChangesBpmOperationHistory(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     const url = `${envi.url}:${envi.port}${envi.compare_hist}${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.requestsService.sendRequestsFetchGet(url)
+      .pipe(catchError((error: Response | any) => {
+        if (error.status == HttpStatusCode.BadRequest || error.statusCode == HttpStatusCode.BadRequest) {
+          return this.requestsService.errorBadRequest(error);
+        }
+        return this.requestsService.errorNotFound(error);
+      }));
   }
 
   updateProTask(proTaskE: ProTaskE) {

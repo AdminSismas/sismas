@@ -57,6 +57,10 @@ import {
 } from '../modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import {
+  CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
+  CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
+} from '../../../constants/general/constantLabels';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -212,17 +216,10 @@ export class TableAlfaMainComponent
 
   viewChanges(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
-      this.msgErrorConsultingAdministration(
-        'No se puede visualizar los cambios realizados, consulte al administrador.'
-      );
+      this.msgErrorConsultingAdministration(CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE);
       return;
     }
-    this.bpmCoreService
-      .viewChangesBpmOperationTemp(
-        this.executionId,
-        operation?.baunitHead?.baunitIdE
-      )
-      .subscribe({
+    this.bpmCoreService.viewChangesBpmOperationTemp(this.executionId, operation?.baunitHead?.baunitIdE).subscribe({
         error: () => this.messageChangesNoAvailable(),
         next: (result: DifferenceChanges[]) => {
           this.openDifferenceChangesProperty(
@@ -341,9 +338,7 @@ export class TableAlfaMainComponent
   }
 
   messageChangesNoAvailable() {
-    this.msgErrorConsultingAdministration(
-      'Cambios realizados en el control de cambios no disponibles, consulte al administrador.'
-    );
+    this.msgErrorConsultingAdministration( CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE);
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>): string {

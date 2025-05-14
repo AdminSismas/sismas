@@ -16,13 +16,16 @@ import {
   LIST_SCHEMAS_CONTROL_MAIN,
   LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
+  MODAL_MIN_MEDIUM_ALL,
   PAGE,
   PAGE_OPTION_5_7_10,
-  PAGE_SIZE, TYPE_CREATE,
+  PAGE_SIZE,
+  TYPE_CREATE,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL,
-  TYPE_OPERATION_ADD, TYPE_OPERATION_CREATE,
-  TYPE_OPERATION_DELETE, TYPE_UPDATE
+  TYPE_OPERATION_ADD,
+  TYPE_OPERATION_DELETE,
+  TYPE_UPDATE
 } from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
@@ -52,8 +55,13 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import Swal from 'sweetalert2';
-import { HttpErrorResponse } from '@angular/common/http';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
+import {
+  CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE, CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR,
+  CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
+} from '../../../constants/general/constantLabels';
+import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -86,7 +94,7 @@ import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 })
 export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit {
 
-  executionId: string | null = null;
+  executionId!: string;
   baUnitId: string | null = null;
   operationBaUnitHead: Operation | null = null;
   // Configuration paginator
@@ -198,6 +206,21 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
     }
   }
 
+  viewChanges(row: BaUnitHeadPercentage): void {
+    if (!row || !row.baunitHead?.baunitIdE || !this.executionId) {
+      this.getAlertError(CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE);
+      return;
+    }
+    this.bpmCoreService.viewChangesBpmOperationTemp( this.executionId, row.baunitHead?.baunitIdE).subscribe({
+        error: (error) => {
+          this.getAlertError(CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR + error.toString());
+        },
+        next: (result: DifferenceChanges[]) => {
+          this.openDifferenceChangesProperty(result, row.baunitHead?.baunitIdE);
+        }
+      });
+  }
+
   editPropertyUnit(row: BaUnitHeadPercentage) {
     this.dialog
       .open(LayoutCardCadastralInformationPropertyComponentComponent, {
@@ -238,6 +261,20 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
           this.getPropertiesUnits();
         }
       });
+  }
+
+  openDifferenceChangesProperty( result: DifferenceChanges[], baunitIdE: string | undefined): void {
+    if (!result || result.length <= 0 || !this.executionId) {
+      this.getAlertError(CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE);
+      return;
+    }
+    const data: DifferenceChanges[] = result
+      .map((row: DifferenceChanges) => new DifferenceChanges(row, this.executionId, baunitIdE));
+    this.dialog.open(ViewChangesBpmOperationComponent, {
+        ...MODAL_MIN_MEDIUM_ALL,
+        disableClose: true,
+        data: data
+      }).afterClosed();
   }
 
   refreshPaginator(event: PageEvent) {
@@ -332,11 +369,10 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
 
   getAlertError(text: string) {
     Swal.fire({
-      title: '¡Error!',
       text: text,
       icon: 'error',
       showConfirmButton: false,
-      timer: 2000
+      timer: 4000
     }).then();
   }
 

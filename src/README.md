@@ -1,6 +1,6 @@
 <div style="margin-bottom: 2rem;">
 <img style="float: left; height: 80px; width: unset; margin: 0;" src="..\src\assets\img\illustrations\it_support.svg" alt="Vex Logo"/>
-<h1 style="height: 80px; line-height: 80px; margin: 0 0 0 70px; font-weight: 800; border: none; font-size: 3rem;">GEO</h1>
+<h1 style="height: 80px; line-height: 80px; margin: 0 0 0 70px; font-weight: 800; border: none; font-size: 3rem;">Sisma</h1>
 </div>
 
 # Introduction

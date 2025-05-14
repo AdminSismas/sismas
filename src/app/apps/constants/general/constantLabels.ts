@@ -1,3 +1,4 @@
+import { throwError } from 'rxjs';
 
 
 export const CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN = 'Si desea reiniciar el control de cambios ingrese la palabra para continuar';
@@ -43,4 +44,7 @@ export const CONSTANT_TEXT_ALFA_MAIN_GEO = 'Información Geografica de Predios';
 
 export const CONSTANT_TEXT_GEO_MAIN_ALFA = 'Mapa Geografico';
 export const CONSTANT_TEXT_ALFA_MAIN_ALFA = 'Información Alfanumérica de Predios';
+export const CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE = 'Error, cambios realizados no disponibles, consulte al administrador.';
+export const CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR = 'Error, cambios realizados no disponibles, consulte al administrador: ';
+export const CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE = 'No se puede visualizar los cambios realizados, consulte al administrador.';
 
