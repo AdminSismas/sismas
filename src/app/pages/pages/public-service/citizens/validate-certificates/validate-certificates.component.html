@@ -1,13 +1,64 @@
-<vex-secondary-toolbar current="Formulario">
-  <vex-breadcrumbs
-    [crumbs]="['Servicio público','Ciudadanos', 'Validar certificados']"
-    class="flex-auto"></vex-breadcrumbs>
+<div [ngStyle]="{backgroundImage:'url(../../../assets/img/logo/fondochat.jpg)'}"
+     class="w-full h-full bg-pattern flex flex-col items-center justify-center">
+  <div
+    @fadeInUp
+    class="card shadow-xl text-center w-full max-w-lg overflow-hidden card-validate-certificate">
+    <div class="p-6 flex flex-col items-center">
+      <img class="w-16" src="../../../assets/img/illustrations/it_support.svg" alt="" />
+    </div>
+    <h1 class="display-1 font-medium m-0">VALIDACION DE CERTIFICADOS</h1>
+    <h3 class="title mt-3 mb-0">Ingrese numero de pin para poder descargar certificado.</h3>
+    <div class="my-6 flex items-center justify-center gap-3">
+      <a class="cursor-pointer">
+        <mat-icon class="icon-sm" svgIcon="logo:facebook"></mat-icon>
+      </a>
+      <a class="cursor-pointer">
+        <mat-icon class="icon-sm" svgIcon="logo:twitter"></mat-icon>
+      </a>
+      <a class="cursor-pointer">
+        <mat-icon class="icon-sm" svgIcon="logo:gmail"></mat-icon>
+      </a>
+      <a class="cursor-pointer">
+        <mat-icon class="icon-sm" svgIcon="logo:whatsapp"></mat-icon>
+      </a>
+    </div>
+    <div [formGroup]="form" class="bg-app-bar p-6 flex flex-col">
+      <p class="mt-0 mb-4 font-medium">
+        If you would like to get notified as soon as we launch, subscribe below
+        and follow us on socials!
+      </p>
 
-  <button class="ml-2" color="primary" mat-icon-button type="button">
-    <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
-</vex-secondary-toolbar>
-<vex-in-construction></vex-in-construction>
+      <vex-input
+        idComboInput="email548784"
+        label="Ingrese Numero Pin"
+        type="email"
+        formControlNameInput="numberPin"
+        [formControlInput]="controlNumberPin"
+        cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
+        icon="mat:search"
+        class="flex-1 sm:ml-0 sm:mr-0"
+      ></vex-input>
+
+      <div class="flex flex-col items-center justify-center align-content-center justify-content-center text-center w-100 my-1">
+        <ngx-recaptcha2
+          class="items-center justify-center align-content-center justify-content-center text-center"
+          [siteKey]="recaptchaSiteKey"
+          [useGlobalDomain]="false"
+          formControlName="recaptcha"></ngx-recaptcha2>
+      </div>
+
+      <button
+        (click)="$event.preventDefault()"
+        color="primary"
+        style="background-color: #1a3a45"
+        mat-raised-button
+        type="button">
+        Descargar
+      </button>
+    </div>
+  </div>
+</div>
+
 
 
 

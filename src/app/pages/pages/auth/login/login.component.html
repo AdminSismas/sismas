@@ -9,66 +9,46 @@
       [attr.src]="videoPath"
       type="video/mp4"
     />
-    Tu navegador no soporta video HTML5.
+    {{ CONSTANT_LOGIN_NOT_SUPPORT_VIDEO }}
   </video>
 </div>
 
-<div class="w-full h-full bg-pattern flex flex-col items-center justify-center">
-  <div
-    @fadeInUp
-    class="card overflow-hidden w-full max-w-md"
-  >
+<div class="w-full h-full flex flex-col items-center justify-center">
+  <div @fadeInUp class="card overflow-hidden w-full max-w-md">
     <div class="p-6 pb-0 flex flex-col items-center justify-center">
       <div class="fill-current text-center">
-        <h1 class="title m-0">Bienvenido</h1>
+        <h1 class="title m-0">{{ CONSTANT_LOGIN_WELCOME }}</h1>
         <br />
         <img
-          class="logo-large"
-          src="../../../../assets/img/logo/logo_sismas.png"
+          class="logo-medium"
+          [attr.src]="logoLoginPath"
           alt="logo"
         />
       </div>
     </div>
-
     <div class="text-center mt-4">
       <h4 class="body-2 text-secondary m-0">
-        Inicia sesión con tus credenciales para continuar.
+        {{ CONSTANT_LOGIN_INIT_SESSION }}
       </h4>
     </div>
-
-    <div
-      [formGroup]="form"
-      class="p-6 flex flex-col gap-4"
-    >
+    <div [formGroup]="form" class="p-6 flex flex-col gap-4">
       <div class="flex flex-col">
+        <!--  USER      -->
         <mat-form-field class="flex-1">
-          <mat-label>Usuario</mat-label>
-          <input
-            formControlName="email"
-            matInput
-            required
-          />
+          <mat-label>{{ CONSTANT_LOGIN_USER }}</mat-label>
+          <input formControlName="email" matInput required />
           <mat-error *ngIf="form.controls['email'].hasError('required')">
-            Se necesita un usuario válido para iniciar sesión
+            {{ CONSTANT_LOGIN_ERROR_USER }}
           </mat-error>
         </mat-form-field>
         <br />
-
+        <!--  PASSWORD    -->
         <mat-form-field class="flex-1">
-          <mat-label>Contraseña</mat-label>
-          <input
-            [type]="inputType"
-            formControlName="password"
-            matInput
-            required
-          />
-          <button
-            (click)="toggleVisibility()"
-            mat-icon-button
-            matIconSuffix
-            matTooltip="Toggle Visibility"
-            type="button"
-          >
+          <mat-label>{{ CONSTANT_LOGIN_PASSWORD }}</mat-label>
+          <input [type]="inputType" formControlName="password" matInput required />
+          <button (click)="toggleVisibility()"
+                  mat-icon-button matIconSuffix matTooltip="Toggle Visibility"
+                  type="button">
             <mat-icon
               *ngIf="visible"
               svgIcon="mat:visibility"
@@ -84,25 +64,30 @@
           </mat-error>
         </mat-form-field>
       </div>
-
       <div class="flex items-center justify-between">
         <mat-checkbox
-          class="caption"
-          color="primary"
-          >Recuérdame</mat-checkbox
-        >
+          class="caption" color="primary">
+          Recuérdame
+        </mat-checkbox>
         <a
           [routerLink]="['/auth/forgot-password']"
           class="caption"
-          >¿Olvidaste la contraseña?</a
+        >{{ CONSTANT_LOGIN_FORGET_PASSPORT }}</a
         >
       </div>
-
-      @if (loading) {
+      @if (loading()) {
         <div class="flex justify-center items-center">
           <mat-spinner diameter="40"></mat-spinner>
         </div>
       } @else {
+        <div class="flex flex-col items-center justify-center align-content-center justify-content-center text-center w-100 my-1">
+          <ngx-recaptcha2
+            class="items-center justify-center align-content-center justify-content-center text-center"
+            [siteKey]="recaptchaSiteKey"
+            [useGlobalDomain]="false"
+            formControlName="recaptcha"></ngx-recaptcha2>
+        </div>
+
         <button
           (click)="send()"
           color="primary"
@@ -110,19 +95,19 @@
           mat-raised-button
           type="button"
         >
-          Ingresar
+          {{ CONSTANT_LOGIN_SUBMIT }}
         </button>
       }
       <div class="p-6 pb-0 flex flex-col items-center justify-center">
         <div class="fill-current text-center">
           <img
             *ngIf="seeLogoRetiro"
-            class="logo-large"
+            class="logo-medium-base"
             [attr.src]="logoPathAlter"
             alt="logo"
           />
           <img
-            class="logo-large"
+            class="logo-medium-base"
             [attr.src]="logoPath"
             alt="logo"
           />

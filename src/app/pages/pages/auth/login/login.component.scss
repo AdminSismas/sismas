@@ -1,6 +1,12 @@
 .logo-large {
   width: 250px; /* Aumentado de 200px a 250px */
-  height: auto; 
+  height: auto;
+  transition: all 0.3s ease; /* Agrega una transición suave */
+}
+
+.logo-medium, logo-medium-base {
+  width: 150px; /* Aumentado de 100px a 250px */
+  height: auto;
   transition: all 0.3s ease; /* Agrega una transición suave */
 }
 
@@ -9,11 +15,28 @@
   .logo-large {
     width: 220px; /* Ligeramente más pequeño en móviles */
   }
+
+  .logo-medium {
+    width: 120px; /* Ligeramente más pequeño en móviles */
+  }
+
+  .logo-medium-base {
+    width: 120px; /* Ligeramente más pequeño en móviles */
+  }
+
 }
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   .logo-large {
     width: 280px; /* Más grande en tablets */
+  }
+
+  .logo-medium {
+    width: 180px; /* Ligeramente más pequeño en móviles */
+  }
+
+  .logo-medium-base {
+    width: 180px; /* Ligeramente más pequeño en móviles */
   }
 }
 
@@ -21,8 +44,21 @@
   .logo-large {
     width: 300px; /* Aún más grande en pantallas grandes */
   }
+
+  .logo-medium {
+    width: 200px; /* Ligeramente más pequeño en móviles */
+  }
+
+  .logo-medium-base {
+    width: 200px; /* Ligeramente más pequeño en móviles */
+  }
 }
 
+@media only screen and (min-width: 1500px) {
+  .logo-medium-base {
+    width: 150px; /* Ligeramente más pequeño en móviles */
+  }
+}
 
 .video-background {
   position: fixed;

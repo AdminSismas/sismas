@@ -16,6 +16,13 @@ export const appRoutes: VexRoutes = [
     pathMatch: 'full'
   },
   {
+    path: 'validate-certificates/:id',
+    loadComponent: () =>
+      import('./pages/pages/public-service/citizens/validate-certificates/validate-certificates.component').then(
+        (m) => m.ValidateCertificatesComponent
+      )
+  },
+  {
     path: 'coming-soon',
     loadComponent: () =>
       import('./pages/pages/coming-soon/coming-soon.component').then(
@@ -24,7 +31,7 @@ export const appRoutes: VexRoutes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./pages/pages/auth/auth-routing.module'),
+    loadChildren: () => import('./pages/pages/auth/auth-routing.module')
   },
   {
     path: '',
@@ -112,15 +119,15 @@ export const appRoutes: VexRoutes = [
         loadComponent: () =>
           import('./pages/pages/ia/asisstants/asisstants.component').then(
             (m) => m.AsisstantsComponent
-          ),
+          )
       },
       {
         path: '**',
         loadComponent: () =>
           import('./pages/pages/errors/error-404/error-404.component').then(
             (m) => m.Error404Component
-          ),
+          )
       }
     ]
-  },
+  }
 ];

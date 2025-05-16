@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../../../../environments/environments';
-import { catchError, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpStatusCode } from '@angular/common/http';
+import { environment as envi, environment } from '../../../../../../environments/environments';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { UserService } from './user.service';
@@ -9,12 +9,12 @@ import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/use
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from 'src/app/apps/constants/general/constants';
 import Swal from 'sweetalert2';
+import { ContentRecaptcha } from '../../../../../apps/interfaces/general/content-recaptcha';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
 
   private _token: string | null = null;
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
@@ -99,8 +99,32 @@ export class AuthService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-
     return this.http.post<{ token: string }>(this.urlEndpoint, body, httpOptions);
+  }
+
+  validateRecaptchaLogin(tokenRecaptcha: string): Observable<boolean> {
+    let body: ContentRecaptcha = new ContentRecaptcha(
+      tokenRecaptcha, `${envi.contentRecaptcha.userActionLogin}`, `${envi.contentRecaptcha.siteKeyWeb}`
+    );
+    let url = `${envi.contentRecaptcha.urlValidationRecaptcha}${envi.contentRecaptcha.apikey}`;
+    return this.http.post<any>(url, body)
+      .pipe(
+        map((result: any) => {
+          if (!result?.tokenProperties?.valid || result?.event?.expectedAction !== `${envi.contentRecaptcha.userActionLogin}`) {
+            throw new HttpErrorResponse({
+              error: { message: 'Error, Recaptcha invalid' },
+              status: HttpStatusCode.BadRequest
+            });
+          }
+          return true;
+        }),
+        catchError((error: Response | any) => {
+          if (error.status == HttpStatusCode.BadRequest || error.statusCode == HttpStatusCode.BadRequest) {
+            return this.errorBadRequest(error);
+          }
+          return this.errorNotFound(error);
+        })
+      );
   }
 
   // Verificar si está autenticado
@@ -165,5 +189,30 @@ export class AuthService {
     return null;
   }
 
+  errorNotFound(error: HttpErrorResponse | any) {
+    if (error.status == HttpStatusCode.NotFound || error.statusCode == HttpStatusCode.NotFound) {
+      return new Observable<any>((subscriber) => subscriber.complete());
+    }
+    return throwError(() => error);
+  }
+
+  errorBadRequest(error: HttpErrorResponse | any) {
+    let errMsg: string | null = null;
+    if (error != null && error['statusCode'] != null) {
+      errMsg = error.data != null && error.data?.error ? error.data?.error : error.message;
+    } else if (error instanceof HttpErrorResponse) {
+      if (error?.error && error?.error?.message) {
+        errMsg = error?.error?.message;
+      } else {
+        errMsg = error?.message ? error?.message : error.toString();
+      }
+    } else if (error != null && error?.message != null) {
+      errMsg = error?.message;
+    }
+    if (errMsg) {
+      return throwError(() => errMsg);
+    }
+    return throwError(() => error);
+  }
 
 }

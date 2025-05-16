@@ -14,6 +14,7 @@ export class UserService {
   public currentUser: Observable<DecodeJwt | null>;
   private currentUserDataSubject: BehaviorSubject<number | null>;
   public currentUserData: Observable<number| null>;
+
   constructor(
     private http: HttpClient
   ) {
@@ -27,7 +28,6 @@ export class UserService {
       this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(null);
     }
     this.currentUser = this.currentUserSubject.asObservable();
-
     const ID = sessionStorage.getItem('ID');
     if (ID) {
       const savedUserData: number = JSON.parse(ID);
@@ -62,25 +62,20 @@ export class UserService {
       let user: DecodeJwt | null = null;
       this.currentUser.subscribe({
         next: (res) => {
-
           user = res;
-
         }
       });
-
       return user;
     }
     return null;
   }
+
   getUserData(): number | null {
     return this.currentUserDataSubject.value;
   }
 
-
-
   getUserInfo(username: string): Observable<UserDetails> {
     const url: string = `${environment.url}:${environment.port}${environment.bpm_user_info}${username}`;
-
     return this.http.get<UserDetails>(url);
   }
 

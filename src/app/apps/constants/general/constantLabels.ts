@@ -1,4 +1,13 @@
-import { throwError } from 'rxjs';
+
+/////// LOGIN
+export const CONSTANT_LOGIN_NOT_SUPPORT_VIDEO = 'Tu navegador no soporta video HTML5.';
+export const CONSTANT_LOGIN_WELCOME = 'Bienvenido';
+export const CONSTANT_LOGIN_USER = 'Usuario';
+export const CONSTANT_LOGIN_PASSWORD = 'Contraseña';
+export const CONSTANT_LOGIN_SUBMIT = 'Ingresar';
+export const CONSTANT_LOGIN_INIT_SESSION = 'Inicia sesión con tus credenciales para continuar.';
+export const CONSTANT_LOGIN_ERROR_USER = 'Se necesita un usuario válido para iniciar sesión';
+export const CONSTANT_LOGIN_FORGET_PASSPORT = '¿Olvidaste la contraseña?';
 
 
 export const CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN = 'Si desea reiniciar el control de cambios ingrese la palabra para continuar';
