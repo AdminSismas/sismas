@@ -10,6 +10,11 @@ export interface RecognitionProperty {
   tag03?: string;
   tag04?: string;
   tag05?: string;
+  tag06?: string;
+  tag07?: string;
+  tag08?: string;
+  tag09?: string;
+  tag10?: string;
   executionId: number;
   createdAt: Date;
   createdBy: string;
@@ -33,6 +38,11 @@ export interface TagsRecognition {
   tag03?: string;
   tag04?: string;
   tag05?: string;
+  tag06?: string;
+  tag07?: string;
+  tag08?: string;
+  tag09?: string;
+  tag10?: string;
 }
 
 export class RecognitionPropertyMapper {
@@ -54,6 +64,11 @@ export class RecognitionPropertyMapper {
       tag03: item.tag03 || '',
       tag04: item.tag04 || '',
       tag05: item.tag05 || '',
+      tag06: item.tag06 || '',
+      tag07: item.tag07 || '',
+      tag08: item.tag08 || '',
+      tag09: item.tag09 || '',
+      tag10: item.tag10 || '',
     };
   }
 }
