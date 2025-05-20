@@ -7,8 +7,8 @@ on:
         description: 'Select Environment'
         required: true
         default: 'test'
-        
-        
+
+
 
 jobs:
   deploy:
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
-          ref: despliegue-desarrollo
+          ref: main
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
