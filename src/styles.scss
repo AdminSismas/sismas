@@ -1,9 +1,9 @@
-@import "~node_modules/simplebar/dist/simplebar.css";
-@import "~node_modules/highlight.js/styles/androidstudio.css";
+@import "node_modules/simplebar/dist/simplebar.css";
+@import "node_modules/highlight.js/styles/androidstudio.css";
 // Vex Core
 @import "./@vex/styles/core";
 @import "./app/apps/styles/core-global-geoGestion";
-@import '~quill/dist/quill.snow.css';
+@import 'quill/dist/quill.snow.css';
 
 /*
   You can override any CSS Variable or style here

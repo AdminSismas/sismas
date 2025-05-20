@@ -1,14 +1,15 @@
-<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
-  <h2
-    class="headline m-0 flex-auto">
-    Cambios realizados
-  </h2>
+<div
+  class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
+  mat-dialog-title
+>
+  <h2 class="headline m-0 flex-auto">Cambios realizados</h2>
 
   <button
     [matMenuTriggerFor]="settingsMenuChangeAlfaMain"
     class="text-secondary"
     mat-icon-button
-    type="button">
+    type="button"
+  >
     <mat-icon svgIcon="mat:more_vert"></mat-icon>
   </button>
 
@@ -16,51 +17,68 @@
     class="text-secondary"
     mat-dialog-close
     mat-icon-button
-    type="button">
+    type="button"
+  >
     <mat-icon svgIcon="mat:close"></mat-icon>
   </button>
 </div>
 <mat-divider class="text-border"></mat-divider>
-<mat-dialog-content class="items-start justify-between vex-layout-content vex-layout-content-custom">
+<mat-dialog-content
+  class="items-start justify-between vex-layout-content vex-layout-content-custom"
+>
   <div class="container-fluid overflow-hidden p-2">
-    <div class="card overflow-auto w-full flex flex-col justify-between py-0  mat-elevation-z3 p-2">
+    <div
+      class="card overflow-auto w-full flex flex-col justify-between py-0 mat-elevation-z3 p-2"
+    >
       <table
         @stagger
         [dataSource]="dataSource"
         class="w-full"
         mat-table
-        matSort>
-
-        <!-- Text Columns -->
-        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+        matSort
+      >
+        @for (column of columns; track column.property) {
+          <!-- Text Columns -->
           <ng-container
             *ngIf="column.type === 'text'"
-            [matColumnDef]="column.property">
+            [matColumnDef]="column.property"
+          >
             <th
               *matHeaderCellDef
               class="pl-1 pr-1 sm:pl-4"
               mat-header-cell
-              mat-sort-header>
+              mat-sort-header
+            >
               {{ column.label }}
             </th>
-            <td *matCellDef="let row"
-                [ngClass]="column.cssClasses"
-                mat-cell
-                class="pl-1 pr-1 sm:pl-4 m-2">
+            <td
+              *matCellDef="let row"
+              [ngClass]="column.cssClasses"
+              mat-cell
+              class="pl-1 pr-1 sm:pl-4 m-2"
+            >
               {{ row[column.property] }}
             </td>
           </ng-container>
-        </ng-container>
+        }
 
-        <tr *matHeaderRowDef="visibleColumns"
-            mat-header-row></tr>
+        <tr
+          *matHeaderRowDef="visibleColumns"
+          mat-header-row
+        ></tr>
         <tr
           *matRowDef="let row; columns: visibleColumns"
           @fadeInUp
           class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer p-0 m-0 h-[32px] sm:h-[32px]"
-          mat-row></tr>
+          mat-row
+        ></tr>
       </table>
-      <div *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0" class="no-data-information">
+      <div
+        *ngIf="
+          dataSource.data.length <= 0 || dataSource.filteredData.length <= 0
+        "
+        class="no-data-information"
+      >
         No hay información disponible
       </div>
       <mat-paginator
@@ -70,11 +88,16 @@
         [pageSize]="pageSize"
         [pageIndex]="page"
         (page)="refreshInformationPaginator($event)"
-        class="sticky left-0"></mat-paginator>
+        class="sticky left-0"
+      ></mat-paginator>
     </div>
   </div>
 </mat-dialog-content>
-<mat-menu #settingsMenuChangeAlfaMain="matMenu" xPosition="before" yPosition="below">
+<mat-menu
+  #settingsMenuChangeAlfaMain="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
     <span>Imprimir</span>

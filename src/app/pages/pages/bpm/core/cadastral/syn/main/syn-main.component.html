@@ -13,12 +13,16 @@
     class="h-1/2"
   />
   <h1 class="text-center text-2xl">¿Está seguro de sincronizar los cambios?</h1>
-  <button
-    mat-raised-button
-    color="primary"
-    class="text-lg p-5"
-    (click)="syncChanges()"
-  >
-    Sincronizar cambios
-  </button>
+  @if (loading) {
+    <mat-spinner diameter="40"></mat-spinner>
+  } @else {
+    <button
+      mat-raised-button
+      color="primary"
+      class="text-lg p-5"
+      (click)="syncChanges()"
+    >
+      Sincronizar cambios
+    </button>
+  }
 </main>

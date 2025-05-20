@@ -1,0 +1,37 @@
+<div class="flex justify-between items-center">
+  <h2 mat-dialog-title>Crear alerta</h2>
+  <button
+    mat-icon-button
+    [mat-dialog-close]="{ response: false }"
+    tabindex="-1"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="bg-slate-400"></mat-divider>
+
+<mat-dialog-content>
+  <vex-dynamic-forms
+    [inputs]="formAlertInputsJson"
+    (formReady)="form.set($event)"
+    className="w-full h-full grid grid-cols-1 grid-rows-[30%_70%] gap-2"
+  ></vex-dynamic-forms>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="onSubmit()"
+  >
+    Aceptar
+  </button>
+  <button
+    mat-flat-button
+    color="warn"
+    [mat-dialog-close]="{ response: false }"
+  >
+    Cancelar
+  </button>
+</mat-dialog-actions>

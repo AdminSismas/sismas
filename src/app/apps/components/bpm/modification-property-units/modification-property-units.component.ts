@@ -351,10 +351,6 @@ export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit
     this.dataSource.filter = value;
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
-
   get visibleColumns() {
     return this.columns.filter((column) => column.visible).map((column) => column.property);
   }

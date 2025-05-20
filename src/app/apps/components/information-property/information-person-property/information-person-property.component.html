@@ -17,7 +17,7 @@
     matSort
   >
     <!-- Text Columns -->
-    <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+    @for (column of columns; track column.property) {
       <!-- Text -->
       <ng-container
         *ngIf="column.visible && column.type === 'text'"
@@ -40,7 +40,7 @@
           {{ row[column.property] }}
         </td>
       </ng-container>
-    </ng-container>
+    }
 
     <tr
       *matHeaderRowDef="visibleColumns"

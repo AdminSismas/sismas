@@ -447,9 +447,7 @@ cleanJsonValues(data: SearchData): SearchData {
     }
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   refreshInformationPaginator(event: PageEvent): void {
     if (event == null) {

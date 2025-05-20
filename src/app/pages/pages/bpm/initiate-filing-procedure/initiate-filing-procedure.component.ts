@@ -187,7 +187,7 @@ export class InitiateFilingProcedureComponent implements OnInit {
   verificationFormGroup: UntypedFormGroup = this.formBuilder.group({
     typeClass: [{ value: '', disabled: true }],
     typeProcedure: [{ value: '', disabled: true }],
-    auxiliaryFilings: [null]
+    auxiliaryFilings: [null],
   });
 
   constructor(

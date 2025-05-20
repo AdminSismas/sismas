@@ -50,7 +50,7 @@
 
 
     <!-- Text Columns -->
-    <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+    @for (column of columns; track column.property) {
       <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
         <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
           {{ column.label }}
@@ -94,7 +94,7 @@
           {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
         </td>
       </ng-container>
-    </ng-container>
+    }
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef class="w-12"></th>
@@ -133,18 +133,6 @@
     class="sticky left-0 flex flex-col"
   >
   </mat-paginator>
-
-  <mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
-    <button
-      (click)="toggleColumnVisibility(column, $event)"
-      *ngFor="let column of columns"
-      class="mat-menu-item block"
-    >
-      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="column.visible" color="primary">
-        {{ column.label }}
-      </mat-checkbox>
-    </button>
-  </mat-menu>
 
 <swal
   #confirmDialog

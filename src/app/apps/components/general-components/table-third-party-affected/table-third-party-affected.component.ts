@@ -272,9 +272,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit, 
   ngOnDestroy(): void {
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   get visibleColumns() {
     return this.columns

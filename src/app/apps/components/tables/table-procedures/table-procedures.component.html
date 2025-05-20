@@ -147,15 +147,6 @@
             />
           </mat-form-field>
 
-          <!-- Botón de filtro -->
-          <!-- <button
-                      [matMenuTriggerFor]="columnFilterMenu"
-                      mat-icon-button
-                      matTooltip="Filtrar columnas"
-                      type="button"
-                      class="ml-4 flex-col">
-                      <mat-icon svgIcon="mat:filter_list"></mat-icon>
-                  </button> -->
         </div>
 
         <!-- Tabla de dominios -->
@@ -344,11 +335,11 @@
     <mat-form-field class="w-full h-full">
       <mat-label>Comentario</mat-label>
       <input
+        #comment
         type="text-area"
         matInput
         class="w-full h-full"
         placeholder="Escriba el comentario relacionado a la anulación del trámite ..."
-        [(ngModel)]="comment"
       />
     </mat-form-field>
   </mat-dialog-content>

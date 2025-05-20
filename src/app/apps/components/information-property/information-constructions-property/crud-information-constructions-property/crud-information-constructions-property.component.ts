@@ -471,10 +471,10 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   chargeQualificationConstruction(domain: string) {
     let id: number | null = null;
     if (this.qualificationsConstruction && this.qualificationsConstruction.length > 0
-      && domain.length > 0 && this.mapQualificationsConstruction != null) {
+      && domain.length > 0 && this.mapQualificationsConstruction !== null) {
       try {
         id = this.mapQualificationsConstruction[domain]?.ccCalUBDom.id;
-        if (validateIsNumber(id) && id != null && id != undefined && id > 0) {
+        if (validateIsNumber(id) && id !== null && id !== undefined && id > 0) {
           return id;
         }
       } catch (e) {
@@ -487,12 +487,12 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   chargeQualificationConstructionAnexx() {
     let id: number | null | undefined = null;
     if (this.qualificationsConstruction && this.qualificationsConstruction.length === 1 &&
-      this.mapQualificationsConstruction != null) {
+      this.mapQualificationsConstruction !== null) {
       try {
         let qualification: CcCalificacionUB = this.qualificationsConstruction[0];
         if (qualification && qualification?.ccCalUBDom) {
           id = qualification.ccCalUBDom.id;
-          if (validateIsNumber(id) && id != null && id > 0) {
+          if (validateIsNumber(id) && id && id > 0) {
             return id;
           }
         }

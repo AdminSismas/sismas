@@ -81,7 +81,7 @@
         </td>
       </ng-container>
       <!-- Text Columns -->
-       @for (column of columns; track trackByProperty) {
+       @for (column of columns; track column.property) {
         @if (column.type === "text") {
           <ng-container [matColumnDef]="column.property">
             <th
@@ -169,23 +169,3 @@
     </mat-paginator>
   </div>
 </mat-dialog-content>
-
-<mat-menu
-  #columnFilterMenu="matMenu"
-  xPosition="before"
-  yPosition="below"
->
-  <button
-    (click)="toggleColumnVisibility(column, $event)"
-    *ngFor="let column of columns"
-    class="mat-menu-item block"
-  >
-    <mat-checkbox
-      (click)="$event.stopPropagation()"
-      [(ngModel)]="column.visible"
-      color="primary"
-    >
-      {{ column.label }}
-    </mat-checkbox>
-  </button>
-</mat-menu>

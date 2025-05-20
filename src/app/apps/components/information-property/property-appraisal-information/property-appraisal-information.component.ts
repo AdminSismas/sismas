@@ -14,6 +14,7 @@ import {
   LIST_GRID_APPRAISAL_1,
   LIST_GRID_APPRAISAL_2,
   LIST_GRID_APPRAISAL_3,
+  MODAL_SMALL,
   MODAL_SMALL_XS,
   NAME_SELF_VALUATION_VALUE,
   PAGE,
@@ -71,6 +72,7 @@ import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 import { getRandomInt } from '../../../utils/general';
 import { AutoAppraisalComponent } from './auto-appraisal/auto-appraisal.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HistoricAppraisalComponent } from './historic-appraisal/historic-appraisal.component';
 
 @Component({
   selector: 'vex-property-appraisal-information',
@@ -317,9 +319,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     column.visible = !column.visible;
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   onFilterChange(value: string): void {
     if (!this.dataSource) {
@@ -350,6 +350,17 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
           this.errorAutoAppraisal.fire();
         }
       });
+  }
+
+  historyAppraisal() {
+    this.dialog.open(HistoricAppraisalComponent, {
+      ...MODAL_SMALL,
+      data: {
+        baunitId: this.baunitId,
+        schema: this.schema,
+        executionId: this.executionId
+      }
+    });
   }
 
   private generateObjectPageSearchData(baunitId: string): PageSearchData {

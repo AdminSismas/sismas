@@ -1,8 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SyncMainService } from 'src/app/apps/services/bpm/sync-main.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-syn-main',
@@ -10,54 +10,36 @@ import { SyncMainService } from 'src/app/apps/services/bpm/sync-main.service';
   imports: [
     // Vex
     // Material
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
     // Custom
   ],
   templateUrl: './syn-main.component.html',
   styleUrl: './syn-main.component.scss'
 })
-export class SynMainComponent implements OnInit {
-  @Input() public id = '';
+export class SynMainComponent {
   @Input() public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
 
-  constructor(
-    private syncMainService: SyncMainService,
-    private snackbar: MatSnackBar
-  ) {}
+  loading = false;
 
-  ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id +
-        this.getRandomInt(100000) +
-        'AlfaMainComponent' +
-        this.getRandomInt(10);
-    } else {
-      this.id =
-        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
-    }
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
+  constructor(private syncMainService: SyncMainService) {}
 
   syncChanges() {
+    this.loading = true;
     this.syncMainService.synchronizeChanges(this.executionId).subscribe({
       next: () => {
-        this.snackbar.open('Cambios sincronizados', 'Aceptar', {
-          duration: 10000
+        Swal.fire({
+          title: 'Cambios sincronizados',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar',
+          showCancelButton: false
         });
+        this.loading = false;
       },
-      error: (error: HttpErrorResponse) => {
-        if (error.status === 400) {
-          this.snackbar.open(error.error, 'Aceptar', { duration: 10000 });
-        } else {
-          this.snackbar.open('Error al sincronizar cambios', 'Aceptar', {
-            duration: 10000
-          });
-        }
+      error: () => {
+        this.loading = false;
       }
     });
   }

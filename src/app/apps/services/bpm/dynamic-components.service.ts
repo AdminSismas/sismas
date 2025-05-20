@@ -7,7 +7,6 @@ import { GeoValidateComponent } from '../../../pages/pages/bpm/core/cadastral/ge
 import { ResMainComponent } from '../../../pages/pages/bpm/core/cadastral/res/main/res-main.component';
 import { ResValidateComponent } from '../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component';
 import { SynMainComponent } from '../../../pages/pages/bpm/core/cadastral/syn/main/syn-main.component';
-import { RecognitionPropertyInformation } from '../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
 import { DocumentMainComponent } from '../../../pages/pages/bpm/core/document/main/document-main.component';
 import { DocumentValidateComponent } from '../../../pages/pages/bpm/core/document/validate/document-validate.component';
 import { ComponentTemplate } from '../../interfaces/bpm/render-template.types';
@@ -15,14 +14,12 @@ import { COMPONENT_ALFA_MAIN, COMPONENT_ALFA_VALIDATE } from '../../constants/ge
 import {
   CitationAndNoticeComponent
 } from '../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
+import { RecognitionPropertyInformationComponent } from '../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DynamicComponentsService {
-
-  constructor() {
-  }
 
   _listMap: ComponentTemplate[] = [
     {
@@ -83,9 +80,9 @@ export class DynamicComponentsService {
     },
     {
       nameComponent: 'cadRecognitionPropertyInformation',
-      component:RecognitionPropertyInformation,
+      component:RecognitionPropertyInformationComponent,
       loadComponent: () => import('../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component').then(
-        (m) => m.RecognitionPropertyInformation
+        (m) => m.RecognitionPropertyInformationComponent
       ),
     },
     {

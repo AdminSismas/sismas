@@ -337,9 +337,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   }
 
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
 
   toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {

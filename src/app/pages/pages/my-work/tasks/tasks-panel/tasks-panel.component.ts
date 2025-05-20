@@ -1,6 +1,6 @@
 // Angular framework
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { LowerCasePipe, NgFor, NgIf } from '@angular/common';
+import { LowerCasePipe, NgFor } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
 import { distinctUntilChanged, filter, take } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -66,7 +66,6 @@ import { LoadingServiceService } from '../../../../../apps/services/general/load
   imports: [
     LowerCasePipe,
     NgFor,
-    NgIf,
     ReactiveFormsModule,
     // Vex
     // Material

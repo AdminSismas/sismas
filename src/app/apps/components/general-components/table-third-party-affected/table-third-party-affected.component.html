@@ -29,7 +29,7 @@
         mat-table
         matSort>
         <!-- Text Columns -->
-        @for (column of columns; track trackByProperty) {
+        @for (column of columns; track column.property) {
           @if (column.type === 'text') {
             <ng-container [matColumnDef]="column.property">
               <th

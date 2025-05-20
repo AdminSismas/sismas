@@ -82,7 +82,7 @@
         </ng-container>
 
         <!-- Text Columns -->
-        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+        @for (column of columns; track column.property) {
           <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
             <th *matHeaderCellDef mat-header-cell mat-sort-header>
               {{ column.label }}
@@ -102,7 +102,7 @@
               {{ row[column.property] | date:'YYYY-MM-dd' }}
             </td>
           </ng-container>
-        </ng-container>
+        }
 
         <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
         <tr mat-row *matRowDef="let element; columns: visibleColumns;" @fadeInUp

@@ -354,9 +354,7 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     this.dataSource.filter = value;
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   get visibleColumns() {
     return this.columns.filter(

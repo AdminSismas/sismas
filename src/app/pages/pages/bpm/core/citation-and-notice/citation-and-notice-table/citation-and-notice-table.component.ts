@@ -242,9 +242,7 @@ export class CitationAndNoticeTableComponent implements OnInit, OnChanges, After
     return Math.floor(Math.random() * max);
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)

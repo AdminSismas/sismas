@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -50,7 +50,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TaskResponseModel } from '../../../../interfaces/bpm/task-response.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
@@ -80,7 +79,6 @@ import { MODAL_SMALL } from 'src/app/apps/constants/general/constants';
     CommonModule,
     FormsModule,
     MatDatepickerModule,
-    NgFor,
     NgClass,
     NgIf,
     ReactiveFormsModule
@@ -99,10 +97,6 @@ export class TableWorkExecutionComponent implements OnInit {
   textInfo =
     'Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem,Prueba de texto, lorem';
   public procedureDetail: TaskResponseModel = new TaskResponseModel();
-  // beginAt!: Date;
-  // beginAtE!: Date;
-  // executionCode: string = '';
-  // individualNumber: string = '';
 
   @Input()
   page: number = PAGE;
@@ -122,7 +116,6 @@ export class TableWorkExecutionComponent implements OnInit {
     private proceduresService: ProceduresService,
     private readonly layoutService: VexLayoutService,
     private dateAdapter: DateAdapter<Date>,
-    private alertSnakbar: MatSnackBar
   ) {
     this.dateAdapter.setLocale('es-CO');
   }

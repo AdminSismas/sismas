@@ -149,9 +149,7 @@ export class InformationSourcePropertyComponent {
   }
 
   /* -------------------------- Meth. HTML -------------------------- */
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   get visibleColumns() {
     const visibleColumns = ['detalles', ...this.columns

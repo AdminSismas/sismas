@@ -104,7 +104,7 @@
 
         <input
           class="z-0 absolute top-0 right-0 bottom-0 left-0 h-full w-full border-0 focus:border-0 px-20 bg-transparent"
-          placeholder="Escribe tu mensaje ..." type="text" [(ngModel)]="newMessage" [disabled]="isInputDisabled" (keydown)="onKeydown($event)" />
+          placeholder="Escribe tu mensaje ..." type="text" [ngModel]="!!newMessage" (ngModelChange)="newMessage = $event" [disabled]="isInputDisabled" (keydown)="onKeydown($event)" />
 
         <button class="relative z-10 mr-4" mat-icon-button type="button" (click)="sendMessage()">
           <mat-icon>send</mat-icon>

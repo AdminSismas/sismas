@@ -157,6 +157,13 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
     cssClasses: ['text-secondary', 'font-medium']
   },
   {
+    label: 'Número de ficha',
+    property: 'baunitIdE',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
     label: 'Matrícula inmobiliaria',
     property: 'registration',
     type: 'text',
@@ -850,6 +857,13 @@ export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
     label: 'Consultar',
     property: 'infoProperties',
     type: 'button',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Número de ficha',
+    property: 'baunitIdE',
+    type: 'text',
     visible: true,
     cssClasses: ['text-secondary', 'font-medium']
   },

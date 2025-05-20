@@ -1,22 +1,26 @@
 export class InfoAppraisal {
-
-  valuationId?:number;
-  cadastralValuationAt?:string;
-  commercialValuation?:number;
-  cadastralValuation?:number;
-  commercialValuationLand?:number;
-  cadastralValuationLand?:number;
-  commercialValuationUnits?:number;
-  cadastralValuationUnits?:number;
+  valuationId?: number;
+  cadastralValuationAt?: Date;
+  commercialValuation?: number;
+  cadastralValuation?: number;
+  commercialValuationLand?: number;
+  cadastralValuationLand?: number;
+  commercialValuationUnits?: number;
+  cadastralValuationUnits?: number;
   selfValuationIs?: boolean;
-  selfValuationValue?:number;
-  validityValuation?:number;
-  hash?:string;
-  createdBy?:string;
-  createdAt?:string;
-  updatedBy?:string;
-  updatedAt?:string;
-
+  selfValuationValue?: number;
+  validityValuation?: number;
+  hash?: string;
+  createdBy?: string;
+  createdAt?: Date;
+  updatedBy?: string;
+  updatedAt?: Date;
+  cadValLandCommon?: number;
+  cadValLandPrivate?: number;
+  cadValUnitbuiltCommon?: number;
+  cadValUnitbuiltPrivate?: number;
+  selfValuationValueLand?: number;
+  selfValuationValueUnits?: number;
 
   constructor(content?: any) {
     this.valuationId = content.valuationId;
@@ -35,5 +39,11 @@ export class InfoAppraisal {
     this.createdAt = content.createdAt;
     this.updatedBy = content.updatedBy;
     this.updatedAt = content.updatedAt;
+    this.cadValLandCommon = content.cadValLandCommon;
+    this.cadValLandPrivate = content.cadValLandPrivate;
+    this.cadValUnitbuiltCommon = content.cadValUnitbuiltCommon;
+    this.cadValUnitbuiltPrivate = content.cadValUnitbuiltPrivate;
+    this.selfValuationValueLand = content.selfValuationValueLand;
+    this.selfValuationValueUnits = content.selfValuationValueUnits;
   }
 }

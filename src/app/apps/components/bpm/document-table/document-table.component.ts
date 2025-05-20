@@ -14,7 +14,7 @@ import {
   UntypedFormControl
 } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 
 // recursos de vex
@@ -89,10 +89,9 @@ import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/m
     MatTabsModule,
     MatTooltipModule,
     NgClass,
-    NgFor,
     NgIf,
     ReactiveFormsModule
-  ]
+]
 })
 export class DocumentTableComponent implements OnInit, AfterViewInit {
   /* ============== ATTRIBUTES ============== */
@@ -178,10 +177,6 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
 
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>) {
-    return column.property;
   }
 
   get visibleColumns(): string[] {

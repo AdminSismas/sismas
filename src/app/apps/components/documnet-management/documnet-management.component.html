@@ -39,8 +39,7 @@
             <!-- Table -->
             <table @stagger mat-table [dataSource]="dataSource" class="w-full " matSort>
                 <!-- Text Columns -->
-                <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-
+                @for (column of columns; track column.property) {
                     <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
                         <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>
                             {{ column.label }}
@@ -60,8 +59,7 @@
                             {{ row[column.property] | date:'dd/MM/yyyy hh:mm:ss a' }}
                         </td>
                     </ng-container>
-
-                </ng-container>
+                }
 
                 <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
                 <tr mat-row *matRowDef="let element; columns: visibleColumns;" @fadeInUp class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"></tr>
@@ -69,7 +67,7 @@
 
             <!-- Paginator -->
             <mat-paginator
-                *ngIf="disablePaginator == true;"
+                *ngIf="disablePaginator === true;"
                 #paginator
                 [class.hidden]="!(isDesktop$ | async)"
                 [pageSizeOptions]="pageSizeOptions"
@@ -83,18 +81,3 @@
         </div>
     </vex-page-layout-content>
 </vex-page-layout>
-
-
-<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
-    <button
-        (click)="toggleColumnVisibility(column, $event)"
-      *ngFor="let column of columns"
-        class="mat-menu-item block">
-        <mat-checkbox
-            (click)="$event.stopPropagation()"
-            [(ngModel)]="column.visible"
-            color="primary">
-            {{ column.label }}
-        </mat-checkbox>
-    </button>
-</mat-menu>

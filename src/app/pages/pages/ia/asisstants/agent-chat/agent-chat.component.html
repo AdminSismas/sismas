@@ -93,7 +93,7 @@
                             <span class="input-group-text attach_btn small-btn"><fa-icon
                                     [icon]="['fas', 'paperclip']"></fa-icon></span>
                         </div>
-                        <textarea [(ngModel)]="newMessage" id="messageInput" class="form-control type_msg small-input"
+                        <textarea [ngModel]="!!newMessage" (ngModelChange)="newMessage = $event" id="messageInput" class="form-control type_msg small-input"
                             placeholder="Escribe tu mensaje..." [disabled]="isInputDisabled"></textarea>
                         <div class="input-group-append">
                             <button class="btn btn-primary send_btn small-btn" (click)="sendMessage()"><fa-icon

@@ -38,7 +38,7 @@ import {
 } from '../../../../constants/general/constantLabels';
 import { MatMenuModule } from '@angular/material/menu';
 import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
-import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -91,7 +91,6 @@ import { CollectionServices } from '../../../../services/general/collection.serv
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
-    NgForOf,
     FormsModule,
     NgClass
   ],
@@ -147,7 +146,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CrudAlfaMainComponent>
   ) {
-    this.destroyRef.onDestroy(() => {});
+    this.destroyRef.onDestroy(() => console.log('destroyRef'));
   }
 
   ngOnInit(): void {
@@ -317,11 +316,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
-
-  getAlertError(msg: string, timer: number = 10000) {
+  getAlertError(msg: string, timer = 10000) {
     Swal.fire({
       text: msg,
       icon: 'error',
@@ -331,7 +326,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   }
 
 
-  getAlertSuccess(msg: string, timer: number = 10000) {
+  getAlertSuccess(msg: string, timer = 10000) {
     Swal.fire({
       text: msg,
       icon: 'success',
@@ -350,7 +345,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     let data:DomainCollection[] = [];
     if(this.typeOperation === this.TYPEOPERATION_ADD && this.operationBaUnitHead &&
     this.operationBaUnitHead.baunitHead) {
-      let domBaunitCondition = this.operationBaUnitHead.baunitHead?.domBaunitCondition;
+      const domBaunitCondition = this.operationBaUnitHead.baunitHead?.domBaunitCondition;
       if(domBaunitCondition === CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ){
         data = result.filter(dm => dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PH_) && !dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ));
       } else if(domBaunitCondition === CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATRIZ){

@@ -11,7 +11,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgClass, NgForOf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -76,9 +76,8 @@ import Swal from 'sweetalert2';
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
-    HeaderCadastralInformationPropertyComponent,
-    NgForOf
-  ],
+    HeaderCadastralInformationPropertyComponent
+],
   templateUrl: './information-adjacent-property.component.html',
   styleUrl: './information-adjacent-property.component.scss',
   providers: [
@@ -108,7 +107,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
   pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
-  classEdit: string = '!bg-slate-400 !text-gray-100 opacity-60';
+  classEdit = '!bg-slate-400 !text-gray-100 opacity-60';
 
   dataSource!: MatTableDataSource<InformationAdjacent>;
   selection: SelectionModel<InformationAdjacent> = new SelectionModel<InformationAdjacent>(
@@ -318,10 +317,6 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
   }
 
   get visibleColumns() {

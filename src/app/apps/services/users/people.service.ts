@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-  HttpParams,
-  HttpStatusCode
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { catchError, Observable, throwError } from 'rxjs';

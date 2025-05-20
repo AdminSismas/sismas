@@ -341,10 +341,6 @@ export class TableAlfaMainComponent
     this.msgErrorConsultingAdministration( CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE);
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
-
   editCadastralUnits(row: Operation) {
     this.dialog.open(ModificationPropertyUnitsComponent, {
       ...MODAL_MEDIUM_H90,

@@ -37,8 +37,7 @@
           </td>
         </ng-container>
 
-        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
-
+        @for (column of columns; track column.property) {
           <!-- Text Columns -->
           <ng-container
             *ngIf="column.type === 'text' && column.property"
@@ -62,8 +61,7 @@
               {{ row[column.property] | date: 'short' }}
             </td>
           </ng-container>
-
-        </ng-container>
+        }
 
         <!-- type Process Participant Columns-->
         <ng-container matColumnDef="typeProcessParticipant">

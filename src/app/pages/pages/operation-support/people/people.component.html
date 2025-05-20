@@ -81,16 +81,6 @@
   </form>
 </div>
 
-<!-- <button
-[matMenuTriggerFor]="columnFilterMenu"
-class="ml-4 flex-none"
-mat-icon-button
-matTooltip="Filtrar columnas"
-type="button"
->
-<mat-icon svgIcon="mat:filter_list"></mat-icon>
-</button> -->
-
 <div
   class="mt-6 relative"
   style="padding-bottom: 56.25%; /* Relación de aspecto 16:9 */"
@@ -133,8 +123,8 @@ type="button"
       </td>
     </ng-container>
 
-    <!-- Text Columns -->
-    <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+    @for (column of columns; track column.property) {
+      <!-- Text Columns -->
       <ng-container
         *ngIf="column.type === 'text'"
         [matColumnDef]="column.property"
@@ -154,7 +144,7 @@ type="button"
           {{ row[column.property] }}
         </td>
       </ng-container>
-    </ng-container>
+    }
 
     <!-- Action Column -->
     <ng-container matColumnDef="actions">
@@ -203,26 +193,6 @@ type="button"
   >
   </mat-paginator>
 </div>
-
-<mat-menu
-  #columnFilterMenu="matMenu"
-  xPosition="before"
-  yPosition="below"
->
-  <button
-    (click)="toggleColumnVisibility(column, $event)"
-    *ngFor="let column of columns"
-    class="mat-menu-item block"
-  >
-    <mat-checkbox
-      (click)="$event.stopPropagation()"
-      [(ngModel)]="column.visible"
-      color="primary"
-    >
-      {{ column.label }}
-    </mat-checkbox>
-  </button>
-</mat-menu>
 
 <mat-menu
   #actionsMenu="matMenu"

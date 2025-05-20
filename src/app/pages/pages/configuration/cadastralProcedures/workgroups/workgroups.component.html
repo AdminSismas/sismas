@@ -31,19 +31,18 @@
             <div class="flex items-center border border-gray-300 rounded px-2 h-10">
               <input
                 type="text"
-                [(ngModel)]="searchTerm"
-                (ngModelChange)="onSearchChange()"
+                (input)="onSearchChange($event)"
                 class="focus:outline-none text-sm w-full h-full px-2"
               />
             </div>
 
             <!-- Botón "Buscar" -->
-            <button
+            <!-- <button
               class="bg-primary-500 text-white font-medium px-4 rounded h-10"
               (click)="onSearchChange()"
             >
               Buscar
-            </button>
+            </button> -->
 
           </div>
         </mat-card-header>

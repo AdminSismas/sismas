@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -47,7 +47,6 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
     MatIconModule,
     MatDialogContent,
     MatMenuModule,
-    NgForOf,
     NgIf,
     MatPaginatorModule,
     MatSortModule,
@@ -181,9 +180,5 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
     return this.columns
       .filter((column) => column.visible)
       .map((column) => column.property);
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
   }
 }

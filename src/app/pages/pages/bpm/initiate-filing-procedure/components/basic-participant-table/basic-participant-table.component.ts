@@ -72,7 +72,6 @@ import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/proces
   imports: [
     FormsModule,
     NgClass,
-    NgForOf,
     NgIf,
     ReactiveFormsModule,
     // Vex
@@ -89,8 +88,8 @@ import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/proces
     // Custom
     ComboxColletionComponent,
     FluidMinHeightDirective,
-    FluidMinHeightDirective,
-  ],
+    FluidMinHeightDirective
+],
   templateUrl: './basic-participant-table.component.html',
   styleUrl: './basic-participant-table.component.scss',
   viewProviders: [
@@ -168,9 +167,7 @@ export class BasicParticipantTableComponent
     this.dataSource.filter = value;
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   get visibleColumns() {
     return this.columns
@@ -207,7 +204,7 @@ export class BasicParticipantTableComponent
       .getFindPersonByNumber(info.numberID, info.typeNumberDocument)
       .subscribe({
         error: (error: HttpErrorResponse) => {
-          if (error.status == HttpStatusCode.NotFound) {
+          if (error.status === HttpStatusCode.NotFound) {
             this.person = null;
             this.form.get('personCompleted')?.patchValue('');
             this.dialog
@@ -232,7 +229,7 @@ export class BasicParticipantTableComponent
                       next: (res: InfoPerson) =>
                         this.captureInformationCadastralData(res),
                       error: (error: HttpErrorResponse) => {
-                        if (error.status == HttpStatusCode.NotFound) {
+                        if (error.status === HttpStatusCode.NotFound) {
                           this.person = null;
                           this.form.get('personCompleted')?.patchValue('');
                         }
@@ -283,7 +280,7 @@ export class BasicParticipantTableComponent
 
       if (this.participants.length > 0) {
         const existParticipant = this.participants.find((pr) => {
-          return pr.individual.individualId == this.person?.individualId;
+          return pr.individual.individualId === this.person?.individualId;
         });
         if (!existParticipant) {
           this.participants.unshift(participant);

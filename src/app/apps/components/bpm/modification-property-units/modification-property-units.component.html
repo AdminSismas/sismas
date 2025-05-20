@@ -91,7 +91,7 @@
             </td>
           </ng-container>
 
-          @for (column of columns; track trackByProperty) {
+          @for (column of columns; track column.property) {
             @if (column.type === "text") {
               <ng-container [matColumnDef]="column.property">
                 <th *matHeaderCellDef class="pl-1 pr-1" mat-header-cell mat-sort-header>

@@ -531,9 +531,7 @@ export class TableCertificateSearchAppraisalsComponent
       : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   refreshInformationPaginator(event: PageEvent): void {
     if (event == null) {

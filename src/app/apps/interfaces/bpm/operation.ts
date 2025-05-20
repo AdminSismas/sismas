@@ -17,8 +17,6 @@ export class Operation {
     this.appliedGeo = content?.appliedGeo || '';
   }
 
-  set registration(value:string) {}
-
   get registration(): string {
     const name = '';
     if (this.baunitHead?.propertyRegistryOffice && this.baunitHead?.propertyRegistryNumber) {
@@ -53,6 +51,10 @@ export class Operation {
 
   get domBaunitEconoDesti(): string {
     return this.baunitHead?.domBaunitEconoDesti || '';
+  }
+
+  get baunitIdE(): string {
+    return this.baunitHead?.baunitIdE || '';
   }
 
 }

@@ -1,30 +1,26 @@
 import {
   Component,
   OnInit,
-  ViewChild,
   Output,
   EventEmitter,
-  AfterViewInit
-} from '@angular/core';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+  inject,
+  computed} from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ReportCategory } from 'src/app/apps/interfaces/operation-support/reports/report-category.interface';
-import { DownloadReport } from 'src/app/apps/interfaces/operation-support/reports/report.interface';
-import { PAGE, PAGE_OPTION_1_5_10, PAGE_SIZE } from 'src/app/apps/constants/general/constants';
-import { ReportManagerService } from 'src/app/apps/services/operation-support/reports/report-manager.service';
+import { ReportManagerService, ReportType } from 'src/app/apps/services/operation-support/reports/report-manager.service';
+import { environment } from 'src/environments/environments';
+import { TableColumn } from '@vex/interfaces/table-column.interface';
+import { signal } from '@angular/core';
+import { MuncipalityCodePipe } from 'src/app/apps/pipes/muncipalityCode.pipe';
 
 @Component({
   selector: 'vex-report-master',
   standalone: true,
   imports: [
-    MatPaginatorModule,
+    MuncipalityCodePipe,
     MatFormField,
     MatIconModule,
     MatInputModule,
@@ -32,43 +28,33 @@ import { ReportManagerService } from 'src/app/apps/services/operation-support/re
   ],
   templateUrl: './report-master.component.html'
 })
-export class ReportMasterComponent implements OnInit, AfterViewInit {
-  dataSource = new MatTableDataSource();
-  displayedColumns: string[] = [
-    'action',
-    'id',
-    'name',
-    'outputFormat'
-  ];
-  reportDataSource: MatTableDataSource<DownloadReport> =
-    new MatTableDataSource<DownloadReport>();
+export class ReportMasterComponent implements OnInit {
+  reportManagerService = inject(ReportManagerService);
 
-  // Paginator variables
-  pageSize = PAGE_SIZE;
-  page = PAGE;
-  totalElements = 0;
+  dataSource = signal<MatTableDataSource<ReportType>>(new MatTableDataSource());
+
+  protected readonly columns: TableColumn<ReportType>[] = [
+    { property: 'action', label: 'Accion', type: 'button' },
+    { property: 'name', label: 'Nombre', type: 'text' },
+    { property: 'municipality', label: 'Municipio', type: 'text' },
+    { property: 'outputFormat', label: 'Tipo de archivo', type: 'text' },
+  ];
+
+  displayedColumns = computed(() => {
+    return this.columns.map((column) => column.property);
+  });
 
   @Output() viewDetail = new EventEmitter<boolean>();
   @Output() selectedCategory = new EventEmitter<ReportCategory>();
-
-  @ViewChild('categoryPaginator', { static: false })
-  categoryPaginator!: MatPaginator;
-
-  constructor(private reportManagerService: ReportManagerService) {}
 
   ngOnInit(): void {
     this.loadCategories();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.categoryPaginator;
-  }
-
   loadCategories() {
-    this.reportManagerService.getCategories().subscribe({
+    this.reportManagerService.getCategories(environment.municipalities).subscribe({
       next: (categories) => {
-        this.dataSource.data = categories;
-        this.totalElements = categories.length;
+        this.dataSource().data = categories;
       }
     });
   }
@@ -77,14 +63,17 @@ export class ReportMasterComponent implements OnInit, AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value
       .trim()
       .toLowerCase();
-    this.dataSource.filter = filterValue;
+    this.dataSource().filter = filterValue;
   }
 
-  selectCategory(urlEnd: string, name: string) {
-    this.reportManagerService.getExcelReport(urlEnd)
+  selectCategory(urlEnd: string, name: string, municipality: string) {
+    const municipalityCodePipe = new MuncipalityCodePipe();
+
+    this.reportManagerService.getExcelReport(urlEnd, municipality)
       .subscribe({
         next: (response) => {
-          const filename = name.toUpperCase() + '.xlsx';
+          const nameMunicipality = municipalityCodePipe.transform(municipality);
+          const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
           const type = response.headers.get('content-type') as string;
           this.downloadFile(response.body!, type, filename);
         }
@@ -101,16 +90,5 @@ export class ReportMasterComponent implements OnInit, AfterViewInit {
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
-  }
-
-  changePage(event: PageEvent) {
-    console.log(event);
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.totalElements = event.length;
-  }
-
-  get paginatorOptions(): number[] {
-    return PAGE_OPTION_1_5_10;
   }
 }

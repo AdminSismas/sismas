@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   Input,
   OnChanges,
   OnInit,
@@ -78,6 +79,7 @@ import { ReassignProcedureComponent } from '../../procedures/reassign-procedure/
 import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
 import { ComponentType } from '@angular/cdk/overlay';
 import { MatDividerModule } from '@angular/material/divider';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 
 interface MenuActions {
   label: string;
@@ -85,13 +87,18 @@ interface MenuActions {
   action: (row: contentInfoProcedures) => void;
 }
 
+const beginAt = new Date('2025-01-01T00:00:00');
+
 @Component({
   selector: 'vex-table-procedures',
   standalone: true,
   templateUrl: './table-procedures.component.html',
   styleUrl: './table-procedures.component.scss',
   animations: [fadeInUp400ms, stagger40ms],
-  providers: [{ provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    provideMomentDateAdapter()
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -135,7 +142,6 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   seeInfoDocument = false;
   public procedureDetail: TaskResponseModel = new TaskResponseModel();
   userRole: string | undefined = this.getUserRole();
-  comment = '';
   readonly actions: MenuActions[] = [
     {
       label: 'Reasignar',
@@ -186,6 +192,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   @ViewChild('errorReassign') errorReassign!: SwalComponent;
   @ViewChild('successChangePriority') successChangePriority!: SwalComponent;
   @ViewChild('errorChangePriority') errorChangePriority!: SwalComponent;
+  @ViewChild('comment') comment!: ElementRef<HTMLInputElement>;
 
   get visibleColumns() {
     const validUser = this.userRole
@@ -219,12 +226,6 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   /* ------- Meth. Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
-    // this.searchCtrl.valueChanges
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe((value) => this.onFilterChange(value));
-
-    // this.beginAt = new Date();
-    // this.getDataFromProceduresService();
     this.initForm();
     this.executionCodeValidate();
     this.individualNumberPartValid();
@@ -249,13 +250,6 @@ export class TableProceduresComponent implements OnInit, OnChanges {
     return result;
   }
 
-  // Método para generar una fecha un mes atrás a partir de una fecha actual proporcionada
-  getOneMonthAgo(date: Date): Date {
-    const result = new Date(date);
-    result.setMonth(result.getMonth() - 1);
-    return result;
-  }
-
   /**
    * Init information address form
    */
@@ -270,7 +264,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
         Validators.pattern(/^[0-9]*$/)
       ])
     });
-    this.beginAtForm?.setValue(this.getOneMonthAgo(new Date()));
+    this.beginAtForm?.setValue(beginAt);
     this.beginAtEForm?.setValue(new Date());
   }
 
@@ -434,7 +428,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
     const formValue: PageProceduresData = {
       page: this.page,
       size: this.pageSize,
-      beginAt: this.formatDate(this.getOneMonthAgo(new Date())),
+      beginAt: this.formatDate(beginAt),
       beginAtE: this.formatDate(new Date()),
       executionCode: '0',
       individualNumber: ''
@@ -455,7 +449,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
       size: this.pageSize,
       beginAt: this.beginAtForm?.value
         ? this.formatDate(this.beginAtForm.value)
-        : this.formatDate(this.getOneMonthAgo(new Date())),
+        : this.formatDate(beginAt),
       beginAtE: this.beginAtEForm?.value
         ? this.formatDate(this.beginAtEForm.value)
         : this.formatDate(new Date()),
@@ -576,16 +570,15 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   }
 
   priorityProcedure(row: ProceduresCollection) {
-    this.proceduresService.changePriority(row.executionId!)
-      .subscribe({
-        next: () => {
-          this.successChangePriority.fire();
-          this.defaultTableData();
-        },
-        error: () => {
-          this.errorChangePriority.fire();
-        }
-      });
+    this.proceduresService.changePriority(row.executionId!).subscribe({
+      next: () => {
+        this.successChangePriority.fire();
+        this.defaultTableData();
+      },
+      error: () => {
+        this.errorChangePriority.fire();
+      }
+    });
   }
 
   addComment(row: ProceduresCollection) {
@@ -598,9 +591,10 @@ export class TableProceduresComponent implements OnInit, OnChanges {
           .afterClosed()
           .subscribe((response: boolean) => {
             if (response) {
-              if (!this.comment) return this.commentError.fire();
+              const comment = this.comment.nativeElement.value;
+              if (!comment) return this.commentError.fire();
               this.proceduresService
-                .commentProcedure(row.executionId!, this.comment)
+                .commentProcedure(row.executionId!, comment)
                 .subscribe({
                   next: () => {
                     this.cancelProcedure(row.executionId!);

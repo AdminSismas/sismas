@@ -375,8 +375,6 @@ export class InformationConstructionsPropertyComponent implements OnInit, AfterV
     return '';
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
 }

@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, computed, OnInit } from '@angular/core';
-import { InConstructionComponent } from '../../../../../apps/components/general-components/in-construction/in-construction.component';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -24,7 +24,6 @@ import { PAGE_OPTION_10_20_50_100, MODAL_SMALL } from '../../../../../apps/const
   selector: 'vex-workgroups',
   standalone: true,
   imports: [
-    InConstructionComponent,
     MatIconModule,
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
@@ -71,9 +70,6 @@ export class WorkgroupsComponent implements OnInit {
   totalElements = 0;
   pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
 
-  // Buscador
-  searchTerm = '';
-
   constructor(
     private workgroupsService: WorkgroupsService,
     public dialog: MatDialog,
@@ -114,7 +110,7 @@ export class WorkgroupsComponent implements OnInit {
     this.workgroupsService.create(group).subscribe(() => {
       this.getWorkgroups();  // Recargar la lista de grupos
       this.showSnackBar('Grupo creado con éxito'); // Mostrar mensaje de éxito
-    }, error => {
+    }, () => {
       this.showSnackBar('Error al crear el grupo'); // Mostrar mensaje de error en caso de fallo
     });
   }
@@ -123,7 +119,7 @@ export class WorkgroupsComponent implements OnInit {
     this.workgroupsService.update(group).subscribe(() => {
       this.getWorkgroups();  // Recargar la lista de grupos
       this.showSnackBar('Grupo editado con éxito'); // Mostrar mensaje de éxito
-    }, error => {
+    }, () => {
       this.showSnackBar('Error al editar el grupo'); // Mostrar mensaje de error en caso de fallo
     });
   }
@@ -135,11 +131,13 @@ export class WorkgroupsComponent implements OnInit {
     this.getWorkgroups(); // Llamar al método de obtención de grupos con los parámetros actualizados
   }
   // Método de búsqueda
-  onSearchChange(): void {
-    if (this.searchTerm.trim() === '') {
-      this.getWorkgroups(); // Si no hay término de búsqueda, recarga todos los grupos
+  onSearchChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const { value } = input;
+    if (!value.trim()) {
+      this.dataSource.filter = '';
     } else {
-      this.dataSource.filter = this.searchTerm.trim().toLowerCase();
+      this.dataSource.filter = value.trim().toLowerCase();
     }
   }
 

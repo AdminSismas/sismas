@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, input, OnChanges, OnInit, Output, SimpleChanges, signal, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -41,48 +41,48 @@ import { TextAreaComponent } from '../../general-components/text-area/text-area.
   styleUrl: './dynamic-forms.component.scss',
 })
 export class DynamicFormsComponent implements OnInit, OnChanges {
-  @Input({ required: true }) inputs: JSONInput[] = [];
-  @Input() className = '';
-  @Input() disabled = false;
-  @Input() initValues: any | null = {};
+  private fb = inject(FormBuilder);
 
-  form: FormGroup = new FormGroup({});
+  inputs = input.required<JSONInput[]>();
+  className = input<string>('');
+  disabled = input<boolean>(false);
+  initValues = input<any | null>(null);
+
+  form = signal(this.fb.group({}));
   private dateFilters = new Map<string, (date: Date | null) => boolean>();
 
   @Output() formReady = new EventEmitter<FormGroup>();
-
-  constructor(private fb: FormBuilder) {
-  }
 
   ngOnInit(): void {
     this.createForm();
     this.createDateFilters();
 
-    if (this.disabled) {
-      this.form.disable();
+    if (this.disabled()) {
+      this.form().disable();
     }
 
-    if (this.initValues != null && this.initValues()) {
-      this.form.reset(this.initValues());
+    if (this.initValues && this.initValues()) {
+      console.log('initValues', this.initValues());
+      this.form().reset(this.initValues()!);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['disabled'] && this.form) {
       if (changes['disabled'].currentValue) {
-        this.form.disable();
+        this.form().disable();
       } else {
-        this.form.enable();
+        this.form().enable();
       }
     }
 
     if (changes['initValues'] && this.form) {
-      this.form.reset(this.initValues);
+      this.form().reset(this.initValues);
     }
   }
 
   private createDateFilters(): void {
-    this.inputs
+    this.inputs()
       .filter((input) => input.element === 'date')
       .forEach((dateInput) => {
         this.dateFilters.set(
@@ -94,21 +94,21 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
 
   private createForm(): void {
     const formObject: any = {};
-    this.inputs.forEach((input) => {
+    this.inputs().forEach((input) => {
       formObject[input.name] = ['', input.validators];
     });
 
-    this.form = this.fb.group(formObject);
+    this.form.set(this.fb.group(formObject));
 
-    this.formReady.emit(this.form);
+    this.formReady.emit(this.form());
 
-    this.form.valueChanges.subscribe(() => {
-      this.formReady.emit(this.form);
+    this.form().valueChanges.subscribe(() => {
+      this.formReady.emit(this.form());
     });
   }
 
   cssClassesForm(cssClasses: string | undefined): string {
-    if (this.inputs.length === 1) return 'w-full h-full';
+    if (this.inputs().length === 1) return 'w-full h-full';
     if (cssClasses) {
       return cssClasses;
     } else {

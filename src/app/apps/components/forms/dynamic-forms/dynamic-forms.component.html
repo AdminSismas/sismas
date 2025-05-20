@@ -1,110 +1,127 @@
-@if (form) {
-  <form [formGroup]="form" [ngClass]="cssClassesForm(className)" class="py-2">
-    @for (input of inputs; track input.name) {
-      @if (input.element === "collection" && !input.noVisibleComponent) {
-        <vex-combox-colletion
-          [idComboCollection]="input.name + $index"
-          [label]="input.label"
-          [formControlNameCombobox]="input.name"
-          [typeDomainName]="input.type"
-          placeholderDomainName="{{ input.placeholder }}&hellip;"
-          [cssClasses]="cssClassesInput(input.cssClasses)"
-          [ngClass]="cssClassesInput(input.cssClasses)"
-        ></vex-combox-colletion>
-      }
+@if (form()) {
+  <form [formGroup]="form()" [ngClass]="cssClassesForm(className())" class="py-2">
+    @for (input of inputs(); track input.name) {
+      @switch (input.element) {
+        @case ("collection") {
+          @if (!input.noVisibleComponent) {
+            <vex-combox-colletion
+              [idComboCollection]="input.name + $index"
+              [label]="input.label"
+              [formControlNameCombobox]="input.name"
+              [typeDomainName]="input.type"
+              placeholderDomainName="{{ input.placeholder }}&hellip;"
+              [cssClasses]="cssClassesInput(input.cssClasses)"
+              [ngClass]="cssClassesInput(input.cssClasses)"
+            ></vex-combox-colletion>
+          }
+        }
 
-      @if (input.element === "date" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
-                        [id]="input.name + $index">
-          <mat-label>{{ input.label }}</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            placeholder="{{ input.placeholder }}&hellip;"
-            [formControlName]="input.name"
-            [matDatepickerFilter]="getDateFiler(input.name)"
-          />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      }
+        @case ("date") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
+                            [id]="input.name + $index">
+              <mat-label>{{ input.label }}</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="{{ input.placeholder }}&hellip;"
+                [formControlName]="input.name"
+                [matDatepickerFilter]="getDateFiler(input.name)"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          }
+        }
 
-      @if (input.element === "file" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
-                        [id]="input.name + $index">
-          <mat-label>{{ input.label }}</mat-label>
-          <ngx-mat-file-input
-            [formControlName]="input.name"
-            [accept]="input.type ? input.type : ''"
-            [multiple]="false"
-            color="primary"
-          ></ngx-mat-file-input>
-        </mat-form-field>
-      }
+        @case ("file") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
+                            [id]="input.name + $index">
+              <mat-label>{{ input.label }}</mat-label>
+              <ngx-mat-file-input
+                [formControlName]="input.name"
+                [accept]="input.type ? input.type : ''"
+                [multiple]="false"
+                color="primary"
+              ></ngx-mat-file-input>
+            </mat-form-field>
+          }
+        }
 
-      @if (input.element === "select" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)"
-                        [id]="input.name + $index">
-          <mat-label>{{ input.label }}</mat-label>
-          <mat-select
-            [formControlName]="input.name"
-            [id]="input.name"
-            placeholder="{{ input.placeholder }}&hellip;"
-          >
-            @for (option of input.options; track $index) {
-              <mat-option [value]="option.value">{{ option.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      }
+        @case ("select") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field [ngClass]="cssClassesForm(input.cssClasses)"
+                            [id]="input.name + $index">
+              <mat-label>{{ input.label }}</mat-label>
+              <mat-select
+                [formControlName]="input.name"
+                [id]="input.name"
+                placeholder="{{ input.placeholder }}&hellip;"
+              >
+                @for (option of input.options; track $index) {
+                  <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
+        }
 
-      @if (input.element === "toggle" && !input.noVisibleComponent) {
-        <mat-slide-toggle
-          [id]="input.name + $index"
-          [formControlName]="input.name"
-          [labelPosition]="labelPositionToggle(input)"
-        >{{ input.label }}
-        </mat-slide-toggle
-        >
-      }
+        @case ("toggle") {
+          @if (!input.noVisibleComponent) {
+            <mat-slide-toggle
+              [id]="input.name + $index"
+              [formControlName]="input.name"
+              [labelPosition]="labelPositionToggle(input)"
+            >{{ input.label }}
+            </mat-slide-toggle>
+          }
+        }
 
-      @if (input.element === "checkbox" && !input.noVisibleComponent) {
-        <mat-form-field [id]="input.name + $index">
-          <mat-checkbox
-            [formControlName]="input.name"
-            [id]="input.name"
-            [ngClass]="cssClassesInput(input.cssClasses)"
-          >
-            {{ input.label }}
-          </mat-checkbox>
-        </mat-form-field>
-      }
+        @case ("checkbox") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field [id]="input.name + $index">
+              <mat-checkbox
+                [formControlName]="input.name"
+                [id]="input.name"
+                [ngClass]="cssClassesInput(input.cssClasses)"
+              >
+                {{ input.label }}
+              </mat-checkbox>
+            </mat-form-field>
+          }
+        }
 
-      @if (input.element === "textarea" && !input.noVisibleComponent) {
-        <vex-text-area
-          [idTextArea]="input.name + $index"
-          [label]="input.label"
-          [formControlNameTextArea]="input.name"
-          [placeholder]="input.placeholder"
-          [cssClasses]="cssClassesInput(input.cssClasses)"
-          [ngClass]="cssClassesInput(input.cssClasses)">
-        </vex-text-area>
-      }
+        @case ("textarea") {
+          @if (!input.noVisibleComponent) {
+            <vex-text-area
+              [idTextArea]="input.name + $index"
+              [label]="input.label"
+              [formControlNameTextArea]="input.name"
+              [placeholder]="input.placeholder"
+              [cssClasses]="cssClassesInput(input.cssClasses)"
+              [ngClass]="cssClassesInput(input.cssClasses)">
+            </vex-text-area>
+          }
+        }
 
-      @if (input.element === "input" && !input.noVisibleComponent) {
-        <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
-                        [id]="input.name + $index">
-          <mat-label>{{ input.label }}</mat-label>
-          <input
-            matInput
-            [type]="input.type"
-            placeholder="{{ input.placeholder }}&hellip;"
-            [formControlName]="input.name"
-          />
-        </mat-form-field>
+        @case ("input") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
+                            [id]="input.name + $index">
+              <mat-label>{{ input.label }}</mat-label>
+              <input
+                matInput
+                [type]="input.type"
+                placeholder="{{ input.placeholder }}&hellip;"
+                [formControlName]="input.name"
+              />
+            </mat-form-field>
+          }
+        }
       }
     }
   </form>

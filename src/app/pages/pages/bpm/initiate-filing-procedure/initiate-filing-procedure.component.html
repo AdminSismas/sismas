@@ -297,7 +297,8 @@
                       let document of listBpmDocumentsProcess$ | async;
                       trackBy: trackByTypeDocumentName
                     "
-                    [(ngModel)]="document.state"
+                    [ngModel]="!!document.state"
+                    (ngModelChange)="document.state = $event"
                     [ngModelOptions]="{ standalone: true }"
                   >
                     {{ document.name }}

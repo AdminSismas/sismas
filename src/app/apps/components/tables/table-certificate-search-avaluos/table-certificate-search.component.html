@@ -72,7 +72,7 @@
               class="pl-1 pr-1"
               mat-cell>
             <div class="flex">
-           
+
               <button
                 (click)="openCadastralInformationProperty(row)"
                 class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
@@ -80,7 +80,7 @@
                 <mat-icon class="icon-sm" svgIcon="mat:info"></mat-icon>
               </button>
 
-            
+
 
               <button
                 (click)="viewFile(row)"
@@ -90,13 +90,13 @@
               </button>
 
 
-      
+
             </div>
           </td>
         </ng-container>
 
         <!-- Text Columns -->
-        <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+        @for (column of columns; track column.property) {
           <ng-container
             *ngIf="column.type === 'text'"
             [matColumnDef]="column.property">
@@ -114,7 +114,7 @@
               {{ row[column.property] }}
             </td>
           </ng-container>
-        </ng-container>
+        }
 
         <tr *matHeaderRowDef="visibleColumns"
             mat-header-row></tr>

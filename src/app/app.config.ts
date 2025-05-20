@@ -2,13 +2,8 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { BrowserModule } from '@angular/platform-browser';
 import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {
-  provideHttpClient,
-  withFetch,
-  withInterceptors,
-  withInterceptorsFromDi
-} from '@angular/common/http';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { provideRouter, withHashLocation, withInMemoryScrolling } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import {
@@ -44,6 +39,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideRouter(
       appRoutes,
+      withHashLocation(),
       withInMemoryScrolling({
         anchorScrolling: 'enabled',
         scrollPositionRestoration: 'enabled'

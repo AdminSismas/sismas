@@ -12,20 +12,28 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -57,17 +65,13 @@ import {
   TITULO_PAGE_CADASTRAL_DA,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendInformationRegisterService } from '../../../services/register-procedure/send-information-register.service';
 import { ValidateInformationBaunitService } from '../../../services/general/validate-information-baunit.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';
-import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService } from '../../../services/bpm/bpm-process.service';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from '../../../interfaces/user-details/user.model';
@@ -83,7 +87,6 @@ import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-
     CommonModule,
     FormsModule,
     NgClass,
-    NgIf,
     ReactiveFormsModule,
     // Vex
     VexBreadcrumbsComponent,
@@ -109,15 +112,14 @@ import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-
   ]
 })
 export class TableCadastralSearchComponent
-  implements OnInit, AfterViewInit, OnChanges {
-
+  implements OnInit, AfterViewInit, OnChanges
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
   user: DecodeJwt | null = null;
-  setNewEndPoint: boolean = false;
+  setNewEndPoint = false;
 
-  @Input()
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
   page = PAGE;
   totalElements = 0;
@@ -150,7 +152,6 @@ export class TableCadastralSearchComponent
     private bpmProcessService: BpmProcessService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar,
     private infoTableService: InfoTableService,
     private readonly layoutService: VexLayoutService,
     private sendInformation: SendInformationRegisterService,
@@ -228,7 +229,7 @@ export class TableCadastralSearchComponent
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tituloPage'] && this.tituloPage) {
-      this.tituloPage = this.tituloPage;
+      // this.tituloPage = this.tituloPage;
       if (this.tituloPage === TITULO_PAGE_CADASTRAL_DA) {
         this.titleAssigned(this.tituloPage);
         this.menuAssigned(TITULO_PAGE_CADASTRAL_DA, this.tituloPage);
@@ -262,7 +263,6 @@ export class TableCadastralSearchComponent
           this.captureInformationSubscribe(result)
       });
   }
-
 
   titleAssigned(value: string): void {
     this.titleArray.push(value);
@@ -302,7 +302,6 @@ export class TableCadastralSearchComponent
         })
         .afterClosed();
     } else {
-
       this.dialog
         .open(LayoutCardCadastralInformationPropertyComponentComponent, {
           ...MODAL_LARGE,
@@ -319,7 +318,6 @@ export class TableCadastralSearchComponent
           )
         })
         .afterClosed();
-
     }
   }
 
@@ -503,17 +501,7 @@ export class TableCadastralSearchComponent
       .getDataBaUnitIdE(this.page, this.pageSize, baunit)
       .subscribe({
         next: (result: InformationPegeable) =>
-          this.captureInformationSubscribe(result),
-        error: (error: HttpErrorResponse) => {
-          this.captureInformationSubscribeError();
-          if (error.status === 404) {
-            this.snackbar.open(
-              'No se encontró un predio con ese número',
-              'Cerrar',
-              { duration: 5000 }
-            );
-          }
-        }
+          this.captureInformationSubscribe(result)
       });
   }
 
@@ -545,12 +533,14 @@ export class TableCadastralSearchComponent
   }
 
   searValueData(searData: SearchData, data: string): void {
-    this.baunitService.advancedSearchCadastral(
-      this.generateObjectPageSearchData(searData),
-      data
-    ).subscribe((value) => {
+    this.baunitService
+      .advancedSearchCadastral(
+        this.generateObjectPageSearchData(searData),
+        data
+      )
+      .subscribe((value) => {
         this.captureInformationSubscribe(value);
-    });
+      });
   }
 
   onFilterChange(value: string): void {
@@ -581,10 +571,6 @@ export class TableCadastralSearchComponent
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
   }
 
   refreshInformationPaginator(event: PageEvent): void {
@@ -619,13 +605,6 @@ export class TableCadastralSearchComponent
       next: () => {
         // Si la validación es exitosa, procedemos a iniciar el trámite
         this.initiateFilingProcedure(data);
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status === 400) {
-          this.snackbar.open(error.error, 'Aceptar', { duration: 10000 });
-          return;
-        }
-        this.snackbar.open('Error al radicar', 'Aceptar', { duration: 10000 });
       }
     });
   }

@@ -68,10 +68,9 @@ import {
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    NgFor,
     NgClass,
     NgIf
-  ]
+]
 })
 
 export class TableDomainLadmColComponent implements OnInit, AfterViewInit {

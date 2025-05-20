@@ -31,7 +31,7 @@
           class="w-full"
           mat-table
           matSort>
-  
+
           <!-- Checkbox Column -->
           <ng-container matColumnDef="checkbox">
             <th *matHeaderCellDef mat-header-cell
@@ -52,7 +52,7 @@
               </mat-checkbox>
             </td>
           </ng-container>
-  
+
           <!-- Image Column -->
           <ng-container matColumnDef="image">
             <th *matHeaderCellDef mat-header-cell class="pl-1 pr-1"></th>
@@ -60,7 +60,7 @@
               <img [src]="row['imageSrc']" class="avatar h-8 w-8 align-middle" alt="" />
             </td>
           </ng-container>
-  
+
           <!-- View Map -->
           <ng-container matColumnDef="viewMap">
             <th
@@ -79,14 +79,14 @@
                   mat-icon-button title="Ver mapa">
                   <mat-icon class="icon-sm" svgIcon="mat:map"></mat-icon>
                 </button>
-  
+
                 <button
                   (click)="openCadastralInformationProperty(row)"
                   class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
                   mat-icon-button title="Consultar información predial">
                   <mat-icon class="icon-sm" svgIcon="mat:info"></mat-icon>
                 </button>
-  
+
                 <button
                   (click)="initiateFilingProcedure(row)"
                   class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
@@ -96,9 +96,9 @@
               </div>
             </td>
           </ng-container>
-  
+
           <!-- Text Columns -->
-          <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+          @for (column of columns; track column.property) {
             <ng-container
               *ngIf="column.type === 'text'"
               [matColumnDef]="column.property">
@@ -116,8 +116,8 @@
                 {{ row[column.property] }}
               </td>
             </ng-container>
-          </ng-container>
-  
+          }
+
           <tr *matHeaderRowDef="visibleColumns"
               mat-header-row></tr>
           <tr
@@ -140,4 +140,3 @@
       </div>
     </vex-page-layout-content>
   </vex-page-layout>
-  

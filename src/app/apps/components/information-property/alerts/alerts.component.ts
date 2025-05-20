@@ -1,29 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  AfterViewInit,
   Component,
-  computed, forwardRef,
+  computed,
   inject,
-  Input,
   OnInit,
   signal,
-  TemplateRef,
-  ViewChild
+  input
 } from '@angular/core';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_SMALL,
-  PAGE,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION,
-  TYPE_INFORMATION_EDITION
+  MODAL_SMALL_XS
 } from '../../../constants/general/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { environment } from '../../../../../environments/environments';
 import { AlertsService } from '../../../services/alerts/alertes.service';
 import { InfoOwners } from '../../../interfaces/information-property/info-owners';
 import { MatIconModule } from '@angular/material/icon';
@@ -36,17 +26,22 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { MatSort } from '@angular/material/sort';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
 import { DetailAlertsComponent } from './detail-alerts/detail-alerts.component';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { CreateAlertComponent } from './create-alert/create-alert.component';
+import { AlertResponse } from 'src/app/apps/interfaces/information-property/alerts.interface';
+import Swal from 'sweetalert2';
+import { ALERT_TABLE_COLUMNS } from 'src/app/apps/constants/information-property/alerts.constants';
+import { UpdateAlertComponent } from './update-alert/update-alert.component';
 
-export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'endsIn' |'fractionS' | 'domRightType'> &
+export type InfoOwnerRowT = Pick<
+  InfoOwners,
+  'rightId' | 'beginAt' | 'endsIn' | 'fractionS' | 'domRightType'
+> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
 
 @Component({
@@ -61,7 +56,7 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'endsIn' |'
     scaleFadeIn400ms
   ],
   imports: [
-    CommonModule,
+    DatePipe,
     HeaderCadastralInformationPropertyComponent,
     MatCardModule,
     MatRippleModule,
@@ -71,88 +66,41 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'endsIn' |'
     MatTableModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatDialogModule,
+    MatDialogModule
   ],
   templateUrl: './alerts.component.html',
-  styleUrl: './alerts.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AlertsComponent),
-      multi: true
-    }
-  ]
+  styleUrl: './alerts.component.scss'
 })
-export class AlertsComponent implements OnInit, AfterViewInit {
+export class AlertsComponent implements OnInit {
+  prueba(row: AlertResponse): void {
+    console.log(row);
+  }
 
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) expandedComponent = true;
-  @Input({ required: true }) schema = `${environment.schemas.main}`;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
-  @Input() editable? = true;
-  alerts: any[] = [];
-  dataSource = new MatTableDataSource<any>([]);
+  // Injecting dependencies
+  private alertsService = inject(AlertsService);
+  private matDialog = inject(MatDialog);
 
-  protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = [
-    {
-      label: 'Detalle',
-      property: 'viewDetail',
-      type: 'button',
-      visible: true
-    },
-    {
-      label: 'Tipo',
-      property: 'domIndividualTypeNumber',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Estado',
-      property: 'fullName',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Fecha inicio',
-      property: 'beginAt',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Fecha fin',
-      property: 'endsIn',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Acciones',
-      property: 'actions',
-      type: 'button',
-      visible: true
-    }
-  ];
+  // Defining inputs
+  expandedComponent = input.required<boolean>();
+  schema = input.required<string>();
+  typeInformation = input.required<TypeInformation>();
+  baunitId = input<string | null>(null);
+  executionId = input<string | null>(null);
+  editable = input<boolean>(true);
 
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  @ViewChild('confirmDialog', { static: true }) confirmDialog: TemplateRef<any> | undefined;
+  // Defining signals
+  alerts = signal<AlertResponse[]>([]);
+  columns = signal(ALERT_TABLE_COLUMNS);
+  dataSource = signal<MatTableDataSource<AlertResponse>>(
+    new MatTableDataSource<AlertResponse>([])
+  );
 
-  fractions_sum = 0;
-  page: number = PAGE;
-  totalElements = 0;
-  pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  rightIdSelected?: number;
-  // dataSource: MatTableDataSource<InfoOwners> =
-  //   new MatTableDataSource<InfoOwners>([]);
-  columns = signal(this.TABLE_COLUMNS);
+  // Defining computed properties
   textColumns = computed(() =>
     this.columns().filter((column) => column.type === 'text')
   );
   visibleColumns = computed(() => {
-    return this.TABLE_COLUMNS.filter((column) => column.visible).map(
+    return ALERT_TABLE_COLUMNS.filter((column) => column.visible).map(
       (column) => column.property
     );
   });
@@ -163,98 +111,143 @@ export class AlertsComponent implements OnInit, AfterViewInit {
         label: 'Editar',
         icon: 'mat:edit'
       },
-      {
-        id: 'delete',
-        label: 'Eliminar',
-        icon: 'mat:delete'
-      }
+      // {
+      //   id: 'delete',
+      //   label: 'Eliminar',
+      //   icon: 'mat:delete'
+      // }
     ];
   });
-  addEditDialogContent = computed<{ title: string }>(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const initialState: any = {
-      title: 'Nueva información de propietario'
-    };
-    return { ...initialState };
-  });
-
-  private alertsService = inject(AlertsService);
-  private matDialog = inject(MatDialog);
-
-  constructor(
-    private snakbar: MatSnackBar
-  ) { }
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator || null;
-    this.dataSource.sort = this.sort || null;
-  }
 
   ngOnInit(): void {
-    if (this.id?.length <= 0 || this.baunitId == null) {
-      return;
-    }
-    this.id = this.id + this.getRandomInt(10000) + this.schema;
-    this.isExpandPanel(this.expandedComponent);
-    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition' && this.editable;
+    this.isExpandPanel(this.expandedComponent());
+    ALERT_TABLE_COLUMNS.at(-1)!.visible =
+      this.typeInformation() === 'edition' && this.editable();
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
+  isExpandPanel(expandedPanel: boolean): void {
+    if (expandedPanel) {
       this.loadAlertsByBaunitId();
     }
   }
 
-
   loadAlertsByBaunitId(): void {
-    if (!this.baunitId) {
-      console.warn('baunitId no proporcionado. No se pueden cargar las alertas.');
+    if (!this.baunitId()) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se ha encontrado el número de ficha del predio',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6',
+        showCancelButton: false
+      });
       return;
     }
 
-    this.alertsService.getAlertsByBaunitId(this.baunitId).subscribe(
-      (alerts) => {
-        this.alerts = alerts;
-        this.dataSource.data = this.alerts;
-      },
-      (error) => {
-        console.error('Error al obtener alertas:', error);
+    this.alertsService.getAlertsByBaunitId(this.baunitId()!).subscribe({
+      next: (alerts) => {
+        this.alerts.set(alerts);
+        this.dataSource().data = this.alerts();
       }
-    );
+    });
   }
 
-
-  openAlertDetails(alert: any): void {
-    const dialogRef = this.matDialog.open(DetailAlertsComponent, {
+  openAlertDetails(alert: AlertResponse): void {
+    this.matDialog.open(DetailAlertsComponent, {
       ...MODAL_SMALL,
       disableClose: true,
-      data: alert,
+      data: alert
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-      }
-    });
-  }
-
-
-  /**
-   * On refresh paginator
-   *
-   * @param pageEvent
-   */
-  refreshPaginator(pageEvent: PageEvent): void {
-    const { pageIndex, pageSize } = pageEvent || {};
-    this.page = pageIndex ?? PAGE;
-    this.pageSize = pageSize ?? PAGE_SIZE;
-  }
-
-  private getRandomInt(max: number): number {
-    return Math.floor(Math.random() * max);
   }
 
   individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {
     return column.label === 'Tipo' || column.label === 'Estado';
   }
 
+  openCreateAlert() {
+    this.matDialog
+      .open(CreateAlertComponent, {
+        ...MODAL_SMALL_XS
+      })
+      .afterClosed()
+      .subscribe(
+        (result: { response: boolean; data?: Partial<AlertResponse> }) => {
+          if (
+            result.response &&
+            result.data &&
+            this.baunitId() &&
+            this.executionId()
+          ) {
+            this.createAlert(result.data!);
+          }
+        }
+      );
+  }
+
+  createAlert(alert: Partial<AlertResponse>): void {
+    this.alertsService
+      .createAlertByBaunitId(this.baunitId()!, this.executionId()!, alert)
+      .subscribe(() => {
+        this.alertsService.reloadTableSet(true);
+        this.loadAlertsByBaunitId();
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: 'Alerta creada correctamente',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3085d6',
+          showCancelButton: false
+        });
+      });
+  }
+
+  actionButtonsFunction(id: string, alert: AlertResponse): void {
+    switch (id) {
+      case 'edit':
+        this.editAlert(alert);
+        break;
+      case 'delete':
+        console.log('Delete');
+        break;
+      default:
+        break;
+    }
+  }
+
+  editAlert(alert: AlertResponse): void {
+    this.matDialog.open(UpdateAlertComponent, {
+      ...MODAL_SMALL,
+      data: {
+        alert,
+        baunitId: this.baunitId(),
+        executionId: this.executionId()
+      }
+    }).afterClosed()
+      .subscribe((result: { response: boolean, data?: Partial<AlertResponse> }) => {
+        if (result.response && result.data && this.baunitId() && this.executionId()) {
+          const newAlert = {...alert, ...result.data };
+          this.updateAlert(alert.alertBaunitId, newAlert);
+        }
+      });
+  }
+
+  updateAlert(alertBaunitId: string, alert: AlertResponse): void {
+    this.alertsService.updateAlertByBaunitId(
+      this.baunitId()!,
+      this.executionId()!,
+      alertBaunitId,
+      alert
+    ).subscribe(() => {
+      this.alertsService.reloadTableSet(true);
+      this.loadAlertsByBaunitId();
+      Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: 'Alerta actualizada correctamente',
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6',
+        showCancelButton: false
+      });
+    });
+  }
 }

@@ -73,10 +73,9 @@ import { MODAL_SMALL } from '../../constants/general/constants';
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    NgFor,
     NgClass,
     NgIf
-  ]
+]
 })
 export class DocumnetManagementComponent implements OnInit, AfterViewInit {
   /* ============== ATRIBUTES ============== */

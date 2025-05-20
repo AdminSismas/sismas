@@ -110,7 +110,7 @@
           </ng-container>
 
           <!-- Columnas dinámicas -->
-          @for (column of columns; track trackByProperty) {
+          @for (column of columns; track column.property) {
             @if (column.type === 'text') {
               <ng-container [matColumnDef]="column.property">
                 <th
@@ -206,22 +206,6 @@
       mat-menu-item>
       <mat-icon svgIcon="mat:delete"></mat-icon>
       <span>Eliminar</span>
-    </button>
-  </ng-template>
-</mat-menu>
-
-<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
-  <ng-template let-customer="customer" matMenuContent>
-    <button
-      (click)="toggleColumnVisibility(customer, $event)"
-      *ngFor="let column of columns"
-      class="mat-menu-item block">
-      <mat-checkbox
-        (click)="$event.stopPropagation()"
-        [(ngModel)]="column.visible"
-        color="primary">
-        {{ column.label }}
-      </mat-checkbox>
     </button>
   </ng-template>
 </mat-menu>

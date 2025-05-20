@@ -7,9 +7,7 @@
     placeholderDomainName="Tipo de documento"
     class="w-full sm:flex-1 min-w-[300px] max-w-[400px] sm:mr-2"
   ></vex-combox-colletion>
-  <mat-form-field
-    class="w-full sm:flex-1 min-w-[300px] max-w-[400px] sm:ml-2"
-  >
+  <mat-form-field class="w-full sm:flex-1 min-w-[300px] max-w-[400px] sm:ml-2">
     <mat-label>Documento</mat-label>
     <input
       type="type"
@@ -32,9 +30,7 @@
       Buscar
     </button>
   </div>
-  <mat-form-field
-    class="w-full sm:flex-1 min-w-[300px] max-w-[400px] sm:ml-2"
-  >
+  <mat-form-field class="w-full sm:flex-1 min-w-[300px] max-w-[400px] sm:ml-2">
     <mat-label>Nombre completo persona</mat-label>
     <input
       formControlName="personCompleted"
@@ -76,8 +72,8 @@
       mat-table
       matSort
     >
-      <!-- Text Columns -->
-      <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+      @for (column of columns; track column.property) {
+        <!-- Text Columns -->
         <ng-container
           *ngIf="column.type === 'text'"
           [matColumnDef]="column.property"
@@ -99,7 +95,7 @@
             {{ row[column.property] }}
           </td>
         </ng-container>
-      </ng-container>
+      }
 
       <!-- Action Column -->
       <ng-container matColumnDef="actions">
@@ -125,8 +121,10 @@
           </button>
         </td>
       </ng-container>
-      <tr *matHeaderRowDef="visibleColumns" mat-header-row
-          class="bg-app-bar border-b sticky"
+      <tr
+        *matHeaderRowDef="visibleColumns"
+        mat-header-row
+        class="bg-app-bar border-b sticky"
       ></tr>
       <tr
         *matRowDef="let row; columns: visibleColumns"

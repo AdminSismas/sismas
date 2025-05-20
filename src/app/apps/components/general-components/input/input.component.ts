@@ -87,51 +87,51 @@ export class InputComponent implements OnInit {
       return 'Campo requerido'
     }
 
-    if (formControl.errors?.hasOwnProperty('capitalLetter') && formControl.errors?.['capitalLetter']) {
+    if (formControl.errors?.hasOwnProperty('capitalLetter') && formControl.errors?.['capitalLetter'] === true) {
       return CONSTANT_ERR_CAPITAL_LETTER;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber']) {
+    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber'] === true) {
       return CONSTANT_ERR_INVALID_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('errorArea') && formControl.errors?.['errorArea']) {
+    if (formControl.errors?.hasOwnProperty('errorArea') && formControl.errors?.['errorArea'] === true) {
       return CONSTANT_ERR_INVALID_AREA;
     }
 
-    if (formControl.errors?.hasOwnProperty('yearBetween1900And2099') && formControl.errors?.['yearBetween1900And2099']) {
+    if (formControl.errors?.hasOwnProperty('yearBetween1900And2099') && formControl.errors?.['yearBetween1900And2099'] === true) {
       return CONSTANT_ERR_INVALID_YEAR;
     }
 
-    if (formControl.errors?.hasOwnProperty('max99') && formControl.errors?.['max99']) {
+    if (formControl.errors?.hasOwnProperty('max99') && formControl.errors?.['max99'] === true) {
       return CONSTANT_ERR_ONLY_ONE_99;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyTextOrNumber') && formControl.errors?.['onlyTextOrNumber']) {
+    if (formControl.errors?.hasOwnProperty('onlyTextOrNumber') && formControl.errors?.['onlyTextOrNumber'] === true) {
       return CONSTANT_ERR_ONLY_TEXT_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('min03Characters') && formControl.errors?.['min03Characters']) {
+    if (formControl.errors?.hasOwnProperty('min03Characters') && formControl.errors?.['min03Characters'] === true) {
       return CONSTANT_ERR_MIN03_CHARACTERS;
     }
 
-    if (formControl.errors?.hasOwnProperty('min10Characters') && formControl.errors?.['min10Characters']) {
+    if (formControl.errors?.hasOwnProperty('min10Characters') && formControl.errors?.['min10Characters'] === true) {
       return CONSTANT_ERR_MIN10_CHARACTERS;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyTextAndNumberGuionCommand') && formControl.errors?.['onlyTextAndNumberGuionCommand']) {
+    if (formControl.errors?.hasOwnProperty('onlyTextAndNumberGuionCommand') && formControl.errors?.['onlyTextAndNumberGuionCommand'] === true) {
       return CONSTANT_ERR_ONLY_INVALID_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber']) {
+    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber'] === true) {
       return CONSTANT_ERR_ONLY_INVALID_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyLetters') && formControl.errors?.['onlyLetters']) {
+    if (formControl.errors?.hasOwnProperty('onlyLetters') && formControl.errors?.['onlyLetters'] === true) {
       return CONSTANT_ERR_ONLY_INVALID_LETTER;
     }
 
-    if (formControl.errors?.hasOwnProperty('invalidEmail') && formControl.errors?.['invalidEmail']) {
+    if (formControl.errors?.hasOwnProperty('invalidEmail') && formControl.errors?.['invalidEmail'] === true) {
       return CONSTANT_ERR_ONLY_INVALID_EMAIL;
     }
 

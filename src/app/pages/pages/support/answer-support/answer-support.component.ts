@@ -9,9 +9,8 @@ import {
   Input,
   OnInit,
   ViewChild,
-  inject
+  inject, OnDestroy
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -35,27 +34,20 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexConfigService } from '@vex/config/vex-config.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
 import { SupportService } from '../service/support.service';
 import { ObservationsData } from './model/observations.model';
 import { StatusData } from './model/status.model';
 import { SupportLogs } from './model/supportLogs.model';
 // import { UserAuthData } from 'src/app/core/auth/authData.model';
 // import { AuthService } from 'src/app/core/auth/auth.service';
-import { distinctUntilChanged } from 'rxjs/operators';
 import { AnswerSupportService } from './service/answer-support.service';
 
 @Component({
   selector: 'vex-answer-support',
   standalone: true,
   imports: [
-    VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
     MatButtonToggleModule,
     ReactiveFormsModule,
-    VexPageLayoutContentDirective,
-    NgIf,
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
@@ -63,17 +55,15 @@ import { AnswerSupportService } from './service/answer-support.service';
     MatTableModule,
     MatSortModule,
     MatCheckboxModule,
-    NgFor,
-    NgClass,
     MatPaginatorModule,
     FormsModule,
     MatDialogModule,
-    MatInputModule,
-  ],
+    MatInputModule
+],
   templateUrl: './answer-support.component.html',
   styleUrl: './answer-support.component.scss'
 })
-export class AnswerSupportComponent implements OnInit, AfterViewInit {
+export class AnswerSupportComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @Input() refreshLogs!: EventEmitter<SupportLogs>; // refresh logs

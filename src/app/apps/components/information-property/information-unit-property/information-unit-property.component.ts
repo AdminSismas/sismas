@@ -233,9 +233,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value;
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>): string {
-    return column.property;
-  }
+
 
   captureInformationSubscribeError(): void {
     this.contentInformation = new InformationPegeable();

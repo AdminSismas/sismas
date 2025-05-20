@@ -71,12 +71,12 @@ import {
   templateUrl: './recognition-property-information.component.html',
   styleUrl: './recognition-property-information.component.scss'
 })
-export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterViewInit {
+export class RecognitionPropertyInformationComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @Input({ required: true }) public executionId: string = '';
+  @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public mode = 0;
-  @Input({ required: false }) public fluidHeight: string = '180';
+  @Input({ required: false }) public fluidHeight = '180';
 
   private thirdPartyAffected$: Subscription | undefined;
   private recognitionProperty: RecognitionPropertyService = inject(RecognitionPropertyService);
@@ -109,8 +109,6 @@ export class RecognitionPropertyInformation implements OnInit, OnDestroy, AfterV
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-    this.destroyRef.onDestroy(() => {
-    });
   }
 
 

@@ -87,12 +87,12 @@
           </ng-container>
 
           <!-- Columnas dinámicas -->
-          <ng-container *ngFor="let column of columns; trackBy: trackByProperty">
+          @for (column of columns; track column.property) {
             <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
               <th *matHeaderCellDef mat-header-cell mat-sort-header>{{ column.label }}</th>
               <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
             </ng-container>
-          </ng-container>
+          }
 
           <!-- Action Column -->
           <ng-container matColumnDef="actions">
@@ -149,23 +149,6 @@
     </mat-panel-description>
   </mat-expansion-panel>
 </mat-accordion>
-
-<mat-menu
-  #columnFilterMenu="matMenu"
-  xPosition="before" yPosition="below">
-  @for (column of columns; track column; let index = $index) {
-    <button
-      (click)="toggleColumnVisibility(column, $event)"
-      class="mat-menu-item block">
-      <mat-checkbox
-        (click)="$event.stopPropagation()"
-        [(ngModel)]="column.visible"
-        color="primary">
-        {{ column.label }}
-      </mat-checkbox>
-    </button>
-  }
-</mat-menu>
 
 <mat-menu
   #actionsMenu="matMenu"
@@ -260,7 +243,7 @@
 </swal>
 
 <ng-template #confirmDialog>
-  <h2 matDialogTitle></h2>
+  <h2 matDialogTitle> </h2>
   <mat-dialog-content>
     <p></p>
   </mat-dialog-content>
