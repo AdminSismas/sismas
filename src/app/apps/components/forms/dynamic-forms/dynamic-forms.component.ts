@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, input, OnChanges, OnInit, Output, SimpleChanges, signal, inject } from '@angular/core';
+import { Component, EventEmitter, input, OnChanges, OnInit, Output, SimpleChanges, signal, inject, effect } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -53,6 +53,12 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
 
   @Output() formReady = new EventEmitter<FormGroup>();
 
+  resetFormEffect = effect(() => {
+    if (this.initValues()) {
+      this.form().reset(this.initValues()!);
+    }
+  });
+
   ngOnInit(): void {
     this.createForm();
     this.createDateFilters();
@@ -61,7 +67,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
       this.form().disable();
     }
 
-    if (this.initValues && this.initValues()) {
+    if (this.initValues()) {
       console.log('initValues', this.initValues());
       this.form().reset(this.initValues()!);
     }
