@@ -188,7 +188,7 @@ export const environment = {
   unitBuild: '/unitBuild',
   unitBuilt: '/unitBuilt',
   urban_zones: '/ccZonaHomoFisicaUr',
-  url: 'https://country.api.sismas.com.co',
+  url: 'https://filandia.api.sismas.com.co',
   url_domain_name: 'https://country.api.sismas.com.co:5002/domain/name?',
   url_viewer: 'https://country.map.sismas.com.co:8081/mapstore/',
   user_exist: '/username/',

@@ -103,25 +103,6 @@
                 }
               ]
             },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.development.ts"
-                }
-              ]
-            },
             "armenia": {
               "optimization": {
                 "scripts": true,
@@ -194,6 +175,31 @@
                 {
                   "replace": "src/environments/environments.ts",
                   "with": "src/environments/environments.masora.ts"
+                }
+              ]
+            },
+            "filandia": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.filandia.ts"
                 }
               ]
             },
@@ -312,6 +318,9 @@
             },
             "masora": {
               "buildTarget": "geoGestion:build:masora"
+            },
+            "filandia": {
+              "buildTarget": "geoGestion:build:filandia"
             },
             "barrancabermeja": {
               "buildTarget": "geoGestion:build:barrancabermeja"

@@ -1,4 +1,4 @@
-name: Deploy to Armenia
+name: Deploy to Filandia
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
       environment:
         description: 'Select Environment'
         required: true
-        default: 'armenia'
+        default: 'filandia'
 
 jobs:
   deploy:
@@ -26,18 +26,19 @@ jobs:
         run: npm ci
 
       - name: Build Angular App
-        run: npm run build -- --configuration=armenia
+        run: npm run build -- --configuration=manizales
 
       - name: Install sshpass
         run: |
           sudo apt-get update
           sudo apt-get install -y sshpass
 
-      - name: Deploy to Armenia
+      - name: Deploy to Manizales
         env:
           RSYNC_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
         run: |
           rsync -avz --delete --no-perms --no-owner --no-group --no-t \
           --exclude ".htaccess" \
           --rsh="sshpass -p $RSYNC_PASSWORD ssh -o StrictHostKeyChecking=no -p ${{ secrets.SFTP_PORT }}" \
-          ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/armenia.sismas.com.co/
+          ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/manizales.sismas.com.co/
+

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -55,7 +55,7 @@ export class LoginComponent {
   idleState = 'NOT_STARTED';
   countdown?: number | null;
   lastPing?: Date | null;
-  loading = false;
+  loading = signal<boolean>(false);
 
   constructor(
     private router: Router,
@@ -80,7 +80,7 @@ export class LoginComponent {
     if (this.form.valid) {
       const { email, password } = this.form.value;
 
-      this.loading = true;
+      this.loading.set(true);
       this.authService.login(email, password).subscribe({
         next: (response) => {
 
@@ -89,7 +89,7 @@ export class LoginComponent {
 
             const user: DecodeJwt = jwtDecode(response.token);
             this.userService.setUser(user);
-            this.loading = false;
+            this.loading.set(false);
 
             this.navigationLoaderService.loadInformationNavigation(user.role);
 
@@ -118,7 +118,11 @@ export class LoginComponent {
             this.alertCredentialIncorrect();
           }
         },
-        error: () => this.alertCredentialIncorrect()
+        error: () => {
+          this.loading.set(false);
+          console.log(this.loading);
+          this.alertCredentialIncorrect();
+        }
       });
     } else {
       Swal.fire({
