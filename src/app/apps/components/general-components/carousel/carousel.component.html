@@ -16,6 +16,7 @@
       mat-fab
       color="primary"
       (click)="changeImage(1)"
+      [disabled]="images().length <= 1"
     >
       <mat-icon svgIcon="mat:chevron_right"></mat-icon>
     </button>
@@ -23,27 +24,30 @@
       #slides
       class="m-0 p-0 list-none"
     >
-      @for (image of images(); let i = $index; track i) {
-        @if (i === 0) {
+      @for (image of images(); let index = $index; track index) {
           <li
             class="slide flex justify-center items-center"
-            data-active
+            [attr.data-active]="index === 0 ? true : null"
           >
+            @if (deleteButton()) {
+              <button
+                mat-mini-fab
+                aria-label="Eliminar imagen"
+                matTooltip="Eliminar imagen"
+                color="warn"
+                class="absolute z-10 top-4 right-4"
+                tabindex="-1"
+                (click)="onDeleteImage(image)"
+              >
+                <mat-icon svgIcon="mat:delete"></mat-icon>
+              </button>
+            }
             <img
               [src]="image"
-              [alt]="'Imagen ' + i"
+              [alt]="'Imagen ' + index"
               class="block h-full object-cover object-center shadow-md shadow-black"
             />
           </li>
-        } @else {
-          <li class="slide flex justify-center items-center">
-            <img
-              [src]="image"
-              [alt]="'Imagen ' + i"
-              class="block h-full object-cover object-center shadow-md shadow-black"
-            />
-          </li>
-        }
       }
     </ul>
   </div>

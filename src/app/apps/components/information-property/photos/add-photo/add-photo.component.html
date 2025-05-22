@@ -1,0 +1,36 @@
+<div class="flex justify-between items-center">
+  <h2 mat-dialog-title>Agregar foto</h2>
+  <button
+    mat-icon-button
+    [mat-dialog-close]="{ response: false }"
+    tabindex="-1"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="bg-slate-400"></mat-divider>
+
+<mat-dialog-content>
+  <vex-dynamic-forms
+    [inputs]="inputs"
+    (formReady)="form.set($event)"
+  ></vex-dynamic-forms>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="uploadingFoto()"
+  >
+    Aceptar
+  </button>
+  <button
+    mat-raised-button
+    [mat-dialog-close]="{ response: false }"
+    color="warn"
+  >
+    Cancelar
+  </button>
+</mat-dialog-actions>

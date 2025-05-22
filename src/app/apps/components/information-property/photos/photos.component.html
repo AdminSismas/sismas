@@ -12,11 +12,27 @@
         id="photos"
       ></vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
+    @if (typeInformation() === "edition") {
+      <button
+        mat-flat-button
+        color="primary"
+        class="my-2"
+        (click)="openAddPhotoDialog()"
+      >
+        <mat-icon svgIcon="mat:add"></mat-icon>
+        Agregar foto
+      </button>
+    }
     @if (!loading()) {
       <div class="h-full w-full">
         @if (images().length > 0) {
           <div class="py-8 px-6 h-80 w-full md:h-[500px]">
-            <app-carousel [images]="images()"></app-carousel>
+            <app-carousel
+              [images]="images()"
+              [deleteButton]="typeInformation() === 'edition'"
+              [resetCarousel]="resetCarousel()"
+              (deleteImage)="onDeleteImage($event)"
+            ></app-carousel>
           </div>
         } @else {
           <div class="flex justify-center items-center py-4">

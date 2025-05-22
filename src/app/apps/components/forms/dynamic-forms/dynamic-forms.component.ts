@@ -1,5 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, input, OnChanges, OnInit, Output, SimpleChanges, signal, inject, effect } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  signal,
+  inject,
+  effect
+} from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -38,7 +49,7 @@ import { TextAreaComponent } from '../../general-components/text-area/text-area.
     TextAreaComponent
   ],
   templateUrl: './dynamic-forms.component.html',
-  styleUrl: './dynamic-forms.component.scss',
+  styleUrl: './dynamic-forms.component.scss'
 })
 export class DynamicFormsComponent implements OnInit, OnChanges {
   private fb = inject(FormBuilder);
@@ -137,7 +148,9 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
     return 'after';
   }
 
-  private createFilterForType(typeString: string): (date: Date | null) => boolean {
+  private createFilterForType(
+    typeString: string
+  ): (date: Date | null) => boolean {
     return (date: Date | null): boolean => {
       if (!date) return true;
 
@@ -160,5 +173,16 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
 
   getDateFiler(inputName: string): (date: Date | null) => boolean {
     return this.dateFilters.get(inputName) || (() => true);
+  }
+
+  onFileSelected(event: Event, controlName: string): void {
+    const element = event.target as HTMLInputElement;
+    let file: File | null = null;
+    if (element.files && element.files.length > 0) {
+      file = element.files[0];
+    }
+
+    this.form().get(controlName)!.patchValue(file);
+
   }
 }

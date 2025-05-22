@@ -1,19 +1,27 @@
-import { Component, forwardRef, input, OnInit, signal } from '@angular/core';
-import { MatExpansionModule } from '@angular/material/expansion';
 import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+  Component,
+  forwardRef,
+  inject,
+  input,
+  OnInit,
+  signal
+} from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { PhotosService } from 'src/app/apps/services/photos/photos.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { CarouselComponent } from '../../general-components/carousel/carousel.component';
+import { AddPhotoComponent } from './add-photo/add-photo.component';
+import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-photos',
@@ -40,9 +48,12 @@ import { CarouselComponent } from '../../general-components/carousel/carousel.co
   ]
 })
 export class PhotosComponent implements OnInit {
+  photosService = inject(PhotosService);
+  dialog = inject(MatDialog);
+
   images = signal<string[]>([]);
   loading = signal(true);
-  currentIndex = 0;
+  resetCarousel = signal(false);
 
   expandedComponent = input<boolean>(false);
   baunitId = input<string>('');
@@ -50,9 +61,6 @@ export class PhotosComponent implements OnInit {
   executionId = input<string | null | undefined>('');
   typeInformation = input<string>('');
   npn = input.required<string>();
-
-  constructor(private photosService: PhotosService) {
-  }
 
   ngOnInit(): void {
     this.isExpandPanel(this.expandedComponent());
@@ -79,5 +87,66 @@ export class PhotosComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  openAddPhotoDialog() {
+    this.dialog
+      .open(AddPhotoComponent, {
+        ...MODAL_SMALL_XS
+      })
+      .afterClosed()
+      .subscribe((result: { response: boolean; data?: FormData }) => {
+        if (result.response) {
+          const formData = result.data!;
+          formData.append('municipioId', this.npn().slice(2, 5));
+
+          this.photosService.uploadPhoto(formData, this.baunitId()).subscribe({
+            next: (mesage) => {
+              this.onImagesChange(mesage);
+            }
+          });
+        }
+      });
+  }
+
+  onDeleteImage(urlFile: string) {
+    Swal.fire({
+      icon: 'question',
+      title: '¿Eliminar foto?',
+      text: '¿Está seguro de eliminar la foto?',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteImage(urlFile);
+        this.resetCarousel.update((prev) => !prev);
+        setTimeout(() => this.resetCarousel.update((prev) => !prev), 100);
+      } else {
+        return;
+      }
+    });
+  }
+
+  deleteImage(urlFile: string) {
+    this.photosService.deletePhoto(urlFile).subscribe({
+      next: (mesage) => {
+        this.onImagesChange(mesage);
+      }
+    });
+  }
+
+  onImagesChange(mesage: string) {
+    Swal.fire({
+      icon: 'success',
+      title: 'Exito',
+      text: mesage,
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3085d6',
+      showCancelButton: false
+    });
+    this.loadPhotos();
   }
 }

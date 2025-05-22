@@ -22,7 +22,7 @@ export class PhotosService {
 
     return this.http.get<string[]>(url, { params }).pipe(
       map((fileNames) => {
-        return fileNames.map((fileName:string) => {
+        return fileNames.map((fileName: string) => {
           const urlFile = `${this.base_url}${baunitId}${envi.photos}/${fileName}?municipioId=${municipioId}`;
           return urlFile;
         });
@@ -39,5 +39,19 @@ export class PhotosService {
     const params = new HttpParams().set('municipioId', municipioId);
 
     return this.http.get<Blob>(url, { params, responseType: 'blob' as 'json' });
+  }
+
+  uploadPhoto(body: FormData, baunitId: string): Observable<string> {
+    const url = `${this.base_url}${baunitId}${envi.photos}`;
+
+    return this.http.post(url, body, {
+      responseType: 'text'
+    });
+  }
+
+  deletePhoto(urlFile: string): Observable<string> {
+    return this.http.delete(urlFile, {
+      responseType: 'text'
+    });
   }
 }
