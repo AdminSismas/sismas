@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular App
-        run: npm run build -- --configuration=barrancabermeja
+        run: node --run build -- --configuration=barrancabermeja
 
       - name: Install sshpass
         run: |

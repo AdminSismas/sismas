@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular App
-        run: npm run build -- --configuration=montenegro
+        run: node --run build -- --configuration=montenegro
 
       - name: Install sshpass
         run: |

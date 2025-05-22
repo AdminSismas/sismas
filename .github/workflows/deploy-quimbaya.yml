@@ -27,7 +27,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular App
-        run: npm run build -- --configuration=quimbaya
+        run: node --run build -- --configuration=quimbaya
 
       - name: Install sshpass
         run: |
