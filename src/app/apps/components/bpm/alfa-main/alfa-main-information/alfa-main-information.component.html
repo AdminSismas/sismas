@@ -141,9 +141,9 @@
               mat-raised-button
               color="accent"
               (click)="clearInformationAlfaMain()"
-              disabled
-              class="rounded-full py-2 px-6 title !bg-slate-400 !text-gray-100 opacity-60"
-            >
+              [disabled]="disabledButton(TYPE_BUTTON_RESET)"
+              [ngClass]="buttonsClass(TYPE_BUTTON_RESET)"
+              >
               <mat-icon svgIcon="mat:restart_alt"></mat-icon>
               <span>Reiniciar</span>
             </button>
