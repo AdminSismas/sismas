@@ -86,7 +86,6 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   // Método para identificar el tipo de archivo
   getFileType(fileName: string): string {
     const extension = fileName.split('.').pop()?.toLowerCase();
-    alert(extension);
     if (['pdf'].includes(extension!)) return 'pdf';
     if (['jpg', 'jpeg', 'png', 'bmp', 'gif'].includes(extension!))
       return 'image';
