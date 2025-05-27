@@ -38,6 +38,7 @@ import {
   TYPE_BUTTON_NINE,
   TYPE_BUTTON_ONE,
   TYPE_BUTTON_SIX,
+  TYPE_BUTTON_TEN,
   TYPE_BUTTON_TREE,
   TYPE_BUTTON_TWO,
   TYPE_OPERATION_ADD,
@@ -492,17 +493,43 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  buttonsClass(btn: TypeButtonAlfaMain): string {
+  buttonsClass(btn: TypeButtonAlfaMain | null): string {
     let color = '!bg-slate-400 !text-gray-100 opacity-60';
-    if ((btn === 'AGR' || btn === 'CAL_BOU') && !this.disabledButton(btn)) {
-      color = '!text-white !bg-primary-600';
-    } else if ((btn === 'CRE' || btn === 'CRE_GEO') && !this.disabledButton(btn)) {
-      color = '!text-white !bg-green-600';
-    } else if ((btn === 'BRR' || btn === 'DEL_GEO') && !this.disabledButton(btn)) {
-      color = '!text-white !bg-red-600';
-    } else if ((btn === 'VIGEN') && !this.disabledButton(btn)) {
-      color = '!bg-teal-500 !text-slate-100';
+
+    switch (btn) {
+      case 'AGR':
+      case 'CAL_BOU':
+        if (!this.disabledButton(btn)) {
+          color = '!text-white !bg-primary-600';
+        }
+        break;
+
+      case 'CRE':
+      case 'CRE_GEO':
+        if (!this.disabledButton(btn)) {
+          color = '!text-white !bg-green-600';
+        }
+        break;
+
+      case 'BRR':
+      case 'DEL_GEO':
+        if (!this.disabledButton(btn)) {
+          color = '!text-white !bg-red-600';
+        }
+        break;
+
+      case 'VIGEN':
+        if (!this.disabledButton(btn)) {
+          color = '!bg-teal-500 !text-slate-100';
+        }
+        break;
+      case 'RESET':
+        if (!this.disabledButton(btn)) {
+          color = '';
+        }
+        break;
     }
+
     return `rounded-full py-2 px-6 title ${color}`;
   }
 
@@ -529,7 +556,10 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     this.router.navigate([`${url}`]).then();
   }
 
-  disabledButton(btn: TypeButtonAlfaMain): boolean {
+  disabledButton(btn: TypeButtonAlfaMain | null): boolean {
+    if (!btn) {
+      return true;
+    }
     return !this.resources.includes(btn);
   }
 
@@ -576,6 +606,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   protected readonly TYPE_BUTTON_FIVE = TYPE_BUTTON_FIVE;
   protected readonly TYPE_BUTTON_SIX = TYPE_BUTTON_SIX;
   protected readonly TYPE_BUTTON_VALIDITY = TYPE_BUTTON_NINE;
+  protected readonly TYPE_BUTTON_RESET = TYPE_BUTTON_TEN;
   protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
   protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
   protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;

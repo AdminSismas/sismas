@@ -197,23 +197,8 @@ export class TableCadastralSearchComponent
 
     if (this.route.snapshot.queryParams['npn']) {
       this.initParams = this.route.snapshot.queryParams['npn'];
-      this.searValueData({}, this.initParams as string);
-
-      setTimeout(() => {
-        this.dialog.open(
-          LayoutCardCadastralInformationPropertyComponentComponent,
-          {
-            ...MODAL_LARGE,
-            disableClose: true,
-            data: new ContentInfoSchema(
-              this.dataSource.data[0].baunitIdE,
-              this.dataSource.data[0],
-              null,
-              LIST_SCHEMAS_CONTROL_MAIN
-            )
-          }
-        );
-      }, 300);
+      this.searValueData({}, this.initParams as string, true);
+      console.log(this.dataSource.data[0]);
     }
   }
 
@@ -532,7 +517,7 @@ export class TableCadastralSearchComponent
     this.searValueData(value, result);
   }
 
-  searValueData(searData: SearchData, data: string): void {
+  searValueData(searData: SearchData, data: string, npnParam = false): void {
     this.baunitService
       .advancedSearchCadastral(
         this.generateObjectPageSearchData(searData),
@@ -540,6 +525,22 @@ export class TableCadastralSearchComponent
       )
       .subscribe((value) => {
         this.captureInformationSubscribe(value);
+        if (npnParam) {
+          console.log(value);
+          this.dialog.open(
+            LayoutCardCadastralInformationPropertyComponentComponent,
+            {
+              ...MODAL_LARGE,
+              disableClose: true,
+              data: new ContentInfoSchema(
+                value.content[0].baunitIdE,
+                value.content[0],
+                null,
+                LIST_SCHEMAS_CONTROL_MAIN
+              )
+            }
+          );
+        }
       });
   }
 

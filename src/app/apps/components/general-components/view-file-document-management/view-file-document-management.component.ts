@@ -76,7 +76,8 @@ export class ViewFileDocumentManagementComponent implements OnInit {
       this.fileType === 'rar' ||
       this.fileType === 'dwg' ||
       this.fileType === 'shp' ||
-      this.fileType === 'tiff'
+      this.fileType === 'tiff' ||
+      this.fileType === 'unknown'
     ) {
       this.downloadFile();
     }

@@ -67,7 +67,7 @@ import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/m
 @Component({
   templateUrl: './document-table.component.html',
   styleUrl: './document-table.component.css',
-  selector: 'vex-document-management',
+  selector: 'vex-document-table',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
