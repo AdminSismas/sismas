@@ -137,10 +137,10 @@ export class TableCadastralSearchComponent
     []
   );
   searchCtrl: UntypedFormControl = new UntypedFormControl();
-  initParams?: string;
 
   @Input() tituloPage?: string = '';
   @Input() rulePage?: string = '';
+
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -195,11 +195,11 @@ export class TableCadastralSearchComponent
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
 
-    if (this.route.snapshot.queryParams['npn']) {
-      this.initParams = this.route.snapshot.queryParams['npn'];
-      this.searValueData({}, this.initParams as string, true);
-      console.log(this.dataSource.data[0]);
-    }
+    this.route.queryParams.subscribe((params) => {
+      if (params['npn']){
+        this.searValueData({}, params['npn'], true);
+      }
+    });
   }
 
   ngAfterViewInit(): void {

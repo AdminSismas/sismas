@@ -190,7 +190,7 @@ export const environment = {
   urban_zones: '/ccZonaHomoFisicaUr',
   url: 'https://dev.api.sismas.com.co',
   url_domain_name: 'https://dev.api.sismas.com.co:5001/domain/name?',
-  url_viewer: 'https://prediosplus.map.cadastre4world.com:8081/mapstore/',
+  url_viewer: 'https://masora.map.sismas.com.co:8081/mapstore/',
   user_exist: '/username/',
   v2: '/v2',
   validity: 'validity',
