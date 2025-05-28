@@ -115,7 +115,7 @@ export const environment = {
   geo: '/geo',
   geoeconomic_values: '/zonaGEcoValor',
   geoeconomic_zones: '/ccZonaHomoGeoEconomica',
-  getApiQualificationUrl: 'https://filandia.api.sismas.com.co:5003/calificationUB/',
+  getApiQualificationUrl: 'https://country.api.sismas.com.co:5003/calificationUB/',
   getByExecution: '/getByExecution',
   headBaunitByMaster: '/headBaunitByMaster',
   individual_findByNumber: '/individual/findByNumber',
