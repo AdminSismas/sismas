@@ -26,19 +26,18 @@ jobs:
         run: npm ci
 
       - name: Build Angular App
-        run: node --run build -- --configuration=manizales
+        run: node --run build -- --configuration=filandia
 
       - name: Install sshpass
         run: |
           sudo apt-get update
           sudo apt-get install -y sshpass
 
-      - name: Deploy to Manizales
+      - name: Deploy to Filandia
         env:
           RSYNC_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
         run: |
           rsync -avz --delete --no-perms --no-owner --no-group --no-t \
           --exclude ".htaccess" \
           --rsh="sshpass -p $RSYNC_PASSWORD ssh -o StrictHostKeyChecking=no -p ${{ secrets.SFTP_PORT }}" \
-          ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/manizales.sismas.com.co/
-
+          ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/filandia.sismas.com.co/
