@@ -1,14 +1,14 @@
 <div class="video-background">
   <video
+    #bgVideo
     autoplay
     muted
     loop
+    playsinline
     id="bg-video"
+    (loadedmetadata)="onVideoLoaded()"
   >
-    <source
-      [attr.src]="videoPath"
-      type="video/mp4"
-    />
+    <source [src]="videoPath" type="video/mp4" />
     Tu navegador no soporta video HTML5.
   </video>
 </div>

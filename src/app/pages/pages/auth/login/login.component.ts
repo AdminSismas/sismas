@@ -20,6 +20,8 @@ import { jwtDecode } from 'jwt-decode';
 import { ENVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/general/constants';
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'vex-login',
@@ -43,7 +45,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     RouterLink,
   ]
 })
-export class LoginComponent {
+export class LoginComponent  implements AfterViewInit {
+  @ViewChild('bgVideo') bgVideoRef!: ElementRef<HTMLVideoElement>;
+  videoPlayed = false;
   videoPath: string = environment.video;
   videoPathWebm: string = environment.videoWebm;
   logoPath: string = environment.logo;
@@ -170,5 +174,25 @@ export class LoginComponent {
 
   getLastSegment(path: string): string {
     return path.substring(path.lastIndexOf('/') + 1);
+  }
+  ngAfterViewInit() {
+    this.forceVideoPlay();
+  }
+
+  onVideoLoaded() {
+    this.forceVideoPlay();
+  }
+
+  private forceVideoPlay() {
+    if (this.videoPlayed) return;
+
+    const videoEl = this.bgVideoRef?.nativeElement;
+
+    if (videoEl) {
+      this.videoPlayed = true; // Marcar como reproducido una sola vez
+      videoEl.play().catch(err => {
+        console.warn('Autoplay bloqueado por el navegador:', err);
+      });
+    }
   }
 }
