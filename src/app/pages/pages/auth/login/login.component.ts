@@ -175,9 +175,25 @@ export class LoginComponent  implements AfterViewInit {
   getLastSegment(path: string): string {
     return path.substring(path.lastIndexOf('/') + 1);
   }
-  ngAfterViewInit() {
-    this.forceVideoPlay();
+  ngAfterViewInit(): void {
+    const video = this.bgVideoRef?.nativeElement;
+
+    if (video && !this.videoPlayed) {
+      video.muted = true; // MUY IMPORTANTE
+      video.autoplay = true; // opcional
+      video.playsInline = true; // especialmente útil en móviles
+
+      video.play()
+        .then(() => {
+          this.videoPlayed = true;
+          console.log('🎥 Video reproducido automáticamente');
+        })
+        .catch(err => {
+          console.warn('⚠️ No se pudo reproducir automáticamente:', err);
+        });
+    }
   }
+
 
   onVideoLoaded() {
     this.forceVideoPlay();
