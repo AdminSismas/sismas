@@ -51,7 +51,7 @@ export class PhotosComponent implements OnInit {
   photosService = inject(PhotosService);
   dialog = inject(MatDialog);
 
-  images = signal<string[]>([]);
+  images = signal<{ url: string, name: string }[]>([]);
   loading = signal(true);
   resetCarousel = signal(false);
 
@@ -82,8 +82,8 @@ export class PhotosComponent implements OnInit {
     const municipioId = this.npn().slice(2, 5);
 
     this.photosService.listNamePhotos(this.baunitId(), municipioId).subscribe({
-      next: (urlFiles) => {
-        this.images.set(urlFiles);
+      next: (response) => {
+        this.images.set(response);
         this.loading.set(false);
       }
     });

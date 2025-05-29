@@ -24,9 +24,10 @@ import { MatTooltip } from '@angular/material/tooltip';
   `
 })
 export class CarouselComponent {
-  images = input.required<string[]>();
+  images = input.required<{ url: string, name: string }[]>();
   deleteButton = input<boolean>(false);
   resetCarousel = input<boolean>(false);
+  showNames = input<boolean>(false);
 
   deleteImage = output<string>();
 
@@ -84,7 +85,7 @@ export class CarouselComponent {
     delete activeSlide.dataset.active;
   }
 
-  onDeleteImage(urlFile: string) {
+  onDeleteImage(urlFile: string): void {
     this.deleteImage.emit(urlFile);
   }
 }

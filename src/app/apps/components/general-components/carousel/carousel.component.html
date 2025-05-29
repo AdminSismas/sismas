@@ -25,29 +25,34 @@
       class="m-0 p-0 list-none"
     >
       @for (image of images(); let index = $index; track index) {
-          <li
-            class="slide flex justify-center items-center"
-            [attr.data-active]="index === 0 ? true : null"
-          >
-            @if (deleteButton()) {
-              <button
-                mat-mini-fab
-                aria-label="Eliminar imagen"
-                matTooltip="Eliminar imagen"
-                color="warn"
-                class="absolute z-10 top-4 right-4"
-                tabindex="-1"
-                (click)="onDeleteImage(image)"
-              >
-                <mat-icon svgIcon="mat:delete"></mat-icon>
-              </button>
-            }
-            <img
-              [src]="image"
-              [alt]="'Imagen ' + index"
-              class="block h-full object-cover object-center shadow-md shadow-black"
-            />
-          </li>
+        <li
+          class="slide flex flex-col justify-center items-center gap-4"
+          [attr.data-active]="index === 0 ? true : null"
+        >
+          @if (deleteButton()) {
+            <button
+              mat-mini-fab
+              aria-label="Eliminar imagen"
+              matTooltip="Eliminar imagen"
+              color="warn"
+              class="absolute z-10 top-4 right-4"
+              tabindex="-1"
+              (click)="onDeleteImage(image.url)"
+            >
+              <mat-icon svgIcon="mat:delete"></mat-icon>
+            </button>
+          }
+          <img
+            [src]="image.url"
+            [alt]="'Imagen ' + index"
+            class="block h-full object-cover object-center shadow-md shadow-black"
+          />
+          @if (showNames()) {
+            <div class="w-full text-center shadow-md shadow-black bg-slate-300 p-2">
+              <h2 class="text-lg text-slate-700">{{ image.name }}</h2>
+            </div>
+          }
+        </li>
       }
     </ul>
   </div>

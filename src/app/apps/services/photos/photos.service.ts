@@ -16,7 +16,7 @@ export class PhotosService {
 
   constructor(private http: HttpClient) {}
 
-  listNamePhotos(baunitId: string, municipioId: string): Observable<string[]> {
+  listNamePhotos(baunitId: string, municipioId: string): Observable<{ url: string, name: string }[]> {
     const url = `${this.base_url}${baunitId}${envi.photos}`;
     const params = new HttpParams().set('municipioId', municipioId);
 
@@ -24,7 +24,7 @@ export class PhotosService {
       map((fileNames) => {
         return fileNames.map((fileName: string) => {
           const urlFile = `${this.base_url}${baunitId}${envi.photos}/${fileName}?municipioId=${municipioId}`;
-          return urlFile;
+          return { url: urlFile, name: fileName };
         });
       })
     );
