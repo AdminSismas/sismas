@@ -441,7 +441,17 @@ export class ModificationPropertyUnitsComponent
 
     this.unitPropertyInformationService
       .assignamentZones(this.executionId, this.baUnitId)
-      .subscribe((response) => console.log(response));
+      .subscribe((response) => {
+        Swal.fire({
+          title: 'Asignación de zonas exitosa',
+          text: response.message,
+          icon: 'success',
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar',
+          showCancelButton: false,
+          allowOutsideClick: false
+        });
+      });
   }
 
   protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;

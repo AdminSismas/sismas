@@ -37,6 +37,7 @@ import { BasicInformationProperty } from 'src/app/apps/interfaces/information-pr
 import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
 import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-information-zones-property',
@@ -84,7 +85,6 @@ export class InformationZonesPropertyComponent {
   zoneBAUnitUrban: ZoneBAUnitFisica[] = [];
   zoneBAUnitGeoeconomic: ZoneBAUnitGeoeconomic[] = [];
 
-  @Input({ required: true }) id = '';
   @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
@@ -281,6 +281,16 @@ export class InformationZonesPropertyComponent {
 
     this.informationPropertyService
       .assignamentZones(typeZone, this.executionId!, this.baunitId!)
-      .subscribe((response) => console.log(response));
+      .subscribe((response) => {
+        Swal.fire({
+          title: 'Asignación de zona exitosa',
+          text: response.message,
+          icon: 'success',
+         confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3085d6',
+          showCancelButton: false,
+          allowOutsideClick: false
+        });
+      });
   }
 }
