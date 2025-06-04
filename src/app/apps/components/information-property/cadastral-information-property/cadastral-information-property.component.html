@@ -42,6 +42,7 @@
       [expandedComponent]="expand_tap_property_information"
       (propertyRegistryOffice)="propertyRegistryOffice = $event"
       (propertyRegistryNumber)="propertyRegistryNumber = $event"
+      (isMatriz)="isMatriz.set($event)"
       @fadeInUp
     ></vex-basic-property-information>
     @if (showInformationUnitProperty && levelInfo !== 3) {
@@ -146,6 +147,7 @@
       [typeInformation]="typeInformation"
       [editable]="editable.ZON"
       [npn]="baunitHead.cadastralNumber!"
+      [isMatriz]="isMatriz()"
       @fadeInUp
     ></vex-information-zones-property
     >

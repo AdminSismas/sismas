@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import {
   ContentInformationConstruction,
   CreateBasicInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
 import { environment as envi } from '../../../../../environments/environments';
-import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { CcCalificacionUB } from '../../../interfaces/information-property/cc-calificacion-ub';
@@ -17,6 +18,7 @@ import { SendGeneralRequestsService } from '../../general/send-general-requests.
 export class InformationConstructionsService {
 
   basic_url = `${envi.url}:${envi.port}`;
+  http = inject(HttpClient);
 
   constructor(
     private requestsService: SendGeneralRequestsService
@@ -132,5 +134,18 @@ export class InformationConstructionsService {
 
   private getData(url: string, params: any): Observable<any> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
+  }
+
+  getConstructionsWithoutBaunit( executionId: string, baunitId: string ): Observable<ContentInformationConstruction[]> {
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}${envi.withoutbaunit}`;
+
+    return this.http.get<ContentInformationConstruction[]>(url);
+
+  }
+
+  addConstructionsWithoutBaunit( executionId: string, unitBuildId: string, baunitId: string, body: ContentInformationConstruction ): Observable<any> {
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${unitBuildId}/${baunitId}`;
+
+    return this.http.put<any>(url, body);
   }
 }

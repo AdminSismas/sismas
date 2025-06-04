@@ -30,6 +30,7 @@ import {
   CreateBasicInformationAddress,
   DetailBasicInformationAddress
 } from '../../interfaces/information-property/detail-basic-information-address';
+import { ModalSize } from '../../interfaces/general/modal-size.interface';
 
 export const GUION: string = '-';
 export const SPACE: string = ' ';
@@ -483,7 +484,7 @@ export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResp
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] = [
   ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  { label: 'Acciones', property: 'actions', type: 'operationType', visible: true }
 ];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
@@ -1089,20 +1090,20 @@ export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO',
 
 export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL', 'NPN', 'AREA'];
 
-export const MODAL_LARGE = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
-export const MODAL_MEDIUM = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
-export const MODAL_MEDIUM_H90 = { maxWidth: '100%', width: '80%', minHeight: '90%', height: '90%' };
-export const MODAL_MEDIUM_SMALL = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
-export const MODAL_SMALL = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
-export const MODAL_SMALL_LARGE = { minWidth: '30%', minHeight: '30%' };
-export const MODAL_DYNAMIC_HEIGHT = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
-export const MODAL_DINAMIC_HEIGHT_AUTO = { maxWidth: '100%', minWidth: '60%' };
-export const MODAL_SMALL_XS = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
-export const MODAL_MIN_MEDIUM_ALL = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
-export const MODAL_SMALL_DETAIL_NOTIFICE = { minWidth: '40%', minHeight: '30%' };
-export const MODAL_MIN_SMALL_40_25 = { maxWidth: '100%', minWidth: '40%', minHeight: '25%'};
-export const MODAL_MIN_SMALL_35_25 = { maxWidth: '100%', minWidth: '35%', minHeight: '25%'};
-export const MODAL_MIN_SMALL_25 = { maxWidth: '100%', minWidth: '25%', minHeight: '25%'};
+export const MODAL_LARGE: ModalSize = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
+export const MODAL_MEDIUM: ModalSize = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
+export const MODAL_MEDIUM_H90: ModalSize = { maxWidth: '100%', width: '80%', minHeight: '90%', height: '90%' };
+export const MODAL_MEDIUM_SMALL: ModalSize = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
+export const MODAL_SMALL: ModalSize = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
+export const MODAL_SMALL_LARGE: ModalSize = { minWidth: '30%', minHeight: '30%' };
+export const MODAL_DYNAMIC_HEIGHT: ModalSize = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
+export const MODAL_DINAMIC_HEIGHT_AUTO: ModalSize = { maxWidth: '100%', minWidth: '60%' };
+export const MODAL_SMALL_XS: ModalSize = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
+export const MODAL_MIN_MEDIUM_ALL: ModalSize = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
+export const MODAL_SMALL_DETAIL_NOTIFICE: ModalSize = { minWidth: '40%', minHeight: '30%' };
+export const MODAL_MIN_SMALL_40_25: ModalSize = { maxWidth: '100%', minWidth: '40%', minHeight: '25%'};
+export const MODAL_MIN_SMALL_35_25: ModalSize = { maxWidth: '100%', minWidth: '35%', minHeight: '25%'};
+export const MODAL_MIN_SMALL_25: ModalSize = { maxWidth: '100%', minWidth: '25%', minHeight: '25%'};
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 

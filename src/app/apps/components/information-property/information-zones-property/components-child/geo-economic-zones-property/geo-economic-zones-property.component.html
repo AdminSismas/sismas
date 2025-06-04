@@ -2,17 +2,28 @@
   <div class="header-container m-2 flex items-center justify-between">
     <span class="font-bold text-lg capitalize">{{ tableTitle() }}</span>
     @if (typeInformation === "edition" && !isOrigen()) {
-      <button
-        [ngClass]="disabledClass()"
-        [disabled]="!editable"
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="onClickOpenGeoconomicAddEditModal()"
-      >
-        Nueva
-        <mat-icon svgIcon="mat:add"></mat-icon>
-      </button>
+      <div class="flex items-center gap-2">
+        @if (isMatriz()) {
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="onAssignament()"
+          >
+            <mat-icon svgIcon="mat:assignment"></mat-icon>Asignar
+          </button>
+        }
+        <button
+          [class.!bg-slate-400.!text-gray-100.opacity-60]="!editable"
+          [disabled]="!editable"
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="onClickOpenGeoconomicAddEditModal()"
+        >
+          Nueva
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div>
     }
   </div>
 
@@ -48,7 +59,7 @@
               mat-cell
               *matCellDef="let row"
             >
-              <ng-container *ngIf="column.property === 'viewDetailEcono'">
+              @if (column.property === "viewDetailEcono") {
                 <div
                   class="flex align-middle text-center content-center items-center"
                 >
@@ -64,17 +75,19 @@
                     ></mat-icon>
                   </button>
                 </div>
-              </ng-container>
+              }
 
-              <ng-container *ngIf="column.type === 'text'">
-                {{ row[column.property] }}
-              </ng-container>
-              <ng-container *ngIf="column.type === 'operationType'">
-                {{ row[column.property] ? "Sí" : "No" }}
-              </ng-container>
-              <ng-container *ngIf="column.type === 'progress'">
-                {{ row.ccZonaHomoGeoEconomica?.vigencia }}
-              </ng-container>
+              @switch (column.type) {
+                @case ("text") {
+                  {{ row[column.property] }}
+                }
+                @case ("operationType") {
+                  {{ row[column.property] ? "Sí" : "No" }}
+                }
+                @case ("progress") {
+                  {{ row.ccZonaHomoGeoEconomica?.vigencia }}
+                }
+              }
             </td>
           </ng-container>
         }
@@ -124,21 +137,23 @@
           let-infoOwner="infoOwner"
           matMenuContent
         >
-          <button
-            *ngFor="let actionBtn of actionBtns()"
-            mat-menu-item
-            (click)="onClickGeoconomicActionBtn(actionBtn.id, infoOwner)"
-          >
-            <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
-            <span>{{ actionBtn.label }}</span>
-          </button>
-          <button
-            mat-menu-item
-            disabled
-            *ngIf="actionBtns().length === 0"
-          >
-            <span class="text-center">No options</span>
-          </button>
+          @for (actionBtn of actionBtns(); track $index) {
+            <button
+              mat-menu-item
+              (click)="onClickGeoconomicActionBtn(actionBtn.id, infoOwner)"
+            >
+              <mat-icon [svgIcon]="actionBtn.icon"></mat-icon>
+              <span>{{ actionBtn.label }}</span>
+            </button>
+          }
+          @if (actionBtns().length === 0) {
+            <button
+              mat-menu-item
+              disabled
+            >
+              <span class="text-center">No options</span>
+            </button>
+          }
         </ng-template>
       </mat-menu>
     </div>

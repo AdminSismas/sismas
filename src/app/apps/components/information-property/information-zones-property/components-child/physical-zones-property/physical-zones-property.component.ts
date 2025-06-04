@@ -6,7 +6,8 @@ import {
   ViewChild,
   computed,
   Output,
-  input
+  input,
+  output
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -17,7 +18,6 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -32,9 +32,7 @@ import {
   TABLE_COLUMN_PROPERTIES_PHYSICAL,
   TYPE_INFORMATION_EDITION
 } from 'src/app/apps/constants/general/constants';
-import {
-  ZoneBAUnitFisica,
-} from 'src/app/apps/interfaces/information-property/zone-baunit';
+import { ZoneBAUnitFisica } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../../detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -64,7 +62,6 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatMenuModule,
     MatTableModule,
     MatTabsModule,
-    NgClass,
     SweetAlert2Module
   ],
   templateUrl: './physical-zones-property.component.html',
@@ -87,12 +84,18 @@ export class PhysicalZonesPropertyComponent {
   @Input() editable? = false;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+
+  // INPUT SIGNALS
   tableTitle = input<string>();
   isOrigen = input<boolean>(false);
   zoneType = input.required<'Urbano' | 'Rural'>();
+  isMatriz = input.required<boolean>();
 
   @Output() physicalZoneChange = new EventEmitter<void>();
   @Output() deletePhysicalZone = new EventEmitter<ZoneBAUnitFisica>();
+
+  // OUTPUT SIGNALS
+  assignamentZone = output<'physic' | 'geoeconomic'>();
 
   columns: TableColumn<ZoneBAUnitFisica>[] = TABLE_COLUMN_PROPERTIES_PHYSICAL;
 
@@ -101,7 +104,6 @@ export class PhysicalZonesPropertyComponent {
     | undefined;
   @ViewChild('successCreate') successCreate!: SwalComponent;
   @ViewChild('successDelete') successDelete!: SwalComponent;
-
 
   dataBasicInformation!: BasicInformationProperty;
 
@@ -133,7 +135,7 @@ export class PhysicalZonesPropertyComponent {
   }
 
   get visibleColumns() {
-    const visibleColumns =  this.columns
+    const visibleColumns = this.columns
       .filter((column) => column.visible)
       .map((column) => column.property);
 
@@ -164,7 +166,10 @@ export class PhysicalZonesPropertyComponent {
       return '';
     }
 
-    const typeCode = this.dataBasicInformation.cadastralNumberFormat.substring(7,9);
+    const typeCode = this.dataBasicInformation.cadastralNumberFormat.substring(
+      7,
+      9
+    );
 
     if (typeCode === '00') {
       return 'Rural';
@@ -176,14 +181,11 @@ export class PhysicalZonesPropertyComponent {
   openInformationPropertyZone(zone: ZoneBAUnitFisica): void {
     const propertyType = this.determinePropertyType();
 
-    this.matDialog.open(
-      DetailInformationPropertyZonesComponent,
-      {
-        ...MODAL_SMALL,
-        disableClose: true,
-        data: { zone, propertyType }
-      }
-    );
+    this.matDialog.open(DetailInformationPropertyZonesComponent, {
+      ...MODAL_SMALL,
+      disableClose: true,
+      data: { zone, propertyType }
+    });
   }
 
   captureInformationSubscribeError(): void {
@@ -210,11 +212,11 @@ export class PhysicalZonesPropertyComponent {
       this.onClickOpenPhysicalAddEditModal(zone);
     }
     if (id === 'delete') {
-        this.successDelete.fire().then((result) => {
-          if (result.isConfirmed){
-            this.deletePhysicalZone.emit(zone);
-          }
-        });
+      this.successDelete.fire().then((result) => {
+        if (result.isConfirmed) {
+          this.deletePhysicalZone.emit(zone);
+        }
+      });
     }
   }
 
@@ -242,7 +244,6 @@ export class PhysicalZonesPropertyComponent {
   }
 
   onClickOpenPhysicalAddEditModal(zone?: ZoneBAUnitFisica): void {
-
     const isEdit = Boolean(zone && zone.baUnitZonaId);
 
     this.matDialog
@@ -260,13 +261,12 @@ export class PhysicalZonesPropertyComponent {
         }
       })
       .afterClosed()
-      .subscribe(result =>{
+      .subscribe((result) => {
         if (result) {
           this.successCreate.fire();
           this.physicalZoneChange.emit();
         }
-      }
-      );
+      });
   }
 
   disabledClass(): string {
@@ -274,5 +274,9 @@ export class PhysicalZonesPropertyComponent {
       return '!bg-slate-400 !text-gray-100 opacity-60';
     }
     return 'w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10';
+  }
+
+  onAssignament() {
+    this.assignamentZone.emit('physic');
   }
 }

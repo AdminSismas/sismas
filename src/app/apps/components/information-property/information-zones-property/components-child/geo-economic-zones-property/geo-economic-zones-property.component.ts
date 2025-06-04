@@ -6,10 +6,10 @@ import {
   ViewChild,
   computed,
   inject,
-  ChangeDetectorRef,
   Output,
   EventEmitter,
-  input
+  input,
+  output
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -20,7 +20,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -65,8 +65,6 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MatMenuModule,
     MatTableModule,
     MatTabsModule,
-    NgForOf,
-    NgIf,
     SweetAlert2Module
   ],
   templateUrl: './geo-economic-zones-property.component.html',
@@ -88,11 +86,17 @@ export class GeoEconomicZonesPropertyComponent
   @Input() editable? = false;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+
+  // INPUT SIGNALS
   tableTitle = input<string>();
   isOrigen = input<boolean>(false);
+  isMatriz = input.required<boolean>();
 
   @Output() deleteGeoeconomicZone = new EventEmitter<ZoneBAUnitGeoeconomic>();
   @Output() geoeconomicZoneChange = new EventEmitter<void>();
+
+  // OUTPUT SINGNALS
+  assignamentZone = output<'physic' | 'geoeconomic'>();
 
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC;
 
@@ -132,7 +136,6 @@ export class GeoEconomicZonesPropertyComponent
 
   constructor(
     private readonly layoutService: VexLayoutService,
-    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   get TYPEINFORMATION_EDITION() {
@@ -246,5 +249,9 @@ export class GeoEconomicZonesPropertyComponent
       return '!bg-slate-400 !text-gray-100 opacity-60';
     }
     return 'w-8 h-8 p-0 mr-1 leading-none flex items-center justify-center m-0 hover:bg-hover text-green-600 bg-green-600/10';
+  }
+
+  onAssignament() {
+    this.assignamentZone.emit('geoeconomic');
   }
 }
