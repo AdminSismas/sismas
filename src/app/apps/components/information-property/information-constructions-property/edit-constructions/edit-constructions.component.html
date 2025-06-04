@@ -1,0 +1,28 @@
+<app-modal-window
+  class="w-full h-full"
+  [title]="title"
+  [actions]="dialogActions"
+  [showCancelButton]="showCancelButton"
+  [data]=""
+  (dialog)="editConstructionDialog.set($event)"
+  (accept)="onAccept()"
+>
+
+  @if (data.dataSource.data.length > 0) {
+    <app-table-constructions
+      [dataSource]="data.dataSource"
+      [columns]="columns"
+      [baunitId]="data.baunitId"
+      [executionId]="data.executionId"
+      [selectable]="true"
+      schema="temp"
+      (constructionsSelected)="constructionsSelected.set($event)"
+    ></app-table-constructions>
+  } @else {
+    <div class="w-full h-full">
+      <h2 class="text-center text-2xl w-full">
+        No se encontraron construcciónes para agregar
+      </h2>
+    </div>
+  }
+</app-modal-window>

@@ -199,6 +199,7 @@ export const environment = {
   valuation: "/valuation",
   video: "assets/video/masora.mp4",
   videoWebm: "assets/video/masora.webm",
+  withoutbaunit: "/withoutbaunit",
   withoutSignaturesUsers: "/without-signature",
   withSignaturesUsers: "/with-signature"
 };

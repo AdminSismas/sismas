@@ -199,6 +199,7 @@ export const environment = {
   valuation: "/valuation",
   video: "assets/video/manizales.mp4",
   videoWebm: "assets/video/manizales.webm",
+  withoutbaunit: "/withoutbaunit",
   withoutSignaturesUsers: "/without-signature",
   withSignaturesUsers: "/with-signature"
 };

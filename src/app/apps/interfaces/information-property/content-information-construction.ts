@@ -27,6 +27,7 @@ export class ContentInformationConstruction {
   executionId: string | null | undefined = null;
 
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(content?: any, schema?:string | null, baunitId?: string | null | undefined) {
     this.unitBuiltId = content?.unitBuiltId || 0;
     this.domBuiltType = content?.domBuiltType || null;
@@ -51,8 +52,6 @@ export class ContentInformationConstruction {
     this.schema = schema || '';
     this.baunitId = baunitId || '';
   }
-
-  set typology(value:string) {}
 
   get typology(): string {
     const name = `${NAME_NO_DISPONIBLE}`;
