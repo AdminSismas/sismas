@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, forwardRef, Input, ViewChild } from '@angular/core';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { Component, forwardRef, input, Input, ViewChild } from '@angular/core';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   NAME_NO_DISPONIBLE,
@@ -36,12 +34,8 @@ import {
   ZoneBAUnitResponse
 } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import {
-  GeoEconomicZonesPropertyComponent
-} from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
-import {
-  PhysicalZonesPropertyComponent
-} from './components-child/physical-zones-property/physical-zones-property.component';
+import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
+import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
@@ -79,7 +73,7 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
       useExisting: forwardRef(() => InformationZonesPropertyComponent),
       multi: true
     }
-  ],
+  ]
 })
 export class InformationZonesPropertyComponent {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -98,6 +92,9 @@ export class InformationZonesPropertyComponent {
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+
+  // INPUT SIGNAL
+  isMatriz = input(false);
 
   @ViewChild('errorDelete') errorDelete!: SwalComponent;
 
@@ -277,5 +274,13 @@ export class InformationZonesPropertyComponent {
           this.errorDelete.fire();
         }
       });
+  }
+
+  assignamentZone(typeZone: 'physic' | 'geoeconomic') {
+    if (!this.schema || !this.baunitId) return;
+
+    this.informationPropertyService
+      .assignamentZones(typeZone, this.executionId!, this.baunitId!)
+      .subscribe((response) => console.log(response));
   }
 }

@@ -379,6 +379,18 @@ export class InformationPropertyService {
     return this.http.delete(url);
   }
 
+  assignamentZones( typeZone: 'physic' | 'geoeconomic', executionId: string, baunitId: string ): Observable<unknown> {
+    let url = `${this.basic_url}${envi.baUnitZona}`;
+
+    if (typeZone === 'physic') {
+      url += `${envi.baunitIdFisicas}/${envi.schemas.temp}/${executionId}/${baunitId}${envi.asignacionZonas}`;
+    } else {
+      url += `${envi.baunitIdEcono}/${envi.schemas.temp}/${executionId}/${baunitId}${envi.asignacionZonas}`;
+    }
+
+    return this.http.put(url, {});
+  }
+
   private getData(url: string, params: any): Observable<any> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }

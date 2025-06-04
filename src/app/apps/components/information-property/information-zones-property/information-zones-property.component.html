@@ -30,8 +30,10 @@
           [divPolLv2]="divPolLv2"
           [executionId]="executionId"
           [typeInformation]="typeInformation"
+          [isMatriz]="isMatriz()"
           (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
           (deletePhysicalZone)="deleteZone($event)"
+          (assignamentZone)="assignamentZone($event)"
         ></vex-physical-zones-property>
 
         <!-- Second Table -->
@@ -46,8 +48,10 @@
           [editable]="editable"
           [executionId]="executionId"
           [typeInformation]="typeInformation"
+          [isMatriz]="isMatriz()"
           (geoeconomicZoneChange)="searchInformationGeoeconomicZonesProperty()"
           (deleteGeoeconomicZone)="deleteZone($event)"
+          (assignamentZone)="assignamentZone($event)"
         ></vex-geo-economic-zones-property>
       </div>
 
@@ -69,6 +73,7 @@
           [typeInformation]="typeInformation"
           (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
           (deletePhysicalZone)="deleteZone($event)"
+          [isMatriz]="false"
         ></vex-physical-zones-property>
 
         <!-- Second Table -->
@@ -83,6 +88,7 @@
           [baunitId]="baunitId"
           [executionId]="executionId"
           [typeInformation]="typeInformation"
+          [isMatriz]="false"
           (geoeconomicZoneChange)="searchInformationGeoeconomicZonesProperty()"
           (deleteGeoeconomicZone)="deleteZone($event)"
         ></vex-geo-economic-zones-property>

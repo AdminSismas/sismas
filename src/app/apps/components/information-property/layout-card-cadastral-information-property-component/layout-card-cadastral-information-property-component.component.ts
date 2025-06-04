@@ -82,7 +82,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
     }
 
     this.optionSchemas = [];
-    if (this.defaults.content != null) {
+    if (this.defaults.content !== null) {
       this.baUnitHead = this.defaults.content;
     }
 

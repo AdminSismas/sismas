@@ -31,7 +31,7 @@ export class UnitPropertyInformationService {
 
   //{{url}}:{{port}}/baunit/npnlike
   getListUnitPropertyInformation(page: PageSearchData, npn: string): Observable<InformationPegeable> {
-    let url = `${this.basic_url}${envi.baunit_npnlike}`;
+    const url = `${this.basic_url}${envi.baunit_npnlike}`;
     const npnlike: string = npn.toString().slice(0, 22);
     const paramsR: HttpParams = new HttpParams()
       .set('npnlike', `${npnlike}`)
@@ -84,8 +84,15 @@ export class UnitPropertyInformationService {
     formData.append('domBaunitCondition', `${domBaunitCondition}`);
     formData.append('buildNumber', `${buildNumber}`);
     formData.append('floorNumber', `${floorNumber}`);
-    let url = `${this.basic_url}${envi.temporal}${envi.bAUnitCreateDetail}`;
+    const url = `${this.basic_url}${envi.temporal}${envi.bAUnitCreateDetail}`;
+
     return this.requestsService.sendRequestsFetchPostBody(url, formData)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+  }
+
+  assignamentZones( executionId: string, baunitId: string ): Observable<unknown> {
+    const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdTodas}/${envi.schemas.temp}/${executionId}/${baunitId}${envi.asignacionZonas}`;
+
+    return this.http.put(url, null);
   }
 }
