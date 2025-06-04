@@ -85,6 +85,9 @@
             [baunitId]="baunitId"
             [schema]="schema"
             [executionId]="executionId"
+            (copyInformationOutput)="copyInformation($event)"
+            (deleteInformationOutput)="deleteInformation($event)"
+            (editInformationOutput)="editInformation($event)"
           ></app-table-constructions>
         }
         <mat-paginator
