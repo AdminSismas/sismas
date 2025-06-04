@@ -254,6 +254,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: InformationPegeable) =>{
+          console.log(result);
           this.captureInformationSubscribe(result);
         }
       });
@@ -288,6 +289,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       data = this.contentInformations.content;
       data = data.map((row: Operation) => new Operation(row));
       const indexOperation = this.indexArraylist(data);
+      console.log(indexOperation);
       const result = Object.keys(indexOperation).map((key) => [
         key,
         indexOperation[key]

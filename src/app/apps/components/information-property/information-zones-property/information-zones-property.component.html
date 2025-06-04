@@ -20,6 +20,7 @@
         <vex-physical-zones-property
           class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
           tableTitle="físicas alfanuméricas"
+          [id]="id"
           [dataSource]="dataSourcePhysicalZones"
           [zoneType]="zoneType"
           [schema]="schema"
@@ -29,10 +30,8 @@
           [divPolLv2]="divPolLv2"
           [executionId]="executionId"
           [typeInformation]="typeInformation"
-          [isMatriz]="isMatriz()"
           (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
           (deletePhysicalZone)="deleteZone($event)"
-          (assignamentZone)="assignamentZone($event)"
         ></vex-physical-zones-property>
 
         <!-- Second Table -->
@@ -47,10 +46,8 @@
           [editable]="editable"
           [executionId]="executionId"
           [typeInformation]="typeInformation"
-          [isMatriz]="isMatriz()"
           (geoeconomicZoneChange)="searchInformationGeoeconomicZonesProperty()"
           (deleteGeoeconomicZone)="deleteZone($event)"
-          (assignamentZone)="assignamentZone($event)"
         ></vex-geo-economic-zones-property>
       </div>
 
@@ -61,6 +58,7 @@
           class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
           tableTitle="físicas de origen geográfico"
           [isOrigen]="true"
+          [id]="id"
           [dataSource]="dataSourcePhysicalOrigin"
           [zoneType]="zoneType"
           [schema]="schema"
@@ -71,7 +69,6 @@
           [typeInformation]="typeInformation"
           (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
           (deletePhysicalZone)="deleteZone($event)"
-          [isMatriz]="false"
         ></vex-physical-zones-property>
 
         <!-- Second Table -->
@@ -86,7 +83,6 @@
           [baunitId]="baunitId"
           [executionId]="executionId"
           [typeInformation]="typeInformation"
-          [isMatriz]="false"
           (geoeconomicZoneChange)="searchInformationGeoeconomicZonesProperty()"
           (deleteGeoeconomicZone)="deleteZone($event)"
         ></vex-geo-economic-zones-property>

@@ -1,28 +1,17 @@
+import { AfterViewInit, Component, DestroyRef, forwardRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import {
-  AfterViewInit,
-  Component,
-  DestroyRef,
-  forwardRef,
-  inject,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+  HeaderCadastralInformationPropertyComponent
+} from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgClass } from '@angular/common';
+import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -31,22 +20,24 @@ import {
   MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_5_7_10,
+  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10,
+  PAGE_SIZE,
+  PAGE_SIZE_OPTION_ADDRESS,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS,
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import {
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  ReactiveFormsModule,
-  UntypedFormControl
-} from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -56,25 +47,40 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { ContentInformationConstruction } from '../../../interfaces/information-property/content-information-construction';
+import {
+  ContentInformationConstruction
+} from '../../../interfaces/information-property/content-information-construction';
+import {
+  DetailInformationConstructionsPropertyComponent
+} from './detail-information-constructions-property/detail-information-constructions-property.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
-import { CrudInformationConstructionsPropertyComponent } from './crud-information-constructions-property/crud-information-constructions-property.component';
+import {
+  CrudInformationConstructionsPropertyComponent
+} from './crud-information-constructions-property/crud-information-constructions-property.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { InformationConstructionsService } from '../../../services/information-property/information-constructions-property/information-constructions.service';
+import {
+  InformationConstructionsService
+} from '../../../services/information-property/information-constructions-property/information-constructions.service';
 import { filter } from 'rxjs/operators';
-import { EditConstructionsComponent } from './edit-constructions/edit-constructions.component';
-import { TableConstructionsComponent } from './table-constructions/table-constructions.component';
-import { ModalResponse } from '../../general-components/modal-window/modal-window.component';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-information-constructions-property',
   standalone: true,
-
+  animations: [
+    fadeInRight400ms,
+    stagger80ms,
+    scaleIn400ms,
+    stagger40ms,
+    fadeInUp400ms,
+    scaleFadeIn400ms
+  ],
   imports: [
     FormsModule,
     NgClass,
+    NgForOf,
+    NgIf,
     ReactiveFormsModule,
     SweetAlert2Module,
     // Vex
@@ -96,8 +102,7 @@ import Swal from 'sweetalert2';
     MatTabsModule,
     MatTooltipModule,
     // Custom
-    HeaderCadastralInformationPropertyComponent,
-    TableConstructionsComponent
+    HeaderCadastralInformationPropertyComponent
   ],
   templateUrl: './information-constructions-property.component.html',
   styleUrl: './information-constructions-property.component.scss',
@@ -107,11 +112,10 @@ import Swal from 'sweetalert2';
       useExisting: forwardRef(() => InformationConstructionsPropertyComponent),
       multi: true
     }
-  ]
+  ],
 })
-export class InformationConstructionsPropertyComponent
-  implements OnInit, AfterViewInit
-{
+export class InformationConstructionsPropertyComponent implements OnInit, AfterViewInit {
+
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   ltLg$: Observable<boolean> = this.layoutService.ltLg$;
   ltMd$: Observable<boolean> = this.layoutService.ltMd$;
@@ -125,13 +129,12 @@ export class InformationConstructionsPropertyComponent
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
 
-  columns: TableColumn<ContentInformationConstruction>[] =
-    TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
+  columns: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
   pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
-  configModalCrud = MODAL_DYNAMIC_HEIGHT;
+  configModalCrud: any = MODAL_DYNAMIC_HEIGHT;
 
   dataSource!: MatTableDataSource<ContentInformationConstruction>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -151,7 +154,8 @@ export class InformationConstructionsPropertyComponent
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private constructionsService: InformationConstructionsService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -168,17 +172,24 @@ export class InformationConstructionsPropertyComponent
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
 
-    this.isDesktop$.pipe(filter<boolean>(Boolean)).subscribe(() => {
-      this.configModalCrud = MODAL_DYNAMIC_HEIGHT;
-    });
+    this.isDesktop$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        this.configModalCrud = MODAL_DYNAMIC_HEIGHT;
+      });
 
-    this.ltMd$.pipe(filter<boolean>(Boolean)).subscribe(() => {
-      this.configModalCrud = MODAL_MEDIUM;
-    });
+    this.ltMd$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        this.configModalCrud = MODAL_MEDIUM;
+      });
 
-    this.ltMd$.pipe(filter<boolean>(Boolean)).subscribe(() => {
-      this.configModalCrud = MODAL_LARGE;
-    });
+    this.ltMd$
+      .pipe(filter<boolean>(Boolean))
+      .subscribe((result: boolean) => {
+        this.configModalCrud = MODAL_LARGE;
+      });
+
   }
 
   ngAfterViewInit() {
@@ -206,16 +217,11 @@ export class InformationConstructionsPropertyComponent
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.constructionsService
-      .getBasicInformationPropertyConstructions(
-        this.generateObjectPageSearchData(this.baunitId),
-        this.schema,
-        this.executionId
-      )
+    this.constructionsService.getBasicInformationPropertyConstructions(
+      this.generateObjectPageSearchData(this.baunitId), this.schema, this.executionId)
       .subscribe({
-        error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) =>
-          this.captureInformationSubscribe(result)
+        error: (err: any) => this.captureInformationSubscribeError(),
+        next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
       });
     return true;
   }
@@ -229,10 +235,7 @@ export class InformationConstructionsPropertyComponent
     let data: ContentInformationConstruction[];
     if (this.contentInformations && this.contentInformations.content) {
       data = this.contentInformations.content;
-      data = data.map(
-        (row: ContentInformationConstruction) =>
-          new ContentInformationConstruction(row)
-      );
+      data = data.map((row: ContentInformationConstruction) => new ContentInformationConstruction(row));
       this.dataSource.data = data;
     }
 
@@ -260,6 +263,22 @@ export class InformationConstructionsPropertyComponent
     this.dataSource.data = [];
   }
 
+  openDetailInformationConstructionsProperty(content: ContentInformationConstruction) {
+    if (this.baunitId === null || this.baunitId === undefined) {
+      return;
+    }
+    let data: ContentInformationConstruction = new ContentInformationConstruction(content, this.schema, this.baunitId);
+    data.executionId = this.executionId;
+
+    this.dialog
+      .open(DetailInformationConstructionsPropertyComponent, {
+        ...MODAL_SMALL,
+        disableClose: true,
+        data: { type: 'READ_ONLY', contentInformation: data }
+      })
+      .afterClosed();
+  }
+
   openAddConstructionInformationProperty(): void {
     this.executeEventAddEditConstructionInformation(null);
   }
@@ -270,76 +289,47 @@ export class InformationConstructionsPropertyComponent
 
   deleteInformation(customer: ContentInformationConstruction): void {
     this.deletedConstruction.fire().then((result) => {
-      if (
-        result.isConfirmed &&
-        this.baunitId &&
-        this.executionId &&
-        customer.unitBuiltId
-      ) {
-        this.constructionsService
-          .deleteConstruction(
-            this.baunitId,
-            this.executionId,
-            customer.unitBuiltId
-          )
-          .subscribe({
-            next: () => {
-              this.deleteSwal.fire();
-              this.searchInformationsConstructionsProperty();
-            },
-            error: () => this.errorSwal.fire()
-          });
+      if (result.isConfirmed && this.baunitId && this.executionId && customer.unitBuiltId) {
+        this.constructionsService.deleteConstruction(this.baunitId, this.executionId, customer.unitBuiltId).subscribe({
+          next: () => {
+            this.deleteSwal.fire();
+            this.searchInformationsConstructionsProperty();
+          },
+          error: () => this.errorSwal.fire()
+        });
       }
     });
   }
 
   copyInformation(customer: ContentInformationConstruction): void {
     this.copyConstruction.fire().then((result) => {
-      if (
-        result.isConfirmed &&
-        this.baunitId &&
-        this.executionId &&
-        customer.unitBuiltId
-      ) {
-        this.constructionsService
-          .copyConstruction(
-            this.baunitId,
-            this.executionId,
-            customer.unitBuiltId
-          )
-          .subscribe({
-            next: () => {
-              this.copySwal.fire();
-              this.searchInformationsConstructionsProperty();
-            },
-            error: () => this.errorCopySwal.fire()
-          });
+      if (result.isConfirmed && this.baunitId && this.executionId && customer.unitBuiltId) {
+        this.constructionsService.copyConstruction(this.baunitId, this.executionId, customer.unitBuiltId).subscribe({
+          next: () => {
+            this.copySwal.fire();
+            this.searchInformationsConstructionsProperty();
+          },
+          error: () => this.errorCopySwal.fire()
+        });
       }
     });
   }
 
-  executeEventAddEditConstructionInformation(
-    content: ContentInformationConstruction | null
-  ) {
-    const data: ContentInformationConstruction =
-      new ContentInformationConstruction(content, this.schema, this.baunitId);
+  executeEventAddEditConstructionInformation(content: ContentInformationConstruction | null) {
+    let data: ContentInformationConstruction = new ContentInformationConstruction(content, this.schema, this.baunitId);
     data.executionId = this.executionId;
 
     const dialogRefConstruction = this.dialog.open(
-      CrudInformationConstructionsPropertyComponent,
-      {
+      CrudInformationConstructionsPropertyComponent, {
         ...this.configModalCrud,
         disableClose: true,
         data: { type: !content ? 'CREATE' : 'UPDATE', contentInformation: data }
-      }
-    );
-    dialogRefConstruction
-      .afterClosed()
-      .subscribe((result: ContentInformationConstruction) => {
-        if (result && result.unitBuiltId != null && result.unitBuiltId > 0) {
-          this.searchInformationsConstructionsProperty();
-        }
       });
+    dialogRefConstruction.afterClosed().subscribe((result: ContentInformationConstruction) => {
+      if (result && result.unitBuiltId != null && result.unitBuiltId > 0) {
+        this.searchInformationsConstructionsProperty();
+      }
+    });
   }
 
   toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
@@ -385,73 +375,6 @@ export class InformationConstructionsPropertyComponent
     return '';
   }
 
-  openEditConstruction() {
-    this.getConstructionsWithoutBaunit();
-  }
 
-  getConstructionsWithoutBaunit(): void {
-    if (!this.executionId || !this.baunitId) {
-      console.error('Data is missing or incomplete');
-      return;
-    }
 
-    const { executionId, baunitId } = this;
-
-    this.constructionsService
-      .getConstructionsWithoutBaunit(executionId, baunitId)
-      .subscribe({
-        next: (response) => {
-          this.openDialogEditConstructions(response);
-        },
-        error: () => {
-          return;
-        }
-      });
-  }
-
-  openDialogEditConstructions(
-    response: ContentInformationConstruction[]
-  ): void {
-    this.dialog
-      .open(EditConstructionsComponent, {
-        ...MODAL_SMALL,
-        data: {
-          dataSource: new MatTableDataSource<ContentInformationConstruction>(
-            response
-          ),
-          baunitId: this.baunitId,
-          executionId: this.executionId
-        }
-      })
-      .afterClosed()
-      .subscribe(
-        (response: ModalResponse<ContentInformationConstruction[]>) => {
-          if (response.response && response.data) {
-            this.addConstructionWithoutBaunit(response.data);
-          }
-        }
-      );
-  }
-
-  addConstructionWithoutBaunit(
-    construction: ContentInformationConstruction[]
-  ): void {
-    this.constructionsService.addConstructionsWithoutBaunit(
-      this.executionId!,
-      `${construction[0].unitBuiltId}`,
-      this.baunitId!,
-      construction[0]
-    ).subscribe(
-      () => {
-        Swal.fire({
-          title: 'Construcción agregada',
-          text: 'La construcción se ha agregado correctamente.',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-          confirmButtonColor: '#3085d6',
-          allowOutsideClick: false
-        });
-        this.searchInformationsConstructionsProperty();
-      });
-  }
 }

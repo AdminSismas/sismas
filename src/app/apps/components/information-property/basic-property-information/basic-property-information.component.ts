@@ -113,7 +113,6 @@ export class BasicPropertyInformationComponent implements OnInit {
 
   @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
   @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
-  @Output() isMatriz = new EventEmitter<boolean>();
 
   private alfaMainService: AlfaMainService = inject(AlfaMainService);
 
@@ -174,7 +173,6 @@ export class BasicPropertyInformationComponent implements OnInit {
     this.data = result;
     this.propertyRegistryOffice.emit(this.data.propertyRegistryOffice);
     this.propertyRegistryNumber.emit(this.data.propertyRegistryNumber);
-    this.isMatriz.emit(this.data.masterGroup !== null && this.data.masterGroup !== undefined);
   }
 
   editBasicInformationProperty(): void {

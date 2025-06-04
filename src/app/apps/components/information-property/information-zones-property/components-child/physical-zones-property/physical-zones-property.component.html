@@ -2,28 +2,17 @@
   <div class="header-container m-2 flex items-center justify-between">
     <span class="font-bold text-lg capitalize">{{ tableTitle() }}</span>
     @if (typeInformation === "edition" && !isOrigen()) {
-      <div class="flex items-center gap-2">
-        @if (isMatriz()) {
-          <button
-            mat-raised-button
-            color="accent"
-            (click)="onAssignament()"
-          >
-            <mat-icon svgIcon="mat:assignment"></mat-icon>Asignar
-          </button>
-        }
-        <button
-          [class.!bg-slate-400.!text-gray-100.opacity-60]="!editable"
-          [disabled]="!editable"
-          mat-raised-button
-          color="primary"
-          type="button"
-          (click)="onClickOpenPhysicalAddEditModal()"
-        >
-          Nueva
-          <mat-icon svgIcon="mat:add"></mat-icon>
-        </button>
-      </div>
+      <button
+        [ngClass]="disabledClass()"
+        [disabled]="!editable"
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="onClickOpenPhysicalAddEditModal()"
+      >
+        Nueva
+        <mat-icon svgIcon="mat:add"></mat-icon>
+      </button>
     }
   </div>
 

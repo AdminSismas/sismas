@@ -20,7 +20,6 @@ import {
 import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
 import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
 import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
-import { SimpleResponse } from '../../interfaces/general/simple-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -378,18 +377,6 @@ export class InformationPropertyService {
     const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${direccionId}`;
 
     return this.http.delete(url);
-  }
-
-  assignamentZones( typeZone: 'physic' | 'geoeconomic', executionId: string, baunitId: string ): Observable<SimpleResponse> {
-    let url = `${this.basic_url}${envi.baUnitZona}`;
-
-    if (typeZone === 'physic') {
-      url += `${envi.baunitIdFisicas}/${envi.schemas.temp}/${executionId}/${baunitId}${envi.asignacionZonas}`;
-    } else {
-      url += `${envi.baunitIdEcono}/${envi.schemas.temp}/${executionId}/${baunitId}${envi.asignacionZonas}`;
-    }
-
-    return this.http.put<SimpleResponse>(url, {});
   }
 
   private getData(url: string, params: any): Observable<any> {

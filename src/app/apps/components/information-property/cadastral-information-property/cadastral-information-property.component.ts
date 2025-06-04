@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
-import { Component, ElementRef, forwardRef, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -246,7 +246,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
   public showRulesPage = false;
   public expand_tap_property_information = true;
   public expand_tap = false;
-  isMatriz = signal<boolean>(false);
 
   constructor(
     private informationPropertyService: InformationPropertyService
@@ -356,4 +355,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
   removeItem(fragmentToRemove: string): void {
     this.navigationItems = this.navigationItems.filter(item => item.fragment !== fragmentToRemove);
   }
+
+
 }

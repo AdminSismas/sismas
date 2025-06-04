@@ -164,7 +164,7 @@ export class TableAlfaMainComponent
 
   captureInformationCadastralData(): void {
     let data: Operation[];
-    if (this.contentInformations?.content !== null) {
+    if (this.contentInformations?.content != null) {
       data = this.contentInformations.content;
       // data = data.map((row: Operation) => new Operation(row));
       this.dataSource.data = data;

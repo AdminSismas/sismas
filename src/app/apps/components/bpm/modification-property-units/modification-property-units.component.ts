@@ -1,34 +1,15 @@
-import {
-  AfterViewInit,
-  Component,
-  DestroyRef,
-  inject,
-  Inject,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Inject, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogModule
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import {
-  MatPaginator,
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import {
-  DataAlfaMain,
-  ModificationUnitProperties
-} from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
+import { DataAlfaMain, ModificationUnitProperties } from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
 import {
@@ -48,9 +29,13 @@ import {
 } from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import {
+  LayoutCardCadastralInformationPropertyComponentComponent
+} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
-import { MODIFYCATION_UNITS_TABLE_COLUMNS } from '../../../constants/information-property/modification-property-units.constants';
+import {
+  MODIFYCATION_UNITS_TABLE_COLUMNS
+} from '../../../constants/information-property/modification-property-units.constants';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -60,7 +45,9 @@ import { MatInput } from '@angular/material/input';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { UnitPropertyInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
+import {
+  UnitPropertyInformationService
+} from '../../../services/territorial-organization/baunit-children-information.service';
 import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
 import { NgClass, PercentPipe } from '@angular/common';
 import { CrudPropertyUnitsComponent } from './crud-property-units/crud-property-units.component';
@@ -71,8 +58,7 @@ import Swal from 'sweetalert2';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import {
-  CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
-  CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR,
+  CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE, CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
@@ -106,9 +92,8 @@ import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/
   templateUrl: './modification-property-units.component.html',
   styleUrl: './modification-property-units.component.scss'
 })
-export class ModificationPropertyUnitsComponent
-  implements OnInit, AfterViewInit
-{
+export class ModificationPropertyUnitsComponent implements OnInit, AfterViewInit {
+
   executionId!: string;
   baUnitId: string | null = null;
   operationBaUnitHead: Operation | null = null;
@@ -121,19 +106,15 @@ export class ModificationPropertyUnitsComponent
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   contentInformation!: InformationPegeable;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  columns: TableColumn<BaUnitHeadPercentage>[] =
-    MODIFYCATION_UNITS_TABLE_COLUMNS;
+  columns: TableColumn<BaUnitHeadPercentage>[] = MODIFYCATION_UNITS_TABLE_COLUMNS;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmRemoveDialog', { static: true })
-  confirmRemoveDialog!: SwalComponent;
-  @ViewChild('confirmDeleteDialog', { static: true })
-  confirmDeleteDialog!: SwalComponent;
-  @ViewChild('confirmAddUpdateBaUnitHead', { static: true })
-  confirmAddUpdateBaUnitHead!: SwalComponent;
+  @ViewChild('confirmRemoveDialog', { static: true }) confirmRemoveDialog!: SwalComponent;
+  @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: SwalComponent;
+  @ViewChild('confirmAddUpdateBaUnitHead', { static: true }) confirmAddUpdateBaUnitHead!: SwalComponent;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -143,7 +124,8 @@ export class ModificationPropertyUnitsComponent
     private alfaMainService: AlfaMainService,
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
@@ -157,8 +139,7 @@ export class ModificationPropertyUnitsComponent
       this.baUnitId = this.dataInformationUnitProperties?.baunitIdE;
     }
     if (this.dataInformationUnitProperties?.operationBaUnitHead) {
-      this.operationBaUnitHead =
-        this.dataInformationUnitProperties?.operationBaUnitHead;
+      this.operationBaUnitHead = this.dataInformationUnitProperties?.operationBaUnitHead;
     }
     this.getPropertiesUnits();
 
@@ -181,13 +162,11 @@ export class ModificationPropertyUnitsComponent
       return;
     }
     const page = new PageSearchData(this.page, this.pageSize, this.executionId);
-    this.unitPropertyInformationService
-      .getListPropertyUnitsByBaUnitIdV2(page, this.executionId, this.baUnitId)
-      .subscribe({
-        error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) =>
-          this.captureInformationSubscribe(result)
-      });
+    this.unitPropertyInformationService.getListPropertyUnitsByBaUnitIdV2(
+      page, this.executionId, this.baUnitId).subscribe({
+      error: () => this.captureInformationSubscribeError(),
+      next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+    });
   }
 
   captureInformationSubscribeError(): void {
@@ -204,17 +183,11 @@ export class ModificationPropertyUnitsComponent
     let data: BaUnitHeadPercentage[];
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
-      data = data.map(
-        (row: BaUnitHeadPercentage) => new BaUnitHeadPercentage(row)
-      );
+      data = data.map((row: BaUnitHeadPercentage) => new BaUnitHeadPercentage(row));
       this.dataSource.data = data;
     }
 
-    if (
-      this.contentInformation == null ||
-      this.contentInformation.content == null ||
-      this.contentInformation.content.length <= 0
-    ) {
+    if (this.contentInformation == null || (this.contentInformation.content == null || this.contentInformation.content.length <= 0)) {
       this.page = PAGE;
       return;
     }
@@ -238,14 +211,9 @@ export class ModificationPropertyUnitsComponent
       this.getAlertError(CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE);
       return;
     }
-    this.bpmCoreService
-      .viewChangesBpmOperationTemp(this.executionId, row.baunitHead?.baunitIdE)
-      .subscribe({
+    this.bpmCoreService.viewChangesBpmOperationTemp( this.executionId, row.baunitHead?.baunitIdE).subscribe({
         error: (error) => {
-          this.getAlertError(
-            CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR +
-              error.toString()
-          );
+          this.getAlertError(CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR + error.toString());
         },
         next: (result: DifferenceChanges[]) => {
           this.openDifferenceChangesProperty(result, row.baunitHead?.baunitIdE);
@@ -276,13 +244,8 @@ export class ModificationPropertyUnitsComponent
       return;
     }
     let config = {};
-    const addNpnLike: string =
-      this.dataInformationUnitProperties?.npnMatrix?.slice(0, -8) || '';
-    const data: DataAlfaMain = new DataAlfaMain(
-      this.executionId,
-      type,
-      addNpnLike ? { addNpnLike } : null
-    );
+    const addNpnLike: string = this.dataInformationUnitProperties?.npnMatrix?.slice(0, -8) || '';
+    let data: DataAlfaMain = new DataAlfaMain(this.executionId, type, addNpnLike ? { addNpnLike } : null);
     data.operationBaUnitHead = this.operationBaUnitHead;
 
     config = {
@@ -291,8 +254,7 @@ export class ModificationPropertyUnitsComponent
       disableClose: true,
       data: data
     };
-    this.dialog
-      .open(CrudPropertyUnitsComponent, config)
+    this.dialog.open(CrudPropertyUnitsComponent, config)
       .afterClosed()
       .subscribe((result: boolean) => {
         if (result) {
@@ -301,25 +263,18 @@ export class ModificationPropertyUnitsComponent
       });
   }
 
-  openDifferenceChangesProperty(
-    result: DifferenceChanges[],
-    baunitIdE: string | undefined
-  ): void {
+  openDifferenceChangesProperty( result: DifferenceChanges[], baunitIdE: string | undefined): void {
     if (!result || result.length <= 0 || !this.executionId) {
       this.getAlertError(CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE);
       return;
     }
-    const data: DifferenceChanges[] = result.map(
-      (row: DifferenceChanges) =>
-        new DifferenceChanges(row, this.executionId, baunitIdE)
-    );
-    this.dialog
-      .open(ViewChangesBpmOperationComponent, {
+    const data: DifferenceChanges[] = result
+      .map((row: DifferenceChanges) => new DifferenceChanges(row, this.executionId, baunitIdE));
+    this.dialog.open(ViewChangesBpmOperationComponent, {
         ...MODAL_MIN_MEDIUM_ALL,
         disableClose: true,
         data: data
-      })
-      .afterClosed();
+      }).afterClosed();
   }
 
   refreshPaginator(event: PageEvent) {
@@ -333,15 +288,9 @@ export class ModificationPropertyUnitsComponent
 
   openCadastralInformationProperty(data: BaUnitHeadPercentage): void {
     let schemas: string[] = [];
-    schemas = this.executionId
-      ? LIST_SCHEMAS_CONTROL_TEMP
-      : LIST_SCHEMAS_CONTROL_MAIN;
-    const dataInfo: ContentInfoSchema = new ContentInfoSchema(
-      data.baunitHead?.baunitIdE,
-      data.baunitHead,
-      this.executionId,
-      schemas,
-      TYPE_INFORMATION_VISUAL
+    schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
+    let dataInfo: ContentInfoSchema = new ContentInfoSchema(
+      data.baunitHead?.baunitIdE, data.baunitHead, this.executionId, schemas, TYPE_INFORMATION_VISUAL
     );
     dataInfo.levelInfo = 2;
     this.dialog
@@ -357,15 +306,10 @@ export class ModificationPropertyUnitsComponent
     if (row.operationType === TYPE_CREATE) {
       this.confirmRemoveDialog.fire().then((result) => {
         if (result.isConfirmed && this.executionId) {
-          this.bpmCoreService
-            .clearPropertyBpmOperation(
-              this.executionId,
-              row.baunitHead!.baunitIdE as string
-            )
+          this.bpmCoreService.clearPropertyBpmOperation(this.executionId, row.baunitHead!.baunitIdE as string)
             .subscribe({
               next: () => this.getPropertiesUnits(),
-              error: () =>
-                this.getAlertError('Error al eliminar la unidad predial.')
+              error: () => this.getAlertError('Error al eliminar la unidad predial.')
             });
         }
       });
@@ -392,15 +336,11 @@ export class ModificationPropertyUnitsComponent
     if (!this.executionId) {
       return;
     }
-    this.alfaMainService
-      .changeTemporaryStateBeaUnitHeadByExistTemp(
-        row.baunitHead!.baunitIdE as string,
-        this.executionId
-      )
-      .subscribe({
-        next: () => this.getPropertiesUnits(),
-        error: () => this.getAlertError('Error al eliminar la unidad predial.')
-      });
+    this.alfaMainService.changeTemporaryStateBeaUnitHeadByExistTemp(
+      row.baunitHead!.baunitIdE as string, this.executionId).subscribe({
+      next: () => this.getPropertiesUnits(),
+      error: () => this.getAlertError('Error al eliminar la unidad predial.')
+    });
   }
 
   onFilterChange(value: string) {
@@ -412,15 +352,11 @@ export class ModificationPropertyUnitsComponent
   }
 
   get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
+    return this.columns.filter((column) => column.visible).map((column) => column.property);
   }
 
   addRemoveIcon(operationType: string): string {
-    return operationType === TYPE_OPERATION_DELETE
-      ? 'mat:recycling'
-      : 'mat:delete';
+    return operationType === TYPE_OPERATION_DELETE ? 'mat:recycling' : 'mat:delete';
   }
 
   addRemoveText(operationType: string): string {
@@ -434,24 +370,6 @@ export class ModificationPropertyUnitsComponent
       showConfirmButton: false,
       timer: 4000
     }).then();
-  }
-
-  onAssignZones() {
-    if (!this.executionId || !this.baUnitId) return;
-
-    this.unitPropertyInformationService
-      .assignamentZones(this.executionId, this.baUnitId)
-      .subscribe((response) => {
-        Swal.fire({
-          title: 'Asignación de zonas exitosa',
-          text: response.message,
-          icon: 'success',
-          showConfirmButton: true,
-          confirmButtonText: 'Aceptar',
-          showCancelButton: false,
-          allowOutsideClick: false
-        });
-      });
   }
 
   protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
