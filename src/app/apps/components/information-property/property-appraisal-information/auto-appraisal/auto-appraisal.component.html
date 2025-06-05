@@ -12,10 +12,30 @@
 <mat-divider class="bg-slate-400"></mat-divider>
 
 <mat-dialog-content>
-  <vex-dynamic-forms
-    [inputs]="formInputJson()"
-    (formReady)="autoAppraisalForm.set($event)"
-  ></vex-dynamic-forms>
+  <form
+    [formGroup]="autoAppraisalForm()"
+    class="flex flex-col w-full"
+  >
+    <mat-form-field>
+      <mat-label>Vigencia</mat-label>
+      <mat-select formControlName="validity">
+        @for (option of validityOptions(); track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Autoavalúo</mat-label>
+      <span matTextPrefix>$ &nbsp;</span>
+      <input
+        #selfValuationValue
+        class="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+        matInput
+        type="number"
+        formControlName="selfValuationValue"
+      />
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="center">

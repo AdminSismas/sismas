@@ -39,7 +39,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   CommonModule,
   DatePipe,
-  NgClass} from '@angular/common';
+  NgClass,
+  NgForOf,
+  NgIf
+} from '@angular/common';
 import {
   FormsModule, NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
@@ -94,6 +97,8 @@ import { HistoricAppraisalComponent } from './historic-appraisal/historic-apprai
     MatSortModule,
     MatTableModule,
     MatTooltipModule,
+    NgForOf,
+    NgIf,
     ReactiveFormsModule,
     DatePipe,
     NgClass,
