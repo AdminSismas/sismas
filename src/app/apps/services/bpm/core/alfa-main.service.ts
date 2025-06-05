@@ -149,12 +149,13 @@ export class AlfaMainService {
     );
   }
 
+
   /**
    * MAIN
    *
    * */
   // {{url}}:{{port}}/baunit/main/{{executionId}}/{{baunitId}}
-  getBaUnitHead(baunitId: string): Observable<BaunitHead> {
+  getBaUnitHead(baunitId: string ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.main}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
@@ -165,9 +166,7 @@ export class AlfaMainService {
    * */
   // {{url}}:{{port}}/baunit/temp/{{executionId}}/{{baunitId}}
   getBaUnitHeadTemporal(
-    executionId: string,
-    baunitId: string
-  ): Observable<BaunitHead> {
+    executionId: string, baunitId: string ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
@@ -240,20 +239,15 @@ export class AlfaMainService {
     executionId: string,
     baunitId: string,
     parameters: {
-      validity: string;
-      toggleValuationType: boolean;
       selfValuationValue: string;
-      selfValuationValueLand: string;
-      selfValuationValueUnits: string;
+      validity: string;
     }
   ): Observable<void> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.selfvaluation}/${baunitId}`;
 
     const params = new HttpParams()
-      .set('validity', parameters.validity)
-      .set('selfValuationValue', parameters.selfValuationValue ?? 0)
-      .set('selfValuationValueLand', parameters.selfValuationValueLand ?? 0)
-      .set('selfValuationValueUnits', parameters.selfValuationValueUnits ?? 0);
+      .set('selfValuationValue', parameters.selfValuationValue)
+      .set('validity', parameters.validity);
 
     return this.http.put<void>(url, {}, { params });
   }
