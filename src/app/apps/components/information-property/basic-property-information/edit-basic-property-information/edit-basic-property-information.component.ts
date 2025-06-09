@@ -9,7 +9,6 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
-  MatDialogClose,
   MatDialogModule,
   MatDialogRef
 } from '@angular/material/dialog';
@@ -35,6 +34,7 @@ import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height
 import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-property/basic-property-information.constants';
 import { BaunitCondition } from 'src/app/apps/constants/general/constants';
 import { Subscription } from 'rxjs';
+import Big from 'big.js';
 
 @Component({
   selector: 'vex-edit-basic-property-information',
@@ -42,7 +42,6 @@ import { Subscription } from 'rxjs';
   imports: [
     ReactiveFormsModule,
     MatDialogModule,
-    MatDialogClose,
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
@@ -337,18 +336,12 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       return;
     }
 
-    if (
-      !buildNumber ||
-      !floorNumber ||
-      parseFloat(floorNumber) <= 0 ||
-      !unitNumber ||
-      parseFloat(unitNumber) <= 0
-    ) {
+    if (!this.validationFormUnitEdit(buildNumber, floorNumber, unitNumber)) {
       this.getAlertError('Informacion no encontrada');
       return;
     }
 
-    const percentageCoefficient: number = parseFloat(percentageGroup) / 100;
+    const percentageCoefficient: number = Big(percentageGroup).div(100).toNumber();
     if (percentageCoefficient <= 0) {
       this.getAlertError('Valor de coeficiente de propiedad no permitido');
       return;
@@ -375,6 +368,41 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       });
   }
 
+  validationFormUnitEdit(
+    buildNumber: string,
+    floorNumber: string,
+    unitNumber: string
+  ): boolean {
+    if (
+      unitNumber === undefined ||
+      unitNumber === null ||
+      buildNumber === undefined ||
+      buildNumber === null ||
+      floorNumber === undefined ||
+      floorNumber === null
+    ) return false;
+
+    const numberCondition = this.contentInformation?.cadastralNumber?.slice(
+      21,
+      22
+    );
+
+    console.log(numberCondition);
+    if (numberCondition === '8') {
+      if (parseFloat(floorNumber) < 0 || parseFloat(unitNumber) < 0) {
+        return false;
+      }
+
+      return true;
+    }
+
+    if (parseFloat(floorNumber) <= 0 || parseFloat(unitNumber) <= 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   chargerInfoPropertyUnit() {
     if (!this.contentInformation?.detailGroup) {
       return;
@@ -385,7 +413,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       this.contentInformation?.detailGroup?.percentage_group !== 0
     ) {
       const coefficient: number =
-        this.contentInformation?.detailGroup?.percentage_group * 100;
+        +Big(this.contentInformation?.detailGroup?.percentage_group).mul(100).toFixed(2);
       this.controlPercentageGroup.setValue(coefficient);
     }
 
@@ -400,8 +428,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getAlertSuccess(text: string, data: any) {
+  getAlertSuccess(text: string, data: BasicInformationProperty) {
     Swal.fire({
       text: text,
       icon: 'success',

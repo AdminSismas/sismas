@@ -102,6 +102,7 @@
               [id]="input.name + $index"
               [formControlName]="input.name"
               [labelPosition]="labelPositionToggle(input)"
+              [class]="input.cssClasses ?? ''"
               >{{ input.label }}
             </mat-slide-toggle>
           }

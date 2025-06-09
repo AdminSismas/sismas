@@ -335,7 +335,7 @@
         </div>
         @if (existDetailGroup()) {
           <div class="column-titles">
-            <h3 class="text-black">Informacion Unidad Predial</h3>
+            <h3 class="text-black">Información Unidad Predial</h3>
           </div>
           <div class="flex justify-between">
             <div class="flex flex-col gap-1">
@@ -392,97 +392,25 @@
         }
         @if (existMasterGroup()) {
           <div class="column-titles">
-            <h3 class="text-black">Informacion Reglamento</h3>
+            <h3 class="text-black">Información Reglamento</h3>
           </div>
           <div class="flex justify-between">
             <div class="flex flex-col gap-1">
-              <span class="text-black text-sm">Numero de edificios</span>
-              <span class="text-black text-sm">Numero de unidades</span>
-              <span class="text-black text-sm">Área construida común</span>
-              <span class="text-black text-sm">Área construida privada</span>
-              <span class="text-black text-sm">Área construccion total</span>
-              <span class="text-black text-sm">Área común</span>
-              <span class="text-black text-sm">Área privada</span>
-              <span class="text-black text-sm">Área total</span>
+              <span class="text-black text-sm">Número de edificios</span>
+              <span class="text-black text-sm">Número de unidades</span>
             </div>
             <div class="flex flex-col gap-1">
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.numberBuildings !== null &&
-              data.masterGroup.numberBuildings !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.numberBuildings }}</span>
+              @if (existMasterGroup() &&
+              data.masterGroup!.numberBuildings !== null &&
+              data.masterGroup!.numberBuildings !== undefined) {
+                <span class="text-sm">{{ data.masterGroup!.numberBuildings }}</span>
               } @else {
                 <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO }}</span>
               }
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.numberBaunits !== null &&
-              data.masterGroup.numberBaunits !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.numberBaunits }}</span>
-              } @else {
-                <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO }}</span>
-              }
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.commonBuiltArea !== null &&
-              data.masterGroup.commonBuiltArea !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.commonBuiltArea | currencyLands }}</span>
-              } @else {
-                <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2' }}</span>
-              }
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.privateBuiltArea !== null &&
-              data.masterGroup.privateBuiltArea !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.privateBuiltArea | currencyLands }}</span>
-              } @else {
-                <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2' }}</span>
-              }
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.totalBuiltArea !== null &&
-              data.masterGroup.totalBuiltArea !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.totalBuiltArea | currencyLands }}</span>
-              } @else {
-                <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO + ' Mts2' }}</span>
-              }
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.commonLandArea !== null &&
-              data.masterGroup.commonLandArea !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.commonLandArea }}</span>
-              } @else {
-                <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO }}</span>
-              }
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.privateLandArea !== null &&
-              data.masterGroup.privateLandArea !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.privateLandArea }}</span>
-              } @else {
-                <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO }}</span>
-              }
-              @if (data !== null &&
-              data !== undefined &&
-              data.masterGroup !== null &&
-              data.masterGroup !== undefined &&
-              data.masterGroup.totalLandArea !== null &&
-              data.masterGroup.totalLandArea !== undefined) {
-                <span class="text-sm">{{ data.masterGroup.totalLandArea }}</span>
+              @if (existMasterGroup() &&
+              data.masterGroup!.numberBaunits !== null &&
+              data.masterGroup!.numberBaunits !== undefined) {
+                <span class="text-sm">{{ data.masterGroup!.numberBaunits }}</span>
               } @else {
                 <span class="text-sm">{{ NAME_NO_DISPONIBLE_CERO }}</span>
               }

@@ -690,6 +690,22 @@ export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = 
     visible: true,
     cssClassesHead: ['pl-1'],
     cssClasses: ['font-medium', 'pl-1']
+  },
+  {
+    label: 'Terrreno',
+    property: 'selfValuationValueLand',
+    type: 'currency',
+    visible: true,
+    cssClassesHead: ['pl-1'],
+    cssClasses: ['font-medium', 'pl-1']
+  },
+  {
+    label: 'Construcciones',
+    property: 'selfValuationValueUnits',
+    type: 'currency',
+    visible: true,
+    cssClassesHead: ['pl-1'],
+    cssClasses: ['font-medium', 'pl-1']
   }
 ];
 

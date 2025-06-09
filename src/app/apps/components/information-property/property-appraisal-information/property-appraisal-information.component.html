@@ -23,17 +23,20 @@
             matTooltip="Avalúos históricos"
             (click)="historyAppraisal()"
           >
-          <mat-icon svgIcon="mat:receipt_long"></mat-icon>
-          Avalúos históricos
-        </button>
+            <mat-icon svgIcon="mat:receipt_long"></mat-icon>
+            Avalúos históricos
+          </button>
           @if (typeInformation === "edition") {
             <button
               mat-flat-button
               color="primary"
               (click)="autoAppraisal()"
-              [ngClass]="!editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''"
+              [ngClass]="
+                !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+              "
               [disabled]="!editable"
             >
+              <mat-icon svgIcon="mat:attach_money"></mat-icon>
               Autoavalúo
             </button>
           }
@@ -56,15 +59,6 @@
                 />
               </mat-form-field>
               <span class="flex-1"></span>
-              <!-- Botón de filtro -->
-              <!-- <button
-                [matMenuTriggerFor]="columnFilterMenu"
-                mat-icon-button
-                matTooltip="Filtrar columnas"
-                type="button"
-                class="ml-4 flex-col">
-                <mat-icon svgIcon="mat:filter_list"></mat-icon>
-            </button> -->
             </div>
           }
         </section>
@@ -105,69 +99,68 @@
 
             <!-- Text Columns -->
             @for (column of columns; track column.property) {
-              <ng-container
-                *ngIf="column.type === 'text'"
-                [matColumnDef]="column.property"
-              >
-                <th
-                  *matHeaderCellDef
-                  [ngClass]="column.cssClassesHead"
-                  class="text-center"
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                >
-                  {{ row[column.property] }}
-                </td>
-              </ng-container>
-              <ng-container
-                *ngIf="column.type === 'date'"
-                [matColumnDef]="column.property"
-              >
-                <th
-                  *matHeaderCellDef
-                  [ngClass]="column.cssClassesHead"
-                  class="text-center"
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                >
-                  {{ row[column.property] | date: "dd/MM/yyyy" }}
-                </td>
-              </ng-container>
-              <ng-container
-                *ngIf="column.type === 'currency'"
-                [matColumnDef]="column.property"
-              >
-                <th
-                  *matHeaderCellDef
-                  [ngClass]="column.cssClassesHead"
-                  class="text-center"
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                >
-                  {{ row[column.property] | currencyFormat: "COP" }}
-                </td>
-              </ng-container>
+              @switch (column.type) {
+                @case ("text") {
+                  <ng-container [matColumnDef]="column.property">
+                    <th
+                      *matHeaderCellDef
+                      [ngClass]="column.cssClassesHead"
+                      class="text-center"
+                      mat-header-cell
+                      mat-sort-header
+                    >
+                      {{ column.label }}
+                    </th>
+                    <td
+                      *matCellDef="let row"
+                      [ngClass]="column.cssClasses"
+                      mat-cell
+                    >
+                      {{ row[column.property] }}
+                    </td>
+                  </ng-container>
+                }
+                @case ("date") {
+                  <ng-container [matColumnDef]="column.property">
+                    <th
+                      *matHeaderCellDef
+                      [ngClass]="column.cssClassesHead"
+                      class="text-center"
+                      mat-header-cell
+                      mat-sort-header
+                    >
+                      {{ column.label }}
+                    </th>
+                    <td
+                      *matCellDef="let row"
+                      [ngClass]="column.cssClasses"
+                      mat-cell
+                    >
+                      {{ row[column.property] | date: "dd/MM/yyyy" }}
+                    </td>
+                  </ng-container>
+                }
+                @case ("currency") {
+                  <ng-container [matColumnDef]="column.property">
+                    <th
+                      *matHeaderCellDef
+                      [ngClass]="column.cssClassesHead"
+                      class="text-center"
+                      mat-header-cell
+                      mat-sort-header
+                    >
+                      {{ column.label }}
+                    </th>
+                    <td
+                      *matCellDef="let row"
+                      [ngClass]="column.cssClasses"
+                      mat-cell
+                    >
+                      {{ row[column.property] | currencyFormat: "COP" }}
+                    </td>
+                  </ng-container>
+                }
+              }
             }
 
             <!-- Header row first group -->
@@ -212,7 +205,7 @@
               <th
                 mat-header-cell
                 *matHeaderCellDef
-                [attr.colspan]="1"
+                [attr.colspan]="3"
                 [style.text-align]="'center'"
                 class="text-center"
               >
