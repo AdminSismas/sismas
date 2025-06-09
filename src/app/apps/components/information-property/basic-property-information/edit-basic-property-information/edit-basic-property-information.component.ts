@@ -261,8 +261,11 @@ export class EditBasicPropertyInformationComponent implements OnInit {
             ) as keyof BasicInformationProperty;
           }
 
-          const areaValue = this.form.value[counterParameterName] || 0;
-          const sum = +value + +areaValue;
+          const areaValue =
+            this.form.get(counterParameterName)?.value ||
+            this.contentInformation?.[counterParameterName] ||
+            0;
+          const sum = Big(+value).add(+areaValue).toNumber();
           const totalAreaParameterName = this.sumatoryParameterName(parameter);
 
           this.form.get(totalAreaParameterName)?.setValue(sum);
@@ -341,7 +344,9 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       return;
     }
 
-    const percentageCoefficient: number = Big(percentageGroup).div(100).toNumber();
+    const percentageCoefficient: number = Big(percentageGroup)
+      .div(100)
+      .toNumber();
     if (percentageCoefficient <= 0) {
       this.getAlertError('Valor de coeficiente de propiedad no permitido');
       return;
@@ -380,7 +385,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       buildNumber === null ||
       floorNumber === undefined ||
       floorNumber === null
-    ) return false;
+    )
+      return false;
 
     const numberCondition = this.contentInformation?.cadastralNumber?.slice(
       21,
@@ -412,8 +418,11 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       this.contentInformation?.detailGroup?.percentage_group &&
       this.contentInformation?.detailGroup?.percentage_group !== 0
     ) {
-      const coefficient: number =
-        +Big(this.contentInformation?.detailGroup?.percentage_group).mul(100).toFixed(2);
+      const coefficient: number = +Big(
+        this.contentInformation?.detailGroup?.percentage_group
+      )
+        .mul(100)
+        .toFixed(2);
       this.controlPercentageGroup.setValue(coefficient);
     }
 

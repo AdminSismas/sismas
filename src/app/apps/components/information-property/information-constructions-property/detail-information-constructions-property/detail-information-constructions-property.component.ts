@@ -117,7 +117,7 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
     const executionId = detailInformationConstruction.executionId ?? null;
     const baunitId = detailInformationConstruction.baunitId ?? null;
     const unitBuiltId = detailInformationConstruction.unitBuiltId ?? null;
-    if (!executionId || !baunitId || !unitBuiltId) {
+    if (!baunitId || !unitBuiltId) {
       return;
     }
     this.constructionsService.getQualificationConstructions(
