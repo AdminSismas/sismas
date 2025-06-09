@@ -174,7 +174,7 @@ export class BasicPropertyInformationComponent implements OnInit {
     this.data = result;
     this.propertyRegistryOffice.emit(this.data.propertyRegistryOffice);
     this.propertyRegistryNumber.emit(this.data.propertyRegistryNumber);
-    this.isMatriz.emit(this.data.masterGroup !== null && this.data.masterGroup !== undefined);
+    this.isMatriz.emit(this.existMasterGroup());
   }
 
   editBasicInformationProperty(): void {
