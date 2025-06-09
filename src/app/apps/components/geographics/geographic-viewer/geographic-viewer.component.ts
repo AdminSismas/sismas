@@ -50,7 +50,7 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
   @ViewChild('ErrorMap') private errorMap!: SwalComponent;
   queryParameters!: QueryParametersGeographicVie;
   baunitHead!: BaunitHead;
-  errorMessage: string = '';
+  errorMessage = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema | undefined,
@@ -82,7 +82,7 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
     }
 
     this.geographicService
-      .getInfoGeographicViewer(this.baunitHead.cadastralNumber, '')
+      .getInfoGeographicViewer(this.baunitHead.cadastralNumber)
       .subscribe({
         next: (result: QueryParametersGeographicVie) => {
           this.queryParameters = new QueryParametersGeographicVie(result);
@@ -128,7 +128,7 @@ export class GeographicViewerComponent implements OnInit, AfterViewInit {
     this.dialogRef.close();
   }
 
-  handleError(message: string, error?: any): void {
+  handleError(message: string, error?: unknown): void {
     this.errorMessage = message;
     console.error('Error en la solicitud:', error);
     this.errorMap.fire().then(() => {

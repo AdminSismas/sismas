@@ -17,23 +17,23 @@ export class InformationGeographicService {
   }
 
 
-  getInfoGeographicViewer(cadastralNumber: string, schema: string): Observable<QueryParametersGeographicVie> {
+  getInfoGeographicViewer(cadastralNumber: string): Observable<QueryParametersGeographicVie> {
     const url = `${this.basic_url}${envi.accessGeo.extentByCodigoData}/${cadastralNumber}`;
     return this.requestsService.sendRequestsFetchGet(url).pipe(
-      catchError(error => {
+      catchError(() => {
         return throwError(() => new Error('No se pudo encontrar el mapa solicitado.'));
       })
     );
   }
 
   getViewGeneralMapById(ccZonaId: string): Observable<string | null> {
-    let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.generalMap}${envi.accessGeo.get}${ccZonaId}`;
+    const url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.generalMap}${envi.accessGeo.get}${ccZonaId}`;
     return this.requestsService.sendRequestsGetText(url)
       .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }
 
   getViewDataOpenMapByNpn(npn: string): Observable<string | null> {
-    let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.dataOpen}${npn}`;
+    const url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.dataOpen}${npn}`;
     return this.requestsService.sendRequestsGetText(url)
       .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }
@@ -50,7 +50,7 @@ export class InformationGeographicService {
   }
 
   getViewThematicMapByCodeMunicipality(codeMunicipality: string): Observable<string | null> {
-    let url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.thematicMap}${envi.accessGeo.get}${codeMunicipality}`;
+    const url = `${this.basic_url}${envi.accessGeo.extentByCodigo}${envi.accessGeo.thematicMap}${envi.accessGeo.get}${codeMunicipality}`;
     return this.requestsService.sendRequestsGetText(url)
       .pipe(catchError(error => this.errorNotFoundGeographicMap(error)));
   }
@@ -75,9 +75,11 @@ export class InformationGeographicService {
 
   errorNotFoundGeographicMap(error: HttpErrorResponse) {
     if (error.status == HttpStatusCode.NotFound) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return new Observable<any>((subscriber) => subscriber.complete());
     }
     if (error.status == HttpStatusCode.BadRequest) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return new Observable<any>((subscriber) => {
         subscriber.next(null);
         subscriber.complete();

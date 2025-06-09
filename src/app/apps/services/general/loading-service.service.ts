@@ -7,9 +7,6 @@ export class LoadingServiceService {
   isLoading = signal<boolean>(false);
   textLoading = signal<string>('Cargando ...');
 
-  constructor() {
-  }
-
   chargeTextLoading(text: string) {
     this.textLoading.set(text);
   }
@@ -22,12 +19,12 @@ export class LoadingServiceService {
     this.hide();
   }
 
-  activate(timer: number = 3000) {
+  activate(timer = 3000) {
     this.isLoading.set(true);
     setTimeout(() => this.hide(), timer);
   }
 
-  deActivate(timer: number = 3000) {
+  deActivate(timer = 3000) {
     this.isLoading.set(true);
     setTimeout(() => this.hide(), timer);
   }
