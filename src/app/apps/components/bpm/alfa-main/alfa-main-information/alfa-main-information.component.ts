@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import {
@@ -61,10 +69,7 @@ import {
   CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
   CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
 } from '../../../../constants/general/constantLabels';
-import { HttpErrorResponse } from '@angular/common/http';
-import {
-  ViewChangeAlphaMainRecordComponent
-} from '../../view-change-alpha-main-record/view-change-alpha-main-record.component';
+import { ViewChangeAlphaMainRecordComponent } from '../../view-change-alpha-main-record/view-change-alpha-main-record.component';
 import {
   TypeButtonAlfaMain,
   TypeOperationAlfaMain,
@@ -111,7 +116,6 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   styleUrl: './alfa-main-information.component.scss'
 })
 export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
-
   public id: string = getRandomInt(1234).toString();
 
   @Input({ required: true }) public executionId = '';
@@ -121,25 +125,32 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   @Input({ required: false }) public fluidHeight = '220';
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  private loadingServiceService: LoadingServiceService = inject(
+    LoadingServiceService
+  );
   private alfaMainService: AlfaMainService = inject(AlfaMainService);
-
 
   refreshData$: Observable<boolean> = this.alfaMainService.refreshData$;
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-  _validateChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
-  _createChangeLog$: ReplaySubject<ChangeControl> = new ReplaySubject<ChangeControl>(1);
+  _validateChangeLog$: ReplaySubject<ChangeControl> =
+    new ReplaySubject<ChangeControl>(1);
+  _createChangeLog$: ReplaySubject<ChangeControl> =
+    new ReplaySubject<ChangeControl>(1);
 
-  validateChangeLog$: Observable<ChangeControl> = this._validateChangeLog$.asObservable();
-  createChangeLog$: Observable<ChangeControl> = this._createChangeLog$.asObservable();
+  validateChangeLog$: Observable<ChangeControl> =
+    this._validateChangeLog$.asObservable();
+  createChangeLog$: Observable<ChangeControl> =
+    this._createChangeLog$.asObservable();
 
   infoFatherURL!: string;
   contentInformations!: InformationPegeable;
   changeGeoControl!: ChangeControl;
   listOperationContentInformation: OperationContentInformation[] = [];
 
-  @ViewChild('successValidityProcedure') public successValidityProcedure!: SwalComponent;
-  @ViewChild('errorValidityProcedure') public errorValidityProcedure!: SwalComponent;
+  @ViewChild('successValidityProcedure')
+  public successValidityProcedure!: SwalComponent;
+  @ViewChild('errorValidityProcedure')
+  public errorValidityProcedure!: SwalComponent;
 
   constructor(
     proFlow: ProFlow,
@@ -166,7 +177,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
 
     this._infoFatherURL$
       .pipe(filter<string>(Boolean))
-      .subscribe((result: string) => this.infoFatherURL = result);
+      .subscribe((result: string) => (this.infoFatherURL = result));
 
     if (!this.executionId) {
       this.returnPanelTask(true);
@@ -196,7 +207,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         this.getAlfaMain();
       });
 
-
     this.refreshData$
       .pipe(filter<boolean>(Boolean))
       .subscribe((result: boolean) => {
@@ -217,7 +227,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         this.returnPanelTask(true);
         return false;
       }
-
     }, 300);
   }
 
@@ -251,7 +260,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       .getListAlfaMainOperations(this.generateObjectPageSearchData())
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) =>{
+        next: (result: InformationPegeable) => {
           this.captureInformationSubscribe(result);
         }
       });
@@ -273,7 +282,10 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   orderByInformationSubscribe() {
     let data: Operation[];
     this.listOperationContentInformation = [];
-    if (!this.contentInformations?.content || this.contentInformations.content.length > 0) {
+    if (
+      !this.contentInformations?.content ||
+      this.contentInformations.content.length > 0
+    ) {
       data = this.contentInformations.content;
       data = data.map((row: Operation) => new Operation(row));
       const indexOperation = this.indexArraylist(data);
@@ -312,7 +324,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         text: 'No se puede continuar porque no se encuentra información que validar.',
         icon: 'error',
         confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#3085d6',
+        confirmButtonColor: '#3085d6'
       });
     }
   }
@@ -327,7 +339,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   generateObjectPageSearchData(): PageSearchData {
     return new PageSearchData(
       PAGE,
@@ -335,7 +346,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       this.executionId
     );
   }
-
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
@@ -365,22 +375,14 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   }
 
   executeClearInformationAlfaMain(keyWord: string) {
-    this.alfaMainService.clearInformationAlfaMain(this.executionId, keyWord)
+    this.alfaMainService
+      .clearInformationAlfaMain(this.executionId, keyWord)
       .subscribe({
         next: () => {
           this.contentInformations = new InformationPegeable();
           this.listOperationContentInformation = [];
           this.validateChangeLogAlfaMain();
           this.loadingServiceService.activateLoading();
-        },
-        error: (error: HttpErrorResponse) => {
-          Swal.fire({
-            text: 'Error al eliminar la unidad predial.',
-            icon: 'error',
-            showConfirmButton: false,
-            timer: 100
-          }).then();
-          throw error;
         }
       });
   }
@@ -421,10 +423,10 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       });
   }
 
-
   executeCreateAlfaGeo(type: TypeOperationGeoMain) {
     if (type === TYPE_OPERATION_CREATE_GEO && this.executionId) {
-      this.geographicService.createGeographicChangesTemp(this.executionId)
+      this.geographicService
+        .createGeographicChangesTemp(this.executionId)
         .subscribe({
           next: (result: ChangeControl) => {
             if (result && result.changeLogId && result.changeLogId > 0) {
@@ -433,10 +435,9 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
               );
               return;
             }
-            this.getAlertError('No se ha logrado eliminar el cambio geo');
+
             return;
-          },
-          error: () => this.getAlertError('No se ha logrado eliminar el cambio geo')
+          }
         });
     }
   }
@@ -453,9 +454,9 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         showLoaderOnConfirm: true,
         preConfirm: async (text: string) => {
           try {
-            return !text || text.length <= 0 ?
-              Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY) :
-              text;
+            return !text || text.length <= 0
+              ? Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY)
+              : text;
           } catch {
             // Handle the error appropriately, e.g., log it to an external service or remove this line in production.
             Swal.showValidationMessage(CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL);
@@ -463,11 +464,15 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
-        if (result.isConfirmed && result.value === CONSTANT_KEYWORD_DELETE_GEO_MAIN) {
-          this.geographicService.deleteGeographicChangesTemp(this.executionId)
+        if (
+          result.isConfirmed &&
+          result.value === CONSTANT_KEYWORD_DELETE_GEO_MAIN
+        ) {
+          this.geographicService
+            .deleteGeographicChangesTemp(this.executionId)
             .subscribe({
-              next: () => this.getAlertSuccess('Se ha logrado eliminar el cambio geo'),
-              error: () => this.getAlertError('No se ha logrado eliminar el cambio geo')
+              next: () =>
+                this.getAlertSuccess('Se ha logrado eliminar el cambio geo')
             });
         }
       });
@@ -529,16 +534,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     }).then();
   }
 
-  getAlertError(text: string) {
-    Swal.fire({
-      title: '¡Error!',
-      text: text,
-      icon: 'error',
-      showConfirmButton: false,
-      timer: 2000
-    }).then();
-  }
-
   private returnURLPrevious(url: string) {
     this.router.navigate([`${url}`]).then();
   }
@@ -562,25 +557,27 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.dialog.open(ValidityProcedureComponent, {
-      ...MODAL_SMALL_XS,
-      data: {
-        executionId: this.executionId,
-        validateChangeLog
-      }
-    }).afterClosed()
-    .subscribe({
-      next: (result: boolean) => {
-        if (result) {
-          this.validateChangeLogAlfaMain();
-          this.successValidityProcedure.fire();
+    this.dialog
+      .open(ValidityProcedureComponent, {
+        ...MODAL_SMALL_XS,
+        data: {
+          executionId: this.executionId,
+          validateChangeLog
         }
+      })
+      .afterClosed()
+      .subscribe({
+        next: (result: boolean) => {
+          if (result) {
+            this.validateChangeLogAlfaMain();
+            this.successValidityProcedure.fire();
+          }
 
-        if (result === false) {
-          this.errorValidityProcedure.fire();
+          if (result === false) {
+            this.errorValidityProcedure.fire();
+          }
         }
-      }
-    });
+      });
   }
 
   protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
@@ -596,6 +593,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   protected readonly TYPE_BUTTON_RESET = TYPE_BUTTON_TEN;
   protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
   protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
-  protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES = TYPE_OPERATION_CALCULATE_BOUNDARIES;
-
+  protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES =
+    TYPE_OPERATION_CALCULATE_BOUNDARIES;
 }
