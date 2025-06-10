@@ -1,4 +1,11 @@
-import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
@@ -43,32 +50,37 @@ import { LoadingServiceService } from '../../../services/general/loading-service
   styleUrl: './geographic-viewer-embedded.component.scss'
 })
 export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
-
   @Input({ required: false }) idComponent = 'GeneralMapContent1258446';
   @Input({ required: false }) executionId: string | null | undefined;
   @Input({ required: false }) ccZonaId: string | null | undefined;
   @Input({ required: false }) thematicMapValue: string | null | undefined;
   @Input({ required: false }) npn: string | null | undefined;
   @Input({ required: false }) schema: string | null | undefined;
-  @Input({ required: false }) enableRefreshButton: boolean = false;
+  @Input({ required: false }) enableRefreshButton = false;
+  @Input({ required: false }) getData = false;
 
   urlIframe: SafeResourceUrl | string | null = null;
-  showMap: boolean = false;
+  showMap = false;
 
-  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  private loadingServiceService: LoadingServiceService = inject(
+    LoadingServiceService
+  );
 
   constructor(
     private geographicService: InformationGeographicService,
     private sanitizer: DomSanitizer
-  ) {
-  }
-
+  ) {}
 
   ngOnInit(): void {
     if (this.idComponent != null && this.idComponent?.length > 0) {
-      this.idComponent = this.idComponent + getRandomInt(1000) + 'desdC2258446' + getRandomInt(4321);
+      this.idComponent =
+        this.idComponent +
+        getRandomInt(1000) +
+        'desdC2258446' +
+        getRandomInt(4321);
     } else {
-      this.idComponent = getRandomInt(10000) + 'desdC6558522' + getRandomInt(1234);
+      this.idComponent =
+        getRandomInt(10000) + 'desdC6558522' + getRandomInt(1234);
     }
   }
 
@@ -89,14 +101,25 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (changes['executionId'] && this.executionId && this.executionId?.length > 0 && this.schema && this.schema?.length > 0) {
+    if (
+      changes['getData'] &&
+      changes['getData'].currentValue &&
+      this.executionId &&
+      this.executionId?.length > 0 &&
+      this.schema &&
+      this.schema?.length > 0
+    ) {
       this.showMap = true;
       this.loadingServiceService.activateLoading(true);
       this.getViewGeneralMapByExecutionId(this.executionId, this.schema);
       return;
     }
 
-    if (changes['thematicMapValue'] && this.thematicMapValue && this.thematicMapValue?.length > 0) {
+    if (
+      changes['thematicMapValue'] &&
+      this.thematicMapValue &&
+      this.thematicMapValue?.length > 0
+    ) {
       this.showMap = true;
       this.loadingServiceService.activateLoading(true);
       this.getViewGeneralThematicMap(this.thematicMapValue);
@@ -107,7 +130,8 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   }
 
   getViewGeneralMapByExecutionId(executionId: string, schema: string) {
-    this.geographicService.getViewGeneralMapByExecutionId(executionId, schema)
+    this.geographicService
+      .getViewGeneralMapByExecutionId(executionId, schema)
       .subscribe({
         next: (result: string | null) => this.captureResult(result),
         error: () => this.captureErrorResult()
@@ -115,15 +139,15 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   }
 
   getViewGeneralMap(value: string) {
-    this.geographicService.getViewGeneralMapById(value)
-      .subscribe({
-        next: (result: string | null) => this.captureResult(result),
-        error: () => this.captureErrorResult()
-      });
+    this.geographicService.getViewGeneralMapById(value).subscribe({
+      next: (result: string | null) => this.captureResult(result),
+      error: () => this.captureErrorResult()
+    });
   }
 
   getViewGeneralThematicMap(value: string) {
-    this.geographicService.getViewThematicMapByCodeMunicipality(value)
+    this.geographicService
+      .getViewThematicMapByCodeMunicipality(value)
       .subscribe({
         next: (result: string | null) => this.captureResult(result),
         error: () => this.captureErrorResult()
@@ -131,11 +155,10 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
   }
 
   getViewDataOpenMap(value: string) {
-    this.geographicService.getViewDataOpenMapByNpn(value)
-      .subscribe({
-        next: (result: string | null) => this.captureResult(result),
-        error: (error) => this.captureErrorResult()
-      });
+    this.geographicService.getViewDataOpenMapByNpn(value).subscribe({
+      next: (result: string | null) => this.captureResult(result),
+      error: () => this.captureErrorResult()
+    });
   }
 
   captureResult(result: string | null) {
@@ -168,7 +191,12 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (this.executionId && this.executionId?.length > 0 && this.schema && this.schema?.length > 0) {
+    if (
+      this.executionId &&
+      this.executionId?.length > 0 &&
+      this.schema &&
+      this.schema?.length > 0
+    ) {
       this.getViewGeneralMapByExecutionId(this.executionId, this.schema);
       return;
     }
@@ -178,5 +206,4 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
       return;
     }
   }
-
 }

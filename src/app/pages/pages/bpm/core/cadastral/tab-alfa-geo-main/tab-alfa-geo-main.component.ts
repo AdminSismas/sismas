@@ -1,4 +1,12 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+  signal
+} from '@angular/core';
 import { ProFlow } from '../../../../../../apps/interfaces/bpm/pro-flow';
 import { SendInfoGeneralService } from '../../../../../../apps/services/general/send-info-general.service';
 import { Router } from '@angular/router';
@@ -7,17 +15,13 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
-import {
-  GeographicViewerEmbeddedComponent
-} from '../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
+import { GeographicViewerEmbeddedComponent } from '../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
 import { environment } from '../../../../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constants';
 import { filter } from 'rxjs/operators';
-import {
-  AlfaMainInformationComponent
-} from '../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+import { AlfaMainInformationComponent } from '../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -51,23 +55,28 @@ import { LoadingServiceService } from '../../../../../../apps/services/general/l
   styleUrl: './tab-alfa-geo-main.component.scss'
 })
 export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
+  id: string = getRandomInt(12345).toString();
+  schema = `${environment.schemas.temp}`;
+  executionIdGeo = '';
+  enableRefreshButton = true;
 
-  public id: string = getRandomInt(12345).toString();
-  public schema = `${environment.schemas.temp}`;
-  public executionIdGeo = '';
-  public enableRefreshButton: boolean = true;
+  // SIGNALS
+  selectedMapTab = signal<boolean>(false);
 
-  @Input({ required: true }) public executionId: string = '';
+  @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public textTabAlfaMain: string = 'Información Alfanumérica';
-  @Input({ required: false }) public textTabGeoMain: string = 'Mapa Geografico';
+  @Input({ required: false }) public textTabAlfaMain =
+    'Información Alfanumérica';
+  @Input({ required: false }) public textTabGeoMain = 'Mapa Geografico';
   @Input({ required: false }) public mode = 0;
 
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   infoFatherURL!: string;
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  private loadingServiceService: LoadingServiceService = inject(
+    LoadingServiceService
+  );
 
   constructor(
     proFlow: ProFlow,
@@ -80,25 +89,22 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-    this.destroyRef.onDestroy(() => {
-    });
+    this.destroyRef.onDestroy(() => console.log('destroy'));
   }
 
   ngOnInit() {
     this.loadingServiceService.activateLoading(true);
     if (this.id?.length > 0) {
       this.id =
-        this.id +
-        getRandomInt(100000) + 'AlfaGeoMainTab' + getRandomInt(10);
+        this.id + getRandomInt(100000) + 'AlfaGeoMainTab' + getRandomInt(10);
     } else {
-      this.id =
-        getRandomInt(10000) + 'AlfaMainTab' + getRandomInt(10);
+      this.id = getRandomInt(10000) + 'AlfaMainTab' + getRandomInt(10);
     }
 
     // Se sobre escribe los botones que se deben habilitar cuando se formulario geo
     if (this.mode === 3) {
       if (this.resources && this.resources.length > 0) {
-        LIST_BUTTON_GEO_MAIN.forEach(vl => this.resources.push(vl));
+        LIST_BUTTON_GEO_MAIN.forEach((vl) => this.resources.push(vl));
       }
     }
 
@@ -119,8 +125,6 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.loadingServiceService.activateLoading(false);
     }, 3000);
-
-
   }
 
   ngAfterViewInit(): void {
@@ -134,7 +138,6 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
         this.returnPanelTask(true);
         return false;
       }
-
     }, 300);
   }
 
@@ -148,5 +151,14 @@ export class TabAlfaGeoMainComponent implements OnInit, AfterViewInit {
 
   private returnURLPrevious(url: string) {
     this.router.navigate([`${url}`]).then();
+  }
+
+  changeTabSelected(event: number) {
+    if (event === 1) {
+      this.selectedMapTab.set(true);
+      return;
+    }
+    this.selectedMapTab.set(false);
+    return;
   }
 }

@@ -14,7 +14,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     element: 'collection',
     type: 'FuenteAdministrativaTipo',
     validators: [Validators.required],
-    cssClasses: 'col-span-2'
+    cssClasses: 'col-span-2 w-full'
   },
   {
     name: 'fechaDocumentoFuente',
@@ -23,7 +23,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     element: 'date',
     type: 'past',
     validators: [Validators.required, generalValidationsService.maxDateValidator()],
-    cssClasses: 'col-span-2'
+    cssClasses: 'col-span-2 w-full'
   },
   {
     name: 'numeroFuente',
@@ -32,7 +32,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     element: 'input',
     type: 'string',
     validators: [Validators.required],
-    cssClasses: 'col-span-2'
+    cssClasses: 'col-span-2 w-full'
   },
   {
     name: 'domEnteEmisor',
@@ -41,7 +41,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     element: 'collection',
     type: 'EnteEmisor',
     validators: [Validators.required],
-    cssClasses: 'col-span-3'
+    cssClasses: 'col-span-3 w-full'
   },
   {
     name: 'oficinaOrigen',
@@ -50,7 +50,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     element: 'input',
     type: 'number',
     validators: [Validators.required],
-    cssClasses: 'col-span-3'
+    cssClasses: 'col-span-3 w-full'
   },
   {
     name: 'departamentoOrigen',
@@ -60,7 +60,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     type: 'string',
     options: [],
     validators: [Validators.required],
-    cssClasses: 'col-span-3'
+    cssClasses: 'col-span-3 w-full'
   },
   {
     name: 'ciudadOrigen',
@@ -70,7 +70,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     type: 'string',
     options: [],
     validators: [Validators.required],
-    cssClasses: 'col-span-3'
+    cssClasses: 'col-span-3 w-full'
   }
 ];
 

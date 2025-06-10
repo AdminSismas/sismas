@@ -6,7 +6,11 @@ import {
   CreateBasicInformationConstruction
 } from '../../../interfaces/information-property/content-information-construction';
 import { environment as envi } from '../../../../../environments/environments';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams
+} from '@angular/common/http';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { CcCalificacionUB } from '../../../interfaces/information-property/cc-calificacion-ub';
@@ -16,17 +20,15 @@ import { SendGeneralRequestsService } from '../../general/send-general-requests.
   providedIn: 'root'
 })
 export class InformationConstructionsService {
-
   basic_url = `${envi.url}:${envi.port}`;
   http = inject(HttpClient);
 
-  constructor(
-    private requestsService: SendGeneralRequestsService
-  ) {
-  }
+  constructor(private requestsService: SendGeneralRequestsService) {}
 
   // ${executionId}/${baunitId}
-  getDetailBasicInformationPropertyConstructions(id: number | undefined): Observable<ContentInformationConstruction> {
+  getDetailBasicInformationPropertyConstructions(
+    id: number | undefined
+  ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
     return this.requestsService
       .sendRequestsFetchGet(url)
@@ -53,12 +55,20 @@ export class InformationConstructionsService {
     );
   }
 
-  createConstruction(executionId: string, baunitId: string, data: ContentInformationConstruction): Observable<any> {
+  createConstruction(
+    executionId: string,
+    baunitId: string,
+    data: ContentInformationConstruction
+  ): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsFetchPostBody(url, data);
   }
 
-  updateConstruction(executionId: string, baunitId: string, data: ContentInformationConstruction): Observable<any> {
+  updateConstruction(
+    executionId: string,
+    baunitId: string,
+    data: ContentInformationConstruction
+  ): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.requestsService.sendRequestsUpdatePutBody(url, data);
   }
@@ -68,9 +78,9 @@ export class InformationConstructionsService {
     baunitId: string,
     createBasicInformationConstruction: CreateBasicInformationConstruction
   ): Observable<ContentInformationConstruction> {
-
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchPostBody(url, createBasicInformationConstruction)
+    return this.requestsService
+      .sendRequestsFetchPostBody(url, createBasicInformationConstruction)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessage = 'Ocurrió un error inesperado.';
@@ -84,21 +94,37 @@ export class InformationConstructionsService {
       );
   }
 
-
-  updateQualification(executionId: string, baunitId: string, unitBuiltId: number, payload: CcCalificacionUB[]): Observable<void> {
+  updateQualification(
+    executionId: string,
+    baunitId: string,
+    unitBuiltId: number,
+    payload: CcCalificacionUB[]
+  ): Observable<void> {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}`;
-    return this.requestsService.sendRequestsUpdatePutBody(url, payload).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
-    );
+    return this.requestsService
+      .sendRequestsUpdatePutBody(url, payload)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-  getQualificationConstructions(executionId: string, baunitId: string, unitBuiltId: number,
-                                schema: string | null | undefined = `${envi.schemas.temp}`): Observable<CcCalificacionUB[]> {
-    const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${schema}/${executionId}/${baunitId}/${unitBuiltId}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+  getQualificationConstructions(
+    executionId: string | null,
+    baunitId: string,
+    unitBuiltId: number,
+    schema: string | null | undefined = `${envi.schemas.temp}`
+  ): Observable<CcCalificacionUB[]> {
+    let url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
+
+    if (schema === `${envi.schemas.main}` && !executionId) {
+      return this.http.get<CcCalificacionUB[]>(url, { params: { unitBuiltId } });
+    }
+
+    url += `/${schema}/${executionId}/${baunitId}/${unitBuiltId}`;
+    return this.http.get<CcCalificacionUB[]>(url);
   }
 
-  getDetailBasicInformationPropertyQualificationConstructions(unitBuiltId: number | undefined): Observable<CcCalificacionUB[]> {
+  getDetailBasicInformationPropertyQualificationConstructions(
+    unitBuiltId: number | undefined
+  ): Observable<CcCalificacionUB[]> {
     let params: HttpParams = new HttpParams();
     params = params.append('unitBuiltId', `${unitBuiltId}`);
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
@@ -107,15 +133,20 @@ export class InformationConstructionsService {
     );
   }
 
-  getQualificationForTypology(selectedType: string): Observable<CcCalificacionUB[]> {
+  getQualificationForTypology(
+    selectedType: string
+  ): Observable<CcCalificacionUB[]> {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}${envi.typologyType}${selectedType}`;
-    return this.requestsService.sendRequestsFetchGet(url).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
-    );
+    return this.requestsService
+      .sendRequestsFetchGet(url)
+      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
   }
 
-
-  deleteConstruction(baunitId: string, changeLogId: string, unitBuiltId: number): Observable<any> {
+  deleteConstruction(
+    baunitId: string,
+    changeLogId: string,
+    unitBuiltId: number
+  ): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}`;
     const formData = new FormData();
     formData.append('baunitId', baunitId.toString());
@@ -126,24 +157,34 @@ export class InformationConstructionsService {
   }
 
   //{{url}}:{{port}}/unitBuilt/temp/{{executionId}}/{{baunitId}}/{{unitBuiltId}}/copy
-  copyConstruction(baunitId: string, executionId: string, unitBuiltId: number): Observable<ContentInformationConstruction> {
+  copyConstruction(
+    baunitId: string,
+    executionId: string,
+    unitBuiltId: number
+  ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}${envi.copy}`;
-    return this.requestsService.sendRequestsUpdatePutBody(url, null
-    );
+    return this.requestsService.sendRequestsUpdatePutBody(url, null);
   }
 
   private getData(url: string, params: any): Observable<any> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
 
-  getConstructionsWithoutBaunit( executionId: string, baunitId: string ): Observable<ContentInformationConstruction[]> {
+  getConstructionsWithoutBaunit(
+    executionId: string,
+    baunitId: string
+  ): Observable<ContentInformationConstruction[]> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}${envi.withoutbaunit}`;
 
     return this.http.get<ContentInformationConstruction[]>(url);
-
   }
 
-  addConstructionsWithoutBaunit( executionId: string, unitBuildId: string, baunitId: string, body: ContentInformationConstruction ): Observable<any> {
+  addConstructionsWithoutBaunit(
+    executionId: string,
+    unitBuildId: string,
+    baunitId: string,
+    body: ContentInformationConstruction
+  ): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${unitBuildId}/${baunitId}`;
 
     return this.http.put<any>(url, body);
