@@ -107,6 +107,7 @@ export interface CrudBasicInformationProperty {
   contentInformation: BasicInformationProperty | null;
   npnEdit?: boolean;
   areaEdit?: boolean;
+  isMatriz?: boolean;
 }
 export interface UpdateBasicInformationProperty {
   propertyRegistryOffice:      string;
