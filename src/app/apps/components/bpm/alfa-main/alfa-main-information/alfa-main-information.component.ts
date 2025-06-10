@@ -228,7 +228,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         `${environment.schemas.temp}`
       )
       .subscribe({
-        error: () => this.captureInformationChangeLogAlfaMainError(),
         next: (result: ChangeControl) => {
           if (!result) {
             this._validateChangeLog$.next(new ChangeControl());
@@ -243,7 +242,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     this.alfaMainService
       .createAlfaMainOperations(this.executionId, `${environment.schemas.temp}`)
       .subscribe({
-        error: () => this.captureInformationChangeLogAlfaMainError(),
         next: (result: ChangeControl) => this._createChangeLog$.next(result)
       });
   }
@@ -270,15 +268,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     this.listOperationContentInformation = [];
     this.orderByInformationSubscribe();
     this.loadingServiceService.activateLoading();
-  }
-
-  captureInformationChangeLogAlfaMainError() {
-    Swal.fire({
-      text: 'No se puede continuar la actividad error en la validación alfanumérica.',
-      icon: 'error',
-      showConfirmButton: false,
-      timer: 1000
-    }).then();
   }
 
   orderByInformationSubscribe() {
