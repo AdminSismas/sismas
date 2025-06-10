@@ -15,7 +15,8 @@ import {
   LIST_SCHEMAS_CONTROL_CHANGES,
   LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE,
-  MODAL_MEDIUM_H90, MODAL_MIN_MEDIUM_ALL,
+  MODAL_MEDIUM_H90,
+  MODAL_MIN_MEDIUM_ALL,
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
@@ -40,9 +41,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { Operation } from '../../../interfaces/bpm/operation';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
@@ -52,9 +51,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import {
-  ModificationPropertyUnitsComponent
-} from '../modification-property-units/modification-property-units.component';
+import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import {
@@ -85,7 +82,8 @@ import {
   styleUrl: './table-alfa-main.component.scss'
 })
 export class TableAlfaMainComponent
-  implements OnInit, AfterViewInit, OnChanges {
+  implements OnInit, AfterViewInit, OnChanges
+{
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   @Input({ required: true }) contentInformations!: InformationPegeable;
@@ -113,17 +111,19 @@ export class TableAlfaMainComponent
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmRemoveDialog', { static: true }) confirmRemoveDialog!: SwalComponent;
-  @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: SwalComponent;
-  @ViewChild('confirmAddUpdateBaUnitHead', { static: true }) confirmAddUpdateBaUnitHead!: SwalComponent;
+  @ViewChild('confirmRemoveDialog', { static: true })
+  confirmRemoveDialog!: SwalComponent;
+  @ViewChild('confirmDeleteDialog', { static: true })
+  confirmDeleteDialog!: SwalComponent;
+  @ViewChild('confirmAddUpdateBaUnitHead', { static: true })
+  confirmAddUpdateBaUnitHead!: SwalComponent;
 
   constructor(
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private bpmCoreService: BpmCoreService,
     private alfaMainService: AlfaMainService
-  ) {
-  }
+  ) {}
 
   get visibleColumns() {
     return this.columns
@@ -216,10 +216,17 @@ export class TableAlfaMainComponent
 
   viewChanges(operation: Operation): void {
     if (!operation || !operation?.baunitHead?.baunitIdE) {
-      this.msgErrorConsultingAdministration(CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE);
+      this.msgErrorConsultingAdministration(
+        CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
+      );
       return;
     }
-    this.bpmCoreService.viewChangesBpmOperationTemp(this.executionId, operation?.baunitHead?.baunitIdE).subscribe({
+    this.bpmCoreService
+      .viewChangesBpmOperationTemp(
+        this.executionId,
+        operation?.baunitHead?.baunitIdE
+      )
+      .subscribe({
         error: () => this.messageChangesNoAvailable(),
         next: (result: DifferenceChanges[]) => {
           this.openDifferenceChangesProperty(
@@ -325,8 +332,9 @@ export class TableAlfaMainComponent
       return;
     }
 
-    const data: DifferenceChanges[] = result.map((row: DifferenceChanges) =>
-      new DifferenceChanges(row, executionId, baunitIdE)
+    const data: DifferenceChanges[] = result.map(
+      (row: DifferenceChanges) =>
+        new DifferenceChanges(row, executionId, baunitIdE)
     );
     this.dialog
       .open(ViewChangesBpmOperationComponent, {
@@ -338,7 +346,9 @@ export class TableAlfaMainComponent
   }
 
   messageChangesNoAvailable() {
-    this.msgErrorConsultingAdministration( CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE);
+    this.msgErrorConsultingAdministration(
+      CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE
+    );
   }
 
   editCadastralUnits(row: Operation) {
