@@ -187,12 +187,13 @@ export class BasicPropertyInformationComponent implements OnInit {
       type: TYPE_UPDATE,
       contentInformation: data,
       npnEdit: this.editNpn,
-      areaEdit: this.editArea
+      areaEdit: this.editArea,
+      isMatriz: this.existMasterGroup()
     };
     this.dialog.open(EditBasicPropertyInformationComponent, {
       ...MODAL_MEDIUM_SMALL,
       disableClose: true,
-      data: dataBasicInformationProperty
+      data: dataBasicInformationProperty,
     }).afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {

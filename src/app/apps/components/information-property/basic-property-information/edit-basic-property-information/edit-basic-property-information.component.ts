@@ -36,6 +36,8 @@ import { BaunitCondition } from 'src/app/apps/constants/general/constants';
 import { Subscription } from 'rxjs';
 import Big from 'big.js';
 
+const REGEX_MORE_THAN_0 = /^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/;
+
 @Component({
   selector: 'vex-edit-basic-property-information',
   standalone: true,
@@ -67,7 +69,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     // GRUPO "Identificación del predio"
     cadastralNumberFormat: ['', [Validators.required]],
     cadastralNumber: ['', [Validators.required]],
-    cadastralLastNumber: ['', [Validators.min(0)]],
+    cadastralLastNumber: ['', [Validators.pattern(REGEX_MORE_THAN_0)]],
     propertyRegistryOffice: [''],
     propertyRegistryNumber: [''],
     baunitIdOrigin: [''],
@@ -82,9 +84,12 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
     // *****GRUPO "Tamaños y áreas" ****
     propertyRegistryArea: [''],
-    cadastralArea: ['', [Validators.required, Validators.min(0)]],
-    cadAreaCommon: [''],
-    cadAreaPrivate: [''],
+    cadastralArea: [
+      '',
+      [Validators.required, Validators.pattern(REGEX_MORE_THAN_0)]
+    ],
+    cadAreaCommon: ['', [Validators.required, Validators.pattern(REGEX_MORE_THAN_0)]],
+    cadAreaPrivate: ['', [Validators.required, Validators.pattern(REGEX_MORE_THAN_0)]],
     cadastralAreaUnitbuilt: [''],
     cadAreaUnitbuiltCommon: [''],
     cadAreaUnitbuiltPrivate: [''],
@@ -190,14 +195,10 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       this.chargerInfoPropertyUnit();
       return;
     }
-    if (this.contentInformation?.domBaunitCondition) {
-      this.areasEnabledByBaunitConditions = this.dataBasicInformationProperty
-        .areaEdit
-        ? this.areasByBaunitConditions[
-            this.contentInformation.domBaunitCondition as BaunitCondition
-          ]
-        : [];
-    }
+    this.areasEnabledByBaunitConditions = this.dataBasicInformationProperty
+      .isMatriz
+      ? ['propertyRegistryArea', 'cadAreaCommon']
+      : ['propertyRegistryArea', 'cadAreaPrivate'];
     this.getReadyForm();
   }
 
@@ -297,6 +298,20 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     if (!this.executionId || !this.baunitIdE) {
       return;
     }
+
+    const baunitCondition =
+      this.dataBasicInformationProperty.contentInformation?.domBaunitCondition;
+
+    if (
+      this.typeCategory() !== TYPE_UPDATE_PROPERTY_UNIT &&
+      this.form.invalid &&
+      !(baunitCondition === 'Mejora' || baunitCondition === 'Informal')
+    ) {
+      console.log(this.form);
+      this.getAlertError('Complete los campos obligatorios');
+      return;
+    }
+
     let basicInformation!: BasicInformationProperty | null;
     if (this.typeCategory() === TYPE_UPDATE_PROPERTY_UNIT) {
       basicInformation = this.contentInformation;
