@@ -1,0 +1,12 @@
+<app-modal-window
+  title="Convertir a matriz"
+  [actions]="true"
+  [showCancelButton]="true"
+  (accept)="onAccept()"
+  (dialog)="dialog.set($event)"
+>
+  <vex-dynamic-forms
+    [inputs]="inputForm"
+    (formReady)="formGroup.set($event)"
+  ></vex-dynamic-forms>
+</app-modal-window>

@@ -35,6 +35,7 @@ export const environment = {
   baunit_npnlike: "/baunit/npnlike",
   bAUnitCreate: "BAUnitCreate",
   bAUnitCreateDetail: "BAUnitCreateDetail",
+  BAUnitCreateMasterFromNph: "BAUnitCreateMasterFromNph",
   bAUnitDelete: "BAUnitDelete",
   bAUnitDeleteExistTemp: "BAUnitDeleteExistTemp",
   baunitId: "/baunitId",

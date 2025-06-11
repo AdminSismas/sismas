@@ -17,6 +17,7 @@ import {
   MODAL_LARGE,
   MODAL_MEDIUM_H90,
   MODAL_MIN_MEDIUM_ALL,
+  MODAL_SMALL_XS,
   PAGE,
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE,
@@ -58,6 +59,7 @@ import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
+import { CreateMatrixFromNphComponent } from './create-matrix-from-nph/create-matrix-from-nph.component';
 
 @Component({
   selector: 'vex-table-alfa-main',
@@ -166,7 +168,6 @@ export class TableAlfaMainComponent
     let data: Operation[];
     if (this.contentInformations?.content !== null) {
       data = this.contentInformations.content;
-      // data = data.map((row: Operation) => new Operation(row));
       this.dataSource.data = data;
     }
 
@@ -386,6 +387,38 @@ export class TableAlfaMainComponent
       return 'Borrar';
     }
     return 'Reincorporar';
+  }
+
+  isMatriz(condition: string): boolean {
+    return (
+      condition === '(Condominio) Matriz' ||
+      condition === '(Propiedad horizontal) Matriz' ||
+      condition === '(Parque cementerio) Matriz'
+    );
+  }
+
+  changeNphToMatriz(row: Operation) {
+    this.dialog.open(CreateMatrixFromNphComponent, {
+      ...MODAL_SMALL_XS
+    }).afterClosed().subscribe((result) => {
+      if (result.response) {
+        this.bpmCoreService
+          .createMasterFromNph(
+            row.baunitIdE,
+            this.executionId,
+            result.data.domBaunitCondition
+          )
+          .subscribe(() => {
+            Swal.fire({
+              text: 'No propiedad horizontal convertida exitosamente',
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 5000
+            });
+            this.refreshData.emit();
+          });
+      }
+    });
   }
 
   // addRemoveOption(operationType: string): { text: string; icon: string } {
