@@ -1,8 +1,8 @@
 // Angular framework
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
@@ -19,7 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -47,6 +46,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -64,7 +64,6 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
     CommonModule,
     FormsModule,
     NgClass,
-    NgFor,
     NgIf,
     ReactiveFormsModule,
     SweetAlert2Module,
@@ -98,7 +97,7 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
     layoutCtrl = new UntypedFormControl('boxed');
     searchCtrl: UntypedFormControl = new UntypedFormControl();
     dataSource!: MatTableDataSource<AttachmentCollection>;
-    isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+    isNotDesktop$: Observable<boolean> = this.layoutService.isDesktop$.pipe(tap((response) => !response));
     contentInformations!: InformationPegeable;
 
 
@@ -130,7 +129,6 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
       private dialog: MatDialog,
       private attachmentService: AttachmentService,
       private readonly layoutService: VexLayoutService,
-      private snackBar: MatSnackBar,
     ) {}
 
 
@@ -227,7 +225,7 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
     /* ------- Meth. Services ------- */
     getDataFromDocumentManagementService(): void {
       this.attachmentService.getDataPropertyByAttachment(this.executionId).subscribe({
-        next: (data: any) => {
+        next: (data) => {
           this.dataSource.data = data;
           this.totalElements = data.length;
 
@@ -239,8 +237,8 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
       });
     }
 
-    getFileIcon(row: any): string {
-      const fileExtension = this.getFileExtension(row.originalFileName);
+    getFileIcon(row: AttachmentCollection): string {
+      const fileExtension = this.getFileExtension(row.originalFileName!);
 
       switch (fileExtension) {
         case 'pdf':
@@ -264,8 +262,8 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
       }
     }
 
-    getMatTooltip(row: any): string {
-      const fileExtension = this.getFileExtension(row.originalFileName);
+    getMatTooltip(row: AttachmentCollection): string {
+      const fileExtension = this.getFileExtension(row.originalFileName!);
 
       switch (fileExtension) {
         case 'pdf':
@@ -290,8 +288,8 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
       }
     }
 
-    getFileTypeIcon(row: any): string {
-      const fileExtension = this.getFileExtension(row.originalFileName);
+    getFileTypeIcon(row: AttachmentCollection): string {
+      const fileExtension = this.getFileExtension(row.originalFileName!);
       switch (fileExtension) {
         case 'pdf':
           return 'mat:picture_as_pdf'; // Icono de PDF
@@ -315,8 +313,8 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
       }
     }
 
-    getFileIconColor(row: any): string {
-      const fileExtension = this.getFileExtension(row.originalFileName);
+    getFileIconColor(row: AttachmentCollection): string {
+      const fileExtension = this.getFileExtension(row.originalFileName!);
 
       // Colores para diferentes tipos de archivo
       switch (fileExtension) {
@@ -358,7 +356,7 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
       });
     }
 
-    onDelete(row: any): void {
+    onDelete(row: AttachmentCollection): void {
       // Muestra la alerta de confirmación de eliminación
       this.confirmDialog.fire().then((result) => {
         if (result.isConfirmed) {
@@ -369,25 +367,21 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
     }
 
 
-    deleteFile(row: any): void {
+    deleteFile(row: AttachmentCollection): void {
       const index = this.dataSource.data.findIndex(item => item.id === row.id);
 
       if (index !== -1) {
         this.dataSource.data.splice(index, 1);
         this.dataSource._updateChangeSubscription();
 
-        this.attachmentService.deleteAttachment(this.executionId, row.id, row.originalFileName).subscribe({
-          next: (response) => {
-            this.snackBar.open('Archivo eliminado con éxito', 'Cerrar', {
-              duration: 10000,
-              panelClass: ['snack-success'],
-            });
-          },
-          error: (error) => {
-            console.error('Error al eliminar el archivo:', error);
-            this.snackBar.open('Hubo un error al eliminar el archivo. Intente nuevamente.', 'Cerrar', {
-              duration: 10000,
-              panelClass: ['snack-error'],
+        this.attachmentService.deleteAttachment(this.executionId, `${row.id}`, row.originalFileName!).subscribe({
+          next: () => {
+            Swal.fire({
+              text: 'Archivo eliminado con éxito',
+              icon: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Aceptar',
+              timer: 5000
             });
           }
         });

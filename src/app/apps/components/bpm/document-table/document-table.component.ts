@@ -63,6 +63,7 @@ import { MODAL_LARGE } from '../../../constants/general/constants';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   templateUrl: './document-table.component.html',
@@ -91,7 +92,7 @@ import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/m
     NgClass,
     NgIf,
     ReactiveFormsModule
-]
+  ]
 })
 export class DocumentTableComponent implements OnInit, AfterViewInit {
   /* ============== ATTRIBUTES ============== */
@@ -182,7 +183,8 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   get visibleColumns(): string[] {
     return [
       'action',
-      ...this.columns.filter((c) => c.visible).map((c) => c.property)
+      ...this.columns.filter((c) => c.visible).map((c) => c.property),
+      'delete'
     ];
   }
 
@@ -325,7 +327,6 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
       case 'jpg':
       case 'gif':
       case 'bmp':
-
         return 'text-green-600'; // Verde para imágenes
       case 'zip':
       case 'rar':
@@ -338,5 +339,20 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   // Función para obtener la extensión del archivo
   getFileExtension(fileName: string): string {
     return fileName.split('.').pop()?.toLowerCase() || '';
+  }
+  deleteFile(row: AttachmentCollection) {
+    const { id, originalFileName } = row;
+    this.attachmentService
+      .deleteAttachment(this.data.executionId, `${id}`, originalFileName!)
+      .subscribe(() => {
+        Swal.fire({
+          text: 'Archivo eliminado con exito',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar',
+          timer: 5000
+        });
+        this.getDataFromDocumentManagementService();
+      });
   }
 }
