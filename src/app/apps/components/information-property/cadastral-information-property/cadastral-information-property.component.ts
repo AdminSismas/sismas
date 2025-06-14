@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
-import { Component, ElementRef, forwardRef, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, forwardRef, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -242,15 +242,21 @@ export class CadastralInformationPropertyComponent implements OnInit {
   schemaTemp = `${envi.schemas.temp}`;
   schemaHist = `${envi.schemas.hist}`;
 
+  // Zone.js variables
   public viewProperties = false;
   public showRulesPage = false;
-  public expand_tap_property_information = true;
   public expand_tap = false;
+
+  // SIGNALS
+  activeComponent = signal<number>(0);
   isMatriz = signal<boolean>(false);
 
   constructor(
-    private informationPropertyService: InformationPropertyService
+    private informationPropertyService: InformationPropertyService,
   ) {
+    effect(() => {
+      console.log(this.activeComponent());
+    });
   }
 
   ngOnInit(): void {

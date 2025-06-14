@@ -6,6 +6,7 @@ import {
   inject,
   Input,
   OnInit,
+  output,
   ViewChild
 } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -67,6 +68,7 @@ import { EditConstructionsComponent } from './edit-constructions/edit-constructi
 import { TableConstructionsComponent } from './table-constructions/table-constructions.component';
 import { ModalResponse } from '../../general-components/modal-window/modal-window.component';
 import Swal from 'sweetalert2';
+import { input } from '@angular/core';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -117,13 +119,17 @@ export class InformationConstructionsPropertyComponent
   ltMd$: Observable<boolean> = this.layoutService.ltMd$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
+
+  // Input signal
+  expandedComponent = input.required<boolean>();
+
+  // Output signal
+  emitExpandedComponent = output<number>();
 
   columns: TableColumn<ContentInformationConstruction>[] =
     TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
@@ -155,15 +161,13 @@ export class InformationConstructionsPropertyComponent
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    if (this.id?.length <= 0 || this.baunitId == null) {
+    if (this.baunitId == null) {
       return;
     }
-    this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
     if (this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
       this.pageSize = PAGE_SIZE_SORT;
       this.columns = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS;
     }
-    this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
@@ -196,10 +200,9 @@ export class InformationConstructionsPropertyComponent
       .map((column) => column.property);
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchInformationsConstructionsProperty();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(6);
+    this.searchInformationsConstructionsProperty();
   }
 
   searchInformationsConstructionsProperty(): boolean {

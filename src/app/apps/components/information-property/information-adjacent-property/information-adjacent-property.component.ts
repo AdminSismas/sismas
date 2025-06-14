@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, forwardRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, forwardRef, inject, input, Input, OnInit, output, ViewChild } from '@angular/core';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -41,7 +41,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
-import { getRandomInt } from 'src/app/apps/utils/general';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   CrudInformationAdjacentPropertyComponent
@@ -93,13 +92,17 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
 
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable: boolean | undefined = true;
+
+  // Inputs signal
+  expandedComponent = input.required<boolean>();
+
+  // Outputs signal
+  emitExpandedComponent = output<number>();
 
   columns: TableColumn<InformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
 
@@ -133,18 +136,14 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    if (this.id?.length <= 0 || this.baunitId == null) {
+    if (this.baunitId == null) {
       return;
     }
-
-    this.id = getRandomInt(874524) + this.schema +
-      +'InformationAdjacentPropertyComponent' + getRandomInt(10) + this.baunitId;
 
     if (this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
       this.columns = TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL;
     }
 
-    this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
@@ -155,10 +154,9 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     this.initialPaginatorAndSort();
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchInformationAdjacentProperty();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(7);
+    this.searchInformationAdjacentProperty();
   }
 
   searchInformationAdjacentProperty(): boolean {

@@ -1,6 +1,20 @@
-import { Component, EventEmitter, forwardRef, inject, Input, OnInit, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  inject,
+  Input,
+  Output,
+  signal,
+  input,
+  output
+} from '@angular/core';
 import { DatePipe, NgClass, PercentPipe } from '@angular/common';
-import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,9 +29,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
 import {
@@ -40,17 +52,12 @@ import {
 } from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  EditBasicPropertyInformationComponent
-} from './edit-basic-property-information/edit-basic-property-information.component';
+import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
 import { MatDividerModule } from '@angular/material/divider';
-import { getRandomInt } from '../../../utils/general';
-import {
-  LayoutCardCadastralInformationPropertyComponentComponent
-} from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import Swal from 'sweetalert2';
@@ -94,14 +101,15 @@ import Swal from 'sweetalert2';
       useExisting: forwardRef(() => BasicPropertyInformationComponent),
       multi: true
     }
-  ],
+  ]
 })
-export class BasicPropertyInformationComponent implements OnInit {
-
+export class BasicPropertyInformationComponent {
   data!: BasicInformationProperty;
 
-  @Input({ required: true }) id = '';
-  @Input() expandedComponent = true;
+  //Inputs signal
+  expandedComponent = input.required<boolean>();
+
+  //Inputs zone.js
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
@@ -111,8 +119,14 @@ export class BasicPropertyInformationComponent implements OnInit {
   @Input() editNpn? = false;
   @Input() editArea? = false;
 
-  @Output() propertyRegistryNumber: EventEmitter<string> = new EventEmitter<string>();
-  @Output() propertyRegistryOffice: EventEmitter<string> = new EventEmitter<string>();
+  // Outputs signal
+  emitExpandedComponent = output<number>();
+
+  //Outputs zone.js
+  @Output() propertyRegistryNumber: EventEmitter<string> =
+    new EventEmitter<string>();
+  @Output() propertyRegistryOffice: EventEmitter<string> =
+    new EventEmitter<string>();
   @Output() isMatriz = new EventEmitter<boolean>();
 
   private alfaMainService: AlfaMainService = inject(AlfaMainService);
@@ -123,40 +137,24 @@ export class BasicPropertyInformationComponent implements OnInit {
   constructor(
     private informationPropertyService: InformationPropertyService,
     private dialog: MatDialog
-  ) {
+  ) {}
+
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(0);
+    this.searchBasicInformationProperty();
   }
-
-  ngOnInit(): void {
-    if (this.id?.length <= 0 || this.baunitId == null) {
-      return;
-    }
-
-    if (this.id?.length > 0) {
-      this.id = this.id + getRandomInt(10000) + this.schema +
-        'basic-property' + getRandomInt(10);
-    } else {
-      this.id = getRandomInt(100100) + this.schema +
-        +'basic-property' + getRandomInt(10);
-    }
-  }
-
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchBasicInformationProperty();
-    }
-  }
-
 
   searchBasicInformationProperty(): void {
     if (!this.schema || !this.baunitId) {
       return;
     }
 
-    this.informationPropertyService.getBasicInformationProperty(
-      this.schema, this.baunitId, this.executionId)
+    this.informationPropertyService
+      .getBasicInformationProperty(this.schema, this.baunitId, this.executionId)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: BasicInformationProperty) => this.captureInformationSubscribe(result)
+        next: (result: BasicInformationProperty) =>
+          this.captureInformationSubscribe(result)
       });
   }
 
@@ -190,15 +188,17 @@ export class BasicPropertyInformationComponent implements OnInit {
       areaEdit: this.editArea,
       isMatriz: this.existMasterGroup()
     };
-    this.dialog.open(EditBasicPropertyInformationComponent, {
-      ...MODAL_MEDIUM_SMALL,
-      disableClose: true,
-      data: dataBasicInformationProperty,
-    }).afterClosed()
+    this.dialog
+      .open(EditBasicPropertyInformationComponent, {
+        ...MODAL_MEDIUM_SMALL,
+        disableClose: true,
+        data: dataBasicInformationProperty
+      })
+      .afterClosed()
       .subscribe({
         next: (result: BasicInformationProperty) => {
           if (result && result?.baunitIdE) {
-            setTimeout(() => this.data = result, 300);
+            setTimeout(() => (this.data = result), 300);
           }
         }
       });
@@ -212,15 +212,17 @@ export class BasicPropertyInformationComponent implements OnInit {
         type: TYPE_UPDATE_PROPERTY_UNIT,
         contentInformation: data
       };
-      this.dialog.open(EditBasicPropertyInformationComponent, {
-        ...MODAL_MIN_SMALL_40_25,
-        disableClose: true,
-        data: dataBasicInformationProperty
-      }).afterClosed()
+      this.dialog
+        .open(EditBasicPropertyInformationComponent, {
+          ...MODAL_MIN_SMALL_40_25,
+          disableClose: true,
+          data: dataBasicInformationProperty
+        })
+        .afterClosed()
         .subscribe({
           next: (result: BasicInformationProperty) => {
             if (result && result?.baunitIdE) {
-              setTimeout(() => this.data = result, 300);
+              setTimeout(() => (this.data = result), 300);
             }
           }
         });
@@ -238,7 +240,8 @@ export class BasicPropertyInformationComponent implements OnInit {
   }
 
   openCadastralMasterGroupE(): void {
-    const masterGroupE: string | null | undefined = this.data?.detailGroup?.masterGroupE;
+    const masterGroupE: string | null | undefined =
+      this.data?.detailGroup?.masterGroupE;
     if (!masterGroupE) {
       return;
     }
@@ -248,9 +251,12 @@ export class BasicPropertyInformationComponent implements OnInit {
       return;
     }
 
-    this.alfaMainService.getBaUnitHeadTemporal(this.executionId, masterGroupE).subscribe({
-      next: (result: BaunitHead) => this.executeOpenCadastralMaster(result, masterGroupE),
-      error: () => this.swalErrorBaUnitHead(this.executionId, masterGroupE)
+    this.alfaMainService
+      .getBaUnitHeadTemporal(this.executionId, masterGroupE)
+      .subscribe({
+        next: (result: BaunitHead) =>
+          this.executeOpenCadastralMaster(result, masterGroupE),
+        error: () => this.swalErrorBaUnitHead(this.executionId, masterGroupE)
       });
   }
 
@@ -259,12 +265,16 @@ export class BasicPropertyInformationComponent implements OnInit {
       return;
     }
     this.alfaMainService.getBaUnitHead(masterGroupE).subscribe({
-      next: (result: BaunitHead) => this.executeOpenCadastralMaster(result, masterGroupE),
+      next: (result: BaunitHead) =>
+        this.executeOpenCadastralMaster(result, masterGroupE),
       error: () => this.swalErrorBaUnitHead(this.executionId, masterGroupE)
     });
   }
 
-  executeOpenCadastralMaster(result: BaunitHead, masterGroupE: string | null | undefined) {
+  executeOpenCadastralMaster(
+    result: BaunitHead,
+    masterGroupE: string | null | undefined
+  ) {
     if (!masterGroupE) {
       return;
     }
@@ -273,9 +283,15 @@ export class BasicPropertyInformationComponent implements OnInit {
       return;
     }
     let schemas: string[] = [];
-    schemas = this.executionId ? LIST_SCHEMAS_CONTROL_TEMP : LIST_SCHEMAS_CONTROL_MAIN;
+    schemas = this.executionId
+      ? LIST_SCHEMAS_CONTROL_TEMP
+      : LIST_SCHEMAS_CONTROL_MAIN;
     const dataInfo: ContentInfoSchema = new ContentInfoSchema(
-      masterGroupE, result, this.executionId, schemas, TYPE_INFORMATION_VISUAL
+      masterGroupE,
+      result,
+      this.executionId,
+      schemas,
+      TYPE_INFORMATION_VISUAL
     );
     dataInfo.levelInfo = 3;
     this.dialog
@@ -287,11 +303,17 @@ export class BasicPropertyInformationComponent implements OnInit {
       .afterClosed();
   }
 
-  swalErrorBaUnitHead(executionId: string | null | undefined,
-                      baunitId: string | null | undefined) {
+  swalErrorBaUnitHead(
+    executionId: string | null | undefined,
+    baunitId: string | null | undefined
+  ) {
     Swal.fire({
       title: '¡Error!',
-      text: 'Hubo un error, verifique la información de la unidad predial: ' + baunitId + ' y la version: ' + executionId,
+      text:
+        'Hubo un error, verifique la información de la unidad predial: ' +
+        baunitId +
+        ' y la version: ' +
+        executionId,
       icon: 'error',
       showConfirmButton: false,
       timer: 3000

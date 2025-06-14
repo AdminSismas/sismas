@@ -3,7 +3,7 @@ import {
   forwardRef,
   inject,
   input,
-  OnInit,
+  output,
   signal
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -39,6 +39,7 @@ import Swal from 'sweetalert2';
     CarouselComponent
   ],
   templateUrl: './photos.component.html',
+  styleUrl: './photos.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -47,14 +48,17 @@ import Swal from 'sweetalert2';
     }
   ]
 })
-export class PhotosComponent implements OnInit {
+export class PhotosComponent {
+  // Inject services
   photosService = inject(PhotosService);
   dialog = inject(MatDialog);
 
+  // Signals
   images = signal<{ url: string, name: string }[]>([]);
   loading = signal(true);
   resetCarousel = signal(false);
 
+  // Inputs
   expandedComponent = input<boolean>(false);
   baunitId = input<string>('');
   schema = input<string>('');
@@ -62,14 +66,12 @@ export class PhotosComponent implements OnInit {
   typeInformation = input<string>('');
   npn = input.required<string>();
 
-  ngOnInit(): void {
-    this.isExpandPanel(this.expandedComponent());
-  }
+  // Outputs
+  emitExpandedComponent = output<number>();
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.loadPhotos();
-    }
+  isExpandPanel() {
+    this.emitExpandedComponent.emit(12);
+    this.loadPhotos();
   }
 
   loadPhotos() {

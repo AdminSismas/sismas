@@ -13,10 +13,11 @@ mat-expansion-panel-header.mat-expanded:focus {
   background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
 }
 
-::ng-deep .classInformationConstructions div.mat-expansion-panel-body {
+::ng-deep .classInformationPhotos div.mat-expansion-panel-body {
   padding: 0;
 }
 
 .mat-mdc-header-row {
   height: var(--mat-table-header-container-height-geo-getion, 45px) !important;
 }
+

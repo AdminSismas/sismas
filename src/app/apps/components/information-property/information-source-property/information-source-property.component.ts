@@ -1,7 +1,16 @@
 // Angular framework
-import { ChangeDetectorRef, Component, Input, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  SimpleChanges,
+  ViewChild,
+  OnInit,
+  AfterViewInit,
+  OnChanges
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
 // Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -21,7 +30,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatOptionModule } from '@angular/material/core';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -41,10 +54,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import {
-  InformationPersonPropertyComponent
-} from '../information-person-property/information-person-property.component';
-
+import { InformationPersonPropertyComponent } from '../information-person-property/information-person-property.component';
 
 @Component({
   selector: 'vex-information-source-property',
@@ -59,8 +69,6 @@ import {
   ],
   imports: [
     ReactiveFormsModule,
-    NgForOf,
-    NgIf,
     NgClass,
     FormsModule,
     // Vex
@@ -78,32 +86,36 @@ import {
     MatTooltipModule,
     MatCardModule,
     MatMenuModule,
-    MatCheckboxModule,
+    MatCheckboxModule
     // Custom
   ],
   templateUrl: './information-source-property.component.html',
   styleUrl: './information-source-property.component.scss'
 })
-export class InformationSourcePropertyComponent {
-
-  subject$: BehaviorSubject<DataSource[]> = new BehaviorSubject<DataSource[]>([]);
-  data$: Observable<DataSource[]> = this.subject$.asObservable();
-  allSourceSnr: DataSource[] = [];
-
+export class InformationSourcePropertyComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
+  subject$: BehaviorSubject<DataSource[]> = new BehaviorSubject<DataSource[]>(
+    []
+  );
+  data$: Observable<DataSource[]> = this.subject$.asObservable();
+  allSourceSnr: DataSource[] = [];
+
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<DataSource>[] = TABLE_COLUMN_PROPERTIES_SOURCE;
   propertyRegistryOffice: string | null | undefined = null;
   propertyRegistryNumber: string | null | undefined = null;
-  dataSource: MatTableDataSource<DataSource> = new MatTableDataSource<DataSource>([]);
-//dataSource!: MatTableDataSource<DataSource>;
+  dataSource: MatTableDataSource<DataSource> =
+    new MatTableDataSource<DataSource>([]);
+  //dataSource!: MatTableDataSource<DataSource>;
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -113,7 +125,7 @@ export class InformationSourcePropertyComponent {
     private snrService: SnrService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   /* ============================ METHODS ============================ */
   /* --------------------- Meth. Lifecycle Hooks --------------------- */
@@ -150,11 +162,13 @@ export class InformationSourcePropertyComponent {
 
   /* -------------------------- Meth. HTML -------------------------- */
 
-
   get visibleColumns() {
-    const visibleColumns = ['detalles', ...this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property)]
+    const visibleColumns = [
+      'detalles',
+      ...this.columns
+        .filter((column) => column.visible)
+        .map((column) => column.property)
+    ];
 
     return visibleColumns;
   }
@@ -167,9 +181,7 @@ export class InformationSourcePropertyComponent {
 
   /* ----------------------- Meth. Listening ----------------------- */
 
-
   /* ------------------------- Meth. Common ------------------------- */
-
 
   searchBasicInformationPropertyFolio(orip: string, fmi: string): void {
     if (!this.schema || !this.baunitId) {
@@ -178,7 +190,7 @@ export class InformationSourcePropertyComponent {
     this.getDataSourceFolio(orip, fmi);
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.dataSource.data = [];
   }
 
@@ -199,8 +211,7 @@ export class InformationSourcePropertyComponent {
         this.allSourceSnr = response;
         this.subject$.next(this.allSourceSnr.reverse());
         this.cdr.markForCheck();
-      },
-      error: () => {}
+      }
     });
   }
 
@@ -212,8 +223,8 @@ export class InformationSourcePropertyComponent {
         anotacion: row.anotacion,
         baunitId: this.baunitId,
         schema: this.schema,
-        executionId: this.executionId,
+        executionId: this.executionId
       }
-    })
+    });
   }
 }

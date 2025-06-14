@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, forwardRef, input, Input, ViewChild } from '@angular/core';
+import { Component, forwardRef, input, Input, output, ViewChild } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
@@ -85,7 +85,6 @@ export class InformationZonesPropertyComponent {
   zoneBAUnitUrban: ZoneBAUnitFisica[] = [];
   zoneBAUnitGeoeconomic: ZoneBAUnitGeoeconomic[] = [];
 
-  @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input({ required: true }) npn!: string;
@@ -93,8 +92,12 @@ export class InformationZonesPropertyComponent {
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
 
-  // INPUT SIGNAL
+  // Input signals
   isMatriz = input(false);
+  expandedComponent = input.required<boolean>();
+
+  // Output signals
+  emitExpandedComponent = output<number>();
 
   @ViewChild('errorDelete') errorDelete!: SwalComponent;
 
@@ -148,14 +151,13 @@ export class InformationZonesPropertyComponent {
     this.dataBasicInformation = result;
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchInformationPhysicalZonesProperty();
-      this.searchInformationGeoeconomicZonesProperty();
-      this.searchInformationPhysicalZonesOrigin();
-      this.searchInformationGeoeconomicZonesOrigin();
-      this.searchBasicInformationProperty();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(9);
+    this.searchInformationPhysicalZonesProperty();
+    this.searchInformationGeoeconomicZonesProperty();
+    this.searchInformationPhysicalZonesOrigin();
+    this.searchInformationGeoeconomicZonesOrigin();
+    this.searchBasicInformationProperty();
   }
 
   searchInformationPhysicalZonesProperty(): void {

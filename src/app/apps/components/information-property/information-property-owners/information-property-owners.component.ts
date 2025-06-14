@@ -2,23 +2,24 @@
 import {
   AfterViewInit,
   Component,
-  computed, forwardRef,
+  computed,
+  forwardRef,
   inject,
   Input,
   OnInit,
+  output,
   signal,
   ViewChild
 } from '@angular/core';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_MEDIUM,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10,
-  PAGE_SIZE, PAGE_SIZE_SORT,
+  PAGE_OPTION_5_7_10,
+  PAGE_SIZE,
+  PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION
 } from '../../../constants/general/constants';
 import { MatRippleModule } from '@angular/material/core';
@@ -29,9 +30,7 @@ import { InfoOwners } from '../../../interfaces/information-property/info-owners
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import {
-  DetailInformationPropertyOwnerComponent
-} from './detail-information-property-owner/detail-information-property-owner.component';
+import { DetailInformationPropertyOwnerComponent } from './detail-information-property-owner/detail-information-property-owner.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -39,7 +38,11 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
@@ -53,15 +56,17 @@ import {
   FRACTION_DECIMALS,
   TABLE_COLUMNS
 } from '../../../constants/information-property/information-property-owners.constants';
-import { getRandomInt } from 'src/app/apps/utils/general';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 import { DeleteParamsRrright } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import Big from 'big.js';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { input } from '@angular/core';
 
-
-export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS' | 'domRightType'> &
+export type InfoOwnerRowT = Pick<
+  InfoOwners,
+  'rightId' | 'beginAt' | 'fractionS' | 'domRightType'
+> &
   Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
 
 @Component({
@@ -99,19 +104,25 @@ export type InfoOwnerRowT = Pick<InfoOwners, 'rightId' | 'beginAt' | 'fractionS'
       useExisting: forwardRef(() => InformationPropertyOwnersComponent),
       multi: true
     }
-  ],
+  ]
 })
-export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit {
-
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) expandedComponent = true;
+export class InformationPropertyOwnersComponent
+  implements OnInit, AfterViewInit
+{
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
 
-  protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = TABLE_COLUMNS;
+  // Input signal
+  expandedComponent = input.required<boolean>();
+
+  // Output signal
+  emitExpandedComponent = output<number>();
+
+  protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] =
+    TABLE_COLUMNS;
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -163,8 +174,7 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   constructor(
     private snackbar: MatSnackBar,
     private rrrigthtService: RrrightService
-  ) {
-  }
+  ) {}
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator || null;
@@ -172,19 +182,13 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   ngOnInit(): void {
-    if (this.id?.length <= 0 || this.baunitId == null) {
-      return;
-    }
-    this.id = this.id + getRandomInt(10000) + this.schema;
-    this.isExpandPanel(this.expandedComponent);
-
-    this.TABLE_COLUMNS.at(-1)!.visible = this.typeInformation === 'edition' && this.editable;
+    this.TABLE_COLUMNS.at(-1)!.visible =
+      this.typeInformation === 'edition' && this.editable;
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.loadInformationPropertyOwners();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(3);
+    this.loadInformationPropertyOwners();
   }
 
   /**
@@ -204,43 +208,47 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         )
       );
       this.dataSource.data = infoOwners;
-      this.fractions_sum = infoOwners.reduce((acc: number, owner: InfoOwners) => {
-        const fraction = Big(owner.fractionS!);
-        return fraction.add(acc).toNumber();
-      }, 0);
+      this.fractions_sum = infoOwners.reduce(
+        (acc: number, owner: InfoOwners) => {
+          const fraction = Big(owner.fractionS!);
+          return fraction.add(acc).toNumber();
+        },
+        0
+      );
     } catch (e) {
       console.error(e);
     }
   }
 
   openInformationPropertyOwner(owner: InfoOwners): void {
-    const dialog = this.matDialog
-      .open(DetailInformationPropertyOwnerComponent, {
-        ...MODAL_SMALL,
-        disableClose: true,
-        data: owner
-      });
-    dialog.afterClosed().subscribe((data: any) => {});
+    this.matDialog.open(DetailInformationPropertyOwnerComponent, {
+      ...MODAL_SMALL,
+      disableClose: true,
+      data: owner
+    });
   }
 
   onClickOpenAddEditModal(data: any): void {
     if (this.fractions_sum >= 1) {
-      this.snackbar.open('El predio ya está completamente asignado', 'CERRAR', { duration: 10000 });
+      this.snackbar.open('El predio ya está completamente asignado', 'CERRAR', {
+        duration: 10000
+      });
       return;
     }
 
-    this.matDialog.open(AddPropertyOwnerComponent, {
-      ...MODAL_MEDIUM,
-      data: {
-        ownersData: data.data,
-        baunitId: this.baunitId,
-        schema: this.schema,
-        executionId: this.executionId
-      }
-    }).afterClosed()
+    this.matDialog
+      .open(AddPropertyOwnerComponent, {
+        ...MODAL_MEDIUM,
+        data: {
+          ownersData: data.data,
+          baunitId: this.baunitId,
+          schema: this.schema,
+          executionId: this.executionId
+        }
+      })
+      .afterClosed()
       .subscribe(() => {
         setTimeout(() => (this.loadInformationPropertyOwners(), 200));
-
       });
   }
 
@@ -250,10 +258,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       this.confirmDialog.fire().then((result) => {
         if (result.isConfirmed) {
           const parameters: DeleteParamsRrright = {
-                executionId: this.executionId!,
-                baunitId: this.baunitId!,
-                rightId: this.rightIdSelected!
-              };
+            executionId: this.executionId!,
+            baunitId: this.baunitId!,
+            rightId: this.rightIdSelected!
+          };
 
           this.rrrigthtService.deletePropertyOwner(parameters).subscribe(() => {
             setTimeout(() => this.loadInformationPropertyOwners(), 200);
@@ -262,22 +270,24 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
       });
     } else if (id === 'edit') {
       const fractions_sum = Big(this.fractions_sum);
-      this.matDialog.open(EditingPropertyOwnerComponent, {
-        ...MODAL_SMALL,
-        data: {
-          fractions_sum: fractions_sum.minus(infoOwner.fractionS!).toNumber(),
-          rightId: this.rightIdSelected,
-          executionId: this.executionId,
-          baunitId: this.baunitId,
-          schema: this.schema,
-          rrrightInfo: {
-            fraction: infoOwner.fractionS,
-            beginAt: infoOwner.beginAt,
-            domRightType: infoOwner.domRightType
-          },
-          individual: infoOwner.individual
-        }
-      }).afterClosed()
+      this.matDialog
+        .open(EditingPropertyOwnerComponent, {
+          ...MODAL_SMALL,
+          data: {
+            fractions_sum: fractions_sum.minus(infoOwner.fractionS!).toNumber(),
+            rightId: this.rightIdSelected,
+            executionId: this.executionId,
+            baunitId: this.baunitId,
+            schema: this.schema,
+            rrrightInfo: {
+              fraction: infoOwner.fractionS,
+              beginAt: infoOwner.beginAt,
+              domRightType: infoOwner.domRightType
+            },
+            individual: infoOwner.individual
+          }
+        })
+        .afterClosed()
         .subscribe((response: boolean) => {
           if (response) {
             this.successEdit.fire();
@@ -286,7 +296,6 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
         });
     }
   }
-
 
   /**
    * On refresh paginator
@@ -300,6 +309,10 @@ export class InformationPropertyOwnersComponent implements OnInit, AfterViewInit
   }
 
   individualInfo(column: TableColumn<InfoOwnerRowT>): boolean {
-    return column.label === 'Tipo documento' || column.label === 'Número' || column.label === 'Nombre completo';
+    return (
+      column.label === 'Tipo documento' ||
+      column.label === 'Número' ||
+      column.label === 'Nombre completo'
+    );
   }
 }

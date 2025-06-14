@@ -4,7 +4,7 @@ mat-expansion-panel-header.mat-expanded:focus {
 }
 
 .mat-expansion-panel:not(.mat-expanded),
-.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {;
+.mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
   background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
 }
 
@@ -13,7 +13,7 @@ mat-expansion-panel-header.mat-expanded:focus {
   background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
 }
 
-::ng-deep .classInformationConstruction div.mat-expansion-panel-body {
+::ng-deep .classInformationAdjacent div.mat-expansion-panel-body {
   padding: 0;
 }
 
