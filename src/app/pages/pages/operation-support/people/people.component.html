@@ -15,34 +15,32 @@
 </vex-secondary-toolbar>
 <div class="card pt-6">
   <form [formGroup]="form">
-    <!-- Campo departamento -->
-    <!-- <mat-form-field class="sm:ml-2 sm:mr-2 flex-1"> -->
-
     <div class="flex flex-col sm:flex-row sm:gap-4 mt-3 pt-3">
       <div
         class="form-content-item flex flex-row items-center justify-center gap-4"
         style="align-items: flex-start"
       >
         <div style="margin-left: 6px">
-          <button
-            *ngIf="user?.role !== 'USER_READ'"
-            color="primary"
-            aria-label=""
-            type="button"
-            mat-flat-button
-            (click)="createCustomer()"
-            name="crear"
-            class="flex-none"
-          >
-            <mat-icon svgIcon="mat:add"></mat-icon>
-            Nueva persona
-          </button>
+          @if (user?.role === "ADMIN") {
+            <button
+              color="primary"
+              aria-label=""
+              type="button"
+              mat-flat-button
+              (click)="createCustomer()"
+              name="crear"
+              class="flex-none"
+            >
+              <mat-icon svgIcon="mat:add"></mat-icon>
+              Nueva persona
+            </button>
+          }
         </div>
 
         <vex-combox-colletion
+          formControlNameCombobox="typeNumberDocument"
           ubscriptSizing="dynamic"
           idComboCollection="typeNumberDocument"
-          name="selector_document"
           label="Tipo de documento"
           typeDomainName="IndividualTypeNumber"
           placeholderDomainName="Seleccionar tipo documento"
@@ -54,7 +52,7 @@
           <mat-label>Número documento</mat-label>
           <input
             matInput
-            [formControl]="document"
+            formControlName="document"
             placeholder="Número de documento"
             type="text"
             name="search"
@@ -124,28 +122,30 @@
     </ng-container>
 
     @for (column of columns; track column.property) {
-      <!-- Text Columns -->
-      <ng-container
-        *ngIf="column.type === 'text'"
-        [matColumnDef]="column.property"
-      >
-        <th
-          *matHeaderCellDef
-          mat-header-cell
-          mat-sort-header
-        >
-          {{ column.label }}
-        </th>
-        <td
-          *matCellDef="let row"
-          [ngClass]="column.cssClasses"
-          mat-cell
-        >
-          {{ row[column.property] }}
-        </td>
-      </ng-container>
+      @switch (column.type) {
+        @case ("text") {
+          <!-- Text Columns -->
+          <ng-container
+            [matColumnDef]="column.property"
+          >
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              mat-sort-header
+            >
+              {{ column.label }}
+            </th>
+            <td
+              *matCellDef="let row"
+              [class]="column.cssClasses"
+              mat-cell
+            >
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        }
+      }
     }
-
     <!-- Action Column -->
     <ng-container matColumnDef="actions">
       <th
@@ -159,7 +159,6 @@
         mat-cell
       >
         <button
-          *ngIf="user?.role !== 'USER_READ'"
           (click)="$event.stopPropagation()"
           [matMenuTriggerData]="{ customer: row }"
           [matMenuTriggerFor]="actionsMenu"

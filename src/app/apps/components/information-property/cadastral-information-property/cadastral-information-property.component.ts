@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
-import { Component, effect, ElementRef, forwardRef, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, forwardRef, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -254,9 +254,6 @@ export class CadastralInformationPropertyComponent implements OnInit {
   constructor(
     private informationPropertyService: InformationPropertyService,
   ) {
-    effect(() => {
-      console.log(this.activeComponent());
-    });
   }
 
   ngOnInit(): void {
