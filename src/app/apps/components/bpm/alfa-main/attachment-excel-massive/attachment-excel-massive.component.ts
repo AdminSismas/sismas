@@ -24,6 +24,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-attachment-exel-massive',
@@ -171,13 +172,14 @@ export class AttachmentExcelMassiveComponent implements OnInit {
           timer: 4000
         }).then(() => this.cancelUpload(true));
       },
-      error: () => {
+      error: (error: HttpErrorResponse) => {
         this.cancelLoading();
         Swal.fire({
-          text: 'Error al cargar excel masivo, consulte al administrador',
+          text: error.error.message,
           icon: 'error',
-          showConfirmButton: false,
-          timer: 3000
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3085d6',
+          timer: 20000
         }).then(() => this.cancelUpload(null));
       }
     });

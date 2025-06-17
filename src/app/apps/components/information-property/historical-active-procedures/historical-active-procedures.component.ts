@@ -1,9 +1,9 @@
 // ANGULAR IMPORTS
 import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { Component, DestroyRef, forwardRef, inject, Input, OnInit, ViewChild } from '@angular/core';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { Component, DestroyRef, forwardRef, inject, input, Input, OnInit, output, ViewChild } from '@angular/core';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 // ANGULAR MATERIAL IMPORTS
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -24,14 +24,14 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import {
   LIST_SCHEMAS_CONTROL_HISTORY, LIST_SCHEMAS_CONTROL_TEMP,
   MODAL_LARGE, MODAL_MIN_MEDIUM_ALL,
-  MODAL_SMALL, MODAL_SMALL_XS,
+  MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_10_20_50_100, PAGE_OPTION_5_7_10, PAGE_SIZE_SORT,
+  PAGE_OPTION_5_7_10, PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from 'src/app/apps/constants/general/constants';
 import { environment } from 'src/environments/environments';
-import { PAGE_SIZE, TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
+import { TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
 
 // COMPONENT IMPORTS
 import {
@@ -62,7 +62,6 @@ import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { getRandomInt } from 'src/app/apps/utils/general';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import Swal from 'sweetalert2';
@@ -88,7 +87,6 @@ import {
     MatExpansionModule,
     CdkAccordionModule,
     HeaderCadastralInformationPropertyComponent,
-
     MatInputModule,
     MatMenuModule,
     MatPaginatorModule,
@@ -100,12 +98,11 @@ import {
     MatTableModule,
     CommonModule,
     MatDatepickerModule,
-    NgFor,
     NgClass,
     NgIf,
     ReactiveFormsModule,
     MatSelectModule
-  ],
+],
   templateUrl: './historical-active-procedures.component.html',
   styleUrl: './historical-active-procedures.component.scss',
   providers: [
@@ -118,14 +115,18 @@ import {
 })
 export class HistoricalActiveProceduresPropertyComponent implements OnInit {
 
-  @Input({ required: true }) id = '';
   @Input({ required: true }) isHistoricalComponent!: boolean;
-  @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null = null;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+
+  // Input signals
+  expandedComponent = input.required<boolean>();
+
+  // Output signals
+  emitExpandedComponent = output<number>();
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private readonly layoutService: VexLayoutService = inject(VexLayoutService);
@@ -136,7 +137,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
 
   dataSource!: MatTableDataSource<ProceduresCollection>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  isNotDesktop$: Observable<boolean> = this.layoutService.isDesktop$.pipe(tap((value) => !value));
   layoutCtrl = new UntypedFormControl('boxed');
   contentInformations!: InformationPegeable;
 
@@ -150,26 +151,23 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   constructor() {
-    this.destroyRef.onDestroy(() => {
-    });
+    this.destroyRef.onDestroy(() => console.log('destroy'));
   }
 
   ngOnInit(): void {
-    if (this.id?.length <= 0 || this.baunitId == null) {
-      return;
-    }
-    this.id = this.id + getRandomInt(10057) + this.schema + (this.isHistoricalComponent ? 'historical' : 'active');
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
-    this.defaultTableData();
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.defaultTableData();
+  isExpandPanel(): void {
+    if (this.isHistoricalComponent) {
+      this.emitExpandedComponent.emit(10);
+    } else {
+      this.emitExpandedComponent.emit(11);
     }
+    this.defaultTableData();
   }
 
   public informationDetail(value: TaskResponseModel) {
@@ -243,7 +241,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
     return value < 10 ? `0${value}` : value.toString();
   }
 
-  public defaultTableData() {
+  defaultTableData() {
     const formValue: PageProceduresData = {
       page: this.page,
       size: this.pageSize,
@@ -252,7 +250,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       executionCode: this.baunitId != null ? this.baunitId : '0',
       individualNumber: ''
     };
-    if (this.baunitId != null) {
+    if (this.baunitId !== null) {
       if (this.isHistoricalComponent) {
         this.getDataFromProceduresService(formValue);
       } else {
@@ -284,7 +282,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
   }
 
   captureInformationProceduresData() {
-    let executeIdIntoExecuteId: boolean = false;
+    let executeIdIntoExecuteId = false;
     let data: contentInfoProcedures[];
 
     if (this.contentInformations == null || (this.contentInformations.content == null || this.contentInformations.content.length <= 0)) {
@@ -423,7 +421,6 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 10000
-    }).then((result) => {
     });
   }
 
@@ -434,7 +431,6 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 3000
-    }).then((result) => {
     });
   }
 
@@ -445,7 +441,6 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 3000
-    }).then((result) => {
     });
   }
 
@@ -456,7 +451,6 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       icon: 'error',
       showConfirmButton: false,
       timer: 3000
-    }).then((result) => {
     });
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
@@ -5,7 +6,6 @@ import { SendGeneralRequestsService } from '../general/send-general-requests.ser
 import { catchError, Observable, throwError } from 'rxjs';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { InfoPerson } from '../../interfaces/information-property/info-person';
-import { People } from '../../interfaces/users/people.model';
 import { InfoContact } from '../../interfaces/information-property/info-contact';
 
 @Injectable({
@@ -61,7 +61,7 @@ export class PeopleService {
   }
 
   getDeletePeopleId(params: number) {
-    const urlP: string = `${this.url_basic}${environment.individualNumber}/${params}?version=99999`;
+    const urlP = `${this.url_basic}${environment.individualNumber}/${params}?version=99999`;
     return this.deleteBody(urlP);
   }
 

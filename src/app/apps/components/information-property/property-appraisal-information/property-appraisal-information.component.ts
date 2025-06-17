@@ -3,8 +3,10 @@ import {
   Component,
   DestroyRef, forwardRef,
   inject,
+  input,
   Input,
   OnInit,
+  output,
   ViewChild
 } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
@@ -66,7 +68,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
-import { getRandomInt } from '../../../utils/general';
 import { AutoAppraisalComponent } from './auto-appraisal/auto-appraisal.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HistoricAppraisalComponent } from './historic-appraisal/historic-appraisal.component';
@@ -118,13 +119,17 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) public expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() editable?: boolean;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+
+  // Input signals
+  expandedComponent = input.required<boolean>();
+
+  // Output signals
+  emitExpandedComponent = output<number>();
 
   columns: TableColumn<InfoAppraisal>[] = TABLE_COLUMN_PROPERTIES_APPRAISALS;
   page: number = PAGE;
@@ -150,17 +155,15 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    if (this.id?.length <= 0 || this.baunitId == null) {
+    if (this.baunitId == null) {
       return;
     }
-    this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
     if (
       this.typeInformation &&
       this.typeInformation === TYPE_INFORMATION_VISUAL
     ) {
       this.pageSize = PAGE_SIZE_SORT;
     }
-    this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
@@ -234,10 +237,9 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     return showProperty;
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchInformationsAppraisalsProperty();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(8);
+    this.searchInformationsAppraisalsProperty();
   }
 
   refreshInformationPaginator(event: PageEvent): void {

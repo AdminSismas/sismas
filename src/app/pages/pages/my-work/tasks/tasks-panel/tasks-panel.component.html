@@ -4,23 +4,32 @@
     [label]="label"
     icon="mat:contacts"
     [filterValue]="filterTask"
-    (outSearchStr)="onFilterChange($event)">
+    (outSearchStr)="onFilterChange($event)"
+  >
   </vex-header-tasks>
-  <div class="h-full flex flex-col" vexFluidHeight fluidHeight=147>
+  <div
+    class="h-full flex flex-col"
+    vexFluidHeight
+    fluidHeight="147"
+  >
     @if (listProTasksECards.length && listProTasksECards.length > 0) {
       <div
         @stagger
-        class="overflow-y-auto flex-auto">
+        class="overflow-y-auto flex-auto"
+      >
         <div
-          class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 container-fluid">
-          <vex-task-card
-            *ngFor="let proTaskE of listProTasksECards; trackBy: trackByExecutionId"
-            [idCard]="proTaskE.executionId?.toString()"
-            [protaskE]="proTaskE"
-            [showHeader]="showHeaders"
-            (openProtaskE)="openBpmCodeProtaskE($event)"
-            (openDetailProtaskE)="openDetailProtaskE($event)"
-            @fadeInUp></vex-task-card>
+          class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 container-fluid"
+        >
+          @for (proTaskE of listProTasksECards; track proTaskE.executionId) {
+            <vex-task-card
+              [idCard]="proTaskE.executionId?.toString()"
+              [protaskE]="proTaskE"
+              [showHeader]="showHeaders"
+              (openProtaskE)="openBpmCodeProtaskE($event)"
+              (openDetailProtaskE)="openDetailProtaskE($event)"
+              @fadeInUp
+            ></vex-task-card>
+          }
         </div>
       </div>
     }
@@ -28,8 +37,13 @@
     @if (listProTasksECards.length && listProTasksECards.length === 0) {
       <div
         @scaleFadeIn
-        class="flex-auto flex flex-col items-center justify-center">
-        <img class="m-12 h-64" [src]="'./assets/img/illustrations/idea.svg'" alt="" />
+        class="flex-auto flex flex-col items-center justify-center"
+      >
+        <img
+          class="m-12 h-64"
+          [src]="'./assets/img/illustrations/idea.svg'"
+          alt=""
+        />
         <h2 class="headline m-0 text-center">
           No hay {{ label | lowercase }} que coincidan con tu búsqueda
         </h2>
@@ -49,6 +63,7 @@
     [length]="totalElements"
     [pageSize]="pageSize"
     [pageIndex]="page"
-    (page)="refreshInformationPaginator($event)">
+    (page)="refreshInformationPaginator($event)"
+  >
   </mat-paginator>
 </div>

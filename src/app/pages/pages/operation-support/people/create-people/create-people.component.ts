@@ -40,7 +40,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
-interface defaultData extends People {
+export interface defaultData extends People {
   mode: 'create' | 'update';
 }
 
@@ -69,8 +69,7 @@ interface defaultData extends People {
     InputComponent
   ],
   templateUrl: './create-people.component.html',
-  styleUrl: './create-people.component.scss',
-
+  styleUrl: './create-people.component.scss'
 })
 export class CreatePeopleComponent implements OnInit {
   typeDocument = 'tipo';
@@ -82,20 +81,20 @@ export class CreatePeopleComponent implements OnInit {
   size = PAGE_SIZE;
 
   form = this.fb.group({
-    individualId: [this.defaults?.id || ''],
-    firstName: [this.defaults?.firstName || ''],
-    middleName: [this.defaults?.middleName || ''],
-    lastName: [this.defaults?.lastName || ''],
-    otherLastName: [this.defaults?.lastName || ''],
-    domIndividualTypeNumber: [this.defaults?.domIndividualTypeNumber || ''],
-    number: [this.defaults?.number || ''],
-    companyName: [this.defaults?.companyName || ''],
-    domIndividualSex: [this.defaults?.domIndividualSex || ''],
+    individualId: [this.defaults?.id ?? ''],
+    firstName: [this.defaults?.firstName ?? ''],
+    middleName: [this.defaults?.middleName ?? ''],
+    lastName: [this.defaults?.lastName ?? ''],
+    otherLastName: [this.defaults?.lastName ?? ''],
+    domIndividualTypeNumber: [this.defaults?.domIndividualTypeNumber ?? ''],
+    number: [this.defaults?.number ?? ''],
+    companyName: [this.defaults?.companyName ?? ''],
+    domIndividualSex: [this.defaults?.domIndividualSex ?? ''],
     domIndividualType: [
-      this.defaults?.domIndividualType || '',
+      this.defaults?.domIndividualType ?? '',
       Validators.required
     ],
-    domIndividualEthnicGroup: [this.defaults?.domIndividualEthnicGroup || '']
+    domIndividualEthnicGroup: [this.defaults?.domIndividualEthnicGroup ?? '']
   });
   mode: 'create' | 'update' = 'create';
 
@@ -122,7 +121,9 @@ export class CreatePeopleComponent implements OnInit {
     this.mode = this.defaults?.mode ?? 'create';
     if (this.mode === 'create') {
       this.form.reset(this.defaults);
-      this.domIndividualTypeNumberChange(this.defaults?.domIndividualTypeNumber);
+      this.domIndividualTypeNumberChange(
+        this.defaults?.domIndividualTypeNumber
+      );
     }
     this.disablesTypePople();
     this.form.patchValue(this.defaults);
@@ -343,13 +344,13 @@ export class CreatePeopleComponent implements OnInit {
     people.number = this.defaults.number;
     people.domIndividualType = this.defaults.domIndividualType;
     this.peopleServcie.userEdit(individualId.toString(), people).subscribe({
-      next: () => {
+      next: (response) => {
         Swal.fire({
           text: 'Persona actualizada',
           icon: 'success',
           showConfirmButton: false,
           timer: 10000
-        }).then(() => this.dialogRef.close());
+        }).then(() => this.dialogRef.close({ response: true, data: response }));
       }
     });
 
@@ -467,7 +468,8 @@ export class CreatePeopleComponent implements OnInit {
   }
 
   createSecuentialPerson() {
-    if (this.form.controls['domIndividualTypeNumber'].value !== 'Secuencial') return;
+    if (this.form.controls['domIndividualTypeNumber'].value !== 'Secuencial')
+      return;
 
     if (this.form.invalid) {
       Swal.fire({

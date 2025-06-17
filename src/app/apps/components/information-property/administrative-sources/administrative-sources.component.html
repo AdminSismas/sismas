@@ -1,10 +1,9 @@
-<mat-accordion
-  class="flex flex-col py-0 px-0 mb-2"
-  [id]="id">
+<mat-accordion class="flex flex-col py-0 px-0 mb-2 classAdministrativeSources">
   <mat-expansion-panel
-    (opened)="isExpandPanel(expandedComponent = true)"
-    [expanded]="expandedComponent"
-    [id]="id + 'mat-panel-description-classAdministrativeSources'">
+    (opened)="isExpandPanel()"
+    [expanded]="expandedComponent()"
+    hideToggle
+  >
     <mat-expansion-panel-header
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
     >
@@ -15,90 +14,97 @@
       >
       </vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
-    <mat-panel-description class="py-0 px-0">
-      <div class="w-full flex flex-col overflow-auto">
-        @if (typeInformation === "edition") {
-          <div class="px-4 h-16 border-b sticky left-0 flex items-center">
-            <button
-              [ngClass]="
-                !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
-              "
-              [color]="editable ? 'primary' : ''"
-              [disabled]="!editable"
-              mat-raised-button
-              title="Agregar fuente administrativa"
-              (click)="createAdministrativeSource()"
+    @if (expandedComponent()) {
+      <mat-panel-description class="py-0 px-0 pt-0 pb-0">
+        <div class="w-full flex flex-col overflow-auto">
+          @if (typeInformation === "edition") {
+            <div class="px-4 h-16 border-b sticky left-0 flex items-center">
+              <button
+                [ngClass]="
+                  !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+                "
+                [color]="editable ? 'primary' : ''"
+                [disabled]="!editable"
+                mat-raised-button
+                title="Agregar fuente administrativa"
+                (click)="createAdministrativeSource()"
+              >
+                Nueva
+                <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+              <span class="flex-1"></span>
+            </div>
+          }
+          @if (dataSource.data.length > 0) {
+            <table
+              mat-table
+              [dataSource]="dataSource"
             >
-              Nueva
-              <mat-icon svgIcon="mat:add"></mat-icon>
-            </button>
-            <span class="flex-1"></span>
-          </div>
-        }
-        @if (dataSource.data.length > 0) {
-          <table mat-table [dataSource]="dataSource">
-            @for (column of columns; track $index) {
-              @if (column.property !== "actions") {
-                <ng-container [matColumnDef]="column.property">
-                  <th
-                    *matHeaderCellDef
-                    mat-header-cell
-                    mat-sort-header
-                  >
-                    {{ column.label }}
-                  </th>
-                  <td
-                    *matCellDef="let row"
-                    mat-cell
-                  >
-                    {{ row[column.property] }}
-                  </td>
-                </ng-container>
+              @for (column of columns; track $index) {
+                @if (column.property !== "actions") {
+                  <ng-container [matColumnDef]="column.property">
+                    <th
+                      *matHeaderCellDef
+                      mat-header-cell
+                      mat-sort-header
+                    >
+                      {{ column.label }}
+                    </th>
+                    <td
+                      *matCellDef="let row"
+                      mat-cell
+                    >
+                      {{ row[column.property] }}
+                    </td>
+                  </ng-container>
+                }
               }
-            }
-            <!-- Action Column -->
-            <ng-container matColumnDef="actions">
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-                mat-sort-header
-              >
-                Acciones
-              </th>
-              <td
-                *matCellDef="let row"
-                class="w-10 text-secondary"
-                mat-cell
-              >
-                <button
-                  (click)="$event.stopPropagation()"
-                  [matMenuTriggerData]="{ row: row }"
-                  [matMenuTriggerFor]="actionsMenu"
-                  mat-icon-button
-                  type="button"
+              <!-- Action Column -->
+              <ng-container matColumnDef="actions">
+                <th
+                  *matHeaderCellDef
+                  mat-header-cell
+                  mat-sort-header
                 >
-                  <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-                </button>
-              </td>
-            </ng-container>
+                  Acciones
+                </th>
+                <td
+                  *matCellDef="let row"
+                  class="w-10 text-secondary"
+                  mat-cell
+                >
+                  <button
+                    (click)="$event.stopPropagation()"
+                    [matMenuTriggerData]="{ row: row }"
+                    [matMenuTriggerFor]="actionsMenu"
+                    mat-icon-button
+                    type="button"
+                  >
+                    <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+                  </button>
+                </td>
+              </ng-container>
 
-            <tr
-              mat-header-row
-              *matHeaderRowDef="displayedColumns"
-            ></tr>
-            <tr
-              mat-row
-              *matRowDef="let row; columns: displayedColumns"
-            ></tr>
-          </table>
-        }
-        @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
-          <div class="no-data-information text-gray-500 text-lg">
-            No hay datos para mostrar.
-          </div>
-        }
-      </div>
-    </mat-panel-description>
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumns()"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumns()"
+              ></tr>
+            </table>
+          }
+          @if (
+            dataSource.data.length <= 0 || dataSource.filteredData.length <= 0
+          ) {
+            <div class="no-data-information text-gray-500 text-lg">
+              No hay datos para mostrar.
+            </div>
+          }
+        </div>
+      </mat-panel-description>
+    }
   </mat-expansion-panel>
 </mat-accordion>
 

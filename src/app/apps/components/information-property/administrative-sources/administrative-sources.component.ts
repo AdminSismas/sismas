@@ -1,29 +1,29 @@
-import { Component, computed, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
-import { MatExpansionModule } from '@angular/material/expansion';
 import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+  Component,
+  computed,
+  forwardRef,
+  input,
+  Input,
+  output,
+  ViewChild
+} from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import {
   AdministrativeSource,
   DeleteAdministrativeSourceParams,
   UpdateAdministrativeSource
 } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {
-  AdministrativeSourcesService
-} from 'src/app/apps/services/information-property/administrative-sources.service';
+import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import {
-  CreateAdministrativeSourceComponent
-} from './create-administrative-source/create-administrative-source.component';
+import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {
-  COLUMNS_ADMINISTRATIVE_SOURCES
-} from '../../../constants/information-property/administrative-source.constants';
+import { COLUMNS_ADMINISTRATIVE_SOURCES } from '../../../constants/information-property/administrative-source.constants';
 import { MODAL_MEDIUM } from '../../../constants/general/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { NgClass } from '@angular/common';
@@ -53,26 +53,29 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
       useExisting: forwardRef(() => AdministrativeSourcesComponent),
       multi: true
     }
-  ],
+  ]
 })
-export class AdministrativeSourcesComponent implements OnInit {
-  @Input() public id = '';
-  @Input() public expandedComponent = false;
-  @Input() public baunitId?: string | null;
-  @Input() public schema?: string;
-  @Input() public executionId?: string | null;
-  @Input() public typeInformation?: string;
-  @Input() public editable? = true;
+export class AdministrativeSourcesComponent {
+  // Input zone.js
+  @Input() baunitId?: string | null;
+  @Input() schema?: string;
+  @Input() executionId?: string | null;
+  @Input() typeInformation?: string;
+  @Input() editable? = true;
+
+  // Input signal
+  expandedComponent = input.required<boolean>();
+
+  // Output signal
+  emitExpandedComponent = output<number>();
 
   @ViewChild('confirmDeleteDialog', { static: true })
   confirmDeleteDialog!: SwalComponent;
-  public selectedFuente?: AdministrativeSource;
-  public dataSource: MatTableDataSource<AdministrativeSource> =
+  selectedFuente?: AdministrativeSource;
+  dataSource: MatTableDataSource<AdministrativeSource> =
     new MatTableDataSource<AdministrativeSource>([]);
-  public columns: TableColumn<AdministrativeSource>[] =
-    COLUMNS_ADMINISTRATIVE_SOURCES;
-  public displayedColumns: string[] = [];
-  public actionBtns = computed(() => {
+  columns: TableColumn<AdministrativeSource>[] = COLUMNS_ADMINISTRATIVE_SOURCES;
+  actionBtns = computed(() => {
     return [
       {
         id: 'edit',
@@ -87,20 +90,24 @@ export class AdministrativeSourcesComponent implements OnInit {
     ];
   });
 
+  // Computed
+  displayedColumns = computed(() => {
+    const displayedColumns = this.columns.map((column) => {
+      if (
+        this.typeInformation !== 'edition' ||
+        (!this.editable && column.property !== 'actions')
+      ) {
+        return column.property;
+      }
+    });
+    return displayedColumns;
+  });
+
   constructor(
     private administrativeSourcesService: AdministrativeSourcesService,
     private dialog: MatDialog,
     private snackbar: MatSnackBar
   ) {}
-
-  ngOnInit(): void {
-    this.displayedColumns = this.columns.map((column) => column.property);
-    if (this.typeInformation !== 'edition' || !this.editable ) {
-      this.displayedColumns = this.displayedColumns.filter(
-        (column) => column !== 'actions'
-      );
-    }
-  }
 
   getDataSource() {
     if (this.schema === 'temp') {
@@ -118,8 +125,7 @@ export class AdministrativeSourcesComponent implements OnInit {
         .subscribe((data) => {
           this.dataSource.data = data;
         });
-    }else if(this.schema === 'hist') {
-
+    } else if (this.schema === 'hist') {
       this.administrativeSourcesService
         .getAdministrativeSourcesHist(
           this.baunitId as string,
@@ -128,13 +134,12 @@ export class AdministrativeSourcesComponent implements OnInit {
         .subscribe((data) => {
           this.dataSource.data = data;
         });
-     }
+    }
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.getDataSource();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(2);
+    this.getDataSource();
   }
 
   createAdministrativeSource(): void {
@@ -199,7 +204,7 @@ export class AdministrativeSourcesComponent implements OnInit {
           oficinaOrigen: row.oficinaOrigen,
           departamentoOrigen: row.departamentoOrigen!,
           ciudadOrigen: row.ciudadOrigen,
-          fuenteAdminId: row.fuenteAdminId,
+          fuenteAdminId: row.fuenteAdminId
         }
       };
 

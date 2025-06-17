@@ -4,7 +4,8 @@ import {
   inject,
   OnInit,
   signal,
-  input
+  input,
+  output
 } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
@@ -72,10 +73,6 @@ export type InfoOwnerRowT = Pick<
   styleUrl: './alerts.component.scss'
 })
 export class AlertsComponent implements OnInit {
-  prueba(row: AlertResponse): void {
-    console.log(row);
-  }
-
   // Injecting dependencies
   private alertsService = inject(AlertsService);
   private matDialog = inject(MatDialog);
@@ -87,6 +84,9 @@ export class AlertsComponent implements OnInit {
   baunitId = input<string | null>(null);
   executionId = input<string | null>(null);
   editable = input<boolean>(true);
+
+  // Defining outputs
+  emitExpandedComponent = output<number>();
 
   // Defining signals
   alerts = signal<AlertResponse[]>([]);
@@ -120,15 +120,13 @@ export class AlertsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.isExpandPanel(this.expandedComponent());
     ALERT_TABLE_COLUMNS.at(-1)!.visible =
       this.typeInformation() === 'edition' && this.editable();
   }
 
-  isExpandPanel(expandedPanel: boolean): void {
-    if (expandedPanel) {
-      this.loadAlertsByBaunitId();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(13);
+    this.loadAlertsByBaunitId();
   }
 
   loadAlertsByBaunitId(): void {

@@ -1,5 +1,9 @@
 @if (showTittle) {
-  <div class="flex items-center" mat-dialog-title [id]="id">
+  <div
+    class="flex items-center"
+    mat-dialog-title
+    [id]="id"
+  >
     <h2 class="headline m-0 flex-auto">{{ label }}</h2>
     <button
       class="text-secondary"
@@ -16,22 +20,31 @@
   [id]="idContainer"
   [ngClass]="cssClasses"
   class="flex items-start justify-start gap-6 overflow-x-hidden"
-  vexFluidHeight fluidHeight=107>
-  <div @stagger style="top: 18px"
-       class="sticky top-20 flex-col flex-none w-2/12 hidden sm:flex">
-    @for (item of navigationItems; track item;) {
-      <div (click)="scrollTo(item.fragment)"
-           class="px-3 py-2 rounded-xl hover:bg-hover transition cursor-pointer relative"
-           matRipple>
+  vexFluidHeight
+  fluidHeight="107"
+>
+  <div
+    @stagger
+    style="top: 18px"
+    class="sticky top-20 flex-col flex-none w-2/12 hidden sm:flex"
+  >
+    @for (item of navigationItems; track item) {
+      <div
+        (click)="scrollTo(item.fragment)"
+        class="px-3 py-2 rounded-xl hover:bg-hover transition cursor-pointer relative"
+        matRipple
+      >
         {{ item.label }}
       </div>
     }
   </div>
 
-  <div @stagger class="max-w-full w-10/12 flex flex-col gap-6">
+  <div
+    @stagger
+    class="max-w-full w-10/12 flex flex-col gap-6"
+  >
     <vex-basic-property-information
       #basicPropertyInformationComponent
-      [id]="'basicAdministrativeUnitInformation' + schema + '12' + executionId"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
@@ -39,108 +52,109 @@
       [editable]="editable.GNR"
       [editNpn]="editable.NPN"
       [editArea]="editable.AREA"
-      [expandedComponent]="expand_tap_property_information"
+      [expandedComponent]="activeComponent() === 0"
       (propertyRegistryOffice)="propertyRegistryOffice = $event"
       (propertyRegistryNumber)="propertyRegistryNumber = $event"
+      (emitExpandedComponent)="activeComponent.set(0)"
       (isMatriz)="isMatriz.set($event)"
       @fadeInUp
     ></vex-basic-property-information>
     @if (showInformationUnitProperty && levelInfo !== 3) {
       <vex-information-unit-property
         #unitPropertyInformationComponent
-        [id]="'informationUnitProperty' + schema + '12' + executionId"
-        [expandedComponent]="expand_tap"
+        [expandedComponent]="activeComponent() === 1"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
         @fadeInUp
         [typeInformation]="typeInformation"
+        (emitExpandedComponent)="activeComponent.set($event)"
       ></vex-information-unit-property>
     }
     <vex-administrative-sources
       #administrativeSourcesComponent
-      [id]="'administrativeSources' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
+      [expandedComponent]="activeComponent() === 2"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
       [editable]="editable.FNA"
       @fadeInUp
       [typeInformation]="typeInformation"
+      (emitExpandedComponent)="activeComponent.set(2)"
     >
     </vex-administrative-sources>
     @if (!showRulesPage) {
       <vex-information-property-owners
         #informationPropertyOwnersComponent
-        [id]="'dataInformationPropertyOwners' + schema + '12' + executionId"
-        [expandedComponent]="expand_tap"
+        [expandedComponent]="activeComponent() === 3"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
         [typeInformation]="typeInformation"
         [editable]="editable.PRO"
+        [showEditPerson]="showEditPerson()"
+        (emitExpandedComponent)="activeComponent.set($event)"
         @fadeInUp
       ></vex-information-property-owners>
       <super-notariado-property
         #superNotariadoPropertyComponent
-        [id]="'superNotariadoPropertyComponent' + schema + '12' + executionId"
         [propertyRegistryNumber]="propertyRegistryOffice"
         [propertyRegistryOffice]="propertyRegistryNumber"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
-        [expandedComponent]="expand_tap"
+        [expandedComponent]="activeComponent() === 4"
+        (emitExpandedComponent)="activeComponent.set($event)"
         @fadeInUp
       ></super-notariado-property>
     }
     <vex-information-addresses-property
       #informationAddressesPropertyComponent
-      [id]="'basicInformationpropertyAddresses' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
+      [expandedComponent]="activeComponent() === 5"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
       @fadeInUp
       [typeInformation]="typeInformation"
       [editable]="editable.DIR"
+      (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-information-addresses-property>
     <vex-information-constructions-property
       #informationConstructionsPropertyComponent
-      [id]="'dataInformationConstructionsPropertyComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
+      [expandedComponent]="activeComponent() === 6"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
       @fadeInUp
       [typeInformation]="typeInformation"
       [editable]="editable.CNS"
+      (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-information-constructions-property>
     <vex-information-adjacent-property
       #informationAdjacentPropertyComponent
-      [id]="'dataInformationAdjacentPropertyComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
+      [expandedComponent]="activeComponent() === 7"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
       @fadeInUp
       [typeInformation]="typeInformation"
       [editable]="editable.CLN"
+      (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-information-adjacent-property>
     <vex-property-appraisal-information
       #propertyAppraisalInformationComponent
-      [id]="'dataIpropertyAppraisalInformationComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
+      [expandedComponent]="activeComponent() === 8"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
       [editable]="editable.AUTAVAL"
       @fadeInUp
       [typeInformation]="typeInformation"
+      (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-property-appraisal-information>
     <vex-information-zones-property
       #informationZonesPropertyComponent
-      [id]="'informationZonesPropertyComponent' + schema + '12' + executionId"
-      [expandedComponent]="expand_tap"
+      [expandedComponent]="activeComponent() === 9"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
@@ -148,58 +162,59 @@
       [editable]="editable.ZON"
       [npn]="baunitHead.cadastralNumber!"
       [isMatriz]="isMatriz()"
+      (emitExpandedComponent)="activeComponent.set($event)"
       @fadeInUp
-    ></vex-information-zones-property
-    >
+    ></vex-information-zones-property>
     @if (showInformationHistoricalProcedures) {
       <vex-historical-active-procedures-property
         #historicalProceduresPropertyComponent
-        [id]="'historicalProceduresPropertyComponent' + schema + '12' + executionId"
         [isHistoricalComponent]="true"
-        [expandedComponent]="false"
+        [expandedComponent]="activeComponent() === 10"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId"
         [typeInformation]="typeInformation"
         @fadeInUp
+        (emitExpandedComponent)="activeComponent.set($event)"
       >
       </vex-historical-active-procedures-property>
     }
     <vex-historical-active-procedures-property
       #activeProceduresPropertyComponent
-      [id]="'activeProceduresPropertyComponent' + schema + '12345' + executionId"
       [isHistoricalComponent]="false"
-      [expandedComponent]="false"
+      [expandedComponent]="activeComponent() === 11"
       [baunitId]="baunitId"
       [schema]="schema"
       [executionId]="executionId"
       [typeInformation]="typeInformation"
       @fadeInUp
+      (emitExpandedComponent)="activeComponent.set($event)"
     >
     </vex-historical-active-procedures-property>
     @if (!showRulesPage) {
       <vex-photos
         #photosComponent
-        [expandedComponent]="expand_tap"
+        [expandedComponent]="activeComponent() === 12"
         [baunitId]="baunitId!"
         [schema]="schema"
         [executionId]="executionId"
         [typeInformation]="typeInformation"
         [npn]="baunitHead.cadastralNumber!"
         @fadeInUp
+        (emitExpandedComponent)="activeComponent.set($event)"
       >
       </vex-photos>
     }
     @if (!showRulesPage) {
       <vex-alerts
         #alertsComponent
-        [id]="'alerts' + schema"
-        [expandedComponent]="expand_tap"
+        [expandedComponent]="activeComponent() === 13"
         [baunitId]="baunitId"
         [schema]="schema"
         [executionId]="executionId ?? null"
         [typeInformation]="typeInformation"
         @fadeInUp
+        (emitExpandedComponent)="activeComponent.set($event)"
       >
       </vex-alerts>
     }
@@ -208,7 +223,8 @@
 <mat-menu
   #settingsMenu="matMenu"
   xPosition="before"
-  yPosition="below">
+  yPosition="below"
+>
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
     <span>Imprimir</span>

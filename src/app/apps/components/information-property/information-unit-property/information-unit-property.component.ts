@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, forwardRef, inject, Input, OnInit, ViewChild } from '@angular/core';
-import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
+import { AfterViewInit, Component, DestroyRef, forwardRef, inject, input, Input, OnInit, output, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -49,7 +48,6 @@ import {
 import {
   UnitPropertyInformationService
 } from '../../../services/territorial-organization/baunit-children-information.service';
-import { getRandomInt } from '../../../utils/general';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import {
   TABLE_COLUMN_UNITS_TABLE_COLUMNS
@@ -105,13 +103,17 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
-
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) expandedComponent = false;
+  // Input zone.js
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
+
+  // Input signals
+  expandedComponent = input.required<boolean>();
+
+  // Output signals
+  emitExpandedComponent = output<number>();
 
   page: number = PAGE;
   pageSize: number = PAGE_SIZE_SORT;
@@ -128,17 +130,13 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private unitPropertyInformationService: UnitPropertyInformationService
   ) {
-    this.destroyRef.onDestroy(() => {
-    });
+    this.destroyRef.onDestroy(() => console.log('destroyed'));
   }
 
   ngOnInit(): void {
-    if (this.id?.length <= 0 || this.baunitId == null) {
+    if (this.baunitId == null) {
       return;
     }
-    this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
-
-    this.isExpandPanel(this.expandedComponent);
 
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -155,10 +153,9 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
     }
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchUnitPropertyInformationTemp();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(1);
+    this.searchUnitPropertyInformationTemp();
   }
 
   searchUnitPropertyInformationTemp(): void {

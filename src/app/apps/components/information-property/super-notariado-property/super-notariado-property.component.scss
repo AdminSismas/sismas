@@ -12,3 +12,11 @@ mat-expansion-panel-header.mat-expanded:focus {
 .mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
   background-color: rgb(var(--vex-background-app-bar-rgb) / var(--tw-bg-opacity));
 }
+
+::ng-deep .classSuperNotariadoProperty div.mat-expansion-panel-body {
+  padding: 0;
+}
+
+.mat-mdc-header-row {
+  height: var(--mat-table-header-container-height-geo-getion, 45px) !important;
+}

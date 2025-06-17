@@ -111,7 +111,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
   }
 
   createObjectLayout(schema: string, defaults: ContentInfoSchema): void {
-    let defaultObject: ContentInfoSchema = { ...defaults };
+    const defaultObject: ContentInfoSchema = { ...defaults };
     let title = '';
     if (schema === `${envi.schemas.main}`) {
       title = CONSTANT_INFORMATION_PREDIAL_MAIN;

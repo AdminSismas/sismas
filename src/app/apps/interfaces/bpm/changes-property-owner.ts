@@ -63,6 +63,7 @@ export interface DialogsData {
   rrrightInfo?: RrrightInfo;
   individual: InfoPerson;
   fractions_sum?: number;
+  showEditPerson?: boolean;
 }
 
 export interface UpdatePropertyOwner {

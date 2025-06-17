@@ -2,8 +2,6 @@
 import {
   AfterViewInit,
   Component,
-  DestroyRef,
-  inject,
   Input,
   OnInit,
   TemplateRef,
@@ -18,7 +16,8 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  UntypedFormControl
+  UntypedFormControl,
+  Validators
 } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,7 +39,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 
-import { CommonModule } from '@angular/common';
 import { CreatePeopleComponent } from './create-people/create-people.component';
 
 // imports from service people
@@ -53,17 +51,15 @@ import {
 } from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-people',
   standalone: true,
   imports: [
     ComboxColletionComponent,
-    CommonModule,
     FormsModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -90,21 +86,19 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   subject$: ReplaySubject<People[]> = new ReplaySubject<People[]>(1);
   data$: Observable<People[]> = this.subject$.asObservable();
   customers: People[] = [];
-  private snackBar = inject(MatSnackBar);
 
   // para enviarlo al formulario
   typeDocument = false;
   infoDoc = 'Id';
   urlQuery = '';
   user: DecodeJwt | null = null;
-  form: FormGroup = this.fb.group({});
+  form!: FormGroup;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  // @ViewChild('confirmDialog') private confirmDialog!: SwalComponent;
   @ViewChild('confirmDialog', { static: true })
   confirmDialog!: TemplateRef<any>;
-  // personalización de las columnas de las tablas
+
   @Input()
   columns: TableColumn<People>[] = [
     {
@@ -142,7 +136,12 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   get visibleColumns() {
     return this.columns
-      .filter((column) => column.visible)
+      .filter((column) => {
+        if (this.user?.role === 'ADMIN') {
+          return column.visible;
+        }
+        return column.visible && column.property !== 'actions';
+      })
       .map((column) => column.property);
   }
 
@@ -153,36 +152,25 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   totalElements = 0;
   dataSource!: MatTableDataSource<People>;
   selection = new SelectionModel<People>(true, []);
-  name = new UntypedFormControl();
-  document = new UntypedFormControl();
-  peopleType = new UntypedFormControl();
-  nombre = new UntypedFormControl();
   contentInformation!: InformationPegeable;
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  // constructor del componente
   constructor(
     private dialog: MatDialog,
     private peopleService: PeopleService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar,
     private userService: UserService
   ) {}
 
   ngOnInit() {
+    this.form = this.fb.group({
+      document: ['', [Validators.required]],
+      typeNumberDocument: ['', [Validators.required]]
+    });
     this.user = this.userService.getUser();
     this.dataSource = new MatTableDataSource();
 
     this.refreshData();
   }
-
-  // // obtenemos los datos para el select
-  // getOpcionSelect(opcion: any): { key: string; value: string } {
-  //   const key = Object.keys(opcion)[0];
-  //   const value = opcion[key];
-  //   return { key, value };
-  // }
 
   ngAfterViewInit() {
     if (this.paginator) {
@@ -196,11 +184,12 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // eliminación de personas
   deleteCustomer(customer: People) {
+    if (this.user?.role !== 'ADMIN') return;
+
     const dialogRef = this.dialog.open(this.confirmDialog);
 
     dialogRef.afterClosed().subscribe(async (data) => {
       if (data === 'delete' && customer.individualId) {
-        let msg = 'Información eliminada con éxito.';
         try {
           await lastValueFrom(
             this.peopleService.getDeletePeopleId(customer.individualId)
@@ -208,11 +197,22 @@ export class PeopleComponent implements OnInit, AfterViewInit {
           this.dataSource.data = this.dataSource.data.filter((row: People) => {
             return row.individualId !== customer.individualId;
           });
+          Swal.fire({
+            icon: 'success',
+            text: 'Información eliminada con éxito.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar',
+            timer: 5000
+          });
         } catch {
-          msg =
-            'Antes de eliminar la persona se debe eliminar el usuario o la participación.';
+          Swal.fire({
+            icon: 'error',
+            text: 'Antes de eliminar la persona se debe eliminar el usuario o la participación.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar',
+            timer: 5000
+          });
         }
-        this.snackbar.open(msg, 'CERRAR', { duration: 10000 });
       }
     });
   }
@@ -223,6 +223,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // creación de personas
   createCustomer() {
+    if (this.user?.role !== 'ADMIN') return;
+
     this.dialog
       .open(CreatePeopleComponent, {
         ...MODAL_SMALL_LARGE,
@@ -233,14 +235,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       })
       .afterClosed()
       .subscribe((customer: People) => {
-        /**
-         * Customer is the updated customer (if the user pressed Save - otherwise it's null)
-         */
         if (customer) {
-          /**
-           * Here we are updating our local array.
-           * You would probably make an HTTP request here.
-           */
           this.customers.unshift(new People(customer));
           this.subject$.next(this.customers);
         }
@@ -249,6 +244,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // actualización de personas
   updateCustomer(customer: People) {
+    if (this.user?.role !== 'ADMIN') return;
+
     this.dialog
       .open(CreatePeopleComponent, {
         ...MODAL_SMALL_LARGE,
@@ -260,15 +257,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       })
       .afterClosed()
       .subscribe((updatedCustomer) => {
-        /**
-         * Customer is the updated customer (if the user pressed Save - otherwise it's null)
-         */
         this.refreshData();
         if (updatedCustomer) {
-          /**
-           * Here we are updating our local array.
-           * You would probably make an HTTP request here.
-           */
           const index = this.customers.findIndex(
             (existingCustomer) => existingCustomer.id === updatedCustomer.id
           );
@@ -297,24 +287,6 @@ export class PeopleComponent implements OnInit, AfterViewInit {
           next: (res: any) => {
             this.customers = [res];
             this.dataSource.data = [res];
-          },
-          error: (error: HttpErrorResponse) => {
-            if (error.status === 404) {
-              this.snackbar.open(
-                'No se encontró una persona con ese documento.',
-                'CERRAR',
-                { duration: 10000 }
-              );
-              this.dialog.open(CreatePeopleComponent, {
-                ...MODAL_SMALL_LARGE,
-                disableClose: true,
-                data: {
-                  mode: 'create',
-                  domIndividualTypeNumber: this.infoDoc,
-                  number: value
-                }
-              });
-            }
           }
         });
       } else {
@@ -356,14 +328,12 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     column.visible = !column.visible;
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     if (this.isAllSelected()) this.selection.clear();
     else this.dataSource.data.forEach((row) => this.selection.select(row));
@@ -403,6 +373,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   }
 
   search() {
-    this.onFilterChange(this.document.value);
+    console.log(this.form.value);
+    this.onFilterChange(this.form.get('document')?.value);
   }
 }

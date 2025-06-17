@@ -6,7 +6,7 @@ import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 import { ProFlow } from '../../interfaces/bpm/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
 import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
-import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpStatusCode } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -119,5 +119,18 @@ export class BpmCoreService {
     const url = `${this.basic_url}${envi.bpmOperation.value}${envi.bpmOperation.proTask}${executId}/active`;
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+  }
+
+  createMasterFromNph(baunitId: string, executionId: string, condition: string): Observable<void> {
+    const url = `${envi.url}:${envi.port}${envi.temporal}${envi.BAUnitCreateMasterFromNph}`;
+
+    const formData = new FormData();
+    formData.append('baunitId', `${baunitId}`);
+    formData.append('changeLogId', `${executionId}`);
+    formData.append('domBaunitCondition', `${condition}`);
+
+    const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
+    return this.http.post<void>(url, formData, { headers });
   }
 }

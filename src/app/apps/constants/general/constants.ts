@@ -1104,7 +1104,7 @@ export const TYPE_BUTTON_TEN: TypeButtonAlfaMain = 'RESET';
 
 export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL', 'NPN', 'AREA'];
+export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL', 'NPN', 'AREA', 'PPL'];
 
 export const MODAL_LARGE: ModalSize = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
 export const MODAL_MEDIUM: ModalSize = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };

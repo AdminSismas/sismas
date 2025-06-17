@@ -2,16 +2,24 @@
 import {
   AfterViewInit,
   Component,
-  DestroyRef, forwardRef,
+  DestroyRef,
+  forwardRef,
   inject,
+  input,
   Input,
   OnChanges,
   OnInit,
+  output,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,7 +30,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { lastValueFrom, Observable } from 'rxjs';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -37,9 +49,7 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
 import { MatCardModule } from '@angular/material/card';
-import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -56,18 +66,12 @@ import { BasicInformationAddress } from '../../../interfaces/information-propert
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  AddEditInformationAddressComponent
-} from './add-edit-information-address/add-edit-information-address.component';
+import { AddEditInformationAddressComponent } from './add-edit-information-address/add-edit-information-address.component';
 import { TypeInformation } from '../../../interfaces/general/content-info';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
-import { getRandomInt } from 'src/app/apps/utils/general';
-import {
-  DetailBasicInformationAddress
-} from '../../../interfaces/information-property/detail-basic-information-address';
-import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
+import { DetailBasicInformationAddress } from '../../../interfaces/information-property/detail-basic-information-address';
 
 @Component({
   selector: 'vex-information-addresses-property',
@@ -111,18 +115,24 @@ import { InformationAdjacent } from '../../../interfaces/information-property/in
       useExisting: forwardRef(() => InformationAddressesPropertyComponent),
       multi: true
     }
-  ],
+  ]
 })
-export class InformationAddressesPropertyComponent implements OnInit, AfterViewInit, OnChanges {
+export class InformationAddressesPropertyComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
-  @Input({ required: true }) id = '';
-  @Input({ required: true }) expandedComponent = true;
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
   @Input() editable? = true;
+
+  // Input signal
+  expandedComponent = input.required<boolean>();
+
+  // Output signal
+  emitExpandedComponent = output<number>();
 
   columns: TableColumn<any>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION;
   page: number = PAGE;
@@ -146,22 +156,16 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private informationPropertyService: InformationPropertyService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    if (this.id?.length <= 0 || this.baunitId == null) {
-      return;
-    }
-    this.id = this.id + getRandomInt(10000) + this.schema + this.baunitId;
-    this.isExpandPanel(this.expandedComponent);
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['typeInformation'].currentValue) {
+    if (changes['typeInformation'] && changes['typeInformation'].currentValue) {
       const { currentValue: typeInformation } = changes['typeInformation'];
       if (typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
         this.columns = TABLE_COLUMN_PROPERTIES_ADDRESS;
@@ -205,28 +209,6 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
         }
       }
     });
-
-    // const dialogRef = this.dialog.open(this.confirmDialog);
-
-    // dialogRef.afterClosed().subscribe(async (data: any) => {
-    //   if (data === 'delete' && basicInformationAddress.direccionId) {
-    //     let msg = 'Información eliminada con éxito';
-    //     try {
-    //       await lastValueFrom(
-    //         this.informationPropertyService.deleteBasicInformationPropertyAddress(
-    //           basicInformationAddress.direccionId
-    //         )
-    //       );
-    //       this.dataSource.data = this.dataSource.data.filter((row: BasicInformationAddress) => {
-    //         return row.direccionId !== basicInformationAddress.direccionId;
-    //       });
-    //     } catch (e) {
-    //       msg = 'Error, no se pudo eliminar la dirección';
-    //       console.error(e);
-    //     }
-    //     this.snackBar.open(msg, 'CLOSE', { duration: 10000 });
-    //   }
-    // });
   }
 
   toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
@@ -244,10 +226,9 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     this.searchBasicInformationPropertyAddresses();
   }
 
-  isExpandPanel(expandedComponent: boolean): void {
-    if (expandedComponent) {
-      this.searchBasicInformationPropertyAddresses();
-    }
+  isExpandPanel(): void {
+    this.emitExpandedComponent.emit(5);
+    this.searchBasicInformationPropertyAddresses();
   }
 
   searchBasicInformationPropertyAddresses(): void {
@@ -287,15 +268,19 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
   }
 
   openAddressInformationProperty(data: BasicInformationAddress) {
-    let newData: BasicInformationAddress = new BasicInformationAddress(data, this.schema);
+    const newData: BasicInformationAddress = new BasicInformationAddress(
+      data,
+      this.schema
+    );
     newData.baunitId = this.baunitId;
     newData.executionId = this.executionId;
 
-    this.dialog.open(DetailInformationAddressComponent, {
-      ...MODAL_SMALL_LARGE,
-      disableClose: true,
-      data: newData
-    })
+    this.dialog
+      .open(DetailInformationAddressComponent, {
+        ...MODAL_SMALL_LARGE,
+        disableClose: true,
+        data: newData
+      })
       .afterClosed();
   }
 
@@ -307,8 +292,10 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     this.executeEventAddEditAddressInformationPropertyDialog(content);
   }
 
-  executeEventAddEditAddressInformationPropertyDialog(content: BasicInformationAddress | null): void {
-    let newData = new BasicInformationAddress(content, this.schema);
+  executeEventAddEditAddressInformationPropertyDialog(
+    content: BasicInformationAddress | null
+  ): void {
+    const newData = new BasicInformationAddress(content, this.schema);
     newData.baunitId = this.baunitId;
     newData.executionId = this.executionId;
     const dialogRef = this.dialog.open(AddEditInformationAddressComponent, {
@@ -320,11 +307,13 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
         hasMainAddress: this.hasMainAddress
       }
     });
-    dialogRef.afterClosed().subscribe((result: DetailBasicInformationAddress) => {
-      if (result && result.direccionId) {
-        this.searchBasicInformationPropertyAddresses();
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .subscribe((result: DetailBasicInformationAddress) => {
+        if (result && result.direccionId) {
+          this.searchBasicInformationPropertyAddresses();
+        }
+      });
   }
 
   captureInformationSubscribe(result: BasicInformationAddress[]): void {
@@ -354,12 +343,9 @@ export class InformationAddressesPropertyComponent implements OnInit, AfterViewI
     this.dataSource.filter = value;
   }
 
-
-
   get visibleColumns() {
-    return this.columns.filter(
-      (column) => column.visible)
+    return this.columns
+      .filter((column) => column.visible)
       .map((column) => column.property);
   }
-
 }

@@ -30,6 +30,9 @@ import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInUp400ms],
   standalone: true,
+  host: {
+    '(document:keyup.enter)': 'send()'
+  },
   imports: [
     MatButtonModule,
     MatCheckboxModule,

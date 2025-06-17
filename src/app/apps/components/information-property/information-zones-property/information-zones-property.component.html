@@ -1,7 +1,7 @@
-<mat-accordion class="flex flex-col py-0 px-0 mb-2">
+<mat-accordion class="flex flex-col py-0 px-0 mb-2 classInformationZonesProperty">
   <mat-expansion-panel
-    (opened)="isExpandPanel((expandedComponent = true))"
-    [expanded]="expandedComponent"
+    (opened)="isExpandPanel()"
+    [expanded]="expandedComponent()"
   >
     <mat-expansion-panel-header
       class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
@@ -13,85 +13,91 @@
       >
       </vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
-    <mat-panel-description class="py-0 px-0 flex flex-col">
-      <!-- Alfanuméricas -->
-      <div class="flex w-full justify-between">
-        <!-- Tabla -->
-        <vex-physical-zones-property
-          class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
-          tableTitle="físicas alfanuméricas"
-          [dataSource]="dataSourcePhysicalZones"
-          [zoneType]="zoneType"
-          [schema]="schema"
-          [baunitId]="baunitId"
-          [editable]="editable"
-          [divPolLv1]="divPolLv1"
-          [divPolLv2]="divPolLv2"
-          [executionId]="executionId"
-          [typeInformation]="typeInformation"
-          [isMatriz]="isMatriz()"
-          (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
-          (deletePhysicalZone)="deleteZone($event)"
-          (assignamentZone)="assignamentZone($event)"
-        ></vex-physical-zones-property>
+    @if (expandedComponent()) {
+      <mat-panel-description class="py-0 px-0 flex flex-col">
+        <!-- Alfanuméricas -->
+        <div class="flex w-full justify-between">
+          <!-- Tabla -->
+          <vex-physical-zones-property
+            class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
+            tableTitle="físicas alfanuméricas"
+            [dataSource]="dataSourcePhysicalZones"
+            [zoneType]="zoneType"
+            [schema]="schema"
+            [baunitId]="baunitId"
+            [editable]="editable"
+            [divPolLv1]="divPolLv1"
+            [divPolLv2]="divPolLv2"
+            [executionId]="executionId"
+            [typeInformation]="typeInformation"
+            [isMatriz]="isMatriz()"
+            (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
+            (deletePhysicalZone)="deleteZone($event)"
+            (assignamentZone)="assignamentZone($event)"
+          ></vex-physical-zones-property>
 
-        <!-- Second Table -->
-        <vex-geo-economic-zones-property
-          class="w-full px-8 border-l border-gray-300 max-h-80 overflow-hidden"
-          tableTitle="geoeconómicas alfanuméricas"
-          [dataSource]="dataSourceGeoeconomicZones"
-          [expandedComponent]="expandedComponent"
-          [schema]="schema"
-          [npn]="npn"
-          [baunitId]="baunitId"
-          [editable]="editable"
-          [executionId]="executionId"
-          [typeInformation]="typeInformation"
-          [isMatriz]="isMatriz()"
-          (geoeconomicZoneChange)="searchInformationGeoeconomicZonesProperty()"
-          (deleteGeoeconomicZone)="deleteZone($event)"
-          (assignamentZone)="assignamentZone($event)"
-        ></vex-geo-economic-zones-property>
-      </div>
+          <!-- Second Table -->
+          <vex-geo-economic-zones-property
+            class="w-full px-8 border-l border-gray-300 max-h-80 overflow-hidden"
+            tableTitle="geoeconómicas alfanuméricas"
+            [dataSource]="dataSourceGeoeconomicZones"
+            [expandedComponent]="expandedComponent()"
+            [schema]="schema"
+            [npn]="npn"
+            [baunitId]="baunitId"
+            [editable]="editable"
+            [executionId]="executionId"
+            [typeInformation]="typeInformation"
+            [isMatriz]="isMatriz()"
+            (geoeconomicZoneChange)="
+              searchInformationGeoeconomicZonesProperty()
+            "
+            (deleteGeoeconomicZone)="deleteZone($event)"
+            (assignamentZone)="assignamentZone($event)"
+          ></vex-geo-economic-zones-property>
+        </div>
 
-      <!-- Origen geográfico -->
-      <div class="flex w-full justify-between border-t-2 border-gray-300">
-        <!-- Tabla -->
-        <vex-physical-zones-property
-          class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
-          tableTitle="físicas de origen geográfico"
-          [isOrigen]="true"
-          [dataSource]="dataSourcePhysicalOrigin"
-          [zoneType]="zoneType"
-          [schema]="schema"
-          [baunitId]="baunitId"
-          [divPolLv1]="divPolLv1"
-          [divPolLv2]="divPolLv2"
-          [executionId]="executionId"
-          [typeInformation]="typeInformation"
-          (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
-          (deletePhysicalZone)="deleteZone($event)"
-          [isMatriz]="false"
-        ></vex-physical-zones-property>
+        <!-- Origen geográfico -->
+        <div class="flex w-full justify-between border-t-2 border-gray-300">
+          <!-- Tabla -->
+          <vex-physical-zones-property
+            class="w-full px-8 border-r border-gray-300 max-h-80 overflow-hidden"
+            tableTitle="físicas de origen geográfico"
+            [isOrigen]="true"
+            [dataSource]="dataSourcePhysicalOrigin"
+            [zoneType]="zoneType"
+            [schema]="schema"
+            [baunitId]="baunitId"
+            [divPolLv1]="divPolLv1"
+            [divPolLv2]="divPolLv2"
+            [executionId]="executionId"
+            [typeInformation]="typeInformation"
+            (physicalZoneChange)="searchInformationPhysicalZonesProperty()"
+            (deletePhysicalZone)="deleteZone($event)"
+            [isMatriz]="false"
+          ></vex-physical-zones-property>
 
-        <!-- Second Table -->
-        <vex-geo-economic-zones-property
-          class="w-full px-8 border-l border-gray-300 max-h-80 overflow-hidden"
-          tableTitle="geoeconómicas de origen geográfico"
-          [isOrigen]="true"
-          [dataSource]="dataSourceGeoeconomicOrigin"
-          [expandedComponent]="expandedComponent"
-          [schema]="schema"
-          [npn]="npn"
-          [baunitId]="baunitId"
-          [executionId]="executionId"
-          [typeInformation]="typeInformation"
-          [isMatriz]="false"
-          (geoeconomicZoneChange)="searchInformationGeoeconomicZonesProperty()"
-          (deleteGeoeconomicZone)="deleteZone($event)"
-        ></vex-geo-economic-zones-property>
-      </div>
-    </mat-panel-description>
+          <!-- Second Table -->
+          <vex-geo-economic-zones-property
+            class="w-full px-8 border-l border-gray-300 max-h-80 overflow-hidden"
+            tableTitle="geoeconómicas de origen geográfico"
+            [isOrigen]="true"
+            [dataSource]="dataSourceGeoeconomicOrigin"
+            [expandedComponent]="expandedComponent()"
+            [schema]="schema"
+            [npn]="npn"
+            [baunitId]="baunitId"
+            [executionId]="executionId"
+            [typeInformation]="typeInformation"
+            [isMatriz]="false"
+            (geoeconomicZoneChange)="
+              searchInformationGeoeconomicZonesProperty()
+            "
+            (deleteGeoeconomicZone)="deleteZone($event)"
+          ></vex-geo-economic-zones-property>
+        </div>
+      </mat-panel-description>
+    }
   </mat-expansion-panel>
 </mat-accordion>
 

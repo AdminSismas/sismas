@@ -1,14 +1,47 @@
-<div class="flex items-center" mat-dialog-title>
+<div
+  class="flex items-center"
+  mat-dialog-title
+>
   <h2 class="headline m-0 flex-auto">
     @if (optionSchemas.length > 1) {
-      {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition }}
+      {{
+        CONSTANT_INFORMATION_PREDIAL +
+          TWO_POINT_ +
+          baUnitHead?.baunitIdE +
+          " - " +
+          baUnitHead?.domBaunitCondition
+      }}
     } @else if (optionSchemas.length === 1) {
       @if (optionSchemas[0].schema === schemaMain) {
-        {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition + " - " + CONSTANT_INFORMATION_PREDIAL_MAIN }}
+        {{
+          CONSTANT_INFORMATION_PREDIAL +
+            TWO_POINT_ +
+            baUnitHead?.baunitIdE +
+            " - " +
+            baUnitHead?.domBaunitCondition +
+            " - " +
+            CONSTANT_INFORMATION_PREDIAL_MAIN
+        }}
       } @else if (optionSchemas[0].schema === schemaTemp) {
-        {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition + " - " + CONSTANT_INFORMATION_PREDIAL_TEMP }}
+        {{
+          CONSTANT_INFORMATION_PREDIAL +
+            TWO_POINT_ +
+            baUnitHead?.baunitIdE +
+            " - " +
+            baUnitHead?.domBaunitCondition +
+            " - " +
+            CONSTANT_INFORMATION_PREDIAL_TEMP
+        }}
       } @else if (optionSchemas[0].schema === schemaHist) {
-        {{ CONSTANT_INFORMATION_PREDIAL + TWO_POINT_ + baUnitHead?.baunitIdE + " - " + baUnitHead?.domBaunitCondition + " - " + CONSTANT_INFORMATION_PREDIAL_HIST }}
+        {{
+          CONSTANT_INFORMATION_PREDIAL +
+            TWO_POINT_ +
+            baUnitHead?.baunitIdE +
+            " - " +
+            baUnitHead?.domBaunitCondition +
+            " - " +
+            CONSTANT_INFORMATION_PREDIAL_HIST
+        }}
       }
     }
   </h2>
@@ -24,24 +57,31 @@
 <mat-divider class="text-border"></mat-divider>
 
 @if (optionSchemas.length > 1 && typeInformation === TYPE_INFORMATION_VISUAL) {
-  <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
+  <vex-page-layout-content
+    class="container-fluid p-0"
+    vexFluidHeight
+    fluidHeight="105"
+  >
     <mat-tab-group (selectedTabChange)="onTabChange($event)">
       @for (option of optionSchemas; track option) {
         <mat-tab [label]="option.title">
-          <vex-cadastral-information-property
-            [id]="'CadastralInformation_' + option.schema"
-            [label]="option.title"
-            [schema]="option.schema"
-            [typeInformation]="typeInformation"
-            [contentInfoSchema]="option.defaultObject"
-            [showTittle]="false"
-            [baunitCondition]="baUnitHead?.domBaunitCondition"
-            [resources]="defaults.resources!"
-            [rulePage]="rulePage"
-            [levelInfo]="defaults.levelInfo"
-            cssClasses="mat-mdc-dialog-content_tab"
-            vexFluidHeight fluidHeight=105
-          ></vex-cadastral-information-property>
+          <ng-template matTabContent>
+            <vex-cadastral-information-property
+              [id]="'CadastralInformation_' + option.schema"
+              [label]="option.title"
+              [schema]="option.schema"
+              [typeInformation]="typeInformation"
+              [contentInfoSchema]="option.defaultObject"
+              [showTittle]="false"
+              [baunitCondition]="baUnitHead?.domBaunitCondition"
+              [resources]="defaults.resources!"
+              [rulePage]="rulePage"
+              [levelInfo]="defaults.levelInfo"
+              cssClasses="mat-mdc-dialog-content_tab"
+              vexFluidHeight
+              fluidHeight="105"
+            ></vex-cadastral-information-property>
+          </ng-template>
         </mat-tab>
       } @empty {
         <mat-tab label="No Data">
@@ -50,8 +90,14 @@
       }
     </mat-tab-group>
   </vex-page-layout-content>
-} @else if (optionSchemas.length === 1 && typeInformation === TYPE_INFORMATION_VISUAL) {
-  <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
+} @else if (
+  optionSchemas.length === 1 && typeInformation === TYPE_INFORMATION_VISUAL
+) {
+  <vex-page-layout-content
+    class="container-fluid p-0"
+    vexFluidHeight
+    fluidHeight="105"
+  >
     <vex-cadastral-information-property
       [id]="'CadastralInformation_' + optionSchemas[0].schema"
       [label]="optionSchemas[0].title"
@@ -64,11 +110,18 @@
       [rulePage]="rulePage"
       [levelInfo]="defaults.levelInfo"
       cssClasses="mat-mdc-dialog-content"
-      vexFluidHeight fluidHeight=105
+      vexFluidHeight
+      fluidHeight="105"
     ></vex-cadastral-information-property>
   </vex-page-layout-content>
-} @else if (optionSchemas.length === 1 && typeInformation === TYPE_INFORMATION_EDITION) {
-  <vex-page-layout-content class="container-fluid p-0" vexFluidHeight fluidHeight=105>
+} @else if (
+  optionSchemas.length === 1 && typeInformation === TYPE_INFORMATION_EDITION
+) {
+  <vex-page-layout-content
+    class="container-fluid p-0"
+    vexFluidHeight
+    fluidHeight="105"
+  >
     <vex-cadastral-information-property
       [id]="'CadastralInformation_' + optionSchemas[0].schema"
       [label]="optionSchemas[0].title"
@@ -81,7 +134,8 @@
       [rulePage]="rulePage"
       [levelInfo]="defaults.levelInfo"
       cssClasses="mat-mdc-dialog-content"
-      vexFluidHeight fluidHeight=105
+      vexFluidHeight
+      fluidHeight="105"
     ></vex-cadastral-information-property>
   </vex-page-layout-content>
 }

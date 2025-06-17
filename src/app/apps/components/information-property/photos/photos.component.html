@@ -1,6 +1,6 @@
-<mat-accordion class="flex flex-col py-0 px-0 mb-2 classPhotos">
+<mat-accordion class="flex flex-col py-0 px-0 mb-2 classInformationPhotos">
   <mat-expansion-panel
-    (opened)="isExpandPanel(true)"
+    (opened)="isExpandPanel()"
     [expanded]="expandedComponent()"
   >
     <mat-expansion-panel-header
@@ -12,39 +12,43 @@
         id="photos"
       ></vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
-    @if (typeInformation() === "edition") {
-      <button
-        mat-flat-button
-        color="primary"
-        class="my-2"
-        (click)="openAddPhotoDialog()"
-      >
-        <mat-icon svgIcon="mat:add"></mat-icon>
-        Agregar foto
-      </button>
-    }
-    @if (!loading()) {
-      <div class="h-full w-full">
-        @if (images().length > 0) {
-          <div class="py-8 px-6 h-80 w-full md:h-[500px]">
-            <app-carousel
-              [images]="images()"
-              [deleteButton]="typeInformation() === 'edition'"
-              [resetCarousel]="resetCarousel()"
-              [showNames]="true"
-              (deleteImage)="onDeleteImage($event)"
-            ></app-carousel>
+    @if (expandedComponent()) {
+      <mat-panel-description>
+        @if (typeInformation() === "edition") {
+          <button
+            mat-flat-button
+            color="primary"
+            class="my-2"
+            (click)="openAddPhotoDialog()"
+          >
+            <mat-icon svgIcon="mat:add"></mat-icon>
+            Agregar foto
+          </button>
+        }
+        @if (!loading()) {
+          <div class="h-full w-full">
+            @if (images().length > 0) {
+              <div class="py-8 px-6 h-80 w-full md:h-[500px]">
+                <app-carousel
+                  [images]="images()"
+                  [deleteButton]="typeInformation() === 'edition'"
+                  [resetCarousel]="resetCarousel()"
+                  [showNames]="true"
+                  (deleteImage)="onDeleteImage($event)"
+                ></app-carousel>
+              </div>
+            } @else {
+              <div class="flex justify-center items-center py-4">
+                <p class="text-gray-500 text-lg">No hay fotos para mostrar.</p>
+              </div>
+            }
           </div>
         } @else {
           <div class="flex justify-center items-center py-4">
-            <p class="text-gray-500 text-lg">No hay fotos para mostrar.</p>
+            <p class="text-gray-500 text-lg">Cargando imágenes...</p>
           </div>
         }
-      </div>
-    } @else {
-      <div class="flex justify-center items-center py-4">
-        <p class="text-gray-500 text-lg">Cargando imágenes...</p>
-      </div>
+      </mat-panel-description>
     }
   </mat-expansion-panel>
 </mat-accordion>
