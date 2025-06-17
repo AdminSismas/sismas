@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
-import { Component, ElementRef, forwardRef, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, ElementRef, forwardRef, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
@@ -233,7 +233,8 @@ export class CadastralInformationPropertyComponent implements OnInit {
     CLN?: boolean,
     AUTAVAL?: boolean,
     NPN?: boolean,
-    AREA?: boolean
+    AREA?: boolean,
+    PPL?: boolean
   } = {};
 
   propertyRegistryOffice: string | null | undefined = null;
@@ -247,9 +248,17 @@ export class CadastralInformationPropertyComponent implements OnInit {
   public showRulesPage = false;
   public expand_tap = false;
 
-  // SIGNALS
+  // Signals
   activeComponent = signal<number>(0);
   isMatriz = signal<boolean>(false);
+
+  // Computed
+  showEditPerson = computed(() => {
+    if (!this.editable.PPL) {
+      return false;
+    }
+    return this.editable.PPL as boolean;
+  });
 
   constructor(
     private informationPropertyService: InformationPropertyService,

@@ -48,7 +48,7 @@
     </div>
     <h4
       class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[30px]"
-      title="{{ protaskE.proTask?.flowName }}"
+      [title]="protaskE.proTask?.flowName"
     >
       @if (
         protaskE.proTask === null ||
@@ -62,7 +62,7 @@
     </h4>
     <h5
       class="subheading-1 leading-none mb-1 mt-1 items-center min-h-[20px]"
-      title="{{ protaskE.proTask?.flowName }}"
+      [title]="protaskE.proTask?.flowName"
     >
       @if (
         protaskE.proTask === null ||

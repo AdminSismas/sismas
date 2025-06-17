@@ -117,6 +117,14 @@ export class InformationPropertyOwnersComponent
 
   // Input signal
   expandedComponent = input.required<boolean>();
+  showEditPerson = input(false, {
+    transform: (value: boolean | string) => {
+      if (value === true || value === 'true' || value === '1') {
+        return true;
+      }
+      return false;
+    }
+  });
 
   // Output signal
   emitExpandedComponent = output<number>();
@@ -284,7 +292,8 @@ export class InformationPropertyOwnersComponent
               beginAt: infoOwner.beginAt,
               domRightType: infoOwner.domRightType
             },
-            individual: infoOwner.individual
+            individual: infoOwner.individual,
+            showEditPerson: this.showEditPerson()
           }
         })
         .afterClosed()

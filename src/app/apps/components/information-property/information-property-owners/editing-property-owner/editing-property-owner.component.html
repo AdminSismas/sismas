@@ -1,14 +1,42 @@
-<h2 mat-dialog-title>
-  {{ data.individual.fullName }}
-</h2>
-<mat-divider></mat-divider>
+<header class="sticky top-0 z-10 bg-slate-100 dark:bg-slate-800">
+  <div class="flex justify-between items-center">
+    <section class="flex items-center">
+      <h2 mat-dialog-title>
+        {{ data.individual.fullName }}
+      </h2>
+      @if(data.showEditPerson){
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="editPerson()"
+        >
+          <mat-icon svgIcon="mat:edit"></mat-icon>
+          Editar persona
+        </button>
+      }
+    </section>
+    <button
+      mat-icon-button
+      (click)="close()"
+      tabindex="-1"
+    >
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="bg-slate-400"></mat-divider>
+</header>
+
 <mat-dialog-content>
   <form
     [formGroup]="form"
     class="grid grid-cols-4 gap-4 grid-flow-row py-2"
   >
     <!-- Edición fracción -->
-    <mat-form-field [ngClass]="{'bg-red-50': form.get('fraction')?.errors?.['invalidFraction'] }">
+    <mat-form-field
+      [ngClass]="{
+        'bg-red-50': form.get('fraction')?.errors?.['invalidFraction']
+      }"
+    >
       <mat-label>Fracción</mat-label>
       <input
         matInput
@@ -19,7 +47,7 @@
         step="0.01"
         type="number"
       />
-      @if (form.get('fraction')?.errors?.['invalidFraction']) {
+      @if (form.get("fraction")?.errors?.["invalidFraction"]) {
         <mat-error>Fracción no válida</mat-error>
       }
     </mat-form-field>
@@ -78,7 +106,7 @@
         type="submit"
         mat-flat-button
         class="p-6 text-lg"
-        [mat-dialog-close]="false"
+        (click)="close()"
       >
         Cancelar
       </button>
