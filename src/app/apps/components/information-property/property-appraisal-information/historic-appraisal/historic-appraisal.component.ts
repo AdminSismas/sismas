@@ -16,15 +16,12 @@ import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data
 import {
   PAGE,
   PAGE_OPTION_1_5_10,
-  PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_APPRAISALS
 } from 'src/app/apps/constants/general/constants';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { InfoAppraisal } from 'src/app/apps/interfaces/information-property/info-appraisal';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { property } from 'lodash';
 
 @Component({
   selector: 'vex-historic-appraisal',
