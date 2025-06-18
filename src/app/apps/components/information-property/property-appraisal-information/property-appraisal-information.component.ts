@@ -16,7 +16,7 @@ import {
   LIST_GRID_APPRAISAL_1,
   LIST_GRID_APPRAISAL_2,
   LIST_GRID_APPRAISAL_3,
-  MODAL_SMALL,
+  MODAL_MEDIUM,
   MODAL_SMALL_XS,
   NAME_SELF_VALUATION_VALUE,
   PAGE,
@@ -351,7 +351,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
 
   historyAppraisal() {
     this.dialog.open(HistoricAppraisalComponent, {
-      ...MODAL_SMALL,
+      ...MODAL_MEDIUM,
       data: {
         baunitId: this.baunitId,
         schema: this.schema,

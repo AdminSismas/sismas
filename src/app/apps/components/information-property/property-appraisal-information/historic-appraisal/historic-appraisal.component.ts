@@ -16,15 +16,12 @@ import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data
 import {
   PAGE,
   PAGE_OPTION_1_5_10,
-  PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES_APPRAISALS
 } from 'src/app/apps/constants/general/constants';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { InfoAppraisal } from 'src/app/apps/interfaces/information-property/info-appraisal';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { property } from 'lodash';
 
 @Component({
   selector: 'vex-historic-appraisal',
@@ -53,7 +50,7 @@ export class HistoricAppraisalComponent implements OnInit, AfterViewInit {
     { label: '', colspan: 2, property: 'vigencia' },
     { label: 'Avalúo catastral', colspan: 3, property: 'avaluo-catastral' },
     { label: 'Avalúo comercial', colspan: 3, property: 'avaluo-comercial' },
-    { label: 'Autoavalúo', colspan: 1, property: 'autoavaluo' },
+    { label: 'Autoavalúo', colspan: 1, property: 'autoavaluo' }
   ];
 
   dataSource = signal<MatTableDataSource<InfoAppraisal>>(
@@ -72,7 +69,7 @@ export class HistoricAppraisalComponent implements OnInit, AfterViewInit {
       .map((column) => column.property);
   });
   displayTitlesGroups = computed<string[]>(() => {
-    return this.groupTitles.map((group) =>group.property);
+    return this.groupTitles.map((group) => group.property);
   });
 
   paginator = viewChild<MatPaginator>('paginator');
@@ -88,18 +85,16 @@ export class HistoricAppraisalComponent implements OnInit, AfterViewInit {
   }
 
   getAppraisalData() {
-    const { baunitId, schema, executionId } = this.data;
+    const { baunitId } = this.data;
     const paginatorData = new PageSearchData(PAGE, this.pageSize(), baunitId);
 
     this.informationPropertyService
-      .getBasicInformationAppraisalsProperty(paginatorData, schema, executionId)
-      .subscribe({
-        next: (response) => {
-          this.dataSource().data = response.content;
-          this.page.set(response.pageable?.pageNumber ?? 0);
-          this.pageSize.set(response.pageable?.pageSize ?? 5);
-          this.totalElements.set(response.totalElements ?? 0);
-        }
+      .getHistoricAppraisalInformation(baunitId, paginatorData)
+      .subscribe((response) => {
+        this.dataSource().data = response.content;
+        this.page.set(response.pageable?.pageNumber ?? 0);
+        this.pageSize.set(response.pageable?.pageSize ?? 5);
+        this.totalElements.set(response.totalElements ?? 0);
       });
   }
 
