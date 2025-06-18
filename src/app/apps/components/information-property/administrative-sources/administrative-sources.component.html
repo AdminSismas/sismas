@@ -59,31 +59,33 @@
                   </ng-container>
                 }
               }
-              <!-- Action Column -->
-              <ng-container matColumnDef="actions">
-                <th
-                  *matHeaderCellDef
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  Acciones
-                </th>
-                <td
-                  *matCellDef="let row"
-                  class="w-10 text-secondary"
-                  mat-cell
-                >
-                  <button
-                    (click)="$event.stopPropagation()"
-                    [matMenuTriggerData]="{ row: row }"
-                    [matMenuTriggerFor]="actionsMenu"
-                    mat-icon-button
-                    type="button"
+              @if (this.editable) {
+                <!-- Action Column -->
+                <ng-container matColumnDef="actions">
+                  <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
                   >
-                    <mat-icon svgIcon="mat:more_horiz"></mat-icon>
-                  </button>
-                </td>
-              </ng-container>
+                    Acciones
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    class="w-10 text-secondary"
+                    mat-cell
+                  >
+                    <button
+                      (click)="$event.stopPropagation()"
+                      [matMenuTriggerData]="{ row: row }"
+                      [matMenuTriggerFor]="actionsMenu"
+                      mat-icon-button
+                      type="button"
+                    >
+                      <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+              }
 
               <tr
                 mat-header-row

@@ -395,4 +395,10 @@ export class InformationPropertyService {
   private getData(url: string, params: any): Observable<any> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
+
+  getHistoricAppraisalInformation( baunit: string, page: { page: string, size: string } ): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${envi.valuation}${envi.historicos}`;
+
+    return this.http.get<InformationPegeable>(url, { params: page });
+  }
 }
