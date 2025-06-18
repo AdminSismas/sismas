@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, Subject, throwError } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
@@ -11,10 +11,11 @@ import { GovernmentalChannel } from '../../interfaces/bpm/governmental-channel';
 @Injectable({
   providedIn: 'root'
 })
-export class ParticipantsServiceService {
+export class ParticipantsService {
   private url_basic = `${envi.url}:${envi.port}`;
 
   private chargeInfoSubject = new BehaviorSubject<boolean | null>(false);
+  private http = inject(HttpClient);
   chargeInfoSubject$ = this.chargeInfoSubject.asObservable();
 
   constructor(
@@ -30,7 +31,8 @@ export class ParticipantsServiceService {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
-    return this.getData(
+
+    return this.getData<InformationPegeable>(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}/${executionId}`,
       paramsR
     );
@@ -42,9 +44,9 @@ export class ParticipantsServiceService {
   }
 
   getAllThirdPartyAffected(executionId: string): Observable<ProcessParticipant[]> {
-    return this.requestsService.sendRequestsFetchGet(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.thirdPartyAffected}/${executionId}`
-    ).pipe(catchError(error => this.errorNotFoundList(error)));
+    const url = `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.thirdPartyAffected}/${executionId}`;
+
+    return this.http.get<ProcessParticipant[]>(url);
   }
 
   saveParticipantByExecutionId(executionId: string, body: ProcessParticipant): Observable<ProcessParticipant> {
@@ -87,17 +89,13 @@ export class ParticipantsServiceService {
     );
   }
 
-  private getData(url: string, params: any): Observable<any> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+  private getData<T>(url: string, params: HttpParams): Observable<T> {
+    return this.http.get<T>(url, { params: params });
   }
 
-  errorNotFoundList(error: HttpErrorResponse) {
-    if (error.status == HttpStatusCode.NotFound) {
-      return new Observable<any>((subscriber) => {
-        subscriber.next([]);
-        subscriber.complete();
-      });
-    }
-    return throwError(() => error);
+  getAutoThirdPartyAffected(executionId: string): Observable<ProcessParticipant[]> {
+    const url = `${this.url_basic}${envi.bpmParticipation.value}${envi.actualizarTercerosAfectados}/${executionId}`;
+
+    return this.http.get<ProcessParticipant[]>(url);
   }
 }

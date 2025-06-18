@@ -13,6 +13,7 @@ export const environment = {
     value: "/accessGeo/"
   },
   active: "active",
+  actualizarTercerosAfectados: "/actualizarTercerosAfectados",
   adjacent: "/colindante/",
   administrativeSource: "/fuenteadmin/",
   apiUrlToken: "/token/authenticate",

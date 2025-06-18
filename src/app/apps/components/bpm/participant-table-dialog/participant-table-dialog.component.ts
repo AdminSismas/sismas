@@ -1,7 +1,16 @@
-import { Component, DestroyRef, inject, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormGroup
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '../../../constants/general/constants';
@@ -24,29 +33,26 @@ import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.di
     FluidMinHeightDirective
   ],
   templateUrl: './participant-table-dialog.component.html',
-  styleUrl: './participant-table-dialog.component.scss',
+  styleUrl: './participant-table-dialog.component.scss'
 })
-export class ParticipantTableDialogComponent implements OnInit,OnDestroy {
-
-  executionId: string = '';
-  thirdPartyAffected:boolean = false;
+export class ParticipantTableDialogComponent implements OnInit {
+  executionId = '';
+  thirdPartyAffected = false;
   participationFormGroup: UntypedFormGroup = this.fb.group({
     numberID: [null],
     typeNumberDocument: [null],
-    typeParticipation: [{ value: CONSTANT_TYPE_PARTICIPATION_THIRDPARTY, disabled: true }],
+    typeParticipation: [
+      { value: CONSTANT_TYPE_PARTICIPATION_THIRDPARTY, disabled: true }
+    ],
     personCompleted: [{ value: '', disabled: true }]
   });
   participants: ProcessParticipant[] = [];
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: ThirdPartyAffectedParticipant,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<ParticipantTableDialogComponent>
-  ) {
-    this.destroyRef.onDestroy(() => {
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.executionId = this.data.executionId;
@@ -62,8 +68,5 @@ export class ParticipantTableDialogComponent implements OnInit,OnDestroy {
 
   closeDialog() {
     this.dialogRef.close(this.participants);
-  }
-
-  ngOnDestroy(): void {
   }
 }
