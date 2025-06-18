@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { BehaviorSubject, catchError, Observable, Subject } from 'rxjs';
-import {
-  BasicInformationProperty} from '../../interfaces/information-property/basic-information-property';
+import { BasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
@@ -380,7 +379,11 @@ export class InformationPropertyService {
     return this.http.delete(url);
   }
 
-  assignamentZones( typeZone: 'physic' | 'geoeconomic', executionId: string, baunitId: string ): Observable<SimpleResponse> {
+  assignamentZones(
+    typeZone: 'physic' | 'geoeconomic',
+    executionId: string,
+    baunitId: string
+  ): Observable<SimpleResponse> {
     let url = `${this.basic_url}${envi.baUnitZona}`;
 
     if (typeZone === 'physic') {
@@ -396,9 +399,16 @@ export class InformationPropertyService {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
 
-  getHistoricAppraisalInformation( baunit: string, page: { page: string, size: string } ): Observable<InformationPegeable> {
-    const url = `${this.basic_url}${envi.valuation}${envi.historicos}`;
+  getHistoricAppraisalInformation(
+    baunitId: string,
+    pageInformation: PageSearchData
+  ): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${envi.valuation}${envi.historicos}/${baunitId}`;
 
-    return this.http.get<InformationPegeable>(url, { params: page });
+    const params = new HttpParams()
+      .set('page', pageInformation.page!)
+      .set('size', pageInformation.size!);
+
+    return this.http.get<InformationPegeable>(url, { params });
   }
 }

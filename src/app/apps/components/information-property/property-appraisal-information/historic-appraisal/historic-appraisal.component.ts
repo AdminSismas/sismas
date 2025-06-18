@@ -85,11 +85,11 @@ export class HistoricAppraisalComponent implements OnInit, AfterViewInit {
   }
 
   getAppraisalData() {
-    const { baunitId, schema, executionId } = this.data;
+    const { baunitId } = this.data;
     const paginatorData = new PageSearchData(PAGE, this.pageSize(), baunitId);
 
     this.informationPropertyService
-      .getBasicInformationAppraisalsProperty(paginatorData, schema, executionId)
+      .getHistoricAppraisalInformation(baunitId, paginatorData)
       .subscribe((response) => {
         this.dataSource().data = response.content;
         this.page.set(response.pageable?.pageNumber ?? 0);
