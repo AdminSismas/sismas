@@ -49,7 +49,7 @@ import { filter } from 'rxjs/operators';
 import {
   CreatePeopleComponent
 } from '../../../../pages/pages/operation-support/people/create-people/create-people.component';
-import { ParticipantsServiceService } from '../../../services/bpm/participants-service.service';
+import { ParticipantsService } from '../../../services/bpm/participants-service.service';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { Pegeable } from '../../../interfaces/general/pegeable.model';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
@@ -126,7 +126,7 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
   constructor(
     private readonly layoutService: VexLayoutService,
     private personService: InformationPersonService,
-    private participantsService: ParticipantsServiceService,
+    private participantsService: ParticipantsService,
     private dialog: MatDialog
   ) {
 

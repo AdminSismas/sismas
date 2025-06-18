@@ -31,7 +31,7 @@ import { ProceduresCollection } from '../../../../../../../apps/interfaces/table
 import {
   TextAreaComponent
 } from '../../../../../../../apps/components/general-components/text-area/text-area.component';
-import { ParticipantsServiceService } from '../../../../../../../apps/services/bpm/participants-service.service';
+import { ParticipantsService } from '../../../../../../../apps/services/bpm/participants-service.service';
 import Swal from 'sweetalert2';
 import {
   ProcessParticipantTableMenu
@@ -108,7 +108,7 @@ export class AddCitationNoticeComponent implements OnInit {
     private dialogRef: MatDialogRef<AddCitationNoticeComponent>,
     private fb: FormBuilder,
     private readonly procedureService: ProceduresService,
-    private readonly participantsService: ParticipantsServiceService,
+    private readonly participantsService: ParticipantsService,
     private peopleService: PeopleService
   ) {
   }

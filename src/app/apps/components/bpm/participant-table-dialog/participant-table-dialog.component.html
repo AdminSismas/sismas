@@ -1,12 +1,21 @@
 <div class="flex justify-between items-center">
-  <h2 mat-dialog-title>Terceros afectados</h2>
-  <button mat-icon-button (click)="closeDialog()" type="button" tabindex="-1">
+  <h2 mat-dialog-title>Agregar terceros afectados manualmente</h2>
+  <button
+    mat-icon-button
+    (click)="closeDialog()"
+    type="button"
+    tabindex="-1"
+  >
     <mat-icon svgIcon="mat:close"></mat-icon>
   </button>
 </div>
 <mat-divider></mat-divider>
 
-<mat-dialog-content class="h-full w-full" vexMinFluidHeight fluidHeight="530">
+<mat-dialog-content
+  class="h-full w-full"
+  vexMinFluidHeight
+  fluidHeight="530"
+>
   <form [formGroup]="participationFormGroup">
     <vex-participant-table
       class="w-full h-full"
@@ -14,6 +23,18 @@
       [form]="participationFormGroup"
       [executionId]="executionId"
       [thirdPartyAffected]="thirdPartyAffected"
-      (processParticipants)="loadParticipants($event)"></vex-participant-table>
+      (processParticipants)="loadParticipants($event)"
+    ></vex-participant-table>
   </form>
 </mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <button
+    mat-flat-button
+    color="primary"
+    mat-dialog-close
+    type="button"
+  >
+    Aceptar
+  </button>
+</mat-dialog-actions>
