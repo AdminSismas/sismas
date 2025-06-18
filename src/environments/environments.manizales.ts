@@ -121,6 +121,7 @@ export const environment = {
   getApiQualificationUrl: "https://manizales.api.sismas.com.co:5001/calificationUB/",
   getByExecution: "/getByExecution",
   headBaunitByMaster: "/headBaunitByMaster",
+  historicos: "/historicos",
   individual_findByNumber: "/individual/findByNumber",
   individualNumber: "/individual",
   individualTypeNumber: "/individual/findByNumber",

@@ -61,7 +61,7 @@ export class AdministrativeSourcesComponent {
   @Input() schema?: string;
   @Input() executionId?: string | null;
   @Input() typeInformation?: string;
-  @Input() editable? = true;
+  @Input() editable? = false;
 
   // Input signal
   expandedComponent = input.required<boolean>();
@@ -92,15 +92,14 @@ export class AdministrativeSourcesComponent {
 
   // Computed
   displayedColumns = computed(() => {
-    const displayedColumns = this.columns.map((column) => {
-      if (
-        this.typeInformation !== 'edition' ||
-        (!this.editable && column.property !== 'actions')
-      ) {
-        return column.property;
-      }
-    });
-    return displayedColumns;
+    return this.columns
+      .filter((column) => {
+        if (!this.editable){
+          return column.visible && column.property !== 'actions' ? true : false;
+        }
+        return column.visible;
+      })
+      .map((column) => column.property);
   });
 
   constructor(
