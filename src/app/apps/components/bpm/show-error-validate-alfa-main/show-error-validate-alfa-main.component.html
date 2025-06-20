@@ -1,38 +1,51 @@
 <div>
-  <div class="flex items-center gap-4 px-6 py-3 border-b border-divider">
-    <mat-icon
-      svgIcon="mat:search"
-      class="text-secondary flex-none"></mat-icon>
-    <input
-      type="text"
-      placeholder="Filtrar error"
-      [formControl]="searchCtrl"
-      class="text-xl font-medium bg-transparent outline-none flex-auto placeholder-secondary" />
-    <button
-      class="flex-none ltr:-mr-2 rtl:-ml-2 text-secondary"
-      type="button"
-      mat-icon-button>
-      <mat-icon svgIcon="mat:settings"></mat-icon>
-    </button>
-  </div>
+  <header class="sticky top-0 z-10 bg-white">
+    <section class="flex items-center justify-between">
+      <h1
+        mat-dialog-title
+        class="text-3xl text-slate-600"
+      >
+        Errores de validación
+      </h1>
+      <button
+        type="button"
+        mat-icon-button
+        mat-dialog-close
+      >
+        <mat-icon svgIcon="mat:close"></mat-icon>
+      </button>
+    </section>
 
-  <div class="p-4">
-    <div class="font-semibold mb-1 px-2 mb-2">
-      <h1 class="title mt-0 ">Errores de validación</h1>
-    </div>
+    <mat-divider class="bg-slate-400"></mat-divider>
 
-    <div class="space-y-1 px-2 py-1 overflow-x-hidden overflow-y-auto" vexFluidHeight fluidHeight=280>
+    <section class="flex gap-4 border border-slate-600 mt-4 mx-6 px-4 py-2 rounded-md">
+      <mat-icon
+        svgIcon="mat:search"
+        class="text-secondary flex-none"
+      ></mat-icon>
+      <input
+        type="text"
+        placeholder="Filtrar error"
+        [formControl]="searchCtrl"
+        class="text-lg font-medium bg-transparent outline-none flex-auto placeholder-secondary"
+      />
+    </section>
+  </header>
+
+  <main class="flex flex-col px-4">
+    <div class="space-y-1 px-2 py-1 overflow-x-hidden overflow-y-auto">
       @for (error of listErrors; track $index) {
         <div
-          class="px-2 py-2 hover:bg-hover rounded transition duration-200 ease-out flex items-center gap-4 cursor-pointer select-none"
-          matRipple>
+          class="px-2 py-2 hover:bg-slate-300 rounded transition duration-200 ease-out flex items-center gap-4 cursor-pointer active:bg-slate-500 active:text-slate-300"
+          matRipple
+          (click)="copyError(error)"
+        >
           <div class="flex-auto text-base font-medium">{{ error }}</div>
         </div>
       }
-      <div *ngIf="!listErrors|| listErrors.length <= 0" class="no-data-information">
-        No hay información disponible
-      </div>
+      @if (!listErrors || listErrors.length <= 0) {
+        <div class="no-data-information">No hay información disponible</div>
+      }
     </div>
-  </div>
-
+  </main>
 </div>
