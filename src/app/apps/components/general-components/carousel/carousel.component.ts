@@ -4,9 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import Swiper from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/scss';
-import 'swiper/scss/navigation';
-import 'swiper/scss/pagination';
 
 @Component({
   selector: 'app-carousel',
@@ -27,6 +24,25 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   showNames = input<boolean>(false);
 
   deleteImage = output<string>();
+
+  constructor () {
+    effect(() => {
+      if (this.resetCarousel()) {
+        this.resetSlider();
+      }
+    }, { allowSignalWrites: true});
+
+    effect(() => {
+      if (this.images().length > 0) {
+        this.swiper.destroy(true, true);
+        this.initSwiper();
+      } else {
+        if (this.swiper) {
+          this.swiper.destroy(true, true);
+        }
+      }
+    }, { allowSignalWrites: true});
+  }
 
   ngAfterViewInit(): void {
     this.initSwiper();
@@ -57,12 +73,6 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
       }
     });
   }
-
-  resetEffect = effect(() => {
-    if (this.resetCarousel()) {
-      this.resetSlider();
-    }
-  }, { allowSignalWrites: true});
 
   resetSlider(): void {
     if (this.swiper) {
