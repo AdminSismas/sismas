@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+import { DecodeJwt, UserDetails, UserRole } from 'src/app/apps/interfaces/user-details/user.model';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environments';
@@ -49,7 +49,7 @@ export class UserService {
     this.currentUserSubject.next(null);
   }
 
-  changeRole(newRole: string): void {
+  changeRole(newRole: UserRole): void {
     const currentUser = this.currentUserSubject.value;
     if (currentUser) {
       currentUser.role = newRole;

@@ -33,6 +33,7 @@ import {
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
+import type { UserRole } from 'src/app/apps/interfaces/user-details/user.model';
 
 @Component({
   selector: 'vex-sidenav',
@@ -155,7 +156,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.router.navigate(['/myWork/cadastralSearch']);
   }
 
-  changeRole(role: string): void {
+  changeRole(role: UserRole): void {
     this.userService.changeRole(role);
   }
 

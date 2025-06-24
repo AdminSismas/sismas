@@ -21,7 +21,7 @@
         style="align-items: flex-start"
       >
         <div style="margin-left: 6px">
-          @if (user?.role === "ADMIN") {
+          @if (user?.role === "ADMIN" || user?.role === "USER_LEAD") {
             <button
               color="primary"
               aria-label=""
