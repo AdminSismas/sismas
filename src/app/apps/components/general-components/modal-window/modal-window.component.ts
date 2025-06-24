@@ -24,7 +24,10 @@ export class ModalWindowComponent implements AfterViewInit {
 
   // INPUTS
   title = input<string>('Título ventana modal');
-  actions = input<boolean>(false);
+  actions = input(false, {
+    transform: (value: boolean | string) =>
+      typeof value === 'string' ? value === '' : value,
+  });
   showCancelButton = input<boolean>(false);
   data = input<unknown | null>(null);
 
