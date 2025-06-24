@@ -1,34 +1,9 @@
+
 <section class="h-full">
-  <div class="h-full w-full relative">
-    <button
-      #prevButton
-      class="absolute z-10 top-1/2 -translate-y-1/2 left-[10%] lg:left-[20%]"
-      mat-fab
-      color="primary"
-      (click)="changeImage(-1)"
-      disabled
-    >
-      <mat-icon svgIcon="mat:chevron_left"></mat-icon>
-    </button>
-    <button
-      #nextButton
-      class="absolute z-10 top-1/2 -translate-y-1/2 right-[10%] lg:right-[20%]"
-      mat-fab
-      color="primary"
-      (click)="changeImage(1)"
-      [disabled]="images().length <= 1"
-    >
-      <mat-icon svgIcon="mat:chevron_right"></mat-icon>
-    </button>
-    <ul
-      #slides
-      class="m-0 p-0 list-none"
-    >
+  <div class="swiper h-full">
+    <div class="swiper-wrapper">
       @for (image of images(); let index = $index; track index) {
-        <li
-          class="slide flex flex-col justify-center items-center gap-4"
-          [attr.data-active]="index === 0 ? true : null"
-        >
+        <div class="swiper-slide relative">
           @if (deleteButton()) {
             <button
               mat-mini-fab
@@ -42,18 +17,26 @@
               <mat-icon svgIcon="mat:delete"></mat-icon>
             </button>
           }
+
           <img
             [src]="image.url"
-            [alt]="'Imagen ' + index"
-            class="block h-full object-cover object-center shadow-md shadow-black"
+            [alt]="'Imagen ' + (index + 1)"
+            class="block h-full w-auto max-w-full object-contain shadow-md shadow-black"
           />
           @if (showNames()) {
-            <div class="w-full text-center shadow-md shadow-black bg-slate-300 p-2">
-              <h2 class="text-lg text-slate-700">{{ image.name }}</h2>
+            <div class="absolute bottom-8 left-2 right-2 text-center shadow-md shadow-black bg-slate-300 bg-opacity-80 p-2 rounded">
+              <h2 class="text-lg text-slate-700 truncate">{{ image.name }}</h2>
             </div>
           }
-        </li>
+        </div>
       }
-    </ul>
+    </div>
+
+    @if (images().length > 1) {
+      <div class="swiper-pagination"></div>
+
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    }
   </div>
 </section>

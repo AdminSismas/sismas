@@ -223,7 +223,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // creación de personas
   createCustomer() {
-    if (this.user?.role !== 'ADMIN') return;
+    if (this.user?.role !== 'ADMIN' && this.user?.role !== 'USER_LEAD') return;
 
     this.dialog
       .open(CreatePeopleComponent, {

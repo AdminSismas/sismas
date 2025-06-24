@@ -40,9 +40,11 @@ export class Authority {
   }
 }
 
+export type UserRole = 'ADMIN' | 'USER_LEAD' | 'GUEST' | 'USER_READ' | 'USER_SERV' | 'USER';
+
 export interface DecodeJwt {
   sub: string;
-  role: string;
+  role: UserRole;
   exp: number;
   iat: number;
 }

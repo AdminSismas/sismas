@@ -13,12 +13,11 @@
       ></vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
     @if (expandedComponent()) {
-      <mat-panel-description>
+      <mat-panel-description class="flex flex-col items-start justify-start p-4">
         @if (typeInformation() === "edition") {
           <button
             mat-flat-button
             color="primary"
-            class="my-2"
             (click)="openAddPhotoDialog()"
           >
             <mat-icon svgIcon="mat:add"></mat-icon>
@@ -28,7 +27,7 @@
         @if (!loading()) {
           <div class="h-full w-full">
             @if (images().length > 0) {
-              <div class="py-8 px-6 h-80 w-full md:h-[500px]">
+              <div class="h-80 w-full md:h-[500px]">
                 <app-carousel
                   [images]="images()"
                   [deleteButton]="typeInformation() === 'edition'"
