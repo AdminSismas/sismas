@@ -1,15 +1,21 @@
-import { Component, DestroyRef, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+  signal
+} from '@angular/core';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { NgClass, TitleCasePipe } from '@angular/common';
 import {
-  CONSTANTE_CITATION,
-  CONSTANTE_CITED,
-  CONSTANTE_NOTIFIED,
-  LIST_NOTICE_NOTIFICATIONS,
   MODAL_DYNAMIC_HEIGHT,
+  MODAL_MEDIUM,
   NAME_NO_DISPONIBLE
 } from 'src/app/apps/constants/general/constants';
 import { getRandomInt } from '../../../../../../../apps/utils/general';
@@ -17,6 +23,13 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCitationNoticeComponent } from '../add-citation-notice/add-citation-notice.component';
 import Swal from 'sweetalert2';
+import { CitationNoticeTypePipe } from './pipes/citation-notice-type.pipe';
+import { CitationNoticeClassPipe } from './pipes/citation-notice-class.pipe';
+import {
+  CitationNoticeService,
+  GuvStateType
+} from '../../service/citation-notice.service';
+import { DocumentViewerComponent } from 'src/app/apps/components/general-components/document-viewer/document-viewer.component';
 
 @Component({
   selector: 'vex-citation-notice-card',
@@ -27,42 +40,61 @@ import Swal from 'sweetalert2';
     MatRippleModule,
     NgClass,
     TitleCasePipe,
-    MatTooltip
+    MatTooltip,
+    CitationNoticeTypePipe,
+    CitationNoticeClassPipe
   ],
   templateUrl: './citation-notice-card.component.html',
   styleUrl: './citation-notice-card.component.scss'
 })
 export class CitationNoticeCardComponent implements OnInit {
+  // Inject
+  dialog = inject(MatDialog);
+  citationNoticeService = inject(CitationNoticeService);
 
   @Input({ required: true }) public id: string | undefined = '';
   @Input({ required: true }) executionId!: string;
   @Input({ required: true }) processParticipant!: ProcessParticipant;
   @Output() refreshData = new EventEmitter<boolean>();
-  @Output() openDetailProcessParticipant = new EventEmitter<ProcessParticipant['participationId']>();
+  @Output() openDetailProcessParticipant = new EventEmitter<
+    ProcessParticipant['participationId']
+  >();
 
+  // Signals
   imageSrc = signal('assets/img/icons/people/teacher.svg');
 
-  constructor(
-    private destroyRef: DestroyRef,
-    private dialog: MatDialog) {
-    destroyRef.onDestroy(() => {
-    });
-  }
+  // Computed
+  isPrintDisabled = computed<boolean>(() => {
+    if (
+      !this.processParticipant.viaGubernativa?.domGuvState ||
+      !this.processParticipant.viaGubernativa.domGuvState
+    ) return true;
+
+    return !Object.values(GuvStateType).includes(
+      this.processParticipant.viaGubernativa!.domGuvState as GuvStateType
+    );
+  });
 
   ngOnInit() {
     if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + getRandomInt(10000) + this.processParticipant.participationId;
+      this.id =
+        this.id + getRandomInt(10000) + this.processParticipant.participationId;
     } else {
-      this.id = getRandomInt(10000).toString() + this.processParticipant.participationId;
+      this.id =
+        getRandomInt(10000).toString() +
+        this.processParticipant.participationId;
     }
 
-    if (this.processParticipant && this.processParticipant.participationId > 0) {
+    if (
+      this.processParticipant &&
+      this.processParticipant.participationId > 0
+    ) {
       this.processParticipant.imageSrc = this.imageSrc();
     }
   }
 
   executeNotification() {
-    if(!this.validateDomGuvStateNotified){
+    if (this.processParticipant.viaGubernativa?.domGuvState !== 'Notificado') {
       this.getAlertError('Participante notificado, accion no disponible');
       return;
     }
@@ -72,7 +104,7 @@ export class CitationNoticeCardComponent implements OnInit {
   }
 
   executeCitation() {
-    if(!this.validateDomGuvStateCitation){
+    if (this.processParticipant.viaGubernativa?.domGuvState !== 'Citado') {
       this.getAlertError('Participante citado, accion no disponible');
       return;
     }
@@ -82,51 +114,23 @@ export class CitationNoticeCardComponent implements OnInit {
   }
 
   executeAdvertisement() {
+    console.log('Avisando participante');
   }
 
-  openAddCitationNoticeComponent(processParticipant: ProcessParticipant){
-    this.dialog.open(AddCitationNoticeComponent, {
-      ...MODAL_DYNAMIC_HEIGHT,
-      disableClose: true,
-      data: processParticipant
-    }).afterClosed().subscribe((result: boolean | null | undefined) => {
-      if(result) {
-        this.processParticipant.typeCategory = null;
-        this.refreshData.emit(true);
-      }
-    });
-  }
-
-  get validateNotFoundGuvState() {
-    return !this.processParticipant?.viaGubernativa || !this.processParticipant?.viaGubernativa?.domGuvState;
-  }
-
-  get validateDomGuvStateCitation() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_CITATION;
-  }
-
-  get validateDomGuvStateNotified() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_CITED;
-  }
-
-  get validateNotifiedCompleted() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_NOTIFIED;
-  }
-
-  get validateDomGuvStateNotice() {
-    return this.processParticipant?.viaGubernativa?.domGuvState && LIST_NOTICE_NOTIFICATIONS.includes(this.processParticipant?.viaGubernativa?.domGuvState);
-  }
-
-  get classValidateDomGuvStateCitation() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_CITATION ? 'text-primary' : 'text-secondary';
-  }
-
-  get classValidateDomGuvStateNotified() {
-    return this.processParticipant?.viaGubernativa?.domGuvState === CONSTANTE_CITED ? 'text-green' : 'text-secondary';
-  }
-
-  get classValidateDomGuvStateNotice() {
-    return this.processParticipant?.viaGubernativa?.domGuvState && LIST_NOTICE_NOTIFICATIONS.includes(this.processParticipant?.viaGubernativa?.domGuvState) ? 'text-amber' : 'text-secondary';
+  openAddCitationNoticeComponent(processParticipant: ProcessParticipant) {
+    this.dialog
+      .open(AddCitationNoticeComponent, {
+        ...MODAL_DYNAMIC_HEIGHT,
+        disableClose: true,
+        data: processParticipant
+      })
+      .afterClosed()
+      .subscribe((result: boolean | null | undefined) => {
+        if (result) {
+          this.processParticipant.typeCategory = null;
+          this.refreshData.emit(true);
+        }
+      });
   }
 
   getAlertError(text: string) {
@@ -137,6 +141,26 @@ export class CitationNoticeCardComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     }).then();
+  }
+
+  onPrint() {
+    if (this.isPrintDisabled()) return;
+    console.log('Imprimiendo');
+
+    const { participationId, viaGubernativa } = this.processParticipant;
+    this.citationNoticeService
+      .executePrint(
+        participationId.toString(),
+        viaGubernativa!.domGuvState as GuvStateType
+      )
+      .subscribe((response) => {
+        this.dialog.open(DocumentViewerComponent, {
+          ...MODAL_MEDIUM,
+          data: {
+            pdfBlob: response
+          } as { pdfBlob: Blob }
+        });
+      });
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

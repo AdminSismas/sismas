@@ -17,7 +17,6 @@ import { environment } from '../../../../../../environments/environments';
 import { Router } from '@angular/router';
 import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProcessParticipant } from '../../../../../apps/interfaces/bpm/process-participant';
 import {
   ProcessParticipantTableMenu,
@@ -59,7 +58,7 @@ export class CitationAndNoticeComponent implements OnInit {
 
   searchStr: UntypedFormControl = new UntypedFormControl();
 
-  @Input({ required: true }) public executionId: string = '';
+  @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];
   @Input({ required: false }) public mode = 1;
 
@@ -86,6 +85,7 @@ export class CitationAndNoticeComponent implements OnInit {
       this.mode = proFlow?.mode;
     }
     this.destroyRef.onDestroy(() => {
+      // Empty block
     });
   }
 
@@ -128,13 +128,15 @@ export class CitationAndNoticeComponent implements OnInit {
   }
 
   openMassiveProcessParticipant(type: ProcessParticipantTableMenu['id']) {
-    let type1 = type;
+    const type1 = type;
+    console.log(type1);
   }
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
       this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
         .then(() => {
+          // Empty block
         });
     }
   }

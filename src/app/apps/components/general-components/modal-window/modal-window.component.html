@@ -12,10 +12,15 @@
   <mat-divider class="bg-slate-400"></mat-divider>
 </header>
 
-
-<mat-dialog-content>
-  <ng-content class="h-full w-full overflow-hidden"></ng-content>
-</mat-dialog-content>
+@if (actions()) {
+  <mat-dialog-content class="h-full w-full">
+    <ng-content class="h-full w-full overflow-hidden"></ng-content>
+  </mat-dialog-content>
+} @else {
+  <div class="h-[calc(100%-49px)] w-full overflow-hidden">
+    <ng-content class="h-full w-full overflow-hidden"></ng-content>
+  </div>
+}
 
 @if (actions()) {
   <mat-dialog-actions align="center">

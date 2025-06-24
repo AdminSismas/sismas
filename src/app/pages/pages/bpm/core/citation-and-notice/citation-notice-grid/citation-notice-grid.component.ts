@@ -4,14 +4,19 @@ import {
   EventEmitter,
   inject,
   Input,
-  OnChanges, OnDestroy,
+  OnChanges,
+  OnDestroy,
   OnInit,
-  Output, signal,
+  Output,
+  signal,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { AsyncPipe, NgForOf } from '@angular/common';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
+import { AsyncPipe } from '@angular/common';
+import {
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+  MatFormFieldDefaultOptions
+} from '@angular/material/form-field';
 import { stagger20ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
@@ -23,7 +28,7 @@ import { InformationPegeable } from '../../../../../../apps/interfaces/general/i
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { EMPTY, Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { CitationNoticeCardComponent } from '../components/citation-notice-card/citation-notice-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -32,10 +37,11 @@ import {
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE
 } from '../../../../../../apps/constants/general/constants';
-import { getRandomInt, validateVariable } from '../../../../../../apps/utils/general';
 import {
-  TypeProcessParticipant
-} from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+  getRandomInt,
+  validateVariable
+} from '../../../../../../apps/utils/general';
+import { TypeProcessParticipant } from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
 
 @Component({
@@ -59,15 +65,14 @@ import { LoadingServiceService } from '../../../../../../apps/services/general/l
     CitationNoticeCardComponent,
     MatButtonModule,
     MatTooltipModule,
-    NgForOf,
     MatPaginatorModule
   ]
-
 })
-export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy {
-
+export class CitationNoticeGridComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   listParticipants: ProcessParticipant[] = [];
-  totalElements: number = 0;
+  totalElements = 0;
   page = PAGE;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
   contentInformation!: InformationPegeable;
@@ -76,25 +81,35 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy 
   @Input({ required: true }) public id: string | undefined = '';
   @Input({ required: true }) executionId!: string;
   @Input({ required: true }) typeProcess!: TypeProcessParticipant;
-  @Input() searchCtrl: string = '';
+  @Input() searchCtrl = '';
 
-  @Output() openDetailProcessParticipant = new EventEmitter<ProcessParticipant>();
+  @Output() openDetailProcessParticipant =
+    new EventEmitter<ProcessParticipant>();
   @Output() changePageSearchData = new EventEmitter<PageSearchData>();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
 
-  _dataContentInformations$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(1);
-  dataContentInformations$: Observable<InformationPegeable> = this._dataContentInformations$.asObservable();
+  _dataContentInformations$: ReplaySubject<InformationPegeable> =
+    new ReplaySubject<InformationPegeable>(1);
+  dataContentInformations$: Observable<InformationPegeable> =
+    this._dataContentInformations$.asObservable();
 
-  _listParticipantsCards$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<ProcessParticipant[]>(1);
-  listParticipantsCards$: Observable<ProcessParticipant[]> = this._listParticipantsCards$.asObservable();
+  _listParticipantsCards$: ReplaySubject<ProcessParticipant[]> =
+    new ReplaySubject<ProcessParticipant[]>(1);
+  listParticipantsCards$: Observable<ProcessParticipant[]> =
+    this._listParticipantsCards$.asObservable();
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
-  private participantsProcess: ParticipantsProcessService = inject(ParticipantsProcessService);
+  private loadingServiceService: LoadingServiceService = inject(
+    LoadingServiceService
+  );
+  private participantsProcess: ParticipantsProcessService = inject(
+    ParticipantsProcessService
+  );
 
   constructor() {
     this.destroyRef.onDestroy(() => {
+      // Empty block
     });
   }
 
@@ -106,9 +121,13 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy 
     }
     this.loadingServiceService.activateLoading(true);
 
-    this.dataContentInformations$.pipe(filter<InformationPegeable>(Boolean))
+    this.dataContentInformations$
+      .pipe(filter<InformationPegeable>(Boolean))
       .subscribe((result: InformationPegeable) => {
-        if (result != null && (result.content == null || result.content.length <= 0)) {
+        if (
+          result != null &&
+          (result.content == null || result.content.length <= 0)
+        ) {
           this.captureNotInformationSubscribeError();
           return;
         }
@@ -143,39 +162,55 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy 
   }
 
   getInformationAssignedTasks() {
-    this.participantsProcess.getParticipantsProcess(this.generateObjectPageSearchData(), this.executionId)
+    this.participantsProcess
+      .getParticipantsProcess(
+        this.generateObjectPageSearchData(),
+        this.executionId
+      )
       .subscribe({
-        error: (err: any) => this.captureNotInformationSubscribeError(),
-        next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
+        error: () => this.captureNotInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this._dataContentInformations$.next(result)
       });
   }
 
   getInformationCitedAssigned() {
-    this.participantsProcess.getParticipantsCitedProcess(this.generateObjectPageSearchData(), this.executionId)
+    this.participantsProcess
+      .getParticipantsCitedProcess(
+        this.generateObjectPageSearchData(),
+        this.executionId
+      )
       .subscribe({
-          error: (err: any) => this.captureNotInformationSubscribeError(),
-          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
-        }
-      );
+        error: () => this.captureNotInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this._dataContentInformations$.next(result)
+      });
   }
 
   getInformationNotifiedAssigned() {
-    this.participantsProcess.getParticipantsNotifiedProcess(this.generateObjectPageSearchData(), this.executionId)
-      .subscribe(
-        {
-          error: (err: any) => this.captureNotInformationSubscribeError(),
-          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
-        }
-      );
+    this.participantsProcess
+      .getParticipantsNotifiedProcess(
+        this.generateObjectPageSearchData(),
+        this.executionId
+      )
+      .subscribe({
+        error: () => this.captureNotInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this._dataContentInformations$.next(result)
+      });
   }
 
   getInformationNotifyAssigned() {
-    this.participantsProcess.getParticipantsNotifyProcess(this.generateObjectPageSearchData(), this.executionId)
+    this.participantsProcess
+      .getParticipantsNotifyProcess(
+        this.generateObjectPageSearchData(),
+        this.executionId
+      )
       .subscribe({
-          error: (err: any) => this.captureNotInformationSubscribeError(),
-          next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
-        }
-      );
+        error: () => this.captureNotInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this._dataContentInformations$.next(result)
+      });
   }
 
   captureNotInformationSubscribeError(): void {
@@ -194,7 +229,7 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy 
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
       data = data.map((row: ProcessParticipant) => {
-        let dt = new ProcessParticipant(row);
+        const dt = new ProcessParticipant(row);
         dt.executionId = this.executionId;
         return dt;
       });
@@ -229,8 +264,9 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy 
 
     value = value.trim();
     value = value.toLowerCase();
-    listParticipantsChange = this.listParticipants
-      .filter((participant: ProcessParticipant) => this.filterObject(participant, value));
+    listParticipantsChange = this.listParticipants.filter(
+      (participant: ProcessParticipant) => this.filterObject(participant, value)
+    );
     this._listParticipantsCards$.next(listParticipantsChange);
   }
 
@@ -238,16 +274,22 @@ export class CitationNoticeGridComponent implements OnInit, OnChanges,OnDestroy 
     if (value?.length <= 3) {
       return participant;
     }
-    return participant !== null && participant !== undefined && (
-      participant.fullName?.toLowerCase().includes(value) ||
-      participant.individualNumber?.toLowerCase().includes(value));
+    return (
+      participant !== null &&
+      participant !== undefined &&
+      (participant.fullName?.toLowerCase().includes(value) ||
+        participant.individualNumber?.toLowerCase().includes(value))
+    );
   }
 
   generateObjectPageSearchData(): PageSearchData {
     return new PageSearchData(this.page, this.pageSize, null);
   }
 
-  trackByParticipationId(index: number, participant: ProcessParticipant): number | undefined {
+  trackByParticipationId(
+    index: number,
+    participant: ProcessParticipant
+  ): number | undefined {
     return participant.participationId;
   }
 
