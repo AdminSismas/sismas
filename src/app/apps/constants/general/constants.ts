@@ -1249,6 +1249,12 @@ export const LIST_NOTICE_NOTIFICATIONS: string[] = [CONSTANTE_UNPIN_NOTICE, CONS
 export const LIST_CITATION_AND_NOTICE_TABLE_MENU: ProcessParticipantTableMenu[] = [
   {
     type: 'link',
+    id: 'participants',
+    icon: 'mat:people',
+    label: 'Participantes'
+  },
+  {
+    type: 'link',
     id: 'all',
     icon: 'mat:view_headline',
     label: 'Consolidado'

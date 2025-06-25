@@ -150,14 +150,15 @@ export class CitationNoticeGridComponent
     if (!this.typeProcess) {
       return;
     }
-    if (this.typeProcess === 'CITADO') {
-      return this.getInformationCitedAssigned();
-    } else if (this.typeProcess === 'NOTIFICADO') {
-      return this.getInformationNotifiedAssigned();
-    } else if (this.typeProcess === 'AVISO') {
-      return this.getInformationNotifyAssigned();
-    } else {
-      return this.getInformationAssignedTasks();
+    switch (this.typeProcess) {
+      case 'CITADO':
+        return this.getInformationCitedAssigned();
+      case 'NOTIFICADO':
+        return this.getInformationNotifiedAssigned();
+      case 'AVISO':
+        return this.getInformationNotifyAssigned();
+      default:
+        return this.getInformationAssignedTasks();
     }
   }
 
