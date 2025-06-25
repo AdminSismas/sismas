@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 // Material
@@ -56,8 +57,6 @@ import {
 import { validateIsNumber, validateVariable } from '../../../../utils/general';
 // Custom
 import {
-  CONSTRUCTION_TYPE,
-  CONSTRUCTION_USE,
   DOMAIN_NAME_BUILT_USE,
   GUION,
   NAME_NO_DISPONIBLE,
@@ -67,10 +66,8 @@ import {
   TYPE_TYPOLOGY
 } from '../../../../constants/general/constants';
 import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
-import { contentInfoComments } from '../../../../interfaces/general/content-info-comments.model';
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { ChangeControl } from '../../../../interfaces/bpm/change-control';
 
 
 @Component({
@@ -115,21 +112,21 @@ import { ChangeControl } from '../../../../interfaces/bpm/change-control';
   templateUrl: './crud-information-constructions-property.component.html',
   styleUrl: './crud-information-constructions-property.component.scss'
 })
-export class CrudInformationConstructionsPropertyComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
-  urlBasic: string = `${environment.getApiQualificationUrl}`;
-  api_domainName: string = `${environment.url_domain_name}`;
-  schema: string = `${environment.schemas.temp}`;
+  urlBasic = `${environment.getApiQualificationUrl}`;
+  api_domainName = `${environment.url_domain_name}`;
+  schema = `${environment.schemas.temp}`;
 
   executionId: string | null | undefined;
   baunitId: string | null | undefined;
   unitBuiltId!: number | null | undefined; // ID de la construcción creada
   typeCrud: TypeOperation | null = null;
-  annexUrl: string = '';
+  annexUrl = '';
   qualificationMode: TypeQualificationMode | null = TYPE_TRADITIONAL;
   allBuiltUseOptions: DomainCollection[] = [];
   filteredBuiltUseOptions: DomainCollection[] = [];
-  isCreateOrUpdateConstruction: boolean = false; // Estado de carga
+  isCreateOrUpdateConstruction = false; // Estado de carga
 
   constructionData: ContentInformationConstruction | null = null;
   qualificationsConstruction: CcCalificacionUB[] = [];
@@ -170,7 +167,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     kitchenEnchapes: [null],
     kitchenFurniture: [null],
     kitchenConservation: [null],
-    domTipologiaTipo: [null]
+    domTipologiaTipo: [null],
+    industrialComplement: [null]
   });
   typologyRatingForm: FormGroup = this.fb.group({
     domTipologiaTipo: [null, Validators.required]
@@ -249,9 +247,6 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       });
   }
 
-  ngAfterViewInit(): void {
-  }
-
   resetConstructionAndQualification(): void {
     if (this.qualificationMode === TYPE_TRADITIONAL) {
       this.traditionalRatingForm.reset();
@@ -317,7 +312,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
           next: () => this.calificationSuccessDialog.fire().then(() => this.closedDialog(this.constructionData)),
           error: () => this.errorSaveDialog.fire()
         });
-    } catch (error) {
+    } catch {
       this.saveErrorDialog.fire();
     }
   }
@@ -393,8 +388,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
   }
 
   refreshTraditionalRatingForm() {
-    let idBath = this.chargeQualificationConstruction('Tamanio_Banio');
-    let idKitchen = this.chargeQualificationConstruction('Tamanio_Cocina');
+    const idBath = this.chargeQualificationConstruction('Tamanio_Banio');
+    const idKitchen = this.chargeQualificationConstruction('Tamanio_Cocina');
 
     this.typeAnexxForm = this.fb.group({
       domTypeAnexx: [this.chargeQualificationConstructionAnexx()]
@@ -435,7 +430,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
         value: this.chargeQualificationConstruction('Conservacion_Cocina'),
         disable: idKitchen !== null && idKitchen !== undefined && idKitchen === 49
       }],
-      domTipologiaTipo: [this.chargeQualificationConstruction('Tipologia')]
+      domTipologiaTipo: [this.chargeQualificationConstruction('Tipologia')],
+      industrialComplement: [this.chargeQualificationConstruction('Cerchas_Complemento_Industria')]
     });
 
     setTimeout(() => {
@@ -447,11 +443,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
       }
     }, 2500);
 
-    this.editForm.valueChanges.subscribe(selectedValue => {
+    this.editForm.valueChanges.subscribe(() => {
       this.isCreateOrUpdateConstruction = false;
-    });
-
-    this.traditionalRatingForm.valueChanges.subscribe(selectedValue => {
     });
 
   }
@@ -477,7 +470,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
         if (validateIsNumber(id) && id !== null && id !== undefined && id > 0) {
           return id;
         }
-      } catch (e) {
+      } catch {
         return null;
       }
     }
@@ -489,14 +482,14 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     if (this.qualificationsConstruction && this.qualificationsConstruction.length === 1 &&
       this.mapQualificationsConstruction !== null) {
       try {
-        let qualification: CcCalificacionUB = this.qualificationsConstruction[0];
+        const qualification: CcCalificacionUB = this.qualificationsConstruction[0];
         if (qualification && qualification?.ccCalUBDom) {
           id = qualification.ccCalUBDom.id;
           if (validateIsNumber(id) && id && id > 0) {
             return id;
           }
         }
-      } catch (e) {
+      } catch {
         return null;
       }
     }
@@ -512,6 +505,9 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
           }
         });
     }
+
+    // Mostrar/ocultar campo de complemento industrial
+    this.toggleIndustrialComplementField(domBuiltType);
   }
 
   validateControlDisableOrEnableCustomSelect(key: string, shouldDisable: boolean) {
@@ -529,7 +525,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     if ((this.traditionalRatingForm.dirty && mode === TYPE_TYPOLOGY) ||
       (this.typologyRatingForm.dirty && mode === TYPE_TRADITIONAL) ||
       (this.typeCrud === 'UPDATE' && this.qualificationsConstruction.length > 0)) {
-      this.warningQualificationDialog.fire().then((result) => {
+      this.warningQualificationDialog.fire().then(() => {
         this.qualificationMode = mode;
         this.typologyRatingForm.reset();
         this.traditionalRatingForm.reset();
@@ -572,7 +568,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
 
   // Procesar valores del formulario
   private processFormValues(values: any): any {
-    let value: ContentInformationConstruction = new ContentInformationConstruction(values);
+    const value: ContentInformationConstruction = new ContentInformationConstruction(values);
     value.unitBuiltPrivateArea = this.validationsService.parseNumericValue(values.unitBuiltPrivateArea);
     value.unitBuiltArea = this.validationsService.parseNumericValue(values.unitBuiltArea);
     return value;
@@ -585,8 +581,6 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
         this.filteredBuiltUseOptions = data;
         this._useOptions$.next(true);
       },
-      error: (err) => {
-      }
     });
   }
 
@@ -667,8 +661,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     this.dialogRef.close(constructionData);
   }
 
-  indexArraylistQualifications = (obj: CcCalificacionUB[], value: string) => {
-    if (obj != null && obj.length > 0) {
+  indexArraylistQualifications(obj: CcCalificacionUB[], value: string) {
+    if (obj !== null && obj.length > 0) {
       return obj.reduce((acc: any, el: any) => ({
         ...acc,
         [el.ccCalUBDom[value]]: el
@@ -676,7 +670,20 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit, Af
     }
   };
 
-  ngOnDestroy(): void {
+  toggleIndustrialComplementField(domBuiltType: string | null | undefined): void {
+    const shouldShowIndustrialComplement = domBuiltType === 'Industrial';
+    if (this.traditionalRatingForm.controls['industrialComplement']) {
+      if (shouldShowIndustrialComplement) {
+        this.traditionalRatingForm.get('industrialComplement')?.enable();
+      } else {
+        this.traditionalRatingForm.get('industrialComplement')?.disable();
+        this.traditionalRatingForm.get('industrialComplement')?.setValue(null);
+      }
+    }
+  }
+
+  isIndustrialConstruction(): boolean {
+    return this.editForm.get('domBuiltType')?.value === 'Industrial';
   }
 
   protected readonly GUION = GUION;
