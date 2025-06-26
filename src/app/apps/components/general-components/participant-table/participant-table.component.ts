@@ -30,7 +30,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ComboxColletionComponent } from '../combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../combobox-collection/combobox-collection.component';
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -83,7 +83,7 @@ import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-particip
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     FluidMinHeightDirective,
     FluidMinHeightDirective,
     NgClass
@@ -97,10 +97,10 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
 
-  @Input({ required: true }) public id: string = '';
+  @Input({ required: true }) public id = '';
   @Input() form: FormGroup | null = null;
   @Input({ required: true }) executionId = '';
-  @Input({ required: true }) thirdPartyAffected: boolean = false;
+  @Input({ required: true }) thirdPartyAffected = false;
   @Input() columns: TableColumn<ProcessParticipant>[] = TABLE_COLUMN_PRINCIPANTS_TABLE;
 
   @Output() processParticipants = new EventEmitter<ProcessParticipant[]>();
@@ -131,6 +131,7 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
   ) {
 
     this.destroyRef.onDestroy(() => {
+      // Empty block
     });
   }
 
@@ -279,7 +280,7 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
 
   deleteInformation(participant: ProcessParticipant): void {
     if (participant && participant.participationId > 0 && this.executionId) {
-      let participationId = participant.participationId;
+      const participationId = participant.participationId;
       this.participantsService.deleteParticipantByExecutionId(this.executionId,
         participationId.toString()).subscribe({
         next: () => {
@@ -294,7 +295,7 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
-  validateParticipants(result: InfoPerson | null, createPeople: boolean = true): void {
+  validateParticipants(result: InfoPerson | null, createPeople = true): void {
     if ((!result || result.individualId <= 0) && createPeople) {
       this.openCreatePeopleComponent();
       return;
@@ -417,7 +418,7 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
       icon: icon,
       showConfirmButton: false,
       timer: 2000
-    }).then((result) => {
+    }).then(() => {
       action();
     });
   }

@@ -21,7 +21,7 @@ import {
 } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Observable, ReplaySubject, throwError } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -47,8 +47,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 // Custom
 import {
-  ComboxColletionComponent
-} from '../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+  ComboboxCollectionComponent
+} from '../../../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import {
   CreatePeopleComponent
 } from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
@@ -56,7 +56,7 @@ import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid
 import { InfoPerson } from '../../../../../../apps/interfaces/information-property/info-person';
 import { InformationPersonService } from '../../../../../../apps/services/bpm/information-person.service';
 import {
-  MODAL_SMALL, MODAL_SMALL_LARGE,
+  MODAL_SMALL_LARGE,
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
@@ -86,7 +86,7 @@ import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/proces
     MatSortModule,
     MatTableModule,
     // Custom
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     FluidMinHeightDirective,
     FluidMinHeightDirective
 ],

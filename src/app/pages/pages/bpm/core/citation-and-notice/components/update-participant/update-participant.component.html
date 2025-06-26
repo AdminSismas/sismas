@@ -1,5 +1,11 @@
-<form (ngSubmit)="updatePeople()" [formGroup]="form">
-  <div class="flex items-center" mat-dialog-title>
+<form
+  (ngSubmit)="updatePeople()"
+  [formGroup]="form"
+>
+  <div
+    class="flex items-center"
+    mat-dialog-title
+  >
     <h2 class="headline m-0 flex-auto">
       {{ label }}
     </h2>
@@ -8,7 +14,8 @@
       class="text-secondary"
       mat-dialog-close
       mat-icon-button
-      type="button">
+      type="button"
+    >
       <mat-icon svgIcon="mat:close"></mat-icon>
     </button>
   </div>
@@ -16,24 +23,29 @@
   <mat-divider class="text-border"></mat-divider>
 
   <mat-dialog-content class="p-6 container-fluid flex flex-col">
-    <div @fadeInUp class="flex flex-col px-3">
+    <div
+      @fadeInUp
+      class="flex flex-col px-3"
+    >
       <div class="flex flex-col sm:flex-row px-3 gap-3">
-        <vex-combox-colletion-form
+        <vex-combobox-collection-form
           idComboCollection="typeNumberDocument896767855234"
           label="Tipo de persona"
           [formControlComboxColletion]="controlDomIndividualType"
           typeDomainName="IndividualType"
           placeholderDomainName="Selecciona el tipo de persona"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto"></vex-combox-colletion-form>
-        <vex-combox-colletion-form
+          class="flex-auto"
+        ></vex-combobox-collection-form>
+        <vex-combobox-collection-form
           idComboCollection="domIndividualTypeNumber896767855234"
           label="Tipo de documento"
           [formControlComboxColletion]="controlDomIndividualTypeNumber"
           typeDomainName="IndividualTypeNumber"
           placeholderDomainName="Seleccionar tipo documento"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto"></vex-combox-colletion-form>
+          class="flex-auto"
+        ></vex-combobox-collection-form>
         <vex-input
           idComboInput="nombrePredio8784"
           label="Número documento"
@@ -41,7 +53,8 @@
           formControlNameInput="number"
           [formControlInput]="controlNumber"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
       </div>
       <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
@@ -52,7 +65,8 @@
           formControlNameInput="firstName"
           [formControlInput]="controlFirstName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <vex-input
           idComboInput="middleName2384"
@@ -61,7 +75,8 @@
           formControlNameInput="middleName"
           [formControlInput]="controlMiddleName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <vex-input
           idComboInput="lastNameeName2384"
@@ -70,7 +85,8 @@
           formControlNameInput="lastName"
           [formControlInput]="controlLastName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
       </div>
       <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
@@ -81,7 +97,8 @@
           formControlNameInput="otherLastName"
           [formControlInput]="controlOtherLastName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <vex-input
           idComboInput="companyNameeeeName2384"
@@ -90,26 +107,29 @@
           formControlNameInput="companyName"
           [formControlInput]="controlCompanyName"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
       </div>
       <div class="flex flex-col sm:flex-row pl-3 px-1 gap-3">
-        <vex-combox-colletion-form
+        <vex-combobox-collection-form
           idComboCollection="typeNumbearDocument896767855234"
           label="Grupo étnico"
           [formControlComboxColletion]="controlDomIndividualEthnicGroup"
           typeDomainName="IndividualEthnicGroup"
           placeholderDomainName="Selecciona el grupo étnico"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto"></vex-combox-colletion-form>
-        <vex-combox-colletion-form
+          class="flex-auto"
+        ></vex-combobox-collection-form>
+        <vex-combobox-collection-form
           idComboCollection="ttypeNumberDocumentearDocument896767855234"
           label="sexo"
           [formControlComboxColletion]="controlIndividualSex"
           typeDomainName="IndividualSex"
           placeholderDomainName="Seleccionar tipo género"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
-          class="flex-auto"></vex-combox-colletion-form>
+          class="flex-auto"
+        ></vex-combobox-collection-form>
       </div>
       <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
         <!-- Campo departamento -->
@@ -123,7 +143,8 @@
           [options]="optionsDeparment"
           (selectionChange)="loadMunicipalitiesInformation($event, true)"
           cssClasses="sm:ml-2 sm:mr-2 flex-1 my-form-field"
-          class="flex-auto"></vex-combox>
+          class="flex-auto"
+        ></vex-combox>
         <!-- Campo municipio -->
         <vex-combox
           idCombo="GeneralMapMunicipy"
@@ -134,7 +155,8 @@
           [formControlNameCombobox]="'divpolLv2'"
           [options]="optionsMunicipalities"
           cssClasses="sm:ml-2 sm:mr-2 flex-1 my-form-field"
-          class="flex-auto"></vex-combox>
+          class="flex-auto"
+        ></vex-combox>
       </div>
       <div class="flex flex-col sm:flex-row px-1 pr-2 gap-3">
         <!--  phoneNumber -->
@@ -145,7 +167,8 @@
           formControlNameInput="phoneNumber"
           [formControlInput]="controlPhoneNumber"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <!--   email  -->
         <vex-input
@@ -155,7 +178,8 @@
           formControlNameInput="email"
           [formControlInput]="controlEmail"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
         <!--   address    -->
         <vex-input
@@ -165,18 +189,26 @@
           formControlNameInput="address"
           [formControlInput]="controlAddress"
           cssClasses="w-full sm:ml-2 sm:mr-2 flex-auto p-0 m-0"
-          class="flex-auto">
+          class="flex-auto"
+        >
         </vex-input>
       </div>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">Cancel</button>
+    <button
+      mat-button
+      mat-dialog-close
+      type="button"
+    >
+      Cancel
+    </button>
     <button
       color="primary"
       mat-flat-button
-      type="submit">
+      type="submit"
+    >
       Actualizar persona
     </button>
   </mat-dialog-actions>

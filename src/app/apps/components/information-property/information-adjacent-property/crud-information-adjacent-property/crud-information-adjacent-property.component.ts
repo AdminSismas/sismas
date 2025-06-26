@@ -31,7 +31,7 @@ import {
 import { validateVariable } from '../../../../utils/general';
 import { TypeOperation } from '../../../../interfaces/general/content-info';
 import { TYPE_CREATE } from '../../../../constants/general/constants';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { TextAreaComponent } from '../../../general-components/text-area/text-area.component';
 import { InformationAdjacentPropertyService } from '../../../../services/information-property/information-adjacent-property/information-adjacent-property.service';
 
@@ -56,7 +56,7 @@ import { InformationAdjacentPropertyService } from '../../../../services/informa
     ReactiveFormsModule,
     SweetAlert2Module,
     MatDialogClose,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     MatDialogActions,
     TextAreaComponent
   ],

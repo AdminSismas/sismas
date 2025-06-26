@@ -5,7 +5,8 @@ import {
   OnChanges, OnDestroy,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges,
+  signal
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -43,6 +44,7 @@ import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service
 import {
   DetailInformationTasksComponent
 } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -52,7 +54,8 @@ import {
     ReactiveFormsModule,
     VexBreadcrumbsComponent,
     AsyncPipe,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './header-bpm-core.component.html',
   styleUrl: './header-bpm-core.component.scss'
@@ -61,6 +64,8 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   crumbs: string[] = [];
   actions: Record<string, () => void> = {};
   existButtonAlfaMain = false;
+
+  isExcelDownloadLoading = signal<boolean>(false);
 
   @Input() public idHeader = '';
   @Input() public icon = '';
@@ -93,6 +98,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   ) {
 
     this.destroyRef.onDestroy(() => {
+      // Component cleanup logic if needed
     });
   }
 
@@ -226,7 +232,12 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getInformationExcelDownload() {
+    this.isExcelDownloadLoading.set(true);
     this.alfaMainService.getGenerateExcelMassive(this.executionId);
+    // Simular un tiempo de descarga para el feedback visual
+    setTimeout(() => {
+      this.isExcelDownloadLoading.set(false);
+    }, 2000);
   }
 
   chargerInformationExcelMassive() {

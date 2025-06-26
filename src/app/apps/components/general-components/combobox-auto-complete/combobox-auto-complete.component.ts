@@ -23,11 +23,11 @@ import { map, startWith } from 'rxjs/operators';
     MatSelectModule,
     AsyncPipe
   ],
-  templateUrl: './combox-auto-complete.component.html',
-  styleUrl: './combox-auto-complete.component.scss',
+  templateUrl: './combobox-auto-complete.component.html',
+  styleUrl: './combobox-auto-complete.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ComboxAutoCompleteComponent implements OnInit {
+export class ComboboxAutoCompleteComponent implements OnInit {
 
   form!: FormGroup;
 

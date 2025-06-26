@@ -1,4 +1,4 @@
-import { Component, inject, Injector, OnInit } from '@angular/core';
+import { Component, inject, Injector, OnInit, signal } from '@angular/core';
 import { AsyncPipe, NgClass, NgComponentOutlet } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,6 +45,7 @@ import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 import { InformationPropertyService } from '../../../../apps/services/territorial-organization/information-property.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -72,6 +73,7 @@ import { InformationPropertyService } from '../../../../apps/services/territoria
     MatSortModule,
     MatTabsModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
     // Custom
     FluidHeightDirective,
     HeaderBpmCoreComponent
@@ -107,6 +109,7 @@ export class BmpCoreComponent implements OnInit {
   infoFatherURL!: string;
   resources: string[] = [];
 
+  isAcceptLoading = signal<boolean>(false);
 
   constructor(
     private route: ActivatedRoute,
@@ -173,24 +176,32 @@ export class BmpCoreComponent implements OnInit {
   }
 
   onAccept(): void {
+    this.isAcceptLoading.set(true);
     this.bpmCoreService.checkStatusBpmOperation(this.executionId)
-      .subscribe((result) => {
-        if (result.length > 0) {
-          this.dialog.open(ShowErrorValidateAlfaMainComponent, {
-            ...MODAL_SMALL,
-            data: result
-          });
-          this.loadingServiceService.activateLoading(false);
-          return;
-        }
+      .subscribe({
+        next: (result) => {
+          if (result.length > 0) {
+            this.dialog.open(ShowErrorValidateAlfaMainComponent, {
+              ...MODAL_SMALL,
+              data: result
+            });
+            this.loadingServiceService.activateLoading(false);
+            this.isAcceptLoading.set(false);
+            return;
+          }
 
-        this.executeAppraise();
-        this.confirmAction(
-          () => this.nextBpmCore(),
-          '¿Está seguro que desea continuar a la siguiente tarea?',
-          'info'
-        );
-        return;
+          this.executeAppraise();
+          this.confirmAction(
+            () => this.nextBpmCore(),
+            '¿Está seguro que desea continuar a la siguiente tarea?',
+            'info'
+          );
+          this.isAcceptLoading.set(false);
+          return;
+        },
+        error: () => {
+          this.isAcceptLoading.set(false);
+        }
       });
   }
 
@@ -255,10 +266,12 @@ export class BmpCoreComponent implements OnInit {
   }
 
   nextBpmCore() {
+    this.isAcceptLoading.set(true);
     this.loadingServiceService.activateLoading(true);
     if (this.proFlow) {
       const pathForm = this.proFlow?.preform?.pathForm;
       if (!pathForm) {
+        this.isAcceptLoading.set(false);
         return;
       }
       const components: BasicComponentTemplate[] = LISTO_FORM_BPM_CORE.filter(
@@ -291,6 +304,7 @@ export class BmpCoreComponent implements OnInit {
   checkStatusBpmOperation() {
     this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
       error: () => {
+        this.isAcceptLoading.set(false);
         this.getAlertError(
           'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar',
           3000
@@ -307,6 +321,7 @@ export class BmpCoreComponent implements OnInit {
           data: result
         });
         this.loadingServiceService.activateLoading(false);
+        this.isAcceptLoading.set(false);
       }
     });
   }
@@ -371,6 +386,7 @@ export class BmpCoreComponent implements OnInit {
     this.getNewProFlow(result.flowId!.toString());
     this.infoGeneralService.setInfoProTaskE(result);
     this.loadingServiceService.activateLoading(false);
+    this.isAcceptLoading.set(false);
   }
 
   getNewProFlow(flowId: string) {
@@ -384,6 +400,7 @@ export class BmpCoreComponent implements OnInit {
   }
 
   captureInformationSubscribeError(error: HttpErrorResponse): void {
+    this.isAcceptLoading.set(false);
     if (error.status === 400) {
       this.loadingServiceService.activateLoading(false);
       Swal.fire({

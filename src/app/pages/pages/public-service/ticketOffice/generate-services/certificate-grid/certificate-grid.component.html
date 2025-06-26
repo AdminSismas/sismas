@@ -28,7 +28,7 @@
             <input
               type="text"
               placeholder="Buscar certificados..."
-              [ngModel]="!!searchQuery"
+              [ngModel]="searchQuery"
               (ngModelChange)="searchQuery = $event"
               (input)="filterCertificates()"
               class="ml-2 p-2 border rounded"

@@ -22,11 +22,11 @@ import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constan
     NgClass,
     CommonModule
   ],
-  templateUrl: './combox-colletion.component.html',
-  styleUrl: './combox-colletion.component.scss',
+  templateUrl: './combobox-collection.component.html',
+  styleUrl: './combobox-collection.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ComboxColletionComponent implements OnInit, OnChanges {
+export class ComboboxCollectionComponent implements OnInit, OnChanges {
 
   options: DomainCollection[] = [];
 

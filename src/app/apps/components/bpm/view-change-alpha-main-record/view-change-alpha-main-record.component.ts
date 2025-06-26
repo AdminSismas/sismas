@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, ViewChild, signal } from '@angular/core';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import { Router } from '@angular/router';
 import {
@@ -34,6 +34,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'vex-view-change-alpha-main-record',
@@ -51,7 +52,8 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    NgClass
+    NgClass,
+    MatProgressSpinnerModule
   ],
   templateUrl: './view-change-alpha-main-record.component.html',
   styleUrl: './view-change-alpha-main-record.component.scss'
@@ -62,9 +64,11 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
   contentInformations!: InformationPegeable;
   searchData!: SearchData;
 
-  baunitIdE!:string |undefined;
-  executionId!:string |undefined;
+  baunitIdE!: string | undefined;
+  executionId!: string | undefined;
   listChanges: DifferenceChanges[] = [];
+
+  isAnalyzeLoading = signal<boolean>(false);
 
   @Input()
   columns: TableColumn<CadastralChangeLog>[] = TABLE_COLUMN_CHANGES_BPM_OPERATION;
@@ -117,12 +121,19 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
     if (this.executionId == null || !this.executionId) {
       return;
     }
+    this.isAnalyzeLoading.set(true);
     this.alfaMainService.analyzeChangesBpmOperationAlfaMain(
       this.generateObjectPageSearchData())
       .subscribe(
         {
-          error: () => this.captureInformationSubscribeError(),
-          next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
+          error: () => {
+            this.captureInformationSubscribeError();
+            this.isAnalyzeLoading.set(false);
+          },
+          next: (result: InformationPegeable) => {
+            this.captureInformationSubscribe(result);
+            this.isAnalyzeLoading.set(false);
+          }
         }
       );
   }

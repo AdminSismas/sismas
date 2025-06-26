@@ -8,7 +8,11 @@ import {
   UntypedFormControl,
   Validators
 } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,13 +27,14 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '../../../../interfaces/general/search-data.model';
-import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition
+} from '@angular/material/snack-bar';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { InputComponent } from '../../../general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {
-  TerritorialOrganizationService
-} from '../../../../services/territorial-organization/territorial-organization.service';
+import { TerritorialOrganizationService } from '../../../../services/territorial-organization/territorial-organization.service';
 import { Department } from '../../../../interfaces/territorial-organization/department.model';
 import { Municipality } from '../../../../interfaces/territorial-organization/municipality.model';
 import {
@@ -43,7 +48,8 @@ import {
   LIST_FORM_CADASTRAL_5,
   LIST_ZONES_RURAL,
   NAME_CODENAME,
-  NUMERO_PREDIAL_NACIONAL, RULE_PAGE_CADASTRAL_DA,
+  NUMERO_PREDIAL_NACIONAL,
+  RULE_PAGE_CADASTRAL_DA,
   STRING_INFORMATION_NOT_FOUND
 } from '../../../../constants/general/constants';
 import { Zone } from '../../../../interfaces/territorial-organization/zone.model';
@@ -57,7 +63,10 @@ import { NationalPredialNumber } from '../../../../interfaces/information-proper
 import { divideNpn } from '../../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../../constants/general/constantLabels';
 import { CharacterValidateService } from '../../../../utils/character-validate.service';
-import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/constants';
+import {
+  DIVPOLLVL2_CODE,
+  DIVPOLLVL_CODE
+} from '../../../../constants/general/constants';
 
 @Component({
   selector: 'vex-filter-cadastral-search',
@@ -84,8 +93,8 @@ import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/c
     MatTabsModule,
     MatTooltipModule,
     // Custom
-    ComboxColletionComponent,
-    InputComponent,
+    ComboboxCollectionComponent,
+    InputComponent
   ]
 })
 export class FilterCadastralSearchComponent implements OnInit {
@@ -121,29 +130,71 @@ export class FilterCadastralSearchComponent implements OnInit {
 
   // Form Npn Like
   formNpnLike: FormGroup = this.fb.group({
-    dpto: [this.defaultData?.dpto ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    mpio: [this.defaultData?.mpio ?? '', [Validators.maxLength(3), Validators.pattern(/^\d+$/)]],
-    zonas: [this.defaultData?.zonas ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    sector: [this.defaultData?.sectorb ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    comuna: [this.defaultData?.comuna ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    barrio: [this.defaultData?.barrio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    manVer: [this.defaultData?.manVer ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
-    terreno: [this.defaultData?.terreno ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
-    condicion: [this.defaultData?.condicion ?? '', [Validators.maxLength(1), Validators.pattern(/^\d+$/)]],
-    edificio: [this.defaultData?.edificio ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    piso: [this.defaultData?.piso ?? '', [Validators.maxLength(2), Validators.pattern(/^\d+$/)]],
-    unidadPredial: [this.defaultData?.unidadPredial ?? '', [Validators.maxLength(4), Validators.pattern(/^\d+$/)]],
+    dpto: [
+      this.defaultData?.dpto ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    mpio: [
+      this.defaultData?.mpio ?? '',
+      [Validators.maxLength(3), Validators.pattern(/^\d+$/)]
+    ],
+    zonas: [
+      this.defaultData?.zonas ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    sector: [
+      this.defaultData?.sectorb ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    comuna: [
+      this.defaultData?.comuna ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    barrio: [
+      this.defaultData?.barrio ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    manVer: [
+      this.defaultData?.manVer ?? '',
+      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
+    ],
+    terreno: [
+      this.defaultData?.terreno ?? '',
+      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
+    ],
+    condicion: [
+      this.defaultData?.condicion ?? '',
+      [Validators.maxLength(1), Validators.pattern(/^\d+$/)]
+    ],
+    edificio: [
+      this.defaultData?.edificio ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    piso: [
+      this.defaultData?.piso ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    unidadPredial: [
+      this.defaultData?.unidadPredial ?? '',
+      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
+    ]
   });
 
   // Form Registration
   formRegistration: FormGroup = this.fb.group({
-    registration: [this.defaultData?.registration ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
+    registration: [
+      this.defaultData?.registration ?? '',
+      [Validators.maxLength(10), Validators.pattern(/^\d+$/)]
+    ]
   });
 
   // Form Document Type
   formDocumentType: FormGroup = this.fb.group({
-    number: [this.defaultData?.number ?? '', [Validators.maxLength(10), Validators.pattern(/^\d+$/)]],
-    domIndividualTypeNumber: this.defaultData?.domIndividualTypeNumber ?? '',
+    number: [
+      this.defaultData?.number ?? '',
+      [Validators.maxLength(10), Validators.pattern(/^\d+$/)]
+    ],
+    domIndividualTypeNumber: this.defaultData?.domIndividualTypeNumber ?? ''
   });
 
   // Form Name or Company Name
@@ -152,12 +203,12 @@ export class FilterCadastralSearchComponent implements OnInit {
     middleName: [this.defaultData?.middleName ?? ''],
     lastName: [this.defaultData?.lastName ?? '', Validators.required],
     otherLastName: [this.defaultData?.otherLastName ?? ''],
-    companyName: [this.defaultData?.companyName ?? ''],
+    companyName: [this.defaultData?.companyName ?? '']
   });
 
   // Form Address
   formAddress: FormGroup = this.fb.group({
-    textAddress: this.defaultData?.textAddress ?? '',
+    textAddress: this.defaultData?.textAddress ?? ''
   });
 
   // Form Municipal Selection
@@ -182,31 +233,26 @@ export class FilterCadastralSearchComponent implements OnInit {
     private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
     private fieldFormatterService: CharacterValidateService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {});
-      this.proccessRulePage();
+      .subscribe(() => this.proccessRulePage());
   }
 
   proccessRulePage() {
-    if(this.defaults && this.defaults.rulePage) {
-      if(this.defaults.rulePage === RULE_PAGE_CADASTRAL_DA) {
-       this.formDocumentType.disable();
-       this.formNames.disable();
-       this.seeRuleField = false;
-      }else{
+    if (this.defaults && this.defaults.rulePage) {
+      if (this.defaults.rulePage === RULE_PAGE_CADASTRAL_DA) {
+        this.formDocumentType.disable();
+        this.formNames.disable();
+        this.seeRuleField = false;
+      } else {
         this.formDocumentType.enable();
-       this.formNames.enable();
-       this.seeRuleField = true;
-
+        this.formNames.enable();
+        this.seeRuleField = true;
       }
-
     }
   }
 
@@ -224,7 +270,10 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   searchByDocumentAndTypeNumber() {
-    const searchData = { number: this.number?.value, domIndividualTypeNumber: this.domIndividualTypeNumber?.value };
+    const searchData = {
+      number: this.number?.value,
+      domIndividualTypeNumber: this.domIndividualTypeNumber?.value
+    };
     if (
       searchData.number?.length > 1 &&
       searchData.domIndividualTypeNumber?.length > 1
@@ -323,7 +372,10 @@ export class FilterCadastralSearchComponent implements OnInit {
   }
 
   searchByName() {
-    if (!this.formNames.invalid || this.formNames.get('companyName')?.value?.length > 0) {
+    if (
+      !this.formNames.invalid ||
+      this.formNames.get('companyName')?.value?.length > 0
+    ) {
       const searchData = {
         firstName: (this.firstName?.value || '').toUpperCase(),
         middleName: (this.middleName?.value || '').toUpperCase(),
@@ -626,7 +678,9 @@ export class FilterCadastralSearchComponent implements OnInit {
           option.divpolLvl1Code === this.defaultData?.department
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('department')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('department')
+          ?.patchValue(listOptions[0].codeName);
         this.loadMunicipalitiesInformation(listOptions[0].codeName, false);
       }
     }
@@ -644,7 +698,9 @@ export class FilterCadastralSearchComponent implements OnInit {
           option.divpolLvl2Code === this.defaultData?.municipality
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('municipality')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('municipality')
+          ?.patchValue(listOptions[0].codeName);
         this.loadZonesInformation(listOptions[0].codeName, false);
       }
     }
@@ -658,7 +714,9 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Zone): boolean => option.id === this.defaultData?.zone
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('zone')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('zone')
+          ?.patchValue(listOptions[0].codeName);
         this.loadSectorsInformation(listOptions[0].codeName, false);
       }
     }
@@ -675,7 +733,9 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Sector): boolean => option.id === this.defaultData?.sector
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('sector')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('sector')
+          ?.patchValue(listOptions[0].codeName);
         this.loadCommunitiesInformation(listOptions[0].codeName, false);
       }
     }
@@ -692,7 +752,9 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Commune): boolean => option.id === this.defaultData?.community
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('community')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('community')
+          ?.patchValue(listOptions[0].codeName);
         this.loadNeighborhoodsInformation(listOptions[0].codeName, false);
       }
     }
@@ -710,7 +772,9 @@ export class FilterCadastralSearchComponent implements OnInit {
           option.id === this.defaultData?.neighborhood
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('neighborhood')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('neighborhood')
+          ?.patchValue(listOptions[0].codeName);
         this.loadBlocksInformation(listOptions[0].codeName, false);
       }
     }
@@ -727,7 +791,9 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Sidewalk): boolean => option.id === this.defaultData?.sidewalk
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('sidewalk')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('sidewalk')
+          ?.patchValue(listOptions[0].codeName);
       }
     }
   }
@@ -743,7 +809,9 @@ export class FilterCadastralSearchComponent implements OnInit {
         (option: Block): boolean => option.id === this.defaultData?.block
       );
       if (listOptions?.length > 0) {
-        this.formMunicipalSelection.get('block')?.patchValue(listOptions[0].codeName);
+        this.formMunicipalSelection
+          .get('block')
+          ?.patchValue(listOptions[0].codeName);
       }
     }
   }
@@ -751,7 +819,9 @@ export class FilterCadastralSearchComponent implements OnInit {
   searchByBaunitIdE() {
     const baunitIdE = this.formBaunitIdE.get('baunitIdE')?.value;
     if (!baunitIdE) {
-      this.snackBar.open('Ingresar número de ficha', 'Aceptar', { duration: 5000 });
+      this.snackBar.open('Ingresar número de ficha', 'Aceptar', {
+        duration: 5000
+      });
       return;
     }
 
@@ -809,7 +879,9 @@ export class FilterCadastralSearchComponent implements OnInit {
     }
   }
   private _clearListForm(list: string[]): void {
-    list.forEach((value): void => this.formMunicipalSelection.get(value)?.patchValue(''));
+    list.forEach((value): void =>
+      this.formMunicipalSelection.get(value)?.patchValue('')
+    );
   }
   private _clearListObject(code: number) {
     if (code === 0) this._clearListObject0();

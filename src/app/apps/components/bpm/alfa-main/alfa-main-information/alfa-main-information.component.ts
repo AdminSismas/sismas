@@ -1,11 +1,11 @@
 import {
   AfterViewInit,
   Component,
-  DestroyRef,
   inject,
   Input,
   OnInit,
-  ViewChild
+  ViewChild,
+  signal
 } from '@angular/core';
 import { NgClass, NgIf } from '@angular/common';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
@@ -85,6 +85,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { LoadingServiceService } from '../../../../services/general/loading-service.service';
 import { ValidityProcedureComponent } from './validity-procedure/validity-procedure.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'vex-alfa-main-information',
@@ -110,7 +111,8 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
     NgClass,
-    SweetAlert2Module
+    SweetAlert2Module,
+    MatProgressSpinnerModule
   ],
   templateUrl: './alfa-main-information.component.html',
   styleUrl: './alfa-main-information.component.scss'
@@ -124,7 +126,6 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   @Input({ required: false }) public mode = 1;
   @Input({ required: false }) public fluidHeight = '220';
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private loadingServiceService: LoadingServiceService = inject(
     LoadingServiceService
   );
@@ -146,6 +147,8 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   contentInformations!: InformationPegeable;
   changeGeoControl!: ChangeControl;
   listOperationContentInformation: OperationContentInformation[] = [];
+
+  isResetLoading = signal<boolean>(false);
 
   @ViewChild('successValidityProcedure')
   public successValidityProcedure!: SwalComponent;
@@ -356,6 +359,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   }
 
   clearInformationAlfaMain() {
+    this.isResetLoading.set(true);
     this.dialog
       .open(ClearInformationDataComponent, {
         width: '25%',
@@ -368,6 +372,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe((keyWord) => {
         if (!keyWord) {
+          this.isResetLoading.set(false);
           return;
         }
         this.executeClearInformationAlfaMain(keyWord);
@@ -383,6 +388,10 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
           this.listOperationContentInformation = [];
           this.validateChangeLogAlfaMain();
           this.loadingServiceService.activateLoading();
+          this.isResetLoading.set(false);
+        },
+        error: () => {
+          this.isResetLoading.set(false);
         }
       });
   }

@@ -12,13 +12,13 @@
   <form [formGroup]="editForm" (ngSubmit)="saveInformationAddress()">
     <div class="form-content">
       <div class="form-content-item">
-        <vex-combox-colletion-form
+        <vex-combobox-collection-form
           idComboCollection="domTipoDireccion2132132133"
           label="Tipo de dirección"
           [formControlComboxColletion]="controlDomTypeAddress"
           typeDomainName="TipoDireccion"
           placeholderDomainName="Escoger tipo de dirección">
-        </vex-combox-colletion-form>
+        </vex-combobox-collection-form>
       </div>
       <div class="form-content-item">
         <vex-input
@@ -75,7 +75,7 @@
           <div @fadeInUp class="flex-auto">
             <div class="px-4 py-2 flex flex-col">
               <div class="flex flex-col sm:flex-row sm:gap-4">
-                <vex-combox-colletion-form
+                <vex-combobox-collection-form
                   idComboCollection="domClaseViaPrincipal"
                   label="Clase de vía principal"
                   [formControlComboxColletion]="controlDomClaseViaPrincipal"
@@ -83,7 +83,7 @@
                   placeholderDomainName="Escoger clase vía principal"
                   cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
                   class="flex-auto">
-                </vex-combox-colletion-form>
+                </vex-combobox-collection-form>
                 <vex-input
                   idComboInput="letraViaPrincipal25841"
                   label="Letra"
@@ -102,7 +102,7 @@
                   [formControlInput]="controlValueViaPrincipal"
                   cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
                   class="flex-auto"></vex-input>
-                <vex-combox-colletion-form
+                <vex-combobox-collection-form
                   idComboCollection="domSectorCiudad856756"
                   label="Sector ciudad"
                   typeDomainName="SectorCiudad"
@@ -110,7 +110,7 @@
                   [formControlComboxColletion]="controlDomSectorCity"
                   cssClasses="w-full sm:ml-2 sm:mr-2 flex-1"
                   class="flex-auto">
-                </vex-combox-colletion-form>
+                </vex-combobox-collection-form>
               </div>
             </div>
           </div>

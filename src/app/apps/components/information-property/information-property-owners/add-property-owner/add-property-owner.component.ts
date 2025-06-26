@@ -12,7 +12,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -40,7 +40,7 @@ import { MODAL_SMALL_LARGE } from '../../../../constants/general/constants';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     MatButtonModule,
     MatButtonToggleModule,
     MatDatepickerModule,

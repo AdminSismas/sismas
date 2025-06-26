@@ -29,7 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { PeopleService } from '../../../../services/users/people.service';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
@@ -56,7 +56,7 @@ import { ModalResponse } from '../../../general-components/modal-window/modal-wi
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     MatDividerModule
   ],
   templateUrl: './editing-property-owner.component.html',
