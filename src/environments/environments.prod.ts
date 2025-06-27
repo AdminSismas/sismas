@@ -201,6 +201,7 @@ export const environment = {
   url_viewer: "https://prediosplus.map.cadastre4world.com:8081/mapstore/",
   user_exist: "/username/",
   v2: "/v2",
+  validateParticipation: "validateParticipation",
   validity: "validity",
   valuation: "/valuation",
   video: "assets/video/desarrollo.mp4",

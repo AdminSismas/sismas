@@ -1,7 +1,4 @@
-<div
-  class="w-full h-full flex flex-col"
-  [id]="this.id"
->
+<div class="w-full h-full flex flex-col">
   <div class="px-2 pt-0 pb-2 bg-primary-600/10 flex-none">
     <div class="flex items-center container-fluid px-0">
       <h2
@@ -53,15 +50,15 @@
         @if (typeProcess === "PARTICIPANTS") {
           <section class="h-full w-full p-6">
             <vex-table-third-party-affected
-              [executionId]="executionId"
+              [executionId]="executionId()"
               [readOnly]="true"
             ></vex-table-third-party-affected>
           </section>
         } @else {
           <div class="card h-full overflow-hidden flex-auto">
             <vex-citation-notice-grid
-              [id]="executionId + 'TableNotificacionGridv2'"
-              [executionId]="executionId"
+              [id]="executionId() + 'TableNotificacionGridv2'"
+              [executionId]="executionId()"
               (openDetailProcessParticipant)="
                 openDetailProcessParticipant($event)
               "

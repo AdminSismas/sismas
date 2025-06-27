@@ -201,6 +201,7 @@ export const environment = {
   url_viewer: "https://manizales.map.sismas.com.co:8081/mapstore/",
   user_exist: "/username/",
   v2: "/v2",
+  validateParticipation: "validateParticipation",
   validity: "validity",
   valuation: "/valuation",
   video: "assets/video/manizales.mp4",

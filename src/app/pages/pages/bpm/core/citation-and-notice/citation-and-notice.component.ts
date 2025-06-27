@@ -3,7 +3,7 @@ import {
   Component,
   DestroyRef,
   inject,
-  Input,
+  input,
   OnInit
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,9 +32,10 @@ import { CitationNoticeGridComponent } from './citation-notice-grid/citation-not
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProFlow } from '../../../../../apps/interfaces/bpm/pro-flow';
-import { getRandomInt } from 'src/app/apps/utils/general';
 import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../apps/constants/general/constants';
 import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
+import { CitationNoticeService } from './service/citation-notice.service';
 
 @Component({
   selector: 'vex-citation-and-notice',
@@ -58,62 +59,30 @@ import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/genera
     AsyncPipe,
     CitationNoticeGridComponent,
     TableThirdPartyAffectedComponent
-  ]
+  ],
 })
 export class CitationAndNoticeComponent implements OnInit {
-  public id: string = getRandomInt(1234).toString();
+  // Injects
+  proFlow = inject(ProFlow);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private infoGeneralService = inject(SendInfoGeneralService);
+  private citationNoticeService = inject(CitationNoticeService);
+  private cdr = inject(ChangeDetectorRef);
+
+  // Inputs
+  executionId = input.required<string>();
+  resources = input.required<string[]>();
+  mode = input.required({ transform: (value) => this.proFlow.mode || value });
 
   searchStr: UntypedFormControl = new UntypedFormControl();
-
-  @Input({ required: true }) public executionId = '';
-  @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public mode = 1;
-
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-  typeProcessDefault: TypeProcessParticipant = 'ALL';
-  typeProcess!: TypeProcessParticipant;
+  typeProcess: TypeProcessParticipant = 'ALL';
   searchStr$ = this.searchStr.valueChanges.pipe(debounceTime(10));
   infoFatherURL!: string;
 
-  constructor(
-    proFlow: ProFlow,
-    private dialog: MatDialog,
-    private router: Router,
-    private infoGeneralService: SendInfoGeneralService,
-    private cdr: ChangeDetectorRef
-  ) {
-    if (proFlow?.flowId) {
-      this.id += proFlow?.flowId;
-    }
-    if (proFlow?.mode) {
-      this.mode = proFlow?.mode;
-    }
-    this.destroyRef.onDestroy(() => {
-      // Empty block
-    });
-  }
-
   ngOnInit() {
-    if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + getRandomInt(12000);
-    } else {
-      this.id = getRandomInt(10000).toString();
-    }
-    this.typeProcess = this.typeProcessDefault;
-    if (this.id?.length > 0) {
-      this.id =
-        this.id +
-        getRandomInt(100000) +
-        'CitationNotificacionComponent' +
-        getRandomInt(10);
-    } else {
-      this.id =
-        getRandomInt(10000) +
-        'CitationNotificacionComponent' +
-        getRandomInt(10);
-    }
     this._infoFatherURL$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => (this.infoFatherURL = value));
@@ -122,8 +91,15 @@ export class CitationAndNoticeComponent implements OnInit {
       this.returnPanelTask(true);
       return false;
     }
-    //
-    this.cdr.markForCheck(); //
+
+    this.cdr.markForCheck();
+    this.validateParticipants();
+  }
+
+  validateParticipants() {
+    this.citationNoticeService
+      .validateParticipants(this.executionId(), new PageSearchData(0, 10, {}))
+      .subscribe((response) => console.log(response));
   }
 
   openDetailProcessParticipant(data?: ProcessParticipant) {
