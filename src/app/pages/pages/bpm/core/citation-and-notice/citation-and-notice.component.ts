@@ -1,11 +1,16 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  OnInit
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {
-  CitationAndNoticeTableMenuComponent
-} from './citation-and-notice-table-menu/citation-and-notice-table-menu.component';
+import { CitationAndNoticeTableMenuComponent } from './citation-and-notice-table-menu/citation-and-notice-table-menu.component';
 import { AsyncPipe } from '@angular/common';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -17,7 +22,6 @@ import { environment } from '../../../../../../environments/environments';
 import { Router } from '@angular/router';
 import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProcessParticipant } from '../../../../../apps/interfaces/bpm/process-participant';
 import {
   ProcessParticipantTableMenu,
@@ -28,8 +32,8 @@ import { CitationNoticeGridComponent } from './citation-notice-grid/citation-not
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProFlow } from '../../../../../apps/interfaces/bpm/pro-flow';
-import { getRandomInt } from 'src/app/apps/utils/general';
 import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../apps/constants/general/constants';
+import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 
 @Component({
   selector: 'vex-citation-and-notice',
@@ -51,68 +55,42 @@ import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../apps/constants/gener
     MatSidenavModule,
     CitationAndNoticeTableMenuComponent,
     AsyncPipe,
-    CitationNoticeGridComponent
-  ]
+    CitationNoticeGridComponent,
+    TableThirdPartyAffectedComponent
+  ],
 })
 export class CitationAndNoticeComponent implements OnInit {
-  public id: string = getRandomInt(1234).toString();
-
-  searchStr: UntypedFormControl = new UntypedFormControl();
-
-  @Input({ required: true }) public executionId: string = '';
-  @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public mode = 1;
-
+  // Injects
+  proFlow = inject(ProFlow);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private infoGeneralService = inject(SendInfoGeneralService);
+  private cdr = inject(ChangeDetectorRef);
 
+  // Inputs
+  executionId = input.required<string>();
+  resources = input.required<string[]>();
+  mode = input.required({ transform: (value) => this.proFlow.mode || value });
+
+  // Properties
+  searchStr: UntypedFormControl = new UntypedFormControl();
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-  typeProcessDefault: TypeProcessParticipant = 'ALL';
-  typeProcess!: TypeProcessParticipant;
+  typeProcess: TypeProcessParticipant = 'ALL';
   searchStr$ = this.searchStr.valueChanges.pipe(debounceTime(10));
   infoFatherURL!: string;
 
-
-  constructor(
-    proFlow: ProFlow,
-    private dialog: MatDialog,
-    private router: Router,
-    private infoGeneralService: SendInfoGeneralService,
-    private cdr: ChangeDetectorRef
-  ) {
-    if (proFlow?.flowId) {
-      this.id += proFlow?.flowId;
-    }
-    if (proFlow?.mode) {
-      this.mode = proFlow?.mode;
-    }
-    this.destroyRef.onDestroy(() => {
-    });
-  }
-
   ngOnInit() {
-    if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + getRandomInt(12000);
-    } else {
-      this.id = getRandomInt(10000).toString();
-    }
-    this.typeProcess = this.typeProcessDefault;
-    if (this.id?.length > 0) {
-      this.id = this.id + getRandomInt(100000)
-        + 'CitationNotificacionComponent' + getRandomInt(10);
-    } else {
-      this.id = getRandomInt(10000)
-        + 'CitationNotificacionComponent' + getRandomInt(10);
-    }
     this._infoFatherURL$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => this.infoFatherURL = value);
+      .subscribe((value) => (this.infoFatherURL = value));
 
     if (!this.executionId) {
       this.returnPanelTask(true);
       return false;
     }
-    //
-    this.cdr.markForCheck(); //
+
+    this.cdr.markForCheck();
   }
 
   openDetailProcessParticipant(data?: ProcessParticipant) {
@@ -128,15 +106,17 @@ export class CitationAndNoticeComponent implements OnInit {
   }
 
   openMassiveProcessParticipant(type: ProcessParticipantTableMenu['id']) {
-    let type1 = type;
+    const type1 = type;
+    console.log(type1);
   }
 
   returnPanelTask(isReturn: boolean) {
     if (isReturn) {
-      this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
+      this.router
+        .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
         .then(() => {
+          // Empty block
         });
     }
   }
-
 }

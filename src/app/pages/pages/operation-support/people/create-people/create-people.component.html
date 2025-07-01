@@ -34,7 +34,7 @@
       class="flex flex-col pl-0 pr-2"
     >
       <div class="flex flex-col sm:flex-row px-3 gap-6">
-        <vex-combox-colletion-form
+        <vex-combobox-collection-form
           idComboCollection="typeNumberDocument896767855234"
           label="Tipo de persona"
           [formControlComboxColletion]="controlDomIndividualType"
@@ -42,9 +42,9 @@
           placeholderDomainName="Selecciona el tipo de persona"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
           class="flex-auto"
-          ></vex-combox-colletion-form>
+          ></vex-combobox-collection-form>
           <!-- (selectionChange)="validateTypePeople()" -->
-        <vex-combox-colletion-form
+        <vex-combobox-collection-form
           idComboCollection="domIndividualTypeNumber896767855234"
           label="Tipo de documento"
           [formControlComboxColletion]="controlDomIndividualTypeNumber"
@@ -53,7 +53,7 @@
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
           class="flex-auto"
           (selectionChange)="domIndividualTypeNumberChange($event)"
-        ></vex-combox-colletion-form>
+        ></vex-combobox-collection-form>
         <vex-input
           idComboInput="nombrePredio8784"
           label="Número documento"
@@ -151,7 +151,7 @@
         </vex-input>
       </div>
       <div class="flex flex-col sm:flex-row px-4 gap-6">
-        <vex-combox-colletion-form
+        <vex-combobox-collection-form
           idComboCollection="typeNumbearDocument896767855234"
           label="Grupo étnico"
           [formControlComboxColletion]="controlDomIndividualEthnicGroup"
@@ -159,8 +159,8 @@
           placeholderDomainName="Selecciona el grupo étnico"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
           class="flex-auto"
-        ></vex-combox-colletion-form>
-        <vex-combox-colletion-form
+        ></vex-combobox-collection-form>
+        <vex-combobox-collection-form
           idComboCollection="ttypeNumberDocumentearDocument896767855234"
           label="sexo"
           [formControlComboxColletion]="controlIndividualSex"
@@ -168,7 +168,7 @@
           placeholderDomainName="Seleccionar tipo género"
           cssClasses="w-full sm:ml-0 sm:mr-0 flex-1"
           class="flex-auto"
-        ></vex-combox-colletion-form>
+        ></vex-combobox-collection-form>
       </div>
     </div>
   </mat-dialog-content>

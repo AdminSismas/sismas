@@ -1,4 +1,7 @@
-<div class="flex items-center" mat-dialog-title>
+<div
+  class="flex items-center"
+  mat-dialog-title
+>
   <h2 class="headline m-0 flex-auto">Búsqueda avanzada</h2>
 
   <button
@@ -12,7 +15,8 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 <mat-dialog-content class="flex flex-col overflow-hidden">
-  <mat-tab-group class="overflow-hidden"
+  <mat-tab-group
+    class="overflow-hidden"
     (selectedTabChange)="clearFormFields($event)"
   >
     <!-- Búsqueda por segregación de número predial nacional -->
@@ -244,7 +248,8 @@
                 (click)="sendInformationTable()"
                 color="primary"
                 mat-flat-button
-                type="primary">
+                type="primary"
+              >
                 <mat-icon svgIcon="mat:search"></mat-icon>
                 Buscar
               </button>
@@ -407,7 +412,10 @@
           </div>
 
           <!-- Búsqueda por dirección de texto -->
-          <form [formGroup]="formAddress" class="border border-slate-400 rounded-md p-2">
+          <form
+            [formGroup]="formAddress"
+            class="border border-slate-400 rounded-md p-2"
+          >
             <h3 class="text-base text-slate-500 mb-2">
               Búsqueda por dirección
             </h3>
@@ -633,7 +641,9 @@
 
 <mat-menu
   #settingsMenu="matMenu"
-  xPosition="before" yPosition="below">
+  xPosition="before"
+  yPosition="below"
+>
   <button mat-menu-item>
     <mat-icon svgIcon="mat:print"></mat-icon>
     <span>Imprimir</span>

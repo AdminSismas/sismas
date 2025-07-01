@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { VexConfig, VexConfigName } from '@vex/config/vex-config.interface';
 import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 
 @Injectable({
@@ -10,7 +9,6 @@ export class SendInfoGeneralService {
 
   private _configProTaskE = new BehaviorSubject<ProTaskE>({});
   private _configURLFather = new BehaviorSubject<string>('');
-  constructor() { }
 
   get infoProTaskE$(): Observable<ProTaskE> {
     return this._configProTaskE.asObservable();
@@ -27,5 +25,7 @@ export class SendInfoGeneralService {
   setFatherURL(url: string) {
     this._configURLFather.next(url);
   }
+
+
 
 }

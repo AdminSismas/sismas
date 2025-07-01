@@ -24,7 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '../../../../interfaces/general/search-data.model';
 import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { InputComponent } from '../../../general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {
@@ -83,7 +83,7 @@ import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/c
     MatTabsModule,
     MatTooltipModule,
     // Custom
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     InputComponent,
   ]
 })
@@ -103,7 +103,7 @@ export class FilterCertificateSearchAppraisalsComponent implements OnInit {
   optionsCommunities: Commune[] = [];
   optionsNeighborhoods: Neighborhood[] = [];
   optionsBlocks: Block[] = [];
-  seeRuleField: boolean = true;
+  seeRuleField = true;
 
   optionsSidewalks: Sidewalk[] = [];
   defaultData: SearchData = this.defaults?.searchData;
@@ -191,18 +191,17 @@ export class FilterCertificateSearchAppraisalsComponent implements OnInit {
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {});
-      this.proccessRulePage()
+      .subscribe(() => this.proccessRulePage());
   }
 
   proccessRulePage() {
     if(this.defaults && this.defaults.rulePage) {
       if(this.defaults.rulePage === RULE_PAGE_CADASTRAL_DA) {
-       this.formDocumentType.disable()
+       this.formDocumentType.disable();
        this.formNames.disable();
        this.seeRuleField = false;
       }else{
-        this.formDocumentType.enable()
+        this.formDocumentType.enable();
        this.formNames.enable();
        this.seeRuleField = true;
 

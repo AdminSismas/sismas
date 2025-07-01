@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,17 +17,15 @@ import { ExtraInfoPerson, InfoPerson } from '../../../../../../../apps/interface
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
 import {
-  ComboxColletionFormComponent
-} from '../../../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
+  ComboboxCollectionFormComponent
+} from '../../../../../../../apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { PeopleService } from '../../../../../../../apps/services/users/people.service';
-import { _filterInformationCode, validateVariable } from '../../../../../../../apps/utils/general';
+import { validateVariable } from '../../../../../../../apps/utils/general';
 import { TypeOperationPeople } from '../../../../../../../apps/interfaces/general/content-info';
 import {
   CONSTANT_COUNTRY_DEFAULT,
-  DIVPOLLVL2_CODE,
-  DIVPOLLVL2SEC_CODE,
   PAGE,
   PAGE_SIZE
 } from '../../../../../../../apps/constants/general/constants';
@@ -56,7 +55,7 @@ import { filter } from 'rxjs/operators';
     MatIcon,
     MatIconButton,
     MatDialogContent,
-    ComboxColletionFormComponent,
+    ComboboxCollectionFormComponent,
     InputComponent,
     MatButton,
     MatDialogActions,
@@ -66,7 +65,7 @@ import { filter } from 'rxjs/operators';
   styleUrl: './update-participant.component.scss'
 })
 export class UpdateParticipantComponent implements OnInit, OnDestroy {
-  label: string = 'Actualizar Participante';
+  label = 'Actualizar Participante';
 
   optionsDeparment: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
@@ -198,7 +197,7 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    let individualId = this.defaults.individualId;
+    const individualId = this.defaults.individualId;
     const people = this.defaults;
     if (!individualId || individualId <= 0) {
       this.getMessageError(
@@ -361,7 +360,7 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
     this.form.get('domIndividualType')?.disable();
   }
 
-  getMessageError(msg: string, closeModal: boolean = true, obj: any) {
+  getMessageError(msg: string, closeModal: boolean, obj: any) {
     Swal.fire({
       text: msg,
       icon: 'error',
@@ -374,7 +373,7 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
     });
   }
 
-  getMessageSuccess(msg: string, closeModal: boolean = true, obj: any) {
+  getMessageSuccess(msg: string, closeModal: boolean, obj: any) {
     Swal.fire({
       text: msg,
       icon: 'success',

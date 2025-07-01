@@ -1,26 +1,35 @@
-<div class="w-full h-full flex flex-col" [id]="this.id">
+<div class="w-full h-full flex flex-col">
   <div class="px-2 pt-0 pb-2 bg-primary-600/10 flex-none">
     <div class="flex items-center container-fluid px-0">
       <h2
-        class="headline font-bold m-0 flex items-center min-h-10 min-w-3xs max-w-xl mr-4">
+        class="headline font-bold m-0 flex items-center min-h-10 min-w-3xs max-w-xl mr-4"
+      >
         <span
           @scaleIn
-          class="w-10 h-10 rounded-full text-primary-600 ltr:mr-4 rtl:ml-4 bg-primary-600/10 hidden sm:flex items-center justify-center">
+          class="w-10 h-10 rounded-full text-primary-600 ltr:mr-4 rtl:ml-4 bg-primary-600/10 hidden sm:flex items-center justify-center"
+        >
           <mat-icon svgIcon="mat:contacts"></mat-icon>
         </span>
-        <span @fadeInRight class="block">Citación, notificación y aviso</span>
+        <span
+          @fadeInRight
+          class="block"
+          >Citación, notificación y aviso</span
+        >
       </h2>
 
       <div
-        class="hidden sm:flex items-center bg-foreground rounded-full overflow-hidden relative ltr:pl-5 rtl:pr-5 h-10 max-w-md w-full shadow-xl mx-auto">
+        class="hidden sm:flex items-center bg-foreground rounded-full overflow-hidden relative ltr:pl-5 rtl:pr-5 h-10 max-w-md w-full shadow-xl mx-auto"
+      >
         <mat-icon
           class="text-secondary flex-none"
-          svgIcon="mat:search"></mat-icon>
+          svgIcon="mat:search"
+        ></mat-icon>
         <input
           [formControl]="searchStr"
           class="border-0 h-10 outline-none ltr:pl-4 rtl:pr-4 placeholder:text-secondary bg-foreground flex-auto"
           placeholder="Buscar Citación, notificación..."
-          type="text" />
+          type="text"
+        />
       </div>
     </div>
   </div>
@@ -32,18 +41,33 @@
           [id]="executionId + 'Menu2Notificacion'"
           (filterChange)="setData($event)"
           (openAddNew)="openDetailProcessParticipant()"
-          (openMassiveProcessParticipant)="openMassiveProcessParticipant($event)"
-          class="hidden sm:block ltr:mr-3 rtl:ml-3">
+          (openMassiveProcessParticipant)="
+            openMassiveProcessParticipant($event)
+          "
+          class="hidden sm:block ltr:mr-3 rtl:ml-3"
+        >
         </vex-citation-notice-table-menu>
-        <div class="card h-full overflow-hidden flex-auto">
-          <vex-citation-notice-grid
-            [id]="executionId + 'TableNotificacionGridv2'"
-            [executionId]="executionId"
-            (openDetailProcessParticipant)="openDetailProcessParticipant($event)"
-            [typeProcess]="typeProcess"
-            [searchCtrl]="searchStr$ | async">
-          </vex-citation-notice-grid>
-        </div>
+        @if (typeProcess === "PARTICIPANTS") {
+          <section class="h-full w-full p-6">
+            <vex-table-third-party-affected
+              [executionId]="executionId()"
+              [readOnly]="true"
+            ></vex-table-third-party-affected>
+          </section>
+        } @else {
+          <div class="card h-full overflow-hidden flex-auto">
+            <vex-citation-notice-grid
+              [id]="executionId() + 'TableNotificacionGridv2'"
+              [executionId]="executionId()"
+              (openDetailProcessParticipant)="
+                openDetailProcessParticipant($event)
+              "
+              [typeProcess]="typeProcess"
+              [searchCtrl]="searchStr$ | async"
+            >
+            </vex-citation-notice-grid>
+          </div>
+        }
       </mat-drawer-content>
     </mat-drawer-container>
   </div>

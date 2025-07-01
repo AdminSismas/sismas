@@ -37,7 +37,7 @@ import {
   CONSTANT_NAME_DELETE_LABEL
 } from '../../../../constants/general/constantLabels';
 import { MatMenuModule } from '@angular/material/menu';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
@@ -80,7 +80,7 @@ import { CollectionServices } from '../../../../services/general/collection.serv
     MatDialogTitle,
     MatDividerModule,
     MatMenuModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     AsyncPipe,
     MatAutocompleteModule,
     MatOptionModule,

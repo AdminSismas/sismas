@@ -13,6 +13,7 @@ export class DocumentValidateComponent implements OnInit {
   @Input({ required: true }) public executionId = '';
   @Input() public id = '';
   @Input({ required: true }) public resources: string[] = [];
+  @Input() public mode = '';
 
   ngOnInit() {
     if (this.id?.length > 0) {

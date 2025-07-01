@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 
@@ -7,7 +7,7 @@ import { environment } from '../../../../environments/environments';
 })
 export class DocumentAssociatedService {
 
-  basic_url: string = `${environment.url}:${environment.port}`;
+  basic_url = `${environment.url}:${environment.port}`;
 
   constructor(private http: HttpClient) { }
 

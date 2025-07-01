@@ -5,22 +5,15 @@ import {
   OnInit,
   Output,
   forwardRef,
-  Optional,
-  Host,
-  SkipSelf,
-  OnDestroy,
-  AfterViewInit,
-  inject, Injector
-} from '@angular/core';
+  OnDestroy} from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule, NgClass } from '@angular/common';
 import {
   AbstractControl,
-  ControlContainer, ControlValueAccessor,
+  ControlContainer,
   FormControl,
-  FormGroup,
   FormGroupDirective,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule
@@ -46,7 +39,7 @@ import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constan
 
 // @ts-ignore
 @Component({
-  selector: 'vex-combox-colletion-form',
+  selector: 'vex-combobox-collection-form',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -57,18 +50,18 @@ import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constan
     NgClass,
     CommonModule
   ],
-  templateUrl: './combox-colletion-form.component.html',
-  styleUrl: './combox-colletion-form.component.scss',
+  templateUrl: './combobox-collection-form.component.html',
+  styleUrl: './combobox-collection-form.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ComboxColletionFormComponent),
+      useExisting: forwardRef(() => ComboboxCollectionFormComponent),
       multi: true
     }
   ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ComboxColletionFormComponent implements OnInit, OnDestroy {
+export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
 
   options: DomainCollection[] = [];
   calificationOptions: DomainCalificationCollection[] = [];

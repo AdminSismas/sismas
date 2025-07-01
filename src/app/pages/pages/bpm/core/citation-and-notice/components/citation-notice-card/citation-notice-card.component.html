@@ -1,16 +1,25 @@
-<div class="card overflow-hidden min-h-[5rem] shadow-md" [id]="id">
+<div
+  class="card overflow-hidden min-h-[5rem] shadow-md"
+  [id]="id"
+>
   <div
-    (click)="openDetailProcessParticipant.emit(processParticipant.participationId)"
+    (click)="
+      openDetailProcessParticipant.emit(processParticipant.participationId)
+    "
     class="pl-2 pr-2 pt-3 pb-2 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
-    matRipple>
-<!--    <img [src]="imageSrc()" class="avatar h-11 w-11 mx-auto" alt="" />-->
+    matRipple
+  >
+    <!--    <img [src]="imageSrc()" class="avatar h-11 w-11 mx-auto" alt="" />-->
     <div class="flex items-center justify-center min-h-3 pt-4">
-      <h4 class="subheading-2 pl-2">{{ processParticipant.bpmParticipation }}</h4>
+      <h4 class="subheading-2 pl-2">
+        {{ processParticipant.bpmParticipation }}
+      </h4>
     </div>
     <div class="flex items-center justify-center">
       <mat-icon
         class="ltr:mr-1 rtl:ml-1 icon-xs"
-        svgIcon="mat:receipt_long"></mat-icon>
+        svgIcon="mat:receipt_long"
+      ></mat-icon>
       <span class="sm:text-xs text-secondary">
         {{ processParticipant.individual.domIndividualTypeNumber | titlecase }}
         - {{ processParticipant.individualNumber }}
@@ -19,85 +28,76 @@
     <div class="flex items-center justify-center">
       <mat-icon
         class="ltr:mr-1 rtl:ml-1 icon-xs"
-        svgIcon="mat:people"></mat-icon>
-      <span
-        class="sm:text-xs text-secondary">{{ processParticipant.fullName | titlecase }}</span>
+        svgIcon="mat:people"
+      ></mat-icon>
+      <span class="sm:text-xs text-secondary">{{
+        processParticipant.fullName | titlecase
+      }}</span>
     </div>
 
-    @if (validateNotifiedCompleted) {
-      <div
-        class="rounded px-2 py-1 font-medium text-xs flex-none text-gray-600 bg-gray-600/10 absolute top-2 right-2">
-        {{ 'Notificado' }}
-      </div>
-    }
+    <div
+      class="rounded px-2 py-1 font-medium text-xs flex-none bg-gray-600/10 absolute top-2 right-2"
+      [ngClass]="processParticipant.viaGubernativa?.domGuvState ?? '' | citationNoticeClass"
+    >
+      {{ processParticipant.viaGubernativa?.domGuvState | citationNoticeType }}
+    </div>
 
-    @if (validateNotFoundGuvState) {
-      <div
-        class="rounded px-2 py-1 font-medium text-xs flex-none text-secondary-600 bg-secondary-600/10 absolute top-2 right-2">
-        {{ 'Pendiente' }}
-      </div>
-    }
 
-    @if (validateDomGuvStateNotified) {
-      <div
-        class="rounded px-2 py-1 font-medium text-xs flex-none text-green-600 bg-green-600/10 absolute top-2 right-2">
-        {{ 'Notificar' }}
-      </div>
-    }
-
-    @if (validateDomGuvStateCitation) {
-      <div
-        class="rounded px-2 py-1 font-medium text-xs flex-none text-primary-600 bg-primary-600/10 absolute top-2 right-2">
-        {{ 'Citar' }}
-      </div>
-    }
-
-    @if (validateDomGuvStateNotice) {
-      <div
-        class="rounded px-2 py-1 font-medium text-xs flex-none text-amber-600 bg-amber-600/10 absolute top-2 right-2">
-        <!--        <mat-icon svgIcon="mat:label" class="ltr:mr-3 rtl:ml-3 "></mat-icon>-->
-        {{ 'Avisar' }}
-      </div>
-    }
   </div>
 
   <div class="bg-app-bar p-0 flex items-center justify-around">
-    <div class="p-0 grid grid-cols-3 gap-3">
+    <div class="p-0 grid grid-cols-4 gap-2">
       <button
-        type="button" mat-icon-button
+        type="button"
+        mat-icon-button
         color="accent"
         class="p-0"
         matTooltip="Citar participante"
         matTooltipPosition="below"
-        [disabled]="!validateDomGuvStateCitation"
-        [ngClass]="classValidateDomGuvStateCitation"
-        (click)="executeCitation()">
+        [disabled]="processParticipant.viaGubernativa?.domGuvState !== 'Citado'"
+        [ngClass]="processParticipant.viaGubernativa?.domGuvState !== 'Citado' ? 'text-amber' : 'text-secondary'"
+        (click)="executeCitation()"
+      >
         <mat-icon svgIcon="mat:notifications"></mat-icon>
       </button>
 
       <button
-        type="button" mat-icon-button
+        type="button"
+        mat-icon-button
         color="primary"
         class="p-0"
         matTooltip="Notificar participante"
         matTooltipPosition="below"
-        [disabled]="!validateDomGuvStateNotified"
-        [ngClass]="classValidateDomGuvStateNotified"
-        (click)="executeNotification()">
+        [disabled]="processParticipant.viaGubernativa?.domGuvState !== 'Notificado'"
+        [ngClass]="processParticipant.viaGubernativa?.domGuvState !== 'Notificado' ? 'text-green' : 'text-secondary'"
+        (click)="executeNotification()"
+      >
         <mat-icon svgIcon="mat:event_note"></mat-icon>
       </button>
       <button
-        type="button" mat-icon-button
+        type="button"
+        mat-icon-button
         color="purple"
         class="p-0"
         matTooltip="Avisar participante"
         matTooltipPosition="below"
-        [disabled]="!validateDomGuvStateNotice"
-        [ngClass]="classValidateDomGuvStateNotice"
-        (click)="executeAdvertisement()">
+        [disabled]="processParticipant.viaGubernativa?.domGuvState !== 'Aviso'"
+        [ngClass]="processParticipant.viaGubernativa?.domGuvState !== 'Aviso' ? 'text-amber' : 'text-secondary'"
+        (click)="executeAdvertisement()"
+      >
         <mat-icon svgIcon="mat:chat"></mat-icon>
       </button>
-
+      <button
+        type="button"
+        mat-icon-button
+        class="p-0"
+        matTooltip="Imprimir"
+        matTooltipPosition="below"
+        [disabled]="isPrintDisabled()"
+        (click)="onPrint()"
+      >
+        <mat-icon svgIcon="mat:print"></mat-icon>
+      </button>
     </div>
   </div>
 </div>

@@ -23,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '../../../../interfaces/general/search-data.model';
 import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { InputComponent } from '../../../general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
@@ -72,7 +72,7 @@ import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/c
   standalone: true,
   imports: [
     CommonModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     InputComponent,
     MatAutocompleteModule,
     MatButtonModule,

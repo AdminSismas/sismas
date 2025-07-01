@@ -23,10 +23,9 @@ import {
 } from '../../../../../../../apps/constants/general/constants';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import {
-  ComboxColletionFormComponent
-} from '../../../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
+  ComboboxCollectionFormComponent
+} from '../../../../../../../apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 import { ProceduresService } from '../../../../../../../apps/services/general/procedures.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ProceduresCollection } from '../../../../../../../apps/interfaces/tables/procedures-progress.model';
 import {
   TextAreaComponent
@@ -57,7 +56,7 @@ import { PeopleService } from '../../../../../../../apps/services/users/people.s
     MatDialogContent,
     TitleCasePipe,
     MatDialogTitle,
-    ComboxColletionFormComponent,
+    ComboboxCollectionFormComponent,
     DatePipe,
     TextAreaComponent,
     MatSlideToggle
@@ -67,8 +66,8 @@ import { PeopleService } from '../../../../../../../apps/services/users/people.s
 })
 export class AddCitationNoticeComponent implements OnInit {
 
-  labelCited: string = 'Datos de citacion';
-  labelNotice: string = 'Datos de notificacion';
+  labelCited = 'Datos de citacion';
+  labelNotice = 'Datos de notificacion';
   id: string = getRandomInt(5258445) + 'AddCitationNoticeComponent2555444';
   maxDate: Date = new Date(); // Fecha máxima permitida (hoy)
   minDate: Date | null = null; // Fecha minima, fecha de la radicacion
@@ -161,8 +160,6 @@ export class AddCitationNoticeComponent implements OnInit {
           this.formNotification.patchValue(this.processParticipant?.viaGubernativa);
         }
       },
-      error: (error: HttpErrorResponse) => {
-      }
     });
   }
 
@@ -184,8 +181,8 @@ export class AddCitationNoticeComponent implements OnInit {
     const form = this.formCitation.getRawValue();
     this.participantsService.updateGovernmentalChannelCitedParticipantByExecutionId(
       this.executionId, form, this.participationId).subscribe({
-      next: (result: void) => {
-        let msg: string = this.processParticipant.fullName + ' ' + 'Citado correctamente por via: ' + this.controlDomCitationMethod.value;
+      next: () => {
+        const msg: string = this.processParticipant.fullName + ' ' + 'Citado correctamente por via: ' + this.controlDomCitationMethod.value;
         this.getAlertSuccess(msg);
         this.dialogRef.close(true);
       },
@@ -207,8 +204,8 @@ export class AddCitationNoticeComponent implements OnInit {
     const form = this.formNotification.getRawValue();
     this.participantsService.updateGovernmentalChannelNotifiedParticipantByExecutionId(
       this.executionId, form, this.participationId).subscribe({
-      next: (result: void) => {
-        let msg: string = this.processParticipant.fullName + ' ' + 'Citado correctamente por via: ' + this.controlDomCitationMethod.value;
+      next: () => {
+        const msg: string = this.processParticipant.fullName + ' ' + 'Citado correctamente por via: ' + this.controlDomCitationMethod.value;
         this.getAlertSuccess(msg);
         this.dialogRef.close(true);
       },

@@ -29,7 +29,8 @@ import {
   CONSTANT_ERR_ONLY_INVALID_LETTER,
   CONSTANT_ERR_ONLY_INVALID_NUMBER,
   CONSTANT_ERR_ONLY_ONE_99,
-  CONSTANT_ERR_ONLY_TEXT_NUMBER
+  CONSTANT_ERR_ONLY_TEXT_NUMBER,
+  CONSTANT_ERR_TEXT_ADDRESS_VALIDATOR
 } from '../../../constants/general/constantsAlertLabel';
 
 @Component({
@@ -65,8 +66,6 @@ export class InputComponent implements OnInit {
   @Input() public hintValue!: string | null;
   @Input() public hideRequiredMarker = true;
 
-  constructor() { }
-
   ngOnInit(): void {
     if (this.idComboInput?.length>0) {
       this.idComboInput = this.idComboInput + getRandomInt(10000) + this.formControlNameInput;
@@ -84,7 +83,7 @@ export class InputComponent implements OnInit {
 
   checkForErrorsIn(formControl: AbstractControl): string {
     if (formControl.hasError('required')) {
-      return 'Campo requerido'
+      return 'Campo requerido';
     }
 
     if (formControl.errors?.hasOwnProperty('capitalLetter') && formControl.errors?.['capitalLetter'] === true) {
@@ -124,7 +123,7 @@ export class InputComponent implements OnInit {
     }
 
     if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber'] === true) {
-      return CONSTANT_ERR_ONLY_INVALID_NUMBER;
+      return CONSTANT_ERR_ONLY_TEXT_NUMBER;
     }
 
     if (formControl.errors?.hasOwnProperty('onlyLetters') && formControl.errors?.['onlyLetters'] === true) {
@@ -137,6 +136,10 @@ export class InputComponent implements OnInit {
 
     if (formControl.errors?.hasOwnProperty('max') && formControl.errors?.['max']) {
       return 'Error, valor maximo: ' + formControl.errors?.['max'].max + ' valor actual: ' + formControl.errors?.['max'].actual;
+    }
+
+    if (formControl.errors?.hasOwnProperty('textAddressValidator') && formControl.errors?.['textAddressValidator']) {
+      return CONSTANT_ERR_TEXT_ADDRESS_VALIDATOR;
     }
 
     return '';

@@ -22,7 +22,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 /* Components */
-import { ComboxColletionComponent } from '../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../general-components/combobox-collection/combobox-collection.component';
 import { JSONInput } from '../../../interfaces/forms/dynamic-forms';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSelectModule } from '@angular/material/select';
@@ -44,7 +44,7 @@ import { TextAreaComponent } from '../../general-components/text-area/text-area.
     MatNativeDateModule,
     MatSelectModule,
     MatSlideToggleModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     NgxMatFileInputModule,
     TextAreaComponent
   ],

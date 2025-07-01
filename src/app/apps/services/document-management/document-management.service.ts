@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { environment } from '../../../../environments/environments';
 import { Observable, catchError } from 'rxjs';
-import {AttachmentCollection} from '../../interfaces/documnet-management/attachment.model';
+import {AttachmentCollection} from '../../interfaces/document-management/attachment.model';
 import { HttpClient } from '@angular/common/http';
 
 

@@ -3,13 +3,12 @@ import {
   Component,
   DestroyRef,
   inject,
-  Input,
+  input,
   OnInit,
   signal,
   ViewChild
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { getRandomInt } from '../../../utils/general';
 import { MatDialog } from '@angular/material/dialog';
 import { ThirdPartyAffectedParticipant } from '../../../interfaces/general/content-info';
 import { ParticipantTableDialogComponent } from '../../bpm/participant-table-dialog/participant-table-dialog.component';
@@ -76,17 +75,45 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './table-third-party-affected.component.scss'
 })
 export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
-  @Input({ required: true }) public executionId = '';
-  @Input({ required: true }) public readOnly = true;
+  // Injects
+  private dialog: MatDialog = inject(MatDialog);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private participantsService: ParticipantsService =
+    inject(ParticipantsService);
 
-  id: string = getRandomInt(1358879).toString();
+  // Inputs
+  executionId = input.required<string>();
+  readOnly = input.required({
+    transform: (value: string | boolean) => {
+      switch (value) {
+        case '':
+          return false;
+        case 'false':
+          return false;
+        case 'true':
+          return true;
+        case true:
+          return true;
+        case false:
+          return false;
+        default:
+          return false;
+      }
+    }
+  });
+
+  // Signals
+  existThirdPartyAffected = signal(false);
+  dataSource = signal<MatTableDataSource<ProcessParticipant>>(
+    new MatTableDataSource()
+  );
+
   contentInformation!: InformationPegeable;
 
   page = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_OPTION_UNIQUE_7;
   pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
-  dataSource!: MatTableDataSource<ProcessParticipant>;
   columns: TableColumn<ProcessParticipant>[] =
     TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY;
   subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
@@ -94,32 +121,11 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
   >(1);
   data$: Observable<ProcessParticipant[]> = this.subject$.asObservable();
 
-  private participantsService: ParticipantsService =
-    inject(ParticipantsService);
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private dialog: MatDialog = inject(MatDialog);
-
-  existThirdPartyAffected = signal(false);
-
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id +
-        getRandomInt(1345789) +
-        'TableThirdPartyAffectedComponent444' +
-        getRandomInt(10);
-    } else {
-      this.id =
-        getRandomInt(987541) +
-        'TableThirdPartyAffectedComponent44' +
-        getRandomInt(10);
-    }
-
-    this.dataSource = new MatTableDataSource();
     this.getExistThirdPartyAffected();
 
     this.searchCtrl.valueChanges
@@ -129,38 +135,50 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
     this.data$
       .pipe(filter<ProcessParticipant[]>(Boolean))
       .subscribe((participants) => {
-        this.dataSource.data = participants;
+        this.dataSource.update((dataSource) => {
+          dataSource.data = participants;
+          return dataSource;
+        });
       });
 
-    this.participantsService.chargeInfoSubject$.subscribe(
-      (result: boolean | null) => {
+    this.participantsService.chargeInfoSubject$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result: boolean | null) => {
         if (result !== null && result) {
           this.obtainInformationThirdPartyAffected();
         }
         return;
-      }
-    );
+      });
 
     this.obtainInformationThirdPartyAffected();
   }
 
   ngAfterViewInit(): void {
     if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+      this.dataSource.update((dataSource) => {
+        dataSource.paginator = this.paginator!;
+        return dataSource;
+      });
     }
 
     if (this.sort) {
-      this.dataSource.sort = this.sort;
+      this.dataSource.update((dataSource) => {
+        dataSource.sort = this.sort!;
+        return dataSource;
+      });
     }
   }
 
   onFilterChange(value: string): void {
-    if (!this.dataSource) {
+    if (!this.dataSource()) {
       return;
     }
     value = value.trim();
     value = value.toLowerCase();
-    this.dataSource.filter = value;
+    this.dataSource.update((dataSource) => {
+      dataSource.filter = value;
+      return dataSource;
+    });
   }
 
   openThirdPartyAffected() {
@@ -177,7 +195,8 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
 
   getExistThirdPartyAffected() {
     this.participantsService
-      .getExistThirdPartyAffected(this.executionId)
+      .getExistThirdPartyAffected(this.executionId())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((responseThirdPartyAffected: boolean) => {
         this.participantsService.changeInfoParticipants(
           responseThirdPartyAffected
@@ -188,7 +207,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
 
   onThirdPartyAffectedTrue() {
     const obj: ThirdPartyAffectedParticipant = {
-      executionId: this.executionId,
+      executionId: this.executionId(),
       thirdPartyAffected: true
     };
     this.dialog
@@ -200,7 +219,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe(() => {
         this.participantsService
-          .getExistThirdPartyAffected(this.executionId)
+          .getExistThirdPartyAffected(this.executionId())
           .subscribe((response: boolean) => {
             this.participantsService.changeInfoParticipants(response);
             this.existThirdPartyAffected.set(response);
@@ -210,7 +229,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
 
   obtainInformationThirdPartyAffected() {
     this.participantsService
-      .getAllThirdPartyAffected(this.executionId)
+      .getAllThirdPartyAffected(this.executionId())
       .subscribe({
         next: (result: ProcessParticipant[]) =>
           this.captureInformationThirdPartyAffectedTable(result),
@@ -239,7 +258,10 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
 
   captureInformationSubscribeError(): void {
     this.contentInformation = new InformationPegeable();
-    this.dataSource.data = [];
+    this.dataSource.update((dataSource) => {
+      dataSource.data = [];
+      return dataSource;
+    });
   }
 
   refreshInformationPaginator(event: PageEvent): void {
@@ -279,11 +301,11 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
   }
 
   deleteInformation(participant: ProcessParticipant): void {
-    if (participant && participant.participationId > 0 && this.executionId) {
+    if (participant && participant.participationId > 0 && this.executionId()) {
       const participationId = participant.participationId;
       this.participantsService
         .deleteParticipantByExecutionId(
-          this.executionId,
+          this.executionId(),
           participationId.toString()
         )
         .subscribe({
@@ -347,7 +369,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
 
   autoThirdPartyAffected() {
     this.participantsService
-      .getAutoThirdPartyAffected(this.executionId)
+      .getAutoThirdPartyAffected(this.executionId())
       .subscribe(() => {
         const message = 'Se han obtenido todos los terceros afectados';
         this.successAlert(message);

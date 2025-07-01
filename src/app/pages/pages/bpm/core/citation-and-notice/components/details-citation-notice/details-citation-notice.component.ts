@@ -15,7 +15,6 @@ import { MODAL_DYNAMIC_HEIGHT, NAME_NO_DISPONIBLE } from '../../../../../../../a
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { UpdateParticipantComponent } from '../update-participant/update-participant.component';
 import { InfoPerson } from '../../../../../../../apps/interfaces/information-property/info-person';
-import { HttpErrorResponse } from '@angular/common/http';
 import { PeopleService } from '../../../../../../../apps/services/users/people.service';
 import { InfoContact } from '../../../../../../../apps/interfaces/information-property/info-contact';
 
@@ -66,8 +65,8 @@ export class DetailsCitationNoticeComponent implements OnInit {
   }
 
   editProcessParticipant() {
-    let individualTypeNumber: string = this.processParticipant.individual.domIndividualTypeNumber;
-    let number: string = this.processParticipant.individual.number;
+    const individualTypeNumber: string = this.processParticipant.individual.domIndividualTypeNumber;
+    const number: string = this.processParticipant.individual.number;
     this.dialog.open(UpdateParticipantComponent, {
       ...MODAL_DYNAMIC_HEIGHT,
       disableClose: true,

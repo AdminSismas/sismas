@@ -1,14 +1,30 @@
 // Angular framework
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Inject, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgxDropzoneModule } from 'ngx-dropzone';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 // Material
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -24,9 +40,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
 import { AttachmentService } from '../../../../../../../apps/services/bpm/core/document/main/attachment.service';
-import {
-  ComboxColletionComponent
-} from '../../../../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
 import Swal from 'sweetalert2';
 
@@ -59,14 +73,13 @@ import Swal from 'sweetalert2';
     MatSlideToggleModule,
     MatTabsModule,
     // Custom
-    ComboxColletionComponent,
-    InputComponent,
-
+    ComboboxCollectionComponent,
+    InputComponent
   ],
   templateUrl: './attachment-form.component.html',
   styleUrl: './attachment-form.component.scss'
 })
-export class AttachmentFormComponent  {
+export class AttachmentFormComponent {
   @Output() dataUpdated = new EventEmitter<void>();
 
   file: File | null = null;
@@ -76,7 +89,7 @@ export class AttachmentFormComponent  {
   errorMessage = '';
   isLoading = false;
   isUploading = false;
-  uploadTimeout: any;
+  uploadTimeout!: NodeJS.Timeout;
 
   @ViewChild('errorForm') errorForm!: SwalComponent;
   @ViewChild('uploadWarning') uploadWarning!: SwalComponent;
@@ -84,17 +97,17 @@ export class AttachmentFormComponent  {
   constructor(
     public dialogRef: MatDialogRef<AttachmentFormComponent>,
     private snackbar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { executionId: string },
     private attachmentService: AttachmentService
   ) {
     this.attachmentForm = new FormGroup({
       file: new FormControl(null, Validators.required),
       attachmentType: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required)
     });
   }
 
-  onSelect(event: any) {
+  onSelect(event: NgxDropzoneChangeEvent) {
     const maxSize = 50 * 1024 * 1024; // 50MB en bytes
 
     const alreadySelectedFiles = [];
@@ -103,7 +116,8 @@ export class AttachmentFormComponent  {
     const validFiles = event.addedFiles.filter((nuevoArchivo: File) => {
       const alreadySelected = this.uploadedFiles.some(
         (archivoExistente: File) =>
-          archivoExistente.name === nuevoArchivo.name && archivoExistente.size === nuevoArchivo.size
+          archivoExistente.name === nuevoArchivo.name &&
+          archivoExistente.size === nuevoArchivo.size
       );
 
       if (alreadySelected) {
@@ -117,15 +131,19 @@ export class AttachmentFormComponent  {
       return !alreadySelected && nuevoArchivo.size <= maxSize;
     });
 
-
     if (alreadySelectedFiles.length > 0) {
-      this.snackbar.open('Algunos archivos ya han sido seleccionados.', 'OK', { duration: 5000 });
+      this.snackbar.open('Algunos archivos ya han sido seleccionados.', 'OK', {
+        duration: 5000
+      });
     }
 
     if (oversizedFiles.length > 0) {
-      this.snackbar.open('Algunos archivos exceden el límite de tamaño de 50MB.', 'OK', { duration: 5000 });
+      this.snackbar.open(
+        'Algunos archivos exceden el límite de tamaño de 50MB.',
+        'OK',
+        { duration: 5000 }
+      );
     }
-
 
     if (validFiles.length > 0) {
       this.uploadedFiles.push(...validFiles);
@@ -134,7 +152,7 @@ export class AttachmentFormComponent  {
     }
   }
 
-  onRemove(event: any) {
+  onRemove(event: File) {
     const index = this.uploadedFiles.indexOf(event);
     if (index > -1) {
       this.uploadedFiles.splice(index, 1);
@@ -144,9 +162,12 @@ export class AttachmentFormComponent  {
   validateForm(): boolean {
     if (this.attachmentForm.invalid) {
       let errorMessage = 'Por favor complete los siguientes campos:\n';
-      if (this.attachmentForm.get('file')?.invalid) errorMessage += '- Archivo\n';
-      if (this.attachmentForm.get('attachmentType')?.invalid) errorMessage += '- Tipo de Documento\n';
-      if (this.attachmentForm.get('description')?.invalid) errorMessage += '- Descripción\n';
+      if (this.attachmentForm.get('file')?.invalid)
+        errorMessage += '- Archivo\n';
+      if (this.attachmentForm.get('attachmentType')?.invalid)
+        errorMessage += '- Tipo de Documento\n';
+      if (this.attachmentForm.get('description')?.invalid)
+        errorMessage += '- Descripción\n';
 
       this.errorMessage = errorMessage;
       this.errorForm.fire();
@@ -167,13 +188,15 @@ export class AttachmentFormComponent  {
     formData.append('file', this.uploadedFiles[0]);
     formData.append('executionId', this.data.executionId);
     formData.append('taskId', '0');
-    formData.append('attachmentType', this.attachmentForm.get('attachmentType')?.value);
+    formData.append(
+      'attachmentType',
+      this.attachmentForm.get('attachmentType')?.value
+    );
 
     const description = this.attachmentForm.get('description')?.value;
     if (description) {
       formData.append('description', description);
     }
-
 
     this.uploadTimeout = setTimeout(() => {
       if (this.isUploading) {
@@ -183,7 +206,7 @@ export class AttachmentFormComponent  {
           icon: 'warning',
           showCancelButton: true,
           confirmButtonText: 'Continuar esperando',
-          cancelButtonText: 'Cancelar operación',
+          cancelButtonText: 'Cancelar operación'
         }).then((result) => {
           if (result.dismiss === Swal.DismissReason.cancel) {
             this.cancelUpload();
@@ -192,20 +215,22 @@ export class AttachmentFormComponent  {
       }
     }, 15000);
 
-
-
     this.attachmentService.sendAttachment(formData).subscribe(
-      response => {
+      () => {
         clearTimeout(this.uploadTimeout);
-        this.snackbar.open('Archivo enviado correctamente', 'OK', { duration: 5000 });
+        this.snackbar.open('Archivo enviado correctamente', 'OK', {
+          duration: 5000
+        });
         this.dialogRef.close();
         this.dataUpdated.emit();
         this.isLoading = false;
         this.isUploading = false;
       },
-      error => {
+      () => {
         clearTimeout(this.uploadTimeout);
-        this.snackbar.open('Error al enviar el archivo', 'OK', { duration: 5000 });
+        this.snackbar.open('Error al enviar el archivo', 'OK', {
+          duration: 5000
+        });
         this.isLoading = false;
         this.isUploading = false;
       }

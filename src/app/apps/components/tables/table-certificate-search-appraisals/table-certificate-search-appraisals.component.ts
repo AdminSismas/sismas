@@ -18,11 +18,9 @@ import {
   MatPaginatorModule,
   PageEvent
 } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import {
-  MatDialog,
-  MatDialogModule
-} from '@angular/material/dialog';
+  MatDialog} from '@angular/material/dialog';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -33,13 +31,9 @@ import {
   UntypedFormControl
 } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonModule } from '@angular/material/button';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
@@ -48,8 +42,6 @@ import { SearchData } from '../../../interfaces/general/search-data.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { Observable } from 'rxjs';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { FilterCertificateSearchAppraisalsComponent } from './filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
 import {
@@ -84,28 +76,18 @@ import { ViewCertificateManagementComponent } from '../../general-components/vie
   animations: [fadeInUp400ms, stagger40ms],
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     NgClass,
-    NgIf,
     ReactiveFormsModule,
     // Vex
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
     // Material
-    MatButtonModule,
-    MatButtonToggleModule,
     MatCheckboxModule,
-    MatDialogModule,
     MatIconModule,
     MatInputModule,
-    MatMenuModule,
     MatPaginatorModule,
-    MatSelectModule,
-    MatSortModule,
     MatTableModule,
-    MatTabsModule,
-    MatTooltipModule,
     // Custom
     CurrencyLandsPipe
   ]
@@ -612,6 +594,7 @@ export class TableCertificateSearchAppraisalsComponent
         title: title
       }
     }).afterClosed().subscribe(() => {
+      // Empty block
     });
   }
 }

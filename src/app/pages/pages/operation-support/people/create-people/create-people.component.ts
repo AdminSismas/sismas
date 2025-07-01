@@ -26,7 +26,7 @@ import {
   PAGE,
   PAGE_SIZE
 } from '../../../../../apps/constants/general/constants';
-import { ComboxColletionFormComponent } from '../../../../../apps/components/general-components/combox-colletion-form/combox-colletion-form.component';
+import { ComboboxCollectionFormComponent } from '../../../../../apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 import { InputComponent } from '../../../../../apps/components/general-components/input/input.component';
 import { validateVariable } from '../../../../../apps/utils/general';
 import Swal from 'sweetalert2';
@@ -65,7 +65,7 @@ export interface defaultData extends People {
     MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
-    ComboxColletionFormComponent,
+    ComboboxCollectionFormComponent,
     InputComponent
   ],
   templateUrl: './create-people.component.html',

@@ -8,14 +8,13 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { InformationPropertyService } from '../../../../services/territorial-organization/information-property.service';
 import { DataAlfaMain } from '../../../../interfaces/bpm/data-alfa-main.model';
 import { TypeOperationAlfaMain } from '../../../../interfaces/general/content-info';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
 import { InputComponent } from '../../../general-components/input/input.component';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
 import {
   CONSTANT_TYPEDOMAIN_BAUNITCONDITION,
@@ -33,7 +32,6 @@ import { Operation } from '../../../../interfaces/bpm/operation';
 import { CollectionServices } from '../../../../services/general/collection.service';
 import Swal from 'sweetalert2';
 import { BaunitHead } from '../../../../interfaces/information-property/baunit-head.model';
-import { InformationPegeable } from '../../../../interfaces/general/information-pegeable.model';
 import {
   UnitPropertyInformationService
 } from '../../../../services/territorial-organization/baunit-children-information.service';
@@ -52,7 +50,7 @@ import {
     MatDialogActions,
     MatButton,
     InputComponent,
-    ComboxColletionComponent
+    ComboboxCollectionComponent
   ],
   templateUrl: './crud-property-units.component.html',
   styleUrl: './crud-property-units.component.scss'
@@ -111,7 +109,7 @@ export class CrudPropertyUnitsComponent implements OnInit {
   captureCollectionsListUnitProperty(result: DomainCollection[]) {
     let data: DomainCollection[] = [];
     if (this.operationBaUnitHead && this.operationBaUnitHead.baunitHead) {
-      let domBaunitCondition = this.operationBaUnitHead.baunitHead?.domBaunitCondition;
+      const domBaunitCondition = this.operationBaUnitHead.baunitHead?.domBaunitCondition;
       if (domBaunitCondition === CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ) {
         data = result.filter(dm => dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PH_) && !dm.code?.includes(CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ));
       } else if (domBaunitCondition === CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATRIZ) {
@@ -141,13 +139,13 @@ export class CrudPropertyUnitsComponent implements OnInit {
 
     this.unitPropertyInformationService.createBaUnitCreateDetail(
       baunitIdMaster, this.executionId, domBaunitCondition, buildNumber, floorNumber).subscribe({
-      next: (result: void) => {
+      next: () => {
         this.getAlertSuccess('Se ha creado una unidad predial al predio matriz: ' + baunitIdMaster, true);
       }
     });
   }
 
-  getAlertSuccess(text: string, data: any) {
+  getAlertSuccess(text: string, data: boolean) {
     Swal.fire({
       text: text,
       icon: 'success',

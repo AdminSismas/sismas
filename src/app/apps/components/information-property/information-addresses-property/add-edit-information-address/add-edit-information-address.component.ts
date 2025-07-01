@@ -47,15 +47,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { InputComponent } from '../../../general-components/input/input.component';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '../../header-cadastral-information-property/header-cadastral-information-property.component';
 import { TextAreaComponent } from '../../../general-components/text-area/text-area.component';
 import {
-  ComboxColletionFormComponent
-} from '../../../general-components/combox-colletion-form/combox-colletion-form.component';
+  ComboboxCollectionFormComponent
+} from '../../../general-components/combobox-collection-form/combobox-collection-form.component';
 
 @Component({
   selector: 'vex-edit-information-address',
@@ -91,11 +91,11 @@ import {
     MatStepperModule,
     MatTabsModule,
     MatTooltipModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     InputComponent,
     HeaderCadastralInformationPropertyComponent,
     TextAreaComponent,
-    ComboxColletionFormComponent
+    ComboboxCollectionFormComponent
   ],
   templateUrl: './add-edit-information-address.component.html',
   styleUrl: './add-edit-information-address.component.scss'
@@ -110,7 +110,7 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
   direccionId: string | null | undefined;
   informationAddressData: BasicInformationAddress | null = null;
   formExpanded = true;
-  isCreateOrUpdateAddress: boolean = false;// Estado de carga
+  isCreateOrUpdateAddress = false;// Estado de carga
 
   schema = signal<string>(`${environment.schemas.temp}`);
   detailBasicInformation = signal<DetailBasicInformationAddress | null>(null);
@@ -118,9 +118,9 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
   editForm: FormGroup = this.fb.group({
     domTipoDireccion: [null, [Validators.required]],
     codigoPostal: [null, [Validators.required, this.generalValidations.onlyNumber()]],
-    nombrePredio: [null, [Validators.required, this.generalValidations.onlyTextAndNumberGuionCommand()]],
+    nombrePredio: [null, [Validators.required, this.generalValidations.textAddressValidator()]],
     esDireccionPrincipal: [false, [Validators.required]],
-    direccionTexto: [null, [Validators.required]],
+    direccionTexto: [null, [Validators.required, this.generalValidations.textAddressValidator()]],
     domClaseViaPrincipal: [null, [Validators.required]],
     letraViaPrincipal: [null, [Validators.required, this.generalValidations.onlyLetters()]], // Solo letras
     valorViaPrincipal: [null, [Validators.required, this.generalValidations.onlyNumber()]], // Solo números
@@ -169,7 +169,7 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     }
 
     this.blockPrimaryAddressField();
-    this.editForm.valueChanges.subscribe(selectedValue => {
+    this.editForm.valueChanges.subscribe(() => {
       this.isCreateOrUpdateAddress = false;
     });
 
@@ -232,7 +232,7 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     if (value?.domTipoDireccion === 'Estructurada') {
       createBasicInformationAddress = this.filterValueAddressStructured(value);
     } else if (value?.domTipoDireccion === 'No estructurada') {
-      createBasicInformationAddress = this.filterValueAddressDontStructured(value);
+      createBasicInformationAddress = this.filterValueAddressDontStructured();
     }
     createBasicInformationAddress.domTipoDireccion = value?.domTipoDireccion;
     createBasicInformationAddress.esDireccionPrincipal = this.mainAddress?.value;
@@ -260,7 +260,7 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
       return;
     }
 
-    let direccionId = this.informationAddressData?.direccionId;
+    const direccionId = this.informationAddressData?.direccionId;
     this.blockPrimaryAddressField();
     const value = this.editForm.value || {};
     let detailBasicInformationAddress: DetailBasicInformationAddress = DETAIL_BASIC_MODEL_ADDRESS;
@@ -418,9 +418,9 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     };
   }
 
-  filterValueAddressDontStructured(value: any): CreateBasicInformationAddress {
+  filterValueAddressDontStructured(): CreateBasicInformationAddress {
     const address: CreateBasicInformationAddress = CREATE_BASIC_MODEL_ADDRESS;
-    address: value?.direccionTexto;
+
     return address;
   }
 

@@ -18,7 +18,7 @@ import {
   BasicInformationProperty,
   CrudBasicInformationProperty
 } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
@@ -47,7 +47,7 @@ const REGEX_MORE_THAN_0 = /^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/;
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     MatDatepickerModule,
     MatIconModule,
     InputComponent,

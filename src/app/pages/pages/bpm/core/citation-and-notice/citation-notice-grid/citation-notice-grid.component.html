@@ -1,28 +1,41 @@
-<div class="w-full h-full flex flex-col shadow-md vex-layout-content" [id]="id">
+<div
+  class="w-full h-full flex flex-col shadow-md vex-layout-content"
+>
   @if (((listParticipantsCards$ | async)?.length ?? 0) > 0) {
     <div
       @stagger
-      class="overflow-y-auto flex-auto">
+      class="overflow-y-auto flex-auto"
+    >
       <div
-        class="px-2 py-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 container-fluid">
-        <vex-citation-notice-card
-          *ngFor="let participant of listParticipantsCards$ | async; trackBy: trackByParticipationId"
-          [id]="participant.participationId + executionId + 'filteredCard'"
-          (openDetailProcessParticipant)="openDetailProcessParticipant.emit(participant)"
-          (refreshData)="validateExecuteTypeProcess()"
-          [processParticipant]="participant"
-          [executionId]="executionId"
-          @fadeInUp>
-        </vex-citation-notice-card>
+        class="px-2 py-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 container-fluid"
+      >
+        @for (participant of listParticipantsCards$ | async; track $index) {
+          <vex-citation-notice-card
+            [id]="participant.participationId + executionId() + 'filteredCard'"
+            (openDetailProcessParticipant)="
+              openDetailProcessParticipant.emit(participant)
+            "
+            (refreshData)="validateExecuteTypeProcess(typeProcess())"
+            [processParticipant]="participant"
+            [executionId]="executionId()"
+            @fadeInUp
+          >
+          </vex-citation-notice-card>
+        }
       </div>
     </div>
   } @else {
     <div
       @scaleFadeIn
-      class="flex-auto flex flex-col items-center justify-center">
-      <img class="m-12 h-64" [src]="notFoundImageSrc()" alt="" />
+      class="flex-auto flex flex-col items-center justify-center"
+    >
+      <img
+        class="m-12 h-64"
+        [src]="notFoundImageSrc"
+        alt=""
+      />
       <h2 class="headline m-0 text-center">
-        {{ 'No hay Participantes del proceso que coincidan con tu búsqueda' }}
+        {{ "No hay Participantes del proceso que coincidan con tu búsqueda" }}
       </h2>
     </div>
   }

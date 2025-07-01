@@ -13,6 +13,9 @@ export interface ModalResponse<T> {
   selector: 'app-modal-window',
   standalone: true,
   imports: [MatDialogModule, MatDividerModule, MatButtonModule, MatIconModule],
+  host: {
+    class: 'w-full h-full'
+  },
   templateUrl: './modal-window.component.html'
 })
 export class ModalWindowComponent implements AfterViewInit {
@@ -21,7 +24,10 @@ export class ModalWindowComponent implements AfterViewInit {
 
   // INPUTS
   title = input<string>('Título ventana modal');
-  actions = input<boolean>(false);
+  actions = input(false, {
+    transform: (value: boolean | string) =>
+      typeof value === 'string' ? value === '' : value,
+  });
   showCancelButton = input<boolean>(false);
   data = input<unknown | null>(null);
 

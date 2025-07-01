@@ -44,7 +44,7 @@ import { CreatePeopleComponent } from './create-people/create-people.component';
 // imports from service people
 import { PeopleService } from '../../../../apps/services/users/people.service';
 import { MatSelectModule } from '@angular/material/select';
-import { ComboxColletionComponent } from '../../../../apps/components/general-components/combox-colletion/combox-colletion.component';
+import { ComboboxCollectionComponent } from '../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import {
   MODAL_SMALL_LARGE,
   PAGE
@@ -59,7 +59,7 @@ import Swal from 'sweetalert2';
   selector: 'vex-people',
   standalone: true,
   imports: [
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     FormsModule,
     MatButtonModule,
     MatButtonToggleModule,

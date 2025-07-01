@@ -1,4 +1,4 @@
-<div [id]="this.id">
+<div>
   <div class="p-0 m-0 mt-0 mb-4 flex flex-col sm:flex-row items-center gap-3">
     <h2
       class="title flex flex-auto items-center cursor-pointer"
@@ -40,10 +40,7 @@
       <span>Agregar manual</span>
     </button>
   </div>
-  <div
-    class="card h-full flex flex-col mat-elevation-z3"
-    [id]="id"
-  >
+  <div class="card h-full flex flex-col mat-elevation-z3">
     <div
       class="w-full flex flex-col justify-between py-0 overflow-auto"
       vexMinFluidHeight
@@ -51,7 +48,7 @@
     >
       <table
         @stagger
-        [dataSource]="dataSource"
+        [dataSource]="dataSource()"
         class="w-full"
         mat-table
         matSort
@@ -131,7 +128,7 @@
           mat-row
         ></tr>
       </table>
-      @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
+      @if (dataSource().data.length <= 0 || dataSource().filteredData.length <= 0) {
         <div
           class="no-data-information items-center justify-center h-full w-full m-auto"
         >

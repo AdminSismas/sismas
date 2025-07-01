@@ -12,8 +12,12 @@
   <mat-divider class="bg-slate-400"></mat-divider>
 </header>
 
-
-<mat-dialog-content>
+<mat-dialog-content
+  class="w-full overflow-hidden"
+  [class.h-full]="actions()"
+  [class.h-[calc(100%-49px)]]="!actions()"
+  [class.!max-h-none]="!actions()"
+>
   <ng-content class="h-full w-full overflow-hidden"></ng-content>
 </mat-dialog-content>
 
