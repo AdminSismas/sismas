@@ -34,8 +34,6 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProFlow } from '../../../../../apps/interfaces/bpm/pro-flow';
 import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../apps/constants/general/constants';
 import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
-import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
-import { CitationNoticeService } from './service/citation-notice.service';
 
 @Component({
   selector: 'vex-citation-and-notice',
@@ -68,7 +66,6 @@ export class CitationAndNoticeComponent implements OnInit {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private infoGeneralService = inject(SendInfoGeneralService);
-  private citationNoticeService = inject(CitationNoticeService);
   private cdr = inject(ChangeDetectorRef);
 
   // Inputs
@@ -76,6 +73,7 @@ export class CitationAndNoticeComponent implements OnInit {
   resources = input.required<string[]>();
   mode = input.required({ transform: (value) => this.proFlow.mode || value });
 
+  // Properties
   searchStr: UntypedFormControl = new UntypedFormControl();
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   typeProcess: TypeProcessParticipant = 'ALL';
@@ -93,13 +91,6 @@ export class CitationAndNoticeComponent implements OnInit {
     }
 
     this.cdr.markForCheck();
-    this.validateParticipants();
-  }
-
-  validateParticipants() {
-    this.citationNoticeService
-      .validateParticipants(this.executionId(), new PageSearchData(0, 10, {}))
-      .subscribe((response) => console.log(response));
   }
 
   openDetailProcessParticipant(data?: ProcessParticipant) {

@@ -1,16 +1,14 @@
 import {
   Component,
   DestroyRef,
-  EventEmitter,
+  effect,
   inject,
-  Input,
-  OnChanges,
+  input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
   signal,
-  SimpleChanges,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import {
@@ -37,10 +35,7 @@ import {
   PAGE_SIZE_OPTION_UNIQUE,
   PAGE_SIZE_TABLE_UNIQUE
 } from '../../../../../../apps/constants/general/constants';
-import {
-  getRandomInt,
-  validateVariable
-} from '../../../../../../apps/utils/general';
+import { validateVariable } from '../../../../../../apps/utils/general';
 import { TypeProcessParticipant } from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
 
@@ -68,27 +63,39 @@ import { LoadingServiceService } from '../../../../../../apps/services/general/l
     MatPaginatorModule
   ]
 })
-export class CitationNoticeGridComponent
-  implements OnInit, OnChanges, OnDestroy
-{
-  listParticipants: ProcessParticipant[] = [];
-  totalElements = 0;
-  page = PAGE;
-  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  contentInformation!: InformationPegeable;
-  notFoundImageSrc = signal('assets/img/illustrations/idea.svg');
+export class CitationNoticeGridComponent implements OnInit, OnDestroy {
+  // Injects
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private loadingServiceService: LoadingServiceService = inject(
+    LoadingServiceService
+  );
+  private participantsProcess: ParticipantsProcessService = inject(
+    ParticipantsProcessService
+  );
 
-  @Input({ required: true }) public id: string | undefined = '';
-  @Input({ required: true }) executionId!: string;
-  @Input({ required: true }) typeProcess!: TypeProcessParticipant;
-  @Input() searchCtrl = '';
+  // Inputs
+  executionId = input.required<string>();
+  typeProcess = input.required<TypeProcessParticipant>();
+  searchCtrl = input.required<string>();
 
-  @Output() openDetailProcessParticipant =
-    new EventEmitter<ProcessParticipant>();
-  @Output() changePageSearchData = new EventEmitter<PageSearchData>();
+  // Outputs
+  openDetailProcessParticipant = output<ProcessParticipant>();
+  changePageSearchData = output<PageSearchData>();
 
-  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
+  // Properties
+  readonly notFoundImageSrc = 'assets/img/illustrations/idea.svg';
 
+  // Signals
+  page = signal(PAGE);
+  pageSize = signal(PAGE_SIZE_TABLE_UNIQUE);
+  contentInformation = signal<InformationPegeable>(new InformationPegeable());
+  totalElements = signal<number>(0);
+  listParticipants = signal<ProcessParticipant[]>([]);
+
+  // Viewchilds
+  paginator? = viewChild(MatPaginator);
+
+  // Subjects
   _dataContentInformations$: ReplaySubject<InformationPegeable> =
     new ReplaySubject<InformationPegeable>(1);
   dataContentInformations$: Observable<InformationPegeable> =
@@ -99,28 +106,39 @@ export class CitationNoticeGridComponent
   listParticipantsCards$: Observable<ProcessParticipant[]> =
     this._listParticipantsCards$.asObservable();
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private loadingServiceService: LoadingServiceService = inject(
-    LoadingServiceService
-  );
-  private participantsProcess: ParticipantsProcessService = inject(
-    ParticipantsProcessService
-  );
-
   constructor() {
     this.destroyRef.onDestroy(() => {
       // Empty block
     });
+
+    effect(() => {
+      this.validateExecuteTypeProcess(this.typeProcess());
+    });
+
+    effect(() => {
+      this.onFilterChange(this.searchCtrl() ?? '');
+    });
   }
 
   ngOnInit() {
-    if (this.id != null && this.id?.length > 0) {
-      this.id = this.id + getRandomInt(10000);
-    } else {
-      this.id = getRandomInt(10000).toString();
-    }
     this.loadingServiceService.activateLoading(true);
 
+    this.getInitParticipantsData();
+
+    this.loadingServiceService.deActivate(1000);
+  }
+
+  getInitParticipantsData() {
+    this.participantsProcess
+      .validateParticipants(
+        this.executionId(),
+        this.generateObjectPageSearchData()
+      ).subscribe(() => {
+        this.getDataContentInformations();
+      });
+  }
+
+  getDataContentInformations() {
     this.dataContentInformations$
       .pipe(filter<InformationPegeable>(Boolean))
       .subscribe((result: InformationPegeable) => {
@@ -133,24 +151,13 @@ export class CitationNoticeGridComponent
         }
         this.captureInformationSubscribe(result);
       });
-
-    this.loadingServiceService.deActivate(1000);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['typeProcess']) {
-      this.validateExecuteTypeProcess();
-    }
-    if (changes['searchCtrl'] && this.searchCtrl != null) {
-      this.onFilterChange(this.searchCtrl);
-    }
-  }
-
-  validateExecuteTypeProcess() {
-    if (!this.typeProcess) {
+  validateExecuteTypeProcess(typeProcess: TypeProcessParticipant) {
+    if (!typeProcess) {
       return;
     }
-    switch (this.typeProcess) {
+    switch (typeProcess) {
       case 'CITADO':
         return this.getInformationCitedAssigned();
       case 'NOTIFICADO':
@@ -166,7 +173,7 @@ export class CitationNoticeGridComponent
     this.participantsProcess
       .getParticipantsProcess(
         this.generateObjectPageSearchData(),
-        this.executionId
+        this.executionId()
       )
       .subscribe({
         error: () => this.captureNotInformationSubscribeError(),
@@ -179,7 +186,7 @@ export class CitationNoticeGridComponent
     this.participantsProcess
       .getParticipantsCitedProcess(
         this.generateObjectPageSearchData(),
-        this.executionId
+        this.executionId()
       )
       .subscribe({
         error: () => this.captureNotInformationSubscribeError(),
@@ -192,7 +199,7 @@ export class CitationNoticeGridComponent
     this.participantsProcess
       .getParticipantsNotifiedProcess(
         this.generateObjectPageSearchData(),
-        this.executionId
+        this.executionId()
       )
       .subscribe({
         error: () => this.captureNotInformationSubscribeError(),
@@ -205,7 +212,7 @@ export class CitationNoticeGridComponent
     this.participantsProcess
       .getParticipantsNotifyProcess(
         this.generateObjectPageSearchData(),
-        this.executionId
+        this.executionId()
       )
       .subscribe({
         error: () => this.captureNotInformationSubscribeError(),
@@ -215,43 +222,43 @@ export class CitationNoticeGridComponent
   }
 
   captureNotInformationSubscribeError(): void {
-    this.listParticipants = [];
-    this.contentInformation = new InformationPegeable();
+    this.listParticipants.set([]);
+    this.contentInformation.set(new InformationPegeable());
     this._listParticipantsCards$.next([]);
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
-    this.contentInformation = result;
+    this.contentInformation.set(result);
     this.orderByInformationSubscribe();
   }
 
   orderByInformationSubscribe() {
     let data: ProcessParticipant[];
-    if (this.contentInformation?.content != null) {
-      data = this.contentInformation.content;
+    if (this.contentInformation()?.content != null) {
+      data = this.contentInformation()?.content;
       data = data.map((row: ProcessParticipant) => {
         const dt = new ProcessParticipant(row);
-        dt.executionId = this.executionId;
+        dt.executionId = this.executionId();
         return dt;
       });
-      this.listParticipants = data;
+      this.listParticipants.set(data);
       this._listParticipantsCards$.next(data);
-      if (this.contentInformation == null) {
-        this.page = PAGE;
+      if (this.contentInformation() == null) {
+        this.page.set(PAGE);
         return;
       }
 
-      if (this.contentInformation.totalElements) {
-        this.totalElements = this.contentInformation.totalElements;
+      if (this.contentInformation()?.totalElements) {
+        this.totalElements.set(this.contentInformation()?.totalElements ?? 0);
       }
 
-      if (this.contentInformation.pageable == null) {
-        this.page = PAGE;
+      if (this.contentInformation()?.pageable == null) {
+        this.page.set(PAGE);
         return;
       }
 
-      if (this.contentInformation.pageable.pageNumber != null) {
-        this.page = this.contentInformation.pageable.pageNumber;
+      if (this.contentInformation()?.pageable?.pageNumber != null) {
+        this.page.set(this.contentInformation()?.pageable?.pageNumber ?? PAGE);
       }
     }
   }
@@ -259,13 +266,13 @@ export class CitationNoticeGridComponent
   onFilterChange(value: string): void {
     let listParticipantsChange: ProcessParticipant[] = [];
     if (!validateVariable(value)) {
-      this._listParticipantsCards$.next(this.listParticipants);
+      this._listParticipantsCards$.next(this.listParticipants());
       return;
     }
 
     value = value.trim();
     value = value.toLowerCase();
-    listParticipantsChange = this.listParticipants.filter(
+    listParticipantsChange = this.listParticipants().filter(
       (participant: ProcessParticipant) => this.filterObject(participant, value)
     );
     this._listParticipantsCards$.next(listParticipantsChange);
@@ -284,7 +291,7 @@ export class CitationNoticeGridComponent
   }
 
   generateObjectPageSearchData(): PageSearchData {
-    return new PageSearchData(this.page, this.pageSize, null);
+    return new PageSearchData(this.page(), this.pageSize(), null);
   }
 
   trackByParticipationId(

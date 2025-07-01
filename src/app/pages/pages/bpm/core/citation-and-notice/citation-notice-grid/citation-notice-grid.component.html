@@ -1,6 +1,5 @@
 <div
   class="w-full h-full flex flex-col shadow-md vex-layout-content"
-  [id]="id"
 >
   @if (((listParticipantsCards$ | async)?.length ?? 0) > 0) {
     <div
@@ -12,13 +11,13 @@
       >
         @for (participant of listParticipantsCards$ | async; track $index) {
           <vex-citation-notice-card
-            [id]="participant.participationId + executionId + 'filteredCard'"
+            [id]="participant.participationId + executionId() + 'filteredCard'"
             (openDetailProcessParticipant)="
               openDetailProcessParticipant.emit(participant)
             "
-            (refreshData)="validateExecuteTypeProcess()"
+            (refreshData)="validateExecuteTypeProcess(typeProcess())"
             [processParticipant]="participant"
-            [executionId]="executionId"
+            [executionId]="executionId()"
             @fadeInUp
           >
           </vex-citation-notice-card>
@@ -32,7 +31,7 @@
     >
       <img
         class="m-12 h-64"
-        [src]="notFoundImageSrc()"
+        [src]="notFoundImageSrc"
         alt=""
       />
       <h2 class="headline m-0 text-center">

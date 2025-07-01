@@ -118,9 +118,9 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
   editForm: FormGroup = this.fb.group({
     domTipoDireccion: [null, [Validators.required]],
     codigoPostal: [null, [Validators.required, this.generalValidations.onlyNumber()]],
-    nombrePredio: [null, [Validators.required, this.generalValidations.onlyTextAndNumberGuionCommand()]],
+    nombrePredio: [null, [Validators.required, this.generalValidations.textAddressValidator()]],
     esDireccionPrincipal: [false, [Validators.required]],
-    direccionTexto: [null, [Validators.required]],
+    direccionTexto: [null, [Validators.required, this.generalValidations.textAddressValidator()]],
     domClaseViaPrincipal: [null, [Validators.required]],
     letraViaPrincipal: [null, [Validators.required, this.generalValidations.onlyLetters()]], // Solo letras
     valorViaPrincipal: [null, [Validators.required, this.generalValidations.onlyNumber()]], // Solo números

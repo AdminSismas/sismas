@@ -198,6 +198,16 @@ export class GeneralValidationsService {
     };
   }
 
+  textAddressValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control || !control.value) {
+        return null;
+      }
+      const regex = /^[a-zA-Z0-9\-_#/ñÑáéíóúÁÉÍÓÚ°\s,.:]+$/;
+      return regex.test(control.value) ? null : { textAddressValidator: true };
+    };
+  }
+
   onlyNumber(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control || !control.value) {
