@@ -16,6 +16,7 @@
     "add-environments": "node scripts/addEnvironments.js",
     "delete-environments": "node scripts/deleteEnvironments.js",
     "update-environments": "node scripts/updateEnvironments.js",
+    "setup-git": "node scripts/git/setup-git-scripts.js",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "version": "ng version",
