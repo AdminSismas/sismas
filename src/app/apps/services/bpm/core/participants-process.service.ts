@@ -76,6 +76,16 @@ export class ParticipantsProcessService {
     return this.getData(url, paramsA);
   }
 
+  getParticipantsWarningProcess(executionId: string, page: PageSearchData): Observable<InformationPegeable> {
+    const url = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}${envi.bpmParticipation.aviso}`;
+
+    const params = new HttpParams()
+      .append('page', `${page.page}`)
+      .append('size', `${page.size}`);
+
+    return this.http.get<InformationPegeable>(url, { params });
+  }
+
   private getData(url: string, params: HttpParams): Observable<InformationPegeable> {
     return this.requestsService
       .sendRequestsGetOption(url, { params: params })

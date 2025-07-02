@@ -76,6 +76,7 @@ export const environment = {
     value: "/bpmOperation"
   },
   bpmParticipation: {
+    aviso: "/aviso",
     guv: "/guv",
     participation: "/participation/",
     thirdPartyAffected: "/terceroAfectado",

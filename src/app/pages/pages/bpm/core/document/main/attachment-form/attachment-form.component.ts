@@ -43,6 +43,7 @@ import { AttachmentService } from '../../../../../../../apps/services/bpm/core/d
 import { ComboboxCollectionComponent } from '../../../../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
 import Swal from 'sweetalert2';
+import { rejectedFileTypes } from 'src/app/apps/constants/general/constants';
 
 @Component({
   selector: 'vex-attachment-form',
@@ -108,28 +109,7 @@ export class AttachmentFormComponent {
   }
 
   onSelect(event: NgxDropzoneChangeEvent) {
-    const maxSize = 50 * 1024 * 1024; // 50MB en bytes
-
-    const alreadySelectedFiles = [];
-    const oversizedFiles = [];
-
-    const validFiles = event.addedFiles.filter((nuevoArchivo: File) => {
-      const alreadySelected = this.uploadedFiles.some(
-        (archivoExistente: File) =>
-          archivoExistente.name === nuevoArchivo.name &&
-          archivoExistente.size === nuevoArchivo.size
-      );
-
-      if (alreadySelected) {
-        alreadySelectedFiles.push(nuevoArchivo);
-      }
-
-      if (nuevoArchivo.size > maxSize) {
-        oversizedFiles.push(nuevoArchivo);
-      }
-
-      return !alreadySelected && nuevoArchivo.size <= maxSize;
-    });
+    const { validFiles, alreadySelectedFiles, oversizedFiles } = this.validateFiles(event);
 
     if (alreadySelectedFiles.length > 0) {
       this.snackbar.open('Algunos archivos ya han sido seleccionados.', 'OK', {
@@ -150,6 +130,48 @@ export class AttachmentFormComponent {
       this.attachmentForm.patchValue({ file: this.uploadedFiles });
       this.attachmentForm.get('file')?.updateValueAndValidity();
     }
+  }
+
+  validateFiles(event: NgxDropzoneChangeEvent) {
+    const maxSize = 50 * 1024 * 1024; // 50MB en bytes
+    const alreadySelectedFiles: File[] = [];
+    const oversizedFiles: File[] = [];
+    const rejectedTypeFiles: File[] = [];
+
+    const validFiles = event.addedFiles.filter((nuevoArchivo: File) => {
+      const alreadySelected = this.uploadedFiles.some(
+        (archivoExistente: File) =>
+          archivoExistente.name === nuevoArchivo.name &&
+          archivoExistente.size === nuevoArchivo.size
+      );
+
+      const extension = nuevoArchivo.name.split('.').pop()!.toLowerCase();
+      const isRejectedType = rejectedFileTypes.includes(extension);
+
+      if (alreadySelected) {
+        alreadySelectedFiles.push(nuevoArchivo);
+      }
+
+      if (nuevoArchivo.size > maxSize) {
+        oversizedFiles.push(nuevoArchivo);
+      }
+
+      if (isRejectedType) {
+        rejectedTypeFiles.push(nuevoArchivo);
+        Swal.fire({
+          title: 'Error',
+          text: 'El archivo ' + nuevoArchivo.name + ' no es un archivo válido.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#3085d6',
+          timer: 5000,
+        });
+      }
+
+      return !alreadySelected && nuevoArchivo.size <= maxSize && !isRejectedType;
+    });
+
+    return { validFiles, alreadySelectedFiles, oversizedFiles };
   }
 
   onRemove(event: File) {

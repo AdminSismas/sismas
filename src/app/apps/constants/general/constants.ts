@@ -1261,7 +1261,7 @@ export const LIST_CITATION_AND_NOTICE_TABLE_MENU: ProcessParticipantTableMenu[] 
   },
   {
     type: 'subheading',
-    label: 'Estados'
+    label: 'Acciones'
   },
   {
     type: 'link',
@@ -1357,3 +1357,32 @@ export enum BaunitCondition {
   '(Propiedad horizontal) Unidad Predial' = '(Propiedad horizontal) Unidad Predial',
   'Vía' = 'Vía'
 }
+
+export const rejectedFileTypes: string[] = [
+  // Ejecutables y scripts de shell
+  'exe', 'msi', 'bat', 'cmd', 'sh', 'ps1', 'psm1',
+  // Scripts de JavaScript y TypeScript
+  'js', 'jsx', 'ts', 'tsx',
+  // Archivos de backend
+  'php', 'py', 'rb', 'pl', 'cgi', 'pyc', 'pyo',
+  // Archivos potencialmente peligrosos
+  'html', 'htm', 'svg',
+  // Otros tipos de ejecutables o scripts
+  'jar', 'class', 'vb', 'vbs', 'wsf', 'scr',
+  // Componentes ejecutables de Windows
+  'dll', 'com', 'pif', 'cpl', 'msc', 'msp',
+  // Archivos de configuración y sistema
+  'ini', 'cfg', 'conf', 'config', 'reg',
+  // Archivos de base de datos
+  'db', 'sqlite', 'mdb', 'accdb', 'sql',
+  // Archivos de desarrollo y código fuente
+  'cs', 'cpp', 'c', 'h', 'go', 'rs', 'swift',
+  // Documentos con macros habilitadas
+  'xlsm', 'docm', 'pptm',
+  // Paquetes de aplicaciones
+  'app', 'deb', 'rpm',
+  // Archivos comprimidos potencialmente peligrosos
+  'ace', 'arj', 'cab',
+  // Imágenes de disco
+  'iso', 'img', 'dmg'
+];

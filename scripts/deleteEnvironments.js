@@ -66,6 +66,44 @@ function writeTypeScriptFile(filePath, data) {
   fs.writeFileSync(filePath, content, 'utf8');
 }
 
+// Función para verificar si existe una propiedad anidada
+function hasNestedProperty(obj, path) {
+  const keys = path.split('.');
+  let current = obj;
+  
+  for (const key of keys) {
+    if (!current || typeof current !== 'object' || !current.hasOwnProperty(key)) {
+      return false;
+    }
+    current = current[key];
+  }
+  
+  return true;
+}
+
+// Función para eliminar una propiedad anidada
+function deleteNestedProperty(obj, path) {
+  const keys = path.split('.');
+  
+  if (keys.length === 1) {
+    // Si es una propiedad de primer nivel
+    delete obj[keys[0]];
+    return true;
+  }
+  
+  let current = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!current[key] || typeof current[key] !== 'object') {
+      return false; // No se puede eliminar si no existe la ruta
+    }
+    current = current[key];
+  }
+  
+  delete current[keys[keys.length - 1]];
+  return true;
+}
+
 // Función para obtener el parámetro a eliminar desde los argumentos de la línea de comandos
 function getParameterToRemove() {
   const args = process.argv.slice(2); // Ignorar "node" y el nombre del script
@@ -104,10 +142,22 @@ function main() {
     const environment = evaluateTypeScriptFile(filePath);
 
     // Eliminar el parámetro si existe
-    if (environment.hasOwnProperty(parameterToRemove)) {
-      delete environment[parameterToRemove];
-      console.log(`Removed "${parameterToRemove}" from ${file}`);
+    let parameterExists = false;
+    if (parameterToRemove.includes('.')) {
+      parameterExists = hasNestedProperty(environment, parameterToRemove);
+      if (parameterExists) {
+        deleteNestedProperty(environment, parameterToRemove);
+        console.log(`Removed "${parameterToRemove}" from ${file}`);
+      }
     } else {
+      parameterExists = environment.hasOwnProperty(parameterToRemove);
+      if (parameterExists) {
+        delete environment[parameterToRemove];
+        console.log(`Removed "${parameterToRemove}" from ${file}`);
+      }
+    }
+    
+    if (!parameterExists) {
       console.log(`Parameter "${parameterToRemove}" not found in ${file}`);
     }
 

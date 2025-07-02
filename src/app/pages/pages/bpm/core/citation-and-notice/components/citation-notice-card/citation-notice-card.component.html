@@ -1,10 +1,7 @@
-<div
-  class="card overflow-hidden min-h-[5rem] shadow-md"
-  [id]="id"
->
+<div class="card overflow-hidden min-h-[5rem] shadow-md">
   <div
     (click)="
-      openDetailProcessParticipant.emit(processParticipant.participationId)
+      openDetailProcessParticipant.emit(processParticipant()!.participationId)
     "
     class="pl-2 pr-2 pt-3 pb-2 text-center hover:bg-hover transition duration-400 ease-out-swift cursor-pointer relative"
     matRipple
@@ -12,7 +9,7 @@
     <!--    <img [src]="imageSrc()" class="avatar h-11 w-11 mx-auto" alt="" />-->
     <div class="flex items-center justify-center min-h-3 pt-4">
       <h4 class="subheading-2 pl-2">
-        {{ processParticipant.bpmParticipation }}
+        {{ processParticipant()!.bpmParticipation }}
       </h4>
     </div>
     <div class="flex items-center justify-center">
@@ -21,8 +18,10 @@
         svgIcon="mat:receipt_long"
       ></mat-icon>
       <span class="sm:text-xs text-secondary">
-        {{ processParticipant.individual.domIndividualTypeNumber | titlecase }}
-        - {{ processParticipant.individualNumber }}
+        {{
+          processParticipant()!.individual.domIndividualTypeNumber | titlecase
+        }}
+        - {{ processParticipant()!.individualNumber }}
       </span>
     </div>
     <div class="flex items-center justify-center">
@@ -31,31 +30,35 @@
         svgIcon="mat:people"
       ></mat-icon>
       <span class="sm:text-xs text-secondary">{{
-        processParticipant.fullName | titlecase
+        processParticipant()!.fullName | titlecase
       }}</span>
     </div>
 
     <div
       class="rounded px-2 py-1 font-medium text-xs flex-none bg-gray-600/10 absolute top-2 right-2"
-      [ngClass]="processParticipant.viaGubernativa?.domGuvState ?? '' | citationNoticeClass"
+      [ngClass]="
+        processParticipant()!.viaGubernativa?.domGuvState ?? ''
+          | citationNoticeClass
+      "
     >
-      {{ processParticipant.viaGubernativa?.domGuvState | citationNoticeType }}
+      {{
+        processParticipant()!.viaGubernativa?.domGuvState | citationNoticeType
+      }}
     </div>
-
-
   </div>
 
   <div class="bg-app-bar p-0 flex items-center justify-around">
-    <div class="p-0 grid grid-cols-4 gap-2">
+    <div class="p-0 grid grid-cols-4 gap-2 items-center">
       <button
         type="button"
-        mat-icon-button
-        color="accent"
-        class="p-0"
+        mat-fab
+        color="primary"
+        class="my-1 w-8 h-8 rounded-md"
         matTooltip="Citar participante"
         matTooltipPosition="below"
-        [disabled]="processParticipant.viaGubernativa?.domGuvState !== 'Citado'"
-        [ngClass]="processParticipant.viaGubernativa?.domGuvState !== 'Citado' ? 'text-amber' : 'text-secondary'"
+        [disabled]="
+          processParticipant()!.viaGubernativa?.domGuvState !== 'Citacion'
+        "
         (click)="executeCitation()"
       >
         <mat-icon svgIcon="mat:notifications"></mat-icon>
@@ -63,26 +66,27 @@
 
       <button
         type="button"
-        mat-icon-button
-        color="primary"
-        class="p-0"
+        mat-fab
+        class="my-1 w-8 h-8 rounded-md bg-green-600"
         matTooltip="Notificar participante"
         matTooltipPosition="below"
-        [disabled]="processParticipant.viaGubernativa?.domGuvState !== 'Notificado'"
-        [ngClass]="processParticipant.viaGubernativa?.domGuvState !== 'Notificado' ? 'text-green' : 'text-secondary'"
+        [matTooltipDisabled]="false"
+        [disabled]="
+          processParticipant()!.viaGubernativa?.domGuvState !== 'Citado'
+        "
         (click)="executeNotification()"
       >
         <mat-icon svgIcon="mat:event_note"></mat-icon>
       </button>
       <button
         type="button"
-        mat-icon-button
-        color="purple"
-        class="p-0"
+        mat-fab
+        class="my-1 w-8 h-8 rounded-md bg-amber-600"
         matTooltip="Avisar participante"
         matTooltipPosition="below"
-        [disabled]="processParticipant.viaGubernativa?.domGuvState !== 'Aviso'"
-        [ngClass]="processParticipant.viaGubernativa?.domGuvState !== 'Aviso' ? 'text-amber' : 'text-secondary'"
+        [disabled]="
+          processParticipant()!.viaGubernativa?.domGuvState !== 'Notificado'
+        "
         (click)="executeAdvertisement()"
       >
         <mat-icon svgIcon="mat:chat"></mat-icon>
@@ -90,7 +94,7 @@
       <button
         type="button"
         mat-icon-button
-        class="p-0"
+        class="my-1 p-0 w-8 h-8 rounded-md"
         matTooltip="Imprimir"
         matTooltipPosition="below"
         [disabled]="isPrintDisabled()"

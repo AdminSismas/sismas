@@ -66,6 +66,39 @@ function writeTypeScriptFile(filePath, data) {
   fs.writeFileSync(filePath, content, 'utf8');
 }
 
+
+// Función para verificar si existe una propiedad anidada
+function hasNestedProperty(obj, path) {
+  const keys = path.split('.');
+  let current = obj;
+  
+  for (const key of keys) {
+    if (!current || typeof current !== 'object' || !current.hasOwnProperty(key)) {
+      return false;
+    }
+    current = current[key];
+  }
+  
+  return true;
+}
+
+// Función para actualizar una propiedad anidada
+function updateNestedProperty(obj, path, value) {
+  const keys = path.split('.');
+  let current = obj;
+  
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!current[key] || typeof current[key] !== 'object') {
+      return false; // No se puede actualizar si no existe la ruta
+    }
+    current = current[key];
+  }
+  
+  current[keys[keys.length - 1]] = value;
+  return true;
+}
+
 // Función para obtener los parámetros y valores a actualizar desde los argumentos de la línea de comandos
 function getParametersToUpdate() {
   const args = process.argv.slice(2); // Ignorar "node" y el nombre del script
@@ -118,7 +151,13 @@ function main() {
 
     // Verificar si todos los parámetros existen en el archivo
     const missingParameters = Object.keys(parametersToUpdate).filter(
-      key => !environment.hasOwnProperty(key)
+      key => {
+        if (key.includes('.')) {
+          return !hasNestedProperty(environment, key);
+        } else {
+          return !environment.hasOwnProperty(key);
+        }
+      }
     );
 
     if (missingParameters.length > 0) {
@@ -129,7 +168,11 @@ function main() {
 
     // Actualizar los parámetros
     Object.entries(parametersToUpdate).forEach(([key, value]) => {
-      environment[key] = value;
+      if (key.includes('.')) {
+        updateNestedProperty(environment, key, value);
+      } else {
+        environment[key] = value;
+      }
       console.log(`Updated "${key}" to "${value}" in ${file}`);
     });
 

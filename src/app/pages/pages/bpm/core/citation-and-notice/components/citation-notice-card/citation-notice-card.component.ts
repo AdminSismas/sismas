@@ -3,7 +3,7 @@ import {
   computed,
   EventEmitter,
   inject,
-  Input,
+  input,
   OnInit,
   Output,
   signal
@@ -18,7 +18,6 @@ import {
   MODAL_MEDIUM,
   NAME_NO_DISPONIBLE
 } from 'src/app/apps/constants/general/constants';
-import { getRandomInt } from '../../../../../../../apps/utils/general';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCitationNoticeComponent } from '../add-citation-notice/add-citation-notice.component';
@@ -52,13 +51,14 @@ export class CitationNoticeCardComponent implements OnInit {
   dialog = inject(MatDialog);
   citationNoticeService = inject(CitationNoticeService);
 
-  @Input({ required: true }) public id: string | undefined = '';
-  @Input({ required: true }) executionId!: string;
-  @Input({ required: true }) processParticipant!: ProcessParticipant;
   @Output() refreshData = new EventEmitter<boolean>();
   @Output() openDetailProcessParticipant = new EventEmitter<
     ProcessParticipant['participationId']
   >();
+
+  // Input signals
+  executionId = input.required<string>();
+  processParticipant = input.required<ProcessParticipant>();
 
   // Signals
   imageSrc = signal('assets/img/icons/people/teacher.svg');
@@ -66,51 +66,47 @@ export class CitationNoticeCardComponent implements OnInit {
   // Computed
   isPrintDisabled = computed<boolean>(() => {
     if (
-      !this.processParticipant.viaGubernativa?.domGuvState ||
-      !this.processParticipant.viaGubernativa.domGuvState
-    ) return true;
+      !this.processParticipant()?.viaGubernativa?.domGuvState ||
+      !this.processParticipant()?.viaGubernativa?.domGuvState
+    )
+      return true;
 
     return !Object.values(GuvStateType).includes(
-      this.processParticipant.viaGubernativa!.domGuvState as GuvStateType
+      this.processParticipant()?.viaGubernativa!.domGuvState as GuvStateType
     );
   });
 
   ngOnInit() {
-    if (this.id != null && this.id?.length > 0) {
-      this.id =
-        this.id + getRandomInt(10000) + this.processParticipant.participationId;
-    } else {
-      this.id =
-        getRandomInt(10000).toString() +
-        this.processParticipant.participationId;
-    }
-
     if (
-      this.processParticipant &&
-      this.processParticipant.participationId > 0
+      this.processParticipant() &&
+      this.processParticipant()?.participationId > 0
     ) {
-      this.processParticipant.imageSrc = this.imageSrc();
+      this.processParticipant()!.imageSrc = this.imageSrc();
     }
   }
 
   executeNotification() {
-    if (this.processParticipant.viaGubernativa?.domGuvState !== 'Notificado') {
+    if (
+      this.processParticipant()?.viaGubernativa?.domGuvState !== 'Notificado'
+    ) {
       this.getAlertError('Participante notificado, accion no disponible');
       return;
     }
-    this.processParticipant.executionId = this.executionId;
-    this.processParticipant.typeCategory = 'notification';
-    this.openAddCitationNoticeComponent(this.processParticipant);
+    this.processParticipant()!.executionId = this.executionId();
+    this.processParticipant()!.typeCategory = 'notification';
+    this.openAddCitationNoticeComponent(this.processParticipant()!);
   }
 
   executeCitation() {
-    if (this.processParticipant.viaGubernativa?.domGuvState !== 'Citado') {
+    if (
+      this.processParticipant()?.viaGubernativa?.domGuvState !== 'Citacion'
+    ) {
       this.getAlertError('Participante citado, accion no disponible');
       return;
     }
-    this.processParticipant.executionId = this.executionId;
-    this.processParticipant.typeCategory = 'citation';
-    this.openAddCitationNoticeComponent(this.processParticipant);
+    this.processParticipant()!.executionId = this.executionId();
+    this.processParticipant()!.typeCategory = 'citation';
+    this.openAddCitationNoticeComponent(this.processParticipant()!);
   }
 
   executeAdvertisement() {
@@ -127,7 +123,7 @@ export class CitationNoticeCardComponent implements OnInit {
       .afterClosed()
       .subscribe((result: boolean | null | undefined) => {
         if (result) {
-          this.processParticipant.typeCategory = null;
+          this.processParticipant().typeCategory = null;
           this.refreshData.emit(true);
         }
       });
@@ -147,7 +143,7 @@ export class CitationNoticeCardComponent implements OnInit {
     if (this.isPrintDisabled()) return;
     console.log('Imprimiendo');
 
-    const { participationId, viaGubernativa } = this.processParticipant;
+    const { participationId, viaGubernativa } = this.processParticipant();
     this.citationNoticeService
       .executePrint(
         participationId.toString(),
