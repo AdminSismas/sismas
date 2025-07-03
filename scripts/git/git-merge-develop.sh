@@ -8,7 +8,7 @@ git checkout main && \
 git fetch origin -p && \
 git pull && \
 git merge despliegue-desarrollo -X theirs --no-edit && \
-git commit --amend -m "Merge despliegue-desarrollo into main - $(date +%d-%m-%Y)" && \
+git commit --amend -m "Actualización - $(date +%d-%m-%Y)" && \
 echo -n "¿Desea realizar un push al main? (s/n): " && \
 read response && \
 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') && \
