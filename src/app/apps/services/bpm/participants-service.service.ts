@@ -18,16 +18,16 @@ export class ParticipantsService {
   private http = inject(HttpClient);
   chargeInfoSubject$ = this.chargeInfoSubject.asObservable();
 
-  constructor(
-    private requestsService: SendGeneralRequestsService
-  ) {
-  }
+  constructor(private requestsService: SendGeneralRequestsService) {}
 
   changeInfoParticipants(value: boolean | null) {
     this.chargeInfoSubject.next(value);
   }
 
-  getAllParticipants(page: PageSearchData, executionId: string): Observable<InformationPegeable> {
+  getAllParticipants(
+    page: PageSearchData,
+    executionId: string
+  ): Observable<InformationPegeable> {
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('page', `${page.page}`);
     paramsR = paramsR.append('size', `${page.size}`);
@@ -39,24 +39,33 @@ export class ParticipantsService {
   }
 
   getExistThirdPartyAffected(executionId: string): Observable<boolean> {
-    return this.getAllThirdPartyAffected(executionId)
-      .pipe(map((result: ProcessParticipant[]) => result != null && result.length > 0));
+    return this.getAllThirdPartyAffected(executionId).pipe(
+      map((result: ProcessParticipant[]) => result != null && result.length > 0)
+    );
   }
 
-  getAllThirdPartyAffected(executionId: string): Observable<ProcessParticipant[]> {
+  getAllThirdPartyAffected(
+    executionId: string
+  ): Observable<ProcessParticipant[]> {
     const url = `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.thirdPartyAffected}/${executionId}`;
 
     return this.http.get<ProcessParticipant[]>(url);
   }
 
-  saveParticipantByExecutionId(executionId: string, body: ProcessParticipant): Observable<ProcessParticipant> {
+  saveParticipantByExecutionId(
+    executionId: string,
+    body: ProcessParticipant
+  ): Observable<ProcessParticipant> {
     return this.requestsService.sendRequestsFetchPostBody(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`,
       body
     );
   }
 
-  updateParticipantByExecutionId(executionId: string, body: ProcessParticipant): Observable<ProcessParticipant> {
+  updateParticipantByExecutionId(
+    executionId: string,
+    body: ProcessParticipant
+  ): Observable<ProcessParticipant> {
     return this.requestsService.sendRequestsUpdatePutBody(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`,
       body
@@ -66,7 +75,8 @@ export class ParticipantsService {
   updateGovernmentalChannelCitedParticipantByExecutionId(
     executionId: string,
     body: GovernmentalChannel,
-    participationId: number | string): Observable<void> {
+    participationId: number | string
+  ): Observable<void> {
     return this.requestsService.sendRequestsUpdatePutBody(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.cited}/${participationId}`,
       body
@@ -76,14 +86,18 @@ export class ParticipantsService {
   updateGovernmentalChannelNotifiedParticipantByExecutionId(
     executionId: string,
     body: GovernmentalChannel,
-    participationId: number | string): Observable<void> {
+    participationId: number | string
+  ): Observable<void> {
     return this.requestsService.sendRequestsUpdatePutBody(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.notified}/${participationId}`,
       body
     );
   }
 
-  deleteParticipantByExecutionId(executionId: string, participationId: string): Observable<void> {
+  deleteParticipantByExecutionId(
+    executionId: string,
+    participationId: string
+  ): Observable<void> {
     return this.requestsService.sendDeleteFetch(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}/${participationId}`
     );
@@ -93,7 +107,9 @@ export class ParticipantsService {
     return this.http.get<T>(url, { params: params });
   }
 
-  getAutoThirdPartyAffected(executionId: string): Observable<ProcessParticipant[]> {
+  getAutoThirdPartyAffected(
+    executionId: string
+  ): Observable<ProcessParticipant[]> {
     const url = `${this.url_basic}${envi.bpmParticipation.value}${envi.actualizarTercerosAfectados}/${executionId}`;
 
     return this.http.get<ProcessParticipant[]>(url);

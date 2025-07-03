@@ -87,7 +87,7 @@ export class CitationNoticeCardComponent implements OnInit {
 
   executeNotification() {
     if (
-      this.processParticipant()?.viaGubernativa?.domGuvState !== 'Notificado'
+      this.processParticipant()?.viaGubernativa?.domGuvState !== 'Citado'
     ) {
       this.getAlertError('Participante notificado, accion no disponible');
       return;
