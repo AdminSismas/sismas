@@ -163,9 +163,9 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
       case 'NOTIFICADO':
         return this.getInformationNotifiedAssigned();
       case 'AVISO':
-        return this.getInformationNotifyAssigned();
-      default:
         return this.getInformationWarningAssigned();
+      default:
+        return this.getInformationAssignedTasks();
     }
   }
 
