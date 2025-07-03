@@ -31,7 +31,7 @@ import {
 import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { DocumentTableComponent } from '../document-table/document-table.component';
+import { DocumentTableComponent, DocumentTableData } from '../document-table/document-table.component';
 import { CommentsComponent } from '../comments/comments.component';
 import { ComponentTemplate } from '../../../interfaces/bpm/render-template.types';
 import { TypeButtonAlfaMain } from '../../../interfaces/general/content-info';
@@ -210,8 +210,9 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
       this.dialog.open(DocumentTableComponent, {
         ...MODAL_MEDIUM,
         data: {
-          executionId: this.proTaskE?.executionId
-        }
+          executionId: this.proTaskE!.executionId,
+          mode: 'edition'
+        } as unknown as DocumentTableData
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {

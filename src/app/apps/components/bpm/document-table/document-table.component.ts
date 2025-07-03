@@ -4,7 +4,6 @@ import {
   DestroyRef,
   inject,
   Inject,
-  Input,
   OnInit,
   ViewChild
 } from '@angular/core';
@@ -65,6 +64,11 @@ import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 import Swal from 'sweetalert2';
 
+export interface DocumentTableData {
+  executionId: string;
+  mode: 'edition' | 'visualization';
+}
+
 @Component({
   templateUrl: './document-table.component.html',
   styleUrl: './document-table.component.css',
@@ -105,7 +109,6 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
-  @Input()
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   totalElements = 0;
@@ -121,7 +124,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { executionId: string },
+    @Inject(MAT_DIALOG_DATA) public data: DocumentTableData,
     private dialog: MatDialog,
     private attachmentService: AttachmentService,
     private readonly layoutService: VexLayoutService
@@ -181,10 +184,16 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   }
 
   get visibleColumns(): string[] {
+    if (this.data.mode === 'edition') {
+      return [
+        'action',
+        ...this.columns.filter((c) => c.visible).map((c) => c.property),
+        'delete'
+      ];
+    }
     return [
       'action',
-      ...this.columns.filter((c) => c.visible).map((c) => c.property),
-      'delete'
+      ...this.columns.filter((c) => c.visible).map((c) => c.property)
     ];
   }
 
@@ -341,18 +350,34 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     return fileName.split('.').pop()?.toLowerCase() || '';
   }
   deleteFile(row: AttachmentCollection) {
-    const { id, originalFileName } = row;
-    this.attachmentService
-      .deleteAttachment(this.data.executionId, `${id}`, originalFileName!)
-      .subscribe(() => {
-        Swal.fire({
-          text: 'Archivo eliminado con exito',
-          icon: 'success',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Aceptar',
-          timer: 5000
-        });
-        this.getDataFromDocumentManagementService();
-      });
+    if (this.data.mode !== 'edition') return;
+
+    Swal.fire({
+      title: '¿Estas seguro de eliminar el archivo?',
+      text: 'No podras revertir esta accion',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Aceptar',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const { id, originalFileName } = row;
+        this.attachmentService
+          .deleteAttachment(this.data.executionId, `${id}`, originalFileName!)
+          .subscribe(() => {
+            Swal.fire({
+              text: 'Archivo eliminado con exito',
+              icon: 'success',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Aceptar',
+              timer: 5000
+            });
+            this.getDataFromDocumentManagementService();
+          });
+      }
+    });
+
   }
 }

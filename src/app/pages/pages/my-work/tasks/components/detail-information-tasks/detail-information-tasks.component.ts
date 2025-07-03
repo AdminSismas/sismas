@@ -68,7 +68,7 @@ import {
 import { ProceduresCollection } from '../../../../../../apps/interfaces/tables/procedures-progress.model';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { TaskResponseModel } from '../../../../../../apps/interfaces/bpm/task-response.model';
-import { DocumentTableComponent } from 'src/app/apps/components/bpm/document-table/document-table.component';
+import { DocumentTableComponent, DocumentTableData } from 'src/app/apps/components/bpm/document-table/document-table.component';
 import { CommentsComponent } from 'src/app/apps/components/general-components/comments/comments.component';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
 import { ActivatedRoute } from '@angular/router';
@@ -115,9 +115,9 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   @Input({ required: true }) baunitId: string | null | undefined = null;
   @Input() executionId: string | null | undefined = null;
   @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
-
   @Input() message: string | null = null;
   @Input() color = 'bg-blue-500'; // Color por defecto
+
   @Output() closeModal = new EventEmitter<void>();
 
   columns: TableColumn<TaskRetailExecuteResponseModel>[] = TABLE_COLUMN_PROPERTIES_EXECUTED;
@@ -416,8 +416,9 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       this.dialog.open(DocumentTableComponent, {
         width: '80%',
         data: {
-          executionId: this.data?.value?.executionId
-        }
+          executionId: this.data?.value?.executionId,
+          mode: 'visualization'
+        } as unknown as DocumentTableData
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
