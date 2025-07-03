@@ -13,6 +13,13 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
         cssClasses: ['font-medium']
     },
     {
+      label: 'Tipo',
+      property: 'attachmentType',
+      type: 'text',
+      visible: true,
+      cssClasses: ['font-medium']
+    },
+    {
         label: 'Peso',
         property: 'size',
         type: 'text',
