@@ -56,7 +56,8 @@ export const environment = {
   bpmAttachment: {
     count: "/count",
     proExecution: "proExecution/",
-    value: "/bpmAttachment/"
+    value: "/bpmAttachment/",
+    xtf: "xtf"
   },
   bpmOperation: {
     comment: "comment/",
@@ -186,6 +187,7 @@ export const environment = {
   tasksAssigned: "/assignedTasks",
   temporal: "/temporal/",
   term: "/term",
+  testParam2: "testValue2",
   titulo: "Armenia",
   typeNotification: {
     cited: "/citar",

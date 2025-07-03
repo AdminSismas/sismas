@@ -5,6 +5,7 @@ import {
   inject,
   Inject,
   OnInit,
+  signal,
   ViewChild
 } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -76,6 +77,7 @@ import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
+import { LoaderComponent } from "../../general-components/loader/loader.component";
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -102,7 +104,9 @@ import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/
     NgClass,
     SweetAlert2Module
     // Custom
-  ],
+    ,
+    LoaderComponent
+],
   templateUrl: './modification-property-units.component.html',
   styleUrl: './modification-property-units.component.scss'
 })
@@ -123,6 +127,9 @@ export class ModificationPropertyUnitsComponent
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   columns: TableColumn<BaUnitHeadPercentage>[] =
     MODIFYCATION_UNITS_TABLE_COLUMNS;
+
+  // Signals
+  isZonesAssigning = signal(false);
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -438,10 +445,13 @@ export class ModificationPropertyUnitsComponent
 
   onAssignZones() {
     if (!this.executionId || !this.baUnitId) return;
+    this.isZonesAssigning.set(true);
 
     this.unitPropertyInformationService
       .assignamentZones(this.executionId, this.baUnitId)
-      .subscribe((response) => {
+      .subscribe({
+        next: (response) => {
+        this.isZonesAssigning.set(false);
         Swal.fire({
           title: 'Asignación de zonas exitosa',
           text: response.message,
@@ -451,6 +461,10 @@ export class ModificationPropertyUnitsComponent
           showCancelButton: false,
           allowOutsideClick: false
         });
+      },
+      error: () => {
+        this.isZonesAssigning.set(false);
+      }
       });
   }
 

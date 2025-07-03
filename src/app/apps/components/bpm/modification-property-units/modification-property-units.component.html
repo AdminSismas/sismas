@@ -299,3 +299,9 @@
   [confirmButtonColor]="'#3085d6'"
   [cancelButtonColor]="'#d33'"
 ></swal>
+
+<app-loader
+  [isLoading]="isZonesAssigning()"
+  loaderTitle="Asignando zonas"
+  loaderMessage="Por favor espere mientras se asignan las zonas"
+></app-loader>

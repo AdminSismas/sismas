@@ -1,0 +1,82 @@
+<vex-page-layout>
+  <vex-secondary-toolbar current="Formulario">
+    <vex-breadcrumbs
+      [crumbs]="['Apoyo operación', 'Reportes', 'Descarga de XTF']"
+      class="flex-auto"
+    ></vex-breadcrumbs>
+  </vex-secondary-toolbar>
+
+  <vex-page-layout-content class="px-5">
+    <div class="bg-app-bar px-4 pt-4 flex items-center card">
+      <!-- Campo de búsqueda -->
+      <mat-form-field>
+        <mat-icon
+          matIconPrefix
+          svgIcon="mat:search"
+        ></mat-icon>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Buscar archivo XTF"
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+    <div class="card overflow-auto mt-4">
+      <mat-table
+        [dataSource]="dataSource()"
+        class="rounded-md"
+      >
+        <ng-container matColumnDef="actions">
+          <mat-header-cell
+            *matHeaderCellDef
+            class="border-slate-500"
+            >Acciones</mat-header-cell
+          >
+          <mat-cell
+            *matCellDef="let element"
+            class="border-slate-300 flex items-center justify-center"
+          >
+            <button
+              mat-fab
+              color="primary"
+              title="Descargar XTF"
+              class="rounded-md w-10 h-10 p-0"
+              (click)="downloadXtf(element)"
+            >
+              <mat-icon
+                class="icon-sm"
+                svgIcon="mat:download"
+              ></mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        @for (column of columns; track column.property; let index = $index) {
+          <ng-container [matColumnDef]="column.property">
+            <mat-header-cell
+              *matHeaderCellDef
+              class="border-slate-500 border-l"
+              >{{ column.label }}</mat-header-cell
+            >
+            <mat-cell
+              *matCellDef="let element"
+              class="border-slate-300"
+              >{{ element[column.property] }}</mat-cell
+            >
+          </ng-container>
+        }
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns()"
+          class="bg-primary-200 font-semibold text-slate-600"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns()"></mat-row>
+      </mat-table>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+
+<app-loader
+  [isLoading]="isLoading()"
+  loaderTitle="Preparando descarga"
+  loaderMessage="Esto puede tomar varios minutos, por favor espere..."
+></app-loader>

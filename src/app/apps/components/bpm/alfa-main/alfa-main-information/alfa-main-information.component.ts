@@ -85,7 +85,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { LoadingServiceService } from '../../../../services/general/loading-service.service';
 import { ValidityProcedureComponent } from './validity-procedure/validity-procedure.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderComponent } from '../../../general-components/loader/loader.component';
 
 @Component({
   selector: 'vex-alfa-main-information',
@@ -112,7 +112,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     VexPageLayoutContentDirective,
     NgClass,
     SweetAlert2Module,
-    MatProgressSpinnerModule
+    LoaderComponent
   ],
   templateUrl: './alfa-main-information.component.html',
   styleUrl: './alfa-main-information.component.scss'

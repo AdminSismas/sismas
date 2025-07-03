@@ -168,6 +168,9 @@ function main() {
   // Leer todos los archivos en la carpeta environments
   const files = fs.readdirSync(environmentsFolder);
 
+  // Guardar las keys originales para reutilizar en cada archivo
+  const originalKeys = newParameters._originalKeys || [];
+  
   files.forEach(file => {
     // Ignorar el archivo especificado
     const isIgnoredFile = IGNORED_FILES.some(ignoredFile => ignoredFile === file);
@@ -179,48 +182,54 @@ function main() {
       return;
     }
 
+    console.log(`\x1b[36mProcessing ${file}...\x1b[0m`);
+
     const filePath = path.join(environmentsFolder, file);
 
-    // Leer y evaluar el archivo TypeScript
-    const environment = evaluateTypeScriptFile(filePath);
+    try {
+      // Leer y evaluar el archivo TypeScript
+      const environment = evaluateTypeScriptFile(filePath);
 
-    // Usar las keys originales para validación
-    const originalKeys = newParameters._originalKeys || [];
-    delete newParameters._originalKeys; // Eliminar la propiedad auxiliar
+      // Crear una copia limpia de newParameters sin la propiedad auxiliar
+      const cleanParameters = { ...newParameters };
+      delete cleanParameters._originalKeys;
 
-    // Verificar que los parámetros no existan ya usando las keys originales
-    const existingParameters = originalKeys.filter(
-      key => {
-        if (key.includes('.')) {
-          // Para propiedades anidadas, verificar si la propiedad específica existe
-          return hasNestedProperty(environment, key);
-        } else {
-          // Para propiedades de primer nivel, verificar si ya existe
-          return environment.hasOwnProperty(key);
+      // Verificar que los parámetros no existan ya usando las keys originales
+      const existingParameters = originalKeys.filter(
+        key => {
+          if (key.includes('.')) {
+            // Para propiedades anidadas, verificar si la propiedad específica existe
+            return hasNestedProperty(environment, key);
+          } else {
+            // Para propiedades de primer nivel, verificar si ya existe
+            return environment.hasOwnProperty(key);
+          }
         }
-      }
-    );
+      );
 
-    if (existingParameters.length > 0) {
-      console.error(`Error en ${file}: Los siguientes parámetros ya existen: ${existingParameters.join(', ')}`);
-      console.log('Use updateEnvironments.js para actualizar parámetros existentes.');
-      return; // Saltar este archivo y continuar con el siguiente
+      if (existingParameters.length > 0) {
+        console.error(`\x1b[33mSkipping ${file}: Los siguientes parámetros ya existen: ${existingParameters.join(', ')}\x1b[0m`);
+        console.log('Use updateEnvironments.js para actualizar parámetros existentes.');
+        return; // Saltar este archivo y continuar con el siguiente
+      }
+
+      // Aplicar las novedades al objeto
+      const updatedEnvironment = applyUpdates(environment, cleanParameters);
+
+      // Escribir el archivo TypeScript actualizado
+      writeTypeScriptFile(filePath, updatedEnvironment);
+
+      // Mostrar qué parámetros se agregaron usando las keys originales
+      originalKeys.forEach(key => {
+        if (key.includes('.')) {
+          console.log(`\x1b[32m✓ Added "${key}" to existing object in ${file}\x1b[0m`);
+        } else {
+          console.log(`\x1b[32m✓ Added new parameter "${key}" to ${file}\x1b[0m`);
+        }
+      });
+    } catch (error) {
+      console.error(`\x1b[31m✗ Error processing ${file}: ${error.message}\x1b[0m`);
     }
-
-    // Aplicar las novedades al objeto
-    const updatedEnvironment = applyUpdates(environment, newParameters);
-
-    // Escribir el archivo TypeScript actualizado
-    writeTypeScriptFile(filePath, updatedEnvironment);
-
-    // Mostrar qué parámetros se agregaron usando las keys originales
-    originalKeys.forEach(key => {
-      if (key.includes('.')) {
-        console.log(`Added "${key}" to existing object in ${file}`);
-      } else {
-        console.log(`Added new parameter "${key}" to ${file}`);
-      }
-    });
   });
 }
 

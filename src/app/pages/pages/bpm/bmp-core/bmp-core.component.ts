@@ -45,7 +45,7 @@ import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 import { InformationPropertyService } from '../../../../apps/services/territorial-organization/information-property.service';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderComponent } from "../../../../apps/components/general-components/loader/loader.component";
 
 @Component({
   selector: 'vex-bmp-core',
@@ -73,11 +73,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSortModule,
     MatTabsModule,
     MatTooltipModule,
-    MatProgressSpinnerModule,
     // Custom
     FluidHeightDirective,
-    HeaderBpmCoreComponent
-  ],
+    HeaderBpmCoreComponent,
+    LoaderComponent
+],
   templateUrl: './bmp-core.component.html',
   styleUrl: './bmp-core.component.scss'
 })
@@ -255,13 +255,11 @@ export class BmpCoreComponent implements OnInit {
 
   async returnPanelTask(isReturn: boolean) {
     if (isReturn) {
-      let isCollapse: boolean = await firstValueFrom(this.sidenavCollapsed$);
+      const isCollapse: boolean = await firstValueFrom(this.sidenavCollapsed$);
       if (isCollapse) {
         this.layoutService.expandSidenav();
       }
-      this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
-        .then(() => {
-        });
+      this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`]);
     }
   }
 

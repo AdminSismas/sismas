@@ -1,4 +1,4 @@
-import { Component, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, SimpleChanges, ViewChild, OnInit, AfterViewInit, OnChanges } from '@angular/core';
 import { ReportCategory } from '../../../../../../apps/interfaces/operation-support/reports/report-category.interface';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ReportService } from '../../../../../../apps/services/operation-support/reports/report.service';
@@ -49,7 +49,7 @@ import { DownloadReportsComponent } from '../download-reports.component';
   templateUrl: './report-master.component.html',
   styleUrl: './report-master.component.scss'
 })
-export class ReportMasterComponent {
+export class ReportMasterComponent implements OnInit, AfterViewInit, OnChanges {
   public categories: ReportCategory[] = [];
   public displayedColumns: string[] = ['action', 'id', 'name', 'status', 'statusDate', 'outputFormat'];
   public dataSource: MatTableDataSource<ReportCategory> = new MatTableDataSource<ReportCategory>();

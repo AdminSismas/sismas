@@ -156,6 +156,12 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDr
         label: 'Descarga de reportes',
         route: '/operationSupport/reports/downloadReports',
         routerLinkActiveOptions: { exact: true }
+      },
+      {
+        type: 'link',
+        label: 'Descarga de XTF',
+        route: '/operationSupport/reports/downloadXTF',
+        routerLinkActiveOptions: { exact: true }
       }
     ]
 

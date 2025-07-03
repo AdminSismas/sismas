@@ -34,7 +34,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderComponent } from "../../general-components/loader/loader.component";
 
 @Component({
   selector: 'vex-view-change-alpha-main-record',
@@ -53,8 +53,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSortModule,
     MatTableModule,
     NgClass,
-    MatProgressSpinnerModule
-  ],
+    LoaderComponent
+],
   templateUrl: './view-change-alpha-main-record.component.html',
   styleUrl: './view-change-alpha-main-record.component.scss'
 })

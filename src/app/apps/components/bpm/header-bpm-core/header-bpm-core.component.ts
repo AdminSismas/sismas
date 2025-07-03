@@ -44,7 +44,7 @@ import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service
 import {
   DetailInformationTasksComponent
 } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderComponent } from "../../general-components/loader/loader.component";
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -55,8 +55,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     VexBreadcrumbsComponent,
     AsyncPipe,
     MatButtonModule,
-    MatProgressSpinnerModule
-  ],
+    LoaderComponent
+],
   templateUrl: './header-bpm-core.component.html',
   styleUrl: './header-bpm-core.component.scss'
 })

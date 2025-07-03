@@ -71,6 +71,13 @@ const routes: VexRoutes = [
               (m) => m.ReportManagerComponent
             )
         },
+        {
+          path: 'downloadXTF',
+          loadComponent: () =>
+            import('./reports/download-xtf/download-xtf.component').then(
+              (m) => m.DownloadXtfComponent
+            )
+        }
         ]
       },
 
