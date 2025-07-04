@@ -43,7 +43,7 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '../../../../../../apps/constants/general/constants';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
 import {
@@ -74,6 +74,7 @@ import { DocumentTableComponent } from 'src/app/apps/components/bpm/document-tab
 import { CommentsComponent } from 'src/app/apps/components/general-components/comments/comments.component';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
 import { ActivatedRoute } from '@angular/router';
+import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 
 @Component({
   selector: 'vex-detail-information-tasks',
@@ -87,7 +88,9 @@ import { ActivatedRoute } from '@angular/router';
     scaleFadeIn400ms
   ],
   imports: [
-    CommonModule,
+    AsyncPipe,
+    NgClass,
+    DatePipe,
     MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
@@ -100,7 +103,8 @@ import { ActivatedRoute } from '@angular/router';
     MatCheckboxModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    TableThirdPartyAffectedComponent
   ],
   templateUrl: './detail-information-tasks.component.html'
 })

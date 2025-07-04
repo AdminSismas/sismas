@@ -14,6 +14,7 @@ import { ThirdPartyAffectedParticipant } from '../../../interfaces/general/conte
 import { ParticipantTableDialogComponent } from '../../bpm/participant-table-dialog/participant-table-dialog.component';
 import {
   PAGE,
+  PAGE_OPTION_5_7_10,
   PAGE_OPTION_UNIQUE_7,
   TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
   TYPE_BUTTON_ONE,
@@ -78,25 +79,23 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
   // Injects
   private dialog: MatDialog = inject(MatDialog);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
-  private participantsService: ParticipantsService =
-    inject(ParticipantsService);
+  private participantsService = inject(ParticipantsService);
 
   // Inputs
   executionId = input.required<string>();
-  readOnly = input.required({
+  readOnly = input(false, {
     transform: (value: string | boolean) => {
       switch (value) {
         case '':
-          return false;
+          return true;
         case 'false':
           return false;
         case 'true':
           return true;
-        case true:
-          return true;
-        case false:
-          return false;
         default:
+          if (typeof value === 'boolean') {
+            return value;
+          }
           return false;
       }
     }
@@ -113,7 +112,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
   page = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_OPTION_UNIQUE_7;
-  pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
+  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
   columns: TableColumn<ProcessParticipant>[] =
     TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY;
   subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<

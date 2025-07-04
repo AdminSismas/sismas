@@ -116,7 +116,7 @@
             {{
               this.taskDetails.beginAt
                 ? (this.taskDetails.beginAt | date: "dd/MM/yyyy hh:mm:ss a")
-                : (NAME_NO_DISPONIBLE | date: "dd/MM/yyyy hh:mm:ss a")
+                : NAME_NO_DISPONIBLE
             }}
           </h2>
         </div>
@@ -127,8 +127,8 @@
           <h2 class="text-sm">
             {{
               this.taskDetails.finishAt
-                ? this.taskDetails.finishAt
-                : (NAME_NO_DISPONIBLE | date: "dd/MM/yyyy hh:mm:ss a")
+                ? (this.taskDetails.finishAt | date: "dd/MM/yyyy hh:mm:ss a")
+                : NAME_NO_DISPONIBLE
             }}
           </h2>
         </div>
@@ -153,7 +153,7 @@
               this.taskDetails.lastUpdateAt
                 ? (this.taskDetails.lastUpdateAt
                   | date: "dd/MM/yyyy hh:mm:ss a")
-                : (NAME_NO_DISPONIBLE | date: "dd/MM/yyyy hh:mm:ss a")
+                : NAME_NO_DISPONIBLE
             }}
           </h2>
         </div>
@@ -186,8 +186,8 @@
           <h2 class="text-sm">
             {{
               this.taskDetails.dueDate
-                ? this.taskDetails.dueDate
-                : (NAME_NO_DISPONIBLE | date: "dd/MM/yyyy hh:mm:ss a")
+                ? (this.taskDetails.dueDate | date: "dd/MM/yyyy hh:mm:ss a")
+                : NAME_NO_DISPONIBLE
             }}
           </h2>
         </div>
@@ -277,76 +277,67 @@
             </td>
           </ng-container>
           @for (column of columns; track column.property) {
-            <!-- Text Columns -->
-            <ng-container
-              *ngIf="column.type === 'currency'"
-              [matColumnDef]="column.property"
-            >
-              <th
-                *matHeaderCellDef
-                [ngClass]="column.cssClassesHead"
-                class="text-center"
-                mat-header-cell
-                mat-sort-header
-              >
-                {{ column.label }}
-              </th>
-              <td
-                *matCellDef="let row"
-                [ngClass]="column.cssClasses"
-                mat-cell
-              >
-                {{ getAbsoluteValue(row[column.property]) }}
-              </td>
-            </ng-container>
-
-            <ng-container
-              *ngIf="column.type === 'date'"
-              [matColumnDef]="column.property"
-            >
-              <th
-                *matHeaderCellDef
-                [ngClass]="column.cssClassesHead"
-                class="text-center"
-                mat-header-cell
-                mat-sort-header
-              >
-                {{ column.label }}
-              </th>
-              <td
-                *matCellDef="let row"
-                [ngClass]="column.cssClasses"
-                mat-cell
-              >
-                {{ row[column.property] | date: "dd/MM/yyyy" }}
-              </td>
-            </ng-container>
+            @switch (column.type) {
+              @case ("currency") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    [ngClass]="column.cssClassesHead"
+                    class="text-center"
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                  >
+                    {{ getAbsoluteValue(row[column.property]) }}
+                  </td>
+                </ng-container>
+              }
+              @case ("date") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    [ngClass]="column.cssClassesHead"
+                    class="text-center"
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                  >
+                    {{ row[column.property] | date: "dd/MM/yyyy" }}
+                  </td>
+                </ng-container>
+              }
+              @case ("text") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                  >
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              }
+            }
           }
-
-          @for (column of columns; track column.property) {
-            <!-- Text Columns -->
-            <ng-container
-              *ngIf="column.type === 'text'"
-              [matColumnDef]="column.property"
-            >
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-                mat-sort-header
-              >
-                {{ column.label }}
-              </th>
-              <td
-                *matCellDef="let row"
-                [ngClass]="column.cssClasses"
-                mat-cell
-              >
-                {{ row[column.property] }}
-              </td>
-            </ng-container>
-          }
-
-          <!-- Action Column -->
 
           <tr
             *matHeaderRowDef="visibleColumns"
@@ -370,6 +361,12 @@
         >
         </mat-paginator>
       </div>
+    </mat-tab>
+    <mat-tab label="Participantes">
+      <vex-table-third-party-affected
+        [executionId]="data.taskId"
+        readOnly
+      ></vex-table-third-party-affected>
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>

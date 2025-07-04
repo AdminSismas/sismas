@@ -15,30 +15,32 @@
       </span>
       <span class="block"> Participantes </span>
     </h2>
-    <button
-      color="accent"
-      mat-raised-button
-      type="button"
-      (click)="autoThirdPartyAffected()"
-    >
-      <mat-icon
-        class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
-        svgIcon="mat:autorenew"
-      ></mat-icon>
-      <span>Agregar automático</span>
-    </button>
-    <button
-      color="primary"
-      mat-raised-button
-      type="button"
-      (click)="openThirdPartyAffected()"
-    >
-      <mat-icon
-        class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
-        svgIcon="mat:add_circle_outline"
-      ></mat-icon>
-      <span>Agregar manual</span>
-    </button>
+    @if (!readOnly()) {
+      <button
+        color="accent"
+        mat-raised-button
+        type="button"
+        (click)="autoThirdPartyAffected()"
+      >
+        <mat-icon
+          class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
+          svgIcon="mat:autorenew"
+        ></mat-icon>
+        <span>Agregar automático</span>
+      </button>
+      <button
+        color="primary"
+        mat-raised-button
+        type="button"
+        (click)="openThirdPartyAffected()"
+      >
+        <mat-icon
+          class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
+          svgIcon="mat:add_circle_outline"
+        ></mat-icon>
+        <span>Agregar manual</span>
+      </button>
+    }
   </div>
   <div class="card h-full flex flex-col mat-elevation-z3">
     <div
@@ -128,7 +130,9 @@
           mat-row
         ></tr>
       </table>
-      @if (dataSource().data.length <= 0 || dataSource().filteredData.length <= 0) {
+      @if (
+        dataSource().data.length <= 0 || dataSource().filteredData.length <= 0
+      ) {
         <div
           class="no-data-information items-center justify-center h-full w-full m-auto"
         >
