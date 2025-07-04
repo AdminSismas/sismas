@@ -13,7 +13,7 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { XtfFiles } from '../interfaces/xtfListFiles.interfaces';
+import { XtfFiles } from '../services/xtf-service.service';
 import { XtfServiceService } from '../services/xtf-service.service';
 import { UserService } from '../../../auth/login/services/user.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
@@ -25,6 +25,7 @@ import { LoaderComponent } from 'src/app/apps/components/general-components/load
   selector: 'vex-download-xtf',
   standalone: true,
   imports: [
+    LoaderComponent,
     MatButtonModule,
     MatFormField,
     MatIconModule,
@@ -34,7 +35,6 @@ import { LoaderComponent } from 'src/app/apps/components/general-components/load
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
     VexSecondaryToolbarComponent,
-    LoaderComponent
   ],
   templateUrl: './download-xtf.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -95,7 +95,7 @@ export class DownloadXtfComponent implements OnInit {
 
     this.xtfService.downloadXtfFile(file.name).subscribe({
       next: (response) => {
-        const blob = new Blob([response], { type: 'application/pdf' });
+        const blob = new Blob([response], { type: 'application/zip' });
         this.createDownloadLink(blob, file.name);
         this.isLoading.set(false);
       },
@@ -114,5 +114,9 @@ export class DownloadXtfComponent implements OnInit {
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
+  }
+
+  fileNameTable(file: XtfFiles): string {
+    return file.name.split('.')[0];
   }
 }

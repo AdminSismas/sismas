@@ -2,8 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
-import { XtfFiles } from '../interfaces/xtfListFiles.interfaces';
 import { UserService } from '../../../auth/login/services/user.service';
+
+export interface XtfFiles {
+  name: string;
+  user: string;
+  type: '.XTF' | '.ZIP';
+}
 
 const baseUrl = `${envi.url}:${envi.port}${envi.bpmAttachment.value}`;
 
@@ -24,7 +29,7 @@ export class XtfServiceService {
           return {
             name: file,
             user: this.userService.getUser()!.sub,
-            type: '.XTF' as XtfFiles['type']
+            type: '.ZIP' as XtfFiles['type']
           };
         });
       })
@@ -33,6 +38,6 @@ export class XtfServiceService {
 
   downloadXtfFile(fileName: string): Observable<Blob> {
     const url = `${baseUrl}${envi.bpmAttachment.xtf}/${fileName}`;
-    return this.http.get(url, { responseType: 'blob' });
+    return this.http.get(url, { responseType: 'blob'});
   }
 }

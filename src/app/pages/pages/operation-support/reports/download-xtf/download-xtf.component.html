@@ -61,8 +61,13 @@
             <mat-cell
               *matCellDef="let element"
               class="border-slate-300"
-              >{{ element[column.property] }}</mat-cell
-            >
+              >
+              @if (column.property === 'name') {
+                {{ fileNameTable(element) }}
+              } @else {
+                {{ element[column.property] }}
+              }
+            </mat-cell>
           </ng-container>
         }
         <mat-header-row
