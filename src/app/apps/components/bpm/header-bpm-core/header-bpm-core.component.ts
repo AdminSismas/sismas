@@ -1,8 +1,11 @@
 import {
-  Component, DestroyRef,
-  EventEmitter, inject,
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
   Input,
-  OnChanges, OnDestroy,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -31,20 +34,16 @@ import {
 import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { DocumentTableComponent, DocumentTableData } from '../document-table/document-table.component';
+import { DocumentTableComponent } from '../document-table/document-table.component';
 import { CommentsComponent } from '../comments/comments.component';
 import { ComponentTemplate } from '../../../interfaces/bpm/render-template.types';
 import { TypeButtonAlfaMain } from '../../../interfaces/general/content-info';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
-import {
-  AttachmentExcelMassiveComponent
-} from '../alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+import { AttachmentExcelMassiveComponent } from '../alfa-main/attachment-excel-massive/attachment-excel-massive.component';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
-import {
-  DetailInformationTasksComponent
-} from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { LoaderComponent } from "../../general-components/loader/loader.component";
+import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { LoaderComponent } from '../../general-components/loader/loader.component';
 
 @Component({
   selector: 'vex-header-bpm-core',
@@ -56,7 +55,7 @@ import { LoaderComponent } from "../../general-components/loader/loader.componen
     AsyncPipe,
     MatButtonModule,
     LoaderComponent
-],
+  ],
   templateUrl: './header-bpm-core.component.html',
   styleUrl: './header-bpm-core.component.scss'
 })
@@ -86,7 +85,8 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   countAttachment$: Observable<number> = this._countAttachment$.asObservable();
   _crumbs$: ReplaySubject<ProTaskE> = new ReplaySubject<ProTaskE>(0);
   crumbs$: Observable<ProTaskE> = this._crumbs$.asObservable();
-  components$: Observable<ComponentTemplate[]> = this._components$.asObservable();
+  components$: Observable<ComponentTemplate[]> =
+    this._components$.asObservable();
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -96,7 +96,6 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
     private tasksPanelService: TasksPanelService,
     private dialog: MatDialog
   ) {
-
     this.destroyRef.onDestroy(() => {
       // Component cleanup logic if needed
     });
@@ -155,7 +154,8 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
     if (proTaskE.proTask?.flowDetail && proTaskE?.proTask?.flowName) {
       const flowDetailTtitle = `${NAME_FILED}: ${proTaskE.proTask?.flowDetail}`;
       this.crumbs.push(flowDetailTtitle);
-      this.actions[flowDetailTtitle] = () => this.openDialogDetailProcedure(proTaskE.executionId!);
+      this.actions[flowDetailTtitle] = () =>
+        this.openDialogDetailProcedure(proTaskE.executionId!);
     }
     if (proTaskE?.executionId) {
       const executionIdTtitle = `${NAME_VERSION}: ${proTaskE?.executionId}`;
@@ -167,18 +167,17 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   openDialogDetailProcedure(taskId: number) {
-    this.tasksPanelService.viewTaskId(taskId)
-      .subscribe({
-        next: (result) => {
-          this.dialog.open(DetailInformationTasksComponent, {
-            ...MODAL_SMALL,
-            data: {
-              taskId,
-              value: result
-            }
-          });
-        }
-      });
+    this.tasksPanelService.viewTaskId(taskId).subscribe({
+      next: (result) => {
+        this.dialog.open(DetailInformationTasksComponent, {
+          ...MODAL_SMALL,
+          data: {
+            taskId,
+            value: result
+          }
+        });
+      }
+    });
   }
 
   validateComponents(components: ComponentTemplate[] | null) {
@@ -210,9 +209,8 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
       this.dialog.open(DocumentTableComponent, {
         ...MODAL_MEDIUM,
         data: {
-          executionId: this.proTaskE!.executionId,
-          mode: 'edition'
-        } as unknown as DocumentTableData
+          executionId: this.proTaskE!.executionId
+        }
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {

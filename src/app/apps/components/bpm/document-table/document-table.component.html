@@ -14,7 +14,7 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 <mat-dialog-content>
-  @if (data.mode === "edition") {
+  @if (mode() === "edition") {
     <div class="header-container m-2">
       <button
         mat-raised-button
@@ -143,7 +143,7 @@
           }
         }
       }
-      @if (data.mode === "edition") {
+      @if (mode() === "edition") {
         <ng-container matColumnDef="delete">
           <th
             mat-header-cell
@@ -160,6 +160,7 @@
               (click)="deleteFile(row)"
               color="warn"
               class="rounded-md p-2 m-0 w-10 h-10"
+              [disabled]="row.blocked === true"
             >
               <mat-icon svgIcon="mat:delete"></mat-icon>
             </button>

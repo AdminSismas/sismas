@@ -5,6 +5,7 @@ import {
   inject,
   Inject,
   OnInit,
+  signal,
   ViewChild
 } from '@angular/core';
 import {
@@ -63,11 +64,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 import Swal from 'sweetalert2';
-
-export interface DocumentTableData {
-  executionId: string;
-  mode: 'edition' | 'visualization';
-}
+import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 
 @Component({
   templateUrl: './document-table.component.html',
@@ -99,6 +96,9 @@ export interface DocumentTableData {
   ]
 })
 export class DocumentTableComponent implements OnInit, AfterViewInit {
+  // Injects
+  private userService = inject(UserService);
+
   /* ============== ATTRIBUTES ============== */
   numRegister = 0;
   disablePaginator = true;
@@ -108,6 +108,9 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   dataSource!: MatTableDataSource<AttachmentCollection>;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
+  mode = signal<'visualization' | 'edition'>(
+    this.userService.getUser()?.role === 'GUEST' ? 'visualization' : 'edition'
+  );
 
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
@@ -124,7 +127,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DocumentTableData,
+    @Inject(MAT_DIALOG_DATA) public data: { executionId: string },
     private dialog: MatDialog,
     private attachmentService: AttachmentService,
     private readonly layoutService: VexLayoutService
@@ -184,16 +187,10 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
   }
 
   get visibleColumns(): string[] {
-    if (this.data.mode === 'edition') {
-      return [
-        'action',
-        ...this.columns.filter((c) => c.visible).map((c) => c.property),
-        'delete'
-      ];
-    }
     return [
       'action',
-      ...this.columns.filter((c) => c.visible).map((c) => c.property)
+      ...this.columns.filter((c) => c.visible).map((c) => c.property),
+      'delete'
     ];
   }
 
@@ -350,7 +347,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     return fileName.split('.').pop()?.toLowerCase() || '';
   }
   deleteFile(row: AttachmentCollection) {
-    if (this.data.mode !== 'edition') return;
+    if (this.mode() !== 'edition') return;
 
     Swal.fire({
       title: '¿Estas seguro de eliminar el archivo?',
@@ -378,6 +375,5 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
           });
       }
     });
-
   }
 }

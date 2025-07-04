@@ -46,7 +46,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { DetailExecutedTasksComponent } from './detail-executed-tasks/detail-executed-tasks.component';
@@ -62,13 +66,11 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  TaskRetailExecuteResponseModel
-} from '../../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
+import { TaskRetailExecuteResponseModel } from '../../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
 import { ProceduresCollection } from '../../../../../../apps/interfaces/tables/procedures-progress.model';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { TaskResponseModel } from '../../../../../../apps/interfaces/bpm/task-response.model';
-import { DocumentTableComponent, DocumentTableData } from 'src/app/apps/components/bpm/document-table/document-table.component';
+import { DocumentTableComponent } from 'src/app/apps/components/bpm/document-table/document-table.component';
 import { CommentsComponent } from 'src/app/apps/components/general-components/comments/comments.component';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
 import { ActivatedRoute } from '@angular/router';
@@ -103,7 +105,6 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './detail-information-tasks.component.html'
 })
 export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
-
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentTasksInformations!: InformationPegeable;
   public taskDetails: TaskResponseModel = new TaskResponseModel();
@@ -120,7 +121,8 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
 
   @Output() closeModal = new EventEmitter<void>();
 
-  columns: TableColumn<TaskRetailExecuteResponseModel>[] = TABLE_COLUMN_PROPERTIES_EXECUTED;
+  columns: TableColumn<TaskRetailExecuteResponseModel>[] =
+    TABLE_COLUMN_PROPERTIES_EXECUTED;
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
@@ -150,8 +152,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService
-  ) {
-  }
+  ) {}
 
   openSnackbar() {
     this.snackBar.open('Este es un mensaje de alerta', 'Cerrar', {
@@ -168,17 +169,15 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
 
   closeAlert() {
     this.showAlert = false;
-
   }
 
   // implementacion de tabla
 
-
   ngOnInit() {
     this.executionId = this.data.executionId;
     // Accede a los parámetros de consulta
-    this.route.queryParamMap.subscribe(params => {
-      this.executionId = params.get('executionId');  // Obtén el valor del parámetro
+    this.route.queryParamMap.subscribe((params) => {
+      this.executionId = params.get('executionId'); // Obtén el valor del parámetro
     });
     this.dataSource = new MatTableDataSource();
     if (this.data && this.data.textAlert && this.data?.textAlert.message) {
@@ -194,7 +193,10 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       return;
     }
     this.id = this.id + this.getRandomInt(10000) + this.schema + this.baunitId;
-    if (this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL) {
+    if (
+      this.typeInformation &&
+      this.typeInformation === TYPE_INFORMATION_VISUAL
+    ) {
       this.pageSize = PAGE_SIZE_SORT;
       this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
       this.columns = TABLE_COLUMN_PROPERTIES_EXECUTED;
@@ -202,7 +204,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
-
   }
 
   ngAfterViewInit() {
@@ -236,29 +237,27 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   }
 
   viewDetallyTask(executionId: any) {
-    this.tasksPanelService.viewTaskId(
-      executionId)
-      .subscribe(result => {
-        this.taskDetails = result;
-        this.id = this.taskDetails.executionId ? String(this.taskDetails.executionId) : '';
-        this.getInformationProTaskCountComment();
-        this.getInformationProTaskCountAttachment();
-        this.viewExcuteTask(executionId);
-        this.viewDetallyTaskExecuId(executionId);
-      });
+    this.tasksPanelService.viewTaskId(executionId).subscribe((result) => {
+      this.taskDetails = result;
+      this.id = this.taskDetails.executionId
+        ? String(this.taskDetails.executionId)
+        : '';
+      this.getInformationProTaskCountComment();
+      this.getInformationProTaskCountAttachment();
+      this.viewExcuteTask(executionId);
+      this.viewDetallyTaskExecuId(executionId);
+    });
   }
 
   viewDetallyTaskExecuId(executionId: any) {
-    this.tasksPanelService.viewProTaskId(
-      executionId)
-      .subscribe(result => {
-        this.assignedSee = result.assignee;
-      });
+    this.tasksPanelService.viewProTaskId(executionId).subscribe((result) => {
+      this.assignedSee = result.assignee;
+    });
   }
 
-
   viewExcuteTask(taskId: any) {
-    this.tasksPanelService.viewExecuteTaskId(this.generateObjectPageSearchData(taskId), taskId)
+    this.tasksPanelService
+      .viewExecuteTaskId(this.generateObjectPageSearchData(taskId), taskId)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (executeTask: InformationPegeable) => {
@@ -271,12 +270,17 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     let data: TaskRetailExecuteResponseModel[];
     this.contentTasksInformations = executeTask;
 
-    if (this.contentTasksInformations && this.contentTasksInformations.content) {
+    if (
+      this.contentTasksInformations &&
+      this.contentTasksInformations.content
+    ) {
       data = this.contentTasksInformations.content;
-      data = data.map((row: TaskRetailExecuteResponseModel) => new TaskRetailExecuteResponseModel(row));
+      data = data.map(
+        (row: TaskRetailExecuteResponseModel) =>
+          new TaskRetailExecuteResponseModel(row)
+      );
       this.dataSource.data = data;
     }
-
 
     if (this.contentTasksInformations == null) {
       this.page = PAGE;
@@ -295,7 +299,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     if (this.contentTasksInformations.pageable.pageNumber != null) {
       this.page = this.contentTasksInformations.pageable.pageNumber;
     }
-
   }
 
   captureInformationSubscribeError(): void {
@@ -303,9 +306,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     this.dataSource.data = [];
   }
 
-
   captureInformationConstructionData(): void {
-
     if (this.contentTasksInformations === null) {
       this.page = PAGE;
       return;
@@ -325,7 +326,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   openDetailInTaks(data: TaskRetailExecuteResponseModel) {
     this.dialog
       .open(DetailExecutedTasksComponent, {
@@ -335,10 +335,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       })
       .afterClosed();
   }
-
-
-
-
 
   toggleColumnVisibility(column: TableColumn<BaunitHead>, event: Event) {
     event.stopPropagation();
@@ -355,7 +351,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     if (this.data.taskId) {
       this.viewExcuteTask(this.data.taskId);
     }
-
   }
 
   captureInformationSubscribe(data: any) {
@@ -363,11 +358,16 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     this.captureInformationProceduresData();
   }
 
-
   captureInformationProceduresData() {
     let data: TaskRetailExecuteResponseModel[];
-    if (this.contentTasksInformations != null && this.contentTasksInformations.content != null) {
-      data = this.contentTasksInformations.content.map((row: ProceduresCollection) => new TaskRetailExecuteResponseModel({ row }));
+    if (
+      this.contentTasksInformations != null &&
+      this.contentTasksInformations.content != null
+    ) {
+      data = this.contentTasksInformations.content.map(
+        (row: ProceduresCollection) =>
+          new TaskRetailExecuteResponseModel({ row })
+      );
       this.dataSource.data = data;
     }
 
@@ -390,7 +390,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   onFilterChange(value: string): void {
     if (!this.dataSource) {
       return;
@@ -408,7 +407,6 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
     return Math.floor(Math.random() * max);
   }
 
-
   // implementacion de tabla
 
   openDialog(type: string): void {
@@ -416,9 +414,8 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       this.dialog.open(DocumentTableComponent, {
         width: '80%',
         data: {
-          executionId: this.data?.value?.executionId,
-          mode: 'visualization'
-        } as unknown as DocumentTableData
+          executionId: this.data?.value?.executionId
+        }
       });
     } else if (type === 'comments') {
       this.dialog.open(CommentsComponent, {
@@ -433,15 +430,16 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   }
 
   getInformationProTaskCountComment() {
-    this.bpmCoreService.getProTaskCountComment(this.id)
+    this.bpmCoreService
+      .getProTaskCountComment(this.id)
       .subscribe((result: number) => this._countComment$.next(result));
   }
 
   getInformationProTaskCountAttachment() {
-    this.bpmCoreService.getProTaskCountAttachment(this.id)
+    this.bpmCoreService
+      .getProTaskCountAttachment(this.id)
       .subscribe((result: number) => this._countAttachment$.next(result));
   }
-
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
 }
