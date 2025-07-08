@@ -10,6 +10,8 @@ export class ProFlow {
   dueDays?: number;
   bpmLaneNames?: string;
   mode?: number;
+  question: string | null = null;
+  questionFlow: number | null = null;
 
 
   constructor(content?:any) {
@@ -21,5 +23,7 @@ export class ProFlow {
     this.dueDays = content?.dueDays || '';
     this.bpmLaneNames = content?.bpmLaneNames || '';
     this.mode = content?.mode || 0;
+    this.question = content?.question || null;
+    this.questionFlow = content?.questionFlow || null;
   }
 }

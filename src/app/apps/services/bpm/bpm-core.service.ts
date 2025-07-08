@@ -48,9 +48,8 @@ export class BpmCoreService {
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
-  getNextOperation(executionId: string): Observable<ProTaskE> {
-
-    const url = `${this.basic_url}${envi.bpmOperation.proExecution_next}${executionId}`;
+  getNextOperation(executionId: string, answer: boolean): Observable<ProTaskE> {
+    const url = `${this.basic_url}${envi.bpmOperation.proExecution_next}${executionId}/${answer}`;
     return this.requestsService.sendRequestsFetchPost(url);
   }
 

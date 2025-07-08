@@ -27,7 +27,10 @@ import {
   MODAL_SMALL
 } from '../../../../apps/constants/general/constants';
 import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
-import { BasicComponentTemplate, ComponentTemplate } from '../../../../apps/interfaces/bpm/render-template.types';
+import {
+  BasicComponentTemplate,
+  ComponentTemplate
+} from '../../../../apps/interfaces/bpm/render-template.types';
 import { ProFlow } from '../../../../apps/interfaces/bpm/pro-flow';
 import { BpmCoreService } from '../../../../apps/services/bpm/bpm-core.service';
 import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
@@ -37,15 +40,16 @@ import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLab
 import { environment } from '../../../../../environments/environments';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  ShowErrorValidateAlfaMainComponent
-} from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
+import { ShowErrorValidateAlfaMainComponent } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
+import {
+  BpmProcessService,
+  PermissionVailable
+} from 'src/app/apps/services/bpm/bpm-process.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 import { InformationPropertyService } from '../../../../apps/services/territorial-organization/information-property.service';
-import { LoaderComponent } from "../../../../apps/components/general-components/loader/loader.component";
+import { LoaderComponent } from '../../../../apps/components/general-components/loader/loader.component';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -77,7 +81,7 @@ import { LoaderComponent } from "../../../../apps/components/general-components/
     FluidHeightDirective,
     HeaderBpmCoreComponent,
     LoaderComponent
-],
+  ],
   templateUrl: './bmp-core.component.html',
   styleUrl: './bmp-core.component.scss'
 })
@@ -87,18 +91,23 @@ export class BmpCoreComponent implements OnInit {
   ).getDynamicComponents();
 
   private readonly injector = inject(Injector);
-  private loadingServiceService: LoadingServiceService = inject(LoadingServiceService);
+  private loadingServiceService: LoadingServiceService = inject(
+    LoadingServiceService
+  );
 
   _infoProTaskE$: Observable<ProTaskE> = this.infoGeneralService.infoProTaskE$;
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
 
   sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<ComponentTemplate[]>(1);
+  _components$: ReplaySubject<ComponentTemplate[]> = new ReplaySubject<
+    ComponentTemplate[]
+  >(1);
   _proFlow$ = this.route.data.pipe(map(({ proFlow }) => proFlow));
   _resources$ = this.route.data.pipe(map(({ resources }) => resources));
 
-  components$: Observable<ComponentTemplate[]> = this._components$.asObservable();
+  components$: Observable<ComponentTemplate[]> =
+    this._components$.asObservable();
   executionId$ = this.route.params.pipe(
     map((params) => params[CONSTANT_NAME_ID])
   );
@@ -121,8 +130,7 @@ export class BmpCoreComponent implements OnInit {
     private infoGeneralService: SendInfoGeneralService,
     private informationProperty: InformationPropertyService,
     private bpmProcessService: BpmProcessService
-  ) {
-  }
+  ) {}
 
   async ngOnInit() {
     this.loadingServiceService.activateLoading(true);
@@ -151,8 +159,11 @@ export class BmpCoreComponent implements OnInit {
     this.loadingServiceService.activateLoading(false);
   }
 
-  confirmAction(action: () => void, message: string,
-                icon: SweetAlertIcon | undefined): void {
+  confirmAction(
+    action: () => void,
+    message: string,
+    icon: SweetAlertIcon | undefined
+  ): void {
     Swal.fire({
       text: message,
       icon: icon,
@@ -177,43 +188,58 @@ export class BmpCoreComponent implements OnInit {
 
   onAccept(): void {
     this.isAcceptLoading.set(true);
-    this.bpmCoreService.checkStatusBpmOperation(this.executionId)
-      .subscribe({
-        next: (result) => {
-          if (result.length > 0) {
-            this.dialog.open(ShowErrorValidateAlfaMainComponent, {
-              ...MODAL_SMALL,
-              data: {
-                errors: result,
-                executionId: this.executionId,
-              },
-            });
-            this.loadingServiceService.activateLoading(false);
-            this.isAcceptLoading.set(false);
-            return;
-          }
+    if (
+      this.proFlow.preform?.pathForm &&
+      this.proFlow.preform.pathForm === COMPONENT_PATH_FORM_ALFA_MAIN
+    ) {
+      this.checkStatusBpmOperation();
+      return;
+    }
 
-          this.executeAppraise();
-          this.confirmAction(
-            () => this.nextBpmCore(),
-            '¿Está seguro que desea continuar a la siguiente tarea?',
-            'info'
-          );
+    this.executeAppraise();
+    this.confirmAction(
+      () => this.nextBpmCore(),
+      '¿Está seguro que desea continuar a la siguiente tarea?',
+      'info'
+    );
+    this.isAcceptLoading.set(false);
+    return;
+  }
+
+  checkStatusBpmOperation() {
+    this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
+      next: (result) => {
+        if (result.length > 0) {
+          this.dialog.open(ShowErrorValidateAlfaMainComponent, {
+            ...MODAL_SMALL,
+            data: {
+              errors: result,
+              executionId: this.executionId
+            }
+          });
+          this.loadingServiceService.activateLoading(false);
           this.isAcceptLoading.set(false);
           return;
-        },
-        error: () => {
-          this.isAcceptLoading.set(false);
         }
-      });
+
+        this.executeAppraise();
+        this.confirmAction(
+          () => this.nextBpmCore(),
+          '¿Está seguro que desea continuar a la siguiente tarea?',
+          'info'
+        );
+        this.isAcceptLoading.set(false);
+        return;
+      },
+      error: () => {
+        this.isAcceptLoading.set(false);
+      }
+    });
   }
 
   refreshComponentsDynamic(proFlow: ProFlow) {
     if (!proFlow || !proFlow.preform || !proFlow.preform.pathForm) {
-      this.getAlertError(
-        'Error valor inválido, no es posible continuar',
-        3000
-      );
+      this.getAlertError('Error valor inválido, no es posible continuar', 3000);
       return;
     }
     const pathForm = proFlow.preform.pathForm;
@@ -223,16 +249,14 @@ export class BmpCoreComponent implements OnInit {
     const listComponents: ComponentTemplate[] = [];
     if (components?.length > 0) {
       components.forEach((component: BasicComponentTemplate) => {
-        const listTmp: ComponentTemplate[] = this.listComponents
-          .filter((x: ComponentTemplate) =>
-            x.nameComponent.includes(component.name)
-          );
+        const listTmp: ComponentTemplate[] = this.listComponents.filter(
+          (x: ComponentTemplate) => x.nameComponent.includes(component.name)
+        );
 
         if (listTmp?.length > 0) {
           listTmp.forEach((x) => this.createObjectComponent(x, component));
           listComponents.push(...listTmp);
         }
-
       });
       this._components$.next(listComponents);
       this.loadingServiceService.activateLoading(false);
@@ -262,7 +286,9 @@ export class BmpCoreComponent implements OnInit {
       if (isCollapse) {
         this.layoutService.expandSidenav();
       }
-      this.router.navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`]);
+      this.router.navigate([
+        `${environment.myWork_tasksPanel}${this.infoFatherURL}`
+      ]);
     }
   }
 
@@ -302,38 +328,14 @@ export class BmpCoreComponent implements OnInit {
     }
   }
 
-  checkStatusBpmOperation() {
-    this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
-      error: () => {
-        this.isAcceptLoading.set(false);
-        this.getAlertError(
-          'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar',
-          3000
-        );
-      },
-      next: (result: string[]) => {
-        if (!result || result.length <= 0) {
-          this.executeBpmNextBpmCore();
-          return;
-        }
-
-        this.dialog.open(ShowErrorValidateAlfaMainComponent, {
-          ...MODAL_SMALL,
-          data: result
-        });
-        this.loadingServiceService.activateLoading(false);
-        this.isAcceptLoading.set(false);
-      }
-    });
-  }
-
   executeAppraise() {
     if (!this.proFlow.preform || !this.proFlow.preform.pathForm) return;
 
     const pathForm = this.proFlow.preform.pathForm;
     if (pathForm !== COMPONENT_PATH_FORM_ALFA_MAIN) return;
 
-    this.informationProperty.executeAppraisalProcess(this.executionId)
+    this.informationProperty
+      .executeAppraisalProcess(this.executionId)
       .subscribe({
         next: (response) => {
           console.log('Realizado el avalúo con respuesta: ', response);
@@ -342,20 +344,59 @@ export class BmpCoreComponent implements OnInit {
           console.error('Error al realizar el avalúo: ', error);
         }
       });
-
   }
 
   executeBpmNextBpmCore() {
-    this.bpmCoreService.getNextOperation(this.executionId).subscribe({
-      error: (error: HttpErrorResponse) => this.captureInformationSubscribeError(error),
-      next: (result: ProTaskE) => this.captureInformationBpmCore(result)
-    });
+    if (this.proFlow.question && this.proFlow.questionFlow) {
+      this.loadingServiceService.activateLoading(false);
+      Swal.fire({
+        text: this.proFlow.question,
+        icon: 'question',
+        showConfirmButton: true,
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonText: 'Sí',
+        denyButtonText: 'No',
+        cancelButtonText: 'Cerrar',
+        confirmButtonColor: '#3085d6',
+        allowEscapeKey: false,
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.bpmCoreService
+            .getNextOperation(this.executionId, true)
+            .subscribe({
+              error: (error: HttpErrorResponse) =>
+                this.captureInformationSubscribeError(error),
+              next: (result: ProTaskE) => this.captureInformationBpmCore(result)
+            });
+        } else if (result.isDenied) {
+          this.bpmCoreService
+            .getNextOperation(this.executionId, false)
+            .subscribe({
+              error: (error: HttpErrorResponse) =>
+                this.captureInformationSubscribeError(error),
+              next: (result: ProTaskE) => this.captureInformationBpmCore(result)
+            });
+        } else {
+          this.loadingServiceService.activateLoading(false);
+          this.isAcceptLoading.set(false);
+        }
+      });
+    } else {
+      this.bpmCoreService.getNextOperation(this.executionId, true).subscribe({
+        error: (error: HttpErrorResponse) =>
+          this.captureInformationSubscribeError(error),
+        next: (result: ProTaskE) => this.captureInformationBpmCore(result)
+      });
+    }
   }
 
   previewBpmCore() {
     this.loadingServiceService.activateLoading(true);
     this.bpmCoreService.getPreviewOperation(this.executionId).subscribe({
-      error: (error: HttpErrorResponse) => this.captureInformationSubscribeError(error),
+      error: (error: HttpErrorResponse) =>
+        this.captureInformationSubscribeError(error),
       next: (result: ProTaskE) => this.captureInformationBpmCore(result)
     });
   }
@@ -380,7 +421,6 @@ export class BmpCoreComponent implements OnInit {
         return;
       }
     }
-
 
     this.proTaskE_Bpm = result;
     this.executionId = result.executionId?.toString() || '';
@@ -426,7 +466,11 @@ export class BmpCoreComponent implements OnInit {
   ) {
     obj.nameComponent = component.name;
     obj.pathForm = component.pathForm;
-    obj.inputs = { executionId: this.executionId, resources: this.resources, mode: component.mode };
+    obj.inputs = {
+      executionId: this.executionId,
+      resources: this.resources,
+      mode: component.mode
+    };
     this.proFlow.mode = component.mode;
     obj.componentData = Injector.create({
       providers: [{ provide: ProFlow, useValue: this.proFlow }],
