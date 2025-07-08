@@ -1,5 +1,5 @@
-<mat-dialog-content>
-  <header class="flex items-center justify-between">
+<header class="sticky top-0">
+  <section class="flex items-center justify-between">
     <h2 mat-dialog-title>Comentarios</h2>
     <button
       mat-icon-button
@@ -8,9 +8,11 @@
     >
       <mat-icon svgIcon="mat:close"></mat-icon>
     </button>
-  </header>
+  </section>
   <mat-divider class="bg-slate-400"></mat-divider>
+</header>
 
+<mat-dialog-content>
   <form
   class="mt-4"
   [formGroup]="form">

@@ -29,7 +29,6 @@ import { UserService } from 'src/app/pages/pages/auth/login/services/user.servic
   selector: 'vex-comments',
   standalone: true,
   templateUrl: './comments.component.html',
-  styleUrl: './comments.component.css',
   imports: [
     CommonModule,
     FormsModule,
@@ -72,7 +71,7 @@ export class CommentsComponent implements OnInit {
 
   /* ============== CONSTRUCTOR ============== */
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: { executionId: string },
     private dialog: MatDialog,
     private commentsService: CommentsService,
     private readonly layoutService: VexLayoutService,
@@ -119,7 +118,7 @@ export class CommentsComponent implements OnInit {
     const pageData = this.generateObjectPageCommentsData();
     this.executionId = this.data.executionId;
     this.commentsService.getDataPropertyByComments(this.executionId, pageData).subscribe({ //this.generateObjectPageCommentsData()
-      next: (data: any) => {
+      next: (data: InformationPegeable) => {
         this.captureInformationSubscribe(data);
         this.viewPaginator(data.totalElements ?? 0);
       },
@@ -150,7 +149,7 @@ export class CommentsComponent implements OnInit {
     }
 
     this.commentsService.postDataPropertyByComments(this.executionId, this.body).subscribe({
-      next: (data: any) => {
+      next: () => {
         this.alertSnakbar.open('Comentario Enviado', 'Close', {
           duration: 10000,
           horizontalPosition: 'center'
@@ -167,7 +166,7 @@ export class CommentsComponent implements OnInit {
 
   delelteDataCommentService(commentId: number): void {
     this.commentsService.deleteDataPropertyByComments(this.executionId, commentId).subscribe({
-      next: (data: any) => {
+      next: () => {
         this.alertSnakbar.open('Comentario Eliminado', 'Close', {
           duration: 10000,
           horizontalPosition: 'center'
