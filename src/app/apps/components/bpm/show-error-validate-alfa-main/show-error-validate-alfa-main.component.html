@@ -31,7 +31,7 @@
         [formControl]="searchCtrl"
         class="text-lg font-medium bg-transparent outline-none flex-auto placeholder-secondary"
       />
-      @if (!listErrors || listErrors.length <= 0) {
+      @if (listErrors && listErrors.length >= 0) {
         <button
           mat-raised-button
           color="primary"
