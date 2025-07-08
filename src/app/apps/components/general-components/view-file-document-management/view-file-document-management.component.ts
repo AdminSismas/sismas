@@ -1,6 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 // recursos de angular material
@@ -17,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
 import { environment } from '../../../../../environments/environments';
 import { MODEL_METADATA_PROPERTIES } from '../../../constants/general/attachment.constant';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'vex-view-file-document-management',
@@ -24,14 +23,11 @@ import { MODEL_METADATA_PROPERTIES } from '../../../constants/general/attachment
   styleUrl: './view-file-document-management.component.scss',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
+    DatePipe,
     MatIconModule,
     MatDialogModule,
     MatDividerModule,
     MatTabsModule,
-    NgFor,
-    NgIf,
     MatIconModule
   ]
 })
