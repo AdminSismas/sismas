@@ -3,10 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import {
-  ReactiveFormsModule,
-  UntypedFormControl
-} from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDividerModule } from '@angular/material/divider';
 import Swal from 'sweetalert2';
@@ -34,11 +31,11 @@ export class ShowErrorValidateAlfaMainComponent implements OnInit {
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  constructor(@Inject(MAT_DIALOG_DATA) public defaults: string[]) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public defaults: { errors: string[], executionId: string }) {}
 
   ngOnInit() {
-    if (this.defaults && this.defaults.length > 0) {
-      this.listErrors = [...this.defaults];
+    if (this.defaults && this.defaults.errors.length > 0) {
+      this.listErrors = [...this.defaults.errors];
     }
 
     this.searchCtrl.valueChanges
@@ -48,13 +45,13 @@ export class ShowErrorValidateAlfaMainComponent implements OnInit {
 
   onFilterChange(value: string): void {
     if (!value) {
-      this.listErrors = this.defaults;
+      this.listErrors = this.defaults.errors;
       return;
     }
 
     value = value.trim();
     value = value.toLowerCase();
-    this.listErrors = this.defaults.filter((val: string) => {
+    this.listErrors = this.defaults.errors.filter((val: string) => {
       if (val) {
         return val.toLowerCase().includes(value);
       }
@@ -71,5 +68,28 @@ export class ShowErrorValidateAlfaMainComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       timer: 2000
     });
+  }
+
+  downloadList() {
+    const csvContent = this.listErrors
+      .map((error) => `"${error.replace(/"/g, '""')}"`)
+      .join('\n');
+    const csvHeader = 'Errores\n';
+    const csvData = csvHeader + csvContent;
+
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const today = new Date();
+    const date = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+
+    link.setAttribute('href', url);
+    link.setAttribute('download', `errores (versión ${this.defaults.executionId}) ${date}.csv`);
+    link.style.visibility = 'hidden';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }
 }

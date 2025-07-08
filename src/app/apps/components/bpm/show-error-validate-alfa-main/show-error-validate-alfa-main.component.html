@@ -18,7 +18,9 @@
 
     <mat-divider class="bg-slate-400"></mat-divider>
 
-    <section class="flex gap-4 border border-slate-600 mt-4 mx-6 px-4 py-2 rounded-md">
+    <section
+      class="flex gap-4 border border-slate-600 mt-4 mx-6 px-4 py-2 rounded-md"
+    >
       <mat-icon
         svgIcon="mat:search"
         class="text-secondary flex-none"
@@ -29,6 +31,16 @@
         [formControl]="searchCtrl"
         class="text-lg font-medium bg-transparent outline-none flex-auto placeholder-secondary"
       />
+      @if (!listErrors || listErrors.length <= 0) {
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="downloadList()"
+        >
+          <mat-icon svgIcon="mat:download"></mat-icon>
+          Descargar lista
+        </button>
+      }
     </section>
   </header>
 
