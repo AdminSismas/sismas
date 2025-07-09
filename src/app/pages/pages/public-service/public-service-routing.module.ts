@@ -1,5 +1,5 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
-import { NOT_USER_SERV } from 'src/app/apps/constants/general/constants';
+import { NOT_USER_SERV_AND_USER_TRAM } from 'src/app/apps/constants/general/constants';
 import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [
@@ -15,7 +15,7 @@ const routes: VexRoutes = [
         path: 'citizens',
         canActivate: [RoleGuard],
         canActivateChild: [RoleGuard],
-        data: { citizenRoles: NOT_USER_SERV, parameter: 'citizenRoles' },
+        data: { citizenRoles: NOT_USER_SERV_AND_USER_TRAM, parameter: 'citizenRoles' },
         children:[
           {
             path: 'validateAdministrativeActs',

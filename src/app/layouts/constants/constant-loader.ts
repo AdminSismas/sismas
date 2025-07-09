@@ -1,7 +1,6 @@
 import {
-  BASIC_USERS_ROLE_LIST,
   CERTIFICATE_USERS_ROLE_LIST,
-  NOT_USER_SERV,
+  NOT_USER_SERV_AND_USER_TRAM,
   TOP_ROLE_LIST
 } from 'src/app/apps/constants/general/constants';
 import {
@@ -262,7 +261,7 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (
         routerLinkActiveOptions: { exact: true }
       }
     ],
-    roles: NOT_USER_SERV
+    roles: NOT_USER_SERV_AND_USER_TRAM
   },
   {
     type: 'dropdown',
