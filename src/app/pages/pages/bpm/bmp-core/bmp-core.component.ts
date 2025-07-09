@@ -188,54 +188,76 @@ export class BmpCoreComponent implements OnInit {
 
   onAccept(): void {
     this.isAcceptLoading.set(true);
-    if (
-      this.proFlow.preform?.pathForm &&
-      this.proFlow.preform.pathForm === COMPONENT_PATH_FORM_ALFA_MAIN
-    ) {
-      this.checkStatusBpmOperation();
-      return;
-    }
 
-    this.executeAppraise();
-    this.confirmAction(
-      () => this.nextBpmCore(),
-      '¿Está seguro que desea continuar a la siguiente tarea?',
-      'info'
-    );
+    this.nextBpmCore();
     this.isAcceptLoading.set(false);
     return;
   }
 
   checkStatusBpmOperation() {
     this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
-      next: (result) => {
-        if (result.length > 0) {
-          this.dialog.open(ShowErrorValidateAlfaMainComponent, {
-            ...MODAL_SMALL,
-            data: {
-              errors: result,
-              executionId: this.executionId
-            }
-          });
+      error: () => {
+        this.isAcceptLoading.set(false);
+        this.getAlertError(
+          'Error ejecutando servicio validación de alfa main o validate main, no es posible continuar',
+          3000
+        );
+      },
+      next: (result: string[]) => {
+        if (!result || result.length <= 0) {
+          this.executeAppraise();
+          this.confirmAction(
+            () => this.executeBpmNextBpmCore(),
+            '¿Está seguro que desea continuar a la siguiente tarea?',
+            'info'
+          );
           this.loadingServiceService.activateLoading(false);
           this.isAcceptLoading.set(false);
           return;
         }
 
-        this.executeAppraise();
-        this.confirmAction(
-          () => this.nextBpmCore(),
-          '¿Está seguro que desea continuar a la siguiente tarea?',
-          'info'
-        );
-        this.isAcceptLoading.set(false);
-        return;
-      },
-      error: () => {
+        this.dialog.open(ShowErrorValidateAlfaMainComponent, {
+          ...MODAL_SMALL,
+          data: result
+        });
+        this.loadingServiceService.activateLoading(false);
         this.isAcceptLoading.set(false);
       }
     });
   }
+
+  // bpmOperationNextWithValidation() {
+  //   this.bpmCoreService.checkStatusBpmOperation(this.executionId).subscribe({
+  //     next: (result) => {
+  //       if (result.length > 0) {
+  //         this.dialog.open(ShowErrorValidateAlfaMainComponent, {
+  //           ...MODAL_SMALL,
+  //           data: {
+  //             errors: result,
+  //             executionId: this.executionId
+  //           }
+  //         });
+  //         this.loadingServiceService.activateLoading(false);
+  //         this.isAcceptLoading.set(false);
+  //         return;
+  //       }
+
+  //       this.executeAppraise();
+  //       this.confirmAction(
+  //         () => this.executeBpmNextBpmCore(),
+  //         '¿Está seguro que desea continuar a la siguiente tarea?',
+  //         'info'
+  //       );
+  //       this.loadingServiceService.activateLoading(false);
+  //       this.isAcceptLoading.set(false);
+  //       return;
+  //     },
+  //     error: () => {
+  //       this.loadingServiceService.activateLoading(false);
+  //       this.isAcceptLoading.set(false);
+  //     }
+  //   });
+  // }
 
   refreshComponentsDynamic(proFlow: ProFlow) {
     if (!proFlow || !proFlow.preform || !proFlow.preform.pathForm) {
@@ -302,7 +324,7 @@ export class BmpCoreComponent implements OnInit {
         return;
       }
       const components: BasicComponentTemplate[] = LISTO_FORM_BPM_CORE.filter(
-        (x) => x.pathForm.includes(pathForm)
+        (component) => component.pathForm.includes(pathForm)
       );
 
       let serviceValidation = '';
@@ -311,7 +333,12 @@ export class BmpCoreComponent implements OnInit {
       }
 
       if (!serviceValidation) {
-        this.executeBpmNextBpmCore();
+        this.loadingServiceService.activateLoading(false);
+        this.confirmAction(
+          () => this.executeBpmNextBpmCore(),
+          '¿Está seguro que desea continuar a la siguiente tarea?',
+          'info'
+        );
         return;
       }
 
@@ -363,33 +390,25 @@ export class BmpCoreComponent implements OnInit {
         allowOutsideClick: false
       }).then((result) => {
         if (result.isConfirmed) {
-          this.bpmCoreService
-            .getNextOperation(this.executionId, true)
-            .subscribe({
-              error: (error: HttpErrorResponse) =>
-                this.captureInformationSubscribeError(error),
-              next: (result: ProTaskE) => this.captureInformationBpmCore(result)
-            });
+          this.executeBpmNextService(true);
         } else if (result.isDenied) {
-          this.bpmCoreService
-            .getNextOperation(this.executionId, false)
-            .subscribe({
-              error: (error: HttpErrorResponse) =>
-                this.captureInformationSubscribeError(error),
-              next: (result: ProTaskE) => this.captureInformationBpmCore(result)
-            });
+          this.executeBpmNextService(false);
         } else {
           this.loadingServiceService.activateLoading(false);
           this.isAcceptLoading.set(false);
         }
       });
     } else {
-      this.bpmCoreService.getNextOperation(this.executionId, true).subscribe({
-        error: (error: HttpErrorResponse) =>
-          this.captureInformationSubscribeError(error),
-        next: (result: ProTaskE) => this.captureInformationBpmCore(result)
-      });
+      this.executeBpmNextService(true);
     }
+  }
+
+  executeBpmNextService(answer: boolean) {
+    this.bpmCoreService.getNextOperation(this.executionId, answer).subscribe({
+      error: (error: HttpErrorResponse) =>
+        this.captureInformationSubscribeError(error),
+      next: (result: ProTaskE) => this.captureInformationBpmCore(result)
+    });
   }
 
   previewBpmCore() {
