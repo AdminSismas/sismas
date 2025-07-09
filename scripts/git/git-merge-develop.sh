@@ -13,7 +13,7 @@ echo -n "¿Desea realizar un push al main? (s/n): " && \
 read response && \
 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') && \
 case "$response" in
-  s) echo "Realizando push al main..." && git push;;
+  s) echo "Realizando push al main..." && git push --force;;
   n) echo "Operación cancelada." ;;
   *) echo "Respuesta no válida. Operación cancelada." ;;
 esac
