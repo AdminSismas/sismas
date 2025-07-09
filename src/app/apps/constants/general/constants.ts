@@ -146,7 +146,8 @@ export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BO
 
 export const ADMIN_ROLE_LIST: string[] = ['ADMIN'];
 export const TOP_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD'];
-export const EXECUTIONERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER', 'USER_TRAM'];
+export const EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER', 'USER_TRAM'];
+export const EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER'];
 export const CERTIFICATE_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER_TRAM'];
 export const NOT_USER_SERV_AND_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER', 'USER_READ', 'GUEST'];
 export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ', 'USER_TRAM'];

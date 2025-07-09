@@ -1,5 +1,6 @@
 import {
   CERTIFICATE_USERS_ROLE_LIST,
+  EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM,
   NOT_USER_SERV_AND_USER_TRAM,
   TOP_ROLE_LIST
 } from 'src/app/apps/constants/general/constants';
@@ -185,7 +186,8 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (
         route: '/operationSupport/reports/downloadXTF',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ],
+    roles: EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM
   }
 ];
 

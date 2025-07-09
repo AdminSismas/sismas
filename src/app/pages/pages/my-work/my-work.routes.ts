@@ -1,5 +1,5 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
-import { EXECUTIONERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
+import { EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM } from 'src/app/apps/constants/general/constants';
 import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [
@@ -28,7 +28,7 @@ const routes: VexRoutes = [
       {
         path: 'tasks',
         canActivate: [RoleGuard],
-        data: { tasksRoles: EXECUTIONERS_ROLE_LIST, parameter: 'tasksRoles' },
+        data: { tasksRoles: EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM, parameter: 'tasksRoles' },
         loadChildren: () => import('./tasks/my-work-tasks.routes'),
       },
       {

@@ -1,4 +1,6 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
+import { EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM } from 'src/app/apps/constants/general/constants';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [
   {
@@ -56,6 +58,8 @@ const routes: VexRoutes = [
       },
       {
       path: 'reports',
+      canActivate: [RoleGuard],
+      data: { operationSupportReportsRoles: EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM, parameter: 'operationSupportReportsRoles' },
       children: [
         {
           path: 'operationalAnalytics',

@@ -16,7 +16,7 @@ import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, EXECUTIONERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM, NOT_GUEST_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -215,7 +215,7 @@ export class NavigationLoaderService {
                 }
               }
             ],
-            roles: EXECUTIONERS_ROLE_LIST
+            roles: EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM
           },
           ...filteredMyWork3
         ],
@@ -225,7 +225,7 @@ export class NavigationLoaderService {
         type: 'subheading',
         label: 'Apoyo operación',
         children: filteredOperationSupport,
-        roles: EXECUTIONERS_ROLE_LIST
+        roles: EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM
       },
       {
         type: 'subheading',

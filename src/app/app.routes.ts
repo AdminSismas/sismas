@@ -2,7 +2,7 @@ import { LayoutComponent } from './layouts/layout/layout.component';
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import { RoleGuard } from './guards/role.guard';
 import { authGuard } from './guards/auth.guard';
-import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, EXECUTIONERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from './apps/constants/general/constants';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM, NOT_GUEST_USERS_ROLE_LIST } from './apps/constants/general/constants';
 
 export const appRoutes: VexRoutes = [
   {
@@ -41,7 +41,7 @@ export const appRoutes: VexRoutes = [
         path: 'operationSupport',
         loadChildren: () => import('./pages/pages/operation-support/operation-support-routing.module'),
         canActivate: [RoleGuard],
-        data: { baseRoles: EXECUTIONERS_ROLE_LIST, parameter: 'baseRoles' }
+        data: { baseRoles: EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM, parameter: 'baseRoles' }
       },
       {
         path: 'openData',
