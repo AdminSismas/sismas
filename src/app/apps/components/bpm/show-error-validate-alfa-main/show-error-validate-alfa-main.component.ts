@@ -34,7 +34,7 @@ export class ShowErrorValidateAlfaMainComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: { errors: string[], executionId: string }) {}
 
   ngOnInit() {
-    if (this.defaults && this.defaults.errors.length > 0) {
+    if (this.defaults.errors && this.defaults.errors.length > 0) {
       this.listErrors = [...this.defaults.errors];
     }
 

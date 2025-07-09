@@ -218,7 +218,10 @@ export class BmpCoreComponent implements OnInit {
 
         this.dialog.open(ShowErrorValidateAlfaMainComponent, {
           ...MODAL_SMALL,
-          data: result
+          data: {
+            errors: result,
+            executionId: this.executionId
+          }
         });
         this.loadingServiceService.activateLoading(false);
         this.isAcceptLoading.set(false);
