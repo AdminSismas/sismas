@@ -47,7 +47,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ComboboxCollectionComponent } from '../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import {
   MODAL_SMALL_LARGE,
-  PAGE
+  PAGE,
+  TOP_ROLE_LIST
 } from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
@@ -91,8 +92,9 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   typeDocument = false;
   infoDoc = 'Id';
   urlQuery = '';
-  user: DecodeJwt | null = null;
+  user: DecodeJwt | null = this.userService.getUser();
   form!: FormGroup;
+  availableRoles = TOP_ROLE_LIST.includes(this.user?.role ?? '');
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -137,7 +139,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   get visibleColumns() {
     return this.columns
       .filter((column) => {
-        if (this.user?.role === 'ADMIN') {
+        if (this.availableRoles) {
           return column.visible;
         }
         return column.visible && column.property !== 'actions';
@@ -166,7 +168,6 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       document: ['', [Validators.required]],
       typeNumberDocument: ['', [Validators.required]]
     });
-    this.user = this.userService.getUser();
     this.dataSource = new MatTableDataSource();
 
     this.refreshData();
@@ -223,7 +224,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // creación de personas
   createCustomer() {
-    if (this.user?.role !== 'ADMIN' && this.user?.role !== 'USER_LEAD') return;
+    if (!this.availableRoles) return;
 
     this.dialog
       .open(CreatePeopleComponent, {
@@ -244,7 +245,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
 
   // actualización de personas
   updateCustomer(customer: People) {
-    if (this.user?.role !== 'ADMIN') return;
+    if (!this.availableRoles) return;
 
     this.dialog
       .open(CreatePeopleComponent, {

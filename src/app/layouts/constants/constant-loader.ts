@@ -1,7 +1,18 @@
-import { BASIC_USERS_ROLE_LIST, CERTIFICATE_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
-import { NavigationDropdown, NavigationLink } from '../../core/navigation/navigation-item.interface';
+import {
+  BASIC_USERS_ROLE_LIST,
+  CERTIFICATE_USERS_ROLE_LIST,
+  NOT_USER_SERV,
+  TOP_ROLE_LIST
+} from 'src/app/apps/constants/general/constants';
+import {
+  NavigationDropdown,
+  NavigationLink
+} from '../../core/navigation/navigation-item.interface';
 
-export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[] = [
+export const NAVIGATION_LOADER_MY_WORK_1: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
   {
     type: 'link',
     label: 'Búsqueda catastral',
@@ -25,10 +36,13 @@ export const NAVIGATION_LOADER_MY_WORK_1: (NavigationLink | NavigationDropdown)[
     label: 'Soporte',
     route: '/myWork/support',
     icon: 'mat:contact_support'
-  },
+  }
 ];
 
-export const NAVIGATION_LOADER_MY_WORK_2: (NavigationLink | NavigationDropdown)[] = [
+export const NAVIGATION_LOADER_MY_WORK_2: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
   {
     type: 'dropdown',
     label: 'Tareas',
@@ -73,29 +87,38 @@ export const NAVIGATION_LOADER_MY_WORK_2: (NavigationLink | NavigationDropdown)[
         }
       }
     ]
-  },
+  }
 ];
-export const NAVIGATION_LOADER_MY_WORK_3: (NavigationLink | NavigationDropdown)[] = [
-//   {
-//     type: 'link',
-//     label: 'Búsqueda catastral',
-//     route: '/myWork/cadastralSearch',
-//     icon: 'mat:search'
-//   },
-//   {
-//     type: 'link',
-//     label: 'Radicar trámite',
-//     route: '/myWork/fileProcedure',
-//     icon: 'mat:app_registration'
-//   },
+export const NAVIGATION_LOADER_MY_WORK_3: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
+  //   {
+  //     type: 'link',
+  //     label: 'Búsqueda catastral',
+  //     route: '/myWork/cadastralSearch',
+  //     icon: 'mat:search'
+  //   },
+  //   {
+  //     type: 'link',
+  //     label: 'Radicar trámite',
+  //     route: '/myWork/fileProcedure',
+  //     icon: 'mat:app_registration'
+  //   },
 ];
-export const NAVIGATION_LOADER_MY_WORK: (NavigationLink | NavigationDropdown)[] = [
+export const NAVIGATION_LOADER_MY_WORK: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
   ...NAVIGATION_LOADER_MY_WORK_1,
   ...NAVIGATION_LOADER_MY_WORK_2,
-  ...NAVIGATION_LOADER_MY_WORK_3,
+  ...NAVIGATION_LOADER_MY_WORK_3
 ];
 
-export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDropdown)[] = [
+export const NAVIGATION_LOADER_OPERATION_SUPPORT: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
   {
     type: 'link',
     label: 'Personas',
@@ -164,12 +187,13 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (NavigationLink | NavigationDr
         routerLinkActiveOptions: { exact: true }
       }
     ]
-
-  },
-
+  }
 ];
 
-export const NAVIGATION_LOADER_OPEN_DATA: (NavigationLink | NavigationDropdown)[] = [
+export const NAVIGATION_LOADER_OPEN_DATA: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
   {
     type: 'link',
     label: 'Mapas generales',
@@ -199,11 +223,15 @@ export const NAVIGATION_LOADER_OPEN_DATA: (NavigationLink | NavigationDropdown)[
         route: '/openData/downloads/alphanumeric',
         routerLinkActiveOptions: { exact: true }
       }
-    ]
+    ],
+    roles: TOP_ROLE_LIST
   }
 ];
 
-export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropdown)[] = [
+export const NAVIGATION_LOADER_PUBLIC_SERVICE: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
   {
     type: 'dropdown',
     label: 'Ciudadanos',
@@ -233,7 +261,8 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropd
         route: '/publicService/citizens/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
-    ], roles: BASIC_USERS_ROLE_LIST
+    ],
+    roles: NOT_USER_SERV
   },
   {
     type: 'dropdown',
@@ -257,7 +286,10 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (NavigationLink | NavigationDropd
   }
 ];
 
-export const NAVIGATION_LOADER_CONFIGURATION: (NavigationLink | NavigationDropdown)[] = [
+export const NAVIGATION_LOADER_CONFIGURATION: (
+  | NavigationLink
+  | NavigationDropdown
+)[] = [
   {
     type: 'dropdown',
     label: 'Catastral',
@@ -346,7 +378,8 @@ export const NAVIGATION_LOADER_CONFIGURATION: (NavigationLink | NavigationDropdo
       {
         type: 'link',
         label: 'Documentos asociados a trámites',
-        route: '/configuration/cadastralProcedures/documentsAssociatedProcedures',
+        route:
+          '/configuration/cadastralProcedures/documentsAssociatedProcedures',
         routerLinkActiveOptions: { exact: true }
       },
       {
@@ -365,30 +398,31 @@ export const NAVIGATION_LOADER_CONFIGURATION: (NavigationLink | NavigationDropdo
   }
 ];
 
-export const NAVIGATION_LOADER_AUDIT: (NavigationLink | NavigationDropdown)[] = [
-  {
-    type: 'link',
-    label: 'Registros de acceso',
-    route: '/audit/accessRecords',
-    icon: 'mat:search'
-  },
-  {
-    type: 'link',
-    label: 'Registros de gestión catastral',
-    route: '/audit/cadastralManagementRecords',
-    icon: 'mat:app_registration'
-  }
-];
+export const NAVIGATION_LOADER_AUDIT: (NavigationLink | NavigationDropdown)[] =
+  [
+    {
+      type: 'link',
+      label: 'Registros de acceso',
+      route: '/audit/accessRecords',
+      icon: 'mat:search'
+    },
+    {
+      type: 'link',
+      label: 'Registros de gestión catastral',
+      route: '/audit/cadastralManagementRecords',
+      icon: 'mat:app_registration'
+    }
+  ];
 
-export const NAVIGATION_THEMATIC_MAP: (NavigationLink | NavigationDropdown)[] = [
-  {
-    type: 'link',
-    label: 'Mapa',
-    route: '/thematicMap/map',
-    icon: 'mat:map'
-  },
-];
-
+export const NAVIGATION_THEMATIC_MAP: (NavigationLink | NavigationDropdown)[] =
+  [
+    {
+      type: 'link',
+      label: 'Mapa',
+      route: '/thematicMap/map',
+      icon: 'mat:map'
+    }
+  ];
 
 // export const NAVIGATION_LOADER_IA: Array<NavigationLink | NavigationDropdown> = [
 //   {

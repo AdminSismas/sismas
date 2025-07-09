@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { NavigationItem } from './navigation-item.interface';
+import { NavigationItem, NavigationLink, NavigationDropdown } from './navigation-item.interface';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import {
   NAVIGATION_LOADER_AUDIT,
@@ -16,7 +16,7 @@ import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, EXECUTIONERS_ROLE_LIST, NOT_GUEST_USERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -137,18 +137,30 @@ export class NavigationLoaderService {
     }
   }
 
-  loadInformationNavigation(role: string): void {
-    const filteredPublicService = NAVIGATION_LOADER_PUBLIC_SERVICE.filter(
-      (item) => {
-        return !item.roles || item.roles.includes(role);
+  private filterNavigationItemsByRole(items: (NavigationLink | NavigationDropdown)[], role: string): (NavigationLink | NavigationDropdown)[] {
+    return items.filter((item) => {
+      if (item.roles && !item.roles.includes(role)) {
+        return false;
       }
-    );
 
-    const filteredThematicMapService = NAVIGATION_THEMATIC_MAP.filter(
-      (item) => {
-        return !item.roles || item.roles.includes(role);
+      if (item.type === 'dropdown' && item.children) {
+        item.children = this.filterNavigationItemsByRole(item.children, role);
+        return item.children.length > 0;
       }
-    );
+
+      return true;
+    });
+  }
+
+  loadInformationNavigation(role: string): void {
+    const filteredPublicService = this.filterNavigationItemsByRole(NAVIGATION_LOADER_PUBLIC_SERVICE, role);
+    const filteredThematicMapService = this.filterNavigationItemsByRole(NAVIGATION_THEMATIC_MAP, role);
+    const filteredOperationSupport = this.filterNavigationItemsByRole(NAVIGATION_LOADER_OPERATION_SUPPORT, role);
+    const filteredOpenData = this.filterNavigationItemsByRole(NAVIGATION_LOADER_OPEN_DATA, role);
+    const filteredConfiguration = this.filterNavigationItemsByRole(NAVIGATION_LOADER_CONFIGURATION, role);
+    const filteredAudit = this.filterNavigationItemsByRole(NAVIGATION_LOADER_AUDIT, role);
+    const filteredMyWork1 = this.filterNavigationItemsByRole(NAVIGATION_LOADER_MY_WORK_1, role);
+    const filteredMyWork3 = this.filterNavigationItemsByRole(NAVIGATION_LOADER_MY_WORK_3, role);
 
     const currentCounters = this.taskCounters.value;
 
@@ -157,7 +169,7 @@ export class NavigationLoaderService {
         type: 'subheading',
         label: 'Mi trabajo',
         children: [
-          ...NAVIGATION_LOADER_MY_WORK_1,
+          ...filteredMyWork1,
 
           {
             type: 'dropdown',
@@ -202,22 +214,23 @@ export class NavigationLoaderService {
                   textClass: 'text-white'
                 }
               }
-            ]
+            ],
+            roles: EXECUTIONERS_ROLE_LIST
           },
-          ...NAVIGATION_LOADER_MY_WORK_3
+          ...filteredMyWork3
         ],
         roles: NOT_GUEST_USERS_ROLE_LIST
       },
       {
         type: 'subheading',
         label: 'Apoyo operación',
-        children: NAVIGATION_LOADER_OPERATION_SUPPORT,
-        roles: NOT_GUEST_USERS_ROLE_LIST
+        children: filteredOperationSupport,
+        roles: EXECUTIONERS_ROLE_LIST
       },
       {
         type: 'subheading',
         label: 'Datos abiertos',
-        children: NAVIGATION_LOADER_OPEN_DATA,
+        children: filteredOpenData,
         roles: BASIC_USERS_ROLE_LIST
       },
       {
@@ -235,13 +248,13 @@ export class NavigationLoaderService {
       {
         type: 'subheading',
         label: 'Configuración',
-        children: NAVIGATION_LOADER_CONFIGURATION,
+        children: filteredConfiguration,
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'subheading',
         label: 'Auditoría',
-        children: NAVIGATION_LOADER_AUDIT,
+        children: filteredAudit,
         roles: ADMIN_ROLE_LIST
       },
       {
@@ -258,9 +271,20 @@ export class NavigationLoaderService {
         roles: ADMIN_ROLE_LIST
       }
     ];
+
     const accessibleNavigation = listItem.filter(
       (item) => !item.roles || item.roles.includes(role)
-    );
+    ).map(item => {
+      if (item.type === 'subheading' && item.children) {
+        item.children = this.filterNavigationItemsByRole(item.children, role);
+      }
+      return item;
+    }).filter(item => {
+      if (item.type === 'subheading') {
+        return item.children.length > 0;
+      }
+      return true;
+    });
 
     this.nextItems(accessibleNavigation);
   }

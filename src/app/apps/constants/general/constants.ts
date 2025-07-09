@@ -143,11 +143,14 @@ export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATZ = 'Parque_Cementerio.Matriz';
 export const TYPE_OPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
 export const TYPE_OPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
 export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
-export const BASIC_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ', 'GUEST'];
-export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ'];
-export const CERTIFICATE_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV'];
-export const ADMIN_ROLE_LIST: string[] = ['ADMIN'];
 
+export const ADMIN_ROLE_LIST: string[] = ['ADMIN'];
+export const TOP_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD'];
+export const EXECUTIONERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER'];
+export const CERTIFICATE_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV'];
+export const NOT_USER_SERV: string[] = ['ADMIN', 'USER_LEAD', 'USER', 'USER_READ', 'GUEST'];
+export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ'];
+export const BASIC_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ', 'GUEST'];
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {

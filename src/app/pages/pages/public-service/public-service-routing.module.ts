@@ -1,4 +1,6 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
+import { NOT_USER_SERV } from 'src/app/apps/constants/general/constants';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [
   {
@@ -11,6 +13,9 @@ const routes: VexRoutes = [
       },
       {
         path: 'citizens',
+        canActivate: [RoleGuard],
+        canActivateChild: [RoleGuard],
+        data: { citizenRoles: NOT_USER_SERV, parameter: 'citizenRoles' },
         children:[
           {
             path: 'validateAdministrativeActs',
@@ -70,6 +75,10 @@ const routes: VexRoutes = [
       },
     ]
   },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 export default routes;

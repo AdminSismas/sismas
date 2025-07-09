@@ -1,4 +1,6 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
+import { EXECUTIONERS_ROLE_LIST } from 'src/app/apps/constants/general/constants';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [
   {
@@ -25,7 +27,9 @@ const routes: VexRoutes = [
       },
       {
         path: 'tasks',
-        loadChildren: () => import('./tasks/my-work-tasks.routes')
+        canActivate: [RoleGuard],
+        data: { tasksRoles: EXECUTIONERS_ROLE_LIST, parameter: 'tasksRoles' },
+        loadChildren: () => import('./tasks/my-work-tasks.routes'),
       },
       {
         path: 'manage',

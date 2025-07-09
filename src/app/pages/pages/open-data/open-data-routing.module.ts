@@ -1,4 +1,6 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
+import { TOP_ROLE_LIST } from 'src/app/apps/constants/general/constants';
+import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [
   {
@@ -21,6 +23,8 @@ const routes: VexRoutes = [
       },
       {
         path: 'downloads',
+        canActivate: [RoleGuard],
+        data: { openDataDownloadRoles: TOP_ROLE_LIST, parameter: 'openDataDownloadRoles' },
         children:[
           {
             path: 'geodatabase',

@@ -7,7 +7,7 @@ import { DecodeJwt } from '../apps/interfaces/user-details/user.model';
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const userService = inject(UserService)
+  const userService = inject(UserService);
 
   if (authService.isAuthenticated()) {
     userService.setUser(authService.getDecodedToken() as DecodeJwt);
