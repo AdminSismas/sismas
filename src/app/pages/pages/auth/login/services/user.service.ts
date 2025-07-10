@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { DecodeJwt, UserDetails, UserRole } from 'src/app/apps/interfaces/user-details/user.model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  DecodeJwt,
+  UserDetails,
+  UserRole
+} from 'src/app/apps/interfaces/user-details/user.model';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environments';
-
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +16,8 @@ export class UserService {
   private currentUserSubject: BehaviorSubject<DecodeJwt | null>;
   public currentUser: Observable<DecodeJwt | null>;
   private currentUserDataSubject: BehaviorSubject<number | null>;
-  public currentUserData: Observable<number| null>;
-  constructor(
-    private http: HttpClient
-  ) {
+  public currentUserData: Observable<number | null>;
+  constructor(private http: HttpClient) {
     const token = sessionStorage.getItem('token');
     if (token) {
       const savedUser: DecodeJwt = jwtDecode(token);
@@ -62,9 +63,7 @@ export class UserService {
       let user: DecodeJwt | null = null;
       this.currentUser.subscribe({
         next: (res) => {
-
           user = res;
-
         }
       });
 
@@ -76,10 +75,8 @@ export class UserService {
     return this.currentUserDataSubject.value;
   }
 
-
-
   getUserInfo(username: string): Observable<UserDetails> {
-    const url: string = `${environment.url}:${environment.port}${environment.bpm_user_info}${username}`;
+    const url = `${environment.url}:${environment.port}${environment.bpmUser.value}${environment.bpmUser.username}${username}`;
 
     return this.http.get<UserDetails>(url);
   }

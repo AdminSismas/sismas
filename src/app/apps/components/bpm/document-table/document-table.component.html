@@ -1,18 +1,20 @@
-<div
-  class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
-  mat-dialog-title
->
-  <h2 class="headline m-0 flex-auto">Documentos</h2>
-  <button
-    class="text-secondary"
-    mat-dialog-close
-    mat-icon-button
-    type="button"
+<header class="sticky top-0 z-10">
+  <div
+    class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
+    mat-dialog-title
   >
-    <mat-icon svgIcon="mat:close"></mat-icon>
-  </button>
-</div>
-<mat-divider class="text-border"></mat-divider>
+    <h2 class="headline m-0 flex-auto">Documentos</h2>
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="text-border"></mat-divider>
+</header>
 <mat-dialog-content class="max-h-none">
   @if (mode() === "edition") {
     <div class="header-container m-2">

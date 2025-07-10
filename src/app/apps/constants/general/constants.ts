@@ -73,7 +73,7 @@ export const CONSTANT_TYPE_PARTICIPATION_THIRDPARTY = 'Tercero Afectado';
 
 export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
 export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
-export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
+export const PAGE_OPTION_10_20_50_100: number[] = [5, 10, 20, 50, 100];
 
 export const PAGE_OPTION_UNIQUE_5 = 5;
 export const PAGE_OPTION_UNIQUE_7 = 7;

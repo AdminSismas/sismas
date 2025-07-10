@@ -50,9 +50,7 @@ export const environment = {
   bpm_bpmCore: "/bpm/bpm-core/",
   bpm_email_exists: "/exists/email/",
   bpm_individual_exists: "/exists/individual/",
-  bpm_user_info: "/bpmUser/username/",
   bpm_username_exists: "/exists/username/",
-  bpm_users: "/bpmUser",
   bpmAttachment: {
     count: "/count",
     proExecution: "proExecution/",
@@ -89,6 +87,11 @@ export const environment = {
     value: "/bpmProcess"
   },
   bpmResolution: "/bpmResolution",
+  bpmUser: {
+    text: "/text",
+    username: "/username",
+    value: "/bpmUser"
+  },
   calificationUB: "/calificationUB",
   cancel: "/cancel",
   ccColindante: "/ccColindante/",

@@ -8,7 +8,7 @@ import { environment as envi } from 'src/environments/environments';
 })
 export class PasswordService {
 
-  private base_url = `${envi.url}:${envi.port}${envi.bpm_users}${envi.password}`;
+  private base_url = `${envi.url}:${envi.port}${envi.bpmUser.value}${envi.password}`;
 
   constructor(
     private http: HttpClient

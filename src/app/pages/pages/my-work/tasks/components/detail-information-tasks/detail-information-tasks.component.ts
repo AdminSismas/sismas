@@ -416,7 +416,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   openDialog(type: string): void {
     if (type === 'documents') {
       this.dialog.open(DocumentTableComponent, {
-        width: '80%',
+        ...MODAL_MEDIUM,
         data: {
           executionId: this.data?.value?.executionId
         }

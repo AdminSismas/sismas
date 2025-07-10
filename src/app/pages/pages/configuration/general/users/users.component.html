@@ -32,16 +32,9 @@
           matInput
           placeholder="Filtrar usuario"
           [formControl]="searchCtrl"
+          (keydown.enter)="onEnterSearch()"
         />
       </mat-form-field>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="searchUser()"
-      >
-        <mat-icon svgIcon="mat:search"></mat-icon>
-        Buscar
-      </button>
     </div>
     <table
       mat-table
@@ -60,11 +53,11 @@
             mat-cell
             *matCellDef="let element"
           >
-            {{
-              column.name !== "fullName"
-                ? showTableValue(element[column.name], column.name)
-                : (element[column.name] | titlecase)
-            }}
+            @if (column.name !== "fullName") {
+              {{ showTableValue(element[column.name], column.name) }}
+            } @else {
+              {{ element[column.name] | titlecase }}
+            }
           </td>
         </ng-container>
       }

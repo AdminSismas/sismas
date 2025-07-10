@@ -10,7 +10,7 @@ import { UserDetails } from '../../interfaces/user-details/user.model';
 })
 export class DigitalizedSignaturesService {
 
-  private base_url = `${envi.url}:${envi.port}${envi.bpm_users}`;
+  private base_url = `${envi.url}:${envi.port}${envi.bpmUser.value}`;
 
   constructor(
     private http: HttpClient

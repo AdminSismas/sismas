@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, computed, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,8 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -15,20 +24,23 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { Observable, ReplaySubject } from 'rxjs';
-import { User, InformationPageableUser } from 'src/app/apps/interfaces/users/user';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import {
+  User,
+  InformationPageableUser
+} from 'src/app/apps/interfaces/users/user';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
-import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { PAGE_OPTION_10_20_50_100 } from '../../../../../apps/constants/general/constants';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'vex-users',
   standalone: true,
   imports: [
-    CommonModule,
+    TitleCasePipe,
     ReactiveFormsModule,
     /* Material */
     MatIconModule,
@@ -42,16 +54,16 @@ import { PAGE_OPTION_10_20_50_100 } from '../../../../../apps/constants/general/
     VexBreadcrumbsComponent,
     VexSecondaryToolbarComponent,
     VexPageLayoutComponent,
-    VexPageLayoutContentDirective,
+    VexPageLayoutContentDirective
     /* Custom */
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
 export class UsersComponent implements OnInit, AfterViewInit {
-
   public isDesktop$: Observable<boolean> = this.layoutSerices.isDesktop$;
-  public subject$: ReplaySubject<InformationPageableUser> = new ReplaySubject<InformationPageableUser>(1);
+  public subject$: ReplaySubject<InformationPageableUser> =
+    new ReplaySubject<InformationPageableUser>(1);
   public actionBtns = computed(() => {
     return [
       {
@@ -62,8 +74,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
     ];
   });
   public searchCtrl: FormControl = new FormControl();
+  private cancelSearch$ = new Subject<void>();
 
-  public columns: { name: string, label: string }[] = USER_COLUMNS;
+  public columns: { name: string; label: string }[] = USER_COLUMNS;
   public dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   public displayedColumns: string[] = [];
   public totalElements = 0;
@@ -78,14 +91,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private readonly layoutSerices: VexLayoutService,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getUsers();
 
     this.displayedColumns = this.columns.map((column) => column.name);
     this.displayedColumns.push('actions');
+
+    this.setupSearchSubscription();
   }
 
   ngAfterViewInit(): void {
@@ -95,20 +109,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   getUsers(page = 0, size = 10): void {
-    this.userService.getUsers(page, size)
-      .subscribe({
-        next: (data: InformationPageableUser) => {
-          this.dataSourceFormat(data);
-          this.totalElements = data.totalElements;
-          this.page = page;
-          this.pageSize = size;
-        },
-        error: (error: any) => {
-          this.snackbar.open('Error al obtener usuarios', 'CERRAR', {
-            duration: 10000,
-          });
-          throw error;
-        }
+    this.userService
+      .getUsers(page, size)
+      .subscribe((data: InformationPageableUser) => {
+        this.dataSourceFormat(data);
+        this.totalElements = data.totalElements;
+        this.page = page;
+        this.pageSize = size;
       });
   }
 
@@ -122,63 +129,86 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   pageEvent(pageEvent: PageEvent): void {
+    if (this.searchCtrl.value) {
+      this.searchUser(pageEvent.pageIndex, pageEvent.pageSize);
+      return;
+    }
     this.getUsers(pageEvent.pageIndex, pageEvent.pageSize);
   }
 
-  showTableValue(value: any, key: string): string {
+  showTableValue(value: string | boolean, key: string): string {
     if (key === 'enabled') {
       return value ? 'Activo' : 'Inactivo';
     }
-    return value;
+    return value as string;
   }
 
   openDialogAddUser(): void {
-    this.dialog.open(CreateUsersComponent, {
-      data: {
-        mode: 'create'
-      }
-    })
+    this.dialog
+      .open(CreateUsersComponent, {
+        data: {
+          mode: 'create'
+        }
+      })
       .afterClosed()
-      .subscribe((result: InformationPageableUser) => {
-        setTimeout(() =>{
+      .subscribe(() => {
+        setTimeout(() => {
           this.getUsers(this.page, this.pageSize);
-        } , 300);
+        }, 300);
       });
   }
 
   actionMenuHandler(action: string, row: InformationPageableUser) {
     if (action === 'edit') {
-      this.dialog.open(CreateUsersComponent, {
-        data: {
-          ...row,
-          mode: 'edit'
-        }
-      })
+      this.dialog
+        .open(CreateUsersComponent, {
+          data: {
+            ...row,
+            mode: 'edit'
+          }
+        })
         .afterClosed()
-        .subscribe((result: InformationPageableUser) => {
-          setTimeout(() =>{
+        .subscribe(() => {
+          setTimeout(() => {
             this.getUsers(this.page, this.pageSize);
-          } , 300);
+          }, 300);
         });
     }
   }
 
-  searchUser() {
+  searchUser(page = 0, size = this.pageSize) {
     if (!this.searchCtrl.value) {
       this.getUsers();
       return;
     }
-    this.userService.searchUser(this.searchCtrl.value)
-      .subscribe({
-        next: (res) => {
-          this.dataSource.data = [res];
-        },
-        error: (error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            this.snackbar.open('Usuario no encontrado', 'CERRAR', { duration: 10000 });
-          }
-          throw error;
-        }
+
+    const pageConfig = { page, size};
+    this.userService.searchUser(this.searchCtrl.value, pageConfig).subscribe((res) => {
+      this.dataSource.data = res.content as User[];
+      this.totalElements = res.totalElements ?? 0;
+      this.page = page;
+      this.pageSize = size;
+    });
+  }
+
+  onEnterSearch() {
+    this.cancelSearch$.next();
+    this.searchUser();
+
+    setTimeout(() => {
+      this.setupSearchSubscription();
+    }, 0);
+  }
+
+  private setupSearchSubscription() {
+    this.searchCtrl.valueChanges
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        takeUntil(this.cancelSearch$)
+      )
+      .subscribe(() => {
+        this.searchUser();
       });
   }
 }
