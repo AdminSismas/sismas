@@ -51,6 +51,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { FilterCadastralSearchComponent } from './filter-cadastral-search/filter-cadastral-search.component';
 import {
+  CAN_RESOLVE_LIST,
   INFORMATION_HISTORICAL,
   LIST_SCHEMAS_CONTROL_HISTORY_PRIME,
   LIST_SCHEMAS_CONTROL_MAIN,
@@ -117,7 +118,7 @@ export class TableCadastralSearchComponent
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
-  user: DecodeJwt | null = null;
+  user: DecodeJwt | null = this.userService.getUser();
   setNewEndPoint = false;
 
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES;
@@ -129,6 +130,7 @@ export class TableCadastralSearchComponent
   titleMenu = 'Búsqueda avanzada';
   principalTitleMenu = 'Búsqueda avanzada';
   seeAction = true;
+  canResolve = CAN_RESOLVE_LIST.includes(this.user?.role ?? '');
   seeActionHistory = true;
 
   dataSource!: MatTableDataSource<BaunitHead>;

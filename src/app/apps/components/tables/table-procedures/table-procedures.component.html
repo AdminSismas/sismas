@@ -146,7 +146,6 @@
               type="text"
             />
           </mat-form-field>
-
         </div>
 
         <!-- Tabla de dominios -->
@@ -157,101 +156,105 @@
           class="w-full"
           matSort
         >
-          <!-- View button basic -->
-          <ng-container matColumnDef="detailInfoProcedures">
-            <th
-              mat-header-cell
-              *matHeaderCellDef
-            >
-              Detalle
-            </th>
-            <!-- Encabezado -->
-            <td
-              mat-cell
-              *matCellDef="let row"
-            >
-              <button
-                (click)="informationDetail(row)"
-                mat-icon-button
-                title="Detalle del tramite"
-              >
-                <mat-icon
-                  class="icon-sm"
-                  svgIcon="mat:remove_red_eye"
-                ></mat-icon>
-              </button>
-            </td>
-          </ng-container>
+
           <!-- Text Columns -->
           @for (column of columns; track column.property) {
-            @if (column.property === "actions") {
-              <ng-container [matColumnDef]="column.property">
-                <th
-                  *matHeaderCellDef
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                >
-                  <button
-                    [matMenuTriggerFor]="menu"
-                    [matMenuTriggerData]="{ row: row }"
-                    mat-icon-button
-                    title="Acciones de trámite"
-                    (click)="filteredActions(row)"
+            @switch (column.type) {
+              @case ("button") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                  >
+                    Detalle
+                  </th>
+                  <td
+                    mat-cell
+                    *matCellDef="let row"
+                  >
+                    <button
+                      (click)="informationDetail(row)"
+                      mat-icon-button
+                      title="Detalle del tramite"
+                    >
+                      <mat-icon
+                        class="icon-sm"
+                        svgIcon="mat:remove_red_eye"
+                      ></mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+              }
+              @case ("text") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                  >
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              }
+              @case ("date") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
                   >
                     <mat-icon
-                      class="icon-sm"
-                      svgIcon="mat:more_horiz"
+                      matIconPrefix
+                      svgIcon="mat:picture_as_pdf"
+                      class="w-5 h-5 p-0 items-center justify-center text-red-600"
                     ></mat-icon>
-                  </button>
-                </td>
-              </ng-container>
-            } @else if (column.type === "text") {
-              <ng-container [matColumnDef]="column.property">
-                <th
-                  *matHeaderCellDef
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                >
-                  {{ row[column.property] }}
-                </td>
-              </ng-container>
-            } @else if (column.type === "date") {
-              <ng-container [matColumnDef]="column.property">
-                <th
-                  *matHeaderCellDef
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                >
-                  <mat-icon
-                    matIconPrefix
-                    *ngIf="column.property === 'originalFileName'"
-                    svgIcon="mat:picture_as_pdf"
-                    class="w-5 h-5 p-0 items-center justify-center text-red-600"
-                  ></mat-icon>
-                  {{ row[column.property] | date: "YYYY-MM-dd" }}
-                </td>
-              </ng-container>
+                    {{ row[column.property] | date: "YYYY-MM-dd" }}
+                  </td>
+                </ng-container>
+              }
+              @case ("operationType") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                  >
+                    <button
+                      [matMenuTriggerFor]="menu"
+                      [matMenuTriggerData]="{ row: row }"
+                      mat-icon-button
+                      title="Acciones de trámite"
+                      (click)="filteredActions(row)"
+                    >
+                      <mat-icon
+                        class="icon-sm"
+                        svgIcon="mat:more_horiz"
+                      ></mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+              }
             }
           }
 

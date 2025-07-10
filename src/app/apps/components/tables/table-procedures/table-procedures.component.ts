@@ -205,7 +205,7 @@ export class TableProceduresComponent implements OnInit, OnChanges {
       }
       return column.visible && (column.property !== 'actions' || validUser);
     });
-
+    console.log(columnsFiltered.map((column) => column.property));
     return columnsFiltered.map((column) => column.property);
   }
 
@@ -625,6 +625,8 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   }
 
   reassignProcedure(row: ProceduresCollection) {
+    if (!this.userRole || !USERS_ACTIONS_ENABLED.includes(this.userRole)) return;
+
     this.dialog
       .open(ReassignProcedureComponent, {
         ...MODAL_SMALL,

@@ -136,7 +136,7 @@
                   svgIcon="mat:info"
                 ></mat-icon>
               </button>
-              @if (seeAction && user?.role !== "USER_READ") {
+              @if (seeAction && canResolve) {
                 <button
                   (click)="isBaunitValid(row)"
                   class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"

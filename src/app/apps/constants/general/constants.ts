@@ -56,7 +56,6 @@ export const RULE_PAGE_HISTORICAL = 'historicalInformation';
 export const INFORMATION_HISTORICAL = 'Información histórica';
 export const INFORMATION_NOT_FOUND = 'Información No disponible';
 
-
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
 export const PAGE_SIZE_TABLE_UNIQUE = 10;
 export const PAGE_SIZE_SORT = 5;
@@ -139,19 +138,20 @@ export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATRIZ = '(Parque cementerio) Matri
 export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_ = 'Parque_Cementerio.';
 export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATZ = 'Parque_Cementerio.Matriz';
 
-
 export const TYPE_OPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
 export const TYPE_OPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
 export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
 
 export const ADMIN_ROLE_LIST: string[] = ['ADMIN'];
-export const TOP_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD'];
-export const EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER', 'USER_TRAM'];
-export const EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER'];
-export const CERTIFICATE_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER_TRAM'];
-export const NOT_USER_SERV_AND_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER', 'USER_READ', 'GUEST'];
-export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ', 'USER_TRAM'];
-export const BASIC_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_SERV', 'USER', 'USER_READ', 'GUEST', 'USER_TRAM'];
+export const TOP_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD'];
+export const MODIFY_PEOPLE: string[] = ['ADMIN', 'USER_LEAD'];
+export const EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER', 'USER_TRAM'];
+export const CAN_RESOLVE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_TRAM', 'USER_SERV', 'USER'];
+export const EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER'];
+export const CERTIFICATE_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_SERV', 'USER_TRAM'];
+export const NOT_USER_SERV_AND_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER', 'USER_READ', 'GUEST'];
+export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_SERV', 'USER', 'USER_READ', 'USER_TRAM'];
+export const BASIC_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_SERV', 'USER', 'USER_READ', 'GUEST', 'USER_TRAM'];
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
@@ -212,6 +212,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   }
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
+
 export const TABLE_COLUMN_DOCUMENT_ASSOCIATION: TableColumn<OutFormatModel>[] = [
   {
     label: 'ID',
@@ -1248,7 +1249,6 @@ export const CONSTANTE_PIN_NOTICE = 'Fijar Aviso';
 export const LIST_NOTIFICATIONS: string[] = [CONSTANTE_ADVERTISEMENT, CONSTANTE_UNPIN_NOTICE, CONSTANTE_PIN_NOTICE];
 
 export const LIST_NOTICE_NOTIFICATIONS: string[] = [CONSTANTE_UNPIN_NOTICE, CONSTANTE_PIN_NOTICE];
-
 
 export const LIST_CITATION_AND_NOTICE_TABLE_MENU: ProcessParticipantTableMenu[] = [
   {

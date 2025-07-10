@@ -47,9 +47,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ComboboxCollectionComponent } from '../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import {
   MODAL_SMALL_LARGE,
-  PAGE,
-  TOP_ROLE_LIST
-} from '../../../../apps/constants/general/constants';
+  MODIFY_PEOPLE,
+  PAGE} from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../auth/login/services/user.service';
@@ -94,7 +93,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   urlQuery = '';
   user: DecodeJwt | null = this.userService.getUser();
   form!: FormGroup;
-  availableRoles = TOP_ROLE_LIST.includes(this.user?.role ?? '');
+  availableRoles = MODIFY_PEOPLE.includes(this.user?.role ?? '');
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
