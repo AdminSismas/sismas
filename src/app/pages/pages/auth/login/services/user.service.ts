@@ -76,7 +76,7 @@ export class UserService {
   }
 
   getUserInfo(username: string): Observable<UserDetails> {
-    const url = `${environment.url}:${environment.port}${environment.bpmUser.value}${environment.bpmUser.username}${username}`;
+    const url = `${environment.url}:${environment.port}${environment.bpmUser.value}${environment.bpmUser.username}/${username}`;
 
     return this.http.get<UserDetails>(url);
   }
