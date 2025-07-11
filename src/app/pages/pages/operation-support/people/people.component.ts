@@ -1,29 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  AfterViewInit,
   Component,
-  Input,
   OnInit,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+  computed,
+  inject} from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
+  FormControl,
   ReactiveFormsModule,
-  UntypedFormControl,
-  Validators
+  UntypedFormControl
 } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
-  MatPaginator,
   MatPaginatorModule,
   PageEvent
 } from '@angular/material/paginator';
@@ -32,10 +24,16 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { People as People } from '../../../../apps/interfaces/users/people.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable, ReplaySubject, lastValueFrom } from 'rxjs';
+import {
+  Observable,
+  ReplaySubject,
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+  lastValueFrom,
+  takeUntil
+} from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
-import { MatSort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 
@@ -43,12 +41,12 @@ import { CreatePeopleComponent } from './create-people/create-people.component';
 
 // imports from service people
 import { PeopleService } from '../../../../apps/services/users/people.service';
-import { MatSelectModule } from '@angular/material/select';
-import { ComboboxCollectionComponent } from '../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import {
   MODAL_SMALL_LARGE,
   MODIFY_PEOPLE,
-  PAGE} from '../../../../apps/constants/general/constants';
+  PAGE,
+  PEOPLE_TABLE_COLUMNS
+} from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../auth/login/services/user.service';
@@ -59,17 +57,13 @@ import Swal from 'sweetalert2';
   selector: 'vex-people',
   standalone: true,
   imports: [
-    ComboboxCollectionComponent,
-    FormsModule,
     MatButtonModule,
-    MatButtonToggleModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    MatIconModule,
+    MatIcon,
     MatInputModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatSelectModule,
     MatTableModule,
     ReactiveFormsModule,
     VexBreadcrumbsComponent,
@@ -79,8 +73,14 @@ import Swal from 'sweetalert2';
   templateUrl: './people.component.html',
   styleUrl: './people.component.scss'
 })
-export class PeopleComponent implements OnInit, AfterViewInit {
-  layoutCtrl = new UntypedFormControl('boxed');
+export class PeopleComponent implements OnInit {
+  // Properties
+  columns: TableColumn<People>[] = PEOPLE_TABLE_COLUMNS;
+
+  // Injects
+  dialog = inject(MatDialog);
+  peopleService = inject(PeopleService);
+  userService = inject(UserService);
 
   // datos principales
   subject$: ReplaySubject<People[]> = new ReplaySubject<People[]>(1);
@@ -88,54 +88,13 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   customers: People[] = [];
 
   // para enviarlo al formulario
-  typeDocument = false;
-  infoDoc = 'Id';
-  urlQuery = '';
   user: DecodeJwt | null = this.userService.getUser();
-  form!: FormGroup;
   availableRoles = MODIFY_PEOPLE.includes(this.user?.role ?? '');
+  layoutCtrl = new UntypedFormControl('boxed');
+  searchControl = new FormControl('');
+  cancelSearch$ = new Subject<void>();
 
-  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true })
-  confirmDialog!: TemplateRef<any>;
-
-  @Input()
-  columns: TableColumn<People>[] = [
-    {
-      label: 'Checkbox',
-      property: 'checkbox',
-      type: 'checkbox',
-      visible: false
-    },
-    {
-      label: 'Nombre',
-      property: 'fullName',
-      type: 'text',
-      visible: true,
-      cssClasses: ['font-medium']
-    },
-
-    { label: 'Apellido', property: 'lastName', type: 'text', visible: false },
-
-    {
-      label: 'Documento',
-      property: 'number',
-      type: 'text',
-      visible: true,
-      cssClasses: ['text-secondary', 'font-medium']
-    },
-    {
-      label: 'Tipo de persona',
-      property: 'domIndividualType',
-      type: 'text',
-      visible: true,
-      cssClasses: ['text-secondary', 'font-medium']
-    },
-    { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-  ];
-
-  get visibleColumns() {
+  visibleColumns = computed(() => {
     return this.columns
       .filter((column) => {
         if (this.availableRoles) {
@@ -144,7 +103,7 @@ export class PeopleComponent implements OnInit, AfterViewInit {
         return column.visible && column.property !== 'actions';
       })
       .map((column) => column.property);
-  }
+  });
 
   // indicativos de la paginación
   page: number = PAGE;
@@ -155,70 +114,80 @@ export class PeopleComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<People>(true, []);
   contentInformation!: InformationPegeable;
 
-  constructor(
-    private dialog: MatDialog,
-    private peopleService: PeopleService,
-    private fb: FormBuilder,
-    private userService: UserService
-  ) {}
-
   ngOnInit() {
-    this.form = this.fb.group({
-      document: ['', [Validators.required]],
-      typeNumberDocument: ['', [Validators.required]]
-    });
+    this.setupSearchSubscription();
+
     this.dataSource = new MatTableDataSource();
 
     this.refreshData();
   }
 
-  ngAfterViewInit() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-    }
+  private setupSearchSubscription() {
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        takeUntil(this.cancelSearch$)
+      )
+      .subscribe(() => {
+        this.searchPeople();
+      });
+  }
 
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
+  onEnterSearch() {
+    this.cancelSearch$.next();
+    this.page = 0;
+    this.searchPeople();
+
+    this.setupSearchSubscription();
   }
 
   // eliminación de personas
   deleteCustomer(customer: People) {
     if (this.user?.role !== 'ADMIN') return;
 
-    const dialogRef = this.dialog.open(this.confirmDialog);
-
-    dialogRef.afterClosed().subscribe(async (data) => {
-      if (data === 'delete' && customer.individualId) {
-        try {
-          await lastValueFrom(
-            this.peopleService.getDeletePeopleId(customer.individualId)
-          );
-          this.dataSource.data = this.dataSource.data.filter((row: People) => {
-            return row.individualId !== customer.individualId;
-          });
-          Swal.fire({
-            icon: 'success',
-            text: 'Información eliminada con éxito.',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar',
-            timer: 5000
-          });
-        } catch {
-          Swal.fire({
-            icon: 'error',
-            text: 'Antes de eliminar la persona se debe eliminar el usuario o la participación.',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Aceptar',
-            timer: 5000
-          });
+    Swal.fire({
+      title: 'Eliminar persona',
+      text: '¿Desea eliminar la persona?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        if (customer.individualId) {
+          await this.executeDeleteService(customer);
         }
       }
     });
   }
 
-  deleteCustomers(customers: People[]) {
-    customers.forEach((c) => this.deleteCustomer(c));
+  async executeDeleteService(customer: People) {
+    try {
+      await lastValueFrom(
+        this.peopleService.getDeletePeopleId(customer.individualId)
+      );
+      this.dataSource.data = this.dataSource.data.filter((row: People) => {
+        return row.individualId !== customer.individualId;
+      });
+      Swal.fire({
+        icon: 'success',
+        text: 'Información eliminada con éxito.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar',
+        timer: 5000
+      });
+    } catch {
+      Swal.fire({
+        icon: 'error',
+        text: 'Antes de eliminar la persona se debe eliminar el usuario o la participación.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar',
+        timer: 5000
+      });
+    }
   }
 
   // creación de personas
@@ -268,45 +237,6 @@ export class PeopleComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // demás scripts
-  onFilterChange(value: string) {
-    if (!this.dataSource) {
-      return;
-    }
-    value = value.trim();
-    // value = value.toLowerCase();
-    if (this.infoDoc !== 'Id') {
-      if (value !== '') {
-        const obj = {
-          number: value,
-          page: this.page,
-          size: this.pageSize,
-          individualTypeNumber: this.infoDoc
-        };
-        this.peopleService.getPeopleTypeNumber(obj).subscribe({
-          next: (res: any) => {
-            this.customers = [res];
-            this.dataSource.data = [res];
-          }
-        });
-      } else {
-        this.refreshData();
-      }
-    } else {
-      if (value !== '') {
-        const obj = {
-          number: value
-        };
-        this.peopleService.getPeopleNumber(obj).subscribe((res: any) => {
-          this.customers = [res];
-          this.dataSource.data = [res];
-        });
-      } else {
-        this.refreshData();
-      }
-    }
-  }
-
   refreshData() {
     const params = {
       page: this.page,
@@ -316,16 +246,8 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     this.peopleService.getAllPeople(params).subscribe((res: any) => {
       this.customers = res.content;
       this.dataSource.data = res.content;
-      if (res.totalElements) {
-        this.totalElements = res.totalElements;
-      }
+      this.totalElements = res.totalElements ?? 0;
     });
-  }
-
-  toggleColumnVisibility(column: TableColumn<People>, event: Event) {
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    column.visible = !column.visible;
   }
 
   isAllSelected() {
@@ -339,41 +261,28 @@ export class PeopleComponent implements OnInit, AfterViewInit {
     else this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
-  trackByProperty<T>(index: number, column: TableColumn<T>) {
-    return column.property;
-  }
-
-  onLabelChange(change: MatSelectChange, row: People) {
-    const index = this.customers.findIndex((c) => c === row);
-    this.customers[index].labels = change.value;
-    this.subject$.next(this.customers);
-  }
-
-  //función cambio
-  cambio(event?: any) {
-    const valorSeleccionado = event.value;
-
-    if (valorSeleccionado === 'number') {
-      this.typeDocument = true;
-    } else {
-      this.typeDocument = false;
-      this.infoDoc = 'Id';
-    }
-  }
-
-  infoSelect(info: string) {
-    this.infoDoc = info;
-  }
-
   refreshPaginatorNext(eventPage: PageEvent) {
     this.page = eventPage.pageIndex;
     this.pageSize = eventPage.pageSize;
 
+    if (this.searchControl.value) {
+      this.searchPeople(this.page, this.pageSize);
+      return;
+    }
     this.refreshData();
   }
 
-  search() {
-    console.log(this.form.value);
-    this.onFilterChange(this.form.get('document')?.value);
+  searchPeople(page = this.page, size = this.pageSize) {
+    if (!this.searchControl.value) {
+      this.refreshData();
+      return;
+    }
+    const pageConfig = { page, size };
+
+    this.peopleService.getPeopleSearch(this.searchControl.value, pageConfig).subscribe((response: InformationPegeable) => {
+      const content = response.content as People[];
+      this.dataSource.data = content;
+      this.totalElements = response.totalElements ?? 0;
+    });
   }
 }

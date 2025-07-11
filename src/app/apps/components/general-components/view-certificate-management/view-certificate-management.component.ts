@@ -98,7 +98,7 @@ export class ViewCertificateManagementComponent {
     this.currentTitle = data.title || 'Validación de Pago';
 
     if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
-      this.basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individualNumber}`;
+      this.basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individual.value}`;
     } else {
       this.basic_url_appraisals = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}/${this.baunitID}`;
     }

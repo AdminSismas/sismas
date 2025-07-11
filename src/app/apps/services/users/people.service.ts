@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpStatusCode } from '@angular/common/http';
-import { environment } from '../../../../environments/environments';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpParams,
+  HttpStatusCode
+} from '@angular/common/http';
+import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
@@ -12,7 +18,7 @@ import { InfoContact } from '../../interfaces/information-property/info-contact'
   providedIn: 'root'
 })
 export class PeopleService {
-  private url_basic = `${environment.url}:${environment.port}`;
+  private url_basic = `${envi.url}:${envi.port}`;
 
   constructor(
     private requestsService: SendGeneralRequestsService,
@@ -24,8 +30,20 @@ export class PeopleService {
     paramsR = paramsR.append('page', params.page);
     paramsR = paramsR.append('size', params.size);
     paramsR = paramsR.append('sortBy', params.sortBy);
-    const urlP = `${this.url_basic}${environment.individualNumber}`;
+    const urlP = `${this.url_basic}${envi.individual.value}`;
     return this.getData(urlP, paramsR);
+  }
+
+  getPeopleSearch(
+    value: string,
+    pageConfig: { page: number; size: number }
+  ): Observable<InformationPegeable> {
+    const url = `${this.url_basic}${envi.individual.value}${envi.individual.text}/${value}`;
+    const params = new HttpParams()
+      .set('page', pageConfig.page.toString())
+      .set('size', pageConfig.size.toString());
+
+    return this.http.get<InformationPegeable>(url, { params });
   }
 
   getPeopleTypeNumber(params: any): Observable<InfoPerson> {
@@ -36,40 +54,38 @@ export class PeopleService {
       params.individualTypeNumber
     );
     return this.getData(
-      `${this.url_basic}${environment.individualTypeNumber}`,
+      `${this.url_basic}${envi.individual.value}${envi.individual.findByNumber}`,
       paramsR
     );
   }
 
   getPeopleNumber(params: any) {
-    const urlP = `${this.url_basic}${environment.individualNumber}/${params.number}`;
+    const urlP = `${this.url_basic}${envi.individual.value}/${params.number}`;
     return this.getDataFetch(urlP);
   }
 
   userEdit(id: string, body: any): Observable<InfoPerson> {
     return this.requestsService.sendRequestsUpdatePutBody(
-      `${environment.url}:${environment.port}${environment.individualNumber}/${id}?baunitId=TESTS`,
+      `${envi.url}:${envi.port}${envi.individual.value}/${id}?baunitId=TESTS`,
       body
     );
   }
 
   createPeople(body: any) {
     return this.fetchBody(
-      `${environment.url}:${environment.port}${environment.individualNumber}`,
+      `${envi.url}:${envi.port}${envi.individual.value}`,
       body
     );
   }
 
   getDeletePeopleId(params: number) {
-    const urlP = `${this.url_basic}${environment.individualNumber}/${params}?version=99999`;
+    const urlP = `${this.url_basic}${envi.individual.value}/${params}?version=99999`;
     return this.deleteBody(urlP);
   }
 
   getContactByIndividualId(individualId: number): Observable<InfoContact> {
     return this.requestsService
-      .sendRequestsFetchGet(
-        `${this.url_basic}${environment.contact}/${individualId}`
-      )
+      .sendRequestsFetchGet(`${this.url_basic}${envi.contact}/${individualId}`)
       .pipe(catchError((error) => this.errorNotFoundContact(error)));
   }
 
@@ -79,7 +95,7 @@ export class PeopleService {
   ): Observable<InfoContact> {
     return this.requestsService
       .sendRequestsUpdatePutBody(
-        `${this.url_basic}${environment.contact}/${individualId}`,
+        `${this.url_basic}${envi.contact}/${individualId}`,
         obj
       )
       .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
@@ -116,10 +132,12 @@ export class PeopleService {
   }
 
   getSequencialCode(): Observable<string> {
-    const url = `${this.url_basic}${environment.individualNumber}${environment.sequentialCode}`;
+    const url = `${this.url_basic}${envi.individual.value}${envi.sequentialCode}`;
 
-    const headers = new HttpHeaders({ 'Content-Type': 'text/plain;charset=UTF-8;'});
+    const headers = new HttpHeaders({
+      'Content-Type': 'text/plain;charset=UTF-8;'
+    });
 
-    return this.http.get(url, { responseType: 'text' , headers });
+    return this.http.get(url, { responseType: 'text', headers });
   }
 }

@@ -14,7 +14,6 @@ export const RoleGuard: CanActivateFn = (route) => {
       const requiredRoles = route.data[route.data['parameter']];
       const userRole = user.role;
 
-      console.log({ userRole, requiredRoles });
       if (requiredRoles.includes(userRole)) {
         return true;
       } else {

@@ -15,7 +15,7 @@ export class InformationPersonService {
   constructor(private requestsService: SendGeneralRequestsService) { }
 
   getFindPersonByNumber(number: string, individualTypeNumber:string): Observable<InfoPerson> {
-    const url = `${this.basic_url}${envi.individual_findByNumber}`;
+    const url = `${this.basic_url}${envi.individual.value}${envi.individual.findByNumber}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', `${number}`);
     paramsR = paramsR.append('individualTypeNumber', `${individualTypeNumber}`);
@@ -23,7 +23,7 @@ export class InformationPersonService {
   }
 
   getFindParticipantPersonByNumber(number: string, individualTypeNumber:string): Observable<InfoPerson> {
-    const url = `${this.basic_url}${envi.individual_findByNumber}`;
+    const url = `${this.basic_url}${envi.individual.value}${envi.individual.findByNumber}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('number', `${number}`);
     paramsR = paramsR.append('individualTypeNumber', `${individualTypeNumber}`);

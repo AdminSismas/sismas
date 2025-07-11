@@ -31,6 +31,7 @@ import {
   DetailBasicInformationAddress
 } from '../../interfaces/information-property/detail-basic-information-address';
 import { ModalSize } from '../../interfaces/general/modal-size.interface';
+import { People } from '../../interfaces/users/people.model';
 
 export const GUION = '-';
 export const SPACE = ' ';
@@ -741,6 +742,39 @@ export const LIST_FORM_CADASTRAL_5: string[] = [
 ];
 export const LIST_EXTRA_COLUMNS_APPRAISAL: string[] = [
   'header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-quartet-group'
+];
+export const PEOPLE_TABLE_COLUMNS: TableColumn<People>[] = [
+  {
+    label: 'Checkbox',
+    property: 'checkbox',
+    type: 'checkbox',
+    visible: false
+  },
+  {
+    label: 'Nombre',
+    property: 'fullName',
+    type: 'text',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
+
+  { label: 'Apellido', property: 'lastName', type: 'text', visible: false },
+
+  {
+    label: 'Documento',
+    property: 'number',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  {
+    label: 'Tipo de persona',
+    property: 'domIndividualType',
+    type: 'text',
+    visible: true,
+    cssClasses: ['text-secondary', 'font-medium']
+  },
+  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
 export const FRAGMENT_INFORMATION_PROPERTY_OWNERS = 'informationPropertyOwnersComponent';

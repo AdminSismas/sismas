@@ -131,9 +131,11 @@ export const environment = {
   getByExecution: "/getByExecution",
   headBaunitByMaster: "/headBaunitByMaster",
   historicos: "/historicos",
-  individual_findByNumber: "/individual/findByNumber",
-  individualNumber: "/individual",
-  individualTypeNumber: "/individual/findByNumber",
+  individual: {
+    findByNumber: "/findByNumber",
+    text: "/text",
+    value: "/individual"
+  },
   initiate_filing_procedure: "/bpm/initiateFilingProcedure/",
   load: "/load",
   loading_logo: "assets/img/logo/quimbaya.gif",
