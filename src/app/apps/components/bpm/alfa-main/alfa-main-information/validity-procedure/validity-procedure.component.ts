@@ -11,11 +11,24 @@ import { MatSelectModule } from '@angular/material/select';
 import { AlfaMainService } from '../../../../../services/bpm/core/alfa-main.service';
 import { ChangeControl } from 'src/app/apps/interfaces/bpm/change-control';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 interface DialogDataValidity {
   executionId: string;
   validateChangeLog: ChangeControl;
 }
+
+const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'vex-validity-procedure',
@@ -32,7 +45,10 @@ interface DialogDataValidity {
     ReactiveFormsModule
   ],
   templateUrl: './validity-procedure.component.html',
-  providers: [provideMomentDateAdapter()]
+  providers: [
+    provideMomentDateAdapter(),
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class ValidityProcedureComponent implements OnInit{
 

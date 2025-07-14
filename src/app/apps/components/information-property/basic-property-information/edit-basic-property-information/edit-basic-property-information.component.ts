@@ -22,6 +22,8 @@ import { ComboboxCollectionComponent } from '../../../general-components/combobo
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { environment } from 'src/environments/environments';
 import {
   EditBasicPropertyInputs,
@@ -37,6 +39,18 @@ import { Subscription } from 'rxjs';
 import Big from 'big.js';
 
 const REGEX_MORE_THAN_0 = /^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/;
+
+const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'vex-edit-basic-property-information',
@@ -54,7 +68,11 @@ const REGEX_MORE_THAN_0 = /^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/;
     FluidMinHeightDirective
   ],
   templateUrl: './edit-basic-property-information.component.html',
-  styles: ``
+  styles: ``,
+  providers: [
+    provideMomentDateAdapter(),
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class EditBasicPropertyInformationComponent implements OnInit {
   executionId!: string;
