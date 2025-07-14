@@ -1,4 +1,5 @@
 import {
+  CAN_RESOLVE_LIST,
   CERTIFICATE_USERS_ROLE_LIST,
   EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM,
   NOT_USER_SERV_AND_USER_TRAM,
@@ -23,7 +24,8 @@ export const NAVIGATION_LOADER_MY_WORK_1: (
     type: 'link',
     label: 'Radicar trámite',
     route: '/myWork/fileProcedure',
-    icon: 'mat:app_registration'
+    icon: 'mat:app_registration',
+    roles: CAN_RESOLVE_LIST
   },
   {
     type: 'link',
