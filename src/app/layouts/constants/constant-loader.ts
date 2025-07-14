@@ -148,12 +148,12 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (
         route: '/operationSupport/procedures/workFinished',
         routerLinkActiveOptions: { exact: true }
       },
-      {
-        type: 'link',
-        label: 'Trabajo histórico',
-        route: '/operationSupport/procedures/workHistorical',
-        routerLinkActiveOptions: { exact: true }
-      }
+      // {
+      //   type: 'link',
+      //   label: 'Trabajo histórico',
+      //   route: '/operationSupport/procedures/workHistorical',
+      //   routerLinkActiveOptions: { exact: true }
+      // }
     ]
   },
   {

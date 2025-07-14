@@ -3,7 +3,6 @@ import {
   ElementRef,
   inject,
   input,
-  Input,
   OnInit,
   signal,
   ViewChild
@@ -22,7 +21,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   Observable,
-  Subscription,
   tap
 } from 'rxjs';
 
@@ -87,6 +85,7 @@ interface MenuActions {
   label: string;
   icon: string;
   action: (row: contentInfoProcedures) => void;
+  visible: boolean;
 }
 
 const beginAt = new Date('2025-01-01T00:00:00');
@@ -99,17 +98,20 @@ const beginAt = new Date('2025-01-01T00:00:00');
   animations: [fadeInUp400ms, stagger40ms],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    provideMomentDateAdapter({
-      parse: {
-        dateInput: 'DD/MM/YYYY'
+    provideMomentDateAdapter(
+      {
+        parse: {
+          dateInput: 'DD/MM/YYYY'
+        },
+        display: {
+          dateInput: 'DD/MM/YYYY',
+          monthYearLabel: 'MMM YYYY',
+          dateA11yLabel: 'DD/MM/YYYY',
+          monthYearA11yLabel: 'MMMM YYYY'
+        }
       },
-      display: {
-        dateInput: 'DD/MM/YYYY',
-        monthYearLabel: 'MMM YYYY',
-        dateA11yLabel: 'DD/MM/YYYY',
-        monthYearA11yLabel: 'MMMM YYYY'
-      }
-    }, { useUtc: true })
+      { useUtc: true }
+    )
   ],
   imports: [
     CommonModule,
@@ -174,24 +176,28 @@ export class TableProceduresComponent implements OnInit {
       label: 'Reasignar',
       icon: 'mat:swap_horiz',
       action: (row: contentInfoProcedures) =>
-        this.actionButtons('reassign', row)
+        this.actionButtons('reassign', row),
+      visible: true
     },
     {
       label: 'Anular',
       icon: 'mat:block',
-      action: (row: contentInfoProcedures) => this.actionButtons('cancel', row)
+      action: (row: contentInfoProcedures) => this.actionButtons('cancel', row),
+      visible: this.userRole !== 'USER_COORD'
     },
     {
       label: 'Prioridad',
       icon: 'mat:warning',
       action: (row: contentInfoProcedures) =>
-        this.actionButtons('priority', row)
+        this.actionButtons('priority', row),
+      visible: this.userRole !== 'USER_COORD'
     },
     {
       label: 'Quitar prioridad',
       icon: 'mat:assignment_returned',
       action: (row: contentInfoProcedures) =>
-        this.actionButtons('no-priority', row)
+        this.actionButtons('no-priority', row),
+      visible: this.userRole !== 'USER_COORD'
     }
   ];
 
@@ -479,11 +485,9 @@ export class TableProceduresComponent implements OnInit {
 
   private formatDate(date?: Date): string {
     if (!date) return '';
-    const formatDate = moment(date).locale('es').format('DD/MM/YYYY');
-    console.log(formatDate);
-    return formatDate;
-  }
 
+    return moment(date).locale('es').format('DD/MM/YYYY');
+  }
 
   /* ------- Meth. Modal load file ------- */
 
@@ -568,6 +572,8 @@ export class TableProceduresComponent implements OnInit {
   }
 
   priorityProcedure(row: ProceduresCollection) {
+    if (!this.userRole || this.userRole === 'USER_COORD') return;
+
     this.proceduresService.changePriority(row.executionId!).subscribe({
       next: () => {
         this.successChangePriority.fire();
@@ -580,6 +586,8 @@ export class TableProceduresComponent implements OnInit {
   }
 
   addComment(row: ProceduresCollection) {
+    if (!this.userRole || this.userRole === 'USER_COORD') return;
+
     this.confirmDelete.fire().then((result) => {
       if (result.isConfirmed) {
         this.dialog
@@ -623,7 +631,8 @@ export class TableProceduresComponent implements OnInit {
   }
 
   reassignProcedure(row: ProceduresCollection) {
-    if (!this.userRole || !USERS_ACTIONS_ENABLED.includes(this.userRole)) return;
+    if (!this.userRole || !USERS_ACTIONS_ENABLED.includes(this.userRole))
+      return;
 
     this.dialog
       .open(ReassignProcedureComponent, {
@@ -651,12 +660,12 @@ export class TableProceduresComponent implements OnInit {
   filteredActions(row: contentInfoProcedures): void {
     if (!row.bpmPriority || row.bpmPriority === 1) {
       return this.menuOptions.set(
-        this.actions.filter((action) => action.label !== 'Quitar prioridad')
+        this.actions.filter((action) => action.visible && action.label !== 'Quitar prioridad')
       );
     }
 
     return this.menuOptions.set(
-      this.actions.filter((action) => action.label !== 'Prioridad')
+      this.actions.filter((action) => action.visible && action.label !== 'Prioridad')
     );
   }
 

@@ -40,13 +40,13 @@ const routes: VexRoutes = [
                 (m) => m.WorkFinishedComponent
               )
           },
-          {
-            path: 'workHistorical',
-            loadComponent: () =>
-              import('./procedures/work-historical/work-historical.component').then(
-                (m) => m.WorkHistoricalComponent
-              )
-          }
+          // {
+          //   path: 'workHistorical',
+          //   loadComponent: () =>
+          //     import('./procedures/work-historical/work-historical.component').then(
+          //       (m) => m.WorkHistoricalComponent
+          //     )
+          // }
         ]
       },
       {
