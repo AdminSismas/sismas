@@ -27,7 +27,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ComboboxCollectionComponent } from '../combobox-collection/combobox-collection.component';
@@ -46,9 +50,7 @@ import { InformationPersonService } from '../../../services/bpm/information-pers
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
-import {
-  CreatePeopleComponent
-} from '../../../../pages/pages/operation-support/people/create-people/create-people.component';
+import { CreatePeopleComponent } from '../../../../pages/pages/operation-support/people/create-people/create-people.component';
 import { ParticipantsService } from '../../../services/bpm/participants-service.service';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { Pegeable } from '../../../interfaces/general/pegeable.model';
@@ -90,10 +92,13 @@ import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-particip
   ],
   templateUrl: './participant-table.component.html',
   styleUrl: './participant-table.component.scss',
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
+  viewProviders: [
+    { provide: ControlContainer, useExisting: FormGroupDirective }
+  ]
 })
-export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class ParticipantTableComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
 
@@ -101,10 +106,10 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
   @Input() form: FormGroup | null = null;
   @Input({ required: true }) executionId = '';
   @Input({ required: true }) thirdPartyAffected = false;
-  @Input() columns: TableColumn<ProcessParticipant>[] = TABLE_COLUMN_PRINCIPANTS_TABLE;
+  @Input() columns: TableColumn<ProcessParticipant>[] =
+    TABLE_COLUMN_PRINCIPANTS_TABLE;
 
   @Output() processParticipants = new EventEmitter<ProcessParticipant[]>();
-
 
   page = PAGE;
   totalElements = 0;
@@ -112,7 +117,9 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
   pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
   dataSource!: MatTableDataSource<ProcessParticipant>;
 
-  subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<ProcessParticipant[]>(1);
+  subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
+    ProcessParticipant[]
+  >(1);
   data$: Observable<ProcessParticipant[]> = this.subject$.asObservable();
   person!: InfoPerson | null;
 
@@ -129,7 +136,6 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     private participantsService: ParticipantsService,
     private dialog: MatDialog
   ) {
-
     this.destroyRef.onDestroy(() => {
       // Empty block
     });
@@ -139,7 +145,11 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     if (!this.executionId || this.executionId?.length <= 0) {
       return;
     }
-    this.id = this.id + getRandomInt(12340) + this.executionId + 'ParticipantTableComponent1234';
+    this.id =
+      this.id +
+      getRandomInt(12340) +
+      this.executionId +
+      'ParticipantTableComponent1234';
 
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges
@@ -176,26 +186,37 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   obtainInformationThirdPartyAffected() {
-    this.participantsService.getAllThirdPartyAffected(this.executionId).subscribe({
-      next: (result: ProcessParticipant[]) => this.captureInformationThirdPartyAffectedTable(result),
-      error: () => this.captureInformationSubscribeError()
-    });
+    this.participantsService
+      .getAllThirdPartyAffected(this.executionId)
+      .subscribe({
+        next: (result: ProcessParticipant[]) =>
+          this.captureInformationThirdPartyAffectedTable(result),
+        error: () => this.captureInformationSubscribeError()
+      });
   }
 
   obtainInformationParticipants() {
-    this.participantsService.getAllParticipants(
-      new PageSearchData(this.page, this.pageSize, this.executionId),
-      this.executionId
-    ).subscribe({
-      next: (result: InformationPegeable) => this.captureInformationSubscribe(result),
-      error: () => this.captureInformationSubscribeError()
-    });
+    this.participantsService
+      .getAllParticipants(
+        new PageSearchData(this.page, this.pageSize, this.executionId),
+        this.executionId
+      )
+      .subscribe({
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result),
+        error: () => this.captureInformationSubscribeError()
+      });
   }
 
   findParticipant() {
     const info = this.form?.value;
-    if (!info || !info.typeNumberDocument || !validateVariable(info.typeNumberDocument) ||
-      !info.numberID || !validateVariable(info.numberID)) {
+    if (
+      !info ||
+      !info.typeNumberDocument ||
+      !validateVariable(info.typeNumberDocument) ||
+      !info.numberID ||
+      !validateVariable(info.numberID)
+    ) {
       Swal.fire({
         text: 'Ingresar tipo documento o número de documento',
         icon: 'error',
@@ -217,9 +238,17 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     }
     const list: ProcessParticipant[] = this.contentInformation?.content;
     if (list != null && list.length >= 1) {
-      listPersonExist = list.filter((user: ProcessParticipant) => user.individual.individualId === person?.individualId);
+      listPersonExist = list.filter(
+        (user: ProcessParticipant) =>
+          user.individual.individualId === person?.individualId
+      );
       if (!listPersonExist || listPersonExist.length <= 0) {
-        listPersonExist = list.filter((user: ProcessParticipant) => user.individual.number === person?.number && user.individual.domIndividualTypeNumber === person?.domIndividualTypeNumber);
+        listPersonExist = list.filter(
+          (user: ProcessParticipant) =>
+            user.individual.number === person?.number &&
+            user.individual.domIndividualTypeNumber ===
+              person?.domIndividualTypeNumber
+        );
       }
       if (listPersonExist && listPersonExist.length > 0) {
         Swal.fire({
@@ -238,61 +267,91 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     if (this.person) {
       participant.individual = new InfoPerson(this.person);
     }
-    this.participantsService.saveParticipantByExecutionId(this.executionId, participant).subscribe({
-      next: (result: ProcessParticipant) => {
-        if (!result) {
-          this.getAlertError('Error al guardar participante del proceso');
-          return;
-        }
-        this.confirmAction(
-          () => this.searchInformation(),
-          'Participante Agregado correctamente',
-          'success'
-        );
-      },
-      error: () => this.getAlertError('Error al guardar participante del proceso')
-    });
+    this.participantsService
+      .saveParticipantByExecutionId(this.executionId, participant)
+      .subscribe({
+        next: (result: ProcessParticipant) => {
+          if (!result) {
+            this.getAlertError('Error al guardar participante del proceso');
+            return;
+          }
+          this.confirmAction(
+            () => this.searchInformation(),
+            'Participante Agregado correctamente',
+            'success'
+          );
+        },
+        error: () =>
+          this.getAlertError('Error al guardar participante del proceso')
+      });
   }
 
   editParticipantToList(participant: ProcessParticipant) {
-    if (!participant || !participant?.bpmParticipation || participant?.participationId <= 0) {
+    if (
+      !participant ||
+      !participant?.bpmParticipation ||
+      participant?.participationId <= 0
+    ) {
       this.getAlertError('Error al tratar de actualizar el participante');
       return;
     }
     const typeParticipation = this.form?.get('typeParticipation')?.value;
-    const participantUpdate: ProcessParticipant = new ProcessParticipant(participant);
+    const participantUpdate: ProcessParticipant = new ProcessParticipant(
+      participant
+    );
     participantUpdate.bpmParticipation = typeParticipation;
-    this.participantsService.updateParticipantByExecutionId(this.executionId, participantUpdate).subscribe({
-      next: (result: ProcessParticipant) => {
-        if (!result) {
-          this.getAlertError('Error al actualizar participante del proceso');
-          return;
-        }
-        this.confirmAction(
-          () => this.searchInformation(),
-          'Participante Actualizado correctamente',
-          'success'
-        );
-      },
-      error: () => this.getAlertError('Error al actualizar participante del proceso')
-    });
-  }
-
-  deleteInformation(participant: ProcessParticipant): void {
-    if (participant && participant.participationId > 0 && this.executionId) {
-      const participationId = participant.participationId;
-      this.participantsService.deleteParticipantByExecutionId(this.executionId,
-        participationId.toString()).subscribe({
-        next: () => {
+    this.participantsService
+      .updateParticipantByExecutionId(this.executionId, participantUpdate)
+      .subscribe({
+        next: (result: ProcessParticipant) => {
+          if (!result) {
+            this.getAlertError('Error al actualizar participante del proceso');
+            return;
+          }
           this.confirmAction(
             () => this.searchInformation(),
-            'Borrado Eliminado correctamente',
+            'Participante Actualizado correctamente',
             'success'
           );
         },
-        error: () => this.getAlertError('Error al tratar de eliminar el participante')
+        error: () =>
+          this.getAlertError('Error al actualizar participante del proceso')
       });
-    }
+  }
+
+  deleteInformation(participant: ProcessParticipant): void {
+    if (!participant || participant.participationId <= 0 || !this.executionId)
+      return;
+
+    Swal.fire({
+      text: '¿Está seguro de remover esta persona?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Remover',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const participationId = participant.participationId;
+        this.participantsService
+          .deleteParticipantByExecutionId(
+            this.executionId,
+            participationId.toString()
+          )
+          .subscribe({
+            next: () => {
+              this.confirmAction(
+                () => this.searchInformation(),
+                'Borrado Eliminado correctamente',
+                'success'
+              );
+            },
+            error: () =>
+              this.getAlertError('Error al tratar de eliminar el participante')
+          });
+      }
+    });
   }
 
   validateParticipants(result: InfoPerson | null, createPeople = true): void {
@@ -326,15 +385,20 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
       })
       .afterClosed()
       .subscribe((result: { number: string; individualTypeNumber: string }) => {
-          this.getParticipant(result.number, result.individualTypeNumber, false);
-        }
-      );
+        this.getParticipant(result.number, result.individualTypeNumber, false);
+      });
   }
 
-  getParticipant(number: string, individualTypeNumber: string, createPeople: boolean) {
+  getParticipant(
+    number: string,
+    individualTypeNumber: string,
+    createPeople: boolean
+  ) {
     this.personService
       .getFindParticipantPersonByNumber(number, individualTypeNumber)
-      .subscribe((result: InfoPerson) => this.validateParticipants(result, createPeople));
+      .subscribe((result: InfoPerson) =>
+        this.validateParticipants(result, createPeople)
+      );
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
@@ -363,8 +427,13 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     }
 
     this.contentInformation = new InformationPegeable(
-      result?.length / PAGE_OPTION_UNIQUE_7, result?.length, false,
-      result?.length, result?.length, true, result?.length > 0,
+      result?.length / PAGE_OPTION_UNIQUE_7,
+      result?.length,
+      false,
+      result?.length,
+      result?.length,
+      true,
+      result?.length > 0,
       result,
       new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE_7)
     );
@@ -403,16 +472,17 @@ export class ParticipantTableComponent implements OnInit, AfterViewInit, OnDestr
     }
   }
 
-
-
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)
       .map((column) => column.property);
   }
 
-  confirmAction(action: () => void, message: string,
-                icon: SweetAlertIcon | undefined): void {
+  confirmAction(
+    action: () => void,
+    message: string,
+    icon: SweetAlertIcon | undefined
+  ): void {
     Swal.fire({
       text: message,
       icon: icon,
