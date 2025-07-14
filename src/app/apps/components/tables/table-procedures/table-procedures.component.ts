@@ -1,11 +1,11 @@
 import {
   Component,
   ElementRef,
+  inject,
+  input,
   Input,
-  OnChanges,
   OnInit,
   signal,
-  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
@@ -80,6 +80,8 @@ import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.servic
 import { ComponentType } from '@angular/cdk/overlay';
 import { MatDividerModule } from '@angular/material/divider';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import moment from 'moment';
+import 'moment/locale/es';
 
 interface MenuActions {
   label: string;
@@ -97,7 +99,17 @@ const beginAt = new Date('2025-01-01T00:00:00');
   animations: [fadeInUp400ms, stagger40ms],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    provideMomentDateAdapter()
+    provideMomentDateAdapter({
+      parse: {
+        dateInput: 'DD/MM/YYYY'
+      },
+      display: {
+        dateInput: 'DD/MM/YYYY',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'DD/MM/YYYY',
+        monthYearA11yLabel: 'MMMM YYYY'
+      }
+    }, { useUtc: true })
   ],
   imports: [
     CommonModule,
@@ -125,12 +137,26 @@ const beginAt = new Date('2025-01-01T00:00:00');
     MatTableModule
   ]
 })
-export class TableProceduresComponent implements OnInit, OnChanges {
-  /* ============== ATRIBUTES ============== */
-  /* ============== ATRIBUTES ============== */
-  @Input() urlTable?: string = '';
-  @Input() urlView?: string = '';
+export class TableProceduresComponent implements OnInit {
+  // Injects
+  private fBuilder = inject(FormBuilder);
+  private dialog = inject(MatDialog);
+  private proceduresService = inject(ProceduresService);
+  private readonly layoutService = inject(VexLayoutService);
+  private dateAdapter = inject(DateAdapter<Date>);
+  private alertSnakbar = inject(MatSnackBar);
+  private authService = inject(AuthService);
 
+  // Constructor
+  constructor() {
+    this.dateAdapter.setLocale('es');
+  }
+
+  // Inputs
+  urlTable = input<string>('');
+  urlView = input<string>('');
+
+  // Variables
   dataSource!: MatTableDataSource<contentInfoProcedures>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -140,8 +166,9 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   informationEjecution!: FormGroup;
   seeInfo = false;
   seeInfoDocument = false;
-  public procedureDetail: TaskResponseModel = new TaskResponseModel();
+  procedureDetail: TaskResponseModel = new TaskResponseModel();
   userRole: string | undefined = this.getUserRole();
+
   readonly actions: MenuActions[] = [
     {
       label: 'Reasignar',
@@ -170,10 +197,6 @@ export class TableProceduresComponent implements OnInit, OnChanges {
 
   menuOptions = signal<MenuActions[]>([]);
 
-  // Array para almacenar las suscripciones
-  private subscriptions: Subscription | undefined[] = [];
-
-  @Input()
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
@@ -200,26 +223,13 @@ export class TableProceduresComponent implements OnInit, OnChanges {
       : false;
 
     const columnsFiltered = this.columns.filter((column) => {
-      if (this.urlTable !== environment.active) {
+      if (this.urlTable() !== environment.active) {
         return column.visible && column.property !== 'actions';
       }
       return column.visible && (column.property !== 'actions' || validUser);
     });
-    console.log(columnsFiltered.map((column) => column.property));
-    return columnsFiltered.map((column) => column.property);
-  }
 
-  /* ============== CONSTRUCTOR ============== */
-  constructor(
-    private fBuilder: FormBuilder,
-    private dialog: MatDialog,
-    private proceduresService: ProceduresService,
-    private readonly layoutService: VexLayoutService,
-    private dateAdapter: DateAdapter<Date>,
-    private alertSnakbar: MatSnackBar,
-    private authService: AuthService
-  ) {
-    this.dateAdapter.setLocale('es-CO');
+    return columnsFiltered.map((column) => column.property);
   }
 
   /* ============== METHODS ============== */
@@ -236,12 +246,6 @@ export class TableProceduresComponent implements OnInit, OnChanges {
     this.beginAtgreaterThanDate();
     this.beginAtEFormGreaterThanDate();
     this.defaultTableData();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['urlTable']) {
-      this.urlTable = changes['urlTable'].currentValue;
-    }
   }
 
   getOneDayBefore(date: Date): Date {
@@ -304,11 +308,11 @@ export class TableProceduresComponent implements OnInit, OnChanges {
   }
 
   informationDetail(value: ProceduresCollection) {
-    if (this.urlView != '') {
+    if (this.urlView() !== '') {
       this.dialog.open(DocumentViewerWorkHistoricalComponent, {
         ...MODAL_LARGE,
         disableClose: true,
-        data: { url: this.urlView }
+        data: { url: this.urlView() }
       });
     } else {
       this.proceduresService
@@ -475,24 +479,18 @@ export class TableProceduresComponent implements OnInit, OnChanges {
 
   private formatDate(date?: Date): string {
     if (!date) return '';
-
-    const day = this.padZero(date.getDate());
-    const month = this.padZero(date.getMonth() + 1);
-    const year = date.getFullYear();
-
-    return `${day}/${month}/${year}`;
+    const formatDate = moment(date).locale('es').format('DD/MM/YYYY');
+    console.log(formatDate);
+    return formatDate;
   }
 
-  private padZero(value: number): string {
-    return value < 10 ? `0${value}` : value.toString();
-  }
 
   /* ------- Meth. Modal load file ------- */
 
   /* ------- Meth. Services ------- */
   getDataFromProceduresService(data: PageProceduresData) {
     this.proceduresService
-      .getFilterTableEjecutionService(data, this.urlTable || '')
+      .getFilterTableEjecutionService(data, this.urlTable() ?? '')
       .subscribe({
         next: (result) => {
           this.captureInformationSubscribe(result);
