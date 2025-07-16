@@ -106,8 +106,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       '',
       [Validators.required, Validators.pattern(REGEX_MORE_THAN_0)]
     ],
-    cadAreaCommon: ['', [Validators.required, Validators.pattern(REGEX_MORE_THAN_0)]],
-    cadAreaPrivate: ['', [Validators.required, Validators.pattern(REGEX_MORE_THAN_0)]],
+    cadAreaCommon: ['', [Validators.required]],
+    cadAreaPrivate: ['', [Validators.required]],
     cadastralAreaUnitbuilt: [''],
     cadAreaUnitbuiltCommon: [''],
     cadAreaUnitbuiltPrivate: [''],
