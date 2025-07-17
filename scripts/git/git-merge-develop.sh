@@ -17,3 +17,4 @@ case "$response" in
   n) echo "Operación cancelada." ;;
   *) echo "Respuesta no válida. Operación cancelada." ;;
 esac
+git checkout despliegue-desarrollo
