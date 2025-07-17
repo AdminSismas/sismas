@@ -1,7 +1,8 @@
 import {
   AfterViewInit,
   Component,
-  DestroyRef, forwardRef,
+  DestroyRef,
+  forwardRef,
   inject,
   input,
   Input,
@@ -16,6 +17,7 @@ import {
   LIST_GRID_APPRAISAL_1,
   LIST_GRID_APPRAISAL_2,
   LIST_GRID_APPRAISAL_3,
+  MODAL_SMALL,
   MODAL_MEDIUM,
   MODAL_SMALL_XS,
   NAME_SELF_VALUATION_VALUE,
@@ -38,12 +40,10 @@ import {
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import {
-  CommonModule,
-  DatePipe,
-  NgClass} from '@angular/common';
-import {
-  FormsModule, NG_VALUE_ACCESSOR,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
   UntypedFormControl
 } from '@angular/forms';
@@ -71,6 +71,7 @@ import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
 import { AutoAppraisalComponent } from './auto-appraisal/auto-appraisal.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HistoricAppraisalComponent } from './historic-appraisal/historic-appraisal.component';
+import { AppraisalDetailsComponent } from './appraisal-details/appraisal-details.component';
 
 @Component({
   selector: 'vex-property-appraisal-information',
@@ -113,9 +114,11 @@ import { HistoricAppraisalComponent } from './historic-appraisal/historic-apprai
       useExisting: forwardRef(() => PropertyAppraisalInformationComponent),
       multi: true
     }
-  ],
+  ]
 })
-export class PropertyAppraisalInformationComponent implements OnInit, AfterViewInit {
+export class PropertyAppraisalInformationComponent
+  implements OnInit, AfterViewInit
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformations!: InformationPegeable;
 
@@ -185,11 +188,7 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
       })
       .map((column) => column.property);
 
-    return visibleColumns;
-
-    // if (this.typeInformation === TYPE_INFORMATION_EDITION && this.editable)
-    //   return [...visibleColumns, 'actions'];
-    // else return visibleColumns;
+    return ['viewDetail', ...visibleColumns];
   }
 
   get visibleColumnsSecondsRow() {
@@ -316,8 +315,6 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
     column.visible = !column.visible;
   }
 
-
-
   onFilterChange(value: string): void {
     if (!this.dataSource) {
       return;
@@ -332,13 +329,15 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
   }
 
   autoAppraisal() {
-    this.dialog.open(AutoAppraisalComponent, {
-      ...MODAL_SMALL_XS,
-      data: {
-        executionId: this.executionId,
-        baunitId: this.baunitId
-      }
-    }).afterClosed()
+    this.dialog
+      .open(AutoAppraisalComponent, {
+        ...MODAL_SMALL_XS,
+        data: {
+          executionId: this.executionId,
+          baunitId: this.baunitId
+        }
+      })
+      .afterClosed()
       .subscribe((result: boolean | undefined) => {
         if (result === true) {
           this.successAutoAppraisal.fire();
@@ -362,5 +361,12 @@ export class PropertyAppraisalInformationComponent implements OnInit, AfterViewI
 
   private generateObjectPageSearchData(baunitId: string): PageSearchData {
     return new PageSearchData(this.page, this.pageSize, baunitId);
+  }
+
+  viewDetails(row: InfoAppraisal) {
+    this.dialog.open(AppraisalDetailsComponent, {
+      ...MODAL_SMALL,
+      data: row
+    });
   }
 }
