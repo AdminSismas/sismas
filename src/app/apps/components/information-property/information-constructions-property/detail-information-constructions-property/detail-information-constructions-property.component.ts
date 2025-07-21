@@ -14,7 +14,10 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { NAME_NO_DISPONIBLE, TYPE_READ_ONLY } from '../../../../constants/general/constants';
+import {
+  NAME_NO_DISPONIBLE,
+  TYPE_READ_ONLY
+} from '../../../../constants/general/constants';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AsyncPipe } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -27,9 +30,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { Observable } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import {
-  InformationConstructionsService
-} from '../../../../services/information-property/information-constructions-property/information-constructions.service';
+import { InformationConstructionsService } from '../../../../services/information-property/information-constructions-property/information-constructions.service';
 import { TypeOperation } from '../../../../interfaces/general/content-info';
 import { validateIsNumber, validateVariable } from '../../../../utils/general';
 
@@ -67,7 +68,6 @@ export interface Tile {
   styleUrl: './detail-information-constructions-property.component.scss'
 })
 export class DetailInformationConstructionsPropertyComponent implements OnInit {
-
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   executionId: string | null | undefined;
@@ -79,28 +79,39 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
   schema: string | null | undefined = `${environment.schemas.main}`;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public crudInformationData: CrudInformationConstruction | null,
+    @Inject(MAT_DIALOG_DATA)
+    public crudInformationData: CrudInformationConstruction | null,
     private dialogRef: MatDialogRef<DetailInformationConstructionsPropertyComponent>,
     private constructionsService: InformationConstructionsService,
     private layoutService: VexLayoutService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    if (!this.crudInformationData || !this.crudInformationData?.contentInformation) {
+    if (
+      !this.crudInformationData ||
+      !this.crudInformationData?.contentInformation
+    ) {
       this.close();
       return;
     }
     this.typeCrud = this.crudInformationData?.type || TYPE_READ_ONLY;
-    this.executionId = this.crudInformationData?.contentInformation?.executionId;
+    this.executionId =
+      this.crudInformationData?.contentInformation?.executionId;
     this.baunitId = this.crudInformationData?.contentInformation?.baunitId;
-    this.unitBuiltId = this.crudInformationData?.contentInformation?.unitBuiltId;
-    if (validateVariable(this.crudInformationData?.contentInformation?.schema)) {
+    this.unitBuiltId =
+      this.crudInformationData?.contentInformation?.unitBuiltId;
+    if (
+      validateVariable(this.crudInformationData?.contentInformation?.schema)
+    ) {
       this.schema = this.crudInformationData?.contentInformation?.schema;
     }
 
-    if (!validateVariable(this.executionId) || !validateVariable(this.baunitId) ||
-      (this.unitBuiltId == null || !validateIsNumber(this.unitBuiltId))) {
+    if (
+      !validateVariable(this.executionId) ||
+      !validateVariable(this.baunitId) ||
+      this.unitBuiltId == null ||
+      !validateIsNumber(this.unitBuiltId)
+    ) {
       this.close();
       return;
     }
@@ -109,7 +120,9 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
     this.loadDetailInformationCalificationConstructions(this.constructionData);
   }
 
-  loadDetailInformationCalificationConstructions(detailInformationConstruction: ContentInformationConstruction | null) {
+  loadDetailInformationCalificationConstructions(
+    detailInformationConstruction: ContentInformationConstruction | null
+  ) {
     if (!detailInformationConstruction) {
       return;
     }
@@ -120,9 +133,16 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
     if (!baunitId || !unitBuiltId) {
       return;
     }
-    this.constructionsService.getQualificationConstructions(
-      executionId, baunitId, unitBuiltId, this.schema)
-      .subscribe((result: CcCalificacionUB[]) => this.dataCalification = result);
+    this.constructionsService
+      .getQualificationConstructions(
+        executionId,
+        baunitId,
+        unitBuiltId,
+        this.schema
+      )
+      .subscribe(
+        (result: CcCalificacionUB[]) => (this.dataCalification = result)
+      );
   }
 
   close(): void {

@@ -1,21 +1,42 @@
-<div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+<div
+  class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
+  mat-dialog-title
+>
   <h3 class="subheading-2 m-0 flex-auto">
-    @if (this.crudInformationData && this.crudInformationData.type === 'UPDATE') {
+    @if (
+      this.crudInformationData && this.crudInformationData.type === "UPDATE"
+    ) {
       Editar Construcción
-    } @else if (this.crudInformationData && this.crudInformationData.type === 'CREATE') {
+    } @else if (
+      this.crudInformationData && this.crudInformationData.type === "CREATE"
+    ) {
       Nueva Construcción
     }
   </h3>
-  <button class="text-secondary" mat-icon-button type="button" (click)="handleDialogClose()">
-    <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
+  <button
+    class="text-secondary"
+    mat-icon-button
+    type="button"
+    (click)="handleDialogClose()"
+  >
+    <mat-icon
+      svgIcon="mat:close"
+      class="icon-xs"
+    ></mat-icon>
   </button>
 </div>
 
 <mat-divider class="text-border"></mat-divider>
 
 <mat-dialog-content class="p-0-cons">
-  <div @fadeInUp class="card overflow-hidden">
-    <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+  <div
+    @fadeInUp
+    class="card overflow-hidden"
+  >
+    <mat-horizontal-stepper
+      #stepper="matHorizontalStepper"
+      [linear]="true"
+    >
       <ng-template matStepperIcon="edit">
         <mat-icon svgIcon="mat:done_all"></mat-icon>
       </ng-template>
@@ -25,7 +46,10 @@
 
       <!-- Aspectos de Construcción -->
       <mat-step [stepControl]="editForm">
-        <div [@stagger]="true" class="p-0 container-fluid">
+        <div
+          [@stagger]="true"
+          class="p-0 container-fluid"
+        >
           <form [formGroup]="editForm">
             <ng-template matStepLabel>Aspectos de Construcción</ng-template>
             <div class="p-0 pb-1 container">
@@ -115,9 +139,13 @@
               </div>
             </div>
             <div class="actions flex items-center justify-end gap-2">
-              <button color="primary" mat-raised-button matStepperNext
-                      [disabled]="editForm.invalid"
-                      (click)="saveConstruction()">
+              <button
+                color="primary"
+                mat-raised-button
+                matStepperNext
+                [disabled]="editForm.invalid"
+                (click)="saveConstruction()"
+              >
                 Continuar
               </button>
             </div>
@@ -129,13 +157,20 @@
       <mat-step [stepControl]="activeQualificationForm">
         <form [formGroup]="activeQualificationForm">
           <ng-template matStepLabel>Calificación</ng-template>
-          @if (qualificationMode === TYPE_TYPOLOGY || qualificationMode === TYPE_TRADITIONAL){
+          @if (
+            qualificationMode === TYPE_TYPOLOGY ||
+            qualificationMode === TYPE_TRADITIONAL
+          ) {
             <div class="actions flex items-center gap-2 pt-0">
               <button
                 mat-raised-button
                 color="primary"
                 (click)="toggleQualificationMode(TYPE_TRADITIONAL)"
-                [class]="qualificationMode === TYPE_TRADITIONAL ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+                [class]="
+                  qualificationMode === TYPE_TRADITIONAL
+                    ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
+                    : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
+                "
                 [disabled]="qualificationMode === TYPE_TRADITIONAL"
               >
                 Tradicional
@@ -144,7 +179,11 @@
                 mat-raised-button
                 color="primary"
                 (click)="toggleQualificationMode(TYPE_TYPOLOGY)"
-                [class]="qualificationMode === TYPE_TYPOLOGY ? 'bg-blue-500 text-white font-bold cursor-not-allowed' : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'"
+                [class]="
+                  qualificationMode === TYPE_TYPOLOGY
+                    ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
+                    : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
+                "
                 [disabled]="qualificationMode === TYPE_TYPOLOGY"
               >
                 Tipología
@@ -270,7 +309,7 @@
                     [apiUrl]="getApiQualificationUrl('Tamanio_Banio')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'bathSize'"
+                    formControlName="bathSize"
                     (selectionChange)="toggleBathroomFields($event)"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
@@ -283,7 +322,7 @@
                     [apiUrl]="getApiQualificationUrl('Enchape_Banio')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'bathEnchapes'"
+                    formControlName="bathEnchapes"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
 
@@ -295,7 +334,7 @@
                     [apiUrl]="getApiQualificationUrl('Mobiliario_Banio')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'bathFurniture'"
+                    formControlName="bathFurniture"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
 
@@ -307,7 +346,7 @@
                     [apiUrl]="getApiQualificationUrl('Conservacion_Banio')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'bathConservation'"
+                    formControlName="bathConservation"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
                 </div>
@@ -323,7 +362,7 @@
                     [apiUrl]="getApiQualificationUrl('Tamanio_Cocina')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'kitchenSize'"
+                    formControlName="kitchenSize"
                     (selectionChange)="toggleKitchenFields($event)"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
@@ -336,7 +375,7 @@
                     [apiUrl]="getApiQualificationUrl('Enchape_Cocina')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'kitchenEnchapes'"
+                    formControlName="kitchenEnchapes"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
 
@@ -348,7 +387,7 @@
                     [apiUrl]="getApiQualificationUrl('Mobiliario_Cocina')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'kitchenFurniture'"
+                    formControlName="kitchenFurniture"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
 
@@ -360,7 +399,7 @@
                     [apiUrl]="getApiQualificationUrl('Conservacion_Cocina')"
                     [valueKey]="'id'"
                     [displayKey]="'dispname'"
-                    [formControlName]="'kitchenConservation'"
+                    formControlName="kitchenConservation"
                     cssClasses="custom-class"
                   ></vex-combox-custom-selector>
                 </div>
@@ -374,10 +413,12 @@
                       [idSelector]="'ComplementoIndustrial' + 12354"
                       [label]="'Complemento industrial'"
                       [placeholder]="'Seleccionar complemento industrial'"
-                      [apiUrl]="getApiQualificationUrl('Cerchas_Complemento_Industria')"
+                      [apiUrl]="
+                        getApiQualificationUrl('Cerchas_Complemento_Industria')
+                      "
                       [valueKey]="'id'"
                       [displayKey]="'dispname'"
-                      [formControlName]="'industrialComplement'"
+                      formControlName="industrialComplement"
                       cssClasses="custom-class"
                     ></vex-combox-custom-selector>
                   </div>
@@ -428,27 +469,33 @@
             </div>
           }
           <div class="actions flex items-center justify-end gap-2">
-            <button color="primary" mat-button matStepperPrevious type="button">
+            <button
+              color="primary"
+              mat-button
+              matStepperPrevious
+              type="button"
+            >
               Atras
             </button>
             <button
               class="px-2"
               mat-raised-button
               color="accent"
-              (click)="resetConstructionAndQualification()">
+              (click)="resetConstructionAndQualification()"
+            >
               Borrar
             </button>
             <button
               class="px-2"
               mat-raised-button
               color="primary"
-              (click)="saveConstructionAndQualification()">
+              (click)="saveConstructionAndQualification()"
+            >
               Guardar
             </button>
           </div>
         </form>
       </mat-step>
-
     </mat-horizontal-stepper>
   </div>
 </mat-dialog-content>
@@ -462,7 +509,8 @@
   [confirmButtonText]="'Sí, guardar cambios'"
   [cancelButtonText]="'Cancelar'"
   [confirmButtonColor]="'#3085d6'"
-  [cancelButtonColor]="'#d33'">
+  [cancelButtonColor]="'#d33'"
+>
 </swal>
 
 <swal
@@ -470,7 +518,7 @@
   title="¡Guardado!"
   text="Los datos se han actualizado correctamente."
   icon="success"
-  [showConfirmButton]=false
+  [showConfirmButton]="false"
 >
 </swal>
 
@@ -479,7 +527,8 @@
   title="¡Error!"
   text="Por favor, corrige las validaciones del formulario."
   icon="error"
-  [confirmButtonColor]="'#3f51b5'">
+  [confirmButtonColor]="'#3f51b5'"
+>
 </swal>
 
 <swal
@@ -487,14 +536,16 @@
   title="¡Calificación Guardada!"
   text="Los datos de la calificación han sido registrados."
   icon="success"
-  [confirmButtonColor]="'#3f51b5'">
+  [confirmButtonColor]="'#3f51b5'"
+>
 </swal>
 
 <swal
   #errorSaveDialog
   title="¡Error!"
   text="No se logro almacenar la informacion."
-  icon="error">
+  icon="error"
+>
 </swal>
 
 <swal

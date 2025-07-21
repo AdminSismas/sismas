@@ -1,12 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // Angular framework
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  Inject,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 // Vex
 // Material
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -51,16 +67,16 @@ import {
   ValidateQualificationByDomBuiltType
 } from '../../../../interfaces/general/content-info';
 import { CommonGeneralValidationsService } from '../../../../services/general/common-general-validations.service';
-import {
-  InformationConstructionsService
-} from '../../../../services/information-property/information-constructions-property/information-constructions.service';
+import { InformationConstructionsService } from '../../../../services/information-property/information-constructions-property/information-constructions.service';
 import { validateIsNumber, validateVariable } from '../../../../utils/general';
 // Custom
 import {
   DOMAIN_NAME_BUILT_USE,
   GUION,
   NAME_NO_DISPONIBLE,
-  QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE, QUALIFICATIONS_DOMBUILT_TYPE_ANEXX, TYPE_ANNEX,
+  QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE,
+  QUALIFICATIONS_DOMBUILT_TYPE_ANEXX,
+  TYPE_ANNEX,
   TYPE_CREATE,
   TYPE_TRADITIONAL,
   TYPE_TYPOLOGY
@@ -69,9 +85,8 @@ import { DomainCollection } from '../../../../interfaces/general/domain-name.mod
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-
 @Component({
-  selector: 'vex-edit-information-constructions-property',
+  selector: 'crud-information-constructions-property',
   standalone: true,
   animations: [
     fadeInRight400ms,
@@ -104,16 +119,15 @@ import { filter } from 'rxjs/operators';
     MatStepperModule,
     MatTabsModule,
     MatTooltipModule,
+    // Custom
     CustomSelectorComponent,
     InputComponent,
     TextAreaComponent
-
   ],
   templateUrl: './crud-information-constructions-property.component.html',
   styleUrl: './crud-information-constructions-property.component.scss'
 })
 export class CrudInformationConstructionsPropertyComponent implements OnInit {
-
   urlBasic = `${environment.getApiQualificationUrl}`;
   api_domainName = `${environment.url_domain_name}`;
   schema = `${environment.schemas.temp}`;
@@ -133,22 +147,53 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   mapQualificationsConstruction: any = null;
 
   editForm: FormGroup = this.fb.group({
-    unitBuiltId: [this.crudInformationData?.contentInformation?.unitBuiltId ?? null],
-    domBuiltType: [this.crudInformationData?.contentInformation?.domBuiltType ?? null, Validators.required],
-    domBuiltUse: [this.crudInformationData?.contentInformation?.domBuiltUse ?? null, Validators.required],
-    unitBuiltLabel: [this.crudInformationData?.contentInformation?.unitBuiltLabel ?? null, [Validators.required, this.generalValidations.validateCapitalLettersOnly()]],// Solo letras mayúsculas
-    unitBuiltFloors: [this.crudInformationData?.contentInformation?.unitBuiltFloors ?? null, [Validators.required, this.generalValidations.validateNumberMax99()]],// Números del 1 al 99
-    unitBuiltYear: [this.crudInformationData?.contentInformation?.unitBuiltYear ?? null, [Validators.required,
-      this.generalValidations.validateYearBetween1900And2099(), // Años entre 1900 y 2099
-      this.generalValidations.yearNotInFutureValidator()]], // Validación personalizada
-    unitBuiltArea: [this.crudInformationData?.contentInformation?.unitBuiltArea ?? null, [Validators.required, this.generalValidations.validateOnlyNumber()]],
-    unitBuiltPrivateArea: [this.crudInformationData?.contentInformation?.unitBuiltPrivateArea ?? null, [
-      Validators.required,
-      this.generalValidations.validateOnlyNumber(), // Solo números
-      //this.generalValidations.nonZeroValidator(), // Validación para que el área no sea 0
-      this.generalValidations.privateAreaValidator('unitBuiltArea') // Validación para que no sea mayor al área total
-    ]],
-    unitBuiltObservation: [this.crudInformationData?.contentInformation?.unitBuiltObservation ?? null]
+    unitBuiltId: [
+      this.crudInformationData?.contentInformation?.unitBuiltId ?? null
+    ],
+    domBuiltType: [
+      this.crudInformationData?.contentInformation?.domBuiltType ?? null,
+      Validators.required
+    ],
+    domBuiltUse: [
+      this.crudInformationData?.contentInformation?.domBuiltUse ?? null,
+      Validators.required
+    ],
+    unitBuiltLabel: [
+      this.crudInformationData?.contentInformation?.unitBuiltLabel ?? null,
+      [
+        Validators.required,
+        this.generalValidations.validateCapitalLettersOnly()
+      ]
+    ], // Solo letras mayúsculas
+    unitBuiltFloors: [
+      this.crudInformationData?.contentInformation?.unitBuiltFloors ?? null,
+      [Validators.required, this.generalValidations.validateNumberMax99()]
+    ], // Números del 1 al 99
+    unitBuiltYear: [
+      this.crudInformationData?.contentInformation?.unitBuiltYear ?? null,
+      [
+        Validators.required,
+        this.generalValidations.validateYearBetween1900And2099(), // Años entre 1900 y 2099
+        this.generalValidations.yearNotInFutureValidator()
+      ]
+    ], // Validación personalizada
+    unitBuiltArea: [
+      this.crudInformationData?.contentInformation?.unitBuiltArea ?? null,
+      [Validators.required, this.generalValidations.validateOnlyNumber()]
+    ],
+    unitBuiltPrivateArea: [
+      this.crudInformationData?.contentInformation?.unitBuiltPrivateArea ??
+        null,
+      [
+        Validators.required,
+        this.generalValidations.validateOnlyNumber(), // Solo números
+        //this.generalValidations.nonZeroValidator(), // Validación para que el área no sea 0
+        this.generalValidations.privateAreaValidator('unitBuiltArea') // Validación para que no sea mayor al área total
+      ]
+    ],
+    unitBuiltObservation: [
+      this.crudInformationData?.contentInformation?.unitBuiltObservation ?? null
+    ]
   });
   traditionalRatingForm: FormGroup = this.fb.group({
     structureFraming: [null],
@@ -184,21 +229,26 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   @ViewChild('formError') formError!: SwalComponent;
   @ViewChild('idError') idError!: SwalComponent;
   @ViewChild('qualificationError') qualificationError!: SwalComponent;
-  @ViewChild('warningQualificationDialog') warningQualificationDialog!: SwalComponent;
+  @ViewChild('warningQualificationDialog')
+  warningQualificationDialog!: SwalComponent;
   @ViewChild('incompleteForm') incompleteForm!: SwalComponent;
   @ViewChild('notFoundValues') notFoundValues!: SwalComponent;
   @ViewChild('saveErrorDialog') saveErrorDialog!: SwalComponent;
   @ViewChild('selectTypeError') selectTypeError!: SwalComponent;
-  @ViewChild('successQualificationType') successQualificationType!: SwalComponent;
+  @ViewChild('successQualificationType')
+  successQualificationType!: SwalComponent;
   @ViewChild('errorQualificationType') errorQualificationType!: SwalComponent;
   @ViewChild('closeDialog') closeDialog!: SwalComponent;
   @ViewChild('successDialog') private successDialog!: SwalComponent;
-  @ViewChild('validationErrorDialog') private validationErrorDialog!: SwalComponent;
-  @ViewChild('calificationSuccessDialog') private calificationSuccessDialog!: SwalComponent;
+  @ViewChild('validationErrorDialog')
+  private validationErrorDialog!: SwalComponent;
+  @ViewChild('calificationSuccessDialog')
+  private calificationSuccessDialog!: SwalComponent;
   @ViewChild('errorSaveDialog') private errorSaveDialog!: SwalComponent;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public crudInformationData: CrudInformationConstruction | null,
+    @Inject(MAT_DIALOG_DATA)
+    public crudInformationData: CrudInformationConstruction | null,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<CrudInformationConstructionsPropertyComponent>,
     private collectionServicesService: CollectionServices,
@@ -214,37 +264,62 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
   ngOnInit(): void {
     this.typeCrud = this.crudInformationData?.type || TYPE_CREATE;
-    this.executionId = this.crudInformationData?.contentInformation?.executionId;
+    this.executionId =
+      this.crudInformationData?.contentInformation?.executionId;
     this.baunitId = this.crudInformationData?.contentInformation?.baunitId;
-    this.unitBuiltId = this.crudInformationData?.contentInformation?.unitBuiltId;
+    this.unitBuiltId =
+      this.crudInformationData?.contentInformation?.unitBuiltId;
 
-    if (!validateVariable(this.executionId) || !validateVariable(this.baunitId)) {
+    if (
+      !validateVariable(this.executionId) ||
+      !validateVariable(this.baunitId)
+    ) {
       return;
     }
 
-    if (!this.crudInformationData || !this.crudInformationData?.contentInformation ||
-      this.typeCrud === 'DELETE') {
+    if (
+      !this.crudInformationData ||
+      !this.crudInformationData?.contentInformation ||
+      this.typeCrud === 'DELETE'
+    ) {
       this.fetchAllBuiltUseOptions();
       return;
     }
 
     this.fetchAllBuiltUseOptions();
 
-    this.useOptions$.pipe(filter<boolean>(Boolean))
-      .subscribe(() => {
-        if (!this.crudInformationData || !this.crudInformationData?.contentInformation) {
-          return;
-        }
+    this.useOptions$.pipe(filter<boolean>(Boolean)).subscribe(() => {
+      if (
+        !this.crudInformationData ||
+        !this.crudInformationData?.contentInformation
+      ) {
+        return;
+      }
 
-        if (this.typeCrud === 'UPDATE') {
-          this.constructionData = this.crudInformationData?.contentInformation;
-          if (this.constructionData != null && this.crudInformationData?.contentInformation?.schema != null) {
-            this.schema = this.crudInformationData?.contentInformation?.schema;
-          }
-          this.changeDetailInformationConstruction(this.constructionData);
-          this.getDetailQualificationConstruction(this.constructionData);
+      if (this.typeCrud === 'UPDATE') {
+        this.constructionData = this.crudInformationData?.contentInformation;
+        if (
+          this.constructionData != null &&
+          this.crudInformationData?.contentInformation?.schema != null
+        ) {
+          this.schema = this.crudInformationData?.contentInformation?.schema;
         }
-      });
+        this.changeDetailInformationConstruction(this.constructionData);
+        this.getDetailQualificationConstruction(this.constructionData);
+      }
+    });
+  }
+
+  initFormQualification(isIndustrialConstruction: boolean) {
+    if (!isIndustrialConstruction) return;
+
+    this.activeQualificationForm.controls['bathSize'].setValue(null);
+    this.toggleBathroomFields(34);
+    this.activeQualificationForm.controls['bathSize'].disable();
+
+    this.activeQualificationForm.controls['kitchenSize'].setValue(null);
+    this.toggleKitchenFields(49);
+    this.activeQualificationForm.controls['kitchenSize'].disable();
   }
 
   resetConstructionAndQualification(): void {
@@ -269,7 +344,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   }
 
   saveTypologyQualification() {
-    const selectedTypology = this.typologyRatingForm.get('domTipologiaTipo')?.value;
+    const selectedTypology =
+      this.typologyRatingForm.get('domTipologiaTipo')?.value;
     if (!selectedTypology) {
       this.selectTypeError.fire();
       return;
@@ -278,7 +354,12 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   }
 
   saveTraditionalRating() {
-    if (this.traditionalRatingForm.invalid || !this.executionId || !this.baunitId || !this.unitBuiltId) {
+    if (
+      this.traditionalRatingForm.invalid ||
+      !this.executionId ||
+      !this.baunitId ||
+      !this.unitBuiltId
+    ) {
       this.traditionalRatingForm.markAllAsTouched();
       this.incompleteForm.fire();
       return;
@@ -287,7 +368,12 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   }
 
   saveTypologyAnexx() {
-    if (this.typeAnexxForm.invalid || !this.executionId || !this.baunitId || !this.unitBuiltId) {
+    if (
+      this.typeAnexxForm.invalid ||
+      !this.executionId ||
+      !this.baunitId ||
+      !this.unitBuiltId
+    ) {
       this.typeAnexxForm.markAllAsTouched();
       this.incompleteForm.fire();
       return;
@@ -307,9 +393,18 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
         this.notFoundValues.fire();
         return;
       }
-      this.constructionsService.updateQualification(this.executionId, this.baunitId, this.unitBuiltId, listQualification)
+      this.constructionsService
+        .updateQualification(
+          this.executionId,
+          this.baunitId,
+          this.unitBuiltId,
+          listQualification
+        )
         .subscribe({
-          next: () => this.calificationSuccessDialog.fire().then(() => this.closedDialog(this.constructionData)),
+          next: () =>
+            this.calificationSuccessDialog
+              .fire()
+              .then(() => this.closedDialog(this.constructionData)),
           error: () => this.errorSaveDialog.fire()
         });
     } catch {
@@ -327,7 +422,9 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
       return;
     }
 
-    const formValues: ContentInformationConstruction = this.processFormValues(this.editForm.value);
+    const formValues: ContentInformationConstruction = this.processFormValues(
+      this.editForm.value
+    );
     if (this.typeCrud === 'UPDATE' && this.executionId && this.baunitId) {
       this.updateConstruction(this.executionId, this.baunitId, formValues);
       return;
@@ -353,7 +450,9 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     }
   }
 
-  changeDetailInformationConstruction(detailInformationConstruction: ContentInformationConstruction | null) {
+  changeDetailInformationConstruction(
+    detailInformationConstruction: ContentInformationConstruction | null
+  ) {
     if (detailInformationConstruction) {
       Object.entries(detailInformationConstruction).forEach(([key, value]) => {
         if (this.editForm.controls[key]) {
@@ -361,7 +460,10 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
           if (key === 'domBuiltType') {
             this.toggleKitchenAndBathFields(value);
-            this.filteredBuiltUseOptions = this.allBuiltUseOptions.filter((option: DomainCollection) => option?.code && option?.code.startsWith(value));
+            this.filteredBuiltUseOptions = this.allBuiltUseOptions.filter(
+              (option: DomainCollection) =>
+                option?.code && option?.code.startsWith(value)
+            );
           } else if (key === 'domBuiltUse') {
             this.validateDomBuilTypeAnnex(value);
           }
@@ -370,7 +472,9 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     }
   }
 
-  getDetailQualificationConstruction(detailInformationConstruction: ContentInformationConstruction | null) {
+  getDetailQualificationConstruction(
+    detailInformationConstruction: ContentInformationConstruction | null
+  ) {
     if (detailInformationConstruction) {
       const executionId = detailInformationConstruction.executionId ?? null;
       const baunitId = detailInformationConstruction.baunitId ?? null;
@@ -378,10 +482,20 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
       if (!executionId || !baunitId || !unitBuiltId) {
         return;
       }
-      this.constructionsService.getQualificationConstructions(executionId, baunitId, unitBuiltId, this.schema)
+      this.constructionsService
+        .getQualificationConstructions(
+          executionId,
+          baunitId,
+          unitBuiltId,
+          this.schema
+        )
         .subscribe((result: CcCalificacionUB[]) => {
           this.qualificationsConstruction = result;
-          this.mapQualificationsConstruction = this.indexArraylistQualifications(this.qualificationsConstruction, 'domain');
+          this.mapQualificationsConstruction =
+            this.indexArraylistQualifications(
+              this.qualificationsConstruction,
+              'domain'
+            );
           setTimeout(() => this.refreshTraditionalRatingForm(), 275);
         });
     }
@@ -399,39 +513,62 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
       structureFraming: [this.chargeQualificationConstruction('Armazon')],
       structureWalls: [this.chargeQualificationConstruction('Muros')],
       structureRoof: [this.chargeQualificationConstruction('Cubierta')],
-      structureConservation: [this.chargeQualificationConstruction('Conservacion_Cubierta')],
+      structureConservation: [
+        this.chargeQualificationConstruction('Conservacion_Cubierta')
+      ],
       finishesFacades: [this.chargeQualificationConstruction('Fachada')],
-      finishesWalls: [this.chargeQualificationConstruction('Cubrimiento_Muros')],
+      finishesWalls: [
+        this.chargeQualificationConstruction('Cubrimiento_Muros')
+      ],
       finishesFloors: [this.chargeQualificationConstruction('Piso')],
-      finishesConservation: [this.chargeQualificationConstruction('Conservacion_Acabados')],
+      finishesConservation: [
+        this.chargeQualificationConstruction('Conservacion_Acabados')
+      ],
       bathSize: [idBath],
-      bathEnchapes: [{
-        value: this.chargeQualificationConstruction('Enchape_Banio'),
-        disable: idBath !== null && idBath !== undefined && idBath === 34
-      }],
-      bathFurniture: [{
-        value: this.chargeQualificationConstruction('Mobiliario_Banio'),
-        disable: idBath !== null && idBath !== undefined && idBath === 34
-      }],
-      bathConservation: [{
-        value: this.chargeQualificationConstruction('Conservacion_Banio'),
-        disable: idBath !== null && idBath !== undefined && idBath === 34
-      }],
+      bathEnchapes: [
+        {
+          value: this.chargeQualificationConstruction('Enchape_Banio'),
+          disable: idBath !== null && idBath !== undefined && idBath === 34
+        }
+      ],
+      bathFurniture: [
+        {
+          value: this.chargeQualificationConstruction('Mobiliario_Banio'),
+          disable: idBath !== null && idBath !== undefined && idBath === 34
+        }
+      ],
+      bathConservation: [
+        {
+          value: this.chargeQualificationConstruction('Conservacion_Banio'),
+          disable: idBath !== null && idBath !== undefined && idBath === 34
+        }
+      ],
       kitchenSize: [idKitchen],
-      kitchenEnchapes: [{
-        value: this.chargeQualificationConstruction('Enchape_Cocina'),
-        disable: idKitchen !== null && idKitchen !== undefined && idKitchen === 49
-      }],
-      kitchenFurniture: [{
-        value: this.chargeQualificationConstruction('Mobiliario_Cocina'),
-        disable: idKitchen !== null && idKitchen !== undefined && idKitchen === 49
-      }],
-      kitchenConservation: [{
-        value: this.chargeQualificationConstruction('Conservacion_Cocina'),
-        disable: idKitchen !== null && idKitchen !== undefined && idKitchen === 49
-      }],
+      kitchenEnchapes: [
+        {
+          value: this.chargeQualificationConstruction('Enchape_Cocina'),
+          disable:
+            idKitchen !== null && idKitchen !== undefined && idKitchen === 49
+        }
+      ],
+      kitchenFurniture: [
+        {
+          value: this.chargeQualificationConstruction('Mobiliario_Cocina'),
+          disable:
+            idKitchen !== null && idKitchen !== undefined && idKitchen === 49
+        }
+      ],
+      kitchenConservation: [
+        {
+          value: this.chargeQualificationConstruction('Conservacion_Cocina'),
+          disable:
+            idKitchen !== null && idKitchen !== undefined && idKitchen === 49
+        }
+      ],
       domTipologiaTipo: [this.chargeQualificationConstruction('Tipologia')],
-      industrialComplement: [this.chargeQualificationConstruction('Cerchas_Complemento_Industria')]
+      industrialComplement: [
+        this.chargeQualificationConstruction('Cerchas_Complemento_Industria')
+      ]
     });
 
     setTimeout(() => {
@@ -446,25 +583,40 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     this.editForm.valueChanges.subscribe(() => {
       this.isCreateOrUpdateConstruction = false;
     });
-
   }
 
   toggleBathroomFields(selectedValue: number): void {
     const shouldDisable: boolean = selectedValue === 34; // ID de "Sin_Baño"
-    const fieldsToToggle = ['bathEnchapes', 'bathFurniture', 'bathConservation'];
-    fieldsToToggle.forEach((key: string) => this.validateControlDisableOrEnableCustomSelect(key, shouldDisable));
+    const fieldsToToggle = [
+      'bathEnchapes',
+      'bathFurniture',
+      'bathConservation'
+    ];
+    fieldsToToggle.forEach((key: string) =>
+      this.validateControlDisableOrEnableCustomSelect(key, shouldDisable)
+    );
   }
 
   toggleKitchenFields(selectedValue: number): void {
     const shouldDisable = selectedValue === 49; // ID de "Sin_Cocina"
-    const fieldsToToggle = ['kitchenEnchapes', 'kitchenFurniture', 'kitchenConservation'];
-    fieldsToToggle.forEach((key: string) => this.validateControlDisableOrEnableCustomSelect(key, shouldDisable));
+    const fieldsToToggle = [
+      'kitchenEnchapes',
+      'kitchenFurniture',
+      'kitchenConservation'
+    ];
+    fieldsToToggle.forEach((key: string) =>
+      this.validateControlDisableOrEnableCustomSelect(key, shouldDisable)
+    );
   }
 
   chargeQualificationConstruction(domain: string) {
     let id: number | null = null;
-    if (this.qualificationsConstruction && this.qualificationsConstruction.length > 0
-      && domain.length > 0 && this.mapQualificationsConstruction !== null) {
+    if (
+      this.qualificationsConstruction &&
+      this.qualificationsConstruction.length > 0 &&
+      domain.length > 0 &&
+      this.mapQualificationsConstruction !== null
+    ) {
       try {
         id = this.mapQualificationsConstruction[domain]?.ccCalUBDom.id;
         if (validateIsNumber(id) && id !== null && id !== undefined && id > 0) {
@@ -479,10 +631,14 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
   chargeQualificationConstructionAnexx() {
     let id: number | null | undefined = null;
-    if (this.qualificationsConstruction && this.qualificationsConstruction.length === 1 &&
-      this.mapQualificationsConstruction !== null) {
+    if (
+      this.qualificationsConstruction &&
+      this.qualificationsConstruction.length === 1 &&
+      this.mapQualificationsConstruction !== null
+    ) {
       try {
-        const qualification: CcCalificacionUB = this.qualificationsConstruction[0];
+        const qualification: CcCalificacionUB =
+          this.qualificationsConstruction[0];
         if (qualification && qualification?.ccCalUBDom) {
           id = qualification.ccCalUBDom.id;
           if (validateIsNumber(id) && id && id > 0) {
@@ -500,17 +656,30 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     if (validateVariable(domBuiltType)) {
       QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE.forEach(
         (obj: ValidateQualificationByDomBuiltType) => {
-          if (obj != null && obj.list.length > 0 && obj.domBuiltType === domBuiltType) {
-            obj.list.forEach((key: string) => this.validateControlDisableOrEnableCustomSelect(key, obj.shouldDisable));
+          if (
+            obj != null &&
+            obj.list.length > 0 &&
+            obj.domBuiltType === domBuiltType
+          ) {
+            obj.list.forEach((key: string) =>
+              this.validateControlDisableOrEnableCustomSelect(
+                key,
+                obj.shouldDisable
+              )
+            );
           }
-        });
+        }
+      );
     }
 
     // Mostrar/ocultar campo de complemento industrial
     this.toggleIndustrialComplementField(domBuiltType);
   }
 
-  validateControlDisableOrEnableCustomSelect(key: string, shouldDisable: boolean) {
+  validateControlDisableOrEnableCustomSelect(
+    key: string,
+    shouldDisable: boolean
+  ) {
     if (this.traditionalRatingForm.controls[key]) {
       if (shouldDisable) {
         this.traditionalRatingForm.get(`${key}`)?.disable();
@@ -522,14 +691,19 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   }
 
   toggleQualificationMode(mode: TypeQualificationMode): void {
-    if ((this.traditionalRatingForm.dirty && mode === TYPE_TYPOLOGY) ||
+    if (
+      (this.traditionalRatingForm.dirty && mode === TYPE_TYPOLOGY) ||
       (this.typologyRatingForm.dirty && mode === TYPE_TRADITIONAL) ||
-      (this.typeCrud === 'UPDATE' && this.qualificationsConstruction.length > 0)) {
+      (this.typeCrud === 'UPDATE' && this.qualificationsConstruction.length > 0)
+    ) {
       this.warningQualificationDialog.fire().then(() => {
         this.qualificationMode = mode;
         this.typologyRatingForm.reset();
         this.traditionalRatingForm.reset();
-        if (this.qualificationsConstruction != null && this.qualificationsConstruction.length > 0) {
+        if (
+          this.qualificationsConstruction != null &&
+          this.qualificationsConstruction.length > 0
+        ) {
           this.qualificationsConstruction = [];
         }
       });
@@ -546,7 +720,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     }
     const selectedTypeDispname = selectedType; // Valor seleccionado
     this.filteredBuiltUseOptions = this.allBuiltUseOptions.filter(
-      (option: DomainCollection) => option?.code && option?.code.startsWith(selectedTypeDispname)
+      (option: DomainCollection) =>
+        option?.code && option?.code.startsWith(selectedTypeDispname)
     );
     this.editForm.get('domBuiltUse')?.setValue(null); // Resetea el valor del uso
   }
@@ -555,12 +730,20 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     let domBuiltType: string | null = null;
     if (domBuiltUse) {
       domBuiltType = this.editForm.get('domBuiltType')?.value;
-      if (domBuiltType && domBuiltType === QUALIFICATIONS_DOMBUILT_TYPE_ANEXX.domBuiltType) {
+      if (
+        domBuiltType &&
+        domBuiltType === QUALIFICATIONS_DOMBUILT_TYPE_ANEXX.domBuiltType
+      ) {
         const list = this.allBuiltUseOptions.filter(
-          (option: DomainCollection) => domBuiltType && domBuiltUse && option?.code &&
-            option?.code.startsWith(domBuiltType) && option?.dispname === domBuiltUse
+          (option: DomainCollection) =>
+            domBuiltType &&
+            domBuiltUse &&
+            option?.code &&
+            option?.code.startsWith(domBuiltType) &&
+            option?.dispname === domBuiltUse
         );
-        this.annexUrl = list.length >= 1 ? this.urlBasic + `${list[0].domainCode}` : '';
+        this.annexUrl =
+          list.length >= 1 ? this.urlBasic + `${list[0].domainCode}` : '';
         this.toggleQualificationMode(TYPE_ANNEX);
       }
     }
@@ -568,20 +751,29 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
   // Procesar valores del formulario
   private processFormValues(values: any): any {
-    const value: ContentInformationConstruction = new ContentInformationConstruction(values);
-    value.unitBuiltPrivateArea = this.validationsService.parseNumericValue(values.unitBuiltPrivateArea);
-    value.unitBuiltArea = this.validationsService.parseNumericValue(values.unitBuiltArea);
+    const value: ContentInformationConstruction =
+      new ContentInformationConstruction(values);
+    value.unitBuiltPrivateArea = this.validationsService.parseNumericValue(
+      values.unitBuiltPrivateArea
+    );
+    value.unitBuiltArea = this.validationsService.parseNumericValue(
+      values.unitBuiltArea
+    );
     return value;
   }
 
   private fetchAllBuiltUseOptions(): void {
-    this.collectionServicesService.getAllDataAllBuiltUseOptions(DOMAIN_NAME_BUILT_USE, true).subscribe({
-      next: (data: DomainCollection[]) => {
-        this.allBuiltUseOptions = (data || []).map((content: DomainCollection) => new DomainCollection(content));
-        this.filteredBuiltUseOptions = data;
-        this._useOptions$.next(true);
-      },
-    });
+    this.collectionServicesService
+      .getAllDataAllBuiltUseOptions(DOMAIN_NAME_BUILT_USE, true)
+      .subscribe({
+        next: (data: DomainCollection[]) => {
+          this.allBuiltUseOptions = (data || []).map(
+            (content: DomainCollection) => new DomainCollection(content)
+          );
+          this.filteredBuiltUseOptions = data;
+          this._useOptions$.next(true);
+        }
+      });
   }
 
   get validateUnitBuiltLabel() {
@@ -617,43 +809,61 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     return `${this.urlBasic}${domain}`;
   }
 
-  createConstruction(executionId: string, baunitId: string, formValues: ContentInformationConstruction) {
-    this.constructionsService.createConstruction(executionId, baunitId, formValues).subscribe({
-      next: (result) => {
-        this.constructionData = result;
-        this.unitBuiltId = result?.unitBuiltId;
-        this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
-        this.updateInformationKitchenAndBathFields();
-        this.isCreateOrUpdateConstruction = true;
-        this.successDialog.fire();
-      },
-      error: () => {
-        this.isCreateOrUpdateConstruction = false;
-        this.errorSaveDialog.fire();
-      }
-    });
+  createConstruction(
+    executionId: string,
+    baunitId: string,
+    formValues: ContentInformationConstruction
+  ) {
+    this.constructionsService
+      .createConstruction(executionId, baunitId, formValues)
+      .subscribe({
+        next: (result) => {
+          this.constructionData = result;
+          this.unitBuiltId = result?.unitBuiltId;
+          this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
+          this.updateInformationKitchenAndBathFields();
+          this.isCreateOrUpdateConstruction = true;
+          this.successDialog.fire();
+          this.initFormQualification(this.isIndustrialConstruction());
+        },
+        error: () => {
+          this.isCreateOrUpdateConstruction = false;
+          this.errorSaveDialog.fire();
+        }
+      });
   }
 
-  updateConstruction(executionId: string, baunitId: string, formValues: ContentInformationConstruction) {
-    this.constructionsService.updateConstruction(executionId, baunitId, formValues).subscribe({
-      next: (result) => {
-        this.constructionData = result;
-        this.unitBuiltId = result?.unitBuiltId;
-        this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
-        this.updateInformationKitchenAndBathFields();
-        this.isCreateOrUpdateConstruction = true;
-        this.successDialog.fire();
-      },
-      error: () => {
-        this.isCreateOrUpdateConstruction = false;
-        this.errorSaveDialog.fire();
-      }
-    });
+  updateConstruction(
+    executionId: string,
+    baunitId: string,
+    formValues: ContentInformationConstruction
+  ) {
+    this.constructionsService
+      .updateConstruction(executionId, baunitId, formValues)
+      .subscribe({
+        next: (result) => {
+          this.constructionData = result;
+          this.unitBuiltId = result?.unitBuiltId;
+          this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
+          this.updateInformationKitchenAndBathFields();
+          this.isCreateOrUpdateConstruction = true;
+          this.successDialog.fire();
+          this.initFormQualification(this.isIndustrialConstruction());
+        },
+        error: () => {
+          this.isCreateOrUpdateConstruction = false;
+          this.errorSaveDialog.fire();
+        }
+      });
   }
 
   updateInformationKitchenAndBathFields() {
-    this.traditionalRatingForm.get('bathFurniture')?.setValue(this.chargeQualificationConstruction('Mobiliario_Banio'));
-    this.traditionalRatingForm.get('kitchenFurniture')?.setValue(this.chargeQualificationConstruction('Mobiliario_Cocina'));
+    this.traditionalRatingForm
+      .get('bathFurniture')
+      ?.setValue(this.chargeQualificationConstruction('Mobiliario_Banio'));
+    this.traditionalRatingForm
+      .get('kitchenFurniture')
+      ?.setValue(this.chargeQualificationConstruction('Mobiliario_Cocina'));
   }
 
   // Cerrar el diálogo
@@ -663,14 +873,19 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
   indexArraylistQualifications(obj: CcCalificacionUB[], value: string) {
     if (obj !== null && obj.length > 0) {
-      return obj.reduce((acc: any, el: any) => ({
-        ...acc,
-        [el.ccCalUBDom[value]]: el
-      }), []);
+      return obj.reduce(
+        (acc: any, el: any) => ({
+          ...acc,
+          [el.ccCalUBDom[value]]: el
+        }),
+        []
+      );
     }
-  };
+  }
 
-  toggleIndustrialComplementField(domBuiltType: string | null | undefined): void {
+  toggleIndustrialComplementField(
+    domBuiltType: string | null | undefined
+  ): void {
     const shouldShowIndustrialComplement = domBuiltType === 'Industrial';
     if (this.traditionalRatingForm.controls['industrialComplement']) {
       if (shouldShowIndustrialComplement) {
@@ -688,7 +903,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
   protected readonly GUION = GUION;
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
-  protected readonly CONSTANT_MSG_UNITBUILT_LABEL = CONSTANT_MSG_UNITBUILT_LABEL;
+  protected readonly CONSTANT_MSG_UNITBUILT_LABEL =
+    CONSTANT_MSG_UNITBUILT_LABEL;
   protected readonly CONSTANT_MSG_UNITBUILT_YEAR = CONSTANT_MSG_UNITBUILT_YEAR;
   protected readonly CONSTANT_MSG_TYPE_AREA = CONSTANT_MSG_TYPE_AREA;
   protected readonly CONSTANT_MSG_ONLY_ONE_99 = CONSTANT_MSG_ONLY_ONE_99;
