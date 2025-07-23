@@ -28,4 +28,33 @@ export class WorkflowCollection {
   }
 }
 
+export interface Proflow {
+  flowId:         number;
+  preform:        Preform;
+  key:            string;
+  orderFlow:      number;
+  name:           string;
+  dueDays:        number;
+  bpmLaneNames:   string;
+  question:       null | string;
+  questionFlow:   null | string;
+  transientField: boolean;
+}
+
+export interface Preform {
+  preformId: number;
+  name?:      string;
+  pathForm?:  string;
+  params?:    null;
+}
+
+export interface TaskListData {
+  tasks: Proflow[];
+  processId: string;
+  name: string;
+  key: string;
+}
+
+
+
 

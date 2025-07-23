@@ -1,0 +1,91 @@
+<app-modal-window [title]="'Listado de tareas de ' + data.name">
+  <button
+    titleButton
+    mat-raised-button
+    (click)="createTask()"
+    color="primary"
+  >
+    <mat-icon svgIcon="mat:add"></mat-icon>
+    Crear tarea
+  </button>
+  <div class="overflow-auto max-h-[90vh]">
+    <mat-table
+      [dataSource]="dataSource()"
+      @stagger
+    >
+      @for (column of columns; track $index) {
+        <ng-container [matColumnDef]="column.property">
+          <mat-header-cell
+            *matHeaderCellDef
+            class="border-none"
+          >
+            {{ column.label }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            @switch (column.property) {
+              @case ("preform.name") {
+                {{ row.preform.name }}
+              }
+              @case ("bpmLaneNames") {
+                {{ row[column.property] | laneNames }}
+              }
+              @case ("question") {
+                <span>{{ row[column.property] || 'Sin pregunta' }}</span>
+              }
+              @case ("orderFlow") {
+                <span>{{ row[column.property] }}</span>
+              }
+              @default {
+                {{ row[column.property] }}
+              }
+            }
+          </mat-cell>
+        </ng-container>
+      }
+      <ng-container matColumnDef="actions">
+        <mat-header-cell
+          *matHeaderCellDef
+          class="border-none justify-center"
+          >Acciones</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row"
+          class="justify-center"
+        >
+          <button
+            mat-icon-button
+            color="primary"
+            [matMenuTriggerFor]="menu"
+            [matMenuTriggerData]="{ row: row }"
+          >
+            <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row
+        *matHeaderRowDef="visibleColumns(); sticky: true"
+        class="bg-blue-300 flex items-center"
+      ></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: visibleColumns()"
+        @fadeInUp
+      ></mat-row>
+    </mat-table></div
+></app-modal-window>
+
+<mat-menu #menu="matMenu">
+  <ng-template
+    let-row="row"
+    matMenuContent
+  >
+    @for (action of actions; track $index) {
+      <button
+        mat-menu-item
+        (click)="action.action(row)"
+      >
+        <mat-icon [svgIcon]="action.icon"></mat-icon>
+        {{ action.label }}
+      </button>
+    }
+  </ng-template>
+</mat-menu>

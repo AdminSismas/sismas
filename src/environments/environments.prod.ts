@@ -60,6 +60,8 @@ export const environment = {
   bpmOperation: {
     comment: "comment/",
     count: "/count",
+    flow: "flow/",
+    preform: "preform",
     proExecution: "proExecution/",
     proExecution_next: "proExecution/nextV2/",
     proExecution_prev: "proExecution/prevV2/",

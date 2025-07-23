@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Component,
-  EventEmitter,
   input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
   signal,
   inject,
@@ -18,7 +16,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 /* Components */
@@ -29,6 +27,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TextAreaComponent } from '../../general-components/text-area/text-area.component';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/constants';
+import { output } from '@angular/core';
 
 @Component({
   selector: 'vex-dynamic-forms',
@@ -49,7 +50,11 @@ import { TextAreaComponent } from '../../general-components/text-area/text-area.
     TextAreaComponent
   ],
   templateUrl: './dynamic-forms.component.html',
-  styleUrl: './dynamic-forms.component.scss'
+  styleUrl: './dynamic-forms.component.scss',
+  providers: [
+    provideMomentDateAdapter(),
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class DynamicFormsComponent implements OnInit, OnChanges {
   private fb = inject(FormBuilder);
@@ -62,7 +67,8 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
   form = signal(this.fb.group({}));
   private dateFilters = new Map<string, (date: Date | null) => boolean>();
 
-  @Output() formReady = new EventEmitter<FormGroup>();
+  formReady = output<FormGroup>();
+  // new EventEmitter<FormGroup>();
 
   resetFormEffect = effect(() => {
     if (this.initValues()) {
@@ -94,7 +100,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
     }
 
     if (changes['initValues'] && this.form) {
-      this.form().reset(this.initValues);
+      this.form().reset(this.initValues()!);
     }
   }
 

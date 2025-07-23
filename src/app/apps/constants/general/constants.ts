@@ -87,6 +87,18 @@ export const PAGE_SIZE_OPTION_ADJACENT: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
 export const PAGE_SIZE_OPTION_FOLIO: number[] = [2, 5];
 
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 export const STRUCTURE_HTML_HEADER =
   `<html>
   <head>

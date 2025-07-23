@@ -80,7 +80,8 @@ export const WORKFLOW_INPUTS: JSONInput[] = [
     type: 'BpmProcessCategory',
     placeholder: 'Categoría',
     validators: [Validators.required],
-    element: 'collection'
+    element: 'collection',
+    valueCode: true
   },
   {
     label: 'Nombre',

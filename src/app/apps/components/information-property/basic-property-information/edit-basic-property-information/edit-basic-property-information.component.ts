@@ -37,20 +37,9 @@ import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-pro
 import { BaunitCondition } from 'src/app/apps/constants/general/constants';
 import { Subscription } from 'rxjs';
 import Big from 'big.js';
+import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/procedures.constant';
 
 const REGEX_MORE_THAN_0 = /^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/;
-
-const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 
 @Component({
   selector: 'vex-edit-basic-property-information',

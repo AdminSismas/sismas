@@ -14,4 +14,5 @@ export interface JSONInput {
   noVisibleComponent?: boolean | null;
   options?: { value: string; label: string }[];
   multiple?: boolean;
+  valueCode?: boolean;
 }

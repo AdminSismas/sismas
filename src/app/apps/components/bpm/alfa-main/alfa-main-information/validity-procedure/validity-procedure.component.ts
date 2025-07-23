@@ -12,23 +12,12 @@ import { AlfaMainService } from '../../../../../services/bpm/core/alfa-main.serv
 import { ChangeControl } from 'src/app/apps/interfaces/bpm/change-control';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/constants';
 
 interface DialogDataValidity {
   executionId: string;
   validateChangeLog: ChangeControl;
 }
-
-const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 
 @Component({
   selector: 'vex-validity-procedure',

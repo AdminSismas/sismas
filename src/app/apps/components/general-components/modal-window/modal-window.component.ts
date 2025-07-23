@@ -25,10 +25,25 @@ export class ModalWindowComponent implements AfterViewInit {
   // INPUTS
   title = input<string>('Título ventana modal');
   actions = input(false, {
-    transform: (value: boolean | string) =>
-      typeof value === 'string' ? value === '' : value,
+    transform: (value: boolean | string) => {
+      if (typeof value === 'boolean') return value;
+      if (value === '') return true;
+      if (value === 'true') return true;
+      if (value === 'false') return false;
+
+      return false;
+    }
   });
-  showCancelButton = input<boolean>(false);
+  showCancelButton = input(false, {
+    transform: (value: boolean | string) => {
+      if (typeof value === 'boolean') return value;
+      if (value === '') return true;
+      if (value === 'true') return true;
+      if (value === 'false') return false;
+
+      return false;
+    }
+  });
   data = input<unknown | null>(null);
 
   // OUTPUTS
