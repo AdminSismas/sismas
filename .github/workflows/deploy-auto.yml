@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular App
-        run: node --run build -- --configuration=test
+        run: npm run build -- --configuration=test
       - name: Install sshpass
         run: |
           sudo apt-get update
