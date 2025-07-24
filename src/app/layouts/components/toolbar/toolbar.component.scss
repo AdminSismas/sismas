@@ -5,7 +5,7 @@
   white-space: nowrap;
   width: 100%;
   z-index: var(--vex-toolbar-z-index);
-  @apply backdrop-blur border-b;
+  @apply backdrop-blur;
 }
 
 .toolbar {

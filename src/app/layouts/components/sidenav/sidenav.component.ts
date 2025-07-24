@@ -149,8 +149,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
           )
         )
       )
-      .subscribe((result) => {
-      });
+      .subscribe();
   }
   navigateToCadastralSearch() {
     this.router.navigate(['/myWork/cadastralSearch']);

@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
 import { VexConfigService } from '@vex/config/vex-config.service';
 import { VexSidebarComponent } from '@vex/components/vex-sidebar/vex-sidebar.component';
 
-import { AsyncPipe, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { FooterComponent } from '../components/footer/footer.component';
@@ -28,7 +28,6 @@ import { VexConfig } from '@vex/config/vex-config.interface';
   styleUrls: ['./layout.component.scss'],
   imports: [
     BaseLayoutComponent,
-    NgIf,
     AsyncPipe,
     SidenavComponent,
     ToolbarComponent,
@@ -39,7 +38,6 @@ import { VexConfig } from '@vex/config/vex-config.interface';
     ConfigPanelComponent,
     MatDialogModule,
     MatSidenavModule,
-    NgTemplateOutlet,
     RouterOutlet,
     SearchComponent,
     VexProgressBarComponent,
@@ -64,6 +62,11 @@ export class LayoutComponent {
   sidenavOpen$: Observable<boolean> = this.layoutService.sidenavOpen$;
   configPanelOpen$: Observable<boolean> = this.layoutService.configPanelOpen$;
   quickpanelOpen$: Observable<boolean> = this.layoutService.quickpanelOpen$;
+
+  isToolbarVisible$: Observable<boolean> = combineLatest([
+    this.configService.config$,
+    this.layoutService.isDesktop$
+  ]).pipe(map(([config, isDesktop]) => config.toolbar.visible || !isDesktop));
 
   constructor(
     private readonly layoutService: VexLayoutService,
