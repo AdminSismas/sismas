@@ -30,6 +30,7 @@ import { TextAreaComponent } from '../../general-components/text-area/text-area.
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/constants';
 import { output } from '@angular/core';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'vex-dynamic-forms',
@@ -65,7 +66,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
   initValues = input<any | null>(null);
 
   form = signal(this.fb.group({}));
-  private dateFilters = new Map<string, (date: Date | null) => boolean>();
+  private dateFilters = new Map<string, (date: Moment | null) => boolean>();
 
   formReady = output<FormGroup>();
   // new EventEmitter<FormGroup>();
@@ -156,28 +157,28 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
 
   private createFilterForType(
     typeString: string
-  ): (date: Date | null) => boolean {
-    return (date: Date | null): boolean => {
+  ): (date: Moment | null) => boolean {
+    return (date: Moment | null): boolean => {
       if (!date) return true;
-
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      date.setHours(0, 0, 0, 0);
+      const dateToCompare = date.toDate();
+      dateToCompare.setHours(0, 0, 0, 0);
 
       switch (typeString) {
         case 'future':
-          return date.getTime() >= today.getTime();
+          return dateToCompare.getTime() >= today.getTime();
         case 'past':
-          return date.getTime() <= today.getTime();
+          return dateToCompare.getTime() <= today.getTime();
         case 'today':
-          return date.getTime() === today.getTime();
+          return dateToCompare.getTime() === today.getTime();
         default:
           return true;
       }
     };
   }
 
-  getDateFiler(inputName: string): (date: Date | null) => boolean {
+  getDateFiler(inputName: string): (date: Moment | null) => boolean {
     return this.dateFilters.get(inputName) || (() => true);
   }
 

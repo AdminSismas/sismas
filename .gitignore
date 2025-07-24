@@ -62,3 +62,6 @@ src/claude/*
 
 # gemini CLI
 GEMINI.md
+
+# trae
+.vercel/*
