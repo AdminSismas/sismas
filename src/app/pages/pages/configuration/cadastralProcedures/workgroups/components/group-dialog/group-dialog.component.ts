@@ -1,39 +1,46 @@
-import { Component, Inject } from '@angular/core';
-import { Group } from '../interfaces/group.interface';
+import { Component, Inject, signal } from '@angular/core';
+import { Group } from '../../interfaces/group.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
 
 @Component({
   selector: 'vex-group-dialog',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
-
-    
-
+    MatInputModule,
+    ModalWindowComponent
   ],
-  templateUrl: './group-dialog.component.html',
-  styleUrl: './group-dialog.component.scss'
+  templateUrl: './group-dialog.component.html'
 })
 export class GroupDialogComponent {
-
   groupForm!: FormGroup;
   group: Group;
+
+  // Signals
+  title = signal('');
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<GroupDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Group
   ) {
-    this.group = data ? new Group(data) : new Group({ groupId: null, name: '', description: '' });
+    this.group = data
+      ? new Group(data)
+      : new Group({ groupId: null, name: '', description: '' });
     this.createForm();
+    this.title.set(this.group.groupId ? 'Editar grupo' : 'Nuevo grupo');
   }
 
   private createForm() {
@@ -55,5 +62,4 @@ export class GroupDialogComponent {
       });
     }
   }
-
 }

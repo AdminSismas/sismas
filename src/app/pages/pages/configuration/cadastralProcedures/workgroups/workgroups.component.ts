@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, computed, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { WorkgroupsService } from './services/work-group.service';
-import { GroupDialogComponent } from './group-dialog/group-dialog.component';
+import { GroupDialogComponent } from './components/group-dialog/group-dialog.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,8 +17,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { PAGE_OPTION_10_20_50_100, MODAL_SMALL } from '../../../../../apps/constants/general/constants';
+import {
+  PAGE_OPTION_10_20_50_100,
+  MODAL_SMALL,
+  MODAL_SMALL_XS,
+  MODAL_LARGE
+} from '../../../../../apps/constants/general/constants';
+import { GroupMemberComponent } from './components/group-member/group-member.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-workgroups',
@@ -39,30 +45,36 @@ import { PAGE_OPTION_10_20_50_100, MODAL_SMALL } from '../../../../../apps/const
     MatDialogModule,
     MatButtonModule,
     MatMenuModule
-
-
   ],
   templateUrl: './workgroups.component.html',
   styleUrl: './workgroups.component.scss'
 })
 export class WorkgroupsComponent implements OnInit {
+  // Injects
+  private workgroupsService = inject(WorkgroupsService);
+  private dialog = inject(MatDialog);
 
   displayedColumns: string[] = ['name', 'description', 'actions'];
   dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>([]);
-    public actionBtns = computed(() => {
-      return [
-        {
-          name: 'edit',
-          label: 'Editar',
-          icon: 'mat:edit'
-        },
-        {
-          name: 'delete',
-          label: 'Borrar',
-          icon: 'mat:delete'
-        }
-      ];
-    });
+  public actionBtns = computed(() => {
+    return [
+      {
+        name: 'edit',
+        label: 'Editar',
+        icon: 'mat:edit'
+      },
+      {
+        name: 'delete',
+        label: 'Borrar',
+        icon: 'mat:delete'
+      },
+      {
+        name: 'members',
+        label: 'Miembros',
+        icon: 'mat:people'
+      }
+    ];
+  });
 
   // Paginación
   page = 0;
@@ -70,22 +82,18 @@ export class WorkgroupsComponent implements OnInit {
   totalElements = 0;
   pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
 
-  constructor(
-    private workgroupsService: WorkgroupsService,
-    public dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) {}
-
   ngOnInit(): void {
     this.getWorkgroups();
   }
 
   // Método para obtener los grupos
   getWorkgroups(): void {
-    this.workgroupsService.getAll(this.page, this.pageSize).subscribe((data) => {
-      this.dataSource.data = data.content.map((item: any) => new Group(item));
-      this.totalElements = data.totalElements; // Establecer el número total de elementos
-    });
+    this.workgroupsService
+      .getAll(this.page, this.pageSize)
+      .subscribe((data) => {
+        this.dataSource.data = data.content.map((item: any) => new Group(item));
+        this.totalElements = data.totalElements!; // Establecer el número total de elementos
+      });
   }
 
   // Método para abrir el modal de crear/editar
@@ -95,7 +103,7 @@ export class WorkgroupsComponent implements OnInit {
       data: group || {} // Si existe un grupo, lo pasa al modal, si no, se pasa un objeto vacío
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (result.groupId) {
           this.editGroup(result); // Si el grupo tiene un ID, es una edición
@@ -107,20 +115,50 @@ export class WorkgroupsComponent implements OnInit {
   }
 
   createGroup(group: Group): void {
-    this.workgroupsService.create(group).subscribe(() => {
-      this.getWorkgroups();  // Recargar la lista de grupos
-      this.showSnackBar('Grupo creado con éxito'); // Mostrar mensaje de éxito
-    }, () => {
-      this.showSnackBar('Error al crear el grupo'); // Mostrar mensaje de error en caso de fallo
+    this.workgroupsService.create(group).subscribe({
+      next: () => {
+        this.getWorkgroups(); // Recargar la lista de grupos
+        Swal.fire({
+          icon: 'success',
+          title: 'Grupo creado con éxito',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar',
+          timer: 10000
+        });
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al crear el grupo',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar',
+          timer: 10000
+        });
+      }
     });
   }
 
   editGroup(group: Group): void {
-    this.workgroupsService.update(group).subscribe(() => {
-      this.getWorkgroups();  // Recargar la lista de grupos
-      this.showSnackBar('Grupo editado con éxito'); // Mostrar mensaje de éxito
-    }, () => {
-      this.showSnackBar('Error al editar el grupo'); // Mostrar mensaje de error en caso de fallo
+    this.workgroupsService.update(group).subscribe({
+      next: () => {
+        this.getWorkgroups(); // Recargar la lista de grupos
+        Swal.fire({
+          icon: 'success',
+          title: 'Grupo editado con éxito',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar',
+          timer: 10000
+        });
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al editar el grupo',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar',
+          timer: 10000
+        });
+      }
     });
   }
 
@@ -141,24 +179,31 @@ export class WorkgroupsComponent implements OnInit {
     }
   }
 
-  private showSnackBar(message: string): void {
-    this.snackBar.open(message, 'OK', {
-      duration: 3000,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom',
-    });
+  actionMenuHandler(action: string, row: Group) {
+    switch (action) {
+      case 'edit':
+        this.openEditGroup(row);
+        break;
+      case 'delete':
+        console.log('delete');
+        break;
+      case 'members':
+        this.openMembers(row);
+        break;
+    }
   }
 
-  actionMenuHandler(action: string, row: any) {
-    if (action === 'edit') {
-      const dialogRef = this.dialog.open(GroupDialogComponent, {
+  openEditGroup(row: Group) {
+    this.dialog
+      .open(GroupDialogComponent, {
+        ...MODAL_SMALL_XS,
         data: {
           ...row,
           mode: 'edit'
         }
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
+      })
+      .afterClosed()
+      .subscribe((result) => {
         if (result) {
           if (result.groupId) {
             this.editGroup(result);
@@ -167,8 +212,14 @@ export class WorkgroupsComponent implements OnInit {
           }
         }
       });
-    }
-
   }
 
+  openMembers(row: Group) {
+    this.workgroupsService.getGroupMembers(row.groupId).subscribe((members) => {
+      this.dialog.open(GroupMemberComponent, {
+        ...MODAL_LARGE,
+        data: { members, title: row.name, groupId: row.groupId }
+      });
+    });
+  }
 }

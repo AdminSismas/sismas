@@ -1,0 +1,75 @@
+<app-modal-window [title]="title()">
+  <button
+    titleButton
+    mat-raised-button
+    color="primary"
+    (click)="addMember()"
+  >
+    Agregar miembro
+  </button>
+  <div class="overflow-y-auto max-h-full">
+    @if (dataSource().data && dataSource().data.length > 0) {
+      <mat-table
+        [dataSource]="dataSource()"
+        @stagger
+      >
+        @for (column of columns; track column.property) {
+          <ng-container [matColumnDef]="column.property">
+            <mat-header-cell *matHeaderCellDef>{{
+              column.label
+            }}</mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="border-b border-slate-300"
+              >{{ element[column.property] }}</mat-cell
+            >
+          </ng-container>
+        }
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell
+            *matCellDef="let element"
+            class="border-b border-slate-300"
+          >
+            <button
+              mat-icon-button
+              color="primary"
+              type="button"
+              [matMenuTriggerData]="{ row: element }"
+              [matMenuTriggerFor]="menu"
+            >
+              <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row
+          *matHeaderRowDef="visibleColumns()"
+          class="bg-blue-300"
+        ></mat-header-row>
+        <mat-row
+          @fadeInUp
+          *matRowDef="let row; columns: visibleColumns()"
+        ></mat-row>
+      </mat-table>
+    } @else {
+      <h2 class="text-center font-bold text-slate-400 text-xl mt-10">
+        No hay miembros en este grupo
+      </h2>
+    }
+  </div>
+</app-modal-window>
+<mat-menu #menu="matMenu">
+  <ng-template
+    matMenuContent
+    let-row="row"
+  >
+    @for (action of actions; track action.name) {
+      <button
+        mat-menu-item
+        (click)="action.action(row)"
+      >
+        <mat-icon [svgIcon]="action.icon"></mat-icon>{{ action.label }}
+      </button>
+    }
+  </ng-template>
+</mat-menu>

@@ -1,0 +1,45 @@
+<app-modal-window
+  [title]="title()"
+  actions
+  (accept)="onSave()"
+  (cancel)="onNoClick()"
+>
+  <form [formGroup]="groupForm">
+    <mat-form-field
+      class="w-full"
+      appearance="outline"
+    >
+      <mat-label>Nombre</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        required
+      />
+      @if (
+        groupForm.controls["name"].invalid &&
+        (groupForm.controls["name"].dirty || groupForm.controls["name"].touched)
+      ) {
+        <mat-error> El nombre es obligatorio. </mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field
+      class="w-full"
+      appearance="outline"
+    >
+      <mat-label>Descripción</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        required
+      ></textarea>
+      @if (
+        groupForm.controls["description"].invalid &&
+        (groupForm.controls["description"].dirty ||
+          groupForm.controls["description"].touched)
+      ) {
+        <mat-error> La descripción es obligatoria. </mat-error>
+      }
+    </mat-form-field>
+  </form>
+</app-modal-window>

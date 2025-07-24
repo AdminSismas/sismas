@@ -57,6 +57,10 @@ export const environment = {
     value: "/bpmAttachment/",
     xtf: "xtf"
   },
+  bpmGroup: {
+    membership: "/membership",
+    value: "/bpmGroup"
+  },
   bpmOperation: {
     comment: "comment/",
     count: "/count",

@@ -17,11 +17,10 @@
 
 <mat-dialog-content
   class="w-full overflow-hidden"
-  [class.h-full]="actions()"
   [class.h-[calc(100%-49px)]]="!actions()"
   [class.!max-h-none]="!actions()"
 >
-  <ng-content class="h-full w-full overflow-hidden"></ng-content>
+  <ng-content class="w-full overflow-hidden"></ng-content>
 </mat-dialog-content>
 
 @if (actions()) {
