@@ -42,7 +42,7 @@ export class GeoMainComponent implements OnInit {
 
   public id: string = getRandomInt(1234).toString();
   public schema = `${environment.schemas.temp}`;
-  public enableRefreshButton: boolean = true;
+  public enableRefreshButton = true;
 
   @Input({ required: true }) public executionId = '';
   @Input({ required: true }) public resources: string[] = [];

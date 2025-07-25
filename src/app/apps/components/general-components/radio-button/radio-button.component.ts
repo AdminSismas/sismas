@@ -27,9 +27,9 @@ export class RadioButtonComponent implements OnInit, OnChanges {
   @Input() public idRadioButton = '';
   @Input() public cssClasses?: string = '';
   @Input() public label = '';
-  @Input() public key: string = '';
-  @Input() public valueKey: string = '';
-  @Input() public inLine: boolean = true;
+  @Input() public key = '';
+  @Input() public valueKey = '';
+  @Input() public inLine = true;
   @Input() public formControlNameRadio = '';
   @Input() public options: any[] = [];
 

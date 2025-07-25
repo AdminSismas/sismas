@@ -107,7 +107,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
        private userService:UserService
     ) {
       this.form.get('content')?.setValue(this.defaults.documentAssociated?.htmlTemplate
-      )
+      );
     }
 
     ngOnInit() {
@@ -162,14 +162,14 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
     saveTemplate(): any {
       if (this.form.invalid) {
         this.form.markAllAsTouched();
-        return
+        return;
       }
       if (this.defaults.type === 'new') {
-        let createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value);
+        const createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value);
         this.dialogRef.close(createdAssociatedDocument);
       }else{
 
-        let createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value,);
+        const createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value,);
         this.dialogRef.close(createdAssociatedDocument);
       }
     }

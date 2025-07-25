@@ -91,11 +91,11 @@ export class CitationAndNoticeTableComponent implements OnInit, OnChanges, After
   @Input({ required: true }) public id: string | undefined = '';
   @Input({ required: true }) executionId!: string;
   @Input({ required: true }) typeProcess: string | undefined = '';
-  @Input() searchStr: string = '';
+  @Input() searchStr = '';
   @Input()
   columns: TableColumn<ProcessParticipant>[] = TABLE_CITATION_NOTICE_COLUMN;
 
-  totalElements: number = 0;
+  totalElements = 0;
   page = PAGE;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
@@ -111,7 +111,7 @@ export class CitationAndNoticeTableComponent implements OnInit, OnChanges, After
   _dataContentInformations$: ReplaySubject<InformationPegeable> = new ReplaySubject<InformationPegeable>(1);
   dataContentInformations$: Observable<InformationPegeable> = this._dataContentInformations$.asObservable();
 
-  isExistDataInformations: boolean = false;
+  isExistDataInformations = false;
   contentInformations!: InformationPegeable;
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;

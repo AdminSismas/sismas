@@ -26,15 +26,15 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ComboboxComponent implements OnInit, OnChanges {
 
-  @Input({ required: true }) label: string = '';
-  @Input({ required: true }) fielKey: string = '';
+  @Input({ required: true }) label = '';
+  @Input({ required: true }) fielKey = '';
   @Input()  public idCombo = '';
-  @Input()  public valueKey: string = '';
+  @Input()  public valueKey = '';
   @Input()  public options: any[] = [];
-  @Input()  public formControlNameCombobox: string = '';
+  @Input()  public formControlNameCombobox = '';
   @Input()  public cssClasses?: string;
   @Input()  public placeholder = '';
-  @Input()  public hideRequiredMarker: boolean = false;
+  @Input()  public hideRequiredMarker = false;
   @Output() public selectionChange = new EventEmitter<any>(); // Evento para emitir cambios de selección
 
 

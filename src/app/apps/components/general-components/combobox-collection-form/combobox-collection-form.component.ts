@@ -65,7 +65,7 @@ export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
 
   options: DomainCollection[] = [];
   calificationOptions: DomainCalificationCollection[] = [];
-  loading: boolean = false; // Indicador de carga
+  loading = false; // Indicador de carga
 
   private destroy$ = new Subject<void>();
   control: FormControl | null | undefined = null;
@@ -79,8 +79,8 @@ export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
   @Input() public cssClasses?: string;
   @Input() public valueReturn: string | undefined = 'dispname';
   @Input() public hintValue: string | null = null;
-  @Input() public hideRequiredMarker:boolean = true;
-  @Input() public validateInactiveCollection:boolean = false;
+  @Input() public hideRequiredMarker = true;
+  @Input() public validateInactiveCollection = false;
   @Input() public queryParams: Record<string, string | number | boolean> = {};
   @Output() selectionChange = new EventEmitter<any>();
 

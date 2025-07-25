@@ -164,7 +164,7 @@ export class SendGeneralRequestsService {
         'Accept': 'text/html, application/xhtml+xml, */*',
         'Content-Type': 'text/plain; charset=utf-8'
       }),
-      responseType: 'text' as 'text'
+      responseType: 'text' as const
     });
   }
 

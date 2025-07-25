@@ -48,7 +48,7 @@ export class ProcessParticipant {
   }
 
   get individualUpdatedAt(): string {
-    let name = '';
+    const name = '';
     if (this.individual?.updatedAt) {
       return `${this.individual.updatedAt}`;
     }
@@ -59,7 +59,7 @@ export class ProcessParticipant {
   }
 
   get typeProcessParticipant(): string {
-    let name = 'SI';
+    const name = 'SI';
     if (this.individual?.companyName) {
       return 'NO';
     }

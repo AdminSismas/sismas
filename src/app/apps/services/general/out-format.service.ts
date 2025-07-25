@@ -9,7 +9,7 @@ import { InformationPegeable } from '../../interfaces/general/information-pegeab
 })
 export class OutFormatService {
 
-  basic_url: string = `${environment.url}:${environment.port}`;
+  basic_url = `${environment.url}:${environment.port}`;
 
   constructor(private http: HttpClient) { }
 
@@ -41,7 +41,7 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
   }
 
   setUDocumentoAsocietyDelete(outTemplateId:any):Observable<any> {
-    let paramsPP:HttpParams = new HttpParams();
+    const paramsPP:HttpParams = new HttpParams();
     const urlComplete = `${this.basic_url}/bpmOutTemplate/${outTemplateId}`;
     return  this.http.delete<InformationPegeable>(urlComplete);
   }

@@ -17,7 +17,7 @@ import { debounceTime, fromEvent, Subscription, throttleTime } from 'rxjs';
 export class FluidMinHeightDirective implements AfterViewInit, OnDestroy {
   @Input() minHeight!: number;
   @Input({ transform: numberAttribute, alias: 'fluidHeight' }) topOffset!: number;
-  @Input({ required: false }) overflowY: string = 'auto';
+  @Input({ required: false }) overflowY = 'auto';
 
   private domElement: HTMLElement;
   private resizeSub: Subscription;

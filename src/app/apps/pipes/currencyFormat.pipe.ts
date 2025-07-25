@@ -6,13 +6,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CurrencyFormatPipe implements PipeTransform {
 
-  transform(value: any, currencyCode: string = 'COP'): string {
+  transform(value: any, currencyCode = 'COP'): string {
     if (value == null) {
       return '';
     }
 
     // Convertir el valor a número si es una cadena
-    let numericValue = typeof value === 'string' ? parseFloat(value.replace(/[^0-9.-]+/g, '')) : value;
+    const numericValue = typeof value === 'string' ? parseFloat(value.replace(/[^0-9.-]+/g, '')) : value;
 
     // Formatear el valor con puntos como separadores de miles y sin decimales
     const formattedValue = numericValue.toLocaleString('es-CO', {

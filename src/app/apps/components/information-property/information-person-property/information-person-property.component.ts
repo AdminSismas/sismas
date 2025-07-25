@@ -1,5 +1,5 @@
 // Angular framework
-import { ChangeDetectorRef, Component, Inject, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, SimpleChanges, ViewChild, OnInit, AfterViewInit, OnChanges } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
@@ -69,7 +69,7 @@ import { MatDividerModule } from '@angular/material/divider';
   templateUrl: './information-person-property.component.html',
   styleUrl: './information-person-property.component.scss'
 })
-export class InformationPersonPropertyComponent {
+export class InformationPersonPropertyComponent implements OnInit, AfterViewInit, OnChanges {
   /* =========================== ATRIBUTES =========================== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
@@ -79,7 +79,7 @@ export class InformationPersonPropertyComponent {
   data$: Observable<DataPerson[]> = this.subject$.asObservable();
   allPersonSnr: DataPerson[] = [];
   page: number = PAGE;
-  totalElements: number = 0;
+  totalElements = 0;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<DataPerson>[] = TABLE_COLUMN_PROPERTIES_PERSON;

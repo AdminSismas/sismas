@@ -32,4 +32,4 @@ export const _filterInformationCode = (code: string, options: any[], keyValue: s
   const listOptions: any[] = options
     .filter((option: any): boolean => option[keyValue] === code);
   return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
-}
+};

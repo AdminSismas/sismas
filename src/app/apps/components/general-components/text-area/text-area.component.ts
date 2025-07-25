@@ -72,7 +72,7 @@ export class TextAreaComponent implements OnInit {
 
   checkForErrorsIn(formControl: AbstractControl): string {
     if (formControl.hasError('required')) {
-      return 'Campo requerido'
+      return 'Campo requerido';
     }
 
     if (formControl.errors?.hasOwnProperty('capitalLetter') && formControl.errors?.['capitalLetter']) {

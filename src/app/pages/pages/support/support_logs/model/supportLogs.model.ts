@@ -4,7 +4,7 @@ export class SupportLogs {
     id_soporte: number;
     id_status: number;
     id_empleado: number;
-    respuesta: string
+    respuesta: string;
     fecha_hora: string;
     
     constructor(data: any) {

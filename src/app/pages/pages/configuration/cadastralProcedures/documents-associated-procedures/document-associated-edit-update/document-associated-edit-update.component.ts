@@ -96,7 +96,7 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
     ) {
 
       this.form.get('content')?.setValue(this.defaults.documentAssociated?.htmlTemplate
-      )
+      );
     }
 
     ngOnInit() {
@@ -139,14 +139,14 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
     saveTemplate(): any {
       if (this.form.invalid) {
         this.form.markAllAsTouched();
-        return
+        return;
       }
       if (this.defaults.type === 'new') {
-        let createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value);
+        const createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value);
         this.dialogRef.close(createdAssociatedDocument);
       }else{
 
-        let createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value,);
+        const createdAssociatedDocument = this.generateModelDirecctionModel(this.form.value,);
         this.dialogRef.close(createdAssociatedDocument);
       }
     }
@@ -176,14 +176,14 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
 
         };
         if(this.headerTemplateId?.value){
-          createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
+          createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined);
 
         }
         // headerTemplateId: this.headerTemplateId?.value ? this.headerTemplateId?.value : '',
 
         // footerTemplateId:  this.footerTemplateId?.value ? this.footerTemplateId?.value : '',
         if(this.footerTemplateId?.value){
-        createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined)
+        createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined);
         }
 
         return createBasicInformationAddress;
@@ -210,11 +210,11 @@ export class DocumentAssociatedEditUpdateComponent implements OnInit {
           };
 
           if(this.headerTemplateId?.value){
-            createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined)
+            createBasicInformationAddress.headerTemplate = new HeaderTemplateModel(this.headerTemplateId?.value ? Number(this.headerTemplateId?.value) : undefined);
 
           }
           if(this.footerTemplateId?.value){
-          createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined)
+          createBasicInformationAddress.footerTemplate =  new FooterTemplateModel(this.footerTemplateId?.value ? Number(this.footerTemplateId?.value) : undefined);
           }
 
           return createBasicInformationAddress;

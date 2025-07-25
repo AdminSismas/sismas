@@ -30,7 +30,7 @@ export class VexSplashScreenService {
         )
         .subscribe(() => {
           this.loadingServiceService.hide();
-          this.hide()
+          this.hide();
         });
     }
   }

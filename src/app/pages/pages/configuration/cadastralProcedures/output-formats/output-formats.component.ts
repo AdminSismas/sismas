@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, Input, TemplateRef, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -91,7 +91,7 @@ export interface AddOutputFormats {
   templateUrl: './output-formats.component.html',
   styleUrl: './output-formats.component.scss'
 })
-export class OutputFormatsComponent {
+export class OutputFormatsComponent implements OnInit, AfterViewInit {
 isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     contentInformations!: InformationPegeable;
 

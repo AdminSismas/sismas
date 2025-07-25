@@ -70,7 +70,7 @@ export class InputDateComponent implements OnInit {
   @Input() public idComboInput = '';
   @Input() public cssClasses?: string;
   @Input() public label!: string | null;
-  @Input() public placeHolder: string = '';
+  @Input() public placeHolder = '';
   @Input() public formControlName = '';
   @Input() public icon!: string | null;
   @Input() public maxDate: Date = new Date(); // Fecha máxima permitida (hoy)

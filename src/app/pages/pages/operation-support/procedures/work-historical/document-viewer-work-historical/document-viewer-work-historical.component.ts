@@ -1,6 +1,6 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Inject, Input, SecurityContext } from '@angular/core';
+import { Component, Inject, Input, SecurityContext, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -27,7 +27,7 @@ import { environment } from 'src/environments/environments';
   templateUrl: './document-viewer-work-historical.component.html',
   styleUrl: './document-viewer-work-historical.component.scss'
 })
-export class DocumentViewerWorkHistoricalComponent {
+export class DocumentViewerWorkHistoricalComponent implements OnInit {
 
   showMetadataView = false;
   properties = MODEL_METADATA_PROPERTIES;

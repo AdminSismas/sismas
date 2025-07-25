@@ -23,10 +23,10 @@ export class SupportService {
   support$ = this.supportingSubject.asObservable();
   supportLogs: SupportLogs[] = [];
 
-  nombre: string = '';
-  observacion: string = '';
-  modulo: string = '';
-  vista: string = '';
+  nombre = '';
+  observacion = '';
+  modulo = '';
+  vista = '';
 
   constructor(private http: HttpClient) { }
 

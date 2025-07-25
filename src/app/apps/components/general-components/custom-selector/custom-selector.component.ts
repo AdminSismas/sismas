@@ -34,24 +34,24 @@ import { INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
 })
 export class CustomSelectorComponent implements OnInit, OnChanges {
 
-  @Input({ required: true }) idSelector: string = '';
-  @Input() label: string = 'Seleccione una opción'; // Etiqueta del selector
-  @Input() placeholder: string = ''; // Placeholder del selector
+  @Input({ required: true }) idSelector = '';
+  @Input() label = 'Seleccione una opción'; // Etiqueta del selector
+  @Input() placeholder = ''; // Placeholder del selector
   @Input() apiUrl!: string; // URL para obtener las opciones
   @Input() apiUrlDynamic!: string; // URL para obtener las opciones dinamico
-  @Input() valueKey: string = 'value'; // Clave para el `value` del mat-option
-  @Input({ required: true }) displayKey: string = 'label'; // Clave para el texto del mat-option
-  @Input() cssClasses: string = ''; // Clases CSS dinámicas
-  @Input() hideRequiredMarker: boolean = false; // Opción para ocultar el marcador de requerido
-  @Input() formControlName: string = ''; // FormControl para el binding
-  @Input() hintValue: string = ''; // Valor del hint opcional
+  @Input() valueKey = 'value'; // Clave para el `value` del mat-option
+  @Input({ required: true }) displayKey = 'label'; // Clave para el texto del mat-option
+  @Input() cssClasses = ''; // Clases CSS dinámicas
+  @Input() hideRequiredMarker = false; // Opción para ocultar el marcador de requerido
+  @Input() formControlName = ''; // FormControl para el binding
+  @Input() hintValue = ''; // Valor del hint opcional
   @Input() options: any[] = [];
   @Input() queryParams: Record<string, string | number | boolean> = {};
   @Output() selectionChange = new EventEmitter<any>(); // Evento para emitir cambios de selección
 
-  loading: boolean = false; // Indicador de carga
+  loading = false; // Indicador de carga
   value: any; // Valor del selector
-  disabled: boolean = false; // Estado de deshabilitado
+  disabled = false; // Estado de deshabilitado
 
   constructor(private requestsService: SendGeneralRequestsService) {
   }

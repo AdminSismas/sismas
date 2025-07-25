@@ -38,7 +38,7 @@ export class ProcedureWorkFinishedService {
 
     public getFilterTableProcedureService(page: PageProceduresData):Observable<ProceduresCollection[]>{
       const paramsR:HttpParams = new HttpParams();
-      const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.finished}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`
+      const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution}${environment.finished}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
      return  this.http.get<any>(urlComplete);
   //    return this.requestsService.sendRequestsGetOption(urlComplete, paramsR);
 

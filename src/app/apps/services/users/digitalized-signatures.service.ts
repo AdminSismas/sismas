@@ -16,7 +16,7 @@ export class DigitalizedSignaturesService {
     private http: HttpClient
   ) { }
 
-  getUsersWithSignatures(page: number = 0, size: number = 10, sortBy: string = 'username'): Observable<UsersSignatures> {
+  getUsersWithSignatures(page = 0, size = 10, sortBy = 'username'): Observable<UsersSignatures> {
     const url = `${this.base_url}${envi.withSignaturesUsers}`;
 
     const params = new HttpParams()
@@ -27,7 +27,7 @@ export class DigitalizedSignaturesService {
     return this.http.get<UsersSignatures>(url, { params });
   }
 
-  getUsersWithoutSignatures(page: number = 0, size: number = 10, sortBy: string = 'username'): Observable<UsersSignatures> {
+  getUsersWithoutSignatures(page = 0, size = 10, sortBy = 'username'): Observable<UsersSignatures> {
     const url = `${this.base_url}${envi.withoutSignaturesUsers}`;
 
     const params = new HttpParams()
@@ -41,14 +41,14 @@ export class DigitalizedSignaturesService {
   addSignature(userId: number, formData: FormData): Observable<UserDetails[]> {
     const url = `${this.base_url}/${userId}${envi.signatureUrl}`;
 
-    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' })
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
 
     return this.http.patch<UserDetails[]>(url, formData, { headers });
   }
 
   deleteSignature(userId: number): Observable<UserDetails[]> {
     const url = `${this.base_url}/${userId}${envi.signatureUrl}`;
-    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' })
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
 
     const formData = new FormData();
     formData.append('file', new Blob() ,'NULL');
