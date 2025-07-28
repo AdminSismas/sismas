@@ -111,7 +111,7 @@ export interface VexThemePluginOptions {
 
 export default plugin.withOptions(
   (options: VexThemePluginOptions): PluginCreator => {
-    return ({ theme, e, addComponents }: PluginAPI): void => {
+    return ({ e, addComponents }: PluginAPI): void => {
       const themes = options.themes;
 
       for (const [themeName, partialThemeOptions] of Object.entries(themes)) {
@@ -206,6 +206,7 @@ export default plugin.withOptions(
     for (const [colorName, colorOptions] of Object.entries(
       defaultTheme.colors
     )) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       colors[colorName] = {} as any;
 
       for (const colorShade of Object.keys(colorOptions.palette)) {

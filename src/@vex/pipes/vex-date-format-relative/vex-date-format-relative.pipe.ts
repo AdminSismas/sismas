@@ -6,9 +6,9 @@ import { DateTime } from 'luxon';
   standalone: true
 })
 export class VexDateFormatRelativePipe implements PipeTransform {
-  transform(value: DateTime | null | undefined | string, ...args: any[]): any {
+  transform(value: DateTime | null | undefined | string,): string | null {
     if (!value) {
-      return;
+      return null;
     }
 
     if (!(value instanceof DateTime)) {

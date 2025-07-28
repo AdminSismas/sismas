@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
 import { environment } from '../../../../environments/environments';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DomainCollection } from '../../interfaces/general/domain-name.model';
 import { PageSortByData } from '../../interfaces/general/page-sortBy-data.model';
+import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 
 
 @Injectable({
@@ -16,20 +16,16 @@ export class DomainLadmColService {
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(private requestsService: SendGeneralRequestsService) {}
+  private http = inject(HttpClient);
 
 
   /* -------------- MÉTODOS -------------- */
-  getDataPropertyByDomainName(page: PageSortByData):Observable<DomainCollection[]> {
-    let paramsDN:HttpParams = new HttpParams();
-    paramsDN = paramsDN.append('page', `${page.page}`);
-    paramsDN = paramsDN.append('size', `${page.size}`);
-    paramsDN = paramsDN.append('sortBy',`${page.sortBy}`);
-    return this.getData(`${this.basic_url}`,paramsDN);
-  }
-
-
-  private getData(url:string, params:any):Observable<DomainCollection[]>{
-    return this.requestsService.sendRequestsGetOption(url, {params: params});
+  getDataPropertyByDomainName(page: PageSortByData):Observable<InformationPegeable> {
+    let params:HttpParams = new HttpParams();
+    params = params.append('page', `${page.page}`);
+    params = params.append('size', `${page.size}`);
+    params = params.append('sortBy',`${page.sortBy}`);
+    return this.http.get<InformationPegeable>(`${this.basic_url}`,{ params });
   }
 
 

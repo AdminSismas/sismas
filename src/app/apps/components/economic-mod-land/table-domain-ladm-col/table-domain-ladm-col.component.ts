@@ -1,6 +1,18 @@
-import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core'; // √
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core'; // √
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 
@@ -16,7 +28,11 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 
 // recursos de angular material
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
@@ -40,7 +56,6 @@ import {
   PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
 } from '../../../constants/economic-mod-land/domain-ladm-col.constant';
-
 
 @Component({
   templateUrl: './table-domain-ladm-col.component.html',
@@ -70,9 +85,8 @@ import {
     FormsModule,
     NgClass,
     NgIf
-]
+  ]
 })
-
 export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
   /* ============== ATRIBUTES ============== */
   layoutCtrl = new UntypedFormControl('boxed');
@@ -82,7 +96,7 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
   contentInformations!: InformationPegeable;
 
   @Input()
-  page:number = PAGE;
+  page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
@@ -94,14 +108,11 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-
   /* ============== CONSTRUCTOR ============== */
   constructor(
     private domainLadmColService: DomainLadmColService,
-    private readonly layoutService: VexLayoutService,
+    private readonly layoutService: VexLayoutService
   ) {}
-
-
 
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */
@@ -118,7 +129,6 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
     this.getDataFromDomainLadmService();
   }
 
-
   // asignar el paginador y la funcionalidad de ordenación a la fuente de datos de la tabla
   ngAfterViewInit() {
     if (this.paginator) {
@@ -130,19 +140,19 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-
   /* ------- Meth. HTML ------- */
   //1 método para mostrar las columnas
-  toggleColumnVisibility(column: TableColumn<contentInfoDomainLadmCol>, event: Event) {
+  toggleColumnVisibility(
+    column: TableColumn<contentInfoDomainLadmCol>,
+    event: Event
+  ) {
     event.stopPropagation();
     event.stopImmediatePropagation();
     column.visible = !column.visible;
   }
 
-
   //2 método para actualizar la información de la tabla
-  refreshInformationpaginator(event: any): void {
+  refreshInformationpaginator(event: PageEvent): void {
     if (event == null) {
       return;
     }
@@ -152,12 +162,10 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
     this.getDataFromDomainLadmService();
   }
 
-
   //3. método para realizar la búsqueda de la información
   trackByProperty<T>(index: number, column: TableColumn<T>) {
     return column.property;
   }
-
 
   //4. método para poner visible las columnas
   get visibleColumns() {
@@ -165,8 +173,6 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
       .filter((column) => column.visible)
       .map((column) => column.property);
   }
-
-
 
   /* ------- Meth. Common ------- */
   onFilterChange(value: string) {
@@ -178,28 +184,20 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value;
   }
 
-
   // objeto de paginador de la tabla
   generateObjectPageDomainLadmColData(): PageSortByData {
     const sortBy = 'domainName';
     return new PageSortByData(this.page, this.pageSize, sortBy);
   }
 
-
-
   /* ------- Meth. Services ------- */
   //ser. servicio para realizar la petición a la API
   getDataFromDomainLadmService() {
-    this.domainLadmColService.getDataPropertyByDomainName(this.generateObjectPageDomainLadmColData())
-    .subscribe({
-        next: (result: any) => {
-            this.captureInformationSubscribe(result); // se llama el método para que capturar la información de la API
-        },
-        error: (error) => {
-        },
-        complete: () => {
-        }
-    });
+    this.domainLadmColService
+      .getDataPropertyByDomainName(this.generateObjectPageDomainLadmColData())
+      .subscribe((result) => {
+        this.captureInformationSubscribe(result); // se llama el método para que capturar la información de la API
+      });
   }
 
   //ser.1 método para capturar todo el objeto completo la información de la API
@@ -211,8 +209,13 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
   //ser.2 método para capturar el sub objeto content de la información de la API
   captureInformationDomainLadmColData() {
     let data: contentInfoDomainLadmCol[];
-    if (this.contentInformations != null && this.contentInformations.content != null) {
-      data = this.contentInformations.content.map((row: contentInfoDomainLadmCol) => new contentInfoDomainLadmCol(row)); // se mapea la información de la API para mostrarla en la tabla cambiando de tipo de dato
+    if (
+      this.contentInformations != null &&
+      this.contentInformations.content != null
+    ) {
+      data = this.contentInformations.content.map(
+        (row: contentInfoDomainLadmCol) => new contentInfoDomainLadmCol(row)
+      ); // se mapea la información de la API para mostrarla en la tabla cambiando de tipo de dato
       this.dataSource.data = data;
     }
     // funcionamiento de paginador, navegación entre vistas de registros en tabla
@@ -234,5 +237,4 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
       this.page = this.contentInformations.pageable.pageNumber;
     }
   }
-
 }

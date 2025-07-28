@@ -29,7 +29,7 @@ export class VexDemoService {
           (event): event is NavigationEnd => event instanceof NavigationEnd
         )
       )
-      .subscribe((event) => {
+      .subscribe(() => {
         const route = this.router.routerState.root.snapshot;
         if (route.queryParamMap.has('layout')) {
           this.configService.setConfig(

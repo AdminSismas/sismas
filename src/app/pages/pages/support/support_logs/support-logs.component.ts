@@ -1,17 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { CommonModule, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  DestroyRef,
-  EventEmitter,
-  Input,
   OnInit,
-  ViewChild,
-  inject
+  ViewChild
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -32,24 +27,16 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { VexConfigService } from '@vex/config/vex-config.service';
-import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+
+
 import { SupportService } from '../service/support.service';
-import { ObservationsData } from './model/observations.model';
-import { StatusData } from './model/status.model';
-import { SupportLogs } from './model/supportLogs.model';
-import { SupportLogsService } from './service/support-logs.service';
-// import { UserAuthData } from 'src/app/core/auth/authData.model';
-// import { AuthService } from 'src/app/core/auth/auth.service';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+
+
 import { env } from 'src/environments/environments.soporte';
 import { Ticket } from './model/ticket.model';
-import { CustomDatePipe } from 'src/app/apps/pipes/custom-date.pipe';
+
 import { UserService } from '../../auth/login/services/user.service';
-import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
+
 
 
 @Component({
@@ -146,6 +133,7 @@ export class SupportLogsComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
       },
       (error) => {
+        console.error('Error fetching tickets:', error);
       }
     );
 
@@ -162,8 +150,10 @@ export class SupportLogsComponent implements OnInit, AfterViewInit {
   }
 
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+    } else {
+      this.dataSource.data.forEach((row) => this.selection.select(row));
+    }
   }
 }

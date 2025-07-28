@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TitleService } from './apps/services/general/tittle.service';
 import { SplashScreenService } from './apps/services/core/splash-screen.service';

@@ -10,13 +10,13 @@ import {
   ViewChild
 } from '@angular/core';
 import { asapScheduler } from 'rxjs';
-// @ts-ignore
+// @ts-expect-error ApexCharts is not typed
 import ApexCharts from 'apexcharts';
 
 export interface ApexOptions {
   annotations?: ApexAnnotations;
   chart?: ApexChart;
-  colors?: any[];
+  colors?: string[];
   dataLabels?: ApexDataLabels;
   fill?: ApexFill;
   grid?: ApexGrid;
