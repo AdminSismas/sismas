@@ -98,7 +98,7 @@ export class LoginComponent  implements AfterViewInit {
             this.userService.setUser(user);
             this.loading.set(false);
 
-            this.navigationLoaderService.loadInformationNavigation(user.role);
+            this.navigationLoaderService.refreshNavigation();
 
             this.userService.getUserInfo(user.sub).subscribe({
               next: (res) => this.userService.setUserData(res),

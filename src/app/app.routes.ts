@@ -2,7 +2,7 @@ import { LayoutComponent } from './layouts/layout/layout.component';
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import { RoleGuard } from './guards/role.guard';
 import { authGuard } from './guards/auth.guard';
-import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, CAN_RESOLVE_LIST, EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM, NOT_GUEST_USERS_ROLE_LIST } from './apps/constants/general/constants';
+import { ADMIN_ROLE_LIST, BASIC_USERS_ROLE_LIST, CAN_RESOLVE_LIST, EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM, MODIFY_PEOPLE, NOT_GUEST_USERS_ROLE_LIST } from './apps/constants/general/constants';
 
 export const appRoutes: VexRoutes = [
   {
@@ -65,7 +65,7 @@ export const appRoutes: VexRoutes = [
         path: 'configuration',
         loadChildren: () => import('./pages/pages/configuration/configuration-routing.module'),
         canActivate: [RoleGuard],
-        data: { baseRoles: ADMIN_ROLE_LIST, parameter: 'baseRoles' }
+        data: { baseRoles: MODIFY_PEOPLE, parameter: 'baseRoles' }
       },
       {
         path: 'audit',

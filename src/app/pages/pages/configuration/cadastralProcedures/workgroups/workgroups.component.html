@@ -18,13 +18,15 @@
         <mat-card-header>
 
           <div class="flex items-center gap-4">
-            <!-- Botón "Nuevo grupo de trabajo" -->
-            <button
-              class="bg-primary-500 text-white font-medium px-4 rounded h-10 flex items-center"
-              (click)="openDialog()"
-            >
-              Nuevo grupo de trabajo
-            </button>
+            @if (canCreateWorkGroup()) {
+              <!-- Botón "Nuevo grupo de trabajo" -->
+              <button
+                class="bg-primary-500 text-white font-medium px-4 rounded h-10 flex items-center"
+                (click)="openDialog()"
+              >
+                Nuevo grupo de trabajo
+              </button>
+            }
 
 
             <!-- Campo de búsqueda -->

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -25,6 +25,7 @@ import {
 } from '../../../../../apps/constants/general/constants';
 import { GroupMemberComponent } from './components/group-member/group-member.component';
 import Swal from 'sweetalert2';
+import { UserService } from '../../../auth/login/services/user.service';
 
 @Component({
   selector: 'vex-workgroups',
@@ -53,6 +54,16 @@ export class WorkgroupsComponent implements OnInit {
   // Injects
   private workgroupsService = inject(WorkgroupsService);
   private dialog = inject(MatDialog);
+  private userService = inject(UserService);
+
+  // Signals
+  user = signal(this.userService.getUser());
+
+  // Computed
+  canCreateWorkGroup = computed(() => {
+    if (this.user()?.role === 'ADMIN') return true;
+    return false;
+  });
 
   displayedColumns: string[] = ['name', 'description', 'actions'];
   dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>([]);
@@ -98,6 +109,8 @@ export class WorkgroupsComponent implements OnInit {
 
   // Método para abrir el modal de crear/editar
   openDialog(group?: Group): void {
+    if (!this.canCreateWorkGroup()) return;
+
     const dialogRef = this.dialog.open(GroupDialogComponent, {
       ...MODAL_SMALL,
       data: group || {} // Si existe un grupo, lo pasa al modal, si no, se pasa un objeto vacío
