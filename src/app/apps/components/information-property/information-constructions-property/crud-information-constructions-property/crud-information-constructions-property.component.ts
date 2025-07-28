@@ -84,6 +84,7 @@ import {
 import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { TypesQualificationUB } from 'src/app/apps/interfaces/information-property/types-qualification-ub';
 
 @Component({
   selector: 'crud-information-constructions-property',
@@ -490,6 +491,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
           this.schema
         )
         .subscribe((result: CcCalificacionUB[]) => {
+          console.log(result);
           this.qualificationsConstruction = result;
           this.mapQualificationsConstruction =
             this.indexArraylistQualifications(
@@ -502,6 +504,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   }
 
   refreshTraditionalRatingForm() {
+    console.log(this.mapQualificationsConstruction);
     const idBath = this.chargeQualificationConstruction('Tamanio_Banio');
     const idKitchen = this.chargeQualificationConstruction('Tamanio_Cocina');
 
@@ -525,45 +528,18 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
         this.chargeQualificationConstruction('Conservacion_Acabados')
       ],
       bathSize: [idBath],
-      bathEnchapes: [
-        {
-          value: this.chargeQualificationConstruction('Enchape_Banio'),
-          disable: idBath !== null && idBath !== undefined && idBath === 34
-        }
-      ],
-      bathFurniture: [
-        {
-          value: this.chargeQualificationConstruction('Mobiliario_Banio'),
-          disable: idBath !== null && idBath !== undefined && idBath === 34
-        }
-      ],
+      bathEnchapes: [this.chargeQualificationConstruction('Enchape_Banio')],
+      bathFurniture: [this.chargeQualificationConstruction('Mobiliario_Banio')],
       bathConservation: [
-        {
-          value: this.chargeQualificationConstruction('Conservacion_Banio'),
-          disable: idBath !== null && idBath !== undefined && idBath === 34
-        }
+        this.chargeQualificationConstruction('Conservacion_Banio')
       ],
       kitchenSize: [idKitchen],
-      kitchenEnchapes: [
-        {
-          value: this.chargeQualificationConstruction('Enchape_Cocina'),
-          disable:
-            idKitchen !== null && idKitchen !== undefined && idKitchen === 49
-        }
-      ],
+      kitchenEnchapes: [this.chargeQualificationConstruction('Enchape_Cocina')],
       kitchenFurniture: [
-        {
-          value: this.chargeQualificationConstruction('Mobiliario_Cocina'),
-          disable:
-            idKitchen !== null && idKitchen !== undefined && idKitchen === 49
-        }
+        this.chargeQualificationConstruction('Mobiliario_Cocina')
       ],
       kitchenConservation: [
-        {
-          value: this.chargeQualificationConstruction('Conservacion_Cocina'),
-          disable:
-            idKitchen !== null && idKitchen !== undefined && idKitchen === 49
-        }
+        this.chargeQualificationConstruction('Conservacion_Cocina')
       ],
       domTipologiaTipo: [this.chargeQualificationConstruction('Tipologia')],
       industrialComplement: [
@@ -619,6 +595,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     ) {
       try {
         id = this.mapQualificationsConstruction[domain]?.ccCalUBDom.id;
+        if (domain === 'Enchape_Banio') console.log(id);
         if (validateIsNumber(id) && id !== null && id !== undefined && id > 0) {
           return id;
         }
@@ -873,13 +850,15 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
 
   indexArraylistQualifications(obj: CcCalificacionUB[], value: string) {
     if (obj !== null && obj.length > 0) {
-      return obj.reduce(
-        (acc: any, el: any) => ({
+      return obj.reduce((acc: CcCalificacionUB[], el: CcCalificacionUB) => {
+        const key = el.ccCalUBDom![
+          value as keyof TypesQualificationUB
+        ] as string;
+        return {
           ...acc,
-          [el.ccCalUBDom[value]]: el
-        }),
-        []
-      );
+          [key]: el
+        };
+      }, []);
     }
   }
 
