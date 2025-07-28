@@ -31,7 +31,7 @@
 
   <div
     *ngIf="(isVerticalLayout$ | async) && (isNavbarInToolbar$ | async)"
-    [class.hidden]="!(isDesktop$ | async)"
+    [class.hidden]="(isDesktop$ | async) === false"
     class="px-6 flex-none flex items-center"
   >
     <vex-navigation-item
@@ -63,7 +63,7 @@
         mat-icon-button
         type="button"
       >
-        <mat-icon svgIcon="flag:united-states"></mat-icon>
+        <!-- <mat-icon svgIcon="flag:united-states"></mat-icon> -->
       </button>
     </div>
 
@@ -81,12 +81,12 @@
       yPosition="below"
     >
       <button mat-menu-item>
-        <mat-icon svgIcon="flag:united-states"></mat-icon>
+        <!-- <mat-icon svgIcon="flag:united-states"></mat-icon> -->
         <span>English</span>
       </button>
 
       <button mat-menu-item>
-        <mat-icon svgIcon="flag:germany"></mat-icon>
+        <!-- <mat-icon svgIcon="flag:germany"></mat-icon> -->
         <span>German</span>
       </button>
     </mat-menu>
@@ -95,5 +95,5 @@
 
 <vex-navigation
   *ngIf="(isVerticalLayout$ | async) && (isNavbarBelowToolbar$ | async)"
-  [class.hidden]="!(isDesktop$ | async)"
+  [class.hidden]="(isDesktop$ | async) === false"
 ></vex-navigation>
