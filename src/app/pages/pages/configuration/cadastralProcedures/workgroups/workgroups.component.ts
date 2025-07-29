@@ -60,7 +60,7 @@ export class WorkgroupsComponent implements OnInit {
   user = signal(this.userService.getUser());
 
   // Computed
-  canCreateWorkGroup = computed(() => {
+  canModifyWorkGroup = computed(() => {
     if (this.user()?.role === 'ADMIN') return true;
     return false;
   });
@@ -68,7 +68,7 @@ export class WorkgroupsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'description', 'actions'];
   dataSource: MatTableDataSource<Group> = new MatTableDataSource<Group>([]);
   public actionBtns = computed(() => {
-    return [
+    const actionsMenu = [
       {
         name: 'edit',
         label: 'Editar',
@@ -85,6 +85,8 @@ export class WorkgroupsComponent implements OnInit {
         icon: 'mat:people'
       }
     ];
+    if (this.canModifyWorkGroup()) return actionsMenu;
+    return actionsMenu.filter((item) => item.name !== 'delete' && item.name !== 'edit');
   });
 
   // Paginación
@@ -109,7 +111,7 @@ export class WorkgroupsComponent implements OnInit {
 
   // Método para abrir el modal de crear/editar
   openDialog(group?: Group): void {
-    if (!this.canCreateWorkGroup()) return;
+    if (!this.canModifyWorkGroup()) return;
 
     const dialogRef = this.dialog.open(GroupDialogComponent, {
       ...MODAL_SMALL,
