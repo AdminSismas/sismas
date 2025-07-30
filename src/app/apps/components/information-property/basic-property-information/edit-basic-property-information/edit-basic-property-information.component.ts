@@ -227,15 +227,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       enableInputs.push('cadastralNumber');
     }
 
-    if (this.dataBasicInformationProperty.conditionEdit) {
-      const condition =
-        this.contentInformation?.domBaunitCondition?.toLowerCase() as string;
-      if (
-        !condition.includes('matriz') &&
-        !condition.includes('unidad predial')
-      ) {
+    if (this.isEditableBaunitCondition) {
         enableInputs.push('domBaunitCondition');
-      }
     }
 
     Object.keys(this.form.controls).forEach((field) => {
@@ -511,6 +504,14 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
   get controlPercentageGroup() {
     return this.formDetailGroup.get('percentageGroup') as FormControl;
+  }
+
+  get isEditableBaunitCondition(): boolean {
+    const condition = this.dataBasicInformationProperty.contentInformation?.domBaunitCondition?.trim().toLowerCase() as string;
+    if (condition.includes('matriz')) return false;
+    if (condition.includes('unidad predial')) return false;
+
+    return this.dataBasicInformationProperty.conditionEdit ?? false;
   }
 
   protected readonly TYPE_UPDATE_PROPERTY_COEFFICIENT =

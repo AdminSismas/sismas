@@ -89,7 +89,7 @@
                 [typeDomainName]="input.type"
                 [placeholderDomainName]="input.placeholder"
                 [idComboCollection]="input.name"
-                [filterOptions]="input.group"
+                [filterOptions]="isEditableBaunitCondition ? input.group : []"
                 cssClasses="w-full"
                 [class.col-span-3]="group.groupName !== 'Tamaños y áreas'"
                 [class.col-span-2]="group.groupName === 'Tamaños y áreas'"
