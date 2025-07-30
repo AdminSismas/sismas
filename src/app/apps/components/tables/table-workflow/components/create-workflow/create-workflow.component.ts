@@ -57,12 +57,9 @@ export class CreateWorkflowComponent {
       return;
     }
 
-    const { validBeginAt, validToAt } = this.form.value;
+    // const { validBeginAt, validToAt } = this.form.value;
 
-    this.form.value.validBeginAt = validBeginAt.toISOString().split('T')[0];
-    if (validToAt) {
-      this.form.value.validToAt = validToAt.toISOString().split('T')[0];
-    }
+    // console.log({ validBeginAt, validToAt });
 
     if (this.data.mode === 'edit') {
       const data: WorkflowCollection = { ...this.data.initValues, ...this.form.value };

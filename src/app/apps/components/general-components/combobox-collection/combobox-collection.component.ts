@@ -21,6 +21,7 @@ import { DomainCollection } from '../../../interfaces/general/domain-name.model'
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';
 import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'vex-combox-colletion',
@@ -56,13 +57,17 @@ export class ComboboxCollectionComponent implements OnInit, OnChanges {
   @Input() public validateInactiveCollection = false;
   @Input() public queryParams: Record<string, string | number | boolean> = {};
   @Input() public optionsExternal: DomainCollection[] = [];
-  @Input({ transform: (value: string | boolean) => {
-    if (typeof value === 'boolean') return value;
-    if (value === '') return true;
-    if (value === 'true') return true;
-    if (value === 'false') return false;
-    return false;
-  } }) public valueCode = false;
+  @Input({
+    transform: (value: string | boolean) => {
+      if (typeof value === 'boolean') return value;
+      if (value === '') return true;
+      if (value === 'true') return true;
+      if (value === 'false') return false;
+      return false;
+    }
+  })
+  public valueCode = false;
+  @Input() filterOptions: string[] = [];
 
   @Output() selectionChange = new EventEmitter<any>();
 
@@ -96,10 +101,29 @@ export class ComboboxCollectionComponent implements OnInit, OnChanges {
     if (this.typeDomainName != null && this.typeDomainName.length > 0) {
       this.collectionServicesService
         .getDataDomainName(this.typeDomainName)
-        .subscribe((result: DomainCollection[]) =>
-          this.captureInformationSubscribe(result)
-        );
+        .pipe(
+          map((result: DomainCollection[]) => {
+            if (this.filterOptions.length > 0) {
+              let newResult = result;
+              this.filterOptions.forEach((filter) => newResult = this.filterResult(newResult, filter));
+
+              return newResult;
+            }
+
+            return result;
+          })
+        )
+        .subscribe((result) => this.captureInformationSubscribe(result));
     }
+  }
+
+  filterResult(result: DomainCollection[], filter: string): DomainCollection[] {
+    return result.filter((item) => {
+      const filterLower = filter.trim().toLowerCase();
+      const dispnameLower = item.dispname?.trim().toLowerCase() ?? '';
+
+      return !dispnameLower.includes(filterLower);
+    });
   }
 
   obtainsCollectionsListParams() {

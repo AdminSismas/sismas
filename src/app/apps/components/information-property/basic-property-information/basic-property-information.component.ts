@@ -118,6 +118,7 @@ export class BasicPropertyInformationComponent {
   @Input() editable? = true;
   @Input() editNpn? = false;
   @Input() editArea? = false;
+  @Input() editCondition? = false;
 
   // Outputs signal
   emitExpandedComponent = output<number>();
@@ -186,7 +187,8 @@ export class BasicPropertyInformationComponent {
       contentInformation: data,
       npnEdit: this.editNpn,
       areaEdit: this.editArea,
-      isMatriz: this.existMasterGroup()
+      isMatriz: this.existMasterGroup(),
+      conditionEdit: this.editCondition
     };
     this.dialog
       .open(EditBasicPropertyInformationComponent, {

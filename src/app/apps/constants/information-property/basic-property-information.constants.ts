@@ -11,7 +11,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Oficina de registro',
-        group: '',
+        group: [],
         groupName: 'Identificación del predio'
       },
       {
@@ -20,7 +20,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Número de registro',
-        group: '',
+        group: [],
         groupName: 'Identificación del predio'
       },
       {
@@ -29,7 +29,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Número predial',
-        group: '',
+        group: [],
         groupName: 'Identificación del predio'
       },
       {
@@ -38,7 +38,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'number',
         placeholder: 'Número predial anterior',
-        group: '',
+        group: [],
         groupName: 'Identificación del predio'
       },
       // *********** estos dos campo contituyen matricula inmobiliaria**********
@@ -49,7 +49,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Nupre',
-        group: '',
+        group: [],
         groupName: 'Identificación del predio'
       }
     ]
@@ -65,7 +65,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: true,
         type: 'BaunitEconoDesti',
         placeholder: 'Destino económico',
-        group: '',
+        group: [],
         groupName: 'Propiedad y uso'
       },
       // DEBE SER LISTA TIPO
@@ -75,7 +75,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: true,
         type: 'BaunitType',
         placeholder: 'Tipo',
-        group: '',
+        group: [],
         groupName: 'Propiedad y uso'
       },
       {
@@ -85,7 +85,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: true,
         type: 'BaunitCondition',
         placeholder: 'Condición propiedad',
-        group: '',
+        group: ['matriz', 'unidad predial'],
         groupName: 'Propiedad y uso'
       },
       {
@@ -94,7 +94,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'date',
         placeholder: 'Inscripción catastral',
-        group: '',
+        group: [],
         groupName: 'Propiedad y uso'
       },
       {
@@ -103,7 +103,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Código homologado',
-        group: '',
+        group: [],
         groupName: 'Propiedad y uso'
       }
     ]
@@ -119,7 +119,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Área registral',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       },
       {
@@ -128,7 +128,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: '',
         placeholder: '',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       },
       {
@@ -137,7 +137,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Área catastral privada',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       },
       {
@@ -146,7 +146,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Área catastral común',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       },
       {
@@ -155,7 +155,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Área catastral',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       },
       {
@@ -164,7 +164,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Área catastral construida Privada',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       },
       {
@@ -173,7 +173,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Área catastral construida común',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       },
       {
@@ -182,7 +182,7 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         collection: false,
         type: 'text',
         placeholder: 'Área catastral construida',
-        group: '',
+        group: [],
         groupName: 'Tamaños y áreas'
       }
     ]

@@ -226,6 +226,18 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     if (this.dataBasicInformationProperty.npnEdit) {
       enableInputs.push('cadastralNumber');
     }
+
+    if (this.dataBasicInformationProperty.conditionEdit) {
+      const condition =
+        this.contentInformation?.domBaunitCondition?.toLowerCase() as string;
+      if (
+        !condition.includes('matriz') &&
+        !condition.includes('unidad predial')
+      ) {
+        enableInputs.push('domBaunitCondition');
+      }
+    }
+
     Object.keys(this.form.controls).forEach((field) => {
       if (!enableInputs.includes(field)) {
         this.form.get(field)?.disable();

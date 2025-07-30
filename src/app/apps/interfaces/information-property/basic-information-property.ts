@@ -58,6 +58,7 @@ export class BasicInformationProperty {
   executionId?: string;
 
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(content?: any) {
     this.propertyRegistryOffice = content?.propertyRegistryOffice || '';
     this.propertyRegistryNumber = content?.propertyRegistryNumber || '';
@@ -108,6 +109,7 @@ export interface CrudBasicInformationProperty {
   npnEdit?: boolean;
   areaEdit?: boolean;
   isMatriz?: boolean;
+  conditionEdit?: boolean;
 }
 export interface UpdateBasicInformationProperty {
   propertyRegistryOffice:      string;

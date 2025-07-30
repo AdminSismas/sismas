@@ -66,7 +66,7 @@ export interface InputsField {
   placeholder: string;
   collection: boolean;
   type: string;
-  group: string;
+  group: string[];
   groupName: string;
 }
 
