@@ -4,7 +4,7 @@ import { SendGeneralRequestsService } from '../../general/send-general-requests.
 import { catchError, Observable } from 'rxjs';
 import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,9 @@ export class InformationAdjacentPropertyService {
   basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService
-  ) {
-  }
+    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
+  ) {}
 
   getBasicInformationPropertyAdjacent(baUnitId: string): Observable<InformationAdjacent[]> {
     const url = `${this.basic_url}${envi.ccColindante}${envi.baunit}/${baUnitId}`;
@@ -31,7 +31,7 @@ export class InformationAdjacentPropertyService {
     const params: HttpParams = new HttpParams()
       .set('page', `${page}`)
       .set('size', `${size}`);
-    return this.getData(url, params).pipe(
+    return this.getData<InformationPegeable>(url, params).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
     );
   }
@@ -53,7 +53,7 @@ export class InformationAdjacentPropertyService {
   }
 
   //POST: {{url}}:{{port}}/changeLog/temp/{{executionId}}/geo/colindante/{{baunitId}}
-  addInformationGeoPropertyAdjacent(executionId: string, baUnitId: string): Observable<any> {
+  addInformationGeoPropertyAdjacent(executionId: string, baUnitId: string): Observable<string> {
     const url = `${this.basic_url}${envi.changeLog}${envi.schemas.temp}/${executionId}${envi.accessGeo.geo}${envi.adjacent}${baUnitId}`;
     return this.requestsService.sendPostText(url).pipe(
       catchError((error) => this.requestsService.errorNotFound(error))
@@ -67,9 +67,15 @@ export class InformationAdjacentPropertyService {
     );
   }
 
+  masiveDeleteAdjacent( executionId: string, baunitId: string, body: number[] ): Observable<null> {
+    const url = `${this.basic_url}${envi.ccColindante}${envi.schemas.temp}/${executionId}/${baunitId}`;
 
-  private getData(url: string, params: any): Observable<any> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.delete<null>(url, { body });
+  }
+
+
+  private getData<T>(url: string, params: HttpParams): Observable<T> {
+    return this.requestsService.sendRequestsGetOption(url, { params: params }) as Observable<T>;
   }
 
 }

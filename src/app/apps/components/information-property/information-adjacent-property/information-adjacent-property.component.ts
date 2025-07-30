@@ -1,13 +1,26 @@
-import { AfterViewInit, Component, DestroyRef, forwardRef, inject, input, Input, OnInit, output, ViewChild } from '@angular/core';
 import {
-  HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  forwardRef,
+  inject,
+  input,
+  Input,
+  OnInit,
+  output,
+  ViewChild
+} from '@angular/core';
+import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -15,16 +28,22 @@ import { NgClass } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
+  MODAL_MEDIUM,
   MODAL_SMALL_LARGE,
   PAGE,
-  PAGE_OPTION_5_7_10,
-  PAGE_SIZE_SORT,
+  PAGE_OPTION_10_20_50_100,
+  PAGE_SIZE_TABLE_UNIQUE,
   TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
   TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import {
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { stagger40ms } from '@vex/animations/stagger.animation';
@@ -42,13 +61,10 @@ import { TypeInformation } from '../../../interfaces/general/content-info';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  CrudInformationAdjacentPropertyComponent
-} from './crud-information-adjacent-property/crud-information-adjacent-property.component';
-import {
-  InformationAdjacentPropertyService
-} from '../../../services/information-property/information-adjacent-property/information-adjacent-property.service';
+import { CrudInformationAdjacentPropertyComponent } from './crud-information-adjacent-property/crud-information-adjacent-property.component';
+import { InformationAdjacentPropertyService } from '../../../services/information-property/information-adjacent-property/information-adjacent-property.service';
 import Swal from 'sweetalert2';
+import { MasiveDeleteAdjacentComponent } from './masive-delete-adjacent/masive-delete-adjacent.component';
 
 @Component({
   selector: 'vex-information-adjacent-property',
@@ -76,7 +92,7 @@ import Swal from 'sweetalert2';
     MatTabsModule,
     MatTooltipModule,
     HeaderCadastralInformationPropertyComponent
-],
+  ],
   templateUrl: './information-adjacent-property.component.html',
   styleUrl: './information-adjacent-property.component.scss',
   providers: [
@@ -85,10 +101,11 @@ import Swal from 'sweetalert2';
       useExisting: forwardRef(() => InformationAdjacentPropertyComponent),
       multi: true
     }
-  ],
+  ]
 })
-export class InformationAdjacentPropertyComponent implements OnInit, AfterViewInit {
-
+export class InformationAdjacentPropertyComponent
+  implements OnInit, AfterViewInit
+{
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
 
@@ -104,17 +121,18 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
   // Outputs signal
   emitExpandedComponent = output<number>();
 
-  columns: TableColumn<InformationAdjacent>[] = TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
+  columns: TableColumn<InformationAdjacent>[] =
+    TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION;
 
   page: number = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE_SORT;
-  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
+  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
   classEdit = '!bg-slate-400 !text-gray-100 opacity-60';
 
   dataSource!: MatTableDataSource<InformationAdjacent>;
-  selection: SelectionModel<InformationAdjacent> = new SelectionModel<InformationAdjacent>(
-    true, []);
+  selection: SelectionModel<InformationAdjacent> =
+    new SelectionModel<InformationAdjacent>(true, []);
   searchCtrl: UntypedFormControl = new UntypedFormControl();
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
@@ -131,8 +149,7 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private informationAdjacentService: InformationAdjacentPropertyService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -147,7 +164,6 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
-
   }
 
   ngAfterViewInit() {
@@ -163,11 +179,17 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     if (!this.schema || !this.baunitId) {
       return false;
     }
-    this.informationAdjacentService.getInformationPropertyTemporalAdjacent(
-      this.page, this.pageSize, this.baunitId).subscribe({
-      next: (result: InformationPegeable) => this.captureInformationSubscribe(result),
-      error: () => this.captureInformationSubscribeError()
-    });
+    this.informationAdjacentService
+      .getInformationPropertyTemporalAdjacent(
+        this.page,
+        this.pageSize,
+        this.baunitId
+      )
+      .subscribe({
+        next: (result: InformationPegeable) =>
+          this.captureInformationSubscribe(result),
+        error: () => this.captureInformationSubscribeError()
+      });
     return true;
   }
 
@@ -185,7 +207,9 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
 
     if (this.contentInformation?.content != null) {
       data = this.contentInformation.content;
-      data = data.map((row: InformationAdjacent) => new InformationAdjacent(row));
+      data = data.map(
+        (row: InformationAdjacent) => new InformationAdjacent(row)
+      );
       this.dataSource.data = data;
     }
 
@@ -216,16 +240,29 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     this.executeEventAddEditAdjacentInformationProperty(content);
   }
 
-  executeEventAddEditAdjacentInformationProperty(content: InformationAdjacent | null): void {
-    const data: InformationAdjacent = new InformationAdjacent(content, this.schema, this.baunitId);
+  executeEventAddEditAdjacentInformationProperty(
+    content: InformationAdjacent | null
+  ): void {
+    const data: InformationAdjacent = new InformationAdjacent(
+      content,
+      this.schema,
+      this.baunitId
+    );
     data.executionId = this.executionId;
-    const dialogRef = this.dialog.open(CrudInformationAdjacentPropertyComponent, {
-      ...MODAL_SMALL_LARGE,
-      disableClose: true,
-      data: { type: !content ? 'CREATE' : 'UPDATE', contentInformation: data }
-    });
+    const dialogRef = this.dialog.open(
+      CrudInformationAdjacentPropertyComponent,
+      {
+        ...MODAL_SMALL_LARGE,
+        disableClose: true,
+        data: { type: !content ? 'CREATE' : 'UPDATE', contentInformation: data }
+      }
+    );
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.ccColindanteBaunitId != null && result.ccColindanteBaunitId > 0) {
+      if (
+        result &&
+        result.ccColindanteBaunitId != null &&
+        result.ccColindanteBaunitId > 0
+      ) {
         this.searchInformationAdjacentProperty();
       }
     });
@@ -233,18 +270,19 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
 
   addAdjacentGeoInformationProperty(): void {
     if (this.baunitId && this.executionId) {
-      this.informationAdjacentService.addInformationGeoPropertyAdjacent(
-        this.executionId, this.baunitId).subscribe({
-        next: (result: string) => {
-          Swal.fire({
-            text: result,
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 2000
-          }).then(() => this.searchInformationAdjacentProperty());
-        },
-        error: () => this.errorAdjacentSwal.fire()
-      });
+      this.informationAdjacentService
+        .addInformationGeoPropertyAdjacent(this.executionId, this.baunitId)
+        .subscribe({
+          next: (result: string) => {
+            Swal.fire({
+              text: result,
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 2000
+            }).then(() => this.searchInformationAdjacentProperty());
+          },
+          error: () => this.errorAdjacentSwal.fire()
+        });
     }
   }
 
@@ -253,16 +291,26 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
       return;
     }
     this.deletedAdjacent.fire().then((result) => {
-      if (result.isConfirmed && this.baunitId && this.executionId && content?.ccColindanteBaunitId) {
-        this.informationAdjacentService.deleteAdjacent(
-          this.executionId, this.schema, this.baunitId, content?.ccColindanteBaunitId
-        ).subscribe({
-          next: () => {
-            this.searchInformationAdjacentProperty();
-            this.deleteSwal.fire();
-          },
-          error: () => this.errorSwal.fire()
-        });
+      if (
+        result.isConfirmed &&
+        this.baunitId &&
+        this.executionId &&
+        content?.ccColindanteBaunitId
+      ) {
+        this.informationAdjacentService
+          .deleteAdjacent(
+            this.executionId,
+            this.schema,
+            this.baunitId,
+            content?.ccColindanteBaunitId
+          )
+          .subscribe({
+            next: () => {
+              this.searchInformationAdjacentProperty();
+              this.deleteSwal.fire();
+            },
+            error: () => this.errorSwal.fire()
+          });
       }
     });
   }
@@ -297,12 +345,16 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     if (this.isAllSelected()) {
       this.selection.clear();
     } else {
-      this.dataSource.data
-        .forEach((row: InformationAdjacent) => this.selection.select(row));
+      this.dataSource.data.forEach((row: InformationAdjacent) =>
+        this.selection.select(row)
+      );
     }
   }
 
-  toggleColumnVisibility(column: TableColumn<InformationAdjacent>, event: Event) {
+  toggleColumnVisibility(
+    column: TableColumn<InformationAdjacent>,
+    event: Event
+  ) {
     event.stopPropagation();
     event.stopImmediatePropagation();
     column.visible = !column.visible;
@@ -317,9 +369,52 @@ export class InformationAdjacentPropertyComponent implements OnInit, AfterViewIn
     }
   }
 
-  get visibleColumns() {
-    return this.columns.filter((column) => column.visible)
-      .map((column) => column.property);
+  masiveDeleteAdjacents(): void {
+    this.informationAdjacentService
+      .getInformationPropertyTemporalAdjacent(0, 1000, this.baunitId!)
+      .subscribe((result) => {
+        this.dialog
+          .open(MasiveDeleteAdjacentComponent, {
+            ...MODAL_MEDIUM,
+            data: {
+              data: result.content
+            }
+          })
+          .afterClosed()
+          .subscribe((result: { result: boolean; data: InformationAdjacent[] }) => {
+            if (!result.result || !this.executionId || !this.baunitId) return;
+    
+            this.onDeleteMasiveAdjacent(result, this.executionId, this.baunitId);
+          });
+      });
   }
 
+  onDeleteMasiveAdjacent(
+    result: { result: boolean; data: InformationAdjacent[] },
+    executionId: string,
+    baunitId: string
+  ) {
+    const ccColindanteBaUnitIds: number[] = result.data.map(
+      (adjacent: InformationAdjacent) => adjacent.ccColindanteBaunitId!
+    );
+
+    this.informationAdjacentService
+      .masiveDeleteAdjacent(executionId, baunitId, ccColindanteBaUnitIds)
+      .subscribe(() => {
+        Swal.fire({
+          text: 'Colindantes eliminados correctamente',
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Aceptar',
+          timer: 10000
+        });
+        this.searchInformationAdjacentProperty();
+      });
+  }
+
+  get visibleColumns() {
+    return this.columns
+      .filter((column) => column.visible)
+      .map((column) => column.property);
+  }
 }

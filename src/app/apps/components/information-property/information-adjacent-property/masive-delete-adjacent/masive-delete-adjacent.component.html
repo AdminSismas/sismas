@@ -1,0 +1,50 @@
+<app-modal-window
+  title="Eliminación masiva de colindates"
+  actions
+  showCancelButton
+  (accept)="masiveDeleteAdjacents()"
+>
+  <div class="h-full overflow-y-auto">
+    <mat-table [dataSource]="dataSource()">
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [aria-label]="checkboxLabel()"
+          >
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+          >
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      @for (column of columns; track $index) {
+        <ng-container [matColumnDef]="column.property">
+          <mat-header-cell *matHeaderCellDef>
+            {{ column.label }}
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row; let index = index">
+            @switch (column.property) {
+              @case ("order") {
+                {{ index + 1 }}
+              }
+              @default {
+                {{ row[column.property] }}
+              }
+            }
+          </mat-cell>
+        </ng-container>
+      }
+      <mat-header-row *matHeaderRowDef="visibleColumns()"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: visibleColumns()"></mat-row>
+    </mat-table>
+  </div>
+</app-modal-window>
