@@ -18,7 +18,12 @@ export const environment = {
   administrativeSource: "/fuenteadmin/",
   apiUrlToken: "/token/authenticate",
   asignacionZonas: "/asignacionZonas",
-  auth_login: "/auth/login",
+  auth: {
+    forgotPassword: "/forgot-password",
+    login: "/login",
+    resetPassword: "/reset-password",
+    value: "/auth"
+  },
   awsConfig: {
     accessKeyId: "AKIAW5WU5HQB6DQ52QVS",
     bucketName: "geo-masora-bucket",

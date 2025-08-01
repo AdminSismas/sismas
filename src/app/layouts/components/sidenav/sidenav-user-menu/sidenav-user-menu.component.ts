@@ -39,7 +39,7 @@ export class SidenavUserMenuComponent {
   close(): void {
     /** Wait for animation to complete and then close */
     setTimeout(() => this.popoverRef.close(), 250);
-    this.router.navigate([`${environment.auth_login}`]);
+    this.router.navigate([`${environment.auth.value}${environment.auth.login}`]);
   }
 
   openChangePasswordDialog(): void {

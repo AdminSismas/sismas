@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -8,8 +8,4 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [MatIconModule]
 })
-export class InConstructionComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
-}
+export class InConstructionComponent {}

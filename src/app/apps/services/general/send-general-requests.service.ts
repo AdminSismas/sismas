@@ -134,7 +134,7 @@ export class SendGeneralRequestsService {
       .pipe(
         catchError((e) => {
           if (e.status == 401) {
-            this.router.navigate([`${environment.auth_login}`]).then(r => {
+            this.router.navigate([`${environment.auth.value}${environment.auth.login}`]).then(r => {
             });
           }
           return throwError(() => e);

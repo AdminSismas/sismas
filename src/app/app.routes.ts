@@ -16,6 +16,10 @@ export const appRoutes: VexRoutes = [
     pathMatch: 'full'
   },
   {
+    path: 'reset-password',
+    loadComponent: () => import('./pages/pages/auth/reset-password/reset-password.component')
+  },
+  {
     path: 'coming-soon',
     loadComponent: () =>
       import('./pages/pages/coming-soon/coming-soon.component').then(
