@@ -411,4 +411,17 @@ export class InformationPropertyService {
 
     return this.http.get<InformationPegeable>(url, { params });
   }
+
+  refreshCadastralAreaGeoE(baunitId: string, executionId = ''): Observable<BasicInformationProperty> {
+
+    let url = `${this.basic_url}/${envi.baunit}/`;
+
+    if (executionId) {
+      url += `${envi.schemas.temp}/${executionId}/${baunitId}${envi.updateAreaGeo}`;
+    } else {
+      url += `${envi.schemas.main}/${baunitId}${envi.updateAreaGeo}`;
+    }
+
+    return this.http.put<BasicInformationProperty>(url, {});
+  }
 }

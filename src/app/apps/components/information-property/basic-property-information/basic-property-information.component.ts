@@ -61,6 +61,7 @@ import { LayoutCardCadastralInformationPropertyComponentComponent } from '../lay
 import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
 import Swal from 'sweetalert2';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'vex-basic-property-information',
@@ -74,24 +75,25 @@ import Swal from 'sweetalert2';
     scaleFadeIn400ms
   ],
   imports: [
-    NgClass,
+    CurrencyLandsPipe,
+    DatePipe,
     FormsModule,
+    HeaderCadastralInformationPropertyComponent,
     MatAutocompleteModule,
     MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatOptionModule,
-    MatTabsModule,
-    ReactiveFormsModule,
     MatSlideToggleModule,
-    MatCardModule,
-    HeaderCadastralInformationPropertyComponent,
-    MatExpansionModule,
-    DatePipe,
-    CurrencyLandsPipe,
-    MatDividerModule,
-    PercentPipe
+    MatTabsModule,
+    MatTooltipModule,
+    NgClass,
+    PercentPipe,
+    ReactiveFormsModule
   ],
   templateUrl: './basic-property-information.component.html',
   styleUrl: './basic-property-information.component.scss',
@@ -330,6 +332,27 @@ export class BasicPropertyInformationComponent {
       showConfirmButton: false,
       timer: 3000
     }).then();
+  }
+
+  refreshCadastralAreaGeoE(): void {
+    if (!this.baunitId) return;
+
+    const executionId =
+      this.schema === environment.schemas.temp && this.executionId
+        ? this.executionId
+        : '';
+
+    this.informationPropertyService
+      .refreshCadastralAreaGeoE(this.baunitId, executionId)
+      .subscribe((response) => {
+        this.captureInformationSubscribe(response);
+        Swal.fire({
+          icon: 'success',
+          text: 'Área catastral geográfica actualizada correctamente',
+          showConfirmButton: false,
+          timer: 10000
+        });
+      });
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

@@ -209,6 +209,7 @@ export const environment = {
   ulr_icon_base: "assets/img/icons/cadastral-logos/128x128/",
   unitBuild: "/unitBuild",
   unitBuilt: "/unitBuilt",
+  updateAreaGeo: "/updateAreaGeo",
   urban_zones: "/ccZonaHomoFisicaUr",
   url: "https://armenia.api.sismas.com.co",
   url_domain_name: "https://armenia.map.sismas.com.co:5001/domain/name?",
