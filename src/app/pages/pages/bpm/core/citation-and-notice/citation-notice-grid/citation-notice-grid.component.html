@@ -1,6 +1,4 @@
-<div
-  class="w-full h-full flex flex-col shadow-md vex-layout-content"
->
+<div class="w-full h-full flex flex-col shadow-md vex-layout-content relative">
   @if (((listParticipantsCards$ | async)?.length ?? 0) > 0) {
     <div
       @stagger

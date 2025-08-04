@@ -63,5 +63,6 @@ src/claude/*
 # gemini CLI
 GEMINI.md
 
-# trae
-.vercel/*
+# pull request files
+pullrequestBody.md
+cambios.txt

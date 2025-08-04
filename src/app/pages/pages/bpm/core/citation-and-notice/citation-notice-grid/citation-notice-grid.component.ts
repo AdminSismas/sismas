@@ -120,12 +120,18 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  refreshData() {
     this.loadingServiceService.activateLoading(true);
+    // Limpiar temporalmente la lista para forzar la actualización
+    this._listParticipantsCards$.next([]);
 
     this.getInitParticipantsData();
+    this.getInformationAssignedTasks();
+    this.loadingServiceService.deActivate(500);
+  }
 
-    this.loadingServiceService.deActivate(1000);
+  ngOnInit() {
+    this.refreshData();
   }
 
   getInitParticipantsData() {
@@ -133,7 +139,8 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
       .validateParticipants(
         this.executionId(),
         this.generateObjectPageSearchData()
-      ).subscribe(() => {
+      )
+      .subscribe(() => {
         this.getDataContentInformations();
       });
   }
@@ -154,6 +161,7 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
   }
 
   validateExecuteTypeProcess(typeProcess: TypeProcessParticipant) {
+    console.log({ typeProcess });
     if (!typeProcess) {
       return;
     }
@@ -170,14 +178,16 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
   }
 
   getInformationWarningAssigned() {
-    this.participantsProcess.getParticipantsWarningProcess(
-      this.executionId(),
-      this.generateObjectPageSearchData()
-    ).subscribe({
-      error: () => this.captureNotInformationSubscribeError(),
-      next: (result: InformationPegeable) =>
-        this._dataContentInformations$.next(result)
-    });
+    this.participantsProcess
+      .getParticipantsWarningProcess(
+        this.executionId(),
+        this.generateObjectPageSearchData()
+      )
+      .subscribe({
+        error: () => this.captureNotInformationSubscribeError(),
+        next: (result: InformationPegeable) =>
+          this._dataContentInformations$.next(result)
+      });
   }
 
   getInformationAssignedTasks() {
