@@ -1,5 +1,3 @@
-// import { RuralPhysicalZone } from './rural-physical-zone';
-// import { UrbanPhysicalZone } from './urban-physical-zone';
 import { GeoEconomicZone } from './geo-economic-zone';
 
 export class ZoneBAUnitFisica {
@@ -16,6 +14,11 @@ export class ZoneBAUnitFisica {
   baUnitZonaAreaE?: string;
   esComun?: boolean;
   vigencia?: number;
+  createdBy: string;
+  createdAt: string;
+  updatedBy: string;
+  updatedAt: string;
+  baUnitZonaValorM2?: number;
 
   constructor( baunitZona: ZoneBAUnitResponse) {
     this.baUnitZonaType = baunitZona.ccZonaHomoFisicaRu ? 'Rural' : 'Urbana';
@@ -29,6 +32,11 @@ export class ZoneBAUnitFisica {
     this.baUnitZonaAreaE = baunitZona.baUnitZonaAreaE;
     this.esComun = baunitZona.esComun;
     this.vigencia = baunitZona.ccZonaHomoFisicaRu?.vigencia || baunitZona.ccZonaHomoFisicaUr?.vigencia || baunitZona.ccZonaHomoGeoEconomica?.vigencia;
+    this.createdBy = baunitZona.createdBy;
+    this.createdAt = baunitZona.createdAt;
+    this.updatedBy = baunitZona.updatedBy;
+    this.updatedAt = baunitZona.updatedAt;
+    this.baUnitZonaValorM2 = baunitZona.baUnitZonaValorM2;
   }
 
 }
@@ -47,6 +55,12 @@ export class ZoneBAUnitGeoeconomic {
   baUnitZonaAreaE?: string;
   esComun?: boolean;
   vigencia?: number;
+  createdBy: string;
+  createdAt: string;
+  updatedBy: string;
+  updatedAt: string;
+  zonaValid: boolean;
+  baUnitZonaValorM2?: number;
 
   constructor( baunitZona: ZoneBAUnitResponse) {
     this.baUnitZonaType = 'Geoeconomica';
@@ -58,6 +72,12 @@ export class ZoneBAUnitGeoeconomic {
     this.baUnitZonaAreaE = baunitZona.baUnitZonaAreaE;
     this.esComun = baunitZona.esComun;
     this.vigencia = baunitZona.ccZonaHomoGeoEconomica?.vigencia;
+    this.createdBy = baunitZona.createdBy;
+    this.createdAt = baunitZona.createdAt;
+    this.updatedBy = baunitZona.updatedBy;
+    this.updatedAt = baunitZona.updatedAt;
+    this.zonaValid = baunitZona.zonaValid ?? false;
+    this.baUnitZonaValorM2 = baunitZona.baUnitZonaValorM2 ?? 0;
   }
 }
 
@@ -82,10 +102,12 @@ export interface ZoneBAUnitResponse {
   esComun:                boolean;
   hash:                   string;
   createdBy:              string;
-  createdAt:              Date;
+  createdAt:              string;
   updatedBy:              string;
   updatedAt:              string;
-  baUnitZonaAreaE:        string;
+  baUnitZonaAreaE?:       string;
+  zonaValid?:             boolean;
+  baUnitZonaValorM2?:      number;
 }
 
 export interface CcZonaHomoFisica {
@@ -95,7 +117,7 @@ export interface CcZonaHomoFisica {
   zonaHomoFisicaRuCode?:           string;
   domTopografiaZonaTipo:           string;
   domInfluenciaVialUrbanaTipo?:    string;
-  domInfluenciaVialRuralTipo?:     string;
+  domInfluenciaVialRural?:         string;
   domServiciosPublicosTipo:        string;
   domUsoSueloUrbanoTipo?:          string;
   domUsoSueloRuralTipo?:           string;

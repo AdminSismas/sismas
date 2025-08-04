@@ -1,4 +1,4 @@
-import { Component, computed, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, computed, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
 import { EconomicZoneComponent } from '../economic-zone/economic-zone.component';
 import { MODAL_SMALL } from '../../../../constants/general/constants';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'zone-manager',
@@ -60,9 +61,6 @@ export class ZoneManagerComponent implements OnInit {
     ];
   });
   public zonesCode = '';
-
-  @ViewChild('confirmDeleteDialog', { static: true }) confirmDeleteDialog!: TemplateRef<any>;
-  @ViewChild('actionsMenu', { static: true }) actionsMenu!: TemplateRef<any>;
 
   @Input({ required: true }) public typeZone: 'urbana' | 'rural' | 'geoeconómica' = 'urbana';
   @Input({ required: true }) public service!: ZoneServices;
@@ -154,14 +152,19 @@ export class ZoneManagerComponent implements OnInit {
   onClickActionBtn(id: string, row: any) {
     if (id === 'delete') {
       this.zonesCode = row.zonaHomoFisicaUrCode || row.zonaHomoFisicaRuCode || row.zonaHomoGeoEconomicaCode;
-      this.dialog.open(this.confirmDeleteDialog, { width: '40%' })
-        .afterClosed()
-        .subscribe((result: boolean) => {
-          if (result) {
-            this.deleteZone(row);
-          }
-        });
-
+      Swal.fire({
+        text: '¿Está seguro de eliminar esta zona?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#30#3085d6',
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteZone(row);
+        }
+      });
     } else if (id === 'edit') {
       this.openDialogEditZone(row);
     }

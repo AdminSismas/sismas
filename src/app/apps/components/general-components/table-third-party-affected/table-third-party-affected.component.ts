@@ -14,8 +14,8 @@ import { ThirdPartyAffectedParticipant } from '../../../interfaces/general/conte
 import { ParticipantTableDialogComponent } from '../../bpm/participant-table-dialog/participant-table-dialog.component';
 import {
   PAGE,
-  PAGE_OPTION_5_7_10,
-  PAGE_OPTION_UNIQUE_7,
+  PAGE_OPTION_10_20_50_100,
+  PAGE_OPTION_UNIQUE,
   TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
   TYPE_BUTTON_ONE,
   TYPE_OPERATION_CREATE
@@ -69,7 +69,6 @@ import { MatInputModule } from '@angular/material/input';
     MatSortModule,
     MatTableModule,
     FluidMinHeightDirective,
-    FluidMinHeightDirective,
     NgClass
   ],
   templateUrl: './table-third-party-affected.component.html',
@@ -111,8 +110,8 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
 
   page = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_OPTION_UNIQUE_7;
-  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
+  pageSize: number = PAGE_OPTION_UNIQUE;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
   columns: TableColumn<ProcessParticipant>[] =
     TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY;
   subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
@@ -242,7 +241,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
       return;
     }
     this.contentInformation = new InformationPegeable(
-      result?.length / PAGE_OPTION_UNIQUE_7,
+      result?.length / PAGE_OPTION_UNIQUE,
       result?.length,
       false,
       result?.length,
@@ -250,7 +249,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
       true,
       result?.length > 0,
       result,
-      new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE_7)
+      new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE)
     );
     this.captureInformationData();
   }

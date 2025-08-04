@@ -45,6 +45,19 @@ export default class ResetPasswordComponent {
   private resetPasswordService = inject(ResetPasswordService);
 
   // Signals
+  inputTypePassword = signal<'password' | 'text'>('password');
+  inputTypeConfirmPassword = signal<'password' | 'text'>('password');
+  form = signal<FormGroup>(this.fb.group(
+    {
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      password_confirm: ['', [Validators.required]]
+    },
+    {
+      validators: this.passwordMatchValidator
+    }
+  ));
+
+  // toSignals
   token = toSignal(
     this.route.queryParamMap.pipe(
       map((params) => {
@@ -52,8 +65,6 @@ export default class ResetPasswordComponent {
       })
     )
   );
-  inputTypePassword = signal<'password' | 'text'>('password');
-  inputTypeConfirmPassword = signal<'password' | 'text'>('password');
 
   constructor() {
     effect(() => {
@@ -63,17 +74,9 @@ export default class ResetPasswordComponent {
         ]);
       }
     });
-  }
 
-  form: FormGroup = this.fb.group(
-    {
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      password_confirm: ['', [Validators.required]]
-    },
-    {
-      validators: this.passwordMatchValidator
-    }
-  );
+    
+  }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
@@ -85,12 +88,12 @@ export default class ResetPasswordComponent {
   }
 
   send() {
-    if (this.form.invalid || !this.token()) {
+    if (this.form().invalid || !this.token()) {
       return;
     }
     // TODO: Implement password change logic here
     const token = this.token();
-    const newPassword = this.form.controls['password'].value;
+    const newPassword = this.form().controls['password'].value;
     this.resetPasswordService
       .changePassword(token!, newPassword)
       .pipe(
@@ -123,6 +126,7 @@ export default class ResetPasswordComponent {
       `${environment.auth.value}${environment.auth.login}`
     ]);
   }
+
   toggleVisibility(input: 'password' | 'confirmPassword') {
     if (input === 'password') {
       this.inputTypePassword.update((type) => {

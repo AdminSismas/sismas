@@ -1,69 +1,58 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
-import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
-import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from '../../../../constants/general/constants';
-import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
+import { NAME_NO_DISPONIBLE } from '../../../../constants/general/constants';
+import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from '../../../../interfaces/information-property/zone-baunit';
+import { ModalWindowComponent } from '../../../general-components/modal-window/modal-window.component';
+
+type PropertyType = 'Urbano' | 'Rural' | 'Geoeconómica';
+
+interface DialogData {
+  zone: ZoneBAUnitFisica | ZoneBAUnitGeoeconomic;
+  propertyType: PropertyType;
+}
 
 @Component({
-  selector: 'vex-detail-information-property-zones',
+  selector: 'app-detail-information-property-zones',
   standalone: true,
-  animations: [
-    fadeInRight400ms,
-    stagger80ms,
-    scaleIn400ms,
-    stagger40ms,
-    fadeInUp400ms,
-    scaleFadeIn400ms,
-  ],
   imports: [
-    MatButtonModule,
-    MatDialogClose,
-    MatDialogTitle,
+    CommonModule,
+    MatDialogModule,
     MatDividerModule,
+    MatButtonModule,
     MatIconModule,
-    MatMenuModule,
-    MatDialogContent,
-    CommonModule
+    ModalWindowComponent
   ],
   templateUrl: './detail-information-property-zones.component.html',
-  styleUrl: './detail-information-property-zones.component.scss'
+  styleUrls: ['./detail-information-property-zones.component.scss']
 })
-export class DetailInformationPropertyZonesComponent implements OnInit {
+export class DetailInformationPropertyZonesComponent {
+  protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
+  private readonly dialogRef = inject(MatDialogRef<DetailInformationPropertyZonesComponent>);
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { zone: ZoneBAUnitFisica | ZoneBAUnitGeoeconomic, propertyType: string},
-    private dialogRef: MatDialogRef<DetailInformationPropertyZonesComponent>,
-    private cdr: ChangeDetectorRef
-  ) {}
-
-  ngOnInit() {
-    if (this.data.zone === null || this.data.zone === undefined) {
-      this.close();
-    }
-
-    this.cdr.detectChanges();
+    @Inject(MAT_DIALOG_DATA)
+    public readonly data: DialogData
+  ) {
+    console.log(data);
   }
 
-  close(): void {
+  getTitle(): string {
+    let code = '';
+    if (this.data.propertyType === 'Urbano') {
+      code = this.data.zone.zonaHomoFisicaUrCode || this.NAME_NO_DISPONIBLE;
+    } else if (this.data.propertyType === 'Geoeconómica') {
+      code = this.data.zone.zonaHomoGeoEconomicaCode || this.NAME_NO_DISPONIBLE;
+    } else {
+      code = this.data.zone.zonaHomoFisicaRuCode || this.NAME_NO_DISPONIBLE;
+    }
+    return `Código - ${code}`;
+  }
+
+  onAccept(): void {
     this.dialogRef.close();
   }
-
-  protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;
-  protected readonly INDIVIDUAL_TYPE_NUMBER = INDIVIDUAL_TYPE_NUMBER;
-
 }

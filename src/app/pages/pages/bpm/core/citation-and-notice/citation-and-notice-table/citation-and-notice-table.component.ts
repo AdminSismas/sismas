@@ -67,7 +67,6 @@ import { MatSelectModule } from '@angular/material/select';
     VexScrollbarComponent,
     MatTableModule,
     MatSortModule,
-    NgFor,
     NgIf,
     NgClass,
     MatButtonModule,
@@ -120,9 +119,6 @@ export class CitationAndNoticeTableComponent implements OnInit, OnChanges, After
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private dialog: MatDialog,
-    private readonly layoutService: VexLayoutService,
-    private snackbar: MatSnackBar,
     private participantsProcess: ParticipantsProcessService
   ) {
   }
