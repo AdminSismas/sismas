@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -52,11 +52,15 @@ export default class ResetPasswordComponent {
       })
     )
   );
+  inputTypePassword = signal<'password' | 'text'>('password');
+  inputTypeConfirmPassword = signal<'password' | 'text'>('password');
 
   constructor() {
     effect(() => {
       if (!this.token()) {
-        this.router.navigate([`${environment.auth.value}${environment.auth.login}`]);
+        this.router.navigate([
+          `${environment.auth.value}${environment.auth.login}`
+        ]);
       }
     });
   }
@@ -87,29 +91,50 @@ export default class ResetPasswordComponent {
     // TODO: Implement password change logic here
     const token = this.token();
     const newPassword = this.form.controls['password'].value;
-    this.resetPasswordService.changePassword(token!, newPassword)
-      .pipe(catchError(() => {
+    this.resetPasswordService
+      .changePassword(token!, newPassword)
+      .pipe(
+        catchError(() => {
+          Swal.fire({
+            icon: 'error',
+            text: 'Ha ocurrido un error al actualizar la contraseña',
+            showConfirmButton: false,
+            timer: 10000
+          });
+
+          throw new Error('Error al cambiar la contraseña');
+        })
+      )
+      .subscribe((response) => {
         Swal.fire({
-          icon: 'error',
-          text: 'Ha ocurrido un error al actualizar la contraseña',
+          icon: 'success',
+          text: response,
           showConfirmButton: false,
           timer: 10000
         });
-
-        throw new Error('Error al cambiar la contraseña');
-      }))
-      .subscribe((response) => {
-      Swal.fire({
-        icon: 'success',
-        text: response,
-        showConfirmButton: false,
-        timer: 10000
+        this.router.navigate([
+          `${environment.auth.value}${environment.auth.login}`
+        ]);
       });
-      this.router.navigate([`${environment.auth.value}${environment.auth.login}`]);
-    });
   }
 
   back() {
-    this.router.navigate([`${environment.auth.value}${environment.auth.login}`]);
+    this.router.navigate([
+      `${environment.auth.value}${environment.auth.login}`
+    ]);
+  }
+  toggleVisibility(input: 'password' | 'confirmPassword') {
+    if (input === 'password') {
+      this.inputTypePassword.update((type) => {
+        if (type === 'password') return 'text';
+        return 'password';
+      });
+      return;
+    }
+    this.inputTypeConfirmPassword.update((type) => {
+      if (type === 'password') return 'text';
+      return 'password';
+    });
+    return;
   }
 }

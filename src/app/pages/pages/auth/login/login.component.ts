@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  signal
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -17,11 +27,13 @@ import { UserService } from './services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
-import { ENVIRONMENT_RETIRO_IMG, NAME_LOGO_IMG_SAN_VICENTE } from 'src/app/apps/constants/general/constants';
+import {
+  ENVIRONMENT_RETIRO_IMG,
+  NAME_LOGO_IMG_SAN_VICENTE
+} from 'src/app/apps/constants/general/constants';
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-
 
 @Component({
   selector: 'vex-login',
@@ -45,10 +57,10 @@ import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
     MatTooltipModule,
     NgIf,
     ReactiveFormsModule,
-    RouterLink,
+    RouterLink
   ]
 })
-export class LoginComponent  implements AfterViewInit {
+export class LoginComponent implements AfterViewInit {
   @ViewChild('bgVideo') bgVideoRef!: ElementRef<HTMLVideoElement>;
   videoPlayed = false;
   videoPath: string = environment.video;
@@ -70,7 +82,7 @@ export class LoginComponent  implements AfterViewInit {
     private cd: ChangeDetectorRef,
     private authService: AuthService,
     private userService: UserService,
-    private navigationLoaderService: NavigationLoaderService,
+    private navigationLoaderService: NavigationLoaderService
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -82,7 +94,6 @@ export class LoginComponent  implements AfterViewInit {
     navigationLoaderService.stopCountLoop();
   }
 
-
   send() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
@@ -90,7 +101,6 @@ export class LoginComponent  implements AfterViewInit {
       this.loading.set(true);
       this.authService.login(email, password).subscribe({
         next: (response) => {
-
           if (response && response.token) {
             this.authService.saveToken(response.token);
 
@@ -119,7 +129,6 @@ export class LoginComponent  implements AfterViewInit {
                 showConfirmButton: false,
                 timer: 3000
               }).then();
-
             });
           } else {
             this.alertCredentialIncorrect();
@@ -142,7 +151,7 @@ export class LoginComponent  implements AfterViewInit {
     }
   }
 
-  alertCredentialIncorrect(){
+  alertCredentialIncorrect() {
     Swal.fire({
       title: '¡Error!',
       text: 'Credenciales incorrectas. Intenta nuevamente.',
@@ -151,7 +160,6 @@ export class LoginComponent  implements AfterViewInit {
       timer: 5000
     }).then();
   }
-
 
   toggleVisibility() {
     if (this.visible) {
@@ -186,17 +194,17 @@ export class LoginComponent  implements AfterViewInit {
       video.autoplay = true; // opcional
       video.playsInline = true; // especialmente útil en móviles
 
-      video.play()
+      video
+        .play()
         .then(() => {
           this.videoPlayed = true;
           console.log('🎥 Video reproducido automáticamente');
         })
-        .catch(err => {
+        .catch((err) => {
           console.warn('⚠️ No se pudo reproducir automáticamente:', err);
         });
     }
   }
-
 
   onVideoLoaded() {
     this.forceVideoPlay();
@@ -209,7 +217,7 @@ export class LoginComponent  implements AfterViewInit {
 
     if (videoEl) {
       this.videoPlayed = true; // Marcar como reproducido una sola vez
-      videoEl.play().catch(err => {
+      videoEl.play().catch((err) => {
         console.warn('Autoplay bloqueado por el navegador:', err);
       });
     }
