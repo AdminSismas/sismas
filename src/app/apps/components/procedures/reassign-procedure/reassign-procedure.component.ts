@@ -1,15 +1,23 @@
 import { TitleCasePipe } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Inject,
-  OnInit,
+  OnInit
 } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -80,8 +88,9 @@ export class ReassignProcedureComponent implements OnInit {
   }
 
   getAllUsers(): void {
-    this.userService.getUsers(0, 1000).subscribe({
-      next: (res: InformationPageableUser) => {
+    this.userService
+      .getUsers(0, 1000)
+      .subscribe((res: InformationPageableUser) => {
         this.dataUser = res;
         this.dataSource = (this.dataUser.content || []).map((user) => {
           return {
@@ -93,19 +102,21 @@ export class ReassignProcedureComponent implements OnInit {
         });
         this.dataSource$ = this.dataSource;
         this.cdr.detectChanges();
-      },
-      error: (error: HttpErrorResponse) => {
-      }
-    });
+      });
   }
 
   reassign() {
-    this.procedureService.reassignProcedure(this.data.executionId, this.selectedUser!.username, this.selectedUser!.userId)
+    this.procedureService
+      .reassignProcedure(
+        this.data.executionId,
+        this.selectedUser!.username,
+        this.selectedUser!.userId
+      )
       .subscribe({
         next: () => {
           this.dialogRef.close('success');
         },
-        error: (error: HttpErrorResponse) => {
+        error: () => {
           this.dialogRef.close('error');
         }
       });
@@ -123,7 +134,7 @@ export class ReassignProcedureComponent implements OnInit {
       return;
     }
 
-    this.dataSource$ = this.dataSource.filter(user => {
+    this.dataSource$ = this.dataSource.filter((user) => {
       const newValue = value.toLowerCase();
       for (const key in user) {
         const rowValue = user[key as keyof RowUserAssign].toString();

@@ -156,7 +156,7 @@ export class ChangePasswordComponent implements OnInit {
     const newPassword = this.form.get('newPassword')?.value;
 
     this.passwordService.changePassword(username, lastPassword, newPassword).subscribe({
-      next: (res) => {
+      next: () => {
         this.snackbar.open('Contraseña cambiada correctamente', 'CERRAR', {
           duration: 10000
         });

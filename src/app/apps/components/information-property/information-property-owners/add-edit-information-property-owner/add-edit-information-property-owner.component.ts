@@ -28,8 +28,6 @@ export class AddEditInformationPropertyOwnerComponent {
     this.initForm();
   }
 
-  onSubmitForm(): void {}
-
   /**
    * Init form
    */

@@ -32,8 +32,6 @@ export class HeaderCadastralInformationPropertyComponent implements OnInit{
   @Input() public label = '';
   @Input() public icon = '';
 
-  constructor() { }
-
   ngOnInit(): void {
     if (this.idheaderCadastral?.length>0) {
       this.idheaderCadastral = this.idheaderCadastral + this.getRandomInt(10000);

@@ -1,6 +1,16 @@
-import { Component, DestroyRef, EventEmitter, inject, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  UntypedFormControl,
+  Validators
+} from '@angular/forms';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,15 +25,15 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '../../../../interfaces/general/search-data.model';
-import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { ComboxColletionComponent } from '../../../general-components/combox-colletion/combox-colletion.component';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition
+} from '@angular/material/snack-bar';
 import { InputComponent } from '../../../general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {
-  TerritorialOrganizationService
-} from '../../../../services/territorial-organization/territorial-organization.service';
+import { TerritorialOrganizationService } from '../../../../services/territorial-organization/territorial-organization.service';
 import { Department } from '../../../../interfaces/territorial-organization/department.model';
 import { Municipality } from '../../../../interfaces/territorial-organization/municipality.model';
 import {
@@ -50,7 +60,11 @@ import { NationalPredialNumber } from '../../../../interfaces/information-proper
 import { divideNpn } from '../../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../../constants/general/constantLabels';
 import { CharacterValidateService } from '../../../../utils/character-validate.service';
-import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/constants';
+import {
+  DIVPOLLVL2_CODE,
+  DIVPOLLVL_CODE
+} from '../../../../constants/general/constants';
+import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
 
 @Component({
   selector: 'vex-filter-certificate-search',
@@ -59,7 +73,7 @@ import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/c
   standalone: true,
   imports: [
     CommonModule,
-    ComboxColletionComponent,
+    ComboboxCollectionComponent,
     InputComponent,
     MatAutocompleteModule,
     MatButtonModule,
@@ -78,14 +92,13 @@ import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../constants/general/c
   ]
 })
 export class FilterCertificateSearchComponent implements OnInit {
+  protected readonly STRING_INFORMATION_NOT_FOUND =
+    STRING_INFORMATION_NOT_FOUND;
 
-  @Output() searchData = new EventEmitter<any>();
-
-  protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
-
-  protected readonly LIMPIAR_CAMPOS_SELECCION_MUNICIPAL = LIMPIAR_CAMPOS_SELECCION_MUNICIPAL;
-  protected readonly LIMPIAR_CAMPOS_MULTIPLES_CAMPOS = LIMPIAR_CAMPOS_MULTIPLES_CAMPOS;
-
+  protected readonly LIMPIAR_CAMPOS_SELECCION_MUNICIPAL =
+    LIMPIAR_CAMPOS_SELECCION_MUNICIPAL;
+  protected readonly LIMPIAR_CAMPOS_MULTIPLES_CAMPOS =
+    LIMPIAR_CAMPOS_MULTIPLES_CAMPOS;
 
   optionsDeparments: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
@@ -97,24 +110,60 @@ export class FilterCertificateSearchComponent implements OnInit {
   optionsSidewalks: Sidewalk[] = [];
 
   form: FormGroup = this.fb.group({
-
-
     // National Property Number,
 
-    codigoCompleto: ['', [Validators.maxLength(30), Validators.pattern(/^\d+$/)]],
-    dpto: [this.defaults?.dpto ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
-    mpio: [this.defaults?.mpio ?? '',[Validators.maxLength(3),Validators.pattern(/^\d+$/)]],
-    zonas: [this.defaults?.zonas ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
-    sectorb: [this.defaults?.sectorb ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
-    comuna: [this.defaults?.comuna ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
-    barrio: [this.defaults?.barrio ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
-    manVer: [this.defaults?.manVer ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
-    terreno: [this.defaults?.terreno ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
-    condicion: [this.defaults?.condicion ?? '',[Validators.maxLength(1),Validators.pattern(/^\d+$/)]],
-    edificio: [this.defaults?.edificio ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
-    piso: [this.defaults?.piso ?? '',[Validators.maxLength(2),Validators.pattern(/^\d+$/)]],
-    unidadPredial: [this.defaults?.unidadPredial ?? '',[Validators.maxLength(4),Validators.pattern(/^\d+$/)]],
-
+    codigoCompleto: [
+      '',
+      [Validators.maxLength(30), Validators.pattern(/^\d+$/)]
+    ],
+    dpto: [
+      this.defaults?.dpto ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    mpio: [
+      this.defaults?.mpio ?? '',
+      [Validators.maxLength(3), Validators.pattern(/^\d+$/)]
+    ],
+    zonas: [
+      this.defaults?.zonas ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    sectorb: [
+      this.defaults?.sectorb ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    comuna: [
+      this.defaults?.comuna ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    barrio: [
+      this.defaults?.barrio ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    manVer: [
+      this.defaults?.manVer ?? '',
+      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
+    ],
+    terreno: [
+      this.defaults?.terreno ?? '',
+      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
+    ],
+    condicion: [
+      this.defaults?.condicion ?? '',
+      [Validators.maxLength(1), Validators.pattern(/^\d+$/)]
+    ],
+    edificio: [
+      this.defaults?.edificio ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    piso: [
+      this.defaults?.piso ?? '',
+      [Validators.maxLength(2), Validators.pattern(/^\d+$/)]
+    ],
+    unidadPredial: [
+      this.defaults?.unidadPredial ?? '',
+      [Validators.maxLength(4), Validators.pattern(/^\d+$/)]
+    ],
 
     // MUltiple Fields
     registration: this.defaults?.registration ?? '',
@@ -135,8 +184,7 @@ export class FilterCertificateSearchComponent implements OnInit {
     community: this.defaults?.community ?? '',
     neighborhood: this.defaults?.neighborhood ?? '',
     sidewalk: this.defaults?.sidewalk ?? '',
-    block: this.defaults?.block ?? '',
-
+    block: this.defaults?.block ?? ''
   });
 
   filteredOptionsDepartments$: Observable<Department[]> | undefined;
@@ -158,77 +206,116 @@ export class FilterCertificateSearchComponent implements OnInit {
     private snackBar: MatSnackBar,
     private territorialOrganizationService: TerritorialOrganizationService,
     private fieldFormatterService: CharacterValidateService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {});
+      .subscribe();
   }
 
   searchRegistrationNumber() {
     const searchData = this.validateFilterSearchCadastral();
-    if (searchData.registration?.length > 1) {
+    if (searchData.registration && searchData.registration?.length > 1) {
       this.dialogRef.close(searchData);
       return;
     }
     this.openSnackbar(
       'No es posible la búsqueda por círculo - matrícula, datos no válidos',
-      'CERRAR', 'end'
+      'CERRAR',
+      'end'
     );
   }
 
   searchByDocumentAndTypeNumber() {
     const searchData = this.validateFilterSearchCadastral();
-    if (searchData.number?.length > 1 && searchData.domIndividualTypeNumber?.length > 1) {
+    if (
+      searchData.number &&
+      searchData.number?.length > 1 &&
+      searchData.domIndividualTypeNumber &&
+      searchData.domIndividualTypeNumber?.length > 1
+    ) {
       this.dialogRef.close(searchData);
       return;
     }
     this.openSnackbar(
       'No es posible la búsqueda por doumento y tipo de documento, datos no válidos',
-      'CERRAR', 'end'
+      'CERRAR',
+      'end'
     );
   }
 
   formatFieldValue() {
-      this.dpto?.reset();
-      this.mpio?.reset();
-      this.zonas?.reset();
-      this.sectorb?.reset();
-      this.comuna?.reset();
-      this.barrio?.reset();
-      this.manVer?.reset();
-      this.terreno?.reset();
-      this.condicion?.reset();
-      this.edificio?.reset();
-      this.piso?.reset();
-      this.unidadPredial?.reset();
+    this.dpto?.reset();
+    this.mpio?.reset();
+    this.zonas?.reset();
+    this.sectorb?.reset();
+    this.comuna?.reset();
+    this.barrio?.reset();
+    this.manVer?.reset();
+    this.terreno?.reset();
+    this.condicion?.reset();
+    this.edificio?.reset();
+    this.piso?.reset();
+    this.unidadPredial?.reset();
   }
-
-
 
   public sendInformationTable() {
     const searchData = this.validateFilterSearchCadastral();
     const searchDataFiltered: SearchData = new SearchData(searchData);
     if (this.codigoCompleto?.valid && this.codigoCompleto?.value?.trim()) {
       searchDataFiltered.codigoCompleto = this.codigoCompleto.value.trim();
-    }else{
-      searchDataFiltered.dpto = this.fieldFormatterService.formatField(this.dpto?.value, 2);
-      searchDataFiltered.mpio = this.fieldFormatterService.formatField(this.mpio?.value, 3);
-      searchDataFiltered.zonas = this.fieldFormatterService.formatField(this.zonas?.value, 2);
-      searchDataFiltered.sectorb = this.fieldFormatterService.formatField(this.sectorb?.value, 2);
-      searchDataFiltered.comuna =  this.fieldFormatterService.formatField(this.comuna?.value, 2);
-      searchDataFiltered.barrio = this.fieldFormatterService.formatField(this.barrio?.value, 2);
-      searchDataFiltered.manVer = this.fieldFormatterService.formatField(this.manVer?.value, 4);
-      searchDataFiltered.terreno = this.fieldFormatterService.formatField(this.terreno?.value, 4);
-      searchDataFiltered.condicion =  this.fieldFormatterService.formatField(this.condicion?.value, 1);
-      searchDataFiltered.edificio =  this.fieldFormatterService.formatField(this.edificio?.value, 2);
-      searchDataFiltered.piso = this.fieldFormatterService.formatField(this.piso?.value, 2);
-      searchDataFiltered.unidadPredial = this.fieldFormatterService.formatField(this.unidadPredial?.value, 4);
+    } else {
+      searchDataFiltered.dpto = this.fieldFormatterService.formatField(
+        this.dpto?.value,
+        2
+      );
+      searchDataFiltered.mpio = this.fieldFormatterService.formatField(
+        this.mpio?.value,
+        3
+      );
+      searchDataFiltered.zonas = this.fieldFormatterService.formatField(
+        this.zonas?.value,
+        2
+      );
+      searchDataFiltered.sectorb = this.fieldFormatterService.formatField(
+        this.sectorb?.value,
+        2
+      );
+      searchDataFiltered.comuna = this.fieldFormatterService.formatField(
+        this.comuna?.value,
+        2
+      );
+      searchDataFiltered.barrio = this.fieldFormatterService.formatField(
+        this.barrio?.value,
+        2
+      );
+      searchDataFiltered.manVer = this.fieldFormatterService.formatField(
+        this.manVer?.value,
+        4
+      );
+      searchDataFiltered.terreno = this.fieldFormatterService.formatField(
+        this.terreno?.value,
+        4
+      );
+      searchDataFiltered.condicion = this.fieldFormatterService.formatField(
+        this.condicion?.value,
+        1
+      );
+      searchDataFiltered.edificio = this.fieldFormatterService.formatField(
+        this.edificio?.value,
+        2
+      );
+      searchDataFiltered.piso = this.fieldFormatterService.formatField(
+        this.piso?.value,
+        2
+      );
+      searchDataFiltered.unidadPredial = this.fieldFormatterService.formatField(
+        this.unidadPredial?.value,
+        4
+      );
     }
-
 
     if (searchDataFiltered) {
       this.dialogRef.close(searchDataFiltered);
@@ -237,7 +324,8 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CERRAR', 'end'
+      'CERRAR',
+      'end'
     );
   }
 
@@ -255,30 +343,12 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.openSnackbar(
       'No es posible la búsqueda por dirección, datos no válidos',
-      'CERRAR', 'end'
+      'CERRAR',
+      'end'
     );
   }
 
-  public clearFormFields(value:any){
-    if(value?.tab?.textLabel === 'Selección Municipal'){
-      this.clearMultipleFields();
-      this.formatFieldValue();
-    }
-
-    if(value?.tab?.textLabel === 'Múltiplex Campos'){
-      this.clearMunicipalSelection();
-      this.formatFieldValue();
-    }
-
-    if(value?.tab?.textLabel === 'Número Predial Nacional'){
-      this.clearMunicipalSelection();
-      this.clearMultipleFields();
-
-
-    }
-  }
-
-  public clearMunicipalSelection(){
+  public clearMunicipalSelection() {
     this.department?.reset();
     this.municipality?.reset();
     this.zone?.reset();
@@ -288,10 +358,9 @@ export class FilterCertificateSearchComponent implements OnInit {
     this.neighborhood?.reset();
     this.sidewalk?.reset();
     this.block?.reset();
-
   }
 
-  public clearMultipleFields(){
+  public clearMultipleFields() {
     this.registration?.reset();
     this.domIndividualTypeNumber?.reset();
     this.firstName?.reset();
@@ -301,13 +370,9 @@ export class FilterCertificateSearchComponent implements OnInit {
     this.middleName?.reset();
     this.lastName?.reset();
     this.companyName?.reset();
-
-
   }
 
-
-
-  validateFilterSearchCadastral(): any {
+  validateFilterSearchCadastral(): SearchData {
     const searchData = this.form.value;
     if (searchData == null) {
       throw new Error(
@@ -317,95 +382,151 @@ export class FilterCertificateSearchComponent implements OnInit {
     return searchData;
   }
 
-  openSnackbar(msg: string, action: string, position: MatSnackBarHorizontalPosition) {
-    this.snackBar.open(
-      msg, action, { duration: 3000, horizontalPosition: position }
-    );
+  openSnackbar(
+    msg: string,
+    action: string,
+    position: MatSnackBarHorizontalPosition
+  ) {
+    this.snackBar.open(msg, action, {
+      duration: 3000,
+      horizontalPosition: position
+    });
   }
-
 
   searchMunicipalSelection() {
     const searchData = this.validateFilterSearchCadastral();
     const searchDataFiltered: SearchData = new SearchData(searchData);
-    searchDataFiltered.department = this._filterInformationCode(searchData.department, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
-    searchDataFiltered.municipality = this._filterInformationCode(searchData.municipality, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
-    searchDataFiltered.zone = this.captureCodeOfCodeNameAndID(searchData.zone, this.optionsZones);
-    searchDataFiltered.sector = this.captureCodeOfCodeNameAndID(searchData.sector, this.optionsSectors);
-    searchDataFiltered.community = this.captureCodeOfCodeNameAndID(searchData.community, this.optionsCommunities);
-    searchDataFiltered.neighborhood = this.captureCodeOfCodeNameAndID(searchData.neighborhood, this.optionsNeighborhoods);
-    searchDataFiltered.sidewalk = this.captureCodeOfCodeNameAndID(searchData.sidewalk, this.optionsSidewalks);
-    searchDataFiltered.block = this.captureCodeOfCodeNameAndID(searchData.block, this.optionsBlocks);
+    searchDataFiltered.department = this._filterInformationCode<Department>(
+      searchData.department!,
+      this.optionsDeparments,
+      NAME_CODENAME,
+      DIVPOLLVL_CODE
+    );
+    searchDataFiltered.municipality = this._filterInformationCode<Municipality>(
+      searchData.municipality!,
+      this.optionsMunicipalities,
+      NAME_CODENAME,
+      DIVPOLLVL2_CODE
+    );
+    searchDataFiltered.zone = this.captureCodeOfCodeNameAndID<Zone>(
+      searchData.zone!,
+      this.optionsZones
+    );
+    searchDataFiltered.sector = this.captureCodeOfCodeNameAndID<Sector>(
+      searchData.sector!,
+      this.optionsSectors
+    );
+    searchDataFiltered.community = this.captureCodeOfCodeNameAndID<Commune>(
+      searchData.community!,
+      this.optionsCommunities
+    );
+    searchDataFiltered.neighborhood = this.captureCodeOfCodeNameAndID<Neighborhood>(
+      searchData.neighborhood!,
+      this.optionsNeighborhoods
+    );
+    searchDataFiltered.sidewalk = this.captureCodeOfCodeNameAndID<Sidewalk>(
+      searchData.sidewalk!,
+      this.optionsSidewalks
+    );
+    searchDataFiltered.block = this.captureCodeOfCodeNameAndID<Block>(
+      searchData.block!,
+      this.optionsBlocks
+    );
 
-    if (searchDataFiltered.sidewalk !== null && searchDataFiltered.sidewalk !== undefined && searchDataFiltered.sidewalk.length > 10 ||
-      searchDataFiltered.block !== null && searchDataFiltered.block !== undefined && searchDataFiltered.block.length > 10) {
+    if (
+      (searchDataFiltered.sidewalk !== null &&
+        searchDataFiltered.sidewalk !== undefined &&
+        searchDataFiltered.sidewalk.length > 10) ||
+      (searchDataFiltered.block !== null &&
+        searchDataFiltered.block !== undefined &&
+        searchDataFiltered.block.length > 10)
+    ) {
       this.dialogRef.close(searchDataFiltered);
       return;
     }
 
     this.openSnackbar(
       'No es posible la búsqueda por selección de Municipio, datos no válidos o incompletos',
-      'CERRAR', 'end'
+      'CERRAR',
+      'end'
     );
   }
 
-
   loadDepartmentalInformation() {
-    this.territorialOrganizationService.getDataDeparments()
-      .subscribe({
-          next: (result: Department[]) => this.captureDepartmentInformation(result)
-        }
-      );
+    this.territorialOrganizationService.getDataDeparments().subscribe({
+      next: (result: Department[]) => this.captureDepartmentInformation(result)
+    });
   }
-  loadMunicipalitiesInformation(codeName: string, skipPreloadedValues: boolean | null) {
+  loadMunicipalitiesInformation(
+    codeName: string,
+    skipPreloadedValues: boolean | null
+  ) {
     if (codeName?.length <= 0) {
       return;
     }
     this._clearFormSelection(0);
-    const dpto = this._filterInformationCode(
-      codeName, this.optionsDeparments, NAME_CODENAME, DIVPOLLVL_CODE);
+    const dpto = this._filterInformationCode<Department>(
+      codeName,
+      this.optionsDeparments,
+      NAME_CODENAME,
+      DIVPOLLVL_CODE
+    );
     if (dpto == null || dpto?.length <= 0) {
       return;
     }
-    this.territorialOrganizationService.getDataMunicipalities(dpto)
-      .subscribe({
-          next: (result: Municipality[]) => this.captureMunicipalityInformation(result, skipPreloadedValues)
-        }
-      );
+    this.territorialOrganizationService.getDataMunicipalities(dpto).subscribe({
+      next: (result: Municipality[]) =>
+        this.captureMunicipalityInformation(result, skipPreloadedValues)
+    });
   }
   loadZonesInformation(codeName: string, skipPreloadedValues: boolean | null) {
     if (codeName?.length <= 0) {
       return;
     }
     this._clearFormSelection(1);
-    const deptoMpio = this._filterInformationCode(
-      codeName, this.optionsMunicipalities, NAME_CODENAME, DIVPOLLVL2_CODE);
+    const deptoMpio = this._filterInformationCode<Municipality>(
+      codeName,
+      this.optionsMunicipalities,
+      NAME_CODENAME,
+      DIVPOLLVL2_CODE
+    );
     if (deptoMpio == null || deptoMpio?.length <= 0) {
       return;
     }
-    this.territorialOrganizationService.getDataZones(deptoMpio)
-      .subscribe({
-          next: (result: Zone[]) => this.captureZoneInformation(result, skipPreloadedValues)
-        }
-      );
+    this.territorialOrganizationService.getDataZones(deptoMpio).subscribe({
+      next: (result: Zone[]) =>
+        this.captureZoneInformation(result, skipPreloadedValues)
+    });
   }
-  loadSectorsInformation(codeName: string, skipPreloadedValues: boolean | null) {
+  loadSectorsInformation(
+    codeName: string,
+    skipPreloadedValues: boolean | null
+  ) {
     if (codeName?.length <= 0) {
       return;
     }
     this._clearFormSelection(2);
-    const ccZonaPkey: string | null | undefined = this._filterInformationCode(codeName, this.optionsZones, 'codigoZona', 'id');
-    this.territorialOrganizationService.getDataSectors(ccZonaPkey)
-      .subscribe({
-          next: (result: Sector[]) => this.captureSectorInformation(result, skipPreloadedValues)
-        }
-      );
+    const ccZonaPkey: string | null | undefined = this._filterInformationCode<Zone>(
+      codeName,
+      this.optionsZones,
+      'codigoZona',
+      'id'
+    );
+    this.territorialOrganizationService.getDataSectors(ccZonaPkey).subscribe({
+      next: (result: Sector[]) =>
+        this.captureSectorInformation(result, skipPreloadedValues)
+    });
   }
-  loadCommunitiesInformation(codeName: string, skipPreloadedValues: boolean | null) {
+  loadCommunitiesInformation(
+    codeName: string,
+    skipPreloadedValues: boolean | null
+  ) {
     if (codeName?.length <= 0) {
       return;
     }
     this._clearFormSelection(3);
-    const sectorPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsSectors);
+    const sectorPkey: string | null | undefined =
+      this.captureCodeOfCodeNameAndID<Sector>(codeName, this.optionsSectors);
     const nationalPredialNumber: NationalPredialNumber = divideNpn(sectorPkey);
     if (!nationalPredialNumber.zone) {
       return;
@@ -416,49 +537,57 @@ export class FilterCertificateSearchComponent implements OnInit {
       return;
     }
 
-    this.territorialOrganizationService.getDataCommunes(sectorPkey)
-      .subscribe({
-          next: (result: Commune[]) => this.captureCommunitiesInformation(result, skipPreloadedValues)
-        }
-      );
+    this.territorialOrganizationService.getDataCommunes(sectorPkey).subscribe({
+      next: (result: Commune[]) =>
+        this.captureCommunitiesInformation(result, skipPreloadedValues)
+    });
   }
-  loadNeighborhoodsInformation(codeName: string, skipPreloadedValues: boolean | null) {
+  loadNeighborhoodsInformation(
+    codeName: string,
+    skipPreloadedValues: boolean | null
+  ) {
     if (codeName?.length <= 0) {
       return;
     }
     this._clearFormSelection(4);
-    const communityPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsCommunities);
-    this.territorialOrganizationService.getDataNeighborhoods(communityPkey)
+    const communityPkey: string | null | undefined =
+      this.captureCodeOfCodeNameAndID<Commune>(codeName, this.optionsCommunities);
+    this.territorialOrganizationService
+      .getDataNeighborhoods(communityPkey)
       .subscribe({
-          next: (result: Neighborhood[]) => this.captureNeighborhoodsInformation(result, skipPreloadedValues)
-        }
-      );
+        next: (result: Neighborhood[]) =>
+          this.captureNeighborhoodsInformation(result, skipPreloadedValues)
+      });
   }
-  loadSidewalksInformation(codeName: string, skipPreloadedValues: boolean | null) {
+  loadSidewalksInformation(
+    codeName: string,
+    skipPreloadedValues: boolean | null
+  ) {
     if (codeName?.length <= 0) {
       return;
     }
     this._clearFormSelection(5);
-    const sectorPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsSectors);
-    this.territorialOrganizationService.getDataSidewalks(sectorPkey)
-      .subscribe({
-          next: (result: Sidewalk[]) => this.captureSidewalksInformation(result, skipPreloadedValues)
-        }
-      );
+    const sectorPkey: string | null | undefined =
+      this.captureCodeOfCodeNameAndID<Sector>(codeName, this.optionsSectors);
+    this.territorialOrganizationService.getDataSidewalks(sectorPkey).subscribe({
+      next: (result: Sidewalk[]) =>
+        this.captureSidewalksInformation(result, skipPreloadedValues)
+    });
   }
   loadBlocksInformation(codeName: string, skipPreloadedValues: boolean | null) {
     if (codeName?.length <= 0) {
       return;
     }
     this._clearFormSelection(5);
-    const neighborhoodPkey: string | null | undefined = this.captureCodeOfCodeNameAndID(codeName, this.optionsNeighborhoods);
-    this.territorialOrganizationService.getDataBlocks(neighborhoodPkey)
+    const neighborhoodPkey: string | null | undefined =
+      this.captureCodeOfCodeNameAndID<Neighborhood>(codeName, this.optionsNeighborhoods);
+    this.territorialOrganizationService
+      .getDataBlocks(neighborhoodPkey)
       .subscribe({
-          next: (result: Block[]) => this.captureBlocksInformation(result, skipPreloadedValues)
-        }
-      );
+        next: (result: Block[]) =>
+          this.captureBlocksInformation(result, skipPreloadedValues)
+      });
   }
-
 
   captureDepartmentInformation(result: Department[]) {
     result = result.map((dpto: Department) => new Department(dpto));
@@ -466,37 +595,54 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     if (this.defaults?.department) {
       const listOptions: Department[] = this.optionsDeparments.filter(
-        (option: Department): boolean => option.divpolLvl1Code === this.defaults?.department);
+        (option: Department): boolean =>
+          option.divpolLvl1Code === this.defaults?.department
+      );
       if (listOptions?.length > 0) {
         this.form.get('department')?.patchValue(listOptions[0].codeName);
         this.loadMunicipalitiesInformation(listOptions[0].codeName, false);
       }
     }
 
-    this.filteredOptionsDepartments$ = this.form.get('department')?.valueChanges.pipe(
-      startWith(''),
-      map((value): any[] => this.optionsDeparments.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+    this.filteredOptionsDepartments$ = this.form
+      .get('department')
+      ?.valueChanges.pipe(
+        startWith(''),
+        map((value) =>
+          this.optionsDeparments.filter((option) =>
+            option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+          )
+        )
+      );
   }
-  captureMunicipalityInformation(result: Municipality[], skipPreloadedValues: boolean | null) {
+  captureMunicipalityInformation(
+    result: Municipality[],
+    skipPreloadedValues: boolean | null
+  ) {
     result = result.map((mncp: Municipality) => new Municipality(mncp));
     this.optionsMunicipalities = result;
 
     if (this.defaults?.municipality && !skipPreloadedValues) {
       const listOptions: Municipality[] = this.optionsMunicipalities.filter(
-        (option: Municipality): boolean => option.divpolLvl2Code === this.defaults?.municipality);
+        (option: Municipality): boolean =>
+          option.divpolLvl2Code === this.defaults?.municipality
+      );
       if (listOptions?.length > 0) {
         this.form.get('municipality')?.patchValue(listOptions[0].codeName);
         this.loadZonesInformation(listOptions[0].codeName, false);
       }
     }
 
-    this.filteredOptionsMunicipalities$ = this.form.get('municipality')?.valueChanges.pipe(
-      startWith(''),
-      map((value): any[] => this.optionsMunicipalities.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+    this.filteredOptionsMunicipalities$ = this.form
+      .get('municipality')
+      ?.valueChanges.pipe(
+        startWith(''),
+        map((value) =>
+          this.optionsMunicipalities.filter((option) =>
+            option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+          )
+        )
+      );
   }
   captureZoneInformation(result: Zone[], skipPreloadedValues: boolean | null) {
     result = result.map((dpto: Zone) => new Zone(dpto));
@@ -504,7 +650,8 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     if (this.defaults?.zone && !skipPreloadedValues) {
       const listOptions: Zone[] = this.optionsZones.filter(
-        (option: Zone): boolean => option.id === this.defaults?.zone);
+        (option: Zone): boolean => option.id === this.defaults?.zone
+      );
       if (listOptions?.length > 0) {
         this.form.get('zone')?.patchValue(listOptions[0].codeName);
         this.loadSectorsInformation(listOptions[0].codeName, false);
@@ -513,17 +660,24 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.filteredOptionsZones$ = this.form.get('zone')?.valueChanges.pipe(
       startWith(''),
-      map((value): any[] => this.optionsZones.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+      map((value) =>
+        this.optionsZones.filter((option) =>
+          option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+        )
+      )
+    );
   }
-  captureSectorInformation(result: Sector[], skipPreloadedValues: boolean | null) {
+  captureSectorInformation(
+    result: Sector[],
+    skipPreloadedValues: boolean | null
+  ) {
     result = result.map((dpto: Sector) => new Sector(dpto));
     this.optionsSectors = result;
 
     if (this.defaults?.sector && !skipPreloadedValues) {
       const listOptions: Sector[] = this.optionsSectors.filter(
-        (option: Sector): boolean => option.id === this.defaults?.sector);
+        (option: Sector): boolean => option.id === this.defaults?.sector
+      );
       if (listOptions?.length > 0) {
         this.form.get('sector')?.patchValue(listOptions[0].codeName);
         this.loadCommunitiesInformation(listOptions[0].codeName, false);
@@ -532,73 +686,108 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.filteredOptionsSectors$ = this.form.get('sector')?.valueChanges.pipe(
       startWith(''),
-      map((value): any[] => this.optionsSectors.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+      map((value) =>
+        this.optionsSectors.filter((option) =>
+          option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+        )
+      )
+    );
   }
-  captureCommunitiesInformation(result: Commune[], skipPreloadedValues: boolean | null) {
+  captureCommunitiesInformation(
+    result: Commune[],
+    skipPreloadedValues: boolean | null
+  ) {
     result = result.map((dpto: Commune) => new Commune(dpto));
     this.optionsCommunities = result;
 
     if (this.defaults?.community && !skipPreloadedValues) {
       const listOptions: Commune[] = this.optionsCommunities.filter(
-        (option: Commune): boolean => option.id === this.defaults?.community);
+        (option: Commune): boolean => option.id === this.defaults?.community
+      );
       if (listOptions?.length > 0) {
         this.form.get('community')?.patchValue(listOptions[0].codeName);
         this.loadNeighborhoodsInformation(listOptions[0].codeName, false);
       }
     }
 
-    this.filteredOptionsCommunities$ = this.form.get('community')?.valueChanges.pipe(
-      startWith(''),
-      map((value): any[] => this.optionsCommunities.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+    this.filteredOptionsCommunities$ = this.form
+      .get('community')
+      ?.valueChanges.pipe(
+        startWith(''),
+        map((value) =>
+          this.optionsCommunities.filter((option) =>
+            option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+          )
+        )
+      );
   }
-  captureNeighborhoodsInformation(result: Neighborhood[], skipPreloadedValues: boolean | null) {
+  captureNeighborhoodsInformation(
+    result: Neighborhood[],
+    skipPreloadedValues: boolean | null
+  ) {
     result = result.map((dpto: Neighborhood) => new Neighborhood(dpto));
     this.optionsNeighborhoods = result;
 
     if (this.defaults?.neighborhood && !skipPreloadedValues) {
       const listOptions: Neighborhood[] = this.optionsNeighborhoods.filter(
-        (option: Neighborhood): boolean => option.id === this.defaults?.neighborhood);
+        (option: Neighborhood): boolean =>
+          option.id === this.defaults?.neighborhood
+      );
       if (listOptions?.length > 0) {
         this.form.get('neighborhood')?.patchValue(listOptions[0].codeName);
         this.loadBlocksInformation(listOptions[0].codeName, false);
       }
     }
 
-    this.filteredOptionsNeighborhoods$ = this.form.get('neighborhood')?.valueChanges.pipe(
-      startWith(''),
-      map((value): any[] => this.optionsNeighborhoods.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+    this.filteredOptionsNeighborhoods$ = this.form
+      .get('neighborhood')
+      ?.valueChanges.pipe(
+        startWith(''),
+        map((value) =>
+          this.optionsNeighborhoods.filter((option) =>
+            option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+          )
+        )
+      );
   }
-  captureSidewalksInformation(result: Sidewalk[], skipPreloadedValues: boolean | null) {
+  captureSidewalksInformation(
+    result: Sidewalk[],
+    skipPreloadedValues: boolean | null
+  ) {
     result = result.map((sd: Sidewalk) => new Sidewalk(sd));
     this.optionsSidewalks = result;
 
     if (this.defaults?.sidewalk && !skipPreloadedValues) {
       const listOptions: Sidewalk[] = this.optionsSidewalks.filter(
-        (option: Sidewalk): boolean => option.id === this.defaults?.sidewalk);
+        (option: Sidewalk): boolean => option.id === this.defaults?.sidewalk
+      );
       if (listOptions?.length > 0) {
         this.form.get('sidewalk')?.patchValue(listOptions[0].codeName);
       }
     }
 
-    this.filteredOptionsSidewalk$ = this.form.get('sidewalk')?.valueChanges.pipe(
-      startWith(''),
-      map((value): any[] => this.optionsSidewalks.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+    this.filteredOptionsSidewalk$ = this.form
+      .get('sidewalk')
+      ?.valueChanges.pipe(
+        startWith(''),
+        map((value) =>
+          this.optionsSidewalks.filter((option) =>
+            option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+          )
+        )
+      );
   }
-  captureBlocksInformation(result: Block[], skipPreloadedValues: boolean | null) {
+  captureBlocksInformation(
+    result: Block[],
+    skipPreloadedValues: boolean | null
+  ) {
     result = result.map((sd: Block) => new Block(sd));
     this.optionsBlocks = result;
 
     if (this.defaults?.block && !skipPreloadedValues) {
       const listOptions: Block[] = this.optionsBlocks.filter(
-        (option: Block): boolean => option.id === this.defaults?.block);
+        (option: Block): boolean => option.id === this.defaults?.block
+      );
       if (listOptions?.length > 0) {
         this.form.get('block')?.patchValue(listOptions[0].codeName);
       }
@@ -606,19 +795,37 @@ export class FilterCertificateSearchComponent implements OnInit {
 
     this.filteredOptionsBlocks$ = this.form.get('block')?.valueChanges.pipe(
       startWith(''),
-      map((value): any[] => this.optionsBlocks.filter(
-        (option: any) => option.codeName?.toLowerCase().includes(value.toLowerCase() || ''))
-      ));
+      map((value) =>
+        this.optionsBlocks.filter((option) =>
+          option.codeName?.toLowerCase().includes(value.toLowerCase() || '')
+        )
+      )
+    );
   }
 
-
-  private _filterInformationCode(code: string, options: any[], keyValue: string, key: string): string | undefined | null {
-    const listOptions: any[] = options
-      .filter((option: any): boolean => option[keyValue] === code);
-    return listOptions?.length > 0 && listOptions[0][key] ? listOptions[0][key] : null;
+  private _filterInformationCode<T>(
+    code: string,
+    options: T[],
+    keyValue: keyof T,
+    key: keyof T
+  ): string | undefined | null {
+    const listOptions = options.filter(
+      (option): boolean => option[keyValue] === code
+    );
+    return listOptions?.length > 0 && listOptions[0][key]
+      ? listOptions[0][key] as string
+      : null;
   }
-  private captureCodeOfCodeNameAndID(codeName: string, options: any[]): string | null | undefined {
-    return this._filterInformationCode(codeName, options, NAME_CODENAME, CONSTANT_NAME_ID);
+  private captureCodeOfCodeNameAndID<T>(
+    codeName: string,
+    options: T[]
+  ): string | null | undefined {
+    return this._filterInformationCode(
+      codeName,
+      options,
+      NAME_CODENAME as keyof T,
+      CONSTANT_NAME_ID as keyof T
+    );
   }
   private _clearFormSelection(code: number) {
     if (code === 0) {
@@ -659,7 +866,8 @@ export class FilterCertificateSearchComponent implements OnInit {
   }
 
   private _clearListObject0() {
-    if (this.optionsMunicipalities?.length > 0) this.captureMunicipalityInformation([], null);
+    if (this.optionsMunicipalities?.length > 0)
+      this.captureMunicipalityInformation([], null);
     this._clearListObject1();
   }
   private _clearListObject1() {
@@ -667,147 +875,147 @@ export class FilterCertificateSearchComponent implements OnInit {
     this._clearListObject2();
   }
   private _clearListObject2() {
-    if (this.optionsSectors?.length > 0) this.captureSectorInformation([], null);
+    if (this.optionsSectors?.length > 0)
+      this.captureSectorInformation([], null);
     this._clearListObject3();
   }
   private _clearListObject3() {
-    if (this.optionsCommunities?.length > 0) this.captureCommunitiesInformation([], null);
+    if (this.optionsCommunities?.length > 0)
+      this.captureCommunitiesInformation([], null);
     this._clearListObject4();
   }
   private _clearListObject4() {
-    if (this.optionsNeighborhoods?.length > 0) this.captureNeighborhoodsInformation([], null);
+    if (this.optionsNeighborhoods?.length > 0)
+      this.captureNeighborhoodsInformation([], null);
     this._clearListObject5();
   }
   private _clearListObject5() {
-    if (this.optionsSidewalks?.length > 0) this.captureSidewalksInformation([], null);
+    if (this.optionsSidewalks?.length > 0)
+      this.captureSidewalksInformation([], null);
     if (this.optionsBlocks?.length > 0) this.captureBlocksInformation([], null);
   }
 
-// formulario nuevo
+  // formulario nuevo
 
+  get dpto() {
+    return this.form.get('dpto');
+  }
 
-get dpto(){
-  return this.form.get('dpto');
-}
+  get mpio() {
+    return this.form.get('mpio');
+  }
 
-get mpio(){
-  return this.form.get('mpio');
-}
+  get zonas() {
+    return this.form.get('zonas');
+  }
 
-get zonas(){
-  return this.form.get('zonas');
-}
+  get sectorb() {
+    return this.form.get('sectorb');
+  }
 
-get sectorb(){
-  return this.form.get('sectorb');
-}
+  get comuna() {
+    return this.form.get('comuna');
+  }
 
-get comuna(){
-  return this.form.get('comuna');
-}
+  get barrio() {
+    return this.form.get('barrio');
+  }
 
-get barrio(){
-  return this.form.get('barrio');
-}
+  get terreno() {
+    return this.form.get('terreno');
+  }
 
-get terreno(){
-  return this.form.get('terreno');
-}
+  get condicion() {
+    return this.form.get('condicion');
+  }
 
-get condicion(){
-  return this.form.get('condicion');
-}
+  get edificio() {
+    return this.form.get('edificio');
+  }
 
-get edificio(){
-  return this.form.get('edificio');
-}
+  get piso() {
+    return this.form.get('piso');
+  }
 
-get piso(){
-  return this.form.get('piso');
-}
+  get unidadPredial() {
+    return this.form.get('unidadPredial');
+  }
 
-get unidadPredial(){
-  return this.form.get('unidadPredial');
-}
+  //
 
-//
-
-  get registration(){
+  get registration() {
     return this.form.get('registration');
   }
 
-  get domIndividualTypeNumber(){
+  get domIndividualTypeNumber() {
     return this.form.get('domIndividualTypeNumber');
   }
 
-  get firstName(){
+  get firstName() {
     return this.form.get('firstName');
   }
 
-  get otherLastName(){
+  get otherLastName() {
     return this.form.get('otherLastName');
   }
 
-  get textAddress(){
+  get textAddress() {
     return this.form.get('textAddress');
   }
 
-  get number(){
+  get number() {
     return this.form.get('number');
   }
 
-  get middleName(){
+  get middleName() {
     return this.form.get('middleName');
   }
 
-  get lastName(){
+  get lastName() {
     return this.form.get('lastName');
   }
 
-  get companyName(){
+  get companyName() {
     return this.form.get('companyName');
   }
 
-  get department(){
+  get department() {
     return this.form.get('department');
   }
 
-  get municipality(){
+  get municipality() {
     return this.form.get('municipality');
   }
 
-  get zone(){
+  get zone() {
     return this.form.get('zone');
   }
 
-  get manVer(){
+  get manVer() {
     return this.form.get('manVer');
   }
 
-  get sector(){
+  get sector() {
     return this.form.get('sector');
   }
 
-  get community(){
+  get community() {
     return this.form.get('community');
   }
 
-  get neighborhood(){
+  get neighborhood() {
     return this.form.get('neighborhood');
   }
 
-  get sidewalk(){
+  get sidewalk() {
     return this.form.get('sidewalk');
   }
 
-
-  get block(){
+  get block() {
     return this.form.get('block');
   }
 
-  get codigoCompleto(){
+  get codigoCompleto() {
     return this.form.get('codigoCompleto');
   }
-
-
 }

@@ -4,7 +4,9 @@
     mat-icon-button
     mat-dialog-close
     type="button"
-  ><mat-icon svgIcon="mat:close"></mat-icon></button>
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
 </div>
 <mat-divider class="border-slate-400"></mat-divider>
 <mat-dialog-content>
@@ -18,28 +20,29 @@
   >
     <!-- Text Columns -->
     @for (column of columns; track column.property) {
-      <!-- Text -->
-      <ng-container
-        *ngIf="column.visible && column.type === 'text'"
-        [matColumnDef]="column.property"
-      >
-        <th
-          *matHeaderCellDef
-          [ngClass]="column.cssClassesHead"
-          class="text-center"
-          mat-header-cell
-          mat-sort-header
+      @if (column.visible && column.type === "text") {
+        <!-- Text -->
+        <ng-container
+          [matColumnDef]="column.property"
         >
-          {{ column.label }}
-        </th>
-        <td
-          *matCellDef="let row"
-          [ngClass]="column.cssClasses"
-          mat-cell
-        >
-          {{ row[column.property] }}
-        </td>
-      </ng-container>
+          <th
+            *matHeaderCellDef
+            [ngClass]="column.cssClassesHead"
+            class="text-center"
+            mat-header-cell
+            mat-sort-header
+          >
+            {{ column.label }}
+          </th>
+          <td
+            *matCellDef="let row"
+            [ngClass]="column.cssClasses"
+            mat-cell
+          >
+            {{ row[column.property] }}
+          </td>
+        </ng-container>
+      }
     }
 
     <tr

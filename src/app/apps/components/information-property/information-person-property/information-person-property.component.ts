@@ -1,7 +1,16 @@
 // Angular framework
-import { ChangeDetectorRef, Component, Inject, SimpleChanges, ViewChild, OnInit, AfterViewInit, OnChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  SimpleChanges,
+  ViewChild,
+  OnInit,
+  AfterViewInit,
+  OnChanges
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { BehaviorSubject, filter, Observable } from 'rxjs';
 // Vex
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -14,14 +23,21 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 // Material
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorModule,
+  PageEvent
+} from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 // Custom
-import { DataPerson, DialogPersonData } from 'src/app/apps/interfaces/information-property/snr-person-info';
+import {
+  DataPerson,
+  DialogPersonData
+} from 'src/app/apps/interfaces/information-property/snr-person-info';
 import {
   PAGE,
   PAGE_OPTION_5_7_10,
@@ -49,8 +65,6 @@ import { MatDividerModule } from '@angular/material/divider';
   imports: [
     FormsModule,
     NgClass,
-    NgForOf,
-    NgIf,
     ReactiveFormsModule,
     // Vex
     // Material
@@ -63,13 +77,15 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSortModule,
     MatTableModule,
     MatTabsModule,
-    MatTooltipModule,
+    MatTooltipModule
     // Custom
   ],
   templateUrl: './information-person-property.component.html',
   styleUrl: './information-person-property.component.scss'
 })
-export class InformationPersonPropertyComponent implements OnInit, AfterViewInit, OnChanges {
+export class InformationPersonPropertyComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   /* =========================== ATRIBUTES =========================== */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
@@ -134,7 +150,6 @@ export class InformationPersonPropertyComponent implements OnInit, AfterViewInit
 
   /* -------------------------- Meth. HTML -------------------------- */
 
-
   get visibleColumns() {
     return this.columns
       .filter((column) => column.visible)
@@ -151,9 +166,6 @@ export class InformationPersonPropertyComponent implements OnInit, AfterViewInit
 
   /* ------------------------- Meth. Common ------------------------- */
 
-
-
-
   searchBasicInformationPropertyFolio(): void {
     if (!this.data.schema || !this.data.baunitId) {
       return;
@@ -165,7 +177,7 @@ export class InformationPersonPropertyComponent implements OnInit, AfterViewInit
     );
   }
 
-  captureInformationSubscribeError(err: any): void {
+  captureInformationSubscribeError(): void {
     this.dataSource.data = [];
   }
 
@@ -179,13 +191,12 @@ export class InformationPersonPropertyComponent implements OnInit, AfterViewInit
 
   /* ------------------------ Meth. Services ------------------------ */
   getDataSourcePerson(orip: string, fmi: string, anotacion: string) {
-    this.snrService.getPersonByOripAndFmi(orip, fmi, anotacion).subscribe({
-      next: (response) => {
+    this.snrService
+      .getPersonByOripAndFmi(orip, fmi, anotacion)
+      .subscribe((response) => {
         this.allPersonSnr = response;
         this.subject$.next(this.allPersonSnr.reverse());
         this.cdr.markForCheck();
-      },
-      error: () => {}
-    });
+      });
   }
 }
