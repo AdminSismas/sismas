@@ -161,7 +161,6 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
   }
 
   validateExecuteTypeProcess(typeProcess: TypeProcessParticipant) {
-    console.log({ typeProcess });
     if (!typeProcess) {
       return;
     }

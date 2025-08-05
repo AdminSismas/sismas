@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, signal } from '@angular/core';
+import { Component, effect, Inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -26,6 +26,7 @@ import { getRandomInt } from '../../../../../../../apps/utils/general';
 import {
   CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED,
   CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED,
+  MY_DATE_FORMATS,
   NAME_NO_DISPONIBLE
 } from '../../../../../../../apps/constants/general/constants';
 import { DatePipe, TitleCasePipe } from '@angular/common';
@@ -39,6 +40,8 @@ import { ProcessParticipantTableMenu } from '../../../../../../../apps/interface
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { InfoContact } from '../../../../../../../apps/interfaces/information-property/info-contact';
 import { PeopleService } from '../../../../../../../apps/services/users/people.service';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 
 @Component({
   selector: 'vex-add-citation-notice',
@@ -63,14 +66,18 @@ import { PeopleService } from '../../../../../../../apps/services/users/people.s
     MatSlideToggle
   ],
   templateUrl: './add-citation-notice.component.html',
-  styleUrl: './add-citation-notice.component.scss'
+  styleUrl: './add-citation-notice.component.scss',
+  providers: [
+    provideMomentDateAdapter(),
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class AddCitationNoticeComponent implements OnInit {
   labelCited = 'Datos de citacion';
   labelNotice = 'Datos de notificacion';
   id: string = getRandomInt(5258445) + 'AddCitationNoticeComponent2555444';
-  maxDate: Date = new Date(); // Fecha máxima permitida (hoy)
-  minDate: Date | null = null; // Fecha minima, fecha de la radicacion
+  maxDate = signal<Date>(new Date()); // Fecha máxima permitida (hoy)
+  minDate = signal<Date>(new Date(0)); // Fecha minima, fecha de la radicacion
   typeCategory = signal<ProcessParticipantTableMenu['id']>('citation');
 
   executionId!: string;
@@ -123,9 +130,12 @@ export class AddCitationNoticeComponent implements OnInit {
     private readonly procedureService: ProceduresService,
     private readonly participantsService: ParticipantsService,
     private peopleService: PeopleService
-  ) {}
+  ) {
+    effect(() => console.log(this.minDate()));
+  }
 
   ngOnInit() {
+    console.log(this.minDate());
     if (
       this.processParticipant == null ||
       this.processParticipant.participationId == null
@@ -168,14 +178,14 @@ export class AddCitationNoticeComponent implements OnInit {
         this.procedure = result;
         if (this.typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED) {
           if (result.dueDate) {
-            this.minDate = new Date(result.dueDate!);
+            this.minDate.set(new Date(result.beginAt!));
           }
         } else if (
           this.processParticipant?.viaGubernativa?.citationDate &&
           this.typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED
         ) {
-          this.minDate = new Date(
-            this.processParticipant?.viaGubernativa?.citationDate
+          this.minDate.set(
+            new Date(this.processParticipant?.viaGubernativa?.citationDate)
           );
         }
         if (

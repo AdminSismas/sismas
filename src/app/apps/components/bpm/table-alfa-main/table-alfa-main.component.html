@@ -230,7 +230,7 @@
       </button>
     }
 
-    @if (mode === 1 && row["operationType"] !== "CREATE") {
+    @if ((mode === 1 || mode === 3) && row["operationType"] !== "CREATE") {
       <button
         (click)="changeTemporaryStateBeaUnitHead(row)"
         mat-menu-item

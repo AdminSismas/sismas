@@ -7,7 +7,7 @@ export class ProceduresCollection {
     processName?: string;
     bpmProcessCategory?: string;
     bpmPriority?: number;
-    begindAt?: string;
+    beginAt?: string;
     finishAt?: string;
     lastUpdateBy?: string;
     lastUpdateAt?: string;
@@ -22,7 +22,7 @@ export class ProceduresCollection {
         this.processName = processName;
         this.bpmProcessCategory = bpmProcessCategory;
         this.bpmPriority = bpmPriority;
-        this.begindAt = begindAt;
+        this.beginAt = begindAt;
         this.finishAt = finishAt;
         this.lastUpdateBy = lastUpdateBy;
         this.lastUpdateAt = lastUpdateAt;
