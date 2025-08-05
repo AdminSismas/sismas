@@ -41,7 +41,6 @@ import { environment } from '../../../../../environments/environments';
 import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowErrorValidateAlfaMainComponent } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import {
   BpmProcessService,
   PermissionVailable
@@ -407,20 +406,16 @@ export class BmpCoreComponent implements OnInit {
   }
 
   executeBpmNextService(answer: boolean) {
-    this.bpmCoreService.getNextOperation(this.executionId, answer).subscribe({
-      error: (error: HttpErrorResponse) =>
-        this.captureInformationSubscribeError(error),
-      next: (result: ProTaskE) => this.captureInformationBpmCore(result)
-    });
+    this.bpmCoreService
+      .getNextOperation(this.executionId, answer)
+      .subscribe((result: ProTaskE) => this.captureInformationBpmCore(result));
   }
 
   previewBpmCore() {
     this.loadingServiceService.activateLoading(true);
-    this.bpmCoreService.getPreviewOperation(this.executionId).subscribe({
-      error: (error: HttpErrorResponse) =>
-        this.captureInformationSubscribeError(error),
-      next: (result: ProTaskE) => this.captureInformationBpmCore(result)
-    });
+    this.bpmCoreService
+      .getPreviewOperation(this.executionId)
+      .subscribe((result: ProTaskE) => this.captureInformationBpmCore(result));
   }
 
   captureInformationBpmCore(result: ProTaskE) {
@@ -460,26 +455,6 @@ export class BmpCoreComponent implements OnInit {
         this.refreshComponentsDynamic(result);
       }
     });
-  }
-
-  captureInformationSubscribeError(error: HttpErrorResponse): void {
-    this.isAcceptLoading.set(false);
-    if (error.status === 400) {
-      this.loadingServiceService.activateLoading(false);
-      Swal.fire({
-        text: error.error,
-        showConfirmButton: true,
-        timer: 10000
-      }).then(() => {
-        this.router.navigate([environment.myWork_tasksPanel]);
-      });
-      return;
-    }
-    this.getAlertError(
-      'Error ejecutando servicio de continuar flujo Bpm o retroceder, no es posible continuar',
-      3000
-    );
-    return;
   }
 
   createObjectComponent(

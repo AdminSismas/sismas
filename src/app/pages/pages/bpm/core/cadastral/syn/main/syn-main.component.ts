@@ -19,6 +19,7 @@ import Swal from 'sweetalert2';
 })
 export class SynMainComponent {
   @Input() public executionId = '';
+  @Input() private mode = 1;
   @Input({ required: true }) public resources: string[] = [];
 
   loading = false;
