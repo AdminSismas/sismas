@@ -133,7 +133,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
     const { number, domIndividualTypeNumber } = this.data.individual;
 
     this.peopleService
-      .getPeopleTypeNumber({
+      .getPersonByDocumentNumber({
         number: number,
         individualTypeNumber: domIndividualTypeNumber
       })

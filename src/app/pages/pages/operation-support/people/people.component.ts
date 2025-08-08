@@ -37,14 +37,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 
-import { CreatePeopleComponent } from './create-people/create-people.component';
-
 // imports from service people
 import { PeopleService } from '../../../../apps/services/users/people.service';
 import {
   MODAL_SMALL_LARGE,
   MODIFY_PEOPLE,
   PAGE,
+  PAGE_OPTION_10_20_50_100,
+  PAGE_OPTION_UNIQUE,
   PEOPLE_TABLE_COLUMNS
 } from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
@@ -52,6 +52,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import Swal from 'sweetalert2';
+import { UpdateParticipantComponent } from '../../bpm/core/citation-and-notice/components/update-participant/update-participant.component';
 
 @Component({
   selector: 'vex-people',
@@ -107,8 +108,8 @@ export class PeopleComponent implements OnInit {
 
   // indicativos de la paginación
   page: number = PAGE;
-  pageSize = 5;
-  pageSizeOptions: number[] = [5, 10, 20, 50];
+  pageSize = PAGE_OPTION_UNIQUE;
+  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
   totalElements = 0;
   dataSource!: MatTableDataSource<People>;
   selection = new SelectionModel<People>(true, []);
@@ -195,11 +196,11 @@ export class PeopleComponent implements OnInit {
     if (!this.availableRoles) return;
 
     this.dialog
-      .open(CreatePeopleComponent, {
+      .open(UpdateParticipantComponent, {
         ...MODAL_SMALL_LARGE,
         disableClose: true,
         data: {
-          mode: 'create'
+          mode: 'peopleCreate'
         }
       })
       .afterClosed()
@@ -215,13 +216,15 @@ export class PeopleComponent implements OnInit {
   updateCustomer(customer: People) {
     if (!this.availableRoles) return;
 
-    this.dialog
-      .open(CreatePeopleComponent, {
+    this.peopleService.getContactByIndividualId(customer.individualId).subscribe((res) => {
+      this.dialog
+      .open(UpdateParticipantComponent, {
         ...MODAL_SMALL_LARGE,
         disableClose: true,
         data: {
           ...customer,
-          mode: 'update'
+          contact: res,
+          mode: 'peopleUpdate'
         }
       })
       .afterClosed()
@@ -235,6 +238,7 @@ export class PeopleComponent implements OnInit {
           this.subject$.next(this.customers);
         }
       });
+    });
   }
 
   refreshData() {

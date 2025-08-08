@@ -82,7 +82,7 @@ export class CreateUsersComponent implements OnInit {
       return;
     }
     const { number, individualTypeNumber } = this.searchForm!.value;
-    this.peopleService.getPeopleTypeNumber({ number, individualTypeNumber })
+    this.peopleService.getPersonByDocumentNumber({ number, individualTypeNumber })
       .subscribe({
         next: (result: InfoPerson) => {
           this.individualValidator(result.individualId)

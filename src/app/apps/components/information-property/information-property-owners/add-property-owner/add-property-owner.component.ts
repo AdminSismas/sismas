@@ -100,7 +100,7 @@ export class AddPropertyOwnerComponent implements OnInit {
       number: this.form.value.number,
       individualTypeNumber: this.form.value.domIndividualTypeNumber
     };
-    this.peopleService.getPeopleTypeNumber(params)
+    this.peopleService.getPersonByDocumentNumber(params)
       .subscribe({
         next: (res: InfoPerson) => {
         this.customer = res;

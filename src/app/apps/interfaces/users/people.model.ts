@@ -1,21 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TypeOperationPeople } from "../general/content-info";
 
 export class People {
-  id: number;
-  individualId: number;
-  imageSrc: string;
+  companyName: string;
+  createdAt: string;
+  createdBy: string;
+  domIndividualEthnicGroup: string;
+  domIndividualSex: string;
+  domIndividualType: string;
+  domIndividualTypeNumber: string;
   firstName: string;
   fullName: string;
-  middleName: string;
+  id: number;
+  imageSrc: string;
+  individualId: number;
+  hash: string;
   lastName: string;
-  labels: any;
-  domIndividualType: any;
+  middleName: string;
   number: any;
   otherLastName: string;
-  companyName: string;
-  domIndividualSex: string;
-  domIndividualTypeNumber: string;
-  domIndividualEthnicGroup: string;
+  updatedAt: string;
+  updatedBy: string;
 
   constructor(customer: any) {
     this.middleName = customer.middleName;
@@ -32,6 +37,11 @@ export class People {
     this.domIndividualSex = customer.domIndividualSex;
     this.domIndividualTypeNumber = customer.domIndividualTypeNumber;
     this.domIndividualEthnicGroup = customer.domIndividualEthnicGroup;
+    this.createdAt = customer.createdAt;
+    this.createdBy = customer.createdBy;
+    this.updatedAt = customer.updatedAt;
+    this.updatedBy = customer.updatedBy;
+    this.hash = customer.hash;
   }
 }
 

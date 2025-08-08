@@ -200,7 +200,7 @@ export class CreatePeopleComponent implements OnInit {
 
   sendCreatePeople() {
     this.menssage.status = false;
-    const body = { ...this.form.value, number: this.form.get('number')?.value };
+    const body = { ...this.form.value, number: this.form.get('number')!.value } as People;
 
     this.peopleServcie.createPeople(body).subscribe({
       next: () => {
@@ -256,7 +256,7 @@ export class CreatePeopleComponent implements OnInit {
       size: this.size
     };
 
-    this.peopleServcie.getPeopleTypeNumber(obj).subscribe({
+    this.peopleServcie.getPersonByDocumentNumber(obj).subscribe({
       error: (error: HttpErrorResponse) => {
         if (error.status == HttpStatusCode.NotFound) {
           if (createPeople) {
@@ -343,7 +343,7 @@ export class CreatePeopleComponent implements OnInit {
     this.menssage.status = false;
     people.number = this.defaults.number;
     people.domIndividualType = this.defaults.domIndividualType;
-    this.peopleServcie.userEdit(individualId.toString(), people).subscribe({
+    this.peopleServcie.editPerson(individualId.toString(), people).subscribe({
       next: (response) => {
         Swal.fire({
           text: 'Persona actualizada',

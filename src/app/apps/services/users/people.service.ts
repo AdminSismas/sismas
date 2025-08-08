@@ -9,10 +9,11 @@ import {
 } from '@angular/common/http';
 import { environment as envi } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
 import { InfoPerson } from '../../interfaces/information-property/info-person';
 import { InfoContact } from '../../interfaces/information-property/info-contact';
+import { People } from '../../interfaces/users/people.model';
 
 @Injectable({
   providedIn: 'root'
@@ -46,12 +47,12 @@ export class PeopleService {
     return this.http.get<InformationPegeable>(url, { params });
   }
 
-  getPeopleTypeNumber(params: any): Observable<InfoPerson> {
+  getPersonByDocumentNumber(params: Partial<InfoPerson> & { individualTypeNumber?: string }): Observable<InfoPerson> {
     let paramsR: HttpParams = new HttpParams();
-    paramsR = paramsR.append('number', params.number);
+    paramsR = paramsR.append('number', params.number ?? '');
     paramsR = paramsR.append(
       'individualTypeNumber',
-      params.individualTypeNumber
+      params.individualTypeNumber ?? params.domIndividualTypeNumber ?? ''
     );
     return this.getData(
       `${this.url_basic}${envi.individual.value}${envi.individual.findByNumber}`,
@@ -59,19 +60,19 @@ export class PeopleService {
     );
   }
 
-  getPeopleNumber(params: any) {
-    const urlP = `${this.url_basic}${envi.individual.value}/${params.number}`;
-    return this.getDataFetch(urlP);
+  getPersonByIndividualId(params: InfoPerson) {
+    const urlP = `${this.url_basic}${envi.individual.value}/${params.individualId}`;
+    return this.getDataFetch<People>(urlP);
   }
 
-  userEdit(id: string, body: any): Observable<InfoPerson> {
+  editPerson(id: string, body: any): Observable<People> {
     return this.requestsService.sendRequestsUpdatePutBody(
       `${envi.url}:${envi.port}${envi.individual.value}/${id}?baunitId=TESTS`,
       body
     );
   }
 
-  createPeople(body: any) {
+  createPeople(body: People) {
     return this.fetchBody(
       `${envi.url}:${envi.port}${envi.individual.value}`,
       body
@@ -85,8 +86,7 @@ export class PeopleService {
 
   getContactByIndividualId(individualId: number): Observable<InfoContact> {
     return this.requestsService
-      .sendRequestsFetchGet(`${this.url_basic}${envi.contact}/${individualId}`)
-      .pipe(catchError((error) => this.errorNotFoundContact(error)));
+      .sendRequestsFetchGet(`${this.url_basic}${envi.contact}/${individualId}`);
   }
 
   updateContact(
@@ -97,24 +97,25 @@ export class PeopleService {
       .sendRequestsUpdatePutBody(
         `${this.url_basic}${envi.contact}/${individualId}`,
         obj
-      )
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      );
+  }
+
+  createContact(body: Partial<InfoContact>) {
+    const url = `${this.url_basic}${envi.contact}`;
+
+    return this.requestsService.sendRequestsFetchPostBody(url, body);
   }
 
   private getData(url: string, params: any): Observable<InfoPerson> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });
   }
 
-  private getDataFetch(url: string): Observable<InformationPegeable> {
+  private getDataFetch<T>(url: string): Observable<T> {
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
-  private fetchBody(url: any, body: any): Observable<InformationPegeable> {
+  private fetchBody(url: any, body: any): Observable<People> {
     return this.requestsService.sendRequestsFetchPostBody(url, body);
-  }
-
-  private updateBody(url: any, body: any): Observable<InformationPegeable> {
-    return this.requestsService.sendRequestsUpdatePutBody(url, body);
   }
 
   private deleteBody(url: any): Observable<InformationPegeable> {
