@@ -1,7 +1,5 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { Operation } from '../../interfaces/bpm/operation';
 import { BaUnitHeadPercentage } from '../../interfaces/information-property/baunit-head-percentage.model';
-import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
 
 
 export const TABLE_COLUMN_UNITS_TABLE_COLUMNS: TableColumn<BaUnitHeadPercentage>[] = [
@@ -61,6 +59,13 @@ export const MODIFYCATION_UNITS_TABLE_COLUMNS: TableColumn<BaUnitHeadPercentage>
     label: '',
     property: 'operationType',
     type: 'operationType',
+    visible: true,
+    cssClasses: []
+  },
+  {
+    label: 'Ficha',
+    property: 'baunitIdE',
+    type: 'text',
     visible: true,
     cssClasses: []
   },

@@ -43,7 +43,6 @@
             mat-raised-button
             color="accent"
             (click)="onAssignZones()"
-
           >
             <mat-icon svgIcon="mat:assignment"></mat-icon>
             Asignar zonas
@@ -92,26 +91,28 @@
               mat-cell
               class="px-3"
             >
-              @if (row["operationType"] === "CREATE") {
-                <div
-                  class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-green-600"
-                >
-                  Creado
-                </div>
-              }
-              @if (row["operationType"] === "UPDATE") {
-                <div
-                  class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-primary-600"
-                >
-                  Agregado
-                </div>
-              }
-              @if (row["operationType"] === "DELETE") {
-                <div
-                  class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-red-600"
-                >
-                  Borrado
-                </div>
+              @switch (row["operationType"]) {
+                @case ("CREATE") {
+                  <div
+                    class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-green-600"
+                  >
+                    Creado
+                  </div>
+                }
+                @case ("UPDATE") {
+                  <div
+                    class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-primary-600"
+                  >
+                    Agregado
+                  </div>
+                }
+                @case ("DELETE") {
+                  <div
+                    class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-red-600"
+                  >
+                    Borrado
+                  </div>
+                }
               }
             </td>
           </ng-container>
@@ -145,43 +146,46 @@
           </ng-container>
 
           @for (column of columns; track column.property) {
-            @if (column.type === "text") {
-              <ng-container [matColumnDef]="column.property">
-                <th
-                  *matHeaderCellDef
-                  class="pl-1 pr-1"
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  [ngClass]="column.cssClasses"
-                  mat-cell
-                  class="pl-1 pr-1"
-                >
-                  {{ row[column.property] }}
-                </td>
-              </ng-container>
-            } @else if (column.type === "percentage") {
-              <ng-container [matColumnDef]="column.property">
-                <th
-                  *matHeaderCellDef
-                  class="pl-1 pr-1"
-                  mat-header-cell
-                  mat-sort-header
-                >
-                  {{ column.label }}
-                </th>
-                <td
-                  *matCellDef="let row"
-                  mat-cell
-                  class="pl-1 pr-1"
-                >
-                  {{ row[column.property] | percent: "1.1-15" }}
-                </td>
-              </ng-container>
+            @switch (column.type) {
+              @case ("text") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    class="pl-1 pr-1"
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                    class="pl-1 pr-1"
+                  >
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              }
+              @case ("percentage") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    class="pl-1 pr-1"
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                    class="pl-1 pr-1"
+                  >
+                    {{ row[column.property] | percent: "1.1-15" }}
+                  </td>
+                </ng-container>
+              }
             }
           }
           <!-- Action Column -->

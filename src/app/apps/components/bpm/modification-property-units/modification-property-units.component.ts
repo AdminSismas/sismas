@@ -77,7 +77,7 @@ import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
-import { LoaderComponent } from "../../general-components/loader/loader.component";
+import { LoaderComponent } from '../../general-components/loader/loader.component';
 
 @Component({
   selector: 'vex-modification-property-units',
@@ -102,11 +102,10 @@ import { LoaderComponent } from "../../general-components/loader/loader.componen
     MatSort,
     PercentPipe,
     NgClass,
-    SweetAlert2Module
+    SweetAlert2Module,
     // Custom
-    ,
     LoaderComponent
-],
+  ],
   templateUrl: './modification-property-units.component.html',
   styleUrl: './modification-property-units.component.scss'
 })
@@ -192,8 +191,9 @@ export class ModificationPropertyUnitsComponent
       .getListPropertyUnitsByBaUnitIdV2(page, this.executionId, this.baUnitId)
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
-        next: (result: InformationPegeable) =>
-          this.captureInformationSubscribe(result)
+        next: (result: InformationPegeable) => {
+          this.captureInformationSubscribe(result);
+        }
       });
   }
 
@@ -451,20 +451,20 @@ export class ModificationPropertyUnitsComponent
       .assignamentZones(this.executionId, this.baUnitId)
       .subscribe({
         next: (response) => {
-        this.isZonesAssigning.set(false);
-        Swal.fire({
-          title: 'Asignación de zonas exitosa',
-          text: response.message,
-          icon: 'success',
-          showConfirmButton: true,
-          confirmButtonText: 'Aceptar',
-          showCancelButton: false,
-          allowOutsideClick: false
-        });
-      },
-      error: () => {
-        this.isZonesAssigning.set(false);
-      }
+          this.isZonesAssigning.set(false);
+          Swal.fire({
+            title: 'Asignación de zonas exitosa',
+            text: response.message,
+            icon: 'success',
+            showConfirmButton: true,
+            confirmButtonText: 'Aceptar',
+            showCancelButton: false,
+            allowOutsideClick: false
+          });
+        },
+        error: () => {
+          this.isZonesAssigning.set(false);
+        }
       });
   }
 

@@ -9,7 +9,9 @@ export class BaUnitHeadPercentage {
   registration?: string;
   percentageGroup?: number;
   operationType?: string;
+  baunitIdE?: string;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(content?: any) {
     this.baunitHead = content?.baunitHead ? new BaunitHead(content?.baunitHead) : null;
     this.cadastralNumber = content?.baunitHead?.cadastralNumber || '';
@@ -18,6 +20,7 @@ export class BaUnitHeadPercentage {
     this.domBaunitEconoDesti = content?.baunitHead?.domBaunitEconoDesti || '';
     this.percentageGroup = content?.percentageGroup || 0;
     this.operationType = content?.operationType || '';
+    this.baunitIdE = content?.baunitHead?.baunitIdE || '';
 
     if (this.baunitHead?.propertyRegistryOffice && this.baunitHead?.propertyRegistryOffice.length > 0 &&
       this.baunitHead?.propertyRegistryNumber && this.baunitHead?.propertyRegistryNumber.length > 0) {
