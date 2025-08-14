@@ -138,7 +138,7 @@ export const environment = {
   geo: "/geo",
   geoeconomic_values: "/zonaGEcoValor",
   geoeconomic_zones: "/ccZonaHomoGeoEconomica",
-  getApiQualificationUrl: "https://country.api.sismas.com.co:5001/calificationUB/",
+  getApiQualificationUrl: "https://country.api.sismas.com.co:5002/calificationUB/",
   getByExecution: "/getByExecution",
   headBaunitByMaster: "/headBaunitByMaster",
   historicos: "/historicos",
