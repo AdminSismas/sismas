@@ -122,13 +122,13 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     esDireccionPrincipal: [false, [Validators.required]],
     direccionTexto: [null, [Validators.required, this.generalValidations.textAddressValidator()]],
     domClaseViaPrincipal: [null, [Validators.required]],
-    letraViaPrincipal: [null, [Validators.required, this.generalValidations.onlyLetters()]], // Solo letras
+    letraViaPrincipal: [null, [this.generalValidations.onlyLetters()]], // Solo letras
     valorViaPrincipal: [null, [Validators.required, this.generalValidations.onlyNumber()]], // Solo números
-    domSectorCiudad: [null, [Validators.required]], // Aquí solo una validación básica de requerido
+    domSectorCiudad: [null, []], // Aquí solo una validación básica de requerido
     valorViaGeneradora: [null, [Validators.required, this.generalValidations.onlyNumber()]],
     numeroPredio: [null, [Validators.required, this.generalValidations.onlyNumber()]],
-    letraViaGeneradora: [null, [Validators.required, this.generalValidations.onlyLetters()]],
-    domSectorPredio: [null, [Validators.required]]
+    letraViaGeneradora: [null, [this.generalValidations.onlyLetters()]],
+    domSectorPredio: [null, []]
   });
 
   @ViewChild('successDialog') private successDialog!: SwalComponent;
