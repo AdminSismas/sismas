@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/img/logo/quimbaya.gif",
   logo: "assets/img/logo/logo_quimbaya.jpg",
+  logoGeogestion: "",
+  logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["594"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",

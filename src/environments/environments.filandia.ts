@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/img/logo/filandia.gif",
   logo: "assets/img/logo/logo_filandia.jpg",
+  logoGeogestion: "",
+  logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["272"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",

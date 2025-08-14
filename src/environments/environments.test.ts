@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/video/an_logo.mp4",
   logo: "assets/img/illustrations/it_support.svg",
+  logoGeogestion: "",
+  logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["001", "674", "607"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",

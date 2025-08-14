@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/img/logo/armenia.gif",
   logo: "assets/img/logo/logo_armenia.png",
+  logoGeogestion: "",
+  logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["001"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",

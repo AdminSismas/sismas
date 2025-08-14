@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/img/logo/San vicente_retiro.gif",
   logo: "assets/img/logo/logo_san_vicente.png",
+  logoGeogestion: "",
+  logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["674", "607"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",

@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/img/logo/barrancabermeja.gif",
   logo: "assets/img/logo/logo_barrancabermeja.png",
+  logoGeogestion: "",
+  logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["674"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",

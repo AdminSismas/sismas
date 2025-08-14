@@ -66,6 +66,8 @@ export class LoginComponent implements AfterViewInit {
   videoPath: string = environment.video;
   videoPathWebm: string = environment.videoWebm;
   logoPath: string = environment.logo;
+  logoPathMasora: string = environment.logoMasora;
+  logoPathGeogestion: string = environment.logoGeogestion;
   logoPathAlter = '';
   form!: FormGroup;
   inputType = 'password';

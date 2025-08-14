@@ -74,14 +74,11 @@
             matTooltip="Toggle Visibility"
             type="button"
           >
-            <mat-icon
-              *ngIf="visible"
-              svgIcon="mat:visibility"
-            ></mat-icon>
-            <mat-icon
-              *ngIf="!visible"
-              svgIcon="mat:visibility_off"
-            ></mat-icon>
+            @if (visible) {
+              <mat-icon svgIcon="mat:visibility"></mat-icon>
+            } @else {
+              <mat-icon svgIcon="mat:visibility_off"></mat-icon>
+            }
           </button>
           <mat-hint>Haga clic en el ojo para cambiar la visibilidad</mat-hint>
           <mat-error *ngIf="form.controls['password'].hasError('required')">
@@ -119,18 +116,35 @@
         </button>
       }
       <div class="p-6 pb-0 flex flex-col items-center justify-center">
-        <div class="fill-current text-center">
+        <div
+          class="fill-current text-center grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-2"
+        >
+          @if (seeLogoRetiro) {
+            <img
+              class=""
+              [attr.src]="logoPathAlter"
+              alt="logo"
+            />
+          }
           <img
-            *ngIf="seeLogoRetiro"
-            class="logo-large"
-            [attr.src]="logoPathAlter"
-            alt="logo"
-          />
-          <img
-            class="logo-large"
+            class="w-full h-auto col-span-full"
             [attr.src]="logoPath"
             alt="logo"
           />
+          @if (logoPathGeogestion !== "") {
+            <img
+              class="w-full h-auto"
+              [attr.src]="logoPathGeogestion"
+              alt="logo"
+            />
+          }
+          @if (logoPathMasora !== "") {
+            <img
+              class="w-full h-auto"
+              [attr.src]="logoPathMasora"
+              alt="logo"
+            />
+          }
         </div>
       </div>
     </div>

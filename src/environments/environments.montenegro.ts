@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/img/logo/montenegro.gif",
   logo: "assets/img/logo/logo_montenegro.jpg",
+  logoGeogestion: "",
+  logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["470"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",

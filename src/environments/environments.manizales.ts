@@ -151,6 +151,8 @@ export const environment = {
   load: "/load",
   loading_logo: "assets/img/logo/manizales.gif",
   logo: "assets/img/logo/logo_manizales.png",
+  logoGeogestion: "assets/img/logo/logo_manizales_2.png",
+  logoMasora: "assets/img/logo/logo_manizales_3.png",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
   municipalities: ["001"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",
