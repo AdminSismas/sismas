@@ -34,7 +34,6 @@ import { InputComponent } from '../../../general-components/input/input.componen
 import Swal from 'sweetalert2';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-property/basic-property-information.constants';
-import { BaunitCondition } from 'src/app/apps/constants/general/constants';
 import { Subscription } from 'rxjs';
 import Big from 'big.js';
 import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/procedures.constant';
@@ -91,6 +90,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
     // *****GRUPO "Tamaños y áreas" ****
     propertyRegistryArea: [''],
+    cadastralAreaGeo: [''],
     cadastralArea: [
       '',
       [Validators.required, Validators.pattern(REGEX_MORE_THAN_0)]
@@ -127,56 +127,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       [Validators.required, Validators.min(0), Validators.max(100)]
     ]
   });
-
-  private readonly areasByBaunitConditions: Record<BaunitCondition, string[]> =
-    {
-      'Bien de uso público': [
-        'propertyRegistryArea',
-        'cadAreaPrivate',
-        'cadAreaUnitbuiltPrivate'
-      ],
-      '(Condominio) Matriz': [
-        'propertyRegistryArea',
-        'cadAreaCommon',
-        'cadAreaUnitbuiltCommon'
-      ],
-      '(Condominio) Unidad predial': [
-        'propertyRegistryArea',
-        'cadAreaPrivate',
-        'cadAreaUnitbuiltPrivate'
-      ],
-      Informal: [
-        'propertyRegistryArea',
-        'cadAreaPrivate',
-        'cadAreaUnitbuiltPrivate'
-      ],
-      Mejora: ['propertyRegistryArea', 'cadAreaUnitbuiltPrivate'],
-      'No propiedad horizontal': [
-        'propertyRegistryArea',
-        'cadAreaPrivate',
-        'cadAreaUnitbuiltPrivate'
-      ],
-      '(Parque cementerio) Matriz': [
-        'propertyRegistryArea',
-        'cadAreaCommon',
-        'cadAreaUnitbuiltCommon'
-      ],
-      '(Parque Cementerio) Unidad predial': [
-        'propertyRegistryArea',
-        'cadAreaPrivate',
-        'cadAreaUnitbuiltPrivate'
-      ],
-      '(Propiedad horizontal) Matriz': [
-        'propertyRegistryArea',
-        'cadAreaCommon',
-        'cadAreaUnitbuiltCommon'
-      ],
-      '(Propiedad horizontal) Unidad Predial': [
-        'propertyRegistryArea',
-        'cadAreaUnitbuiltCommon'
-      ],
-      Vía: ['propertyRegistryArea', 'cadAreaPrivate', 'cadAreaUnitbuiltPrivate']
-    };
 
   private areasEnabledByBaunitConditions: string[] = [];
 
@@ -463,6 +413,26 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       this.contentInformation?.detailGroup?.unitNumber
     );
   }
+
+  refreshCadastralAreaGeoE(event: MouseEvent): void {
+      event.preventDefault();
+      if (!this.baunitIdE) return;
+      console.log(this.baunitIdE);
+
+      const executionId = this.executionId;
+
+      this.informationPropertyService
+        .refreshCadastralAreaGeoE(this.baunitIdE, executionId)
+        .subscribe((response) => {
+          this.form.patchValue({ cadastralAreaGeo: response.cadastralAreaGeo  });
+          Swal.fire({
+            icon: 'success',
+            text: 'Área catastral geográfica actualizada correctamente',
+            showConfirmButton: false,
+            timer: 10000
+          });
+        });
+    }
 
   getAlertSuccess(text: string, data: BasicInformationProperty) {
     Swal.fire({

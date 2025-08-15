@@ -133,13 +133,14 @@
                 alt="logo retiro"
               />
             }
-            
+
             <img
               class="h-20 w-auto object-contain"
               [attr.src]="logoPath"
+              [class.col-span-full]="!seeLogoRetiro && logoPathGeogestion === ''"
               alt="logo principal"
             />
-            
+
             @if (logoPathGeogestion !== "") {
               <img
                 class="h-20 w-auto object-contain"
@@ -148,7 +149,7 @@
               />
             }
           </div>
-          
+
         </div>
       </div>
     </div>

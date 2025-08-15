@@ -42,6 +42,7 @@ export class BasicInformationProperty {
 
 
   propertyRegistryArea?: string;
+  cadastralAreaGeo?: string;
   cadastralAreaGeoE?: string;
   cadastralCreatedAt?: string;
   domBaunitProcessType?: string;

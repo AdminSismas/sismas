@@ -112,7 +112,6 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
     groupName: 'Tamaños y áreas',
     fields: [
       // *****GRUPO "Tamaños y áreas" ****
-
       {
         name: 'propertyRegistryArea',
         label: 'Área registral',
@@ -123,7 +122,16 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         groupName: 'Tamaños y áreas'
       },
       {
-        name: '(espacio vacio)',
+        name: 'cadastralAreaGeo',
+        label: 'Área geográfica',
+        collection: false,
+        type: 'text',
+        placeholder: 'Área geográfica',
+        group: [],
+        groupName: 'Tamaños y áreas'
+      },
+      {
+        name: '(refresh geografic button)',
         label: '',
         collection: false,
         type: '',

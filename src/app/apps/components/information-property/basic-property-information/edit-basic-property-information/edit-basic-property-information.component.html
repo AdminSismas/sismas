@@ -80,8 +80,18 @@
           </h3>
           <!-- Recorrer los campos del grupo -->
           @for (input of group.fields; track $index) {
-            @if (input.name === '(espacio vacio)'){
-              <div class="w-full -col-end-1"></div>
+            @if (input.name === '(refresh geografic button)'){
+              <div class="w-full col-span-2 flex justify-start itemcs-center">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  aria-label="Cadastral Geographic Area Refresh"
+                  (click)="refreshCadastralAreaGeoE($event)"
+                >
+                  <mat-icon svgIcon="mat:refresh"></mat-icon>
+                  Refrescar área geográfica
+                </button>
+              </div>
             } @else if (input.collection) {
               <vex-combox-colletion
                 [label]="input.label"
