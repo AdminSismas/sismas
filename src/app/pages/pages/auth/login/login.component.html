@@ -99,7 +99,6 @@
           >¿Olvidaste la contraseña?</a
         >
       </div>
-
       @if (loading()) {
         <div class="flex justify-center items-center">
           <mat-spinner diameter="40"></mat-spinner>
@@ -116,35 +115,40 @@
         </button>
       }
       <div class="p-6 pb-0 flex flex-col items-center justify-center">
-        <div
-          class="fill-current text-center grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-2"
-        >
-          @if (seeLogoRetiro) {
-            <img
-              class=""
-              [attr.src]="logoPathAlter"
-              alt="logo"
-            />
-          }
-          <img
-            class="w-full h-auto col-span-full"
-            [attr.src]="logoPath"
-            alt="logo"
-          />
-          @if (logoPathGeogestion !== "") {
-            <img
-              class="w-full h-auto"
-              [attr.src]="logoPathGeogestion"
-              alt="logo"
-            />
-          }
+        <div class="fill-current text-center w-full max-w-4xl space-y-6">
           @if (logoPathMasora !== "") {
-            <img
-              class="w-full h-auto"
-              [attr.src]="logoPathMasora"
-              alt="logo"
-            />
+            <div class="flex justify-center">
+              <img
+                class="h-20 w-auto object-contain"
+                [attr.src]="logoPathMasora"
+                alt="logo masora"
+              />
+            </div>
           }
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center">
+            @if (seeLogoRetiro) {
+              <img
+                class="h-20 w-auto object-contain"
+                [attr.src]="logoPathAlter"
+                alt="logo retiro"
+              />
+            }
+            
+            <img
+              class="h-20 w-auto object-contain"
+              [attr.src]="logoPath"
+              alt="logo principal"
+            />
+            
+            @if (logoPathGeogestion !== "") {
+              <img
+                class="h-20 w-auto object-contain"
+                [attr.src]="logoPathGeogestion"
+                alt="logo geogestion"
+              />
+            }
+          </div>
+          
         </div>
       </div>
     </div>
