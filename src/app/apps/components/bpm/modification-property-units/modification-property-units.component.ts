@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, Observable } from 'rxjs';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -65,7 +65,6 @@ import { UnitPropertyInformationService } from '../../../services/territorial-or
 import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
 import { NgClass, PercentPipe } from '@angular/common';
 import { CrudPropertyUnitsComponent } from './crud-property-units/crud-property-units.component';
-import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import Swal from 'sweetalert2';
@@ -102,7 +101,6 @@ import { LoaderComponent } from '../../general-components/loader/loader.componen
     MatSort,
     PercentPipe,
     NgClass,
-    SweetAlert2Module,
     // Custom
     LoaderComponent
   ],
@@ -134,12 +132,6 @@ export class ModificationPropertyUnitsComponent
 
   @ViewChild(MatPaginator, { read: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmRemoveDialog', { static: true })
-  confirmRemoveDialog!: SwalComponent;
-  @ViewChild('confirmDeleteDialog', { static: true })
-  confirmDeleteDialog!: SwalComponent;
-  @ViewChild('confirmAddUpdateBaUnitHead', { static: true })
-  confirmAddUpdateBaUnitHead!: SwalComponent;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -189,6 +181,7 @@ export class ModificationPropertyUnitsComponent
     const page = new PageSearchData(this.page, this.pageSize, this.executionId);
     this.unitPropertyInformationService
       .getListPropertyUnitsByBaUnitIdV2(page, this.executionId, this.baUnitId)
+      .pipe(distinctUntilChanged())
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: InformationPegeable) => {
@@ -275,7 +268,7 @@ export class ModificationPropertyUnitsComponent
           this.dataInformationUnitProperties.resources
         )
       })
-      .afterClosed();
+      .afterClosed().subscribe(() => this.getPropertiesUnits());
   }
 
   openCrudAlfaMain(type: TypeOperationAlfaMain) {
@@ -362,7 +355,15 @@ export class ModificationPropertyUnitsComponent
 
   deletePropertyUnit(row: BaUnitHeadPercentage) {
     if (row.operationType === TYPE_CREATE) {
-      this.confirmRemoveDialog.fire().then((result) => {
+      Swal.fire({
+        text: '¿Está seguro de remover esta unidad predial?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, remover',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
         if (result.isConfirmed && this.executionId) {
           this.bpmCoreService
             .clearPropertyBpmOperation(
@@ -380,7 +381,15 @@ export class ModificationPropertyUnitsComponent
     }
 
     if (row.operationType === TYPE_UPDATE) {
-      this.confirmDeleteDialog.fire().then((result) => {
+      Swal.fire({
+        text: '¿Está seguro que desea cambiar el estado a eliminacion a esta unidad predial?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
         if (result.isConfirmed && this.executionId) {
           this.executeResultChangeTemporaryStateBeaUnitHead(row);
         }
@@ -388,7 +397,15 @@ export class ModificationPropertyUnitsComponent
       return;
     }
 
-    this.confirmAddUpdateBaUnitHead.fire().then((result) => {
+    Swal.fire({
+      text: '¿Está seguro que desea reincorporar esta unidad predial?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, reincorporar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
       if (result.isConfirmed && this.executionId) {
         this.executeResultChangeTemporaryStateBeaUnitHead(row);
       }

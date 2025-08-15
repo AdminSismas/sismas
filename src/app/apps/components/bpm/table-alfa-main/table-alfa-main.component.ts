@@ -49,7 +49,6 @@ import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
@@ -77,8 +76,7 @@ import { CreateMatrixFromNphComponent } from './create-matrix-from-nph/create-ma
     NgClass,
     MatMenuModule,
     MatDialogModule,
-    MatDividerModule,
-    SweetAlert2Module
+    MatDividerModule
   ],
   templateUrl: './table-alfa-main.component.html',
   styleUrl: './table-alfa-main.component.scss'
@@ -113,12 +111,6 @@ export class TableAlfaMainComponent
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmRemoveDialog', { static: true })
-  confirmRemoveDialog!: SwalComponent;
-  @ViewChild('confirmDeleteDialog', { static: true })
-  confirmDeleteDialog!: SwalComponent;
-  @ViewChild('confirmAddUpdateBaUnitHead', { static: true })
-  confirmAddUpdateBaUnitHead!: SwalComponent;
 
   constructor(
     private dialog: MatDialog,
@@ -265,7 +257,16 @@ export class TableAlfaMainComponent
 
   removeInformation(operation: Operation): void {
     this.npnRemoving = operation.npnlike;
-    this.confirmRemoveDialog.fire().then((result) => {
+    Swal.fire({
+      title: 'Confirmar eliminación',
+      text: '¿Está seguro de remover esta unidad predial?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, remover',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33'
+    }).then((result) => {
       if (result.isConfirmed) {
         this.bpmCoreService
           .clearPropertyBpmOperation(
@@ -290,13 +291,31 @@ export class TableAlfaMainComponent
   changeTemporaryStateBeaUnitHead(operation: Operation): void {
     this.npnRemoving = operation.npnlike;
     if (operation.operationType === 'UPDATE') {
-      this.confirmDeleteDialog.fire().then((result) => {
+      Swal.fire({
+        title: 'Confirmar eliminación',
+        text: '¿Está seguro que desea cambiar el estado a eliminacion a esta unidad predial?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
         if (result.isConfirmed) {
           this.executeResultChangeTemporaryStateBeaUnitHead(operation);
         }
       });
     } else if (operation.operationType === 'DELETE') {
-      this.confirmAddUpdateBaUnitHead.fire().then((result) => {
+      Swal.fire({
+        title: 'Confirmar reincorporacion',
+        text: '¿Está seguro que desea reincorporar esta unidad predial?',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, reincorporar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
         if (result.isConfirmed) {
           this.executeResultChangeTemporaryStateBeaUnitHead(operation);
         }
@@ -420,11 +439,4 @@ export class TableAlfaMainComponent
       }
     });
   }
-
-  // addRemoveOption(operationType: string): { text: string; icon: string } {
-  //   if (operationType === 'UPDATE') {
-  //     return { text: 'Borrar', icon: 'mat:delete' };
-  //   }
-  //   return { text: 'Reincorporar', icon: 'mat:recycling' };
-  // }
 }
