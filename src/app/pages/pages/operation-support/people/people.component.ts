@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Component,
-  OnInit,
-  computed,
-  inject} from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
@@ -15,10 +11,7 @@ import {
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  MatPaginatorModule,
-  PageEvent
-} from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { People as People } from '../../../../apps/interfaces/users/people.model';
@@ -53,6 +46,8 @@ import { UserService } from '../../auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import Swal from 'sweetalert2';
 import { UpdateParticipantComponent } from '../../bpm/core/citation-and-notice/components/update-participant/update-participant.component';
+import { HttpErrorResponse } from '@angular/common/http';
+import { InfoContact } from 'src/app/apps/interfaces/information-property/info-contact';
 
 @Component({
   selector: 'vex-people',
@@ -216,14 +211,28 @@ export class PeopleComponent implements OnInit {
   updateCustomer(customer: People) {
     if (!this.availableRoles) return;
 
-    this.peopleService.getContactByIndividualId(customer.individualId).subscribe((res) => {
-      this.dialog
+    this.peopleService
+      .getContactByIndividualId(customer.individualId)
+      .subscribe({
+        next: (contact) => {
+          this.openEditPersonDialog(customer, contact);
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this.openEditPersonDialog(customer, null);
+          }
+        }
+      });
+  }
+
+  openEditPersonDialog(customer: People, contact: InfoContact | null) {
+    this.dialog
       .open(UpdateParticipantComponent, {
         ...MODAL_SMALL_LARGE,
         disableClose: true,
         data: {
           ...customer,
-          contact: res,
+          contact: contact,
           mode: 'peopleUpdate'
         }
       })
@@ -238,7 +247,6 @@ export class PeopleComponent implements OnInit {
           this.subject$.next(this.customers);
         }
       });
-    });
   }
 
   refreshData() {
@@ -283,10 +291,12 @@ export class PeopleComponent implements OnInit {
     }
     const pageConfig = { page, size };
 
-    this.peopleService.getPeopleSearch(this.searchControl.value, pageConfig).subscribe((response: InformationPegeable) => {
-      const content = response.content as People[];
-      this.dataSource.data = content;
-      this.totalElements = response.totalElements ?? 0;
-    });
+    this.peopleService
+      .getPeopleSearch(this.searchControl.value, pageConfig)
+      .subscribe((response: InformationPegeable) => {
+        const content = response.content as People[];
+        this.dataSource.data = content;
+        this.totalElements = response.totalElements ?? 0;
+      });
   }
 }
