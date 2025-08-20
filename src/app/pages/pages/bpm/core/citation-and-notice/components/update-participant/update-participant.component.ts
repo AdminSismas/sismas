@@ -292,7 +292,8 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
     }
     this.peopleService
       .getContactByIndividualId(this.defaults?.individualId)
-      .subscribe((res: InfoContact) => {
+      .subscribe({
+        next: (res: InfoContact) => {
         this.contact = res;
         if (
           this.contact != null &&
@@ -302,7 +303,14 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
           this.defaults.contact = this.contact;
         }
         this.chargeInformation();
-      });
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          Swal.close();
+          this.contact = null;
+        }
+      }
+    });
   }
 
   updatePeople() {

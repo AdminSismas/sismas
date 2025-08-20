@@ -219,6 +219,7 @@ export class PeopleComponent implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 404) {
+            Swal.close();
             this.openEditPersonDialog(customer, null);
           }
         }
