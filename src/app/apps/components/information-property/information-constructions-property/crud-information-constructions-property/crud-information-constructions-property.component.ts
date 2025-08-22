@@ -181,7 +181,12 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     ], // Validación personalizada
     unitBuiltArea: [
       this.crudInformationData?.contentInformation?.unitBuiltArea ?? null,
-      [Validators.required, this.generalValidations.validateOnlyNumber(), this.generalValidations.nonZeroValidator()]
+      [
+        Validators.required,
+        Validators.min(0),
+        this.generalValidations.validateOnlyNumber(),
+        this.generalValidations.nonZeroValidator()
+      ]
     ],
     unitBuiltPrivateArea: [
       this.crudInformationData?.contentInformation?.unitBuiltPrivateArea ??
@@ -189,7 +194,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
       [
         Validators.required,
         this.generalValidations.validateOnlyNumber(), // Solo números
-        this.generalValidations.nonZeroValidator(), // Validación para que el área no sea 0
+        // this.generalValidations.nonZeroValidator(), // Validación para que el área no sea 0
         this.generalValidations.privateAreaValidator('unitBuiltArea') // Validación para que no sea mayor al área total
       ]
     ],
