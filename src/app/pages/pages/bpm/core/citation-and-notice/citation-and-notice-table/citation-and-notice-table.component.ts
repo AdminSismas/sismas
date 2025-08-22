@@ -23,7 +23,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -40,9 +40,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ParticipantsProcessService } from '../../../../../../apps/services/bpm/core/participants-process.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
@@ -171,9 +169,11 @@ export class CitationAndNoticeTableComponent implements OnInit, OnChanges, After
   }
 
   masterToggle(): void {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if(this.isAllSelected()){
+      this.selection.clear();
+      return;
+    }
+    this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
   isAllSelected(): boolean {
@@ -186,7 +186,7 @@ export class CitationAndNoticeTableComponent implements OnInit, OnChanges, After
     this.participantsProcess.getParticipantsProcess(this.generateObjectPageSearchData(), this.executionId)
       .subscribe(
         {
-          error: (err: any) => this.captureInformationSubscribeError(),
+          error: () => this.captureInformationSubscribeError(),
           next: (result: InformationPegeable) => this._dataContentInformations$.next(result)
         }
       );

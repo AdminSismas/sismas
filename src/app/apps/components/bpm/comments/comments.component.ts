@@ -23,6 +23,7 @@ import { contentInfoComments } from '../../../interfaces/general/content-info-co
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
 
 
 @Component({
@@ -52,7 +53,7 @@ export class CommentsComponent implements OnInit {
   NumPage = 0;
   NumSize = 5;
   totalElements = 0;
-  pageSizeOptions: number[] = [5, 10, 20, 30];
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   executionId = '';
   user: DecodeJwt | null = null;
 

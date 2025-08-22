@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { AfterViewInit, Component, DestroyRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -74,7 +74,6 @@ import {
     MatTableModule,
     MatSortModule,
     MatCheckboxModule,
-    NgFor,
     NgClass,
     MatPaginatorModule,
     FormsModule,
@@ -82,7 +81,7 @@ import {
     MatInputModule,
     MatTabsModule,
     MatSelectModule
-  ],
+],
   templateUrl: './certificate-table.component.html',
   styleUrl: './certificate-table.component.scss'
 })
@@ -207,17 +206,18 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
       });
   }
 
-  cleanJsonValues(data: any): any {
-    const cleanedData: any = {};
+  cleanJsonValues(data: SearchData): SearchData {
+    const cleanedData: SearchData = {};
 
     // Iterar sobre las claves del JSON
     Object.keys(data).forEach((key) => {
-      const value = data[key];
+      const typedKey = key as keyof SearchData;
+      const value = data[typedKey];
       if (typeof value === 'string') {
         // Eliminar solo los guiones bajos (__) dejando los números
-        cleanedData[key] = value.replace(/_/g, '');
+        cleanedData[typedKey] = value.replace(/_/g, '');
       } else {
-        cleanedData[key] = value; // Mantener valores no string tal como están
+        cleanedData[typedKey] = value!; // Mantener valores no string tal como están
       }
     });
     return cleanedData;
@@ -371,10 +371,6 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-  deleteInformations(customer: BaunitHead): void {
-  }
-
   onFilterChange(value: string): void {
     if (!this.dataSource) {
       return;
@@ -399,9 +395,11 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if(this.isAllSelected()){
+      this.selection.clear();
+      return;
+    }
+    this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
 
@@ -446,8 +444,7 @@ export class CertificateTableComponent implements OnInit, AfterViewInit {
       const url = `${environment.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
       this.router.navigate([`${url}`, data.baunitIdE])
-        .then(r => {
-        });
+        .then();
     }
   }
 

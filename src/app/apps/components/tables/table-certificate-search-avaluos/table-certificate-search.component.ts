@@ -47,7 +47,7 @@ import {
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constant';
+} from 'src/app/apps/constants/general/constants';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
@@ -62,7 +62,6 @@ import {
   ViewFileDocumentManagementComponent
 } from '../../general-components/view-file-document-management/view-file-document-management.component';
 import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
-
 
 @Component({
   selector: 'vex-table-certificate-search',
@@ -95,20 +94,10 @@ import { contentInfoAttachment } from '../../../interfaces/general/content-info-
 export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
 
   @Output() search = new EventEmitter<void>();
-  @Output() viewProperty = new EventEmitter<any>();
-  @Output() viewDocument = new EventEmitter<any>();
 
   // Lógica para los botones
   onSearchClick(): void {
     this.search.emit();
-  }
-
-  onViewPropertyClick(property: any): void {
-    this.viewProperty.emit(property);
-  }
-
-  onViewDocumentClick(file: any): void {
-    this.viewDocument.emit(file);
   }
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -238,17 +227,18 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       });
   }
 
-  cleanJsonValues(data: any): any {
-    const cleanedData: any = {};
+  cleanJsonValues(data: SearchData): SearchData {
+    const cleanedData: SearchData = {};
 
     // Iterar sobre las claves del JSON
     Object.keys(data).forEach((key) => {
-      const value = data[key];
+      const typedKey = key as keyof SearchData;
+      const value = data[typedKey];
       if (typeof value === 'string') {
         // Eliminar solo los guiones bajos (__) dejando los números
-        cleanedData[key] = value.replace(/_/g, '');
+        cleanedData[typedKey] = value.replace(/_/g, '');
       } else {
-        cleanedData[key] = value; // Mantener valores no string tal como están
+        cleanedData[typedKey] = value!; // Mantener valores no string tal como están
       }
     });
     return cleanedData;
@@ -402,10 +392,6 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       });
   }
 
-
-  deleteInformations(customer: BaunitHead): void {
-  }
-
   onFilterChange(value: string): void {
     if (!this.dataSource) {
       return;
@@ -430,9 +416,12 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
 
@@ -476,9 +465,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
       }
       const url = `${envi.initiate_filing_procedure}`;
       this.sendInformation.setInformationRegister(data);
-      this.router.navigate([`${url}`, data.baunitIdE])
-        .then(r => {
-        });
+      this.router.navigate([`${url}`, data.baunitIdE]);
     }
   }
 
@@ -499,7 +486,6 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
         }
       });
 
-    this.dialogRef.afterClosed().subscribe(() => {
-    });
+    this.dialogRef.afterClosed().subscribe();
   }
 }

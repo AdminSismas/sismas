@@ -20,7 +20,7 @@ import {
   CreateSignatureComponent
 } from 'src/app/apps/components/configuration/digitalized-signatures/create-signature/create-signature.component';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 // Custom
 
@@ -47,7 +47,7 @@ import { Observable } from 'rxjs';
 })
 export class DigitalizedSignaturesComponent {
 
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  isNotDesktop$: Observable<boolean> = this.layoutService.isDesktop$.pipe(map((isDesktop) => !isDesktop));
   @ViewChild(TableDigitalizedSignaturesComponent) tableDigitalizedSignaturesComponent!: TableDigitalizedSignaturesComponent;
 
   constructor (

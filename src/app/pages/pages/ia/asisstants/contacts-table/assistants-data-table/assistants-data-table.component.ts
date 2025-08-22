@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild
@@ -27,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
+import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
 
 @Component({
   selector: 'vex-contacts-data-table',
@@ -57,12 +57,12 @@ import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollb
   ]
 })
 export class AssistantsDataTableComponent<T>
-  implements OnInit, OnChanges, AfterViewInit
+  implements OnChanges, AfterViewInit
 {
   @Input({ required: true }) data!: T[];
   @Input({ required: true }) columns!: TableColumn<T>[];
   @Input() pageSize = 20;
-  @Input() pageSizeOptions = [10, 20, 50];
+  @Input() pageSizeOptions = PAGE_SIZE_OPTION;
   @Input() searchStr = '';
 
   @Output() toggleStar = new EventEmitter<Contact['id']>();
@@ -73,10 +73,6 @@ export class AssistantsDataTableComponent<T>
 
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-
-  constructor() {}
-
-  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['columns']) {

@@ -34,6 +34,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { DecodeJwt } from '../../../interfaces/user-details/user.model';
 import { CommentsCollection } from 'src/app/apps/interfaces/comments/comments.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
 
 
 @Component({
@@ -74,7 +75,7 @@ export class CommentsComponent implements OnInit {
   NumPage = 0;
   NumSize = 5;
   totalElements = 0;
-  pageSizeOptions: number[] = [5, 10, 20, 30];
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   user: DecodeJwt | null = null;
 
   executionId!: string;

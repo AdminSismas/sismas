@@ -1,5 +1,4 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { NgClass, NgFor, NgIf } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -7,7 +6,6 @@ import {
   DestroyRef,
   EventEmitter,
   Input,
-  OnInit,
   ViewChild,
   inject, OnDestroy
 } from '@angular/core';
@@ -27,10 +25,6 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexConfigService } from '@vex/config/vex-config.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
@@ -41,6 +35,7 @@ import { SupportLogs } from './model/supportLogs.model';
 // import { UserAuthData } from 'src/app/core/auth/authData.model';
 // import { AuthService } from 'src/app/core/auth/auth.service';
 import { AnswerSupportService } from './service/answer-support.service';
+import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
 
 @Component({
   selector: 'vex-answer-support',
@@ -63,7 +58,7 @@ import { AnswerSupportService } from './service/answer-support.service';
   templateUrl: './answer-support.component.html',
   styleUrl: './answer-support.component.scss'
 })
-export class AnswerSupportComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AnswerSupportComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
   @Input() refreshLogs!: EventEmitter<SupportLogs>; // refresh logs
@@ -71,7 +66,7 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit, OnDestroy 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   pageSize = 5;
-  pageSizeOptions: number[] = [5, 10, 20, 50];
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource!: MatTableDataSource<SupportLogs>;
   selection = new SelectionModel<SupportLogs>(true, []);
   searchCtrl = new UntypedFormControl();
@@ -143,52 +138,6 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit, OnDestroy 
     private answerSupportService: AnswerSupportService,
     private supportService: SupportService
   ) {}
-
-  ngOnInit() {
-    // this.currentUser = this.authService.getCurrentUser();
-    // this.footerVisibleChange(false);
-
-    // this.dataSource = new MatTableDataSource();
-    // if (this.currentUser) {
-    // } else {
-    //   console.error("No user is logged in");
-    // }
-
-    // if (!this.subjectSupportLogsList$) {
-    //   console.error("subjectSupportLogsList$ is undefined. Initializing as a new BehaviorSubject.");
-    //   this.subjectSupportLogsList$ = new BehaviorSubject<SupportLogs[]>([]);
-    // }
-
-    // this.subscription.add(
-    //   this.subjectSupportLogsList$.subscribe({
-    //     next: data => {
-    //       distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)) // Compare previous and current values
-    //       this.loadAllDataLogs(); // Load logs after subscription is set up
-    //     },
-    //     error: err => {
-    //       console.error("Error in logs subscription:", err);
-    //     }
-    //   })
-    // );
-    // this.supportService.getSupportLogs().subscribe((response) => {
-    //   if (response.success) {
-    //     // Update the supportLogs array with the fetched logs
-    //     this.supportLogs = response.data || [];
-
-    //   } else {
-    //     console.error('Failed to fetch logs:', response.message);
-    //   }
-    // });
-
-    // this.data$.pipe(filter<SupportLogs[]>(Boolean)).subscribe((supportLogs) => {
-    //   this.supportLogs = supportLogs;
-    //   this.dataSource.data = supportLogs;
-    // });
-
-    // this.searchCtrl.valueChanges
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe((value) => this.onFilterChange(value));
-  }
 
   loadAllDataLogs() {
     this.loadObservationSupports();
@@ -296,7 +245,7 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit, OnDestroy 
       }
     }
 
-  footerVisibleChange(change: boolean): void {
+  footerVisibleChange(): void {
     this.configService.updateConfig({
       footer: {
         visible: false
@@ -320,19 +269,14 @@ export class AnswerSupportComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
+    if(this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
   trackByProperty<T>(index: number, column: TableColumn<T>) {
     return column.property;
-  }
-
-  onRespuestaChange(row: any): void {
-    // Perform an update operation here, such as calling an API to save the changes.
-    this.answerSupportService.updateRespuesta(row.id, row.respuesta).subscribe(response => {
-
-    });
   }
 }

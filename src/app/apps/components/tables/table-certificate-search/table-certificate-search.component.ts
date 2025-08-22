@@ -34,7 +34,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -82,7 +82,6 @@ import { contentInfoAttachment } from '../../../interfaces/general/content-info-
     MatButtonToggleModule,
     ReactiveFormsModule,
     VexPageLayoutContentDirective,
-    NgIf,
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
@@ -90,7 +89,6 @@ import { contentInfoAttachment } from '../../../interfaces/general/content-info-
     MatTableModule,
     MatSortModule,
     MatCheckboxModule,
-    NgFor,
     NgClass,
     MatPaginatorModule,
     FormsModule,
@@ -98,7 +96,7 @@ import { contentInfoAttachment } from '../../../interfaces/general/content-info-
     MatInputModule,
     MatTabsModule,
     MatSelectModule
-  ]
+]
 })
 export class TableCertificateSearchComponent
   implements OnInit, AfterViewInit
@@ -507,7 +505,6 @@ cleanJsonValues(data: SearchData): SearchData {
         metaData: metaData
       }
     });
-    this.dialogRef.afterClosed().subscribe(() => {
-    });
+    this.dialogRef.afterClosed().subscribe();
   }
 }

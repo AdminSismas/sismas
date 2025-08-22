@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -47,7 +47,7 @@ import { UsersSignatures } from '../../../interfaces/users/digitalized-signature
 export class TableDigitalizedSignaturesComponent
   implements OnInit, AfterViewInit
 {
-  @Input({ required: true }) public isDesktop$!: Observable<boolean>;
+  @Input({ required: true }) public isNotDesktop$!: Observable<boolean>;
 
   public dataSource: MatTableDataSource<UserDetails> =
     new MatTableDataSource<UserDetails>([]);
@@ -126,8 +126,8 @@ export class TableDigitalizedSignaturesComponent
     return new PageSortByData(this.page, this.pageSize, sortBy);
   }
 
-  refreshInformationPaginator(event: any): void {
-    if (event == null) {
+  refreshInformationPaginator(event: PageEvent): void {
+    if (event === null) {
       return;
     }
     this.page = event.pageIndex;
