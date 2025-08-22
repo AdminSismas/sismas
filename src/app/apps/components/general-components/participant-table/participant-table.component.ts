@@ -40,7 +40,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_DYNAMIC_HEIGHT,
   PAGE,
-  PAGE_OPTION_UNIQUE_7,
+  PAGE_OPTION_UNIQUE,
   TABLE_COLUMN_PRINCIPANTS_TABLE
 } from '../../../constants/general/constants';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -113,8 +113,8 @@ export class ParticipantTableComponent
 
   page = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_OPTION_UNIQUE_7;
-  pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
+  pageSize: number = PAGE_OPTION_UNIQUE;
+  pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE];
   dataSource!: MatTableDataSource<ProcessParticipant>;
 
   subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
@@ -427,7 +427,7 @@ export class ParticipantTableComponent
     }
 
     this.contentInformation = new InformationPegeable(
-      result?.length / PAGE_OPTION_UNIQUE_7,
+      result?.length / PAGE_OPTION_UNIQUE,
       result?.length,
       false,
       result?.length,
@@ -435,7 +435,7 @@ export class ParticipantTableComponent
       true,
       result?.length > 0,
       result,
-      new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE_7)
+      new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE)
     );
     this.captureInformationData();
   }

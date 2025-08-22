@@ -24,7 +24,7 @@ import {
   CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ,
   CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ,
   PAGE,
-  PAGE_OPTION_UNIQUE_7,
+  PAGE_OPTION_UNIQUE,
   STRING_INFORMATION_NOT_FOUND,
   TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN,
   TYPE_OPERATION_ADD,
@@ -116,8 +116,8 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN;
   page = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_OPTION_UNIQUE_7;
-  pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE_7];
+  pageSize: number = PAGE_OPTION_UNIQUE;
+  pageSizeOptions: number[] = [PAGE_OPTION_UNIQUE];
 
   dataSource!: MatTableDataSource<BaunitHead>;
   selection: SelectionModel<BaunitHead> = new SelectionModel<BaunitHead>(true, []);

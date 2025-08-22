@@ -18,7 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
-  PAGE_OPTION_10_20_50_100,
+  PAGE_SIZE_OPTION,
   MODAL_SMALL,
   MODAL_SMALL_XS,
   MODAL_LARGE
@@ -93,7 +93,7 @@ export class WorkgroupsComponent implements OnInit {
   page = 0;
   pageSize = 10;
   totalElements = 0;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
 
   ngOnInit(): void {
     this.getWorkgroups();

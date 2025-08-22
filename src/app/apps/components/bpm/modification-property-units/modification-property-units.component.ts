@@ -38,7 +38,7 @@ import {
   MODAL_LARGE,
   MODAL_MIN_MEDIUM_ALL,
   PAGE,
-  PAGE_OPTION_5_7_10,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE,
   TYPE_CREATE,
   TYPE_INFORMATION_EDITION,
@@ -117,7 +117,7 @@ export class ModificationPropertyUnitsComponent
   totalElements = 0;
   page = PAGE;
   pageSize = PAGE_SIZE;
-  pageSizeOptions = PAGE_OPTION_5_7_10;
+  pageSizeOptions = PAGE_SIZE_OPTION;
   dataSource!: MatTableDataSource<BaUnitHeadPercentage>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   contentInformation!: InformationPegeable;

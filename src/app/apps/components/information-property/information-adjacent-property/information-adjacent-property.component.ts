@@ -31,7 +31,7 @@ import {
   MODAL_MEDIUM,
   MODAL_SMALL_LARGE,
   PAGE,
-  PAGE_OPTION_10_20_50_100,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION,
   TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
@@ -127,7 +127,7 @@ export class InformationAdjacentPropertyComponent
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   classEdit = '!bg-slate-400 !text-gray-100 opacity-60';
 
   dataSource!: MatTableDataSource<InformationAdjacent>;
@@ -383,7 +383,7 @@ export class InformationAdjacentPropertyComponent
           .afterClosed()
           .subscribe((result: { result: boolean; data: InformationAdjacent[] }) => {
             if (!result.result || !this.executionId || !this.baunitId) return;
-    
+
             this.onDeleteMasiveAdjacent(result, this.executionId, this.baunitId);
           });
       });

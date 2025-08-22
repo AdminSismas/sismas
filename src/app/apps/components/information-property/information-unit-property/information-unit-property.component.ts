@@ -25,7 +25,7 @@ import {
   LIST_SCHEMAS_CONTROL_MAIN,
   MODAL_LARGE,
   PAGE,
-  PAGE_OPTION_5_7_10,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
@@ -117,7 +117,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
 
   page: number = PAGE;
   pageSize: number = PAGE_SIZE_SORT;
-  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
   columns: TableColumn<BaUnitHeadPercentage>[] = TABLE_COLUMN_UNITS_TABLE_COLUMNS;
 

@@ -26,7 +26,7 @@ import {
   MODAL_LARGE, MODAL_MIN_MEDIUM_ALL,
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_5_7_10, PAGE_SIZE_SORT,
+  PAGE_SIZE_OPTION, PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from 'src/app/apps/constants/general/constants';
@@ -143,7 +143,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
 
   page: number = PAGE;
   pageSize: number = PAGE_SIZE_SORT;
-  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
   columns: TableColumn<contentInfoProcedures>[] = TABLE_COLUMN_PROPERTIES_HISTORY;
 

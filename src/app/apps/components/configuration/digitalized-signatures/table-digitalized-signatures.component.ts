@@ -13,7 +13,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { PAGE, PAGE_OPTION_10_20_50_100, PAGE_SIZE } from '../../../constants/general/constants';
+import { PAGE, PAGE_SIZE_OPTION, PAGE_SIZE } from '../../../constants/general/constants';
 
 // Custom
 import { CreateSignatureComponent } from './create-signature/create-signature.component';
@@ -58,7 +58,7 @@ export class TableDigitalizedSignaturesComponent
   // MatPaginator configuration
   public page: number = PAGE;
   public pageSize: number = PAGE_SIZE;
-  public pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  public pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   public totalElements = 0;
   public contentInformation!: InformationPegeable;
 

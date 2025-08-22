@@ -36,7 +36,7 @@ import {
   MODAL_SMALL_LARGE,
   MODIFY_PEOPLE,
   PAGE,
-  PAGE_OPTION_10_20_50_100,
+  PAGE_SIZE_OPTION,
   PAGE_OPTION_UNIQUE,
   PEOPLE_TABLE_COLUMNS
 } from '../../../../apps/constants/general/constants';
@@ -104,7 +104,7 @@ export class PeopleComponent implements OnInit {
   // indicativos de la paginación
   page: number = PAGE;
   pageSize = PAGE_OPTION_UNIQUE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
   dataSource!: MatTableDataSource<People>;
   selection = new SelectionModel<People>(true, []);

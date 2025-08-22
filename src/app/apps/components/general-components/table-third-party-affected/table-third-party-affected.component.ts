@@ -14,7 +14,7 @@ import { ThirdPartyAffectedParticipant } from '../../../interfaces/general/conte
 import { ParticipantTableDialogComponent } from '../../bpm/participant-table-dialog/participant-table-dialog.component';
 import {
   PAGE,
-  PAGE_OPTION_10_20_50_100,
+  PAGE_SIZE_OPTION,
   PAGE_OPTION_UNIQUE,
   TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
   TYPE_BUTTON_ONE,
@@ -111,7 +111,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
   page = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_OPTION_UNIQUE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<ProcessParticipant>[] =
     TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY;
   subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<

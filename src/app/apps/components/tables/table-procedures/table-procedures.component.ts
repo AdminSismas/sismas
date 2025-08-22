@@ -67,7 +67,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   MODAL_LARGE,
   MODAL_SMALL,
-  PAGE_OPTION_10_20_50_100
+  PAGE_SIZE_OPTION
 } from '../../../constants/general/constants';
 import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
 import { environment } from 'src/environments/environments';
@@ -205,7 +205,7 @@ export class TableProceduresComponent implements OnInit {
 
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
   maxDate: Date = new Date(); // Fecha máxima permitida (hoy)
   maxStartDate: Date = new Date(); // Fecha máxima permitida para la fecha de inicio (un día antes de hoy)

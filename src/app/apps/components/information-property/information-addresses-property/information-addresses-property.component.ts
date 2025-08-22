@@ -41,7 +41,7 @@ import {
   MODAL_SMALL,
   MODAL_SMALL_LARGE,
   PAGE,
-  PAGE_OPTION_5_7_10,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_ADDRESS,
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
@@ -138,7 +138,7 @@ export class InformationAddressesPropertyComponent
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
-  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public hasMainAddress = false;
 

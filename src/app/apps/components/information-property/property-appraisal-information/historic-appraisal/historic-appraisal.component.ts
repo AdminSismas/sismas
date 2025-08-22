@@ -15,7 +15,7 @@ import { InformationPropertyService } from '../../../../services/territorial-org
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import {
   PAGE,
-  PAGE_OPTION_1_5_10,
+  PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES_APPRAISALS
 } from 'src/app/apps/constants/general/constants';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
@@ -60,7 +60,7 @@ export class HistoricAppraisalComponent implements OnInit, AfterViewInit {
   pageSize = signal<number>(5);
   totalElements = signal<number>(0);
 
-  pageSizeOptions = computed<number[]>(() => PAGE_OPTION_1_5_10);
+  pageSizeOptions = computed<number[]>(() => PAGE_SIZE_OPTION);
   displayColumns = computed<string[]>(() => {
     return this.columns
       .filter((column) => {

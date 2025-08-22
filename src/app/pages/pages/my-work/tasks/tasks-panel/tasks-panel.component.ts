@@ -30,7 +30,7 @@ import { InformationPegeable } from '../../../../../apps/interfaces/general/info
 import {
   MODAL_SMALL,
   PAGE,
-  PAGE_SIZE_OPTION_BASIC,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   PAGE_SIZE_TABLE_UNIQUE,
   PANEL_ASSIGNED_TASKS,
@@ -98,7 +98,7 @@ export class TasksPanelComponent implements OnInit {
   filterTask = '';
 
   // Paginator config
-  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_BASIC;
+  protected readonly pageSizeOptions = PAGE_SIZE_OPTION;
   dataSource!: MatTableDataSource<TaskRetailExecuteResponseModel>;
   page = PAGE;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;

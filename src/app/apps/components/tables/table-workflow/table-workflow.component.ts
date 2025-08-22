@@ -54,7 +54,7 @@ import {
 import { PageSortByData } from '../../../interfaces/general/page-sortBy-data.model';
 import { WorkflowCollection } from '../../../interfaces/bpm/workflow.model';
 import { WorkflowService } from '../../../services/bpm/workflow.service';
-import { MODAL_LARGE, PAGE_OPTION_10_20_50_100 } from '../../../constants/general/constants';
+import { MODAL_LARGE, PAGE_SIZE_OPTION } from '../../../constants/general/constants';
 import Swal from 'sweetalert2';
 import { TaskListComponent } from './components/task-list/task-list.component';
 
@@ -123,7 +123,7 @@ export class TableWorkflowComponent implements OnInit {
 
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
   columns: TableColumn<contentInfoWorkflow>[] = TABLE_COLUMN_PROPERTIES;
 

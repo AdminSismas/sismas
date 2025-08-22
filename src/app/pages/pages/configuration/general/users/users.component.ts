@@ -33,7 +33,7 @@ import {
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
-import { PAGE_OPTION_10_20_50_100 } from '../../../../../apps/constants/general/constants';
+import { PAGE_SIZE_OPTION } from '../../../../../apps/constants/general/constants';
 import { TitleCasePipe } from '@angular/common';
 
 @Component({
@@ -82,7 +82,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   public totalElements = 0;
   public page = 0;
   public pageSize = 10;
-  public pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  public pageSizeOptions: number[] = PAGE_SIZE_OPTION;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;

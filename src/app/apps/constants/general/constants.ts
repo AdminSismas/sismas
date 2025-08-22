@@ -72,21 +72,10 @@ export const FORMAT_CURRENCY_SIMBOL = 'symbol';
 export const STRING_INFORMATION_NOT_FOUND = 'Información no disponible';
 export const CONSTANT_TYPE_PARTICIPATION_THIRDPARTY = 'Tercero Afectado';
 
-export const PAGE_OPTION_1_5_10: number[] = [1, 5, 10];
-export const PAGE_OPTION_5_7_10: number[] = [5, 7, 10];
-export const PAGE_OPTION_10_20_50_100: number[] = [10, 20, 50, 100];
-
-export const PAGE_OPTION_UNIQUE_5 = 5;
-export const PAGE_OPTION_UNIQUE_7 = 7;
 export const PAGE_OPTION_UNIQUE = 10;
 export const PAGE_SIZE_OPTION: number[] = [PAGE_OPTION_UNIQUE, 20, 50, 100];
 export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
-export const PAGE_SIZE_OPTION_BASIC: number[] = [PAGE_OPTION_UNIQUE, 15, 20];
-export const PAGE_SIZE_OPTION_ADDRESS: number[] = [5, PAGE_OPTION_UNIQUE];
-export const PAGE_SIZE_OPTION_ADJACENT: number[] = [5, PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
-export const PAGE_SIZE_OPTION_FOLIO: number[] = [2, 5];
-
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',

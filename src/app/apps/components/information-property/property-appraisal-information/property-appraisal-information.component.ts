@@ -22,7 +22,7 @@ import {
   MODAL_SMALL_XS,
   NAME_SELF_VALUATION_VALUE,
   PAGE,
-  PAGE_OPTION_5_7_10,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_APPRAISALS,
   TYPE_INFORMATION_EDITION,
@@ -138,7 +138,7 @@ export class PropertyAppraisalInformationComponent
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_SORT;
-  pageSizeOptions: number[] = PAGE_OPTION_5_7_10;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
 
   dataSource!: MatTableDataSource<InfoAppraisal>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();

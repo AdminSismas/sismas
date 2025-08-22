@@ -12,8 +12,9 @@ export class OutFormatModel {
     schema?:string | '';
     page?: number | '';
     size?: number | '';
-  
-  
+
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(content?: any,schema?:string,page?: number, size?: number,) {
         this.outTemplateId = content.outTemplateId;
         this.templateCode = content.templateCode;
@@ -43,7 +44,7 @@ export class OutFormatModel {
 
 export class HeaderTemplateModel {
     outTemplateId?: number;
-  
+
     constructor(outTemplateId?: number) {
         this.outTemplateId = outTemplateId;
     }
@@ -52,7 +53,7 @@ export class HeaderTemplateModel {
 
 export class FooterTemplateModel {
     outTemplateId?: number;
-  
+
     constructor(outTemplateId?: number) {
         this.outTemplateId = outTemplateId;
     }

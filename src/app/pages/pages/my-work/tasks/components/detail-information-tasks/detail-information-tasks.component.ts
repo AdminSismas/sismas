@@ -34,8 +34,7 @@ import {
   MODAL_MEDIUM,
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
-  PAGE_OPTION_10_20_50_100,
-  PAGE_SIZE_OPTION_ADDRESS,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_COLUMN_PROPERTIES_EXECUTED,
@@ -130,7 +129,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
   page: number = PAGE;
   totalElements = 0;
   pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   showAlert = false;
 
   _countAttachment$: ReplaySubject<number> = new ReplaySubject<number>(0);
@@ -202,7 +201,7 @@ export class DetailInformationTasksComponent implements OnInit, AfterViewInit {
       this.typeInformation === TYPE_INFORMATION_VISUAL
     ) {
       this.pageSize = PAGE_SIZE_SORT;
-      this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
+      this.pageSizeOptions = PAGE_SIZE_OPTION;
       this.columns = TABLE_COLUMN_PROPERTIES_EXECUTED;
     }
     this.searchCtrl.valueChanges

@@ -25,6 +25,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../apps/constants/general/constants';
 import { MatIconButton } from '@angular/material/button';
+import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 
 
 // AddEditInformationDocumentAssociated
@@ -66,14 +67,12 @@ export interface AddOutputFormats{
 })
 export class OutputFormatsEditUpdateComponent implements OnInit {
  readonly defaults = inject<AddOutputFormats>(MAT_DIALOG_DATA);
-  userSesion:any | null = null;
+  userSesion:DecodeJwt | null = null;
   form = this.fb.group({
     content: new UntypedFormControl('', [Validators.required]),
     headerTemplateId: new UntypedFormControl('',),
     footerTemplateId: new UntypedFormControl('',),
     templateCode: new UntypedFormControl('', [Validators.required]),
-
-
   });
 
 
@@ -159,7 +158,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
     }
 
 
-    saveTemplate(): any {
+    saveTemplate() {
       if (this.form.invalid) {
         this.form.markAllAsTouched();
         return;
@@ -176,7 +175,7 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
 
 
     // PROCESO ACTUALIZAR MODELO DE DATOS DetailBasicInformationAddress
-    public generateModelDirecctionModel(value: any): OutFormatModel | undefined {
+    public generateModelDirecctionModel(value: Record<string, string | boolean>): OutFormatModel | undefined {
       // Obtener el contenido HTML desde el editor Quill
       let textFormatHtml = '';
       if (this.quillEditor?.quillEditor) {
@@ -189,11 +188,11 @@ export class OutputFormatsEditUpdateComponent implements OnInit {
         const createBasicInformationAddress: OutFormatModel = {
           templateCode: this.templateCode?.value || '',
           htmlTemplate: fullHtmlDocument || '',
-          isSinged: value.isSinged || false,
-          createdBy: value.createdBy || this.userSesion?.sub,
-          createdAt: value.createdAt || this.getCurrentFormattedDate(),
-          updatedBy: value.updatedBy || null,
-          updatedAt: value.updatedAt || null,
+          isSinged: value['isSinged'] as boolean ?? false,
+          createdBy: value['createdBy'] as string ?? this.userSesion?.sub,
+          createdAt: value['createdAt'] as string ?? this.getCurrentFormattedDate(),
+          updatedBy: value['updatedBy'] as string ?? null,
+          updatedAt: value['updatedAt'] as string ?? null,
         };
 
         if (this.headerTemplateId?.value) {

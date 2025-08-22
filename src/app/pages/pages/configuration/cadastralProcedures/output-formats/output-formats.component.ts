@@ -4,7 +4,7 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { CommonModule, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { CommonModule, NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,9 +24,8 @@ import { InformationPegeable } from '../../../../../apps/interfaces/general/info
 import {
   MODAL_SMALL,
   PAGE,
-  PAGE_OPTION_10_20_50_100,
   PAGE_SIZE,
-  PAGE_SIZE_OPTION_ADDRESS,
+  PAGE_SIZE_OPTION,
   PAGE_SIZE_SORT,
   TABLE_COLUMN_DOCUMENT_ASSOCIATION,
   TYPE_INFORMATION_EDITION,
@@ -80,7 +79,6 @@ export interface AddOutputFormats {
     MatIconModule,
     MatSortModule,
     MatTableModule,
-    NgFor,
     NgClass,
     NgIf,
     CommonModule,
@@ -109,7 +107,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
     page:number = PAGE;
     totalElements = 0;
     pageSize: number = PAGE_SIZE;
-    pageSizeOptions: number[] = PAGE_OPTION_10_20_50_100;
+    pageSizeOptions: number[] = PAGE_SIZE_OPTION;
     userSesion:DecodeJwt | null = null;
 
     dataSource!: MatTableDataSource<OutFormatModel>;
@@ -137,7 +135,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
       // this.id = this.id + this.getRandomInt(10000) + this.schema + this.outTempplateId;
       if(this.typeInformation && this.typeInformation === TYPE_INFORMATION_VISUAL) {
         this.pageSize = PAGE_SIZE_SORT;
-        this.pageSizeOptions = PAGE_SIZE_OPTION_ADDRESS;
+        this.pageSizeOptions = PAGE_SIZE_OPTION;
         this.columns = TABLE_COLUMN_DOCUMENT_ASSOCIATION;
       }
       this.searchDocumentoList();
@@ -166,7 +164,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
       this.outFormatService.getDataDocumentoAsociety(
         this.generateObjectPageSearchData(''))
         .subscribe({
-          error: (err: any) => this.captureInformationSubscribeError(err),
+          error: () => this.captureInformationSubscribeError(),
           next: (result: InformationPegeable) => this.captureInformationSubscribe(result)
         });
       return true;
@@ -204,7 +202,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
       }
     }
 
-    captureInformationSubscribeError(err: any): void {
+    captureInformationSubscribeError(): void {
       this.contentInformations = new InformationPegeable();
       this.dataSource.data = [];
     }
@@ -230,7 +228,7 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
         data: dialogData
       });
 
-      dialogRef.afterClosed().subscribe((result) => {
+      dialogRef.afterClosed().subscribe((result: OutFormatModel) => {
         if (result) {
           if(dialogData.type === 'new'){
             this.saveDocumento(result);
@@ -241,27 +239,27 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
       });
     }
 
-    saveDocumento(data:any): boolean {
+    saveDocumento(data:OutFormatModel): boolean {
       this.outFormatService.setDataDocumentoAsocietySave(
         this.generateObjectPageSearchData(''),data)
         .subscribe({
-          error: (err: any) => this.captureInformationSubscribeError(err),
-          next: (result: InformationPegeable) => this.searchDocumentoList()
+          error: () => this.captureInformationSubscribeError(),
+          next: () => this.searchDocumentoList()
         });
       return true;
     }
 
-    updateDocumento(data:any): boolean {
+    updateDocumento(data:OutFormatModel): boolean {
       this.outFormatService.setUDocumentoAsocietyUpdate(
-        this.generateObjectPageSearchData(data?.outTemplateId),data)
+        this.generateObjectPageSearchData(`${data?.outTemplateId}`),data)
         .subscribe({
-          error: (err: any) => this.captureInformationSubscribeError(err),
-          next: (result: InformationPegeable) => this.searchDocumentoList()
+          error: () => this.captureInformationSubscribeError(),
+          next: () => this.searchDocumentoList()
         });
       return true;
     }
 
-    editInformations(valueTemplate: any): void {
+    editInformations(): void {
       // const dialogRef = this.dialog.open(DocumentAssociatedEditUpdateComponent, {
       //   width: '58%',
       //   height: '80%',
@@ -277,24 +275,24 @@ isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
       // });
     }
 
-    deleteInformations(customer: any): void {
-      const dialogRef = this.dialog.open(this.confirmDialog);
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          const outTemplateId = customer.outTemplateId ?? '';
+    // deleteInformations(customer: any): void {
+    //   const dialogRef = this.dialog.open(this.confirmDialog);
+    //   dialogRef.afterClosed().subscribe((result) => {
+    //     if (result) {
+    //       const outTemplateId = customer.outTemplateId ?? '';
 
-          this.outFormatService.setUDocumentoAsocietyDelete(outTemplateId).subscribe({
-            next: () => {
-              this.searchDocumentoList();
-              this.deleteSwal.fire();
-            },
-            error: () => {
-              this.errorSwal.fire();
-            }
-          });
-        }
-      });
-    }
+    //       this.outFormatService.setUDocumentoAsocietyDelete(outTemplateId).subscribe({
+    //         next: () => {
+    //           this.searchDocumentoList();
+    //           this.deleteSwal.fire();
+    //         },
+    //         error: () => {
+    //           this.errorSwal.fire();
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
 
 
 
