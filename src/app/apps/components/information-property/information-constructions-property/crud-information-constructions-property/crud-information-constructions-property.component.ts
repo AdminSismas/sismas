@@ -137,6 +137,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   baunitId: string | null | undefined;
   unitBuiltId!: number | null | undefined; // ID de la construcción creada
   typeCrud: TypeOperation | null = null;
+  haveToCreateConstruction = true;
   annexUrl = '';
   qualificationMode: TypeQualificationMode | null = TYPE_TRADITIONAL;
   allBuiltUseOptions: DomainCollection[] = [];
@@ -180,7 +181,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     ], // Validación personalizada
     unitBuiltArea: [
       this.crudInformationData?.contentInformation?.unitBuiltArea ?? null,
-      [Validators.required, this.generalValidations.validateOnlyNumber()]
+      [Validators.required, this.generalValidations.validateOnlyNumber(), this.generalValidations.nonZeroValidator()]
     ],
     unitBuiltPrivateArea: [
       this.crudInformationData?.contentInformation?.unitBuiltPrivateArea ??
@@ -188,7 +189,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
       [
         Validators.required,
         this.generalValidations.validateOnlyNumber(), // Solo números
-        //this.generalValidations.nonZeroValidator(), // Validación para que el área no sea 0
+        this.generalValidations.nonZeroValidator(), // Validación para que el área no sea 0
         this.generalValidations.privateAreaValidator('unitBuiltArea') // Validación para que no sea mayor al área total
       ]
     ],
@@ -264,7 +265,8 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.typeCrud = this.crudInformationData?.type || TYPE_CREATE;
+    this.typeCrud = this.crudInformationData?.type ?? TYPE_CREATE;
+    this.haveToCreateConstruction = this.typeCrud === TYPE_CREATE;
     this.executionId =
       this.crudInformationData?.contentInformation?.executionId;
     this.baunitId = this.crudInformationData?.contentInformation?.baunitId;
@@ -796,16 +798,18 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
       .subscribe({
         next: (result) => {
           this.constructionData = result;
+          this.haveToCreateConstruction = false;
           this.unitBuiltId = result?.unitBuiltId;
           this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
           this.updateInformationKitchenAndBathFields();
           this.isCreateOrUpdateConstruction = true;
-          this.successDialog.fire();
+          this.successDialog.fire().then(() => this.stepper.next());
           this.initFormQualification(this.isIndustrialConstruction());
         },
         error: () => {
           this.isCreateOrUpdateConstruction = false;
           this.errorSaveDialog.fire();
+          this.haveToCreateConstruction = true;
         }
       });
   }
@@ -824,7 +828,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
           this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
           this.updateInformationKitchenAndBathFields();
           this.isCreateOrUpdateConstruction = true;
-          this.successDialog.fire();
+          this.successDialog.fire().then(() => this.stepper.next());
           this.initFormQualification(this.isIndustrialConstruction());
         },
         error: () => {

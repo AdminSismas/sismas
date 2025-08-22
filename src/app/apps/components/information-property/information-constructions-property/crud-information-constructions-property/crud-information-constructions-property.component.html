@@ -153,349 +153,353 @@
         </div>
       </mat-step>
 
-      <!-- Calificación -->
-      <mat-step [stepControl]="activeQualificationForm">
-        <form [formGroup]="activeQualificationForm">
-          <ng-template matStepLabel>Calificación</ng-template>
-          @if (
-            qualificationMode === TYPE_TYPOLOGY ||
-            qualificationMode === TYPE_TRADITIONAL
-          ) {
-            <div class="actions flex items-center gap-2 pt-0">
-              <button
-                mat-raised-button
-                color="primary"
-                (click)="toggleQualificationMode(TYPE_TRADITIONAL)"
-                [class]="
-                  qualificationMode === TYPE_TRADITIONAL
-                    ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
-                    : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
-                "
-                [disabled]="qualificationMode === TYPE_TRADITIONAL"
-              >
-                Tradicional
-              </button>
-              <button
-                mat-raised-button
-                color="primary"
-                (click)="toggleQualificationMode(TYPE_TYPOLOGY)"
-                [class]="
-                  qualificationMode === TYPE_TYPOLOGY
-                    ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
-                    : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
-                "
-                [disabled]="qualificationMode === TYPE_TYPOLOGY"
-              >
-                Tipología
-              </button>
-            </div>
-          }
-
-          @if (qualificationMode === TYPE_TRADITIONAL) {
-            <!-- Tradicional -->
-            <div class="mt-2 flex flex-col gap-2">
-              <div class="mt-0 flex flex-col gap-2">
-                <p><strong>Estructura</strong></p>
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'arma' + 12354"
-                    [label]="'Armazón'"
-                    [placeholder]="'Escoger armazón'"
-                    [apiUrl]="getApiQualificationUrl('Armazon')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'structureFraming'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Muros' + 12354"
-                    [label]="'Muros'"
-                    [placeholder]="'Escoger muros'"
-                    [apiUrl]="getApiQualificationUrl('Muros')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'structureWalls'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'conseva_cuviertas' + 12354"
-                    [label]="'Cubierta'"
-                    [placeholder]="'Escoger cubierta'"
-                    [apiUrl]="getApiQualificationUrl('Cubierta')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'structureRoof'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'conseva_one' + 12354"
-                    [label]="'Conservación'"
-                    [placeholder]="'Escoger conservación'"
-                    [apiUrl]="getApiQualificationUrl('Conservacion_Cubierta')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'structureConservation'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-                </div>
+      @if (!haveToCreateConstruction) {
+        <!-- Calificación -->
+        <mat-step [stepControl]="activeQualificationForm">
+          <form [formGroup]="activeQualificationForm">
+            <ng-template matStepLabel>Calificación</ng-template>
+            @if (
+              qualificationMode === TYPE_TYPOLOGY ||
+              qualificationMode === TYPE_TRADITIONAL
+            ) {
+              <div class="actions flex items-center gap-2 pt-0">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="toggleQualificationMode(TYPE_TRADITIONAL)"
+                  [class]="
+                    qualificationMode === TYPE_TRADITIONAL
+                      ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
+                      : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
+                  "
+                  [disabled]="qualificationMode === TYPE_TRADITIONAL"
+                >
+                  Tradicional
+                </button>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="toggleQualificationMode(TYPE_TYPOLOGY)"
+                  [class]="
+                    qualificationMode === TYPE_TYPOLOGY
+                      ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
+                      : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
+                  "
+                  [disabled]="qualificationMode === TYPE_TYPOLOGY"
+                >
+                  Tipología
+                </button>
               </div>
-              <div class="mt-0 flex flex-col gap-2">
-                <p><strong>Acabados Principales</strong></p>
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Fachadas' + 12354"
-                    [label]="'Fachadas'"
-                    [placeholder]="'Escoger fachada'"
-                    [apiUrl]="getApiQualificationUrl('Fachada')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'finishesFacades'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
+            }
 
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'muros_cubri' + 12354"
-                    [label]="'Cubrimiento de muros'"
-                    [placeholder]="'Escoger cubrimiento'"
-                    [apiUrl]="getApiQualificationUrl('Cubrimiento_Muros')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'finishesWalls'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Pisos' + 12354"
-                    [label]="'Pisos'"
-                    [placeholder]="'Escoger pisos'"
-                    [apiUrl]="getApiQualificationUrl('Piso')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'finishesFloors'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Conserva' + 12354"
-                    [label]="'Conservación'"
-                    [placeholder]="'Escoger conservación'"
-                    [apiUrl]="getApiQualificationUrl('Conservacion_Acabados')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    [formControlName]="'finishesConservation'"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-                </div>
-              </div>
-              <div class="mt-0 flex flex-col gap-2">
-                <p><strong>Baño</strong></p>
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Tamanio' + 12354"
-                    [label]="'Tamaño'"
-                    [placeholder]="'Escoger tamaño'"
-                    [apiUrl]="getApiQualificationUrl('Tamanio_Banio')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="bathSize"
-                    (selectionChange)="toggleBathroomFields($event)"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Enchapes' + 12354"
-                    [label]="'Enchapes'"
-                    [placeholder]="'Escoger enchape'"
-                    [apiUrl]="getApiQualificationUrl('Enchape_Banio')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="bathEnchapes"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Mobiliario' + 12354"
-                    [label]="'Mobiliario'"
-                    [placeholder]="'Escoger mobiliario'"
-                    [apiUrl]="getApiQualificationUrl('Mobiliario_Banio')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="bathFurniture"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Conservación' + 12354"
-                    [label]="'Conservación'"
-                    [placeholder]="'Escoger conservación'"
-                    [apiUrl]="getApiQualificationUrl('Conservacion_Banio')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="bathConservation"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-                </div>
-              </div>
-              <div class="mt-0 flex flex-col gap-2">
-                <p><strong>Cocina</strong></p>
-                <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Tamanio' + 12354"
-                    [label]="'Tamaño'"
-                    [placeholder]="'Escoger tamaño'"
-                    [apiUrl]="getApiQualificationUrl('Tamanio_Cocina')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="kitchenSize"
-                    (selectionChange)="toggleKitchenFields($event)"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Enchapes' + 12354"
-                    [label]="'Enchapes'"
-                    [placeholder]="'Escoger enchape'"
-                    [apiUrl]="getApiQualificationUrl('Enchape_Cocina')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="kitchenEnchapes"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Mobiliario' + 12354"
-                    [label]="'Mobiliario'"
-                    [placeholder]="'Escoger mobiliario'"
-                    [apiUrl]="getApiQualificationUrl('Mobiliario_Cocina')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="kitchenFurniture"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Conservación' + 12354"
-                    [label]="'Conservación'"
-                    [placeholder]="'Escoger conservación'"
-                    [apiUrl]="getApiQualificationUrl('Conservacion_Cocina')"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="kitchenConservation"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-                </div>
-              </div>
-              @if (isIndustrialConstruction()) {
+            @if (qualificationMode === TYPE_TRADITIONAL) {
+              <!-- Tradicional -->
+              <div class="mt-2 flex flex-col gap-2">
                 <div class="mt-0 flex flex-col gap-2">
-                  <p><strong>Complemento Industrial</strong></p>
+                  <p><strong>Estructura</strong></p>
                   <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
                     <vex-combox-custom-selector
-                      class="w-[calc(25%-1rem)]"
-                      [idSelector]="'ComplementoIndustrial' + 12354"
-                      [label]="'Complemento industrial'"
-                      [placeholder]="'Seleccionar complemento industrial'"
-                      [apiUrl]="
-                        getApiQualificationUrl('Cerchas_Complemento_Industria')
-                      "
+                      class="flex-auto"
+                      [idSelector]="'arma' + 12354"
+                      [label]="'Armazón'"
+                      [placeholder]="'Escoger armazón'"
+                      [apiUrl]="getApiQualificationUrl('Armazon')"
                       [valueKey]="'id'"
                       [displayKey]="'dispname'"
-                      formControlName="industrialComplement"
+                      [formControlName]="'structureFraming'"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Muros' + 12354"
+                      [label]="'Muros'"
+                      [placeholder]="'Escoger muros'"
+                      [apiUrl]="getApiQualificationUrl('Muros')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      [formControlName]="'structureWalls'"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'conseva_cuviertas' + 12354"
+                      [label]="'Cubierta'"
+                      [placeholder]="'Escoger cubierta'"
+                      [apiUrl]="getApiQualificationUrl('Cubierta')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      [formControlName]="'structureRoof'"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'conseva_one' + 12354"
+                      [label]="'Conservación'"
+                      [placeholder]="'Escoger conservación'"
+                      [apiUrl]="getApiQualificationUrl('Conservacion_Cubierta')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      [formControlName]="'structureConservation'"
                       cssClasses="custom-class"
                     ></vex-combox-custom-selector>
                   </div>
                 </div>
-              }
-            </div>
-          }
+                <div class="mt-0 flex flex-col gap-2">
+                  <p><strong>Acabados Principales</strong></p>
+                  <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Fachadas' + 12354"
+                      [label]="'Fachadas'"
+                      [placeholder]="'Escoger fachada'"
+                      [apiUrl]="getApiQualificationUrl('Fachada')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      [formControlName]="'finishesFacades'"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
 
-          @if (qualificationMode === TYPE_TYPOLOGY) {
-            <!-- Tipología -->
-            <div class="mt-2 flex flex-col gap-2">
-              <div class="mt-0 flex flex-col gap-2">
-                <p><strong>Tipología</strong></p>
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-3">
-                  <vex-combox-custom-selector
-                    [idSelector]="'Tipologia ' + 12354"
-                    [label]="'Tipología'"
-                    [placeholder]="'Seleccione tipología...'"
-                    [apiUrl]="getApiQualificationUrl('Tipologia')"
-                    [displayKey]="'dispname'"
-                    formControlName="domTipologiaTipo"
-                  ></vex-combox-custom-selector>
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'muros_cubri' + 12354"
+                      [label]="'Cubrimiento de muros'"
+                      [placeholder]="'Escoger cubrimiento'"
+                      [apiUrl]="getApiQualificationUrl('Cubrimiento_Muros')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      [formControlName]="'finishesWalls'"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Pisos' + 12354"
+                      [label]="'Pisos'"
+                      [placeholder]="'Escoger pisos'"
+                      [apiUrl]="getApiQualificationUrl('Piso')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      [formControlName]="'finishesFloors'"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Conserva' + 12354"
+                      [label]="'Conservación'"
+                      [placeholder]="'Escoger conservación'"
+                      [apiUrl]="getApiQualificationUrl('Conservacion_Acabados')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      [formControlName]="'finishesConservation'"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+                  </div>
+                </div>
+                <div class="mt-0 flex flex-col gap-2">
+                  <p><strong>Baño</strong></p>
+                  <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Tamanio' + 12354"
+                      [label]="'Tamaño'"
+                      [placeholder]="'Escoger tamaño'"
+                      [apiUrl]="getApiQualificationUrl('Tamanio_Banio')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="bathSize"
+                      (selectionChange)="toggleBathroomFields($event)"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Enchapes' + 12354"
+                      [label]="'Enchapes'"
+                      [placeholder]="'Escoger enchape'"
+                      [apiUrl]="getApiQualificationUrl('Enchape_Banio')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="bathEnchapes"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Mobiliario' + 12354"
+                      [label]="'Mobiliario'"
+                      [placeholder]="'Escoger mobiliario'"
+                      [apiUrl]="getApiQualificationUrl('Mobiliario_Banio')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="bathFurniture"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Conservación' + 12354"
+                      [label]="'Conservación'"
+                      [placeholder]="'Escoger conservación'"
+                      [apiUrl]="getApiQualificationUrl('Conservacion_Banio')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="bathConservation"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+                  </div>
+                </div>
+                <div class="mt-0 flex flex-col gap-2">
+                  <p><strong>Cocina</strong></p>
+                  <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Tamanio' + 12354"
+                      [label]="'Tamaño'"
+                      [placeholder]="'Escoger tamaño'"
+                      [apiUrl]="getApiQualificationUrl('Tamanio_Cocina')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="kitchenSize"
+                      (selectionChange)="toggleKitchenFields($event)"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Enchapes' + 12354"
+                      [label]="'Enchapes'"
+                      [placeholder]="'Escoger enchape'"
+                      [apiUrl]="getApiQualificationUrl('Enchape_Cocina')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="kitchenEnchapes"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Mobiliario' + 12354"
+                      [label]="'Mobiliario'"
+                      [placeholder]="'Escoger mobiliario'"
+                      [apiUrl]="getApiQualificationUrl('Mobiliario_Cocina')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="kitchenFurniture"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Conservación' + 12354"
+                      [label]="'Conservación'"
+                      [placeholder]="'Escoger conservación'"
+                      [apiUrl]="getApiQualificationUrl('Conservacion_Cocina')"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="kitchenConservation"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+                  </div>
+                </div>
+                @if (isIndustrialConstruction()) {
+                  <div class="mt-0 flex flex-col gap-2">
+                    <p><strong>Complemento Industrial</strong></p>
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                      <vex-combox-custom-selector
+                        class="w-[calc(25%-1rem)]"
+                        [idSelector]="'ComplementoIndustrial' + 12354"
+                        [label]="'Complemento industrial'"
+                        [placeholder]="'Seleccionar complemento industrial'"
+                        [apiUrl]="
+                          getApiQualificationUrl(
+                            'Cerchas_Complemento_Industria'
+                          )
+                        "
+                        [valueKey]="'id'"
+                        [displayKey]="'dispname'"
+                        formControlName="industrialComplement"
+                        cssClasses="custom-class"
+                      ></vex-combox-custom-selector>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+
+            @if (qualificationMode === TYPE_TYPOLOGY) {
+              <!-- Tipología -->
+              <div class="mt-2 flex flex-col gap-2">
+                <div class="mt-0 flex flex-col gap-2">
+                  <p><strong>Tipología</strong></p>
+                  <div class="flex flex-col sm:flex-row gap-3 sm:gap-3">
+                    <vex-combox-custom-selector
+                      [idSelector]="'Tipologia ' + 12354"
+                      [label]="'Tipología'"
+                      [placeholder]="'Seleccione tipología...'"
+                      [apiUrl]="getApiQualificationUrl('Tipologia')"
+                      [displayKey]="'dispname'"
+                      formControlName="domTipologiaTipo"
+                    ></vex-combox-custom-selector>
+                  </div>
                 </div>
               </div>
-            </div>
-          }
+            }
 
-          @if (qualificationMode === TYPE_ANNEX) {
-            <!-- Anexo -->
-            <div class="mt-2 flex flex-col gap-2">
-              <div class="mt-0 flex flex-col gap-3">
-                <p><strong>Anexos</strong></p>
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                  <vex-combox-custom-selector
-                    class="flex-auto"
-                    [idSelector]="'Anexxxo ' + 98765"
-                    [label]="'Anexos'"
-                    [placeholder]="'Seleccione un anexo...'"
-                    [apiUrlDynamic]="annexUrl"
-                    [valueKey]="'id'"
-                    [displayKey]="'dispname'"
-                    formControlName="domTypeAnexx"
-                    cssClasses="custom-class"
-                  ></vex-combox-custom-selector>
-                  <span class="flex-auto"></span>
+            @if (qualificationMode === TYPE_ANNEX) {
+              <!-- Anexo -->
+              <div class="mt-2 flex flex-col gap-2">
+                <div class="mt-0 flex flex-col gap-3">
+                  <p><strong>Anexos</strong></p>
+                  <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                    <vex-combox-custom-selector
+                      class="flex-auto"
+                      [idSelector]="'Anexxxo ' + 98765"
+                      [label]="'Anexos'"
+                      [placeholder]="'Seleccione un anexo...'"
+                      [apiUrlDynamic]="annexUrl"
+                      [valueKey]="'id'"
+                      [displayKey]="'dispname'"
+                      formControlName="domTypeAnexx"
+                      cssClasses="custom-class"
+                    ></vex-combox-custom-selector>
+                    <span class="flex-auto"></span>
+                  </div>
                 </div>
               </div>
+            }
+            <div class="actions flex items-center justify-end gap-2">
+              <button
+                color="primary"
+                mat-button
+                matStepperPrevious
+                type="button"
+              >
+                Atras
+              </button>
+              <button
+                class="px-2"
+                mat-raised-button
+                color="accent"
+                (click)="resetConstructionAndQualification()"
+              >
+                Borrar
+              </button>
+              <button
+                class="px-2"
+                mat-raised-button
+                color="primary"
+                (click)="saveConstructionAndQualification()"
+              >
+                Guardar
+              </button>
             </div>
-          }
-          <div class="actions flex items-center justify-end gap-2">
-            <button
-              color="primary"
-              mat-button
-              matStepperPrevious
-              type="button"
-            >
-              Atras
-            </button>
-            <button
-              class="px-2"
-              mat-raised-button
-              color="accent"
-              (click)="resetConstructionAndQualification()"
-            >
-              Borrar
-            </button>
-            <button
-              class="px-2"
-              mat-raised-button
-              color="primary"
-              (click)="saveConstructionAndQualification()"
-            >
-              Guardar
-            </button>
-          </div>
-        </form>
-      </mat-step>
+          </form>
+        </mat-step>
+      }
     </mat-horizontal-stepper>
   </div>
 </mat-dialog-content>
