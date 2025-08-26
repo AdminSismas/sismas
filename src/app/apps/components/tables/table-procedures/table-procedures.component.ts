@@ -7,7 +7,7 @@ import {
   signal,
   ViewChild
 } from '@angular/core';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -17,12 +17,7 @@ import {
   Validators
 } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  Observable,
-  tap
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, tap } from 'rxjs';
 
 // recursos de vex
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
@@ -80,6 +75,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import 'moment/locale/es';
+import Swal from 'sweetalert2';
 
 interface MenuActions {
   label: string;
@@ -114,10 +110,10 @@ const beginAt = new Date('2025-01-01T00:00:00');
     )
   ],
   imports: [
-    CommonModule,
+    AsyncPipe,
+    DatePipe,
     FormsModule,
     NgClass,
-    NgIf,
     ReactiveFormsModule,
     ReactiveFormsModule,
     SweetAlert2Module,
@@ -202,6 +198,7 @@ export class TableProceduresComponent implements OnInit {
   ];
 
   menuOptions = signal<MenuActions[]>([]);
+  gettedProcedureByResolution = signal<boolean>(false);
 
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
@@ -272,7 +269,15 @@ export class TableProceduresComponent implements OnInit {
       ]), // Solo letras y permite espacio
       individualNumberPartForm: this.fBuilder.control(null, [
         Validators.pattern(/^[0-9]*$/)
-      ])
+      ]),
+      resolutionNumber: ['', [Validators.pattern(/^[0-9]*$/)]],
+      resolutionYear: [
+        '',
+        [
+          Validators.pattern(/^[0-9]*$/),
+          Validators.max(new Date().getFullYear())
+        ]
+      ]
     });
     this.beginAtForm?.setValue(beginAt);
     this.beginAtEForm?.setValue(new Date());
@@ -432,6 +437,7 @@ export class TableProceduresComponent implements OnInit {
   }
 
   public defaultTableData() {
+    this.gettedProcedureByResolution.set(false);
     this.executionCodeForm?.setValue(0);
 
     this.individualNumberPartForm?.setValue('');
@@ -447,9 +453,55 @@ export class TableProceduresComponent implements OnInit {
     this.getDataFromProceduresService(formValue);
   }
 
-  onSearch(): void {
+  searchByPersonOrFiled(): void {
     const data = this.objectParameters();
     this.getDataFromProceduresService(data);
+  }
+
+  searchByResolution(): void {
+    const { resolutionNumber, resolutionYear } =
+      this.informationEjecution.value;
+
+    if (!resolutionNumber || !resolutionYear) {
+      Swal.fire({
+        icon: 'error',
+        text: 'Debe ingresar el número y el año de la resolución',
+        timer: 5000,
+        showConfirmButton: false,
+        timerProgressBar: true
+      });
+      return;
+    }
+
+    if (resolutionYear > new Date().getFullYear()) {
+      Swal.fire({
+        icon: 'error',
+        text: 'El año de la resolución no puede ser mayor al año actual',
+        timer: 5000,
+        showConfirmButton: false,
+        timerProgressBar: true
+      });
+      return;
+    }
+
+    if (resolutionNumber < 1) {
+      Swal.fire({
+        icon: 'error',
+        text: 'El número de la resolución no puede ser menor a 1',
+        timer: 5000,
+        showConfirmButton: false,
+        timerProgressBar: true
+      });
+      return;
+    }
+
+
+    this.proceduresService
+      .getProcedureByResolution(resolutionNumber, resolutionYear)
+      .subscribe((result) => {
+        this.dataSource.data = [new contentInfoProcedures(result)];
+        this.gettedProcedureByResolution.set(true);
+      });
   }
 
   /* ------- Meth. Common ------- */
@@ -528,7 +580,6 @@ export class TableProceduresComponent implements OnInit {
         (row: ProceduresCollection) =>
           new contentInfoProcedures({
             ...row,
-            name: row.process?.name,
             processName: row.process?.name
           })
       );
@@ -660,12 +711,16 @@ export class TableProceduresComponent implements OnInit {
   filteredActions(row: contentInfoProcedures): void {
     if (!row.bpmPriority || row.bpmPriority === 1) {
       return this.menuOptions.set(
-        this.actions.filter((action) => action.visible && action.label !== 'Quitar prioridad')
+        this.actions.filter(
+          (action) => action.visible && action.label !== 'Quitar prioridad'
+        )
       );
     }
 
     return this.menuOptions.set(
-      this.actions.filter((action) => action.visible && action.label !== 'Prioridad')
+      this.actions.filter(
+        (action) => action.visible && action.label !== 'Prioridad'
+      )
     );
   }
 

@@ -171,7 +171,10 @@ export const environment = {
   preview: "/preview",
   production: false,
   proexecution: "/proexecution",
-  proExecution: "/proExecution",
+  proExecution: {
+    resolucion: "/resolucion",
+    value: "/proExecution"
+  },
   qbaunit_ccbarrio: "/qbaunit/ccbarrio",
   qbaunit_cccomuna: "/qbaunit/cccomuna",
   qbaunit_cccorr: "/qbaunit/cccorr",

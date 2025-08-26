@@ -14,14 +14,13 @@ import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 })
 export class ProceduresService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}${envi.proExecution}`;
+  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}${envi.proExecution.value}`;
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(
     private requestsService: SendGeneralRequestsService,
     private http: HttpClient
-  ) {
-  }
+  ) {}
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByProcedures(
@@ -51,8 +50,17 @@ export class ProceduresService {
     page: PageProceduresData,
     urlMain: string
   ): Observable<InformationPegeable> {
-    const urlComplete = `${this.basic_url}/${urlMain}?page=${page.page}&size=${page.size}&beginAt=${page.beginAt}&beginAtE=${page.beginAtE}&executionCode=${page.executionCode}&individualNumber=${page.individualNumber}`;
-    return this.http.get<InformationPegeable>(urlComplete);
+    const params = new HttpParams()
+      .set('page', `${page.page}`)
+      .set('size', `${page.size}`)
+      .set('beginAt', `${page.beginAt}`)
+      .set('beginAtE', `${page.beginAtE}`)
+      .set('executionCode', `${page.executionCode}`)
+      .set('individualNumber', `${page.individualNumber}`);
+
+    const urlComplete = `${this.basic_url}/${urlMain}`;
+
+    return this.http.get<InformationPegeable>(urlComplete, { params });
   }
 
   public getFilterTableHistoryService(
@@ -63,7 +71,9 @@ export class ProceduresService {
   }
 
   // /bpmOperation/proExecution/baunitId/active/{{baunitId}}?page=0&size=10
-  public getFilterHistoryService(page: PageProceduresData): Observable<ProceduresCollection[]> {
+  public getFilterHistoryService(
+    page: PageProceduresData
+  ): Observable<ProceduresCollection[]> {
     const urlComplete = `${this.basic_url}${envi.baunitId}${envi.finish}${page.executionCode}`;
     const params: HttpParams = new HttpParams()
       .set('page', page.page!.toString())
@@ -71,9 +81,11 @@ export class ProceduresService {
     return this.http.get<any>(urlComplete, { params });
   }
 
-
   //{{url}}:{{port}}/bpmOperation/proExecution/baunitId/finish/{{baunitId}}?page=0&size=10
-  getBaUnitHistoricProcedures(baUnitId: number | string, page: PageProceduresData): Observable<InformationPegeable> {
+  getBaUnitHistoricProcedures(
+    baUnitId: number | string,
+    page: PageProceduresData
+  ): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.baunitId}${envi.finish}${baUnitId}`;
     const params: HttpParams = new HttpParams()
       .set('page', `${page.page!}`)
@@ -82,7 +94,10 @@ export class ProceduresService {
   }
 
   //{{url}}:{{port}}/bpmOperation/proExecution/baunitId/active/{{baunitId}}?page=0&size=10
-  getBaUnitActiveProcedures(baUnitId: number | string, page: PageProceduresData): Observable<InformationPegeable> {
+  getBaUnitActiveProcedures(
+    baUnitId: number | string,
+    page: PageProceduresData
+  ): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.baunitId}/${envi.active}/${baUnitId}`;
     const params: HttpParams = new HttpParams()
       .set('page', `${page.page!}`)
@@ -116,6 +131,15 @@ export class ProceduresService {
   // {{url}}:{{port}}/bpmOperation/proExecution/{{executionId}}
   getProcedure(executionId: number | string): Observable<ProceduresCollection> {
     const url = `${this.basic_url}/${executionId}`;
+    return this.http.get<ProceduresCollection>(url);
+  }
+
+  getProcedureByResolution(
+    resolutionNumber: number,
+    resolutionYear: number
+  ): Observable<ProceduresCollection> {
+    const url = `${this.basic_url}${envi.proExecution.resolucion}/${resolutionNumber}/${resolutionYear}`;
+
     return this.http.get<ProceduresCollection>(url);
   }
 

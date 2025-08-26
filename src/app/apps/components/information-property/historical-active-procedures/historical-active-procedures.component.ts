@@ -303,7 +303,6 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
       (row: ProceduresCollection) =>
         new contentInfoProcedures({
           ...row,
-          name: row.process?.name,
           processName: row.process?.name
         })
     );
