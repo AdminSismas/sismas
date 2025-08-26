@@ -504,6 +504,12 @@ export class TableProceduresComponent implements OnInit {
       });
   }
 
+  revertResolutionSearch(): void {
+    this.informationEjecution.get('resolutionNumber')?.setValue('');
+    this.informationEjecution.get('resolutionYear')?.setValue('');
+    this.defaultTableData();
+  }
+
   /* ------- Meth. Common ------- */
   objectParameters(): PageProceduresData {
     const formValue: PageProceduresData = {
