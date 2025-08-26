@@ -32,6 +32,7 @@ export class Ticket {
     pendingTime: string | null;
     type: string | null;
     timeUnit: string | null;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     preferences: Record<string, any>;
     updatedById: number;
     createdById: number;
@@ -41,7 +42,7 @@ export class Ticket {
     referencingChecklistIds: number[];
     articleIds: number[];
     ticketTimeAccountingIds: number[];
-  
+
     constructor(data: Partial<Ticket>) {
       this.id = data.id || 0;
       this.groupId = data.groupId || 0;
@@ -87,4 +88,3 @@ export class Ticket {
       this.ticketTimeAccountingIds = data.ticketTimeAccountingIds || [];
     }
   }
-  

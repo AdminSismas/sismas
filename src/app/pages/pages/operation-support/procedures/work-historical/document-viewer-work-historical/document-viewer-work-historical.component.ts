@@ -1,14 +1,13 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Inject, Input, SecurityContext, OnInit } from '@angular/core';
+import { Component, Inject, SecurityContext, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MODEL_METADATA_PROPERTIES } from '../../../../../../apps/constants/general/attachment.constant';
-import { environment } from 'src/environments/environments';
 
 @Component({
   selector: 'vex-document-viewer-work-historical',

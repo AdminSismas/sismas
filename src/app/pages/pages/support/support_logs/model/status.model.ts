@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class StatusData {
     [x: string]: any;
     id: number;

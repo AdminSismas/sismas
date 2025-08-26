@@ -64,8 +64,7 @@ export class MapComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.idGeneralMap = getRandomInt(10000) + 'mapThematicMaps' + getRandomInt(82);
     this.loadDepartmentalInformation();
-    this.searchCtrl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
-    });
+    this.searchCtrl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   ngOnDestroy(): void {

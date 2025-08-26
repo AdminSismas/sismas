@@ -53,13 +53,13 @@ import { AttachmentCollection } from '../../../interfaces/document-management/at
 import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { ViewFileDocumentManagementComponent } from '../../general-components/view-file-document-management/view-file-document-management.component';
+import { TABLE_COLUMN_PROPERTIES } from '../../../constants/general/attachment.constant';
 import {
+  MODAL_LARGE,
   PAGE,
   PAGE_SIZE,
-  PAGE_SIZE_OPTION,
-  TABLE_COLUMN_PROPERTIES
-} from '../../../constants/general/attachment.constant';
-import { MODAL_LARGE } from '../../../constants/general/constants';
+  PAGE_SIZE_OPTION
+} from '../../../constants/general/constants';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';

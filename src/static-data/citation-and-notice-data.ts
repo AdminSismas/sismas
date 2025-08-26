@@ -1,5 +1,3 @@
-import { ProcessParticipant } from '../app/apps/interfaces/bpm/process-participant';
-
 /**
 export const citationNotices: ProcessParticipant[] = [
   {

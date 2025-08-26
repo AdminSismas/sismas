@@ -51,10 +51,10 @@ import { contentInfoAttachment } from '../../../../../../../apps/interfaces/gene
 import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatDividerModule } from '@angular/material/divider';
 import { ViewFileDocumentManagementComponent } from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import {PAGE,
+PAGE_SIZE,
+PAGE_SIZE_OPTION} from '../../../../../../../apps/constants/general/constants';
 import {
-  PAGE,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
 } from '../../../../../../../apps/constants/general/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
