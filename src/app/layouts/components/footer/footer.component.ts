@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -9,10 +9,5 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatButtonModule, MatIconModule]
 })
-export class FooterComponent implements OnInit, OnDestroy {
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnDestroy(): void {}
+export class FooterComponent {
 }

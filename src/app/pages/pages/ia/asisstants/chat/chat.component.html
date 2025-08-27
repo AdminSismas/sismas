@@ -20,7 +20,7 @@
             mat-raised-button
             type="button"
           >
-          <mat-icon>arrow_back</mat-icon>
+            <mat-icon>arrow_back</mat-icon>
           </button>
 
           <mat-menu
@@ -110,7 +110,7 @@
           </div>
 
           <div class="space-y-1">
-            <ng-container *ngFor="let chat of chats$ | async">
+            @for (chat of chats$ | async; track chat.id) {
               <a
                 #rla="routerLinkActive"
                 [ngClass]="{
@@ -122,14 +122,15 @@
                 matRipple
                 routerLinkActive
               >
-                <div
-                  *ngIf="rla.isActive"
-                  class="w-1 bg-primary-600 absolute left-0 top-0 bottom-0 rounded-full my-1"
-                ></div>
-
+                @if (rla.isActive) {
+                  <div
+                    class="w-1 bg-primary-600 absolute left-0 top-0 bottom-0 rounded-full my-1"
+                  ></div>
+                }
                 <img
                   class="h-10 w-10 rounded-full flex-none select-none"
                   src="{{ chat.imageUrl }}"
+                  alt="Chat Image"
                 />
                 <div class="flex-1 select-none truncate">
                   <div class="truncate flex mb-0.5">
@@ -143,7 +144,7 @@
                   </div>
                 </div>
               </a>
-            </ng-container>
+            }
           </div>
 
           <a

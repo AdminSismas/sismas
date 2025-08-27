@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Notification } from '../interfaces/notification.interface';
 import { DateTime } from 'luxon';
 import { trackById } from '@vex/utils/track-by';
@@ -26,7 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
     VexDateFormatRelativePipe
   ]
 })
-export class ToolbarNotificationsDropdownComponent implements OnInit {
+export class ToolbarNotificationsDropdownComponent {
   notifications: Notification[] = [
     {
       id: '1',
@@ -88,8 +88,4 @@ export class ToolbarNotificationsDropdownComponent implements OnInit {
   ];
 
   trackById = trackById;
-
-  constructor() {}
-
-  ngOnInit() {}
 }

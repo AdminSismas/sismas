@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -13,8 +13,5 @@ import { MatIconModule } from '@angular/material/icon';
   standalone: true,
   imports: [MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule]
 })
-export class ComingSoonComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
+export class ComingSoonComponent {
 }

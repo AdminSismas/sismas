@@ -96,7 +96,7 @@ export class GeneralMapsComponent implements OnInit, OnDestroy {
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {});
+      .subscribe();
   }
 
   ngOnDestroy(): void {

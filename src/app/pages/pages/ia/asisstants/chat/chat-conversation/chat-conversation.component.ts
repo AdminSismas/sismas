@@ -242,8 +242,8 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
     const humanOn = !this.isRobot ? 'si' : 'no';
 
     // falta idUser
-    this.chatServicesService.sendAudioToBackend(audioBlob, idUser , volumeUp, humanOn, this.threadId).subscribe(
-      (response: any) => {
+    this.chatServicesService.sendAudioToBackend(audioBlob, idUser , volumeUp, humanOn, this.threadId).subscribe({
+      next: (response) => {
         if (response.status === 'ok') {
           const transcription = response.transcription;
           this.messages.push({ id: this.messages.length + 1, from: 'me', text: transcription, timestamp: new Date().toLocaleTimeString() });
@@ -258,13 +258,13 @@ export class ChatConversationComponent implements OnInit, AfterViewChecked {
           this.cd.detectChanges();
         }
       },
-      error => {
+      error: () => {
         this.isTyping = false;
         this.isInputDisabled = false;
         this.messages.push({ id: this.messages.length + 1, from: 'other', text: 'Error al conectar con el servidor.', timestamp: new Date().toLocaleTimeString() });
         this.cd.detectChanges();
       }
-    );
+  });
   }
 
   playAudio(audioFileName: string) {

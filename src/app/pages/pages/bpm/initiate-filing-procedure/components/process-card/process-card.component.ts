@@ -30,9 +30,6 @@ export class ProcessCardComponent implements OnInit {
   @Input({ required: true }) bpmTypeProcess!: BpmTypeProcess;
   @Output() selectProcess: EventEmitter<BpmTypeProcess> = new EventEmitter<BpmTypeProcess>();
 
-  constructor() {
-  }
-
   ngOnInit() {
     if (this.idCard != null && this.idCard?.length > 0) {
       this.idCard = this.idCard + this.getRandomInt(10000);

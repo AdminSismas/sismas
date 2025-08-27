@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Contact } from '../../interfaces/contact.interface';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
@@ -38,7 +38,7 @@ export interface ContactsTableMenu {
     NgClass
   ]
 })
-export class AssistantsTableMenuComponent implements OnInit {
+export class AssistantsTableMenuComponent {
   @Input() items: ContactsTableMenu[] = [
     {
       type: 'link',
@@ -104,10 +104,6 @@ export class AssistantsTableMenuComponent implements OnInit {
   @Output() openAddNew = new EventEmitter<void>();
 
   activeCategory: ContactsTableMenu['id'] = 'all';
-
-  constructor() {}
-
-  ngOnInit() {}
 
   setFilter(category: ContactsTableMenu['id']) {
     this.activeCategory = category;

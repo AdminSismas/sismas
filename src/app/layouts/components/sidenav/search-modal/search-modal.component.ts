@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +37,9 @@ import { MatRippleModule } from '@angular/material/core';
             matRipple>
             <img
               src="assets/img/avatars/4.jpg"
-              class="w-8 h-8 rounded-full flex-none" />
+              class="w-8 h-8 rounded-full flex-none"
+              alt="avatar"
+            />
             <div class="flex-auto text-base font-medium">Alice Miller</div>
             <div
               class="flex-none text-xs text-secondary font-medium flex items-center gap-2">
@@ -56,7 +58,9 @@ import { MatRippleModule } from '@angular/material/core';
             matRipple>
             <img
               src="assets/img/avatars/3.jpg"
-              class="w-8 h-8 rounded-full flex-none" />
+              class="w-8 h-8 rounded-full flex-none"
+              alt="avatar"
+            />
             <div class="flex-auto text-base font-medium">Frank White</div>
             <div
               class="flex-none text-xs text-secondary font-medium flex items-center gap-2">
@@ -155,8 +159,5 @@ import { MatRippleModule } from '@angular/material/core';
   `,
   styles: [``]
 })
-export class SearchModalComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class SearchModalComponent {
 }

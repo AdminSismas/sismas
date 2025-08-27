@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavigationItem, NavigationLink } from '../../../../core/navigation/navigation-item.interface';
 import { filter, map, startWith } from 'rxjs/operators';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
@@ -26,7 +26,7 @@ import { AsyncPipe, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/comm
     AsyncPipe
   ]
 })
-export class NavigationItemComponent implements OnInit {
+export class NavigationItemComponent {
   @Input({ required: true }) item!: NavigationItem;
 
   isActive$ = this.router.events.pipe(
@@ -44,8 +44,6 @@ export class NavigationItemComponent implements OnInit {
     private navigationService: NavigationService,
     private router: Router
   ) {}
-
-  ngOnInit() {}
 
   hasActiveChilds(parent: NavigationItem): boolean {
     if (this.isLink(parent)) {

@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  OnInit,
   ViewChild
 } from '@angular/core';
 import { VexPopoverService } from '@vex/components/vex-popover/vex-popover.service';
@@ -19,7 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatButtonModule, MatIconModule]
 })
-export class ToolbarNotificationsComponent implements OnInit {
+export class ToolbarNotificationsComponent {
   @ViewChild('originRef', { static: true, read: ElementRef })
   originRef?: ElementRef;
 
@@ -29,8 +28,6 @@ export class ToolbarNotificationsComponent implements OnInit {
     private popover: VexPopoverService,
     private cd: ChangeDetectorRef
   ) {}
-
-  ngOnInit() {}
 
   showPopover() {
     this.dropdownOpen = true;

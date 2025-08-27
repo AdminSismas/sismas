@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
@@ -40,7 +40,7 @@ import { MODAL_SMALL } from '../../../../../apps/constants/general/constants';
     AsyncPipe
   ]
 })
-export class AssistantsTableComponent implements OnInit {
+export class AssistantsTableComponent {
   searchCtrl = new UntypedFormControl();
 
   searchStr$ = this.searchCtrl.valueChanges.pipe(debounceTime(10));
@@ -103,8 +103,6 @@ export class AssistantsTableComponent implements OnInit {
 
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit() {}
-
   openContact(id?: Contact['id']) {
     this.dialog.open(AssistantsEditComponent, {
       data: id || null,
@@ -121,7 +119,7 @@ export class AssistantsTableComponent implements OnInit {
     }
   }
 
-  setData(data: Contact[]) {
+  setData() {
     this.menuOpen = false;
   }
 
