@@ -37,10 +37,12 @@ import Swal from 'sweetalert2';
 import { Operation } from '../../../../interfaces/bpm/operation';
 import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
+  MODAL_MEDIUM,
   MODAL_SMALL,
   MODAL_SMALL_XS,
   PAGE,
   PAGE_OPTION_UNIQUE,
+  TYPE_BUTTON_ELEVEN,
   TYPE_BUTTON_FIVE,
   TYPE_BUTTON_FOUR,
   TYPE_BUTTON_NINE,
@@ -86,6 +88,7 @@ import { LoadingServiceService } from '../../../../services/general/loading-serv
 import { ValidityProcedureComponent } from './validity-procedure/validity-procedure.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { LoaderComponent } from '../../../general-components/loader/loader.component';
+import { ViewChangesComponent } from './view-changes/view-changes.component';
 
 @Component({
   selector: 'vex-alfa-main-information',
@@ -529,6 +532,11 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
           color = '';
         }
         break;
+      case 'CHANGES':
+        if (!this.disabledButton(btn)) {
+          color = '!bg-green-700/80 !text-white';
+        }
+        break;
     }
 
     return `rounded-full py-2 px-6 title ${color}`;
@@ -589,6 +597,15 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       });
   }
 
+  viewChanges() {
+    this.dialog.open(ViewChangesComponent, {
+      ...MODAL_MEDIUM,
+      data: {
+        executionId: this.executionId
+      }
+    });
+  }
+
   protected readonly TYPE_OPERATION_CREATE = TYPE_OPERATION_CREATE;
   protected readonly TYPE_OPERATION_DELETE = TYPE_OPERATION_DELETE;
   protected readonly TYPE_OPERATION_ADD = TYPE_OPERATION_ADD;
@@ -600,6 +617,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   protected readonly TYPE_BUTTON_SIX = TYPE_BUTTON_SIX;
   protected readonly TYPE_BUTTON_VALIDITY = TYPE_BUTTON_NINE;
   protected readonly TYPE_BUTTON_RESET = TYPE_BUTTON_TEN;
+  protected readonly TYPE_BUTTON_CHANGES = TYPE_BUTTON_ELEVEN;
   protected readonly TYPE_OPERATION_DELETE_GEO = TYPE_OPERATION_DELETE_GEO;
   protected readonly TYPE_OPERATION_CREATE_GEO = TYPE_OPERATION_CREATE_GEO;
   protected readonly TYPE_OPERATION_CALCULATE_BOUNDARIES =

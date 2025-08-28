@@ -6,7 +6,7 @@ import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 import { ProFlow } from '../../interfaces/bpm/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
 import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
-import { HttpClient, HttpHeaders, HttpParams, HttpStatusCode } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -77,13 +77,8 @@ export class BpmCoreService {
   //{{url}}:{{port}}/compare/temp/{{executionId}}/{{baunitId}}
   viewChangesBpmOperationTemp(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     const url = `${envi.url}:${envi.port}${envi.compare_temp}${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError((error: Response | any) => {
-        if (error.status == HttpStatusCode.BadRequest || error.statusCode == HttpStatusCode.BadRequest) {
-          return this.requestsService.errorBadRequest(error);
-        }
-        return this.requestsService.errorNotFound(error);
-      }));
+
+    return this.requestsService.sendRequestsFetchGet(url);
   }
   /*
   * Compare History
@@ -92,13 +87,8 @@ export class BpmCoreService {
   //{{url}}:{{port}}/compare/hist/{{executionId}}/{{baunitId}}
   viewChangesBpmOperationHistory(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     const url = `${envi.url}:${envi.port}${envi.compare_hist}${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError((error: Response | any) => {
-        if (error.status == HttpStatusCode.BadRequest || error.statusCode == HttpStatusCode.BadRequest) {
-          return this.requestsService.errorBadRequest(error);
-        }
-        return this.requestsService.errorNotFound(error);
-      }));
+
+    return this.requestsService.sendRequestsFetchGet(url);
   }
 
   updateProTask(proTaskE: ProTaskE) {
@@ -116,8 +106,8 @@ export class BpmCoreService {
 
   bpmOperationGetFiled(executId: number): Observable<ProTaskE> {
     const url = `${this.basic_url}${envi.bpmOperation.value}${envi.bpmOperation.proTask}${executId}/active`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+
+    return this.requestsService.sendRequestsFetchGet(url);
   }
 
   createMasterFromNph(baunitId: string, executionId: string, condition: string): Observable<void> {
@@ -131,5 +121,11 @@ export class BpmCoreService {
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
 
     return this.http.post<void>(url, formData, { headers });
+  }
+
+  getBpmOperationChanges(executionId: string): Observable<Blob> {
+    const url = `${envi.url}:${envi.port}/${envi.bpmResolution.value}/${envi.bpmResolution.report}/${executionId}`;
+
+    return this.http.get(url, { responseType: 'blob' });
   }
 }

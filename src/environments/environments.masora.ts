@@ -97,7 +97,10 @@ export const environment = {
     prodocumentStr: "/prodocumentStr/",
     value: "/bpmProcess"
   },
-  bpmResolution: "/bpmResolution",
+  bpmResolution: {
+    report: "report",
+    value: "bpmResolution"
+  },
   bpmUser: {
     text: "/text",
     username: "/username",

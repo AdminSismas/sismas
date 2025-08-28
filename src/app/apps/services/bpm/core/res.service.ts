@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
 
-const basic_url = `${envi.url}:${envi.port}${envi.bpmResolution}`;
+const basic_url = `${envi.url}:${envi.port}${envi.bpmResolution.value}`;
 
 @Injectable({
   providedIn: 'root'
