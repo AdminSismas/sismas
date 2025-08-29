@@ -128,7 +128,6 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
   private initializeForm() {
     const documentValidators = this.getValidators('document');
     const peopleValidators = this.getValidators('people');
-    const contactValidators = this.getValidators('contact');
 
     this.form = this.fb.group({
       individualId: [this.defaults?.individualId ?? ''],
@@ -160,34 +159,24 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
       ],
 
       // Contact
-      divpolLv1: [this.defaults?.contact?.divpolLv1 ?? '', contactValidators],
-      divpolLv2: [this.defaults?.contact?.divpolLv2 ?? '', contactValidators],
+      divpolLv1: [this.defaults?.contact?.divpolLv1 ?? ''],
+      divpolLv2: [this.defaults?.contact?.divpolLv2 ?? ''],
       phoneNumber: [
         this.defaults?.contact?.phoneNumber ?? '',
-        [
-          this.generalValidations.onlyNumber(),
-          ...(contactValidators ? [contactValidators] : [])
-        ]
+        [this.generalValidations.onlyNumber()]
       ],
       email: [
         this.defaults?.contact?.email ?? '',
-        [
-          ...(contactValidators
-            ? [contactValidators, this.generalValidations.emailValidator()]
-            : [])
-        ]
+        [this.generalValidations.emailValidator()]
       ],
       address: [
         this.defaults?.contact?.address ?? '',
-        [
-          this.generalValidations.min03Characters(),
-          ...(contactValidators ? [contactValidators] : [])
-        ]
+        [this.generalValidations.min03Characters()]
       ]
     });
   }
 
-  private getValidators(groupControl: 'people' | 'contact' | 'document') {
+  private getValidators(groupControl: 'people' | 'document') {
     if (!this.defaults?.mode) {
       return null;
     }
@@ -198,8 +187,7 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
     if (
       (mode === 'peopleCreate' &&
         (groupControl === 'document' || groupControl === 'people')) ||
-      (mode === 'peopleUpdate' && groupControl === 'people') ||
-      (mode === 'update' && groupControl === 'contact')
+      (mode === 'peopleUpdate' && groupControl === 'people')
     ) {
       validators.push(Validators.required);
     }
@@ -294,23 +282,23 @@ export class UpdateParticipantComponent implements OnInit, OnDestroy {
       .getContactByIndividualId(this.defaults?.individualId)
       .subscribe({
         next: (res: InfoContact) => {
-        this.contact = res;
-        if (
-          this.contact != null &&
-          this.contact.individualId > 0 &&
-          this.defaults
-        ) {
-          this.defaults.contact = this.contact;
+          this.contact = res;
+          if (
+            this.contact != null &&
+            this.contact.individualId > 0 &&
+            this.defaults
+          ) {
+            this.defaults.contact = this.contact;
+          }
+          this.chargeInformation();
+        },
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            Swal.close();
+            this.contact = null;
+          }
         }
-        this.chargeInformation();
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.status === 404) {
-          Swal.close();
-          this.contact = null;
-        }
-      }
-    });
+      });
   }
 
   updatePeople() {

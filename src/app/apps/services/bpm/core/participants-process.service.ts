@@ -36,9 +36,10 @@ export class ParticipantsProcessService {
     page: PageSearchData,
     executionId: string
   ): Observable<InformationPegeable> {
-    let paramsA: HttpParams = new HttpParams();
-    paramsA = paramsA.append('page', `${page.page}`);
-    paramsA = paramsA.append('size', `${page.size}`);
+    const paramsA: HttpParams = new HttpParams()
+      .set('page', `${page.page}`)
+      .set('size', `${page.size}`);
+      
     const url = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}`;
     return this.getData(url, paramsA);
   }

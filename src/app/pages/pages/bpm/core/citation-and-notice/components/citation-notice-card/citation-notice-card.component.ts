@@ -11,7 +11,8 @@ import {
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatRippleModule, ThemePalette } from '@angular/material/core';
 import { NgClass, TitleCasePipe } from '@angular/common';
 import {
   MODAL_DYNAMIC_HEIGHT,
@@ -34,14 +35,15 @@ import { DocumentViewerComponent } from 'src/app/apps/components/general-compone
   selector: 'vex-citation-notice-card',
   standalone: true,
   imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatRippleModule,
-    NgClass,
-    TitleCasePipe,
-    MatTooltip,
+    CitationNoticeClassPipe,
     CitationNoticeTypePipe,
-    CitationNoticeClassPipe
+    MatBadgeModule,
+    MatButtonModule,
+    MatIconModule,
+    MatRippleModule,
+    MatTooltip,
+    NgClass,
+    TitleCasePipe
   ],
   templateUrl: './citation-notice-card.component.html',
   styleUrl: './citation-notice-card.component.scss'
@@ -59,6 +61,7 @@ export class CitationNoticeCardComponent implements OnInit {
   // Input signals
   executionId = input.required<string>();
   processParticipant = input.required<ProcessParticipant>();
+  expirationDate = input.required<string | null>();
 
   // Signals
   imageSrc = signal('assets/img/icons/people/teacher.svg');
@@ -76,6 +79,26 @@ export class CitationNoticeCardComponent implements OnInit {
     );
   });
 
+  badgeColor = computed<ThemePalette>(() => {
+    if (!this.expirationDate()) return;
+
+    const expirationDays = +this.expirationDate()!;
+
+    if (expirationDays > 30) return 'primary';
+    if (expirationDays <= 30 && expirationDays >= 15) return 'accent';
+    return 'warn';
+  });
+
+  expirationDays = computed(() => {
+    if (!this.expirationDate()) return null;
+
+    const expirationDays = new Date().getTime() - new Date(this.expirationDate()!).getTime();
+    const milisecondsInDay = 1000 * 3600 * 24;
+    const days = Math.floor(expirationDays / milisecondsInDay);
+
+    return days >= 100 ? '+99' : days;
+  });
+
   ngOnInit() {
     if (
       this.processParticipant() &&
@@ -86,9 +109,7 @@ export class CitationNoticeCardComponent implements OnInit {
   }
 
   executeNotification() {
-    if (
-      this.processParticipant()?.viaGubernativa?.domGuvState !== 'Citado'
-    ) {
+    if (this.processParticipant()?.viaGubernativa?.domGuvState !== 'Citado') {
       this.getAlertError('Participante notificado, accion no disponible');
       return;
     }
@@ -98,9 +119,7 @@ export class CitationNoticeCardComponent implements OnInit {
   }
 
   executeCitation() {
-    if (
-      this.processParticipant()?.viaGubernativa?.domGuvState !== 'Citacion'
-    ) {
+    if (this.processParticipant()?.viaGubernativa?.domGuvState !== 'Citacion') {
       this.getAlertError('Participante citado, accion no disponible');
       return;
     }

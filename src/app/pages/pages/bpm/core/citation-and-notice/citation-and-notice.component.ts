@@ -77,7 +77,7 @@ export class CitationAndNoticeComponent implements OnInit {
   searchStr: UntypedFormControl = new UntypedFormControl();
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   typeProcess: TypeProcessParticipant = 'ALL';
-  searchStr$ = this.searchStr.valueChanges.pipe(debounceTime(10));
+  searchStr$ = this.searchStr.valueChanges.pipe(debounceTime(200));
   infoFatherURL!: string;
 
   ngOnInit() {

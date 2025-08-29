@@ -154,22 +154,39 @@ export class AddCitationNoticeComponent implements OnInit {
   }
 
   getContactParticipation() {
-    this.peopleService
-      .getContactByIndividualId(this.individualId)
-      .subscribe((res: InfoContact) => {
-        this.contact = res;
-        if (
-          !this.contact ||
-          !this.contact?.phoneNumber ||
-          !this.contact?.address
-        ) {
-          this.getAlertErrorConfirm(
-            'Error, No se encontro informacion de contacto del participante no es posible continuar'
-          );
-          return;
+    this.peopleService.getContactByIndividualId(this.individualId).subscribe({
+      next: (res: InfoContact) => {
+        this.contactParticipation(res);
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          text: 'La información de contacto del participante no existe.',
+          timer: 5000
+        });
+        return;
+      }
+    });
+  }
+
+  contactParticipation(res: InfoContact) {
+    this.contact = res;
+    if (!this.contact || !this.contact?.phoneNumber || !this.contact?.address) {
+      Swal.fire({
+        icon: 'warning',
+        text: 'No se ha encontrado información de contacto para este participante.',
+        confirmButtonText: 'Continuar',
+        confirmButtonColor: '#3085d6',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.isDismissed) {
+          this.dialogRef.close();
         }
-        this.obtainProcedure();
       });
+    }
+    this.obtainProcedure();
   }
 
   obtainProcedure(): void {

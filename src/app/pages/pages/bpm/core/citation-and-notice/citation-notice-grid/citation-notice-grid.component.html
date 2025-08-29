@@ -2,7 +2,7 @@
   @if (((listParticipantsCards$ | async)?.length ?? 0) > 0) {
     <div
       @stagger
-      class="overflow-y-auto flex-auto"
+      class="overflow-y-auto flex flex-col justify-between h-full"
     >
       <div
         class="px-2 py-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 container-fluid"
@@ -16,11 +16,20 @@
             (refreshData)="validateExecuteTypeProcess(typeProcess())"
             [processParticipant]="participant"
             [executionId]="executionId()"
+            [expirationDate]="participant.viaGubernativa?.guvDateEndTerms || null"
             @fadeInUp
           >
           </vex-citation-notice-card>
         }
       </div>
+      <mat-paginator
+        class="sticky bottom-0 z-10"
+        [pageIndex]="page()"
+        [pageSize]="pageSize()"
+        [length]="totalElements()"
+        (page)="changePage($event)"
+      >
+      </mat-paginator>
     </div>
   } @else {
     <div
