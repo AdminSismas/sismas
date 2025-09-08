@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 import { SendGeneralRequestsService } from '../general/send-general-requests.service';
@@ -43,9 +44,11 @@ export class TerritorialOrganizationService {
   }
 
   getDataMunicipalities(dpto: string | null | undefined): Observable<Municipality[]> {
-    let paramsMun: HttpParams = new HttpParams();
-    paramsMun = paramsMun.append('dpto', `${dpto}`);
+    const paramsMun: HttpParams = new HttpParams()
+      .set('dpto', `${dpto}`);
+
     const url = `${this.basic_url}${environment.qbaunit_ccmpio}`;
+
     return this.getData(url, paramsMun);
   }
 
@@ -108,12 +111,14 @@ export class TerritorialOrganizationService {
   }
 
 
-  advancedSearch(valueUrlo: string): Observable<any[]> {
-    const paramsMun: HttpParams = new HttpParams();
-    const url = `${this.basic_url}/baunit/npnlike?npnlike=1800101040000030600069&page=0&size=4`;
-    // const url: string = `${this.basic_url}/baunit/npnlike?npnlike=${valueUrlo}&page=0&size=20`;
-    // return this.getData(url, paramsMun);
-    return this.http.get<any>(url);
+  advancedSearch(): Observable<any[]> {
+    const params: HttpParams = new HttpParams()
+      .set('npnlike', '1800101040000030600069')
+      .set('page', '0')
+      .set('size', '4');
+      
+    const url = `${this.basic_url}/baunit/npnlike`;
+    return this.http.get<any[]>(url, { params });
   }
 
 

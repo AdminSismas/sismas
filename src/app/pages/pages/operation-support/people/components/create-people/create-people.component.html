@@ -1,0 +1,37 @@
+<app-modal-window
+  [title]="modalTitle()"
+  actions
+  showCancelButton
+  @fadeInUp
+  (accept)="save()"
+>
+  @if (loading()) {
+    <div class="flex flex-col justify-center items-center gap-6 h-40 lg:h-64">
+      <h2 class="text-center text-2xl font-bold">Cargando...</h2>
+      <mat-spinner diameter="60"></mat-spinner>
+    </div>
+  } @else {
+    <div class="max-h-[65vh] overflow-y-auto">
+      <h2 class="w-full text-lg font-bold">Buscar persona</h2>
+      <search-person-form
+        [enableSearchForm]="enableSearchForm()"
+        (search)="getPerson()"
+      ></search-person-form>
+      <hr class="bg-slate-400 w-full mb-4" />
+      <h2 class="w-full text-lg font-bold">Información individuo</h2>
+      <create-person-form
+        [sendFormValues]="getCreatePersonFormValues()"
+        [enableForm]="enableCreatePersonForm()"
+        (createPerson)="createPerson()"
+      ></create-person-form>
+      <hr class="bg-slate-400 w-full mb-4" />
+      <h2 class="w-full text-lg font-bold">Información contacto <span class="text-base">(opcional)</span></h2>
+      <create-contact-form
+        [enableContactForm]="enableCreateContactForm()"
+        [sendContactForm]="sendContactForm()"
+        [contactFormIsValid]="validateContactForm()"
+        (contactFormValid)="contactFormValid.set($event)"
+      ></create-contact-form>
+    </div>
+  }
+</app-modal-window>

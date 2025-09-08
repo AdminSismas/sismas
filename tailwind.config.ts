@@ -6,6 +6,7 @@ import addIconsPlugin from './src/@vex/tailwind/plugins/icons';
 import chroma from 'chroma-js';
 import { PluginUtils } from 'tailwindcss/types/config';
 import addTypographyPlugin from '@tailwindcss/typography';
+import plugin from 'tailwindcss/plugin';
 
 export const themes: VexThemes = {
   default: {
@@ -293,7 +294,29 @@ export default {
       target: 'modern'
     }),
     addThemesPlugin({ themes }),
-    addIconsPlugin
+    addIconsPlugin,
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        /* aplicable al input mismo */
+        "input.no-spin::-webkit-inner-spin-button, input.no-spin::-webkit-outer-spin-button": {
+          "-webkit-appearance": "none",
+          margin: "0",
+        },
+        "input.no-spin": {
+          appearance: "textfield",
+          "-moz-appearance": "textfield",
+        },
+        /* aplicable a un contenedor que envuelva inputs[type=number] */
+        ".no-spin input[type='number']::-webkit-inner-spin-button, .no-spin input[type='number']::-webkit-outer-spin-button": {
+          "-webkit-appearance": "none",
+          margin: "0",
+        },
+        ".no-spin input[type='number']": {
+          appearance: "textfield",
+          "-moz-appearance": "textfield",
+        },
+      });
+    }),
   ],
   corePlugins: {
     container: false

@@ -84,13 +84,13 @@
             <div
               class="container-fluid mt-3 mb-1 px-[5rem] py-0 w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden"
             >
-              <vex-dynamic-forms
+              <app-dynamic-forms
                 [inputs]="inputs"
                 [initValues]="initTags()"
                 (formReady)="form.set($event)"
                 className="pt-3 pb-1 grid grid-cols-2 gap-4 sm:grip-row overflow-hidden items-center justify-center w-100 px-2"
                 class="w-full pt-4"
-              ></vex-dynamic-forms>
+              ></app-dynamic-forms>
             </div>
             <div
               class="w-full max-w-4xl p-4 flex items-center justify-center text-center gap-4 mx-auto mt-2"

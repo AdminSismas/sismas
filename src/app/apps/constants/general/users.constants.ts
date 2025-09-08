@@ -26,7 +26,7 @@ export const USER_COLUMNS: { name: string; label: string }[] = [
 
 export const SEARCH_INPUTS: JSONInput[] = [
   {
-    name: 'individualTypeNumber',
+    name: 'domIndividualTypeNumber',
     label: 'Tipo de documento',
     element: 'collection',
     type: 'IndividualTypeNumber',

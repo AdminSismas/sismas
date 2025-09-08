@@ -5,10 +5,10 @@
   (dialog)="dialogRef.set($event)"
   (accept)="onAccept()"
 >
-  <vex-dynamic-forms
+  <app-dynamic-forms
     [inputs]="editTaskInputs()"
     (formReady)="form.set($event)"
     [initValues]="data.proflow"
     className="grid grid-cols-3 gap-4 w-full h-full"
-  ></vex-dynamic-forms>
+  ></app-dynamic-forms>
 </app-modal-window>

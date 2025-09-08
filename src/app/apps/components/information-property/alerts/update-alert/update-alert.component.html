@@ -12,12 +12,12 @@
 <mat-divider class="bg-slate-400"></mat-divider>
 
 <mat-dialog-content>
-  <vex-dynamic-forms
+  <app-dynamic-forms
     [inputs]="formAlertUpdateInputsJson"
     (formReady)="form.set($event)"
     [initValues]="data.alert"
     className="w-full h-full grid grid-cols-3 grid-rows-[30%_70%] gap-2"
-  ></vex-dynamic-forms>
+  ></app-dynamic-forms>
 </mat-dialog-content>
 
 <mat-dialog-actions align="center">

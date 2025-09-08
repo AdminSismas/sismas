@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpErrorResponse,
-  HttpHeaders,
   HttpParams,
   HttpStatusCode
 } from '@angular/common/http';
@@ -47,17 +46,15 @@ export class PeopleService {
     return this.http.get<InformationPegeable>(url, { params });
   }
 
-  getPersonByDocumentNumber(params: Partial<InfoPerson> & { individualTypeNumber?: string }): Observable<InfoPerson> {
-    let paramsR: HttpParams = new HttpParams();
-    paramsR = paramsR.append('number', params.number ?? '');
-    paramsR = paramsR.append(
-      'individualTypeNumber',
-      params.individualTypeNumber ?? params.domIndividualTypeNumber ?? ''
-    );
-    return this.getData(
-      `${this.url_basic}${envi.individual.value}${envi.individual.findByNumber}`,
-      paramsR
-    );
+  getPersonByDocumentNumber(
+    searchParams: Partial<InfoPerson>
+  ): Observable<InfoPerson> {
+    const url = `${this.url_basic}${envi.individual.value}${envi.individual.findByNumber}`;
+
+    const params: HttpParams = new HttpParams()
+      .set('number', searchParams.number ?? '')
+      .set('individualTypeNumber', searchParams.domIndividualTypeNumber ?? '');
+    return this.http.get<InfoPerson>(url, { params });
   }
 
   getPersonByIndividualId(params: InfoPerson) {
@@ -72,7 +69,7 @@ export class PeopleService {
     );
   }
 
-  createPeople(body: People) {
+  createPeople(body: Partial<InfoPerson>) {
     return this.fetchBody(
       `${envi.url}:${envi.port}${envi.individual.value}`,
       body
@@ -85,25 +82,9 @@ export class PeopleService {
   }
 
   getContactByIndividualId(individualId: number): Observable<InfoContact> {
-    return this.requestsService
-      .sendRequestsFetchGet(`${this.url_basic}${envi.contact}/${individualId}`);
-  }
+    const url = `${this.url_basic}${envi.contact}/${individualId}`;
 
-  updateContact(
-    individualId: number,
-    obj: InfoContact
-  ): Observable<InfoContact> {
-    return this.requestsService
-      .sendRequestsUpdatePutBody(
-        `${this.url_basic}${envi.contact}/${individualId}`,
-        obj
-      );
-  }
-
-  createContact(body: Partial<InfoContact>) {
-    const url = `${this.url_basic}${envi.contact}`;
-
-    return this.requestsService.sendRequestsFetchPostBody(url, body);
+    return this.http.get<InfoContact>(url);
   }
 
   private getData(url: string, params: any): Observable<InfoPerson> {
@@ -132,13 +113,5 @@ export class PeopleService {
     return throwError(() => error);
   }
 
-  getSequencialCode(): Observable<string> {
-    const url = `${this.url_basic}${envi.individual.value}${envi.sequentialCode}`;
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'text/plain;charset=UTF-8;'
-    });
-
-    return this.http.get(url, { responseType: 'text', headers });
-  }
+  
 }

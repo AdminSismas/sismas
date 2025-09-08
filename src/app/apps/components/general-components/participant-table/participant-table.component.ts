@@ -38,7 +38,7 @@ import { ComboboxCollectionComponent } from '../combobox-collection/combobox-col
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
-  MODAL_DYNAMIC_HEIGHT,
+  MODAL_SMALL_LARGE,
   PAGE,
   PAGE_OPTION_UNIQUE,
   TABLE_COLUMN_PRINCIPANTS_TABLE
@@ -50,7 +50,7 @@ import { InformationPersonService } from '../../../services/bpm/information-pers
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
-import { CreatePeopleComponent } from '../../../../pages/pages/operation-support/people/create-people/create-people.component';
+import { CreatePeopleComponent } from '../../../../pages/pages/operation-support/people/components/create-people/create-people.component';
 import { ParticipantsService } from '../../../services/bpm/participants-service.service';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { Pegeable } from '../../../interfaces/general/pegeable.model';
@@ -375,7 +375,7 @@ export class ParticipantTableComponent
     this.form?.get('personCompleted')?.reset();
     this.dialog
       .open(CreatePeopleComponent, {
-        ...MODAL_DYNAMIC_HEIGHT,
+        ...MODAL_SMALL_LARGE,
         disableClose: true,
         data: {
           domIndividualTypeNumber: info.typeNumberDocument,
