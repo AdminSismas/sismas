@@ -39,27 +39,26 @@
       >
         @for (column of columns; track column.property) {
           <!-- Text Columns -->
-          <ng-container
-            *ngIf="column.type === 'text'"
-            [matColumnDef]="column.property"
-          >
-            <th
-              *matHeaderCellDef
-              class="pl-1 pr-1 sm:pl-4"
-              mat-header-cell
-              mat-sort-header
-            >
-              {{ column.label }}
-            </th>
-            <td
-              *matCellDef="let row"
-              [ngClass]="column.cssClasses"
-              mat-cell
-              class="pl-1 pr-1 sm:pl-4 m-2"
-            >
-              {{ row[column.property] }}
-            </td>
-          </ng-container>
+          @if (column.type === "text") {
+            <ng-container [matColumnDef]="column.property">
+              <th
+                *matHeaderCellDef
+                class="pl-1 pr-1 sm:pl-4"
+                mat-header-cell
+                mat-sort-header
+              >
+                {{ column.label }}
+              </th>
+              <td
+                *matCellDef="let row"
+                [ngClass]="column.cssClasses"
+                mat-cell
+                class="pl-1 pr-1 sm:pl-4 m-2"
+              >
+                {{ row[column.property] }}
+              </td>
+            </ng-container>
+          }
         }
 
         <tr
@@ -73,17 +72,11 @@
           mat-row
         ></tr>
       </table>
-      <div
-        *ngIf="
-          dataSource.data.length <= 0 || dataSource.filteredData.length <= 0
-        "
-        class="no-data-information"
-      >
-        No hay información disponible
-      </div>
+      @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
+        <div class="no-data-information">No hay información disponible</div>
+      }
       <mat-paginator
         #paginator
-        [pageSizeOptions]="pageSizeOptions"
         [length]="totalElements"
         [pageSize]="pageSize"
         [pageIndex]="page"
