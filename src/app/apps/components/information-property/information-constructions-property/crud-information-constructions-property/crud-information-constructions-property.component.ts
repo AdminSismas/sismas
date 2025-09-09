@@ -316,6 +316,20 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
         this.getDetailQualificationConstruction(this.constructionData);
       }
     });
+
+    if (this.typeCrud === TYPE_CREATE) {
+      this.getIDConstructionsSuggestion();
+    }
+  }
+
+  getIDConstructionsSuggestion() {
+    if (!this.executionId || !this.baunitId) return;
+
+    this.constructionsService
+      .getIDConstructionsSuggestion(this.executionId, this.baunitId)
+      .subscribe((id) => {
+        this.editForm.get('unitBuiltLabel')?.setValue(id);
+      });
   }
 
   initFormQualification(isIndustrialConstruction: boolean) {

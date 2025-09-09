@@ -115,7 +115,9 @@ export class InformationConstructionsService {
     let url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
 
     if (schema === `${envi.schemas.main}` && !executionId) {
-      return this.http.get<CcCalificacionUB[]>(url, { params: { unitBuiltId } });
+      return this.http.get<CcCalificacionUB[]>(url, {
+        params: { unitBuiltId }
+      });
     }
 
     url += `/${schema}/${executionId}/${baunitId}/${unitBuiltId}`;
@@ -188,5 +190,15 @@ export class InformationConstructionsService {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${unitBuildId}/${baunitId}`;
 
     return this.http.put<any>(url, body);
+  }
+
+  getIDConstructionsSuggestion(
+    executionId: string,
+    baunitId: string
+  ): Observable<string> {
+    // {{url}}:{{port}}/unitBuilt/temp/{{executionId}}/{{baunitId}}/nextLabel
+    const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}/nextLabel`;
+
+    return this.http.get<string>(url, { responseType: 'text' as 'json' });
   }
 }
