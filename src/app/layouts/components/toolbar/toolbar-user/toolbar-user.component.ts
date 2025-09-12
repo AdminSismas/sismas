@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit
 } from '@angular/core';
 import { VexPopoverService } from '@vex/components/vex-popover/vex-popover.service';
 import { ToolbarUserDropdownComponent } from './toolbar-user-dropdown/toolbar-user-dropdown.component';
@@ -16,16 +15,13 @@ import { MatRippleModule } from '@angular/material/core';
   standalone: true,
   imports: [MatRippleModule, MatIconModule]
 })
-export class ToolbarUserComponent implements OnInit {
+export class ToolbarUserComponent {
   dropdownOpen = false;
 
   constructor(
     private popover: VexPopoverService,
     private cd: ChangeDetectorRef
   ) {}
-
-  ngOnInit() {}
-
   showPopover(originRef: HTMLElement) {
     this.dropdownOpen = true;
     this.cd.markForCheck();

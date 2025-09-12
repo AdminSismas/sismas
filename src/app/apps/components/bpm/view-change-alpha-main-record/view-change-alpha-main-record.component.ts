@@ -1,12 +1,9 @@
 import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, ViewChild, signal } from '@angular/core';
 import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
-import { Router } from '@angular/router';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
   MatDialogClose,
   MatDialogContent,
-  MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
@@ -14,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -25,8 +22,6 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { CadastralChangeLog } from '../../../interfaces/bpm/cadastral-change-log';
 import {
   PAGE,
-  PAGE_OPTION_UNIQUE,
-  PAGE_SIZE_OPTION_UNIQUE,
   TABLE_COLUMN_CHANGES_BPM_OPERATION
 } from '../../../constants/general/constants';
 import { UntypedFormControl } from '@angular/forms';
@@ -48,7 +43,6 @@ import { LoaderComponent } from "../../general-components/loader/loader.componen
     MatIconModule,
     MatDialogContent,
     MatMenuModule,
-    NgIf,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
@@ -74,8 +68,7 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
   columns: TableColumn<CadastralChangeLog>[] = TABLE_COLUMN_CHANGES_BPM_OPERATION;
   page = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_OPTION_UNIQUE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
+  pageSize = 100;
 
   dataSource!: MatTableDataSource<CadastralChangeLog>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -87,11 +80,8 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: string[],
-    private dialogRef: MatDialogRef<ViewChangeAlphaMainRecordComponent>,
     private alfaMainService: AlfaMainService,
     private readonly layoutService: VexLayoutService,
-    private router: Router,
-    private dialog: MatDialog
   ) {
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
@@ -20,7 +21,7 @@ export class SupportLogsService {
   public supportLogs$ = this.supportLogsSubject.asObservable();
   public observationsSupport$ = this.observationsSupportSubject.asObservable();
   public statusesSupport$ = this.statusSupportSubject.asObservable();
-  
+
   constructor(private http: HttpClient) { }
 
 getSupportLogs(): Observable<{ success: boolean, message: string, data?: SupportLogs[] }> {
@@ -33,7 +34,7 @@ getSupportLogs(): Observable<{ success: boolean, message: string, data?: Support
       if (response.success) {
         // Map the response to the StatusName type
         this.updateLogsInList(response.data);
-        const supportlogs: SupportLogs[] = Array.isArray(response.data) ? 
+        const supportlogs: SupportLogs[] = Array.isArray(response.data) ?
           response.data.map((item: any) => ({
             id: item.id,
             id_soporte: item.id_soporte,
@@ -67,7 +68,7 @@ getObservationsSupport(): Observable<{ success: boolean, message: string, data?:
     map(response => {
       if (response.success) {
         // Map the response to the StatusName type
-        const observaciones: ObservationsData[] = Array.isArray(response.data) ? 
+        const observaciones: ObservationsData[] = Array.isArray(response.data) ?
           response.data.map((item: any) => ({
             id: item.id,
             observacion: item.observacion,
@@ -117,7 +118,7 @@ updateRespuesta(
           };
         }
       }),
-      catchError(error => {
+      catchError(() => {
         return of({
           success: false,
           message: 'Ocurrió un error al actualizar la respuesta',
@@ -153,7 +154,7 @@ getStatuses(): Observable<{ success: boolean, message: string, data?: StatusData
     map(response => {
       if (response.success) {
         // Map the response to the StatusData type
-        const statuses: StatusData[] = Array.isArray(response.data) ? 
+        const statuses: StatusData[] = Array.isArray(response.data) ?
           response.data.map((item: any) => ({
             id: item.id,
             status: item.status
@@ -168,5 +169,5 @@ getStatuses(): Observable<{ success: boolean, message: string, data?: StatusData
       return of({ success: false, message: error.message, data: [] });
     })
   );
-}  
+}
 }

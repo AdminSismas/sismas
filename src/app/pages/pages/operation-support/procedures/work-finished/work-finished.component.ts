@@ -19,5 +19,4 @@ import { environment } from 'src/environments/environments';
 })
 export class WorkFinishedComponent {
   urlMain = environment.finished;
-
 }

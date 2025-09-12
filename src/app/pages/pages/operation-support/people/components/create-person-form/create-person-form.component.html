@@ -1,0 +1,7 @@
+<section class="w-full">
+  <app-dynamic-forms
+    [inputs]="CREATE_PERSON_FORM"
+    [initValues]="infoPerson()"
+    (formReady)="createForm.set($event)"
+  ></app-dynamic-forms>
+</section>

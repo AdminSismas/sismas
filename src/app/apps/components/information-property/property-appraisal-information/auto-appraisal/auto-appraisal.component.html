@@ -12,10 +12,10 @@
 <mat-divider class="bg-slate-400"></mat-divider>
 
 <mat-dialog-content>
-  <vex-dynamic-forms
+  <app-dynamic-forms
     [inputs]="formInputJson()"
     (formReady)="autoAppraisalForm.set($event)"
-  ></vex-dynamic-forms>
+  ></app-dynamic-forms>
 </mat-dialog-content>
 
 <mat-dialog-actions align="center">

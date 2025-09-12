@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
@@ -118,7 +119,7 @@ updateRespuesta(
           };
         }
       }),
-      catchError(error => {
+      catchError(() => {
         return of({
           success: false,
           message: 'Ocurrió un error al actualizar la respuesta',

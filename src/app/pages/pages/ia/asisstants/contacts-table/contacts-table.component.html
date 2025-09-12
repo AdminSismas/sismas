@@ -37,13 +37,13 @@
     <mat-drawer-container class="bg-transparent flex-auto flex">
       <mat-drawer [(opened)]="menuOpen" mode="over">
         <vex-contacts-table-menu
-          (filterChange)="setData($event)"
+          (filterChange)="setData()"
           (openAddNew)="openContact()"
           class="sm:hidden"></vex-contacts-table-menu>
       </mat-drawer>
       <mat-drawer-content class="p-6 pt-0 flex-auto flex items-start">
         <vex-contacts-table-menu
-          (filterChange)="setData($event)"
+          (filterChange)="setData()"
           (openAddNew)="openContact()"
           class="hidden sm:block ltr:mr-6 rtl:ml-6"></vex-contacts-table-menu>
 

@@ -100,6 +100,8 @@ export class ResValidateComponent implements OnInit {
       subscription = this.resService.getNoProcedeDoc(this.executionId());
     }
 
+    console.log(subscription);
+
     subscription.subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
@@ -110,10 +112,11 @@ export class ResValidateComponent implements OnInit {
         );
         this.isLoading.set(false);
       },
-      error: () => {
+      error: (error: HttpErrorResponse) => {
         this.isLoading.set(false);
-        console.error('Error al cargar el documento PDF:');
         this.pdfUrl.set('error');
+        
+        throw error;
       }
     });
   }

@@ -24,9 +24,9 @@ import { contentInfoAttachment } from '../../../../interfaces/general/content-in
 import { contentInfoProcedures } from '../../../../interfaces/general/content-info-procedures.model';
 import {
   MY_DATE_FORMATS,
-  PAGE,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION,
+  // PAGE,
+  // PAGE_SIZE,
+  // PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
 } from '../../../../constants/general/procedures.constant';
 import { ProceduresCollection } from '../../../../interfaces/tables/procedures-progress.model';
@@ -53,7 +53,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TaskResponseModel } from '../../../../interfaces/bpm/task-response.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { MODAL_SMALL } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
 
 @Component({
   selector: 'vex-table-execution',
@@ -202,7 +202,6 @@ export class TableWorkExecutionComponent implements OnInit {
         (row: ProceduresCollection) =>
           new contentInfoProcedures({
             ...row,
-            name: row.process?.name,
             processName: row.process?.name
           })
       );

@@ -1,0 +1,17 @@
+<section class="w-full flex gap-4 justify-center">
+  <app-dynamic-forms
+    [inputs]="SEARCH_PERSON_FORM"
+    (formReady)="searchForm.set($event)"
+    className="grid grid-cols-3 gap-2"
+  ></app-dynamic-forms>
+  <button
+    mat-raised-button
+    [color]="buttonProperties().color"
+    (click)="onSearch()"
+    [disabled]="!enableSearchForm()"
+    class="mt-3"
+  >
+    <mat-icon [svgIcon]="buttonProperties().icon"></mat-icon>
+    {{ buttonProperties().label }}
+  </button>
+</section>

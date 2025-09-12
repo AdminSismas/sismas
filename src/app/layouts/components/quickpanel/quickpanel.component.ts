@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DateTime } from 'luxon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRippleModule } from '@angular/material/core';
@@ -19,11 +19,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatProgressBarModule
   ]
 })
-export class QuickpanelComponent implements OnInit {
+export class QuickpanelComponent {
   date = DateTime.local().toFormat('DD');
   dayName = DateTime.local().toFormat('EEEE');
 
-  constructor() {}
-
-  ngOnInit() {}
 }

@@ -4,10 +4,10 @@
          [overflowY]="'hidden'">
       <div
         class="container px-[1rem] py-0 w-full h-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden">
-        <vex-dynamic-forms [inputs]="inputFormVisit" [initValues]="initRecognitionProperty()"
+        <app-dynamic-forms [inputs]="inputFormVisit" [initValues]="initRecognitionProperty()"
                            (formReady)="form.set($event)"
                            className="grid grid-cols-2 gap-4 sm:grip-row overflow-hidden items-start"
-                           class="w-full pt-4"></vex-dynamic-forms>
+                           class="w-full pt-4"></app-dynamic-forms>
       </div>
       <div class="container w-full h-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden">
         <vex-table-third-party-affected

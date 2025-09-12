@@ -1,7 +1,7 @@
 import { UserDataIA } from "./authData.model";
 import { Injectable } from '@angular/core';
 import { env } from "src/environments/enviromentsIA";
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 
 @Injectable({

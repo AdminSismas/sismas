@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class SupportLogs {
     [x: string]: any;
     id: number;
@@ -6,7 +7,7 @@ export class SupportLogs {
     id_empleado: number;
     respuesta: string;
     fecha_hora: string;
-    
+
     constructor(data: any) {
         this.id = data.id;
         this.id_soporte = data.id_soporte;

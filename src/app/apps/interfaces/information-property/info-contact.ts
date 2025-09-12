@@ -10,6 +10,7 @@ export class InfoContact {
   addressNotification: string | null;
   notificationByEmail: boolean | null;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(content?: any) {
     this.individualId = content?.individualId ?? -55;
     this.divpolLv1 = content?.divpolLv1 ?? '';

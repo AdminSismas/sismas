@@ -1,9 +1,6 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { contentInfoAttachment } from '../../interfaces/general/content-info-attachment.model';
 
-export const PAGE = 0;
-export const PAGE_SIZE = 5;
-export const PAGE_SIZE_OPTION: number[] = [5, 10, 20, 50];
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
     {
         label: 'Nombre archivo',

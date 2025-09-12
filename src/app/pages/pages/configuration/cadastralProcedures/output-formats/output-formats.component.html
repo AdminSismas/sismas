@@ -142,7 +142,7 @@
       <!-- Paginador -->
       <mat-paginator
         #paginator
-        [class.hidden]="!(isDesktop$ | async)"
+        [class.hidden]="(isDesktop$ | async) === false"
         [pageSizeOptions]="pageSizeOptions"
         [length]="totalElements"
         [pageSize]="pageSize"

@@ -45,9 +45,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import Swal from 'sweetalert2';
-import { UpdateParticipantComponent } from '../../bpm/core/citation-and-notice/components/update-participant/update-participant.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InfoContact } from 'src/app/apps/interfaces/information-property/info-contact';
+import { CreatePeopleComponent } from './components/create-people/create-people.component';
+import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 
 @Component({
   selector: 'vex-people',
@@ -191,15 +192,15 @@ export class PeopleComponent implements OnInit {
     if (!this.availableRoles) return;
 
     this.dialog
-      .open(UpdateParticipantComponent, {
+      .open(CreatePeopleComponent, {
         ...MODAL_SMALL_LARGE,
         disableClose: true,
         data: {
-          mode: 'peopleCreate'
+          mode: 'create'
         }
       })
       .afterClosed()
-      .subscribe((customer: People) => {
+      .subscribe((customer: InfoPerson) => {
         if (customer) {
           this.customers.unshift(new People(customer));
           this.subject$.next(this.customers);
@@ -228,13 +229,13 @@ export class PeopleComponent implements OnInit {
 
   openEditPersonDialog(customer: People, contact: InfoContact | null) {
     this.dialog
-      .open(UpdateParticipantComponent, {
+      .open(CreatePeopleComponent, {
         ...MODAL_SMALL_LARGE,
         disableClose: true,
         data: {
           ...customer,
           contact: contact,
-          mode: 'peopleUpdate'
+          mode: 'update'
         }
       })
       .afterClosed()

@@ -1,8 +1,7 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
-  OnInit
+  Component
 } from '@angular/core';
 import { MenuItem } from '../interfaces/menu-item.interface';
 import { trackById } from '@vex/utils/track-by';
@@ -40,7 +39,7 @@ export interface OnlineStatus {
     NgIf
   ]
 })
-export class ToolbarUserDropdownComponent implements OnInit {
+export class ToolbarUserDropdownComponent {
   items: MenuItem[] = [
     {
       id: '1',
@@ -111,8 +110,6 @@ export class ToolbarUserDropdownComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private popoverRef: VexPopoverRef<ToolbarUserDropdownComponent>
   ) {}
-
-  ngOnInit() {}
 
   setStatus(status: OnlineStatus) {
     this.activeStatus = status;

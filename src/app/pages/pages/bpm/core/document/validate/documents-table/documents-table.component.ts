@@ -51,13 +51,10 @@ import { InformationPegeable } from '../../../../../../../apps/interfaces/genera
 import { MatDividerModule } from '@angular/material/divider';
 import { ViewFileDocumentManagementComponent } from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
 import {
-  PAGE,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE
 } from '../../../../../../../apps/constants/general/attachment.constant';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constants';
+import { MODAL_LARGE, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '../../../../../../../apps/constants/general/constants';
 
 @Component({
   selector: 'vex-documents-table',

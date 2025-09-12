@@ -7,7 +7,8 @@ import {
   SimpleChanges,
   signal,
   inject,
-  effect
+  effect,
+  OnDestroy
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -31,9 +32,10 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/constants';
 import { output } from '@angular/core';
 import { Moment } from 'moment';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'vex-dynamic-forms',
+  selector: 'app-dynamic-forms',
   standalone: true,
   imports: [
     NgClass,
@@ -57,7 +59,7 @@ import { Moment } from 'moment';
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
 })
-export class DynamicFormsComponent implements OnInit, OnChanges {
+export class DynamicFormsComponent implements OnInit, OnChanges, OnDestroy {
   private fb = inject(FormBuilder);
 
   inputs = input.required<JSONInput[]>();
@@ -67,6 +69,7 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
 
   form = signal(this.fb.group({}));
   private dateFilters = new Map<string, (date: Moment | null) => boolean>();
+  private formValueChanges = signal<Subscription | undefined>(undefined);
 
   formReady = output<FormGroup>();
   // new EventEmitter<FormGroup>();
@@ -104,6 +107,11 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy(): void {
+    this.formValueChanges()?.unsubscribe();
+    this.formValueChanges.set(undefined);
+  }
+
   private createDateFilters(): void {
     this.inputs()
       .filter((input) => input.element === 'date')
@@ -125,9 +133,9 @@ export class DynamicFormsComponent implements OnInit, OnChanges {
 
     this.formReady.emit(this.form());
 
-    this.form().valueChanges.subscribe(() => {
+    this.formValueChanges.set(this.form().valueChanges.subscribe(() => {
       this.formReady.emit(this.form());
-    });
+    }));
   }
 
   cssClassesForm(cssClasses: string | undefined): string {

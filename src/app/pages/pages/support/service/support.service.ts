@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
@@ -6,6 +7,7 @@ import { supportData } from '../model/support.model';
 import { ModuloName } from '../model/modulos.model';
 import { SupportLogs } from '../support_logs/model/supportLogs.model';
 import { env } from 'src/environments/environments.soporte';
+import { SupportFormValues } from '../support_logs/interfaces/form-values.interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -68,7 +70,7 @@ export class SupportService {
   //   );
   // }
 
-  insertTicket(formData: any): Observable<any> {
+  insertTicket(formData: SupportFormValues): Observable<any> {
     const apiUrl = `${this.apiTickets}`;
     return this.http.post(apiUrl, formData);
   }
@@ -76,7 +78,7 @@ export class SupportService {
   getTickets(customerId: number): Observable<any> {
     const params = new HttpParams().set('customer_id', customerId.toString());
     return this.http.get<any>(`${this.apiTickets}`, { params });
-}
+  }
 
 
   createSupportRequest(request: supportData): Observable<{ success: boolean; message: string; data?: any }> {

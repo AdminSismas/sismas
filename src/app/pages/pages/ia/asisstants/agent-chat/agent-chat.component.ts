@@ -137,7 +137,7 @@ export class AgentChatComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  footerVisibleChange(change: boolean): void {
+  footerVisibleChange(): void {
     this.configService.updateConfig({
       footer: {
         visible: false

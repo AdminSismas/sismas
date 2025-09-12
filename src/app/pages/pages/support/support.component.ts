@@ -32,7 +32,8 @@ import { Modulo, Subvista, Vista } from './interfaces/module.model';
 import { MODULES } from './constants/modules.constant';
 import { UserService } from '../auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
+import { SupportFormValues } from './support_logs/interfaces/form-values.interfaces';
 
 @Component({
   selector: 'vex-support',
@@ -154,7 +155,7 @@ export class SupportComponent implements OnInit {
     // });
   }
   loadModulos() {
-    this.modulo = MODULES.map((modulo: any) => new Modulo(modulo));
+    this.modulo = MODULES.map((modulo) => new Modulo(modulo));
   }
 
   loadVistas(id_modulo: number) {
@@ -206,8 +207,8 @@ export class SupportComponent implements OnInit {
 
   onSubmit() {
     if (this.verticalAccountFormGroup.valid) {
-      const formData = this.verticalAccountFormGroup.value;
-      formData.id_cliente = this.userID;
+      const formData: SupportFormValues = this.verticalAccountFormGroup.value;
+      formData.id_cliente = this.userID!;
       this.supportService.insertTicket(formData).subscribe(response => {
         if (response.success) {
           Swal.fire({
@@ -252,7 +253,7 @@ export class SupportComponent implements OnInit {
     });
   }
 
-  onSelect(event: any) {
+  onSelect(event: NgxDropzoneChangeEvent) {
     const file = event.addedFiles.filter((nuevoArchivo: File) => {
 
       return !this.uploadedFiles.some((archivoExistente: File) =>
@@ -272,7 +273,7 @@ export class SupportComponent implements OnInit {
     this.verticalAccountFormGroup.get('file')?.updateValueAndValidity();
   }
 
-  onRemove(event: any) {
+  onRemove(event: File) {
     const index = this.uploadedFiles.indexOf(event);
     if (index > -1) {
       this.uploadedFiles.splice(index, 1);

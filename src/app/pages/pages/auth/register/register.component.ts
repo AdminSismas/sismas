@@ -52,7 +52,7 @@ export class RegisterComponent {
   ) {}
 
   send() {
-    this.router.navigate([`${environment.root}`]).then(value => {});
+    this.router.navigate([`${environment.root}`]).then();
   }
 
   toggleVisibility() {

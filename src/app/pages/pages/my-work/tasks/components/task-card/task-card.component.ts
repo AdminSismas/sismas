@@ -16,7 +16,7 @@ import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
 import { TaskResponseModel } from '../../../../../../apps/interfaces/bpm/task-response.model';
 import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
-import { PAGE, PAGE_SIZE } from '../../../../../../apps/constants/general/procedures.constant';
+import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/general/constants';
 import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { TaskRetailExecuteResponseModel } from '../../../../../../apps/interfaces/bpm/task-retail-execute-response.model';

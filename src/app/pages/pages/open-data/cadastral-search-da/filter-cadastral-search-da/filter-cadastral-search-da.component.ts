@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSelectModule } from '@angular/material/select';
@@ -163,7 +163,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {});
+      .subscribe();
   }
 
   searchRegistrationNumber() {
@@ -254,7 +254,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
     );
   }
 
-  public clearFormFields(value:any){
+  public clearFormFields(value: MatTabChangeEvent){
     if(value?.tab?.textLabel === 'Seleccion Municipal'){
       this.formatFieldValue();
       this.clearMunicipalSelection();
@@ -300,7 +300,7 @@ export class FilterCadastralSearchDaComponent implements OnInit {
 
 
 
-  validateFilterSearchCadastral(): any {
+  validateFilterSearchCadastral(): SearchData {
     const searchData = this.form.value;
     if (searchData == null) {
       throw new Error(

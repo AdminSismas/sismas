@@ -7,8 +7,8 @@ import {
   OnInit
 } from '@angular/core';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { Observable, of } from 'rxjs';
-import { delay, filter, startWith, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, startWith, switchMap } from 'rxjs/operators';
 import { trackById } from '@vex/utils/track-by';
 import { stagger80ms } from '@vex/animations/stagger.animation';
 import {
@@ -20,8 +20,7 @@ import {
 } from '@angular/router';
 import { ChatService } from './chat.service';
 import { MatRippleModule } from '@angular/material/core';
-import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -63,8 +62,6 @@ export interface ChatMessage {
     MatMenuModule,
     MatIconModule,
     NgClass,
-    NgIf,
-    NgFor,
     MatRippleModule,
     RouterLinkActive,
     RouterLink,

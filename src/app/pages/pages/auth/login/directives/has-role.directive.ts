@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 })
 export class HasRoleDirective {
   constructor(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
     private userService: UserService

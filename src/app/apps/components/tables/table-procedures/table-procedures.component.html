@@ -18,18 +18,13 @@
             ></mat-datepicker-toggle>
             <!-- <mat-hint>Formato fecha: dd/mm/yyyy</mat-hint> -->
             <mat-datepicker #startDatepicker></mat-datepicker>
-            <mat-error *ngIf="beginAtForm?.hasError('dateComparison')">
-              La fecha debe ser menor a la fecha fin
-            </mat-error>
-            <mat-error
-              *ngIf="beginAtForm?.touched && beginAtForm?.hasError('required')"
-              >Este campo es obligatorio.</mat-error
-            >
+            @if (beginAtForm?.hasError("dateComparison")) {
+              <mat-error>La fecha debe ser menor a la fecha fin</mat-error>
+            }
+            @if (beginAtForm?.touched && beginAtForm?.hasError("required")) {
+              <mat-error>Este campo es obligatorio.</mat-error>
+            }
           </mat-form-field>
-
-          <!-- <div *ngIf="myForm.get('endDate')?.hasError('dateComparison') && myForm.get('endDate')?.touched" class="error-message">
-                    The end date must be greater than or equal to the start date.
-                  </div> -->
         </div>
         <mat-form-field class="flex-auto">
           <mat-label>Fecha fin</mat-label>
@@ -47,13 +42,12 @@
           <!-- <mat-hint>Formato fecha: dd/mm/yyyy</mat-hint> -->
           <mat-datepicker #endDatepicker></mat-datepicker>
           <!-- Validaciones -->
-          <mat-error
-            *ngIf="beginAtEForm?.touched && beginAtEForm?.hasError('required')"
-            >Este campo es obligatorio.</mat-error
-          >
-          <mat-error *ngIf="beginAtEForm?.hasError('dateComparison')">
-            La fecha debe ser mayor a la fecha de inicio.
-          </mat-error>
+          @if (beginAtEForm?.touched && beginAtEForm?.hasError("required")) {
+            <mat-error>Este campo es obligatorio.</mat-error>
+          }
+          @if (beginAtEForm?.hasError("dateComparison")) {
+            <mat-error>La fecha debe ser mayor a la fecha de inicio.</mat-error>
+          }
         </mat-form-field>
         <div>
           <mat-form-field class="flex-auto">
@@ -66,36 +60,36 @@
             />
           </mat-form-field>
           <br />
-          <mat-error
-            *ngIf="
-              executionCodeForm?.touched &&
-              executionCodeForm?.hasError('required')
-            "
-            >Este campo es obligatorio.</mat-error
-          >
-          <mat-error *ngIf="executionCodeForm?.hasError('pattern')"
-            >Solo se permite valores númerios.</mat-error
-          >
+          @if (
+            executionCodeForm?.touched &&
+            executionCodeForm?.hasError("required")
+          ) {
+            <mat-error>Este campo es obligatorio.</mat-error>
+          }
+          @if (executionCodeForm?.hasError("pattern")) {
+            <mat-error>Solo se permite valores númerios.</mat-error>
+          }
         </div>
-        <span
-          style="z-index: 1000"
-          data-balloon-length="large"
-          aria-label="Cuando buscas por el campo Radicado no puedes buscar por Documento"
-          data-balloon-pos="up"
-          *ngIf="seeInfo"
-        >
-          <mat-icon svgIcon="mat:info"></mat-icon>
-        </span>
-
-        <span
-          style="z-index: 1000"
-          data-balloon-length="large"
-          aria-label="Cuando buscas por el campo Documento no puedes buscar por Radicado"
-          data-balloon-pos="up"
-          *ngIf="seeInfoDocument"
-        >
-          <mat-icon svgIcon="mat:info"></mat-icon>
-        </span>
+        @if (seeInfo) {
+          <span
+            style="z-index: 1000"
+            data-balloon-length="large"
+            aria-label="Cuando buscas por el campo Radicado no puedes buscar por Documento"
+            data-balloon-pos="up"
+          >
+            <mat-icon svgIcon="mat:info"></mat-icon>
+          </span>
+        }
+        @if (seeInfoDocument) {
+          <span
+            style="z-index: 1000"
+            data-balloon-length="large"
+            aria-label="Cuando buscas por el campo Documento no puedes buscar por Radicado"
+            data-balloon-pos="up"
+          >
+            <mat-icon svgIcon="mat:info"></mat-icon>
+          </span>
+        }
         <div>
           <mat-form-field class="flex-auto">
             <mat-label>Documento personal</mat-label>
@@ -107,9 +101,9 @@
             />
           </mat-form-field>
           <br />
-          <mat-error *ngIf="individualNumberPartForm?.hasError('pattern')"
-            >Solo se permite valores númerios.</mat-error
-          >
+          @if (individualNumberPartForm?.hasError("pattern")) {
+            <mat-error>Solo se permite valores númerios.</mat-error>
+          }
         </div>
 
         <button
@@ -118,13 +112,54 @@
           mat-raised-button
           type="button"
           [disabled]="!informationEjecution.valid"
-          (click)="onSearch()"
+          (click)="searchByPersonOrFiled()"
         >
           <mat-icon svgIcon="mat:search"></mat-icon>Buscar
         </button>
       </div>
+      @if (urlTable() === 'finished') {
+        <div class="flex gap-4">
+          <mat-form-field>
+            <mat-label>Número de resolución</mat-label>
+            <input
+              type="number"
+              matInput
+              placeholder="Ingresa el número de radicado"
+              formControlName="resolutionNumber"
+              min="1"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Año de resolución</mat-label>
+            <input
+              type="number"
+              matInput
+              placeholder="Ingresa el año de radicado"
+              formControlName="resolutionYear"
+            />
+          </mat-form-field>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="searchByResolution()"
+          >
+            <mat-icon svgIcon="mat:search" />
+            Buscar por N° resolución
+          </button>
+          @if (gettedProcedureByResolution()) {
+            <button
+              mat-flat-button
+              color="warn"
+              (click)="revertResolutionSearch()"
+            >
+              <mat-icon svgIcon="mat:undo" />
+              Revertir
+            </button>
+          }
+        </div>
+      }
 
-      <div class="card overflow-auto mt-8">
+      <div class="card overflow-auto">
         <!-- mt-16 -->
         <div
           class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center"
@@ -156,7 +191,6 @@
           class="w-full"
           matSort
         >
-
           <!-- Text Columns -->
           @for (column of columns; track column.property) {
             @switch (column.type) {

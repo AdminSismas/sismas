@@ -9,12 +9,12 @@ import { trackById } from '@vex/utils/track-by';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ContactsCardComponent } from '../components/contacts-card/contacts-card.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { AssistantsService } from 'src/app/core/crud/assistantsService.service';
@@ -104,7 +104,7 @@ export class AssistantsGridComponent implements OnInit {
           this.assistants = [];
         }
       },
-      error: (error) => {
+      error: () => {
         this.assistants = [];
       }
     });

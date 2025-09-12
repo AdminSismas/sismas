@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pegeable } from './pegeable.model';
 
 export class InformationPegeable {
@@ -12,6 +13,7 @@ export class InformationPegeable {
   numberOfElements?: number;
   first?: boolean;
   empty?: boolean;
+
 
   constructor(totalPages?: number, totalElements?: number, last?: boolean,
               size?: number, numberOfElements?: number, first?: boolean,

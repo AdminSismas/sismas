@@ -4,8 +4,8 @@ export class supportData {
     id_modulo?: string;
     id_vista?: string;
     observacion?: string;
-  
-    constructor(item: any){
+
+    constructor(item: Partial<supportData>){
       this.id = item.id;
       this.nombre = item.nombre;
       this.id_modulo = item.id_modulo;
@@ -13,4 +13,3 @@ export class supportData {
       this.observacion = item.observacion;
     }
   }
-  

@@ -51,7 +51,7 @@ import {
 } from '../../../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
 import {
   CreatePeopleComponent
-} from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
+} from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
 import { InfoPerson } from '../../../../../../apps/interfaces/information-property/info-person';
 import { InformationPersonService } from '../../../../../../apps/services/bpm/information-person.service';

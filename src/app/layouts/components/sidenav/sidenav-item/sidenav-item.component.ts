@@ -94,6 +94,7 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes &&
+      // eslint-disable-next-line no-prototype-builtins
       changes.hasOwnProperty('item') &&
       this.isDropdown(this.item)
     ) {

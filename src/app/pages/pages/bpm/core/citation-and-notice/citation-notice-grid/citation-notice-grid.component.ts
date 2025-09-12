@@ -25,20 +25,16 @@ import { filter } from 'rxjs/operators';
 import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { Observable, ReplaySubject } from 'rxjs';
 import { CitationNoticeCardComponent } from '../components/citation-notice-card/citation-notice-card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
-  PAGE,
-  PAGE_SIZE_OPTION_UNIQUE,
-  PAGE_SIZE_TABLE_UNIQUE
-} from '../../../../../../apps/constants/general/constants';
+  PAGE} from 'src/app/apps/constants/general/constants';
 import { validateVariable } from '../../../../../../apps/utils/general';
 import { TypeProcessParticipant } from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
-
 @Component({
   selector: 'vex-citation-notice-grid',
   templateUrl: './citation-notice-grid.component.html',
@@ -55,12 +51,13 @@ import { LoadingServiceService } from '../../../../../../apps/services/general/l
   standalone: true,
   imports: [
     AsyncPipe,
-    MatIconModule,
-    MatTabsModule,
     CitationNoticeCardComponent,
     MatButtonModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatPaginatorModule,
+    MatTabsModule,
     MatTooltipModule,
-    MatPaginatorModule
   ]
 })
 export class CitationNoticeGridComponent implements OnInit, OnDestroy {
@@ -87,7 +84,7 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
 
   // Signals
   page = signal(PAGE);
-  pageSize = signal(PAGE_SIZE_TABLE_UNIQUE);
+  pageSize = signal(100);
   contentInformation = signal<InformationPegeable>(new InformationPegeable());
   totalElements = signal<number>(0);
   listParticipants = signal<ProcessParticipant[]>([]);
@@ -117,7 +114,7 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
 
     effect(() => {
       this.onFilterChange(this.searchCtrl() ?? '');
-    });
+    }, { allowSignalWrites: true });
   }
 
   refreshData() {
@@ -321,10 +318,14 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
     return participant.participationId;
   }
 
+  changePage(event: PageEvent) {
+    this.page.set(event.pageIndex);
+    this.pageSize.set(event.pageSize);
+    this.changePageSearchData.emit(this.generateObjectPageSearchData());
+  }
+
   ngOnDestroy(): void {
     this._dataContentInformations$.unsubscribe();
     this._listParticipantsCards$.unsubscribe();
   }
-
-  protected readonly pageSizeOptions = PAGE_SIZE_OPTION_UNIQUE;
 }

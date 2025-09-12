@@ -1,4 +1,9 @@
-<div class="card overflow-hidden min-h-[5rem] shadow-md">
+<div
+  class="card overflow-hidden min-h-[5rem] shadow-md"
+  [matBadge]="expirationDays()"
+  [matBadgeColor]="badgeColor()"
+  [matBadgeHidden]="!expirationDays()"
+>
   <div
     (click)="
       openDetailProcessParticipant.emit(processParticipant()!.participationId)

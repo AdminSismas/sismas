@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -23,10 +23,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 
 
 import { SupportService } from '../service/support.service';
@@ -43,27 +40,22 @@ import { UserService } from '../../auth/login/services/user.service';
   selector: 'vex-support-logs',
   standalone: true,
   imports: [
-    VexPageLayoutComponent,
-    VexPageLayoutHeaderDirective,
-    VexBreadcrumbsComponent,
+    DatePipe,
+    FormsModule,
+    MatButtonModule,
     MatButtonToggleModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatTooltipModule,
+    NgClass,
     ReactiveFormsModule,
     VexPageLayoutContentDirective,
-    NgIf,
-    MatButtonModule,
-    MatTooltipModule,
-    MatIconModule,
-    MatMenuModule,
-    MatTableModule,
-    MatSortModule,
-    MatCheckboxModule,
-    NgFor,
-    NgClass,
-    MatPaginatorModule,
-    FormsModule,
-    MatDialogModule,
-    MatInputModule,
-    CommonModule
   ],
   templateUrl: './support-logs.component.html',
   styleUrl: './support-logs.component.scss'

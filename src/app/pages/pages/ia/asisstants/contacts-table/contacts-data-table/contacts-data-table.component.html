@@ -44,7 +44,9 @@
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
             <img
               [src]="row[column.property]"
-              class="avatar h-9 w-9 align-middle my-2" />
+              class="avatar h-9 w-9 align-middle my-2"
+              alt="Avatar"
+            />
           </td>
         </ng-container>
 
@@ -110,7 +112,7 @@
       *ngIf="dataSource.filteredData.length === 0"
       @scaleFadeIn
       class="flex-auto flex flex-col items-center justify-center">
-      <img class="m-12 h-64" src="assets/img/illustrations/idea.svg" />
+      <img class="m-12 h-64" src="assets/img/illustrations/idea.svg" alt="No hay contactos disponibles"/>
       <h2 class="headline m-0 text-center">
         No contacts matching your filters
       </h2>

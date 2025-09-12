@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  OnInit,
   ViewChild
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
@@ -19,14 +18,12 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule]
 })
-export class ToolbarSearchComponent implements OnInit {
+export class ToolbarSearchComponent {
   isOpen = false;
 
   @ViewChild('input', { read: ElementRef, static: true }) input?: ElementRef;
 
   constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnInit() {}
 
   open() {
     this.isOpen = true;

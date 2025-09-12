@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { VexPopoverRef } from '@vex/components/vex-popover/vex-popover-ref';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { NgFor } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
 export interface MegaMenuFeature {
@@ -20,9 +19,9 @@ export interface MegaMenuPage {
   selector: 'vex-mega-menu',
   templateUrl: './mega-menu.component.html',
   standalone: true,
-  imports: [MatButtonModule, NgFor, RouterLink, MatIconModule]
+  imports: [MatButtonModule, RouterLink, MatIconModule]
 })
-export class MegaMenuComponent implements OnInit {
+export class MegaMenuComponent {
   features: MegaMenuFeature[] = [
     {
       icon: 'mat:layers',
@@ -100,8 +99,6 @@ export class MegaMenuComponent implements OnInit {
   ];
 
   constructor(private popoverRef: VexPopoverRef<MegaMenuComponent>) {}
-
-  ngOnInit() {}
 
   close() {
     this.popoverRef.close();

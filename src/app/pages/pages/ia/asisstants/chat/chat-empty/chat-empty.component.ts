@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ChatService } from '../chat.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,14 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatButtonModule, MatIconModule]
 })
-export class ChatEmptyComponent implements OnInit {
+export class ChatEmptyComponent {
   constructor(
     private chatService: ChatService,
     private cd: ChangeDetectorRef
   ) {}
-
-  ngOnInit() {}
-
   openDrawer() {
     this.chatService.drawerOpen.next(true);
     this.cd.markForCheck();

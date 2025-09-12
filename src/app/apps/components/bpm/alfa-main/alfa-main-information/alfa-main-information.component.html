@@ -139,6 +139,15 @@
             </button>
             <button
               mat-raised-button
+              [ngClass]="buttonsClass(TYPE_BUTTON_CHANGES)"
+              (click)="viewChanges()"
+              [disabled]="disabledButton(TYPE_BUTTON_CHANGES)"
+            >
+              <mat-icon svgIcon="mat:history"></mat-icon>
+              Ver Cambios
+            </button>
+            <button
+              mat-raised-button
               color="accent"
               (click)="clearInformationAlfaMain()"
               [disabled]="disabledButton(TYPE_BUTTON_RESET)"

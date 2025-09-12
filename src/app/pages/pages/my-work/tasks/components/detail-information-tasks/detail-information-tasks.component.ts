@@ -54,7 +54,7 @@ import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { DetailExecutedTasksComponent } from './detail-executed-tasks/detail-executed-tasks.component';
 import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
-import { PAGE } from '../../../../../../apps/constants/general/procedures.constant';
+import { PAGE } from 'src/app/apps/constants/general/constants';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UntypedFormControl } from '@angular/forms';
 import { TypeInformation } from '../../../../../../apps/interfaces/general/content-info';

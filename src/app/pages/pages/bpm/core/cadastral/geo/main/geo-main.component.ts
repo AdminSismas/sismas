@@ -65,9 +65,6 @@ export class GeoMainComponent implements OnInit {
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
-
-    this.destroyRef.onDestroy(() => {
-    });
   }
 
   ngOnInit() {

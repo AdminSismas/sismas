@@ -1,9 +1,6 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { contentInfoProcedures } from '../../interfaces/general/content-info-procedures.model';
 
-export const PAGE = 0;
-export const PAGE_SIZE = 10;
-export const PAGE_SIZE_OPTION: number[] = [5, 10, 20, 50];
 export const USERS_ACTIONS_ENABLED = ['ADMIN', 'USER_LEAD', 'USER_COORD'];
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[] = [
   {

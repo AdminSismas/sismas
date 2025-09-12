@@ -62,6 +62,5 @@ src/claude/*
 
 # gemini CLI
 GEMINI.md
-
-# pull request files
 cambios.patch
+pullrequest.md

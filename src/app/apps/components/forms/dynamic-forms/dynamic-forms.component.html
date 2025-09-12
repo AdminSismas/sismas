@@ -91,6 +91,8 @@
                   <mat-option [value]="option.value">{{
                     option.label
                   }}</mat-option>
+                } @empty {
+                  <mat-option disabled>No hay opciones</mat-option>
                 }
               </mat-select>
             </mat-form-field>

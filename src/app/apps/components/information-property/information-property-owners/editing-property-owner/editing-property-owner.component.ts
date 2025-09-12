@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -37,9 +36,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import Swal from 'sweetalert2';
 import {
   CreatePeopleComponent,
-  defaultData
-} from 'src/app/pages/pages/operation-support/people/create-people/create-people.component';
-import { MODAL_SMALL } from 'src/app/apps/constants/general/constants';
+  DefaultDataCreatePerson
+} from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
+import { MODAL_SMALL_LARGE } from 'src/app/apps/constants/general/constants';
 import { People } from 'src/app/apps/interfaces/users/people.model';
 import { ModalResponse } from '../../../general-components/modal-window/modal-window.component';
 
@@ -108,7 +107,7 @@ export class EditingPropertyOwnerComponent implements OnInit {
     this.dialogRef.close(this.reloadAtClose());
   }
 
-  editRrrightOwnerProperty(): any {
+  editRrrightOwnerProperty() {
     if (this.form.invalid) {
       Swal.fire({
         icon: 'error',
@@ -134,8 +133,8 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
     this.peopleService
       .getPersonByDocumentNumber({
-        number: number,
-        individualTypeNumber: domIndividualTypeNumber
+        number,
+        domIndividualTypeNumber
       })
       .subscribe((res: InfoPerson) => {
         values.individual = { individualId: res.individualId };
@@ -171,11 +170,11 @@ export class EditingPropertyOwnerComponent implements OnInit {
 
     const person = new People({ ...this.data.individual });
     this.dialog.open(CreatePeopleComponent, {
-      ...MODAL_SMALL,
+      ...MODAL_SMALL_LARGE,
       data: {
         mode: 'update',
         ...person
-      } as defaultData
+      } as DefaultDataCreatePerson
     }).afterClosed().subscribe((res: ModalResponse<InfoPerson>) => {
       if (res.response) {
         this.reloadAtClose.set(true);

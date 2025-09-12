@@ -8,11 +8,9 @@ import { map } from 'rxjs/operators';
 import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
 import {
   AsyncPipe,
-  KeyValuePipe,
   NgClass,
   NgFor,
   NgIf,
-  UpperCasePipe
 } from '@angular/common';
 import { Observable } from 'rxjs';
 import {
@@ -44,8 +42,6 @@ import { VEX_THEMES } from '@vex/config/config.token';
     MatSlideToggleModule,
     MatRadioModule,
     AsyncPipe,
-    UpperCasePipe,
-    KeyValuePipe
   ]
 })
 export class ConfigPanelComponent {

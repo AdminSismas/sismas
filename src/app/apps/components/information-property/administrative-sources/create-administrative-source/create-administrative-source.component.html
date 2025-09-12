@@ -12,12 +12,12 @@
 </div>
 <mat-divider class="text-border border-slate-400 mb-4"></mat-divider>
 <mat-dialog-content class="flex flex-col overflow-hidden gap-2">
-  <vex-dynamic-forms
+  <app-dynamic-forms
     [inputs]="inputs"
     (formReady)="form = $event"
     [initValues]="initValues"
     className="grid grid-cols-6 grid-flow-row gap-x-4"
-  ></vex-dynamic-forms>
+  ></app-dynamic-forms>
   <mat-dialog-actions class="flex justify-center gap-6 w-full">
     <button
       mat-flat-button

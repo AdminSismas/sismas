@@ -11,12 +11,12 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/d
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MODAL_DYNAMIC_HEIGHT, NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constants';
+import { MODAL_SMALL_LARGE, NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constants';
 import { getRandomInt } from 'src/app/apps/utils/general';
-import { UpdateParticipantComponent } from '../update-participant/update-participant.component';
 import { InfoPerson } from '../../../../../../../apps/interfaces/information-property/info-person';
 import { PeopleService } from '../../../../../../../apps/services/users/people.service';
 import { InfoContact } from '../../../../../../../apps/interfaces/information-property/info-contact';
+import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 
 @Component({
   selector: 'vex-details-citation-notice',
@@ -65,15 +65,11 @@ export class DetailsCitationNoticeComponent implements OnInit {
   }
 
   editProcessParticipant() {
-    const individualTypeNumber: string = this.processParticipant.individual.domIndividualTypeNumber;
-    const number: string = this.processParticipant.individual.number;
-    this.dialog.open(UpdateParticipantComponent, {
-      ...MODAL_DYNAMIC_HEIGHT,
+    this.dialog.open(CreatePeopleComponent, {
+      ...MODAL_SMALL_LARGE,
       disableClose: true,
       data: {
-        domIndividualTypeNumber: individualTypeNumber,
-        contact: this.contact,
-        number: number,
+        ...this.processParticipant.individual,
         mode: 'update'
       }
     }).afterClosed().subscribe((result: InfoPerson) => {
