@@ -19,7 +19,6 @@ import {
 } from '../../interfaces/general/content-info';
 import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
 import { OutFormatModel } from '../../interfaces/general/out-format.model';
-import { TaskRetailExecuteResponseModel } from '../../interfaces/bpm/task-retail-execute-response.model';
 import { DataFolio } from '../../interfaces/information-property/snr-folio-info';
 import { DataSource } from '../../interfaces/information-property/snr-source-info';
 import { DataPerson } from '../../interfaces/information-property/snr-person-info';
@@ -453,42 +452,6 @@ export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<InformationAd
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
-export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
-  {
-    label: 'Detalle',
-    property: 'viewDetail',
-    type: 'button',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-
-  {
-    label: 'Nombre del trámite',
-    property: 'processName',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Nombre de la tarea',
-    property: 'flowName',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Fecha de inicio',
-    property: 'beginAt',
-    type: 'date',
-    visible: true
-  },
-  {
-    label: 'Días de retraso',
-    property: 'daysFinish',
-    type: 'currency',
-    visible: true
-  }
-
-
-];
 export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] = [
   ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,
   { label: 'Acciones', property: 'actions', type: 'operationType', visible: true }

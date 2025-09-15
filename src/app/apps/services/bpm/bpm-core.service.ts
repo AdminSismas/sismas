@@ -7,6 +7,7 @@ import { ProFlow } from '../../interfaces/bpm/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
 import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { MetadataInformation } from '../../interfaces/bpm/metadata-information.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class BpmCoreService {
 
   private proTaskSubject = new ReplaySubject<ProTaskE>(1);
   proTask$ = this.proTaskSubject.asObservable();
-  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}/`;
+  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
   constructor(
     private requestsService: SendGeneralRequestsService,
@@ -24,7 +25,7 @@ export class BpmCoreService {
   }
 
   getProTaskCountComment(id: string): Observable<number> {
-    const url = `${this.basic_url}${envi.bpmOperation.comment}${id}${envi.bpmOperation.count}`;
+    const url = `${this.basic_url}${envi.bpmOperation.comment}/${id}${envi.bpmOperation.count}`;
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
@@ -37,29 +38,32 @@ export class BpmCoreService {
   }
 
   getProFlow(flowId: string): Observable<ProFlow> {
-    const url = `${this.basic_url}${envi.bpmOperation.proflow}${flowId}`;
+    const url = `${this.basic_url}/${envi.bpmOperation.proflow}${flowId}`;
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
   getProFlowProExecution(executionId: string): Observable<ProFlow> {
-    const url = `${this.basic_url}${envi.bpmOperation.proflow_proExecution}${executionId}`;
+    const { proflow, proExecution } = envi.bpmOperation;
+    const url = `${this.basic_url}/${proflow}${proExecution}${executionId}`;
     return this.requestsService.sendRequestsFetchGet(url)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
   getNextOperation(executionId: string, answer: boolean): Observable<ProTaskE> {
-    const url = `${this.basic_url}${envi.bpmOperation.proExecution_next}${executionId}/${answer}`;
+    const { proExecution, next } = envi.bpmOperation;
+    const url = `${this.basic_url}/${proExecution}${next}/${executionId}/${answer}`;
     return this.requestsService.sendRequestsFetchPost(url);
   }
 
   getPreviewOperation(executionId: string): Observable<ProTaskE> {
-    const url = `${this.basic_url}${envi.bpmOperation.proExecution_prev}${executionId}`;
+    const { proExecution, prev } = envi.bpmOperation;
+    const url = `${this.basic_url}/${proExecution}${prev}/${executionId}`;
     return this.requestsService.sendRequestsFetchPost(url);
   }
 
   bpmOperationStartProcess(proExecutionE: ProExecutionE): Observable<ProTaskE> {
-    const url = `${this.basic_url}${envi.bpmOperation.startProcess}`;
+    const url = `${this.basic_url}/${envi.bpmOperation.startProcess}`;
     return this.requestsService.sendRequestsFetchPostBody(url, proExecutionE)
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
@@ -104,12 +108,6 @@ export class BpmCoreService {
       `${envi.url}:${envi.port}${envi.temporal}${envi.clearBaunit}`, { params });
   }
 
-  bpmOperationGetFiled(executId: number): Observable<ProTaskE> {
-    const url = `${this.basic_url}${envi.bpmOperation.value}${envi.bpmOperation.proTask}${executId}/active`;
-
-    return this.requestsService.sendRequestsFetchGet(url);
-  }
-
   createMasterFromNph(baunitId: string, executionId: string, condition: string): Observable<void> {
     const url = `${envi.url}:${envi.port}${envi.temporal}${envi.BAUnitCreateMasterFromNph}`;
 
@@ -127,5 +125,11 @@ export class BpmCoreService {
     const url = `${envi.url}:${envi.port}/${envi.bpmResolution.value}/${envi.bpmResolution.report}/${executionId}`;
 
     return this.http.get(url, { responseType: 'blob' });
+  }
+
+  getProcessMetadata(executionId: string): Observable<MetadataInformation[]> {
+    const url = `${this.basic_url}${envi.bpmOperation.metadata}/${executionId}`;
+
+    return this.http.get<MetadataInformation[]>(url);
   }
 }

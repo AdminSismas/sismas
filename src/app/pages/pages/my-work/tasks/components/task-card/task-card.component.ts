@@ -15,7 +15,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
 import { TaskResponseModel } from '../../../../../../apps/interfaces/bpm/task-response.model';
-import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
 import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/general/constants';
 import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
 import { MatTableDataSource } from '@angular/material/table';
@@ -65,8 +64,8 @@ export class TaskCardComponent implements OnInit {
 
   seeTaskProperty(
     value: TaskResponseModel,
-    taskExecuteDetail: any,
-    taskId: number
+    // taskExecuteDetail: MatTableDataSource<TaskRetailExecuteResponseModel>,
+    taskId: string
   ): void {
     this.dialog.open(DetailInformationTasksComponent, {
       // minWidth: '60%',
@@ -77,7 +76,7 @@ export class TaskCardComponent implements OnInit {
       data: {
         taskId: taskId,
         value,
-        taskExecuteDetail
+        // taskExecuteDetail
       }
     });
   }
@@ -85,51 +84,8 @@ export class TaskCardComponent implements OnInit {
   viewDetailTask(value: any) {
     this.tasksPanelService.viewTaskId(value.executionId).subscribe((result) => {
       this.taskOne = result;
-      this.viewExecuteTask(this.taskOne);
+      this.seeTaskProperty(result, `${result.executionId!}`);
     });
-  }
-
-  viewExecuteTask(objOne: any) {
-    this.tasksPanelService
-      .viewExecuteTaskId(
-        this.generateObjectPageSearchData(objOne.executionId),
-        objOne.executionId
-      )
-      .subscribe({
-        error: () => this.captureInformationSubscribeError(),
-        next: (objTwo: InformationPegeable) =>
-          this.captureInformationSubscribe(objOne, objTwo, objOne.executionId)
-      });
-  }
-
-  captureInformationSubscribe(
-    objOne: any,
-    objTwo: InformationPegeable,
-    id: number
-  ): void {
-    let data: TaskRetailExecuteResponseModel[];
-    this.contentTasksInformations = objTwo;
-    if (
-      this.contentTasksInformations &&
-      this.contentTasksInformations.content
-    ) {
-      data = this.contentTasksInformations.content;
-      data = data.map(
-        (row: TaskRetailExecuteResponseModel) =>
-          new TaskRetailExecuteResponseModel(row)
-      );
-      this.dataSource.data = data;
-      this.seeTaskProperty(objOne, this.dataSource, id);
-    }
-  }
-
-  captureInformationSubscribeError(): void {
-    this.contentTasksInformations = new InformationPegeable();
-    this.dataSource.data = [];
-  }
-
-  private generateObjectPageSearchData(baunitId: string): PageSearchData {
-    return new PageSearchData(this.page, this.pageSize, baunitId);
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

@@ -1,0 +1,10 @@
+<div
+  class="w-full h-full grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-4 overflow-y-auto"
+>
+  @for (values of metadata(); track values.metaField) {
+    <section class="flex flex-col gap-1">
+      <span class="font-bold text-sm">{{ values.metaFieldDescription }}</span>
+      <span class="text-sm">{{ values.metaValue }}</span>
+    </section>
+  }
+</div>

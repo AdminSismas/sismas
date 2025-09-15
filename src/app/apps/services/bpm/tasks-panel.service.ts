@@ -70,8 +70,8 @@ export class TasksPanelService {
       .pipe(catchError(error => this.requestsService.errorNotFound(error)));
   }
 
-  viewTaskId(taskId: number): Observable<TablaContent> {
-    const urlTask = `${this.basic_url}${envi.bpmOperation.proExecution}${taskId}`;
+  viewTaskId(executionId: string): Observable<TablaContent> {
+    const urlTask = `${this.basic_url}${envi.bpmOperation.proExecution}${executionId}`;
     return this.http.get<TablaContent>(urlTask);
   }
 
@@ -87,7 +87,8 @@ export class TasksPanelService {
   }
 
   getResources(executionId: string): Observable<string[]> {
-    const url = `${this.basic_url}${envi.bpmOperation.proflow_proExecution}${envi.bpmOperation.resources}${executionId}`;
+    const { proflow, proExecution, resources } = envi.bpmOperation;
+    const url = `${this.basic_url}${proflow}${proExecution}${resources}${executionId}`;
     const headers: HttpHeaders = new HttpHeaders()
       .set('Content-Type', 'text/plain;charset=UTF-8');
     return  this.http.get(url, { headers, responseType: 'text' })

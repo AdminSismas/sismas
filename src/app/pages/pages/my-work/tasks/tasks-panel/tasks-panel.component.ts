@@ -225,10 +225,6 @@ export class TasksPanelComponent implements OnInit {
 
   seeTaskProperty(value: TaskResponseModel, taskId: number): void {
     this.dialog.open(DetailInformationTasksComponent, {
-      // minWidth: '60%',
-      // minHeight: '70%',
-      // disableClose: true,
-      // minWidth:'370px',
       ...MODAL_SMALL,
       data: {
         taskId: taskId,

@@ -16,7 +16,7 @@ import { InformationPegeable } from '../../interfaces/general/information-pegeab
 })
 export class CommentsService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}/${environment.bpmOperation.comment}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.bpmOperation.comment}/`;
 
   /* -------------- CONSTRUCTRO -------------- */
   constructor(
