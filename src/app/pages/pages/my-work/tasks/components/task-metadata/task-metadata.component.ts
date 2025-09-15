@@ -1,5 +1,6 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { MetadataInformation } from 'src/app/apps/interfaces/bpm/metadata-information.interface';
+import { NAME_NO_DISPONIBLE } from 'src/app/apps/constants/general/constants';
+import { MetadataBpm } from 'src/app/apps/interfaces/bpm/metadata-bpm';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class TaskMetadataComponent implements OnInit {
   executionId = input.required<string>();
 
   /* ---- Signals ---- */
-  metadata = signal<MetadataInformation[] | null>(null);
+  metadata = signal<MetadataBpm[] | null>(null);
 
   ngOnInit(): void {
     this.bpmCoreService
@@ -27,5 +28,9 @@ export class TaskMetadataComponent implements OnInit {
       .subscribe((metadata) => {
         this.metadata.set(metadata);
       });
+  }
+
+  get NAME_NO_DISPONIBLE() {
+    return NAME_NO_DISPONIBLE;
   }
 }

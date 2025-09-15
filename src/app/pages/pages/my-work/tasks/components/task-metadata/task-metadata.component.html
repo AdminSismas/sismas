@@ -4,7 +4,7 @@
   @for (values of metadata(); track values.metaField) {
     <section class="flex flex-col gap-1">
       <span class="font-bold text-sm">{{ values.metaFieldDescription }}</span>
-      <span class="text-sm">{{ values.metaValue }}</span>
+      <span class="text-sm">{{ values.metaValue || NAME_NO_DISPONIBLE}}</span>
     </section>
   }
 </div>

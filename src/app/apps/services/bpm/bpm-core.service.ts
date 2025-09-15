@@ -7,7 +7,7 @@ import { ProFlow } from '../../interfaces/bpm/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
 import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { MetadataInformation } from '../../interfaces/bpm/metadata-information.interface';
+import { MetadataBpm } from '../../interfaces/bpm/metadata-bpm';
 
 @Injectable({
   providedIn: 'root'
@@ -127,9 +127,9 @@ export class BpmCoreService {
     return this.http.get(url, { responseType: 'blob' });
   }
 
-  getProcessMetadata(executionId: string): Observable<MetadataInformation[]> {
+  getProcessMetadata(executionId: string): Observable<MetadataBpm[]> {
     const url = `${this.basic_url}${envi.bpmOperation.metadata}/${executionId}`;
 
-    return this.http.get<MetadataInformation[]>(url);
+    return this.http.get<MetadataBpm[]>(url);
   }
 }
