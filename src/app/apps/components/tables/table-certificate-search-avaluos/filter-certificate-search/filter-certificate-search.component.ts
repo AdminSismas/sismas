@@ -420,10 +420,11 @@ export class FilterCertificateSearchComponent implements OnInit {
       searchData.community!,
       this.optionsCommunities
     );
-    searchDataFiltered.neighborhood = this.captureCodeOfCodeNameAndID<Neighborhood>(
-      searchData.neighborhood!,
-      this.optionsNeighborhoods
-    );
+    searchDataFiltered.neighborhood =
+      this.captureCodeOfCodeNameAndID<Neighborhood>(
+        searchData.neighborhood!,
+        this.optionsNeighborhoods
+      );
     searchDataFiltered.sidewalk = this.captureCodeOfCodeNameAndID<Sidewalk>(
       searchData.sidewalk!,
       this.optionsSidewalks
@@ -506,12 +507,13 @@ export class FilterCertificateSearchComponent implements OnInit {
       return;
     }
     this._clearFormSelection(2);
-    const ccZonaPkey: string | null | undefined = this._filterInformationCode<Zone>(
-      codeName,
-      this.optionsZones,
-      'codigoZona',
-      'id'
-    );
+    const ccZonaPkey: string | null | undefined =
+      this._filterInformationCode<Zone>(
+        codeName,
+        this.optionsZones,
+        'codigoZona',
+        'id'
+      );
     this.territorialOrganizationService.getDataSectors(ccZonaPkey).subscribe({
       next: (result: Sector[]) =>
         this.captureSectorInformation(result, skipPreloadedValues)
@@ -551,7 +553,10 @@ export class FilterCertificateSearchComponent implements OnInit {
     }
     this._clearFormSelection(4);
     const communityPkey: string | null | undefined =
-      this.captureCodeOfCodeNameAndID<Commune>(codeName, this.optionsCommunities);
+      this.captureCodeOfCodeNameAndID<Commune>(
+        codeName,
+        this.optionsCommunities
+      );
     this.territorialOrganizationService
       .getDataNeighborhoods(communityPkey)
       .subscribe({
@@ -580,7 +585,10 @@ export class FilterCertificateSearchComponent implements OnInit {
     }
     this._clearFormSelection(5);
     const neighborhoodPkey: string | null | undefined =
-      this.captureCodeOfCodeNameAndID<Neighborhood>(codeName, this.optionsNeighborhoods);
+      this.captureCodeOfCodeNameAndID<Neighborhood>(
+        codeName,
+        this.optionsNeighborhoods
+      );
     this.territorialOrganizationService
       .getDataBlocks(neighborhoodPkey)
       .subscribe({
@@ -813,7 +821,7 @@ export class FilterCertificateSearchComponent implements OnInit {
       (option): boolean => option[keyValue] === code
     );
     return listOptions?.length > 0 && listOptions[0][key]
-      ? listOptions[0][key] as string
+      ? (listOptions[0][key] as string)
       : null;
   }
   private captureCodeOfCodeNameAndID<T>(

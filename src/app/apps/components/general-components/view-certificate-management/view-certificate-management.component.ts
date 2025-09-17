@@ -20,9 +20,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 // recursos de archivos locales
 import { environment } from '../../../../../environments/environments';
 import { MODEL_METADATA_PROPERTIES } from '../../../constants/general/attachment.constant';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams
+} from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Subscription } from 'rxjs';
+import { catchError, Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 
 export interface ViewCertificateManagementData {
@@ -198,46 +202,55 @@ export class ViewCertificateManagementComponent {
     this.errorMessage = '';
     this.isErrorMessage = false;
 
-    const url =
+    const url: string =
       this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA'
-        ? this.basic_url
-        : this.basic_url_appraisals;
+        ? this.basic_url!
+        : this.basic_url_appraisals!;
 
-    const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
-    const fullUrl = `${url}${queryParams}`;
+    let params = new HttpParams()
+      .set('number', this.documentNumber)
+      .set('domIndividualTypeNumber', this.documentType)
+      .set('individualNameNoExist', this.fullName);
+
+    if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA' && this.baunitID) {
+      params = params.append('baunitId', this.baunitID);
+    }
 
     const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`);
 
     // Realizar la solicitud HTTP y suscribirse a la respuesta
     this.loadSubscription = this.http
-      .get(fullUrl, { headers, responseType: 'blob' })
-      .subscribe({
-        next: (response) => {
-          const blob = new Blob([response], { type: 'application/pdf' });
-          const blobUrl = URL.createObjectURL(blob);
-          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
-          this.isLoading = false; // Termina la carga
-          this.errorMessage = 'Certificado generado correctamente'; // Mensaje de éxito
-          this.isErrorMessage = false; // Mensaje de éxito, color verde
+      .get(url, { headers, params, responseType: 'blob' })
+      .pipe(
+        catchError(
+          (error) => {
+            this.pdfUrl = 'error';
+            this.isLoading = false;
+            this.errorMessage = 'Error en generación de certificado';
+            this.isErrorMessage = true; // Mensaje de error, color rojo
 
-          // Desaparecer el mensaje después de 3 segundos
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        },
-        error: (error) => {
-          console.error('Error al cargar el documento PDF:', error);
-          this.pdfUrl = 'error';
-          this.isLoading = false; // Termina la carga
-          this.errorMessage = 'Error en generación de certificado'; // Mensaje de error
-          this.isErrorMessage = true; // Mensaje de error, color rojo
+            // Cerrar el dialog automáticamente si ocurre un error
+            setTimeout(() => {
+              this.dialogRef.close(); // Cierra el dialog si hay un error
+            }, 5000);
+            throw error;
+          }
+        )
+      )
+      .subscribe((response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const blobUrl = URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+        this.isLoading = false; // Termina la carga
+        this.errorMessage = 'Certificado generado correctamente'; // Mensaje de éxito
+        this.isErrorMessage = false; // Mensaje de éxito, color verde
 
-          // Cerrar el dialog automáticamente si ocurre un error
-          setTimeout(() => {
-            this.dialogRef.close(); // Cierra el dialog si hay un error
-          }, 3000);
-        }
+        // Desaparecer el mensaje después de 3 segundos
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
       });
   }
 
