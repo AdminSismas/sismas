@@ -1,12 +1,8 @@
-import { AfterViewInit, Component, DestroyRef, inject, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Inject, OnInit, signal, ViewChild } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle
-} from '@angular/material/dialog';
+  MatDialogModule,
+  MatDialogRef} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,19 +32,17 @@ import {
   CONSTANT_NAME_CREATE_LABEL,
   CONSTANT_NAME_DELETE_LABEL
 } from '../../../../constants/general/constantLabels';
-import { MatMenuModule } from '@angular/material/menu';
 import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatOptionModule } from '@angular/material/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { AlfaMainService } from '../../../../services/bpm/core/alfa-main.service';
 import { filter, map, startWith } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { DataAlfaMain } from '../../../../interfaces/bpm/data-alfa-main.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -64,35 +58,29 @@ import Swal from 'sweetalert2';
 import { Operation } from '../../../../interfaces/bpm/operation';
 import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
 import { CollectionServices } from '../../../../services/general/collection.service';
+import { LoaderComponent } from '../../../general-components/loader/loader.component';
 
 @Component({
   selector: 'vex-crud-alfa-main',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
+    AsyncPipe,
+    ComboboxCollectionComponent,
     CurrencyLandsPipe,
-    MatDialogContent,
-    MatDialogActions,
+    LoaderComponent,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatDividerModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule,
-    MatDialogClose,
-    MatDialogTitle,
-    MatDividerModule,
-    MatMenuModule,
-    ComboboxCollectionComponent,
-    AsyncPipe,
-    MatAutocompleteModule,
-    MatOptionModule,
-    ReactiveFormsModule,
-    NgIf,
-    MatCheckboxModule,
     MatPaginatorModule,
-    MatSortModule,
     MatTableModule,
     MatTooltipModule,
-    FormsModule,
-    NgClass
+    NgClass,
+    ReactiveFormsModule,
   ],
   templateUrl: './crud-alfa-main.component.html',
   styleUrl: './crud-alfa-main.component.scss'
@@ -111,6 +99,7 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
   executionId!: string;
   typeOperation!: TypeOperationAlfaMain;
   operationBaUnitHead: Operation | null = null;
+  createBaunitHeadUpdateLoading = signal(false);
 
 
   columns: TableColumn<BaunitHead>[] = TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN;
@@ -258,14 +247,16 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!baunit || !baunit?.baunitIdE) {
       return;
     }
+    this.createBaunitHeadUpdateLoading.set(true);
     this.alfaMainService.createUpdateTemporalBeaUnithead(baunit?.baunitIdE, this.executionId)
       .subscribe({
         next: (() => {
+          this.createBaunitHeadUpdateLoading.set(false);
           this.getAlertSuccess('Se creó una nueva unidad predial para actualizar.');
           this.loadPropertiesInformation();
         }),
         error: (error: HttpErrorResponse) => {
-          this.getAlertError('Error al crear la unidad predial para actualizar.');
+          this.createBaunitHeadUpdateLoading.set(false);
           throw error;
         }
       });
