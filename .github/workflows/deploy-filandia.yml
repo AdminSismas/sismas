@@ -22,11 +22,14 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install pnpm
+        run: npm install -g pnpm@latest
+
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build Angular App
-        run: node --run build -- --configuration=filandia
+        run: pnpm run build --configuration=filandia
 
       - name: Install sshpass
         run: |
