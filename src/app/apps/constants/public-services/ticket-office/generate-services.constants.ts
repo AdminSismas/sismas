@@ -1,6 +1,7 @@
-import { CertificateDialogAvaluoComponent } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-dialog-avaluo/certificate-dialog-avaluo.component';
-import { CertificateDialogComponent } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-dialog/certificate-dialog.component';
-import { Certificate } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/interfaces/certificate.interface';
+
+import { CertificateDialogAvaluoComponent } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/components/certificate-dialog-avaluo/certificate-dialog-avaluo.component';
+import { CertificateDialogComponent } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/components/certificate-dialog/certificate-dialog.component';
+import { Certificate } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/interfaces';
 
 export const GENERAL_SERVICES_CERTIFICATES: Certificate[] = [
   {

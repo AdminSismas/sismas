@@ -1,0 +1,38 @@
+.fadeInUp-animation{
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+.state {
+  @apply min-w-28 px-4 py-2 rounded-full font-semibold flex justify-center items-center;
+}
+
+.Completado {
+  @apply bg-green-500 text-green-800;
+}
+
+.Fallido {
+  @apply bg-red-500 text-red-100;
+}
+
+.Procesando {
+  @apply bg-yellow-500 text-yellow-800;
+}
+
+.Pendiente {
+  @apply bg-gray-500 text-gray-200;
+}
+
+.Descargado {
+  @apply bg-blue-500 text-blue-800;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

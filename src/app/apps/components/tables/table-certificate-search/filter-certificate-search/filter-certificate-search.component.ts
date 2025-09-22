@@ -23,17 +23,10 @@ import { MODAL_LARGE } from '../../../../constants/general/constants';
 
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { InformationPersonService } from 'src/app/apps/services/bpm/information-person.service';
-import { ViewCertificateManagementComponent } from '../../../general-components/view-certificate-management/view-certificate-management.component';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
-
-interface DataViewCertificate {
-  documentNumber: string;
-  documentType: string;
-  fullName: string;
-  typeCertificate: string;
-  baunitID: string;
-}
+import { PaymentValidationComponent } from '../../../general-components/payment-validation/payment-validation.component';
+import { DataViewCertificate } from 'src/app/apps/interfaces/document-management/view-certificate-management-data.interface';
 
 @Component({
   selector: 'vex-filter-certificate-search',
@@ -58,8 +51,8 @@ export class FilterCertificateSearchComponent {
   form: FormGroup = this.fb.group({
     domIndividualTypeNumber: this.defaults?.domIndividualTypeNumber ?? '',
     number: this.defaults?.number ?? '',
-    fullName: this.defaults?.firstName ?? '',
-    baunitID: this.defaults?.baunitIdE ?? ''
+    individualNameNoExist: this.defaults?.firstName ?? '',
+    baunitId: this.defaults?.baunitIdE ?? ''
   });
 
   constructor(
@@ -70,18 +63,24 @@ export class FilterCertificateSearchComponent {
     private dialog: MatDialog
   ) {}
 
-  viewFile(): void {
+  sendCertificateQuery(): void {
+//     {
+//        "baunitId": 20711886,
+//        "domIndividualTypeNumber": null,
+//        "individualNameNoExist": null,
+//        "number": null,
+//        "paymentReference":"REF123456XYZ"
+//        "templateCode": "CERT_INST_PUBL",
+//     }
+    this.form.enable();
     this.validatBaunit({
-      documentNumber: this.form.value['number'],
-      documentType: this.form.value['domIndividualTypeNumber'],
-      fullName: this.form.value['fullName'],
-      baunitID: this.form.value['baunitID'],
-      typeCertificate: 'CERT_POSEER_BIEN_TAQUILLA',
+      ...this.form.value,
+      templateCode: 'CERT_POSEER_BIEN_TAQUILLA',
     });
   }
 
   openViewCertificateManagement(data: DataViewCertificate): void {
-    this.dialog.open(ViewCertificateManagementComponent, {
+    this.dialog.open(PaymentValidationComponent, {
       ...MODAL_LARGE,
       disableClose: true,
       data
@@ -89,12 +88,13 @@ export class FilterCertificateSearchComponent {
   }
 
   validatBaunit(data: DataViewCertificate) {
-    if (!data.baunitID) {
-      this.openViewCertificateManagement(data);
+    if (!data.baunitId) {
+      this.dialog.closeAll();
+      this.openViewCertificateManagement({ ...data, baunitId: null });
       return;
     }
 
-    this.alfaMainService.getBaUnitHead(data.baunitID).subscribe((response) => {
+    this.alfaMainService.getBaUnitHead(data.baunitId).subscribe((response) => {
       if (!response || Object.keys(response).length === 0) {
         Swal.fire({
           icon: 'warning',
@@ -102,8 +102,10 @@ export class FilterCertificateSearchComponent {
           showConfirmButton: false,
           timer: 5000
         });
+        this.form.get('individualNameNoExist')?.disable();
         return;
       }
+      
       this.dialog.closeAll();
       this.openViewCertificateManagement(data);
     });
@@ -132,7 +134,7 @@ export class FilterCertificateSearchComponent {
             timer: 5000
           });
           this.enableFullNameInput();
-          this.form.get('fullName')?.patchValue('');
+          this.form.get('individualNameNoExist')?.patchValue('');
         },
         next: (result) => {
           this.captureInformationCadastralData(result);
@@ -142,22 +144,22 @@ export class FilterCertificateSearchComponent {
 
   captureInformationCadastralData(result: InfoPerson): void {
     if (result?.fullName) {
-      this.form.get('fullName')?.patchValue(result.fullName);
+      this.form.get('individualNameNoExist')?.patchValue(result.fullName);
       this.isFullNameEditable = false;
-      this.form.get('fullName')?.disable();
+      this.form.get('individualNameNoExist')?.disable();
     }
   }
 
   enableFullNameInput(): void {
     this.isFullNameEditable = true;
-    this.form.get('fullName')?.enable();
+    this.form.get('individualNameNoExist')?.enable();
   }
 
-  get fullNameControl(): FormControl {
-    return this.form.get('fullName') as FormControl;
+  get individualNameNoExistControl(): FormControl {
+    return this.form.get('individualNameNoExist') as FormControl;
   }
 
-  get baunitIDControl(): FormControl {
-    return this.form.get('baunitID') as FormControl;
+  get baunitIdControl(): FormControl {
+    return this.form.get('baunitId') as FormControl;
   }
 }

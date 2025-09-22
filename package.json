@@ -9,6 +9,7 @@
   "license": "",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "ng": "ng",
     "start": "ng serve",
     "start-test": "ng serve --configuration=test",

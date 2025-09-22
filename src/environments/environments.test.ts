@@ -132,7 +132,6 @@ export const environment = {
   export: "/export",
   finish: "/finish/",
   finished: "finished",
-  formato: "/formato",
   generate: "/generate",
   generateAviso: "/generateAviso",
   generateCitacion: "/generateCitacion",
@@ -202,7 +201,12 @@ export const environment = {
   },
   selfvaluation: "/selfvaluation",
   sequentialCode: "/sequentialCode",
-  serviciosTaquilla: "/serviciosTaquilla",
+  serviciosTaquilla: {
+    download: "/download",
+    formato: "/formato",
+    solicitud: "/solicitud",
+    value: "/serviciosTaquilla"
+  },
   signatureUrl: "/signatureUrl",
   snr: "/snr",
   synchronization: "/synchronization",

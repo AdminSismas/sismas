@@ -45,7 +45,7 @@
         <input
           matInput
           type="text"
-          [formControl]="fullNameControl"
+          formControlName="individualNameNoExist"
           [readonly]="!isFullNameEditable"
           placeholder="Nombre completo de la persona"
         />
@@ -57,8 +57,8 @@
         color="primary"
         mat-raised-button
         type="button"
-        [disabled]="!form.get('fullName')?.value"
-        (click)="viewFile()"
+        [disabled]="!form.get('individualNameNoExist')?.value"
+        (click)="sendCertificateQuery()"
       >
         Continuar
         <mat-icon svgIcon="mat:navigate_next"></mat-icon>
@@ -70,7 +70,7 @@
         <input
           matInput
           type="text"
-          [formControl]="baunitIDControl"
+          [formControl]="baunitIdControl"
           placeholder="Nombre completo de la persona"
         />
         <mat-icon matPrefix svgIcon="mat:corporate_fare"></mat-icon>

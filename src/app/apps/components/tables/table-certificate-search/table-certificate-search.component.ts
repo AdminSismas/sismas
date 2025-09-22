@@ -96,11 +96,9 @@ import { contentInfoAttachment } from '../../../interfaces/general/content-info-
     MatInputModule,
     MatTabsModule,
     MatSelectModule
-]
+  ]
 })
-export class TableCertificateSearchComponent
-  implements OnInit, AfterViewInit
-{
+export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
   searchData!: SearchData;
@@ -153,7 +151,7 @@ export class TableCertificateSearchComponent
 
     if (this.route.snapshot.queryParams['npn']) {
       this.initParams = this.route.snapshot.queryParams['npn'];
-      this.searValueData({}, this.initParams as string);
+      this.searchValueData({}, this.initParams as string);
       setTimeout(() => {
         this.dialog.open(
           LayoutCardCadastralInformationPropertyComponentComponent,
@@ -231,7 +229,7 @@ export class TableCertificateSearchComponent
       });
   }
 
-cleanJsonValues(data: SearchData): SearchData {
+  cleanJsonValues(data: SearchData): SearchData {
     const cleanedData: SearchData = {};
 
     // Iterar sobre las claves del JSON
@@ -377,36 +375,35 @@ cleanJsonValues(data: SearchData): SearchData {
   }
 
   formatFieldValue(value: SearchData) {
-    const formattedValues = [
-      value.dpto,
-      value.mpio,
-      value.zonas,
-      value.sectorb,
-      value.comuna,
-      value.barrio,
-      value.manVer,
-      value.terreno,
-      value.condicion,
-      value.edificio,
-      value.piso,
-      value.unidadPredial
-    ];
-
     let result;
 
     if (value?.codigoCompleto) {
       result = value.codigoCompleto;
     } else {
+      const formattedValues = [
+        value.dpto,
+        value.mpio,
+        value.zonas,
+        value.sectorb,
+        value.comuna,
+        value.barrio,
+        value.manVer,
+        value.terreno,
+        value.condicion,
+        value.edificio,
+        value.piso,
+        value.unidadPredial
+      ];
       result = formattedValues.join('');
     }
 
-    this.searValueData(value, result);
+    this.searchValueData(value, result);
   }
 
-  searValueData(searData: SearchData, data: string): void {
+  searchValueData(searchData: SearchData, data: string): void {
     this.baunitService
       .advancedSearchCadastral(
-        this.generateObjectPageSearchData(searData),
+        this.generateObjectPageSearchData(searchData),
         data
       )
       .subscribe((value) => {
@@ -444,8 +441,6 @@ cleanJsonValues(data: SearchData): SearchData {
       this.dataSource.data.forEach((row) => this.selection.select(row));
     }
   }
-
-
 
   refreshInformationPaginator(event: PageEvent): void {
     if (event == null) {

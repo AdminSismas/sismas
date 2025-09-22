@@ -143,7 +143,6 @@ export class TableCadastralSearchComponent
   @Input() tituloPage?: string = '';
   @Input() rulePage?: string = '';
 
-
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
@@ -198,8 +197,8 @@ export class TableCadastralSearchComponent
       .subscribe((value) => this.onFilterChange(value));
 
     this.route.queryParams.subscribe((params) => {
-      if (params['npn']){
-        this.searValueData({}, params['npn'], true);
+      if (params['npn']) {
+        this.searchValueData({}, params['npn'], true);
       }
     });
   }
@@ -493,33 +492,32 @@ export class TableCadastralSearchComponent
   }
 
   formatFieldValue(value: SearchData) {
-    const formattedValues = [
-      value.dpto,
-      value.mpio,
-      value.zonas,
-      value.sectorb,
-      value.comuna,
-      value.barrio,
-      value.manVer,
-      value.terreno,
-      value.condicion,
-      value.edificio,
-      value.piso,
-      value.unidadPredial
-    ];
-
     let result;
 
     if (value?.codigoCompleto) {
       result = value.codigoCompleto;
     } else {
+      const formattedValues = [
+        value.dpto,
+        value.mpio,
+        value.zonas,
+        value.sectorb,
+        value.comuna,
+        value.barrio,
+        value.manVer,
+        value.terreno,
+        value.condicion,
+        value.edificio,
+        value.piso,
+        value.unidadPredial
+      ];
       result = formattedValues.join('');
     }
 
-    this.searValueData(value, result);
+    this.searchValueData(value, result);
   }
 
-  searValueData(searData: SearchData, data: string, npnParam = false): void {
+  searchValueData(searData: SearchData, data: string, npnParam = false): void {
     this.baunitService
       .advancedSearchCadastral(
         this.generateObjectPageSearchData(searData),
