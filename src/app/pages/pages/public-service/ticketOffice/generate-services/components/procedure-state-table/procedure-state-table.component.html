@@ -66,8 +66,15 @@
                   (click)="onViewDetails(row)"
                   class="rounded-md bg-green-400 text-slate-600"
                   [disabled]="disabledViewButton(row.status)"
+                  [matTooltip]="row.errorMessage"
+                  [matTooltipDisabled]="!row.errorMessage"
+                  matTooltipPosition="left"
+                  [class.bg-red-400]="row.status === 'FAILED'"
+                  [class.text-white]="row.status === 'FAILED'"
                 >
-                  <mat-icon>visibility</mat-icon>
+                  <mat-icon>{{
+                    row.status === "FAILED" ? "visibility_off" : "visibility"
+                  }}</mat-icon>
                 </button>
               }
             }
@@ -78,7 +85,10 @@
         *matHeaderRowDef="displayedColumns()"
         class="bg-primary-400/40"
       ></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns()" class="fadeInUp-animation"></mat-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns()"
+        class="fadeInUp-animation"
+      ></mat-row>
     </mat-table>
     <mat-paginator
       [pageSize]="PAGE_SIZE"

@@ -3,7 +3,7 @@
 }
 
 .state {
-  @apply min-w-28 px-4 py-2 rounded-full font-semibold flex justify-center items-center;
+  @apply min-w-28 px-4 py-2 rounded-full font-semibold flex justify-center items-center cursor-default;
 }
 
 .Completado {

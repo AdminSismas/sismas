@@ -32,6 +32,7 @@ import {
 } from 'src/app/apps/constants/general/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewCertificateComponent } from '../view-certificate/view-certificate.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'procedure-state-table',
@@ -45,7 +46,8 @@ import { ViewCertificateComponent } from '../view-certificate/view-certificate.c
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule
   ],
   templateUrl: './procedure-state-table.component.html',
   styleUrl: './procedure-state-table.component.scss'
@@ -116,7 +118,8 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
 
   /* ---- Methods ---- */
   onViewDetails(row: ProcedureStateResponse) {
-    console.log('View details for:', row);
+    if (this.disabledViewButton(row.status) || row.status === 'FAILED') return;
+
     this.dialog.open(ViewCertificateComponent, {
       ...MODAL_LARGE,
       data: { id: row.id }
@@ -133,9 +136,7 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
   }
 
   disabledViewButton(status: ProcedureState): boolean {
-    return (
-      status === 'PENDING' || status === 'PROCESSING' || status === 'FAILED'
-    );
+    return status === 'PENDING' || status === 'PROCESSING';
   }
 
   /* ---- Getters ---- */
