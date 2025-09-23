@@ -1,133 +1,81 @@
 <form [formGroup]="form">
-  <div class="flex items-center" mat-dialog-title>
-    <h2
-      class="headline m-0 flex-auto">
-      Buscar certificado
-    </h2>
-
-    <!-- <button
-      [matMenuTriggerFor]="settingsMenu"
-      class="text-secondary"
-      mat-icon-button
-      type="button">
-      <mat-icon svgIcon="mat:more_vert"></mat-icon>
-    </button> -->
-
-    <!-- <button
-      class="text-secondary"
-      mat-dialog-close
-      mat-icon-button
-      type="button">
-      <mat-icon svgIcon="mat:close"></mat-icon>
-    </button> -->
+  <div
+    class="flex items-center"
+    mat-dialog-title
+  >
+    <h2 class="headline m-0 flex-auto">Buscar certificado</h2>
   </div>
   <mat-divider class="text-border"></mat-divider>
-  <mat-dialog-content class="flex flex-col overflow-hidden">
+  <mat-dialog-content class="flex flex-col">
+    <div class="w-full grid grid-cols-3 gap-2 lg:gap-4 lg:grid-cols-5">
+      <!-- Búsqueda por documento y tipo -->
+      <vex-combox-colletion
+        idComboCollection="typeNumberDocument"
+        label="Tipo de documento"
+        formControlNameCombobox="domIndividualTypeNumber"
+        typeDomainName="IndividualTypeNumber"
+        placeholderDomainName="Tipo de documento"
+        class="col-span-1 lg:col-span-2"
+        cssClasses="w-full"
+      ></vex-combox-colletion>
 
+      <vex-input
+        class="col-span-1 lg:col-span-2"
+        cssClasses="w-full !mx-0"
+        label="Documento"
+        type="text"
+        idComboInput="numberID"
+        formControlNameInput="number"
+        icon="mat:assignment"
+      ></vex-input>
 
+      <button
+        class="w-fit"
+        color="primary"
+        mat-raised-button
+        type="button"
+        (click)="findParticipant()"
+      >
+        <mat-icon svgIcon="mat:search"></mat-icon>
+        Buscar
+      </button>
 
-      
-        <vex-page-layout class="overflow-hidden">
-          <vex-page-layout-content class="container-fluid p-0 overflow-hidden" style="padding-bottom: 0px;">
-            <!--Búsqueda por círculo - matrícula / matrícula -->
-            <!-- <div class="flex flex-col sm:flex-row">
-              <vex-input
-                cssClasses="sm:ml-2 sm:mr-2 flex-1"
-                label="Matrícula"
-                type="text"
-                idComboInput="registrationID"
-                formControlNameInput="registration"
-                icon="mat:assignment"
-              ></vex-input>
-              <div class="sm:ml-2 sm:mr-2 flex-auto">
-                <button color="primary" mat-raised-button type="button"
-                        (click)="searchRegistrationNumber()">
-                  <mat-icon svgIcon="mat:search"></mat-icon>Buscar
-                </button>
-          
-              </div>
-            </div> -->
-            <!-- Búsqueda por documento y tipo -->
-            <div class="flex flex-col sm:flex-row gap-4">
-              <vex-combox-colletion
-                idComboCollection="typeNumberDocument"
-                label="Tipo de documento"
-                formControlNameCombobox="domIndividualTypeNumber"
-                typeDomainName="IndividualTypeNumber"
-                placeholderDomainName="Tipo de documento"
-              ></vex-combox-colletion>
+      <!-- Campo de Nombre Completo -->
+      <mat-form-field class="w-full -col-end-2 col-start-1">
+        <mat-label>Nombre completo</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="individualNameNoExist"
+          [readonly]="!isFullNameEditable"
+          placeholder="Nombre completo de la persona"
+        />
+        <mat-icon matPrefix>person</mat-icon>
+      </mat-form-field>
 
-              <vex-input
-                cssClasses="sm:ml-2 sm:mr-2 flex-1"
-                label="Documento"
-                type="text"
-                idComboInput="numberID"
-                formControlNameInput="number"
-                icon="mat:assignment"
-              ></vex-input>
+      <button
+        class="w-fit"
+        color="primary"
+        mat-raised-button
+        type="button"
+        [disabled]="!form.get('individualNameNoExist')?.value"
+        (click)="sendCertificateQuery()"
+      >
+        Continuar
+        <mat-icon svgIcon="mat:navigate_next"></mat-icon>
+      </button>
 
-              <div class="sm:ml-2 sm:mr-2 flex-auto">
-                <button color="primary" mat-raised-button type="button"
-                        (click)="findParticipant()">
-                  <mat-icon svgIcon="mat:search"></mat-icon>Buscar
-                </button>
-              </div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row">
-              <!-- Campo de Nombre Completo -->
-              <mat-form-field class="mainClass">
-                <mat-label>Nombre completo</mat-label>
-                <input
-                  matInput
-                  type="text"
-                  [formControl]="firstNameControl"
-                  [readonly]="!isFullNameEditable"
-                  placeholder="Nombre completo de la persona"
-                />
-                <mat-icon matPrefix>person</mat-icon>
-              </mat-form-field>
-            
-              <!-- Botón Continuar -->
-              <div class="sm:ml-2 sm:mr-2 flex-auto">
-                <button
-                  color="primary"
-                  mat-raised-button
-                  type="button"
-                  [disabled]="!form.get('firstName')?.value"
-                  (click)="viewFile()"
-                >
-                  Continuar
-                  <mat-icon svgIcon="mat:navigate_next"></mat-icon>
-                </button>
-              </div>
-            </div>
-            
-            
-            
-
-  
-
-          </vex-page-layout-content>
-        </vex-page-layout>
-    
-
-
+      <!-- Campo de búsqueda por número de ficha -->
+      <mat-form-field class="w-full -col-end-2 col-start-1">
+        <mat-label>Número de ficha</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="baunitIdControl"
+          placeholder="Número de ficha predio a consultar"
+        />
+        <mat-icon matPrefix svgIcon="mat:corporate_fare"></mat-icon>
+      </mat-form-field>
+    </div>
   </mat-dialog-content>
 </form>
-<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Imprimir</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Exportar</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Borrar</span>
-  </button>
-</mat-menu>

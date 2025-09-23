@@ -1,0 +1,65 @@
+<div
+  class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
+  mat-dialog-title
+>
+  <h2 class="headline m-0 flex-auto">
+    <span>
+      Radicado:
+      {{
+        taskResponseModel() && taskResponseModel().executionCode
+          ? taskResponseModel().executionCode
+          : NAME_NO_DISPONIBLE
+      }}
+    </span>
+    -
+    <span>
+      Versión:
+      {{
+        taskResponseModel() && taskResponseModel().executionId
+          ? taskResponseModel().executionId
+          : NAME_NO_DISPONIBLE
+      }}
+    </span>
+    -
+    <span>
+      Trámite asignado a :
+      {{ this.assignedSee() ? this.assignedSee() : NAME_NO_DISPONIBLE }}
+    </span>
+  </h2>
+  <button
+    color="secondary"
+    mat-button
+    type="button"
+    class="box bg-app-bar rounded caption min-w-3"
+    title="Comentarios"
+    (click)="openDialog('comments')"
+  >
+    <mat-icon
+      class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+      svgIcon="mat:insert_comment"
+    ></mat-icon>
+    <span class="box-text">{{ countComment() }}</span>
+  </button>
+  <button
+    color="secondary"
+    mat-button
+    type="button"
+    class="box bg-app-bar rounded caption min-w-3"
+    title="Archivos"
+    (click)="openDialog('documents')"
+  >
+    <mat-icon
+      class="ltr:-ml-1 rtl:-mr-1 ltr:mr-2 rtl:ml-2"
+      svgIcon="mat:attach_file"
+    ></mat-icon>
+    <span class="box-text">{{ countAttachment() }}</span>
+  </button>
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>

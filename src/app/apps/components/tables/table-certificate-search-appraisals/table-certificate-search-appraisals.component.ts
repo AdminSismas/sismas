@@ -67,7 +67,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService } from '../../../services/bpm/bpm-process.service';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from '../../../interfaces/user-details/user.model';
-import { ViewCertificateManagementComponent } from '../../general-components/view-certificate-management/view-certificate-management.component';
+import { PaymentValidationComponent } from '../../general-components/payment-validation/payment-validation.component';
 
 @Component({
   selector: 'vex-table-certificate-search-appraisals',
@@ -583,14 +583,11 @@ export class TableCertificateSearchAppraisalsComponent
 
     this.dialog.closeAll();
 
-    this.dialog.open(ViewCertificateManagementComponent, {
-      minWidth: '370px',
-      width: '98%',
-      height: '86%',
-      disableClose: true,
+    this.dialog.open(PaymentValidationComponent, {
+      ...MODAL_LARGE,
       data: {
-        baunitID: data.baunitIdE,
-        typeCertificate: typeCertificate,
+        baunitId: data.baunitIdE,
+        templateCode: typeCertificate,
         title: title
       }
     }).afterClosed().subscribe(() => {

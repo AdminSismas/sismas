@@ -17,33 +17,26 @@
 <mat-divider class="text-border"></mat-divider>
 
 <mat-dialog-content>
-  <ng-container [ngSwitch]="currentView">
-    <!-- Tabla -->
-    <ng-container *ngSwitchCase="'table'">
+  @switch (currentView) {
+    @case ("table") {
       <vex-table-certificate-search></vex-table-certificate-search>
-    </ng-container>
-
-    <!-- Filtro de búsqueda -->
-    <ng-container *ngSwitchCase="'search'">
+    }
+    @case ("search") {
       <vex-filter-certificate-search
         (close)="closeSearch()"
         (apply)="applySearch($event)"
       >
       </vex-filter-certificate-search>
-    </ng-container>
-
-    <!-- Visualización de propiedad -->
-    <ng-container *ngSwitchCase="'property'">
+    }
+    @case ("property") {
       <vex-layout-card-cadastral-information-property-component
         (close)="closePropertyView()"
       >
       </vex-layout-card-cadastral-information-property-component>
-    </ng-container>
-
-    <!-- Visualización de documento -->
-    <ng-container *ngSwitchCase="'document'">
+    }
+    @case ("document") {
       <vex-view-file-document-management (close)="closeDocumentView()">
       </vex-view-file-document-management>
-    </ng-container>
-  </ng-container>
+    }
+  }
 </mat-dialog-content>

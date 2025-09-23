@@ -167,7 +167,7 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   openDialogDetailProcedure(taskId: number) {
-    this.tasksPanelService.viewTaskId(taskId).subscribe({
+    this.tasksPanelService.viewTaskId(`${taskId}`).subscribe({
       next: (result) => {
         this.dialog.open(DetailInformationTasksComponent, {
           ...MODAL_SMALL,

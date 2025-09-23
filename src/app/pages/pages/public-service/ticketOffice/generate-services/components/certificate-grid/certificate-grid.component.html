@@ -1,4 +1,4 @@
-<div class="h-full flex flex-col">
+<div class="flex flex-col">
   <div class="p-6 pb-0 bg-foreground shadow-b flex-none border-b">
     <div class="container px-0">
       <h1 class="display-1 font-bold mt-0 mb-4 flex items-center">
@@ -11,8 +11,9 @@
         <span
           @fadeInRight
           class="block"
-          >Certificados</span
         >
+          Certificados
+        </span>
         <div class="flex items-center ml-auto">
           <button
             class="flex-none hidden sm:inline-block"
@@ -59,10 +60,7 @@
         @for (certificate of filteredCertificates; track certificate.id) {
           <vex-certificate-card
             (openCertificate)="
-              openCertificate(
-                certificate.id,
-                certificate.component
-              )
+              openCertificate(certificate.id, certificate.component)
             "
             @fadeInUp
             [certificate]="certificate"

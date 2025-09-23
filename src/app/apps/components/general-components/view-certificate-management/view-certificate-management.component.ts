@@ -1,6 +1,6 @@
 import { Component, Inject, Input, SecurityContext } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   DomSanitizer,
   SafeResourceUrl,
@@ -20,19 +20,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 // recursos de archivos locales
 import { environment } from '../../../../../environments/environments';
 import { MODEL_METADATA_PROPERTIES } from '../../../constants/general/attachment.constant';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams
+} from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Subscription } from 'rxjs';
+import { catchError, Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
-
-export interface ViewCertificateManagementData {
-  baunitID: number;
-  typeCertificate: string;
-  documentNumber?: string;
-  documentType?: string;
-  fullName?: string;
-  title?: string;
-}
+import { ViewCertificateManagementData } from 'src/app/apps/interfaces/document-management/view-certificate-management-data.interface';
 
 @Component({
   selector: 'vex-view-certificate-management',
@@ -40,17 +36,15 @@ export interface ViewCertificateManagementData {
   styleUrl: './view-certificate-management.component.scss',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatIconModule,
     MatDialogModule,
     MatDividerModule,
     MatTabsModule,
-    NgFor,
-    NgIf,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatButtonModule
+    MatButtonModule,
+    NgClass,
   ]
 })
 export class ViewCertificateManagementComponent {
@@ -66,11 +60,11 @@ export class ViewCertificateManagementComponent {
   currentIcon = 'mat:verified';
   showWarning = false;
   successMessage = '';
-  typeCertificate: string;
-  documentNumber: string;
-  documentType: string;
-  fullName: string;
-  baunitID: number;
+  templateCode: string;
+  number: string;
+  domIndividualTypeNumber: string;
+  individualNameNoExist: string;
+  baunitId: number | null;
   pdfUrl: SafeResourceUrl | string = '';
   loadSubscription: Subscription | undefined;
   fileType = '';
@@ -90,17 +84,17 @@ export class ViewCertificateManagementComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: ViewCertificateManagementData
   ) {
-    this.documentNumber = data.documentNumber || '';
-    this.documentType = data.documentType || '';
-    this.fullName = data.fullName ? data.fullName.toUpperCase() : '';
-    this.typeCertificate = data.typeCertificate;
-    this.baunitID = data.baunitID;
-    this.currentTitle = data.title || 'Validación de Pago';
+    this.number = data.number ?? '';
+    this.domIndividualTypeNumber = data.domIndividualTypeNumber ?? '';
+    this.individualNameNoExist = data.individualNameNoExist ? data.individualNameNoExist.toUpperCase() : '';
+    this.templateCode = data.templateCode;
+    this.baunitId = data.baunitId ?? null;
+    this.currentTitle = data.title ?? 'Validación de Pago';
 
-    if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
-      this.basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}${environment.individual.value}`;
+    if (this.templateCode === 'CERT_POSEER_BIEN_TAQUILLA') {
+      this.basic_url = `${environment.url}:${environment.port}${environment.serviciosTaquilla.value}${environment.serviciosTaquilla.formato}/${this.templateCode}${environment.individual.value}`;
     } else {
-      this.basic_url_appraisals = `${environment.url}:${environment.port}${environment.serviciosTaquilla}${environment.formato}/${this.typeCertificate}/${this.baunitID}`;
+      this.basic_url_appraisals = `${environment.url}:${environment.port}${environment.serviciosTaquilla.value}${environment.serviciosTaquilla.formato}/${this.templateCode}/${this.baunitId}`;
     }
     this.paymentForm = this.fb.group({
       reference: ['']
@@ -108,7 +102,7 @@ export class ViewCertificateManagementComponent {
   }
 
   get hiddeReference() {
-    return this.typeCertificate === 'CERT_INST_PUBL';
+    return this.templateCode === 'CERT_INST_PUBL';
   }
 
   validatePayment() {
@@ -170,12 +164,12 @@ export class ViewCertificateManagementComponent {
           a.href = blobUrl;
 
           let fileName = '';
-          if (this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA') {
-            fileName = `Certificado_de_poseer_o_no_bienes_${this.fullName}.pdf`;
-          } else if (this.typeCertificate === 'CERT_FICHA_AVALUO') {
-            fileName = `Certificado_de_ficha_de_avaluo_${this.baunitID}.pdf`;
-          } else if (this.typeCertificate === 'CERT_PLANO_PREDIAL_CATASTRAL') {
-            fileName = `Certificado_plano_predial_catastral_${this.baunitID}.pdf`;
+          if (this.templateCode === 'CERT_POSEER_BIEN_TAQUILLA') {
+            fileName = `Certificado_de_poseer_o_no_bienes_${this.individualNameNoExist}.pdf`;
+          } else if (this.templateCode === 'CERT_FICHA_AVALUO') {
+            fileName = `Certificado_de_ficha_de_avaluo_${this.baunitId}.pdf`;
+          } else if (this.templateCode === 'CERT_PLANO_PREDIAL_CATASTRAL') {
+            fileName = `Certificado_plano_predial_catastral_${this.baunitId}.pdf`;
           }
 
           a.download = fileName;
@@ -198,46 +192,55 @@ export class ViewCertificateManagementComponent {
     this.errorMessage = '';
     this.isErrorMessage = false;
 
-    const url =
-      this.typeCertificate === 'CERT_POSEER_BIEN_TAQUILLA'
-        ? this.basic_url
-        : this.basic_url_appraisals;
+    const url: string =
+      this.templateCode === 'CERT_POSEER_BIEN_TAQUILLA'
+        ? this.basic_url!
+        : this.basic_url_appraisals!;
 
-    const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
-    const fullUrl = `${url}${queryParams}`;
+    let params = new HttpParams()
+      .set('number', this.number)
+      .set('domIndividualTypeNumber', this.domIndividualTypeNumber)
+      .set('individualNameNoExist', this.individualNameNoExist);
+
+    if (this.templateCode === 'CERT_POSEER_BIEN_TAQUILLA' && this.baunitId) {
+      params = params.append('baunitId', this.baunitId);
+    }
 
     const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`);
 
     // Realizar la solicitud HTTP y suscribirse a la respuesta
     this.loadSubscription = this.http
-      .get(fullUrl, { headers, responseType: 'blob' })
-      .subscribe({
-        next: (response) => {
-          const blob = new Blob([response], { type: 'application/pdf' });
-          const blobUrl = URL.createObjectURL(blob);
-          this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
-          this.isLoading = false; // Termina la carga
-          this.errorMessage = 'Certificado generado correctamente'; // Mensaje de éxito
-          this.isErrorMessage = false; // Mensaje de éxito, color verde
+      .get(url, { headers, params, responseType: 'blob' })
+      .pipe(
+        catchError(
+          (error) => {
+            this.pdfUrl = 'error';
+            this.isLoading = false;
+            this.errorMessage = 'Error en generación de certificado';
+            this.isErrorMessage = true; // Mensaje de error, color rojo
 
-          // Desaparecer el mensaje después de 3 segundos
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        },
-        error: (error) => {
-          console.error('Error al cargar el documento PDF:', error);
-          this.pdfUrl = 'error';
-          this.isLoading = false; // Termina la carga
-          this.errorMessage = 'Error en generación de certificado'; // Mensaje de error
-          this.isErrorMessage = true; // Mensaje de error, color rojo
+            // Cerrar el dialog automáticamente si ocurre un error
+            setTimeout(() => {
+              this.dialogRef.close(); // Cierra el dialog si hay un error
+            }, 5000);
+            throw error;
+          }
+        )
+      )
+      .subscribe((response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const blobUrl = URL.createObjectURL(blob);
+        this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+        this.isLoading = false; // Termina la carga
+        this.errorMessage = 'Certificado generado correctamente'; // Mensaje de éxito
+        this.isErrorMessage = false; // Mensaje de éxito, color verde
 
-          // Cerrar el dialog automáticamente si ocurre un error
-          setTimeout(() => {
-            this.dialogRef.close(); // Cierra el dialog si hay un error
-          }, 3000);
-        }
+        // Desaparecer el mensaje después de 3 segundos
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
       });
   }
 
@@ -250,7 +253,7 @@ export class ViewCertificateManagementComponent {
 
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {
-    const queryParams = `?number=${encodeURIComponent(this.documentNumber)}&domIndividualTypeNumber=${encodeURIComponent(this.documentType)}&individualNameNoExist=${encodeURIComponent(this.fullName)}`;
+    const queryParams = `?number=${encodeURIComponent(this.number)}&domIndividualTypeNumber=${encodeURIComponent(this.domIndividualTypeNumber)}&individualNameNoExist=${encodeURIComponent(this.individualNameNoExist)}`;
     const fullUrl = `${this.basic_url}${queryParams}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(fullUrl);
   }

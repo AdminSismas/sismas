@@ -7,13 +7,13 @@
   @if (label && label.length > 0) {
     <mat-label>{{ label }}</mat-label>
   }
-  @if (formControlNameInput && formControlInput == null) {
+  @if (formControlNameInput && formControlInput === null) {
     <input
       matInput
       [type]="type"
       [formControlName]="formControlNameInput"
     />
-  } @else if (formControlNameInput && formControlInput != null) {
+  } @else if (formControlNameInput && formControlInput !== null) {
     <input
       matInput
       [type]="type"
@@ -27,7 +27,7 @@
   @if (hintValue && hintValue.length > 0 && checkIsInValid(formControlInput)) {
     <mat-hint class="mb-1">{{ hintValue }}</mat-hint>
   }
-  @if (formControlInput != null) {
+  @if (formControlInput !== null) {
   <mat-error class="mb-1">{{ checkForErrorsIn(formControlInput) }}</mat-error>
   }
 </mat-form-field>

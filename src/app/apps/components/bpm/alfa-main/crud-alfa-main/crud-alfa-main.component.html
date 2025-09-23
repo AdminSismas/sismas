@@ -16,14 +16,6 @@
     </h2>
   }
 
-  <!-- <button
-    [matMenuTriggerFor]="settingsMenu"
-    class="text-secondary"
-    mat-icon-button
-    type="button">
-    <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button> -->
-
   <button
     class="text-secondary"
     mat-dialog-close
@@ -36,8 +28,7 @@
 </div>
 <mat-divider class="text-border"></mat-divider>
 @if (typeOperation === TYPEOPERATION_ADD) {
-  <mat-dialog-content
-    class="justify-center overflow-hidden">
+  <mat-dialog-content class="justify-center overflow-hidden">
     <form
       [formGroup]="formAdd"
       (ngSubmit)="onSubmitFormAdd()"
@@ -56,9 +47,10 @@
           <mat-autocomplete
             autoActiveFirstOption
             #autoAddNpnLike="matAutocomplete"
-            [panelWidth]="350">
+            [panelWidth]="350"
+          >
             @if (optionsListNpnlike$ | async; as options) {
-              @for (option of options; track option; ) {
+              @for (option of options; track option) {
                 <mat-option [value]="option">
                   {{ option }}
                 </mat-option>
@@ -66,7 +58,10 @@
             }
           </mat-autocomplete>
         </mat-form-field>
-        @if (operationBaUnitHead === null || operationBaUnitHead.baunitHead === null) {
+        @if (
+          operationBaUnitHead === null ||
+          operationBaUnitHead.baunitHead === null
+        ) {
           <vex-combox-colletion
             idComboCollection="BaunitCondition{{ this.executionId }}"
             label="Tipo de predio"
@@ -74,7 +69,8 @@
             typeDomainName="BaunitCondition"
             placeholderDomainName="Seleccione un tipo de predio"
             cssClasses="w-full sm:ml-0 sm:mr-2"
-            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2">
+            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2"
+          >
           </vex-combox-colletion>
         } @else {
           <vex-combox-colletion
@@ -84,7 +80,8 @@
             placeholderDomainName="Seleccione un tipo de predio"
             [optionsExternal]="baunitConditionOptions"
             cssClasses="w-full sm:ml-0 sm:mr-2"
-            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2">
+            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2"
+          >
           </vex-combox-colletion>
         }
       </div>
@@ -129,9 +126,11 @@
                 #autoAddNpnLike="matAutocomplete"
                 [panelWidth]="350"
               >
-                @for (option of optionsListNpnlike$ | async;
+                @for (
+                  option of optionsListNpnlike$ | async;
                   track option;
-                  let index = $index) {
+                  let index = $index
+                ) {
                   <mat-option [value]="option">
                     {{ option }}
                   </mat-option>
@@ -155,10 +154,9 @@
             </div>
           </div>
         </div>
-        <div
-          class="flex-none sm:w-44"
-          *ngIf="isDesktop$"
-        ></div>
+        @if (isDesktop$) {
+          <div class="flex-none sm:w-44"></div>
+        }
       </div>
       <mat-divider class="text-border"></mat-divider>
       <div class="card overflow-auto mat-elevation-z5">
@@ -303,30 +301,31 @@
               class="w-5 text-secondary py-1"
               mat-cell
             >
-              <button
-                *ngIf="typeOperation === TYPEOPERATION_CREATE"
-                (click)="createBeaUnitHeadUpdate(row)"
-                class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
-                mat-icon-button
-                title="Agregar unidad predial a modificar"
-              >
-                <mat-icon
-                  class="icon-sm"
-                  svgIcon="mat:edit"
-                ></mat-icon>
-              </button>
-              <button
-                *ngIf="typeOperation !== TYPEOPERATION_CREATE"
-                (click)="createBeaUnitHeadDelete(row)"
-                class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-red-600 bg-red-600/10"
-                mat-icon-button
-                title="Agregar unidad predial a Eliminar"
-              >
-                <mat-icon
-                  class="icon-sm"
-                  svgIcon="mat:edit"
-                ></mat-icon>
-              </button>
+              @if (typeOperation === TYPEOPERATION_CREATE) {
+                <button
+                  (click)="createBeaUnitHeadUpdate(row)"
+                  class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
+                  mat-icon-button
+                  title="Agregar unidad predial a modificar"
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:edit"
+                  ></mat-icon>
+                </button>
+              } @else {
+                <button
+                  (click)="createBeaUnitHeadDelete(row)"
+                  class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-red-600 bg-red-600/10"
+                  mat-icon-button
+                  title="Agregar unidad predial a Eliminar"
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:edit"
+                  ></mat-icon>
+                </button>
+              }
             </td>
           </ng-container>
 
@@ -341,14 +340,11 @@
             mat-row
           ></tr>
         </table>
-        <div
-          *ngIf="
+        @if (
           dataSource.data.length <= 0 || dataSource.filteredData.length <= 0
-        "
-          class="no-data-information"
-        >
-          No hay información disponible
-        </div>
+        ) {
+          <div class="no-data-information">No hay información disponible</div>
+        }
         <mat-paginator
           [pageSizeOptions]="pageSizeOptions"
           [length]="totalElements"
@@ -374,23 +370,8 @@
   </div>
 }
 
-<mat-menu
-  #settingsMenu="matMenu"
-  xPosition="before"
-  yPosition="below"
->
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Imprimir</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Exportar</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Borrar</span>
-  </button>
-</mat-menu>
+<app-loader
+  [isLoading]="createBaunitHeadUpdateLoading()"
+  [loaderTitle]="'Cargando...'"
+  [loaderMessage]="'Por favor, espere mientras se procesa su solicitud.'"
+></app-loader>

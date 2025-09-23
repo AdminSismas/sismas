@@ -124,7 +124,8 @@ export class ProceduresService {
     executionId: number | string,
     commentText: string
   ): Observable<unknown> {
-    const url = `${envi.url}:${envi.port}${envi.bpmOperation.value}${envi.comment}${executionId}`;
+    const { comment, value } = envi.bpmOperation;
+    const url = `${envi.url}:${envi.port}${value}${comment}${executionId}`;
     return this.http.post<unknown>(url, { commentText });
   }
 

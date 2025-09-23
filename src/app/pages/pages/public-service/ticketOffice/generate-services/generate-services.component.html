@@ -8,6 +8,23 @@
   </button>
 </vex-secondary-toolbar>
 
-<vex-certificate-grid></vex-certificate-grid>
-
-
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="mat:description"></mat-icon>
+      Generar certificado
+    </ng-template>
+    <ng-template matTabContent>
+      <vex-certificate-grid></vex-certificate-grid>
+    </ng-template>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon svgIcon="mat:content_paste_search"></mat-icon>
+      Estados certificados
+    </ng-template>
+    <ng-template matTabContent>
+      <procedure-state-table></procedure-state-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

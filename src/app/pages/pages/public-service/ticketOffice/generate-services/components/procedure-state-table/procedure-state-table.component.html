@@ -1,0 +1,107 @@
+<section class="w-full flex flex-col overflow-auto">
+  <div class="p-6 pb-0 bg-foreground shadow-b flex-none border-b">
+    <div class="container px-0">
+      <h1 class="display-1 font-bold mt-0 mb-4 flex items-center">
+        <span
+          class="w-12 h-12 rounded-full text-primary-600 ltr:mr-4 rtl:ml-4 flex items-center justify-center bg-primary-600/10"
+        >
+          <mat-icon svgIcon="mat:content_paste_search"></mat-icon>
+        </span>
+        <span class="block">Estados certificados</span>
+      </h1>
+    </div>
+  </div>
+  <section class="flex flex-col px-4 my-6">
+    <mat-form-field>
+      <mat-label>Búsqueda de certificado</mat-label>
+      <input
+        matInput
+        [formControl]="searchInput"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Borrar búsqueda"
+        (click)="searchInput.setValue('')"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-table
+      class="shadow-lg shadow-slate-400"
+      [dataSource]="stateDataSource() ?? []"
+      matSort
+    >
+      @for (column of columns; track column.property) {
+        <ng-container [matColumnDef]="column.property">
+          <mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="flex justify-center items-center"
+            >{{ column.label }}</mat-header-cell
+          >
+          <mat-cell
+            *matCellDef="let row"
+            class="flex justify-center states"
+          >
+            @switch (column.type) {
+              @case ("text") {
+                {{ row[column.property] }}
+              }
+              @case ("badge") {
+                <span [class]="'state ' + row[column.property]">
+                  {{ row[column.property] }}
+                </span>
+              }
+              @case ("date") {
+                @if (row[column.property]) {
+                  {{ row[column.property] | date: "dd/MM/yyyy" }}
+                } @else {
+                  ---
+                }
+              }
+              @case ("button") {
+                <button
+                  mat-mini-fab
+                  (click)="onViewDetails(row)"
+                  class="rounded-md bg-green-400 text-slate-600"
+                  [disabled]="disabledViewButton(row.status)"
+                  [matTooltip]="row.errorMessage"
+                  [matTooltipDisabled]="!row.errorMessage"
+                  matTooltipPosition="left"
+                  [class.bg-red-400]="row.status === 'FAILED'"
+                  [class.text-white]="row.status === 'FAILED'"
+                >
+                  <mat-icon>{{
+                    row.status === "FAILED" ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              }
+            }
+          </mat-cell>
+        </ng-container>
+      }
+      <mat-header-row
+        *matHeaderRowDef="displayedColumns()"
+        class="bg-primary-400/40"
+      ></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns()"
+        class="fadeInUp-animation"
+      ></mat-row>
+    </mat-table>
+    <mat-paginator
+      [pageSize]="PAGE_SIZE"
+      [length]="TOTAL_ELEMENTS"
+      [pageSizeOptions]="PAGE_SIZE_OPTION"
+      showFirstLastButtons
+    ></mat-paginator>
+    @if (!stateDataSource()?.data || stateDataSource()!.data.length === 0) {
+      <div class="flex flex-col items-center justify-center py-12">
+        <h2 class="mt-4 text-gray-500 text-xl lg:text-2xl">
+          No se han solicitado certificados
+        </h2>
+      </div>
+    }
+  </section>
+</section>
