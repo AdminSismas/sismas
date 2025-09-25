@@ -27,4 +27,12 @@ export class ResService {
     });
   }
 
+  getCompleteDocs(executionId: string): Observable<Blob> {
+    const url = `${basic_url}${envi.bpmResolution.completeDocs}/${executionId}`;
+
+    return this.http.get(url, {
+      responseType: 'blob'
+    });
+  }
+
 }

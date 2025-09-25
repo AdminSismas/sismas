@@ -536,11 +536,17 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     mode: 2
   },
   {
+    name: 'cadCompleteDocsComponent',
+    pathForm: '/core/cadastral/res/complete.html',
+    serviceValidation: '',
+    mode: 3
+  },
+  {
     name: 'citationAndNoticeComponent',
     pathForm: '/core/cadastral/notificacion.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
-  }
+  },
 ];
 
 export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>[] = [
