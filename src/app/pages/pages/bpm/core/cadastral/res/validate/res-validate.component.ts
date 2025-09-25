@@ -109,6 +109,8 @@ export class ResValidateComponent implements OnInit {
         break;
     }
 
+    console.log(subscription);
+
     subscription.subscribe({
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
