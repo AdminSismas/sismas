@@ -266,14 +266,18 @@ export class CrudAlfaMainComponent implements OnInit, AfterViewInit {
     if (!baunit || !baunit?.baunitIdE) {
       return;
     }
+
+    this.createBaunitHeadUpdateLoading.set(true);
     this.alfaMainService.createDeleteTemporalBeaUnitHead(baunit?.baunitIdE, this.executionId)
       .subscribe({
         next: () => {
           this.getAlertSuccess('Se creó una nueva unidad predial para eliminar.');
           this.loadPropertiesInformation();
+          this.createBaunitHeadUpdateLoading.set(false);
         },
         error: (error: HttpErrorResponse) => {
           this.getAlertError('Error al crear la unidad predial para eliminar.');
+          this.createBaunitHeadUpdateLoading.set(false);
           throw error;
         }
       });
