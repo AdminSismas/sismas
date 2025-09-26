@@ -9,12 +9,13 @@ export class Operation {
   appliedGeo?:boolean;
 
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(content?: any) {
     this.operationType = content?.operationType || '';
     this.npnlike = content?.npnlike || '';
-    this.appliedAlfa = content?.appliedAlfa || '';
+    this.appliedAlfa = content?.appliedAlfa || false;
     this.baunitHead = content?.baunitHead || '';
-    this.appliedGeo = content?.appliedGeo || '';
+    this.appliedGeo = content?.appliedGeo || false;
   }
 
   get registration(): string {
@@ -29,25 +30,17 @@ export class Operation {
     return name;
   }
 
-  set cadastralNumber(value:string) {}
-
   get cadastralNumber(): string {
     return this.baunitHead?.cadastralNumber || '';
   }
-
-  set cadastralArea(value:number) {}
 
   get cadastralArea(): number {
     return this.baunitHead?.cadastralArea || 0;
   }
 
-  set domBaunitCondition(value:string) {}
-
   get domBaunitCondition(): string {
     return this.baunitHead?.domBaunitCondition || '';
   }
-
-  set domBaunitEconoDesti(value:string) {}
 
   get domBaunitEconoDesti(): string {
     return this.baunitHead?.domBaunitEconoDesti || '';

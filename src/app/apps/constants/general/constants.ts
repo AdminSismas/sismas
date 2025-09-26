@@ -491,7 +491,7 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     name: 'cadGeoValidateComponent',
     pathForm: '/core/cadastral/geo/validate.html',
     serviceValidation: '',
-    mode: 1
+    mode: 2
   },
   {
     name: 'cadResMainComponent',
@@ -873,7 +873,7 @@ export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] = 
 ];
 export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
   {
-    label: '',
+    label: 'Operación',
     property: 'operationType',
     type: 'operationType',
     visible: true,

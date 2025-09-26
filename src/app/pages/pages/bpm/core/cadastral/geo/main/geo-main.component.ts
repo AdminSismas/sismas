@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LIST_BUTTON_GEO_MAIN } from '../../../../../../../apps/constants/general/constants';
 import { Observable } from 'rxjs';
@@ -44,10 +44,10 @@ export class GeoMainComponent implements OnInit {
   public schema = `${environment.schemas.temp}`;
   public enableRefreshButton = true;
 
-  @Input({ required: true }) public executionId = '';
-  @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public resourcesRemovers: string[] = [];
-  @Input({ required: false }) public mode = 3;
+  public readonly executionId = input.required<string>();
+  public readonly resources = input.required<string[]>();
+  public readonly resourcesRemovers = input<string[]>([]);
+  public readonly mode = input(3);
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -62,9 +62,6 @@ export class GeoMainComponent implements OnInit {
     if (proFlow?.flowId) {
       this.id += proFlow?.flowId;
     }
-    if (proFlow?.mode) {
-      this.mode = proFlow?.mode;
-    }
   }
 
   ngOnInit() {
@@ -78,8 +75,9 @@ export class GeoMainComponent implements OnInit {
     }
 
     // Se sobre escribe los botones que se deben habilitar
-    if (this.resources && this.resources.length > 0) {
-      LIST_BUTTON_GEO_MAIN.forEach(vl => this.resources.push(vl));
+    const resources = this.resources();
+    if (resources && resources.length > 0) {
+      LIST_BUTTON_GEO_MAIN.forEach(vl => this.resources().push(vl));
     }
 
     this._infoFatherURL$
@@ -88,7 +86,7 @@ export class GeoMainComponent implements OnInit {
         this.infoFatherURL = result;
       });
 
-    if (!this.executionId) {
+    if (!this.executionId()) {
       this.returnPanelTask(true);
       return false;
     }

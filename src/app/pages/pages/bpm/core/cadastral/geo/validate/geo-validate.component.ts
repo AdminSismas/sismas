@@ -1,32 +1,63 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Error500Component } from '../../../../../errors/error-500/error-500.component';
-import { MatDialogTitle } from '@angular/material/dialog';
+import { Component, inject, input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, filter } from 'rxjs';
+import {
+  CONSTANT_TEXT_ALFA_MAIN_GEO,
+  CONSTANT_TEXT_GEO_MAIN_GEO
+} from 'src/app/apps/constants/general/constantLabels';
+import { LIST_BUTTON_GEO_MAIN } from 'src/app/apps/constants/general/constants';
+import { SendInfoGeneralService } from 'src/app/apps/services/general/send-info-general.service';
+import { environment } from 'src/environments/environments';
+import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
 
 @Component({
   selector: 'vex-geo-validate',
   standalone: true,
-  imports: [Error500Component, MatDialogTitle],
+  imports: [TabAlfaGeoMainComponent],
   templateUrl: './geo-validate.component.html',
   styleUrl: './geo-validate.component.scss'
 })
 export class GeoValidateComponent implements OnInit {
-  @Input() public id = '';
-  @Input({ required: true }) public resources: string[] = [];
+  public schema = `${environment.schemas.temp}`;
+  public enableRefreshButton = true;
+
+  public readonly executionId = input.required<string>();
+  public readonly resources = input.required<string[]>();
+  public readonly mode = input.required<number>();
+
+  private infoGeneralService = inject(SendInfoGeneralService);
+  private router = inject(Router);
+
+  _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
+  infoFatherURL!: string;
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id +
-        this.getRandomInt(100000) +
-        'AlfaMainComponent' +
-        this.getRandomInt(10);
-    } else {
-      this.id =
-        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
+    // Se sobre escribe los botones que se deben habilitar
+    const resources = this.resources();
+    if (resources && resources.length > 0) {
+      LIST_BUTTON_GEO_MAIN.forEach((vl) => this.resources().push(vl));
+    }
+
+    this._infoFatherURL$
+      .pipe(filter<string>(Boolean))
+      .subscribe((result: string) => {
+        this.infoFatherURL = result;
+      });
+
+    if (!this.executionId()) {
+      this.returnPanelTask(true);
+      return false;
     }
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
+  returnPanelTask(isReturn: boolean) {
+    if (isReturn) {
+      this.router
+        .navigate([`${environment.myWork_tasksPanel}${this.infoFatherURL}`])
+        .then();
+    }
   }
+
+  protected readonly CONSTANT_TEXT_ALFA_MAIN_GEO = CONSTANT_TEXT_ALFA_MAIN_GEO;
+  protected readonly CONSTANT_TEXT_GEO_MAIN_GEO = CONSTANT_TEXT_GEO_MAIN_GEO;
 }

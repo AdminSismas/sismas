@@ -12,9 +12,12 @@
     <ng-container matColumnDef="operationType">
       <th
         *matHeaderCellDef
+        class="px-4"
         mat-header-cell
-        class="pl-1 pr-1"
-      ></th>
+        mat-sort-header
+      >
+        Operación
+      </th>
       <td
         *matCellDef="let row"
         mat-cell
@@ -76,7 +79,7 @@
     </ng-container>
 
     <!-- Text Columns -->
-    @for (column of columns; track column.property) {
+    @for (column of columns(); track column.property) {
       @if (column.type === "text") {
         <ng-container [matColumnDef]="column.property">
           <th
@@ -132,11 +135,13 @@
         *matCellDef="let row"
         class="w-10 text-secondary pl-1 pr-1"
         mat-cell
+        [class.cursor-default]="disableCollapseMenu(row)"
       >
         <button
           (click)="$event.stopPropagation()"
           [matMenuTriggerData]="{ row: row }"
           [matMenuTriggerFor]="actionsMenu"
+          [disabled]="disableCollapseMenu(row)"
           mat-icon-button
           type="button"
         >
@@ -156,12 +161,9 @@
       mat-row
     ></tr>
   </table>
-  <div
-    *ngIf="dataSource.data.length <= 0 || dataSource.filteredData.length <= 0"
-    class="no-data-information"
-  >
-    No hay información disponible
-  </div>
+  @if (dataSource.data.length <= 0 || dataSource.filteredData.length <= 0) {
+    <div class="no-data-information">No hay información disponible</div>
+  }
   <mat-paginator
     #paginator
     [pageSizeOptions]="pageSizeOptions"
@@ -181,7 +183,7 @@
     let-row="row"
     matMenuContent
   >
-    @if (mode !== 3) {
+    @if (mode() !== 3) {
       <button
         (click)="viewChanges(row)"
         mat-menu-item
@@ -191,7 +193,7 @@
       </button>
     }
 
-    @if (mode === 1 && row["operationType"] !== "DELETE") {
+    @if (mode() === 1 && row["operationType"] !== "DELETE") {
       <button
         (click)="editInformation(row)"
         mat-menu-item
@@ -220,7 +222,7 @@
       </button>
     }
 
-    @if (mode === 1 || mode === 3) {
+    @if (mode() === 1 || mode() === 3) {
       <button
         (click)="removeInformation(row)"
         mat-menu-item
@@ -230,7 +232,7 @@
       </button>
     }
 
-    @if ((mode === 1 || mode === 3) && row["operationType"] !== "CREATE") {
+    @if ((mode() === 1 || mode() === 3) && row["operationType"] !== "CREATE") {
       <button
         (click)="changeTemporaryStateBeaUnitHead(row)"
         mat-menu-item
