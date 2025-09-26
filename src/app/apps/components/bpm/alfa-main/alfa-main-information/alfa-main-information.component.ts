@@ -4,10 +4,11 @@ import {
   inject,
   Input,
   OnInit,
-  ViewChild,
-  signal
+  signal,
+  input,
+  viewChild
 } from '@angular/core';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import {
   MatAccordion,
@@ -109,7 +110,6 @@ import { ViewChangesComponent } from './view-changes/view-changes.component';
     MatExpansionPanelDescription,
     MatExpansionPanelHeader,
     MatIcon,
-    NgIf,
     TableAlfaMainComponent,
     VexPageLayoutComponent,
     VexPageLayoutContentDirective,
@@ -123,11 +123,11 @@ import { ViewChangesComponent } from './view-changes/view-changes.component';
 export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   public id: string = getRandomInt(1234).toString();
 
-  @Input({ required: true }) public executionId = '';
-  @Input({ required: true }) public resources: string[] = [];
-  @Input({ required: false }) public resourcesRemovers: string[] = [];
+  public readonly executionId = input.required<string>();
+  public readonly resources = input.required<string[]>();
+  public readonly resourcesRemovers = input<string[]>([]);
   @Input({ required: false }) public mode = 1;
-  @Input({ required: false }) public fluidHeight = '220';
+  public readonly fluidHeight = input('220');
 
   private loadingServiceService: LoadingServiceService = inject(
     LoadingServiceService
@@ -153,10 +153,8 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
 
   isResetLoading = signal<boolean>(false);
 
-  @ViewChild('successValidityProcedure')
-  public successValidityProcedure!: SwalComponent;
-  @ViewChild('errorValidityProcedure')
-  public errorValidityProcedure!: SwalComponent;
+  public readonly successValidityProcedure = viewChild.required<SwalComponent>('successValidityProcedure');
+  public readonly errorValidityProcedure = viewChild.required<SwalComponent>('errorValidityProcedure');
 
   constructor(
     proFlow: ProFlow,
@@ -185,7 +183,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       .pipe(filter<string>(Boolean))
       .subscribe((result: string) => (this.infoFatherURL = result));
 
-    if (!this.executionId) {
+    if (!this.executionId()) {
       this.returnPanelTask(true);
       return false;
     }
@@ -229,7 +227,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      if (!this.executionId) {
+      if (!this.executionId()) {
         this.returnPanelTask(true);
         return false;
       }
@@ -239,7 +237,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   validateChangeLogAlfaMain() {
     this.alfaMainService
       .validateAlfaMainOperations(
-        this.executionId,
+        this.executionId(),
         `${environment.schemas.temp}`
       )
       .subscribe({
@@ -255,7 +253,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
 
   createAlfaMainOperations() {
     this.alfaMainService
-      .createAlfaMainOperations(this.executionId, `${environment.schemas.temp}`)
+      .createAlfaMainOperations(this.executionId(), `${environment.schemas.temp}`)
       .subscribe({
         next: (result: ChangeControl) => this._createChangeLog$.next(result)
       });
@@ -349,7 +347,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     return new PageSearchData(
       PAGE,
       MAX_PAGE_SIZE_TABLE_UNIQUE,
-      this.executionId
+      this.executionId()
     );
   }
 
@@ -384,7 +382,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
 
   executeClearInformationAlfaMain(keyWord: string) {
     this.alfaMainService
-      .clearInformationAlfaMain(this.executionId, keyWord)
+      .clearInformationAlfaMain(this.executionId(), keyWord)
       .subscribe({
         next: () => {
           this.contentInformations = new InformationPegeable();
@@ -404,7 +402,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       .open(ViewChangeAlphaMainRecordComponent, {
         ...MODAL_SMALL,
         disableClose: true,
-        data: [this.executionId]
+        data: [this.executionId()]
       })
       .afterClosed()
       .subscribe();
@@ -417,14 +415,14 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         width: '30%',
         minHeight: '30%',
         disableClose: true,
-        data: new DataAlfaMain(this.executionId, type)
+        data: new DataAlfaMain(this.executionId(), type)
       };
     } else {
       config = {
         width: '70%',
         height: '90%',
         disableClose: true,
-        data: new DataAlfaMain(this.executionId, type)
+        data: new DataAlfaMain(this.executionId(), type)
       };
     }
     this.dialog
@@ -436,9 +434,10 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   }
 
   executeCreateAlfaGeo(type: TypeOperationGeoMain) {
-    if (type === TYPE_OPERATION_CREATE_GEO && this.executionId) {
+    const executionId = this.executionId();
+    if (type === TYPE_OPERATION_CREATE_GEO && executionId) {
       this.geographicService
-        .createGeographicChangesTemp(this.executionId)
+        .createGeographicChangesTemp(executionId)
         .subscribe({
           next: (result: ChangeControl) => {
             if (result && result.changeLogId && result.changeLogId > 0) {
@@ -455,7 +454,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   }
 
   executeDeletedAlfaGeo(type: TypeOperationGeoMain) {
-    if (type === TYPE_OPERATION_DELETE_GEO && this.executionId) {
+    if (type === TYPE_OPERATION_DELETE_GEO && this.executionId()) {
       Swal.fire({
         titleText: CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN,
         input: 'text',
@@ -481,7 +480,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
           result.value === CONSTANT_KEYWORD_DELETE_GEO_MAIN
         ) {
           this.geographicService
-            .deleteGeographicChangesTemp(this.executionId)
+            .deleteGeographicChangesTemp(this.executionId())
             .subscribe({
               next: () =>
                 this.getAlertSuccess('Se ha logrado eliminar el cambio geo')
@@ -492,7 +491,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
   }
 
   executeCalculateBoundaries(type: TypeOperationGeoMain) {
-    if (type === TYPE_OPERATION_CALCULATE_BOUNDARIES && this.executionId) {
+    if (type === TYPE_OPERATION_CALCULATE_BOUNDARIES && this.executionId()) {
       this.getAlertSuccess('Calculo linderos inicia ejecucion a ejecutarse');
     }
   }
@@ -559,11 +558,11 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     if (!btn) {
       return true;
     }
-    return !this.resources.includes(btn);
+    return !this.resources().includes(btn);
   }
 
   buttonRemovers(btn: TypeButtonAlfaMain): boolean {
-    return !this.resourcesRemovers.includes(btn);
+    return !this.resourcesRemovers().includes(btn);
   }
 
   validityProcedure() {
@@ -578,7 +577,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
       .open(ValidityProcedureComponent, {
         ...MODAL_SMALL_XS,
         data: {
-          executionId: this.executionId,
+          executionId: this.executionId(),
           validateChangeLog
         }
       })
@@ -587,11 +586,11 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
         next: (result: boolean) => {
           if (result) {
             this.validateChangeLogAlfaMain();
-            this.successValidityProcedure.fire();
+            this.successValidityProcedure().fire();
           }
 
           if (result === false) {
-            this.errorValidityProcedure.fire();
+            this.errorValidityProcedure().fire();
           }
         }
       });
@@ -601,7 +600,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     this.dialog.open(ViewChangesComponent, {
       ...MODAL_MEDIUM,
       data: {
-        executionId: this.executionId
+        executionId: this.executionId()
       }
     });
   }

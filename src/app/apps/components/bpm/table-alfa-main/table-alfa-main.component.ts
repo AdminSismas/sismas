@@ -27,10 +27,6 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
 
-
-
-
-
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -70,7 +66,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
-  selector: 'vex-table-alfa-main',
+  selector: 'table-alfa-main',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
@@ -99,7 +95,17 @@ export class TableAlfaMainComponent
   readonly executionId = input.required<string>();
   readonly mode = input.required<number>();
   readonly resources = input<string[]>([]);
-  readonly columns = input<TableColumn<Operation>[]>(TABLE_ALFA_MAIN_OPERATION_COLUMN);
+  readonly columns = input<TableColumn<Operation>[]>(
+    TABLE_ALFA_MAIN_OPERATION_COLUMN
+  );
+  readonly notActions = input(false, {
+    transform: (value): boolean => {
+      if (value === null || value === undefined) return false;
+      if (value === '') return true;
+      if (typeof value === 'boolean') return value;
+      return false;
+    }
+  });
 
   @Output() refreshData = new EventEmitter<void>();
 
@@ -128,12 +134,17 @@ export class TableAlfaMainComponent
   ) {}
 
   get visibleColumns() {
-    return this.columns()
+    const columns = this.notActions()
+      ? this.columns().filter((col) => col.property !== 'actions')
+      : this.columns();
+
+    return columns
       .filter((column) => column.visible)
       .map((column) => column.property);
   }
 
   ngOnInit(): void {
+    console.log(this.notActions());
     this.dataSource = new MatTableDataSource();
 
     console.log(this.mode());
@@ -429,34 +440,39 @@ export class TableAlfaMainComponent
   }
 
   changeNphToMatriz(row: Operation) {
-    this.dialog.open(CreateMatrixFromNphComponent, {
-      ...MODAL_SMALL_XS
-    }).afterClosed().subscribe((result) => {
-      if (result.response) {
-        this.bpmCoreService
-          .createMasterFromNph(
-            row.baunitIdE,
-            this.executionId(),
-            result.data.domBaunitCondition
-          )
-          .subscribe(() => {
-            Swal.fire({
-              text: 'No propiedad horizontal convertida exitosamente',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 5000
+    this.dialog
+      .open(CreateMatrixFromNphComponent, {
+        ...MODAL_SMALL_XS
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result.response) {
+          this.bpmCoreService
+            .createMasterFromNph(
+              row.baunitIdE,
+              this.executionId(),
+              result.data.domBaunitCondition
+            )
+            .subscribe(() => {
+              Swal.fire({
+                text: 'No propiedad horizontal convertida exitosamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 5000
+              });
+              this.refreshData.emit();
             });
-            this.refreshData.emit();
-          });
-      }
-    });
+        }
+      });
   }
 
   disableCollapseMenu(row?: Operation): boolean {
-    
     const mode = this.mode();
 
-    const { appliedAlfa, appliedGeo } = row || { appliedAlfa: false, appliedGeo: false };
+    const { appliedAlfa, appliedGeo } = row || {
+      appliedAlfa: false,
+      appliedGeo: false
+    };
 
     if (mode === 1 && !appliedAlfa) {
       return false;
