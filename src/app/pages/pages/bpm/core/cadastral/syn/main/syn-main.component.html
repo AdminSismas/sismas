@@ -1,28 +1,73 @@
-<!-- <div class="container flex items-center text-center" mat-dialog-title
-     [id]="id">
-  <h2
-    class="headline m-0 flex-auto">
-    cadastral/syn/main
-  </h2>
-</div> -->
-<!-- src\assets\img\illustrations\checklist.svg -->
 <main class="h-full flex flex-col items-center justify-center gap-8">
-  <img
-    src="../../../../../../../../assets/img/illustrations/checklist.svg"
-    alt="checklist"
-    class="h-1/2"
-  />
-  <h1 class="text-center text-2xl">¿Está seguro de sincronizar los cambios?</h1>
-  @if (loading) {
-    <mat-spinner diameter="40"></mat-spinner>
-  } @else {
-    <button
-      mat-raised-button
-      color="primary"
-      class="text-lg p-5"
-      (click)="syncChanges()"
-    >
-      Sincronizar cambios
-    </button>
-  }
+  <h1 class="text-center text-2xl">Cambios a sincronizar</h1>
+  <div class="max-h-full min-h-80 w-full px-6 overflow-y-auto flex flex-col justify-center">
+    @if (
+      listOperationContentInformation() !== null &&
+      listOperationContentInformation().length > 0
+    ) {
+      <mat-accordion
+        multi
+        class="w-full flex flex-col justify-between py-3 px-5"
+      >
+        @for (
+          obj of listOperationContentInformation();
+          track obj;
+          let index = $index
+        ) {
+          <mat-expansion-panel
+            [expanded]="index === 0"
+            class="py-0 px-0"
+          >
+            <mat-expansion-panel-header
+              class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center"
+            >
+              <div class="w-full px-0 py-0 flex text-start items-center">
+                <h4 class="subheading-1 mb-1 mt-1 w-full flex items-center">
+                  <span
+                    @scaleIn
+                    class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10"
+                  >
+                    <mat-icon
+                      svgIcon="mat:description"
+                      class="icon-xs"
+                    ></mat-icon>
+                  </span>
+                  <span
+                    @fadeInRight
+                    class="block"
+                    >Manzana o vereda - {{ obj.npnlike }}</span
+                  >
+                </h4>
+              </div>
+            </mat-expansion-panel-header>
+            <mat-panel-description class="py-0 px-0 m-0">
+              <table-alfa-main
+                class="w-full flex flex-col justify-between py-0"
+                [contentInformations]="obj.contentInformations"
+                [executionId]="executionId()"
+                [mode]="mode()"
+                notActions
+                [resources]="resources()"
+                (refreshData)="getAlfaMain()"
+              ></table-alfa-main>
+            </mat-panel-description>
+          </mat-expansion-panel>
+        }
+      </mat-accordion>
+    }
+  </div>
+  <button
+    mat-raised-button
+    color="primary"
+    class="text-lg p-5"
+    (click)="syncChanges()"
+  >
+    Sincronizar cambios
+  </button>
+
+  <app-loader
+    [isLoading]="loading()"
+    loaderTitle="Sincronizando cambios..."
+    loaderMessage="Espere un momento."
+  ></app-loader>
 </main>

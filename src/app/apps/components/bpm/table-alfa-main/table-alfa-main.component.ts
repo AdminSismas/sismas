@@ -9,7 +9,8 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  input,
+  viewChild
 } from '@angular/core';
 import {
   LIST_SCHEMAS_CONTROL_CHANGES,
@@ -25,22 +26,16 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { NgClass, NgIf } from '@angular/common';
+
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { Observable, ReplaySubject } from 'rxjs';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
 import { SearchData } from '../../../interfaces/general/search-data.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { MatMenuModule } from '@angular/material/menu';
+
 import { Operation } from '../../../interfaces/bpm/operation';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
@@ -48,7 +43,7 @@ import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
 import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
 import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
-import { MatDividerModule } from '@angular/material/divider';
+
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
@@ -59,9 +54,19 @@ import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
 import { CreateMatrixFromNphComponent } from './create-matrix-from-nph/create-matrix-from-nph.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgClass } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatSortModule, MatSort } from '@angular/material/sort';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
-  selector: 'vex-table-alfa-main',
+  selector: 'table-alfa-main',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
@@ -72,7 +77,6 @@ import { CreateMatrixFromNphComponent } from './create-matrix-from-nph/create-ma
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    NgIf,
     NgClass,
     MatMenuModule,
     MatDialogModule,
@@ -85,12 +89,23 @@ export class TableAlfaMainComponent
   implements OnInit, AfterViewInit, OnChanges
 {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private dialog = inject(MatDialog);
 
   @Input({ required: true }) contentInformations!: InformationPegeable;
-  @Input({ required: true }) executionId!: string;
-  @Input({ required: true }) mode = 1;
-  @Input() resources: string[] = [];
-  @Input() columns: TableColumn<Operation>[] = TABLE_ALFA_MAIN_OPERATION_COLUMN;
+  readonly executionId = input.required<string>();
+  readonly mode = input.required<number>();
+  readonly resources = input<string[]>([]);
+  readonly columns = input<TableColumn<Operation>[]>(
+    TABLE_ALFA_MAIN_OPERATION_COLUMN
+  );
+  readonly notActions = input(false, {
+    transform: (value): boolean => {
+      if (value === null || value === undefined) return false;
+      if (value === '') return true;
+      if (typeof value === 'boolean') return value;
+      return false;
+    }
+  });
 
   @Output() refreshData = new EventEmitter<void>();
 
@@ -109,24 +124,30 @@ export class TableAlfaMainComponent
   contentInformations$: Observable<InformationPegeable> =
     this._contentInformations$.asObservable();
 
-  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild(MatSort);
 
   constructor(
-    private dialog: MatDialog,
     private readonly layoutService: VexLayoutService,
     private bpmCoreService: BpmCoreService,
     private alfaMainService: AlfaMainService
   ) {}
 
   get visibleColumns() {
-    return this.columns
+    const columns = this.notActions()
+      ? this.columns().filter((col) => col.property !== 'actions')
+      : this.columns();
+
+    return columns
       .filter((column) => column.visible)
       .map((column) => column.property);
   }
 
   ngOnInit(): void {
+    console.log(this.notActions());
     this.dataSource = new MatTableDataSource();
+
+    console.log(this.mode());
 
     this.contentInformations$
       .pipe(filter<InformationPegeable>(Boolean))
@@ -136,12 +157,14 @@ export class TableAlfaMainComponent
   }
 
   ngAfterViewInit(): void {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+    const paginator = this.paginator();
+    if (paginator) {
+      this.dataSource.paginator = paginator;
     }
 
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
+    const sort = this.sort();
+    if (sort) {
+      this.dataSource.sort = sort;
     }
   }
 
@@ -199,7 +222,7 @@ export class TableAlfaMainComponent
         data: new ContentInfoSchema(
           operation?.baunitHead?.baunitIdE,
           operation?.baunitHead,
-          this.executionId,
+          this.executionId(),
           LIST_SCHEMAS_CONTROL_CHANGES,
           TYPE_INFORMATION_VISUAL
         )
@@ -216,7 +239,7 @@ export class TableAlfaMainComponent
     }
     this.bpmCoreService
       .viewChangesBpmOperationTemp(
-        this.executionId,
+        this.executionId(),
         operation?.baunitHead?.baunitIdE
       )
       .subscribe({
@@ -224,7 +247,7 @@ export class TableAlfaMainComponent
         next: (result: DifferenceChanges[]) => {
           this.openDifferenceChangesProperty(
             result,
-            this.executionId,
+            this.executionId(),
             operation?.baunitHead?.baunitIdE
           );
         }
@@ -245,11 +268,11 @@ export class TableAlfaMainComponent
         data: new ContentInfoSchema(
           operation?.baunitHead?.baunitIdE,
           operation?.baunitHead,
-          this.executionId,
+          this.executionId(),
           LIST_SCHEMAS_CONTROL_TEMP,
           TYPE_INFORMATION_EDITION,
           '',
-          this.resources
+          this.resources()
         )
       })
       .afterClosed();
@@ -270,7 +293,7 @@ export class TableAlfaMainComponent
       if (result.isConfirmed) {
         this.bpmCoreService
           .clearPropertyBpmOperation(
-            this.executionId,
+            this.executionId(),
             operation.baunitHead!.baunitIdE as string
           )
           .subscribe({
@@ -327,7 +350,7 @@ export class TableAlfaMainComponent
     this.alfaMainService
       .changeTemporaryStateBeaUnitHeadByExistTemp(
         operation.baunitHead!.baunitIdE as string,
-        this.executionId
+        this.executionId()
       )
       .subscribe({
         next: () => {
@@ -376,10 +399,10 @@ export class TableAlfaMainComponent
       ...MODAL_MEDIUM_H90,
       disableClose: true,
       data: {
-        executionId: this.executionId,
+        executionId: this.executionId(),
         baunitIdE: row.baunitHead?.baunitIdE,
         npnMatrix: row.baunitHead!.cadastralNumber,
-        resources: this.resources,
+        resources: this.resources(),
         operationBaUnitHead: row
       }
     });
@@ -417,26 +440,47 @@ export class TableAlfaMainComponent
   }
 
   changeNphToMatriz(row: Operation) {
-    this.dialog.open(CreateMatrixFromNphComponent, {
-      ...MODAL_SMALL_XS
-    }).afterClosed().subscribe((result) => {
-      if (result.response) {
-        this.bpmCoreService
-          .createMasterFromNph(
-            row.baunitIdE,
-            this.executionId,
-            result.data.domBaunitCondition
-          )
-          .subscribe(() => {
-            Swal.fire({
-              text: 'No propiedad horizontal convertida exitosamente',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 5000
+    this.dialog
+      .open(CreateMatrixFromNphComponent, {
+        ...MODAL_SMALL_XS
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result.response) {
+          this.bpmCoreService
+            .createMasterFromNph(
+              row.baunitIdE,
+              this.executionId(),
+              result.data.domBaunitCondition
+            )
+            .subscribe(() => {
+              Swal.fire({
+                text: 'No propiedad horizontal convertida exitosamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 5000
+              });
+              this.refreshData.emit();
             });
-            this.refreshData.emit();
-          });
-      }
-    });
+        }
+      });
+  }
+
+  disableCollapseMenu(row?: Operation): boolean {
+    const mode = this.mode();
+
+    const { appliedAlfa, appliedGeo } = row || {
+      appliedAlfa: false,
+      appliedGeo: false
+    };
+
+    if (mode === 1 && !appliedAlfa) {
+      return false;
+    }
+    if (mode === 3 && !appliedGeo) {
+      return false;
+    }
+
+    return true;
   }
 }

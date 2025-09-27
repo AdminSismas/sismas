@@ -1,1 +1,8 @@
+ignoredBuiltDependencies:
+  - '@scarf/scarf'
+  - aws-sdk
+  - esbuild
+  - lmdb
+  - msgpackr-extract
+
 minimumReleaseAge: 10080

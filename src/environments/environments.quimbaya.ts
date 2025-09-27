@@ -98,6 +98,7 @@ export const environment = {
     value: "/bpmProcess"
   },
   bpmResolution: {
+    completeDocs: "/completeDocs",
     report: "report",
     value: "bpmResolution"
   },

@@ -7,7 +7,7 @@
     <div
       class="card"
       vexMinFluidHeight
-      [fluidHeight]="mode === 3 ? 230 : fluidHeight"
+      [fluidHeight]="mode === 3 ? 230 : fluidHeight()"
     >
       <div class="px-5 py-3 sm:min-w-full md:min-w-[300px]">
         <div class="p-0 m-0 flex flex-col sm:flex-row items-center gap-3">
@@ -152,7 +152,7 @@
               (click)="clearInformationAlfaMain()"
               [disabled]="disabledButton(TYPE_BUTTON_RESET)"
               [ngClass]="buttonsClass(TYPE_BUTTON_RESET)"
-              >
+            >
               <mat-icon svgIcon="mat:restart_alt"></mat-icon>
               <span>Reiniciar</span>
             </button>
@@ -160,58 +160,59 @@
         </div>
       </div>
       <div class="w-full container-fluid bg-foreground p-0 py-0 px-0"></div>
-      <mat-accordion
-        multi
-        class="w-full flex flex-col justify-between py-3 px-5 classTableAlfaMain accordion-headers-align"
-        *ngIf="
-          listOperationContentInformation !== null &&
-          listOperationContentInformation.length > 0
-        "
-      >
-        @for (
-          obj of listOperationContentInformation;
-          track obj;
-          let index = $index
-        ) {
-          <mat-expansion-panel
-            [expanded]="index === 0"
-            class="py-0 px-0"
-          >
-            <mat-expansion-panel-header
-              class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center"
+      @if (
+        listOperationContentInformation !== null &&
+        listOperationContentInformation.length > 0
+      ) {
+        <mat-accordion
+          multi
+          class="w-full flex flex-col justify-between py-3 px-5 classTableAlfaMain accordion-headers-align"
+        >
+          @for (
+            obj of listOperationContentInformation;
+            track obj;
+            let index = $index
+          ) {
+            <mat-expansion-panel
+              [expanded]="index === 0"
+              class="py-0 px-0"
             >
-              <div class="w-full px-0 py-0 flex text-start items-center">
-                <h4 class="subheading-1 mb-1 mt-1 w-full flex items-center">
-                  <span
-                    @scaleIn
-                    class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10"
-                  >
-                    <mat-icon
-                      svgIcon="mat:description"
-                      class="icon-xs"
-                    ></mat-icon>
-                  </span>
-                  <span
-                    @fadeInRight
-                    class="block"
-                    >Manzana o vereda - {{ obj.npnlike }}</span
-                  >
-                </h4>
-              </div>
-            </mat-expansion-panel-header>
-            <mat-panel-description class="py-0 px-0 m-0">
-              <vex-table-alfa-main
-                class="w-full flex flex-col justify-between py-0"
-                [contentInformations]="obj.contentInformations"
-                [executionId]="executionId"
-                [mode]="mode"
-                [resources]="resources"
-                (refreshData)="getAlfaMain()"
-              ></vex-table-alfa-main>
-            </mat-panel-description>
-          </mat-expansion-panel>
-        }
-      </mat-accordion>
+              <mat-expansion-panel-header
+                class="mat-expansion-zones bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex text-start items-center"
+              >
+                <div class="w-full px-0 py-0 flex text-start items-center">
+                  <h4 class="subheading-1 mb-1 mt-1 w-full flex items-center">
+                    <span
+                      @scaleIn
+                      class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10"
+                    >
+                      <mat-icon
+                        svgIcon="mat:description"
+                        class="icon-xs"
+                      ></mat-icon>
+                    </span>
+                    <span
+                      @fadeInRight
+                      class="block"
+                      >Manzana o vereda - {{ obj.npnlike }}</span
+                    >
+                  </h4>
+                </div>
+              </mat-expansion-panel-header>
+              <mat-panel-description class="py-0 px-0 m-0">
+                <table-alfa-main
+                  class="w-full flex flex-col justify-between py-0"
+                  [contentInformations]="obj.contentInformations"
+                  [executionId]="executionId()"
+                  [mode]="mode"
+                  [resources]="resources()"
+                  (refreshData)="getAlfaMain()"
+                ></table-alfa-main>
+              </mat-panel-description>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+      }
     </div>
   </vex-page-layout-content>
 </vex-page-layout>

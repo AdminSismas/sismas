@@ -55,7 +55,7 @@ import { Observable } from 'rxjs';
 export class ResValidateComponent implements OnInit {
   executionId = input.required<string>();
   resources = input.required<string[]>();
-  mode = input.required<1 | 2>();
+  mode = input.required<1 | 2 | 3>();
 
   private sanitizer = inject(DomSanitizer);
   private resService = inject(ResService);
@@ -94,10 +94,19 @@ export class ResValidateComponent implements OnInit {
   loadPdf() {
 
     let subscription: Observable<Blob>;
-    if (this.mode() === 1){
-      subscription = this.resService.getResValidateDoc(this.executionId());
-    } else {
-      subscription = this.resService.getNoProcedeDoc(this.executionId());
+    switch (this.mode()) {
+      case 1:
+        subscription = this.resService.getResValidateDoc(this.executionId());
+        break;
+      case 2:
+        subscription = this.resService.getNoProcedeDoc(this.executionId());
+        break;
+      case 3:
+        subscription = this.resService.getCompleteDocs(this.executionId());
+        break;
+      default:
+        subscription = this.resService.getResValidateDoc(this.executionId());
+        break;
     }
 
     console.log(subscription);

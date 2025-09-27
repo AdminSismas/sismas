@@ -17,7 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { map } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
-import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
+
 import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
 import {
   COMPONENT_PATH_FORM_ALFA_MAIN,
@@ -49,6 +49,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
 import { InformationPropertyService } from '../../../../apps/services/territorial-organization/information-property.service';
 import { LoaderComponent } from '../../../../apps/components/general-components/loader/loader.component';
+import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 
 @Component({
   selector: 'vex-bmp-core',
@@ -408,14 +409,20 @@ export class BmpCoreComponent implements OnInit {
   executeBpmNextService(answer: boolean) {
     this.bpmCoreService
       .getNextOperation(this.executionId, answer)
-      .subscribe((result: ProTaskE) => this.captureInformationBpmCore(result));
+      .subscribe({
+        next: (result: ProTaskE) => this.captureInformationBpmCore(result),
+        error: () => this.loadingServiceService.activateLoading(false)
+      });
   }
 
   previewBpmCore() {
     this.loadingServiceService.activateLoading(true);
     this.bpmCoreService
       .getPreviewOperation(this.executionId)
-      .subscribe((result: ProTaskE) => this.captureInformationBpmCore(result));
+      .subscribe({
+        next: (result: ProTaskE) => this.captureInformationBpmCore(result),
+        error: () => this.loadingServiceService.activateLoading(false)
+      });
   }
 
   captureInformationBpmCore(result: ProTaskE) {
