@@ -20,8 +20,6 @@ import {
   MODAL_MIN_MEDIUM_ALL,
   MODAL_SMALL_XS,
   PAGE,
-  PAGE_SIZE_OPTION_UNIQUE,
-  PAGE_SIZE_TABLE_UNIQUE,
   TABLE_ALFA_MAIN_OPERATION_COLUMN,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
@@ -114,8 +112,7 @@ export class TableAlfaMainComponent
 
   page = PAGE;
   totalElements = 0;
-  pageSize: number = PAGE_SIZE_TABLE_UNIQUE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION_UNIQUE;
+  pageSize = 100;
   dataSource!: MatTableDataSource<Operation>;
   npnRemoving?: string;
 
