@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Script para hacer merge de despliegue-desarrollo a main
-git checkout despliegue-desarrollo && \
+git switch despliegue-desarrollo && \
 git fetch origin -p && \
 git pull && \
-git checkout main && \
+git switch main && \
 git fetch origin -p && \
 git pull && \
-git reset --hard despliegue-desarrollo && \
+git merge despliegue-desarrollo -X theirs --squash && \
 git commit --allow-empty -m "Actualización - $(date +%d-%m-%Y)" && \
 echo -n "¿Desea realizar un push al main? (s/n): " && \
 read response && \
@@ -17,4 +17,4 @@ case "$response" in
   n) echo "Operación cancelada." ;;
   *) echo "Respuesta no válida. Operación cancelada." ;;
 esac
-git checkout despliegue-desarrollo
+git switch despliegue-desarrollo
