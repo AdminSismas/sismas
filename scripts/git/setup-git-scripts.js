@@ -24,7 +24,7 @@ console.log('\nStep 2: Configuring git aliases...');
 
 const aliases = {
   pd: `!"sh scripts/git/git-pull-develop.sh"`,
-  'merge-develop': `!"sh scripts/git/git-merge-develop.sh"`
+  md: `!"sh scripts/git/git-merge-develop.sh"`
 };
 
 for (const [alias, command] of Object.entries(aliases)) {
@@ -40,4 +40,4 @@ for (const [alias, command] of Object.entries(aliases)) {
 
 
 console.log('\nGit scripts setup completed!');
-console.log('You can now use the git aliases: git pd and git merge-develop');
+console.log('You can now use the git aliases: git pd and git md');
