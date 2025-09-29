@@ -27,7 +27,7 @@ jobs:
         run: npm install -g pnpm@latest
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install 
 
       - name: Build Angular App
         run: pnpm run build --configuration=quimbaya
