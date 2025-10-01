@@ -22,7 +22,7 @@
       <create-person-form
         [sendFormValues]="getCreatePersonFormValues()"
         [enableForm]="enableCreatePersonForm()"
-        (createPerson)="createPerson()"
+        (createPerson)="createPerson($event)"
       ></create-person-form>
       <hr class="bg-slate-400 w-full mb-4" />
       <h2 class="w-full text-lg font-bold">Información contacto <span class="text-base">(opcional)</span></h2>

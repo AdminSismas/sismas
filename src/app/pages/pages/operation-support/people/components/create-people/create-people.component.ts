@@ -1,6 +1,7 @@
 import {
   Component,
   computed,
+  effect,
   inject,
   OnDestroy,
   OnInit,
@@ -80,6 +81,12 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
     return title;
   });
 
+  constructor() {
+    effect(() => {
+      console.log(this.validateContactForm());
+    });
+  }
+
   ngOnInit() {
     this.mode = this.defaults?.mode ?? 'create';
     if (this.mode === 'create') {
@@ -104,7 +111,11 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
     return;
   }
 
-  createPerson() {
+  createPerson(isValid: boolean) {
+    if (!isValid) {
+      this.contactFormValid.set(false);
+      return;
+    }
     /* NOTA: validamos el usuario */
     if (this.mode === 'create') {
       this.sendCreatePeople();

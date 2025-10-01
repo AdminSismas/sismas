@@ -36,7 +36,7 @@ export class CreatePersonFormComponent implements AfterViewInit {
   sendFormValues = input.required<boolean>();
 
   /* ---- Outputs ---- */
-  createPerson = output<void>();
+  createPerson = output<boolean>();
 
   /* ---- Constructor ---- */
   constructor() {
@@ -72,13 +72,17 @@ export class CreatePersonFormComponent implements AfterViewInit {
             timer: 10000
           });
 
+          this.createPerson.emit(false);
           return;
         }
-        if (!this.validateForm()) return;
+        if (!this.validateForm()) {
+          this.createPerson.emit(false);
+          return;
+        }
 
         this.createPersonService.setInfoPersonData(this.createForm()!.value);
 
-        this.createPerson.emit();
+        this.createPerson.emit(true);
       }
     });
   }
