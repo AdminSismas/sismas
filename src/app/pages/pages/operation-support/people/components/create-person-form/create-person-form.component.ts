@@ -185,6 +185,10 @@ export class CreatePersonFormComponent implements AfterViewInit {
       }
     }
 
+    this.createForm()!.get('companyName')?.setValue(
+      this.createForm()!.get('companyName')?.value?.trim()
+    );
+
     return true;
   }
 
