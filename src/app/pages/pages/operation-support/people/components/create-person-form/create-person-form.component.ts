@@ -36,7 +36,7 @@ export class CreatePersonFormComponent implements AfterViewInit {
   sendFormValues = input.required<boolean>();
 
   /* ---- Outputs ---- */
-  createPerson = output<void>();
+  createPerson = output<boolean>();
 
   /* ---- Constructor ---- */
   constructor() {
@@ -72,13 +72,17 @@ export class CreatePersonFormComponent implements AfterViewInit {
             timer: 10000
           });
 
+          this.createPerson.emit(false);
           return;
         }
-        if (!this.validateForm()) return;
+        if (!this.validateForm()) {
+          this.createPerson.emit(false);
+          return;
+        }
 
         this.createPersonService.setInfoPersonData(this.createForm()!.value);
 
-        this.createPerson.emit();
+        this.createPerson.emit(true);
       }
     });
   }
@@ -137,7 +141,7 @@ export class CreatePersonFormComponent implements AfterViewInit {
       if (validate) {
         Swal.fire({
           icon: 'error',
-          text: 'El nombre solo debe contener una palabra',
+          text: 'El primer nombre solo debe contener una palabra',
           showConfirmButton: false,
           timer: 10000
         });
@@ -154,7 +158,7 @@ export class CreatePersonFormComponent implements AfterViewInit {
       if (validate) {
         Swal.fire({
           icon: 'error',
-          text: 'El apellido solo debe contener una palabra',
+          text: 'El primer apellido solo debe contener una palabra',
           showConfirmButton: false,
           timer: 10000
         });

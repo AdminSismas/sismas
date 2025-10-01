@@ -104,7 +104,11 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
     return;
   }
 
-  createPerson() {
+  createPerson(isValid: boolean) {
+    if (!isValid) {
+      this.contactFormValid.set(false);
+      return;
+    }
     /* NOTA: validamos el usuario */
     if (this.mode === 'create') {
       this.sendCreatePeople();
