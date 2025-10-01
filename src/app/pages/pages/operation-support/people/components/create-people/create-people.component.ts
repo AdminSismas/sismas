@@ -1,7 +1,6 @@
 import {
   Component,
   computed,
-  effect,
   inject,
   OnDestroy,
   OnInit,
@@ -80,12 +79,6 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
 
     return title;
   });
-
-  constructor() {
-    effect(() => {
-      console.log(this.validateContactForm());
-    });
-  }
 
   ngOnInit() {
     this.mode = this.defaults?.mode ?? 'create';

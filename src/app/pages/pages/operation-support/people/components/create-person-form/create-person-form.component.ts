@@ -141,7 +141,7 @@ export class CreatePersonFormComponent implements AfterViewInit {
       if (validate) {
         Swal.fire({
           icon: 'error',
-          text: 'El nombre solo debe contener una palabra',
+          text: 'El primer nombre solo debe contener una palabra',
           showConfirmButton: false,
           timer: 10000
         });
@@ -158,7 +158,7 @@ export class CreatePersonFormComponent implements AfterViewInit {
       if (validate) {
         Swal.fire({
           icon: 'error',
-          text: 'El apellido solo debe contener una palabra',
+          text: 'El primer apellido solo debe contener una palabra',
           showConfirmButton: false,
           timer: 10000
         });
