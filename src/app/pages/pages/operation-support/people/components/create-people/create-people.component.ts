@@ -227,7 +227,7 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
         this.loading.set(false);
       },
       error: () => {
-        this.loading.set(true);
+        this.loading.set(false);
       }
     });
   }
