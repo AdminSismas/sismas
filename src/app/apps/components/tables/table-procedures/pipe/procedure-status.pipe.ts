@@ -10,9 +10,9 @@ export class ProcedureStatusPipe implements PipeTransform {
   transform(value: Status): string {
     switch (value) {
       case 'COMPLETED':
-        return 'Completado';
+        return 'Finalizado';
       case 'CANCELLED':
-        return 'Cancelado';
+        return 'Anulado';
       case 'ACTIVE':
         return 'Activo';
       default:
