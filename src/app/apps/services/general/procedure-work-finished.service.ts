@@ -11,7 +11,7 @@ import { ProceduresCollection } from '../../interfaces/tables/procedures-progres
 })
 export class ProcedureWorkFinishedService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.proExecution.value}${environment.active}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.proExecution.value}`;
 
   /* -------------- CONSTRUCTRO -------------- */
   constructor(
@@ -23,40 +23,43 @@ export class ProcedureWorkFinishedService {
   getDataPropertyByWorkFinishedProcedures(
     page: PageProceduresData
   ): Observable<ProceduresCollection[]> {
-    let paramsPP: HttpParams = new HttpParams();
-    paramsPP = paramsPP.append('page', `${page.page}`);
-    paramsPP = paramsPP.append('size', `${page.size}`);
-    paramsPP = paramsPP.append('beginAt', `${page.beginAt}`);
-    paramsPP = paramsPP.append('beginAtE', `${page.beginAtE}`);
-    paramsPP = paramsPP.append('executionCode', `${page.executionCode}`);
-    paramsPP = paramsPP.append('individualNumber', `${page.individualNumber}`);
+    let params: HttpParams = new HttpParams();
+    params = params.append('page', `${page.page}`);
+    params = params.append('size', `${page.size}`);
+    params = params.append('beginAt', `${page.beginAt}`);
+    params = params.append('beginAtE', `${page.beginAtE}`);
+    params = params.append('executionCode', `${page.executionCode}`);
+    params = params.append('individualNumber', `${page.individualNumber}`);
     // '{{url}}:{{port}}/bpmOperation/proExecution/finished?page=0&size=10&beginAt=05/01/2024&beginAtE=&executionCode=0&individualNumber='
-    return this.http.get<ProceduresCollection[]>(`${this.basic_url}?`, {
-      params: paramsPP
-    });
+    return this.http.get<ProceduresCollection[]>(
+      `${this.basic_url}${environment.active}`,
+      {
+        params
+      }
+    );
   }
 
   public getFilterTableProcedureService(
     page: PageProceduresData
   ): Observable<ProceduresCollection[]> {
-    const paramsR: HttpParams = new HttpParams()
+    const params: HttpParams = new HttpParams()
       .append('page', `${page.page}`)
       .append('size', `${page.size}`)
       .append('beginAt', `${page.beginAt}`)
       .append('beginAtE', `${page.beginAtE}`)
       .append('executionCode', `${page.executionCode}`)
       .append('individualNumber', `${page.individualNumber}`);
-    const urlComplete = `${environment.url}:${environment.port}/bpmOperation${environment.proExecution.value}${environment.finished}`;
+    const urlComplete = `${this.basic_url}${environment.finished}`;
 
     return this.http.get<ProceduresCollection[]>(urlComplete, {
-      params: paramsR
+      params
     });
   }
 
   public viewDetailIdProceduresFininsh(
     idProcedure: number
   ): Observable<ProceduresCollection> {
-    const urlComplete = `${environment.url}:${environment.port}/${environment.bpmOperation.value}/${environment.proExecution.value}/${idProcedure}`;
+    const urlComplete = `${this.basic_url}/${idProcedure}`;
 
     return this.http.get<ProceduresCollection>(urlComplete);
   }

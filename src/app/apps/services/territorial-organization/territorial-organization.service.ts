@@ -18,109 +18,139 @@ import { Sidewalk } from '../../interfaces/territorial-organization/sidewalk.mod
   providedIn: 'root'
 })
 export class TerritorialOrganizationService {
-
   basic_url = `${environment.url}:${environment.port}`;
 
   constructor(
     private http: HttpClient,
     private requestsService: SendGeneralRequestsService
-  ) {
-  }
+  ) {}
 
   getDataDeparments(): Observable<Department[]> {
-    const url = `${this.basic_url}${environment.qbaunit_ccdpto}`;
+    const { value: qbaunit, ccdpto } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${ccdpto}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   getDataDepartments(): Observable<Department[]> {
-    const url = `${this.basic_url}${environment.qbaunit_ccdpto}`;
+    const { value: qbaunit, ccdpto } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${ccdpto}`;
     return this.requestsService.sendRequestsFetchGet(url);
   }
 
   getAllDataDepartments(): Observable<Department[]> {
-    const url = `${this.basic_url}${environment.qbaunit_divpol_ccdpto}`;
+    const { value: qbaunit, divpol, ccdpto } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${divpol}${ccdpto}`;
 
     return this.http.get<Department[]>(url);
   }
 
-  getDataMunicipalities(dpto: string | null | undefined): Observable<Municipality[]> {
-    const paramsMun: HttpParams = new HttpParams()
-      .set('dpto', `${dpto}`);
+  getDataMunicipalities(
+    dpto: string | null | undefined
+  ): Observable<Municipality[]> {
+    const { value: qbaunit, ccmpio } = environment.qbaunit;
+    const paramsMun: HttpParams = new HttpParams().set('dpto', `${dpto}`);
 
-    const url = `${this.basic_url}${environment.qbaunit_ccmpio}`;
+    const url = `${this.basic_url}${qbaunit}${ccmpio}`;
 
     return this.getData(url, paramsMun);
   }
 
-  getAllDataMunicipalities(dpto: string ): Observable<Municipality[]> {
-    const url = `${this.basic_url}${environment.qbaunit_divpol_ccmpio}`;
+  getAllDataMunicipalities(dpto: string): Observable<Municipality[]> {
+    const { value: qbaunit, divpol, ccmpio } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${divpol}${ccmpio}`;
 
-    const params: HttpParams = new HttpParams()
-      .set('dpto', dpto);
+    const params: HttpParams = new HttpParams().set('dpto', dpto);
 
     return this.http.get<Municipality[]>(url, { params });
   }
 
-  getDataTownships(deptoMpio: string | null | undefined): Observable<Township[]> {
+  getDataTownships(
+    deptoMpio: string | null | undefined
+  ): Observable<Township[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('deptompio', `${deptoMpio}`);
-    const url = `${this.basic_url}${environment.qbaunit_cccorr}`;
+
+    const { value: qbaunit, cccorr } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${cccorr}`;
+
     return this.getData(url, paramsMun);
   }
 
   getDataZones(deptoMpio: string | null | undefined): Observable<Zone[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('deptompio', `${deptoMpio}`);
-    const url = `${this.basic_url}${environment.qbaunit_cczona}`;
+
+    const { value: qbaunit, cczona } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${cczona}`;
+
     return this.getData(url, paramsMun);
   }
 
   getDataSectors(ccZonaPkey: string | null | undefined): Observable<Sector[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('ccZonaPkey', `${ccZonaPkey}`);
-    const url = `${this.basic_url}${environment.qbaunit_ccsector}`;
+
+    const { value: qbaunit, ccsector } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${ccsector}`;
+
     return this.getData(url, paramsMun);
   }
 
-  getDataCommunes(sectorPkey: string | null | undefined): Observable<Commune[]> {
+  getDataCommunes(
+    sectorPkey: string | null | undefined
+  ): Observable<Commune[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('sectorPkey', `${sectorPkey}`);
-    const url = `${this.basic_url}${environment.qbaunit_cccomuna}`;
+
+    const { value: qbaunit, cccomuna } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${cccomuna}`;
+
     return this.getData(url, paramsMun);
   }
 
-  getDataNeighborhoods(communityPkey: string | null | undefined): Observable<Neighborhood[]> {
+  getDataNeighborhoods(
+    communityPkey: string | null | undefined
+  ): Observable<Neighborhood[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('comunaPkey', `${communityPkey}`);
-    const url = `${this.basic_url}${environment.qbaunit_ccbarrio}`;
+    const { value: qbaunit, ccbarrio } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${ccbarrio}`;
     return this.getData(url, paramsMun);
   }
 
-  getDataBlocks(neighborhoodPkey: string | null | undefined): Observable<Block[]> {
+  getDataBlocks(
+    neighborhoodPkey: string | null | undefined
+  ): Observable<Block[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('barrioPkey', `${neighborhoodPkey}`);
-    const url = `${this.basic_url}${environment.qbaunit_ccmanzana}`;
+
+    const { value: qbaunit, ccmanzana } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${ccmanzana}`;
+
     return this.getData(url, paramsMun);
   }
 
-  getDataSidewalks(sectorPkey: string | null | undefined): Observable<Sidewalk[]> {
+  getDataSidewalks(
+    sectorPkey: string | null | undefined
+  ): Observable<Sidewalk[]> {
     let paramsMun: HttpParams = new HttpParams();
     paramsMun = paramsMun.append('sectorPkey', `${sectorPkey}`);
-    const url = `${this.basic_url}${environment.qbaunit_ccvereda}`;
+
+    const { value: qbaunit, ccvereda } = environment.qbaunit;
+    const url = `${this.basic_url}${qbaunit}${ccvereda}`;
+
     return this.getData(url, paramsMun);
   }
-
 
   advancedSearch(): Observable<any[]> {
     const params: HttpParams = new HttpParams()
       .set('npnlike', '1800101040000030600069')
       .set('page', '0')
       .set('size', '4');
-      
+
     const url = `${this.basic_url}/baunit/npnlike`;
     return this.http.get<any[]>(url, { params });
   }
-
 
   private getData(url: string, params: any): Observable<any[]> {
     return this.requestsService.sendRequestsGetOption(url, { params: params });

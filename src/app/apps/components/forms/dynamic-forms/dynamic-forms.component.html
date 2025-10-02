@@ -153,6 +153,23 @@
             </mat-form-field>
           }
         }
+        @case ("autocomplete") {
+          <mat-form-field class="example-full-width">
+            <mat-label>{{ input.label }}</mat-label>
+            <input
+              [type]="input.type"
+              [placeholder]="input.placeholder"
+              matInput
+              [formControlName]="input.name"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of input.options; track option) {
+                <mat-option [value]="option.label">{{ option.label }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        }
       }
     }
   </form>

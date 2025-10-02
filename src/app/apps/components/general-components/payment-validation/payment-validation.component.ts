@@ -80,9 +80,9 @@ export class PaymentValidationComponent {
         Swal.fire({
           icon: 'success',
           title: 'Éxito',
-          text: `El certificado ${procedureName} ha sido solicitado exitosamente con número de solicitud ${response.requestId}.`,
+          text: `El certificado "${procedureName}" ha sido solicitado exitosamente con número de solicitud ${response.requestId}.`,
           showConfirmButton: false,
-          timer: 5000
+          timer: 60000
         });
 
         this.dialogRef.close();

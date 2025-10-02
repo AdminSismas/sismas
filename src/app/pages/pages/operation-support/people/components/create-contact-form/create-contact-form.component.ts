@@ -125,7 +125,7 @@ export class CreateContactFormComponent
   /* ---- Methods ---- */
   getDepartmentOptions() {
     this.territorialOrganizationService
-      .getDataDepartments()
+      .getAllDataDepartments()
       .pipe(
         map((municipalities) =>
           municipalities.map((municipality) => ({
@@ -147,7 +147,7 @@ export class CreateContactFormComponent
     if (!dpto) return;
 
     this.territorialOrganizationService
-      .getDataMunicipalities(dpto)
+      .getAllDataMunicipalities(dpto)
       .pipe(
         map((municipalities) =>
           municipalities.map((municipality) => ({

@@ -8,6 +8,7 @@ export class contentInfoProcedures {
     dueDate: string;
     executionId?: number;
     bpmPriority?: number;
+    status: Status;
 
 
     constructor(content?: Partial<contentInfoProcedures>) {
@@ -20,5 +21,8 @@ export class contentInfoProcedures {
         this.dueDate = content?.dueDate ?? '';
         this.executionId = content?.executionId ?? 0;
         this.bpmPriority = content?.bpmPriority ?? 0;
+        this.status = content?.status ?? 'CANCELLED';
     }
 }
+
+export type Status = 'COMPLETED' | 'CANCELLED' | 'ACTIVE';
