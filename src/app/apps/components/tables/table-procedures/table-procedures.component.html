@@ -117,7 +117,7 @@
           <mat-icon svgIcon="mat:search"></mat-icon>Buscar
         </button>
       </div>
-      @if (urlTable() === 'finished') {
+      @if (urlTable() === "finished") {
         <div class="flex gap-4">
           <mat-form-field>
             <mat-label>Número de resolución</mat-label>
@@ -286,6 +286,26 @@
                         svgIcon="mat:more_horiz"
                       ></mat-icon>
                     </button>
+                  </td>
+                </ng-container>
+              }
+              @case ("badge") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                  >
+                    <span [class]="'status-badge ' + (row[column.property] | procedureStatus)">{{
+                      row[column.property] | procedureStatus
+                    }}</span>
                   </td>
                 </ng-container>
               }

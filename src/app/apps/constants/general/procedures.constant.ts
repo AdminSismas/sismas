@@ -17,7 +17,13 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[] = [
     visible: true,
     cssClasses: ['font-medium']
   },
-
+  {
+    label: 'Estado',
+    property: 'status',
+    type: 'badge',
+    visible: true,
+    cssClasses: ['font-medium']
+  },
   {
     label: 'Clase',
     property: 'bpmProcessCategory',

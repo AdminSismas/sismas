@@ -5,7 +5,7 @@ import {
   input,
   OnInit,
   signal,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import {
@@ -78,6 +78,7 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import 'moment/locale/es';
 import Swal from 'sweetalert2';
+import { ProcedureStatusPipe } from './pipe/procedure-status.pipe';
 
 interface MenuActions {
   label: string;
@@ -134,7 +135,9 @@ const beginAt = new Date('2025-01-01T00:00:00');
     MatMenuModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    // Custom
+    ProcedureStatusPipe
   ]
 })
 export class TableProceduresComponent implements OnInit {
@@ -209,18 +212,18 @@ export class TableProceduresComponent implements OnInit {
   maxDate: Date = new Date(); // Fecha máxima permitida (hoy)
   maxStartDate: Date = new Date(); // Fecha máxima permitida para la fecha de inicio (un día antes de hoy)
 
-  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('commentDialog') commentDialog!: ComponentType<unknown>;
-  @ViewChild('confirmDelete') confirmDelete!: SwalComponent;
-  @ViewChild('errorDelete') errorDelete!: SwalComponent;
-  @ViewChild('commentError') commentError!: SwalComponent;
-  @ViewChild('successDelete') successDelete!: SwalComponent;
-  @ViewChild('successReassign') successReassign!: SwalComponent;
-  @ViewChild('errorReassign') errorReassign!: SwalComponent;
-  @ViewChild('successChangePriority') successChangePriority!: SwalComponent;
-  @ViewChild('errorChangePriority') errorChangePriority!: SwalComponent;
-  @ViewChild('comment') comment!: ElementRef<HTMLInputElement>;
+  readonly paginator = viewChild.required(MatPaginator);
+  readonly sort = viewChild.required(MatSort);
+  readonly commentDialog = viewChild.required<ComponentType<unknown>>('commentDialog');
+  readonly confirmDelete = viewChild.required<SwalComponent>('confirmDelete');
+  readonly errorDelete = viewChild.required<SwalComponent>('errorDelete');
+  readonly commentError = viewChild.required<SwalComponent>('commentError');
+  readonly successDelete = viewChild.required<SwalComponent>('successDelete');
+  readonly successReassign = viewChild.required<SwalComponent>('successReassign');
+  readonly errorReassign = viewChild.required<SwalComponent>('errorReassign');
+  readonly successChangePriority = viewChild.required<SwalComponent>('successChangePriority');
+  readonly errorChangePriority = viewChild.required<SwalComponent>('errorChangePriority');
+  readonly comment = viewChild.required<ElementRef<HTMLInputElement>>('comment');
 
   get visibleColumns() {
     const validUser = this.userRole
@@ -307,7 +310,12 @@ export class TableProceduresComponent implements OnInit {
   }
 
   get columns() {
-    return TABLE_COLUMN_PROPERTIES;
+    return TABLE_COLUMN_PROPERTIES.filter((column) => {
+      if (column.property === 'status' && this.urlTable() !== environment.finished ) {
+        return false;
+      }
+      return true;
+    });
   }
 
   refreshInformationpaginator(event: PageEvent): void {
@@ -635,11 +643,11 @@ export class TableProceduresComponent implements OnInit {
 
     this.proceduresService.changePriority(row.executionId!).subscribe({
       next: () => {
-        this.successChangePriority.fire();
+        this.successChangePriority().fire();
         this.defaultTableData();
       },
       error: () => {
-        this.errorChangePriority.fire();
+        this.errorChangePriority().fire();
       }
     });
   }
@@ -647,17 +655,17 @@ export class TableProceduresComponent implements OnInit {
   addComment(row: ProceduresCollection) {
     if (!this.userRole || this.userRole === 'USER_COORD') return;
 
-    this.confirmDelete.fire().then((result) => {
+    this.confirmDelete().fire().then((result) => {
       if (result.isConfirmed) {
         this.dialog
-          .open(this.commentDialog, {
+          .open(this.commentDialog(), {
             ...MODAL_SMALL
           })
           .afterClosed()
           .subscribe((response: boolean) => {
             if (response) {
-              const comment = this.comment.nativeElement.value;
-              if (!comment) return this.commentError.fire();
+              const comment = this.comment().nativeElement.value;
+              if (!comment) return this.commentError().fire();
               this.proceduresService
                 .commentProcedure(row.executionId!, comment)
                 .subscribe({
@@ -665,7 +673,7 @@ export class TableProceduresComponent implements OnInit {
                     this.cancelProcedure(row.executionId!);
                   },
                   error: (error: HttpErrorResponse) => {
-                    this.errorDelete.fire();
+                    this.errorDelete().fire();
                     throw error.message;
                   }
                 });
@@ -680,10 +688,10 @@ export class TableProceduresComponent implements OnInit {
       next: () => {
         const data = this.objectParameters();
         this.getDataFromProceduresService(data);
-        this.successDelete.fire();
+        this.successDelete().fire();
       },
       error: (error: HttpErrorResponse) => {
-        this.errorDelete.fire();
+        this.errorDelete().fire();
         throw error.message;
       }
     });
@@ -704,12 +712,12 @@ export class TableProceduresComponent implements OnInit {
       .subscribe({
         next: (response: string | undefined) => {
           if (response === 'success') {
-            this.successReassign.fire();
+            this.successReassign().fire();
             return;
           }
 
           if (response === 'error') {
-            this.errorReassign.fire();
+            this.errorReassign().fire();
             return;
           }
         }
