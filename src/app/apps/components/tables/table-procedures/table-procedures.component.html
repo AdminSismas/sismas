@@ -373,11 +373,11 @@
     <mat-form-field class="w-full h-full">
       <mat-label>Comentario</mat-label>
       <input
-        #comment
         type="text-area"
         matInput
         class="w-full h-full"
         placeholder="Escriba el comentario relacionado a la anulación del trámite ..."
+        (input)="setComment($event)"
       />
     </mat-form-field>
   </mat-dialog-content>

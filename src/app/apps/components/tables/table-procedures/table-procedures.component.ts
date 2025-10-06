@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   inject,
   input,
   OnInit,
@@ -203,6 +202,7 @@ export class TableProceduresComponent implements OnInit {
   ];
 
   menuOptions = signal<MenuActions[]>([]);
+  readonly comment = signal<string>('');
   gettedProcedureByResolution = signal<boolean>(false);
 
   page: number = PAGE;
@@ -223,7 +223,7 @@ export class TableProceduresComponent implements OnInit {
   readonly errorReassign = viewChild.required<SwalComponent>('errorReassign');
   readonly successChangePriority = viewChild.required<SwalComponent>('successChangePriority');
   readonly errorChangePriority = viewChild.required<SwalComponent>('errorChangePriority');
-  readonly comment = viewChild.required<ElementRef<HTMLInputElement>>('comment');
+  
 
   get visibleColumns() {
     const validUser = this.userRole
@@ -652,6 +652,13 @@ export class TableProceduresComponent implements OnInit {
     });
   }
 
+  setComment(event: Event): void {
+    if (!event.target) return;
+
+    const value = (event.target as HTMLInputElement).value;
+    this.comment.set(value);
+  }
+
   addComment(row: ProceduresCollection) {
     if (!this.userRole || this.userRole === 'USER_COORD') return;
 
@@ -664,7 +671,7 @@ export class TableProceduresComponent implements OnInit {
           .afterClosed()
           .subscribe((response: boolean) => {
             if (response) {
-              const comment = this.comment().nativeElement.value;
+              const comment = this.comment();
               if (!comment) return this.commentError().fire();
               this.proceduresService
                 .commentProcedure(row.executionId!, comment)
