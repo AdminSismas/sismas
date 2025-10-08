@@ -16,6 +16,7 @@ import {
 } from '../../constants/general/constants';
 import { CitationAndNoticeComponent } from '../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
 import { RecognitionPropertyInformationComponent } from '../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
+import { CompleteDocsComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/complete/complete-docs.component';
 
 @Injectable({
   providedIn: 'root'
@@ -120,11 +121,11 @@ export class DynamicComponentsService {
     },
     {
       nameComponent: 'cadCompleteDocsComponent',
-      component: ResValidateComponent,
+      component: CompleteDocsComponent,
       loadComponent: () =>
         import(
-          '../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component'
-        ).then((m) => m.ResValidateComponent)
+          '../../../pages/pages/bpm/core/cadastral/res/complete/complete-docs.component'
+        ).then((m) => m.CompleteDocsComponent)
     },
     {
       nameComponent: 'citationAndNoticeComponent',

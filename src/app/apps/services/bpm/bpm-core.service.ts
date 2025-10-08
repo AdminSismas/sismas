@@ -122,7 +122,7 @@ export class BpmCoreService {
   }
 
   getBpmOperationChanges(executionId: string): Observable<Blob> {
-    const url = `${envi.url}:${envi.port}/${envi.bpmResolution.value}/${envi.bpmResolution.report}/${executionId}`;
+    const url = `${envi.url}:${envi.port}${envi.bpmResolution.value}/${envi.bpmResolution.report}/${executionId}`;
 
     return this.http.get(url, { responseType: 'blob' });
   }
