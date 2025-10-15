@@ -1,4 +1,4 @@
-import { Component, effect, Inject, OnInit, signal } from '@angular/core';
+import { Component, Inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -131,11 +131,9 @@ export class AddCitationNoticeComponent implements OnInit {
     private readonly participantsService: ParticipantsService,
     private peopleService: PeopleService
   ) {
-    effect(() => console.log(this.minDate()));
   }
 
   ngOnInit() {
-    console.log(this.minDate());
     if (
       this.processParticipant == null ||
       this.processParticipant.participationId == null

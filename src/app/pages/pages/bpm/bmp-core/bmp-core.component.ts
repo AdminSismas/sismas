@@ -429,19 +429,19 @@ export class BmpCoreComponent implements OnInit {
     if (result?.proTask) {
       if (result.proTask.taskId! < 0) {
         const vailablePermission: PermissionVailable = {
-          executionId: result.executionId?.toString() || '',
-          message: result?.proTask?.flowName || ''
+          executionId: result.executionId?.toString() ?? '',
+          message: result?.proTask?.flowName ?? ''
         };
-        this.router.navigate([environment.myWork_tasksPanel], {
-          queryParams: { executionId: result.executionId }
-        });
         Swal.fire({
           text: result.proTask!.flowName!,
           icon: 'success',
           showConfirmButton: true,
           timer: 10000
-        }).then();
+        });
         this.bpmProcessService.setPermissions(vailablePermission);
+        this.router.navigate([environment.myWork_tasksPanel], {
+          queryParams: { executionId: vailablePermission.executionId }
+        });
         return;
       }
     }

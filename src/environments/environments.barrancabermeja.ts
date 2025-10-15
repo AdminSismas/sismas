@@ -100,7 +100,8 @@ export const environment = {
   bpmResolution: {
     completeDocs: "/completeDocs",
     report: "report",
-    value: "bpmResolution"
+    requirements: "/requirements",
+    value: "/bpmResolution"
   },
   bpmUser: {
     text: "/text",

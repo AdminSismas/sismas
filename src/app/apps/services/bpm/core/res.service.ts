@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
 
-const basic_url = `${envi.url}:${envi.port}/${envi.bpmResolution.value}`;
+const basic_url = `${envi.url}:${envi.port}${envi.bpmResolution.value}`;
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +21,6 @@ export class ResService {
 
   getNoProcedeDoc(executionId: string): Observable<Blob> {
     const url = `${basic_url}${envi.noprocede}/${executionId}`;
-
-    return this.http.get(url, {
-      responseType: 'blob'
-    });
-  }
-
-  getCompleteDocs(executionId: string): Observable<Blob> {
-    const url = `${basic_url}${envi.bpmResolution.completeDocs}/${executionId}`;
 
     return this.http.get(url, {
       responseType: 'blob'

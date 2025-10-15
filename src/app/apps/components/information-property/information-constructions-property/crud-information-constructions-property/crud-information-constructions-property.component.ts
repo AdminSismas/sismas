@@ -512,7 +512,6 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
           this.schema
         )
         .subscribe((result: CcCalificacionUB[]) => {
-          console.log(result);
           this.qualificationsConstruction = result;
           this.mapQualificationsConstruction =
             this.indexArraylistQualifications(
@@ -525,7 +524,6 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
   }
 
   refreshTraditionalRatingForm() {
-    console.log(this.mapQualificationsConstruction);
     const idBath = this.chargeQualificationConstruction('Tamanio_Banio');
     const idKitchen = this.chargeQualificationConstruction('Tamanio_Cocina');
 
@@ -616,7 +614,6 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     ) {
       try {
         id = this.mapQualificationsConstruction[domain]?.ccCalUBDom.id;
-        if (domain === 'Enchape_Banio') console.log(id);
         if (validateIsNumber(id) && id !== null && id !== undefined && id > 0) {
           return id;
         }

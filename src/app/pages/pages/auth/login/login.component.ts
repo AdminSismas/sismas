@@ -138,7 +138,6 @@ export class LoginComponent implements AfterViewInit {
         },
         error: () => {
           this.loading.set(false);
-          console.log(this.loading);
           this.alertCredentialIncorrect();
         }
       });

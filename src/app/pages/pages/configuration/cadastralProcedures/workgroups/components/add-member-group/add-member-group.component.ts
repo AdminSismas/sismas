@@ -77,6 +77,5 @@ export class AddMemberGroupComponent implements OnInit {
     const user = this.data.users.find((user) => user.userId === userId);
 
     this.selectedUser.set(user!);
-    console.log(this.selectedUser());
   }
 }

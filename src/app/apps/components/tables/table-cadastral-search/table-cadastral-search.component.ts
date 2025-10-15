@@ -526,7 +526,6 @@ export class TableCadastralSearchComponent
       .subscribe((value) => {
         this.captureInformationSubscribe(value);
         if (npnParam) {
-          console.log(value);
           this.dialog.open(
             LayoutCardCadastralInformationPropertyComponentComponent,
             {

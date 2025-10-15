@@ -8,8 +8,8 @@ import {
   MODAL_MEDIUM,
   NAME_NO_DISPONIBLE
 } from 'src/app/apps/constants/general/constants';
-import { TaskResponseModel } from 'src/app/apps/interfaces/bpm/task-response.model';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
+import { DetailInformationData } from '../detail-information-tasks/detail-information-tasks.component';
 
 @Component({
   selector: 'details-header',
@@ -26,8 +26,8 @@ export class DetailsHeaderComponent implements OnInit {
   bpmCoreService = inject(BpmCoreService);
 
   /* ---- Inputs ---- */
-  taskResponseModel = input.required<TaskResponseModel>();
   assignedSee = input.required<string>();
+  detailInformationData = input.required<DetailInformationData>();
 
   /* ---- Signals ---- */
   countComment = signal<number>(0);
@@ -36,7 +36,7 @@ export class DetailsHeaderComponent implements OnInit {
 
   /* ---- LifeCycle ---- */
   ngOnInit(): void {
-    this.executionId.set(`${this.taskResponseModel()?.executionId}` || null);
+    this.executionId.set(`${this.detailInformationData()?.taskId}` || null);
     this.getInformationProTaskCountComment();
     this.getInformationProTaskCountAttachment();
   }
@@ -74,7 +74,7 @@ export class DetailsHeaderComponent implements OnInit {
   }
 
   getInformationProTaskCountAttachment() {
-    if (!this.executionId) {
+    if (!this.executionId()) {
       this.countAttachment.set(0);
       return;
     }

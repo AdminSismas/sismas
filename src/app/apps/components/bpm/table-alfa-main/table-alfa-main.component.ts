@@ -141,10 +141,7 @@ export class TableAlfaMainComponent
   }
 
   ngOnInit(): void {
-    console.log(this.notActions());
     this.dataSource = new MatTableDataSource();
-
-    console.log(this.mode());
 
     this.contentInformations$
       .pipe(filter<InformationPegeable>(Boolean))

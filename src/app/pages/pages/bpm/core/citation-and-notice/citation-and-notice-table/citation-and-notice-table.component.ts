@@ -151,7 +151,6 @@ export class CitationAndNoticeTableComponent implements OnInit, OnChanges, After
         this.getInformationAssignedTasks();
       }
     }
-    console.log(changes);
   }
 
   emitToggleStar(event: Event, id: ProcessParticipant['participationId']) {

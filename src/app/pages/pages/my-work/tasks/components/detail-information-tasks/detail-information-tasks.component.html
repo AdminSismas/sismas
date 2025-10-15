@@ -1,32 +1,31 @@
 <!-- Encabezado de ventana modal -->
 <details-header
-  [assignedSee]="assignedSee"
-  [taskResponseModel]="data.value"
+  [assignedSee]="assignedSee()"
+  [detailInformationData]="data"
 ></details-header>
 
 <mat-divider class="text-border"></mat-divider>
 <mat-dialog-content class="p-0 m-0">
-  @if (message !== null && message !== "" && showAlert) {
+  @if (message() !== null && message() !== "" && showAlert()) {
     <!-- Mensaje de alerta -->
     <div
-      [ngClass]="color"
-      class="top-0 left-0 w-full p-4 flex items-center justify-between z-50"
+      class="bg-blue-500 top-0 left-0 w-full p-4 flex items-center justify-between z-50"
     >
-      <span class="text-white">{{ message }}</span>
+      <span class="text-white">{{ message() }}</span>
     </div>
   }
   <mat-tab-group class="w-full h-full">
     <!-- Detalles de la tarea -->
     <mat-tab label="Detalles de la tarea">
       <task-details
-        [executionId]="executionId"
+        [executionId]="executionId()"
         [taskDetails]="data.value"
       ></task-details>
     </mat-tab>
 
     <!-- Tareas ejecutadas -->
     <mat-tab label="Tareas ejecutadas">
-      <tasks-executed [executionId]="executionId"></tasks-executed>
+      <tasks-executed [executionId]="executionId()"></tasks-executed>
     </mat-tab>
 
     <!-- Participantes -->
@@ -39,7 +38,7 @@
 
     <!-- Metadata -->
     <mat-tab label="Información adicional">
-      <task-metadata [executionId]="executionId"></task-metadata>
+      <task-metadata [executionId]="executionId()"></task-metadata>
     </mat-tab>
   </mat-tab-group>
 </mat-dialog-content>

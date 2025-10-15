@@ -8,6 +8,7 @@ import { InformationPegeable } from '../../interfaces/general/information-pegeab
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 import { TablaContent } from '../../interfaces/bpm/table-procedure-response.model';
+import { TaskRetailExecuteResponseModel } from '../../interfaces/bpm/task-retail-execute-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,9 +76,9 @@ export class TasksPanelService {
     return this.http.get<TablaContent>(urlTask);
   }
 
-  viewProTaskId(taskId: number): Observable<any> {
+  viewProTaskId(taskId: number): Observable<TaskRetailExecuteResponseModel> {
     const urlTask = `${this.basic_url}${envi.bpmOperation.proTask}${taskId}/active`;
-    return this.http.get<any>(urlTask);
+    return this.http.get<TaskRetailExecuteResponseModel>(urlTask);
   }
 
 

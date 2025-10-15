@@ -6,8 +6,8 @@
     <span>
       Radicado:
       {{
-        taskResponseModel() && taskResponseModel().executionCode
-          ? taskResponseModel().executionCode
+        detailInformationData().value && detailInformationData().value.executionCode
+          ? detailInformationData().value.executionCode
           : NAME_NO_DISPONIBLE
       }}
     </span>
@@ -15,15 +15,15 @@
     <span>
       Versión:
       {{
-        taskResponseModel() && taskResponseModel().executionId
-          ? taskResponseModel().executionId
+        detailInformationData().value && detailInformationData().value.executionId
+          ? detailInformationData().value.executionId
           : NAME_NO_DISPONIBLE
       }}
     </span>
     -
     <span>
       Trámite asignado a :
-      {{ this.assignedSee() ? this.assignedSee() : NAME_NO_DISPONIBLE }}
+      {{ assignedSee() ? assignedSee() : NAME_NO_DISPONIBLE }}
     </span>
   </h2>
   <button

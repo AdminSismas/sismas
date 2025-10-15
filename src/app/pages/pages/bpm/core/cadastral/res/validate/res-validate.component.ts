@@ -55,7 +55,7 @@ import { Observable } from 'rxjs';
 export class ResValidateComponent implements OnInit {
   executionId = input.required<string>();
   resources = input.required<string[]>();
-  mode = input.required<1 | 2 | 3>();
+  mode = input.required<1 | 2>();
 
   private sanitizer = inject(DomSanitizer);
   private resService = inject(ResService);
@@ -101,15 +101,10 @@ export class ResValidateComponent implements OnInit {
       case 2:
         subscription = this.resService.getNoProcedeDoc(this.executionId());
         break;
-      case 3:
-        subscription = this.resService.getCompleteDocs(this.executionId());
-        break;
       default:
         subscription = this.resService.getResValidateDoc(this.executionId());
         break;
     }
-
-    console.log(subscription);
 
     subscription.subscribe({
       next: (response) => {
