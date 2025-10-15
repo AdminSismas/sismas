@@ -269,7 +269,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       this.form.invalid &&
       !(baunitCondition === 'Mejora' || baunitCondition === 'Informal')
     ) {
-      console.log(this.form);
       this.getAlertError('Complete los campos obligatorios');
       return;
     }
@@ -370,7 +369,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       22
     );
 
-    console.log(numberCondition);
     if (numberCondition === '8') {
       if (parseFloat(floorNumber) < 0 || parseFloat(unitNumber) < 0) {
         return false;
@@ -417,7 +415,6 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   refreshCadastralAreaGeoE(event: MouseEvent): void {
       event.preventDefault();
       if (!this.baunitIdE) return;
-      console.log(this.baunitIdE);
 
       const executionId = this.executionId;
 

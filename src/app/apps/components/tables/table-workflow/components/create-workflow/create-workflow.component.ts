@@ -57,10 +57,6 @@ export class CreateWorkflowComponent {
       return;
     }
 
-    // const { validBeginAt, validToAt } = this.form.value;
-
-    // console.log({ validBeginAt, validToAt });
-
     if (this.data.mode === 'edit') {
       const data: WorkflowCollection = { ...this.data.initValues, ...this.form.value };
       this.dialogRef.close({ result: true, data: data });

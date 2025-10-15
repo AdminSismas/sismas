@@ -149,7 +149,6 @@ export class CompleteDocsComponent {
 
     const payload = this.createPayload();
 
-    console.log(payload);
     this.getDocument(payload);
   }
 

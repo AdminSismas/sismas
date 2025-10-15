@@ -36,9 +36,7 @@ export class DetailInformationPropertyZonesComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public readonly data: DialogData
-  ) {
-    console.log(data);
-  }
+  ) {}
 
   getTitle(): string {
     let code = '';

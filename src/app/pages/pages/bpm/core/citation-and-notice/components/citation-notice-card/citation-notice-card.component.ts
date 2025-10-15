@@ -160,7 +160,6 @@ export class CitationNoticeCardComponent implements OnInit {
 
   onPrint() {
     if (this.isPrintDisabled()) return;
-    console.log('Imprimiendo');
 
     const { participationId, viaGubernativa } = this.processParticipant();
     this.citationNoticeService

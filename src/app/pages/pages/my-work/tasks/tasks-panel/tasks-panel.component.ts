@@ -173,7 +173,7 @@ export class TasksPanelComponent implements OnInit {
   }
 
   viewDetailTask(value: number) {
-    this.proTasksService.viewProTaskId(value).subscribe((result) => {
+    this.proTasksService.viewTaskId(`${value}`).subscribe((result) => {
       this.taskOne = result;
       this.viewExecuteTask(this.taskOne);
     });

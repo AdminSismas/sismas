@@ -85,7 +85,7 @@ export class CommentsComponent implements OnInit {
   }
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.getDataFromDocumentManagementService();
     this.user = this.userService.getUser();
   }
@@ -117,7 +117,6 @@ export class CommentsComponent implements OnInit {
   /* ------- Meth. Services ------- */
   getDataFromDocumentManagementService(): void {
     const pageData = this.generateObjectPageCommentsData();
-    console.log(this.data);
     this.executionId = this.data.executionId;
     this.commentsService.getDataPropertyByComments(this.executionId, pageData).subscribe({ //this.generateObjectPageCommentsData()
       next: (data: InformationPegeable) => {
