@@ -217,7 +217,7 @@ export const environment = {
   tasksAssigned: "/assignedTasks",
   temporal: "/temporal/",
   term: "/term",
-  titulo: "Desarrollo",
+  titulo: "Calarcá",
   typeNotification: {
     cited: "/citar",
     notified: "/notificar",

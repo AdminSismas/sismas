@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { MatDialogTitle } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environments';
@@ -13,9 +13,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrl: './res-main.component.scss'
 })
 export class ResMainComponent implements OnInit {
-  @Input() public id = '';
-  @Input() public executionId = '';
-  @Input({ required: true }) public resources: string[] = [];
+  public readonly executionId = input('');
+  public readonly resources = input.required<string[]>();
+  public readonly mode = input<number>();
 
   basic_url = `${environment.url}:${environment.port}/${'bpmResolution'}/${'generate'}/`;
   pdfUrl: SafeUrl = '';
@@ -25,26 +25,11 @@ export class ResMainComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id +
-        this.getRandomInt(100000) +
-        'AlfaMainComponent' +
-        this.getRandomInt(10);
-    } else {
-      this.id =
-        this.getRandomInt(10000) + 'AlfaMainComponent' + this.getRandomInt(10);
-    }
-
     this.loadPdf();
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
   loadPdf() {
-      const urlComplete = `${this.basic_url}${this.executionId}`;
+      const urlComplete = `${this.basic_url}${this.executionId()}`;
       const token = sessionStorage.getItem('token');
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       this.http.get(urlComplete, { headers, responseType: 'blob' }).subscribe({
@@ -52,8 +37,8 @@ export class ResMainComponent implements OnInit {
           const blob = new Blob([response], { type: 'application/pdf' });
           this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
         },
-        error: () => {
-          console.error('Error al cargar el documento PDF:');
+        error: (error) => {
+          console.log(error);
           this.pdfUrl = 'error';
         }
       });

@@ -215,6 +215,7 @@ export class InformationPropertyOwnersComponent
           this.executionId
         )
       );
+      this.totalElements = infoOwners.length;
       this.dataSource.data = infoOwners;
       this.fractions_sum = infoOwners.reduce(
         (acc: number, owner: InfoOwners) => {
