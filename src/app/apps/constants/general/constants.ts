@@ -58,7 +58,7 @@ export const INFORMATION_NOT_FOUND = 'Información No disponible';
 
 export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
 export const PAGE_SIZE_TABLE_UNIQUE = 10;
-export const PAGE_SIZE_SORT = 5;
+export const PAGE_SIZE_SORT = 10;
 export const NAME_CODENAME = 'codeName';
 export const DIVPOLLV1 = 'divpolLv1';
 export const DIVPOLLV2 = 'divpolLv2';
