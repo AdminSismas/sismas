@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { environment } from 'src/environments/environments';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-res-main',
@@ -37,8 +38,15 @@ export class ResMainComponent implements OnInit {
           const blob = new Blob([response], { type: 'application/pdf' });
           this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));
         },
-        error: (error) => {
-          console.log(error);
+        error: async (blobError) => {
+          const error = await blobError.text();
+          const jsonError = JSON.parse(error);
+          Swal.fire({
+            icon: 'error',
+            text: jsonError.message,
+            timer: 30000,
+            showConfirmButton: false
+          });
           this.pdfUrl = 'error';
         }
       });
