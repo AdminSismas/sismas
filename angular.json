@@ -338,6 +338,9 @@
             "armenia": {
               "buildTarget": "geoGestion:build:armenia"
             },
+            "calarca": {
+              "buildTarget": "geoGestion:build:calarca"
+            },
             "manizales": {
               "buildTarget": "geoGestion:build:manizales"
             },
