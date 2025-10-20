@@ -128,6 +128,31 @@
                 }
               ]
             },
+            "calarca": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.calarca.ts"
+                }
+              ]
+            },
             "manizales": {
               "optimization": {
                 "scripts": true,
