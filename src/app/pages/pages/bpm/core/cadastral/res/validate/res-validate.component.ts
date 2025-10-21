@@ -31,6 +31,7 @@ import { LoadingServiceService } from '../../../../../../../apps/services/genera
 import { TableThirdPartyAffectedComponent } from '../../../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 import { ResService } from 'src/app/apps/services/bpm/core/res.service';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-res-validate',
@@ -55,7 +56,7 @@ import { Observable } from 'rxjs';
 export class ResValidateComponent implements OnInit {
   executionId = input.required<string>();
   resources = input.required<string[]>();
-  mode = input.required<1 | 2>();
+  mode = input.required<1 | 2 | 3>();
 
   private sanitizer = inject(DomSanitizer);
   private resService = inject(ResService);
@@ -86,19 +87,22 @@ export class ResValidateComponent implements OnInit {
 
   ngOnInit() {
     this.loadingServiceService.activateLoading(true);
+    if (this.mode() === 3) this.firstTab.set('Documentos completados');
     this.loadPdf();
     this.getTags();
     this.loadingServiceService.deActivate(1400);
   }
 
   loadPdf() {
-
     let subscription: Observable<Blob>;
     switch (this.mode()) {
       case 1:
         subscription = this.resService.getResValidateDoc(this.executionId());
         break;
       case 2:
+        subscription = this.resService.getNoProcedeDoc(this.executionId());
+        break;
+      case 3:
         subscription = this.resService.getNoProcedeDoc(this.executionId());
         break;
       default:
@@ -116,11 +120,20 @@ export class ResValidateComponent implements OnInit {
         );
         this.isLoading.set(false);
       },
-      error: (error: HttpErrorResponse) => {
+      error: async (blob: Blob) => {
         this.isLoading.set(false);
         this.pdfUrl.set('error');
-        
-        throw error;
+        const errorString = await blob.text();
+        const errorJson = JSON.parse(errorString);
+
+        Swal.fire({
+          icon: 'error',
+          text: errorJson.message,
+          timer: 30000,
+          showConfirmButton: true
+        });
+
+        throw errorJson;
       }
     });
   }

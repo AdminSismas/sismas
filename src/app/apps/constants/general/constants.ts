@@ -537,9 +537,15 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
   },
   {
     name: 'cadCompleteDocsComponent',
-    pathForm: '/core/cadastral/res/complete.html',
+    pathForm: '/core/cadastral/ofi/complete.html',
     serviceValidation: '',
     mode: 1
+  },
+  {
+    name: 'cadValidateCompleteDocsComponent',
+    pathForm: '/core/cadastral/ofi/validate.html',
+    serviceValidation: '',
+    mode: 3
   },
   {
     name: 'citationAndNoticeComponent',

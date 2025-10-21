@@ -9,10 +9,16 @@
           </h2>
         </div>
       } @else {
-        <iframe
-          [src]="documentUrl()"
-          class="w-full h-full min-h-[350px]"
-        ></iframe>
+        @if (documentUrl()) {
+          <iframe
+            [src]="documentUrl()"
+            class="w-full h-full min-h-[350px]"
+          ></iframe>
+        } @else {
+          <h2 class="text-2xl text-center w-full font-bold text-slate-600">
+            No hay documento disponible
+          </h2>
+        }
       }
     </section>
     <section
