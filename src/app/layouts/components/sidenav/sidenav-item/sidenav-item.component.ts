@@ -22,7 +22,6 @@ import { NavigationService } from '../../../../core/navigation/navigation.servic
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -33,13 +32,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
     MatRippleModule,
     RouterLinkActive,
     RouterLink,
-    MatIconModule,
-    NgClass,
-    NgFor
+    MatIconModule
   ]
 })
 export class SidenavItemComponent implements OnInit, OnChanges {

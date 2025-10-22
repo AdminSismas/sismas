@@ -823,6 +823,10 @@ export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: NavigationItemCadastralInf
   {
     label: 'Alertas',
     fragment: FRAGMENT_ALERTS
+  },
+  {
+    label: 'ICA',
+    fragment: 'baunitIcaComponent'
   }
 ];
 

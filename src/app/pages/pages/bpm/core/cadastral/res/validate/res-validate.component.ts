@@ -32,6 +32,7 @@ import { TableThirdPartyAffectedComponent } from '../../../../../../../apps/comp
 import { ResService } from 'src/app/apps/services/bpm/core/res.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { CompleteDocsService } from '../complete/services/complete-docs.service';
 
 @Component({
   selector: 'vex-res-validate',
@@ -54,18 +55,22 @@ import Swal from 'sweetalert2';
   styleUrl: './res-validate.component.scss'
 })
 export class ResValidateComponent implements OnInit {
-  executionId = input.required<string>();
-  resources = input.required<string[]>();
-  mode = input.required<1 | 2 | 3>();
-
+  /* ---- Injects ---- */
   private sanitizer = inject(DomSanitizer);
   private resService = inject(ResService);
+  private completeDocsService = inject(CompleteDocsService);
   private recognitionProperty: RecognitionPropertyService = inject(
     RecognitionPropertyService
   );
   private loadingServiceService: LoadingServiceService = inject(
     LoadingServiceService
   );
+
+  /* ---- Inputs ---- */
+  executionId = input.required<string>();
+  resources = input.required<string[]>();
+  mode = input.required<1 | 2 | 3>();
+
 
   isLoading = signal<boolean>(true);
   id = signal<string>('');
@@ -87,9 +92,9 @@ export class ResValidateComponent implements OnInit {
 
   ngOnInit() {
     this.loadingServiceService.activateLoading(true);
-    if (this.mode() === 3) this.firstTab.set('Documentos completados');
     this.loadPdf();
-    this.getTags();
+    if (this.mode() === 3) this.firstTab.set('Documentos completados');
+    else this.getTags();
     this.loadingServiceService.deActivate(1400);
   }
 
@@ -103,7 +108,7 @@ export class ResValidateComponent implements OnInit {
         subscription = this.resService.getNoProcedeDoc(this.executionId());
         break;
       case 3:
-        subscription = this.resService.getNoProcedeDoc(this.executionId());
+        subscription = this.completeDocsService.getFinalDocs(this.executionId());
         break;
       default:
         subscription = this.resService.getResValidateDoc(this.executionId());

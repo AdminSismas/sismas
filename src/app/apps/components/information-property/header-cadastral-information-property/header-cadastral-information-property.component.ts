@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -25,23 +25,10 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
   templateUrl: './header-cadastral-information-property.component.html',
   styleUrl: './header-cadastral-information-property.component.scss'
 })
-export class HeaderCadastralInformationPropertyComponent implements OnInit{
+export class HeaderCadastralInformationPropertyComponent {
 
-  @Input() public idheaderCadastral = '';
-  @Input() public cssClasses?: string;
-  @Input() public label = '';
-  @Input() public icon = '';
-
-  ngOnInit(): void {
-    if (this.idheaderCadastral?.length>0) {
-      this.idheaderCadastral = this.idheaderCadastral + this.getRandomInt(10000);
-    } else {
-      this.idheaderCadastral = this.getRandomInt(10000) + this.label?.trim();
-    }
-  }
-
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
+  public readonly idheaderCadastral = input<string>();
+  public readonly cssClasses = input<string>();
+  public readonly label = input('');
+  public readonly icon = input('');
 }
