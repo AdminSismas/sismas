@@ -149,7 +149,7 @@ export const environment = {
   ica: {
     baunitId: "/baunitId",
     value: "/ica",
-    visible: false
+    visible: true
   },
   individual: {
     findByNumber: "/findByNumber",
