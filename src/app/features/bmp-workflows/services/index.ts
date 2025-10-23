@@ -6,3 +6,4 @@ export * from './tasks-panel.service';
 export * from './bmp-task.service';
 export * from './bmp-flow.service';
 export * from './bmp-workflow-facade.service';
+export * from './tasks-panel-facade.service';
