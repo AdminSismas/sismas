@@ -1,10 +1,9 @@
-@if (showTittle) {
+@if (showTittle()) {
   <div
     class="flex items-center"
     mat-dialog-title
-    [id]="id"
   >
-    <h2 class="headline m-0 flex-auto">{{ label }}</h2>
+    <h2 class="headline m-0 flex-auto">{{ label() }}</h2>
     <button
       class="text-secondary"
       mat-dialog-close
@@ -18,7 +17,7 @@
 }
 <mat-dialog-content
   [id]="idContainer"
-  [ngClass]="cssClasses"
+  [ngClass]="cssClasses()"
   class="flex items-start justify-start gap-6 overflow-x-hidden"
   vexFluidHeight
   fluidHeight="107"
@@ -46,9 +45,9 @@
     <vex-basic-property-information
       #basicPropertyInformationComponent
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       [editable]="editable.GNR"
       [editNpn]="editable.NPN"
       [editArea]="editable.AREA"
@@ -60,15 +59,15 @@
       (isMatriz)="isMatriz.set($event)"
       @fadeInUp
     ></vex-basic-property-information>
-    @if (showInformationUnitProperty && levelInfo !== 3) {
+    @if (showInformationUnitProperty && levelInfo() !== 3) {
       <vex-information-unit-property
         #unitPropertyInformationComponent
         [expandedComponent]="activeComponent() === 1"
         [baunitId]="baunitId"
-        [schema]="schema"
+        [schema]="schema()"
         [executionId]="executionId"
         @fadeInUp
-        [typeInformation]="typeInformation"
+        [typeInformation]="typeInformation()"
         (emitExpandedComponent)="activeComponent.set($event)"
       ></vex-information-unit-property>
     }
@@ -76,11 +75,11 @@
       #administrativeSourcesComponent
       [expandedComponent]="activeComponent() === 2"
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
       [editable]="editable.FNA"
       @fadeInUp
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       (emitExpandedComponent)="activeComponent.set(2)"
     >
     </vex-administrative-sources>
@@ -89,9 +88,9 @@
         #informationPropertyOwnersComponent
         [expandedComponent]="activeComponent() === 3"
         [baunitId]="baunitId"
-        [schema]="schema"
+        [schema]="schema()"
         [executionId]="executionId"
-        [typeInformation]="typeInformation"
+        [typeInformation]="typeInformation()"
         [editable]="editable.PRO"
         [showEditPerson]="showEditPerson()"
         (emitExpandedComponent)="activeComponent.set($event)"
@@ -102,7 +101,7 @@
         [propertyRegistryNumber]="propertyRegistryOffice"
         [propertyRegistryOffice]="propertyRegistryNumber"
         [baunitId]="baunitId"
-        [schema]="schema"
+        [schema]="schema()"
         [executionId]="executionId"
         [expandedComponent]="activeComponent() === 4"
         (emitExpandedComponent)="activeComponent.set($event)"
@@ -113,10 +112,10 @@
       #informationAddressesPropertyComponent
       [expandedComponent]="activeComponent() === 5"
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
       @fadeInUp
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       [editable]="editable.DIR"
       (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-information-addresses-property>
@@ -124,10 +123,10 @@
       #informationConstructionsPropertyComponent
       [expandedComponent]="activeComponent() === 6"
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
       @fadeInUp
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       [editable]="editable.CNS"
       (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-information-constructions-property>
@@ -135,10 +134,10 @@
       #informationAdjacentPropertyComponent
       [expandedComponent]="activeComponent() === 7"
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
       @fadeInUp
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       [editable]="editable.CLN"
       (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-information-adjacent-property>
@@ -146,20 +145,20 @@
       #propertyAppraisalInformationComponent
       [expandedComponent]="activeComponent() === 8"
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
       [editable]="editable.AUTAVAL"
       @fadeInUp
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       (emitExpandedComponent)="activeComponent.set($event)"
     ></vex-property-appraisal-information>
     <vex-information-zones-property
       #informationZonesPropertyComponent
       [expandedComponent]="activeComponent() === 9"
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       [editable]="editable.ZON"
       [npn]="baunitHead.cadastralNumber!"
       [isMatriz]="isMatriz()"
@@ -172,9 +171,9 @@
         [isHistoricalComponent]="true"
         [expandedComponent]="activeComponent() === 10"
         [baunitId]="baunitId"
-        [schema]="schema"
+        [schema]="schema()"
         [executionId]="executionId"
-        [typeInformation]="typeInformation"
+        [typeInformation]="typeInformation()"
         @fadeInUp
         (emitExpandedComponent)="activeComponent.set($event)"
       >
@@ -185,9 +184,9 @@
       [isHistoricalComponent]="false"
       [expandedComponent]="activeComponent() === 11"
       [baunitId]="baunitId"
-      [schema]="schema"
+      [schema]="schema()"
       [executionId]="executionId"
-      [typeInformation]="typeInformation"
+      [typeInformation]="typeInformation()"
       @fadeInUp
       (emitExpandedComponent)="activeComponent.set($event)"
     >
@@ -197,9 +196,9 @@
         #photosComponent
         [expandedComponent]="activeComponent() === 12"
         [baunitId]="baunitId!"
-        [schema]="schema"
+        [schema]="schema()"
         [executionId]="executionId"
-        [typeInformation]="typeInformation"
+        [typeInformation]="typeInformation()"
         [npn]="baunitHead.cadastralNumber!"
         @fadeInUp
         (emitExpandedComponent)="activeComponent.set($event)"
@@ -211,13 +210,21 @@
         #alertsComponent
         [expandedComponent]="activeComponent() === 13"
         [baunitId]="baunitId"
-        [schema]="schema"
+        [schema]="schema()"
         [executionId]="executionId ?? null"
-        [typeInformation]="typeInformation"
+        [typeInformation]="typeInformation()"
         @fadeInUp
         (emitExpandedComponent)="activeComponent.set($event)"
       >
       </vex-alerts>
+    }
+    @if (showBaunitIca) {
+      <baunit-ica
+        #baunitIcaComponent
+        [baunitId]="baunitId!"
+        [expandedComponent]="activeComponent() === 14"
+        (emitExpandedComponent)="activeComponent.set($event)"
+      ></baunit-ica>
     }
   </div>
 </mat-dialog-content>

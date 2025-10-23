@@ -99,6 +99,7 @@ export const environment = {
   },
   bpmResolution: {
     completeDocs: "/completeDocs",
+    finalDocs: "/finalDocs",
     report: "report",
     requirements: "/requirements",
     value: "/bpmResolution"
@@ -145,6 +146,11 @@ export const environment = {
   getByExecution: "/getByExecution",
   headBaunitByMaster: "/headBaunitByMaster",
   historicos: "/historicos",
+  ica: {
+    baunitId: "/baunitId",
+    value: "/ica",
+    visible: false
+  },
   individual: {
     findByNumber: "/findByNumber",
     text: "/text",

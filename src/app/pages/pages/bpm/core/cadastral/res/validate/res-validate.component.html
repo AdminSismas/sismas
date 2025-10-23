@@ -27,28 +27,30 @@
               vexMaxFluidHeight
               fluidHeight="207"
             >
-              <!-- REFRESH BUTTON -->
-              <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
-                <div
-                  class="rounded-tr rounded-br border-l-3 px-0 py-0 m-0 flex flex-col sm:flex-row items-center gap-3"
-                >
-                  <span class="sm:flex-auto"></span>
-                  <span class="sm:flex-auto xl:flex-1"></span>
-                  <button
-                    class="rounded-full grow xl:max-w-[160px] sm:min-w-[80px]"
-                    color="primary"
-                    mat-raised-button
-                    type="button"
-                    (click)="reloadPdf()"
+              @if (mode() !== 3) {
+                <!-- REFRESH BUTTON -->
+                <div class="px-3 py-3 sm:min-w-full md:min-w-[300px]">
+                  <div
+                    class="rounded-tr rounded-br border-l-3 px-0 py-0 m-0 flex flex-col sm:flex-row items-center gap-3"
                   >
-                    <mat-icon
-                      class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
-                      svgIcon="mat:refresh"
-                    ></mat-icon>
-                    <span>Refrescar</span>
-                  </button>
+                    <span class="sm:flex-auto"></span>
+                    <span class="sm:flex-auto xl:flex-1"></span>
+                    <button
+                      class="rounded-full grow xl:max-w-[160px] sm:min-w-[80px]"
+                      color="primary"
+                      mat-raised-button
+                      type="button"
+                      (click)="reloadPdf()"
+                    >
+                      <mat-icon
+                        class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
+                        svgIcon="mat:refresh"
+                      ></mat-icon>
+                      <span>Refrescar</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              }
               @if (!isLoading() && pdfUrl() !== "error") {
                 <iframe
                   vexMaxFluidHeight
@@ -70,67 +72,69 @@
         </div>
       </mat-tab>
 
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon svgIcon="mat:edit_note"></mat-icon>
-          {{ secondTab() }}
-        </ng-template>
-        <vex-page-layout-content class="card w-full h-full">
-          <div
-            class="container-fluid p-0"
-            vexFluidHeight
-            fluidHeight="200"
-          >
+      @if (mode() !== 3) {
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon svgIcon="mat:edit_note"></mat-icon>
+            {{ secondTab() }}
+          </ng-template>
+          <vex-page-layout-content class="card w-full h-full">
             <div
-              class="container-fluid mt-3 mb-1 px-[5rem] py-0 w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden"
+              class="container-fluid p-0"
+              vexFluidHeight
+              fluidHeight="200"
             >
-              <app-dynamic-forms
-                [inputs]="inputs"
-                [initValues]="initTags()"
-                (formReady)="form.set($event)"
-                className="pt-3 pb-1 grid grid-cols-2 gap-4 sm:grip-row overflow-hidden items-center justify-center w-100 px-2"
-                class="w-full pt-4"
-              ></app-dynamic-forms>
-            </div>
-            <div
-              class="w-full max-w-4xl p-4 flex items-center justify-center text-center gap-4 mx-auto mt-2"
-            >
-              <button
-                mat-raised-button
-                class="grow max-w-xs px-6 py-5"
-                color="primary"
-                (click)="saveTags()"
+              <div
+                class="container-fluid mt-3 mb-1 px-[5rem] py-0 w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden"
               >
-                <mat-icon
-                  svgIcon="mat:save"
-                  class="!w-6 !h-6"
-                ></mat-icon>
-                Guardar
-              </button>
+                <app-dynamic-forms
+                  [inputs]="inputs"
+                  [initValues]="initTags()"
+                  (formReady)="form.set($event)"
+                  className="pt-3 pb-1 grid grid-cols-2 gap-4 sm:grip-row overflow-hidden items-center justify-center w-100 px-2"
+                  class="w-full pt-4"
+                ></app-dynamic-forms>
+              </div>
+              <div
+                class="w-full max-w-4xl p-4 flex items-center justify-center text-center gap-4 mx-auto mt-2"
+              >
+                <button
+                  mat-raised-button
+                  class="grow max-w-xs px-6 py-5"
+                  color="primary"
+                  (click)="saveTags()"
+                >
+                  <mat-icon
+                    svgIcon="mat:save"
+                    class="!w-6 !h-6"
+                  ></mat-icon>
+                  Guardar
+                </button>
+              </div>
             </div>
-          </div>
-        </vex-page-layout-content>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon svgIcon="mat:edit_note"></mat-icon>
-          {{ thirdTab() }}
-        </ng-template>
-        <vex-page-layout-content class="card w-full h-full">
-          <div
-            class="container-fluid p-0"
-            vexFluidHeight
-            fluidHeight="200"
-          >
+          </vex-page-layout-content>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon svgIcon="mat:edit_note"></mat-icon>
+            {{ thirdTab() }}
+          </ng-template>
+          <vex-page-layout-content class="card w-full h-full">
             <div
-              class="container w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden py-4"
+              class="container-fluid p-0"
+              vexFluidHeight
+              fluidHeight="200"
             >
-              <vex-table-third-party-affected [executionId]="executionId()">
-              </vex-table-third-party-affected>
+              <div
+                class="container w-full flex flex-col overflow-hidden overflow-y-hidden overflow-x-hidden py-4"
+              >
+                <vex-table-third-party-affected [executionId]="executionId()">
+                </vex-table-third-party-affected>
+              </div>
             </div>
-          </div>
-        </vex-page-layout-content>
-      </mat-tab>
+          </vex-page-layout-content>
+        </mat-tab>
+      }
     </mat-tab-group>
   </vex-page-layout-content>
 </vex-page-layout>

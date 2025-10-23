@@ -120,6 +120,14 @@ export class DynamicComponentsService {
         ).then((m) => m.ResValidateComponent)
     },
     {
+      nameComponent: 'cadValidateCompleteDocsComponent',
+      component: ResValidateComponent,
+      loadComponent: () =>
+        import(
+          '../../../pages/pages/bpm/core/cadastral/res/complete/complete-docs.component'
+        ).then((m) => m.CompleteDocsComponent)
+    },
+    {
       nameComponent: 'cadCompleteDocsComponent',
       component: CompleteDocsComponent,
       loadComponent: () =>

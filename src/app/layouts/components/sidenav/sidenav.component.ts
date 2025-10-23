@@ -18,7 +18,7 @@ import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollb
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AsyncPipe, CommonModule, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { Router } from '@angular/router';
@@ -41,13 +41,10 @@ import type { UserRole } from 'src/app/apps/interfaces/user-details/user.model';
   styleUrls: ['./sidenav.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
-    NgIf,
     MatButtonModule,
     MatIconModule,
     MatRippleModule,
     VexScrollbarComponent,
-    NgFor,
     SidenavItemComponent,
     AsyncPipe,
     MatAutocompleteModule,

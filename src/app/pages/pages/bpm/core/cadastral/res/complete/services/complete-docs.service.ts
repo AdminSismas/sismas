@@ -26,4 +26,14 @@ export class CompleteDocsService {
 
     return this.http.post(url, payload, { responseType: 'blob' });
   }
+
+  getFinalDocs(executionId: string) {
+
+    // {{url}}:{{port}}/bpmResolution/finalDocs/{{executionId}}
+    const { finalDocs } = envi.bpmResolution;
+    const url = `${baseUrl}${finalDocs}/${executionId}`;
+
+    return this.http.get(url, { responseType: 'blob' });
+  }
 }
+

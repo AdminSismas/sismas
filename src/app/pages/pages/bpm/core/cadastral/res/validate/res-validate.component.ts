@@ -31,6 +31,8 @@ import { LoadingServiceService } from '../../../../../../../apps/services/genera
 import { TableThirdPartyAffectedComponent } from '../../../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 import { ResService } from 'src/app/apps/services/bpm/core/res.service';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
+import { CompleteDocsService } from '../complete/services/complete-docs.service';
 
 @Component({
   selector: 'vex-res-validate',
@@ -53,18 +55,22 @@ import { Observable } from 'rxjs';
   styleUrl: './res-validate.component.scss'
 })
 export class ResValidateComponent implements OnInit {
-  executionId = input.required<string>();
-  resources = input.required<string[]>();
-  mode = input.required<1 | 2>();
-
+  /* ---- Injects ---- */
   private sanitizer = inject(DomSanitizer);
   private resService = inject(ResService);
+  private completeDocsService = inject(CompleteDocsService);
   private recognitionProperty: RecognitionPropertyService = inject(
     RecognitionPropertyService
   );
   private loadingServiceService: LoadingServiceService = inject(
     LoadingServiceService
   );
+
+  /* ---- Inputs ---- */
+  executionId = input.required<string>();
+  resources = input.required<string[]>();
+  mode = input.required<1 | 2 | 3>();
+
 
   isLoading = signal<boolean>(true);
   id = signal<string>('');
@@ -87,12 +93,12 @@ export class ResValidateComponent implements OnInit {
   ngOnInit() {
     this.loadingServiceService.activateLoading(true);
     this.loadPdf();
-    this.getTags();
+    if (this.mode() === 3) this.firstTab.set('Documentos completados');
+    else this.getTags();
     this.loadingServiceService.deActivate(1400);
   }
 
   loadPdf() {
-
     let subscription: Observable<Blob>;
     switch (this.mode()) {
       case 1:
@@ -100,6 +106,9 @@ export class ResValidateComponent implements OnInit {
         break;
       case 2:
         subscription = this.resService.getNoProcedeDoc(this.executionId());
+        break;
+      case 3:
+        subscription = this.completeDocsService.getFinalDocs(this.executionId());
         break;
       default:
         subscription = this.resService.getResValidateDoc(this.executionId());
@@ -116,11 +125,20 @@ export class ResValidateComponent implements OnInit {
         );
         this.isLoading.set(false);
       },
-      error: (error: HttpErrorResponse) => {
+      error: async (blob: Blob) => {
         this.isLoading.set(false);
         this.pdfUrl.set('error');
-        
-        throw error;
+        const errorString = await blob.text();
+        const errorJson = JSON.parse(errorString);
+
+        Swal.fire({
+          icon: 'error',
+          text: errorJson.message,
+          timer: 30000,
+          showConfirmButton: true
+        });
+
+        throw errorJson;
       }
     });
   }

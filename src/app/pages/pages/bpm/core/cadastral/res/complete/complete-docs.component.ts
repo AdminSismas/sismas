@@ -19,6 +19,7 @@ import { map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { PayloadCompleteDocs } from './interfaces/payload-complete-docs.interface';
 import Swal from 'sweetalert2';
+import { SimpleResponse } from 'src/app/apps/interfaces/general/simple-response.interface';
 
 @Component({
   selector: 'bpm-complete-docs',
@@ -117,7 +118,8 @@ export class CompleteDocsComponent {
     this.documentIsLoading.set(true);
     this.completeDocsService
       .getCompleteDocs(this.executionId(), payload)
-      .subscribe((blob) => {
+      .subscribe({
+        next:(blob) => {
         Swal.fire({
           icon: 'success',
           text: 'Se ha modificado el documento correctamente',
@@ -126,7 +128,20 @@ export class CompleteDocsComponent {
         });
         this.documentUrl.set(this.sanitizerUrl(blob));
         this.documentIsLoading.set(false);
-      });
+      },
+      error: async (blob: Blob) => {
+        const errorString = await blob.text();
+        const errorJson: SimpleResponse = JSON.parse(errorString);
+        Swal.fire({
+          icon: 'error',
+          text: errorJson.message ?? 'Error al generar el documento',
+          timer: 30000,
+          showConfirmButton: true
+        });
+        this.documentIsLoading.set(false);
+        throw errorJson.message;
+      }
+    });
   }
 
   sanitizerUrl(blob: Blob): SafeUrl {
