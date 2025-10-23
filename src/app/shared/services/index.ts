@@ -1,10 +1,14 @@
 // Shared services barrel exports
-// Export services from apps/services for backward compatibility
+// Export services that exist with correct paths
 
-// BMP Core services
-export { BmpCoreService } from '../../apps/services/bmp/bmp-core.service';
-export { AlfaMainService } from '../../apps/services/bmp/core/alfa-main.service';
-export { AttachmentService } from '../../apps/services/bmp/core/document/main/attachment.service';
+// Loading service
+export { LoadingServiceService } from '../../apps/services/general/loading-service.service';
+
+// Title service
+export { TitleService } from '../../apps/services/general/tittle.service';
+
+// Comments service
+export { CommentsService } from '../../apps/services/comments/comments.service';
 
 // Alert services
 export { AlertsService as AlertesService } from '../../apps/services/alerts/alertes.service';
@@ -12,10 +16,25 @@ export { AlertsService as AlertesService } from '../../apps/services/alerts/aler
 // Re-export with common naming patterns for backward compatibility
 export { AlertsService } from '../../apps/services/alerts/alertes.service';
 
-// Placeholder exports for missing services - these need to be implemented or paths corrected
+// Splash screen service
+export { SplashScreenService } from '../../apps/services/core/splash-screen.service';
+
+// TODO: BMP Core services - verificar rutas exactas
+// export { AlfaMainService } from '../../apps/services/bmp/core/alfa-main.service';
+// export { AttachmentService } from '../../apps/services/bmp/core/document/main/attachment.service';
+
+// Collection service
+export { CollectionServices } from '../../apps/services/general/collection.service';
+
+// BMP services - comentado temporalmente por problemas de acceso al archivo
 // export { ParticipantsService } from '../../apps/services/bmp/participants-service.service';
-// export { CommentsService } from '../../apps/services/bmp/core/document/comments/comments.service';
-// export { CollectionServices } from '../../apps/services/collections/collection.service';
-// export { LoadingServiceService } from '../../apps/services/loading/loading-service.service';
+
+// Territorial organization service
+export { TerritorialOrganizationService } from '../../apps/services/territorial-organization/territorial-organization.service';
+
+// Document management service
+export { AttachmentService } from '../../apps/services/document-management/document-management.service';
+
+// Geographic service
+export { InformationGeographicService } from '../../apps/services/geographics/information-geographic.service';
 // export { TitleService } from '../../apps/services/title/title.service';
-// export { SplashScreenService } from '../../apps/services/splash-screen/splash-screen.service';

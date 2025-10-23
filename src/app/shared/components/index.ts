@@ -1,11 +1,13 @@
 // Shared components barrel exports
-// Export components from apps/components for backward compatibility
+// Componentes organizados por ubicación: apps/components (legacy) + features (nueva arquitectura)
 
-// BMP components
-export { CommentsComponent } from '../../apps/components/bmp/comments/comments.component';
-export { DocumentTableComponent } from '../../apps/components/bmp/document-table/document-table.component';
+// === NUEVA ARQUITECTURA (features) ===
+// BMP Workflow components (migrados)
+export { DocumentTableComponent } from '../../features/bmp-workflows/components/document-table/document-table.component';
+export { ClearInformationDataComponent } from '../../features/bmp-workflows/components/clear-information-data/clear-information-data.component';
 
-// General components
+// === ARQUITECTURA LEGACY (apps/components) ===
+// General components que existen y funcionan
 export { LoaderComponent } from '../../apps/components/general-components/loader/loader.component';
 export { InputComponent } from '../../apps/components/general-components/input/input.component';
 export { ComboboxCollectionComponent } from '../../apps/components/general-components/combobox-collection/combobox-collection.component';
@@ -20,11 +22,24 @@ export { CreateSignatureComponent } from '../../apps/components/configuration/di
 export { CreateZoneComponent } from '../../apps/components/configuration/economic-mod-land/create-zone/create-zone.component';
 export { EconomicZoneComponent } from '../../apps/components/configuration/economic-mod-land/economic-zone/economic-zone.component';
 
-// Table components
-export { ParticipantTableDialogComponent } from '../../apps/components/general-components/table-third-party-affected/participant-table-dialog/participant-table-dialog.component';
-
 // Document management
 export { ViewFileDocumentManagementComponent } from '../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
 
-// Attachment components
-export { AttachmentExcelMassiveComponent } from '../../apps/components/bmp/attachment-excel-massive/attachment-excel-massive.component';
+// Additional general components
+export { ComboboxComponent } from '../../apps/components/general-components/combobox/combobox.component';
+export { InConstructionComponent } from '../../apps/components/general-components/in-construction/in-construction.component';
+
+// Geographic components
+export { GeographicViewerEmbeddedComponent } from '../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
+
+// Information property components
+export { CadastralInformationPropertyComponent } from '../../apps/components/information-property/cadastral-information-property/cadastral-information-property.component';
+
+// BMP components - comentado temporalmente por problemas de acceso al archivo
+// export { ParticipantTableDialogComponent } from '../../apps/components/bmp/participant-table-dialog/participant-table-dialog.component';
+
+// BMP components - comentados porque las rutas no son accesibles durante compilación
+// export { CommentsComponent } from '../../apps/components/bmp/comments/comments.component';
+
+// TODO: Componentes por verificar/migrar
+// export { AttachmentExcelMassiveComponent } from '../../apps/components/bmp/attachment-excel-massive/attachment-excel-massive.component';
