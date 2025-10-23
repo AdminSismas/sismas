@@ -3,6 +3,7 @@
 ## 📁 Estructura de Importaciones
 
 ### ✅ **Antes (Problemático):**
+
 ```typescript
 // Imports con rutas relativas complejas
 import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
@@ -11,6 +12,7 @@ import { AuthGuard } from '../../../guards/auth.guard';
 ```
 
 ### ✅ **Después (Limpio):**
+
 ```typescript
 // Imports con barrel exports limpios
 import { BmpCoreService } from '@features/bmp-workflows';
@@ -21,6 +23,7 @@ import { AuthGuard } from '@core/guards';
 ## 🎯 **Patrones de Uso por Feature**
 
 ### **1. Core (Servicios Singleton)**
+
 ```typescript
 // Imports desde core
 import { AuthGuard, RoleGuard } from '@core/guards';
@@ -34,6 +37,7 @@ providers: [
 ```
 
 ### **2. Shared (Componentes Reutilizables)**
+
 ```typescript
 // Imports desde shared
 import { LoaderComponent, InputComponent, ModalComponent } from '@shared/ui';
@@ -51,6 +55,7 @@ import { FluidHeightDirective } from '@shared/directives';
 ```
 
 ### **3. Features (Módulos por Dominio)**
+
 ```typescript
 // BMP Workflows Feature
 import { 
@@ -150,6 +155,7 @@ export class PropertyFacadeService {
 ## 🏃‍♂️ **Migración Gradual**
 
 ### **Paso 1: Imports Actualizados**
+
 ```typescript
 // Cambiar gradualmente los imports existentes
 // De:
@@ -159,6 +165,7 @@ import { Service } from '@features/domain/services';
 ```
 
 ### **Paso 2: Barrel Exports**
+
 ```typescript
 // Crear index.ts en cada carpeta
 export * from './component1';
@@ -167,6 +174,7 @@ export * from './service1';
 ```
 
 ### **Paso 3: Path Aliases**
+
 ```typescript
 // Actualizar tsconfig.json con paths
 "@domain/*": ["src/app/features/domain/*"]
@@ -175,12 +183,14 @@ export * from './service1';
 ## 📊 **Beneficios Inmediatos**
 
 ### **Antes:**
+
 - ❌ 741 imports relativos `../../../`
 - ❌ Acoplamiento alto entre módulos  
 - ❌ Difícil de mantener y refactorizar
 - ❌ Testing complejo por dependencias
 
 ### **Después:**
+
 - ✅ Imports limpios con barrel exports
 - ✅ Separación clara de responsabilidades
 - ✅ Fácil mantenimiento y testing
