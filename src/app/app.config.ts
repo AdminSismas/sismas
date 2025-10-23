@@ -18,7 +18,7 @@ import { provideNavigation } from './core/navigation/navigation.provider';
 import { vexConfigs } from '@vex/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
 import { COLOMBIA_DATE_FORMATS } from './helpers/colombia-date-formats';
-import { authInterceptor } from './pages/pages/auth/login/services/auth.interceptor';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 import {
   MatPaginatorIntl,
   MatPaginatorModule
