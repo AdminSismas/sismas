@@ -202,7 +202,19 @@ export class TenantConfigService {
    */
   isFeatureEnabled(feature: keyof TenantFeatures): boolean {
     const tenant = this.getCurrentTenant();
-    return tenant?.features[feature] ?? false;
+    const featureValue = tenant?.features[feature];
+    
+    // Handle boolean features
+    if (typeof featureValue === 'boolean') {
+      return featureValue;
+    }
+    
+    // Handle array features (customFeatures)
+    if (Array.isArray(featureValue)) {
+      return featureValue.length > 0;
+    }
+    
+    return false;
   }
 
   /**

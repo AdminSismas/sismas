@@ -62,7 +62,7 @@ export class TenantConfigFactory {
           logout: '/logout',
           refresh: '/refresh'
         },
-        bmp: {
+        bpm: {
           value: '/bpm',
           tasks: '/tasks',
           workflows: '/workflows'
