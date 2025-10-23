@@ -205,7 +205,7 @@
       >
       </vex-photos>
     }
-    @if (showRulesPage) {
+    @if (!showRulesPage) {
       <vex-alerts
         #alertsComponent
         [expandedComponent]="activeComponent() === 13"
