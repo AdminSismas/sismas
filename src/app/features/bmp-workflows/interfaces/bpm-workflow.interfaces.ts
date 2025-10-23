@@ -1,0 +1,40 @@
+import { Observable } from 'rxjs';
+import { ProTaskE } from '../models/pro-task';
+import { ProFlow } from '../models/pro-flow';
+import { ProExecutionE } from '../models/pro-execution-e';
+import { DifferenceChanges } from '../models/difference-changes';
+import { MetadataBpm } from '../models/metadata-bpm';
+
+/**
+ * Interface for BPM Task operations
+ */
+export interface IBmpTaskService {
+  getProTaskCountComment(id: string): Observable<number>;
+  getProTaskCountAttachment(id: string): Observable<number>;
+  getNextOperation(executionId: string, answer: boolean): Observable<ProTaskE>;
+  getPreviewOperation(executionId: string): Observable<ProTaskE>;
+}
+
+/**
+ * Interface for BPM Flow operations
+ */
+export interface IBmpFlowService {
+  getProFlow(flowId: string): Observable<ProFlow>;
+  getProFlowProExecution(executionId: string): Observable<ProFlow>;
+}
+
+/**
+ * Interface for BPM Execution operations
+ */
+export interface IBmpExecutionService {
+  getProExecution(executionId: string): Observable<ProExecutionE>;
+  getDifferenceChanges(executionId: string): Observable<DifferenceChanges[]>;
+}
+
+/**
+ * Interface for BPM Metadata operations
+ */
+export interface IBmpMetadataService {
+  getMetadata(executionId: string): Observable<MetadataBpm>;
+  updateMetadata(executionId: string, metadata: MetadataBpm): Observable<void>;
+}
