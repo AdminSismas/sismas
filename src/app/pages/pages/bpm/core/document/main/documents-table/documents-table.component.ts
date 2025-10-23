@@ -45,12 +45,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Custom
-import { AttachmentCollection } from '../../../../../../../apps/interfaces/document-management/attachment.model';
-import { AttachmentService } from '../../../../../../../apps/services/document-management/document-management.service';
-import { contentInfoAttachment } from '../../../../../../../apps/interfaces/general/content-info-attachment.model';
-import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
+import { AttachmentCollection } from '@shared/interfaces';
+import { AttachmentService } from '@shared/services';
+import { contentInfoAttachment } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@shared/components';
 import {PAGE,
 PAGE_SIZE,
 PAGE_SIZE_OPTION} from '../../../../../../../apps/constants/general/constants';

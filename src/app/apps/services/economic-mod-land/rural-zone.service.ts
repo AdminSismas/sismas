@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
-import { RuralZone, Zone, ZoneServices } from '../../interfaces/economic-mod-land/zone-description';
+import { RuralZone, Zone, ZoneServices } from '@shared/interfaces';
 import { environment as envi } from 'src/environments/environments';
 
 @Injectable({

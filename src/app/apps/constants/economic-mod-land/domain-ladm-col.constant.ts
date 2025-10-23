@@ -1,4 +1,4 @@
-import { contentInfoDomainLadmCol } from '../../interfaces/general/content-info-domainLadmCol.model';
+import { contentInfoDomainLadmCol } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 
 export const PAGE = 0;

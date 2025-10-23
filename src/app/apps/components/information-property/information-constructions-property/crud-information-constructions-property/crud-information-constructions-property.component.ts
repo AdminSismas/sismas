@@ -49,25 +49,25 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { CustomSelectorComponent } from '../../../general-components/custom-selector/custom-selector.component';
-import { InputComponent } from '../../../general-components/input/input.component';
-import { CollectionServices } from '../../../../services/general/collection.service';
-import { CcCalificacionUB } from '../../../../interfaces/information-property/cc-calificacion-ub';
-import { TextAreaComponent } from '../../../general-components/text-area/text-area.component';
+import { CustomSelectorComponent } from '@shared/components';
+import { InputComponent } from '@shared/components';
+import { CollectionServices } from '@shared/services';
+import { CcCalificacionUB } from '@shared/interfaces';
+import { TextAreaComponent } from '@shared/components';
 import {
   CONSTANT_MSG_ONLY_ONE_99,
   CONSTANT_MSG_TYPE_AREA,
   CONSTANT_MSG_UNITBUILT_LABEL,
   CONSTANT_MSG_UNITBUILT_YEAR
 } from '../../../../constants/general/constantsAlertLabel';
-import { GeneralValidationsService } from '../../../../services/validations/general-validations.service';
+import { GeneralValidationsService } from '@shared/services';
 import {
   TypeOperation,
   TypeQualificationMode,
   ValidateQualificationByDomBuiltType
-} from '../../../../interfaces/general/content-info';
-import { CommonGeneralValidationsService } from '../../../../services/general/common-general-validations.service';
-import { InformationConstructionsService } from '../../../../services/information-property/information-constructions-property/information-constructions.service';
+} from '@shared/interfaces';
+import { CommonGeneralValidationsService } from '@shared/services';
+import { InformationConstructionsService } from '@shared/services';
 import { validateIsNumber, validateVariable } from '../../../../utils/general';
 // Custom
 import {
@@ -81,7 +81,7 @@ import {
   TYPE_TRADITIONAL,
   TYPE_TYPOLOGY
 } from '../../../../constants/general/constants';
-import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
+import { DomainCollection } from '@shared/interfaces';
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { TypesQualificationUB } from 'src/app/apps/interfaces/information-property/types-qualification-ub';

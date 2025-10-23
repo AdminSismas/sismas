@@ -1,5 +1,5 @@
-import { TypeOperationPeople } from './content-info';
-import { InfoContact } from './info-contact';
+import { TypeOperationPeople } from '@shared/models';
+import { InfoContact } from '@shared/models';
 
 export class InfoPerson {
   companyName: string | null;

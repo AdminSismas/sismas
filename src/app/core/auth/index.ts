@@ -1,4 +1,4 @@
-// Auth services barrel exports
+// Core auth barrel exports
 export * from './auth.service';
-export * from './user.service';
 export * from './cancellation.service';
+export * from './user.service';

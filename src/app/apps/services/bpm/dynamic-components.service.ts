@@ -9,7 +9,7 @@ import { ResValidateComponent } from '../../../pages/pages/bpm/core/cadastral/re
 import { SynMainComponent } from '../../../pages/pages/bpm/core/cadastral/syn/main/syn-main.component';
 import { DocumentMainComponent } from '../../../pages/pages/bpm/core/document/main/document-main.component';
 import { DocumentValidateComponent } from '../../../pages/pages/bpm/core/document/validate/document-validate.component';
-import { ComponentTemplate } from '../../interfaces/bpm/render-template.types';
+import { ComponentTemplate } from '@shared/interfaces';
 import {
   COMPONENT_ALFA_MAIN,
   COMPONENT_ALFA_VALIDATE

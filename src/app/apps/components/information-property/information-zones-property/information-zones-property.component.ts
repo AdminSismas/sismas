@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, forwardRef, input, Input, output, ViewChild } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   NAME_NO_DISPONIBLE,
@@ -16,7 +16,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
+import { InformationPropertyService } from '@shared/services';
 import { Observable } from 'rxjs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { CommonModule } from '@angular/common';
@@ -25,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
-import { TypeInformation } from '../../../interfaces/general/content-info';
+import { TypeInformation } from '@shared/interfaces';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import {
@@ -34,8 +34,8 @@ import {
   ZoneBAUnitResponse
 } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
-import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
+import { GeoEconomicZonesPropertyComponent } from '@shared/components';
+import { PhysicalZonesPropertyComponent } from '@shared/components';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
 

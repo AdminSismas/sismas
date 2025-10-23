@@ -4,7 +4,7 @@ import {
   DecodeJwt,
   UserDetails,
   UserRole
-} from '../../shared/models/user.model';
+} from '@shared/models';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environments';

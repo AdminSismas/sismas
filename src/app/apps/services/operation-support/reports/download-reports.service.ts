@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DownloadReport } from '../../../interfaces/operation-support/reports/report.interface';
+import { DownloadReport } from '@shared/interfaces';
 
 
 @Injectable({

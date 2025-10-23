@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
-import { ThirdPartyAffectedParticipant } from '../../../interfaces/general/content-info';
-import { ParticipantTableDialogComponent } from '../../bpm/participant-table-dialog/participant-table-dialog.component';
+import { ThirdPartyAffectedParticipant } from '@shared/interfaces';
+import { ParticipantTableDialogComponent } from '@shared/components';
 import {
   PAGE,
   PAGE_SIZE_OPTION,
@@ -20,8 +20,8 @@ import {
   TYPE_BUTTON_ONE,
   TYPE_OPERATION_CREATE
 } from '../../../constants/general/constants';
-import { ProcessParticipant } from '../../../interfaces/bpm/process-participant';
-import { ParticipantsService } from '../../../services/bpm/participants-service.service';
+import { ProcessParticipant } from '@shared/interfaces';
+import { ParticipantsService } from '@shared/services';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -41,8 +41,8 @@ import { NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { Pegeable } from '../../../interfaces/general/pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { Pegeable } from '@shared/interfaces';
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { UntypedFormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

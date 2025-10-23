@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 /* -------------- IMPORTACIONES ARCHIVOS LOCALES -------------- */
 import { environment } from '../../../../environments/environments';
 
-import { CommentsCollection } from '../../interfaces/comments/comments.model';
-import { PageCommentsData } from '../../interfaces/general/page-comments-data.model';
-import { contentInfoComments } from '../../interfaces/general/content-info-comments.model';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { CommentsCollection } from '@shared/interfaces';
+import { PageCommentsData } from '@shared/interfaces';
+import { contentInfoComments } from '@shared/interfaces';
+import { SendGeneralRequestsService } from '@shared/services';
+import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

@@ -7,8 +7,8 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import {
   CadastralInformationPropertyComponent
-} from '../cadastral-information-property/cadastral-information-property.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+} from '@shared/components';
+import { ContentInfoSchema } from '@shared/interfaces';
 import {
   RULE_PAGE_CADASTRAL_DA,
   TWO_POINT_,
@@ -17,14 +17,14 @@ import {
 } from '../../../constants/general/constants';
 import { MatMenuModule } from '@angular/material/menu';
 import { environment as envi } from '../../../../../environments/environments';
-import { ObjectSchema, TypeInformation } from '../../../interfaces/general/content-info';
+import { ObjectSchema, TypeInformation } from '@shared/interfaces';
 import {
   CONSTANT_INFORMATION_PREDIAL,
   CONSTANT_INFORMATION_PREDIAL_HIST,
   CONSTANT_INFORMATION_PREDIAL_MAIN,
   CONSTANT_INFORMATION_PREDIAL_TEMP
 } from '../../../constants/general/constantLabels';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 import {
   InformationPropertyService
 } from 'src/app/apps/services/territorial-organization/information-property.service';

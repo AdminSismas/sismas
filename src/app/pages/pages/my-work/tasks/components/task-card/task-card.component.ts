@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ProTaskE } from '../../../../../../apps/interfaces/bpm/pro-task-e';
+import { ProTaskE } from '@shared/interfaces';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,11 +14,11 @@ import { environment as envi } from '../../../../../../../environments/environme
 import { MatDialog } from '@angular/material/dialog';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
-import { TaskResponseModel } from '../../../../../../apps/interfaces/bpm/task-response.model';
+import { TaskResponseModel } from '@shared/interfaces';
 import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/general/constants';
-import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
-import { TaskRetailExecuteResponseModel } from '../../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
+import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 
 @Component({
   selector: 'vex-task-card',

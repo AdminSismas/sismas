@@ -1,8 +1,8 @@
 import { Component, SimpleChanges, ViewChild, OnInit, AfterViewInit, OnChanges } from '@angular/core';
-import { ReportCategory } from '../../../../../../apps/interfaces/operation-support/reports/report-category.interface';
+import { ReportCategory } from '@shared/interfaces';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ReportService } from '../../../../../../apps/services/operation-support/reports/report.service';
-import { DownloadReport } from '../../../../../../apps/interfaces/operation-support/reports/report.interface';
+import { ReportService } from '@shared/services';
+import { DownloadReport } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';

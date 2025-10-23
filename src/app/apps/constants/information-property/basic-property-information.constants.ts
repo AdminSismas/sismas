@@ -1,4 +1,4 @@
-import { EditBasicPropertyInputs } from '../../interfaces/general/content-info';
+import { EditBasicPropertyInputs } from '@shared/interfaces';
 
 export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
   // GRUPO "Identificación del predio"

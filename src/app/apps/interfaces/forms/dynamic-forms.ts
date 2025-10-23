@@ -1,5 +1,5 @@
 import { Validators } from '@angular/forms';
-import { Element } from '../general/content-info';
+import { Element } from '@shared/interfaces';
 
 export interface JSONInput {
   name: string;

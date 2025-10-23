@@ -3,7 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ModalWindowComponent } from '../modal-window/modal-window.component';
+import { ModalWindowComponent } from '@shared/components';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({

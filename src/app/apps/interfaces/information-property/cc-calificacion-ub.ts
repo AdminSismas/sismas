@@ -1,4 +1,4 @@
-import { TypesQualificationUB } from './types-qualification-ub';
+import { TypesQualificationUB } from '@shared/interfaces';
 
 export class CcCalificacionUB {
   id?: number;

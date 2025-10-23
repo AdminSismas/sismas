@@ -43,7 +43,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataSource } from 'src/app/apps/interfaces/information-property/snr-source-info';
 import { environment } from 'src/environments/environments';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
-import { TypeInformation } from '../../../interfaces/general/content-info';
+import { TypeInformation } from '@shared/interfaces';
 import {
   PAGE,
   PAGE_SIZE,
@@ -53,7 +53,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import { InformationPersonPropertyComponent } from '../information-person-property/information-person-property.component';
+import { InformationPersonPropertyComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-information-source-property',

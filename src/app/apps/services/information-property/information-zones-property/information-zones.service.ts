@@ -1,9 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GeoEconomicZoneInfo } from '../../../interfaces/information-property/info-zones';
-import { ZoneBAUnitFisica } from '../../../interfaces/information-property/zone-baunit';
-import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
+import { GeoEconomicZoneInfo } from '@shared/interfaces';
+import { ZoneBAUnitFisica } from '@shared/interfaces';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../../environments/environments';
 
 

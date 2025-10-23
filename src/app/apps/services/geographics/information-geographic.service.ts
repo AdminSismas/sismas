@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
-import { QueryParametersGeographicVie } from '../../interfaces/geographics/query-parameters-geographic-vie';
-import { ChangeControl } from '../../interfaces/bpm/change-control';
+import { QueryParametersGeographicVie } from '@shared/interfaces';
+import { ChangeControl } from '@shared/interfaces';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Injectable({

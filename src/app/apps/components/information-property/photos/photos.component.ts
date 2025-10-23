@@ -7,7 +7,7 @@ import {
   signal
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,8 +18,8 @@ import { CommonModule } from '@angular/common';
 import { PhotosService } from 'src/app/apps/services/photos/photos.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { CarouselComponent } from '../../general-components/carousel/carousel.component';
-import { AddPhotoComponent } from './add-photo/add-photo.component';
+import { CarouselComponent } from '@shared/components';
+import { AddPhotoComponent } from '@shared/components';
 import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
 import Swal from 'sweetalert2';
 

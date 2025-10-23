@@ -8,14 +8,14 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { DataAlfaMain } from '../../../../interfaces/bpm/data-alfa-main.model';
-import { TypeOperationAlfaMain } from '../../../../interfaces/general/content-info';
+import { DataAlfaMain } from '@shared/interfaces';
+import { TypeOperationAlfaMain } from '@shared/interfaces';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
-import { InputComponent } from '../../../general-components/input/input.component';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
-import { DomainCollection } from '../../../../interfaces/general/domain-name.model';
+import { InputComponent } from '@shared/components';
+import { ComboboxCollectionComponent } from '@shared/components';
+import { DomainCollection } from '@shared/interfaces';
 import {
   CONSTANT_TYPEDOMAIN_BAUNITCONDITION,
   CONSTANT_TYPEDOMAIN_DISPNAME_CO_,
@@ -28,13 +28,13 @@ import {
   CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ,
   TYPE_OPERATION_ADD
 } from 'src/app/apps/constants/general/constants';
-import { Operation } from '../../../../interfaces/bpm/operation';
-import { CollectionServices } from '../../../../services/general/collection.service';
+import { Operation } from '@shared/interfaces';
+import { CollectionServices } from '@shared/services';
 import Swal from 'sweetalert2';
-import { BaunitHead } from '../../../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 import {
   UnitPropertyInformationService
-} from '../../../../services/territorial-organization/baunit-children-information.service';
+} from '@shared/services';
 
 @Component({
   selector: 'vex-crud-property-units',

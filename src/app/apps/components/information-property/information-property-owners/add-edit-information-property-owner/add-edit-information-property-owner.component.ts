@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { InputComponent } from '../../../general-components/input/input.component';
+import { InputComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-add-edit-information-property-owner',

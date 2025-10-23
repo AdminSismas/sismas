@@ -18,24 +18,24 @@ import {
 } from '@angular/material/expansion';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { TableAlfaMainComponent } from '../../table-alfa-main/table-alfa-main.component';
+import { TableAlfaMainComponent } from '@shared/components';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { getRandomInt } from '../../../../utils/general';
 import { Observable, ReplaySubject } from 'rxjs';
-import { ChangeControl } from '../../../../interfaces/bpm/change-control';
-import { InformationPegeable } from '../../../../interfaces/general/information-pegeable.model';
-import { OperationContentInformation } from '../../../../interfaces/bpm/operation-content-information';
-import { ProFlow } from '../../../../interfaces/bpm/pro-flow';
-import { AlfaMainService } from '../../../../services/bpm/core/alfa-main.service';
-import { SendInfoGeneralService } from '../../../../services/general/send-info-general.service';
-import { InformationGeographicService } from '../../../../services/geographics/information-geographic.service';
+import { ChangeControl } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { OperationContentInformation } from '@shared/interfaces';
+import { ProFlow } from '@shared/interfaces';
+import { AlfaMainService } from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services';
+import { InformationGeographicService } from '@shared/services';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, take } from 'rxjs/operators';
 import { environment } from '../../../../../../environments/environments';
 import Swal from 'sweetalert2';
-import { Operation } from '../../../../interfaces/bpm/operation';
+import { Operation } from '@shared/interfaces';
 import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   MODAL_MEDIUM,
@@ -59,9 +59,9 @@ import {
   TYPE_OPERATION_DELETE,
   TYPE_OPERATION_DELETE_GEO
 } from '../../../../constants/general/constants';
-import { Pegeable } from '../../../../interfaces/general/pegeable.model';
-import { PageSearchData } from '../../../../interfaces/general/page-search-data.model';
-import { ClearInformationDataComponent } from '../../clear-information-data/clear-information-data.component';
+import { Pegeable } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
+import { ClearInformationDataComponent } from '@shared/components';
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
   CONSTANT_KEYWORD_DELETE_GEO_MAIN,
@@ -72,24 +72,24 @@ import {
   CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
   CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
 } from '../../../../constants/general/constantLabels';
-import { ViewChangeAlphaMainRecordComponent } from '../../view-change-alpha-main-record/view-change-alpha-main-record.component';
+import { ViewChangeAlphaMainRecordComponent } from '@shared/components';
 import {
   TypeButtonAlfaMain,
   TypeOperationAlfaMain,
   TypeOperationGeoMain
-} from '../../../../interfaces/general/content-info';
-import { DataAlfaMain } from '../../../../interfaces/bpm/data-alfa-main.model';
-import { CrudAlfaMainComponent } from '../crud-alfa-main/crud-alfa-main.component';
+} from '@shared/interfaces';
+import { DataAlfaMain } from '@shared/interfaces';
+import { CrudAlfaMainComponent } from '@shared/components';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { LoadingServiceService } from '../../../../services/general/loading-service.service';
-import { ValidityProcedureComponent } from './validity-procedure/validity-procedure.component';
+import { LoadingServiceService } from '@shared/services';
+import { ValidityProcedureComponent } from '@shared/components';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { LoaderComponent } from '../../../general-components/loader/loader.component';
-import { ViewChangesComponent } from './view-changes/view-changes.component';
+import { LoaderComponent } from '@shared/components';
+import { ViewChangesComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-alfa-main-information',

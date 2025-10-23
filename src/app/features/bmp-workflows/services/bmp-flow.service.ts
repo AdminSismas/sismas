@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as envi } from 'src/environments/environments';
-import { IBmpFlowService } from '../interfaces/bmp-workflow.interfaces';
-import { ProFlow } from '../models/pro-flow';
+import { IBmpFlowService } from '@features/bmp-workflows';
+import { ProFlow } from '@features/bmp-workflows';
 
 @Injectable({
   providedIn: 'root'

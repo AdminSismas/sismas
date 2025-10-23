@@ -2,16 +2,16 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { taskListColumns } from '../../constants/task-list.constants';
+import { taskListColumns } from '@shared/components';
 import {
   Proflow,
   TaskListData
 } from 'src/app/apps/interfaces/bpm/workflow.model';
-import { LaneNamesPipe } from '../../pipe/lane-names.pipe';
+import { LaneNamesPipe } from '@shared/components';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { WorkflowService } from 'src/app/apps/services/bpm/workflow.service';
-import { EditTaskComponent } from '../edit-task/edit-task.component';
+import { EditTaskComponent } from '@shared/components';
 import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
 import Swal from 'sweetalert2';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';

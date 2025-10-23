@@ -28,30 +28,30 @@ import {
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { SearchData } from '../../../interfaces/general/search-data.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { SearchData } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 
-import { Operation } from '../../../interfaces/bpm/operation';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { Operation } from '@shared/interfaces';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
+import { ContentInfoSchema } from '@shared/interfaces';
 import { filter } from 'rxjs/operators';
-import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
-import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
-import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
+import { BpmCoreService } from '@shared/services';
+import { DifferenceChanges } from '@shared/interfaces';
+import { ViewChangesBpmOperationComponent } from '@shared/components';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { ModificationPropertyUnitsComponent } from '../modification-property-units/modification-property-units.component';
+import { ModificationPropertyUnitsComponent } from '@shared/components';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import { AlfaMainService } from '@shared/services';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
-import { CreateMatrixFromNphComponent } from './create-matrix-from-nph/create-matrix-from-nph.component';
+import { CreateMatrixFromNphComponent } from '@shared/components';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgClass } from '@angular/common';

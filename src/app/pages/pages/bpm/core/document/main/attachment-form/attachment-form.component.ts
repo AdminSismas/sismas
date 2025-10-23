@@ -39,9 +39,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
-import { AttachmentService } from '../../../../../../../apps/services/bpm/core/document/main/attachment.service';
-import { ComboboxCollectionComponent } from '../../../../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
+import { AttachmentService } from '@shared/services';
+import { ComboboxCollectionComponent } from '@shared/components';
+import { InputComponent } from '@shared/components';
 import Swal from 'sweetalert2';
 import { rejectedFileTypes } from 'src/app/apps/constants/general/constants';
 

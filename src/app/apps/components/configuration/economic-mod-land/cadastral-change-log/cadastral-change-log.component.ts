@@ -3,9 +3,9 @@ import { FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-import { JSONInput } from '../../../../interfaces/forms/dynamic-forms';
+import { JSONInput } from '@shared/interfaces';
 import { CadastreChangeLog } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
-import { DynamicFormsComponent } from '../../../forms/dynamic-forms/dynamic-forms.component';
+import { DynamicFormsComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-cadastral-change-log',

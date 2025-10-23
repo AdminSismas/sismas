@@ -29,13 +29,13 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
+import { InformationPropertyService } from '@shared/services';
 import {
   BasicInformationProperty,
   CrudBasicInformationProperty
-} from '../../../interfaces/information-property/basic-information-property';
+} from '@shared/interfaces';
 import {
   GUION,
   LIST_SCHEMAS_CONTROL_MAIN,
@@ -52,14 +52,14 @@ import {
 } from '../../../constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
-import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
+import { EditBasicPropertyInformationComponent } from '@shared/components';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { GeographicViewerComponent } from '@shared/components';
+import { ContentInfoSchema } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
+import { BaunitHead } from '@shared/interfaces';
+import { AlfaMainService } from '@shared/services';
 import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
 

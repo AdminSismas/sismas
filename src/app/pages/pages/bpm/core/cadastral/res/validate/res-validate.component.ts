@@ -15,20 +15,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
 import { FormGroup } from '@angular/forms';
-import { RecognitionPropertyService } from '../../../../../../../apps/services/bpm/recognition-property.service';
+import { RecognitionPropertyService } from '@shared/services';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {
   RecognitionProperty,
   RecognitionPropertyBasic,
   TagsRecognition
-} from '../../../../../../../apps/interfaces/bpm/recognitionProperty.interface';
+} from '@shared/interfaces';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../../../../../apps/directives/fluid-height.directive';
 import { FluidMaxHeightDirective } from '../../../../../../../apps/directives/fluid-max-height.directive';
 import { RES_VALIDATE_INPUTS } from '../../../../../../../apps/constants/information-property/cadastral-recognition.constants';
-import { LoadingServiceService } from '../../../../../../../apps/services/general/loading-service.service';
-import { TableThirdPartyAffectedComponent } from '../../../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { LoadingServiceService } from '@shared/services';
+import { TableThirdPartyAffectedComponent } from '@shared/components';
 import { ResService } from 'src/app/apps/services/bpm/core/res.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';

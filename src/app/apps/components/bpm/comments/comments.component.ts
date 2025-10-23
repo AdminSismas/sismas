@@ -16,10 +16,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 // recursos de archivos locales
-import { CommentsService } from '../../../services/comments/comments.service';
-import { PageCommentsData } from '../../../interfaces/general/page-comments-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { contentInfoComments } from '../../../interfaces/general/content-info-comments.model';
+import { CommentsService } from '@shared/services';
+import { PageCommentsData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { contentInfoComments } from '@shared/interfaces';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';

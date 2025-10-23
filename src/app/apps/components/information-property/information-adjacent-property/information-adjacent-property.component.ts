@@ -10,7 +10,7 @@ import {
   output,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -55,16 +55,16 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TypeInformation } from '../../../interfaces/general/content-info';
+import { TypeInformation } from '@shared/interfaces';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
+import { InformationAdjacent } from '@shared/interfaces';
 import { SelectionModel } from '@angular/cdk/collections';
-import { CrudInformationAdjacentPropertyComponent } from './crud-information-adjacent-property/crud-information-adjacent-property.component';
-import { InformationAdjacentPropertyService } from '../../../services/information-property/information-adjacent-property/information-adjacent-property.service';
+import { CrudInformationAdjacentPropertyComponent } from '@shared/components';
+import { InformationAdjacentPropertyService } from '@shared/services';
 import Swal from 'sweetalert2';
-import { MasiveDeleteAdjacentComponent } from './masive-delete-adjacent/masive-delete-adjacent.component';
+import { MasiveDeleteAdjacentComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-information-adjacent-property',

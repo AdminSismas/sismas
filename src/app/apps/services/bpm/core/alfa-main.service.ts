@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
-import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
-import { ChangeControl } from '../../../interfaces/bpm/change-control';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
+import { ChangeControl } from '@shared/interfaces';
+import { BaunitHead } from '@shared/interfaces';
 import { saveAs } from 'file-saver';
 
 @Injectable({

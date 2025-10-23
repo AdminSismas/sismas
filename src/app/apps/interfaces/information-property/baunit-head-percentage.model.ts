@@ -1,4 +1,4 @@
-import { BaunitHead } from './baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 
 export class BaUnitHeadPercentage {
   baunitHead?: BaunitHead | null;

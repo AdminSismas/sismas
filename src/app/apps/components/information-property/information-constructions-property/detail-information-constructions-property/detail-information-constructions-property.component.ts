@@ -3,7 +3,7 @@ import { environment } from '../../../../../../environments/environments';
 import {
   ContentInformationConstruction,
   CrudInformationConstruction
-} from '../../../../interfaces/information-property/content-information-construction';
+} from '@shared/interfaces';
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
@@ -21,7 +21,7 @@ import {
 import { MatTabsModule } from '@angular/material/tabs';
 import { AsyncPipe } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CcCalificacionUB } from '../../../../interfaces/information-property/cc-calificacion-ub';
+import { CcCalificacionUB } from '@shared/interfaces';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -30,8 +30,8 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { Observable } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationConstructionsService } from '../../../../services/information-property/information-constructions-property/information-constructions.service';
-import { TypeOperation } from '../../../../interfaces/general/content-info';
+import { InformationConstructionsService } from '@shared/services';
+import { TypeOperation } from '@shared/interfaces';
 import { validateIsNumber, validateVariable } from '../../../../utils/general';
 
 export interface Tile {

@@ -6,7 +6,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { SendGeneralRequestsService } from '../../../services/general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable } from 'rxjs';
 import { INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
 

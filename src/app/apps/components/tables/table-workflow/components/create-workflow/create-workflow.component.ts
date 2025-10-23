@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { WORKFLOW_INPUTS } from '../../../../../constants/bpm/workflow.constant';
-import { JSONInput } from '../../../../../interfaces/forms/dynamic-forms';
+import { JSONInput } from '@shared/interfaces';
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
@@ -10,8 +10,8 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { WorkflowCollection } from '../../../../../interfaces/bpm/workflow.model';
-import { DynamicFormsComponent } from '../../../../forms/dynamic-forms/dynamic-forms.component';
+import { WorkflowCollection } from '@shared/interfaces';
+import { DynamicFormsComponent } from '@shared/components';
 import Swal from 'sweetalert2';
 
 @Component({

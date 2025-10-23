@@ -4,7 +4,7 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import {
   InConstructionComponent
-} from '../../../../../apps/components/general-components/in-construction/in-construction.component';
+} from '@shared/components';
 
 @Component({
   selector: 'vex-operational-analytics',

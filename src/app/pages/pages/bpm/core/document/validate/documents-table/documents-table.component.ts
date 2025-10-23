@@ -44,12 +44,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentService } from '../../../../../../../apps/services/document-management/document-management.service';
-import { AttachmentCollection } from '../../../../../../../apps/interfaces/document-management/attachment.model';
-import { contentInfoAttachment } from '../../../../../../../apps/interfaces/general/content-info-attachment.model';
-import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
+import { AttachmentService } from '@shared/services';
+import { AttachmentCollection } from '@shared/interfaces';
+import { contentInfoAttachment } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@shared/components';
 import {
   TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE
 } from '../../../../../../../apps/constants/general/attachment.constant';

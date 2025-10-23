@@ -48,11 +48,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentService } from '../../../services/document-management/document-management.service';
-import { AttachmentCollection } from '../../../interfaces/document-management/attachment.model';
-import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { ViewFileDocumentManagementComponent } from '../../general-components/view-file-document-management/view-file-document-management.component';
+import { AttachmentService } from '@shared/services';
+import { AttachmentCollection } from '@shared/interfaces';
+import { contentInfoAttachment } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { ViewFileDocumentManagementComponent } from '@shared/components';
 import { TABLE_COLUMN_PROPERTIES } from '../../../constants/general/attachment.constant';
 import {
   MODAL_LARGE,

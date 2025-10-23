@@ -17,8 +17,8 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { getRandomInt } from '../../../../utils/general';
 import { LIST_EXTENSION_MASIVE_EXCEL } from '../../../../constants/general/constants';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '../../../../services/bpm/core/alfa-main.service';
-import { LoadingServiceService } from '../../../../services/general/loading-service.service';
+import { AlfaMainService } from '@shared/services';
+import { LoadingServiceService } from '@shared/services';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';

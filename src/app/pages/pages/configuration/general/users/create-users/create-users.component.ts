@@ -15,14 +15,14 @@ import {
   CREATE_USER_INPUTS,
   SEARCH_INPUTS
 } from '../../../../../../apps/constants/general/users.constants';
-import { JSONInput } from '../../../../../../apps/interfaces/forms/dynamic-forms';
+import { JSONInput } from '@shared/interfaces';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import {
   User,
   CreateUserDialogData,
   CreateUserParams
 } from 'src/app/apps/interfaces/users/user';
-import { PeopleService } from '../../../../../../apps/services/users/people.service';
+import { PeopleService } from '@shared/services';
 import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { MODAL_SMALL_LARGE } from '../../../../../../apps/constants/general/constants';

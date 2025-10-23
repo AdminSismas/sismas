@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
 import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { editTaskInputs } from '../../constants';
+import { editTaskInputs } from '@shared/components';
 import { Preform, Proflow } from 'src/app/apps/interfaces/bpm/workflow.model';
 import Swal from 'sweetalert2';
 

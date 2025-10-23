@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@features/bmp-workflows';
 import { environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, ReplaySubject } from 'rxjs';
 import { ProTaskE } from '../../interfaces/bpm/pro-task-e';

@@ -34,7 +34,7 @@ import {
 } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ComboboxCollectionComponent } from '../combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/components';
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
@@ -44,17 +44,17 @@ import {
   TABLE_COLUMN_PRINCIPANTS_TABLE
 } from '../../../constants/general/constants';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InfoPerson } from '../../../interfaces/information-property/info-person';
+import { InfoPerson } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPersonService } from '../../../services/bpm/information-person.service';
+import { InformationPersonService } from '@shared/services';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { CreatePeopleComponent } from '../../../../pages/pages/operation-support/people/components/create-people/create-people.component';
-import { ParticipantsService } from '../../../services/bpm/participants-service.service';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { Pegeable } from '../../../interfaces/general/pegeable.model';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { ParticipantsService } from '@shared/services';
+import { InformationPegeable } from '@shared/interfaces';
+import { Pegeable } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { getRandomInt, validateVariable } from '../../../utils/general';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

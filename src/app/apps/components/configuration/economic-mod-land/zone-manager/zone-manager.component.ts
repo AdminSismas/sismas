@@ -10,11 +10,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { getZoneParams } from '../../../../constants/economic-mod-land/zone-constants';
 import { Zone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
-import { CreateZoneComponent } from '../create-zone/create-zone.component';
+import { CreateZoneComponent } from '@shared/components';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
-import { EconomicZoneComponent } from '../economic-zone/economic-zone.component';
+import { EconomicZoneComponent } from '@shared/components';
 import { MODAL_SMALL } from '../../../../constants/general/constants';
 import Swal from 'sweetalert2';
 

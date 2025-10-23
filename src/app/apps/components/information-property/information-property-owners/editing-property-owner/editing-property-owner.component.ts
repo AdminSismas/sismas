@@ -28,9 +28,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/components';
 import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
-import { PeopleService } from '../../../../services/users/people.service';
+import { PeopleService } from '@shared/services';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { MatDividerModule } from '@angular/material/divider';
 import Swal from 'sweetalert2';
@@ -40,7 +40,7 @@ import {
 } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { MODAL_SMALL_LARGE } from 'src/app/apps/constants/general/constants';
 import { People } from 'src/app/apps/interfaces/users/people.model';
-import { ModalResponse } from '../../../general-components/modal-window/modal-window.component';
+import { ModalResponse } from '@shared/components';
 
 @Component({
   selector: 'vex-editing-property-owner',

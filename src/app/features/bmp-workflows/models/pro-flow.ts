@@ -1,4 +1,4 @@
-import { PreForm } from './pre-form';
+import { PreForm } from '@features/bmp-workflows';
 
 export class ProFlow {
 

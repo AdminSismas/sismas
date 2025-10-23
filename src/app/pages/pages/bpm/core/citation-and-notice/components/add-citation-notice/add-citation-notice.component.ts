@@ -21,7 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 import { getRandomInt } from '../../../../../../../apps/utils/general';
 import {
   CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED,
@@ -30,16 +30,16 @@ import {
   NAME_NO_DISPONIBLE
 } from '../../../../../../../apps/constants/general/constants';
 import { DatePipe, TitleCasePipe } from '@angular/common';
-import { ComboboxCollectionFormComponent } from '../../../../../../../apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
-import { ProceduresService } from '../../../../../../../apps/services/general/procedures.service';
-import { ProceduresCollection } from '../../../../../../../apps/interfaces/tables/procedures-progress.model';
-import { TextAreaComponent } from '../../../../../../../apps/components/general-components/text-area/text-area.component';
-import { ParticipantsService } from '../../../../../../../apps/services/bpm/participants-service.service';
+import { ComboboxCollectionFormComponent } from '@shared/components';
+import { ProceduresService } from '@shared/services';
+import { ProceduresCollection } from '@shared/interfaces';
+import { TextAreaComponent } from '@shared/components';
+import { ParticipantsService } from '@shared/services';
 import Swal from 'sweetalert2';
-import { ProcessParticipantTableMenu } from '../../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+import { ProcessParticipantTableMenu } from '@shared/interfaces';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { InfoContact } from '../../../../../../../apps/interfaces/information-property/info-contact';
-import { PeopleService } from '../../../../../../../apps/services/users/people.service';
+import { InfoContact } from '@shared/interfaces';
+import { PeopleService } from '@shared/services';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 

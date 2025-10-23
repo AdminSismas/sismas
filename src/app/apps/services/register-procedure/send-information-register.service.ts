@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

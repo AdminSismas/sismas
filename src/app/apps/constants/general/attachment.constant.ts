@@ -1,5 +1,5 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { contentInfoAttachment } from '../../interfaces/general/content-info-attachment.model';
+import { contentInfoAttachment } from '@shared/interfaces';
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
     {

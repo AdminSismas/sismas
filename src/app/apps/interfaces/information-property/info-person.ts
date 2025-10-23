@@ -1,5 +1,5 @@
-import { TypeOperationPeople } from '../general/content-info';
-import { InfoContact } from './info-contact';
+import { TypeOperationPeople } from '@shared/interfaces';
+import { InfoContact } from '@shared/interfaces';
 
 export class InfoPerson {
   companyName: string | null;

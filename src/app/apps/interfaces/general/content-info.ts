@@ -1,4 +1,4 @@
-import { ContentInfoSchema } from './content-info-schema';
+import { ContentInfoSchema } from '@shared/interfaces';
 
 export type Element =
   | 'input'

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { IcaDetails } from '../../interfaces/ica-details';
+import { IcaDetails } from '@shared/components';
 import { DatePipe } from '@angular/common';
 import { NAME_NO_DISPONIBLE } from 'src/app/apps/constants/general/constants';
 

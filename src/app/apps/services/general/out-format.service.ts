@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
 import { catchError, Observable } from 'rxjs';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

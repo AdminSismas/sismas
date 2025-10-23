@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PageSortByData } from '../../interfaces/general/page-sortBy-data.model';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { PageSortByData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 
 
 @Injectable({

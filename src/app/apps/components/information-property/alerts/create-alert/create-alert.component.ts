@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { DynamicFormsComponent } from '../../../forms/dynamic-forms/dynamic-forms.component';
+import { DynamicFormsComponent } from '@shared/components';
 import Swal from 'sweetalert2';
 import { formAlertCreateInputsJson } from 'src/app/apps/constants/information-property/alerts.constants';
 

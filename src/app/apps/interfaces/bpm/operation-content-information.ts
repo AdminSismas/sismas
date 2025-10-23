@@ -1,4 +1,4 @@
-import { InformationPegeable } from '../general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 
 export class OperationContentInformation {
   npnlike:string;

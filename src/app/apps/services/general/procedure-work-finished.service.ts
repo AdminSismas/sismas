@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from './send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PageProceduresData } from '../../interfaces/general/page-procedures-data.model';
+import { PageProceduresData } from '@shared/interfaces';
 import { Observable } from 'rxjs';
-import { ProceduresCollection } from '../../interfaces/tables/procedures-progress.model';
+import { ProceduresCollection } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

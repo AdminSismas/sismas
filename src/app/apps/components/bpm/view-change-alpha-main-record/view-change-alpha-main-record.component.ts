@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, ViewChild, signal } from '@angular/core';
-import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
+import { AlfaMainService } from '@shared/services';
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
+import { DifferenceChanges } from '@shared/interfaces';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,20 +16,20 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { SearchData } from '../../../interfaces/general/search-data.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { SearchData } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { CadastralChangeLog } from '../../../interfaces/bpm/cadastral-change-log';
+import { CadastralChangeLog } from '@shared/interfaces';
 import {
   PAGE,
   TABLE_COLUMN_CHANGES_BPM_OPERATION
 } from '../../../constants/general/constants';
 import { UntypedFormControl } from '@angular/forms';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { PageSearchData } from '@shared/interfaces';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { LoaderComponent } from "../../general-components/loader/loader.component";
+import { LoaderComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-view-change-alpha-main-record',

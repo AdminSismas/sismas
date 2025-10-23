@@ -11,8 +11,8 @@ import {
   CreateOutput,
   CreateUserParams,
   InformationPageableUser
-} from '../../interfaces/users/user';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+} from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

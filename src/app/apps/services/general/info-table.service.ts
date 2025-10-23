@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SendGeneralRequestsService } from './send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
-import { PageSearchData } from '../../interfaces/general/page-search-data.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
 import { Injectable } from '@angular/core';
 
 @Injectable({

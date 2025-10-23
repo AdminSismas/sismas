@@ -1,6 +1,6 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { AlertResponse, EstadoProceso } from '../../interfaces/information-property/alerts.interface';
-import { JSONInput } from '../../interfaces/forms/dynamic-forms';
+import { AlertResponse, EstadoProceso } from '@shared/interfaces';
+import { JSONInput } from '@shared/interfaces';
 import { Validators } from '@angular/forms';
 
 export const ALERT_TABLE_COLUMNS: TableColumn<AlertResponse>[] = [

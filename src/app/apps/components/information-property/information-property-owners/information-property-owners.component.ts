@@ -11,7 +11,7 @@ import {
   signal,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_MEDIUM,
@@ -25,12 +25,12 @@ import {
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
-import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
-import { InfoOwners } from '../../../interfaces/information-property/info-owners';
+import { InformationPropertyService } from '@shared/services';
+import { InfoOwners } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DetailInformationPropertyOwnerComponent } from './detail-information-property-owner/detail-information-property-owner.component';
+import { DetailInformationPropertyOwnerComponent } from '@shared/components';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -47,9 +47,9 @@ import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-pe
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
-import { TypeInformation } from '../../../interfaces/general/content-info';
-import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
-import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
+import { TypeInformation } from '@shared/interfaces';
+import { AddPropertyOwnerComponent } from '@shared/components';
+import { EditingPropertyOwnerComponent } from '@shared/components';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import {

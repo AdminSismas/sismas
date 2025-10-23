@@ -16,8 +16,8 @@ import {
   NAVIGATION_LOADER_PUBLIC_SERVICE,
   NAVIGATION_THEMATIC_MAP
 } from '../../layouts/constants/constant-loader';
-import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
-import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
+import { TasksPanelService } from '@shared/services';
+import { ProTaskE } from '@shared/interfaces';
 import { filter } from 'rxjs/operators';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';

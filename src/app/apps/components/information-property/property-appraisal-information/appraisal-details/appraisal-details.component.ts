@@ -5,11 +5,11 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { ModalWindowComponent } from '../../../general-components/modal-window/modal-window.component';
+import { ModalWindowComponent } from '@shared/components';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CurrencyPipe, KeyValuePipe } from '@angular/common';
 import { InfoAppraisal } from 'src/app/apps/interfaces/information-property/info-appraisal';
-import { AppraisalLabelPipe } from './appraisal-label.pipe';
+import { AppraisalLabelPipe } from '@shared/components';
 import { DatePipe } from '@angular/common';
 
 @Component({

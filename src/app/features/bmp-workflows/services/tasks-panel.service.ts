@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@features/bmp-workflows';
 import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable } from 'rxjs';
 import { PageSearchData } from '../../interfaces/general/page-search-data.model';
 import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';

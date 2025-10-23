@@ -9,13 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { TitleCasePipe } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MODAL_SMALL_LARGE, NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constants';
 import { getRandomInt } from 'src/app/apps/utils/general';
-import { InfoPerson } from '../../../../../../../apps/interfaces/information-property/info-person';
-import { PeopleService } from '../../../../../../../apps/services/users/people.service';
-import { InfoContact } from '../../../../../../../apps/interfaces/information-property/info-contact';
+import { InfoPerson } from '@shared/interfaces';
+import { PeopleService } from '@shared/services';
+import { InfoContact } from '@shared/interfaces';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 
 @Component({

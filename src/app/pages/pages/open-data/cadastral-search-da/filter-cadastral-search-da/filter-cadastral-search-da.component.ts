@@ -44,8 +44,8 @@ import { Commune } from 'src/app/apps/interfaces/territorial-organization/commun
 import { Sector } from 'src/app/apps/interfaces/territorial-organization/sector.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
-import { NationalPredialNumber } from '../../../../../apps/interfaces/information-property/national-predial-number';
-import { SearchData } from '../../../../../apps/interfaces/general/search-data.model';
+import { NationalPredialNumber } from '@shared/interfaces';
+import { SearchData } from '@shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CharacterValidateService } from '../../../../../apps/utils/character-validate.service';
 import {

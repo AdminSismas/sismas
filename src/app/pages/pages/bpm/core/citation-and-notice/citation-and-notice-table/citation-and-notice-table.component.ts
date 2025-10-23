@@ -27,9 +27,9 @@ import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
 import { SelectionModel } from '@angular/cdk/collections';
-import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
-import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
-import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
+import { PageSearchData } from '@shared/interfaces';
+import { ProcessParticipant } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import {
   PAGE,
   PAGE_SIZE_OPTION,
@@ -41,7 +41,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ParticipantsProcessService } from '../../../../../../apps/services/bpm/core/participants-process.service';
+import { ParticipantsProcessService } from '@shared/services';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';

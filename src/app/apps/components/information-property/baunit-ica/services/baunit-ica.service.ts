@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IcaResponse } from '../interfaces/baunit-ica.interface';
+import { IcaResponse } from '@shared/components';
 import { environment as envi } from 'src/environments/environments';
 
 @Injectable({

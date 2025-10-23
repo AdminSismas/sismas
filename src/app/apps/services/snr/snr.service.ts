@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { DataFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
 import { environment as env } from 'src/environments/environments';
-import { DataSource } from '../../interfaces/information-property/snr-source-info';
-import { DataPerson } from '../../interfaces/information-property/snr-person-info';
+import { DataSource } from '@shared/interfaces';
+import { DataPerson } from '@shared/interfaces';
 
 
 @Injectable({

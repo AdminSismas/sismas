@@ -9,7 +9,7 @@ import {
   output,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -47,7 +47,7 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -55,18 +55,18 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '../../../../../environments/environments';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { ContentInformationConstruction } from '../../../interfaces/information-property/content-information-construction';
+import { PageSearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { ContentInformationConstruction } from '@shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TypeInformation } from '../../../interfaces/general/content-info';
-import { CrudInformationConstructionsPropertyComponent } from './crud-information-constructions-property/crud-information-constructions-property.component';
+import { TypeInformation } from '@shared/interfaces';
+import { CrudInformationConstructionsPropertyComponent } from '@shared/components';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { InformationConstructionsService } from '../../../services/information-property/information-constructions-property/information-constructions.service';
+import { InformationConstructionsService } from '@shared/services';
 import { filter } from 'rxjs/operators';
-import { EditConstructionsComponent } from './edit-constructions/edit-constructions.component';
-import { TableConstructionsComponent } from './table-constructions/table-constructions.component';
-import { ModalResponse } from '../../general-components/modal-window/modal-window.component';
+import { EditConstructionsComponent } from '@shared/components';
+import { TableConstructionsComponent } from '@shared/components';
+import { ModalResponse } from '@shared/components';
 import Swal from 'sweetalert2';
 import { input } from '@angular/core';
 

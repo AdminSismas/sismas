@@ -1,10 +1,10 @@
 
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { BehaviorSubject, catchError, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AlertResponse } from '../../interfaces/information-property/alerts.interface';
+import { AlertResponse } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

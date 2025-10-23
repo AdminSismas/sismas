@@ -8,7 +8,7 @@ import {
   Output,
   signal
 } from '@angular/core';
-import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';

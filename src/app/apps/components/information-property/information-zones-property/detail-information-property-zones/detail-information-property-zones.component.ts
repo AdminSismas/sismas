@@ -5,8 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { NAME_NO_DISPONIBLE } from '../../../../constants/general/constants';
-import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from '../../../../interfaces/information-property/zone-baunit';
-import { ModalWindowComponent } from '../../../general-components/modal-window/modal-window.component';
+import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from '@shared/interfaces';
+import { ModalWindowComponent } from '@shared/components';
 
 type PropertyType = 'Urbano' | 'Rural' | 'Geoeconómica';
 

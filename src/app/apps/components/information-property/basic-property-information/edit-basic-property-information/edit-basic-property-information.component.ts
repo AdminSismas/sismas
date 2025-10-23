@@ -18,7 +18,7 @@ import {
   BasicInformationProperty,
   CrudBasicInformationProperty
 } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/components';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,9 +28,9 @@ import { environment } from 'src/environments/environments';
 import {
   EditBasicPropertyInputs,
   TypeOperation
-} from '../../../../interfaces/general/content-info';
+} from '@shared/interfaces';
 import { TYPE_UPDATE_PROPERTY_UNIT } from '../../../../constants/general/constants';
-import { InputComponent } from '../../../general-components/input/input.component';
+import { InputComponent } from '@shared/components';
 import Swal from 'sweetalert2';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-property/basic-property-information.constants';

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, combineLatest, map } from 'rxjs';
-import { IBmpTaskService, IBmpFlowService } from '../interfaces/bmp-workflow.interfaces';
-import { BmpTaskService } from './bmp-task.service';
-import { BmpFlowService } from './bmp-flow.service';
-import { ProTaskE } from '../models/pro-task';
-import { ProFlow } from '../models/pro-flow';
+import { IBmpTaskService, IBmpFlowService } from '@features/bmp-workflows';
+import { BmpTaskService } from '@features/bmp-workflows';
+import { BmpFlowService } from '@features/bmp-workflows';
+import { ProTaskE } from '@features/bmp-workflows';
+import { ProFlow } from '@features/bmp-workflows';
 
 export interface WorkflowSummary {
   task: ProTaskE;

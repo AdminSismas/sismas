@@ -21,13 +21,13 @@ import { MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 /* Components */
-import { ComboboxCollectionComponent } from '../../general-components/combobox-collection/combobox-collection.component';
-import { JSONInput } from '../../../interfaces/forms/dynamic-forms';
+import { ComboboxCollectionComponent } from '@shared/components';
+import { JSONInput } from '@shared/interfaces';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TextAreaComponent } from '../../general-components/text-area/text-area.component';
+import { TextAreaComponent } from '@shared/components';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/constants';
 import { output } from '@angular/core';

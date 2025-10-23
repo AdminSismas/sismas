@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 // Models and interfaces
-import { ProTaskE } from '../models/pro-task';
-import { TaskResponseModel } from '../models/task-response';
-import { TaskRetailExecuteResponseModel } from '../models/task-retail-execute-response';
-import { InformationPegeable } from '../../../shared/models/information-pegeable';
-import { PageSearchData } from '../../../shared/models/page-search-data';
+import { ProTaskE } from '@features/bmp-workflows';
+import { TaskResponseModel } from '@features/bmp-workflows';
+import { TaskRetailExecuteResponseModel } from '@features/bmp-workflows';
+import { InformationPegeable } from '@shared/models';
+import { PageSearchData } from '@shared/models';
 
 export interface TaskPanelData {
   assignedTasks: TaskResponseModel;

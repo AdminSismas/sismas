@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { InformationPropertyService } from '../../../../services/territorial-organization/information-property.service';
+import { InformationPropertyService } from '@shared/services';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import {
   PAGE,

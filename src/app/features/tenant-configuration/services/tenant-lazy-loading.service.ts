@@ -1,7 +1,7 @@
 import { Injectable, Injector, ComponentRef, ViewContainerRef } from '@angular/core';
 import { Observable, from, throwError } from 'rxjs';
-import { TenantConfigService } from './tenant-config.service';
-import { TenantType } from '../models/tenant-config.interface';
+import { TenantConfigService } from '@features/tenant-configuration';
+import { TenantType } from '@features/tenant-configuration';
 
 interface LazyComponentConfig {
   componentPath: string;

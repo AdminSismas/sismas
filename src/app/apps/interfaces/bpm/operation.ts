@@ -1,5 +1,5 @@
-import { BaunitHead } from '../information-property/baunit-head.model';
-import { TypeOperation } from '../general/content-info';
+import { BaunitHead } from '@shared/interfaces';
+import { TypeOperation } from '@shared/interfaces';
 
 export class Operation {
   operationType?:TypeOperation;

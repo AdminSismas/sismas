@@ -15,8 +15,8 @@ import {
   AdministrativeSource,
   CreateAdministrativeSourceParams
 } from 'src/app/apps/interfaces/information-property/administrative-source';
-import { DynamicFormsComponent } from '../../../forms/dynamic-forms/dynamic-forms.component';
-import { JSONInput } from '../../../../interfaces/forms/dynamic-forms';
+import { DynamicFormsComponent } from '@shared/components';
+import { JSONInput } from '@shared/interfaces';
 import {
   INPUTS_ADMINISTRATIVE_SOURCE
 } from '../../../../constants/information-property/administrative-source.constants';

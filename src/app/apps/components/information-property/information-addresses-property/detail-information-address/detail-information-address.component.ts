@@ -10,15 +10,15 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { BasicInformationAddress } from '../../../../interfaces/information-property/basic-information-address';
+import { BasicInformationAddress } from '@shared/interfaces';
 import {
   GUION,
   NAME_NO,
   NAME_NO_DISPONIBLE,
   NAME_SI
 } from '../../../../constants/general/constants';
-import { DetailBasicInformationAddress } from '../../../../interfaces/information-property/detail-basic-information-address';
-import { InformationPropertyService } from '../../../../services/territorial-organization/information-property.service';
+import { DetailBasicInformationAddress } from '@shared/interfaces';
+import { InformationPropertyService } from '@shared/services';
 import { environment } from '../../../../../../environments/environments';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';

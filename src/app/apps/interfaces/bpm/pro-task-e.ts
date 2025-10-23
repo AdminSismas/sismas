@@ -1,4 +1,4 @@
-import { ProTask } from './pro-task';
+import { ProTask } from '@shared/interfaces';
 
 export class ProTaskE {
   proTask?: ProTask;

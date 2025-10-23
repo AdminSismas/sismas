@@ -1,4 +1,4 @@
-import { IcaResponse } from "./baunit-ica.interface";
+import { IcaResponse } from '@shared/components';
 
 export class IcaDetails {
   prediador: string;

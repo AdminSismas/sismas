@@ -16,16 +16,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SearchData } from '../../../../interfaces/general/search-data.model';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from '../../../general-components/input/input.component';
+import { SearchData } from '@shared/interfaces';
+import { ComboboxCollectionComponent } from '@shared/components';
+import { InputComponent } from '@shared/components';
 import { MODAL_LARGE } from '../../../../constants/general/constants';
 
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { InformationPersonService } from 'src/app/apps/services/bpm/information-person.service';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
-import { PaymentValidationComponent } from '../../../general-components/payment-validation/payment-validation.component';
+import { PaymentValidationComponent } from '@shared/components';
 import { DataViewCertificate } from 'src/app/apps/interfaces/document-management/view-certificate-management-data.interface';
 
 @Component({

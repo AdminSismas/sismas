@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable, tap } from 'rxjs';
 import {
   Baunit,
   BAunitLike
-} from '../../interfaces/information-property/baunit-npnlike';
-import { PageSearchData } from '../../interfaces/general/page-search-data.model';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
-import { SimpleResponse } from '../../interfaces/general/simple-response.interface';
+} from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { SimpleResponse } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

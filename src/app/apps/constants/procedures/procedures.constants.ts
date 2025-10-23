@@ -1,5 +1,5 @@
 import { TableColumn } from "@vex/interfaces/table-column.interface";
-import { User } from "../../interfaces/users/user";
+import { User } from '@shared/interfaces';
 
 export const TABLE_REASSIGN_PROCEDURE: TableColumn<User>[] = [
   {

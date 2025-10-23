@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
-import { BpmTypeProcess } from '../../interfaces/bpm/bpm-type-process';
+import { BpmTypeProcess } from '@shared/interfaces';
 
 export interface PermissionVailable {
   executionId: string;

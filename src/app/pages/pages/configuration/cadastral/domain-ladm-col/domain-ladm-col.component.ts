@@ -4,7 +4,7 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import {
   TableDomainLadmColComponent
-} from '../../../../../apps/components/economic-mod-land/table-domain-ladm-col/table-domain-ladm-col.component';
+} from '@shared/components';
 
 @Component({
   selector: 'vex-domain-ladm-col',

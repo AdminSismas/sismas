@@ -1,4 +1,4 @@
-import { TypeOperation } from '../general/content-info';
+import { TypeOperation } from '@features/bmp-workflows';
 
 export class DifferenceChanges  {
   entity?:string;

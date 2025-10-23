@@ -1,5 +1,5 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { IcaTable } from './interfaces/ica-table';
+import { IcaTable } from '@shared/components';
 
 export const TABLE_ICA_COLUMNS: TableColumn<IcaTable>[] = [
   {

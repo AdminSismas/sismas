@@ -4,17 +4,17 @@ import { catchError, Observable, throwError } from 'rxjs';
 import {
   ContentInformationConstruction,
   CreateBasicInformationConstruction
-} from '../../../interfaces/information-property/content-information-construction';
+} from '@shared/interfaces';
 import { environment as envi } from '../../../../../environments/environments';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpParams
 } from '@angular/common/http';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { CcCalificacionUB } from '../../../interfaces/information-property/cc-calificacion-ub';
-import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
+import { PageSearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { CcCalificacionUB } from '@shared/interfaces';
+import { SendGeneralRequestsService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root'

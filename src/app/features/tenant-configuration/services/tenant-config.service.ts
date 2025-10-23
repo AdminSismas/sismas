@@ -5,8 +5,8 @@ import {
   TenantType, 
   TenantDetectionResult,
   TenantFeatures 
-} from '../models/tenant-config.interface';
-import { TenantConfigFactory } from '../factories/tenant-config.factory';
+} from '@features/tenant-configuration';
+import { TenantConfigFactory } from '@features/tenant-configuration';
 
 @Injectable({
   providedIn: 'root'

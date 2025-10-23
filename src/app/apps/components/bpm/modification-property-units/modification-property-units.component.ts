@@ -49,7 +49,7 @@ import {
 } from 'src/app/apps/constants/general/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
 import { MODIFYCATION_UNITS_TABLE_COLUMNS } from '../../../constants/information-property/modification-property-units.constants';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
@@ -61,22 +61,22 @@ import { MatInput } from '@angular/material/input';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { UnitPropertyInformationService } from '../../../services/territorial-organization/baunit-children-information.service';
-import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
+import { UnitPropertyInformationService } from '@shared/services';
+import { BaUnitHeadPercentage } from '@shared/interfaces';
 import { NgClass, PercentPipe } from '@angular/common';
-import { CrudPropertyUnitsComponent } from './crud-property-units/crud-property-units.component';
+import { CrudPropertyUnitsComponent } from '@shared/components';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
+import { BpmCoreService } from '@shared/services';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
-import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
+import { AlfaMainService } from '@shared/services';
+import { DifferenceChanges } from '@shared/interfaces';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
-import { ViewChangesBpmOperationComponent } from '../view-changes-bpm-operation/view-changes-bpm-operation.component';
-import { LoaderComponent } from '../../general-components/loader/loader.component';
+import { ViewChangesBpmOperationComponent } from '@shared/components';
+import { LoaderComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-modification-property-units',

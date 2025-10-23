@@ -16,8 +16,8 @@ import {
   FormGroupDirective,
   ReactiveFormsModule
 } from '@angular/forms';
-import { CollectionServices } from '../../../services/general/collection.service';
-import { DomainCollection } from '../../../interfaces/general/domain-name.model';
+import { CollectionServices } from '@shared/services';
+import { DomainCollection } from '@shared/interfaces';
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';
 import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constants';

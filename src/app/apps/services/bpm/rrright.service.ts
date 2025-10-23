@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment as env } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { InfoOwners } from '../../interfaces/information-property/info-owners';
+import { InfoOwners } from '@shared/interfaces';
 import { catchError, Observable } from 'rxjs';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
-import { DeleteParamsRrright, ParamsRrright } from '../../interfaces/bpm/changes-property-owner';
-import { InfoPerson } from '../../interfaces/information-property/info-person';
+import { SendGeneralRequestsService } from '@shared/services';
+import { DeleteParamsRrright, ParamsRrright } from '@shared/interfaces';
+import { InfoPerson } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

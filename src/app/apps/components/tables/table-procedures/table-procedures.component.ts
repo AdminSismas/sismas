@@ -41,7 +41,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 // recursos de archivos locales
-import { contentInfoProcedures } from '../../../interfaces/general/content-info-procedures.model';
+import { contentInfoProcedures } from '@shared/interfaces';
 import {
   MY_DATE_FORMATS,
   TABLE_COLUMN_PROPERTIES,
@@ -51,13 +51,13 @@ import {
   PAGE,
   PAGE_SIZE,
 } from 'src/app/apps/constants/general/constants';
-import { ProceduresCollection } from '../../../interfaces/tables/procedures-progress.model';
+import { ProceduresCollection } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { ProceduresService } from '../../../services/general/procedures.service';
-import { PageProceduresData } from '../../../interfaces/general/page-procedures-data.model';
+import { ProceduresService } from '@shared/services';
+import { PageProceduresData } from '@shared/interfaces';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { TaskResponseModel } from '../../../interfaces/bpm/task-response.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { TaskResponseModel } from '@shared/interfaces';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
@@ -69,7 +69,7 @@ import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/opera
 import { environment } from 'src/environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ReassignProcedureComponent } from '../../procedures/reassign-procedure/reassign-procedure.component';
+import { ReassignProcedureComponent } from '@shared/components';
 import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
 import { ComponentType } from '@angular/cdk/overlay';
 import { MatDividerModule } from '@angular/material/divider';
@@ -77,7 +77,7 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import 'moment/locale/es';
 import Swal from 'sweetalert2';
-import { ProcedureStatusPipe } from './pipe/procedure-status.pipe';
+import { ProcedureStatusPipe } from '@shared/components';
 
 interface MenuActions {
   label: string;

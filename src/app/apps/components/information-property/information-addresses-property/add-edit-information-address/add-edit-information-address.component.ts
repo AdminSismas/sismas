@@ -29,11 +29,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TypeOperation } from '../../../../interfaces/general/content-info';
+import { TypeOperation } from '@shared/interfaces';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { validateVariable } from '../../../../utils/general';
-import { BasicInformationAddress } from '../../../../interfaces/information-property/basic-information-address';
-import { GeneralValidationsService } from '../../../../services/validations/general-validations.service';
+import { BasicInformationAddress } from '@shared/interfaces';
+import { GeneralValidationsService } from '@shared/services';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -47,15 +47,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from '../../../general-components/input/input.component';
+import { ComboboxCollectionComponent } from '@shared/components';
+import { InputComponent } from '@shared/components';
 import {
   HeaderCadastralInformationPropertyComponent
-} from '../../header-cadastral-information-property/header-cadastral-information-property.component';
-import { TextAreaComponent } from '../../../general-components/text-area/text-area.component';
+} from '@shared/components';
+import { TextAreaComponent } from '@shared/components';
 import {
   ComboboxCollectionFormComponent
-} from '../../../general-components/combobox-collection-form/combobox-collection-form.component';
+} from '@shared/components';
 
 @Component({
   selector: 'vex-edit-information-address',

@@ -10,7 +10,7 @@ import {
   output,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   LIST_EXTRA_COLUMNS_APPRAISAL,
@@ -51,13 +51,13 @@ import { environment } from '../../../../../environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPropertyService } from '../../../services/territorial-organization/information-property.service';
-import { InfoAppraisal } from '../../../interfaces/information-property/info-appraisal';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { InformationPropertyService } from '@shared/services';
+import { InfoAppraisal } from '@shared/interfaces';
+import { BaunitHead } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import { Observable } from 'rxjs';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -66,12 +66,12 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
-import { TypeInformation } from '../../../interfaces/general/content-info';
+import { TypeInformation } from '@shared/interfaces';
 import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
-import { AutoAppraisalComponent } from './auto-appraisal/auto-appraisal.component';
+import { AutoAppraisalComponent } from '@shared/components';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { HistoricAppraisalComponent } from './historic-appraisal/historic-appraisal.component';
-import { AppraisalDetailsComponent } from './appraisal-details/appraisal-details.component';
+import { HistoricAppraisalComponent } from '@shared/components';
+import { AppraisalDetailsComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-property-appraisal-information',

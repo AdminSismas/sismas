@@ -43,20 +43,20 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 // recursos de archivos locales
-import { contentInfoWorkflow } from '../../../interfaces/general/content-info-workflow.model';
-import { CreateWorkflowComponent } from './components/create-workflow/create-workflow.component';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { contentInfoWorkflow } from '@shared/interfaces';
+import { CreateWorkflowComponent } from '@shared/components';
+import { InformationPegeable } from '@shared/interfaces';
 import {
   PAGE,
   PAGE_SIZE,
   TABLE_COLUMN_PROPERTIES
 } from '../../../constants/bpm/workflow.constant';
-import { PageSortByData } from '../../../interfaces/general/page-sortBy-data.model';
-import { WorkflowCollection } from '../../../interfaces/bpm/workflow.model';
-import { WorkflowService } from '../../../services/bpm/workflow.service';
+import { PageSortByData } from '@shared/interfaces';
+import { WorkflowCollection } from '@shared/interfaces';
+import { WorkflowService } from '@shared/services';
 import { MODAL_LARGE, PAGE_SIZE_OPTION } from '../../../constants/general/constants';
 import Swal from 'sweetalert2';
-import { TaskListComponent } from './components/task-list/task-list.component';
+import { TaskListComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-table-workflow',

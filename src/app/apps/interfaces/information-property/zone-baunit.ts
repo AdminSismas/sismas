@@ -1,4 +1,4 @@
-import { GeoEconomicZone } from './geo-economic-zone';
+import { GeoEconomicZone } from '@shared/interfaces';
 
 export class ZoneBAUnitFisica {
   baUnitZonaType: 'Urbana' | 'Rural' | 'Geoeconomica';

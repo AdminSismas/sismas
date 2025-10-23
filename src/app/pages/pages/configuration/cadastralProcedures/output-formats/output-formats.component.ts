@@ -17,10 +17,10 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 
-import { PageSearchData } from '../../../../../apps/interfaces/general/page-search-data.model';
+import { PageSearchData } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { OutFormatModel } from '../../../../../apps/interfaces/general/out-format.model';
-import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
+import { OutFormatModel } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import {
   MODAL_SMALL,
   PAGE,
@@ -37,10 +37,10 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-import { TypeInformation } from '../../../../../apps/interfaces/general/content-info';
+import { TypeInformation } from '@shared/interfaces';
 import { environment } from 'src/environments/environments';
 import { Observable } from 'rxjs';
-import { OutFormatService } from '../../../../../apps/services/general/out-format.service';
+import { OutFormatService } from '@shared/services';
 import { OutputFormatsEditUpdateComponent } from './output-formats-edit-update/output-formats-edit-update.component';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';

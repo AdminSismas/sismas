@@ -4,7 +4,7 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import {
   TableProceduresComponent
-} from '../../../../../apps/components/tables/table-procedures/table-procedures.component';
+} from '@shared/components';
 import { environment } from 'src/environments/environments';
 
 @Component({

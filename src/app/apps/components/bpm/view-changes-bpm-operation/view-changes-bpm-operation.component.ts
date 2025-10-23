@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
+import { DifferenceChanges } from '@shared/interfaces';
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,

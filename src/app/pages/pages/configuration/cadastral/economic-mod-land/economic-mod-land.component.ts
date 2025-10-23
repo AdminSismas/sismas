@@ -52,7 +52,7 @@ import {
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
 import {
   ZoneManagerComponent
-} from '../../../../../apps/components/configuration/economic-mod-land/zone-manager/zone-manager.component';
+} from '@shared/components';
 
 @Component({
   selector: 'vex-economic-mod-land',

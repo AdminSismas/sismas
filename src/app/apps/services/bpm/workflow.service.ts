@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environments';
-import { PageSortByData } from '../../interfaces/general/page-sortBy-data.model';
+import { PageSortByData } from '@shared/interfaces';
 import { catchError, Observable } from 'rxjs';
 import {
   Proflow,
   WorkflowCollection
-} from '../../interfaces/bpm/workflow.model';
+} from '@shared/interfaces';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpParams
 } from '@angular/common/http';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

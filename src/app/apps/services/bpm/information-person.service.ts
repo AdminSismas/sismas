@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
-import { InfoPerson } from '../../interfaces/information-property/info-person';
+import { InfoPerson } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

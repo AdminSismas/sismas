@@ -1,8 +1,8 @@
 import { Validators } from "@angular/forms";
-import { JSONInput } from "../../interfaces/forms/dynamic-forms";
+import { JSONInput } from '@shared/interfaces';
 import { TableColumn } from "@vex/interfaces/table-column.interface";
-import { AdministrativeSource } from "../../interfaces/information-property/administrative-source";
-import { GeneralValidationsService } from "../../services/validations/general-validations.service";
+import { AdministrativeSource } from '@shared/interfaces';
+import { GeneralValidationsService } from '@shared/services';
 
 const generalValidationsService = new GeneralValidationsService();
 

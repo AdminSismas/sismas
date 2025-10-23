@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { TruncatePipe } from '../../../../../../apps/pipes/truncate-pipe.pipe';
-import { BpmTypeProcess } from '../../../../../../apps/interfaces/bpm/bpm-type-process';
+import { BpmTypeProcess } from '@shared/interfaces';
 import { environment as envi } from '../../../../../../../environments/environments';
 import { NAME_NO_DISPONIBLE } from '../../../../../../apps/constants/general/constants';
 import { SPACE } from '@angular/cdk/keycodes';

@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { BehaviorSubject, catchError, Observable, Subject } from 'rxjs';
-import { BasicInformationProperty } from '../../interfaces/information-property/basic-information-property';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { BasicInformationProperty } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   CreateBasicInformationAddress,
   DetailBasicInformationAddress
-} from '../../interfaces/information-property/detail-basic-information-address';
-import { InfoOwners } from '../../interfaces/information-property/info-owners';
-import { PageSearchData } from '../../interfaces/general/page-search-data.model';
+} from '@shared/interfaces';
+import { InfoOwners } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
 import {
   CreateBaunitZone,
   ZoneBAUnitResponse
-} from '../../interfaces/information-property/zone-baunit';
-import { RuralPhysicalZone } from '../../interfaces/information-property/rural-physical-zone';
-import { UrbanPhysicalZone } from '../../interfaces/information-property/urban-physical-zone';
-import { GeoEconomicZone } from '../../interfaces/information-property/geo-economic-zone';
-import { SimpleResponse } from '../../interfaces/general/simple-response.interface';
+} from '@shared/interfaces';
+import { RuralPhysicalZone } from '@shared/interfaces';
+import { UrbanPhysicalZone } from '@shared/interfaces';
+import { GeoEconomicZone } from '@shared/interfaces';
+import { SimpleResponse } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

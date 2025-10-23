@@ -1,6 +1,6 @@
-import { InfoPerson } from '../information-property/info-person';
-import { GovernmentalChannel } from './governmental-channel';
-import { ProcessParticipantTableMenu } from './citation-and-notice/info-participants.interface';
+import { InfoPerson } from '@shared/interfaces';
+import { GovernmentalChannel } from '@shared/interfaces';
+import { ProcessParticipantTableMenu } from '@shared/interfaces';
 
 export class ProcessParticipant {
 

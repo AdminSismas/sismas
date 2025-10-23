@@ -1,6 +1,6 @@
-import { BasicDetailGroup } from './basic-detail-group';
-import { BasicMasterGroup } from './basic-master-group';
-import { TypeOperation } from '../general/content-info';
+import { BasicDetailGroup } from '@shared/interfaces';
+import { BasicMasterGroup } from '@shared/interfaces';
+import { TypeOperation } from '@shared/interfaces';
 
 export class BasicInformationProperty {
 

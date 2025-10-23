@@ -20,10 +20,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 // recursos de archivos locales
-import { CommentsService } from '../../../services/comments/comments.service';
-import { PageCommentsData } from '../../../interfaces/general/page-comments-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { contentInfoComments } from '../../../interfaces/general/content-info-comments.model';
+import { CommentsService } from '@shared/services';
+import { PageCommentsData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { contentInfoComments } from '@shared/interfaces';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -31,7 +31,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { DecodeJwt } from '../../../interfaces/user-details/user.model';
+import { DecodeJwt } from '@shared/interfaces';
 import { CommentsCollection } from 'src/app/apps/interfaces/comments/comments.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';

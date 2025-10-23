@@ -22,7 +22,7 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/components';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -31,7 +31,7 @@ import {
   Owners,
   ParamsRrright
 } from 'src/app/apps/interfaces/bpm/changes-property-owner';
-import { PeopleService } from '../../../../services/users/people.service';
+import { PeopleService } from '@shared/services';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';

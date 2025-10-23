@@ -1,4 +1,4 @@
-import { Individual } from './individual';
+import { Individual } from '@shared/interfaces';
 
 export interface GrantedAuthority {
   authority?:string;

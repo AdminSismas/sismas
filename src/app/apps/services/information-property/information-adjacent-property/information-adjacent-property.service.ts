@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
-import { SendGeneralRequestsService } from '../../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable } from 'rxjs';
-import { InformationAdjacent } from '../../../interfaces/information-property/information-adjacent';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { InformationAdjacent } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({

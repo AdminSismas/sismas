@@ -52,7 +52,7 @@ import { AttachmentService } from '../../../services/document-management/documen
 import { AttachmentCollection } from '../../../interfaces/document-management/attachment.model';
 import { contentInfoAttachment } from '../../../interfaces/general/content-info-attachment.model';
 import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { ViewFileDocumentManagementComponent } from '../../general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@features/bmp-workflows';
 import { TABLE_COLUMN_PROPERTIES } from '../../../constants/general/attachment.constant';
 import {
   MODAL_LARGE,

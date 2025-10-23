@@ -1,5 +1,5 @@
 import { NAME_NO_DISPONIBLE } from '../../constants/general/constants';
-import { TypeOperation } from '../general/content-info';
+import { TypeOperation } from '@shared/interfaces';
 
 export class ContentInformationConstruction {
   unitBuiltId?: number;

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, ReplaySubject } from 'rxjs';
-import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
-import { ProFlow } from '../../interfaces/bpm/pro-flow';
-import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
-import { DifferenceChanges } from '../../interfaces/bpm/difference-changes';
+import { ProTaskE } from '@shared/interfaces';
+import { ProFlow } from '@shared/interfaces';
+import { ProExecutionE } from '@shared/interfaces';
+import { DifferenceChanges } from '@shared/interfaces';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { MetadataBpm } from '../../interfaces/bpm/metadata-bpm';
+import { MetadataBpm } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

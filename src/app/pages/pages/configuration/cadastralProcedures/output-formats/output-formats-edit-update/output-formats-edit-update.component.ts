@@ -4,7 +4,7 @@ import {
   FooterTemplateModel,
   HeaderTemplateModel,
   OutFormatModel
-} from '../../../../../../apps/interfaces/general/out-format.model';
+} from '@shared/interfaces';
 
 import { QuillEditorComponent } from 'ngx-quill';
 import { CommonModule } from '@angular/common';
@@ -20,7 +20,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, Vali
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InputComponent } from '../../../../../../apps/components/general-components/input/input.component';
+import { InputComponent } from '@shared/components';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../apps/constants/general/constants';

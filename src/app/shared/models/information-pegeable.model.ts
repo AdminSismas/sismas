@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Pegeable } from './pegeable.model';
+import { Pegeable } from '@shared/models';
 
 export class InformationPegeable {
   content: any[];

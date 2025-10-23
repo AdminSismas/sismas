@@ -11,7 +11,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   MatPaginator,
@@ -37,13 +37,13 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { InfoTableService } from '../../../services/general/info-table.service';
-import { SearchData } from '../../../interfaces/general/search-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { InfoTableService } from '@shared/services';
+import { SearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
 import { Observable } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { FilterCertificateSearchAppraisalsComponent } from './filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
+import { FilterCertificateSearchAppraisalsComponent } from '@shared/components';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
   MODAL_LARGE,
@@ -55,19 +55,19 @@ import {
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
+import { ContentInfoSchema } from '@shared/interfaces';
+import { GeographicViewerComponent } from '@shared/components';
 import { environment as envi } from '../../../../../environments/environments';
-import { SendInformationRegisterService } from '../../../services/register-procedure/send-information-register.service';
-import { ValidateInformationBaunitService } from '../../../services/general/validate-information-baunit.service';
+import { SendInformationRegisterService } from '@shared/services';
+import { ValidateInformationBaunitService } from '@shared/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';
 import { HttpErrorResponse } from '@angular/common/http';
-import { BpmProcessService } from '../../../services/bpm/bpm-process.service';
+import { BpmProcessService } from '@shared/services';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { DecodeJwt } from '../../../interfaces/user-details/user.model';
-import { PaymentValidationComponent } from '../../general-components/payment-validation/payment-validation.component';
+import { DecodeJwt } from '@shared/interfaces';
+import { PaymentValidationComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-table-certificate-search-appraisals',

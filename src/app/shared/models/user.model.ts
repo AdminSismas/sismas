@@ -1,4 +1,4 @@
-import { InfoPerson } from './info-person';
+import { InfoPerson } from '@shared/models';
 
 export class UserDetails {
   userId: number;

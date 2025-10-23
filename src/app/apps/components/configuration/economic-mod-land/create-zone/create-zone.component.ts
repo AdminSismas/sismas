@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
-import { JSONInput } from '../../../../interfaces/forms/dynamic-forms';
+import { JSONInput } from '@shared/interfaces';
 import { CreateZoneData } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 
 @Component({

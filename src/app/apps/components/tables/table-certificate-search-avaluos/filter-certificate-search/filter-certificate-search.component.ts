@@ -24,18 +24,18 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SearchData } from '../../../../interfaces/general/search-data.model';
+import { SearchData } from '@shared/interfaces';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition
 } from '@angular/material/snack-bar';
-import { InputComponent } from '../../../general-components/input/input.component';
+import { InputComponent } from '@shared/components';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { TerritorialOrganizationService } from '../../../../services/territorial-organization/territorial-organization.service';
-import { Department } from '../../../../interfaces/territorial-organization/department.model';
-import { Municipality } from '../../../../interfaces/territorial-organization/municipality.model';
+import { TerritorialOrganizationService } from '@shared/services';
+import { Department } from '@shared/interfaces';
+import { Municipality } from '@shared/interfaces';
 import {
   LIMPIAR_CAMPOS_MULTIPLES_CAMPOS,
   LIMPIAR_CAMPOS_SELECCION_MUNICIPAL,
@@ -49,14 +49,14 @@ import {
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
 } from '../../../../constants/general/constants';
-import { Zone } from '../../../../interfaces/territorial-organization/zone.model';
-import { Sector } from '../../../../interfaces/territorial-organization/sector.model';
+import { Zone } from '@shared/interfaces';
+import { Sector } from '@shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Neighborhood } from '../../../../interfaces/territorial-organization/neighborhood.model';
-import { Block } from '../../../../interfaces/territorial-organization/block.model';
-import { Sidewalk } from '../../../../interfaces/territorial-organization/sidewalk.model';
-import { Commune } from '../../../../interfaces/territorial-organization/commune.model';
-import { NationalPredialNumber } from '../../../../interfaces/information-property/national-predial-number';
+import { Neighborhood } from '@shared/interfaces';
+import { Block } from '@shared/interfaces';
+import { Sidewalk } from '@shared/interfaces';
+import { Commune } from '@shared/interfaces';
+import { NationalPredialNumber } from '@shared/interfaces';
 import { divideNpn } from '../../../../utils/divide-national-predial-number';
 import { CONSTANT_NAME_ID } from '../../../../constants/general/constantLabels';
 import { CharacterValidateService } from '../../../../utils/character-validate.service';
@@ -64,7 +64,7 @@ import {
   DIVPOLLVL2_CODE,
   DIVPOLLVL_CODE
 } from '../../../../constants/general/constants';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-filter-certificate-search',

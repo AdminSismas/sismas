@@ -32,12 +32,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { BasicParticipantTableComponent } from './components/basic-participant-table/basic-participant-table.component';
-import { BaunitHead } from '../../../../apps/interfaces/information-property/baunit-head.model';
-import { BpmCoreService } from '../../../../apps/services/bpm/bpm-core.service';
-import { BpmDocument } from '../../../../apps/interfaces/bpm/bpm-document';
-import { BpmProcessService, PermissionVailable } from '../../../../apps/services/bpm/bpm-process.service';
-import { BpmTypeProcess } from '../../../../apps/interfaces/bpm/bpm-type-process';
-import { CollectionServices } from '../../../../apps/services/general/collection.service';
+import { BaunitHead } from '@shared/interfaces';
+import { BpmCoreService } from '@shared/services';
+import { BpmDocument } from '@shared/interfaces';
+import { BpmProcessService, PermissionVailable } from '@shared/services';
+import { BpmTypeProcess } from '@shared/interfaces';
+import { CollectionServices } from '@shared/services';
 import {
   CONSTANT_FILING_PROCEDURES,
   CONSTANT_NAME_BAUNITID,
@@ -51,7 +51,7 @@ import {
   CONSTANT_NAME_ROOTING,
   CONSTANT_NAME_SI_
 } from '../../../../apps/constants/general/constantLabels';
-import { DomainCollection } from '../../../../apps/interfaces/general/domain-name.model';
+import { DomainCollection } from '@shared/interfaces';
 import {
   DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY,
   GUION,
@@ -65,15 +65,15 @@ import {
 } from '../../../../apps/constants/general/constants';
 import { environment } from '../../../../../environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
-import { MetadataBpm } from '../../../../apps/interfaces/bpm/metadata-bpm';
+import { MetadataBpm } from '@shared/interfaces';
 import { ProcessCardComponent } from './components/process-card/process-card.component';
-import { ProcessParticipant } from '../../../../apps/interfaces/bpm/process-participant';
-import { ProExecutionE } from '../../../../apps/interfaces/bpm/pro-execution-e';
-import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
-import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
+import { ProcessParticipant } from '@shared/interfaces';
+import { ProExecutionE } from '@shared/interfaces';
+import { ProTaskE } from '@shared/interfaces';
+import { SendInfoGeneralService } from '@shared/services';
 import {
   SendInformationRegisterService
-} from '../../../../apps/services/register-procedure/send-information-register.service';
+} from '@shared/services';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

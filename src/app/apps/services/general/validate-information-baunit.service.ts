@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from './send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import {
   environment as envi,
   environment
 } from '../../../../environments/environments';
 import { map, Observable } from 'rxjs';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PageSearchData } from '../../interfaces/general/page-search-data.model';
+import { PageSearchData } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

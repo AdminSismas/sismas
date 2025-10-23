@@ -2,13 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import {
   RecognitionProperty,
   RecognitionPropertyBasic,
   RecognitionPropertyMapper,
   TagsRecognition
-} from '../../interfaces/bpm/recognitionProperty.interface';
+} from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

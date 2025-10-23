@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment as envi } from 'src/environments/environments';
-import { UrbanZone, Zone, ZoneServices } from '../../interfaces/economic-mod-land/zone-description';
+import { UrbanZone, Zone, ZoneServices } from '@shared/interfaces';
 import { catchError, Observable } from 'rxjs';
 
 @Injectable({

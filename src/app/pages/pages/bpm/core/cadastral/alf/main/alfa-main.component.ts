@@ -5,9 +5,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { ProFlow } from '../../../../../../../apps/interfaces/bpm/pro-flow';
+import { ProFlow } from '@shared/interfaces';
 import { filter, takeUntil } from 'rxjs/operators';
-import { SendInfoGeneralService } from '../../../../../../../apps/services/general/send-info-general.service';
+import { SendInfoGeneralService } from '@shared/services';
 import { environment } from '../../../../../../../../environments/environments';
 import { Router } from '@angular/router';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -24,7 +24,7 @@ import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-ma
 import { CONSTANT_ENABLE_TAB_GEOGRAFIC } from '../../../../../../../apps/constants/general/constants';
 import {
   AlfaMainInformationComponent
-} from '../../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+} from '@shared/components';
 import {
   CONSTANT_TEXT_ALFA_MAIN_ALFA,
   CONSTANT_TEXT_GEO_MAIN_ALFA

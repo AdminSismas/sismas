@@ -7,7 +7,7 @@ import {
   input,
   output
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_SMALL,
@@ -15,8 +15,8 @@ import {
 } from '../../../constants/general/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { AlertsService } from '../../../services/alerts/alertes.service';
-import { InfoOwners } from '../../../interfaces/information-property/info-owners';
+import { AlertsService } from '@shared/services';
+import { InfoOwners } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -30,14 +30,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { TypeInformation } from '../../../interfaces/general/content-info';
-import { DetailAlertsComponent } from './detail-alerts/detail-alerts.component';
+import { TypeInformation } from '@shared/interfaces';
+import { DetailAlertsComponent } from '@shared/components';
 import { DatePipe } from '@angular/common';
-import { CreateAlertComponent } from './create-alert/create-alert.component';
+import { CreateAlertComponent } from '@shared/components';
 import { AlertResponse } from 'src/app/apps/interfaces/information-property/alerts.interface';
 import Swal from 'sweetalert2';
 import { ALERT_TABLE_COLUMNS } from 'src/app/apps/constants/information-property/alerts.constants';
-import { UpdateAlertComponent } from './update-alert/update-alert.component';
+import { UpdateAlertComponent } from '@shared/components';
 
 export type InfoOwnerRowT = Pick<
   InfoOwners,

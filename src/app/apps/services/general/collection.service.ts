@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from './send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { DomainCalificationCollection, DomainCollection } from '../../interfaces/general/domain-name.model';
+import { DomainCalificationCollection, DomainCollection } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

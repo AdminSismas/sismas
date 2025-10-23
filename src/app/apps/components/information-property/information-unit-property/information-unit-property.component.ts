@@ -16,8 +16,8 @@ import { NgClass, PercentPipe } from '@angular/common';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { SearchData } from '../../../interfaces/general/search-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
+import { SearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import {
@@ -30,12 +30,12 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../constants/general/constants';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+import { ContentInfoSchema } from '@shared/interfaces';
 import { environment } from 'src/environments/environments';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { TypeInformation } from '../../../interfaces/general/content-info';
+} from '@shared/components';
+import { TypeInformation } from '@shared/interfaces';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
@@ -44,15 +44,15 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
   HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+} from '@shared/components';
 import {
   UnitPropertyInformationService
-} from '../../../services/territorial-organization/baunit-children-information.service';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+} from '@shared/services';
+import { PageSearchData } from '@shared/interfaces';
 import {
   TABLE_COLUMN_UNITS_TABLE_COLUMNS
 } from '../../../constants/information-property/modification-property-units.constants';
-import { BaUnitHeadPercentage } from '../../../interfaces/information-property/baunit-head-percentage.model';
+import { BaUnitHeadPercentage } from '@shared/interfaces';
 
 @Component({
   selector: 'vex-information-unit-property',

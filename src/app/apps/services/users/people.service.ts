@@ -7,12 +7,12 @@ import {
   HttpStatusCode
 } from '@angular/common/http';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { SendGeneralRequestsService } from '@shared/services';
 import { Observable, throwError } from 'rxjs';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
-import { InfoPerson } from '../../interfaces/information-property/info-person';
-import { InfoContact } from '../../interfaces/information-property/info-contact';
-import { People } from '../../interfaces/users/people.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { InfoPerson } from '@shared/interfaces';
+import { InfoContact } from '@shared/interfaces';
+import { People } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

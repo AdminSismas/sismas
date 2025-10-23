@@ -21,7 +21,7 @@ import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
-import { InformationAddressesPropertyComponent } from '../information-addresses-property/information-addresses-property.component';
+import { InformationAddressesPropertyComponent } from '@shared/components';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
 import { MatListModule } from '@angular/material/list';
@@ -31,20 +31,20 @@ import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
-import { InformationPropertyOwnersComponent } from '../information-property-owners/information-property-owners.component';
-import { InformationConstructionsPropertyComponent } from '../information-constructions-property/information-constructions-property.component';
+import { BasicPropertyInformationComponent } from '@shared/components';
+import { InformationPropertyOwnersComponent } from '@shared/components';
+import { InformationConstructionsPropertyComponent } from '@shared/components';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { ContentInfoSchema } from '@shared/interfaces';
+import { BaunitHead } from '@shared/interfaces';
 import { environment as envi } from '../../../../../environments/environments';
-import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
+import { AdministrativeSourcesComponent } from '@shared/components';
 import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { PhotosComponent } from '../photos/photos.component';
-import { AlertsComponent } from '../alerts/alerts.component';
-import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
-import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
+import { PhotosComponent } from '@shared/components';
+import { AlertsComponent } from '@shared/components';
+import { InformationUnitPropertyComponent } from '@shared/components';
+import { InformationZonesPropertyComponent } from '@shared/components';
 import {
   FRAGMENT_BASIC_PROPERTY_INFORMATION,
   FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY,
@@ -55,17 +55,17 @@ import {
   REFERENCE_COMPONENTS,
   RULE_PAGE_CADASTRAL_DA
 } from '../../../constants/general/constants';
-import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
-import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
+import { PropertyAppraisalInformationComponent } from '@shared/components';
+import { SuperNotariadoPropertyComponent } from '@shared/components';
 import {
   NavigationItemCadastralInfo,
   TypeInformation
-} from '../../../interfaces/general/content-info';
-import { InformationAdjacentPropertyComponent } from '../information-adjacent-property/information-adjacent-property.component';
+} from '@shared/interfaces';
+import { InformationAdjacentPropertyComponent } from '@shared/components';
 import { MatSelectModule } from '@angular/material/select';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
-import { HistoricalActiveProceduresPropertyComponent } from '../historical-active-procedures/historical-active-procedures.component';
-import { BaunitIcaComponent } from '../baunit-ica/baunit-ica.component';
+import { HistoricalActiveProceduresPropertyComponent } from '@shared/components';
+import { BaunitIcaComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-cadastral-information-property',

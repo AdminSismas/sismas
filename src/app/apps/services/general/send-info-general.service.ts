@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
+import { ProTaskE } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

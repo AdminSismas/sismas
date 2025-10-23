@@ -1,9 +1,9 @@
 import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
-import { ComboboxComponent } from '../../../../apps/components/general-components/combobox/combobox.component';
+import { ComboboxComponent } from '@shared/components';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import {
   GeographicViewerEmbeddedComponent
-} from '../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
+} from '@shared/components';
 import { MatButton } from '@angular/material/button';
 import { MatDialogActions } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
@@ -11,12 +11,12 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
-import { Department } from '../../../../apps/interfaces/territorial-organization/department.model';
-import { Municipality } from '../../../../apps/interfaces/territorial-organization/municipality.model';
+import { Department } from '@shared/interfaces';
+import { Municipality } from '@shared/interfaces';
 import { Subject } from 'rxjs';
 import {
   TerritorialOrganizationService
-} from '../../../../apps/services/territorial-organization/territorial-organization.service';
+} from '@shared/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DIVPOLLVL_CODE, NAME_CODENAME } from '../../../../apps/constants/general/constants';
 import { _filterInformationCode, getRandomInt } from 'src/app/apps/utils/general';

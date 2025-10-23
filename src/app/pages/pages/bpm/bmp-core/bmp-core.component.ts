@@ -18,7 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { map } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
+import { HeaderBpmCoreComponent } from '@shared/components';
 import {
   COMPONENT_PATH_FORM_ALFA_MAIN,
   CONSTANT_VALIDATE_CHECK,
@@ -26,29 +26,29 @@ import {
   LISTO_FORM_BPM_CORE,
   MODAL_SMALL
 } from '../../../../apps/constants/general/constants';
-import { GeneralValidationsService } from '../../../../apps/services/validations/general-validations.service';
+import { GeneralValidationsService } from '@shared/services';
 import {
   BasicComponentTemplate,
   ComponentTemplate
-} from '../../../../apps/interfaces/bpm/render-template.types';
-import { ProFlow } from '../../../../apps/interfaces/bpm/pro-flow';
-import { BpmCoreService } from '../../../../apps/services/bpm/bpm-core.service';
-import { ProTaskE } from '../../../../apps/interfaces/bpm/pro-task-e';
+} from '@shared/interfaces';
+import { ProFlow } from '@shared/interfaces';
+import { BpmCoreService } from '@shared/services';
+import { ProTaskE } from '@shared/interfaces';
 import { MatOptionModule } from '@angular/material/core';
-import { DynamicComponentsService } from '../../../../apps/services/bpm/dynamic-components.service';
+import { DynamicComponentsService } from '@shared/services';
 import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLabels';
 import { environment } from '../../../../../environments/environments';
-import { SendInfoGeneralService } from '../../../../apps/services/general/send-info-general.service';
+import { SendInfoGeneralService } from '@shared/services';
 import { MatDialog } from '@angular/material/dialog';
-import { ShowErrorValidateAlfaMainComponent } from '../../../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
+import { ShowErrorValidateAlfaMainComponent } from '@shared/components';
 import {
   BpmProcessService,
   PermissionVailable
 } from 'src/app/apps/services/bpm/bpm-process.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { LoadingServiceService } from '../../../../apps/services/general/loading-service.service';
-import { InformationPropertyService } from '../../../../apps/services/territorial-organization/information-property.service';
-import { LoaderComponent } from '../../../../apps/components/general-components/loader/loader.component';
+import { LoadingServiceService } from '@shared/services';
+import { InformationPropertyService } from '@shared/services';
+import { LoaderComponent } from '@shared/components';
 import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 
 @Component({

@@ -1,5 +1,5 @@
-import { MetadataBpm } from './metadata-bpm';
-import { ProcessParticipant } from './process-participant';
+import { MetadataBpm } from '@shared/interfaces';
+import { ProcessParticipant } from '@shared/interfaces';
 
 export class ProExecutionE {
   processId:number;

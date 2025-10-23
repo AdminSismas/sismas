@@ -45,11 +45,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { DomainLadmColService } from '../../../services/economic-mod-land/domain-ladm-col.service';
-import { DomainCollection } from '../../../interfaces/general/domain-name.model';
-import { PageSortByData } from '../../../interfaces/general/page-sortBy-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { contentInfoDomainLadmCol } from '../../../interfaces/general/content-info-domainLadmCol.model';
+import { DomainLadmColService } from '@shared/services';
+import { DomainCollection } from '@shared/interfaces';
+import { PageSortByData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { contentInfoDomainLadmCol } from '@shared/interfaces';
 import {
   PAGE,
   PAGE_SIZE,

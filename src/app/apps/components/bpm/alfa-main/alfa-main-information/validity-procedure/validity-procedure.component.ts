@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { AlfaMainService } from '../../../../../services/bpm/core/alfa-main.service';
+import { AlfaMainService } from '@shared/services';
 import { ChangeControl } from 'src/app/apps/interfaces/bpm/change-control';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';

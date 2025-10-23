@@ -36,7 +36,7 @@ import { TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/
 // COMPONENT IMPORTS
 import {
   HeaderCadastralInformationPropertyComponent
-} from '../header-cadastral-information-property/header-cadastral-information-property.component';
+} from '@shared/components';
 
 // INTERFACES IMPORTS
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
@@ -60,16 +60,16 @@ import {
 import { TaskResponseModel } from 'src/app/apps/interfaces/bpm/task-response.model';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from '../layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+} from '@shared/components';
+import { ContentInfoSchema } from '@shared/interfaces';
+import { AlfaMainService } from '@shared/services';
+import { BaunitHead } from '@shared/interfaces';
 import Swal from 'sweetalert2';
-import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
-import { DifferenceChanges } from '../../../interfaces/bpm/difference-changes';
+import { BpmCoreService } from '@shared/services';
+import { DifferenceChanges } from '@shared/interfaces';
 import {
   ViewChangesBpmOperationComponent
-} from '../../bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
+} from '@shared/components';
 
 
 @Component({

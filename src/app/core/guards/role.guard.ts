@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, CanActivateFn } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserService } from '../auth/user.service';
-import { DecodeJwt } from '../../shared/models/user.model';
+import { UserService } from '@core/auth';
+import { DecodeJwt } from '@shared/models';
 
 export const RoleGuard: CanActivateFn = (route) => {
   const userService = inject(UserService);

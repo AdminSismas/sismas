@@ -17,7 +17,7 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, ReplaySubject } from 'rxjs';
-import { BpmCoreService } from '../../../services/bpm/bpm-core.service';
+import { BpmCoreService } from '@shared/services';
 import {
   CONSTANT_NAME_RETURN,
   NAME_FILED,
@@ -31,19 +31,19 @@ import {
   TYPE_BUTTON_EIGHT,
   TYPE_BUTTON_SEVEN
 } from '../../../constants/general/constants';
-import { ProTaskE } from '../../../interfaces/bpm/pro-task-e';
+import { ProTaskE } from '@shared/interfaces';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { DocumentTableComponent } from '../document-table/document-table.component';
-import { CommentsComponent } from '../comments/comments.component';
-import { ComponentTemplate } from '../../../interfaces/bpm/render-template.types';
-import { TypeButtonAlfaMain } from '../../../interfaces/general/content-info';
+import { DocumentTableComponent } from '@shared/components';
+import { CommentsComponent } from '@shared/components';
+import { ComponentTemplate } from '@shared/interfaces';
+import { TypeButtonAlfaMain } from '@shared/interfaces';
 import { getRandomInt } from 'src/app/apps/utils/general';
-import { AlfaMainService } from '../../../services/bpm/core/alfa-main.service';
-import { AttachmentExcelMassiveComponent } from '../alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+import { AlfaMainService } from '@shared/services';
+import { AttachmentExcelMassiveComponent } from '@shared/components';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { LoaderComponent } from '../../general-components/loader/loader.component';
+import { LoaderComponent } from '@shared/components';
 
 @Component({
   selector: 'vex-header-bpm-core',

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { DownloadReport } from '../../../interfaces/operation-support/reports/report.interface';
+import { DownloadReport } from '@shared/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { environment as envi } from 'src/environments/environments';
 

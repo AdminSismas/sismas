@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { InputType } from '../../../interfaces/general/content-info';
+import { InputType } from '@shared/interfaces';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import {
   CONSTANT_ERR_CAPITAL_LETTER,

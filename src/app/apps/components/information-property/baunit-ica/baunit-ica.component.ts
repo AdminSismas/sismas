@@ -8,18 +8,18 @@ import {
 } from '@angular/core';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { HeaderCadastralInformationPropertyComponent } from '../header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { TABLE_ICA_COLUMNS } from './baunit-ica.constant';
-import { BaunitIcaService } from './services/baunit-ica.service';
-import { IcaTable } from './interfaces/ica-table';
+import { TABLE_ICA_COLUMNS } from '@shared/components';
+import { BaunitIcaService } from '@shared/components';
+import { IcaTable } from '@shared/components';
 import { map } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { IcaResponse } from './interfaces/baunit-ica.interface';
+import { IcaResponse } from '@shared/components';
 import { MODAL_SMALL, NAME_NO_DISPONIBLE } from 'src/app/apps/constants/general/constants';
 import { MatDialog } from '@angular/material/dialog';
-import { IcaDetailsComponent } from './components/ica-details/ica-details.component';
+import { IcaDetailsComponent } from '@shared/components';
 
 @Component({
   selector: 'baunit-ica',

@@ -4,7 +4,7 @@ import {
   TenantType,
   TenantFeatures,
   TenantApiConfig,
-} from '../models/tenant-config.interface';
+} from '@features/tenant-configuration';
 
 @Injectable({
   providedIn: 'root'

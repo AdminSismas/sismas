@@ -7,8 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
-import { TenantConfigService } from '../../../features/tenant-configuration/services/tenant-config.service';
-import { TenantType, TenantConfig } from '../../../features/tenant-configuration/models/tenant-config.interface';
+import { TenantConfigService } from '@features/tenant-configuration';
+import { TenantType, TenantConfig } from '@features/tenant-configuration';
 
 @Component({
   selector: 'vex-tenant-switcher',
