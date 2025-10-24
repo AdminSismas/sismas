@@ -38,3 +38,6 @@ export * from '../../apps/constants/procedures/procedures.constants';
 
 // Public services constants
 export * from '../../apps/constants/public-services/ticket-office/generate-services.constants';
+
+// Baunit ICA constants
+export * from '../../apps/components/information-property/baunit-ica/baunit-ica.constant';

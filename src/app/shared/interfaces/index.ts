@@ -27,6 +27,11 @@ export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
 export * from '../../apps/interfaces/information-property/basic-information-property';
 export * from '../../apps/interfaces/information-property/info-person';
+export * from '../../apps/interfaces/information-property/info-owners';
+
+// Baunit ICA interfaces
+export * from '../../apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
+export * from '../../apps/components/information-property/baunit-ica/interfaces/ica-table';
 
 // BMP interfaces
 export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
@@ -39,6 +44,9 @@ export * from '../../apps/interfaces/territorial-organization';
 // Operation support interfaces
 export * from '../../apps/interfaces/operation-support/reports/report-category.interface';
 export * from '../../apps/interfaces/operation-support/reports/report.interface';
+
+// Geographic interfaces
+export * from '../../apps/interfaces/geographics/query-parameters-geographic-vie';
 
 // Paginator interface que existe
 export * from '../../apps/interfaces/paginator/PaginatorIntlEs';

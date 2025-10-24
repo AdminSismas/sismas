@@ -59,9 +59,12 @@ export { PropertyAppraisalInformationComponent } from '../../apps/components/inf
 export { InformationAdjacentPropertyComponent } from '../../apps/components/information-property/information-adjacent-property/information-adjacent-property.component';
 export { HistoricalActiveProceduresPropertyComponent } from '../../apps/components/information-property/historical-active-procedures/historical-active-procedures.component';
 export { BaunitIcaComponent } from '../../apps/components/information-property/baunit-ica/baunit-ica.component';
+export { IcaDetailsComponent } from '../../apps/components/information-property/baunit-ica/components/ica-details/ica-details.component';
 
 // Tables components
 export { TableProceduresComponent } from '../../apps/components/tables/table-procedures/table-procedures.component';
+export { TableCertificateSearchComponent } from '../../apps/components/tables/table-certificate-search/table-certificate-search.component';
+export { TableCertificateSearchAppraisalsComponent } from '../../apps/components/tables/table-certificate-search-appraisals/table-certificate-search-appraisals.component';
 
 // BMP components
 export { ParticipantTableDialogComponent } from '../../apps/components/bpm/participant-table-dialog/participant-table-dialog.component';
@@ -70,4 +73,9 @@ export { ParticipantTableDialogComponent } from '../../apps/components/bpm/parti
 // export { CommentsComponent } from '../../apps/components/bpmcomments/comments.component';
 
 // TODO: Componentes por verificar/migrar
-// export { AttachmentExcelMassiveComponent } from '../../apps/components/bpmattachment-excel-massive/attachment-excel-massive.component';
+// export { AttachmentExcelMassiveComponent } from '../../apps/components/bmpattachment-excel-massive/attachment-excel-massive.component';
+
+// ICA interfaces and constants (temporarily here due to component dependencies)
+export * from '../../apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
+export * from '../../apps/components/information-property/baunit-ica/interfaces/ica-table';
+export * from '../../apps/components/information-property/baunit-ica/baunit-ica.constant';

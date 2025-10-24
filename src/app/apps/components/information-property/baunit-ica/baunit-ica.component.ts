@@ -12,7 +12,7 @@ import { HeaderCadastralInformationPropertyComponent } from '@shared/components'
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TABLE_ICA_COLUMNS } from '@shared/components';
-import { BaunitIcaService } from '@shared/components';
+import { BaunitIcaService } from '@shared/services';
 import { IcaTable } from '@shared/components';
 import { map } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';

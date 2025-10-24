@@ -47,4 +47,7 @@ export { InformationPersonService } from '../../apps/services/bpm/information-pe
 // Operation support services  
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';
 
+// Information property services
+export { BaunitIcaService } from '../../apps/components/information-property/baunit-ica/services/baunit-ica.service';
+
 // export { TitleService } from '../../apps/services/title/title.service';
