@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable, throwError, EMPTY } from 'rxjs';
 import {
   ContentInformationConstruction,

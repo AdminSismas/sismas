@@ -151,17 +151,6 @@ export interface CcZonaHomoGeoEconomica {
   cadastreChangeLog:        CadastreChangeLog;
 }
 
-export interface CadastreChangeLog {
-  changeLogId:                      number;
-  resolution:                       string;
-  resolutionAt:                     Date;
-  rooting:                          string;
-  rootingAt:                        Date;
-  validity:                         number;
-  beginAt:                          Date;
-  domCadastreChangeTypeDescription: string;
-}
-
 export interface CreateBaunitZone {
   baUnitZonaId?: number;
   baUnitZonaArea?: number;

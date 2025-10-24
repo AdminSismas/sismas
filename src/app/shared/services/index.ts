@@ -53,7 +53,7 @@ export { ParticipantsService } from '../../apps/services/bpm/participants-servic
 export { InformationPersonService } from '../../apps/services/bpm/information-person.service';
 export { BpmCoreService } from '../../apps/services/bpm/bpm-core.service';
 export { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
-export { BpmProcessService } from '../../apps/services/bpm/bpm-process.service';
+export { BpmProcessService, PermissionVailable } from '../../apps/services/bpm/bpm-process.service';
 export { WorkflowService } from '../../apps/services/bpm/workflow.service';
 export { DomainLadmColService } from '../../apps/services/economic-mod-land/domain-ladm-col.service';
 export { SearchService } from '../../apps/services/general/search.service';

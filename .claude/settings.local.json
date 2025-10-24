@@ -9,7 +9,8 @@
       "Bash(mkdir:*)",
       "Bash(pnpm build:*)",
       "mcp__refactor__code_search",
-      "mcp__refactor__code_refactor"
+      "mcp__refactor__code_refactor",
+      "Bash(grep:*)"
     ],
     "deny": [],
     "ask": []

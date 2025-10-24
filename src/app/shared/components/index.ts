@@ -18,6 +18,7 @@ export { TableDomainLadmColComponent } from '../../apps/components/economic-mod-
 // General components que existen y funcionan
 export { LoaderComponent } from '../../apps/components/general-components/loader/loader.component';
 export { InputComponent } from '../../apps/components/general-components/input/input.component';
+export { TableThirdPartyAffectedComponent } from '../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 export { ComboboxCollectionComponent } from '../../apps/components/general-components/combobox-collection/combobox-collection.component';
 export { TextAreaComponent } from '../../apps/components/general-components/text-area/text-area.component';
 export { LoadingAppComponent } from '../../apps/components/general-components/loading-app/loading-app.component';
@@ -112,9 +113,14 @@ export { FilterCadastralSearchComponent } from '../../apps/components/tables/tab
 export { ParticipantTableDialogComponent } from '../../apps/components/bpm/participant-table-dialog/participant-table-dialog.component';
 export { ViewChangesBpmOperationComponent } from '../../apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
 export { ShowErrorValidateAlfaMainComponent } from '../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
+export { ViewChangeAlphaMainRecordComponent } from '../../apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
+export { ViewChangesComponent } from '../../apps/components/bpm/alfa-main/alfa-main-information/view-changes/view-changes.component';
 export { HeaderBpmCoreComponent } from '../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
 export { CommentsComponent } from '../../apps/components/bpm/comments/comments.component';
 export { AttachmentExcelMassiveComponent } from '../../apps/components/bpm/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+export { AlfaMainInformationComponent } from '../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+export { CrudAlfaMainComponent } from '../../apps/components/bpm/alfa-main/crud-alfa-main/crud-alfa-main.component';
+export { TableAlfaMainComponent } from '../../apps/components/bpm/table-alfa-main/table-alfa-main.component';
 export { ModificationPropertyUnitsComponent } from '../../apps/components/bpm/modification-property-units/modification-property-units.component';
 export { CreateMatrixFromNphComponent } from '../../apps/components/bpm/table-alfa-main/create-matrix-from-nph/create-matrix-from-nph.component';
 export { CrudPropertyUnitsComponent } from '../../apps/components/bpm/modification-property-units/crud-property-units/crud-property-units.component';
