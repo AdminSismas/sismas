@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -19,7 +19,6 @@ import { JSONInput } from '@shared/interfaces';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import {
   User,
-  CreateUserDialogData,
   CreateUserParams
 } from 'src/app/apps/interfaces/users/user';
 import { PeopleService } from '@shared/services';
@@ -46,6 +45,13 @@ import Swal from 'sweetalert2';
   styles: ``
 })
 export class CreateUsersComponent implements OnInit {
+  /* ---- Injects ---- */
+  private peopleService = inject(PeopleService);
+  private userService = inject(UserService);
+  private dialog = inject(MatDialog);
+  private dialogRef = inject(MatDialogRef<CreateUsersComponent>);
+  public data = inject(MAT_DIALOG_DATA);
+
   public searchInputs: JSONInput[] = SEARCH_INPUTS;
   public createUserInputs: JSONInput[] = CREATE_USER_INPUTS;
 
@@ -58,14 +64,6 @@ export class CreateUsersComponent implements OnInit {
     number: string;
     individualTypeNumber: string;
   };
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: CreateUserDialogData,
-    private peopleService: PeopleService,
-    private userService: UserService,
-    private dialog: MatDialog,
-    private dialogRef: MatDialogRef<CreateUsersComponent>
-  ) {}
 
   ngOnInit(): void {
     if (this.data.mode === 'edit') {

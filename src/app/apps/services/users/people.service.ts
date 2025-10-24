@@ -7,11 +7,13 @@ import {
   HttpStatusCode
 } from '@angular/common/http';
 import { environment as envi } from '../../../../environments/environments';
-import { Observable, throwError , EMPTY, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
 import { InfoPerson } from '@shared/interfaces';
-import { InfoContact } from '@shared/interfaces';
+
+// import { InfoContact } from '@shared/interfaces';
 import { People } from '@shared/interfaces';
+import { InfoContact } from '@shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -110,5 +112,5 @@ export class PeopleService {
     return throwError(() => error);
   }
 
-  
+
 }

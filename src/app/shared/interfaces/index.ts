@@ -28,6 +28,8 @@ export * from '../../apps/interfaces/information-property/baunit-head-percentage
 export * from '../../apps/interfaces/information-property/basic-information-property';
 export * from '../../apps/interfaces/information-property/info-person';
 export * from '../../apps/interfaces/information-property/info-owners';
+export * from '../../apps/interfaces/information-property/basic-information-address';
+export * from '../../apps/interfaces/information-property/detail-basic-information-address';
 
 // Baunit ICA interfaces
 export * from '../../apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
@@ -35,6 +37,7 @@ export * from '../../apps/components/information-property/baunit-ica/interfaces/
 
 // BMP interfaces
 export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+export * from '../../apps/interfaces/bpm/difference-changes';
 // Process participant interface - temporarily commented due to circular dependency
 // export * from '../../apps/interfaces/bpmprocess-participant';
 
@@ -50,6 +53,9 @@ export * from '../../apps/interfaces/geographics/query-parameters-geographic-vie
 
 // Paginator interface que existe
 export * from '../../apps/interfaces/paginator/PaginatorIntlEs';
+
+// People interface
+export * from '../../apps/interfaces/users/people.model';
 
 // TODO: Verificar y corregir estas rutas
 // export * from '../../apps/interfaces/bpmprotask.interface';

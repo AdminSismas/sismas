@@ -43,11 +43,18 @@ export { InformationGeographicService } from '../../apps/services/geographics/in
 export { AlfaMainService } from '../../apps/services/bpm/core/alfa-main.service';
 export { ParticipantsService } from '../../apps/services/bpm/participants-service.service';
 export { InformationPersonService } from '../../apps/services/bpm/information-person.service';
+export { BpmCoreService } from '../../apps/services/bpm/bpm-core.service';
 
-// Operation support services  
+// Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';
 
 // Information property services
 export { BaunitIcaService } from '../../apps/components/information-property/baunit-ica/services/baunit-ica.service';
+
+// People services
+export * from '../../apps/services/users/people.service';
+
+// Validation services
+export { GeneralValidationsService } from '../../apps/services/validations/general-validations.service';
 
 // export { TitleService } from '../../apps/services/title/title.service';

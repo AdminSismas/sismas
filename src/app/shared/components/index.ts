@@ -29,6 +29,7 @@ export { ViewFileDocumentManagementComponent } from '../../apps/components/gener
 export { ComboboxComponent } from '../../apps/components/general-components/combobox/combobox.component';
 export { InConstructionComponent } from '../../apps/components/general-components/in-construction/in-construction.component';
 export { ParticipantTableComponent } from '../../apps/components/general-components/participant-table/participant-table.component';
+export { ComboboxCollectionFormComponent } from '../../apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 
 // Geographic components
 export { GeographicViewerEmbeddedComponent } from '../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
@@ -57,9 +58,12 @@ export { UpdateAlertComponent } from '../../apps/components/information-property
 export { PhotosComponent } from '../../apps/components/information-property/photos/photos.component';
 export { PropertyAppraisalInformationComponent } from '../../apps/components/information-property/property-appraisal-information/property-appraisal-information.component';
 export { InformationAdjacentPropertyComponent } from '../../apps/components/information-property/information-adjacent-property/information-adjacent-property.component';
+export { CrudInformationAdjacentPropertyComponent } from '../../apps/components/information-property/information-adjacent-property/crud-information-adjacent-property/crud-information-adjacent-property.component';
+export { MasiveDeleteAdjacentComponent } from '../../apps/components/information-property/information-adjacent-property/masive-delete-adjacent/masive-delete-adjacent.component';
 export { HistoricalActiveProceduresPropertyComponent } from '../../apps/components/information-property/historical-active-procedures/historical-active-procedures.component';
 export { BaunitIcaComponent } from '../../apps/components/information-property/baunit-ica/baunit-ica.component';
 export { IcaDetailsComponent } from '../../apps/components/information-property/baunit-ica/components/ica-details/ica-details.component';
+export { SuperNotariadoPropertyComponent } from '../../apps/components/information-property/super-notariado-property/super-notariado-property.component';
 
 // Tables components
 export { TableProceduresComponent } from '../../apps/components/tables/table-procedures/table-procedures.component';
@@ -68,6 +72,7 @@ export { TableCertificateSearchAppraisalsComponent } from '../../apps/components
 
 // BMP components
 export { ParticipantTableDialogComponent } from '../../apps/components/bpm/participant-table-dialog/participant-table-dialog.component';
+export { ViewChangesBpmOperationComponent } from '../../apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
 
 // BMP components - comentados porque las rutas no son accesibles durante compilación
 // export { CommentsComponent } from '../../apps/components/bpmcomments/comments.component';
@@ -78,4 +83,5 @@ export { ParticipantTableDialogComponent } from '../../apps/components/bpm/parti
 // ICA interfaces and constants (temporarily here due to component dependencies)
 export * from '../../apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
 export * from '../../apps/components/information-property/baunit-ica/interfaces/ica-table';
+export * from '../../apps/components/information-property/baunit-ica/interfaces/ica-details';
 export * from '../../apps/components/information-property/baunit-ica/baunit-ica.constant';
