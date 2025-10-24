@@ -24,9 +24,9 @@ export * from '../../apps/interfaces/document-management/attachment.model';
 // Forms interfaces
 export * from '../../apps/interfaces/forms/dynamic-forms';
 
-// User interfaces
-export * from '../../apps/interfaces/users/digitalized-signatures';
-export * from '../../shared/models/user.model';
+// User interfaces  
+export { DigitalizedSignatures, Pageable as DigitalizedPageable, Sort as DigitalizedSort, UsersSignatures, DecodeJwt, UserDetails } from '../../apps/interfaces/users/digitalized-signatures';
+export { User, Authority as UserAuthority } from '../../shared/models/user.model';
 // Information property interfaces
 export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
@@ -54,7 +54,7 @@ export * from '../../apps/interfaces/bpm/pro-task-e';
 export * from '../../apps/interfaces/bpm/pro-flow';
 export * from '../../apps/interfaces/bpm/pre-form';
 export * from '../../apps/interfaces/bpm/recognitionProperty.interface';
-export * from '../../apps/interfaces/bpm/task-response.model';
+export { TaskResponse, TaskResponseContent, TaskResponseModel } from '../../apps/interfaces/bpm/task-response.model';
 export * from '../../apps/interfaces/bpm/workflow.model';
 export * from '../../apps/interfaces/general/content-info-workflow.model';
 export * from '../../apps/interfaces/bpm/render-template.types';

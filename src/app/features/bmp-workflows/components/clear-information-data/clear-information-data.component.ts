@@ -12,13 +12,13 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgIf } from '@angular/common';
-import { ClearInformationData } from '../../../interfaces/general/content-info';
+import { ClearInformationData } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import {
   CONSTANT_MSG_ERROR_CLEAR_INFORMATION,
   CONSTANT_NAME_CONFIRMATION
-} from '../../../constants/general/constantLabels';
+} from '@shared/constants';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TWO_POINT_ } from '@shared/constants';
 
