@@ -1,4 +1,4 @@
-import { ProceduresProcessCollection } from '@shared/interfaces';
+import { ProceduresCollection as ProceduresProcessCollection } from '@shared/interfaces';
 
 export class ProceduresCollection {
     executionId?: number;

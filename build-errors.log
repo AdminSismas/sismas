@@ -1,0 +1,669 @@
+
+> geogestion@18.2.19 build C:\GeoGestionV2
+> ng build
+
+[33m❯[39m Building...
+[32m✔[39m Building...
+Application bundle generation failed. [11.005 seconds]
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'name' does not exist on type 'ProceduresCollection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/components/information-property/historical-active-procedures/historical-active-procedures.component.ts:306:36:
+[37m      306 │           processName: row.process?.[32mname[37m
+          ╵                                     [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'name' does not exist on type 'ProceduresCollection'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/components/tables/table-procedures/table-procedures.component.ts:599:38:
+[37m      599 │             processName: row.process?.[32mname[37m
+          ╵                                       [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2724: '"@shared/interfaces"' has no exported member named 'PreForm'. Did you mean 'Preform'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/interfaces/bpm/pro-flow.ts:1:9:
+[37m      1 │ import { [32mPreForm[37m } from '@shared/interfaces';
+        ╵          [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'AlfaMainService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/bpm/core/alfa-main.service.ts:43:16:
+[37m      43 │     return this.[32mrequestsService[37m.sendRequestsFetchPost(url);
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'AlfaMainService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/bpm/core/alfa-main.service.ts:190:16:
+[37m      190 │     return this.[32mrequestsService[37m
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'AlfaMainService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/bpm/core/alfa-main.service.ts:214:16:
+[37m      214 │     return this.[32mrequestsService[37m
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2300: Duplicate identifier 'http'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/bpm/participants-service.service.ts:20:22:
+[37m      20 │   constructor(private [32mhttp[37m: HttpClient) {}
+         ╵                       [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'Observable<InfoPerson>' is not assignable to type 'Observable<InfoOwners[]>'.
+  Type 'InfoPerson' is missing the following properties from type 'InfoOwners[]': length, pop, push, concat, and 29 more.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/bpm/rrright.service.ts:23:4:
+[37m      23 │     [32mreturn[37m this.http.get<InfoPerson>(url)
+         ╵     [32m~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2300: Duplicate identifier 'http'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/economic-mod-land/domain-ladm-col.service.ts:18:10:
+[37m      18 │   private [32mhttp[37m = inject(HttpClient);
+         ╵           [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2416: Property 'getZones' in type 'GeoeconomicZoneService' is not assignable to the same property in base type 'ZoneServices'.
+  Type '(divpolLv1: string, divpolLv2: string) => Observable<GeoEconomicZone[]>' is not assignable to type '(divpolLv1: string, divpolLv2: string) => Observable<UrbanZone[] | RuralZone[] | GeoEconomicZone[]>'.
+    Type 'Observable<GeoEconomicZone[]>' is not assignable to type 'Observable<UrbanZone[] | RuralZone[] | GeoEconomicZone[]>'.
+      Type 'GeoEconomicZone[]' is not assignable to type 'UrbanZone[] | RuralZone[] | GeoEconomicZone[]'.
+        Type 'GeoEconomicZone[]' is not assignable to type 'UrbanZone[]'.
+          Type 'GeoEconomicZone' is missing the following properties from type 'UrbanZone': zonaHomoFisicaUrId, zonaHomoFisicaUrCode, domTopografiaZonaTipo, domInfluenciaVialUrbanaTipo, and 4 more.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/economic-mod-land/geoeconomic-zone.service.ts:18:2:
+[37m      18 │   [32mgetZones[37m(divpolLv1: string, divpolLv2: string): Observable<GeoEc...
+         ╵   [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2416: Property 'createZone' in type 'GeoeconomicZoneService' is not assignable to the same property in base type 'ZoneServices'.
+  Type '(params: Zone) => Observable<GeoEconomicZone>' is not assignable to type '(params: Zone) => Observable<Zone>'.
+    Type 'Observable<GeoEconomicZone>' is not assignable to type 'Observable<Zone>'.
+      Type 'GeoEconomicZone' is not assignable to type 'Zone'.
+        Type 'import("C:/GeoGestionV2/src/app/apps/interfaces/information-property/geo-economic-zone").GeoEconomicZone' is not assignable to type 'import("C:/GeoGestionV2/src/app/apps/interfaces/economic-mod-land/zone-description").GeoEconomicZone'.
+          Types of property 'zonaHomoGeoEconomicaId' are incompatible.
+            Type 'number | undefined' is not assignable to type 'number'.
+              Type 'undefined' is not assignable to type 'number'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/economic-mod-land/geoeconomic-zone.service.ts:33:2:
+[37m      33 │   [32mcreateZone[37m(params: Zone): Observable<GeoEconomicZone> {
+         ╵   [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2416: Property 'updateZone' in type 'GeoeconomicZoneService' is not assignable to the same property in base type 'ZoneServices'.
+  Type '(params: GeoEconomicZone) => Observable<GeoEconomicZone>' is not assignable to type '(params: any) => Observable<Zone>'.
+    Type 'Observable<GeoEconomicZone>' is not assignable to type 'Observable<Zone>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/economic-mod-land/geoeconomic-zone.service.ts:44:2:
+[37m      44 │   [32mupdateZone[37m(params: GeoEconomicZone): Observable<GeoEconomicZone> {
+         ╵   [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'CollectionServices'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/general/collection.service.ts:39:16:
+[37m      39 │     return this.[32mrequestsService[37m.sendRequestsGetOption(url, {});
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992003: No suitable injection token for parameter 'http' of class 'CommonGeneralValidationsService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/general/common-general-validations.service.ts:8:22:
+[37m      8 │   constructor(private [32mhttp[37m: HttpClient) {}
+        ╵                       [32m~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/apps/services/general/common-general-validations.service.ts:8:28:
+[37m      8 │   constructor(private http: [32mHttpClient[37m) {}
+        ╵                             [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HttpClient'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/general/common-general-validations.service.ts:8:28:
+[37m      8 │   constructor(private http: [32mHttpClient[37m) {}
+        ╵                             [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992003: No suitable injection token for parameter 'http' of class 'SearchService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/general/search.service.ts:17:22:
+[37m      17 │   constructor(private [32mhttp[37m: HttpClient) {}
+         ╵                       [32m~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/apps/services/general/search.service.ts:17:28:
+[37m      17 │   constructor(private http: [32mHttpClient[37m) {}
+         ╵                             [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HttpClient'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/general/search.service.ts:17:28:
+[37m      17 │   constructor(private http: [32mHttpClient[37m) {}
+         ╵                             [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2300: Duplicate identifier 'HttpErrorResponse'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/geographics/information-geographic.service.ts:6:9:
+[37m      6 │ import { [32mHttpErrorResponse[37m, HttpStatusCode , HttpClient, HttpParams...
+        ╵          [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2300: Duplicate identifier 'HttpErrorResponse'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/geographics/information-geographic.service.ts:6:69:
+[37m      6 │ ...HttpClient, HttpParams, [32mHttpErrorResponse[37m } from '@angular/commo...
+        ╵                            [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationGeographicService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/geographics/information-geographic.service.ts:29:16:
+[37m      29 │     return this.[32mrequestsService[37m.sendRequestsGetText(url)
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationGeographicService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/geographics/information-geographic.service.ts:35:16:
+[37m      35 │     return this.[32mrequestsService[37m.sendRequestsGetText(url)
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationGeographicService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/geographics/information-geographic.service.ts:46:16:
+[37m      46 │     return this.[32mrequestsService[37m.sendRequestsGetText(url)
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationGeographicService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/geographics/information-geographic.service.ts:52:16:
+[37m      52 │     return this.[32mrequestsService[37m.sendRequestsGetText(url)
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationGeographicService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/geographics/information-geographic.service.ts:60:16:
+[37m      60 │     return this.[32mrequestsService[37m.sendRequestsFetchPost(
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationAdjacentPropertyService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-adjacent-property/information-adjacent-property.service.ts:56:16:
+[37m      56 │     return this.[32mrequestsService[37m.sendPostText(url).pipe(
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2687: All declarations of 'http' must have identical modifiers.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:22:2:
+[37m      22 │   [32mhttp[37m = inject(HttpClient);
+         ╵   [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2300: Duplicate identifier 'http'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:24:22:
+[37m      24 │   constructor(private [32mhttp[37m: HttpClient) {}
+         ╵                       [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2687: All declarations of 'http' must have identical modifiers.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:24:22:
+[37m      24 │   constructor(private [32mhttp[37m: HttpClient) {}
+         ╵                       [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationConstructionsService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:31:16:
+[37m      31 │     return this.[32mrequestsService[37m
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationConstructionsService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:80:16:
+[37m      80 │     return this.[32mrequestsService[37m
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationConstructionsService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:102:16:
+[37m      102 │     return this.[32mrequestsService[37m
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationConstructionsService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:140:16:
+[37m      140 │     return this.[32mrequestsService[37m
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationConstructionsService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/information-property/information-constructions-property/information-constructions.service.ts:156:16:
+[37m      156 │     return this.[32mrequestsService[37m.sendDeleteParams(url, { body: for...
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992003: No suitable injection token for parameter 'http' of class 'SendInformationRegisterService'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/register-procedure/send-information-register.service.ts:12:22:
+[37m      12 │   constructor(private [32mhttp[37m: HttpClient) {}
+         ╵                       [32m~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/apps/services/register-procedure/send-information-register.service.ts:12:28:
+[37m      12 │   constructor(private http: [32mHttpClient[37m) {}
+         ╵                             [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'HttpClient'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/register-procedure/send-information-register.service.ts:12:28:
+[37m      12 │   constructor(private http: [32mHttpClient[37m) {}
+         ╵                             [32m~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'UnitPropertyInformationService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/territorial-organization/baunit-children-information.service.ts:27:16:
+[37m      27 │     return this.[32mrequestsService[37m
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'UnitPropertyInformationService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/territorial-organization/baunit-children-information.service.ts:43:16:
+[37m      43 │     return this.[32mrequestsService[37m
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'UnitPropertyInformationService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/territorial-organization/baunit-children-information.service.ts:109:16:
+[37m      109 │     return this.[32mrequestsService[37m
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationPropertyService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/territorial-organization/information-property.service.ts:66:16:
+[37m      66 │     return this.[32mrequestsService[37m
+         ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationPropertyService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/territorial-organization/information-property.service.ts:110:16:
+[37m      110 │     return this.[32mrequestsService[37m
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'requestsService' does not exist on type 'InformationPropertyService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/territorial-organization/information-property.service.ts:126:16:
+[37m      126 │     return this.[32mrequestsService[37m
+          ╵                 [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/interfaces"' has no exported member 'Township'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/apps/services/territorial-organization/territorial-organization.service.ts:8:9:
+[37m      8 │ import { [32mTownship[37m } from '@shared/interfaces';
+        ╵          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../../constants/general/constantLabels"[0m
+
+    src/app/features/bmp-workflows/components/clear-information-data/clear-information-data.component.ts:10:81:
+[37m      10 │ ...E_CONFIRMATION } from [32m'../../../constants/general/constantLabels'[37m;
+         ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../interfaces/general/content-info' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/clear-information-data/clear-information-data.component.ts:15:37:
+[37m      15 │ ...InformationData } from [32m'../../../interfaces/general/content-info'[37m;
+         ╵                           [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../constants/general/constantLabels' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/clear-information-data/clear-information-data.component.ts:21:7:
+[37m      21 │ } from [32m'../../../constants/general/constantLabels'[37m;
+         ╵        [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../../constants/general/attachment.constant"[0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:23:40:
+[37m      23 │ ...ROPERTIES } from [32m'../../../constants/general/attachment.constant'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../services/document-management/document-management.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:51:34:
+[37m      51 │ ...ce } from [32m'../../../services/document-management/document-manag[37m...
+         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../interfaces/document-management/attachment.model' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:52:37:
+[37m      52 │ ...on } from [32m'../../../interfaces/document-management/attachment.m[37m...
+         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../interfaces/general/content-info-attachment.model' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:53:38:
+[37m      53 │ ...nt } from [32m'../../../interfaces/general/content-info-attachment.[37m...
+         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../interfaces/general/information-pegeable.model' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:54:36:
+[37m      54 │ ...le } from [32m'../../../interfaces/general/information-pegeable.mod[37m...
+         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2306: File 'C:/GeoGestionV2/src/app/features/bmp-workflows/index.ts' is not a module.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:55:52:
+[37m      55 │ ...wFileDocumentManagementComponent } from [32m'@features/bmp-workflows'[37m;
+         ╵                                            [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../constants/general/attachment.constant' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:56:40:
+[37m      56 │ ...ROPERTIES } from [32m'../../../constants/general/attachment.constant'[37m;
+         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992003: No suitable injection token for parameter 'attachmentService' of class 'DocumentTableComponent'.
+  Consider using the @Inject decorator to specify an injection token.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:132:12:
+[37m      132 │     private [32mattachmentService[37m: AttachmentService,
+          ╵             [32m~~~~~~~~~~~~~~~~~[0m
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:132:31:
+[37m      132 │     private attachmentService: [32mAttachmentService[37m,
+          ╵                                [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'error' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/bmp-workflows/components/document-table/document-table.component.ts:236:16:
+[37m      236 │         error: ([32merror[37m) => {
+          ╵                 [32m~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/components"' has no exported member 'AlfaMainInformationComponent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/alf/main/alfa-main.component.ts:26:2:
+[37m      26 │   [32mAlfaMainInformationComponent[37m
+         ╵   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value is of type '[MatStepperModule, MatButtonToggleModule, MatIconModule, MatButtonModule, MatExpansionModule, MatCheckboxModule, MatPaginatorModule, MatSortModule, MatTableModule, TabAlfaGeoMainComponent, (not statically analyzable)]'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/alf/main/alfa-main.component.ts:44:11:
+[37m      44 │   imports: [32m[[37m
+         ╵            [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/services"' has no exported member 'RecognitionPropertyService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component.ts:27:9:
+[37m      27 │ import { [32mRecognitionPropertyService[37m } from '@shared/services';
+         ╵          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/interfaces"' has no exported member 'RecognitionProperty'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component.ts:42:2:
+[37m      42 │   [32mRecognitionProperty[37m,
+         ╵   [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/interfaces"' has no exported member 'RecognitionPropertyBasic'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component.ts:43:2:
+[37m      43 │   [32mRecognitionPropertyBasic[37m
+         ╵   [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/components"' has no exported member 'TableThirdPartyAffectedComponent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component.ts:46:2:
+[37m      46 │   [32mTableThirdPartyAffectedComponent[37m
+         ╵   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value is of type '[MatTableModule, MatIconModule, MatButtonModule, SweetAlert2Module, VexPageLayoutComponent, DynamicFormsComponent, VexPageLayoutContentDirective, FluidMinHeightDirective, (not statically analyzable)]'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component.ts:60:11:
+[37m      60 │   imports: [32m[[37m
+         ╵            [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/services"' has no exported member 'RecognitionPropertyService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component.ts:18:9:
+[37m      18 │ import { [32mRecognitionPropertyService[37m } from '@shared/services';
+         ╵          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/interfaces"' has no exported member 'RecognitionProperty'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component.ts:21:2:
+[37m      21 │   [32mRecognitionProperty[37m,
+         ╵   [32m~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/interfaces"' has no exported member 'RecognitionPropertyBasic'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component.ts:22:2:
+[37m      22 │   [32mRecognitionPropertyBasic[37m,
+         ╵   [32m~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/interfaces"' has no exported member 'TagsRecognition'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component.ts:23:2:
+[37m      23 │   [32mTagsRecognition[37m
+         ╵   [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/components"' has no exported member 'TableThirdPartyAffectedComponent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component.ts:31:9:
+[37m      31 │ import { [32mTableThirdPartyAffectedComponent[37m } from '@shared/componen...
+         ╵          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value is of type '[MatTabsModule, MatIconModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, DynamicFormsComponent, SweetAlert2Module, VexPageLayoutComponent, VexPageLayoutContentDirective, FluidHeightDirective, FluidMaxHeightDirective, (not statically analyzable)]'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component.ts:40:11:
+[37m      40 │   imports: [32m[[37m
+         ╵            [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'tags' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component.ts:167:15:
+[37m      167 │         next: ([32mtags[37m) => {
+          ╵                [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/components"' has no exported member 'AlfaMainInformationComponent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/tab-alfa-geo-main/tab-alfa-geo-main.component.ts:24:9:
+[37m      24 │ import { [32mAlfaMainInformationComponent[37m } from '@shared/components';
+         ╵          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value is of type '[VexPageLayoutComponent, VexPageLayoutContentDirective, MatTabGroup, MatTab, MatIcon, MatTabLabel, GeographicViewerEmbeddedComponent, FluidHeightDirective, (not statically analyzable)]'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/cadastral/tab-alfa-geo-main/tab-alfa-geo-main.component.ts:43:11:
+[37m      43 │   imports: [32m[[37m
+         ╵            [32m^[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2724: '"@shared/services"' has no exported member named 'ParticipantsProcessService'. Did you mean 'ParticipantsService'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/citation-and-notice/citation-notice-grid/citation-notice-grid.component.ts:23:9:
+[37m      23 │ import { [32mParticipantsProcessService[37m } from '@shared/services';
+         ╵          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'sendAttachment' does not exist on type 'AttachmentService'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component.ts:240:27:
+[37m      240 │     this.attachmentService.[32msendAttachment[37m(formData).subscribe(
+          ╵                            [32m~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/interfaces"' has no exported member 'BpmDocument'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/initiate-filing-procedure/initiate-filing-procedure.component.ts:37:9:
+[37m      37 │ import { [32mBpmDocument[37m } from '@shared/interfaces';
+         ╵          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2305: Module '"@shared/services"' has no exported member 'PermissionVailable'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/bpm/initiate-filing-procedure/initiate-filing-procedure.component.ts:38:28:
+[37m      38 │ ...t { BpmProcessService, [32mPermissionVailable[37m } from '@shared/servi...
+         ╵                           [32m~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG2: Type 'GeoeconomicZoneService' is not assignable to type 'ZoneServices'.
+  The types returned by 'getZones(...)' are incompatible between these types.
+    Type 'Observable<GeoEconomicZone[]>' is not assignable to type 'Observable<UrbanZone[] | RuralZone[] | GeoEconomicZone[]>'.
+      Type 'GeoEconomicZone[]' is not assignable to type 'UrbanZone[] | RuralZone[] | GeoEconomicZone[]'.
+        Type 'GeoEconomicZone[]' is not assignable to type 'UrbanZone[]'.
+          Type 'GeoEconomicZone' is missing the following properties from type 'UrbanZone': zonaHomoFisicaUrId, zonaHomoFisicaUrCode, domTopografiaZonaTipo, domInfluenciaVialUrbanaTipo, and 4 more.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/configuration/cadastral/economic-mod-land/economic-mod-land.component.html:135:17:
+[37m      135 │                 [[32mservice[37m]="geoeconomicZoneService"
+          ╵                  [32m~~~~~~~[0m
+
+  Error occurs in the template of component EconomicModLandComponent.
+
+    src/app/pages/pages/configuration/cadastral/economic-mod-land/economic-mod-land.component.ts:82:15:
+[37m      82 │   templateUrl: [32m'./economic-mod-land.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2769: No overload matches this call.
+  Overload 1 of 2, '(observerOrNext?: Partial<Observer<GeoEconomicZone[]>> | ((value: GeoEconomicZone[]) => void) | undefined): Subscription', gave the following error.
+    Type '(result: GeoEconomicZone[]) => GeoEconomicZone[]' is not assignable to type '(value: GeoEconomicZone[]) => void'.
+      Types of parameters 'result' and 'value' are incompatible.
+        Type 'import("C:/GeoGestionV2/src/app/apps/interfaces/information-property/geo-economic-zone").GeoEconomicZone[]' is not assignable to type 'import("C:/GeoGestionV2/src/app/apps/interfaces/economic-mod-land/zone-description").GeoEconomicZone[]'.
+          Type 'import("C:/GeoGestionV2/src/app/apps/interfaces/information-property/geo-economic-zone").GeoEconomicZone' is not assignable to type 'import("C:/GeoGestionV2/src/app/apps/interfaces/economic-mod-land/zone-description").GeoEconomicZone'.
+  Overload 2 of 2, '(next?: ((value: GeoEconomicZone[]) => void) | null | undefined, error?: ((error: any) => void) | null | undefined, complete?: (() => void) | null | undefined): Subscription', gave the following error.
+    Object literal may only specify known properties, and 'next' does not exist in type '(value: GeoEconomicZone[]) => void'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/pages/pages/configuration/cadastral/economic-mod-land/economic-mod-land.component.ts:215:8:
+[37m      215 │         [32mnext[37m: ((result: GeoEconomicZone[]) => this.dataSource.geo...
+          ╵         [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/users/digitalized-signatures' has already exported a member named 'Pageable'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:65:0:
+[37m      65 │ [32mexport * from '../../apps/interfaces/users/user';[37m
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/users/digitalized-signatures' has already exported a member named 'Sort'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:65:0:
+[37m      65 │ [32mexport * from '../../apps/interfaces/users/user';[37m
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../shared/models/user.model' has already exported a member named 'Authority'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:65:0:
+[37m      65 │ [32mexport * from '../../apps/interfaces/users/user';[37m
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/bpm/task-response.model' has already exported a member named 'ProcessModel'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:76:0:
+[37m      76 │ [32mexport * from '../../apps/interfaces/bpm/table-procedure-response.[37m...
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/information-property/info-person' has already exported a member named 'InfoPerson'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:79:0:
+[37m      79 │ [32mexport * from '../../apps/interfaces/bpm/changes-property-owner';[37m
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/information-property/geo-economic-zone' has already exported a member named 'GeoEconomicZone'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:81:0:
+[37m      81 │ [32mexport * from '../../apps/interfaces/economic-mod-land/zone-descri[37m...
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/information-property/zone-baunit' has already exported a member named 'CadastreChangeLog'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:81:0:
+[37m      81 │ [32mexport * from '../../apps/interfaces/economic-mod-land/zone-descri[37m...
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/users/digitalized-signatures' has already exported a member named 'Pageable'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:84:0:
+[37m      84 │ [32mexport * from '../../apps/interfaces/information-property/baunit-n[37m...
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2308: Module '../../apps/interfaces/users/digitalized-signatures' has already exported a member named 'Sort'. Consider explicitly re-exporting to resolve the ambiguity.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/shared/interfaces/index.ts:84:0:
+[37m      84 │ [32mexport * from '../../apps/interfaces/information-property/baunit-n[37m...
+         ╵ [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+ ELIFECYCLE  Command failed with exit code 1.

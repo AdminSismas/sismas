@@ -14,10 +14,13 @@ export class ParticipantsService {
   private url_basic = `${envi.url}:${envi.port}`;
 
   private chargeInfoSubject = new BehaviorSubject<boolean | null>(false);
-  private http = inject(HttpClient);
+  
   chargeInfoSubject$ = this.chargeInfoSubject.asObservable();
 
-  constructor() {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   changeInfoParticipants(value: boolean | null) {
     this.chargeInfoSubject.next(value);

@@ -14,8 +14,11 @@ export class DomainLadmColService {
   basic_url = `${environment.url}:${environment.port}${environment.domain_domain}`;
 
   /* -------------- CONSTRUCTOR -------------- */
-  constructor() {}
-  private http = inject(HttpClient);
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
+  
 
 
   /* -------------- MÉTODOS -------------- */

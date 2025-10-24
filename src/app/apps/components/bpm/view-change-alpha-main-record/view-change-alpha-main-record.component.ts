@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
 import { SearchData } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { CadastralChangeLog } from '@shared/interfaces';
+import { CadastreChangeLog as CadastralChangeLog } from '@shared/interfaces';
 import {
   PAGE,
   TABLE_COLUMN_CHANGES_BPM_OPERATION

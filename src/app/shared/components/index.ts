@@ -5,6 +5,14 @@
 // BMP Workflow components (migrados)
 export { DocumentTableComponent } from '../../features/bmp-workflows/components/document-table/document-table.component';
 export { ClearInformationDataComponent } from '../../features/bmp-workflows/components/clear-information-data/clear-information-data.component';
+export { CreateWorkflowComponent } from '../../apps/components/tables/table-workflow/components/create-workflow/create-workflow.component';
+export { TaskListComponent } from '../../apps/components/tables/table-workflow/components/task-list/task-list.component';
+export { EditTaskComponent } from '../../apps/components/tables/table-workflow/components/edit-task/edit-task.component';
+export { LaneNamesPipe } from '../../apps/components/tables/table-workflow/pipe/lane-names.pipe';
+export { taskListColumns } from '../../apps/components/tables/table-workflow/constants/task-list.constants';
+export { editTaskInputs } from '../../apps/components/tables/table-workflow/constants/edit-task.constants';
+export type { InfoOwnerRowT } from '../../apps/components/information-property/information-property-owners/information-property-owners.component';
+export { TableDomainLadmColComponent } from '../../apps/components/economic-mod-land/table-domain-ladm-col/table-domain-ladm-col.component';
 
 // === ARQUITECTURA LEGACY (apps/components) ===
 // General components que existen y funcionan
@@ -103,6 +111,13 @@ export { FilterCadastralSearchComponent } from '../../apps/components/tables/tab
 // BMP components
 export { ParticipantTableDialogComponent } from '../../apps/components/bpm/participant-table-dialog/participant-table-dialog.component';
 export { ViewChangesBpmOperationComponent } from '../../apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
+export { ShowErrorValidateAlfaMainComponent } from '../../apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
+export { HeaderBpmCoreComponent } from '../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
+export { CommentsComponent } from '../../apps/components/bpm/comments/comments.component';
+export { AttachmentExcelMassiveComponent } from '../../apps/components/bpm/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+export { ModificationPropertyUnitsComponent } from '../../apps/components/bpm/modification-property-units/modification-property-units.component';
+export { CreateMatrixFromNphComponent } from '../../apps/components/bpm/table-alfa-main/create-matrix-from-nph/create-matrix-from-nph.component';
+export { CrudPropertyUnitsComponent } from '../../apps/components/bpm/modification-property-units/crud-property-units/crud-property-units.component';
 
 // BMP components - comentados porque las rutas no son accesibles durante compilación
 // export { CommentsComponent } from '../../apps/components/bpmcomments/comments.component';

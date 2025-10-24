@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { Observable, ReplaySubject, combineLatest, map } from 'rxjs';
 import { IBmpTaskService, IBmpFlowService } from '@features/bmp-workflows';
 import { BmpTaskService } from '@features/bmp-workflows';

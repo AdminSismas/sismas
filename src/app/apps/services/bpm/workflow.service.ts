@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { PageSortByData } from '@shared/interfaces';
 import { catchError, Observable } from 'rxjs';
@@ -21,7 +22,10 @@ export class WorkflowService {
   basic_url = `${environment.url}:${environment.port}${environment.bpmProcess.value}`;
 
   /* -------------- CONSTRUCTOR -------------- */
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByWorkflow(

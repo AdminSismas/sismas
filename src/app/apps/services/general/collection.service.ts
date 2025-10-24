@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
-import { HttpParams , HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DomainCalificationCollection, DomainCollection } from '@shared/interfaces';
 
 @Injectable({
@@ -12,7 +13,9 @@ export class CollectionServices {
   basic_url = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
   calification_url = `${environment.url}:${environment.port}${environment.calificationUB}`;
   constructor(
-  ) { }
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   getDataDomainName(domainName:string):Observable<DomainCollection[]> {
     let paramsR:HttpParams = new HttpParams();

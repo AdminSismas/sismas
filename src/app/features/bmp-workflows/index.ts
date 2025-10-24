@@ -1,4 +1,1 @@
-// BMP Workflows barrel exports
-export * from './interfaces';
-export * from './services';
-export * from './models';
+// BMP Workflows barrel exports\nexport * from './interfaces';\nexport * from './services';\nexport * from './models';\nexport * from './components';

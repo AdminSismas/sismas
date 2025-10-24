@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import {
   environment as envi,
   environment
@@ -15,7 +16,8 @@ import { PageSearchData } from '@shared/interfaces';
 export class ValidateInformationBaunitService {
   basic_url = `${environment.url}:${environment.port}`;
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {}
 
   getBaunitIdEInOtherProcess(baunitIdE: string): Observable<string> {

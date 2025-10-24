@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { catchError, Observable, ReplaySubject , EMPTY, throwError } from 'rxjs';
 import { ProTaskE } from '@shared/interfaces';
@@ -7,6 +8,7 @@ import { ProExecutionE } from '@shared/interfaces';
 import { DifferenceChanges } from '@shared/interfaces';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MetadataBpm } from '@shared/interfaces';
+import { SendGeneralRequestsService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,8 @@ export class BpmCoreService {
   basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {
   }
 

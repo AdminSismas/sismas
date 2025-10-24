@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { catchError, Observable } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
@@ -11,7 +12,10 @@ export class OutFormatService {
 
   basic_url = `${environment.url}:${environment.port}`;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) { }
 
    /* -------------- MÉTODOS -------------- */
 getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {

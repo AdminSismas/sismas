@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { Subject } from 'rxjs';
 
 @Injectable({

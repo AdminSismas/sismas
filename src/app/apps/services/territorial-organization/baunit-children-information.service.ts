@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, Observable, tap , EMPTY, throwError } from 'rxjs';
@@ -17,7 +18,8 @@ export class UnitPropertyInformationService {
   basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {}
 
   //{{url}}:{{port}}/baunit/baunitId

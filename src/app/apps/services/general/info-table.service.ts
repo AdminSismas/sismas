@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class InfoTableService {
   basic_url = `${environment.url}:${environment.port}${environment.baunit_attributes}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) { }
 
   getDataPropertyByRegistration(page:PageSearchData):Observable<InformationPegeable> {

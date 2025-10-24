@@ -49,7 +49,7 @@ import {
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
 } from '@shared/constants';
-import { Zone } from '@shared/interfaces';
+import { TerritorialZone as Zone } from '@shared/interfaces';
 import { Sector } from '@shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Neighborhood } from '@shared/interfaces';

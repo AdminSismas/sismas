@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root'

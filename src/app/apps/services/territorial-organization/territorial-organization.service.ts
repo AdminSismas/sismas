@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Department } from '@shared/interfaces';
 import { Municipality } from '@shared/interfaces';
 import { Township } from '@shared/interfaces';
-import { Zone } from '@shared/interfaces';
+import { TerritorialZone as Zone } from '@shared/interfaces';
 import { Sector } from '@shared/interfaces';
 import { Commune } from '@shared/interfaces';
 import { Neighborhood } from '@shared/interfaces';
@@ -20,7 +21,8 @@ export class TerritorialOrganizationService {
   basic_url = `${environment.url}:${environment.port}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {}
 
   getDataDeparments(): Observable<Department[]> {

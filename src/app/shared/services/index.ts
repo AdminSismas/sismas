@@ -54,6 +54,11 @@ export { InformationPersonService } from '../../apps/services/bpm/information-pe
 export { BpmCoreService } from '../../apps/services/bpm/bpm-core.service';
 export { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
 export { BpmProcessService } from '../../apps/services/bpm/bpm-process.service';
+export { WorkflowService } from '../../apps/services/bpm/workflow.service';
+export { DomainLadmColService } from '../../apps/services/economic-mod-land/domain-ladm-col.service';
+export { SearchService } from '../../apps/services/general/search.service';
+export { DynamicComponentsService } from '../../apps/services/bpm/dynamic-components.service';
+export { RecognitionPropertyService } from '../../apps/services/bpm/recognition-property.service';
 
 // Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';

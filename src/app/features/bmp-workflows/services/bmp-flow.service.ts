@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as envi } from 'src/environments/environments';
@@ -11,7 +12,10 @@ import { ProFlow } from '@features/bmp-workflows';
 export class BmpFlowService implements IBmpFlowService {
   private basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   getProFlow(flowId: string): Observable<ProFlow> {
     const url = `${this.basic_url}/${envi.bpmOperation.proflow}${flowId}`;

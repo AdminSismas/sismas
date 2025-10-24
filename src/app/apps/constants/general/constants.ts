@@ -17,7 +17,7 @@ import {
   TypeQualificationMode,
   ValidateQualificationByDomBuiltType
 } from '@shared/interfaces';
-import { CadastralChangeLog } from '@shared/interfaces';
+import { CadastreChangeLog as CadastralChangeLog } from '@shared/interfaces';
 import { OutFormatModel } from '@shared/interfaces';
 import { DataFolio } from '@shared/interfaces';
 import { DataSource } from '@shared/interfaces';

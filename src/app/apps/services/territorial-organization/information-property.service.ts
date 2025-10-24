@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { BehaviorSubject, catchError, Observable, Subject , EMPTY, throwError } from 'rxjs';
 import { BasicInformationProperty } from '@shared/interfaces';
@@ -37,7 +38,8 @@ export class InformationPropertyService {
   showOptionsRulePage$: Observable<boolean> = this.showRulePage$.asObservable();
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {}
 
   public reloadTableSet(value: boolean): void {

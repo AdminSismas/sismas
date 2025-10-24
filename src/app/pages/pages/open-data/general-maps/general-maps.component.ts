@@ -28,7 +28,7 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
-import { Zone } from '@shared/interfaces';
+import { TerritorialZone as Zone } from '@shared/interfaces';
 import { ComboboxComponent } from '@shared/components';
 import { _filterInformationCode, getRandomInt } from '../../../../apps/utils/general';
 import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../apps/constants/general/constants';

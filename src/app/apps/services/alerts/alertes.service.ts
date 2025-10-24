@@ -18,7 +18,10 @@ export class AlertsService {
   showOptionsPersonStarted$: Observable<boolean> =
     this.showOptionsPerson$.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);

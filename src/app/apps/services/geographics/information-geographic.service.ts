@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
-import { catchError, Observable, throwError , EMPTY, throwError } from 'rxjs';
+import { catchError, Observable, throwError, EMPTY } from 'rxjs';
 import { QueryParametersGeographicVie } from '@shared/interfaces';
 import { ChangeControl } from '@shared/interfaces';
-import { HttpErrorResponse, HttpStatusCode , HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode, HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,10 @@ export class InformationGeographicService {
 
   basic_url = `${envi.url}:${envi.port}${envi.accessGeo.value}`;
 
-  constructor() {
-  }
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
 
   getInfoGeographicViewer(cadastralNumber: string): Observable<QueryParametersGeographicVie> {

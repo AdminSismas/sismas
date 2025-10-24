@@ -1,5 +1,6 @@
-import { HttpParams , HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { Observable } from 'rxjs';
 import { GeoEconomicZoneInfo } from '@shared/interfaces';
 import { ZoneBAUnitFisica } from '@shared/interfaces';
@@ -14,7 +15,10 @@ export class InformationZonesService {
 
   basic_url = `${envi.url}:${envi.port}`;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   getByBauniFisica(baunitId: number): Observable<ZoneBAUnitFisica> {
     const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdFisicas'}`;

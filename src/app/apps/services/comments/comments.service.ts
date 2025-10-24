@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -18,7 +19,10 @@ export class CommentsService {
   basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.bpmOperation.comment}/`;
 
   /* -------------- CONSTRUCTRO -------------- */
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByComments(

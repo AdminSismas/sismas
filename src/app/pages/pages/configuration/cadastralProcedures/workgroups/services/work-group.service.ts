@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Group } from '../interfaces/group.interface';
@@ -14,7 +15,10 @@ export class WorkgroupsService {
     private apiUrl = `${environment.url}:${environment.port}${environment.bpmGroup.value}`;
 
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
 
   getAll(page: number, size: number): Observable<InformationPegeable> {

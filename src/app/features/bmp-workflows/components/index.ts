@@ -1,3 +1,1 @@
-// BMP Workflows components barrel exports
-export * from './clear-information-data/clear-information-data.component';
-export * from './document-table/document-table.component';
+// BMP Workflows components barrel exports\nexport * from './clear-information-data/clear-information-data.component';\nexport * from './document-table/document-table.component';\nexport { ViewFileDocumentManagementComponent } from '../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';

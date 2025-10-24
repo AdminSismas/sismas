@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { BehaviorSubject, catchError, Observable , EMPTY, throwError } from 'rxjs';
-import { HttpParams , HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { BpmTypeProcess } from '@shared/interfaces';
 
@@ -19,8 +20,9 @@ export class BpmProcessService {
     dataPermissions$: Observable<PermissionVailable> = this.subjectPermision$.asObservable();
 
   constructor(
-  ) {
-  }
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   getProceduresByCategory(category: string): Observable<BpmTypeProcess[]> {
     const url = `${this.basic_url}${environment.bpmProcess.category}`;

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PageProceduresData } from '@shared/interfaces';
@@ -17,7 +18,8 @@ export class ProceduresService {
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {}
 
   /* -------------- MÉTODOS -------------- */

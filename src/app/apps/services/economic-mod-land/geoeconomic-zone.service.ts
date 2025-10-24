@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { Observable, catchError, of } from 'rxjs';
 import { GeoEconomicZone, GeoEconomicZoneDetails, Zone, ZoneServices } from '@shared/interfaces';
 import { environment as envi } from 'src/environments/environments';
@@ -12,7 +13,8 @@ export class GeoeconomicZoneService implements ZoneServices {
   public base_url = `${envi.url}:${envi.port}${envi.geoeconomic_zones}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) { }
 
   getZones(divpolLv1: string, divpolLv2: string): Observable<GeoEconomicZone[]> {

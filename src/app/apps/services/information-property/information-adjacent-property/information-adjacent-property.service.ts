@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../../environments/environments';
 import { catchError, Observable , EMPTY, throwError } from 'rxjs';
 import { InformationAdjacent } from '@shared/interfaces';
@@ -13,7 +14,8 @@ export class InformationAdjacentPropertyService {
   basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {}
 
   getBasicInformationPropertyAdjacent(baUnitId: string): Observable<InformationAdjacent[]> {

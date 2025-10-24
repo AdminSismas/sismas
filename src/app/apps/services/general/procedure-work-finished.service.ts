@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PageProceduresData } from '@shared/interfaces';
@@ -14,7 +15,8 @@ export class ProcedureWorkFinishedService {
 
   /* -------------- CONSTRUCTRO -------------- */
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) {}
 
   /* -------------- MÉTODOS -------------- */

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError , EMPTY, throwError } from 'rxjs';
+import { catchError, Observable, throwError, EMPTY } from 'rxjs';
 import {
   ContentInformationConstruction,
   CreateBasicInformationConstruction
@@ -19,9 +19,11 @@ import { CcCalificacionUB } from '@shared/interfaces';
 })
 export class InformationConstructionsService {
   basic_url = `${envi.url}:${envi.port}`;
-  http = inject(HttpClient);
 
-  constructor() {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 
   // ${executionId}/${baunitId}
   getDetailBasicInformationPropertyConstructions(

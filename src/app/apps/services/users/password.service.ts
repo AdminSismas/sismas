@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { Observable } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
 
@@ -11,7 +12,8 @@ export class PasswordService {
   private base_url = `${envi.url}:${envi.port}${envi.bpmUser.value}${envi.password}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) { }
 
   changePassword(userId: number, lastPassword: string, newPassword: string ): Observable<object> {

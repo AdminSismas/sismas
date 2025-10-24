@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { environment as env } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { InfoOwners } from '@shared/interfaces';
@@ -14,7 +15,8 @@ export class RrrightService {
   basic_url = `${env.url}:${env.port}${env.rrright}`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
   ) { }
 
   getRrrightByBaUnitId( id: string, domain: string ): Observable<InfoOwners[]> | undefined {

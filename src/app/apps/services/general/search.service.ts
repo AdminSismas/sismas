@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { SendGeneralRequestsService } from '@shared/services';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
@@ -14,5 +16,8 @@ export class SearchService {
   isOpenSubject = new BehaviorSubject<boolean>(false);
   isOpen$ = this.isOpenSubject.asObservable();
 
-  constructor() {}
+  constructor(
+    private http: HttpClient,
+    private requestsService: SendGeneralRequestsService
+  ) {}
 }
