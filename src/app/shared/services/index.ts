@@ -38,4 +38,13 @@ export { AttachmentService } from '../../apps/services/document-management/docum
 
 // Geographic service
 export { InformationGeographicService } from '../../apps/services/geographics/information-geographic.service';
+
+// BMP Core services
+export { AlfaMainService } from '../../apps/services/bpm/core/alfa-main.service';
+export { ParticipantsService } from '../../apps/services/bpm/participants-service.service';
+export { InformationPersonService } from '../../apps/services/bpm/information-person.service';
+
+// Operation support services  
+export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';
+
 // export { TitleService } from '../../apps/services/title/title.service';

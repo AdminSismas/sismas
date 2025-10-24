@@ -11,6 +11,7 @@ export * from '../../apps/interfaces/general/domain-name.model';
 export * from '../../apps/interfaces/general/content-info';
 export * from '../../apps/interfaces/general/content-info-schema';
 export * from '../../apps/interfaces/general/pegeable.model';
+export * from '../../apps/interfaces/general/page-search-data.model';
 
 // Document management interfaces
 export * from '../../apps/interfaces/document-management/attachment.model';
@@ -25,6 +26,7 @@ export * from '../../apps/interfaces/users/digitalized-signatures';
 export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
 export * from '../../apps/interfaces/information-property/basic-information-property';
+export * from '../../apps/interfaces/information-property/info-person';
 
 // BMP interfaces
 export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
@@ -36,6 +38,7 @@ export * from '../../apps/interfaces/territorial-organization';
 
 // Operation support interfaces
 export * from '../../apps/interfaces/operation-support/reports/report-category.interface';
+export * from '../../apps/interfaces/operation-support/reports/report.interface';
 
 // Paginator interface que existe
 export * from '../../apps/interfaces/paginator/PaginatorIntlEs';
