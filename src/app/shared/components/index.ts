@@ -30,6 +30,8 @@ export { ComboboxComponent } from '../../apps/components/general-components/comb
 export { InConstructionComponent } from '../../apps/components/general-components/in-construction/in-construction.component';
 export { ParticipantTableComponent } from '../../apps/components/general-components/participant-table/participant-table.component';
 export { ComboboxCollectionFormComponent } from '../../apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
+export { ModalWindowComponent } from '../../apps/components/general-components/modal-window/modal-window.component';
+export { CustomSelectorComponent } from '../../apps/components/general-components/custom-selector/custom-selector.component';
 
 // Geographic components
 export { GeographicViewerEmbeddedComponent } from '../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';

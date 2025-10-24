@@ -30,6 +30,7 @@ export * from '../../apps/interfaces/information-property/info-person';
 export * from '../../apps/interfaces/information-property/info-owners';
 export * from '../../apps/interfaces/information-property/basic-information-address';
 export * from '../../apps/interfaces/information-property/detail-basic-information-address';
+export * from '../../apps/interfaces/information-property/information-adjacent';
 
 // Baunit ICA interfaces
 export * from '../../apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
