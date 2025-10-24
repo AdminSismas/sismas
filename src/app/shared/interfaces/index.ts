@@ -28,8 +28,8 @@ export * from '../../apps/interfaces/information-property/basic-information-prop
 
 // BMP interfaces
 export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
-// Process participant interface - restored for working components
-export * from '../../apps/interfaces/bmp/process-participant';
+// Process participant interface - temporarily commented due to circular dependency
+// export * from '../../apps/interfaces/bpmprocess-participant';
 
 // Territorial organization interfaces
 export * from '../../apps/interfaces/territorial-organization';
@@ -41,9 +41,9 @@ export * from '../../apps/interfaces/operation-support/reports/report-category.i
 export * from '../../apps/interfaces/paginator/PaginatorIntlEs';
 
 // TODO: Verificar y corregir estas rutas
-// export * from '../../apps/interfaces/bmp/protask.interface';
-// export * from '../../apps/interfaces/bmp/proFlow.interface'; 
-// export * from '../../apps/interfaces/bmp/content-info.interface';
+// export * from '../../apps/interfaces/bpmprotask.interface';
+// export * from '../../apps/interfaces/bpmproFlow.interface';
+// export * from '../../apps/interfaces/bpmcontent-info.interface';
 // export * from '../../apps/interfaces/general/collection-domain.interface';
 // export * from '../../apps/interfaces/general/info-person.interface';
 // export * from '../../apps/interfaces/general/input-type.interface';

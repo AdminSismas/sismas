@@ -39,10 +39,10 @@ export { BasicPropertyInformationComponent } from '../../apps/components/informa
 export { HeaderCadastralInformationPropertyComponent } from '../../apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 
 // BMP components
-export { ParticipantTableDialogComponent } from '../../apps/components/bmp/participant-table-dialog/participant-table-dialog.component';
+export { ParticipantTableDialogComponent } from '../../apps/components/bpmparticipant-table-dialog/participant-table-dialog.component';
 
 // BMP components - comentados porque las rutas no son accesibles durante compilación
-// export { CommentsComponent } from '../../apps/components/bmp/comments/comments.component';
+// export { CommentsComponent } from '../../apps/components/bpmcomments/comments.component';
 
 // TODO: Componentes por verificar/migrar
-// export { AttachmentExcelMassiveComponent } from '../../apps/components/bmp/attachment-excel-massive/attachment-excel-massive.component';
+// export { AttachmentExcelMassiveComponent } from '../../apps/components/bpmattachment-excel-massive/attachment-excel-massive.component';

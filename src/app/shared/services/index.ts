@@ -20,14 +20,14 @@ export { AlertsService } from '../../apps/services/alerts/alertes.service';
 export { SplashScreenService } from '../../apps/services/core/splash-screen.service';
 
 // TODO: BMP Core services - verificar rutas exactas
-// export { AlfaMainService } from '../../apps/services/bmp/core/alfa-main.service';
-// export { AttachmentService } from '../../apps/services/bmp/core/document/main/attachment.service';
+// export { AlfaMainService } from '../../apps/services/bpmcore/alfa-main.service';
+// export { AttachmentService } from '../../apps/services/bpmcore/document/main/attachment.service';
 
 // Collection service
 export { CollectionServices } from '../../apps/services/general/collection.service';
 
-// BMP services - restored for working components
-export { ParticipantsService } from '../../apps/services/bmp/participants-service.service';
+// BMP services - temporarily commented due to path issues
+// export { ParticipantsService } from '../../apps/services/bpmparticipants-service.service';
 
 // Territorial organization service
 export { TerritorialOrganizationService } from '../../apps/services/territorial-organization/territorial-organization.service';
