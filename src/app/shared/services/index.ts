@@ -25,6 +25,13 @@ export { SplashScreenService } from '../../apps/services/core/splash-screen.serv
 
 // Collection service
 export { CollectionServices } from '../../apps/services/general/collection.service';
+export { SendInfoGeneralService } from '../../apps/services/general/send-info-general.service';
+export { SendGeneralRequestsService } from '../../apps/services/general/send-general-requests.service';
+export { OutFormatService } from '../../apps/services/general/out-format.service';
+export { InfoTableService } from '../../apps/services/general/info-table.service';
+export { ValidateInformationBaunitService } from '../../apps/services/general/validate-information-baunit.service';
+export { SendInformationRegisterService } from '../../apps/services/register-procedure/send-information-register.service';
+export { ProceduresService } from '../../apps/services/general/procedures.service';
 
 // BMP services - temporarily commented due to path issues
 // export { ParticipantsService } from '../../apps/services/bpmparticipants-service.service';
@@ -32,6 +39,7 @@ export { CollectionServices } from '../../apps/services/general/collection.servi
 // Territorial organization service
 export { TerritorialOrganizationService } from '../../apps/services/territorial-organization/territorial-organization.service';
 export { InformationPropertyService } from '../../apps/services/territorial-organization/information-property.service';
+export { UnitPropertyInformationService } from '../../apps/services/territorial-organization/baunit-children-information.service';
 
 // Document management service
 export { AttachmentService } from '../../apps/services/document-management/document-management.service';
@@ -45,6 +53,7 @@ export { ParticipantsService } from '../../apps/services/bpm/participants-servic
 export { InformationPersonService } from '../../apps/services/bpm/information-person.service';
 export { BpmCoreService } from '../../apps/services/bpm/bpm-core.service';
 export { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
+export { BpmProcessService } from '../../apps/services/bpm/bpm-process.service';
 
 // Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';
@@ -59,5 +68,6 @@ export * from '../../apps/services/users/people.service';
 
 // Validation services
 export { GeneralValidationsService } from '../../apps/services/validations/general-validations.service';
+export { CommonGeneralValidationsService } from '../../apps/services/general/common-general-validations.service';
 
 // export { TitleService } from '../../apps/services/title/title.service';

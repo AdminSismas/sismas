@@ -12,6 +12,11 @@ export * from '../../apps/interfaces/general/content-info';
 export * from '../../apps/interfaces/general/content-info-schema';
 export * from '../../apps/interfaces/general/pegeable.model';
 export * from '../../apps/interfaces/general/page-search-data.model';
+export * from '../../apps/interfaces/general/search-data.model';
+export * from '../../apps/interfaces/general/out-format.model';
+export * from '../../apps/interfaces/general/content-info-procedures.model';
+export * from '../../apps/interfaces/general/page-procedures-data.model';
+export * from '../../apps/interfaces/tables/procedures-progress.model';
 
 // Document management interfaces
 export * from '../../apps/interfaces/document-management/attachment.model';
@@ -21,7 +26,6 @@ export * from '../../apps/interfaces/forms/dynamic-forms';
 
 // User interfaces
 export * from '../../apps/interfaces/users/digitalized-signatures';
-
 // Information property interfaces
 export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
@@ -31,6 +35,11 @@ export * from '../../apps/interfaces/information-property/info-owners';
 export * from '../../apps/interfaces/information-property/basic-information-address';
 export * from '../../apps/interfaces/information-property/detail-basic-information-address';
 export * from '../../apps/interfaces/information-property/information-adjacent';
+export * from '../../apps/interfaces/information-property/cc-calificacion-ub';
+export * from '../../apps/interfaces/information-property/content-information-construction';
+export * from '../../apps/interfaces/information-property/info-appraisal';
+export * from '../../apps/interfaces/information-property/zone-baunit';
+export * from '../../apps/interfaces/information-property/national-predial-number';
 
 // Baunit ICA interfaces
 export * from '../../apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
@@ -39,6 +48,10 @@ export * from '../../apps/components/information-property/baunit-ica/interfaces/
 // BMP interfaces
 export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
 export * from '../../apps/interfaces/bpm/difference-changes';
+export * from '../../apps/interfaces/bpm/pro-task-e';
+export * from '../../apps/interfaces/bpm/task-response.model';
+// Exportación específica para evitar conflicto ProcessModel
+export { TaskRetailExecuteResponseModel } from '../../apps/interfaces/bpm/task-retail-execute-response.model';
 // Process participant interface - temporarily commented due to circular dependency
 // export * from '../../apps/interfaces/bpmprocess-participant';
 
