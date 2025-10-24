@@ -30,7 +30,7 @@ import {
 } from '@shared/interfaces';
 import { validateVariable } from '../../../../utils/general';
 import { TypeOperation } from '@shared/interfaces';
-import { TYPE_CREATE } from '../../../../constants/general/constants';
+import { TYPE_CREATE } from '@shared/constants';
 import { ComboboxCollectionComponent } from '@shared/components';
 import { TextAreaComponent } from '@shared/components';
 import { InformationAdjacentPropertyService } from '@shared/services';

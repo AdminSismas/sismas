@@ -24,7 +24,7 @@ import { CreateAdministrativeSourceComponent } from '@shared/components';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { COLUMNS_ADMINISTRATIVE_SOURCES } from '../../../constants/information-property/administrative-source.constants';
-import { MODAL_MEDIUM } from '../../../constants/general/constants';
+import { MODAL_MEDIUM } from '@shared/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { NgClass } from '@angular/common';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

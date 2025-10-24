@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
-import { SendGeneralRequestsService } from '@shared/services';
-import { catchError, distinctUntilChanged, Observable, throwError } from 'rxjs';
+import { catchError, distinctUntilChanged, Observable, throwError , EMPTY, throwError } from 'rxjs';
 import { PageSearchData } from '@shared/interfaces';
 import {
   HttpClient,

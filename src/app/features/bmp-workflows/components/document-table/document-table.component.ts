@@ -59,7 +59,7 @@ import {
   PAGE,
   PAGE_SIZE,
   PAGE_SIZE_OPTION
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';

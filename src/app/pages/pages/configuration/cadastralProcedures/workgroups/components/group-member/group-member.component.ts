@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { AddMemberGroupComponent } from '../add-member-group/add-member-group.component';
-import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL_XS } from '@shared/constants';
 import { UserService } from 'src/app/apps/services/users/user.service';
 
 @Component({

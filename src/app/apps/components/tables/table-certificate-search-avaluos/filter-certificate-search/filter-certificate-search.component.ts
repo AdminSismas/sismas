@@ -48,7 +48,7 @@ import {
   LIST_ZONES_RURAL,
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import { Zone } from '@shared/interfaces';
 import { Sector } from '@shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -58,12 +58,12 @@ import { Sidewalk } from '@shared/interfaces';
 import { Commune } from '@shared/interfaces';
 import { NationalPredialNumber } from '@shared/interfaces';
 import { divideNpn } from '../../../../utils/divide-national-predial-number';
-import { CONSTANT_NAME_ID } from '../../../../constants/general/constantLabels';
+import { CONSTANT_NAME_ID } from '@shared/constants';
 import { CharacterValidateService } from '../../../../utils/character-validate.service';
 import {
   DIVPOLLVL2_CODE,
   DIVPOLLVL_CODE
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import { ComboboxCollectionComponent } from '@shared/components';
 
 @Component({

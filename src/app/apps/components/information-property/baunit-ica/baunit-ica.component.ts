@@ -17,7 +17,7 @@ import { IcaTable } from '@shared/components';
 import { map } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { IcaResponse } from '@shared/components';
-import { MODAL_SMALL, NAME_NO_DISPONIBLE } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL, NAME_NO_DISPONIBLE } from '@shared/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { IcaDetailsComponent } from '@shared/components';
 

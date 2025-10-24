@@ -30,7 +30,7 @@ import {
   MODAL_SMALL_XS,
   TYPE_BUTTON_EIGHT,
   TYPE_BUTTON_SEVEN
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { ProTaskE } from '@shared/interfaces';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';

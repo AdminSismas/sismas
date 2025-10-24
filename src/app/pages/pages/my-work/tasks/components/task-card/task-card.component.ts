@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
 import { TaskResponseModel } from '@shared/interfaces';
-import { PAGE, PAGE_SIZE } from 'src/app/apps/constants/general/constants';
+import { PAGE, PAGE_SIZE } from '@shared/constants';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { TaskRetailExecuteResponseModel } from '@shared/interfaces';

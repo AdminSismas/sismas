@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
@@ -15,7 +14,6 @@ export class InfoTableService {
   basic_url = `${environment.url}:${environment.port}${environment.baunit_attributes}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService,
     private http: HttpClient
   ) { }
 
@@ -82,6 +80,6 @@ export class InfoTableService {
   }
 
   private getData(url:string, params:any):Observable<InformationPegeable>{
-    return this.requestsService.sendRequestsGetOption(url, {params: params});
+    return this.http.get<any>(url, { params: params });
   }
 }

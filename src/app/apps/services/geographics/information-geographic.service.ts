@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError , EMPTY, throwError } from 'rxjs';
 import { QueryParametersGeographicVie } from '@shared/interfaces';
 import { ChangeControl } from '@shared/interfaces';
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode , HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +12,13 @@ export class InformationGeographicService {
 
   basic_url = `${envi.url}:${envi.port}${envi.accessGeo.value}`;
 
-  constructor(private requestsService: SendGeneralRequestsService) {
+  constructor() {
   }
 
 
   getInfoGeographicViewer(cadastralNumber: string): Observable<QueryParametersGeographicVie> {
     const url = `${this.basic_url}${envi.accessGeo.extentByCodigoData}/${cadastralNumber}`;
-    return this.requestsService.sendRequestsFetchGet(url).pipe(
+    return this.http.get<any>(url).pipe(
       catchError(() => {
         return throwError(() => new Error('No se pudo encontrar el mapa solicitado.'));
       })
@@ -68,7 +67,7 @@ export class InformationGeographicService {
    * DELETE {{url}}:{{port}}/changeLog/temp/{{executionId}}/geo
    * */
   deleteGeographicChangesTemp(executionId: string): Observable<void> {
-    return this.requestsService.sendDeleteFetch(
+    return this.http.delete<any>(
       `${envi.url}:${envi.port}${envi.changeLog}${envi.schemas.temp}/${executionId}${envi.accessGeo.geo}`
     );
   }

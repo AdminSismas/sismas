@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
-import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from 'src/app/apps/constants/general/constants';
+import { NAME_CODENAME, STRING_INFORMATION_NOT_FOUND } from '@shared/constants';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import {

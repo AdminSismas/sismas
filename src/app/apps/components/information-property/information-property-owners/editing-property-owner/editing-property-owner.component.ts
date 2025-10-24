@@ -38,7 +38,7 @@ import {
   CreatePeopleComponent,
   DefaultDataCreatePerson
 } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
-import { MODAL_SMALL_LARGE } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL_LARGE } from '@shared/constants';
 import { People } from 'src/app/apps/interfaces/users/people.model';
 import { ModalResponse } from '@shared/components';
 

@@ -12,7 +12,7 @@ import { AlfaMainService } from '@shared/services';
 import { ChangeControl } from 'src/app/apps/interfaces/bpm/change-control';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/constants';
+import { MY_DATE_FORMATS } from '@shared/constants';
 
 interface DialogDataValidity {
   executionId: string;

@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
 import { IcaDetails } from '@shared/components';
 import { DatePipe } from '@angular/common';
-import { NAME_NO_DISPONIBLE } from 'src/app/apps/constants/general/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants';
 
 enum IcaDetailLabel {
   accion = 'Acción',

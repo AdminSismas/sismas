@@ -34,9 +34,12 @@ export { GeographicViewerEmbeddedComponent } from '../../apps/components/geograp
 
 // Information property components
 export { CadastralInformationPropertyComponent } from '../../apps/components/information-property/cadastral-information-property/cadastral-information-property.component';
+export { InformationAddressesPropertyComponent } from '../../apps/components/information-property/information-addresses-property/information-addresses-property.component';
+export { BasicPropertyInformationComponent } from '../../apps/components/information-property/basic-property-information/basic-property-information.component';
+export { HeaderCadastralInformationPropertyComponent } from '../../apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 
-// BMP components - comentado temporalmente por problemas de acceso al archivo
-// export { ParticipantTableDialogComponent } from '../../apps/components/bmp/participant-table-dialog/participant-table-dialog.component';
+// BMP components
+export { ParticipantTableDialogComponent } from '../../apps/components/bmp/participant-table-dialog/participant-table-dialog.component';
 
 // BMP components - comentados porque las rutas no son accesibles durante compilación
 // export { CommentsComponent } from '../../apps/components/bmp/comments/comments.component';

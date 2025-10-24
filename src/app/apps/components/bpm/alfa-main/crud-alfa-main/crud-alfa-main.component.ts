@@ -26,12 +26,12 @@ import {
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_CREATE,
   TYPE_OPERATION_DELETE
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import {
   CONSTANT_NAME_ADD_LABEL,
   CONSTANT_NAME_CREATE_LABEL,
   CONSTANT_NAME_DELETE_LABEL
-} from '../../../../constants/general/constantLabels';
+} from '@shared/constants';
 import { ComboboxCollectionComponent } from '@shared/components';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';

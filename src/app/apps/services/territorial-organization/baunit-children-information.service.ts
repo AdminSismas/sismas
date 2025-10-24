@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SendGeneralRequestsService } from '@shared/services';
-import { catchError, Observable, tap } from 'rxjs';
+import { catchError, Observable, tap , EMPTY, throwError } from 'rxjs';
 import {
   Baunit,
   BAunitLike
@@ -18,7 +17,6 @@ export class UnitPropertyInformationService {
   basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService,
     private http: HttpClient
   ) {}
 
@@ -28,7 +26,7 @@ export class UnitPropertyInformationService {
     url += `?baunitId=${baunitId}`;
     return this.requestsService
       .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   //{{url}}:{{port}}/baunit/npnlike
@@ -45,7 +43,7 @@ export class UnitPropertyInformationService {
     return this.requestsService
       .sendRequestsGetOption(url, { params: paramsR })
       .pipe(
-        catchError((error) => this.requestsService.errorNotFound(error)),
+        catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))),
         tap((result: BAunitLike) => {
           const new_content = result.content.filter(
             (baUnit: Baunit) => baUnit.cadastralNumber !== npn
@@ -110,7 +108,7 @@ export class UnitPropertyInformationService {
 
     return this.requestsService
       .sendRequestsFetchPostBody(url, formData)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   assignamentZones(executionId: string, baunitId: string): Observable<SimpleResponse> {

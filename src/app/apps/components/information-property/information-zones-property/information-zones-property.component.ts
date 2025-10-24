@@ -7,7 +7,7 @@ import {
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE,
   TYPE_INFORMATION_EDITION
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { environment } from '../../../../../environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';

@@ -29,7 +29,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TextAreaComponent } from '@shared/components';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/constants';
+import { MY_DATE_FORMATS } from '@shared/constants';
 import { output } from '@angular/core';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';

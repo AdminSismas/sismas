@@ -16,7 +16,7 @@ import {
   NAME_NO,
   NAME_NO_DISPONIBLE,
   NAME_SI
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import { DetailBasicInformationAddress } from '@shared/interfaces';
 import { InformationPropertyService } from '@shared/services';
 import { environment } from '../../../../../../environments/environments';

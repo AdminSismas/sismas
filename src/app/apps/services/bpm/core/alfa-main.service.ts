@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../../environments/environments';
-import { SendGeneralRequestsService } from '@shared/services';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable , EMPTY, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { InformationPegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
@@ -19,7 +18,6 @@ export class AlfaMainService {
   basic_url = `${envi.url}:${envi.port}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService,
     private http: HttpClient
   ) {}
 
@@ -33,7 +31,7 @@ export class AlfaMainService {
     schemas: string
   ): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
@@ -79,7 +77,7 @@ export class AlfaMainService {
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike
   loadingNpnlikeByExecutionId(executionId: string): Observable<string[]> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike/18001010100000099/baunits
@@ -88,7 +86,7 @@ export class AlfaMainService {
     npnLike: string
   ): Observable<BaunitHead[]> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}/${npnLike}${envi.baunits}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   //{{url}}:{{port}}/temporal/BAUnitCreate
@@ -156,7 +154,7 @@ export class AlfaMainService {
   // {{url}}:{{port}}/baunit/main/{{executionId}}/{{baunitId}}
   getBaUnitHead(baunitId: string): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.main}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   /**
@@ -169,7 +167,7 @@ export class AlfaMainService {
     baunitId: string
   ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   /**
@@ -182,7 +180,7 @@ export class AlfaMainService {
     baunitId: string
   ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.hist}/${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   private getData(
@@ -191,7 +189,7 @@ export class AlfaMainService {
   ): Observable<InformationPegeable> {
     return this.requestsService
       .sendRequestsGetOption(url, { params: params })
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/excel/generate
@@ -218,7 +216,7 @@ export class AlfaMainService {
         `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.load}`,
         formData
       )
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getValidityOptions(executionId: string): Observable<string[]> {

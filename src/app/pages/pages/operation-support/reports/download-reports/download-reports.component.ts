@@ -34,7 +34,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
+import { PAGE_SIZE_OPTION } from '@shared/constants';
 
 // import * as FileSaver from 'file-saver';
 

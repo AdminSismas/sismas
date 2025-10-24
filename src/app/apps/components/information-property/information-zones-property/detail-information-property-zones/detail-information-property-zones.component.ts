@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { NAME_NO_DISPONIBLE } from '../../../../constants/general/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants';
 import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from '@shared/interfaces';
 import { ModalWindowComponent } from '@shared/components';
 

@@ -26,11 +26,12 @@ export { SplashScreenService } from '../../apps/services/core/splash-screen.serv
 // Collection service
 export { CollectionServices } from '../../apps/services/general/collection.service';
 
-// BMP services - comentado temporalmente por problemas de acceso al archivo
-// export { ParticipantsService } from '../../apps/services/bmp/participants-service.service';
+// BMP services - restored for working components
+export { ParticipantsService } from '../../apps/services/bmp/participants-service.service';
 
 // Territorial organization service
 export { TerritorialOrganizationService } from '../../apps/services/territorial-organization/territorial-organization.service';
+export { InformationPropertyService } from '../../apps/services/territorial-organization/information-property.service';
 
 // Document management service
 export { AttachmentService } from '../../apps/services/document-management/document-management.service';

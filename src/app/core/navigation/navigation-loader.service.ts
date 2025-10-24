@@ -27,7 +27,7 @@ import {
   EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM,
   MODIFY_PEOPLE,
   NOT_GUEST_USERS_ROLE_LIST
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({

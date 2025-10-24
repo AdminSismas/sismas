@@ -17,7 +17,7 @@ import {
   MODAL_SMALL,
   PAGE_OPTION_UNIQUE,
   PAGE_SIZE_OPTION
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TABLE_COLUMN_PROPERTIES_EXECUTED } from '../../constants';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';

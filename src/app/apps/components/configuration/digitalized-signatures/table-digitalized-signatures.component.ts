@@ -13,7 +13,7 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { PAGE, PAGE_SIZE_OPTION, PAGE_SIZE } from '../../../constants/general/constants';
+import { PAGE, PAGE_SIZE_OPTION, PAGE_SIZE } from '@shared/constants';
 
 // Custom
 import { CreateSignatureComponent } from '@shared/components';

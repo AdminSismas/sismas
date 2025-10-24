@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@features/bmp-workflows';
 import { environment as envi } from '../../../../environments/environments';
-import { catchError, Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
 import { ProFlow } from '../../interfaces/bpm/pro-flow';
 import { ProExecutionE } from '../../interfaces/bpm/pro-execution-e';
@@ -19,59 +18,53 @@ export class BpmCoreService {
   basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService,
     private http: HttpClient
   ) {
   }
 
   getProTaskCountComment(id: string): Observable<number> {
     const url = `${this.basic_url}${envi.bpmOperation.comment}/${id}${envi.bpmOperation.count}`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<number>(url);
   }
 
   getProTaskCountAttachment(id: string): Observable<number> {
     const basic_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}`;
     const url = `${basic_url}${envi.bpmAttachment.proExecution}${id}${envi.bpmAttachment.count}`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<number>(url);
   }
 
   getProFlow(flowId: string): Observable<ProFlow> {
     const url = `${this.basic_url}/${envi.bpmOperation.proflow}${flowId}`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<ProFlow>(url);
   }
 
   getProFlowProExecution(executionId: string): Observable<ProFlow> {
     const { proflow, proExecution } = envi.bpmOperation;
     const url = `${this.basic_url}/${proflow}${proExecution}${executionId}`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<ProFlow>(url);
   }
 
   getNextOperation(executionId: string, answer: boolean): Observable<ProTaskE> {
     const { proExecution, next } = envi.bpmOperation;
     const url = `${this.basic_url}/${proExecution}${next}/${executionId}/${answer}`;
-    return this.requestsService.sendRequestsFetchPost(url);
+    return this.http.post<ProTaskE>(url, {});
   }
 
   getPreviewOperation(executionId: string): Observable<ProTaskE> {
     const { proExecution, prev } = envi.bpmOperation;
     const url = `${this.basic_url}/${proExecution}${prev}/${executionId}`;
-    return this.requestsService.sendRequestsFetchPost(url);
+    return this.http.post<ProTaskE>(url, {});
   }
 
   bpmOperationStartProcess(proExecutionE: ProExecutionE): Observable<ProTaskE> {
     const url = `${this.basic_url}/${envi.bpmOperation.startProcess}`;
-    return this.requestsService.sendRequestsFetchPostBody(url, proExecutionE)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.post<ProTaskE>(url, proExecutionE);
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/check
   checkStatusBpmOperation(executionId: string): Observable<string[]> {
     const url = `${envi.url}:${envi.port}${envi.temporal}${executionId}${envi.check}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<string[]>(url);
   }
 
   /*
@@ -82,7 +75,7 @@ export class BpmCoreService {
   viewChangesBpmOperationTemp(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     const url = `${envi.url}:${envi.port}${envi.compare_temp}${executionId}/${baunitId}`;
 
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<DifferenceChanges[]>(url);
   }
   /*
   * Compare History
@@ -92,7 +85,7 @@ export class BpmCoreService {
   viewChangesBpmOperationHistory(executionId: string, baunitId: string): Observable<DifferenceChanges[]> {
     const url = `${envi.url}:${envi.port}${envi.compare_hist}${executionId}/${baunitId}`;
 
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<DifferenceChanges[]>(url);
   }
 
   updateProTask(proTaskE: ProTaskE) {

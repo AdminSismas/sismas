@@ -46,7 +46,7 @@ import {
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_DELETE,
   TYPE_UPDATE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';

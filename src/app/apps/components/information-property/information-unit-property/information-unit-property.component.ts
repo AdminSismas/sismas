@@ -29,7 +29,7 @@ import {
   PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { ContentInfoSchema } from '@shared/interfaces';
 import { environment } from 'src/environments/environments';
 import {

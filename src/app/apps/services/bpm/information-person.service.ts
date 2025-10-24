@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '@shared/services';
-import { catchError, Observable, throwError } from 'rxjs';
-import { HttpErrorResponse, HttpParams, HttpStatusCode } from '@angular/common/http';
+import { catchError, Observable, throwError , EMPTY, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpParams, HttpStatusCode , HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { InfoPerson } from '@shared/interfaces';
 
 @Injectable({
@@ -12,7 +11,7 @@ export class InformationPersonService {
 
   basic_url = `${envi.url}:${envi.port}`;
 
-  constructor(private requestsService: SendGeneralRequestsService) { }
+  constructor() { }
 
   getFindPersonByNumber(number: string, individualTypeNumber:string): Observable<InfoPerson> {
     const url = `${this.basic_url}${envi.individual.value}${envi.individual.findByNumber}`;
@@ -32,7 +31,7 @@ export class InformationPersonService {
   }
 
   private getData(url: string, params: any): Observable<any> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.get<any>(url, { params: params  });
   }
 
 

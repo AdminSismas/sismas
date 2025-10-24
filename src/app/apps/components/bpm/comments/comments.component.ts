@@ -23,7 +23,7 @@ import { contentInfoComments } from '@shared/interfaces';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
+import { PAGE_SIZE_OPTION } from '@shared/constants';
 
 
 @Component({

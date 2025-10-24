@@ -54,7 +54,7 @@ import {
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   REFERENCE_COMPONENTS,
   RULE_PAGE_CADASTRAL_DA
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { PropertyAppraisalInformationComponent } from '@shared/components';
 import { SuperNotariadoPropertyComponent } from '@shared/components';
 import {

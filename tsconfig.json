@@ -55,6 +55,9 @@
       "@shared/interfaces": [
         "src/app/shared/interfaces"
       ],
+      "@shared/constants": [
+        "src/app/shared/constants"
+      ],
       "@core/guards": [
         "src/app/core/guards"
       ],

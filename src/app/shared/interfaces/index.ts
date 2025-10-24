@@ -24,9 +24,12 @@ export * from '../../apps/interfaces/users/digitalized-signatures';
 // Information property interfaces
 export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
+export * from '../../apps/interfaces/information-property/basic-information-property';
 
-// BMP interfaces - comentado temporalmente por problemas de acceso al archivo
-// export * from '../../apps/interfaces/bmp/process-participant';
+// BMP interfaces
+export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+// Process participant interface - restored for working components
+export * from '../../apps/interfaces/bmp/process-participant';
 
 // Territorial organization interfaces
 export * from '../../apps/interfaces/territorial-organization';

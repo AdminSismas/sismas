@@ -13,7 +13,7 @@ import {
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '../../../constants/general/constants';
+import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '@shared/constants';
 import { ThirdPartyAffectedParticipant } from '@shared/interfaces';
 import { ParticipantTableComponent } from '@shared/components';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';

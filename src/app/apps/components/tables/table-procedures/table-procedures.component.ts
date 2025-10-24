@@ -50,7 +50,7 @@ import {
 import {
   PAGE,
   PAGE_SIZE,
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { ProceduresCollection } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { ProceduresService } from '@shared/services';
@@ -64,7 +64,7 @@ import {
   MODAL_LARGE,
   MODAL_SMALL,
   PAGE_SIZE_OPTION
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
 import { environment } from 'src/environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

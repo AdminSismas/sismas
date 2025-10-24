@@ -1,5 +1,5 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { NAME_NO_DISPONIBLE } from 'src/app/apps/constants/general/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants';
 import { MetadataBpm } from 'src/app/apps/interfaces/bpm/metadata-bpm';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
 

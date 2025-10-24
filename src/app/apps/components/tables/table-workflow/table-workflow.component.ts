@@ -54,7 +54,7 @@ import {
 import { PageSortByData } from '@shared/interfaces';
 import { WorkflowCollection } from '@shared/interfaces';
 import { WorkflowService } from '@shared/services';
-import { MODAL_LARGE, PAGE_SIZE_OPTION } from '../../../constants/general/constants';
+import { MODAL_LARGE, PAGE_SIZE_OPTION } from '@shared/constants';
 import Swal from 'sweetalert2';
 import { TaskListComponent } from '@shared/components';
 

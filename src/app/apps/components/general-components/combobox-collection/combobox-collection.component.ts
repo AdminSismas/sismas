@@ -20,7 +20,7 @@ import { CollectionServices } from '@shared/services';
 import { DomainCollection } from '@shared/interfaces';
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';
-import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
+import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants';
 import { map } from 'rxjs';
 
 @Component({

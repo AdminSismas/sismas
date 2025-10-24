@@ -20,7 +20,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { CarouselComponent } from '@shared/components';
 import { AddPhotoComponent } from '@shared/components';
-import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL_XS } from '@shared/constants';
 import Swal from 'sweetalert2';
 
 @Component({

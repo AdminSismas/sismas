@@ -80,7 +80,7 @@ import {
   TYPE_CREATE,
   TYPE_TRADITIONAL,
   TYPE_TYPOLOGY
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import { DomainCollection } from '@shared/interfaces';
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';

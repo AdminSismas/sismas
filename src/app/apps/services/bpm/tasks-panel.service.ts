@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '@shared/services';
-import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable , EMPTY, throwError } from 'rxjs';
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -21,7 +20,6 @@ export class TasksPanelService {
   listProtaskE$ = this._listProtaskE.asObservable();
 
   constructor(
-    private requestsService: SendGeneralRequestsService,
     private http: HttpClient
   ) { }
 
@@ -37,7 +35,7 @@ export class TasksPanelService {
 
     return this.http.get<ProTaskE>(url)
       .pipe(
-        catchError(error => this.requestsService.errorNotFound(error)),
+        catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))),
         distinctUntilChanged()
       );
   }
@@ -67,8 +65,8 @@ export class TasksPanelService {
   }
 
   private getData(url: string, params: any): Observable<InformationPegeable> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params })
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<any>(url, { params: params  })
+      .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   viewTaskId(executionId: string): Observable<TablaContent> {

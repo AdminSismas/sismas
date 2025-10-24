@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_SMALL,
   MODAL_SMALL_XS
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AlertsService } from '@shared/services';

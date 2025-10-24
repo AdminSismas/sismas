@@ -17,7 +17,7 @@ import {
   PAGE,
   PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES_APPRAISALS
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { InfoAppraisal } from 'src/app/apps/interfaces/information-property/info-appraisal';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';

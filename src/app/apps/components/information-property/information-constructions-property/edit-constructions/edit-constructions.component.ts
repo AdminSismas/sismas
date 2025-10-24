@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ContentInformationConstruction } from 'src/app/apps/interfaces/information-property/content-information-construction';
 import { TableConstructionsComponent } from '@shared/components';
-import { TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION } from 'src/app/apps/constants/general/constants';
+import { TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION } from '@shared/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatTableDataSource } from '@angular/material/table';
 

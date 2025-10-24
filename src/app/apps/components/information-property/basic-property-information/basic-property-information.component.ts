@@ -49,7 +49,7 @@ import {
   TYPE_INFORMATION_VISUAL,
   TYPE_UPDATE,
   TYPE_UPDATE_PROPERTY_UNIT
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from '@shared/components';

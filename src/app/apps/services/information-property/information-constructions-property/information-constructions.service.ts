@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError , EMPTY, throwError } from 'rxjs';
 import {
   ContentInformationConstruction,
   CreateBasicInformationConstruction
@@ -14,8 +14,6 @@ import {
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { CcCalificacionUB } from '@shared/interfaces';
-import { SendGeneralRequestsService } from '@shared/services';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +21,7 @@ export class InformationConstructionsService {
   basic_url = `${envi.url}:${envi.port}`;
   http = inject(HttpClient);
 
-  constructor(private requestsService: SendGeneralRequestsService) {}
+  constructor() {}
 
   // ${executionId}/${baunitId}
   getDetailBasicInformationPropertyConstructions(
@@ -32,7 +30,7 @@ export class InformationConstructionsService {
     const url = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
     return this.requestsService
       .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getBasicInformationPropertyConstructions(
@@ -51,7 +49,7 @@ export class InformationConstructionsService {
       url += `/${executionId}/${page.searchData}`;
     }
     return this.getData(url, params).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
+      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
     );
   }
 
@@ -61,7 +59,7 @@ export class InformationConstructionsService {
     data: ContentInformationConstruction
   ): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsFetchPostBody(url, data);
+    return this.http.post<any>(url, data);
   }
 
   updateConstruction(
@@ -70,7 +68,7 @@ export class InformationConstructionsService {
     data: ContentInformationConstruction
   ): Observable<any> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.requestsService.sendRequestsUpdatePutBody(url, data);
+    return this.http.put<any>(url, data);
   }
 
   createBasicInformationPropertyConstruction(
@@ -103,7 +101,7 @@ export class InformationConstructionsService {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}`;
     return this.requestsService
       .sendRequestsUpdatePutBody(url, payload)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getQualificationConstructions(
@@ -131,7 +129,7 @@ export class InformationConstructionsService {
     params = params.append('unitBuiltId', `${unitBuiltId}`);
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
     return this.getData(url, params).pipe(
-      catchError((error) => this.requestsService.errorNotFound(error))
+      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
     );
   }
 
@@ -141,7 +139,7 @@ export class InformationConstructionsService {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}${envi.typologyType}${selectedType}`;
     return this.requestsService
       .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   deleteConstruction(
@@ -165,11 +163,11 @@ export class InformationConstructionsService {
     unitBuiltId: number
   ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}${envi.copy}`;
-    return this.requestsService.sendRequestsUpdatePutBody(url, null);
+    return this.http.put<any>(url, null);
   }
 
   private getData(url: string, params: any): Observable<any> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.get<any>(url, { params: params  });
   }
 
   getConstructionsWithoutBaunit(

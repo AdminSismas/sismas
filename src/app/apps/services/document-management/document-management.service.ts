@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable, catchError } from 'rxjs';
 import {AttachmentCollection} from '@shared/interfaces';
@@ -17,7 +16,7 @@ export class AttachmentService {
 
 
     /* -------------- CONSTRUCTOR -------------- */
-    constructor(private requestsService: SendGeneralRequestsService, private http: HttpClient) {}
+    constructor( private http: HttpClient) {}
 
 
 
@@ -28,7 +27,7 @@ export class AttachmentService {
     }
 
     private getData(url:string):Observable<AttachmentCollection[]>{
-        return this.requestsService.sendRequestsFetchGet(url);
+        return this.http.get<any>(url);
     }
 
     deleteAttachment(executionId: string, attachmentId: string, originalFileName: string): Observable<AttachmentCollection[]> {

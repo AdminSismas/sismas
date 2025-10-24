@@ -8,7 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable } from 'rxjs';
-import { INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
+import { INFORMATION_NOT_FOUND } from '@shared/constants';
 
 @Component({
   selector: 'vex-combox-custom-selector',

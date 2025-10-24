@@ -1,5 +1,5 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
-import { NOT_USER_SERV_AND_USER_TRAM } from 'src/app/apps/constants/general/constants';
+import { NOT_USER_SERV_AND_USER_TRAM } from '@shared/constants';
 import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [

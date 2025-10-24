@@ -23,7 +23,7 @@ import {
   TABLE_ALFA_MAIN_OPERATION_COLUMN,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';

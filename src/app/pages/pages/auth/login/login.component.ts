@@ -30,7 +30,7 @@ import { jwtDecode } from 'jwt-decode';
 import {
   ENVIRONMENT_RETIRO_IMG,
   NAME_LOGO_IMG_SAN_VICENTE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';

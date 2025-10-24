@@ -29,7 +29,7 @@ import {
   EditBasicPropertyInputs,
   TypeOperation
 } from '@shared/interfaces';
-import { TYPE_UPDATE_PROPERTY_UNIT } from '../../../../constants/general/constants';
+import { TYPE_UPDATE_PROPERTY_UNIT } from '@shared/constants';
 import { InputComponent } from '@shared/components';
 import Swal from 'sweetalert2';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';

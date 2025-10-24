@@ -34,7 +34,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { DecodeJwt } from '@shared/interfaces';
 import { CommentsCollection } from 'src/app/apps/interfaces/comments/comments.model';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
+import { PAGE_SIZE_OPTION } from '@shared/constants';
 
 
 @Component({

@@ -1,9 +1,8 @@
 
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '@shared/services';
-import { BehaviorSubject, catchError, Observable, Subject } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, catchError, Observable, Subject, EMPTY } from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { AlertResponse } from '@shared/interfaces';
 
 @Injectable({
@@ -11,7 +10,6 @@ import { AlertResponse } from '@shared/interfaces';
 })
 export class AlertsService {
   basic_url = `${envi.url}:${envi.port}`;
-  private httpClient = inject(HttpClient);
 
   reloadTable$ = new Subject<boolean>();
   reloadTableStarted$: Observable<boolean> = this.reloadTable$.asObservable();
@@ -20,10 +18,7 @@ export class AlertsService {
   showOptionsPersonStarted$: Observable<boolean> =
     this.showOptionsPerson$.asObservable();
 
-  constructor(
-    private requestsService: SendGeneralRequestsService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);
@@ -43,7 +38,12 @@ export class AlertsService {
     const url = `${this.basic_url}/alert/baunitId`;
     return this.http
       .get<AlertResponse[]>(url, { params })
-      .pipe(catchError((error) => this.requestsService.errorNotFound(error)));
+      .pipe(catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          return EMPTY;
+        }
+        throw error;
+      }));
   }
 
   createAlertByBaunitId(

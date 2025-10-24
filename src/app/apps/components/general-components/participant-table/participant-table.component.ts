@@ -42,7 +42,7 @@ import {
   PAGE,
   PAGE_OPTION_UNIQUE,
   TABLE_COLUMN_PRINCIPANTS_TABLE
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { Observable, ReplaySubject } from 'rxjs';
 import { InfoPerson } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';

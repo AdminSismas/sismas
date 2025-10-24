@@ -53,7 +53,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TaskResponseModel } from '@shared/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { MODAL_SMALL, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '@shared/constants';
 
 @Component({
   selector: 'vex-table-execution',

@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { PageSearchData } from '@shared/interfaces';
@@ -18,7 +17,7 @@ export class ParticipantsService {
   private http = inject(HttpClient);
   chargeInfoSubject$ = this.chargeInfoSubject.asObservable();
 
-  constructor(private requestsService: SendGeneralRequestsService) {}
+  constructor() {}
 
   changeInfoParticipants(value: boolean | null) {
     this.chargeInfoSubject.next(value);
@@ -56,9 +55,8 @@ export class ParticipantsService {
     executionId: string,
     body: ProcessParticipant
   ): Observable<ProcessParticipant> {
-    return this.requestsService.sendRequestsFetchPostBody(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`,
-      body
+    return this.http.post<any>(
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`, body
     );
   }
 
@@ -66,9 +64,8 @@ export class ParticipantsService {
     executionId: string,
     body: ProcessParticipant
   ): Observable<ProcessParticipant> {
-    return this.requestsService.sendRequestsUpdatePutBody(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`,
-      body
+    return this.http.put<any>(
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}`, body
     );
   }
 
@@ -77,9 +74,8 @@ export class ParticipantsService {
     body: GovernmentalChannel,
     participationId: number | string
   ): Observable<void> {
-    return this.requestsService.sendRequestsUpdatePutBody(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.cited}/${participationId}`,
-      body
+    return this.http.put<any>(
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.cited}/${participationId}`, body
     );
   }
 
@@ -88,9 +84,8 @@ export class ParticipantsService {
     body: GovernmentalChannel,
     participationId: number | string
   ): Observable<void> {
-    return this.requestsService.sendRequestsUpdatePutBody(
-      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.notified}/${participationId}`,
-      body
+    return this.http.put<any>(
+      `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.guv}/${executionId}${envi.typeNotification.notified}/${participationId}`, body
     );
   }
 
@@ -98,7 +93,7 @@ export class ParticipantsService {
     executionId: string,
     participationId: string
   ): Observable<void> {
-    return this.requestsService.sendDeleteFetch(
+    return this.http.delete<any>(
       `${this.url_basic}${envi.bpmParticipation.value}${envi.bpmParticipation.participation}${executionId}/${participationId}`
     );
   }

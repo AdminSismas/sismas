@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
 import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PageProceduresData } from '@shared/interfaces';
 import { Observable } from 'rxjs';
@@ -18,7 +17,6 @@ export class ProceduresService {
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(
-    private requestsService: SendGeneralRequestsService,
     private http: HttpClient
   ) {}
 
@@ -43,7 +41,7 @@ export class ProceduresService {
     url: string,
     params: any
   ): Observable<ProceduresCollection[]> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.get<any>(url, { params: params  });
   }
 
   public getFilterTableEjecutionService(

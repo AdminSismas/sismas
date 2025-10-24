@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
-import { BehaviorSubject, catchError, Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject, catchError, Observable , EMPTY, throwError } from 'rxjs';
+import { HttpParams , HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../../environments/environments';
 import { BpmTypeProcess } from '@shared/interfaces';
 
@@ -20,7 +19,6 @@ export class BpmProcessService {
     dataPermissions$: Observable<PermissionVailable> = this.subjectPermision$.asObservable();
 
   constructor(
-    private requestsService: SendGeneralRequestsService
   ) {
   }
 
@@ -28,14 +26,14 @@ export class BpmProcessService {
     const url = `${this.basic_url}${environment.bpmProcess.category}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('category', `${category}`);
-    return this.requestsService.sendRequestsGetOption(url, { params: paramsR })
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<any>(url, { params: paramsR  })
+      .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getListDocumentsByProcessId(processId: string): Observable<string[]> {
     const url = `${this.basic_url}${environment.bpmProcess.prodocumentStr}${processId}`;
-    return this.requestsService.sendRequestsFetchGet(url)
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+    return this.http.get<any>(url)
+      .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   setPermissions(data: PermissionVailable): void {

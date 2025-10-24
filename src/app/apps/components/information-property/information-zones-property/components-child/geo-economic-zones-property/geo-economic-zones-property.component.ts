@@ -34,7 +34,7 @@ import {
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
   TYPE_INFORMATION_EDITION
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '@shared/components';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';

@@ -27,7 +27,7 @@ import {
   TABLE_COLUMN_PROPERTIES_APPRAISALS,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';

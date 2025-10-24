@@ -13,7 +13,7 @@ import {
   PROCESO_ACTUALIZAR_DIRECCION,
   PROCESO_CREAR_DIRECCION,
   TYPE_CREATE
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import { environment } from 'src/environments/environments';
 import {
   InformationPropertyService

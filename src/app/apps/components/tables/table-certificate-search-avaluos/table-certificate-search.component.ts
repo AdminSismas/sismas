@@ -47,7 +47,7 @@ import {
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '@shared/components';

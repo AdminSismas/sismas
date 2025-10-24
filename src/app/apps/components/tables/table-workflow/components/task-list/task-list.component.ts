@@ -12,7 +12,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { WorkflowService } from 'src/app/apps/services/bpm/workflow.service';
 import { EditTaskComponent } from '@shared/components';
-import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL_XS } from '@shared/constants';
 import Swal from 'sweetalert2';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';

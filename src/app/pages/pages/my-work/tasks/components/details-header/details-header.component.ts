@@ -7,7 +7,7 @@ import { DocumentTableComponent } from 'src/app/apps/components/bpm/document-tab
 import {
   MODAL_MEDIUM,
   NAME_NO_DISPONIBLE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
 import { DetailInformationData } from '../detail-information-tasks/detail-information-tasks.component';
 

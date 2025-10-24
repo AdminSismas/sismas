@@ -5,7 +5,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { InformationAdjacent } from 'src/app/apps/interfaces/information-property/information-adjacent';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL } from 'src/app/apps/constants/general/constants';
+import { TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL } from '@shared/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import Swal from 'sweetalert2';
 

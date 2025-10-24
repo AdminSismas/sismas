@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SearchData } from '@shared/interfaces';
 import { ComboboxCollectionComponent } from '@shared/components';
 import { InputComponent } from '@shared/components';
-import { MODAL_LARGE } from '../../../../constants/general/constants';
+import { MODAL_LARGE } from '@shared/constants';
 
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { InformationPersonService } from 'src/app/apps/services/bpm/information-person.service';

@@ -41,7 +41,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { Big } from 'big.js';
-import { MODAL_SMALL_LARGE } from '../../../../constants/general/constants';
+import { MODAL_SMALL_LARGE } from '@shared/constants';
 
 @Component({
   selector: 'vex-add-property-owner',

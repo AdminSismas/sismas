@@ -1,5 +1,5 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
-import { TOP_ROLE_LIST } from 'src/app/apps/constants/general/constants';
+import { TOP_ROLE_LIST } from '@shared/constants';
 import { RoleGuard } from 'src/app/guards/role.guard';
 
 const routes: VexRoutes = [

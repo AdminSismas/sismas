@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import {
   environment as envi,
   environment
@@ -16,8 +15,7 @@ import { PageSearchData } from '@shared/interfaces';
 export class ValidateInformationBaunitService {
   basic_url = `${environment.url}:${environment.port}`;
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   getBaunitIdEInOtherProcess(baunitIdE: string): Observable<string> {
@@ -34,7 +32,7 @@ export class ValidateInformationBaunitService {
   }
 
   private getData(url: string, params: any): Observable<InformationPegeable> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.get<any>(url, { params: params  });
   }
 
   advancedSearchDa(

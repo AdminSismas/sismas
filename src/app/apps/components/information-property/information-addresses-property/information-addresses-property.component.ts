@@ -47,7 +47,7 @@ import {
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { MatCardModule } from '@angular/material/card';
 import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
 import { MatMenuModule } from '@angular/material/menu';

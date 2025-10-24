@@ -5,7 +5,7 @@ import { PAGE } from 'src/app/apps/constants/bpm/workflow.constant';
 import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   PAGE_OPTION_UNIQUE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { Operation } from 'src/app/apps/interfaces/bpm/operation';
 import { OperationContentInformation } from 'src/app/apps/interfaces/bpm/operation-content-information';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';

@@ -35,7 +35,7 @@ import {
   CONSTANT_ERR_ONLY_TEXT_NUMBER
 } from '../../../constants/general/constantsAlertLabel';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { STRING_INFORMATION_NOT_FOUND } from '../../../constants/general/constants';
+import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants';
 
 // @ts-ignore
 @Component({

@@ -27,7 +27,7 @@ import {
   CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ,
   CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ,
   TYPE_OPERATION_ADD
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { Operation } from '@shared/interfaces';
 import { CollectionServices } from '@shared/services';
 import Swal from 'sweetalert2';

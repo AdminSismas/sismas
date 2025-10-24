@@ -38,7 +38,7 @@ import {
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import {
   FormsModule,
   NG_VALUE_ACCESSOR,

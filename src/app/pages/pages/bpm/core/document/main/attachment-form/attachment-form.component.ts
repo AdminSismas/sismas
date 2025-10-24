@@ -43,7 +43,7 @@ import { AttachmentService } from '@shared/services';
 import { ComboboxCollectionComponent } from '@shared/components';
 import { InputComponent } from '@shared/components';
 import Swal from 'sweetalert2';
-import { rejectedFileTypes } from 'src/app/apps/constants/general/constants';
+import { rejectedFileTypes } from '@shared/constants';
 
 @Component({
   selector: 'vex-attachment-form',

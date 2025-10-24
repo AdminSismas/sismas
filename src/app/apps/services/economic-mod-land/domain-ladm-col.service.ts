@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,7 +14,7 @@ export class DomainLadmColService {
   basic_url = `${environment.url}:${environment.port}${environment.domain_domain}`;
 
   /* -------------- CONSTRUCTOR -------------- */
-  constructor(private requestsService: SendGeneralRequestsService) {}
+  constructor() {}
   private http = inject(HttpClient);
 
 

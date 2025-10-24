@@ -29,7 +29,7 @@ import {
   PAGE_SIZE_OPTION, PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { environment } from 'src/environments/environments';
 import { TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
 

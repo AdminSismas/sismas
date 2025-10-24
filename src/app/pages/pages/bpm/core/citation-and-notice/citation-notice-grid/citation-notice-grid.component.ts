@@ -31,7 +31,7 @@ import { CitationNoticeCardComponent } from '../components/citation-notice-card/
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
-  PAGE} from 'src/app/apps/constants/general/constants';
+  PAGE} from '@shared/constants';
 import { validateVariable } from '../../../../../../apps/utils/general';
 import { TypeProcessParticipant } from '@shared/interfaces';
 import { LoadingServiceService } from '@shared/services';

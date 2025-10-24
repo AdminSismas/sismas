@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import {
   NAME_NO_DISPONIBLE,
   TYPE_READ_ONLY
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AsyncPipe } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';

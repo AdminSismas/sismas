@@ -16,7 +16,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
-import { NAME_NO_DISPONIBLE } from 'src/app/apps/constants/general/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants';
 import { CommonModule } from '@angular/common';
 
 @Component({

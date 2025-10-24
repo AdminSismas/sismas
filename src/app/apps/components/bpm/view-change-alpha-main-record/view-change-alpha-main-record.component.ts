@@ -23,7 +23,7 @@ import { CadastralChangeLog } from '@shared/interfaces';
 import {
   PAGE,
   TABLE_COLUMN_CHANGES_BPM_OPERATION
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { UntypedFormControl } from '@angular/forms';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { PageSearchData } from '@shared/interfaces';

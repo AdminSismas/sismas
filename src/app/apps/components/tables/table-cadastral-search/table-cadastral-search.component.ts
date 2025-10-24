@@ -65,7 +65,7 @@ import {
   TITULO_PAGE_AVANZADA,
   TITULO_PAGE_CADASTRAL_DA,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
+} from '@shared/constants';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
 import { ContentInfoSchema } from '@shared/interfaces';
 import { GeographicViewerComponent } from '@shared/components';

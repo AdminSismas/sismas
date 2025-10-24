@@ -8,7 +8,6 @@ import { environment } from '../../../../environments/environments';
 import { CommentsCollection } from '@shared/interfaces';
 import { PageCommentsData } from '@shared/interfaces';
 import { contentInfoComments } from '@shared/interfaces';
-import { SendGeneralRequestsService } from '@shared/services';
 import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
@@ -19,10 +18,7 @@ export class CommentsService {
   basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.bpmOperation.comment}/`;
 
   /* -------------- CONSTRUCTRO -------------- */
-  constructor(
-    private requestsService: SendGeneralRequestsService,
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByComments(
@@ -50,14 +46,14 @@ export class CommentsService {
 
   /* -------------- MÉTODOS PRIVADOS -------------- */
   private getData(url: string, params: any): Observable<CommentsCollection> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.get<CommentsCollection>(url, { params });
   }
 
   private fetchBody(url: string, body: any): Observable<CommentsCollection> {
-    return this.requestsService.sendRequestsFetchPostBody(url, body);
+    return this.http.post<CommentsCollection>(url, body);
   }
 
   private deleteBody(url: string): Observable<CommentsCollection> {
-    return this.requestsService.sendDeleteFetch(url);
+    return this.http.delete<CommentsCollection>(url);
   }
 }

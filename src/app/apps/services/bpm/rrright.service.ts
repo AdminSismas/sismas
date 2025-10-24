@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment as env } from '../../../../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { InfoOwners } from '@shared/interfaces';
-import { catchError, Observable } from 'rxjs';
-import { SendGeneralRequestsService } from '@shared/services';
+import { catchError, Observable , EMPTY, throwError } from 'rxjs';
 import { DeleteParamsRrright, ParamsRrright } from '@shared/interfaces';
 import { InfoPerson } from '@shared/interfaces';
 
@@ -15,8 +14,7 @@ export class RrrightService {
   basic_url = `${env.url}:${env.port}${env.rrright}`;
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService,
+    private http: HttpClient
   ) { }
 
   getRrrightByBaUnitId( id: string, domain: string ): Observable<InfoOwners[]> | undefined {
@@ -24,7 +22,7 @@ export class RrrightService {
 
     return this.http.get<InfoPerson>(url)
       .pipe(
-        catchError(error => this.requestsService.errorNotFound(error))
+        catchError(error => (error.status === 404 ? EMPTY : throwError(() => error)))
       );
   }
 
@@ -35,7 +33,7 @@ export class RrrightService {
 
     return this.http.post<InfoOwners>(url, params)
       .pipe(
-        catchError(error => this.requestsService.errorNotFound(error))
+        catchError(error => (error.status === 404 ? EMPTY : throwError(() => error)))
       );
   }
 
@@ -51,7 +49,7 @@ export class RrrightService {
 
     return this.http.delete<void>(url, { params: params })
       .pipe(
-        catchError(error => this.requestsService.errorNotFound(error))
+        catchError(error => (error.status === 404 ? EMPTY : throwError(() => error)))
       );
   }
 
@@ -62,7 +60,7 @@ export class RrrightService {
 
     return this.http.put(url, params)
       .pipe(
-        catchError(error => this.requestsService.errorNotFound(error))
+        catchError(error => (error.status === 404 ? EMPTY : throwError(() => error)))
       );
   }
 }

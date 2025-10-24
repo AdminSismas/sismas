@@ -15,7 +15,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { getRandomInt } from '../../../../utils/general';
-import { LIST_EXTENSION_MASIVE_EXCEL } from '../../../../constants/general/constants';
+import { LIST_EXTENSION_MASIVE_EXCEL } from '@shared/constants';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '@shared/services';
 import { LoadingServiceService } from '@shared/services';

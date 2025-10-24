@@ -58,7 +58,7 @@ import {
   TYPE_OPERATION_CREATE_GEO,
   TYPE_OPERATION_DELETE,
   TYPE_OPERATION_DELETE_GEO
-} from '../../../../constants/general/constants';
+} from '@shared/constants';
 import { Pegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
 import { ClearInformationDataComponent } from '@shared/components';
@@ -71,7 +71,7 @@ import {
   CONSTANT_TEXT_DELETE_GEO_MAIN,
   CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
   CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
-} from '../../../../constants/general/constantLabels';
+} from '@shared/constants';
 import { ViewChangeAlphaMainRecordComponent } from '@shared/components';
 import {
   TypeButtonAlfaMain,
