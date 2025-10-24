@@ -37,11 +37,14 @@ export { GeographicViewerComponent } from '../../apps/components/geographics/geo
 // Information property components
 export { CadastralInformationPropertyComponent } from '../../apps/components/information-property/cadastral-information-property/cadastral-information-property.component';
 export { InformationAddressesPropertyComponent } from '../../apps/components/information-property/information-addresses-property/information-addresses-property.component';
+export { DetailInformationAddressComponent } from '../../apps/components/information-property/information-addresses-property/detail-information-address/detail-information-address.component';
+export { AddEditInformationAddressComponent } from '../../apps/components/information-property/information-addresses-property/add-edit-information-address/add-edit-information-address.component';
 export { BasicPropertyInformationComponent } from '../../apps/components/information-property/basic-property-information/basic-property-information.component';
 export { EditBasicPropertyInformationComponent } from '../../apps/components/information-property/basic-property-information/edit-basic-property-information/edit-basic-property-information.component';
 export { HeaderCadastralInformationPropertyComponent } from '../../apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 export { InformationPropertyOwnersComponent } from '../../apps/components/information-property/information-property-owners/information-property-owners.component';
 export { InformationConstructionsPropertyComponent } from '../../apps/components/information-property/information-constructions-property/information-constructions-property.component';
+export { CrudInformationConstructionsPropertyComponent } from '../../apps/components/information-property/information-constructions-property/crud-information-constructions-property/crud-information-constructions-property.component';
 export { InformationUnitPropertyComponent } from '../../apps/components/information-property/information-unit-property/information-unit-property.component';
 export { InformationZonesPropertyComponent } from '../../apps/components/information-property/information-zones-property/information-zones-property.component';
 export { LayoutCardCadastralInformationPropertyComponentComponent } from '../../apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
@@ -53,6 +56,9 @@ export { CreateAlertComponent } from '../../apps/components/information-property
 export { UpdateAlertComponent } from '../../apps/components/information-property/alerts/update-alert/update-alert.component';
 export { PhotosComponent } from '../../apps/components/information-property/photos/photos.component';
 export { PropertyAppraisalInformationComponent } from '../../apps/components/information-property/property-appraisal-information/property-appraisal-information.component';
+export { InformationAdjacentPropertyComponent } from '../../apps/components/information-property/information-adjacent-property/information-adjacent-property.component';
+export { HistoricalActiveProceduresPropertyComponent } from '../../apps/components/information-property/historical-active-procedures/historical-active-procedures.component';
+export { BaunitIcaComponent } from '../../apps/components/information-property/baunit-ica/baunit-ica.component';
 
 // Tables components
 export { TableProceduresComponent } from '../../apps/components/tables/table-procedures/table-procedures.component';
