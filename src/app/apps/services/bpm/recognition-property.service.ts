@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, map, Observable , EMPTY, throwError } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
 import {
@@ -15,7 +16,8 @@ import {
 export class RecognitionPropertyService {
   private readonly base_url = `${envi.url}:${envi.port}${envi.ccReconocimientoPredial}`;
 
-  private http: HttpClient = inject(HttpClient); = inject(SendGeneralRequestsService);
+  private http: HttpClient = inject(HttpClient);
+  private requestsService = inject(SendGeneralRequestsService);
 
   createRecognitionProperty(
     executionId: string | number,

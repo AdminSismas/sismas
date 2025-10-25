@@ -59,6 +59,8 @@ export { DomainLadmColService } from '../../apps/services/economic-mod-land/doma
 export { SearchService } from '../../apps/services/general/search.service';
 export { DynamicComponentsService } from '../../apps/services/bpm/dynamic-components.service';
 export { RecognitionPropertyService } from '../../apps/services/bpm/recognition-property.service';
+export { ParticipantsProcessService } from '../../apps/services/bpm/core/participants-process.service';
+export { AttachmentService } from '../../apps/services/bpm/core/document/main/attachment.service';
 
 // Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';

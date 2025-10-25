@@ -8,7 +8,6 @@ import { ProExecutionE } from '@shared/interfaces';
 import { DifferenceChanges } from '@shared/interfaces';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MetadataBpm } from '@shared/interfaces';
-import { SendGeneralRequestsService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root'

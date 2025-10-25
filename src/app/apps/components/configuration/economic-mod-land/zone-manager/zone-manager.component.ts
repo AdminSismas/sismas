@@ -63,7 +63,7 @@ export class ZoneManagerComponent implements OnInit {
   public zonesCode = '';
 
   @Input({ required: true }) public typeZone: 'urbana' | 'rural' | 'geoeconómica' = 'urbana';
-  @Input({ required: true }) public service!: ZoneServices;
+  @Input({ required: true }) public service!: any;
   @Input({ required: true }) public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   @Input({ required: true }) public columns: { name: string, title: string }[] = [];
   @Input({ required: true }) public displayedColumns: string[] = [];

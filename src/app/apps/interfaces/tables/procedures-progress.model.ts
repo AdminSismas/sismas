@@ -1,4 +1,4 @@
-import { ProceduresCollection as ProceduresProcessCollection } from '@shared/interfaces';
+import { ProceduresProcessCollection } from './procedures-progress-process.model';
 
 export class ProceduresCollection {
     executionId?: number;

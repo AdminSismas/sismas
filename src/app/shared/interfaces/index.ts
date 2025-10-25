@@ -17,6 +17,7 @@ export * from '../../apps/interfaces/general/out-format.model';
 export * from '../../apps/interfaces/general/content-info-procedures.model';
 export * from '../../apps/interfaces/general/page-procedures-data.model';
 export * from '../../apps/interfaces/tables/procedures-progress.model';
+export * from '../../apps/interfaces/tables/procedures-progress-process.model';
 
 // Document management interfaces
 export * from '../../apps/interfaces/document-management/attachment.model';
@@ -26,7 +27,7 @@ export * from '../../apps/interfaces/forms/dynamic-forms';
 
 // User interfaces  
 export { Pageable as DigitalizedPageable, Sort as DigitalizedSort, UsersSignatures } from '../../apps/interfaces/users/digitalized-signatures';
-export { User, Authority as UserAuthority } from '../../shared/models/user.model';
+export { User, Authority as UserAuthority, DecodeJwt, UserDetails } from '../../shared/models/user.model';
 // Information property interfaces
 export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
@@ -61,11 +62,13 @@ export * from '../../apps/interfaces/bpm/render-template.types';
 export * from '../../apps/interfaces/bpm/operation';
 export * from '../../apps/interfaces/bpm/operation-content-information';
 export * from '../../apps/interfaces/general/modal-size.interface';
+export * from '../../apps/interfaces/tables/procedures-progress.model';
+export * from '../../apps/interfaces/tables/procedures-progress-process.model';
 export * from '../../apps/interfaces/information-property/snr-folio-info';
 export * from '../../apps/interfaces/information-property/snr-source-info';
 export * from '../../apps/interfaces/information-property/administrative-source';
 export * from '../../apps/interfaces/information-property/alerts.interface';
-export { InformationPageableUser, User, Individual, Role, Authority } from '../../apps/interfaces/users/user';
+export { InformationPageableUser, User, Individual, Role, Authority, CreateUserParams, CreateOutput } from '../../apps/interfaces/users/user';
 export * from '../../apps/interfaces/bpm/pro-execution-e';
 export * from '../../apps/interfaces/bpm/metadata-bpm';
 export * from '../../apps/interfaces/bpm/governmental-channel';

@@ -8,7 +8,7 @@ import { environment as envi } from 'src/environments/environments';
 @Injectable({
   providedIn: 'root'
 })
-export class GeoeconomicZoneService implements ZoneServices {
+export class GeoeconomicZoneService {
 
   public base_url = `${envi.url}:${envi.port}${envi.geoeconomic_zones}`;
 

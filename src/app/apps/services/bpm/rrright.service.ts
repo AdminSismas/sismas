@@ -22,7 +22,7 @@ export class RrrightService {
   getRrrightByBaUnitId( id: string, domain: string ): Observable<InfoOwners[]> | undefined {
     const url = `${this.basic_url}${domain}/${id}`;
 
-    return this.http.get<InfoPerson>(url)
+    return this.http.get<InfoOwners[]>(url)
       .pipe(
         catchError(error => (error.status === 404 ? EMPTY : throwError(() => error)))
       );

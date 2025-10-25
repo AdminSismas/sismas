@@ -86,7 +86,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { LoadingServiceService } from '@shared/services';
-import { ValidityProcedureComponent } from '@shared/components';
+import { TableProceduresComponent } from '@shared/components';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { LoaderComponent } from '@shared/components';
 import { ViewChangesComponent } from '@shared/components';
@@ -574,7 +574,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     });
 
     this.dialog
-      .open(ValidityProcedureComponent, {
+      .open(TableProceduresComponent, {
         ...MODAL_SMALL_XS,
         data: {
           executionId: this.executionId(),

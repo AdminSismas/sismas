@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable, throwError, EMPTY } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpStatusCode } from '@angular/common/http';
 import { AuthService } from '../../../pages/pages/auth/login/services/auth.service';
