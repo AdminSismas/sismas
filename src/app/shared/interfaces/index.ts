@@ -55,7 +55,7 @@ export * from '../../apps/interfaces/bpm/pro-task-e';
 export * from '../../apps/interfaces/bpm/pro-flow';
 export * from '../../apps/interfaces/bpm/pre-form';
 export * from '../../apps/interfaces/bpm/recognitionProperty.interface';
-export { TaskResponse, TaskResponseContent, TaskResponseModel } from '../../apps/interfaces/bpm/task-response.model';
+export { TaskResponseModel, ProcessModel } from '../../apps/interfaces/bpm/task-response.model';
 export * from '../../apps/interfaces/bpm/workflow.model';
 export * from '../../apps/interfaces/general/content-info-workflow.model';
 export * from '../../apps/interfaces/bpm/render-template.types';
