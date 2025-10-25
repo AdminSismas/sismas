@@ -42,7 +42,7 @@ export { InformationPropertyService } from '../../apps/services/territorial-orga
 export { UnitPropertyInformationService } from '../../apps/services/territorial-organization/baunit-children-information.service';
 
 // Document management service
-export { AttachmentService } from '../../apps/services/document-management/document-management.service';
+export { AttachmentService as DocumentAttachmentService } from '../../apps/services/document-management/document-management.service';
 
 // Geographic service
 export { InformationGeographicService } from '../../apps/services/geographics/information-geographic.service';
@@ -60,7 +60,7 @@ export { SearchService } from '../../apps/services/general/search.service';
 export { DynamicComponentsService } from '../../apps/services/bpm/dynamic-components.service';
 export { RecognitionPropertyService } from '../../apps/services/bpm/recognition-property.service';
 export { ParticipantsProcessService } from '../../apps/services/bpm/core/participants-process.service';
-export { AttachmentService } from '../../apps/services/bpm/core/document/main/attachment.service';
+export { AttachmentService as BmpAttachmentService } from '../../apps/services/bpm/core/document/main/attachment.service';
 
 // Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';

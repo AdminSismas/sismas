@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable , EMPTY, throwError } from 'rxjs';
-import { PageSearchData } from '../../interfaces/general/page-search-data.model';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+import { PageSearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ProTaskE } from '../../interfaces/bpm/pro-task-e';
-import { TablaContent } from '../../interfaces/bpm/table-procedure-response.model';
-import { TaskRetailExecuteResponseModel } from '../../interfaces/bpm/task-retail-execute-response.model';
+import { ProTaskE } from '@shared/interfaces';
+import { TablaContent } from '@shared/interfaces';
+import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

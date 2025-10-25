@@ -10,7 +10,8 @@
       "Bash(pnpm build:*)",
       "mcp__refactor__code_search",
       "mcp__refactor__code_refactor",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "mcp__angular-toolkit-mcp__get-project-dependencies"
     ],
     "deny": [],
     "ask": []

@@ -22,8 +22,8 @@ export class BmpWorkflowFacadeService {
   proTask$ = this.proTaskSubject.asObservable();
 
   constructor(
-    private taskService: IBmpTaskService & BmpTaskService,
-    private flowService: IBmpFlowService & BmpFlowService
+    private taskService: BmpTaskService,
+    private flowService: BmpFlowService
   ) {}
 
   /**

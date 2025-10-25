@@ -49,7 +49,7 @@ export class BmpTaskService implements IBmpTaskService {
   }
 
   getPreviewOperation(executionId: string): Observable<ProTaskE> {
-    const url = `${this.basic_url}${envi.bpmOperation.proExecution}${executionId}${envi.bpmOperation.preview}`;
+    const url = `${this.basic_url}${envi.bpmOperation.proExecution}${executionId}${envi.bpmOperation.prev}`;
     return this.http.post<ProTaskE>(url, {}).pipe(
       catchError(error => {
         console.error('Error getting preview operation:', error);

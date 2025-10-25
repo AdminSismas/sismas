@@ -1,9 +1,5 @@
 import { Observable } from 'rxjs';
-import { ProTaskE } from '@features/bmp-workflows';
-import { ProFlow } from '@features/bmp-workflows';
-import { ProExecutionE } from '@features/bmp-workflows';
-import { DifferenceChanges } from '@features/bmp-workflows';
-import { MetadataBpm } from '@features/bmp-workflows';
+import { ProTaskE, ProFlow, ProExecutionE, DifferenceChanges, MetadataBpm } from '@shared/interfaces';
 
 /**
  * Interface for BPM Task operations

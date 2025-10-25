@@ -27,7 +27,7 @@ export * from '../../apps/interfaces/forms/dynamic-forms';
 
 // User interfaces  
 export { Pageable as DigitalizedPageable, Sort as DigitalizedSort, UsersSignatures } from '../../apps/interfaces/users/digitalized-signatures';
-export { User, Authority as UserAuthority, DecodeJwt, UserDetails } from '../../shared/models/user.model';
+// User from user.model moved to line 71 to avoid duplication
 // Information property interfaces
 export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
@@ -69,6 +69,7 @@ export * from '../../apps/interfaces/information-property/snr-source-info';
 export * from '../../apps/interfaces/information-property/administrative-source';
 export * from '../../apps/interfaces/information-property/alerts.interface';
 export { InformationPageableUser, User, Individual, Role, Authority, CreateUserParams, CreateOutput } from '../../apps/interfaces/users/user';
+export { Authority as UserAuthority, DecodeJwt, UserDetails } from '../../shared/models/user.model';
 export * from '../../apps/interfaces/bpm/pro-execution-e';
 export * from '../../apps/interfaces/bpm/metadata-bpm';
 export * from '../../apps/interfaces/bpm/governmental-channel';
