@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
-import { JSONInput } from '@shared/interfaces';
+import { CadastreChangeLog, JSONInput } from '@shared/interfaces';
 import { MatTableDataSource } from "@angular/material/table";
+import { GeoEconomicZone } from "@shared/interfaces";
 
 export interface UrbanZone {
   zonaHomoFisicaUrId: number;
@@ -28,30 +29,6 @@ export interface RuralZone {
   divpolLv1: string;
   divpolLv2: string;
   cadastreChangeLog?: CadastreChangeLog;
-}
-
-export interface GeoEconomicZone {
-  zonaHomoGeoEconomicaId: number;
-  zonaHomoGeoEconomicaCode: string;
-  zonaHomoGeoEconomicaObs: string;
-  vigencia: number;
-  divpolLv1: string;
-  divpolLv2: string;
-  suelo: string;
-  valorLabel: string;
-  cadastreChangeLog?: CadastreChangeLog;
-  details?: GeoEconomicZoneDetails
-}
-
-export interface CadastreChangeLog {
-  changeLogId: number;
-  resolution: string;
-  resolutionAt: string;
-  rooting: string;
-  rootingAt: string;
-  validity: number;
-  beginAt: string;
-  domCadastreChangeTypeDescription: string;
 }
 
 export type Zone = UrbanZone | RuralZone | GeoEconomicZone;

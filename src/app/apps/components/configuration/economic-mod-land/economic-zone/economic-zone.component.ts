@@ -1,7 +1,13 @@
 // Angular framework
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 
 // Material
 import { MatDividerModule } from '@angular/material/divider';
@@ -9,9 +15,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 // Custom
-import { GEOECONOMICA_COLUMNS, NO_DETAILS_DATA } from '../../../../constants/economic-mod-land/zone-constants';
-import { GeoEconomicZone, GeoEconomicZoneDetails } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import {
+  GEOECONOMICA_COLUMNS,
+  NO_DETAILS_DATA
+} from '../../../../constants/economic-mod-land/zone-constants';
+import { GeoEconomicZoneDetails } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
+import { GeoEconomicZone } from '@shared/interfaces';
 
 @Component({
   selector: 'economic-zone',
@@ -20,15 +30,18 @@ import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/
     trigger('detailExpand', [
       state('collapsed,void', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      )
+    ])
   ],
   imports: [
     CommonModule,
     /* Material */
     MatDividerModule,
     MatTableModule,
-    MatIconModule,
+    MatIconModule
     /* Vex */
     /* Custom */
   ],
@@ -36,42 +49,43 @@ import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/
   styles: ``
 })
 export class EconomicZoneComponent implements OnInit {
-  @Input({ required: true }) public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public readonly dataSource = input.required<MatTableDataSource<any>>();
 
-  public columns: { name: string, title: string }[] = GEOECONOMICA_COLUMNS;
+  public columns: { name: string; title: string }[] = GEOECONOMICA_COLUMNS;
   public displayColumns: string[] = [];
   public columnsToDisplayWithExpand: string[] = [];
   public expandedElement?: GeoEconomicZone | null;
   public NO_DETAILS_DATA: string = NO_DETAILS_DATA;
 
-  constructor(
-    private geoEconomicZoneService: GeoeconomicZoneService,
-  ) { }
+  constructor(private geoEconomicZoneService: GeoeconomicZoneService) {}
 
   ngOnInit(): void {
     this.displayColumns = this.columns.map((column) => column.name);
     this.columnsToDisplayWithExpand = [...this.displayColumns, 'expand'];
   }
 
-expandRow(row: GeoEconomicZone): void {
-  if (this.expandedElement === row) {
-    this.expandedElement = null;
-    return;
-  }
+  expandRow(row: GeoEconomicZone): void {
+    if (this.expandedElement === row) {
+      this.expandedElement = null;
+      return;
+    }
 
-  this.expandedElement = row;
+    this.expandedElement = row;
 
-  this.geoEconomicZoneService.getValues(row.zonaHomoGeoEconomicaId)
-    .subscribe({
-      next: (values: GeoEconomicZoneDetails) => {
-        const index: number = this.dataSource.data.indexOf(row);
-        this.dataSource.data[index].details = values;
-        this.dataSource.data = [...this.dataSource.data];
-      },
-      error: (error) => {
-        console.error('Error al cargar los detalles:', error);
-        this.expandedElement = null;
-      }
-    });
+    this.geoEconomicZoneService
+      .getValues(row.zonaHomoGeoEconomicaId!)
+      .subscribe({
+        next: (values: GeoEconomicZoneDetails) => {
+          const index: number = this.dataSource().data.indexOf(row);
+          const dataSource = this.dataSource();
+          dataSource.data[index].details = values;
+          dataSource.data = [...dataSource.data];
+        },
+        error: (error) => {
+          console.error('Error al cargar los detalles:', error);
+          this.expandedElement = null;
+        }
+      });
   }
 }

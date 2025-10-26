@@ -1,8 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '@shared/services';
-import { Observable, catchError, of } from 'rxjs';
-import { GeoEconomicZone, GeoEconomicZoneDetails, Zone, ZoneServices } from '@shared/interfaces';
+import { Observable, catchError } from 'rxjs';
+import { GeoEconomicZone, GeoEconomicZoneDetails, Zone } from '@shared/interfaces';
 import { environment as envi } from 'src/environments/environments';
 
 @Injectable({
@@ -26,7 +26,7 @@ export class GeoeconomicZoneService {
 
     return this.http.get<GeoEconomicZone[]>(url, { params })
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           throw error;
         })
       );
@@ -37,7 +37,7 @@ export class GeoeconomicZoneService {
 
     return this.http.post<GeoEconomicZone>(url, params)
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           throw error;
         })
       );
@@ -49,7 +49,7 @@ export class GeoeconomicZoneService {
 
     return this.http.put<GeoEconomicZone>(url, params)
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           throw error;
         })
       );
@@ -62,7 +62,7 @@ export class GeoeconomicZoneService {
 
     return this.http.delete<void>(url, { params })
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           throw error;
         })
       );
@@ -74,7 +74,7 @@ export class GeoeconomicZoneService {
       .set('zonaHomoGeoEconomicaId', id);
     return this.http.get<GeoEconomicZoneDetails>(url, { params })
       .pipe(
-        catchError((error: any) => {
+        catchError((error: HttpErrorResponse) => {
           throw error;
         })
       );

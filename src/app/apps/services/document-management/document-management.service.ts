@@ -2,46 +2,60 @@ import { Injectable } from '@angular/core';
 import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable, catchError } from 'rxjs';
-import {AttachmentCollection} from '@shared/interfaces';
-import { HttpClient } from '@angular/common/http';
-
+import { AttachmentCollection } from '@shared/interfaces';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AttachmentService {
-    /* -------------- ATRIBUTOS -------------- */
-    //basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment}${environment.proExecution}`;
-    basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${environment.bpmAttachment.proExecution}`;
-    delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
+  /* -------------- ATRIBUTOS -------------- */
+  //basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment}${environment.proExecution}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${environment.bpmAttachment.proExecution}`;
+  delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
 
-
-    /* -------------- CONSTRUCTOR -------------- */
-    constructor(
+  /* -------------- CONSTRUCTOR -------------- */
+  constructor(
     private http: HttpClient,
     private requestsService: SendGeneralRequestsService
   ) {}
 
+  /* -------------- MÉTODOS -------------- */
+  getDataPropertyByAttachment(
+    executionId: string
+  ): Observable<AttachmentCollection[]> {
+    const url = `${this.basic_url}${executionId}`;
+    return this.getData(url);
+  }
 
+  private getData(url: string): Observable<AttachmentCollection[]> {
+    return this.http.get<AttachmentCollection[]>(url);
+  }
 
-    /* -------------- MÉTODOS -------------- */
-    getDataPropertyByAttachment(executionId: string):Observable<AttachmentCollection[]> {
-        const url = `${this.basic_url}${executionId}`;
-        return this.getData(url);
-    }
+  deleteAttachment(
+    executionId: string,
+    attachmentId: string,
+    originalFileName: string
+  ): Observable<AttachmentCollection[]> {
+    const url = `${this.delete_url}${executionId}/${attachmentId}/${originalFileName}`;
 
-    private getData(url:string):Observable<AttachmentCollection[]>{
-        return this.http.get<any>(url);
-    }
+    return this.http.delete<AttachmentCollection[]>(url).pipe(
+      catchError((error) => {
+        console.error('Error al eliminar el archivo:', error);
+        throw error;
+      })
+    );
+  }
 
-    deleteAttachment(executionId: string, attachmentId: string, originalFileName: string): Observable<AttachmentCollection[]> {
-        const url = `${this.delete_url}${executionId}/${attachmentId}/${originalFileName}`;
+  sendAttachment(formData: FormData): Observable<AttachmentCollection[]> {
+    const url = `${this.basic_url}`;
 
-        return this.http.delete<AttachmentCollection[]>(url).pipe(
-          catchError((error) => {
-            console.error('Error al eliminar el archivo:', error);
-            throw error;
-          })
-        );
-      }
+    const headers = new HttpHeaders({
+      'enctype': 'multipart/form-data'
+    });
+
+    return this.http.post<AttachmentCollection[]>(url, formData, {
+      headers: headers
+    });
+  }
 }

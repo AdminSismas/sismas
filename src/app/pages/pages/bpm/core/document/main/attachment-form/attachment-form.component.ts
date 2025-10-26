@@ -214,6 +214,7 @@ export class AttachmentFormComponent {
       'attachmentType',
       this.attachmentForm.get('attachmentType')?.value
     );
+    formData.append('description', this.attachmentForm.get('description')?.value);
 
     const description = this.attachmentForm.get('description')?.value;
     if (description) {

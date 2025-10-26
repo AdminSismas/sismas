@@ -1,3 +1,6 @@
+import { GeoEconomicZoneDetails } from "@shared/interfaces";
+import { CadastreChangeLog } from "./zone-baunit";
+
 export class GeoEconomicZone {
   zonaHomoGeoEconomicaId?: number;
   zonaHomoGeoEconomicaCode?: string;
@@ -7,6 +10,8 @@ export class GeoEconomicZone {
   divpolLv2?: string;
   suelo?: string;
   valorLabel?: string;
+  cadastreChangeLog?: CadastreChangeLog;
+  details?: GeoEconomicZoneDetails;
 
 
   constructor(zonaHomoGeoEconomicaId: number, zonaHomoGeoEconomicaCode: string,

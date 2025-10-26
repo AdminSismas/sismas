@@ -27,10 +27,10 @@ import {
   Columns,
   DataSourceZoneManager,
   DisplayedColumns,
-  GeoEconomicZone,
   RuralZone,
   UrbanZone
 } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import { GeoEconomicZone } from '@shared/interfaces';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
 import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
@@ -212,7 +212,7 @@ export class EconomicModLandComponent implements OnInit{
 
     this.geoeconomicZoneService.getZones(this.divpolLv1, this.divpolLv2)
       .subscribe({
-        next: ((result: GeoEconomicZone[]) => this.dataSource.geoeconomic.data = result)
+        next: ((result) => this.dataSource.geoeconomic.data = result)
       });
   }
 
