@@ -1,6 +1,5 @@
 
 import { inject, Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { BehaviorSubject, catchError, Observable, Subject, EMPTY } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
@@ -20,8 +19,7 @@ export class AlertsService {
     this.showOptionsPerson$.asObservable();
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   public reloadTableSet(value: boolean): void {

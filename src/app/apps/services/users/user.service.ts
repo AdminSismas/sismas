@@ -4,7 +4,6 @@ import {
   HttpParams
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
 import {
@@ -22,8 +21,7 @@ export class UserService {
   private base_url = `${envi.url}:${envi.port}${envi.bpmUser.value}`;
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   getUsers(

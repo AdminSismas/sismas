@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { PageSortByData } from '@shared/interfaces';
 import { catchError, Observable } from 'rxjs';
@@ -23,8 +22,7 @@ export class WorkflowService {
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   /* -------------- MÉTODOS -------------- */

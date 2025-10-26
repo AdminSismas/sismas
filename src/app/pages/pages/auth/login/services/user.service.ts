@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
   DecodeJwt,
@@ -19,8 +18,7 @@ export class UserService {
   private currentUserDataSubject: BehaviorSubject<number | null>;
   public currentUserData: Observable<number | null>;
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {
     const token = sessionStorage.getItem('token');
     if (token) {

@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
-import { catchError, map, Observable , EMPTY, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
 import {
   RecognitionProperty,
@@ -17,7 +16,6 @@ export class RecognitionPropertyService {
   private readonly base_url = `${envi.url}:${envi.port}${envi.ccReconocimientoPredial}`;
 
   private http: HttpClient = inject(HttpClient);
-  private requestsService = inject(SendGeneralRequestsService);
 
   createRecognitionProperty(
     executionId: string | number,
@@ -37,19 +35,16 @@ export class RecognitionPropertyService {
   }
 
   getRecognitionPropertyTags(executionId: string | number): Observable<TagsRecognition> {
-    return this.http.get<any>(
+    return this.http.get<RecognitionProperty>(
       `${this.base_url}${envi.getByExecution}/${executionId}`
     ).pipe(
       map((response: RecognitionProperty) => RecognitionPropertyMapper.mapRecognitionPropertyTags(response)),
-      catchError(error => (error.status === 404 ? EMPTY : throwError(() => error)))
     );
   }
 
   getRecognitionProperty(executionId: string | number): Observable<RecognitionProperty> {
-    return this.http.get<any>(
+    return this.http.get<RecognitionProperty>(
       `${this.base_url}${envi.getByExecution}/${executionId}`
-    ).pipe(
-      catchError(error => (error.status === 404 ? EMPTY : throwError(() => error)))
     );
   }
 

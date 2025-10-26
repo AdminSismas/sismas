@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { Observable } from 'rxjs';
 import { DownloadReport } from '@shared/interfaces';
 
@@ -13,8 +12,7 @@ export class DownloadReportsService {
   private apiUrl = 'https://dev.api.cic-ware.com/reportes/consultas.php';
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) { }
 
   getReports(startDate: string, endDate: string): Observable<DownloadReport[]> {

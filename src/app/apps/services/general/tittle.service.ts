@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environments';
 

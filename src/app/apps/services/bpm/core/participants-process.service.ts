@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../../environments/environments';
-import { catchError, distinctUntilChanged, Observable, throwError, EMPTY } from 'rxjs';
+import {
+  Observable,
+  throwError} from 'rxjs';
 import { PageSearchData } from '@shared/interfaces';
 import {
   HttpClient,
@@ -17,10 +18,13 @@ import { InformationPegeable } from '@shared/interfaces';
 export class ParticipantsProcessService {
   basic_url = `${envi.url}:${envi.port}${envi.bpmParticipation.value}`;
 
-  requestsService = inject(SendGeneralRequestsService);
+  /* ---- Injects ---- */
   http = inject(HttpClient);
 
-  validateParticipants(executionId: string, page: PageSearchData): Observable<string> {
+  validateParticipants(
+    executionId: string,
+    page: PageSearchData
+  ): Observable<string> {
     const url = `${this.basic_url}${envi.bpmParticipation.participation}${envi.validateParticipation}/${executionId}`;
 
     return this.http.put<string>(url, {
@@ -39,7 +43,7 @@ export class ParticipantsProcessService {
     const paramsA: HttpParams = new HttpParams()
       .set('page', `${page.page}`)
       .set('size', `${page.size}`);
-      
+
     const url = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}`;
     return this.getData(url, paramsA);
   }
@@ -77,7 +81,10 @@ export class ParticipantsProcessService {
     return this.getData(url, paramsA);
   }
 
-  getParticipantsWarningProcess(executionId: string, page: PageSearchData): Observable<InformationPegeable> {
+  getParticipantsWarningProcess(
+    executionId: string,
+    page: PageSearchData
+  ): Observable<InformationPegeable> {
     const url = `${this.basic_url}${envi.bpmParticipation.participation}${executionId}${envi.bpmParticipation.aviso}`;
 
     const params = new HttpParams()
@@ -87,13 +94,11 @@ export class ParticipantsProcessService {
     return this.http.get<InformationPegeable>(url, { params });
   }
 
-  private getData(url: string, params: HttpParams): Observable<InformationPegeable> {
-    return this.requestsService
-      .sendRequestsGetOption(url, { params: params })
-      .pipe(
-        catchError((error) => this.errorNotFoundParticipants(error)),
-        distinctUntilChanged()
-      );
+  private getData(
+    url: string,
+    params: HttpParams
+  ): Observable<InformationPegeable> {
+    return this.http.get<InformationPegeable>(url, { params });
   }
 
   errorNotFoundParticipants(error: HttpErrorResponse) {

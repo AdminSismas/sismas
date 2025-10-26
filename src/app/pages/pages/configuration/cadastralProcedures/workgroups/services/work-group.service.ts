@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Group } from '../interfaces/group.interface';
@@ -11,30 +10,22 @@ import { User } from 'src/app/apps/interfaces/users/user';
   providedIn: 'root'
 })
 export class WorkgroupsService {
+  private apiUrl = `${environment.url}:${environment.port}${environment.bpmGroup.value}`;
 
-    private apiUrl = `${environment.url}:${environment.port}${environment.bpmGroup.value}`;
-
-
-  constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
-  ) {}
-
+  constructor(private http: HttpClient) {}
 
   getAll(page: number, size: number): Observable<InformationPegeable> {
     const params = new HttpParams()
-        .set('page', page)
-        .set('size', size)
-        .set('sortBy', 'name');
+      .set('page', page)
+      .set('size', size)
+      .set('sortBy', 'name');
 
     return this.http.get<InformationPegeable>(`${this.apiUrl}`, { params });
   }
 
-
   create(group: Group): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}`, group);
   }
-
 
   update(group: Group): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${group.groupId}`, group);
@@ -44,10 +35,12 @@ export class WorkgroupsService {
     return this.http.delete<void>(`${this.apiUrl}/groups/${groupId}`);
   }
 
-  getGroupMembers(groupId: number): Observable<{ id: number; user: User; lastTurn: boolean; }[]> {
+  getGroupMembers(
+    groupId: number
+  ): Observable<{ id: number; user: User; lastTurn: boolean }[]> {
     const url = `${this.apiUrl}${environment.bpmGroup.membership}/${groupId}`;
 
-    return this.http.get<{ id: number; user: User; lastTurn: boolean; }[]>(url);
+    return this.http.get<{ id: number; user: User; lastTurn: boolean }[]>(url);
   }
 
   removeGroupMember(groupId: number, userId: number): Observable<void> {

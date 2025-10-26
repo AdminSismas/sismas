@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgClass } from '@angular/common';
-import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, input } from '@angular/core';
 import { ControlContainer, FormGroupDirective, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { SendGeneralRequestsService } from '@shared/services';
-import { catchError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { INFORMATION_NOT_FOUND } from '@shared/constants';
 
 @Component({
@@ -33,48 +33,40 @@ import { INFORMATION_NOT_FOUND } from '@shared/constants';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class CustomSelectorComponent implements OnInit, OnChanges {
-
-  @Input({ required: true }) idSelector = '';
-  @Input() label = 'Seleccione una opción'; // Etiqueta del selector
-  @Input() placeholder = ''; // Placeholder del selector
+  readonly label = input('Seleccione una opción'); // Etiqueta del selector
+  readonly placeholder = input(''); // Placeholder del selector
   @Input() apiUrl!: string; // URL para obtener las opciones
-  @Input() apiUrlDynamic!: string; // URL para obtener las opciones dinamico
+  readonly apiUrlDynamic = input.required<string>(); // URL para obtener las opciones dinamico
   @Input() valueKey = 'value'; // Clave para el `value` del mat-option
-  @Input({ required: true }) displayKey = 'label'; // Clave para el texto del mat-option
-  @Input() cssClasses = ''; // Clases CSS dinámicas
-  @Input() hideRequiredMarker = false; // Opción para ocultar el marcador de requerido
-  @Input() formControlName = ''; // FormControl para el binding
+  readonly displayKey = input.required<string>(); // Clave para el texto del mat-option
+  readonly cssClasses = input(''); // Clases CSS dinámicas
+  readonly hideRequiredMarker = input(false); // Opción para ocultar el marcador de requerido
+  readonly formControlName = input(''); // FormControl para el binding
   @Input() hintValue = ''; // Valor del hint opcional
   @Input() options: any[] = [];
-  @Input() queryParams: Record<string, string | number | boolean> = {};
+  readonly queryParams = input<Record<string, string | number | boolean>>({});
   @Output() selectionChange = new EventEmitter<any>(); // Evento para emitir cambios de selección
 
   loading = false; // Indicador de carga
   value: any; // Valor del selector
   disabled = false; // Estado de deshabilitado
 
-  constructor(private requestsService: SendGeneralRequestsService) {
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit(): void {
-    if (this.idSelector?.length > 0) {
-      this.idSelector = this.idSelector + this.getRandomInt(100000)
-        + 'customSelector' + this.getRandomInt(10);
-    } else {
-      this.idSelector = this.getRandomInt(10000)
-        + 'customSelector' + this.getRandomInt(10);
-    }
     this.chargeSelect();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['apiUrlDynamic'] && !this.apiUrlDynamic && this.apiUrlDynamic.length <= 0) {
+    const apiUrlDynamic = this.apiUrlDynamic();
+    if (changes['apiUrlDynamic'] && !apiUrlDynamic && apiUrlDynamic.length <= 0) {
       this.options = [];
       return;
     }
 
-    if (changes['apiUrlDynamic'] && this.apiUrlDynamic && this.apiUrlDynamic.length > 0) {
-      this.apiUrl = this.apiUrlDynamic;
+    if (changes['apiUrlDynamic'] && apiUrlDynamic && apiUrlDynamic.length > 0) {
+      this.apiUrl = apiUrlDynamic;
       this.chargeSelect();
       return;
     }
@@ -89,8 +81,9 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
   fetchOptions(): void {
     this.loading = true;
     let params: HttpParams = new HttpParams();
-    if (this.queryParams && Object.keys(this.queryParams).length > 0) {
-      Object.entries(this.queryParams).forEach(([key, value]) => {
+    const queryParams = this.queryParams();
+    if (queryParams && Object.keys(queryParams).length > 0) {
+      Object.entries(queryParams).forEach(([key, value]) => {
         params = params.append(key, value.toString());
       });
     }
@@ -99,7 +92,7 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
         this.options = data;
         this.loading = false;
       },
-      error: (err) => {
+      error: () => {
         this.loading = false;
       }
     });
@@ -129,14 +122,15 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
     this.disabled = isDisabled;
   }
 
-  private getData(url: string, params: unknown): Observable<any[]> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params })
-      .pipe(catchError(error => this.requestsService.errorNotFound(error)));
+  private getData(url: string, params: HttpParams): Observable<any[]> {
+    return this.http.get<any[]>(url, { params });
   }
 
   private onChange = (value: any) => {
+    console.log('onChange', value);
   };
   private onTouched = () => {
+    console.log('onTouched');
   };
 
   getRandomInt(max: number) {

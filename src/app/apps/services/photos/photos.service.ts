@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment as envi } from 'src/environments/environments';
@@ -16,8 +15,7 @@ export class PhotosService {
   private base_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}${envi.baunit}/`;
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   listNamePhotos(baunitId: string, municipioId: string): Observable<{ url: string, name: string }[]> {

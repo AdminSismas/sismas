@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../../environments/environments';
-import { BehaviorSubject, catchError, Observable , EMPTY, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable} from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { InformationPegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
@@ -18,10 +19,7 @@ export class AlfaMainService {
 
   basic_url = `${envi.url}:${envi.port}`;
 
-  constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   refresh() {
     this._refreshData.next(true);
@@ -33,7 +31,7 @@ export class AlfaMainService {
     schemas: string
   ): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
-    return this.http.get<any>(url);
+    return this.http.get<ChangeControl>(url);
   }
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}
@@ -42,7 +40,7 @@ export class AlfaMainService {
     schemas: string
   ): Observable<ChangeControl> {
     const url = `${this.basic_url}${envi.changeLog}${schemas}/${executionId}`;
-    return this.requestsService.sendRequestsFetchPost(url);
+    return this.http.post<ChangeControl>(url, {});
   }
 
   getListAlfaMainOperations(
@@ -55,7 +53,6 @@ export class AlfaMainService {
     return this.getData(url, paramsR);
   }
 
-  //{{url}}:{{port}}/temporal/clearChangelog
   clearInformationAlfaMain(executionId: string, keyword: string) {
     const formdata = new FormData();
     formdata.append('changeLogId', `${executionId}`);
@@ -79,7 +76,7 @@ export class AlfaMainService {
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike
   loadingNpnlikeByExecutionId(executionId: string): Observable<string[]> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}`;
-    return this.http.get<any>(url);
+    return this.http.get<string[]>(url);
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/npnlike/18001010100000099/baunits
@@ -88,7 +85,7 @@ export class AlfaMainService {
     npnLike: string
   ): Observable<BaunitHead[]> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.npnlike}/${npnLike}${envi.baunits}`;
-    return this.http.get<any>(url);
+    return this.http.get<BaunitHead[]>(url);
   }
 
   //{{url}}:{{port}}/temporal/BAUnitCreate
@@ -156,7 +153,7 @@ export class AlfaMainService {
   // {{url}}:{{port}}/baunit/main/{{executionId}}/{{baunitId}}
   getBaUnitHead(baunitId: string): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.main}/${baunitId}`;
-    return this.http.get<any>(url);
+    return this.http.get<BaunitHead>(url);
   }
 
   /**
@@ -169,7 +166,7 @@ export class AlfaMainService {
     baunitId: string
   ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http.get<any>(url);
+    return this.http.get<BaunitHead>(url);
   }
 
   /**
@@ -182,16 +179,14 @@ export class AlfaMainService {
     baunitId: string
   ): Observable<BaunitHead> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.hist}/${executionId}/${baunitId}`;
-    return this.http.get<any>(url);
+    return this.http.get<BaunitHead>(url);
   }
 
   private getData(
     url: string,
-    params: unknown
+    params: HttpParams
   ): Observable<InformationPegeable> {
-    return this.requestsService
-      .sendRequestsGetOption(url, { params: params })
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+    return this.http.get<InformationPegeable>(url, { params: params });
   }
 
   //{{url}}:{{port}}/temporal/{{executionId}}/excel/generate
@@ -213,12 +208,11 @@ export class AlfaMainService {
 
   //{{url}}:{{port}}/temporal/{{executionId}}/excel/load
   loadingExcelMassive(executionId: string, formData: FormData) {
-    return this.requestsService
-      .sendRequestsFetchPostBody(
+    return this.http
+      .post(
         `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.load}`,
         formData
-      )
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      );
   }
 
   getValidityOptions(executionId: string): Observable<string[]> {

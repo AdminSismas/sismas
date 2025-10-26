@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NavigationEnd, Router } from '@angular/router';
 import { VexConfigService } from '@vex/config/vex-config.service';

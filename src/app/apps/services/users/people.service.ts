@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -23,8 +22,7 @@ export class PeopleService {
   private url_basic = `${envi.url}:${envi.port}`;
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   getAllPeople(params?: any) {

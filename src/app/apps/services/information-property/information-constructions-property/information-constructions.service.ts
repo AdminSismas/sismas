@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { inject, Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
-import { catchError, Observable, throwError, EMPTY } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   ContentInformationConstruction,
   CreateBasicInformationConstruction
@@ -9,7 +7,6 @@ import {
 import { environment as envi } from '../../../../../environments/environments';
 import {
   HttpClient,
-  HttpErrorResponse,
   HttpParams
 } from '@angular/common/http';
 import { PageSearchData } from '@shared/interfaces';
@@ -21,19 +18,14 @@ import { CcCalificacionUB } from '@shared/interfaces';
 export class InformationConstructionsService {
   basic_url = `${envi.url}:${envi.port}`;
 
-  constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
-  ) {}
+  private http = inject(HttpClient);
 
   // ${executionId}/${baunitId}
   getDetailBasicInformationPropertyConstructions(
     id: number | undefined
   ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url} ${envi.unitBuilt} ${envi.schemas.temp}/${id}`;
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+    return this.http.get<ContentInformationConstruction>(url);
   }
 
   getBasicInformationPropertyConstructions(
@@ -51,27 +43,25 @@ export class InformationConstructionsService {
     } else {
       url += `/${executionId}/${page.searchData}`;
     }
-    return this.getData(url, params).pipe(
-      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
-    );
+    return this.http.get<InformationPegeable>(url, { params });
   }
 
   createConstruction(
     executionId: string,
     baunitId: string,
     data: ContentInformationConstruction
-  ): Observable<any> {
+  ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http.post<any>(url, data);
+    return this.http.post<ContentInformationConstruction>(url, data);
   }
 
   updateConstruction(
     executionId: string,
     baunitId: string,
     data: ContentInformationConstruction
-  ): Observable<any> {
+  ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http.put<any>(url, data);
+    return this.http.put<ContentInformationConstruction>(url, data);
   }
 
   createBasicInformationPropertyConstruction(
@@ -80,19 +70,7 @@ export class InformationConstructionsService {
     createBasicInformationConstruction: CreateBasicInformationConstruction
   ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.requestsService
-      .sendRequestsFetchPostBody(url, createBasicInformationConstruction)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = 'Ocurrió un error inesperado.';
-          if (error.error && error.error.message) {
-            errorMessage = error.error.message;
-          } else if (error.error && error.error) {
-            errorMessage = error.error;
-          }
-          return throwError(() => new Error(errorMessage));
-        })
-      );
+    return this.http.post<ContentInformationConstruction>(url, createBasicInformationConstruction);
   }
 
   updateQualification(
@@ -102,9 +80,7 @@ export class InformationConstructionsService {
     payload: CcCalificacionUB[]
   ): Observable<void> {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}`;
-    return this.requestsService
-      .sendRequestsUpdatePutBody(url, payload)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+    return this.http.put<void>(url, payload);
   }
 
   getQualificationConstructions(
@@ -131,32 +107,28 @@ export class InformationConstructionsService {
     let params: HttpParams = new HttpParams();
     params = params.append('unitBuiltId', `${unitBuiltId}`);
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}`;
-    return this.getData(url, params).pipe(
-      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
-    );
+    return this.http.get<CcCalificacionUB[]>(url, { params });
   }
 
   getQualificationForTypology(
     selectedType: string
   ): Observable<CcCalificacionUB[]> {
     const url = `${this.basic_url}${envi.calificationUB}${envi.unitBuild}/${envi.schemas.temp}${envi.typologyType}${selectedType}`;
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+    return this.http.get<CcCalificacionUB[]>(url);
   }
 
   deleteConstruction(
     baunitId: string,
     changeLogId: string,
     unitBuiltId: number
-  ): Observable<any> {
+  ): Observable<void> {
     const url = `${this.basic_url}${envi.unitBuilt}`;
     const formData = new FormData();
     formData.append('baunitId', baunitId.toString());
     formData.append('changeLogId', changeLogId.toString());
     formData.append('unitBuiltId', unitBuiltId.toString());
     formData.append('word', 'borrar');
-    return this.requestsService.sendDeleteParams(url, { body: formData });
+    return this.http.delete<void>(url, { body: formData });
   }
 
   //{{url}}:{{port}}/unitBuilt/temp/{{executionId}}/{{baunitId}}/{{unitBuiltId}}/copy
@@ -166,11 +138,7 @@ export class InformationConstructionsService {
     unitBuiltId: number
   ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${baunitId}/${unitBuiltId}${envi.copy}`;
-    return this.http.put<any>(url, null);
-  }
-
-  private getData(url: string, params: any): Observable<any> {
-    return this.http.get<any>(url, { params: params  });
+    return this.http.put<ContentInformationConstruction>(url, null);
   }
 
   getConstructionsWithoutBaunit(
@@ -187,10 +155,10 @@ export class InformationConstructionsService {
     unitBuildId: string,
     baunitId: string,
     body: ContentInformationConstruction
-  ): Observable<any> {
+  ): Observable<ContentInformationConstruction> {
     const url = `${this.basic_url}${envi.unitBuilt}/${envi.schemas.temp}/${executionId}/${unitBuildId}/${baunitId}`;
 
-    return this.http.put<any>(url, body);
+    return this.http.put<ContentInformationConstruction>(url, body);
   }
 
   getIDConstructionsSuggestion(

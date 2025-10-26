@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { ReportCategory } from '@shared/interfaces';
 
 import { Observable, of } from 'rxjs';

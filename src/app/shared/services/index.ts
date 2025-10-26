@@ -26,7 +26,6 @@ export { SplashScreenService } from '../../apps/services/core/splash-screen.serv
 // Collection service
 export { CollectionServices } from '../../apps/services/general/collection.service';
 export { SendInfoGeneralService } from '../../apps/services/general/send-info-general.service';
-export { SendGeneralRequestsService } from '../../apps/services/general/send-general-requests.service';
 export { OutFormatService } from '../../apps/services/general/out-format.service';
 export { InfoTableService } from '../../apps/services/general/info-table.service';
 export { ValidateInformationBaunitService } from '../../apps/services/general/validate-information-baunit.service';

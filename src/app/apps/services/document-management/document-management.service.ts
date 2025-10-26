@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment } from '../../../../environments/environments';
 import { Observable, catchError } from 'rxjs';
 import { AttachmentCollection } from '@shared/interfaces';
@@ -16,8 +15,7 @@ export class AttachmentService {
 
   /* -------------- CONSTRUCTOR -------------- */
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   /* -------------- MÉTODOS -------------- */

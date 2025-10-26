@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
 import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable , EMPTY, throwError } from 'rxjs';
 import { PageSearchData } from '@shared/interfaces';
@@ -21,8 +20,7 @@ export class TasksPanelService {
   listProtaskE$ = this._listProtaskE.asObservable();
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) { }
 
   getChargerProTaskCount() {

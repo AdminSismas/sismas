@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from 'src/environments/environments';
 import { UsersSignatures } from '@shared/interfaces';
 import { Observable } from 'rxjs';
@@ -14,8 +13,7 @@ export class DigitalizedSignaturesService {
   private base_url = `${envi.url}:${envi.port}${envi.bpmUser.value}`;
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) { }
 
   getUsersWithSignatures(page = 0, size = 10, sortBy = 'username'): Observable<UsersSignatures> {

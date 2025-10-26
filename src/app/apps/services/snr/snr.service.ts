@@ -1,6 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { DataFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
 import { environment as env } from 'src/environments/environments';
@@ -15,8 +14,7 @@ export class SnrService {
     private base_url = `${env.url}:${env.port}${env.snr}`;
 
     constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) { }
 
     /* GET */

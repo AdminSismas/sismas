@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { environment as envi } from '../../../../environments/environments';
-import { BehaviorSubject, catchError, Observable, Subject , EMPTY, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { BasicInformationProperty } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -38,8 +36,7 @@ export class InformationPropertyService {
   showOptionsRulePage$: Observable<boolean> = this.showRulePage$.asObservable();
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   public reloadTableSet(value: boolean): void {
@@ -65,9 +62,7 @@ export class InformationPropertyService {
     } else {
       url += `/${executionId}/${id}`;
     }
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+    return this.http.get<BasicInformationProperty>(url);
   }
 
   getBasicInformationPropertyAddresses(
@@ -92,8 +87,7 @@ export class InformationPropertyService {
     // const url = `${this.basic_url}${envi.basicAddress}`;
 
     return this.http
-      .get<InformationPegeable>(url, { params })
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .get<InformationPegeable>(url, { params });
   }
 
   // {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
@@ -109,9 +103,7 @@ export class InformationPropertyService {
     } else {
       url = `${this.basic_url}${envi.ccDireccion}/${directionId}`;
     }
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+    return this.http.get<DetailBasicInformationAddress>(url);
   }
 
   getInformationPropertyOwners(
@@ -125,9 +117,7 @@ export class InformationPropertyService {
     } else {
       url += `/${executionId}/${id}`;
     }
-    return this.requestsService
-      .sendRequestsFetchGet(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+    return this.http.get<InfoOwners[]>(url);
   }
 
   getBasicInformationAppraisalsProperty(
@@ -145,17 +135,14 @@ export class InformationPropertyService {
     } else {
       url += `/${executionId}/${page.searchData}`;
     }
-    return this.getData(url, params).pipe(
-      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
-    );
+    return this.http.get<InformationPegeable>(url, { params });
   }
 
   executeAppraisalProcess(executionId: string): Observable<unknown> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.valuation}`;
 
     return this.http
-      .post(url, {})
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .post(url, {});
   }
 
   getBasicInformationPropertyZones(
@@ -166,9 +153,7 @@ export class InformationPropertyService {
     let params: HttpParams = new HttpParams();
     params = params.append('baunitId', `${id}`);
 
-    return this.getData(url, params).pipe(
-      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
-    );
+    return this.http.get<ZoneBAUnitResponse[]>(url, { params });
   }
 
   getByBaunitFisica(
@@ -184,8 +169,7 @@ export class InformationPropertyService {
     }
 
     return this.http
-      .get<ZoneBAUnitResponse[]>(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .get<ZoneBAUnitResponse[]>(url);
   }
 
   getByBaunitFisicaOrigin(
@@ -201,8 +185,7 @@ export class InformationPropertyService {
     }
 
     return this.http
-      .get<ZoneBAUnitResponse[]>(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .get<ZoneBAUnitResponse[]>(url);
   }
 
   getByBaunitEcono(
@@ -218,8 +201,7 @@ export class InformationPropertyService {
     }
 
     return this.http
-      .get<ZoneBAUnitResponse[]>(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .get<ZoneBAUnitResponse[]>(url);
   }
 
   getByBaunitEconoOrigin(
@@ -235,8 +217,7 @@ export class InformationPropertyService {
     }
 
     return this.http
-      .get<ZoneBAUnitResponse[]>(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .get<ZoneBAUnitResponse[]>(url);
   }
 
   getByDivPolUrbana(
@@ -247,9 +228,7 @@ export class InformationPropertyService {
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
     const url = `${this.basic_url}${envi.ccZonaHomoFisicaUr}${envi.divpol}`;
-    return this.getData(url, params).pipe(
-      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
-    );
+    return this.http.get<UrbanPhysicalZone[]>(url, { params });
   }
 
   getByDivPolRural(
@@ -260,17 +239,14 @@ export class InformationPropertyService {
     params = params.append('divpolLv1', `${divpolLv1}`);
     params = params.append('divpolLv2', `${divpolLv2}`);
     const url = `${this.basic_url}${envi.ccZonaHomoFisicaRu}${envi.divpol}`;
-    return this.getData(url, params).pipe(
-      catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error)))
-    );
+    return this.http.get<RuralPhysicalZone[]>(url, { params });
   }
 
   getByDivPolGeoeconomica(npn: string): Observable<GeoEconomicZone[]> {
     // {{url}}:{{port}}/baUnitZona/baunitIdEcono/divpol/{{npn}}
     const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}${envi.divpol}/${npn}`;
     return this.http
-      .get<GeoEconomicZone[]>(url)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .get<GeoEconomicZone[]>(url);
   }
 
   createBAUnitZones(
@@ -347,8 +323,7 @@ export class InformationPropertyService {
   ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.http
-      .put<BasicInformationProperty>(url, body)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .put<BasicInformationProperty>(url, body);
   }
 
   updateBasicCoefficientInformationProperty(
@@ -358,8 +333,7 @@ export class InformationPropertyService {
   ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
     return this.http
-      .put<BasicInformationProperty>(url, body)
-      .pipe(catchError((error) => (error.status === 404 ? EMPTY : throwError(() => error))));
+      .put<BasicInformationProperty>(url, body);
   }
 
   /**
@@ -372,11 +346,11 @@ export class InformationPropertyService {
     baunitId: string,
     schema: string,
     executionId: string
-  ): Observable<any> {
+  ): Observable<void> {
     //            {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
     const url = `${this.basic_url}${envi.ccDireccion}/${schema}/${executionId}/${baunitId}/${direccionId}`;
 
-    return this.http.delete(url);
+    return this.http.delete<void>(url);
   }
 
   assignamentZones(
@@ -393,10 +367,6 @@ export class InformationPropertyService {
     }
 
     return this.http.put<SimpleResponse>(url, {});
-  }
-
-  private getData(url: string, params: any): Observable<any> {
-    return this.http.get<any>(url, { params: params  });
   }
 
   getHistoricAppraisalInformation(

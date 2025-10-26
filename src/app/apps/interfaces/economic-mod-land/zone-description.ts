@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Observable } from "rxjs";
 import { CadastreChangeLog, JSONInput } from '@shared/interfaces';
 import { MatTableDataSource } from "@angular/material/table";

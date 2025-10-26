@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SendGeneralRequestsService } from '@shared/services';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment as env } from 'src/environments/environments';
 import { AdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, UpdateAdministrativeSource } from '@shared/interfaces';
@@ -12,8 +11,7 @@ export class AdministrativeSourcesService {
   private base_url = `${env.url}:${env.port}${env.administrativeSource}`;
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) { }
 
   /* GET */
