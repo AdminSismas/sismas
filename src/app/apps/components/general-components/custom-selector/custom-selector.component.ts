@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NgClass } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ControlContainer, FormGroupDirective, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,40 +33,40 @@ import { INFORMATION_NOT_FOUND } from '@shared/constants';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class CustomSelectorComponent implements OnInit, OnChanges {
-  readonly label = input('Seleccione una opción'); // Etiqueta del selector
-  readonly placeholder = input(''); // Placeholder del selector
+  /* ---- Injects ---- */
+  http = inject(HttpClient);
+
+  /* ---- Inputs ---- */
+  @Input() label = 'Seleccione una opción'; // Etiqueta del selector
+  @Input() placeholder = ''; // Placeholder del selector
   @Input() apiUrl!: string; // URL para obtener las opciones
-  readonly apiUrlDynamic = input.required<string>(); // URL para obtener las opciones dinamico
+  @Input() apiUrlDynamic!: string; // URL para obtener las opciones dinamico
   @Input() valueKey = 'value'; // Clave para el `value` del mat-option
-  readonly displayKey = input.required<string>(); // Clave para el texto del mat-option
-  readonly cssClasses = input(''); // Clases CSS dinámicas
-  readonly hideRequiredMarker = input(false); // Opción para ocultar el marcador de requerido
-  readonly formControlName = input(''); // FormControl para el binding
+  @Input({ required: true }) displayKey = 'label'; // Clave para el texto del mat-option
+  @Input() cssClasses = ''; // Clases CSS dinámicas
+  @Input() hideRequiredMarker = false; // Opción para ocultar el marcador de requerido
+  @Input() formControlName = ''; // FormControl para el binding
   @Input() hintValue = ''; // Valor del hint opcional
   @Input() options: any[] = [];
-  readonly queryParams = input<Record<string, string | number | boolean>>({});
+  @Input() queryParams: Record<string, string | number | boolean> = {};
   @Output() selectionChange = new EventEmitter<any>(); // Evento para emitir cambios de selección
 
   loading = false; // Indicador de carga
   value: any; // Valor del selector
   disabled = false; // Estado de deshabilitado
 
-  constructor(private http: HttpClient) {
-  }
-
   ngOnInit(): void {
     this.chargeSelect();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const apiUrlDynamic = this.apiUrlDynamic();
-    if (changes['apiUrlDynamic'] && !apiUrlDynamic && apiUrlDynamic.length <= 0) {
+    if (changes['apiUrlDynamic'] && !this.apiUrlDynamic && this.apiUrlDynamic.length <= 0) {
       this.options = [];
       return;
     }
 
-    if (changes['apiUrlDynamic'] && apiUrlDynamic && apiUrlDynamic.length > 0) {
-      this.apiUrl = apiUrlDynamic;
+    if (changes['apiUrlDynamic'] && this.apiUrlDynamic && this.apiUrlDynamic.length > 0) {
+      this.apiUrl = this.apiUrlDynamic;
       this.chargeSelect();
       return;
     }
@@ -81,9 +81,8 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
   fetchOptions(): void {
     this.loading = true;
     let params: HttpParams = new HttpParams();
-    const queryParams = this.queryParams();
-    if (queryParams && Object.keys(queryParams).length > 0) {
-      Object.entries(queryParams).forEach(([key, value]) => {
+    if (this.queryParams && Object.keys(this.queryParams).length > 0) {
+      Object.entries(this.queryParams).forEach(([key, value]) => {
         params = params.append(key, value.toString());
       });
     }
@@ -127,15 +126,11 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
   }
 
   private onChange = (value: any) => {
-    console.log('onChange', value);
+    console.log(value);
   };
   private onTouched = () => {
     console.log('onTouched');
   };
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
 
   protected readonly INFORMATION_NOT_FOUND = INFORMATION_NOT_FOUND;
 }

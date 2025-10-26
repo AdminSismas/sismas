@@ -56,7 +56,6 @@
               <div class="px-1 py-4 flex flex-col">
                 <div class="mt-1 flex flex-col sm:flex-row sm:gap-4 m-0">
                   <vex-combox-custom-selector
-                    [idSelector]="'BuiltType' + 'dispname' + 15648"
                     [label]="'Tipo de Construcción'"
                     [placeholder]="'Seleccione el tipo...'"
                     [apiUrl]="api_domainName"
@@ -69,7 +68,6 @@
                     class="flex-auto"
                   ></vex-combox-custom-selector>
                   <vex-combox-custom-selector
-                    [idSelector]="'domBuiltUseControl' + 'dispname' + 15648"
                     [label]="'Uso de Construcción'"
                     [placeholder]="'Seleccione el uso...'"
                     [options]="filteredBuiltUseOptions"
@@ -200,7 +198,6 @@
                   <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'arma' + 12354"
                       [label]="'Armazón'"
                       [placeholder]="'Escoger armazón'"
                       [apiUrl]="getApiQualificationUrl('Armazon')"
@@ -212,7 +209,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Muros' + 12354"
                       [label]="'Muros'"
                       [placeholder]="'Escoger muros'"
                       [apiUrl]="getApiQualificationUrl('Muros')"
@@ -224,7 +220,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'conseva_cuviertas' + 12354"
                       [label]="'Cubierta'"
                       [placeholder]="'Escoger cubierta'"
                       [apiUrl]="getApiQualificationUrl('Cubierta')"
@@ -236,7 +231,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'conseva_one' + 12354"
                       [label]="'Conservación'"
                       [placeholder]="'Escoger conservación'"
                       [apiUrl]="getApiQualificationUrl('Conservacion_Cubierta')"
@@ -252,7 +246,6 @@
                   <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Fachadas' + 12354"
                       [label]="'Fachadas'"
                       [placeholder]="'Escoger fachada'"
                       [apiUrl]="getApiQualificationUrl('Fachada')"
@@ -264,7 +257,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'muros_cubri' + 12354"
                       [label]="'Cubrimiento de muros'"
                       [placeholder]="'Escoger cubrimiento'"
                       [apiUrl]="getApiQualificationUrl('Cubrimiento_Muros')"
@@ -276,7 +268,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Pisos' + 12354"
                       [label]="'Pisos'"
                       [placeholder]="'Escoger pisos'"
                       [apiUrl]="getApiQualificationUrl('Piso')"
@@ -288,7 +279,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Conserva' + 12354"
                       [label]="'Conservación'"
                       [placeholder]="'Escoger conservación'"
                       [apiUrl]="getApiQualificationUrl('Conservacion_Acabados')"
@@ -304,7 +294,6 @@
                   <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Tamanio' + 12354"
                       [label]="'Tamaño'"
                       [placeholder]="'Escoger tamaño'"
                       [apiUrl]="getApiQualificationUrl('Tamanio_Banio')"
@@ -317,7 +306,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Enchapes' + 12354"
                       [label]="'Enchapes'"
                       [placeholder]="'Escoger enchape'"
                       [apiUrl]="getApiQualificationUrl('Enchape_Banio')"
@@ -329,7 +317,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Mobiliario' + 12354"
                       [label]="'Mobiliario'"
                       [placeholder]="'Escoger mobiliario'"
                       [apiUrl]="getApiQualificationUrl('Mobiliario_Banio')"
@@ -341,7 +328,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Conservación' + 12354"
                       [label]="'Conservación'"
                       [placeholder]="'Escoger conservación'"
                       [apiUrl]="getApiQualificationUrl('Conservacion_Banio')"
@@ -357,7 +343,6 @@
                   <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Tamanio' + 12354"
                       [label]="'Tamaño'"
                       [placeholder]="'Escoger tamaño'"
                       [apiUrl]="getApiQualificationUrl('Tamanio_Cocina')"
@@ -370,7 +355,7 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Enchapes' + 12354"
+
                       [label]="'Enchapes'"
                       [placeholder]="'Escoger enchape'"
                       [apiUrl]="getApiQualificationUrl('Enchape_Cocina')"
@@ -382,7 +367,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Mobiliario' + 12354"
                       [label]="'Mobiliario'"
                       [placeholder]="'Escoger mobiliario'"
                       [apiUrl]="getApiQualificationUrl('Mobiliario_Cocina')"
@@ -394,7 +378,6 @@
 
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Conservación' + 12354"
                       [label]="'Conservación'"
                       [placeholder]="'Escoger conservación'"
                       [apiUrl]="getApiQualificationUrl('Conservacion_Cocina')"
@@ -411,7 +394,6 @@
                     <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
                       <vex-combox-custom-selector
                         class="w-[calc(25%-1rem)]"
-                        [idSelector]="'ComplementoIndustrial' + 12354"
                         [label]="'Complemento industrial'"
                         [placeholder]="'Seleccionar complemento industrial'"
                         [apiUrl]="
@@ -437,7 +419,6 @@
                   <p><strong>Tipología</strong></p>
                   <div class="flex flex-col sm:flex-row gap-3 sm:gap-3">
                     <vex-combox-custom-selector
-                      [idSelector]="'Tipologia ' + 12354"
                       [label]="'Tipología'"
                       [placeholder]="'Seleccione tipología...'"
                       [apiUrl]="getApiQualificationUrl('Tipologia')"
@@ -457,7 +438,6 @@
                   <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <vex-combox-custom-selector
                       class="flex-auto"
-                      [idSelector]="'Anexxxo ' + 98765"
                       [label]="'Anexos'"
                       [placeholder]="'Seleccione un anexo...'"
                       [apiUrlDynamic]="annexUrl"
