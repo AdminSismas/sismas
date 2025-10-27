@@ -35,7 +35,7 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 import { Operation } from '@shared/interfaces';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '@shared/services';

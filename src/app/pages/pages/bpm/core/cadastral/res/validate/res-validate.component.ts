@@ -13,8 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
-import { FormGroup } from '@angular/forms';
+import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import { FormGroup } from '@angular/forms';
 import { RecognitionPropertyService } from '@shared/services';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {
@@ -28,7 +27,7 @@ import { FluidHeightDirective } from '../../../../../../../apps/directives/fluid
 import { FluidMaxHeightDirective } from '../../../../../../../apps/directives/fluid-max-height.directive';
 import { RES_VALIDATE_INPUTS } from '../../../../../../../apps/constants/information-property/cadastral-recognition.constants';
 import { LoadingServiceService } from '@shared/services';
-import { TableThirdPartyAffectedComponent } from '@shared/components';
+import { TableThirdPartyAffectedComponent } from '../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 import { ResService } from 'src/app/apps/services/bpm/core/res.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';

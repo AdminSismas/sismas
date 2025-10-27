@@ -18,7 +18,7 @@ import {
 } from '@angular/material/expansion';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { TableAlfaMainComponent } from '@shared/components';
+import { TableAlfaMainComponent } from 'src/app/apps/components/bpm/table-alfa-main/table-alfa-main.component';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { getRandomInt } from '../../../../utils/general';
@@ -61,7 +61,7 @@ import {
 } from '@shared/constants';
 import { Pegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
-import { ClearInformationDataComponent } from '@shared/components';
+import { ClearInformationDataComponent } from 'src/app/features/bmp-workflows/components/clear-information-data/clear-information-data.component';
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
   CONSTANT_KEYWORD_DELETE_GEO_MAIN,
@@ -79,17 +79,18 @@ import {
   TypeOperationGeoMain
 } from '@shared/interfaces';
 import { DataAlfaMain } from '@shared/interfaces';
-import { CrudAlfaMainComponent } from '@shared/components';
+import { CrudAlfaMainComponent } from 'src/app/apps/components/bpm/alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { LoadingServiceService } from '@shared/services';
-import { TableProceduresComponent } from '@shared/components';
+import { TableProceduresComponent } from 'src/app/apps/components/tables/table-procedures/table-procedures.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { LoaderComponent } from '@shared/components';
-import { ViewChangesComponent } from '@shared/components';
+
+import { ViewChangesComponent } from 'src/app/apps/components/bpm/alfa-main/alfa-main-information/view-changes/view-changes.component';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({
   selector: 'vex-alfa-main-information',

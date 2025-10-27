@@ -32,7 +32,7 @@ import {
   CONSTANT_NAME_CREATE_LABEL,
   CONSTANT_NAME_DELETE_LABEL
 } from '@shared/constants';
-import { ComboboxCollectionComponent } from '@shared/components';
+
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
@@ -59,6 +59,8 @@ import { Operation } from '@shared/interfaces';
 import { DomainCollection } from '@shared/interfaces';
 import { CollectionServices } from '@shared/services';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
+import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+
 
 @Component({
   selector: 'vex-crud-alfa-main',

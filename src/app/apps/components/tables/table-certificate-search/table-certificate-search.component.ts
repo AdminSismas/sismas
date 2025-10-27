@@ -60,15 +60,15 @@ import {
   TABLE_COLUMN_PROPERTIES,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
-import { GeographicViewerComponent } from '@shared/components';
+import { GeographicViewerComponent } from '../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendInformationRegisterService } from '@shared/services';
 import { ValidateInformationBaunitService } from '@shared/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FilterCertificateSearchComponent } from '@shared/components';
-import { ViewFileDocumentManagementComponent } from '@shared/components';
+import { FilterCertificateSearchComponent } from '../../apps/components/tables/table-certificate-search/filter-certificate-search/filter-certificate-search.component';
+import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
 import { contentInfoAttachment } from '@shared/interfaces';
 
 @Component({

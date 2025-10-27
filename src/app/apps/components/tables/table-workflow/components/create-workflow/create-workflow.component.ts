@@ -11,8 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { WorkflowCollection } from '@shared/interfaces';
-import { DynamicFormsComponent } from '@shared/components';
-import Swal from 'sweetalert2';
+import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-create-workflow',

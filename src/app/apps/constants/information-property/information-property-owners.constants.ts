@@ -1,5 +1,5 @@
 import { TableColumn } from "@vex/interfaces/table-column.interface";
-import { InfoOwnerRowT } from '@shared/components';
+import { InfoOwnerRowT } from 'src/app/apps/components/information-property/information-property-owners/information-property-owners.component';
 
 export const FRACTION_DECIMALS = 2;
 export const TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] = [

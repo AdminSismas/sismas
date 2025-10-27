@@ -34,7 +34,7 @@ import {
 } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ComboboxCollectionFormComponent } from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
+import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {

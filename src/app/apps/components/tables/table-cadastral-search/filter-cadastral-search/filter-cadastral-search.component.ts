@@ -31,8 +31,8 @@ import {
   MatSnackBar,
   MatSnackBarHorizontalPosition
 } from '@angular/material/snack-bar';
-import { ComboboxCollectionFormComponent } from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
-import { InputComponent } from '@shared/components';
+import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { TerritorialOrganizationService } from '@shared/services';
 import { Department } from '@shared/interfaces';

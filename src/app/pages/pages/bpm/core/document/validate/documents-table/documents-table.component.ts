@@ -49,7 +49,7 @@ import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from '@shared/components';
+import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
 import {
   TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE
 } from '../../../../../../../apps/constants/general/attachment.constant';

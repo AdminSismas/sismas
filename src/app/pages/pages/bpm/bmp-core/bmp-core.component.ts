@@ -18,7 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { map } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { HeaderBpmCoreComponent } from '@shared/components';
+import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
 import {
   COMPONENT_PATH_FORM_ALFA_MAIN,
   CONSTANT_VALIDATE_CHECK,
@@ -40,7 +40,7 @@ import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLab
 import { environment } from '../../../../../environments/environments';
 import { SendInfoGeneralService } from '@shared/services';
 import { MatDialog } from '@angular/material/dialog';
-import { ShowErrorValidateAlfaMainComponent } from '@shared/components';
+import { ShowErrorValidateAlfaMainComponent } from 'src/app/apps/components/bpm/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import {
   BpmProcessService,
   PermissionVailable

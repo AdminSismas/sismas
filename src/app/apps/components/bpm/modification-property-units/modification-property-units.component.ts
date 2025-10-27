@@ -49,7 +49,7 @@ import {
 } from '@shared/constants';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
 import { MODIFYCATION_UNITS_TABLE_COLUMNS } from '../../../constants/information-property/modification-property-units.constants';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';

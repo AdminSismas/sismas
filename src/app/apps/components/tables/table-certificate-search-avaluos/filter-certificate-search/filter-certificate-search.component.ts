@@ -29,7 +29,7 @@ import {
   MatSnackBar,
   MatSnackBarHorizontalPosition
 } from '@angular/material/snack-bar';
-import { InputComponent } from '@shared/components';
+import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -64,7 +64,7 @@ import {
   DIVPOLLVL2_CODE,
   DIVPOLLVL_CODE
 } from '@shared/constants';
-import { ComboboxCollectionFormComponent } from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
+import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
 
 @Component({
   selector: 'vex-filter-certificate-search',

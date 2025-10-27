@@ -50,9 +50,7 @@ import {
   URBAN_COLUMNS
 } from '../../../../../apps/constants/economic-mod-land/zone-constants';
 import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
-import {
-  ZoneManagerComponent
-} from '@shared/components';
+import { ZoneManagerComponent } from 'src/app/apps/components/configuration/economic-mod-land/zone-manager/zone-manager.component';
 
 @Component({
   selector: 'vex-economic-mod-land',

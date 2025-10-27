@@ -1,9 +1,7 @@
 import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
-import { ComboboxComponent } from '@shared/components';
+import { ComboboxComponent } from '../../../../apps/components/general-components/combobox/combobox.component';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
-import {
-  GeographicViewerEmbeddedComponent
-} from '@shared/components';
+import { GeographicViewerEmbeddedComponent } from '../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { MatButton } from '@angular/material/button';
 import { MatDialogActions } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';

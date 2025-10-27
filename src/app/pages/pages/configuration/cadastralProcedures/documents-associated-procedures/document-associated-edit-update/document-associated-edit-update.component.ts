@@ -20,7 +20,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, Vali
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InputComponent } from '@shared/components';
+import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { MatIconButton } from '@angular/material/button';

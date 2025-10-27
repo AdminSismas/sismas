@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TableCadastralSearchComponent } from '@shared/components';
+import { TableCadastralSearchComponent } from '../../../../apps/components/tables/table-cadastral-search/table-cadastral-search.component';
 import { LoadingServiceService } from '@shared/services';
 
 @Component({

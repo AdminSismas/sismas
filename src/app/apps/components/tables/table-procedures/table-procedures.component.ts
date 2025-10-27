@@ -69,7 +69,7 @@ import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/opera
 import { environment } from 'src/environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ReassignProcedureComponent } from '@shared/components';
+import { ReassignProcedureComponent } from 'src/app/apps/components/procedures/reassign-procedure/reassign-procedure.component';
 import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
 import { ComponentType } from '@angular/cdk/overlay';
 import { MatDividerModule } from '@angular/material/divider';
@@ -77,7 +77,7 @@ import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import moment from 'moment';
 import 'moment/locale/es';
 import Swal from 'sweetalert2';
-import { ProcedureStatusPipe } from '@shared/components';
+import { ProcedureStatusPipe } from 'src/app/apps/components/tables/table-procedures/pipe/procedure-status.pipe';
 
 interface MenuActions {
   label: string;

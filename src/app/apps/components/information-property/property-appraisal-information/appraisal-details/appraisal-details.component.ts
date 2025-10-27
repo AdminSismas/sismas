@@ -9,7 +9,7 @@ import { ModalWindowComponent } from 'src/app/apps/components/general-components
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CurrencyPipe, KeyValuePipe } from '@angular/common';
 import { InfoAppraisal } from 'src/app/apps/interfaces/information-property/info-appraisal';
-import { AppraisalLabelPipe } from '@shared/components';
+import { AppraisalLabelPipe } from 'src/app/apps/components/information-property/property-appraisal-information/appraisal-details/appraisal-label.pipe';
 import { DatePipe } from '@angular/common';
 
 @Component({

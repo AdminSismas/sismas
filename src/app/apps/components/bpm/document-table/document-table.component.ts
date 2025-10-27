@@ -52,7 +52,7 @@ import { AttachmentService } from '@shared/services';
 import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
-import { ViewFileDocumentManagementComponent } from '@shared/components';
+import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
 import { TABLE_COLUMN_PROPERTIES } from '../../../constants/general/attachment.constant';
 import {
   MODAL_LARGE,

@@ -10,8 +10,7 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { forkJoin, map, Observable } from 'rxjs';
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
-import {
+import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import {
   CREATE_USER_INPUTS,
   SEARCH_INPUTS
 } from '../../../../../../apps/constants/general/users.constants';

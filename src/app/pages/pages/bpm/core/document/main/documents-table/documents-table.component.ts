@@ -50,7 +50,7 @@ import { AttachmentService } from '@shared/services';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from '@shared/components';
+import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
 import {PAGE,
 PAGE_SIZE,
 PAGE_SIZE_OPTION} from '../../../../../../../apps/constants/general/constants';

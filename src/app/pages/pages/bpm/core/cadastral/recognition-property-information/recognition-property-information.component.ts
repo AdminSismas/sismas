@@ -33,8 +33,7 @@ import { ProFlow } from '@shared/interfaces';
 import { SendInfoGeneralService } from '@shared/services';
 import { Router } from '@angular/router';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { DynamicFormsComponent } from '@shared/components';
-import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
+import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { LoadingServiceService } from '@shared/services';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
 import { getRandomInt } from '../../../../../../apps/utils/general';
@@ -42,9 +41,7 @@ import {
   RecognitionProperty,
   RecognitionPropertyBasic
 } from '@shared/interfaces';
-import {
-  TableThirdPartyAffectedComponent
-} from '@shared/components';
+import { TableThirdPartyAffectedComponent } from '../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 
 @Component({
   selector: 'vex-recognition-property-information',

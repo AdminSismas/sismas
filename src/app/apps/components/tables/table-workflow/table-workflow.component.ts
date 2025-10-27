@@ -44,7 +44,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 // recursos de archivos locales
 import { contentInfoWorkflow } from '@shared/interfaces';
-import { CreateWorkflowComponent } from '@shared/components';
+import { CreateWorkflowComponent } from 'src/app/apps/components/tables/table-workflow/components/create-workflow/create-workflow.component';
 import { InformationPegeable } from '@shared/interfaces';
 import {
   PAGE,
@@ -56,7 +56,7 @@ import { WorkflowCollection } from '@shared/interfaces';
 import { WorkflowService } from '@shared/services';
 import { MODAL_LARGE, PAGE_SIZE_OPTION } from '@shared/constants';
 import Swal from 'sweetalert2';
-import { TaskListComponent } from '@shared/components';
+import { TaskListComponent } from 'src/app/apps/components/tables/table-workflow/components/task-list/task-list.component';
 
 @Component({
   selector: 'vex-table-workflow',
