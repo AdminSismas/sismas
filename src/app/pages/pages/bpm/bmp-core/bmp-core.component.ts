@@ -48,7 +48,7 @@ import {
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { LoadingServiceService } from '@shared/services';
 import { InformationPropertyService } from '@shared/services';
-import { LoaderComponent } from '@shared/components';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 
 @Component({

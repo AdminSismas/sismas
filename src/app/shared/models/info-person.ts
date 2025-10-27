@@ -1,4 +1,4 @@
-import { TypeOperationPeople } from '@shared/models';
+import { TypeOperationPeople } from '@shared/interfaces';
 import { InfoContact } from '@shared/interfaces';
 
 export class InfoPerson {

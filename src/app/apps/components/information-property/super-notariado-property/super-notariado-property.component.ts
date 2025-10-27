@@ -7,11 +7,11 @@ import {
   output
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { InfoFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
-import { InformationSourcePropertyComponent } from '@shared/components';
+import { InformationSourcePropertyComponent } from '../information-source-property/information-source-property.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 

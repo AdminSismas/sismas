@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TypeInformation } from '@shared/models';
+import { TypeInformation } from '@shared/interfaces';
 import { TYPE_INFORMATION_VISUAL } from '@shared/constants';
 
 export class ContentInfoSchema {

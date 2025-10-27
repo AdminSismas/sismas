@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import {
   AdministrativeSource,
   DeleteAdministrativeSourceParams,
@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { CreateAdministrativeSourceComponent } from '@shared/components';
+import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { COLUMNS_ADMINISTRATIVE_SOURCES } from '../../../constants/information-property/administrative-source.constants';

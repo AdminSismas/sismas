@@ -5,7 +5,7 @@ import {
   inject,
   signal
 } from '@angular/core';
-import { ModalWindowComponent } from '@shared/components';
+import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CurrencyPipe, KeyValuePipe } from '@angular/common';
 import { InfoAppraisal } from 'src/app/apps/interfaces/information-property/info-appraisal';

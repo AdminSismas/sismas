@@ -34,7 +34,7 @@ import { ContentInfoSchema } from '@shared/models';
 import { environment } from 'src/environments/environments';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from '@shared/components';
+} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { TypeInformation } from '@shared/interfaces';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -44,7 +44,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
   HeaderCadastralInformationPropertyComponent
-} from '@shared/components';
+} from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import {
   UnitPropertyInformationService
 } from '@shared/services';

@@ -43,7 +43,7 @@ import { AlfaMainService } from '@shared/services';
 import { AttachmentExcelMassiveComponent } from '@shared/components';
 import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { LoaderComponent } from '@shared/components';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({
   selector: 'vex-header-bpm-core',

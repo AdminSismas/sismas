@@ -10,7 +10,7 @@ import {
   output,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';

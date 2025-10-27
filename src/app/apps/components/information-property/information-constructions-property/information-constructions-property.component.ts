@@ -9,7 +9,7 @@ import {
   output,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -65,8 +65,8 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationConstructionsService } from '@shared/services';
 import { filter } from 'rxjs/operators';
 import { EditConstructionsComponent } from '@shared/components';
-import { TableConstructionsComponent } from '@shared/components';
-import { ModalResponse } from '@shared/components';
+import { TableConstructionsComponent } from './table-constructions/table-constructions.component';
+import { ModalResponse } from '@shared/ui/modal-window/modal-window.component';
 import Swal from 'sweetalert2';
 import { input } from '@angular/core';
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, forwardRef, input, Input, output, ViewChild } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   NAME_NO_DISPONIBLE,
@@ -34,8 +34,8 @@ import {
   ZoneBAUnitResponse
 } from 'src/app/apps/interfaces/information-property/zone-baunit';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
-import { GeoEconomicZonesPropertyComponent } from '@shared/components';
-import { PhysicalZonesPropertyComponent } from '@shared/components';
+import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
+import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
 

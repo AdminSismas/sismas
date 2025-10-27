@@ -17,7 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchData } from '@shared/interfaces';
-import { ComboboxCollectionComponent } from '@shared/components';
+import { ComboboxCollectionFormComponent } from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 import { InputComponent } from '@shared/components';
 import { MODAL_LARGE } from '@shared/constants';
 
@@ -105,7 +105,7 @@ export class FilterCertificateSearchComponent {
         this.form.get('individualNameNoExist')?.disable();
         return;
       }
-      
+
       this.dialog.closeAll();
       this.openViewCertificateManagement(data);
     });

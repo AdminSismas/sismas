@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { ModalWindowComponent } from '@shared/components';
+import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ContentInformationConstruction } from 'src/app/apps/interfaces/information-property/content-information-construction';

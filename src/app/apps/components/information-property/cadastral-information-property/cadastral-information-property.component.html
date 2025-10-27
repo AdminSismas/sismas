@@ -16,7 +16,6 @@
   <mat-divider class="text-border"></mat-divider>
 }
 <mat-dialog-content
-  [id]="idContainer"
   [ngClass]="cssClasses()"
   class="flex items-start justify-start gap-6 overflow-x-hidden"
   vexFluidHeight
@@ -31,18 +30,18 @@
       <div
         (click)="scrollTo(item.fragment)"
         class="px-3 py-2 rounded-xl hover:bg-hover transition cursor-pointer relative"
-        matRipple
       >
+        <!-- matRipple -->
         {{ item.label }}
       </div>
     }
   </div>
 
   <div
-    @stagger
     class="max-w-full w-10/12 flex flex-col gap-6"
+    @stagger
   >
-    <!-- <vex-basic-property-information
+    <vex-basic-property-information
       #basicPropertyInformationComponent
       [baunitId]="baunitId"
       [schema]="schema()"
@@ -57,9 +56,8 @@
       (propertyRegistryNumber)="propertyRegistryNumber = $event"
       (emitExpandedComponent)="activeComponent.set(0)"
       (isMatriz)="isMatriz.set($event)"
-      @fadeInUp
-    ></vex-basic-property-information> -->
-    <!-- @if (showInformationUnitProperty && levelInfo() !== 3) {
+    ></vex-basic-property-information>
+    @if (showInformationUnitProperty && levelInfo() !== 3) {
       <vex-information-unit-property
         #unitPropertyInformationComponent
         [expandedComponent]="activeComponent() === 1"
@@ -225,26 +223,6 @@
         [expandedComponent]="activeComponent() === 14"
         (emitExpandedComponent)="activeComponent.set($event)"
       ></baunit-ica>
-    } -->
+    }
   </div>
 </mat-dialog-content>
-<mat-menu
-  #settingsMenu="matMenu"
-  xPosition="before"
-  yPosition="below"
->
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Imprimir</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Exportar</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Borrar</span>
-  </button>
-</mat-menu>

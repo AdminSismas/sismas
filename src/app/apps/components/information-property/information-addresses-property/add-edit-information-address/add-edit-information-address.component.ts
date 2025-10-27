@@ -47,15 +47,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ComboboxCollectionComponent } from '@shared/components';
-import { InputComponent } from '@shared/components';
+import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
 import {
   HeaderCadastralInformationPropertyComponent
-} from '@shared/components';
-import { TextAreaComponent } from '@shared/components';
+} from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+import { TextAreaComponent } from 'src/app/apps/components/general-components/text-area/text-area.component';
 import {
   ComboboxCollectionFormComponent
-} from '@shared/components';
+} from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 
 @Component({
   selector: 'vex-edit-information-address',

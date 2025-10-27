@@ -58,7 +58,7 @@ import Swal from 'sweetalert2';
 import { Operation } from '@shared/interfaces';
 import { DomainCollection } from '@shared/interfaces';
 import { CollectionServices } from '@shared/services';
-import { LoaderComponent } from '@shared/components';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({
   selector: 'vex-crud-alfa-main',

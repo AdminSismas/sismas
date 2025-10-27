@@ -24,7 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '@shared/interfaces';
 import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
-import { ComboboxCollectionComponent } from '@shared/components';
+import { ComboboxCollectionFormComponent } from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 import { InputComponent } from '@shared/components';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {

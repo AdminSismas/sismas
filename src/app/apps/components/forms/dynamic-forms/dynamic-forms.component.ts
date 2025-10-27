@@ -21,7 +21,7 @@ import { MAT_DATE_FORMATS, MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 /* Components */
-import { ComboboxCollectionComponent } from '@shared/components';
+import { ComboboxCollectionFormComponent } from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 import { JSONInput } from '@shared/interfaces';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSelectModule } from '@angular/material/select';

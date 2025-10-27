@@ -10,7 +10,7 @@ import {
   output,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   LIST_EXTRA_COLUMNS_APPRAISAL,
@@ -68,10 +68,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
 import { TypeInformation } from '@shared/interfaces';
 import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
-import { AutoAppraisalComponent } from '@shared/components';
+import { AutoAppraisalComponent } from './auto-appraisal/auto-appraisal.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { HistoricAppraisalComponent } from '@shared/components';
-import { AppraisalDetailsComponent } from '@shared/components';
+import { HistoricAppraisalComponent } from './historic-appraisal/historic-appraisal.component';
+import { AppraisalDetailsComponent } from './appraisal-details/appraisal-details.component';
 
 @Component({
   selector: 'vex-property-appraisal-information',

@@ -29,7 +29,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { PageSearchData } from '@shared/interfaces';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { LoaderComponent } from '@shared/components';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({
   selector: 'vex-view-change-alpha-main-record',

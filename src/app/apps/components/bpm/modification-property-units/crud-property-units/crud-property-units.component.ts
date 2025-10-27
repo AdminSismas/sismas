@@ -14,7 +14,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
 import { InputComponent } from '@shared/components';
-import { ComboboxCollectionComponent } from '@shared/components';
+import { ComboboxCollectionFormComponent } from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
 import { DomainCollection } from '@shared/interfaces';
 import {
   CONSTANT_TYPEDOMAIN_BAUNITCONDITION,

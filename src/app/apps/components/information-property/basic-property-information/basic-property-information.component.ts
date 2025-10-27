@@ -29,7 +29,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '@shared/services';
 import {
@@ -52,12 +52,12 @@ import {
 } from '@shared/constants';
 import { environment } from '../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
-import { EditBasicPropertyInformationComponent } from '@shared/components';
+import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { GeographicViewerComponent } from '@shared/components';
+import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { ContentInfoSchema } from '@shared/models';
 import { MatDividerModule } from '@angular/material/divider';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { BaunitHead } from '@shared/interfaces';
 import { AlfaMainService } from '@shared/services';
 import Swal from 'sweetalert2';

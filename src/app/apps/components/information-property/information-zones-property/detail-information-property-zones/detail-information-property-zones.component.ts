@@ -6,7 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { NAME_NO_DISPONIBLE } from '@shared/constants';
 import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from '@shared/interfaces';
-import { ModalWindowComponent } from '@shared/components';
+import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
 
 type PropertyType = 'Urbano' | 'Rural' | 'Geoeconómica';
 

@@ -50,10 +50,10 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { CustomSelectorComponent } from '@shared/components';
-import { InputComponent } from '@shared/components';
+import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
 import { CollectionServices } from '@shared/services';
 import { CcCalificacionUB } from '@shared/interfaces';
-import { TextAreaComponent } from '@shared/components';
+import { TextAreaComponent } from 'src/app/apps/components/general-components/text-area/text-area.component';
 import {
   CONSTANT_MSG_ONLY_ONE_99,
   CONSTANT_MSG_TYPE_AREA,

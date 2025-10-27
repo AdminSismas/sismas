@@ -11,7 +11,7 @@ import {
   signal,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_MEDIUM,
@@ -30,7 +30,7 @@ import { InfoOwners } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DetailInformationPropertyOwnerComponent } from '@shared/components';
+import { DetailInformationPropertyOwnerComponent } from './detail-information-property-owner/detail-information-property-owner.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -48,8 +48,8 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
 import { TypeInformation } from '@shared/interfaces';
-import { AddPropertyOwnerComponent } from '@shared/components';
-import { EditingPropertyOwnerComponent } from '@shared/components';
+import { AddPropertyOwnerComponent } from './add-property-owner/add-property-owner.component';
+import { EditingPropertyOwnerComponent } from './editing-property-owner/editing-property-owner.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import {

@@ -76,7 +76,7 @@ import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
 import { ViewChangesBpmOperationComponent } from '@shared/components';
-import { LoaderComponent } from '@shared/components';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({
   selector: 'vex-modification-property-units',

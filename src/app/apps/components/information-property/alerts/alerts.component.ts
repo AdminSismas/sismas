@@ -7,7 +7,7 @@ import {
   input,
   output
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from '@shared/components';
+import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_SMALL,
@@ -31,13 +31,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TypeInformation } from '@shared/interfaces';
-import { DetailAlertsComponent } from '@shared/components';
+import { DetailAlertsComponent } from './detail-alerts/detail-alerts.component';
 import { DatePipe } from '@angular/common';
-import { CreateAlertComponent } from '@shared/components';
+import { CreateAlertComponent } from './create-alert/create-alert.component';
 import { AlertResponse } from 'src/app/apps/interfaces/information-property/alerts.interface';
 import Swal from 'sweetalert2';
 import { ALERT_TABLE_COLUMNS } from 'src/app/apps/constants/information-property/alerts.constants';
-import { UpdateAlertComponent } from '@shared/components';
+import { UpdateAlertComponent } from './update-alert/update-alert.component';
 
 export type InfoOwnerRowT = Pick<
   InfoOwners,

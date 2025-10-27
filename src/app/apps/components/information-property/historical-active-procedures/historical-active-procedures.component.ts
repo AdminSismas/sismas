@@ -36,7 +36,7 @@ import { TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/
 // COMPONENT IMPORTS
 import {
   HeaderCadastralInformationPropertyComponent
-} from '@shared/components';
+} from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
 
 // INTERFACES IMPORTS
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
@@ -60,7 +60,7 @@ import {
 import { TaskResponseModel } from 'src/app/apps/interfaces/bpm/task-response.model';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from '@shared/components';
+} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
 import { AlfaMainService } from '@shared/services';
 import { BaunitHead } from '@shared/interfaces';

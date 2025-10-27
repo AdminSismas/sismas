@@ -28,7 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
-import { ComboboxCollectionComponent } from '@shared/components';
+import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
 import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
 import { PeopleService } from '@shared/services';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
@@ -40,7 +40,7 @@ import {
 } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { MODAL_SMALL_LARGE } from '@shared/constants';
 import { People } from 'src/app/apps/interfaces/users/people.model';
-import { ModalResponse } from '@shared/components';
+import { ModalResponse } from '@shared/ui/modal-window/modal-window.component';
 
 @Component({
   selector: 'vex-editing-property-owner',
