@@ -13,7 +13,7 @@ import { InfoPerson } from '@shared/interfaces';
 
 // import { InfoContact } from '@shared/interfaces';
 import { People } from '@shared/interfaces';
-import { InfoContact } from '@shared/models';
+import { InfoContact } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

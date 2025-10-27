@@ -54,7 +54,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { InformationPropertyService } from '@services/index';
 
 /* ---- Shared interfaces ---- */
-import { BaunitHead } from '@shared/interfaces';
+// import { BaunitHead } from '@shared/interfaces';
 import {
   NavigationItemCadastralInfo,
   TypeInformation
@@ -235,7 +235,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
 
   public readonly rulePage = input('');
 
-  baunitHead!: BaunitHead;
+  baunitHead!: any;
   executionId: string | null | undefined;
   idContainer = '';
   baunitId: string | null = null;

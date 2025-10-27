@@ -1,5 +1,5 @@
 import { TypeOperationPeople } from '@shared/models';
-import { InfoContact } from '@shared/models';
+import { InfoContact } from '@shared/interfaces';
 
 export class InfoPerson {
   companyName: string | null;
