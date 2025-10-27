@@ -9,7 +9,6 @@ export * from '../../apps/interfaces/general/content-info-attachment.model';
 export * from '../../apps/interfaces/general/page-sortBy-data.model';
 export * from '../../apps/interfaces/general/domain-name.model';
 export * from '../../apps/interfaces/general/content-info';
-export * from '../../apps/interfaces/general/content-info-schema';
 export * from '../../apps/interfaces/general/pegeable.model';
 export * from '../../apps/interfaces/general/page-search-data.model';
 export * from '../../apps/interfaces/general/search-data.model';
@@ -25,7 +24,7 @@ export * from '../../apps/interfaces/document-management/attachment.model';
 // Forms interfaces
 export * from '../../apps/interfaces/forms/dynamic-forms';
 
-// User interfaces  
+// User interfaces
 export { Pageable as DigitalizedPageable, Sort as DigitalizedSort, UsersSignatures } from '../../apps/interfaces/users/digitalized-signatures';
 // User from user.model moved to line 71 to avoid duplication
 // Information property interfaces

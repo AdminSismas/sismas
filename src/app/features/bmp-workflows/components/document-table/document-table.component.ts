@@ -69,7 +69,7 @@ import { UserService } from 'src/app/pages/pages/auth/login/services/user.servic
 @Component({
   templateUrl: './document-table.component.html',
   styleUrl: './document-table.component.css',
-  selector: 'vex-document-table',
+  selector: 'document-table',
   standalone: true,
   animations: [fadeInUp400ms, stagger40ms],
   imports: [

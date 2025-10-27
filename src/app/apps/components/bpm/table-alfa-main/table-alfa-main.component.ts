@@ -36,7 +36,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 import { Operation } from '@shared/interfaces';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
-import { ContentInfoSchema } from '@shared/interfaces';
+import { ContentInfoSchema } from '@shared/models';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '@shared/services';
 import { DifferenceChanges } from '@shared/interfaces';

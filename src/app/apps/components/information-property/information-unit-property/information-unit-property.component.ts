@@ -30,7 +30,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { ContentInfoSchema } from '@shared/interfaces';
+import { ContentInfoSchema } from '@shared/models';
 import { environment } from 'src/environments/environments';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent

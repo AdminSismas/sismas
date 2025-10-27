@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// Angular framework
+/* ---- Angular framework ---- */
 import {
   Component,
   computed,
@@ -10,41 +10,60 @@ import {
   ViewChild,
   input
 } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+
+/* ---- Material Angular ---- */
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRippleModule } from '@angular/material/core';
-import { InformationAddressesPropertyComponent } from '@shared/components';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
-import { MatListModule } from '@angular/material/list';
-import { NgClass } from '@angular/common';
-import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
-import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
-import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { BasicPropertyInformationComponent } from '@shared/components';
-import { InformationPropertyOwnersComponent } from '@shared/components';
-import { InformationConstructionsPropertyComponent } from '@shared/components';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ContentInfoSchema } from '@shared/interfaces';
+
+/* ---- Vex ---- */
+// import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
+// import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
+// import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
+// import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
+// import { scaleIn400ms } from '@vex/animations/scale-in.animation';
+// import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
+
+/* ---- Shared components ---- */
+// import { InformationAddressesPropertyComponent } from '@shared/components';
+// import { BasicPropertyInformationComponent } from '@shared/components';
+// import { InformationPropertyOwnersComponent } from '@shared/components';
+// import { InformationConstructionsPropertyComponent } from '@shared/components';
+// import { AdministrativeSourcesComponent } from '@shared/components';
+// import { PhotosComponent } from '@shared/components';
+// import { AlertsComponent } from '@shared/components';
+// import { InformationUnitPropertyComponent } from '@shared/components';
+// import { InformationZonesPropertyComponent } from '@shared/components';
+// import { PropertyAppraisalInformationComponent } from '@shared/components';
+// import { SuperNotariadoPropertyComponent } from '@shared/components';
+// import { InformationAdjacentPropertyComponent } from '@shared/components';
+// import { HistoricalActiveProceduresPropertyComponent } from '@shared/components';
+// import { BaunitIcaComponent } from '@shared/components';
+
+/* ---- Shared services ---- */
+import { InformationPropertyService } from '@services/index';
+
+/* ---- Shared interfaces ---- */
 import { BaunitHead } from '@shared/interfaces';
-import { environment as envi } from '../../../../../environments/environments';
-import { AdministrativeSourcesComponent } from '@shared/components';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { PhotosComponent } from '@shared/components';
-import { AlertsComponent } from '@shared/components';
-import { InformationUnitPropertyComponent } from '@shared/components';
-import { InformationZonesPropertyComponent } from '@shared/components';
+import {
+  NavigationItemCadastralInfo,
+  TypeInformation
+} from '@shared/interfaces';
+
+/* ---- Shared models ---- */
+import { ContentInfoSchema } from '@shared/models';
+
+/* ---- Shared constants ---- */
 import {
   FRAGMENT_BASIC_PROPERTY_INFORMATION,
   FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY,
@@ -55,34 +74,28 @@ import {
   REFERENCE_COMPONENTS,
   RULE_PAGE_CADASTRAL_DA
 } from '@shared/constants';
-import { PropertyAppraisalInformationComponent } from '@shared/components';
-import { SuperNotariadoPropertyComponent } from '@shared/components';
-import {
-  NavigationItemCadastralInfo,
-  TypeInformation
-} from '@shared/interfaces';
-import { InformationAdjacentPropertyComponent } from '@shared/components';
-import { MatSelectModule } from '@angular/material/select';
-import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
-import { HistoricalActiveProceduresPropertyComponent } from '@shared/components';
-import { BaunitIcaComponent } from '@shared/components';
+
+/* ---- Environments ---- */
+import { environment as envi } from '../../../../../environments/environments';
+
+/* ---- Directives ---- */
+// import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
 
 @Component({
   selector: 'vex-cadastral-information-property',
   templateUrl: './cadastral-information-property.component.html',
   styleUrl: './cadastral-information-property.component.scss',
   animations: [
-    fadeInRight400ms,
-    stagger80ms,
-    scaleIn400ms,
-    stagger40ms,
-    fadeInUp400ms,
-    scaleFadeIn400ms
+    // fadeInRight400ms,
+    // stagger80ms,
+    // scaleIn400ms,
+    // stagger40ms,
+    // fadeInUp400ms,
+    // scaleFadeIn400ms
   ],
   standalone: true,
   imports: [
     MatIconModule,
-    MatButtonModule,
     MatDialogClose,
     MatDialogTitle,
     MatExpansionModule,
@@ -91,28 +104,25 @@ import { BaunitIcaComponent } from '@shared/components';
     MatDividerModule,
     MatDialogContent,
     MatRippleModule,
-    MatListModule,
     MatRippleModule,
     MatSnackBarModule,
-    VexHighlightModule,
-    BasicPropertyInformationComponent,
-    InformationAddressesPropertyComponent,
-    InformationPropertyOwnersComponent,
-    InformationConstructionsPropertyComponent,
-    InformationZonesPropertyComponent,
-    PropertyAppraisalInformationComponent,
-    MatFormFieldModule,
-    InformationUnitPropertyComponent,
-    AdministrativeSourcesComponent,
-    PhotosComponent,
-    AlertsComponent,
-    SuperNotariadoPropertyComponent,
-    InformationAdjacentPropertyComponent,
-    HistoricalActiveProceduresPropertyComponent,
-    MatSelectModule,
-    FluidHeightDirective,
+    // VexHighlightModule,
+    // BasicPropertyInformationComponent,
+    // InformationAddressesPropertyComponent,
+    // InformationPropertyOwnersComponent,
+    // InformationConstructionsPropertyComponent,
+    // InformationZonesPropertyComponent,
+    // PropertyAppraisalInformationComponent,
+    // InformationUnitPropertyComponent,
+    // AdministrativeSourcesComponent,
+    // PhotosComponent,
+    // AlertsComponent,
+    // SuperNotariadoPropertyComponent,
+    // InformationAdjacentPropertyComponent,
+    // HistoricalActiveProceduresPropertyComponent,
+    // FluidHeightDirective,
+    // BaunitIcaComponent
     NgClass,
-    BaunitIcaComponent
   ],
   providers: [
     {

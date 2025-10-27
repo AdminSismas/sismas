@@ -42,7 +42,7 @@
     @stagger
     class="max-w-full w-10/12 flex flex-col gap-6"
   >
-    <vex-basic-property-information
+    <!-- <vex-basic-property-information
       #basicPropertyInformationComponent
       [baunitId]="baunitId"
       [schema]="schema()"
@@ -58,8 +58,8 @@
       (emitExpandedComponent)="activeComponent.set(0)"
       (isMatriz)="isMatriz.set($event)"
       @fadeInUp
-    ></vex-basic-property-information>
-    @if (showInformationUnitProperty && levelInfo() !== 3) {
+    ></vex-basic-property-information> -->
+    <!-- @if (showInformationUnitProperty && levelInfo() !== 3) {
       <vex-information-unit-property
         #unitPropertyInformationComponent
         [expandedComponent]="activeComponent() === 1"
@@ -225,7 +225,7 @@
         [expandedComponent]="activeComponent() === 14"
         (emitExpandedComponent)="activeComponent.set($event)"
       ></baunit-ica>
-    }
+    } -->
   </div>
 </mat-dialog-content>
 <mat-menu

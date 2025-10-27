@@ -51,7 +51,7 @@ import {
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '@shared/components';
-import { ContentInfoSchema } from '@shared/interfaces';
+import { ContentInfoSchema } from '@shared/models';
 import { GeographicViewerComponent } from '@shared/components';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendInformationRegisterService } from '@shared/services';

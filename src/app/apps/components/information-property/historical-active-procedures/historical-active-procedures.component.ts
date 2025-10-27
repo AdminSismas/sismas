@@ -61,7 +61,7 @@ import { TaskResponseModel } from 'src/app/apps/interfaces/bpm/task-response.mod
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '@shared/components';
-import { ContentInfoSchema } from '@shared/interfaces';
+import { ContentInfoSchema } from '@shared/models';
 import { AlfaMainService } from '@shared/services';
 import { BaunitHead } from '@shared/interfaces';
 import Swal from 'sweetalert2';

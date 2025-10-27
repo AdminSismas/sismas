@@ -55,7 +55,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from '@shared/components';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { GeographicViewerComponent } from '@shared/components';
-import { ContentInfoSchema } from '@shared/interfaces';
+import { ContentInfoSchema } from '@shared/models';
 import { MatDividerModule } from '@angular/material/divider';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@shared/components';
 import { BaunitHead } from '@shared/interfaces';

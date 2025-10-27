@@ -8,7 +8,7 @@ import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import {
   CadastralInformationPropertyComponent
 } from '@shared/components';
-import { ContentInfoSchema } from '@shared/interfaces';
+import { ContentInfoSchema } from '@shared/models';
 import {
   RULE_PAGE_CADASTRAL_DA,
   TWO_POINT_,
