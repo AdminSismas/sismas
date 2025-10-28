@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SyncMainService } from 'src/app/apps/services/bpm/sync-main.service';
+import { SyncMainService } from '@features/bpm-workflows/services/sync-main.service';
 
 
 describe(SyncMainService.name, () => {

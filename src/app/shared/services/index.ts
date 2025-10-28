@@ -20,8 +20,8 @@ export { AlertsService } from '../../apps/services/alerts/alertes.service';
 export { SplashScreenService } from '../../apps/services/core/splash-screen.service';
 
 // TODO: BMP Core services - verificar rutas exactas
-// export { AlfaMainService } from '../../apps/services/bpmcore/alfa-main.service';
-// export { AttachmentService } from '../../apps/services/bpmcore/document/main/attachment.service';
+// export { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
+// export { AttachmentService } from '@features/bpm-workflows/services/attachment.service';
 
 // Collection service
 export { CollectionServices } from '../../apps/services/general/collection.service';
@@ -33,7 +33,7 @@ export { SendInformationRegisterService } from '../../apps/services/register-pro
 export { ProceduresService } from '../../apps/services/general/procedures.service';
 
 // BMP services - temporarily commented due to path issues
-// export { ParticipantsService } from '../../apps/services/bpmparticipants-service.service';
+// export { ParticipantsService } from '@features/bpm-workflows/services/participants-service.service';
 
 // Territorial organization service
 export { TerritorialOrganizationService } from '../../apps/services/territorial-organization/territorial-organization.service';
@@ -47,19 +47,19 @@ export { AttachmentService } from '../../apps/services/document-management/docum
 export { InformationGeographicService } from '../../apps/services/geographics/information-geographic.service';
 
 // BMP Core services
-export { AlfaMainService } from '../../apps/services/bpm/core/alfa-main.service';
-export { ParticipantsService } from '../../apps/services/bpm/participants-service.service';
-export { InformationPersonService } from '../../apps/services/bpm/information-person.service';
-export { BpmCoreService } from '../../apps/services/bpm/bpm-core.service';
-export { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
-export { BpmProcessService, PermissionVailable } from '../../apps/services/bpm/bpm-process.service';
-export { WorkflowService } from '../../apps/services/bpm/workflow.service';
+export { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
+export { ParticipantsService } from '@features/bpm-workflows/services/participants-service.service';
+export { InformationPersonService } from '@features/bpm-workflows/services/information-person.service';
+export { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.service';
+export { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
+export { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/bpm-process.service';
+export { WorkflowService } from '@features/bpm-workflows/services/workflow.service';
 export { DomainLadmColService } from '../../apps/services/economic-mod-land/domain-ladm-col.service';
 export { SearchService } from '../../apps/services/general/search.service';
-export { DynamicComponentsService } from '../../apps/services/bpm/dynamic-components.service';
-export { RecognitionPropertyService } from '../../apps/services/bpm/recognition-property.service';
-export { ParticipantsProcessService } from '../../apps/services/bpm/core/participants-process.service';
-// export { AttachmentService as BmpAttachmentService } from '../../apps/services/bmp/core/document/main/attachment.service';
+export { DynamicComponentsService } from '@features/bpm-workflows/services/dynamic-components.service';
+export { RecognitionPropertyService } from '@features/bpm-workflows/services/recognition-property.service';
+export { ParticipantsProcessService } from '@features/bpm-workflows/services/participants-process.service';
+// export { AttachmentService as BmpAttachmentService } from '@features/bpm-workflows/services/attachment.service';
 
 // Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';

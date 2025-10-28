@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
-import { BehaviorSubject, catchError, distinctUntilChanged, map, Observable , EMPTY, throwError } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, distinctUntilChanged, map, Observable, EMPTY, throwError } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+
+import { environment as envi } from 'src/environments/environments';
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ProTaskE } from '@shared/interfaces';
 import { TablaContent } from '@shared/interfaces';
 import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
@@ -13,20 +15,18 @@ import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
   providedIn: 'root'
 })
 export class TasksPanelService {
+  private http = inject(HttpClient);
 
   basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}/`;
 
-  private _listProtaskE = new BehaviorSubject<ProTaskE>({});
-  listProtaskE$ = this._listProtaskE.asObservable();
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  // Modernized with signal instead of BehaviorSubject
+  private _listProtaskE = signal<ProTaskE>({});
+  listProtaskE$ = toObservable(this._listProtaskE);
 
   getChargerProTaskCount() {
     this.getProTaskCount()
       .subscribe((result: ProTaskE) => {
-        this._listProtaskE.next(result);
+        this._listProtaskE.set(result);
         });
   }
 

@@ -11,9 +11,7 @@ import { ProTaskE } from '@features/bpm-workflows/interfaces';
 export class BpmTaskService implements IBpmTaskService {
   private basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
-  constructor(
-    private http: HttpClient
-  ) {}
+  private http = inject(HttpClient);
 
   getProTaskCountComment(id: string): Observable<number> {
     const url = `${this.basic_url}${envi.bpmOperation.comment}/${id}${envi.bpmOperation.count}`;

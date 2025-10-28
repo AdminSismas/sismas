@@ -49,7 +49,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   DetailInformationTasksComponent
 } from '../components/detail-information-tasks/detail-information-tasks.component';
-import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
+import { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/bpm-process.service';
 import { LoadingServiceService } from '@shared/services';
 
 @Component({

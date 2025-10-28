@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, combineLatest, map } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { Observable, combineLatest, map } from 'rxjs';
 import { BpmTaskService } from '@features/bpm-workflows/interfaces';
 import { BpmFlowService } from '@features/bpm-workflows/interfaces';
 import { ProTaskE } from '@features/bpm-workflows/interfaces';
@@ -16,8 +16,8 @@ export interface WorkflowSummary {
   providedIn: 'root'
 })
 export class BpmWorkflowFacadeService {
-  private proTaskSubject = new ReplaySubject<ProTaskE>(1);
-  proTask$ = this.proTaskSubject.asObservable();
+  private proTaskSubject = signal<ProTaskE | null>(null);
+  proTask$ = toObservable(this.proTaskSubject);
 
   constructor(
     private taskService: BpmTaskService,
@@ -49,7 +49,7 @@ export class BpmWorkflowFacadeService {
   processNextOperation(executionId: string, answer: boolean): Observable<ProTaskE> {
     return this.taskService.getNextOperation(executionId, answer).pipe(
       map(task => {
-        this.proTaskSubject.next(task);
+        this.proTaskSubject.set(task);
         return task;
       })
     );
@@ -83,6 +83,6 @@ export class BpmWorkflowFacadeService {
    * Update current task in subject
    */
   updateCurrentTask(task: ProTaskE): void {
-    this.proTaskSubject.next(task);
+    this.proTaskSubject.set(task);
   }
 }

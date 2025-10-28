@@ -1,7 +1,7 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { NAME_NO_DISPONIBLE } from '@shared/constants';
 import { MetadataBpm } from '@shared/interfaces';
-import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
+import { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.service';
 
 @Component({
   selector: 'task-metadata',

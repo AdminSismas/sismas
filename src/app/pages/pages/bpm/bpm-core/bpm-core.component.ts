@@ -44,7 +44,7 @@ import { ShowErrorValidateAlfaMainComponent } from 'src/app/apps/components/bpm/
 import {
   BpmProcessService,
   PermissionVailable
-} from 'src/app/apps/services/bpm/bpm-process.service';
+} from '@features/bpm-workflows/services/bpm-process.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { LoadingServiceService } from '@shared/services';
 import { InformationPropertyService } from '@shared/services';

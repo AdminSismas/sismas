@@ -1,29 +1,20 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environments';
-import { PageSortByData } from '@shared/interfaces';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
-import {
-  Proflow,
-  WorkflowCollection
-} from '@shared/interfaces';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams
-} from '@angular/common/http';
+
+import { environment } from 'src/environments/environments';
+import { PageSortByData } from '@shared/interfaces';
+import { Proflow, WorkflowCollection } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkflowService {
+  private http = inject(HttpClient);
+
   /* -------------- ATRIBUTOS -------------- */
   basic_url = `${environment.url}:${environment.port}${environment.bpmProcess.value}`;
-
-  /* -------------- CONSTRUCTOR -------------- */
-  constructor(
-    private http: HttpClient
-  ) {}
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByWorkflow(

@@ -12,7 +12,7 @@ import {
 } from '../../../../../../apps/constants/general/constants';
 import { environment as envi } from '../../../../../../../environments/environments';
 import { MatDialog } from '@angular/material/dialog';
-import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
 import { TaskResponseModel } from '@shared/interfaces';
 import { PAGE, PAGE_SIZE } from '@shared/constants';

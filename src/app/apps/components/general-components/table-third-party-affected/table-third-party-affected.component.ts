@@ -21,7 +21,7 @@ import {
   TYPE_OPERATION_CREATE
 } from '../../../constants/general/constants';
 import { ProcessParticipant } from '@shared/interfaces';
-import { ParticipantsService } from '../../../services/bpm/participants-service.service';
+import { ParticipantsService } from '@features/bpm-workflows/services/participants-service.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';

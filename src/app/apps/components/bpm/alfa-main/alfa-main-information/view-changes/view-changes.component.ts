@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
+import { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.service';
 
 interface ViewChangeData {
   executionId: string;

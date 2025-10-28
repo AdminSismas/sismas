@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { environment as env } from '../../../../environments/environments';
+import { Injectable, inject } from '@angular/core';
+import { environment as env } from 'src/environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { InfoOwners } from '@shared/interfaces';
 import { catchError, Observable , EMPTY, throwError } from 'rxjs';
@@ -13,9 +13,7 @@ export class RrrightService {
 
   basic_url = `${env.url}:${env.port}${env.rrright}`;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  private http = inject(HttpClient);
 
   getRrrightByBaUnitId( id: string, domain: string ): Observable<InfoOwners[]> | undefined {
     const url = `${this.basic_url}${domain}/${id}`;

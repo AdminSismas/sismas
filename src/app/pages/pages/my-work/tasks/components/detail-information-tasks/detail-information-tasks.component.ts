@@ -10,12 +10,12 @@ import {
   MatDialogRef} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { TaskResponseModel } from '@shared/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
-import { PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
+import { PermissionVailable } from '@features/bpm-workflows/services/bpm-process.service';
 import { DetailsHeaderComponent } from '../details-header/details-header.component';
 import { TasksExecutedComponent } from '../tasks-executed/tasks-executed.component';
 import { TaskMetadataComponent } from '../task-metadata/task-metadata.component';

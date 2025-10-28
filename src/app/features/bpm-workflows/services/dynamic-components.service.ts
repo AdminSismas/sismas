@@ -14,7 +14,7 @@ import { ComponentTemplate } from '@shared/interfaces';
 import {
   COMPONENT_ALFA_MAIN,
   COMPONENT_ALFA_VALIDATE
-} from '../../constants/general/constants';
+} from 'src/app/apps/constants/general/constants';
 import { CitationAndNoticeComponent } from 'src/app/pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
 import { RecognitionPropertyInformationComponent } from 'src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
 import { CompleteDocsComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/complete/complete-docs.component';

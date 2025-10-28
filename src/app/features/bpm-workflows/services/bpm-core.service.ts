@@ -1,52 +1,57 @@
-import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, Observable, EMPTY, throwError } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+
+import { environment as envi } from 'src/environments/environments';
 import { ProTaskE } from '@shared/interfaces';
 import { ProFlow } from '@shared/interfaces';
 import { ProExecutionE } from '@shared/interfaces';
 import { DifferenceChanges } from '@shared/interfaces';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MetadataBpm } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BpmCoreService {
+  private http = inject(HttpClient);
 
-  private proTaskSubject = new ReplaySubject<ProTaskE>(1);
-  proTask$ = this.proTaskSubject.asObservable();
+  // Modernized with signal instead of ReplaySubject
+  private proTaskSignal = signal<ProTaskE | null>(null);
+  proTask$ = toObservable(this.proTaskSignal);
+
   basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
-
-  constructor(
-    private http: HttpClient
-  ) {
-  }
 
   getProTaskCountComment(id: string): Observable<number> {
     const url = `${this.basic_url}${envi.bpmOperation.comment}/${id}${envi.bpmOperation.count}`;
-    return this.http.get<number>(url);
+    return this.http.get<number>(url)
+      .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getProTaskCountAttachment(id: string): Observable<number> {
     const basic_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}`;
     const url = `${basic_url}${envi.bpmAttachment.proExecution}${id}${envi.bpmAttachment.count}`;
-    return this.http.get<number>(url);
+    return this.http.get<number>(url)
+      .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getProFlow(flowId: string): Observable<ProFlow> {
     const url = `${this.basic_url}/${envi.bpmOperation.proflow}${flowId}`;
-    return this.http.get<ProFlow>(url);
+    return this.http.get<ProFlow>(url)
+      .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getProFlowProExecution(executionId: string): Observable<ProFlow> {
     const { proflow, proExecution } = envi.bpmOperation;
     const url = `${this.basic_url}/${proflow}${proExecution}${executionId}`;
-    return this.http.get<ProFlow>(url);
+    return this.http.get<ProFlow>(url)
+      .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getNextOperation(executionId: string, answer: boolean): Observable<ProTaskE> {
     const { proExecution, next } = envi.bpmOperation;
     const url = `${this.basic_url}/${proExecution}${next}/${executionId}/${answer}`;
+
     return this.http.post<ProTaskE>(url, {});
   }
 
@@ -89,7 +94,7 @@ export class BpmCoreService {
   }
 
   updateProTask(proTaskE: ProTaskE) {
-    this.proTaskSubject.next(proTaskE);
+    this.proTaskSignal.set(proTaskE);
   }
 
   //{{url}}:{{port}}/temporal/clearBAUnit

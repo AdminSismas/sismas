@@ -8,7 +8,7 @@ import {
   MODAL_MEDIUM,
   NAME_NO_DISPONIBLE
 } from '@shared/constants';
-import { BpmCoreService } from 'src/app/apps/services/bpm/bpm-core.service';
+import { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.service';
 import { DetailInformationData } from '../detail-information-tasks/detail-information-tasks.component';
 
 @Component({

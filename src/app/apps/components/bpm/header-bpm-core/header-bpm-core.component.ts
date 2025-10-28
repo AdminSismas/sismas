@@ -41,7 +41,7 @@ import { TypeButtonAlfaMain } from '@shared/interfaces';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { AlfaMainService } from '@shared/services';
 import { AttachmentExcelMassiveComponent } from 'src/app/apps/components/bpm/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
-import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 

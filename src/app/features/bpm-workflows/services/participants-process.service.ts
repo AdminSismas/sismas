@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { environment as envi } from '../../../../../environments/environments';
+import { environment as envi } from 'src/environments/environments';
 import {
   Observable,
   throwError} from 'rxjs';

@@ -50,7 +50,7 @@ export class TasksPanelFacadeService {
         totalTasks: 0
       };
 
-      observer.next(mockData);
+      observer.set(mockData);
       observer.complete();
     });
   }
@@ -71,7 +71,7 @@ export class TasksPanelFacadeService {
         executionResult: {} as TaskRetailExecuteResponseModel
       };
 
-      observer.next(mockResult);
+      observer.set(mockResult);
       observer.complete();
     });
   }
@@ -101,7 +101,7 @@ export class TasksPanelFacadeService {
 
     // Placeholder return
     return new Observable(observer => {
-      observer.next(null);
+      observer.set(null);
       observer.complete();
     });
   }
@@ -113,7 +113,7 @@ export class TasksPanelFacadeService {
     // TODO: Implement refresh logic
 
     return new Observable(observer => {
-      observer.next(true);
+      observer.set(true);
       observer.complete();
     });
   }

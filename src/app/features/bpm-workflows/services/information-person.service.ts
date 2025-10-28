@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
-import { catchError, Observable, throwError, EMPTY } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
 import { HttpErrorResponse, HttpParams, HttpStatusCode, HttpClient } from '@angular/common/http';
+import { catchError, Observable, throwError, EMPTY } from 'rxjs';
+
+import { environment as envi } from 'src/environments/environments';
 import { InfoPerson } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InformationPersonService {
+  private http = inject(HttpClient);
 
   basic_url = `${envi.url}:${envi.port}`;
-
-  constructor(
-    private http: HttpClient
-  ) {}
 
   getFindPersonByNumber(number: string, individualTypeNumber:string): Observable<InfoPerson> {
     const url = `${this.basic_url}${envi.individual.value}${envi.individual.findByNumber}`;

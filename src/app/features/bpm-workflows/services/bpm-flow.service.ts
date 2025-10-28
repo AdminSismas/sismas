@@ -11,9 +11,7 @@ import { ProFlow } from '@features/bpm-workflows/interfaces';
 export class BpmFlowService implements IBpmFlowService {
   private basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
-  constructor(
-    private http: HttpClient
-  ) {}
+  private http = inject(HttpClient);
 
   getProFlow(flowId: string): Observable<ProFlow> {
     const url = `${this.basic_url}/${envi.bpmOperation.proflow}${flowId}`;

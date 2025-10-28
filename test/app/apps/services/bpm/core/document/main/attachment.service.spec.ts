@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import {
   AttachmentService
-} from '../../../../../../../../src/app/apps/services/bpm/core/document/main/attachment.service';
+} from '@features/bpm-workflows/services/attachment.service';
 
 describe(AttachmentService.name, () => {
   let service: AttachmentService;

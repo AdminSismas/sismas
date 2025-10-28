@@ -1,28 +1,29 @@
-import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../../environments/environments';
-import {
-  BehaviorSubject,
-  Observable} from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { saveAs } from 'file-saver';
+
+import { environment as envi } from 'src/environments/environments';
 import { InformationPegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
 import { ChangeControl } from '@shared/interfaces';
 import { BaunitHead } from '@shared/interfaces';
-import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlfaMainService {
-  private _refreshData = new BehaviorSubject<boolean>(false);
-  refreshData$ = this._refreshData.asObservable();
+  private http = inject(HttpClient);
+
+  // Modernized with signal instead of BehaviorSubject
+  private _refreshData = signal<boolean>(false);
+  refreshData$ = toObservable(this._refreshData);
 
   basic_url = `${envi.url}:${envi.port}`;
 
-  constructor(private http: HttpClient) {}
-
   refresh() {
-    this._refreshData.next(true);
+    this._refreshData.set(true);
   }
 
   //{{url}}:{{port}}/changeLog/temp/{{executionId}}

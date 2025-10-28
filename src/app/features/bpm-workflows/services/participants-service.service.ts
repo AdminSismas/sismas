@@ -1,7 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
+
+import { environment as envi } from 'src/environments/environments';
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { ProcessParticipant } from '@shared/interfaces';
@@ -13,16 +15,14 @@ import { GovernmentalChannel } from '@shared/interfaces';
 export class ParticipantsService {
   private url_basic = `${envi.url}:${envi.port}`;
 
-  private chargeInfoSubject = new BehaviorSubject<boolean | null>(false);
+  private chargeInfoSubject = signal<boolean | null>(false);
   
-  chargeInfoSubject$ = this.chargeInfoSubject.asObservable();
+  chargeInfoSubject$ = toObservable(this.chargeInfoSubject);
 
-  constructor(
-    private http: HttpClient
-  ) {}
+  private http = inject(HttpClient);
 
   changeInfoParticipants(value: boolean | null) {
-    this.chargeInfoSubject.next(value);
+    this.chargeInfoSubject.set(value);
   }
 
   getAllParticipants(

@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable , EMPTY, throwError } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { catchError, Observable, EMPTY, throwError } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from '../../../../environments/environments';
+import { environment } from 'src/environments/environments';
 import { BpmTypeProcess } from '@shared/interfaces';
 
 export interface PermissionVailable {
@@ -13,14 +14,13 @@ export interface PermissionVailable {
   providedIn: 'root'
 })
 export class BpmProcessService {
+  private http = inject(HttpClient);
+
   basic_url = `${environment.url}:${environment.port}${environment.bpmProcess.value}`;
 
-    subjectPermision$: BehaviorSubject<PermissionVailable> = new BehaviorSubject<PermissionVailable>({ executionId: '', message: '' });
-    dataPermissions$: Observable<PermissionVailable> = this.subjectPermision$.asObservable();
-
-  constructor(
-    private http: HttpClient
-  ) {}
+  // Modernized with signal instead of BehaviorSubject
+  private subjectPermision$ = signal<PermissionVailable>({ executionId: '', message: '' });
+  dataPermissions$ = toObservable(this.subjectPermision$);
 
   getProceduresByCategory(category: string): Observable<BpmTypeProcess[]> {
     const url = `${this.basic_url}${environment.bpmProcess.category}`;
@@ -37,6 +37,6 @@ export class BpmProcessService {
   }
 
   setPermissions(data: PermissionVailable): void {
-    this.subjectPermision$.next(data);
+    this.subjectPermision$.set(data);
   }
 }

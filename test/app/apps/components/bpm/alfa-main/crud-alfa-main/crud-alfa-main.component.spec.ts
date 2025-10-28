@@ -17,7 +17,7 @@ import { provideIcons } from '../../../../../../../src/app/core/icons/icons.prov
 import { CrudAlfaMainComponent } from 'src/app/apps/components/bpm/alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { CurrencyLandsPipe } from '../../../../../../../src/app/apps/pipes/currency-lands.pipe';
-import { AlfaMainService } from '../../../../../../../src/app/apps/services/bpm/core/alfa-main.service';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
 
 describe(CrudAlfaMainComponent.name, () => {
   let component: CrudAlfaMainComponent;
