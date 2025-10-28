@@ -48,7 +48,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // Custom
 import {
   ComboboxCollectionComponent
-} from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+} from '@shared/utils/combobox-collection/combobox-collection.component';
 import {
   CreatePeopleComponent
 } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';

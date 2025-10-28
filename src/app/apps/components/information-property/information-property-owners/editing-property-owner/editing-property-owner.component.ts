@@ -28,7 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from '@features/bpm-workflows/services/rrright.service';
-import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { DialogsData } from '@shared/interfaces';
 import { PeopleService } from '@shared/services';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';

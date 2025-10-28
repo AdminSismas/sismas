@@ -1,11 +1,10 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnChanges,
   OnInit,
-  Output,
-  SimpleChanges
+  SimpleChanges,
+  input,
+  output
 } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
@@ -44,32 +43,32 @@ import { map } from 'rxjs';
 export class ComboboxCollectionComponent implements OnInit, OnChanges {
   options: DomainCollection[] = [];
 
-  @Input() public label = '';
-  @Input() public formControlNameCombobox = '';
-  @Input() public typeDomainName = '';
-  @Input() public typeCalificationDomainName = '';
-  @Input() public placeholderDomainName?: string;
-  @Input() public idComboCollection = '';
-  @Input() public cssClasses?: string;
-  @Input() public valueReturn: string | undefined = 'dispname';
-  @Input() public hintValue: string | null = null;
-  @Input() public hideRequiredMarker = true;
-  @Input() public validateInactiveCollection = false;
-  @Input() public queryParams: Record<string, string | number | boolean> = {};
-  @Input() public optionsExternal: DomainCollection[] = [];
-  @Input({
-    transform: (value: string | boolean) => {
+  public readonly label = input('');
+  public readonly formControlNameCombobox = input('');
+  public readonly typeDomainName = input('');
+  public readonly typeCalificationDomainName = input('');
+  public readonly placeholderDomainName = input<string>();
+  public readonly cssClasses = input<string>('mainClass');
+  public readonly valueReturn = input<string | undefined>('dispname');
+  public readonly hintValue = input<string | null>(null);
+  public readonly hideRequiredMarker = input(true);
+  public readonly validateInactiveCollection = input(false);
+  public readonly queryParams = input<
+    Record<string, string | number | boolean>
+  >({});
+  public readonly optionsExternal = input<DomainCollection[]>([]);
+  public readonly valueCode = input(false, {
+    transform: (value: string | boolean /*T:VAE*/) => {
       if (typeof value === 'boolean') return value;
       if (value === '') return true;
       if (value === 'true') return true;
       if (value === 'false') return false;
       return false;
     }
-  })
-  public valueCode = false;
-  @Input() filterOptions: string[] = [];
+  });
+  readonly filterOptions = input<string[]>([]);
 
-  @Output() selectionChange = new EventEmitter<any>();
+  selectionChange = output();
 
   loading = false; // Indicador de carga
 
@@ -77,35 +76,27 @@ export class ComboboxCollectionComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loading = true;
-    let textID: string = 'ValidateExtID' + this.getRandomInt(10);
-    if (this.validateFiel(this.typeDomainName)) {
-      textID = this.typeDomainName;
-    }
-    if (this.idComboCollection?.length > 0) {
-      this.idComboCollection =
-        this.idComboCollection + this.getRandomInt(10000) + textID;
-    } else {
-      this.idComboCollection = this.getRandomInt(10000) + textID;
-    }
+    const typeDomainName = this.typeDomainName();
 
-    if (this.validateFiel(this.typeDomainName)) {
+    const queryParams = this.queryParams();
+    if (this.validateFiel(typeDomainName)) {
       this.obtainsCollectionsList();
-    } else if (this.queryParams && Object.keys(this.queryParams).length > 0) {
+    } else if (queryParams && Object.keys(queryParams).length > 0) {
       this.obtainsCollectionsListParams();
     }
-
-    this.cssClasses = !this.cssClasses ? 'mainClass' : this.cssClasses;
   }
 
   obtainsCollectionsList() {
-    if (this.typeDomainName != null && this.typeDomainName.length > 0) {
+    if (this.typeDomainName != null && this.typeDomainName().length > 0) {
       this.collectionServicesService
-        .getDataDomainName(this.typeDomainName)
+        .getDataDomainName(this.typeDomainName())
         .pipe(
           map((result: DomainCollection[]) => {
-            if (this.filterOptions.length > 0) {
+            if (this.filterOptions().length > 0) {
               let newResult = result;
-              this.filterOptions.forEach((filter) => newResult = this.filterResult(newResult, filter));
+              this.filterOptions().forEach(
+                (filter) => (newResult = this.filterResult(newResult, filter))
+              );
 
               return newResult;
             }
@@ -128,8 +119,9 @@ export class ComboboxCollectionComponent implements OnInit, OnChanges {
 
   obtainsCollectionsListParams() {
     let params: HttpParams = new HttpParams();
-    if (this.queryParams && Object.keys(this.queryParams).length > 0) {
-      Object.entries(this.queryParams).forEach(([key, value]) => {
+    const queryParams = this.queryParams();
+    if (queryParams && Object.keys(queryParams).length > 0) {
+      Object.entries(queryParams).forEach(([key, value]) => {
         params = params.append(key, value.toString());
       });
     }
@@ -144,7 +136,7 @@ export class ComboboxCollectionComponent implements OnInit, OnChanges {
     if (
       result != null &&
       result.length > 0 &&
-      this.validateInactiveCollection
+      this.validateInactiveCollection()
     ) {
       result = result.filter((dmc) => dmc.inactive === false);
     }
@@ -153,20 +145,18 @@ export class ComboboxCollectionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    const queryParams = this.queryParams();
     if (
       changes['optionsExternal'] &&
-      this.optionsExternal.length > 0 &&
-      !this.validateFiel(this.typeDomainName) &&
-      (!this.queryParams || Object.keys(this.queryParams).length <= 0)
+      this.optionsExternal().length > 0 &&
+      !this.validateFiel(this.typeDomainName()) &&
+      (!queryParams || Object.keys(queryParams).length <= 0)
     ) {
-      this.captureInformationSubscribe(this.optionsExternal);
+      this.captureInformationSubscribe(this.optionsExternal());
     }
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSelectionChange(value: any) {
     this.selectionChange.emit(value);
   }

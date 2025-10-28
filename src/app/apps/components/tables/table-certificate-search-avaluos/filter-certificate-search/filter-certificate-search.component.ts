@@ -63,7 +63,7 @@ import {
   DIVPOLLVL2_CODE,
   DIVPOLLVL_CODE
 } from '@shared/constants';
-import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 
 @Component({
   selector: 'vex-filter-certificate-search',

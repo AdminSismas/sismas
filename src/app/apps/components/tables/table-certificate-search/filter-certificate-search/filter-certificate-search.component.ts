@@ -17,7 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchData } from '@shared/interfaces';
-import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { InputComponent } from '@shared/ui/input/input.component';import { MODAL_LARGE } from '@shared/constants';
 
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';

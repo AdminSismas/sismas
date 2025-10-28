@@ -13,7 +13,7 @@ import { TypeOperationAlfaMain } from '@shared/interfaces';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
-import { InputComponent } from '@shared/ui/input/input.component';import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { InputComponent } from '@shared/ui/input/input.component';import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { DomainCollection } from '@shared/interfaces';
 import {
   CONSTANT_TYPEDOMAIN_BAUNITCONDITION,

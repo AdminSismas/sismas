@@ -31,7 +31,7 @@ import {
 import { validateVariable } from '../../../../utils/general';
 import { TypeOperation } from '@shared/interfaces';
 import { TYPE_CREATE } from '@shared/constants';
-import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { TextAreaComponent } from 'src/app/apps/components/general-components/text-area/text-area.component';
 import { InformationAdjacentPropertyService } from '@shared/services';
 
