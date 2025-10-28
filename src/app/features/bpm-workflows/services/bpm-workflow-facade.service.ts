@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, ReplaySubject, combineLatest, map } from 'rxjs';
-import { IBmpTaskService, IBmpFlowService } from '@features/bmp-workflows';
-import { BmpTaskService } from '@features/bmp-workflows';
-import { BmpFlowService } from '@features/bmp-workflows';
-import { ProTaskE } from '@features/bmp-workflows';
-import { ProFlow } from '@features/bmp-workflows';
+import { BpmTaskService } from '@features/bpm-workflows/interfaces';
+import { BpmFlowService } from '@features/bpm-workflows/interfaces';
+import { ProTaskE } from '@features/bpm-workflows/interfaces';
+import { ProFlow } from '@features/bpm-workflows/interfaces';
 
 export interface WorkflowSummary {
   task: ProTaskE;
@@ -17,13 +15,13 @@ export interface WorkflowSummary {
 @Injectable({
   providedIn: 'root'
 })
-export class BmpWorkflowFacadeService {
+export class BpmWorkflowFacadeService {
   private proTaskSubject = new ReplaySubject<ProTaskE>(1);
   proTask$ = this.proTaskSubject.asObservable();
 
   constructor(
-    private taskService: BmpTaskService,
-    private flowService: BmpFlowService
+    private taskService: BpmTaskService,
+    private flowService: BpmFlowService
   ) {}
 
   /**

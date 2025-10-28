@@ -55,7 +55,7 @@ import {PAGE,
 PAGE_SIZE,
 PAGE_SIZE_OPTION} from '../../../../../../../apps/constants/general/constants';
 import {
-  TABLE_COLUMN_PROPERTIES
+  TABLE_COLUMN_ATTACHMENT
 } from '../../../../../../../apps/constants/general/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
 import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constants';
@@ -129,7 +129,7 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
   pageSize: number = PAGE_SIZE;
   totalElements = 0;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_PROPERTIES;
+  columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_ATTACHMENT;
 
   @ViewChild(MatPaginator, { static: false }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;

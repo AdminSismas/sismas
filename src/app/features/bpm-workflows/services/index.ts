@@ -3,7 +3,7 @@ export * from './bpm-core.service';
 export * from './workflow.service';
 export * from './tasks-panel.service';
 // New facade pattern services
-export * from './bmp-task.service';
-export * from './bmp-flow.service';
-export * from './bmp-workflow-facade.service';
+export * from './bpm-task.service';
+export * from './bpm-flow.service';
+export * from './bpm-workflow-facade.service';
 export * from './tasks-panel-facade.service';

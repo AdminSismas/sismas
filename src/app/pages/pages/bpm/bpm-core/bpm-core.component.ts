@@ -52,7 +52,7 @@ import { LoaderComponent } from '@shared/ui/loader/loader.component';
 import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 
 @Component({
-  selector: 'vex-bmp-core',
+  selector: 'vex-bpm-core',
   standalone: true,
   animations: [
     fadeInRight400ms,
@@ -82,10 +82,10 @@ import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.direc
     HeaderBpmCoreComponent,
     LoaderComponent
   ],
-  templateUrl: './bmp-core.component.html',
-  styleUrl: './bmp-core.component.scss'
+  templateUrl: './bpm-core.component.html',
+  styleUrl: './bpm-core.component.scss'
 })
-export class BmpCoreComponent implements OnInit {
+export class BpmCoreComponent implements OnInit {
   private listComponents = inject(
     DynamicComponentsService
   ).getDynamicComponents();

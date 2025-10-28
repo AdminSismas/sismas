@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 // Models and interfaces
-import { ProTaskE } from '@features/bmp-workflows';
-import { TaskResponseModel } from '@features/bmp-workflows';
-import { TaskRetailExecuteResponseModel } from '@features/bmp-workflows';
-import { InformationPegeable } from '@shared/models';
+import { ProTaskE } from '@features/bpm-workflows/interfaces';
+import { TaskResponseModel } from '@features/bpm-workflows/models';
+import { TaskRetailExecuteResponseModel } from '@features/bpm-workflows/models';
 import { PageSearchData } from '@shared/models';
 
 export interface TaskPanelData {
@@ -27,7 +25,7 @@ export interface TaskExecutionData {
   providedIn: 'root'
 })
 export class TasksPanelFacadeService {
-  
+
   constructor(
     private dialog: MatDialog,
     private router: Router
@@ -37,12 +35,12 @@ export class TasksPanelFacadeService {
    * Get consolidated task panel data for a user
    */
   getTaskPanelData(
-    userId: string, 
+    userId: string,
     pageData: PageSearchData
   ): Observable<TaskPanelData> {
     // TODO: Implement actual service calls
     // This would call the underlying services and combine results
-    
+
     return new Observable(observer => {
       // Placeholder implementation
       const mockData: TaskPanelData = {
@@ -51,7 +49,7 @@ export class TasksPanelFacadeService {
         devolutionTasks: { content: [], totalElements: 0 } as TaskResponseModel,
         totalTasks: 0
       };
-      
+
       observer.next(mockData);
       observer.complete();
     });
@@ -61,18 +59,18 @@ export class TasksPanelFacadeService {
    * Execute a specific task with validation
    */
   executeTask(
-    taskId: string, 
+    taskId: string,
     taskData: any
   ): Observable<TaskExecutionData> {
     // TODO: Implement task execution logic
-    
+
     return new Observable(observer => {
       // Placeholder implementation
       const mockResult: TaskExecutionData = {
         task: {} as ProTaskE,
         executionResult: {} as TaskRetailExecuteResponseModel
       };
-      
+
       observer.next(mockResult);
       observer.complete();
     });
@@ -100,7 +98,7 @@ export class TasksPanelFacadeService {
 
     // const dialogRef = this.dialog.open(DetailInformationTasksComponent, defaultConfig);
     // return dialogRef.afterClosed();
-    
+
     // Placeholder return
     return new Observable(observer => {
       observer.next(null);
@@ -113,7 +111,7 @@ export class TasksPanelFacadeService {
    */
   refreshTasks(userId: string): Observable<boolean> {
     // TODO: Implement refresh logic
-    
+
     return new Observable(observer => {
       observer.next(true);
       observer.complete();
@@ -124,7 +122,7 @@ export class TasksPanelFacadeService {
    * Filter tasks by criteria
    */
   filterTasks(
-    tasks: ProTaskE[], 
+    tasks: ProTaskE[],
     filterCriteria: any
   ): ProTaskE[] {
     if (!filterCriteria || Object.keys(filterCriteria).length === 0) {
@@ -141,8 +139,8 @@ export class TasksPanelFacadeService {
    * Sort tasks by multiple criteria
    */
   sortTasks(
-    tasks: ProTaskE[], 
-    sortBy: string, 
+    tasks: ProTaskE[],
+    sortBy: string,
     sortDirection: 'asc' | 'desc' = 'asc'
   ): ProTaskE[] {
     return tasks.sort((a, b) => {
@@ -156,7 +154,7 @@ export class TasksPanelFacadeService {
     // This is a placeholder implementation
     const aValue = (a as any)[sortBy];
     const bValue = (b as any)[sortBy];
-    
+
     if (aValue < bValue) return -1;
     if (aValue > bValue) return 1;
     return 0;

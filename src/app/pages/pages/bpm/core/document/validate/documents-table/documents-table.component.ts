@@ -51,7 +51,7 @@ import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
 import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
 import {
-  TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE
+  TABLE_COLUMN_ATTACHMENT_DOCUMENT_VALIDATE
 } from '../../../../../../../apps/constants/general/attachment.constant';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MODAL_LARGE, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '../../../../../../../apps/constants/general/constants';
@@ -102,7 +102,7 @@ export class DocumentsTableComponent implements AfterViewInit, OnInit {
   totalElements = 0;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   columns: TableColumn<contentInfoAttachment>[] =
-    TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE;
+    TABLE_COLUMN_ATTACHMENT_DOCUMENT_VALIDATE;
 
   @ViewChild(MatPaginator, { static: false }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;

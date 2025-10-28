@@ -25,9 +25,16 @@
       <div class="flex flex-col">
         <mat-form-field class="flex-1">
           <input formControlName="clearData" matInput required />
-          <mat-error *ngIf="form.controls.clearData.hasError('required') || validateInputClearInformation">
-            {{CONSTANT_MSG_ERROR_CLEAR_INFORMATION}}
-          </mat-error>
+          @if (form.controls.clearData.hasError('required')) {
+            <mat-error>
+              {{CONSTANT_MSG_ERROR_CLEAR_INFORMATION}}
+            </mat-error>
+          }
+          @if (validateInputClearInformation) {
+            <mat-error>
+              {{CONSTANT_MSG_ERROR_CLEAR_INFORMATION}}
+            </mat-error>
+          }
         </mat-form-field>
       </div>
     </div>

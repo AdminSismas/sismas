@@ -1,7 +1,7 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { contentInfoAttachment } from '@shared/interfaces';
 
-export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
+export const TABLE_COLUMN_ATTACHMENT: TableColumn<contentInfoAttachment>[]= [
     {
         label: 'Nombre archivo',
         property: 'originalFileName',
@@ -53,7 +53,7 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoAttachment>[]= [
     },
 ];
 
-export const TABLE_COLUMN_PROPERTIES_DOCUMENT_VALIDATE: TableColumn<contentInfoAttachment>[]= [
+export const TABLE_COLUMN_ATTACHMENT_DOCUMENT_VALIDATE: TableColumn<contentInfoAttachment>[]= [
     {
         label: 'Nombre archivo',
         property: 'originalFileName',

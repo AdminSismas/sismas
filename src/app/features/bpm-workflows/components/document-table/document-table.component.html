@@ -182,17 +182,18 @@
     </table>
 
     <!-- Paginator -->
-    <mat-paginator
-      *ngIf="disablePaginator === true"
-      #paginator
-      [class.hidden]="(isDesktop$ | async) === false"
-      [pageSizeOptions]="pageSizeOptions"
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      [pageIndex]="page"
-      (page)="refreshInformationPaginator($event)"
-      class="sticky left-0 flex flex-col"
-    >
-    </mat-paginator>
+    @if (true) {
+      <mat-paginator
+        #paginator
+        [class.hidden]="!isDesktop()"
+        [pageSizeOptions]="pageSizeOptions"
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="page"
+        (page)="refreshInformationPaginator($event)"
+        class="sticky left-0 flex flex-col"
+      >
+      </mat-paginator>
+    }
   </div>
 </mat-dialog-content>

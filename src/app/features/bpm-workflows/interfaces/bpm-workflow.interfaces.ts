@@ -4,7 +4,7 @@ import { ProTaskE, ProFlow, ProExecutionE, DifferenceChanges, MetadataBpm } from
 /**
  * Interface for BPM Task operations
  */
-export interface IBmpTaskService {
+export interface IBpmTaskService {
   getProTaskCountComment(id: string): Observable<number>;
   getProTaskCountAttachment(id: string): Observable<number>;
   getNextOperation(executionId: string, answer: boolean): Observable<ProTaskE>;
@@ -14,7 +14,7 @@ export interface IBmpTaskService {
 /**
  * Interface for BPM Flow operations
  */
-export interface IBmpFlowService {
+export interface IBpmFlowService {
   getProFlow(flowId: string): Observable<ProFlow>;
   getProFlowProExecution(executionId: string): Observable<ProFlow>;
 }

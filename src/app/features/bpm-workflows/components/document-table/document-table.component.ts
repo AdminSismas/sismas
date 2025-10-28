@@ -3,7 +3,6 @@ import {
   Component,
   DestroyRef,
   inject,
-  Inject,
   OnInit,
   signal,
   ViewChild
@@ -13,9 +12,8 @@ import {
   ReactiveFormsModule,
   UntypedFormControl
 } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
-import { Observable } from 'rxjs';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { DatePipe, NgClass } from '@angular/common';
 
 // recursos de vex
 import { VexLayoutService } from '@vex/services/vex-layout.service';
@@ -53,7 +51,6 @@ import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
-import { TABLE_COLUMN_PROPERTIES } from '@shared/constants';
 import {
   MODAL_LARGE,
   PAGE,
@@ -65,6 +62,7 @@ import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { TABLE_COLUMN_ATTACHMENT } from 'src/app/apps/constants/general/attachment.constant';
 
 @Component({
   templateUrl: './document-table.component.html',
@@ -74,7 +72,7 @@ import { UserService } from 'src/app/pages/pages/auth/login/services/user.servic
   animations: [fadeInUp400ms, stagger40ms],
   imports: [
     CurrencyLandsPipe,
-    CommonModule,
+    DatePipe,
     FormsModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -91,55 +89,48 @@ import { UserService } from 'src/app/pages/pages/auth/login/services/user.servic
     MatTabsModule,
     MatTooltipModule,
     NgClass,
-    NgIf,
     ReactiveFormsModule
-  ]
+]
 })
 export class DocumentTableComponent implements OnInit, AfterViewInit {
-  // Injects
+  /* ---- Injects ---- */
   private userService = inject(UserService);
+  public readonly data: { executionId: string } = inject(MAT_DIALOG_DATA);
+  private readonly dialog: MatDialog = inject(MatDialog);
+  private readonly attachmentService: AttachmentService = inject(AttachmentService);
+  private readonly layoutService: VexLayoutService = inject(VexLayoutService);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  /* ============== ATTRIBUTES ============== */
-  numRegister = 0;
-  disablePaginator = true;
-
-  layoutCtrl = new UntypedFormControl('boxed');
-  searchCtrl: UntypedFormControl = new UntypedFormControl();
-  dataSource!: MatTableDataSource<AttachmentCollection>;
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  contentInformations!: InformationPegeable;
+  /* ---- Signals ---- */
+  disablePaginator = signal(true);
   mode = signal<'visualization' | 'edition'>(
     this.userService.getUser()?.role === 'GUEST' ? 'visualization' : 'edition'
   );
+  isDesktop = toSignal(this.layoutService.isDesktop$);
 
+  /* ---- Properties ---- */
+  protected readonly columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_ATTACHMENT;
+  layoutCtrl = new UntypedFormControl('boxed');
+  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  dataSource!: MatTableDataSource<AttachmentCollection>;
+  contentInformations!: InformationPegeable;
   page: number = PAGE;
   pageSize: number = PAGE_SIZE;
   totalElements = 0;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_PROPERTIES;
 
   @ViewChild(MatPaginator, { static: false }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   dialogRef!: MatDialogRef<ViewFileDocumentManagementComponent>;
 
-  /* ============== CONSTRUCTOR ============== */
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { executionId: string },
-    private dialog: MatDialog,
-    private attachmentService: AttachmentService,
-    private readonly layoutService: VexLayoutService
-  ) {}
-
-  /* ============== METHODS ============== */
-  /* ------- Meth. Lifecycle Hooks ------- */
+  /* ------- Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
 
     this.searchCtrl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
+    .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => this.onFilterChange(value));
 
     this.getDataFromDocumentManagementService();
@@ -155,6 +146,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /* ---- Methods ---- */
   newFolder(): void {
     const dialogRef = this.dialog.open(AttachmentFormComponent, {
       ...MODAL_LARGE,
@@ -207,7 +199,7 @@ export class DocumentTableComponent implements OnInit, AfterViewInit {
 
   viewPaginator(numRegister: number): void {
     if (numRegister < 3) {
-      this.disablePaginator = false;
+      this.disablePaginator.set(false);
     }
   }
 

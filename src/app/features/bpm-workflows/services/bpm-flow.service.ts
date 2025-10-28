@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as envi } from 'src/environments/environments';
-import { IBmpFlowService } from '@features/bmp-workflows';
-import { ProFlow } from '@features/bmp-workflows';
+import { IBpmFlowService } from '@features/bpm-workflows/interfaces';
+import { ProFlow } from '@features/bpm-workflows/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BmpFlowService implements IBmpFlowService {
+export class BpmFlowService implements IBpmFlowService {
   private basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}`;
 
   constructor(

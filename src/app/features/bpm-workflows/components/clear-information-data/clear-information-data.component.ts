@@ -11,7 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { ClearInformationData } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -33,7 +32,6 @@ import { TWO_POINT_ } from '@shared/constants';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    NgIf,
     ReactiveFormsModule,
     MatDialogClose,
     MatIconModule,

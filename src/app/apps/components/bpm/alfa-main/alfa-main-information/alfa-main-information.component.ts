@@ -61,7 +61,7 @@ import {
 } from '@shared/constants';
 import { Pegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
-import { ClearInformationDataComponent } from 'src/app/features/bmp-workflows/components/clear-information-data/clear-information-data.component';
+import { ClearInformationDataComponent } from 'src/app/features/bpm-workflows/components/clear-information-data/clear-information-data.component';
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
   CONSTANT_KEYWORD_DELETE_GEO_MAIN,
