@@ -19,8 +19,7 @@ import { UserService } from '../../../auth/login/services/user.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { LoaderComponent } from 'src/app/apps/components/general-components/loader/loader.component';
-
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 @Component({
   selector: 'vex-download-xtf',
   standalone: true,

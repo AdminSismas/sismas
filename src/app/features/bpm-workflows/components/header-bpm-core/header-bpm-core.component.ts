@@ -43,7 +43,6 @@ import { AttachmentExcelMassiveComponent } from '@features/bpm-workflows/compone
 import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
-
 @Component({
   selector: 'vex-header-bpm-core',
   standalone: true,

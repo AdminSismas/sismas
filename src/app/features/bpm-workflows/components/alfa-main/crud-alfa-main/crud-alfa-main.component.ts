@@ -58,8 +58,7 @@ import Swal from 'sweetalert2';
 import { Operation } from '@shared/interfaces';
 import { DomainCollection } from '@shared/interfaces';
 import { CollectionServices } from '@shared/services';
-import { LoaderComponent } from '@shared/ui/loader/loader.component';
-import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
 
 
 @Component({

@@ -77,7 +77,6 @@ import {
 } from '@shared/constants';
 import { ViewChangesBpmOperationComponent } from '@features/bpm-workflows/components/view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
-
 @Component({
   selector: 'vex-modification-property-units',
   standalone: true,

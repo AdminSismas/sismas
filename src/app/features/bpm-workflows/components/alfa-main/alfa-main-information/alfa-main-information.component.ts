@@ -88,8 +88,7 @@ import { TableProceduresComponent } from 'src/app/apps/components/tables/table-p
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { ViewChangesComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/view-changes/view-changes.component';
-import { LoaderComponent } from '@shared/ui/loader/loader.component';
-import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
 
 @Component({
   selector: 'vex-alfa-main-information',
