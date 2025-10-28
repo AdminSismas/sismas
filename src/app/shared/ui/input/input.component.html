@@ -1,33 +1,33 @@
 <mat-form-field
-  [id]="idComboInput + 23432"
+  [id]="idComboInput() + 23432"
   class="mainClass"
-  [ngClass]="cssClasses"
-  [hideRequiredMarker]="hideRequiredMarker"
+  [ngClass]="cssClasses()"
+  [hideRequiredMarker]="hideRequiredMarker()"
   appearance="outline">
-  @if (label && label.length > 0) {
-    <mat-label>{{ label }}</mat-label>
+  @if (label() && label()!.length > 0) {
+    <mat-label>{{ label() }}</mat-label>
   }
-  @if (formControlNameInput && formControlInput === null) {
+  @if (formControlNameInput() && formControlInput() === null) {
     <input
       matInput
-      [type]="type"
-      [formControlName]="formControlNameInput"
+      [type]="type()"
+      [formControlName]="formControlNameInput()"
     />
-  } @else if (formControlNameInput && formControlInput !== null) {
+  } @else if (formControlNameInput() && formControlInput() !== null) {
     <input
       matInput
-      [type]="type"
-      [formControlName]="formControlNameInput"
-      [formControl]="formControlInput"
+      [type]="type()"
+      [formControlName]="formControlNameInput()"
+      [formControl]="formControlInput()!"
     />
   }
-  @if (icon && icon.length > 0) {
-    <mat-icon matSuffix [svgIcon]="icon"></mat-icon>
+  @if (icon() && icon()!.length > 0) {
+    <mat-icon matSuffix [svgIcon]="icon()!"></mat-icon>
   }
-  @if (hintValue && hintValue.length > 0 && checkIsInValid(formControlInput)) {
-    <mat-hint class="mb-1">{{ hintValue }}</mat-hint>
+  @if (hintValue() && hintValue()!.length > 0 && checkIsInValid(formControlInput()!)) {
+    <mat-hint class="mb-1">{{ hintValue()! }}</mat-hint>
   }
-  @if (formControlInput !== null) {
-  <mat-error class="mb-1">{{ checkForErrorsIn(formControlInput) }}</mat-error>
+  @if (formControlInput() !== null) {
+  <mat-error class="mb-1">{{ checkForErrorsIn(formControlInput()!) }}</mat-error>
   }
 </mat-form-field>

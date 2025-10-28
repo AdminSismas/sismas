@@ -25,8 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SearchData } from '@shared/interfaces';
 import { MatSnackBar, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
 import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { InputComponent } from '@shared/ui/input/input.component';import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {
   TerritorialOrganizationService
 } from '@shared/services';

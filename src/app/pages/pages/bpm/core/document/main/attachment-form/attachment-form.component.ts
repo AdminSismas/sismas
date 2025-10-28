@@ -41,8 +41,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 // Custom
 import { AttachmentService } from '@shared/services';
 import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
-import Swal from 'sweetalert2';
+import { InputComponent } from '@shared/ui/input/input.component';import Swal from 'sweetalert2';
 import { rejectedFileTypes } from '@shared/constants';
 
 @Component({

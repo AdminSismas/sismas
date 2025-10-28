@@ -30,8 +30,7 @@ import {
   TypeOperation
 } from '@shared/interfaces';
 import { TYPE_UPDATE_PROPERTY_UNIT } from '@shared/constants';
-import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
-import Swal from 'sweetalert2';
+import { InputComponent } from '@shared/ui/input/input.component';import Swal from 'sweetalert2';
 import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-property/basic-property-information.constants';
 import { Subscription } from 'rxjs';

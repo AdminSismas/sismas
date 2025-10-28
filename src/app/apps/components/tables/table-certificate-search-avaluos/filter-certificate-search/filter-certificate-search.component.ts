@@ -29,8 +29,7 @@ import {
   MatSnackBar,
   MatSnackBarHorizontalPosition
 } from '@angular/material/snack-bar';
-import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { InputComponent } from '@shared/ui/input/input.component';import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { TerritorialOrganizationService } from '@shared/services';

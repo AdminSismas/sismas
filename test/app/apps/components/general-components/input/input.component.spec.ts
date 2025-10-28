@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InputComponent } from '../../../../../../src/app/apps/components/general-components/input/input.component';
-
+import { InputComponent } from '@shared/ui/input/input.component';
 describe(InputComponent.name, () => {
   let component: InputComponent;
   let fixture: ComponentFixture<InputComponent>;

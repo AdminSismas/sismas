@@ -18,8 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SearchData } from '@shared/interfaces';
 import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from 'src/app/apps/components/general-components/input/input.component';
-import { MODAL_LARGE } from '@shared/constants';
+import { InputComponent } from '@shared/ui/input/input.component';import { MODAL_LARGE } from '@shared/constants';
 
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { InformationPersonService } from '@features/bpm-workflows/services/information-person.service';

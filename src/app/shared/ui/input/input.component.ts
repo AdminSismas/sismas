@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -17,8 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { InputType } from '../../../interfaces/general/content-info';
-import { getRandomInt } from 'src/app/apps/utils/general';
+import { InputType } from '@shared/interfaces';
 import {
   CONSTANT_ERR_CAPITAL_LETTER,
   CONSTANT_ERR_INVALID_AREA,
@@ -31,7 +30,7 @@ import {
   CONSTANT_ERR_ONLY_ONE_99,
   CONSTANT_ERR_ONLY_TEXT_NUMBER,
   CONSTANT_ERR_TEXT_ADDRESS_VALIDATOR
-} from '../../../constants/general/constantsAlertLabel';
+} from '@shared/constants';
 
 @Component({
   selector: 'vex-input',
@@ -54,25 +53,17 @@ import {
   styleUrl: './input.component.scss',
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
 })
-export class InputComponent implements OnInit {
+export class InputComponent {
 
-  @Input() public idComboInput = '';
-  @Input() public cssClasses?: string;
-  @Input() public label!: string | null;
-  @Input() public formControlNameInput = '';
-  @Input() public formControlInput:FormControl | null = null;
-  @Input() public icon!: string | null;
-  @Input() type: InputType = 'text';
-  @Input() public hintValue!: string | null;
-  @Input() public hideRequiredMarker = true;
-
-  ngOnInit(): void {
-    if (this.idComboInput?.length>0) {
-      this.idComboInput = this.idComboInput + getRandomInt(10000) + this.formControlNameInput;
-    } else {
-      this.idComboInput = getRandomInt(10000) + this.formControlNameInput;
-    }
-  }
+  public readonly label = input<string | null>();
+  public readonly hintValue = input<string | null>();
+  public readonly icon = input<string | null>();
+  public readonly formControlInput = input<FormControl>();
+  public readonly idComboInput = input('');
+  public readonly cssClasses = input<string>();
+  public readonly formControlNameInput = input('');
+  readonly type = input<InputType>('text');
+  public readonly hideRequiredMarker = input(true);
 
   checkIsInValid(formControl: AbstractControl | null): boolean {
     return !(
