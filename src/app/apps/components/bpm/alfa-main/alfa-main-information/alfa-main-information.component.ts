@@ -72,7 +72,7 @@ import {
   CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
   CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
 } from '@shared/constants';
-import { ViewChangeAlphaMainRecordComponent } from '@shared/components';
+import { ViewChangeAlphaMainRecordComponent } from 'src/app/apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
 import {
   TypeButtonAlfaMain,
   TypeOperationAlfaMain,

@@ -52,10 +52,10 @@ import {
 import { environment } from 'src/environments/environments';
 import {
   FilterCadastralSearchComponent
-} from '../../../../../../apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
+} from 'src/app/apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import {
   GeographicViewerComponent
-} from '../../../../../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
+} from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 
 @Component({
   selector: 'vex-certificate-table',

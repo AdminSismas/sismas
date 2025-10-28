@@ -27,7 +27,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
-import { AddEditInformatizonZonesPropertyComponent } from '@shared/components';
+import { AddEditInformatizonZonesPropertyComponent } from 'src/app/apps/components/information-property/information-zones-property/add-edit-informatizon-zones-property/add-edit-informatizon-zones-property.component';
 import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
@@ -36,7 +36,7 @@ import {
   TYPE_INFORMATION_EDITION
 } from '@shared/constants';
 import { ZoneBAUnitGeoeconomic } from 'src/app/apps/interfaces/information-property/zone-baunit';
-import { DetailInformationPropertyZonesComponent } from '@shared/components';
+import { DetailInformationPropertyZonesComponent } from 'src/app/apps/components/information-property/information-zones-property/detail-information-property-zones/detail-information-property-zones.component';
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';

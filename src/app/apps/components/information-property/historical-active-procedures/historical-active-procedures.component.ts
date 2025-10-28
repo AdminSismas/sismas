@@ -69,7 +69,7 @@ import { BpmCoreService } from '@shared/services';
 import { DifferenceChanges } from '@shared/interfaces';
 import {
   ViewChangesBpmOperationComponent
-} from '@shared/components';
+} from 'src/app/apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
 
 
 @Component({

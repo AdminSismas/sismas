@@ -43,8 +43,8 @@ export * from '../../apps/interfaces/information-property/zone-baunit';
 export * from '../../apps/interfaces/information-property/national-predial-number';
 
 // Baunit ICA interfaces
-export * from '../../apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
-export * from '../../apps/components/information-property/baunit-ica/interfaces/ica-table';
+export * from 'src/app/apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
+export * from 'src/app/apps/components/information-property/baunit-ica/interfaces/ica-table';
 
 // BMP interfaces
 export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';

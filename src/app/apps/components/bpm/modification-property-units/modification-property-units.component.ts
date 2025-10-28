@@ -64,7 +64,7 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { UnitPropertyInformationService } from '@shared/services';
 import { BaUnitHeadPercentage } from '@shared/interfaces';
 import { NgClass, PercentPipe } from '@angular/common';
-import { CrudPropertyUnitsComponent } from '@shared/components';
+import { CrudPropertyUnitsComponent } from 'src/app/apps/components/bpm/modification-property-units/crud-property-units/crud-property-units.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BpmCoreService } from '@shared/services';
 import Swal from 'sweetalert2';
@@ -75,7 +75,7 @@ import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
-import { ViewChangesBpmOperationComponent } from '@shared/components';
+import { ViewChangesBpmOperationComponent } from 'src/app/apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({

@@ -49,7 +49,7 @@ import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { FilterCadastralSearchComponent } from '../../apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
+import { FilterCadastralSearchComponent } from 'src/app/apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import {
   CAN_RESOLVE_LIST,
   INFORMATION_HISTORICAL,
@@ -68,7 +68,7 @@ import {
 } from '@shared/constants';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
-import { GeographicViewerComponent } from '../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendInformationRegisterService } from '@shared/services';
 import { ValidateInformationBaunitService } from '@shared/services';

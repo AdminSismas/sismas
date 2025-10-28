@@ -1,7 +1,25 @@
 import { JSONInput } from 'src/app/apps/interfaces/forms/dynamic-forms';
-import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
+import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
-const generalValidationsService = new GeneralValidationsService();
+// Validators directos sin instanciar el servicio
+const emailValidator = (): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) return null;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const valid = emailPattern.test(control.value);
+    return valid ? null : { invalidEmail: true };
+  };
+};
+
+const min03Characters = (): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value: any = control.value;
+    if (value !== null && value !== undefined && value !== '' && value.length > 0 && value.length < 3) {
+      return { min03Characters: true };
+    }
+    return null;
+  };
+};
 
 export const CREATE_CONTACT_FORM: JSONInput[] = [
   {
@@ -38,7 +56,7 @@ export const CREATE_CONTACT_FORM: JSONInput[] = [
     placeholder: 'Ingrese el correo electrónico',
     element: 'input',
     type: 'text',
-    validators: [generalValidationsService.emailValidator()]
+    validators: [emailValidator()]
   },
   {
     name: 'address',
@@ -46,6 +64,6 @@ export const CREATE_CONTACT_FORM: JSONInput[] = [
     placeholder: 'Ingrese la dirección',
     element: 'input',
     type: 'text',
-    validators: [generalValidationsService.min03Characters()]
+    validators: [min03Characters()]
   }
 ];

@@ -53,7 +53,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { InformationPersonPropertyComponent } from '@shared/components';
+import { InformationPersonPropertyComponent } from 'src/app/apps/components/information-property/information-person-property/information-person-property.component';
 
 @Component({
   selector: 'vex-information-source-property',

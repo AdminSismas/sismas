@@ -15,13 +15,13 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
-import { GeographicViewerEmbeddedComponent } from '../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
+import { GeographicViewerEmbeddedComponent } from 'src/app/apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
 import { environment } from '../../../../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constants';
 import { filter } from 'rxjs/operators';
-import { AlfaMainInformationComponent } from '../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+import { AlfaMainInformationComponent } from 'src/app/apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';

@@ -15,7 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '@shared/constants';
 import { ThirdPartyAffectedParticipant } from '@shared/interfaces';
-import { ParticipantTableComponent } from '@shared/components';
+import { ParticipantTableComponent } from 'src/app/apps/components/general-components/participant-table/participant-table.component';
 import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
 import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
 

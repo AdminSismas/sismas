@@ -40,4 +40,4 @@ export * from '../../apps/constants/procedures/procedures.constants';
 export * from '../../apps/constants/public-services/ticket-office/generate-services.constants';
 
 // Baunit ICA constants
-export * from '../../apps/components/information-property/baunit-ica/baunit-ica.constant';
+export * from 'src/app/apps/components/information-property/baunit-ica/baunit-ica.constant';

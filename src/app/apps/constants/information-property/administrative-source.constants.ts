@@ -2,9 +2,18 @@ import { Validators } from "@angular/forms";
 import { JSONInput } from '@shared/interfaces';
 import { TableColumn } from "@vex/interfaces/table-column.interface";
 import { AdministrativeSource } from '@shared/interfaces';
-import { GeneralValidationsService } from '@shared/services';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-const generalValidationsService = new GeneralValidationsService();
+// Validator directo sin instanciar el servicio
+const maxDateValidator = (): ValidatorFn => {
+  return (control: AbstractControl): Record<string, boolean> | null => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const inputDate = new Date(control.value);
+    inputDate.setHours(0, 0, 0, 0);
+    return inputDate > today ? { 'futureDate': true } : null;
+  };
+};
 
 export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
   {
@@ -22,7 +31,7 @@ export const INPUTS_ADMINISTRATIVE_SOURCE: JSONInput[] = [
     placeholder: 'Fecha de documento',
     element: 'date',
     type: 'past',
-    validators: [Validators.required, generalValidationsService.maxDateValidator()],
+    validators: [Validators.required, maxDateValidator()],
     cssClasses: 'col-span-2 w-full'
   },
   {

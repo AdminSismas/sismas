@@ -40,18 +40,18 @@ import { ContentInfoSchema } from '@shared/models';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '@shared/services';
 import { DifferenceChanges } from '@shared/interfaces';
-import { ViewChangesBpmOperationComponent } from '@shared/components';
+import { ViewChangesBpmOperationComponent } from 'src/app/apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { ModificationPropertyUnitsComponent } from '@shared/components';
+import { ModificationPropertyUnitsComponent } from 'src/app/apps/components/bpm/modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '@shared/services';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '../../../constants/general/constantLabels';
-import { CreateMatrixFromNphComponent } from '@shared/components';
+import { CreateMatrixFromNphComponent } from 'src/app/apps/components/bpm/table-alfa-main/create-matrix-from-nph/create-matrix-from-nph.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgClass } from '@angular/common';

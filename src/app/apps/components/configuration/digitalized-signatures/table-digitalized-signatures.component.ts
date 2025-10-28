@@ -16,7 +16,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { PAGE, PAGE_SIZE_OPTION, PAGE_SIZE } from '@shared/constants';
 
 // Custom
-import { CreateSignatureComponent } from '@shared/components';
+import { CreateSignatureComponent } from 'src/app/apps/components/configuration/digitalized-signatures/create-signature/create-signature.component';
 import { DIGITALIZED_SIGNATURES_COLUMNS } from '../../../constants/general/digitalized-signatures.constants';
 import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
 import { InformationPegeable } from '@shared/interfaces';

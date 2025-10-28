@@ -50,12 +50,12 @@ import {
 } from '@shared/constants';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
-import { GeographicViewerComponent } from '../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendInformationRegisterService } from '@shared/services';
 import { ValidateInformationBaunitService } from '@shared/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FilterCertificateSearchComponent } from '../../apps/components/tables/table-certificate-search/filter-certificate-search/filter-certificate-search.component';
+import { FilterCertificateSearchComponent } from 'src/app/apps/components/tables/table-certificate-search/filter-certificate-search/filter-certificate-search.component';
 import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
 import { contentInfoAttachment } from '@shared/interfaces';
 

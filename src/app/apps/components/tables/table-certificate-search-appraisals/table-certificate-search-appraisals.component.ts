@@ -43,7 +43,7 @@ import { InformationPegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
 import { Observable } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { FilterCertificateSearchAppraisalsComponent } from '../../apps/components/tables/table-certificate-search-appraisals/filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
+import { FilterCertificateSearchAppraisalsComponent } from 'src/app/apps/components/tables/table-certificate-search-appraisals/filter-certificate-search-appraisals/filter-certificate-search-appraisals.component';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
   MODAL_LARGE,
@@ -57,7 +57,7 @@ import {
 } from '@shared/constants';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
-import { GeographicViewerComponent } from '../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
+import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '../../../../../environments/environments';
 import { SendInformationRegisterService } from '@shared/services';
 import { ValidateInformationBaunitService } from '@shared/services';
@@ -67,7 +67,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BpmProcessService } from '@shared/services';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DecodeJwt } from '@shared/interfaces';
-import { PaymentValidationComponent } from '../../apps/components/general-components/payment-validation/payment-validation.component';
+import { PaymentValidationComponent } from 'src/app/apps/components/general-components/payment-validation/payment-validation.component';
 
 @Component({
   selector: 'vex-table-certificate-search-appraisals',

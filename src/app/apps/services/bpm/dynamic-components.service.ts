@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { AlfaMainComponent } from '../../../pages/pages/bpm/core/cadastral/alf/main/alfa-main.component';
-import { AlfaValidateComponent } from '../../../pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
-import { EcoComiteComponent } from '../../../pages/pages/bpm/core/cadastral/eco/comite/eco-comite.component';
-import { GeoMainComponent } from '../../../pages/pages/bpm/core/cadastral/geo/main/geo-main.component';
-import { GeoValidateComponent } from '../../../pages/pages/bpm/core/cadastral/geo/validate/geo-validate.component';
-import { ResMainComponent } from '../../../pages/pages/bpm/core/cadastral/res/main/res-main.component';
-import { ResValidateComponent } from '../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component';
-import { SynMainComponent } from '../../../pages/pages/bpm/core/cadastral/syn/main/syn-main.component';
-import { DocumentMainComponent } from '../../../pages/pages/bpm/core/document/main/document-main.component';
-import { DocumentValidateComponent } from '../../../pages/pages/bpm/core/document/validate/document-validate.component';
+import { AlfaMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/alf/main/alfa-main.component';
+import { AlfaValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
+import { EcoComiteComponent } from 'src/app/pages/pages/bpm/core/cadastral/eco/comite/eco-comite.component';
+import { GeoMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/geo/main/geo-main.component';
+import { GeoValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/geo/validate/geo-validate.component';
+import { ResMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/main/res-main.component';
+import { ResValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component';
+import { SynMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/syn/main/syn-main.component';
+import { DocumentMainComponent } from 'src/app/pages/pages/bpm/core/document/main/document-main.component';
+import { DocumentValidateComponent } from 'src/app/pages/pages/bpm/core/document/validate/document-validate.component';
 import { ComponentTemplate } from '@shared/interfaces';
 import {
   COMPONENT_ALFA_MAIN,
   COMPONENT_ALFA_VALIDATE
 } from '../../constants/general/constants';
-import { CitationAndNoticeComponent } from '../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
-import { RecognitionPropertyInformationComponent } from '../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
+import { CitationAndNoticeComponent } from 'src/app/pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
+import { RecognitionPropertyInformationComponent } from 'src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
 import { CompleteDocsComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/complete/complete-docs.component';
 
 @Injectable({

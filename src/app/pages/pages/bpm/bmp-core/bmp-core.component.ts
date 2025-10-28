@@ -18,7 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { map } from 'rxjs/operators';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { HeaderBpmCoreComponent } from '../../../../apps/components/bpm/header-bpm-core/header-bpm-core.component';
+import { HeaderBpmCoreComponent } from 'src/app/apps/components/bpm/header-bpm-core/header-bpm-core.component';
 import {
   COMPONENT_PATH_FORM_ALFA_MAIN,
   CONSTANT_VALIDATE_CHECK,

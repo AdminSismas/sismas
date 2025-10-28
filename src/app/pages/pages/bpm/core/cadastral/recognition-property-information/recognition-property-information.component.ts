@@ -41,7 +41,7 @@ import {
   RecognitionProperty,
   RecognitionPropertyBasic
 } from '@shared/interfaces';
-import { TableThirdPartyAffectedComponent } from '../../../../../apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
 
 @Component({
   selector: 'vex-recognition-property-information',

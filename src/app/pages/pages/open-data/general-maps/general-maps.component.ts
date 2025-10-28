@@ -21,13 +21,13 @@ import {
 } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { GeographicViewerEmbeddedComponent } from '../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
+import { GeographicViewerEmbeddedComponent } from 'src/app/apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/vex-page-layout-header.directive';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { TerritorialZone as Zone } from '@shared/interfaces';
-import { ComboboxComponent } from '../../../../apps/components/general-components/combobox/combobox.component';
+import { ComboboxComponent } from 'src/app/apps/components/general-components/combobox/combobox.component';
 import { _filterInformationCode, getRandomInt } from '../../../../apps/utils/general';
 import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../apps/constants/general/constants';
 

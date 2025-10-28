@@ -8,7 +8,8 @@ import {
   signal,
   input,
   inject,
-  forwardRef
+  forwardRef,
+  ViewChild
 } from '@angular/core';
 import { NgClass } from '@angular/common';
 // import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -21,7 +22,7 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-// import { MatRippleModule } from '@angular/material/core';
+import { MatRippleModule } from '@angular/material/core';
 
 /* ---- Vex ---- */
 import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
@@ -97,6 +98,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     AlertsComponent,
     BasicPropertyInformationComponent,
     BaunitIcaComponent,
+    FluidHeightDirective,
     HistoricalActiveProceduresPropertyComponent,
     InformationAddressesPropertyComponent,
     InformationAdjacentPropertyComponent,
@@ -109,10 +111,12 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     MatDialogTitle,
     MatDividerModule,
     MatIconModule,
+    MatRippleModule,
     NgClass,
     PhotosComponent,
     PropertyAppraisalInformationComponent,
     SuperNotariadoPropertyComponent,
+    VexHighlightModule,
   ],
   providers: [
     {
@@ -123,8 +127,91 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class CadastralInformationPropertyComponent implements OnInit {
-  // NOTE: ViewChild references removed as child components are not currently active
-  // When child components are re-enabled, add corresponding ViewChild references
+  private basicPropertyInformationComponent?: ElementRef;
+
+  @ViewChild('unitPropertyInformationComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private informationUnitPropertyComponent?: ElementRef;
+
+  @ViewChild('administrativeSourcesComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private administrativeSourcesComponent?: ElementRef;
+
+  @ViewChild('informationPropertyOwnersComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private informationPropertyOwnersComponent?: ElementRef;
+
+  @ViewChild('superNotariadoPropertyComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private superNotariadoPropertyComponent?: ElementRef;
+
+  @ViewChild('informationAddressesPropertyComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private informationAddressesPropertyComponent?: ElementRef;
+
+  @ViewChild('informationConstructionsPropertyComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private informationConstructionsPropertyComponent?: ElementRef;
+
+  @ViewChild('informationAdjacentPropertyComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private informationAdjacentPropertyComponent?: ElementRef;
+
+  @ViewChild('propertyAppraisalInformationComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private propertyAppraisalInformationComponent?: ElementRef;
+
+  @ViewChild('informationZonesPropertyComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private informationZonesPropertyComponent?: ElementRef;
+
+  @ViewChild('historicalProceduresPropertyComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private historicalProceduresPropertyComponent?: ElementRef;
+
+  @ViewChild('activeProceduresPropertyComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private activeProceduresPropertyComponent?: ElementRef;
+
+  @ViewChild('photosComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private photosComponent?: ElementRef;
+
+  @ViewChild('alertsComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private alertsComponent?: ElementRef;
+
+  @ViewChild('baunitIcaComponent', {
+    read: ElementRef,
+    static: false
+  })
+  private baunitIcaComponent?: ElementRef;
 
   /* ---- Injects ---- */
   private readonly informationPropertyService = inject(
@@ -224,10 +311,10 @@ export class CadastralInformationPropertyComponent implements OnInit {
       }
     });
 
-    // this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
-    //   top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
-    //   behavior: 'smooth'
-    // });
+    this.basicPropertyInformationComponent?.nativeElement.scrollIntoView({
+      top: this.basicPropertyInformationComponent?.nativeElement.offsetTop,
+      behavior: 'smooth'
+    });
   }
 
   processRulePage() {
@@ -249,10 +336,26 @@ export class CadastralInformationPropertyComponent implements OnInit {
   }
 
   scrollTo(elementName: string) {
-    // NOTE: Child components are not active, so scrollTo is disabled
-    // When child components are re-enabled, restore ViewChild-based scrolling
-    console.log(`Scroll to ${elementName} requested, but child components are not active`);
-    return;
+    const elem: ElementRef<any> | undefined = this[
+      elementName as keyof CadastralInformationPropertyComponent
+    ] as unknown as ElementRef | undefined;
+
+    if (elem == null || !elem.nativeElement) {
+      return;
+    }
+
+    if (elementName === FRAGMENT_BASIC_PROPERTY_INFORMATION) {
+      elem?.nativeElement.scrollIntoView({
+        top: elem.nativeElement.offsetTop + 10,
+        behavior: 'smooth'
+      });
+      return;
+    }
+
+    elem?.nativeElement.scrollIntoView({
+      top: elem.nativeElement.offsetTop - 24,
+      behavior: 'smooth'
+    });
   }
 
   get showInformationUnitProperty(): boolean {

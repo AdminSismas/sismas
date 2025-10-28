@@ -1,4 +1,31 @@
-import { IcaResponse } from '@shared/components';
+export interface IcaResponse {
+  prIcaId: number;
+  prediador?: string;
+  accion?: string;
+  domIndividualType?: string;
+  domIndividualTypeNumber?: string;
+  primerNombre?: string;
+  segundoNombre?: string;
+  primerApellido?: string;
+  segundoApellido?: string;
+  direccionResidencia?: string;
+  nombreEstablecimiento?: string;
+  domicilioNotificacion?: string;
+  telefono?: string;
+  email?: string;
+  notificacionElectronica?: string;
+  escritura?: string;
+  ciudadCamara?: string;
+  matricula?: string;
+  fechaMatricula?: Date;
+  fechaInicioActividades?: Date;
+  regimenTributario?: string;
+  estadoRegistroMercantil?: string;
+  granContribuyente?: string;
+  domActividadPrincipal?: string;
+  domActividadSecundaria?: string;
+  inscritoCc?: string;
+}
 
 export class IcaDetails {
   prediador: string;
