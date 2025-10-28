@@ -23,8 +23,7 @@ import { InputComponent } from '@shared/ui/input/input.component';import { MODAL
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { InformationPersonService } from '@features/bpm-workflows/services/information-person.service';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
-import { PaymentValidationComponent } from 'src/app/apps/components/general-components/payment-validation/payment-validation.component';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import { PaymentValidationComponent } from 'src/app/apps/components/general-components/payment-validation/payment-validation.component';
 import { DataViewCertificate } from 'src/app/apps/interfaces/document-management/view-certificate-management-data.interface';
 
 @Component({

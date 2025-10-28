@@ -46,8 +46,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { ModificationPropertyUnitsComponent } from '@features/bpm-workflows/components/modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '@shared/services';
-import {
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
 } from '@shared/constants';

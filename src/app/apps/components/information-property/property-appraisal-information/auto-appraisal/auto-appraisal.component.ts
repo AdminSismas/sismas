@@ -15,8 +15,7 @@ import {
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import { JSONInput } from 'src/app/apps/interfaces/forms/dynamic-forms';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import { JSONInput } from 'src/app/apps/interfaces/forms/dynamic-forms';
 import { AUTO_APPRAILSAL_INPUTS } from 'src/app/apps/constants/information-property/appraisal.constants';
 import { map, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';

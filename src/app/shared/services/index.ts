@@ -47,7 +47,6 @@ export { AttachmentService } from '../../apps/services/document-management/docum
 export { InformationGeographicService } from '../../apps/services/geographics/information-geographic.service';
 
 // BMP Core services
-export { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
 export { ParticipantsService } from '@features/bpm-workflows/services/participants-service.service';
 export { InformationPersonService } from '@features/bpm-workflows/services/information-person.service';
 export { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.service';

@@ -59,8 +59,7 @@ import { ContentInfoSchema } from '@shared/models';
 import { MatDividerModule } from '@angular/material/divider';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { BaunitHead } from '@shared/interfaces';
-import { AlfaMainService } from '@shared/services';
-import Swal from 'sweetalert2';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({

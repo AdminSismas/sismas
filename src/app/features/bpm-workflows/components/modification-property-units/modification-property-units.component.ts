@@ -68,7 +68,7 @@ import { CrudPropertyUnitsComponent } from '@features/bpm-workflows/components/m
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BpmCoreService } from '@shared/services';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '@shared/services';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
 import { DifferenceChanges } from '@shared/interfaces';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,

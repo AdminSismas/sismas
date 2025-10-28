@@ -18,7 +18,6 @@ import { CrudAlfaMainComponent } from 'src/app/apps/components/bpm/alfa-main/cru
 import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { CurrencyLandsPipe } from '../../../../../../../src/app/apps/pipes/currency-lands.pipe';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
-
 describe(CrudAlfaMainComponent.name, () => {
   let component: CrudAlfaMainComponent;
   let fixture: ComponentFixture<CrudAlfaMainComponent>;

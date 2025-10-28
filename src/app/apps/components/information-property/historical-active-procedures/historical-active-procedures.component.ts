@@ -62,8 +62,7 @@ import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
-import { AlfaMainService } from '@shared/services';
-import { BaunitHead } from '@shared/interfaces';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import { BaunitHead } from '@shared/interfaces';
 import Swal from 'sweetalert2';
 import { BpmCoreService } from '@shared/services';
 import { DifferenceChanges } from '@shared/interfaces';

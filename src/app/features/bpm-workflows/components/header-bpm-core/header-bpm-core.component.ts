@@ -38,8 +38,7 @@ import { DocumentTableComponent } from 'src/app/features/bpm-workflows/component
 import { CommentsComponent } from '@features/bpm-workflows/components/comments/comments.component';
 import { ComponentTemplate } from '@shared/interfaces';
 import { TypeButtonAlfaMain } from '@shared/interfaces';
-import { AlfaMainService } from '@shared/services';
-import { AttachmentExcelMassiveComponent } from '@features/bpm-workflows/components/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import { AttachmentExcelMassiveComponent } from '@features/bpm-workflows/components/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
 import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
