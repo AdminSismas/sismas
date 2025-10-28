@@ -3,8 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ModalWindowComponent } from 'src/app/shared/ui/modal-window/modal-window.component';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'vex-document-viewer',

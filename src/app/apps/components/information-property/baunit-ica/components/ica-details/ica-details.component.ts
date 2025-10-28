@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { IcaDetails } from 'src/app/apps/components/information-property/baunit-ica/interfaces/ica-details';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { IcaDetails } from 'src/app/apps/components/information-property/baunit-ica/interfaces/ica-details';
 import { DatePipe } from '@angular/common';
 import { NAME_NO_DISPONIBLE } from '@shared/constants';
 

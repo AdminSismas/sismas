@@ -1,8 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { taskListColumns } from 'src/app/apps/components/tables/table-workflow/constants/task-list.constants';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { taskListColumns } from 'src/app/apps/components/tables/table-workflow/constants/task-list.constants';
 import {
   Proflow,
   TaskListData
