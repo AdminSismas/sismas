@@ -7,9 +7,6 @@ export { LoadingServiceService } from '../../apps/services/general/loading-servi
 // Title service
 export { TitleService } from '../../apps/services/general/tittle.service';
 
-// Comments service
-export { CommentsService } from '../../apps/services/comments/comments.service';
-
 // Alert services
 export { AlertsService as AlertesService } from '../../apps/services/alerts/alertes.service';
 
@@ -39,9 +36,6 @@ export { ProceduresService } from '../../apps/services/general/procedures.servic
 export { TerritorialOrganizationService } from '../../apps/services/territorial-organization/territorial-organization.service';
 export { InformationPropertyService } from '../../apps/services/territorial-organization/information-property.service';
 export { UnitPropertyInformationService } from '../../apps/services/territorial-organization/baunit-children-information.service';
-
-// Document management service
-export { AttachmentService } from '../../apps/services/document-management/document-management.service';
 
 // Geographic service
 export { InformationGeographicService } from '../../apps/services/geographics/information-geographic.service';

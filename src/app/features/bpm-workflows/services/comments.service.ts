@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 /* -------------- IMPORTACIONES ARCHIVOS LOCALES -------------- */
 import { environment } from '../../../../environments/environments';
 
-import { CommentsCollection } from '@shared/interfaces';
 import { PageCommentsData } from '@shared/interfaces';
 import { contentInfoComments } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
@@ -38,24 +37,11 @@ export class CommentsService {
 
   postDataPropertyByComments(executionId: string, body: contentInfoComments) {
     const url = `${this.basic_url}${executionId}`;
-    return this.fetchBody(url, body);
+    return this.http.post(url, body);
   }
 
   deleteDataPropertyByComments(executionId: string, commentId: number) {
     const url = `${this.basic_url}${executionId}/${commentId}`;
-    return this.deleteBody(url);
-  }
-
-  /* -------------- MÉTODOS PRIVADOS -------------- */
-  private getData(url: string, params: any): Observable<CommentsCollection> {
-    return this.http.get<CommentsCollection>(url, { params });
-  }
-
-  private fetchBody(url: string, body: any): Observable<CommentsCollection> {
-    return this.http.post<CommentsCollection>(url, body);
-  }
-
-  private deleteBody(url: string): Observable<CommentsCollection> {
-    return this.http.delete<CommentsCollection>(url);
+    return this.http.delete(url);
   }
 }

@@ -43,8 +43,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
-// recursos de archivos locales
-import { AttachmentService } from '@shared/services';
+import { AttachmentService } from '@features/bpm-workflows/services/attachment.service';
+
 import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';

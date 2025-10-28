@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 // recursos de archivos locales
-import { CommentsService } from '@shared/services';
+import { CommentsService } from '@features/bpm-workflows/services/comments.service';
 import { PageCommentsData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { contentInfoComments } from '@shared/interfaces';
