@@ -21,7 +21,7 @@ import { environment } from '../../../../../../../environments/environments';
 import { Observable } from 'rxjs';
 import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constants';
 import { filter } from 'rxjs/operators';
-import { AlfaMainInformationComponent } from 'src/app/apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+import { AlfaMainInformationComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/alfa-main-information.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';

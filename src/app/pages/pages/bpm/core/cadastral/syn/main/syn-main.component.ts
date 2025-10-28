@@ -15,7 +15,7 @@ import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.serv
 import { SyncMainService } from '@features/bpm-workflows/services/sync-main.service';
 import Swal from 'sweetalert2';
 import { LoaderComponent } from 'src/app/apps/components/general-components/loader/loader.component';
-import { TableAlfaMainComponent } from 'src/app/apps/components/bpm/table-alfa-main/table-alfa-main.component';
+import { TableAlfaMainComponent } from '@features/bpm-workflows/components/table-alfa-main/table-alfa-main.component';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { stagger40ms } from '@vex/animations/stagger.animation';
@@ -121,7 +121,7 @@ export class SynMainComponent implements OnInit {
     ) {
       let data: Operation[] = this.contentInformations().content;
       data = data.map((item) => new Operation(item));
-      
+
       const indexOperation = this.indexArraylist(data);
       const result = Object.keys(indexOperation).map((key) => [
         key,

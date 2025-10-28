@@ -11,10 +11,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
-import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { getRandomInt } from '../../../../utils/general';
 import { LIST_EXTENSION_MASIVE_EXCEL } from '@shared/constants';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '@shared/services';
@@ -55,8 +54,6 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './attachment-excel-massive.component.scss'
 })
 export class AttachmentExcelMassiveComponent implements OnInit {
-
-  id: string = getRandomInt(1264).toString() + '-attachmentExcelMassive';
   isUploading = false;
   file: File | null = null;
   uploadedFiles: File[] = [];
@@ -74,22 +71,16 @@ export class AttachmentExcelMassiveComponent implements OnInit {
     if (!this.executionId || this.executionId === undefined) {
       return;
     }
-    if (this.id?.length > 0) {
-      this.id =
-        this.id + getRandomInt(2584) + 'AttachmentExcelMassiveComponent' + getRandomInt(88);
-    } else {
-      this.id = getRandomInt(9687) + 'AttachmentExcelMassiveComponent' + getRandomInt(77);
-    }
   }
 
-  onRemove(event: any) {
+  onRemove(event: File) {
     const index = this.uploadedFiles.indexOf(event);
     if (index > -1) {
       this.uploadedFiles.splice(index, 1);
     }
   }
 
-  onSelect(event: any) {
+  onSelect(event: NgxDropzoneChangeEvent) {
     const maxSize = 50 * 1024 * 1024; // 50MB en bytes
     const alreadySelectedFiles = [];
     const oversizedFiles = [];

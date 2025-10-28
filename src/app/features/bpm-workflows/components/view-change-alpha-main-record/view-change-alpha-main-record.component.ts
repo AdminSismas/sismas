@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, Inject, Input, OnInit, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, Inject, OnInit, ViewChild, signal } from '@angular/core';
 import { AlfaMainService } from '@shared/services';
 import {
   MAT_DIALOG_DATA,
@@ -15,9 +15,7 @@ import { NgClass } from '@angular/common';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Observable } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
-import { SearchData } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { CadastreChangeLog as CadastralChangeLog } from '@shared/interfaces';
 import {
@@ -53,22 +51,25 @@ import { LoaderComponent } from '@shared/ui/loader/loader.component';
   styleUrl: './view-change-alpha-main-record.component.scss'
 })
 export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit {
+  /* ---- Injects ---- */
 
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  contentInformations!: InformationPegeable;
-  searchData!: SearchData;
+  /*---- Properties ---- */
+  protected readonly columns: TableColumn<CadastralChangeLog>[] = TABLE_COLUMN_CHANGES_BPM_OPERATION;
+  protected readonly pageSize = 100;
 
-  baunitIdE!: string | undefined;
-  executionId!: string | undefined;
-  listChanges: DifferenceChanges[] = [];
+  /* ---- Signals ---- */
+  protected readonly isAnalyzeLoading = signal<boolean>(false);
+  protected readonly contentInformations = signal<InformationPegeable>(new InformationPegeable());
 
-  isAnalyzeLoading = signal<boolean>(false);
+  /* ---- Variables ---- */
 
-  @Input()
-  columns: TableColumn<CadastralChangeLog>[] = TABLE_COLUMN_CHANGES_BPM_OPERATION;
+  protected baunitIdE!: string | undefined;
+  protected executionId!: string | undefined;
+  protected listChanges: DifferenceChanges[] = [];
+
+
   page = PAGE;
   totalElements = 0;
-  pageSize = 100;
 
   dataSource!: MatTableDataSource<CadastralChangeLog>;
   searchCtrl: UntypedFormControl = new UntypedFormControl();
@@ -129,38 +130,38 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
   }
 
   captureInformationSubscribeError(): void {
-    this.contentInformations = new InformationPegeable();
+    this.contentInformations.set(new InformationPegeable());
     this.dataSource.data = [];
   }
 
   captureInformationSubscribe(result: InformationPegeable): void {
-    this.contentInformations = result;
+    this.contentInformations.set(result);
     this.captureInformationCadastralData();
   }
 
   captureInformationCadastralData(): void {
     let data: CadastralChangeLog[];
-    if (this.contentInformations?.content != null) {
-      data = this.contentInformations.content;
+    if (this.contentInformations()?.content != null) {
+      data = this.contentInformations()?.content;
       this.dataSource.data = data;
     }
 
-    if (this.contentInformations == null) {
+    if (this.contentInformations() == null) {
       this.page = PAGE;
       return;
     }
 
-    if (this.contentInformations.totalElements) {
-      this.totalElements = this.contentInformations.totalElements;
+    if (this.contentInformations()?.totalElements) {
+      this.totalElements = this.contentInformations().totalElements!;
     }
 
-    if (this.contentInformations.pageable == null) {
+    if (this.contentInformations()?.pageable == null) {
       this.page = PAGE;
       return;
     }
 
-    if (this.contentInformations.pageable.pageNumber != null) {
-      this.page = this.contentInformations.pageable.pageNumber;
+    if (this.contentInformations()?.pageable?.pageNumber != null) {
+      this.page = this.contentInformations().pageable!.pageNumber!;
     }
   }
 
@@ -169,7 +170,6 @@ export class ViewChangeAlphaMainRecordComponent implements OnInit, AfterViewInit
       return;
     }
     this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
     this.searchAnalyzeChangesBpmOperationAlfaMain();
   }
 

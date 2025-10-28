@@ -22,7 +22,7 @@ import {
   CONSTANT_NAME_RETURN,
   NAME_FILED,
   NAME_VERSION
-} from '../../../constants/general/constantLabels';
+} from '@shared/constants';
 import {
   LIST_COMPONENT_ACTIVE_MASIVE_EXCEL,
   MODAL_MEDIUM,
@@ -35,12 +35,11 @@ import { ProTaskE } from '@shared/interfaces';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentTableComponent } from 'src/app/features/bpm-workflows/components/document-table/document-table.component';
-import { CommentsComponent } from 'src/app/apps/components/bpm/comments/comments.component';
+import { CommentsComponent } from '@features/bpm-workflows/components/comments/comments.component';
 import { ComponentTemplate } from '@shared/interfaces';
 import { TypeButtonAlfaMain } from '@shared/interfaces';
-import { getRandomInt } from 'src/app/apps/utils/general';
 import { AlfaMainService } from '@shared/services';
-import { AttachmentExcelMassiveComponent } from 'src/app/apps/components/bpm/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
+import { AttachmentExcelMassiveComponent } from '@features/bpm-workflows/components/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
 import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
@@ -66,7 +65,6 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
 
   isExcelDownloadLoading = signal<boolean>(false);
 
-  @Input() public idHeader = '';
   @Input() public icon = '';
   @Input({ required: true }) executionId = '';
   @Input({ required: true }) proTaskE: ProTaskE | null = null;
@@ -104,15 +102,6 @@ export class HeaderBpmCoreComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     if (!this.executionId || this.executionId?.length <= 0 || !this.proTaskE) {
       return;
-    }
-
-    if (this.idHeader?.length > 0) {
-      this.idHeader = this.idHeader + getRandomInt(10000);
-    } else {
-      this.idHeader =
-        getRandomInt(10000) +
-        `${this.proTaskE?.executionId}` +
-        `${this.proTaskE?.flowId}`;
     }
 
     this.getInformationProTaskCountComment();

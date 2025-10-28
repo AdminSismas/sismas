@@ -2,7 +2,7 @@ import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { CommentsComponent } from 'src/app/apps/components/bpm/comments/comments.component';
+import { CommentsComponent } from '@features/bpm-workflows/components/comments/comments.component';
 import { DocumentTableComponent } from 'src/app/features/bpm-workflows/components/document-table/document-table.component';
 import {
   MODAL_MEDIUM,

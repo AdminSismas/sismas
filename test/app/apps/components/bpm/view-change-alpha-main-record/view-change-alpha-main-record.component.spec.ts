@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ViewChangeAlphaMainRecordComponent } from 'src/app/apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
+import { ViewChangeAlphaMainRecordComponent } from '@features/bpm-workflows/components/view-change-alpha-main-record/view-change-alpha-main-record.component';
 
 describe(ViewChangeAlphaMainRecordComponent.name, () => {
   let component: ViewChangeAlphaMainRecordComponent;

@@ -9,7 +9,6 @@ import {
   viewChild
 } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -18,10 +17,9 @@ import {
 } from '@angular/material/expansion';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { TableAlfaMainComponent } from 'src/app/apps/components/bpm/table-alfa-main/table-alfa-main.component';
+import { TableAlfaMainComponent } from '@features/bpm-workflows/components/table-alfa-main/table-alfa-main.component';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { getRandomInt } from '../../../../utils/general';
 import { Observable, ReplaySubject } from 'rxjs';
 import { ChangeControl } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
@@ -72,14 +70,14 @@ import {
   CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
   CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
 } from '@shared/constants';
-import { ViewChangeAlphaMainRecordComponent } from 'src/app/apps/components/bpm/view-change-alpha-main-record/view-change-alpha-main-record.component';
+import { ViewChangeAlphaMainRecordComponent } from '@features/bpm-workflows/components/view-change-alpha-main-record/view-change-alpha-main-record.component';
 import {
   TypeButtonAlfaMain,
   TypeOperationAlfaMain,
   TypeOperationGeoMain
 } from '@shared/interfaces';
 import { DataAlfaMain } from '@shared/interfaces';
-import { CrudAlfaMainComponent } from 'src/app/apps/components/bpm/alfa-main/crud-alfa-main/crud-alfa-main.component';
+import { CrudAlfaMainComponent } from '@features/bpm-workflows/components/alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -89,8 +87,9 @@ import { LoadingServiceService } from '@shared/services';
 import { TableProceduresComponent } from 'src/app/apps/components/tables/table-procedures/table-procedures.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
-import { ViewChangesComponent } from 'src/app/apps/components/bpm/alfa-main/alfa-main-information/view-changes/view-changes.component';
+import { ViewChangesComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/view-changes/view-changes.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
+import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
 
 @Component({
   selector: 'vex-alfa-main-information',
@@ -122,8 +121,6 @@ import { LoaderComponent } from '@shared/ui/loader/loader.component';
   styleUrl: './alfa-main-information.component.scss'
 })
 export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
-  public id: string = getRandomInt(1234).toString();
-
   public readonly executionId = input.required<string>();
   public readonly resources = input.required<string[]>();
   public readonly resourcesRemovers = input<string[]>([]);
@@ -164,22 +161,12 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialog: MatDialog
   ) {
-    if (proFlow?.flowId) {
-      this.id += proFlow?.flowId;
-    }
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
   }
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id + getRandomInt(100000) + 'AlfaMainComponent' + getRandomInt(10);
-    } else {
-      this.id = getRandomInt(10000) + 'AlfaMainComponent' + getRandomInt(10);
-    }
-
     this._infoFatherURL$
       .pipe(filter<string>(Boolean))
       .subscribe((result: string) => (this.infoFatherURL = result));

@@ -53,7 +53,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { CurrencyLandsPipe } from '../../../../pipes/currency-lands.pipe';
+import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
 import Swal from 'sweetalert2';
 import { Operation } from '@shared/interfaces';
 import { DomainCollection } from '@shared/interfaces';

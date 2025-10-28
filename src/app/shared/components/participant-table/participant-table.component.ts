@@ -35,7 +35,7 @@ import {
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
-import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
+import { FluidMinHeightDirective } from '../../../apps/directives/fluid-min-height.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_SMALL_LARGE,
@@ -50,13 +50,13 @@ import { InformationPersonService } from '@shared/services';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
-import { CreatePeopleComponent } from '../../../../pages/pages/operation-support/people/components/create-people/create-people.component';
+import { CreatePeopleComponent } from '../../../pages/pages/operation-support/people/components/create-people/create-people.component';
 import { ParticipantsService } from '@shared/services';
 import { InformationPegeable } from '@shared/interfaces';
 import { Pegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { getRandomInt, validateVariable } from '../../../utils/general';
+import { getRandomInt, validateVariable } from '../../../apps/utils/general';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';

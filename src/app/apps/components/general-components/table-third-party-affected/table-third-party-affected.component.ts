@@ -11,7 +11,7 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ThirdPartyAffectedParticipant } from '@shared/interfaces';
-import { ParticipantTableDialogComponent } from 'src/app/apps/components/bpm/participant-table-dialog/participant-table-dialog.component';
+import { ParticipantTableDialogComponent } from '@features/bpm-workflows/components/participant-table-dialog/participant-table-dialog.component';
 import {
   PAGE,
   PAGE_SIZE_OPTION,

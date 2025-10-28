@@ -15,9 +15,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '@shared/constants';
 import { ThirdPartyAffectedParticipant } from '@shared/interfaces';
-import { ParticipantTableComponent } from 'src/app/apps/components/general-components/participant-table/participant-table.component';
+import { ParticipantTableComponent } from '@shared/components/participant-table/participant-table.component';
 import { ProcessParticipant } from '@shared/interfaces';
-import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
+import { FluidMinHeightDirective } from '@shared/directives';
 
 @Component({
   selector: 'vex-basic-participant-table-dialog',

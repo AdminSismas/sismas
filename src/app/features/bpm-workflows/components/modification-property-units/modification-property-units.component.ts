@@ -51,9 +51,9 @@ import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data
 import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
-import { MODIFYCATION_UNITS_TABLE_COLUMNS } from '../../../constants/information-property/modification-property-units.constants';
-import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
-import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
+import { MODIFYCATION_UNITS_TABLE_COLUMNS } from '@shared/constants';
+import { FluidHeightDirective } from '@shared/directives';
+import { FluidMinHeightDirective } from '@shared/directives';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatFormField, MatPrefix } from '@angular/material/form-field';
@@ -64,7 +64,7 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { UnitPropertyInformationService } from '@shared/services';
 import { BaUnitHeadPercentage } from '@shared/interfaces';
 import { NgClass, PercentPipe } from '@angular/common';
-import { CrudPropertyUnitsComponent } from 'src/app/apps/components/bpm/modification-property-units/crud-property-units/crud-property-units.component';
+import { CrudPropertyUnitsComponent } from '@features/bpm-workflows/components/modification-property-units/crud-property-units/crud-property-units.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BpmCoreService } from '@shared/services';
 import Swal from 'sweetalert2';
@@ -74,8 +74,8 @@ import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
-} from '../../../constants/general/constantLabels';
-import { ViewChangesBpmOperationComponent } from 'src/app/apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
+} from '@shared/constants';
+import { ViewChangesBpmOperationComponent } from '@features/bpm-workflows/components/view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({

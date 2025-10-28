@@ -22,7 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 import { getRandomInt } from 'src/app/apps/utils/general';
 import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
 import { CONSTANT_ENABLE_TAB_GEOGRAFIC } from '../../../../../../../apps/constants/general/constants';
-import { AlfaMainInformationComponent } from 'src/app/apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+import { AlfaMainInformationComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/alfa-main-information.component';
 import {
   CONSTANT_TEXT_ALFA_MAIN_ALFA,
   CONSTANT_TEXT_GEO_MAIN_ALFA
