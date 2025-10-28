@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { NAME_NO_DISPONIBLE } from '@shared/constants';
-import { TablaContent } from 'src/app/apps/interfaces/bpm/table-procedure-response.model';
+import { TablaContent } from '@shared/interfaces';
 
 @Component({
   selector: 'task-details',

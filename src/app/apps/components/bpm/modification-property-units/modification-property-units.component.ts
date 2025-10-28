@@ -29,9 +29,9 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   DataAlfaMain,
   ModificationUnitProperties
-} from 'src/app/apps/interfaces/bpm/data-alfa-main.model';
+} from '@shared/interfaces';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
-import { Operation } from 'src/app/apps/interfaces/bpm/operation';
+import { Operation } from '@shared/interfaces';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
   LIST_SCHEMAS_CONTROL_TEMP,

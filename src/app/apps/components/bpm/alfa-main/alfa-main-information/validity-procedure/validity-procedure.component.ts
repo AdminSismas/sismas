@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { AlfaMainService } from '@shared/services';
-import { ChangeControl } from 'src/app/apps/interfaces/bpm/change-control';
+import { ChangeControl } from '@shared/interfaces';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MY_DATE_FORMATS } from '@shared/constants';

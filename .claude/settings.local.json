@@ -2,16 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(npx ng:*)",
-      "Bash(pnpm start:*)",
-      "Bash(cp:*)",
-      "Bash(mkdir:*)",
-      "Bash(pnpm build:*)",
-      "mcp__refactor__code_search",
-      "mcp__refactor__code_refactor",
-      "Bash(grep:*)",
-      "mcp__angular-toolkit-mcp__get-project-dependencies"
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

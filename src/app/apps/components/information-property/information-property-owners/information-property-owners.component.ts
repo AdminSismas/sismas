@@ -58,7 +58,7 @@ import {
 } from '../../../constants/information-property/information-property-owners.constants';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
-import { DeleteParamsRrright } from 'src/app/apps/interfaces/bpm/changes-property-owner';
+import { DeleteParamsRrright } from '@shared/interfaces';
 import Big from 'big.js';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { input } from '@angular/core';

@@ -20,7 +20,7 @@ import {
   TYPE_BUTTON_ONE,
   TYPE_OPERATION_CREATE
 } from '../../../constants/general/constants';
-import { ProcessParticipant } from '../../../interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 import { ParticipantsService } from '../../../services/bpm/participants-service.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

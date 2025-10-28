@@ -6,7 +6,7 @@ import { taskListColumns } from 'src/app/apps/components/tables/table-workflow/c
 import {
   Proflow,
   TaskListData
-} from 'src/app/apps/interfaces/bpm/workflow.model';
+} from '@shared/interfaces';
 import { LaneNamesPipe } from 'src/app/apps/components/tables/table-workflow/pipe/lane-names.pipe';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';

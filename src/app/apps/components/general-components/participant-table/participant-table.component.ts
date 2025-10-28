@@ -60,7 +60,7 @@ import { getRandomInt, validateVariable } from '../../../utils/general';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 
 @Component({
   selector: 'vex-participant-table',

@@ -46,20 +46,9 @@ export * from '../../apps/interfaces/information-property/national-predial-numbe
 export * from 'src/app/apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
 export * from 'src/app/apps/components/information-property/baunit-ica/interfaces/ica-table';
 
-// BMP interfaces
-export * from '../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
-export * from '../../apps/interfaces/bpm/difference-changes';
-export * from '../../apps/interfaces/bpm/pro-task';
-export * from '../../apps/interfaces/bpm/pro-task-e';
-export * from '../../apps/interfaces/bpm/pro-flow';
-export * from '../../apps/interfaces/bpm/pre-form';
-export * from '../../apps/interfaces/bpm/recognitionProperty.interface';
-export { TaskResponseModel, ProcessModel } from '../../apps/interfaces/bpm/task-response.model';
-export * from '../../apps/interfaces/bpm/workflow.model';
+// BPM interfaces - Updated to use new @features path
+export * from '@features/bpm-workflows/models';
 export * from '../../apps/interfaces/general/content-info-workflow.model';
-export * from '../../apps/interfaces/bpm/render-template.types';
-export * from '../../apps/interfaces/bpm/operation';
-export * from '../../apps/interfaces/bpm/operation-content-information';
 export * from '../../apps/interfaces/general/modal-size.interface';
 export * from '../../apps/interfaces/tables/procedures-progress.model';
 export * from '../../apps/interfaces/tables/procedures-progress-process.model';
@@ -69,21 +58,11 @@ export * from '../../apps/interfaces/information-property/administrative-source'
 export * from '../../apps/interfaces/information-property/alerts.interface';
 export { InformationPageableUser, User, Individual, Role, Authority, CreateUserParams, CreateOutput } from '../../apps/interfaces/users/user';
 export { Authority as UserAuthority, DecodeJwt, UserDetails } from '../../shared/models/user.model';
-export * from '../../apps/interfaces/bpm/pro-execution-e';
-export * from '../../apps/interfaces/bpm/metadata-bpm';
-export * from '../../apps/interfaces/bpm/governmental-channel';
-export * from '../../apps/interfaces/bpm/data-alfa-main.model';
-export * from '../../apps/interfaces/bpm/process-participant';
 export * from '../../apps/interfaces/information-property/snr-person-info';
 export * from '../../apps/interfaces/information-property/basic-detail-group';
 export * from '../../apps/interfaces/information-property/info-contact';
 export { GeoEconomicZone } from '../../apps/interfaces/information-property/geo-economic-zone';
-export * from '../../apps/interfaces/bpm/change-control';
-export * from '../../apps/interfaces/bpm/table-procedure-response.model';
-export * from '../../apps/interfaces/bpm/bpm-type-process';
-export * from '../../apps/interfaces/bpm/bpm-document';
 export * from '../../apps/interfaces/information-property/basic-master-group';
-export * from '../../apps/interfaces/bpm/changes-property-owner';
 export * from '../../apps/interfaces/comments/comments.model';
 export * from '../../apps/interfaces/economic-mod-land/zone-description';
 export * from '../../apps/interfaces/general/content-info-domainLadmCol.model';
@@ -92,8 +71,6 @@ export * from '../../apps/interfaces/information-property/baunit-npnlike';
 export * from '../../apps/interfaces/information-property/rural-physical-zone';
 export * from '../../apps/interfaces/information-property/urban-physical-zone';
 export * from '../../apps/interfaces/information-property/types-qualification-ub';
-// Exportación específica para evitar conflicto ProcessModel
-export { TaskRetailExecuteResponseModel } from '../../apps/interfaces/bpm/task-retail-execute-response.model';
 // Process participant interface - temporarily commented due to circular dependency
 // export * from '../../apps/interfaces/bpmprocess-participant';
 

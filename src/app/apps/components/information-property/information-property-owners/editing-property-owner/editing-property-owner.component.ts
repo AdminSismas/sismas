@@ -29,7 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from 'src/app/apps/services/bpm/rrright.service';
 import { ComboboxCollectionComponent } from 'src/app/apps/components/general-components/combobox-collection/combobox-collection.component';
-import { DialogsData } from 'src/app/apps/interfaces/bpm/changes-property-owner';
+import { DialogsData } from '@shared/interfaces';
 import { PeopleService } from '@shared/services';
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { MatDividerModule } from '@angular/material/divider';

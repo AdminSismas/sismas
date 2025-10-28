@@ -1,5 +1,5 @@
 import { TableColumn } from "@vex/interfaces/table-column.interface";
-import { TaskRetailExecuteResponseModel } from "src/app/apps/interfaces/bpm/task-retail-execute-response.model";
+import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 
 export const TABLE_COLUMN_PROPERTIES_EXECUTED: TableColumn<TaskRetailExecuteResponseModel>[] = [
   {

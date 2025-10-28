@@ -8,7 +8,7 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/bpm/task-retail-execute-response.model';
+import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';

@@ -57,7 +57,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   DetailInformationTasksComponent
 } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { TaskResponseModel } from 'src/app/apps/interfaces/bpm/task-response.model';
+import { TaskResponseModel } from '@shared/interfaces';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';

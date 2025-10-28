@@ -6,8 +6,8 @@ import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   PAGE_OPTION_UNIQUE
 } from '@shared/constants';
-import { Operation } from 'src/app/apps/interfaces/bpm/operation';
-import { OperationContentInformation } from 'src/app/apps/interfaces/bpm/operation-content-information';
+import { Operation } from '@shared/interfaces';
+import { OperationContentInformation } from '@shared/interfaces';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { Pegeable } from 'src/app/apps/interfaces/general/pegeable.model';

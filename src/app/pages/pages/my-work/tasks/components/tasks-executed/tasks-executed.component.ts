@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/bpm/task-retail-execute-response.model';
+import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 import { DetailExecutedTasksComponent } from '../detail-executed-tasks/detail-executed-tasks.component';
 import {
   MODAL_SMALL,

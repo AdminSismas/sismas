@@ -21,7 +21,7 @@ import {
   TABLE_COLUMN_THIRD_PARTY
 } from '../../../../../../apps/constants/information-property/cadastral-recognition.constants';
 import { JSONInput } from '@shared/interfaces';
-import { ProcessParticipant } from 'src/app/apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RecognitionPropertyService } from '@shared/services';

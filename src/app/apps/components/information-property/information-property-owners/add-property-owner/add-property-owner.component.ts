@@ -30,7 +30,7 @@ import {
   AddPropertyOwnerData,
   Owners,
   ParamsRrright
-} from 'src/app/apps/interfaces/bpm/changes-property-owner';
+} from '@shared/interfaces';
 import { PeopleService } from '@shared/services';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
