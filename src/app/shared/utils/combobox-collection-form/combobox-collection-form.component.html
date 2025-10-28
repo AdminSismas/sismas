@@ -1,16 +1,14 @@
 <mat-form-field
-  [id]="idComboCollection + 'matFormField'"
-  [ngClass]="cssClasses"
-  [hideRequiredMarker]="hideRequiredMarker"
+  [ngClass]="cssClasses()"
+  [hideRequiredMarker]="hideRequiredMarker()"
   class="w-full">
-  @if (label && label.length > 0) {
-    <mat-label>{{ label }}</mat-label>
+  @if (label() && label().length > 0) {
+    <mat-label>{{ label() }}</mat-label>
   }
 
   <mat-select
-    [formControl]="formControlComboxColletion"
-    [id]="idComboCollection"
-    placeholder="{{placeholderDomainName}}"
+    [formControl]="formControlComboxColletion()"
+    placeholder="{{placeholderDomainName()}}"
     (selectionChange)="onSelectionChange($event.value)"
     class="w-full h-auto"
     [panelWidth]="500">
@@ -35,10 +33,10 @@
     }
   </mat-select>
 
-  @if (hintValue && hintValue.length > 0 && checkIsInValid(formControlComboxColletion)) {
-    <mat-hint class="mb-1">{{ hintValue }}</mat-hint>
+  @if (hintValue() && hintValue()!.length > 0 && checkIsInValid(formControlComboxColletion())) {
+    <mat-hint class="mb-1">{{ hintValue() }}</mat-hint>
   }
-  @if (formControlComboxColletion !== null) {
-    <mat-error class="mb-1">{{ checkForErrorsIn(formControlComboxColletion) }}</mat-error>
+  @if (formControlComboxColletion() !== null) {
+    <mat-error class="mb-1">{{ checkForErrorsIn(formControlComboxColletion()) }}</mat-error>
   }
 </mat-form-field>

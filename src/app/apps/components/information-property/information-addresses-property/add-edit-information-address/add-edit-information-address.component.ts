@@ -54,7 +54,7 @@ import { InputComponent } from '@shared/ui/input/input.component';import {
 import { TextAreaComponent } from 'src/app/apps/components/general-components/text-area/text-area.component';
 import {
   ComboboxCollectionFormComponent
-} from 'src/app/apps/components/general-components/combobox-collection-form/combobox-collection-form.component';
+} from '@shared/utils/combobox-collection-form/combobox-collection-form.component';
 
 @Component({
   selector: 'vex-edit-information-address',

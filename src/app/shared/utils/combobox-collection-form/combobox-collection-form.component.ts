@@ -1,11 +1,11 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
   forwardRef,
-  OnDestroy} from '@angular/core';
+  OnDestroy,
+  input,
+  output
+} from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -33,11 +33,10 @@ import {
   CONSTANT_ERR_ONLY_INVALID_NUMBER,
   CONSTANT_ERR_ONLY_ONE_99,
   CONSTANT_ERR_ONLY_TEXT_NUMBER
-} from '../../../constants/general/constantsAlertLabel';
+} from '@shared/constants';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants';
 
-// @ts-ignore
 @Component({
   selector: 'vex-combobox-collection-form',
   standalone: true,
@@ -70,20 +69,23 @@ export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   control: FormControl | null | undefined = null;
 
-  @Input() public label = '';
-  @Input({ required: true }) public formControlComboxColletion!: FormControl;
-  @Input() public typeDomainName = '';
-  @Input() public typeCalificationDomainName = '';
-  @Input() public placeholderDomainName?: string;
-  @Input() public idComboCollection = '';
-  @Input() public cssClasses?: string;
-  @Input() public valueReturn: string | undefined = 'dispname';
-  @Input() public hintValue: string | null = null;
-  @Input() public hideRequiredMarker = true;
-  @Input() public validateInactiveCollection = false;
-  @Input() public queryParams: Record<string, string | number | boolean> = {};
-  @Output() selectionChange = new EventEmitter<any>();
+  /* ---- Inputs ---- */
+  public readonly label = input('');
+  public readonly formControlComboxColletion = input.required<FormControl>();
+  public readonly typeDomainName = input('');
+  public readonly typeCalificationDomainName = input('');
+  public readonly placeholderDomainName = input<string>();
+  public readonly cssClasses = input<string>('mainClass');
+  public readonly valueReturn = input<string | undefined>('dispname');
+  public readonly hintValue = input<string | null>(null);
+  public readonly hideRequiredMarker = input(true);
+  public readonly validateInactiveCollection = input(false);
+  public readonly queryParams = input<Record<string, string | number | boolean>>({});
 
+  /* ---- Outputs ---- */
+  selectionChange = output<any>();
+
+  /* ---- Subjects ---- */
   _filteredOptions$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   filteredOptions$ = this._filteredOptions$.asObservable();
 
@@ -94,29 +96,19 @@ export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    let textID: string = 'ValidateExtID3543d3' + this.getRandomInt(10);
-    if (this.validateFiel(this.typeDomainName)) {
-      textID = this.typeDomainName;
-    }
-    if (this.idComboCollection?.length > 0) {
-      this.idComboCollection = this.idComboCollection + this.getRandomInt(52547) + textID;
-    } else {
-      this.idComboCollection = this.getRandomInt(2115) + textID;
-    }
-
-    if (this.validateFiel(this.typeDomainName)) {
+    const typeDomainName = this.typeDomainName();
+    const queryParams = this.queryParams();
+    if (this.validateFiel(typeDomainName)) {
       this.obtainsCollectionsList();
       this.obtainsCalificationCollectionsList();
-    } else if (this.queryParams && Object.keys(this.queryParams).length > 0) {
+    } else if (queryParams && Object.keys(queryParams).length > 0) {
       this.obtainsCollectionsListParams();
     }
-
-    this.cssClasses = !this.cssClasses ? 'mainClass' : this.cssClasses;
   }
 
   obtainsCollectionsList() {
-    if (this.typeDomainName != null && this.typeDomainName.length > 0) {
-      this.collectionServicesService.getDataDomainName(this.typeDomainName)
+    if (this.typeDomainName != null && this.typeDomainName().length > 0) {
+      this.collectionServicesService.getDataDomainName(this.typeDomainName())
         .subscribe(
           (result: DomainCollection[]) => this.captureInformationSubscribe(result)
         );
@@ -125,8 +117,9 @@ export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
 
   obtainsCollectionsListParams() {
     let params: HttpParams = new HttpParams();
-    if (this.queryParams && Object.keys(this.queryParams).length > 0) {
-      Object.entries(this.queryParams).forEach(([key, value]) => {
+    const queryParams = this.queryParams();
+    if (queryParams && Object.keys(queryParams).length > 0) {
+      Object.entries(queryParams).forEach(([key, value]) => {
         params = params.append(key, value.toString());
       });
     }
@@ -136,8 +129,8 @@ export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
   }
 
   obtainsCalificationCollectionsList() {
-    if (this.typeCalificationDomainName != null && this.typeCalificationDomainName.length > 0) {
-      this.collectionServicesService.getCalificationDataDomainName(this.typeCalificationDomainName)
+    if (this.typeCalificationDomainName != null && this.typeCalificationDomainName().length > 0) {
+      this.collectionServicesService.getCalificationDataDomainName(this.typeCalificationDomainName())
         .subscribe(
           (result: DomainCalificationCollection[]) => this.captureCalificationInformationSubscribe(result)
         );
@@ -149,16 +142,12 @@ export class ComboboxCollectionFormComponent implements OnInit, OnDestroy {
   }
 
   captureInformationSubscribe(result: DomainCollection[]) {
-    if (result != null && result.length > 0 && this.validateInactiveCollection) {
+    if (result != null && result.length > 0 && this.validateInactiveCollection()) {
       result = result.filter(dmc => dmc.inactive === false);
     }
     this.options = result;
     this._filteredOptions$.next(this.options);
     this.loading = false;
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
   }
 
   onSelectionChange(value: any) {
