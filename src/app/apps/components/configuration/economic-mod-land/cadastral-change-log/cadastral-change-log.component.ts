@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatDividerModule } from '@angular/material/divider';
 import { JSONInput } from '@shared/interfaces';
 import { CadastreChangeLog } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';
 @Component({
   selector: 'vex-cadastral-change-log',
   standalone: true,

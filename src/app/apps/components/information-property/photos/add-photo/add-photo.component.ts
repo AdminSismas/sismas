@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import { FormGroup } from '@angular/forms';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { FormGroup } from '@angular/forms';
 import { inputsAddPhotos } from 'src/app/apps/constants/general/photos.constant';
 import Swal from 'sweetalert2';
 

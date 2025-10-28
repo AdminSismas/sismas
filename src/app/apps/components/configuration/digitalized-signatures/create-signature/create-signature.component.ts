@@ -10,7 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 
 // Custom
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';import { JSONInput } from '@shared/interfaces';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';
+import { JSONInput } from '@shared/interfaces';
 import { CREATE_SIGNATURE_INPUTS, SEARCH_INPUTS } from '../../../../constants/general/digitalized-signatures.constants';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
 import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
