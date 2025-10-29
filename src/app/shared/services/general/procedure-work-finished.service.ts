@@ -1,21 +1,16 @@
-import { Injectable } from '@angular/core';
-import { environment } from '@environments/environments';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PageProceduresData } from '@shared/interfaces';
 import { Observable } from 'rxjs';
-import { ProceduresCollection } from '@shared/interfaces';
+import { environment } from '@environments/environments';
+import { PageProceduresData, ProceduresCollection } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProcedureWorkFinishedService {
-  /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.proExecution.value}`;
+  private readonly http = inject(HttpClient);
 
-  /* -------------- CONSTRUCTRO -------------- */
-  constructor(
-    private http: HttpClient
-  ) {}
+  private readonly basic_url = `${environment.url}:${environment.port}${environment.bpmOperation.value}${environment.proExecution.value}`;
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByWorkFinishedProcedures(

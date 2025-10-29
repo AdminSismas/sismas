@@ -44,7 +44,7 @@ import { ProceduresCollection } from 'src/app/apps/interfaces/tables/procedures-
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { PageProceduresData } from 'src/app/apps/interfaces/general/page-procedures-data.model';
-import { ProceduresService } from 'src/app/apps/services/general/procedures.service';
+import { ProceduresService } from '@shared/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';

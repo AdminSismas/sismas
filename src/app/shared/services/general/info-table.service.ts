@@ -1,20 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
-import { InformationPegeable } from '@shared/interfaces';
-import { PageSearchData } from '@shared/interfaces';
-import { Injectable } from '@angular/core';
+import { environment } from '@environments/environments';
+import { InformationPegeable, PageSearchData } from '@shared/interfaces';
+
 @Injectable({
   providedIn: 'root'
 })
 export class InfoTableService {
+  private readonly http = inject(HttpClient);
 
-  basic_url = `${environment.url}:${environment.port}${environment.baunit_attributes}`;
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  private readonly basic_url = `${environment.url}:${environment.port}${environment.baunit_attributes}`;
 
   getDataPropertyByRegistration(page:PageSearchData):Observable<InformationPegeable> {
     let paramsR:HttpParams = new HttpParams();

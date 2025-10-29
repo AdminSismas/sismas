@@ -1,19 +1,17 @@
-import { Injectable } from '@angular/core';
-import { environment } from '@environments/environments';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from '@environments/environments';
 import { DomainCalificationCollection, DomainCollection } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CollectionServices {
+  private readonly http = inject(HttpClient);
 
-  basic_url = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
-  calification_url = `${environment.url}:${environment.port}${environment.calificationUB}`;
-  constructor(
-    private http: HttpClient
-  ) {}
+  private readonly basic_url = `${environment.url}:${environment.port}${environment.domain_domainName}?`;
+  private readonly calification_url = `${environment.url}:${environment.port}${environment.calificationUB}`;
 
   getDataDomainName(domainName:string):Observable<DomainCollection[]> {
     let paramsR:HttpParams = new HttpParams();

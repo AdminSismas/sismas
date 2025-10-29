@@ -1,12 +1,11 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, effect } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, filter } from 'rxjs';
 import {
   CONSTANT_TEXT_ALFA_MAIN_GEO,
   CONSTANT_TEXT_GEO_MAIN_GEO
 } from 'src/app/apps/constants/general/constantLabels';
 import { LIST_BUTTON_GEO_MAIN } from '@shared/constants';
-import { SendInfoGeneralService } from 'src/app/apps/services/general/send-info-general.service';
+import { SendInfoGeneralService } from '@shared/services';
 import { environment } from '@environments/environments';
 import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
 
@@ -28,8 +27,16 @@ export class GeoValidateComponent implements OnInit {
   private infoGeneralService = inject(SendInfoGeneralService);
   private router = inject(Router);
 
-  _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
-  infoFatherURL!: string;
+  infoFatherURL = '';
+
+  constructor() {
+    effect(() => {
+      const url = this.infoGeneralService.infoFatherURL();
+      if (url) {
+        this.infoFatherURL = url;
+      }
+    });
+  }
 
   ngOnInit() {
     // Se sobre escribe los botones que se deben habilitar
@@ -37,12 +44,6 @@ export class GeoValidateComponent implements OnInit {
     if (resources && resources.length > 0) {
       LIST_BUTTON_GEO_MAIN.forEach((vl) => this.resources().push(vl));
     }
-
-    this._infoFatherURL$
-      .pipe(filter<string>(Boolean))
-      .subscribe((result: string) => {
-        this.infoFatherURL = result;
-      });
 
     if (!this.executionId()) {
       this.returnPanelTask(true);

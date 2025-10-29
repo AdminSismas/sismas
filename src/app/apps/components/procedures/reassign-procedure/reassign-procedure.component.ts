@@ -24,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { TABLE_REASSIGN_PROCEDURE } from 'src/app/apps/constants/procedures/procedures.constants';
 import { InformationPageableUser } from 'src/app/apps/interfaces/users/user';
-import { ProceduresService } from 'src/app/apps/services/general/procedures.service';
+import { ProceduresService } from '@shared/services';
 import { UserService } from 'src/app/apps/services/users/user.service';
 
 interface RowUserAssign {

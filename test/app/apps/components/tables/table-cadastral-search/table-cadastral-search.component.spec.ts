@@ -17,7 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { InfoTableService } from '../../../../../../src/app/apps/services/general/info-table.service';
+import { InfoTableService } from '@shared/services';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TableCadastralSearchComponent } from 'src/app/apps/components/tables/table-cadastral-search/table-cadastral-search.component';

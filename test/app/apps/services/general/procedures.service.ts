@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ProceduresService } from '../../../../../src/app/apps/services/general/procedures.service';
+import { ProceduresService } from '@shared/services';
 
 
 describe(ProceduresService.name, () => {

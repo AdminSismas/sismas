@@ -1,19 +1,16 @@
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '@environments/environments';
-import { catchError, Observable } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OutFormatService {
+  private readonly http = inject(HttpClient);
 
-  basic_url = `${environment.url}:${environment.port}`;
-
-  constructor(
-    private http: HttpClient
-  ) { }
+  private readonly basic_url = `${environment.url}:${environment.port}`;
 
    /* -------------- MÉTODOS -------------- */
 getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
@@ -43,7 +40,6 @@ getDataDocumentoAsociety(page: any):Observable<InformationPegeable> {
   }
 
   setUDocumentoAsocietyDelete(outTemplateId:any):Observable<any> {
-    const paramsPP:HttpParams = new HttpParams();
     const urlComplete = `${this.basic_url}/bpmOutTemplate/${outTemplateId}`;
     return  this.http.delete<InformationPegeable>(urlComplete);
   }

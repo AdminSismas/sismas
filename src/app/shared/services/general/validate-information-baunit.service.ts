@@ -1,22 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Injectable } from '@angular/core';
-import {
-  environment as envi,
-  environment
-} from '../../../../environments/environments';
-import { map, Observable } from 'rxjs';
-import { InformationPegeable } from '@shared/interfaces';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PageSearchData } from '@shared/interfaces';
+import { Observable } from 'rxjs';
+import { environment as envi, environment } from '@environments/environments';
+import { InformationPegeable, PageSearchData } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidateInformationBaunitService {
-  basic_url = `${environment.url}:${environment.port}`;
-  constructor(
-    private http: HttpClient
-  ) {}
+  private readonly http = inject(HttpClient);
+
+  private readonly basic_url = `${environment.url}:${environment.port}`;
 
   getBaunitIdEInOtherProcess(baunitIdE: string): Observable<string> {
     const url = `${this.basic_url}${envi.bpmOperation.value}/${envi.checkProcess}${baunitIdE}`;
@@ -29,10 +24,6 @@ export class ValidateInformationBaunitService {
       responseType: 'text',
       headers: headers
     });
-  }
-
-  private getData(url: string, params: any): Observable<InformationPegeable> {
-    return this.http.get<any>(url, { params: params  });
   }
 
   advancedSearchDa(

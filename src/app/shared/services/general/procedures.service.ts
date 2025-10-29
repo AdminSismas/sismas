@@ -1,24 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Injectable } from '@angular/core';
-import { environment as envi } from '@environments/environments';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PageProceduresData } from '@shared/interfaces';
 import { Observable } from 'rxjs';
-import { ProceduresCollection } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
-import { ProTaskE } from '@shared/interfaces';
+import { environment as envi } from '@environments/environments';
+import {
+  PageProceduresData,
+  ProceduresCollection,
+  InformationPegeable,
+  ProTaskE
+} from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProceduresService {
-  /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}${envi.proExecution.value}`;
+  private readonly http = inject(HttpClient);
 
-  /* -------------- CONSTRUCTOR -------------- */
-  constructor(
-    private http: HttpClient
-  ) {}
+  private readonly basic_url = `${envi.url}:${envi.port}${envi.bpmOperation.value}${envi.proExecution.value}`;
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByProcedures(
