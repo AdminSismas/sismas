@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { PhotosService } from 'src/app/apps/services/photos/photos.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { CarouselComponent } from '../../general-components/carousel/carousel.component';
+import { CarouselComponent } from '../../../../shared/utils/carousel/carousel.component';
 import { AddPhotoComponent } from './add-photo/add-photo.component';
 import { MODAL_SMALL_XS } from '@shared/constants';
 import Swal from 'sweetalert2';
