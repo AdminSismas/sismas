@@ -19,7 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 // recursos de archivos locales
 import { environment } from '@environments/environments';
-import { MODEL_METADATA_PROPERTIES } from '../../../constants/general/attachment.constant';
+import { MODEL_METADATA_PROPERTIES } from '../../../../features/bpm-workflows/constants/attachment.constant';
 import {
   HttpClient,
   HttpHeaders,

@@ -62,7 +62,7 @@ import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { TABLE_COLUMN_ATTACHMENT } from 'src/app/apps/constants/general/attachment.constant';
+import { TABLE_COLUMN_ATTACHMENT } from '@features/bpm-workflows/constants/attachment.constant';
 
 @Component({
   templateUrl: './document-table.component.html',

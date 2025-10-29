@@ -56,7 +56,7 @@ PAGE_SIZE,
 PAGE_SIZE_OPTION} from '../../../../../../../apps/constants/general/constants';
 import {
   TABLE_COLUMN_ATTACHMENT
-} from '../../../../../../../apps/constants/general/attachment.constant';
+} from '../../../../../../../features/bpm-workflows/constants/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
 import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constants';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';

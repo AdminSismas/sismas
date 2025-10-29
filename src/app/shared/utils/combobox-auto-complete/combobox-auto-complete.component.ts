@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { ControlContainer, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,24 +31,16 @@ export class ComboboxAutoCompleteComponent implements OnInit {
 
   form!: FormGroup;
 
-  @Input() options: any[] = [];
-  @Input() public label = '';
-  @Input() public formControlNameCombobox = '';
-  @Input() public idCombo = '';
-  @Input() public placeholder?: string;
-  @Input() public cssClasses?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public readonly options = input<any[]>([]);
+  public readonly label = input<string>('');
+  public readonly formControlNameCombobox = input<string>('');
+  public readonly placeholder = input<string>('');
+  public readonly cssClasses = input<string>('');
 
   filteredOptions: Observable<string[]> | undefined;
 
-  constructor() { }
-
   ngOnInit(): void {
-    if (this.idCombo?.length>0) {
-      this.idCombo = this.idCombo + this.getRandomInt(10000) + 'id' +this.getRandomInt(50);
-    } else {
-      this.idCombo = this.getRandomInt(10000) + 'id' +this.getRandomInt(50);
-    }
-
     this.filteredOptions = this.form.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
@@ -57,10 +49,6 @@ export class ComboboxAutoCompleteComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
+    return this.options().filter(option => option.toLowerCase().includes(filterValue));
   }
 }

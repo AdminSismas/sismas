@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MODEL_METADATA_PROPERTIES } from '../../../../../../apps/constants/general/attachment.constant';
+import { MODEL_METADATA_PROPERTIES } from '../../../../../../features/bpm-workflows/constants/attachment.constant';
 
 @Component({
   selector: 'vex-document-viewer-work-historical',
