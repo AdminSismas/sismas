@@ -33,7 +33,7 @@ import { DatePipe, TitleCasePipe } from '@angular/common';
 import { ComboboxCollectionFormComponent } from '@shared/utils/combobox-collection-form/combobox-collection-form.component';
 import { ProceduresService } from '@shared/services';
 import { ProceduresCollection } from '@shared/interfaces';
-import { TextAreaComponent } from 'src/app/apps/components/general-components/text-area/text-area.component';
+import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
 import { ParticipantsService } from '@shared/services';
 import Swal from 'sweetalert2';
 import { ProcessParticipantTableMenu } from '@shared/interfaces';

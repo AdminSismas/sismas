@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input } from '@angular/core';
 import {
   AbstractControl,
   ControlContainer,
@@ -10,7 +10,6 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { getRandomInt } from '../../../utils/general';
 import {
   CONSTANT_ERR_CAPITAL_LETTER,
   CONSTANT_ERR_INVALID_AREA,
@@ -22,7 +21,7 @@ import {
   CONSTANT_ERR_ONLY_INVALID_NUMBER,
   CONSTANT_ERR_ONLY_ONE_99,
   CONSTANT_ERR_ONLY_TEXT_NUMBER
-} from '../../../constants/general/constantsAlertLabel';
+} from '../../../apps/constants/general/constantsAlertLabel';
 
 @Component({
   selector: 'vex-text-area',
@@ -39,34 +38,20 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
 })
-export class TextAreaComponent implements OnInit {
-
-  @Input() public idTextArea = '';
-  @Input() public cssClasses = '';
+export class TextAreaComponent {
+  public readonly cssClasses = input('');
   @Input() public label = '';
-  @Input() public placeholder = '';
+  public readonly placeholder = input('');
   @Input() public formControlNameTextArea = '';
   @Input() public formControlTextArea:FormControl | null = null;
   @Input() public icon!: string | null;
   @Input() public hintValue!: string | null;
-  @Input() public hideRequiredMarker = true;
-
-  constructor() { }
-
-  ngOnInit(): void {
-    if (this.idTextArea.length>0) {
-      this.idTextArea = this.idTextArea + getRandomInt(10000) +
-        this.formControlNameTextArea + 'www87456' + getRandomInt(985);
-
-    } else {
-      this.idTextArea = getRandomInt(10000) + this.formControlNameTextArea + 'wwss7456' + getRandomInt(254);
-    }
-  }
+  public readonly hideRequiredMarker = input(true);
 
   checkIsInValid(formControl: AbstractControl | null): boolean {
     return !(
-      formControl && formControl.hasOwnProperty('status') && formControl.status === 'VALID' &&
-      formControl.errors === null
+      formControl && Object.keys(formControl).includes('status') && formControl.status === 'VALID' &&
+      Object.keys(formControl).includes('errors') && formControl.errors === null
     );
   }
 
@@ -75,51 +60,51 @@ export class TextAreaComponent implements OnInit {
       return 'Campo requerido';
     }
 
-    if (formControl.errors?.hasOwnProperty('capitalLetter') && formControl.errors?.['capitalLetter']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('capitalLetter') && formControl.errors?.['capitalLetter']) {
       return CONSTANT_ERR_CAPITAL_LETTER;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('onlyNumber') && formControl.errors?.['onlyNumber']) {
       return CONSTANT_ERR_INVALID_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('errorArea') && formControl.errors?.['errorArea']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('errorArea') && formControl.errors?.['errorArea']) {
       return CONSTANT_ERR_INVALID_AREA;
     }
 
-    if (formControl.errors?.hasOwnProperty('yearBetween1900And2099') && formControl.errors?.['yearBetween1900And2099']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('yearBetween1900And2099') && formControl.errors?.['yearBetween1900And2099']) {
       return CONSTANT_ERR_INVALID_YEAR;
     }
 
-    if (formControl.errors?.hasOwnProperty('max99') && formControl.errors?.['max99']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('max99') && formControl.errors?.['max99']) {
       return CONSTANT_ERR_ONLY_ONE_99;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyTextOrNumber') && formControl.errors?.['onlyTextOrNumber']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('onlyTextOrNumber') && formControl.errors?.['onlyTextOrNumber']) {
       return CONSTANT_ERR_ONLY_TEXT_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('min03Characters') && formControl.errors?.['min03Characters']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('min03Characters') && formControl.errors?.['min03Characters']) {
       return CONSTANT_ERR_MIN03_CHARACTERS;
     }
 
-    if (formControl.errors?.hasOwnProperty('min10Characters') && formControl.errors?.['min10Characters']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('min10Characters') && formControl.errors?.['min10Characters']) {
       return CONSTANT_ERR_MIN10_CHARACTERS;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyTextAndNumberGuionCommand') && formControl.errors?.['onlyTextAndNumberGuionCommand']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('onlyTextAndNumberGuionCommand') && formControl.errors?.['onlyTextAndNumberGuionCommand']) {
       return CONSTANT_ERR_ONLY_INVALID_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyNumber') && formControl.errors?.['onlyNumber']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('onlyNumber') && formControl.errors?.['onlyNumber']) {
       return CONSTANT_ERR_ONLY_INVALID_NUMBER;
     }
 
-    if (formControl.errors?.hasOwnProperty('onlyLetters') && formControl.errors?.['onlyLetters']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('onlyLetters') && formControl.errors?.['onlyLetters']) {
       return CONSTANT_ERR_ONLY_INVALID_LETTER;
     }
 
-    if (formControl.errors?.hasOwnProperty('max') && formControl.errors?.['max']) {
+    if (formControl.errors && Object.keys(formControl.errors).includes('max') && formControl.errors?.['max']) {
       return 'Error, valor maximo: ' + formControl.errors?.['max'].max + ' valor actual: ' + formControl.errors?.['max'].actual;
     }
 

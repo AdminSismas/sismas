@@ -51,7 +51,7 @@ import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/c
 import { InputComponent } from '@shared/ui/input/input.component';import {
   HeaderCadastralInformationPropertyComponent
 } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
-import { TextAreaComponent } from 'src/app/apps/components/general-components/text-area/text-area.component';
+import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
 import {
   ComboboxCollectionFormComponent
 } from '@shared/utils/combobox-collection-form/combobox-collection-form.component';

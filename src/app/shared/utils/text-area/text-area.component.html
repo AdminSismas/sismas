@@ -1,23 +1,22 @@
 <mat-form-field
-  [id]="idTextArea + 234332 + '1234gbwwe'"
   class="mainClass"
-  [ngClass]="cssClasses"
-  [hideRequiredMarker]="hideRequiredMarker">
+  [ngClass]="cssClasses()"
+  [hideRequiredMarker]="hideRequiredMarker()">
   @if (label.length > 0) {
     <mat-label>{{ label }}</mat-label>
   }
-  @if (formControlNameTextArea && formControlTextArea == null) {
+  @if (formControlNameTextArea && formControlTextArea === null) {
     <textarea
       matInput
       [formControlName]="formControlNameTextArea"
-      [placeholder]="placeholder">
+      [placeholder]="placeholder()">
     </textarea>
-  } @else if (formControlNameTextArea && formControlTextArea != null) {
+  } @else if (formControlNameTextArea && formControlTextArea !== null) {
     <textarea
       matInput
       [formControlName]="formControlNameTextArea"
       [formControl]="formControlTextArea"
-      [placeholder]="placeholder">
+      [placeholder]="placeholder()">
     </textarea>
   }
   @if (icon && icon.length > 0) {
@@ -26,7 +25,7 @@
   @if (hintValue && hintValue.length > 0 && checkIsInValid(formControlTextArea)) {
     <mat-hint class="mb-1">{{ hintValue }}</mat-hint>
   }
-  @if (formControlTextArea != null) {
+  @if (formControlTextArea !== null) {
     <mat-error class="mb-1">{{ checkForErrorsIn(formControlTextArea) }}</mat-error>
   }
 </mat-form-field>

@@ -27,7 +27,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { TextAreaComponent } from 'src/app/apps/components/general-components/text-area/text-area.component';
+import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_DATE_FORMATS } from '@shared/constants';
 import { output } from '@angular/core';
