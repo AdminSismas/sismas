@@ -58,7 +58,7 @@ export class InputComponent {
   public readonly label = input<string | null>();
   public readonly hintValue = input<string | null>();
   public readonly icon = input<string | null>();
-  public readonly formControlInput = input<FormControl>();
+  public readonly formControlInput = input<FormControl | null>(null);
   public readonly idComboInput = input('');
   public readonly cssClasses = input<string>();
   public readonly formControlNameInput = input('');

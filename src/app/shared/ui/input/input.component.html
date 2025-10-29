@@ -27,7 +27,7 @@
   @if (hintValue() && hintValue()!.length > 0 && checkIsInValid(formControlInput()!)) {
     <mat-hint class="mb-1">{{ hintValue()! }}</mat-hint>
   }
-  @if (formControlInput() !== null) {
-  <mat-error class="mb-1">{{ checkForErrorsIn(formControlInput()!) }}</mat-error>
+  @if (formControlInput()) {
+    <mat-error class="mb-1">{{ checkForErrorsIn(formControlInput()!) }}</mat-error>
   }
 </mat-form-field>
