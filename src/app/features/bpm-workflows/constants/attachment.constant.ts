@@ -95,14 +95,7 @@ export const TABLE_COLUMN_ATTACHMENT_DOCUMENT_VALIDATE: TableColumn<contentInfoA
         type: 'date',
         visible: true,
         cssClasses: ['font-medium']
-    },
-    {
-        label: 'Verificar',
-        property: 'select',
-        type: 'checkbox',
-        visible: true,
-        cssClasses: []
-      },
+    }
 ];
 
 

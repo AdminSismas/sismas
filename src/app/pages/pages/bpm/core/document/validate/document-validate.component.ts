@@ -41,7 +41,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { AttachmentService } from '@features/bpm-workflows/services/attachment.service';
 import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
-import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import { TABLE_COLUMN_ATTACHMENT_DOCUMENT_VALIDATE } from '@features/bpm-workflows/constants';
 import {
   MODAL_LARGE,
@@ -191,7 +191,7 @@ export class DocumentValidateComponent implements AfterViewInit, OnInit {
       disableClose: true,
       data: {
         metaData: metaData,
-        executionId: this.executionId
+        executionId: this.executionId()
       }
     });
   }

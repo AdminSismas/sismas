@@ -50,7 +50,7 @@ import { AttachmentService } from '@features/bpm-workflows/services/attachment.s
 import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
-import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import {
   MODAL_LARGE,
   PAGE,

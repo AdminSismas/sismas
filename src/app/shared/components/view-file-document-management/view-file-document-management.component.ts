@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 // recursos de angular material
@@ -14,7 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 // recursos de archivos locales
 import { contentInfoAttachment } from '@shared/interfaces';
 import { environment } from '@environments/environments';
-import { MODEL_METADATA_PROPERTIES } from '../../../../features/bpm-workflows/constants/attachment.constant';
+import { MODEL_METADATA_PROPERTIES } from '@features/bpm-workflows/constants/attachment.constant';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -29,56 +29,51 @@ import { DatePipe } from '@angular/common';
     MatDividerModule,
     MatTabsModule,
     MatIconModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewFileDocumentManagementComponent implements OnInit {
-  showMetadataView = false;
-  metadata: contentInfoAttachment;
-  properties = MODEL_METADATA_PROPERTIES;
+  /* ---- Injects ---- */
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly dialogRef = inject(MatDialogRef<ViewFileDocumentManagementComponent>);
+  private readonly data = inject<{ metaData: contentInfoAttachment; executionId: string }>(MAT_DIALOG_DATA);
 
-  executionId: string;
-  idAttachment: number;
-  originalFileName: string;
+  /* ---- Properties ---- */
+  private readonly basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
+  public readonly properties = MODEL_METADATA_PROPERTIES;
+  private originalFileName = this.data.metaData.originalFileName;
 
-  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
-  urlSafe: SafeUrl = '';
-  fileType = '';
-  fileContent = ''; // Almacenar el contenido del archivo .txt
+  /* ---- Signals ---- */
+  public readonly showMetadataView = signal<boolean>(false);
+  public readonly metadata = signal<contentInfoAttachment>(this.data.metaData);
+  public readonly fileType = signal<string>('');
+  public readonly urlSafe = signal<SafeUrl>({} as SafeUrl);
+  public readonly fileContent = signal<string>(''); // Almacenar el contenido del archivo .txt
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    public dialogRef: MatDialogRef<ViewFileDocumentManagementComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: { metaData: contentInfoAttachment; executionId: string }
-  ) {
-    this.metadata = data.metaData;
-    this.idAttachment = this.metadata.id;
-    this.originalFileName = this.metadata.originalFileName;
-    this.executionId = data.executionId;
-  }
-
+  /* ---- Lifecycle ---- */
   ngOnInit(): void {
-    this.fileType = this.getFileType(this.originalFileName);
-    this.urlSafe = this.urlPdfViewer();
+    this.fileType.set(this.getFileType(this.originalFileName));
+    this.urlSafe.set(this.urlPdfViewer());
 
-    if (this.fileType === 'txt') {
+    if (this.fileType() === 'txt') {
       this.loadTextFile();
     }
 
     if (
-      this.fileType === 'xlsx' ||
-      this.fileType === 'docx' ||
-      this.fileType === 'zip' ||
-      this.fileType === 'rar' ||
-      this.fileType === 'dwg' ||
-      this.fileType === 'shp' ||
-      this.fileType === 'tiff' ||
-      this.fileType === 'unknown'
+      this.fileType() === 'xlsx' ||
+      this.fileType() === 'docx' ||
+      this.fileType() === 'zip' ||
+      this.fileType() === 'rar' ||
+      this.fileType() === 'dwg' ||
+      this.fileType() === 'shp' ||
+      this.fileType() === 'tiff' ||
+      this.fileType() === 'unknown'
     ) {
       this.downloadFile();
     }
   }
 
+  /* ---- Methods ---- */
   // Método para identificar el tipo de archivo
   getFileType(fileName: string): string {
     const extension = fileName.split('.').pop()?.toLowerCase();
@@ -96,17 +91,27 @@ export class ViewFileDocumentManagementComponent implements OnInit {
 
   // Método para mostrar el visor de PDF
   urlPdfViewer(): SafeUrl {
-    const urlComplete = `${this.basic_url}${this.executionId}/${this.idAttachment}/${this.originalFileName}`;
+    const { executionId, idAttachment, originalFileName } = {
+      executionId: this.data.executionId,
+      idAttachment: this.metadata().id,
+      originalFileName: this.originalFileName
+    };
+    const urlComplete = `${this.basic_url}${executionId}/${idAttachment}/${originalFileName}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlComplete);
   }
 
   // Método para cargar el archivo de texto (.txt)
   loadTextFile(): void {
-    const urlComplete = `${this.basic_url}${this.executionId}/${this.idAttachment}/${this.originalFileName}`;
+    const { executionId, idAttachment, originalFileName } = {
+      executionId: this.data.executionId,
+      idAttachment: this.metadata().id,
+      originalFileName: this.originalFileName
+    };
+    const urlComplete = `${this.basic_url}${executionId}/${idAttachment}/${originalFileName}`;
     fetch(urlComplete)
       .then((response) => response.text())
       .then((text) => {
-        this.fileContent = text; // Guardamos el contenido del archivo .txt
+        this.fileContent.set(text); // Guardamos el contenido del archivo .txt
       })
       .catch((err) =>
         console.error('Error al cargar el archivo de texto', err)
@@ -114,7 +119,12 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   }
 
   downloadFile(): void {
-    const urlComplete = `${this.basic_url}${this.executionId}/${this.idAttachment}/${this.originalFileName}`;
+    const { executionId, idAttachment, originalFileName } = {
+      executionId: this.data.executionId,
+      idAttachment: this.metadata().id,
+      originalFileName: this.originalFileName
+    };
+    const urlComplete = `${this.basic_url}${executionId}/${idAttachment}/${originalFileName}`;
 
     // Abrir el documento en una nueva pestaña
     const newWindow = window.open(urlComplete, '_blank');
@@ -137,8 +147,8 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   }
 
   switchViewDocMetaData(): void {
-    this.showMetadataView = !this.showMetadataView;
-    if (this.showMetadataView) {
+    this.showMetadataView.update(value => !value);
+    if (this.showMetadataView()) {
       this.dialogRef.updateSize('98%', 'auto');
       this.dialogRef.updatePosition({ top: '5%' });
     } else {

@@ -15,7 +15,7 @@
       </div>
 
       <!-- Botón de descarga en la parte superior derecha (para archivos visibles como imagen o PDF) -->
-      @if (fileType === "pdf" || fileType === "image" || fileType === "txt") {
+      @if (fileType() === "pdf" || fileType() === "image" || fileType() === "txt") {
         <button
           type="button"
           class="w-10 h-10 p-0 ml-1 leading-none flex items-center rounded-button justify-center hover:bg-hover text-primary-600 bg-primary-600/10"
@@ -38,7 +38,7 @@
         (click)="switchViewDocMetaData()"
         mat-icon-button
       >
-        @if (showMetadataView === false) {
+        @if (showMetadataView() === false) {
           <mat-icon
             class="w-8 h-8"
             matIconPrefix
@@ -75,14 +75,14 @@
 <mat-dialog-content
   class="flex rounded-md border-2 border-gray-300 my-4 mx-6 p-0 h-full max-h-none"
 >
-  @if (showMetadataView === false) {
+  @if (showMetadataView() === false) {
     <div class="w-full pt-4">
-      @switch (fileType) {
+      @switch (fileType()) {
         @case ("pdf") {
           <!-- Visualización del archivo PDF en el iframe -->
 
           <iframe
-            [src]="urlSafe"
+            [src]="urlSafe()"
             width="100%"
             height="100%"
           ></iframe>
@@ -90,14 +90,14 @@
         @case ("image") {
           <!-- Visualización de la imagen -->
           <img
-            [src]="urlSafe"
+            [src]="urlSafe()"
             alt="Imagen"
             width="100%"
           />
         }
         @case ("txt") {
           <!-- Visualización de archivo TXT -->
-          <pre>{{ fileContent }}</pre>
+          <pre>{{ fileContent() }}</pre>
         }
         @default {
           <div class="text-center my-4">
@@ -111,7 +111,7 @@
     </div>
   }
 
-  @if (showMetadataView === true) {
+  @if (showMetadataView() === true) {
     <div
       class="grid sm:grid-cols-1 md:grid-cols-2 gap-x-9 gap-y-4 mt-5 pt-7 w-full"
     >
@@ -123,7 +123,9 @@
                 <strong class="font-bold text-base mr-2"
                   >{{ property.label }}:</strong
                 >
-                <span class="text-base">{{ metadata[property.metadata] }}</span>
+                <span class="text-base">{{
+                  metadata()[property.metadata]
+                }}</span>
               </div>
             }
             @case ("date") {
@@ -131,9 +133,9 @@
                 <strong class="font-bold text-base"
                   >{{ property.label }}:
                 </strong>
-                <span class="text-base">{{
-                  metadata[property.metadata] | date: "short"
-                }}</span>
+                <span class="text-base">
+                  {{ metadata()[property.metadata] | date: "short" }}
+                </span>
               </div>
             }
           }

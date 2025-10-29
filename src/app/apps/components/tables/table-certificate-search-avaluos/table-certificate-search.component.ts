@@ -56,7 +56,7 @@ import { SendInformationRegisterService } from '@shared/services';
 import { ValidateInformationBaunitService } from '@shared/services';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FilterCertificateSearchComponent } from 'src/app/apps/components/tables/table-certificate-search/filter-certificate-search/filter-certificate-search.component';
-import { ViewFileDocumentManagementComponent } from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import { contentInfoAttachment } from '@shared/interfaces';
 
 @Component({
