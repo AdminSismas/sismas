@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoadingAppComponent } from 'src/app/apps/components/general-components/loading-app/loading-app.component';
+import { LoadingAppComponent } from '@shared/components/loading-app/loading-app.component';
 import { TitleService } from '@shared/services';
 import { SplashScreenService } from '@shared/services';
 import { LoadingServiceService } from '@shared/services';

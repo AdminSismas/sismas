@@ -27,11 +27,11 @@ export class DocumentViewerComponent {
     return this._safePdfUrl();
   });
 
-  // Estado reactivo
+  /* ---- Signals ---- */
   isLoading = signal(true);
   error = signal(false);
 
-  // URL del blob para cleanup
+  /* ---- Private ---- */
   private blobUrl: string | null = null;
 
   constructor(private sanitizer: DomSanitizer) {

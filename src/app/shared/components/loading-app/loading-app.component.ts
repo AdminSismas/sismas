@@ -1,5 +1,10 @@
-import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DOCUMENT, NgIf } from '@angular/common';
+import {
+  Component,
+  Inject,
+  input,
+  viewChild,
+} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { filter, take } from 'rxjs/operators';
 import { NavigationEnd, Router } from '@angular/router';
 import { animate, AnimationBuilder, style } from '@angular/animations';
@@ -11,37 +16,24 @@ import { animate, AnimationBuilder, style } from '@angular/animations';
   templateUrl: './loading-app.component.html',
   styleUrl: './loading-app.component.scss'
 })
-export class LoadingAppComponent implements OnInit, OnChanges {
+export class LoadingAppComponent {
+  splashScreenElem = viewChild<HTMLElement>('vexSplashScreen');
 
-  splashScreenElem?: HTMLElement;
-  @Input({ required: false }) idLoading = 'vexSplashScreen';
-  @Input({ required: false }) textLoading = 'Cargando ...';
+  /* ---- Inputs ---- */
+  textLoading = input<string>('Cargando ...');
 
   constructor(
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
     private animationBuilder: AnimationBuilder
   ) {
-    this.splashScreenElem = this.document.body.querySelector(this.idLoading) ?? undefined;
-    if (this.splashScreenElem) {
+    if (this.splashScreenElem()) {
       this.router.events
         .pipe(
           filter((event) => event instanceof NavigationEnd),
           take(1)
         )
         .subscribe(() => this.hide());
-    }
-  }
-
-  ngOnInit(): void {
-    if(this.textLoading && this.textLoading?.length <= 0) {
-      this.textLoading ='Cargando ...';
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['textLoading'] && this.textLoading && this.textLoading?.length <= 0) {
-      this.textLoading ='Cargando ...';
     }
   }
 
@@ -58,9 +50,9 @@ export class LoadingAppComponent implements OnInit, OnChanges {
           })
         )
       ])
-      .create(this.splashScreenElem);
+      .create(this.splashScreenElem());
 
-    player.onDone(() => this.splashScreenElem?.remove());
+    player.onDone(() => this.splashScreenElem()?.remove());
     player.play();
   }
 }
