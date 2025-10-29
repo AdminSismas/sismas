@@ -13,7 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { TaskResponseModel } from '@shared/interfaces';
 import { ActivatedRoute } from '@angular/router';
-import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { TableThirdPartyAffectedComponent } from '@shared/components/table-third-party-affected/table-third-party-affected.component';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { PermissionVailable } from '@features/bpm-workflows/services/bpm-process.service';
 import { DetailsHeaderComponent } from '../details-header/details-header.component';

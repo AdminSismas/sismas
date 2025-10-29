@@ -6,7 +6,7 @@ import {
   input,
   OnInit,
   signal,
-  ViewChild
+  viewChild,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ import {
   TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
   TYPE_BUTTON_ONE,
   TYPE_OPERATION_CREATE
-} from '../../../constants/general/constants';
+} from '../../../apps/constants/general/constants';
 import { ProcessParticipant } from '@shared/interfaces';
 import { ParticipantsService } from '@features/bpm-workflows/services/participants-service.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
@@ -43,8 +43,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { InformationPegeable } from '@shared/interfaces';
 import { Pegeable } from '@shared/interfaces';
-import { FluidMinHeightDirective } from '../../../directives/fluid-min-height.directive';
-import { UntypedFormControl } from '@angular/forms';
+import { FluidMinHeightDirective } from '../../../apps/directives/fluid-min-height.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -75,12 +74,12 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './table-third-party-affected.component.scss'
 })
 export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
-  // Injects
+  /* ---- Injects ---- */
   private dialog: MatDialog = inject(MatDialog);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private participantsService = inject(ParticipantsService);
 
-  // Inputs
+  /* ---- Inputs ---- */
   executionId = input.required<string>();
   readOnly = input(false, {
     transform: (value: string | boolean) => {
@@ -100,35 +99,32 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
     }
   });
 
-  // Signals
-  existThirdPartyAffected = signal(false);
-  dataSource = signal<MatTableDataSource<ProcessParticipant>>(
+  /* ---- Signals ---- */
+  readonly existThirdPartyAffected = signal(false);
+  readonly dataSource = signal<MatTableDataSource<ProcessParticipant>>(
     new MatTableDataSource()
   );
+  readonly totalElements = signal(0);
+  readonly page = signal(PAGE);
 
   contentInformation!: InformationPegeable;
 
-  page = PAGE;
-  totalElements = 0;
-  pageSize: number = PAGE_OPTION_UNIQUE;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  columns: TableColumn<ProcessParticipant>[] =
+  /* ---- Constants ---- */
+  readonly pageSize = PAGE_OPTION_UNIQUE;
+  readonly pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  readonly columns: TableColumn<ProcessParticipant>[] =
     TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY;
-  subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
+  readonly subject$: ReplaySubject<ProcessParticipant[]> = new ReplaySubject<
     ProcessParticipant[]
   >(1);
   data$: Observable<ProcessParticipant[]> = this.subject$.asObservable();
 
-  @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  /* ---- ViewChild ---- */
+  paginator = viewChild.required(MatPaginator);
+  sort = viewChild.required(MatSort);
 
   ngOnInit() {
     this.getExistThirdPartyAffected();
-
-    this.searchCtrl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => this.onFilterChange(value));
 
     this.data$
       .pipe(filter<ProcessParticipant[]>(Boolean))
@@ -152,16 +148,16 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.paginator) {
+    if (this.paginator()) {
       this.dataSource.update((dataSource) => {
-        dataSource.paginator = this.paginator!;
+        dataSource.paginator = this.paginator();
         return dataSource;
       });
     }
 
-    if (this.sort) {
+    if (this.sort()) {
       this.dataSource.update((dataSource) => {
-        dataSource.sort = this.sort!;
+        dataSource.sort = this.sort();
         return dataSource;
       });
     }
@@ -249,7 +245,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
       true,
       result?.length > 0,
       result,
-      new Pegeable(this.page, result?.length / PAGE_OPTION_UNIQUE)
+      new Pegeable(this.page(), result?.length / PAGE_OPTION_UNIQUE)
     );
     this.captureInformationData();
   }
@@ -266,15 +262,14 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
     if (event == null) {
       return;
     }
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
+    this.page.set(event.pageIndex);
     this.obtainInformationThirdPartyAffected();
   }
 
   captureInformationData(): void {
     let data: ProcessParticipant[];
     if (this.contentInformation == null) {
-      this.page = PAGE;
+      this.page.set(PAGE);
       return;
     }
 
@@ -285,16 +280,16 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
     }
 
     if (this.contentInformation.totalElements) {
-      this.totalElements = this.contentInformation.totalElements;
+      this.totalElements.set(this.contentInformation.totalElements);
     }
 
     if (this.contentInformation.pageable == null) {
-      this.page = PAGE;
+      this.page.set(PAGE);
       return;
     }
 
     if (this.contentInformation.pageable.pageNumber != null) {
-      this.page = this.contentInformation.pageable.pageNumber;
+      this.page.set(this.contentInformation.pageable.pageNumber);
     }
   }
 

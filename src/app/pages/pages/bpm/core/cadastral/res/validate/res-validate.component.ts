@@ -27,7 +27,7 @@ import { FluidHeightDirective } from '../../../../../../../apps/directives/fluid
 import { FluidMaxHeightDirective } from '../../../../../../../apps/directives/fluid-max-height.directive';
 import { RES_VALIDATE_INPUTS } from '../../../../../../../apps/constants/information-property/cadastral-recognition.constants';
 import { LoadingServiceService } from '@shared/services';
-import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { TableThirdPartyAffectedComponent } from '@shared/components/table-third-party-affected/table-third-party-affected.component';
 import { ResService } from '@features/bpm-workflows/services/res.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
