@@ -1,25 +1,25 @@
 <mat-form-field
-  [ngClass]="cssClasses"
-  [hideRequiredMarker]="hideRequiredMarker"
+  [ngClass]="cssClasses()"
+  [hideRequiredMarker]="hideRequiredMarker()"
   class="w-full sm:ml-2 sm:mr-2">
-  <mat-label>{{ label }}</mat-label>
+  <mat-label>{{ label() }}</mat-label>
   <mat-select
-    [formControlName]="formControlName"
-    [placeholder]="placeholder"
+    [formControlName]="formControlName()"
+    [placeholder]="placeholder()"
     (selectionChange)="onSelectionChange($event.value)"
     class="w-full h-auto"
     [panelWidth]="500">
     <!-- Opciones cargadas -->
-    @for (option of options; track option) {
-      @if (valueKey && valueKey !== null) {
+    @for (option of optionValues(); track option) {
+      @if (valueKey() && valueKey() !== null) {
         <mat-option
-          [value]="option[valueKey]">
-          {{ option[displayKey] }}
+          [value]="option[valueKey()]">
+          {{ option[displayKey()] }}
         </mat-option>
       } @else {
         <mat-option
-          [value]="option">
-          {{ option[displayKey] }}
+          [value]="option()">
+          {{ option()[displayKey()] }}
         </mat-option>
       }
     } @empty {
@@ -28,7 +28,7 @@
       </mat-option>
     }
     <!-- Mensaje de carga -->
-    @if (loading) {
+    @if (loading()) {
       <mat-option disabled>
         Cargando...
       </mat-option>
@@ -36,9 +36,9 @@
   </mat-select>
 
   <!-- Hint opcional -->
-  @if (hintValue && hintValue.length > 0) {
+  @if (hintValue() && hintValue().length > 0) {
     <mat-hint>
-      {{ hintValue }}
+      {{ hintValue() }}
     </mat-hint>
   }
 </mat-form-field>
