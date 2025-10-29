@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { UsersSignatures } from '@shared/interfaces';
 import { Observable } from 'rxjs';
 import { UserDetails } from '@shared/interfaces';

@@ -54,7 +54,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { ContentInformationConstruction } from '@shared/interfaces';

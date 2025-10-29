@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Group } from '../interfaces/group.interface';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { User } from 'src/app/apps/interfaces/users/user';
 

@@ -24,7 +24,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import {
   EditBasicPropertyInputs,
   TypeOperation

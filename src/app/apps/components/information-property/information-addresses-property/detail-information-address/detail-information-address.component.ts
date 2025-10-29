@@ -19,7 +19,7 @@ import {
 } from '@shared/constants';
 import { DetailBasicInformationAddress } from '@shared/interfaces';
 import { InformationPropertyService } from '@shared/services';
-import { environment } from '../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

@@ -14,7 +14,7 @@ import {
   PROCESO_CREAR_DIRECCION,
   TYPE_CREATE
 } from '@shared/constants';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import {
   InformationPropertyService
 } from 'src/app/apps/services/territorial-organization/information-property.service';

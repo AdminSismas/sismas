@@ -30,7 +30,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
 
 // COMPONENT IMPORTS

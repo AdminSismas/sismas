@@ -6,7 +6,7 @@ import {
   HttpParams,
   HttpStatusCode
 } from '@angular/common/http';
-import { environment as envi } from '../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { Observable, throwError } from 'rxjs';
 import { InformationPegeable } from '@shared/interfaces';
 import { InfoPerson } from '@shared/interfaces';

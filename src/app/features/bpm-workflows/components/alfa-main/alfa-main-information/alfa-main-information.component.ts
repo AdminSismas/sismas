@@ -30,7 +30,7 @@ import { InformationGeographicService } from '@shared/services';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { filter, take } from 'rxjs/operators';
-import { environment } from '../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import Swal from 'sweetalert2';
 import { Operation } from '@shared/interfaces';
 import {

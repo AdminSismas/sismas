@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PageProceduresData } from '@shared/interfaces';
 import { Observable } from 'rxjs';

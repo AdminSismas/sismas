@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, EMPTY, throwError } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { ProTaskE } from '@shared/interfaces';
 import { ProFlow } from '@shared/interfaces';
 import { ProExecutionE } from '@shared/interfaces';

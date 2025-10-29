@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DomainCalificationCollection, DomainCollection } from '@shared/interfaces';

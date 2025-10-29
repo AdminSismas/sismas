@@ -1,7 +1,7 @@
 import { BpmProcessService } from '@features/bpm-workflows/services/bpm-process.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../../src/environments/environments';
+import { environment } from '@environments/environments';
 
 describe(BpmProcessService.name, () => {
   let service: BpmProcessService;

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError, Observable } from 'rxjs';
 
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { PageSortByData } from '@shared/interfaces';
 import { Proflow, WorkflowCollection } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';

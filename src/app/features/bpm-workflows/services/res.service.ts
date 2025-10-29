@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 
 const basic_url = `${envi.url}:${envi.port}${envi.bpmResolution.value}`;
 

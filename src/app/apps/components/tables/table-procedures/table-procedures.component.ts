@@ -66,7 +66,7 @@ import {
   PAGE_SIZE_OPTION
 } from '@shared/constants';
 import { DocumentViewerWorkHistoricalComponent } from 'src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReassignProcedureComponent } from 'src/app/apps/components/procedures/reassign-procedure/reassign-procedure.component';
@@ -223,7 +223,7 @@ export class TableProceduresComponent implements OnInit {
   readonly errorReassign = viewChild.required<SwalComponent>('errorReassign');
   readonly successChangePriority = viewChild.required<SwalComponent>('successChangePriority');
   readonly errorChangePriority = viewChild.required<SwalComponent>('errorChangePriority');
-  
+
 
   get visibleColumns() {
     const validUser = this.userRole

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { UserService } from '../../../auth/login/services/user.service';
 
 export interface XtfFiles {

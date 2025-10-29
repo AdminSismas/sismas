@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import {
   User,
   CreateOutput,

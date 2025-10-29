@@ -15,7 +15,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { environment as envi } from '../../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { ObjectSchema, TypeInformation } from '@shared/interfaces';
 import {
   CONSTANT_INFORMATION_PREDIAL,

@@ -18,7 +18,7 @@ import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, Observable } from 'rxjs';
 
-import { environment } from '../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { Router } from '@angular/router';
 import { SendInfoGeneralService } from '@shared/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

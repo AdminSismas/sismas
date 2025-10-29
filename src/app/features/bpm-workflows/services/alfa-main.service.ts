@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { saveAs } from 'file-saver';
 
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { InformationPegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
 import { ChangeControl } from '@shared/interfaces';

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpErrorResponse, HttpParams, HttpStatusCode, HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError, EMPTY } from 'rxjs';
 
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { InfoPerson } from '@shared/interfaces';
 
 @Injectable({

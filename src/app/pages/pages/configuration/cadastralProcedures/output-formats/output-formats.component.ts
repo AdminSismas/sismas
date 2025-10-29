@@ -38,7 +38,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { TypeInformation } from '@shared/interfaces';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { OutFormatService } from '@shared/services';
 import { OutputFormatsEditUpdateComponent } from './output-formats-edit-update/output-formats-edit-update.component';

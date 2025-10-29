@@ -7,7 +7,7 @@ import {
 } from 'src/app/apps/constants/general/constantLabels';
 import { LIST_BUTTON_GEO_MAIN } from '@shared/constants';
 import { SendInfoGeneralService } from 'src/app/apps/services/general/send-info-general.service';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
 
 @Component({

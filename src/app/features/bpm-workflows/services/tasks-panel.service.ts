@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, distinctUntilChanged, map, Observable, EMPTY, throwError } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { ProTaskE } from '@shared/interfaces';

@@ -21,7 +21,7 @@ import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';

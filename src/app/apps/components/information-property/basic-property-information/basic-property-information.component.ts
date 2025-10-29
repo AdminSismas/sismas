@@ -50,7 +50,7 @@ import {
   TYPE_UPDATE,
   TYPE_UPDATE_PROPERTY_UNIT
 } from '@shared/constants';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';

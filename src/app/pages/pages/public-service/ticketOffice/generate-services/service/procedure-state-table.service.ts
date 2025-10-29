@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 
 import { ProcedureStateResponse } from '../interfaces';
 import { SendRequestProcedureData } from 'src/app/apps/interfaces/document-management/view-certificate-management-data.interface';

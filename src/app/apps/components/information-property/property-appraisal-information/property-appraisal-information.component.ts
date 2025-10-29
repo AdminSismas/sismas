@@ -47,7 +47,7 @@ import {
   ReactiveFormsModule,
   UntypedFormControl
 } from '@angular/forms';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';

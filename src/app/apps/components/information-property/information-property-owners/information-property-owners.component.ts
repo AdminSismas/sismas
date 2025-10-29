@@ -24,7 +24,7 @@ import {
 } from '@shared/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { InformationPropertyService } from '@shared/services';
 import { InfoOwners } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';

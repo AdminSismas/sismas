@@ -49,7 +49,7 @@ import { ValidateInformationBaunitService } from 'src/app/apps/services/general/
 import {
   SendInformationRegisterService
 } from 'src/app/apps/services/register-procedure/send-information-register.service';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import {
   FilterCadastralSearchComponent
 } from 'src/app/apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';

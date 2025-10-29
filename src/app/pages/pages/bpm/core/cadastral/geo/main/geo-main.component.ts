@@ -11,7 +11,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { filter } from 'rxjs/operators';
-import { environment } from '../../../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { getRandomInt } from '../../../../../../../apps/utils/general';
 import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
 import {

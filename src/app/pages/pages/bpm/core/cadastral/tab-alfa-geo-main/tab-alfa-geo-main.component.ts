@@ -17,7 +17,7 @@ import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
 import { GeographicViewerEmbeddedComponent } from 'src/app/apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
-import { environment } from '../../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constants';
 import { filter } from 'rxjs/operators';

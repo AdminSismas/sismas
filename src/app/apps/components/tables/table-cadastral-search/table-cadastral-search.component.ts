@@ -69,7 +69,7 @@ import {
 import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
 import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
-import { environment as envi } from '../../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { SendInformationRegisterService } from '@shared/services';
 import { ValidateInformationBaunitService } from '@shared/services';
 import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';

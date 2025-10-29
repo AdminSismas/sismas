@@ -37,7 +37,7 @@ import { ProTaskE } from '@shared/interfaces';
 import { MatOptionModule } from '@angular/material/core';
 import { DynamicComponentsService } from '@shared/services';
 import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLabels';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { SendInfoGeneralService } from '@shared/services';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowErrorValidateAlfaMainComponent } from '@features/bpm-workflows/components/show-error-validate-alfa-main/show-error-validate-alfa-main.component';

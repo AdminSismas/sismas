@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DownloadReport } from '@shared/interfaces';
 import { HttpClient } from '@angular/common/http';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 
 export interface ReportType {
   id: number;

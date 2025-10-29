@@ -14,7 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 
 @Component({
   selector: 'vex-register',

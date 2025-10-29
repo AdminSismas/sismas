@@ -41,7 +41,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { DataSource } from 'src/app/apps/interfaces/information-property/snr-source-info';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { TypeInformation } from '@shared/interfaces';
 import {

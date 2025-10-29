@@ -28,7 +28,7 @@ import { RecognitionPropertyService } from '@shared/services';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { environment } from '../../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { ProFlow } from '@shared/interfaces';
 import { SendInfoGeneralService } from '@shared/services';
 import { Router } from '@angular/router';

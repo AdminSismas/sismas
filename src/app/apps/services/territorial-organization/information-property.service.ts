@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { BasicInformationProperty } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';

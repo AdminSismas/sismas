@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { GeoEconomicZone, GeoEconomicZoneDetails, Zone } from '@shared/interfaces';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 
 @Injectable({
   providedIn: 'root'

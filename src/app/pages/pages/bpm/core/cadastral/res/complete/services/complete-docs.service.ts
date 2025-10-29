@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { Requirement } from '../interfaces/requirements.interface';
 import { Observable } from 'rxjs';
 import { PayloadCompleteDocs } from '../interfaces/payload-complete-docs.interface';

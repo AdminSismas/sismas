@@ -75,7 +75,7 @@ import {
 } from '@shared/constants';
 
 /* ---- Environments ---- */
-import { environment as envi } from '../../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 
 /* ---- Directives ---- */
 import { NG_VALUE_ACCESSOR } from '@angular/forms';

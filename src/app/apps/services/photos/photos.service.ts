@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 
 export interface Photo {
   key: string;

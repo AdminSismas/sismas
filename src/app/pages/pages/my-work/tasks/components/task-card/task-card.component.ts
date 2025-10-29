@@ -10,7 +10,7 @@ import {
   NAME_NO_DISPONIBLE,
   SPACE
 } from '../../../../../../apps/constants/general/constants';
-import { environment as envi } from '../../../../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';

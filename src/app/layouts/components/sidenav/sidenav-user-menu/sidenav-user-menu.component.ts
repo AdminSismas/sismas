@@ -10,7 +10,7 @@ import { MatRippleModule } from '@angular/material/core';
 // Custom
 import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
 import { ChangePasswordComponent } from 'src/app/apps/components/sidenav/menu/change-password/change-password.component';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 
 @Component({

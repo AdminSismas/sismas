@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { ProcessParticipant } from '@shared/interfaces';
@@ -16,7 +16,7 @@ export class ParticipantsService {
   private url_basic = `${envi.url}:${envi.port}`;
 
   private chargeInfoSubject = signal<boolean | null>(false);
-  
+
   chargeInfoSubject$ = toObservable(this.chargeInfoSubject);
 
   private http = inject(HttpClient);

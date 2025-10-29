@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment as env } from 'src/environments/environments';
+import { environment as env } from '@environments/environments';
 import { AdministrativeSource, CreateAdministrativeSourceParams, DeleteAdministrativeSourceParams, UpdateAdministrativeSource } from '@shared/interfaces';
 import { catchError, Observable } from 'rxjs';
 

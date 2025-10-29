@@ -40,7 +40,7 @@ import { DetailInformationPropertyZonesComponent } from 'src/app/apps/components
 import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 

@@ -63,6 +63,9 @@
       ],
       "@core/interceptors": [
         "src/app/core/interceptors"
+      ],
+      "@environments/*":[
+        "src/environments/*"
       ]
     },
 

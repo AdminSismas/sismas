@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { IBpmFlowService } from '@features/bpm-workflows/interfaces';
 import { ProFlow } from '@features/bpm-workflows/interfaces';
 

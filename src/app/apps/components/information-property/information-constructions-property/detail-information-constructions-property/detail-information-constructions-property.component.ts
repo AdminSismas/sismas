@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { environment } from '../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import {
   ContentInformationConstruction,
   CrudInformationConstruction

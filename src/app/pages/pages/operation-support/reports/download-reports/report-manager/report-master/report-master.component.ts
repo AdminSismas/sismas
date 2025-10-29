@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ReportCategory } from 'src/app/apps/interfaces/operation-support/reports/report-category.interface';
 import { ReportManagerService, ReportType } from 'src/app/apps/services/operation-support/reports/report-manager.service';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { signal } from '@angular/core';
 import { MuncipalityCodePipe } from 'src/app/apps/pipes/muncipalityCode.pipe';

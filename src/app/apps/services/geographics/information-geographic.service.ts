@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
 import { QueryParametersGeographicVie } from '@shared/interfaces';
 import { ChangeControl } from '@shared/interfaces';

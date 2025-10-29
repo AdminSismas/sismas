@@ -6,7 +6,7 @@ import { InfoAppraisal } from '@shared/interfaces';
 import { BasicComponentTemplate } from '@shared/interfaces';
 import { ProcessParticipant } from '@shared/interfaces';
 import { Operation } from '@shared/interfaces';
-import { environment } from '../../../../environments/environments';
+import { environment } from '@environments/environments';
 import {
   CheckTypeQualificationMode, NavigationItemCadastralInfo,
   TypeButtonAlfaMain,

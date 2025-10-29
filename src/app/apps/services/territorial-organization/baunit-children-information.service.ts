@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment as envi } from '../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Baunit } from '@shared/interfaces';

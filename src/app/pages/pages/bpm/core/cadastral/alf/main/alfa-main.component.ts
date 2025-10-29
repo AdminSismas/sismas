@@ -8,7 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '@shared/interfaces';
 import { filter, takeUntil } from 'rxjs/operators';
 import { SendInfoGeneralService } from '@shared/services';
-import { environment } from '../../../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { Router } from '@angular/router';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';

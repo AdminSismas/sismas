@@ -43,7 +43,7 @@ import {
   ContentInformationConstruction,
   CrudInformationConstruction
 } from 'src/app/apps/interfaces/information-property/content-information-construction';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';

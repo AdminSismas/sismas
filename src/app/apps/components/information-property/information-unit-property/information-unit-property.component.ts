@@ -31,7 +31,7 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
 import { ContentInfoSchema } from '@shared/models';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';

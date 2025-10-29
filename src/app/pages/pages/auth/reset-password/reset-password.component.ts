@@ -18,7 +18,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { catchError, map } from 'rxjs';
 import { ResetPasswordService } from './services/reset-password.service';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -75,7 +75,7 @@ export default class ResetPasswordComponent {
       }
     });
 
-    
+
   }
 
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {

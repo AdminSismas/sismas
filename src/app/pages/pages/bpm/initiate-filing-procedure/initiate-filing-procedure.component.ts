@@ -63,7 +63,7 @@ import {
   SPACE,
   TABLE_COLUMN_PROPERTIES
 } from '../../../../apps/constants/general/constants';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
 import { MetadataBpm } from '@shared/interfaces';
 import { ProcessCardComponent } from './components/process-card/process-card.component';

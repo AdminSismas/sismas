@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 /* -------------- IMPORTACIONES ARCHIVOS LOCALES -------------- */
-import { environment } from '../../../../environments/environments';
+import { environment } from '@environments/environments';
 
 import { PageCommentsData } from '@shared/interfaces';
 import { contentInfoComments } from '@shared/interfaces';

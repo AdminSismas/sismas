@@ -7,7 +7,7 @@ import {
 } from '@shared/models';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 
 @Injectable({
   providedIn: 'root'

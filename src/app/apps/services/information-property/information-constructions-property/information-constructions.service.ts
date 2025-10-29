@@ -4,7 +4,7 @@ import {
   ContentInformationConstruction,
   CreateBasicInformationConstruction
 } from '@shared/interfaces';
-import { environment as envi } from '../../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 import {
   HttpClient,
   HttpParams

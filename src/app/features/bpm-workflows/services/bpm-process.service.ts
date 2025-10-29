@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { catchError, Observable, EMPTY, throwError } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { BpmTypeProcess } from '@shared/interfaces';
 
 export interface PermissionVailable {

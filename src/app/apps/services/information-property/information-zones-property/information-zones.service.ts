@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GeoEconomicZoneInfo } from '@shared/interfaces';
 import { ZoneBAUnitFisica } from '@shared/interfaces';
-import { environment as envi } from '../../../../../environments/environments';
+import { environment as envi } from '@environments/environments';
 
 
 
