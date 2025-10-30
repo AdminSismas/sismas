@@ -18,21 +18,21 @@
         <div class="w-full flex flex-col overflow-auto">
           <!-- Contenedor de botones y filtro -->
           @if (
-            typeInformation === "edition" ||
-            (dataSource && dataSource.data.length > 3)
+            typeInformation() === "edition" ||
+            (dataSource().data.length > 3)
           ) {
             <div class="px-4 h-16 border-b sticky left-0 flex items-center">
               <!-- Botón "Nueva" SIEMPRE visible en edición -->
-              @if (typeInformation === "edition") {
+              @if (typeInformation() === "edition") {
                 <div class="flex gap-4">
                   <button
                     mat-raised-button
                     type="button"
                     [ngClass]="
-                      !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+                      !editable() ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
                     "
-                    [color]="editable ? 'primary' : ''"
-                    [disabled]="!editable"
+                    [color]="editable() ? 'primary' : ''"
+                    [disabled]="!editable()"
                     (click)="openAddConstructionInformationProperty()"
                   >
                     Nueva
@@ -42,10 +42,10 @@
                     mat-raised-button
                     type="button"
                     [ngClass]="
-                      !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+                      !editable() ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
                     "
-                    [color]="editable ? 'accent' : ''"
-                    [disabled]="!editable"
+                    [color]="editable() ? 'accent' : ''"
+                    [disabled]="!editable()"
                     (click)="openEditConstruction()"
                   >
                     Adminstrar
@@ -58,7 +58,7 @@
 
               <!-- Filtro: Visible en modo listar cuando hay datos.
                 También visible en modo edición cuando hay datos -->
-              @if (dataSource && dataSource.data.length > 0) {
+              @if (dataSource() && dataSource().data.length > 0) {
                 <mat-form-field
                   subscriptSizing="dynamic"
                   class="pl-1 pr-1 pt-6 pb-6 flex flex-col w-full max-w-xs ml-4"
@@ -81,11 +81,11 @@
 
           @if (expandedComponent()) {
             <app-table-constructions
-              [dataSource]="dataSource"
+              [dataSource]="dataSource()"
               [columns]="columns"
-              [baunitId]="baunitId"
-              [schema]="schema"
-              [executionId]="executionId"
+              [baunitId]="baunitId()"
+              [schema]="schema()"
+              [executionId]="executionId()"
               (copyInformationOutput)="copyInformation($event)"
               (deleteInformationOutput)="deleteInformation($event)"
               (editInformationOutput)="editInformation($event)"

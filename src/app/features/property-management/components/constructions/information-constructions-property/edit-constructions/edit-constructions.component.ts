@@ -32,13 +32,14 @@ export class EditConstructionsComponent {
       return column.property !== 'actions' && column.property !== 'viewDetail';
     });
 
-  // INJECTS
+  /* ---- Injects ---- */
   data = inject<EditConstructionData>(MAT_DIALOG_DATA);
 
-  // SIGNALS
+  /* ---- Signals ---- */
   constructionsSelected = signal<ContentInformationConstruction[]>([]);
   editConstructionDialog = signal<MatDialogRef<ModalWindowComponent> | null>(null);
 
+  /* ---- Methods ---- */
   onAccept(): void {
     this.editConstructionDialog()?.close({
       response: true,

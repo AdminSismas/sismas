@@ -224,8 +224,8 @@
             dataCalification.length > 0
           ) {
             <mat-grid-list
-              [cols]="(isDesktop$ | async) ? 2 : 1"
-              [rowHeight]="(isDesktop$ | async) ? '40px' : '48px'"
+              [cols]="isDesktop$() ? 2 : 1"
+              [rowHeight]="isDesktop$() ? '40px' : '48px'"
             >
               @for (calification of dataCalification; track calification) {
                 <mat-grid-tile class="tile-content">

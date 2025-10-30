@@ -4,10 +4,12 @@ import {
   DestroyRef,
   forwardRef,
   inject,
-  Input,
   OnInit,
   output,
-  ViewChild
+  signal,
+  ViewChild,
+  input,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -54,7 +56,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { environment } from '@environments/environments';
 import { PageSearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { ContentInformationConstruction } from '@shared/interfaces';
@@ -68,7 +69,6 @@ import { EditConstructionsComponent } from '@features/property-management/compon
 import { TableConstructionsComponent } from '@features/property-management/components/constructions/information-constructions-property/table-constructions/table-constructions.component';
 import { ModalResponse } from '@shared/ui/modal-window/modal-window.component';
 import Swal from 'sweetalert2';
-import { input } from '@angular/core';
 
 @Component({
   selector: 'vex-information-constructions-property',
@@ -109,38 +109,47 @@ import { input } from '@angular/core';
       useExisting: forwardRef(() => InformationConstructionsPropertyComponent),
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InformationConstructionsPropertyComponent
-  implements OnInit, AfterViewInit
-{
+export class InformationConstructionsPropertyComponent implements OnInit, AfterViewInit {
+  /* ---- Injects ---- */
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private readonly layoutService: VexLayoutService = inject(VexLayoutService);
+  private readonly dialog: MatDialog = inject(MatDialog);
+  private readonly constructionsService: InformationConstructionsService = inject(
+    InformationConstructionsService
+  );
+
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  ltLg$: Observable<boolean> = this.layoutService.ltLg$;
   ltMd$: Observable<boolean> = this.layoutService.ltMd$;
-  contentInformations!: InformationPegeable;
 
-  @Input({ required: true }) schema = `${environment.schemas.main}`;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
-  @Input() editable? = true;
+  /* ---- Inputs ---- */
+  readonly schema = input.required<string>();
+  readonly baunitId = input.required<string | null | undefined>();
+  readonly executionId = input<string | null | undefined>(null);
+  readonly typeInformation = input<TypeInformation>(TYPE_INFORMATION_EDITION);
+  readonly editable = input<boolean | undefined>(true);
+  readonly expandedComponent = input.required<boolean>();
 
-  // Input signal
-  expandedComponent = input.required<boolean>();
-
-  // Output signal
+  /* ---- Outputs ---- */
   emitExpandedComponent = output<number>();
 
-  columns: TableColumn<ContentInformationConstruction>[] =
+  /* ---- Properties ---- */
+  private contentInformations!: InformationPegeable;
+  public readonly pageSizeOptions: number[] = PAGE_SIZE_OPTION;
+  public readonly searchCtrl: UntypedFormControl = new UntypedFormControl();
+  public columns: TableColumn<ContentInformationConstruction>[] =
     TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION;
-  page: number = PAGE;
-  totalElements = 0;
-  pageSize: number = PAGE_SIZE_SORT;
-  pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  configModalCrud = MODAL_DYNAMIC_HEIGHT;
+  public page: number = PAGE;
+  public totalElements = 0;
+  public pageSize: number = PAGE_SIZE_SORT;
+  public configModalCrud = MODAL_DYNAMIC_HEIGHT;
 
-  dataSource!: MatTableDataSource<ContentInformationConstruction>;
-  searchCtrl: UntypedFormControl = new UntypedFormControl();
+  /* ---- Signals ---- */
+  public readonly dataSource = signal<
+    MatTableDataSource<ContentInformationConstruction>
+  >(new MatTableDataSource());
 
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
@@ -151,20 +160,15 @@ export class InformationConstructionsPropertyComponent
   @ViewChild('errorCopySwal') private errorCopySwal!: SwalComponent;
   @ViewChild('errorSwal') private errorSwal!: SwalComponent;
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  constructor(
-    private dialog: MatDialog,
-    private readonly layoutService: VexLayoutService,
-    private constructionsService: InformationConstructionsService
-  ) {}
-
   ngOnInit() {
-    this.dataSource = new MatTableDataSource();
-    if (this.baunitId == null) {
+    this.dataSource.set(new MatTableDataSource());
+    if (this.baunitId() == null) {
       return;
     }
-    if (this.typeInformation === TYPE_INFORMATION_VISUAL || !this.editable) {
+    if (
+      this.typeInformation() === TYPE_INFORMATION_VISUAL ||
+      !this.editable()
+    ) {
       this.pageSize = PAGE_SIZE_SORT;
       this.columns = TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS;
     }
@@ -187,10 +191,10 @@ export class InformationConstructionsPropertyComponent
 
   ngAfterViewInit() {
     if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+      this.dataSource().paginator = this.paginator;
     }
     if (this.sort) {
-      this.dataSource.sort = this.sort;
+      this.dataSource().sort = this.sort;
     }
   }
 
@@ -206,14 +210,16 @@ export class InformationConstructionsPropertyComponent
   }
 
   searchInformationsConstructionsProperty(): boolean {
-    if (!this.schema || !this.baunitId) {
+    const baunitId = this.baunitId();
+    const schema = this.schema();
+    if (!schema || !baunitId) {
       return false;
     }
     this.constructionsService
       .getBasicInformationPropertyConstructions(
-        this.generateObjectPageSearchData(this.baunitId),
-        this.schema,
-        this.executionId
+        this.generateObjectPageSearchData(baunitId),
+        schema,
+        this.executionId()
       )
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
@@ -236,7 +242,7 @@ export class InformationConstructionsPropertyComponent
         (row: ContentInformationConstruction) =>
           new ContentInformationConstruction(row)
       );
-      this.dataSource.data = data;
+      this.dataSource().data = data;
     }
 
     if (this.contentInformations === null) {
@@ -260,7 +266,7 @@ export class InformationConstructionsPropertyComponent
 
   captureInformationSubscribeError(): void {
     this.contentInformations = new InformationPegeable();
-    this.dataSource.data = [];
+    this.dataSource().data = [];
   }
 
   openAddConstructionInformationProperty(): void {
@@ -273,18 +279,16 @@ export class InformationConstructionsPropertyComponent
 
   deleteInformation(customer: ContentInformationConstruction): void {
     this.deletedConstruction.fire().then((result) => {
+      const baunitId = this.baunitId();
+      const executionId = this.executionId();
       if (
         result.isConfirmed &&
-        this.baunitId &&
-        this.executionId &&
+        baunitId &&
+        executionId &&
         customer.unitBuiltId
       ) {
         this.constructionsService
-          .deleteConstruction(
-            this.baunitId,
-            this.executionId,
-            customer.unitBuiltId
-          )
+          .deleteConstruction(baunitId, executionId, customer.unitBuiltId)
           .subscribe({
             next: () => {
               this.deleteSwal.fire();
@@ -298,18 +302,16 @@ export class InformationConstructionsPropertyComponent
 
   copyInformation(customer: ContentInformationConstruction): void {
     this.copyConstruction.fire().then((result) => {
+      const baunitId = this.baunitId();
+      const executionId = this.executionId();
       if (
         result.isConfirmed &&
-        this.baunitId &&
-        this.executionId &&
+        baunitId &&
+        executionId &&
         customer.unitBuiltId
       ) {
         this.constructionsService
-          .copyConstruction(
-            this.baunitId,
-            this.executionId,
-            customer.unitBuiltId
-          )
+          .copyConstruction(baunitId, executionId, customer.unitBuiltId)
           .subscribe({
             next: () => {
               this.copySwal.fire();
@@ -325,8 +327,12 @@ export class InformationConstructionsPropertyComponent
     content: ContentInformationConstruction | null
   ) {
     const data: ContentInformationConstruction =
-      new ContentInformationConstruction(content, this.schema, this.baunitId);
-    data.executionId = this.executionId;
+      new ContentInformationConstruction(
+        content,
+        this.schema(),
+        this.baunitId()
+      );
+    data.executionId = this.executionId();
 
     const dialogRefConstruction = this.dialog.open(
       CrudInformationConstructionsPropertyComponent,
@@ -365,12 +371,12 @@ export class InformationConstructionsPropertyComponent
   }
 
   onFilterChange(value: string): void {
-    if (!this.dataSource) {
+    if (!this.dataSource()) {
       return;
     }
     value = value.trim();
     value = value.toLowerCase();
-    this.dataSource.filter = value;
+    this.dataSource().filter = value;
   }
 
   private generateObjectPageSearchData(baunitId: string): PageSearchData {
@@ -382,7 +388,7 @@ export class InformationConstructionsPropertyComponent
   }
 
   disabledClass(): string {
-    if (!this.editable) {
+    if (!this.editable()) {
       return '!bg-slate-400 !text-gray-100 opacity-60';
     }
     return '';
@@ -393,12 +399,14 @@ export class InformationConstructionsPropertyComponent
   }
 
   getConstructionsWithoutBaunit(): void {
-    if (!this.executionId || !this.baunitId) {
+    if (!this.executionId() || !this.baunitId()) {
       console.error('Data is missing or incomplete');
       return;
     }
 
-    const { executionId, baunitId } = this;
+    const { executionId: executionIdInput, baunitId: baunitIdInput } = this;
+    const executionId = executionIdInput()!;
+    const baunitId = baunitIdInput()!;
 
     this.constructionsService
       .getConstructionsWithoutBaunit(executionId, baunitId)
@@ -422,8 +430,8 @@ export class InformationConstructionsPropertyComponent
           dataSource: new MatTableDataSource<ContentInformationConstruction>(
             response
           ),
-          baunitId: this.baunitId,
-          executionId: this.executionId
+          baunitId: this.baunitId(),
+          executionId: this.executionId()
         }
       })
       .afterClosed()
@@ -439,13 +447,14 @@ export class InformationConstructionsPropertyComponent
   addConstructionWithoutBaunit(
     construction: ContentInformationConstruction[]
   ): void {
-    this.constructionsService.addConstructionsWithoutBaunit(
-      this.executionId!,
-      `${construction[0].unitBuiltId}`,
-      this.baunitId!,
-      construction[0]
-    ).subscribe(
-      () => {
+    this.constructionsService
+      .addConstructionsWithoutBaunit(
+        this.executionId()!,
+        `${construction[0].unitBuiltId}`,
+        this.baunitId()!,
+        construction[0]
+      )
+      .subscribe(() => {
         Swal.fire({
           title: 'Construcción agregada',
           text: 'La construcción se ha agregado correctamente.',

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { environment } from '@environments/environments';
 import {
   ContentInformationConstruction,
@@ -14,12 +14,8 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import {
-  NAME_NO_DISPONIBLE,
-  TYPE_READ_ONLY
-} from '@shared/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants';
 import { MatTabsModule } from '@angular/material/tabs';
-import { AsyncPipe } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CcCalificacionUB } from '@shared/interfaces';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -28,11 +24,13 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { Observable } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationConstructionsService } from '@shared/services';
-import { TypeOperation } from '@shared/interfaces';
-import { validateIsNumber, validateVariable } from '../../../../../../apps/utils/general';
+import {
+  validateIsNumber,
+  validateVariable
+} from '../../../../../../apps/utils/general';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 export interface Tile {
   color: string;
@@ -61,30 +59,33 @@ export interface Tile {
     MatIconModule,
     MatTabsModule,
     MatExpansionModule,
-    MatGridListModule,
-    AsyncPipe
+    MatGridListModule
   ],
   templateUrl: './detail-information-constructions-property.component.html',
   styleUrl: './detail-information-constructions-property.component.scss'
 })
 export class DetailInformationConstructionsPropertyComponent implements OnInit {
-  isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
+  /* ---- Injects ---- */
+  public readonly crudInformationData =
+    inject<CrudInformationConstruction | null>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject<
+    MatDialogRef<DetailInformationConstructionsPropertyComponent>
+  >(MatDialogRef<DetailInformationConstructionsPropertyComponent>);
+  private readonly constructionsService = inject(
+    InformationConstructionsService
+  );
+  private readonly layoutService = inject(VexLayoutService);
 
-  executionId: string | null | undefined;
-  baunitId: string | null | undefined;
-  unitBuiltId!: number | null | undefined; // ID de la construcción creada
-  typeCrud: TypeOperation | null = null;
-  constructionData: ContentInformationConstruction | null = null;
-  dataCalification: CcCalificacionUB[] = [];
-  schema: string | null | undefined = `${environment.schemas.main}`;
+  /* ---- Properties ---- */
+  private executionId: string | null | undefined;
+  private baunitId: string | null | undefined;
+  private unitBuiltId!: number | null | undefined; // ID de la construcción creada
+  private schema: string | null | undefined = `${environment.schemas.main}`;
+  public constructionData: ContentInformationConstruction | null = null;
+  public dataCalification: CcCalificacionUB[] = [];
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public crudInformationData: CrudInformationConstruction | null,
-    private dialogRef: MatDialogRef<DetailInformationConstructionsPropertyComponent>,
-    private constructionsService: InformationConstructionsService,
-    private layoutService: VexLayoutService
-  ) {}
+  /* ---- Signals ---- */
+  public readonly isDesktop$ = toSignal(this.layoutService.isDesktop$);
 
   ngOnInit() {
     if (
@@ -94,7 +95,6 @@ export class DetailInformationConstructionsPropertyComponent implements OnInit {
       this.close();
       return;
     }
-    this.typeCrud = this.crudInformationData?.type || TYPE_READ_ONLY;
     this.executionId =
       this.crudInformationData?.contentInformation?.executionId;
     this.baunitId = this.crudInformationData?.contentInformation?.baunitId;

@@ -45,10 +45,10 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './table-constructions.component.html'
 })
 export class TableConstructionsComponent implements OnInit, OnDestroy {
-  // INJECTS
+  /* ---- Injects ---- */
   dialog = inject(MatDialog);
 
-  // INPUTS
+  /* ---- Inputs ---- */
   dataSource =
     input.required<MatTableDataSource<ContentInformationConstruction>>();
   columns = input.required<TableColumn<ContentInformationConstruction>[]>();
@@ -58,13 +58,13 @@ export class TableConstructionsComponent implements OnInit, OnDestroy {
   selectable = input<boolean>();
   multipleSelection = input<boolean>(false);
 
-  // OUTPUTS
+  /* ---- Outputs ---- */
   copyInformationOutput = output<ContentInformationConstruction>();
   editInformationOutput = output<ContentInformationConstruction>();
   deleteInformationOutput = output<ContentInformationConstruction>();
   constructionsSelected = output<ContentInformationConstruction[]>();
 
-  // COMPUTED
+  /* ---- Computed ---- */
   visibleColumns = computed(() => {
     const visibleColumns = this.columns()
       .filter((column) => column.visible)
@@ -75,9 +75,10 @@ export class TableConstructionsComponent implements OnInit, OnDestroy {
     return visibleColumns;
   });
 
-  // PROPERTIES
+  /* ---- Properties ---- */
   selection: SelectionModel<ContentInformationConstruction> | null = null;
 
+  /* ---- Life cycles ---- */
   ngOnInit() {
     // Initialize selection model if selectable is true
     if (this.selectable()) {
@@ -99,6 +100,7 @@ export class TableConstructionsComponent implements OnInit, OnDestroy {
     }
   }
 
+  /* ---- Methods ---- */
   openDetailInformationConstructionsProperty(
     content: ContentInformationConstruction
   ) {
