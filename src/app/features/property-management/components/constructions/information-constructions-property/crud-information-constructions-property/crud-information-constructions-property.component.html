@@ -45,12 +45,12 @@
       </ng-template>
 
       <!-- Aspectos de Construcción -->
-      <mat-step [stepControl]="editForm">
+      <mat-step [stepControl]="editForm()">
         <div
           [@stagger]="true"
           class="p-0 container-fluid"
         >
-          <form [formGroup]="editForm">
+          <form [formGroup]="editForm()">
             <ng-template matStepLabel>Aspectos de Construcción</ng-template>
             <div class="p-0 pb-1 container">
               <div class="px-1 py-4 flex flex-col">
@@ -70,7 +70,7 @@
                   <vex-combox-custom-selector
                     [label]="'Uso de Construcción'"
                     [placeholder]="'Seleccione el uso...'"
-                    [options]="filteredBuiltUseOptions"
+                    [options]="filteredBuiltUseOptions()"
                     [valueKey]="'dispname'"
                     [displayKey]="'dispname'"
                     formControlName="domBuiltUse"
@@ -141,7 +141,7 @@
                 color="primary"
                 mat-raised-button
                 matStepperNext
-                [disabled]="editForm.invalid"
+                [disabled]="editForm().invalid"
                 (click)="saveConstruction()"
               >
                 Continuar
@@ -151,14 +151,14 @@
         </div>
       </mat-step>
 
-      @if (!haveToCreateConstruction) {
+      @if (!haveToCreateConstruction()) {
         <!-- Calificación -->
         <mat-step [stepControl]="activeQualificationForm">
           <form [formGroup]="activeQualificationForm">
             <ng-template matStepLabel>Calificación</ng-template>
             @if (
-              qualificationMode === TYPE_TYPOLOGY ||
-              qualificationMode === TYPE_TRADITIONAL
+              qualificationMode() === TYPE_TYPOLOGY ||
+              qualificationMode() === TYPE_TRADITIONAL
             ) {
               <div class="actions flex items-center gap-2 pt-0">
                 <button
@@ -166,11 +166,11 @@
                   color="primary"
                   (click)="toggleQualificationMode(TYPE_TRADITIONAL)"
                   [class]="
-                    qualificationMode === TYPE_TRADITIONAL
+                    qualificationMode() === TYPE_TRADITIONAL
                       ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
                       : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
                   "
-                  [disabled]="qualificationMode === TYPE_TRADITIONAL"
+                  [disabled]="qualificationMode() === TYPE_TRADITIONAL"
                 >
                   Tradicional
                 </button>
@@ -179,18 +179,18 @@
                   color="primary"
                   (click)="toggleQualificationMode(TYPE_TYPOLOGY)"
                   [class]="
-                    qualificationMode === TYPE_TYPOLOGY
+                    qualificationMode() === TYPE_TYPOLOGY
                       ? 'bg-blue-500 text-white font-bold cursor-not-allowed'
                       : 'bg-gray-200 text-black hover:bg-blue-500 hover:text-white'
                   "
-                  [disabled]="qualificationMode === TYPE_TYPOLOGY"
+                  [disabled]="qualificationMode() === TYPE_TYPOLOGY"
                 >
                   Tipología
                 </button>
               </div>
             }
 
-            @if (qualificationMode === TYPE_TRADITIONAL) {
+            @if (qualificationMode() === TYPE_TRADITIONAL) {
               <!-- Tradicional -->
               <div class="mt-2 flex flex-col gap-2">
                 <div class="mt-0 flex flex-col gap-2">
@@ -412,7 +412,7 @@
               </div>
             }
 
-            @if (qualificationMode === TYPE_TYPOLOGY) {
+            @if (qualificationMode() === TYPE_TYPOLOGY) {
               <!-- Tipología -->
               <div class="mt-2 flex flex-col gap-2">
                 <div class="mt-0 flex flex-col gap-2">
@@ -430,7 +430,7 @@
               </div>
             }
 
-            @if (qualificationMode === TYPE_ANNEX) {
+            @if (qualificationMode() === TYPE_ANNEX) {
               <!-- Anexo -->
               <div class="mt-2 flex flex-col gap-2">
                 <div class="mt-0 flex flex-col gap-3">
@@ -440,7 +440,7 @@
                       class="flex-auto"
                       [label]="'Anexos'"
                       [placeholder]="'Seleccione un anexo...'"
-                      [apiUrlDynamic]="annexUrl"
+                      [apiUrlDynamic]="annexUrl()"
                       [valueKey]="'id'"
                       [displayKey]="'dispname'"
                       formControlName="domTypeAnexx"

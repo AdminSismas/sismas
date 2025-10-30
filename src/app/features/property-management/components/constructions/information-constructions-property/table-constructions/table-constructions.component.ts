@@ -1,12 +1,20 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, inject, input, OnDestroy, OnInit, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  output
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { ContentInformationConstruction } from 'src/app/apps/interfaces/information-property/content-information-construction';
-import { DetailInformationConstructionsPropertyComponent } from 'src/app/apps/components/information-property/information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
+import { DetailInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
 import { MODAL_SMALL } from '@shared/constants';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -27,7 +35,13 @@ import { SelectionModel } from '@angular/cdk/collections';
     scaleFadeIn400ms
   ],
   standalone: true,
-  imports: [MatTableModule, MatIconModule, NgClass, MatMenuModule, MatCheckboxModule],
+  imports: [
+    MatTableModule,
+    MatIconModule,
+    NgClass,
+    MatMenuModule,
+    MatCheckboxModule
+  ],
   templateUrl: './table-constructions.component.html'
 })
 export class TableConstructionsComponent implements OnInit, OnDestroy {
@@ -67,7 +81,10 @@ export class TableConstructionsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Initialize selection model if selectable is true
     if (this.selectable()) {
-      this.selection = new SelectionModel<ContentInformationConstruction>(this.multipleSelection(), []);
+      this.selection = new SelectionModel<ContentInformationConstruction>(
+        this.multipleSelection(),
+        []
+      );
       this.selection.changed.subscribe((selection) => {
         this.constructionsSelected.emit(selection.source.selected);
       });
@@ -77,7 +94,7 @@ export class TableConstructionsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (!this.selectable() || !this.selection) return;
 
-    if (this.selectable()){
+    if (this.selectable()) {
       this.selection.changed.unsubscribe();
     }
   }
@@ -142,6 +159,4 @@ export class TableConstructionsComponent implements OnInit, OnDestroy {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'}`;
   }
-
-
 }

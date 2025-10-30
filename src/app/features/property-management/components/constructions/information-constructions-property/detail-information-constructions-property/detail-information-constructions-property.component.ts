@@ -32,7 +32,7 @@ import { Observable } from 'rxjs';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationConstructionsService } from '@shared/services';
 import { TypeOperation } from '@shared/interfaces';
-import { validateIsNumber, validateVariable } from '../../../../utils/general';
+import { validateIsNumber, validateVariable } from '../../../../../../apps/utils/general';
 
 export interface Tile {
   color: string;
