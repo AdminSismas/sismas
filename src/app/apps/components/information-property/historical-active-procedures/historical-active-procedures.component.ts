@@ -36,7 +36,7 @@ import { TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/
 // COMPONENT IMPORTS
 import {
   HeaderCadastralInformationPropertyComponent
-} from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+} from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 
 // INTERFACES IMPORTS
 import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';

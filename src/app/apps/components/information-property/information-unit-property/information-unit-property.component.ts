@@ -44,7 +44,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
   HeaderCadastralInformationPropertyComponent
-} from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+} from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import {
   UnitPropertyInformationService
 } from '@shared/services';

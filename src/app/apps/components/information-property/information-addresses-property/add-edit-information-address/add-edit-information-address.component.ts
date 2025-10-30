@@ -50,7 +50,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { InputComponent } from '@shared/ui/input/input.component';import {
   HeaderCadastralInformationPropertyComponent
-} from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+} from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
 import {
   ComboboxCollectionFormComponent

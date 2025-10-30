@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import {
   AdministrativeSource,
   DeleteAdministrativeSourceParams,

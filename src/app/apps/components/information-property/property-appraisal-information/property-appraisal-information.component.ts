@@ -10,7 +10,7 @@ import {
   output,
   ViewChild
 } from '@angular/core';
-import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
   LIST_EXTRA_COLUMNS_APPRAISAL,

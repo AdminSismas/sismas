@@ -49,7 +49,7 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
 import { MatCardModule } from '@angular/material/card';
-import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { BaunitHead } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';

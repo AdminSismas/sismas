@@ -7,7 +7,7 @@ import {
   output
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { HeaderCadastralInformationPropertyComponent } from 'src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SnrService } from 'src/app/apps/services/snr/snr.service';
 import { InfoFolio } from 'src/app/apps/interfaces/information-property/snr-folio-info';
