@@ -29,14 +29,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
-import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/geo-economic-zone';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
-import { RuralPhysicalZone } from 'src/app/apps/interfaces/information-property/rural-physical-zone';
-import { UrbanPhysicalZone } from 'src/app/apps/interfaces/information-property/urban-physical-zone';
+import { GeoEconomicZone } from '@shared/interfaces';
+import { InformationPropertyService } from '@shared/services';
+import { RuralPhysicalZone } from '@shared/interfaces';
+import { UrbanPhysicalZone } from '@shared/interfaces';
 import {
   AddZoneParameters,
   CreateBaunitZone
-} from 'src/app/apps/interfaces/information-property/zone-baunit';
+} from '@shared/interfaces';
 
 @Component({
   selector: 'vex-add-edit-informatizon-zones-property',

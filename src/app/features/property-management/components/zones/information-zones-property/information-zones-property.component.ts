@@ -32,8 +32,8 @@ import {
   ZoneBAUnitFisica,
   ZoneBAUnitGeoeconomic,
   ZoneBAUnitResponse
-} from 'src/app/apps/interfaces/information-property/zone-baunit';
-import { BasicInformationProperty } from 'src/app/apps/interfaces/information-property/basic-information-property';
+} from '@shared/interfaces';
+import { BasicInformationProperty } from '@shared/interfaces';
 import { GeoEconomicZonesPropertyComponent } from './components-child/geo-economic-zones-property/geo-economic-zones-property.component';
 import { PhysicalZonesPropertyComponent } from './components-child/physical-zones-property/physical-zones-property.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

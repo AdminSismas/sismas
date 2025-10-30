@@ -42,7 +42,7 @@ import { PhotosComponent } from '../photos/photos.component';
 import { AlertsComponent } from '../alerts/alerts.component';
 import { InformationUnitPropertyComponent } from '../information-unit-property/information-unit-property.component';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
-import { InformationZonesPropertyComponent } from '../information-zones-property/information-zones-property.component';
+import { InformationZonesPropertyComponent } from '@features/property-management/components/zones/information-zones-property/information-zones-property.component';
 import { PropertyAppraisalInformationComponent } from '../property-appraisal-information/property-appraisal-information.component';
 import { SuperNotariadoPropertyComponent } from '../super-notariado-property/super-notariado-property.component';
 import { InformationAdjacentPropertyComponent } from '../information-adjacent-property/information-adjacent-property.component';
