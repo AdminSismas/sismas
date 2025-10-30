@@ -32,7 +32,6 @@ export * from '../../apps/interfaces/information-property/baunit-head.model';
 export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
 export * from '../../apps/interfaces/information-property/basic-information-property';
 export { InfoPerson } from '../../apps/interfaces/information-property/info-person';
-export * from '../../apps/interfaces/information-property/info-owners';
 export * from '../../apps/interfaces/information-property/basic-information-address';
 export * from '../../apps/interfaces/information-property/detail-basic-information-address';
 export * from '../../apps/interfaces/information-property/information-adjacent';
@@ -43,8 +42,12 @@ export * from '../../apps/interfaces/information-property/zone-baunit';
 export * from '../../apps/interfaces/information-property/national-predial-number';
 
 // Baunit ICA interfaces
-export * from 'src/app/apps/components/information-property/baunit-ica/interfaces/baunit-ica.interface';
-export * from 'src/app/apps/components/information-property/baunit-ica/interfaces/ica-table';
+export * from './property-management/ica/baunit-ica.interface';
+export * from './property-management/ica/ica-table';
+export * from './property-management/ica/ica-details';
+
+// Owner interfaces
+export * from './property-management/owner/info-owner-row-t.interface';
 
 // BPM interfaces - Updated to use new @features path
 export * from '@features/bpm-workflows/models';

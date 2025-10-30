@@ -26,7 +26,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '@environments/environments';
 import { InformationPropertyService } from '@shared/services';
-import { InfoOwners } from '@shared/interfaces';
+import { InfoOwners } from '@shared/models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -43,7 +43,7 @@ import {
   MatPaginatorModule,
   PageEvent
 } from '@angular/material/paginator';
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { InfoOwnerRowT } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatSort } from '@angular/material/sort';
 import { lastValueFrom } from 'rxjs';
@@ -55,19 +55,13 @@ import { CommonModule } from '@angular/common';
 import {
   FRACTION_DECIMALS,
   TABLE_COLUMNS
-} from '../../../constants/information-property/information-property-owners.constants';
+} from '@shared/constants';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RrrightService } from '@features/bpm-workflows/services/rrright.service';
 import { DeleteParamsRrright } from '@shared/interfaces';
 import Big from 'big.js';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { input } from '@angular/core';
-
-export type InfoOwnerRowT = Pick<
-  InfoOwners,
-  'rightId' | 'beginAt' | 'fractionS' | 'domRightType'
-> &
-  Pick<InfoPerson, 'domIndividualTypeNumber' | 'number' | 'fullName'>;
 
 @Component({
   selector: 'vex-information-property-owners',

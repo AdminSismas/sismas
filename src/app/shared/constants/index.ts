@@ -21,4 +21,4 @@ export * from '../../apps/constants/procedures/procedures.constants';
 export * from '../../apps/constants/public-services/ticket-office/generate-services.constants';
 
 // Baunit ICA constants
-export * from 'src/app/apps/components/information-property/baunit-ica/baunit-ica.constant';
+export * from '@features/property-management/constants/ica/baunit-ica.constant';

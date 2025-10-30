@@ -28,7 +28,7 @@ import {
   CrudInformationAdjacent,
   InformationAdjacent
 } from '@shared/interfaces';
-import { validateVariable } from '../../../../utils/general';
+import { validateVariable } from '../../../../../apps/utils/general';
 import { TypeOperation } from '@shared/interfaces';
 import { TYPE_CREATE } from '@shared/constants';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';

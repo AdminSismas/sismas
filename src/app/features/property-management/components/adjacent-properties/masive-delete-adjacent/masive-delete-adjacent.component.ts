@@ -1,8 +1,9 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
-import { InformationAdjacent } from 'src/app/apps/interfaces/information-property/information-adjacent';
+import { InformationAdjacent } from '@shared/interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL } from '@shared/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';

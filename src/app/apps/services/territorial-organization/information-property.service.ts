@@ -8,7 +8,7 @@ import {
   CreateBasicInformationAddress,
   DetailBasicInformationAddress
 } from '@shared/interfaces';
-import { InfoOwners } from '@shared/interfaces';
+import { InfoOwners } from '@shared/models';
 import { PageSearchData } from '@shared/interfaces';
 import {
   CreateBaunitZone,

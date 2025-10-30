@@ -7,7 +7,7 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import {
   CadastralInformationPropertyComponent
-} from '../cadastral-information-property/cadastral-information-property.component';
+} from '@features/property-management/components/cadastral-information-property.component';
 import { ContentInfoSchema } from '@shared/models';
 import {
   RULE_PAGE_CADASTRAL_DA,

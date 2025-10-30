@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { environment as env } from '@environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { InfoOwners } from '@shared/interfaces';
+import { InfoOwners } from '@shared/models';
 import { catchError, Observable , EMPTY, throwError } from 'rxjs';
 import { DeleteParamsRrright, ParamsRrright } from '@shared/interfaces';
 import { InfoPerson } from '@shared/interfaces';

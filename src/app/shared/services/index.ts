@@ -53,7 +53,6 @@ export { ParticipantsProcessService } from '@features/bpm-workflows/services/par
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';
 
 // Information property services
-export { BaunitIcaService } from 'src/app/apps/components/information-property/baunit-ica/services/baunit-ica.service';
 export { InformationAdjacentPropertyService } from '../../apps/services/information-property/information-adjacent-property/information-adjacent-property.service';
 export { InformationConstructionsService } from '../../apps/services/information-property/information-constructions-property/information-constructions.service';
 
