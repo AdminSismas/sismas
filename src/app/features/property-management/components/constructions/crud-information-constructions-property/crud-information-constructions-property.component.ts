@@ -53,7 +53,7 @@ import {
   CONSTANT_MSG_TYPE_AREA,
   CONSTANT_MSG_UNITBUILT_LABEL,
   CONSTANT_MSG_UNITBUILT_YEAR
-} from '../../../../../../apps/constants/general/constantsAlertLabel';
+} from '../../../../../apps/constants/general/constantsAlertLabel';
 import { GeneralValidationsService } from '@shared/services';
 import {
   TypeOperation,
@@ -65,7 +65,7 @@ import { InformationConstructionsService } from '@shared/services';
 import {
   validateIsNumber,
   validateVariable
-} from '../../../../../../apps/utils/general';
+} from '../../../../../apps/utils/general';
 // Custom
 import {
   DOMAIN_NAME_BUILT_USE,

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, signal, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -65,7 +64,6 @@ import {
     scaleFadeIn400ms
   ],
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     SweetAlert2Module,
     // Vex

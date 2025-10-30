@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CrudInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/information-constructions-property/crud-information-constructions-property/crud-information-constructions-property.component';
+import { CrudInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/crud-information-constructions-property/crud-information-constructions-property.component';
 
 
 describe(CrudInformationConstructionsPropertyComponent.name, () => {

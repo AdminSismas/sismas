@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DetailInformationConstructionsPropertyComponent
-} from '../../../../../../../src/app/features/property-management/components/constructions/information-constructions-property/detail-information-constructions-property/detail-information-constructions-property.component';
+} from '../../../../../../../src/app/features/property-management/components/constructions/detail-information-constructions-property/detail-information-constructions-property.component';
 
 
 describe(DetailInformationConstructionsPropertyComponent.name, () => {

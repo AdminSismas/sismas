@@ -29,7 +29,7 @@ import { InformationConstructionsService } from '@shared/services';
 import {
   validateIsNumber,
   validateVariable
-} from '../../../../../../apps/utils/general';
+} from '../../../../../apps/utils/general';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 export interface Tile {

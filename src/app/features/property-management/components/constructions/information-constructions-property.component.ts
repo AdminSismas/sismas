@@ -61,12 +61,12 @@ import { InformationPegeable } from '@shared/interfaces';
 import { ContentInformationConstruction } from '@shared/interfaces';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '@shared/interfaces';
-import { CrudInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/information-constructions-property/crud-information-constructions-property/crud-information-constructions-property.component';
+import { CrudInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/crud-information-constructions-property/crud-information-constructions-property.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationConstructionsService } from '@shared/services';
 import { filter } from 'rxjs/operators';
-import { EditConstructionsComponent } from '@features/property-management/components/constructions/information-constructions-property/edit-constructions/edit-constructions.component';
-import { TableConstructionsComponent } from '@features/property-management/components/constructions/information-constructions-property/table-constructions/table-constructions.component';
+import { EditConstructionsComponent } from '@features/property-management/components/constructions/edit-constructions/edit-constructions.component';
+import { TableConstructionsComponent } from '@features/property-management/components/constructions/table-constructions/table-constructions.component';
 import { ModalResponse } from '@shared/ui/modal-window/modal-window.component';
 import Swal from 'sweetalert2';
 
