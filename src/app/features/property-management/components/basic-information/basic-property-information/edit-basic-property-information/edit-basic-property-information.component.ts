@@ -16,26 +16,24 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import {
   BasicInformationProperty,
-  CrudBasicInformationProperty
-} from 'src/app/apps/interfaces/information-property/basic-information-property';
+  CrudBasicInformationProperty,
+  EditBasicPropertyInputs,
+  TypeOperation
+} from '@shared/interfaces';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import { InformationPropertyService } from '@shared/services';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { environment } from '@environments/environments';
-import {
-  EditBasicPropertyInputs,
-  TypeOperation
-} from '@shared/interfaces';
-import { TYPE_UPDATE_PROPERTY_UNIT } from '@shared/constants';
-import { InputComponent } from '@shared/ui/input/input.component';import Swal from 'sweetalert2';
-import { FluidMinHeightDirective } from '../../../../directives/fluid-min-height.directive';
-import { FORM_INPUT_BASIC_PROPERTY } from '../../../../constants/information-property/basic-property-information.constants';
+import { TYPE_UPDATE_PROPERTY_UNIT, MY_DATE_FORMATS } from '@shared/constants';
+import { InputComponent } from '@shared/ui/input/input.component';
+import Swal from 'sweetalert2';
+import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
+import { FORM_INPUT_BASIC_PROPERTY } from 'src/app/apps/constants/information-property/basic-property-information.constants';
 import { Subscription } from 'rxjs';
 import Big from 'big.js';
-import { MY_DATE_FORMATS } from 'src/app/apps/constants/general/procedures.constant';
 
 const REGEX_MORE_THAN_0 = /^(0*[1-9]\d*(\.\d+)?|0+\.\d*[1-9]\d*)$/;
 

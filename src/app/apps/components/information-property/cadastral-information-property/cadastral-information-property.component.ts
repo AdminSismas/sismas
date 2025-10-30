@@ -34,7 +34,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 
 /* ---- Shared components ---- */
 import { InformationAddressesPropertyComponent } from '../information-addresses-property/information-addresses-property.component';
-import { BasicPropertyInformationComponent } from '../basic-property-information/basic-property-information.component';
+import { BasicPropertyInformationComponent } from '@features/property-management/components/basic-information/basic-property-information/basic-property-information.component';
 import { InformationPropertyOwnersComponent } from '../information-property-owners/information-property-owners.component';
 import { InformationConstructionsPropertyComponent } from '../information-constructions-property/information-constructions-property.component';
 import { AdministrativeSourcesComponent } from '../administrative-sources/administrative-sources.component';
