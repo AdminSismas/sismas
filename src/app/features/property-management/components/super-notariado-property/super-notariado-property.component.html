@@ -1,0 +1,37 @@
+<mat-accordion class="flex flex-col py-0 px-0 mb-2 classSuperNotariadoProperty">
+  <mat-expansion-panel
+    (opened)="isExpandPanel()"
+    [expanded]="expandedComponent()"
+  >
+    <mat-expansion-panel-header
+      class="bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar pb-0 py-1 border-b sticky left-0 flex items-center"
+    >
+      <vex-header-cadastral-information-property
+        label="Super notariado"
+        icon="mat:contacts"
+        id="super-notariado-property"
+      >
+      </vex-header-cadastral-information-property>
+    </mat-expansion-panel-header>
+    @if (expandedComponent()) {
+      @if (listFolioDetails.length > 0) {
+        <div
+          class="grid grid-cols-2 grid-flow-row gap-y-2 gap-x-4 py-4 my-4 border-slate-950"
+        >
+          @for (folioDetail of listFolioDetails; track $index) {
+            <div class="grid grid-cols-2 grid-flow-row">
+              <strong>{{ folioDetail.label }}:</strong>
+              <span>{{ folioDetail.value }}</span>
+            </div>
+          }
+        </div>
+        <mat-divider class="border-slate-400 my-2"></mat-divider>
+      }
+      <vex-information-source-property
+        [baunitId]="baunitId"
+        [schema]="schema"
+        [executionId]="executionId"
+      ></vex-information-source-property>
+    }
+  </mat-expansion-panel>
+</mat-accordion>

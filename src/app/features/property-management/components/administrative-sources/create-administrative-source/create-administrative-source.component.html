@@ -1,0 +1,37 @@
+<div mat-dialog-title class="flex justify-between items-center">
+  <h2>{{ data.params ? 'Editar' : 'Crear' }} fuente administrativa</h2>
+  <button
+    class="text-secondary"
+    mat-icon-button
+    type="button"
+    mat-dialog-close
+    tabindex="-1"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border border-slate-400 mb-4"></mat-divider>
+<mat-dialog-content class="flex flex-col overflow-hidden gap-2">
+  <app-dynamic-forms
+    [inputs]="inputs"
+    (formReady)="form = $event"
+    [initValues]="initValues"
+    className="grid grid-cols-6 grid-flow-row gap-x-4"
+  ></app-dynamic-forms>
+  <mat-dialog-actions class="flex justify-center gap-6 w-full">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="requestManager()"
+    >
+      {{ data.params ? "Actualizar" : "Crear" }}
+    </button>
+    <button
+      mat-flat-button
+      mat-dialog-close
+      color="warn"
+    >
+      Cerrar
+    </button>
+  </mat-dialog-actions>
+</mat-dialog-content>

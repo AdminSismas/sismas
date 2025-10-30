@@ -1,0 +1,162 @@
+<app-modal-window
+  [title]="getTitle()"
+  [actions]="false"
+  (accept)="onAccept()"
+>
+  <div class="grid grid-cols-4 gap-4 p-6">
+    @if (data.propertyType !== 'Geoeconómica') {
+      <strong class="text-black text-sm">Área:</strong>
+      <span class="text-sm">
+        @if (data.zone.baUnitZonaAreaE) {
+          {{ data.zone.baUnitZonaAreaE }}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-black text-sm">Tipo:</strong>
+      <span class="text-sm">
+        {{ data.zone.baUnitZonaType }}
+      </span>
+
+      <strong class="text-black text-sm">Topografía:</strong>
+      <span class="text-sm">
+        @if (data.propertyType === 'Urbano') {
+          {{ data.zone.ccZonaHomoFisicaUr?.domTopografiaZonaTipo ?? NAME_NO_DISPONIBLE }}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-black text-sm">Uso actual del suelo:</strong>
+      <span class="text-sm">
+        @if (data.propertyType === 'Urbano') {
+          {{ data.zone.ccZonaHomoFisicaUr?.domUsoSueloUrbanoTipo ?? NAME_NO_DISPONIBLE }}
+        } @else {
+          {{ data.zone.ccZonaHomoFisicaRu?.normaUsoSuelo ?? NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <!-- Fila 2 -->
+      <strong class="text-black text-sm">Influencia vial:</strong>
+      <span class="text-sm">
+        @if (data.propertyType === 'Urbano') {
+          {{ data.zone.ccZonaHomoFisicaUr?.domInfluenciaVialUrbanaTipo ?? NAME_NO_DISPONIBLE }}
+        } @else {
+          {{ data.zone.ccZonaHomoFisicaRu?.domInfluenciaVialRural ?? NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-black text-sm">Norma uso del suelo:</strong>
+      <span class="text-sm">
+        @if (data.propertyType === 'Urbano') {
+          {{ data.zone.ccZonaHomoFisicaUr?.normaUsoSuelo ?? NAME_NO_DISPONIBLE }}
+        } @else {
+          {{ data.zone.ccZonaHomoFisicaRu?.normaUsoSuelo ?? NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <!-- Fila 3 -->
+      <strong class="text-black text-sm">Servicios públicos:</strong>
+      <span class="text-sm">
+        @if (data.propertyType === 'Urbano') {
+          {{ data.zone.ccZonaHomoFisicaUr?.domServiciosPublicosTipo ?? NAME_NO_DISPONIBLE }}
+        } @else {
+          {{ data.zone.ccZonaHomoFisicaRu?.domDisponibilidadAgua ?? NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-black text-sm">Tipificación construcción:</strong>
+      <span class="text-sm">
+        @if (data.propertyType === 'Urbano') {
+          {{ data.zone.ccZonaHomoFisicaUr?.domTipificacionConstruccionTipo ?? NAME_NO_DISPONIBLE }}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-black text-sm">Actualizado por:</strong>
+      <span class="text-sm">
+        @if (data.zone.updatedBy) {
+          {{ data.zone.updatedBy }}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-black text-sm">Actualizado en:</strong>
+      <span class="text-sm">
+        @if (data.zone.updatedAt) {
+          {{ data.zone.updatedAt | date: 'dd/MM/yyyy'}}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+    }
+
+    @if (data.propertyType === 'Geoeconómica') {
+      <strong class="text-sm">Valor:</strong>
+      <span class="text-sm">
+        {{ data.zone.baUnitZonaValor ?? 0 | currency:'': 'symbol': '1.0-0' }}
+      </span>
+
+      <strong class="text-sm">Área:</strong>
+      <span class="text-sm">
+        {{ data.zone.baUnitZonaAreaE }}
+      </span>
+
+      <strong class="text-sm">Vigencia:</strong>
+      <span class="text-sm">
+        {{ data.zone.vigencia }}
+      </span>
+
+
+      <strong class="text-sm">Valor m2:</strong>
+      <span class="text-sm">
+        {{ data.zone.baUnitZonaValorM2 ?? 0 | currency:'': 'symbol': '1.0-0' }}
+      </span>
+
+      <strong class="text-sm">Es común:</strong>
+      <span class="text-sm">
+        {{ data.zone.esComun ? 'Sí' : 'No' }}
+      </span>
+
+      <strong class="text-sm">Tipo de suelo:</strong>
+      <span class="text-sm">
+        {{ data.zone.ccZonaHomoGeoEconomica?.suelo ?? NAME_NO_DISPONIBLE }}
+      </span>
+
+      <strong class="text-sm">Valor del suelo:</strong>
+      <span class="text-sm">
+        {{ data.zone.ccZonaHomoGeoEconomica?.valorLabel ?? NAME_NO_DISPONIBLE }}
+      </span>
+
+      <strong class="text-sm">Observaciones:</strong>
+      <span class="text-sm">
+        @if (data.zone.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaObs) {
+          {{ data.zone.ccZonaHomoGeoEconomica?.zonaHomoGeoEconomicaObs }}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-sm">Actualizado por:</strong>
+      <span class="text-sm">
+        @if (data.zone.updatedBy) {
+          {{ data.zone.updatedBy }}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+
+      <strong class="text-sm">Actualizado en:</strong>
+      <span class="text-sm">
+        @if (data.zone.updatedAt) {
+          {{ data.zone.updatedAt | date: 'dd/MM/yyyy'}}
+        } @else {
+          {{ NAME_NO_DISPONIBLE }}
+        }
+      </span>
+    }
+  </div>
+</app-modal-window>
