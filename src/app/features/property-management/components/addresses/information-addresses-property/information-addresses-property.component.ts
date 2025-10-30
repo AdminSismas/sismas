@@ -64,13 +64,12 @@ import { environment } from '@environments/environments';
 import { InformationPropertyService } from '@shared/services';
 import { BasicInformationAddress } from '@shared/interfaces';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DetailInformationAddressComponent } from 'src/app/apps/components/information-property/information-addresses-property/detail-information-address/detail-information-address.component';
+import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AddEditInformationAddressComponent } from 'src/app/apps/components/information-property/information-addresses-property/add-edit-information-address/add-edit-information-address.component';
-import { TypeInformation } from '@shared/interfaces';
+import { AddEditInformationAddressComponent } from './add-edit-information-address/add-edit-information-address.component';
+import { TypeInformation, InformationPegeable } from '@shared/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { DetailBasicInformationAddress } from '@shared/interfaces';
 
 @Component({

@@ -15,25 +15,22 @@ import {
   TYPE_CREATE
 } from '@shared/constants';
 import { environment } from '@environments/environments';
-import {
-  InformationPropertyService
-} from 'src/app/apps/services/territorial-organization/information-property.service';
+import { InformationPropertyService, GeneralValidationsService } from '@shared/services';
 import {
   AddEditInformationDataI,
   CreateBasicInformationAddress,
-  DetailBasicInformationAddress
-} from 'src/app/apps/interfaces/information-property/detail-basic-information-address';
+  DetailBasicInformationAddress,
+  TypeOperation,
+  BasicInformationAddress
+} from '@shared/interfaces';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TypeOperation } from '@shared/interfaces';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { validateVariable } from '../../../../utils/general';
-import { BasicInformationAddress } from '@shared/interfaces';
-import { GeneralValidationsService } from '@shared/services';
+import { validateVariable } from 'src/app/apps/utils/general';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
