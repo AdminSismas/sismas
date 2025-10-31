@@ -31,7 +31,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '../../../../../apps/constants/general/constants';
-import { UserService } from '../../../auth/login/services/user.service';
+import { UserService } from '@shared/services';
 
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

@@ -32,7 +32,7 @@ import { SupportService } from '../service/support.service';
 import { env } from 'src/environments/environments.soporte';
 import { Ticket } from './model/ticket.model';
 
-import { UserService } from '../../auth/login/services/user.service';
+import { UserService } from '@shared/services';
 
 
 

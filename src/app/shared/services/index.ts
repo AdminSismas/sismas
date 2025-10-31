@@ -31,23 +31,24 @@ export { SendInformationRegisterService } from '../../apps/services/register-pro
 // Territorial organization service
 export { TerritorialOrganizationService } from '../../apps/services/territorial-organization/territorial-organization.service';
 export { InformationPropertyService } from '../../apps/services/territorial-organization/information-property.service';
-export { UnitPropertyInformationService } from '../../apps/services/territorial-organization/baunit-children-information.service';
+export { UnitPropertyInformationService } from '../../features/bpm-workflows/services/modification-property-units/procedures/baunit-children-information.service';
 
 // Geographic service
-export { InformationGeographicService } from '../../apps/services/geographics/information-geographic.service';
+export { InformationGeographicService } from '../../features/bpm-workflows/services/alfa-main/information-geographic.service';
 
 // BMP Core services
 export { ParticipantsService } from '@features/bpm-workflows/services/participants-service.service';
 export { InformationPersonService } from '@features/bpm-workflows/services/information-person.service';
-export { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.service';
-export { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
 export { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/bpm-process.service';
 export { WorkflowService } from '@features/bpm-workflows/services/workflow.service';
 export { DomainLadmColService } from '../../apps/services/economic-mod-land/domain-ladm-col.service';
 export { DynamicComponentsService } from '@features/bpm-workflows/services/dynamic-components.service';
 export { RecognitionPropertyService } from '@features/bpm-workflows/services/recognition-property.service';
 export { ParticipantsProcessService } from '@features/bpm-workflows/services/participants-process.service';
-// export { AttachmentService as BmpAttachmentService } from '@features/bpm-workflows/services/attachment.service';
+
+
+// Attachment services
+export * from './documents/attachment.service';
 
 // Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';
@@ -58,6 +59,7 @@ export { InformationConstructionsService } from '../../apps/services/information
 
 // People services
 export * from '../../apps/services/users/people.service';
+export * from './auth/user.service';
 
 // Validation services
 export { GeneralValidationsService } from '../../apps/services/validations/general-validations.service';

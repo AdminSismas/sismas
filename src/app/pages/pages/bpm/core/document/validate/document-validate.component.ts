@@ -38,7 +38,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 
 // Recursos del proyecto
-import { AttachmentService } from '@features/bpm-workflows/services/attachment.service';
+import { AttachmentService } from '@shared/services';
 import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';

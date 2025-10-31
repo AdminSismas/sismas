@@ -9,7 +9,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
-import { InformationGeographicService } from '@shared/services';
+import { InformationGeographicService } from '@features/bpm-workflows/services';
 import { MatButton } from '@angular/material/button';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';

@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { catchError, Observable, EMPTY, throwError } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams, HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environments';
 import { BpmTypeProcess } from '@shared/interfaces';
 
@@ -26,13 +26,13 @@ export class BpmProcessService {
     const url = `${this.basic_url}${environment.bpmProcess.category}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('category', `${category}`);
-    return this.http.get<any>(url, { params: paramsR  })
+    return this.http.get<BpmTypeProcess[]>(url, { params: paramsR  })
       .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 
   getListDocumentsByProcessId(processId: string): Observable<string[]> {
     const url = `${this.basic_url}${environment.bpmProcess.prodocumentStr}${processId}`;
-    return this.http.get<any>(url)
+    return this.http.get<string[]>(url)
       .pipe(catchError(error => (error.status === 404 ? EMPTY : throwError(() => error))));
   }
 

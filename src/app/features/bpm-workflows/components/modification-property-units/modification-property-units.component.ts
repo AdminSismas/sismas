@@ -61,14 +61,14 @@ import { MatInput } from '@angular/material/input';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
-import { UnitPropertyInformationService } from '@shared/services';
+import { UnitPropertyInformationService } from '@features/bpm-workflows/services';
 import { BaUnitHeadPercentage } from '@shared/interfaces';
 import { NgClass, PercentPipe } from '@angular/common';
 import { CrudPropertyUnitsComponent } from '@features/bpm-workflows/components/modification-property-units/crud-property-units/crud-property-units.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BpmCoreService } from '@shared/services';
+import { BpmCoreService } from '@features/bpm-workflows/services';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';
+import { AlfaMainService } from '@features/bpm-workflows/services';
 import { DifferenceChanges } from '@shared/interfaces';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,

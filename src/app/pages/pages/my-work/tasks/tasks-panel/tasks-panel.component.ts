@@ -41,7 +41,7 @@ import { PageSearchData } from '@shared/interfaces';
 import { ProTaskE } from '@shared/interfaces';
 import { SendInfoGeneralService } from '@shared/services';
 import { TaskCardComponent } from '../components/task-card/task-card.component';
-import { TasksPanelService } from '@shared/services';
+import { TasksPanelService } from '@features/bpm-workflows/services';
 import { TaskResponseModel } from '@shared/interfaces';
 import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 import { MatTableDataSource } from '@angular/material/table';

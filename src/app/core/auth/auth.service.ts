@@ -4,7 +4,7 @@ import { environment } from '@environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { UserService } from '@core/auth';
+import { UserService } from '@shared/services';
 import { DecodeJwt, UserDetails } from '@shared/models';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from '@shared/constants';

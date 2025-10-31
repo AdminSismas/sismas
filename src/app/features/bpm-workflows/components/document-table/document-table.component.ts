@@ -46,7 +46,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentService } from '@features/bpm-workflows/services/attachment.service';
+import { AttachmentService } from '@shared/services';
 import { AttachmentCollection } from '@shared/interfaces';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
@@ -61,7 +61,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
 import Swal from 'sweetalert2';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { TABLE_COLUMN_ATTACHMENT } from '@features/bpm-workflows/constants/attachment.constant';
 
 @Component({

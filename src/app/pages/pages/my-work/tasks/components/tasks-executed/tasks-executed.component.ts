@@ -20,7 +20,7 @@ import {
 } from '@shared/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TABLE_COLUMN_PROPERTIES_EXECUTED } from '../../constants';
-import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
+import { TasksPanelService } from '@features/bpm-workflows/services';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
 import { catchError, EMPTY } from 'rxjs';
 import { environment } from '@environments/environments';
 import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLabels';
-import { TasksPanelService } from '@shared/services';
+import { TasksPanelService } from '@features/bpm-workflows/services';
 
 
 export const resourcesDataResolver: ResolveFn<string[]> = (

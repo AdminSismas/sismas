@@ -46,7 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Custom
 import { AttachmentCollection } from '@shared/interfaces';
-import { AttachmentService } from '@features/bpm-workflows/services/attachment.service';
+import { AttachmentService } from '@shared/services';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';

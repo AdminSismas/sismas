@@ -21,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BaunitHead } from '@shared/interfaces';
 import { ContentInfoSchema } from '@shared/models';
 import { environment as envi } from '@environments/environments';
-import { InformationGeographicService } from '@shared/services';
+import { InformationGeographicService } from '@features/bpm-workflows/services';
 import { QueryParametersGeographicVie } from '@shared/interfaces';
 
 @Component({

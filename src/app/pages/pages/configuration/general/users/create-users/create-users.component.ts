@@ -21,7 +21,7 @@ import {
   CreateUserParams
 } from 'src/app/apps/interfaces/users/user';
 import { PeopleService } from '@shared/services';
-import { UserService } from 'src/app/apps/services/users/user.service';
+import { CadastralUserService } from 'src/app/apps/services/users/user.service';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { MODAL_SMALL_LARGE } from '../../../../../../apps/constants/general/constants';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -46,7 +46,7 @@ import Swal from 'sweetalert2';
 export class CreateUsersComponent implements OnInit {
   /* ---- Injects ---- */
   private peopleService = inject(PeopleService);
-  private userService = inject(UserService);
+  private cadastralUserService = inject(CadastralUserService);
   private dialog = inject(MatDialog);
   private dialogRef = inject(MatDialogRef<CreateUsersComponent>);
   public data = inject(MAT_DIALOG_DATA);
@@ -188,8 +188,8 @@ export class CreateUsersComponent implements OnInit {
       `${this.individualFound!.firstName}.${this.individualFound!.lastName}`.toLowerCase();
 
     return forkJoin({
-      usernameExists: this.userService.existUserName(username),
-      emailExists: this.userService.existEmail(email)
+      usernameExists: this.cadastralUserService.existUserName(username),
+      emailExists: this.cadastralUserService.existEmail(email)
     }).pipe(
       map((result) => {
         if (result.usernameExists) {
@@ -222,7 +222,7 @@ export class CreateUsersComponent implements OnInit {
   }
 
   individualValidator(individualId: number): Observable<boolean> {
-    return this.userService.existIndividual(individualId).pipe(
+    return this.cadastralUserService.existIndividual(individualId).pipe(
       map((result: boolean) => {
         if (!result) {
           this.newUserForm
@@ -249,7 +249,7 @@ export class CreateUsersComponent implements OnInit {
       }
     };
 
-    this.userService.createUser(params).subscribe({
+    this.cadastralUserService.createUser(params).subscribe({
       next: (result) => {
         Swal.fire({
           text: 'Usuario creado exitosamente',
@@ -281,7 +281,7 @@ export class CreateUsersComponent implements OnInit {
       return;
     }
 
-    this.userService
+    this.cadastralUserService
       .existEmail(this.newUserForm!.value.email)
       .subscribe((result: boolean) => {
         if (!result) {
@@ -291,7 +291,7 @@ export class CreateUsersComponent implements OnInit {
   }
 
   editUserService(): void {
-    this.userService
+    this.cadastralUserService
       .updateUser(this.data.userId!, this.newUserForm!.value.email)
       .subscribe({
         next: (result: User) => {

@@ -32,7 +32,7 @@ import {
   ComponentTemplate
 } from '@shared/interfaces';
 import { ProFlow } from '@shared/interfaces';
-import { BpmCoreService } from '@shared/services';
+import { BpmCoreService } from '@features/bpm-workflows/services';
 import { ProTaskE } from '@shared/interfaces';
 import { MatOptionModule } from '@angular/material/core';
 import { DynamicComponentsService } from '@shared/services';

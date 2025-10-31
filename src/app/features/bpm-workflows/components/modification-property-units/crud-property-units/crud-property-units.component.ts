@@ -33,7 +33,7 @@ import Swal from 'sweetalert2';
 import { BaunitHead } from '@shared/interfaces';
 import {
   UnitPropertyInformationService
-} from '@shared/services';
+} from '@features/bpm-workflows/services';
 
 @Component({
   selector: 'vex-crud-property-units',

@@ -25,7 +25,7 @@ import { MatTableModule } from '@angular/material/table';
 import { TABLE_REASSIGN_PROCEDURE } from 'src/app/apps/constants/procedures/procedures.constants';
 import { InformationPageableUser } from 'src/app/apps/interfaces/users/user';
 import { ProceduresService } from '@shared/services';
-import { UserService } from 'src/app/apps/services/users/user.service';
+import { CadastralUserService } from 'src/app/apps/services/users/user.service';
 
 interface RowUserAssign {
   userId: number;
@@ -62,7 +62,7 @@ export class ReassignProcedureComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { executionId: number },
-    private userService: UserService,
+    private cadastralUserService: CadastralUserService,
     private procedureService: ProceduresService,
     private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<ReassignProcedureComponent>,
@@ -88,7 +88,7 @@ export class ReassignProcedureComponent implements OnInit {
   }
 
   getAllUsers(): void {
-    this.userService
+    this.cadastralUserService
       .getUsers(0, 1000)
       .subscribe((res: InformationPageableUser) => {
         this.dataUser = res;

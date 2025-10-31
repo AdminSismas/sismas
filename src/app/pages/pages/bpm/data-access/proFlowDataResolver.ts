@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
 import { ProFlow } from '@shared/interfaces';
 import { catchError, EMPTY } from 'rxjs';
-import { BpmCoreService } from '@shared/services';
+import { BpmCoreService } from '@features/bpm-workflows/services';
 import { environment } from '@environments/environments';
 import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLabels';
 

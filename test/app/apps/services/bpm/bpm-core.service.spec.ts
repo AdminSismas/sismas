@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.service';
+import { BpmCoreService } from '@features/bpm-workflows/services';
 
 describe(BpmCoreService.name, () => {
   let service: BpmCoreService;

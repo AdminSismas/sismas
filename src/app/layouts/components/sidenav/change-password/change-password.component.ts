@@ -16,7 +16,7 @@ import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 import { PasswordService } from 'src/app/apps/services/users/password.service';
 // Custom
 import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserService } from '@shared/services';
 
 @Component({
   selector: 'vex-change-password',

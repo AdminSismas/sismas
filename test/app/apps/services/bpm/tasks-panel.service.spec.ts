@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { TasksPanelService } from '@features/bpm-workflows/services/tasks-panel.service';
+import { TasksPanelService } from '@features/bpm-workflows/services';
 
 
 describe(TasksPanelService.name, () => {

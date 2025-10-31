@@ -74,7 +74,7 @@ import { SendInformationRegisterService } from '@shared/services';
 import { ValidateInformationBaunitService } from '@shared/services';
 import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';
 import { BpmProcessService } from '@shared/services';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from '@shared/interfaces';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 

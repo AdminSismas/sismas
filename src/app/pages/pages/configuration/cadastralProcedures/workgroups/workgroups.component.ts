@@ -25,7 +25,7 @@ import {
 } from '../../../../../apps/constants/general/constants';
 import { GroupMemberComponent } from './components/group-member/group-member.component';
 import Swal from 'sweetalert2';
-import { UserService } from '../../../auth/login/services/user.service';
+import { UserService } from '@shared/services';
 
 @Component({
   selector: 'vex-workgroups',

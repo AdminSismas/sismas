@@ -33,7 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { BasicParticipantTableComponent } from './components/basic-participant-table/basic-participant-table.component';
 import { BaunitHead } from '@shared/interfaces';
-import { BpmCoreService } from '@shared/services';
+import { BpmCoreService } from '@features/bpm-workflows/services';
 import { BpmDocument } from '@shared/interfaces';
 import { BpmProcessService, PermissionVailable } from '@shared/services';
 import { BpmTypeProcess } from '@shared/interfaces';

@@ -42,7 +42,7 @@ import {
 } from '../../../../apps/constants/general/constants';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatButtonModule } from '@angular/material/button';
-import { UserService } from '../../auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, CanActivateFn } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserService } from '@core/auth';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from '@shared/models';
 
 export const RoleGuard: CanActivateFn = (route) => {

@@ -13,7 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';
 import { JSONInput } from '@shared/interfaces';
 import { CREATE_SIGNATURE_INPUTS, SEARCH_INPUTS } from '../../../../constants/general/digitalized-signatures.constants';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

@@ -36,7 +36,8 @@ import {
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import { filter, map, startWith } from 'rxjs/operators';
+import { AlfaMainService } from '@features/bpm-workflows/services';
+import { filter, map, startWith } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { DataAlfaMain } from '@shared/interfaces';
 import { MatCheckboxModule } from '@angular/material/checkbox';

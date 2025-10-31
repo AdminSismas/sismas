@@ -12,7 +12,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { AddMemberGroupComponent } from '../add-member-group/add-member-group.component';
 import { MODAL_SMALL_XS } from '@shared/constants';
-import { UserService } from 'src/app/apps/services/users/user.service';
+import { CadastralUserService } from 'src/app/apps/services/users/user.service';
 
 @Component({
   selector: 'group-member',
@@ -46,7 +46,7 @@ export class GroupMemberComponent {
     groupId: number;
   }>(MAT_DIALOG_DATA);
   workGroupService = inject(WorkgroupsService);
-  userService = inject(UserService);
+  cadastralUserService = inject(CadastralUserService);
   dialog = inject(MatDialog);
 
   // Signals
@@ -134,7 +134,7 @@ export class GroupMemberComponent {
   }
 
   addMember() {
-    this.userService.getUsers(0, 1000).subscribe((users) => {
+    this.cadastralUserService.getUsers(0, 1000).subscribe((users) => {
       this.dialog
         .open(AddMemberGroupComponent, {
           ...MODAL_SMALL_XS,

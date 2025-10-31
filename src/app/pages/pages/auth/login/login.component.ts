@@ -23,7 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { environment } from '@environments/environments';
 import { AuthService } from './services/auth.service';
-import { UserService } from './services/user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';

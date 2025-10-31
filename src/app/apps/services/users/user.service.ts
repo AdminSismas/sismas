@@ -17,7 +17,7 @@ import { InformationPegeable } from '@shared/interfaces';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class CadastralUserService {
   private base_url = `${envi.url}:${envi.port}${envi.bpmUser.value}`;
 
   constructor(

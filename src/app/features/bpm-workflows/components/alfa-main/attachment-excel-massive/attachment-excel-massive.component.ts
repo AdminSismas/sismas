@@ -16,7 +16,8 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { LIST_EXTENSION_MASIVE_EXCEL } from '@shared/constants';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main.service';import { LoadingServiceService } from '@shared/services';
+import { AlfaMainService } from '@features/bpm-workflows/services';
+import { LoadingServiceService } from '@shared/services';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';

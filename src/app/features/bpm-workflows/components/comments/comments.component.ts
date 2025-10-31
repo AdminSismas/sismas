@@ -16,14 +16,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 // recursos de archivos locales
-import { CommentsService } from '@features/bpm-workflows/services/comments.service';
+import { CommentsService } from '@features/bpm-workflows/services';
 import { PageCommentsData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { contentInfoComments } from '@shared/interfaces';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { PAGE_SIZE_OPTION } from '@shared/constants';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -174,7 +175,7 @@ export class CommentsComponent implements OnInit {
         });
         this.getDataFromDocumentManagementService();
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         console.error('Error al obtener los datos:', err);
       }
     });

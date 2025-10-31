@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as envi } from '@environments/environments';
