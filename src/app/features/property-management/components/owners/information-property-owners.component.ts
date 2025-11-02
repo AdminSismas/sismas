@@ -57,7 +57,7 @@ import {
   TABLE_COLUMNS
 } from '@shared/constants';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { RrrightService } from '@features/bpm-workflows/services/rrright.service';
+import { RrrightService } from '@features/bpm-workflows/services/core/rrright.service';
 import { DeleteParamsRrright } from '@shared/interfaces';
 import Big from 'big.js';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';

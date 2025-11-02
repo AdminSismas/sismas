@@ -9,7 +9,7 @@ import {
 import { LaneNamesPipe } from 'src/app/apps/components/tables/table-workflow/pipe/lane-names.pipe';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { WorkflowService } from '@features/bpm-workflows/services/workflow.service';
+import { WorkflowService } from '@features/bpm-workflows/services/core/workflow.service';
 import { EditTaskComponent } from 'src/app/apps/components/tables/table-workflow/components/edit-task/edit-task.component';
 import { MODAL_SMALL_XS } from '@shared/constants';
 import Swal from 'sweetalert2';

@@ -1,4 +1,4 @@
-import { BpmProcessService } from '@features/bpm-workflows/services/bpm-process.service';
+import { BpmProcessService } from '@features/bpm-workflows/services/core/bpm-process.service';
 import { TestBed } from '@angular/core/testing';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environments';

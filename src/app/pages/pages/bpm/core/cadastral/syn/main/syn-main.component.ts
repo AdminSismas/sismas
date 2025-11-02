@@ -12,7 +12,7 @@ import { InformationPegeable } from 'src/app/apps/interfaces/general/information
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { Pegeable } from 'src/app/apps/interfaces/general/pegeable.model';
 import { AlfaMainService } from '@features/bpm-workflows/services';
-import { SyncMainService } from '@features/bpm-workflows/services/sync-main.service';
+import { SyncMainService } from '@features/bpm-workflows/services/core/sync-main.service';
 import Swal from 'sweetalert2';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 import { TableAlfaMainComponent } from '@features/bpm-workflows/components/table-alfa-main/table-alfa-main.component';

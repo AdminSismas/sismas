@@ -25,7 +25,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationConstructionsService } from '@shared/services';
+import { InformationConstructionsService } from '@features/property-management/services';
 import {
   validateIsNumber,
   validateVariable

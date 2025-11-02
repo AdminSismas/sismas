@@ -53,9 +53,11 @@ export * from './documents/attachment.service';
 // Operation support services
 export { DownloadReportsService } from '../../apps/services/operation-support/reports/download-reports.service';
 
-// Information property services
-export { InformationAdjacentPropertyService } from '../../apps/services/information-property/information-adjacent-property/information-adjacent-property.service';
-export { InformationConstructionsService } from '../../apps/services/information-property/information-constructions-property/information-constructions.service';
+// Information property services - migrated to property-management feature
+export { InformationAdjacentPropertyService } from '@features/property-management/services';
+export { InformationConstructionsService } from '@features/property-management/services';
+export { AdministrativeSourcesService } from '@features/property-management/services';
+export { InformationZonesService } from '@features/property-management/services';
 
 // People services
 export * from '../../apps/services/users/people.service';

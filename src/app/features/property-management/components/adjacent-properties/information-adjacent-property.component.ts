@@ -62,7 +62,7 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { InformationAdjacent } from '@shared/interfaces';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CrudInformationAdjacentPropertyComponent } from './crud-information-adjacent-property/crud-information-adjacent-property.component';
-import { InformationAdjacentPropertyService } from '@shared/services';
+import { InformationAdjacentPropertyService } from '@features/property-management/services';
 import Swal from 'sweetalert2';
 import { MasiveDeleteAdjacentComponent } from './masive-delete-adjacent/masive-delete-adjacent.component';
 

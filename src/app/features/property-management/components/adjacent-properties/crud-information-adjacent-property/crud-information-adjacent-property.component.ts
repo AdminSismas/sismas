@@ -33,7 +33,7 @@ import { TypeOperation } from '@shared/interfaces';
 import { TYPE_CREATE } from '@shared/constants';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
-import { InformationAdjacentPropertyService } from '@shared/services';
+import { InformationAdjacentPropertyService } from '@features/property-management/services';
 
 @Component({
   selector: 'vex-crud-information-adjacent-property',

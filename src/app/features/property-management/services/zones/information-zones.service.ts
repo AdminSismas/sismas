@@ -1,7 +1,7 @@
 import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GeoEconomicZoneInfo } from '@shared/interfaces';
+import { GeoEconomicZone } from 'src/app/apps/interfaces/information-property/geo-economic-zone';
 import { ZoneBAUnitFisica } from '@shared/interfaces';
 import { environment as envi } from '@environments/environments';
 
@@ -27,7 +27,7 @@ export class InformationZonesService {
     return this.getData(url, paramsR);
   }
 
-  getByBauniEcono(baunitId: number): Observable<GeoEconomicZoneInfo> {
+  getByBauniEcono(baunitId: number): Observable<GeoEconomicZone> {
     const url = `${this.basic_url}/${'baUnitZona'}/${'baunitIdEcono'}`;
     let paramsR: HttpParams = new HttpParams();
     paramsR = paramsR.append('baunitId', `${baunitId}`);

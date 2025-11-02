@@ -21,7 +21,7 @@ import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/c
 import { InputComponent } from '@shared/ui/input/input.component';import { MODAL_LARGE } from '@shared/constants';
 
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { InformationPersonService } from '@features/bpm-workflows/services/information-person.service';
+import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '@features/bpm-workflows/services';
 import { PaymentValidationComponent } from 'src/app/apps/components/general-components/payment-validation/payment-validation.component';

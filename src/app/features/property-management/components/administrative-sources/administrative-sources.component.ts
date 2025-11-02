@@ -15,7 +15,7 @@ import {
   UpdateAdministrativeSource
 } from 'src/app/apps/interfaces/information-property/administrative-source';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AdministrativeSourcesService } from 'src/app/apps/services/information-property/administrative-sources.service';
+import { AdministrativeSourcesService } from '@features/property-management/services';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';

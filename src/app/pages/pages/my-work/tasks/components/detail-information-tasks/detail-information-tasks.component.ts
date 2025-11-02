@@ -15,7 +15,7 @@ import { TaskResponseModel } from '@shared/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { TableThirdPartyAffectedComponent } from '@shared/components/table-third-party-affected/table-third-party-affected.component';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
-import { PermissionVailable } from '@features/bpm-workflows/services/bpm-process.service';
+import { PermissionVailable } from '@features/bpm-workflows/services/core/bpm-process.service';
 import { DetailsHeaderComponent } from '../details-header/details-header.component';
 import { TasksExecutedComponent } from '../tasks-executed/tasks-executed.component';
 import { TaskMetadataComponent } from '../task-metadata/task-metadata.component';

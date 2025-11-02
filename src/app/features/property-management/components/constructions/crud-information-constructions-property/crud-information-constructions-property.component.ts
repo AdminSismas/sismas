@@ -61,7 +61,7 @@ import {
   ValidateQualificationByDomBuiltType
 } from '@shared/interfaces';
 import { CommonGeneralValidationsService } from '@shared/services';
-import { InformationConstructionsService } from '@shared/services';
+import { InformationConstructionsService } from '@features/property-management/services';
 import {
   validateIsNumber,
   validateVariable
