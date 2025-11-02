@@ -37,14 +37,14 @@ export { UnitPropertyInformationService } from '../../features/bpm-workflows/ser
 export { InformationGeographicService } from '../../features/bpm-workflows/services/alfa-main/information-geographic.service';
 
 // BMP Core services
-export { ParticipantsService } from '@features/bpm-workflows/services/participants-service.service';
-export { InformationPersonService } from '@features/bpm-workflows/services/information-person.service';
-export { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/bpm-process.service';
-export { WorkflowService } from '@features/bpm-workflows/services/workflow.service';
+export { ParticipantsService } from '@features/bpm-workflows/services/core/participants-service.service';
+export { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
+export { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/core/bpm-process.service';
+export { WorkflowService } from '@features/bpm-workflows/services/core/workflow.service';
 export { DomainLadmColService } from '../../apps/services/economic-mod-land/domain-ladm-col.service';
-export { DynamicComponentsService } from '@features/bpm-workflows/services/dynamic-components.service';
-export { RecognitionPropertyService } from '@features/bpm-workflows/services/recognition-property.service';
-export { ParticipantsProcessService } from '@features/bpm-workflows/services/participants-process.service';
+export { DynamicComponentsService } from '@features/bpm-workflows/services/core/dynamic-components.service';
+export { RecognitionPropertyService } from '@features/bpm-workflows/services/core/recognition-property.service';
+export { ParticipantsProcessService } from '@features/bpm-workflows/services/core/participants-process.service';
 
 
 // Attachment services
