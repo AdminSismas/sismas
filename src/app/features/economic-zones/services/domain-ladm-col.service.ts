@@ -10,13 +10,11 @@ import { InformationPegeable } from '@shared/interfaces';
   providedIn: 'root'
 })
 export class DomainLadmColService {
-  /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${environment.url}:${environment.port}${environment.domain_domain}`;
+  /* -------------- DEPENDENCIES -------------- */
+  private http = inject(HttpClient);
 
-  /* -------------- CONSTRUCTOR -------------- */
-  constructor(
-    private http: HttpClient
-  ) {}
+  /* -------------- ATTRIBUTES -------------- */
+  basic_url = `${environment.url}:${environment.port}${environment.domain_domain}`;
 
 
 

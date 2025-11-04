@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { JSONInput } from '@shared/interfaces';
-import { CreateZoneData } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+import { CreateZoneData } from '@features/economic-zones/models';
 
 @Component({
   selector: 'vex-create-zone',

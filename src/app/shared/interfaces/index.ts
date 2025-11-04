@@ -67,7 +67,6 @@ export * from '../../apps/interfaces/information-property/info-contact';
 export { GeoEconomicZone } from '../../apps/interfaces/information-property/geo-economic-zone';
 export * from '../../apps/interfaces/information-property/basic-master-group';
 export * from '../../apps/interfaces/comments/comments.model';
-export * from '../../apps/interfaces/economic-mod-land/zone-description';
 export * from '../../apps/interfaces/general/content-info-domainLadmCol.model';
 export * from '../../apps/interfaces/general/simple-response.interface';
 export * from '../../apps/interfaces/information-property/baunit-npnlike';

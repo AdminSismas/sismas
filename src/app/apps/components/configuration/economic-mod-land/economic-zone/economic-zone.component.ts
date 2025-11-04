@@ -7,7 +7,7 @@ import {
   trigger
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, input } from '@angular/core';
+import { Component, inject, OnInit, input } from '@angular/core';
 
 // Material
 import { MatDividerModule } from '@angular/material/divider';
@@ -19,8 +19,8 @@ import {
   GEOECONOMICA_COLUMNS,
   NO_DETAILS_DATA
 } from '../../../../constants/economic-mod-land/zone-constants';
-import { GeoEconomicZoneDetails } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
-import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
+import { GeoEconomicZoneDetails } from '@features/economic-zones/models';
+import { GeoeconomicZoneService } from '@features/economic-zones/services/geoeconomic-zone.service';
 import { GeoEconomicZone } from '@shared/interfaces';
 
 @Component({
@@ -58,7 +58,7 @@ export class EconomicZoneComponent implements OnInit {
   public expandedElement?: GeoEconomicZone | null;
   public NO_DETAILS_DATA: string = NO_DETAILS_DATA;
 
-  constructor(private geoEconomicZoneService: GeoeconomicZoneService) {}
+  private geoEconomicZoneService = inject(GeoeconomicZoneService);
 
   ngOnInit(): void {
     this.displayColumns = this.columns.map((column) => column.name);

@@ -1,6 +1,6 @@
 // Angular framework
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { map, Observable, startWith, Subject, takeUntil } from 'rxjs';
 
@@ -29,18 +29,18 @@ import {
   DisplayedColumns,
   RuralZone,
   UrbanZone
-} from 'src/app/apps/interfaces/economic-mod-land/zone-description';
+} from '@features/economic-zones/models';
 import { GeoEconomicZone } from '@shared/interfaces';
 import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
-import { GeoeconomicZoneService } from 'src/app/apps/services/economic-mod-land/geoeconomic-zone.service';
+import { GeoeconomicZoneService } from '@features/economic-zones/services/geoeconomic-zone.service';
 import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
 import {
   DIVPOLLVL_CODE,
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
 } from '../../../../../apps/constants/general/constants';
-import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
-import { RuralZoneService } from 'src/app/apps/services/economic-mod-land/rural-zone.service';
+import { RefreshService } from '@features/economic-zones/services/refresh-service.service';
+import { RuralZoneService } from '@features/economic-zones/services/rural-zone.service';
 import {
   TerritorialOrganizationService
 } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
@@ -49,7 +49,7 @@ import {
   RURAL_COLUMNS,
   URBAN_COLUMNS
 } from '../../../../../apps/constants/economic-mod-land/zone-constants';
-import { UrbanZoneService } from 'src/app/apps/services/economic-mod-land/urban-zone.service';
+import { UrbanZoneService } from '@features/economic-zones/services/urban-zone.service';
 import { ZoneManagerComponent } from 'src/app/apps/components/configuration/economic-mod-land/zone-manager/zone-manager.component';
 
 @Component({
@@ -82,6 +82,13 @@ import { ZoneManagerComponent } from 'src/app/apps/components/configuration/econ
 })
 export class EconomicModLandComponent implements OnInit{
 
+  private fb = inject(FormBuilder);
+  private territorialOrganizationService = inject(TerritorialOrganizationService);
+  public urbanZoneService = inject(UrbanZoneService);
+  public ruralZoneService = inject(RuralZoneService);
+  public geoeconomicZoneService = inject(GeoeconomicZoneService);
+  private refreshService = inject(RefreshService);
+
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
     municipality: ['', Validators.required]
@@ -111,15 +118,6 @@ export class EconomicModLandComponent implements OnInit{
   };
 
   private destroy$ = new Subject<void>();
-
-  constructor(
-    private fb: FormBuilder,
-    private territorialOrganizationService: TerritorialOrganizationService,
-    public urbanZoneService: UrbanZoneService,
-    public ruralZoneService: RuralZoneService,
-    public geoeconomicZoneService: GeoeconomicZoneService,
-    private refreshService: RefreshService
-  ) {}
 
   ngOnInit(): void {
     this.loadDepartmentalInformation();

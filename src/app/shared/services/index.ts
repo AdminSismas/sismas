@@ -41,7 +41,7 @@ export { ParticipantsService } from '@features/bpm-workflows/services/core/parti
 export { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 export { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/core/bpm-process.service';
 export { WorkflowService } from '@features/bpm-workflows/services/core/workflow.service';
-export { DomainLadmColService } from '../../apps/services/economic-mod-land/domain-ladm-col.service';
+export { DomainLadmColService } from '@features/economic-zones/services/domain-ladm-col.service';
 export { DynamicComponentsService } from '@features/bpm-workflows/services/core/dynamic-components.service';
 export { RecognitionPropertyService } from '@features/bpm-workflows/services/core/recognition-property.service';
 export { ParticipantsProcessService } from '@features/bpm-workflows/services/core/participants-process.service';

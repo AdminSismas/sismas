@@ -1,19 +1,17 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
-import { GeoEconomicZone, GeoEconomicZoneDetails, Zone } from '@shared/interfaces';
+import { GeoEconomicZone } from '@shared/interfaces';
+import { GeoEconomicZoneDetails, Zone } from '@features/economic-zones/models';
 import { environment as envi } from '@environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeoeconomicZoneService {
+  private http = inject(HttpClient);
 
   public base_url = `${envi.url}:${envi.port}${envi.geoeconomic_zones}`;
-
-  constructor(
-    private http: HttpClient
-  ) { }
 
   getZones(divpolLv1: string, divpolLv2: string): Observable<GeoEconomicZone[]> {
     const url = `${this.base_url}${envi.divpol}`;

@@ -45,7 +45,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { DomainLadmColService } from '@shared/services';
+import { DomainLadmColService } from '@features/economic-zones/services/domain-ladm-col.service';
 import { DomainCollection } from '@shared/interfaces';
 import { PageSortByData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
@@ -55,7 +55,7 @@ import {
   PAGE_SIZE,
   PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
-} from '../../../constants/economic-mod-land/domain-ladm-col.constant';
+} from '@features/economic-zones/constants';
 
 @Component({
   templateUrl: './table-domain-ladm-col.component.html',
@@ -88,7 +88,12 @@ import {
   ]
 })
 export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
-  /* ============== ATRIBUTES ============== */
+  /* ---- Injects ---- */
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private domainLadmColService = inject(DomainLadmColService);
+  private readonly layoutService = inject(VexLayoutService);
+
+  /* ---- ATRIBUTES ---- */
   layoutCtrl = new UntypedFormControl('boxed');
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
@@ -106,13 +111,6 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  /* ============== CONSTRUCTOR ============== */
-  constructor(
-    private domainLadmColService: DomainLadmColService,
-    private readonly layoutService: VexLayoutService
-  ) {}
 
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */

@@ -1,4 +1,4 @@
-import { GeoEconomicZoneDetails } from "@shared/interfaces";
+import { GeoEconomicZoneDetails } from "@features/economic-zones/models";
 import { CadastreChangeLog } from "./zone-baunit";
 
 export class GeoEconomicZone {

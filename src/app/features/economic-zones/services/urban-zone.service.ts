@@ -1,19 +1,16 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '@environments/environments';
-import { UrbanZone, Zone, ZoneServices } from '@shared/interfaces';
+import { UrbanZone, Zone, ZoneServices } from '@features/economic-zones/models';
 import { catchError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UrbanZoneService implements ZoneServices {
+  private http = inject(HttpClient);
 
   public base_url = `${envi.url}:${envi.port}${envi.urban_zones}`;
-
-  constructor(
-    private http: HttpClient
-  ) { }
 
   getZones(divpolLv1: string, divpolLv2: string): Observable<UrbanZone[]> {
     const url = `${this.base_url}${envi.divpol}`;
