@@ -2,9 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProcedureStateTableService } from '../../service/procedure-state-table.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { LoaderComponent } from "src/app/apps/components/general-components/loader/loader.component";
-
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { LoaderComponent } from '@shared/ui/loader/loader.component';
 @Component({
   selector: 'vex-view-certificate',
   standalone: true,
@@ -25,7 +23,7 @@ export class ViewCertificateComponent implements OnInit {
   ngOnInit(): void {
     this.getFileBlob(this.data.id);
   }
-  
+
   /* ---- Methods ---- */
   getFileBlob(id: string) {
     this.isLoading.set(true);

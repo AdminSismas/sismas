@@ -18,11 +18,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 // Custom
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { environment as envi } from '../../../../../environments/environments';
-import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
-import { QueryParametersGeographicVie } from '../../../interfaces/geographics/query-parameters-geographic-vie';
+import { BaunitHead } from '@shared/interfaces';
+import { ContentInfoSchema } from '@shared/models';
+import { environment as envi } from '@environments/environments';
+import { InformationGeographicService } from '@features/bpm-workflows/services';
+import { QueryParametersGeographicVie } from '@shared/interfaces';
 
 @Component({
   selector: 'vex-geographic-viewer-main',

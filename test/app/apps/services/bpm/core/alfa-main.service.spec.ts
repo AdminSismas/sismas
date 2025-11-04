@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
-
+import { AlfaMainService } from '@features/bpm-workflows/services';
 describe(AlfaMainService.name, () => {
   let service: AlfaMainService;
 

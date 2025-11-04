@@ -44,18 +44,17 @@ import { InformationPegeable } from '../../../../../../apps/interfaces/general/i
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
 import { SearchData } from '../../../../../../apps/interfaces/general/search-data.model';
-import { InfoTableService } from 'src/app/apps/services/general/info-table.service';
-import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';
+import { InfoTableService, ValidateInformationBaunitService } from '@shared/services';
 import {
   SendInformationRegisterService
 } from 'src/app/apps/services/register-procedure/send-information-register.service';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import {
   FilterCadastralSearchComponent
-} from '../../../../../../apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
+} from 'src/app/apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import {
   GeographicViewerComponent
-} from '../../../../../../apps/components/geographics/geographic-viewer/geographic-viewer.component';
+} from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 
 @Component({
   selector: 'vex-certificate-table',

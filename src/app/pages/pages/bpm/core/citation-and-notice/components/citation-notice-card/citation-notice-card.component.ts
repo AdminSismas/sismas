@@ -8,7 +8,7 @@ import {
   Output,
   signal
 } from '@angular/core';
-import { ProcessParticipant } from '../../../../../../../apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -18,7 +18,7 @@ import {
   MODAL_DYNAMIC_HEIGHT,
   MODAL_MEDIUM,
   NAME_NO_DISPONIBLE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCitationNoticeComponent } from '../add-citation-notice/add-citation-notice.component';

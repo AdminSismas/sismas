@@ -18,22 +18,22 @@ import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, Observable } from 'rxjs';
 
-import { environment } from '../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { Router } from '@angular/router';
-import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
+import { SendInfoGeneralService } from '@shared/services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ProcessParticipant } from '../../../../../apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 import {
   ProcessParticipantTableMenu,
   TypeProcessParticipant
-} from '../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+} from '@shared/interfaces';
 import { DetailsCitationNoticeComponent } from './components/details-citation-notice/details-citation-notice.component';
 import { CitationNoticeGridComponent } from './citation-notice-grid/citation-notice-grid.component';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { ProFlow } from '../../../../../apps/interfaces/bpm/pro-flow';
+import { ProFlow } from '@shared/interfaces';
 import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../apps/constants/general/constants';
-import { TableThirdPartyAffectedComponent } from 'src/app/apps/components/general-components/table-third-party-affected/table-third-party-affected.component';
+import { TableThirdPartyAffectedComponent } from '@shared/components/table-third-party-affected/table-third-party-affected.component';
 
 @Component({
   selector: 'vex-citation-and-notice',

@@ -1,5 +1,5 @@
 import { Validators } from "@angular/forms";
-import { JSONInput } from "../../interfaces/forms/dynamic-forms";
+import { JSONInput } from '@shared/interfaces';
 
 export const inputsAddPhotos: JSONInput[] = [
   {

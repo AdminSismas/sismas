@@ -4,14 +4,18 @@ import {
   Output,
   EventEmitter,
   inject,
-  computed} from '@angular/core';
+  computed
+} from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ReportCategory } from 'src/app/apps/interfaces/operation-support/reports/report-category.interface';
-import { ReportManagerService, ReportType } from 'src/app/apps/services/operation-support/reports/report-manager.service';
-import { environment } from 'src/environments/environments';
+import {
+  ReportManagerService,
+  ReportType
+} from 'src/app/apps/services/operation-support/reports/report-manager.service';
+import { environment } from '@environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { signal } from '@angular/core';
 import { MuncipalityCodePipe } from 'src/app/apps/pipes/muncipalityCode.pipe';
@@ -37,7 +41,7 @@ export class ReportMasterComponent implements OnInit {
     { property: 'action', label: 'Accion', type: 'button' },
     { property: 'name', label: 'Nombre', type: 'text' },
     { property: 'municipality', label: 'Municipio', type: 'text' },
-    { property: 'outputFormat', label: 'Tipo de archivo', type: 'text' },
+    { property: 'outputFormat', label: 'Tipo de archivo', type: 'text' }
   ];
 
   displayedColumns = computed(() => {
@@ -52,11 +56,11 @@ export class ReportMasterComponent implements OnInit {
   }
 
   loadCategories() {
-    this.reportManagerService.getCategories(environment.municipalities).subscribe({
-      next: (categories) => {
+    this.reportManagerService
+      .getCategories(environment.municipalities)
+      .subscribe((categories) => {
         this.dataSource().data = categories;
-      }
-    });
+      });
   }
 
   applyFilter(event: Event) {
@@ -66,22 +70,35 @@ export class ReportMasterComponent implements OnInit {
     this.dataSource().filter = filterValue;
   }
 
-  selectCategory(urlEnd: string, name: string, municipality: string) {
+  selectCategory(urlEnd: string, name: string, municipality: string, reportId: number) {
     const municipalityCodePipe = new MuncipalityCodePipe();
 
-    this.reportManagerService.getExcelReport(urlEnd, municipality)
-      .subscribe({
-        next: (response) => {
-          const nameMunicipality = municipalityCodePipe.transform(municipality);
-          const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
-          const type = response.headers.get('content-type') as string;
-          this.downloadFile(response.body!, type, filename);
-        }
+    console.log(reportId);
+
+    if ([3, 4].includes(reportId)) {
+      const zoneType: 'rural' | 'urbano' = reportId === 3 ? 'urbano' : 'rural';
+      this.reportManagerService.getUpdateReport(municipality, environment.departments, zoneType)
+      .subscribe((response) => {
+        const nameMunicipality = municipalityCodePipe.transform(municipality);
+        const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
+        const type = response.headers.get('content-type') as string;
+        this.downloadFile(response.body!, type, filename);
       });
+      return;
+    }
+
+    this.reportManagerService.getExcelReport(urlEnd, municipality).subscribe({
+      next: (response) => {
+        const nameMunicipality = municipalityCodePipe.transform(municipality);
+        const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
+        const type = response.headers.get('content-type') as string;
+        this.downloadFile(response.body!, type, filename);
+      }
+    });
   }
 
   downloadFile(data: Blob, type: string, filename: string) {
-    const blob = new Blob([data], {type: type});
+    const blob = new Blob([data], { type: type });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;

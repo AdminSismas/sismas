@@ -7,24 +7,23 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import {
   CadastralInformationPropertyComponent
-} from '../cadastral-information-property/cadastral-information-property.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
+} from '@features/property-management/components/cadastral-information-property.component';
+import { ContentInfoSchema } from '@shared/models';
 import {
   RULE_PAGE_CADASTRAL_DA,
   TWO_POINT_,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
-import { MatMenuModule } from '@angular/material/menu';
-import { environment as envi } from '../../../../../environments/environments';
-import { ObjectSchema, TypeInformation } from '../../../interfaces/general/content-info';
+} from '@shared/constants';
+import { environment as envi } from '@environments/environments';
+import { ObjectSchema, TypeInformation } from '@shared/interfaces';
 import {
   CONSTANT_INFORMATION_PREDIAL,
   CONSTANT_INFORMATION_PREDIAL_HIST,
   CONSTANT_INFORMATION_PREDIAL_MAIN,
   CONSTANT_INFORMATION_PREDIAL_TEMP
 } from '../../../constants/general/constantLabels';
-import { BaunitHead } from '../../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 import {
   InformationPropertyService
 } from 'src/app/apps/services/territorial-organization/information-property.service';
@@ -43,7 +42,6 @@ import Swal from 'sweetalert2';
     VexPageLayoutContentDirective,
     MatTabsModule,
     CadastralInformationPropertyComponent,
-    MatMenuModule,
     FluidHeightDirective
   ],
   templateUrl:

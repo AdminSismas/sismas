@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   ProcessParticipantTableMenu,
   TypeProcessParticipant
-} from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
+} from '@shared/interfaces';
 import { LIST_CITATION_AND_NOTICE_TABLE_MENU } from '../../../../../../apps/constants/general/constants';
 
 @Component({

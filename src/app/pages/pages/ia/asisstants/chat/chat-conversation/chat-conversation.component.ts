@@ -1,4 +1,4 @@
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,

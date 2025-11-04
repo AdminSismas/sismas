@@ -14,7 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatMenuModule } from '@angular/material/menu';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { People as People } from '../../../../apps/interfaces/users/people.model';
+import { People as People } from '@shared/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -31,7 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 
 // imports from service people
-import { PeopleService } from '../../../../apps/services/users/people.service';
+import { PeopleService } from '@shared/services';
 import {
   MODAL_SMALL_LARGE,
   MODIFY_PEOPLE,
@@ -40,9 +40,9 @@ import {
   PAGE_OPTION_UNIQUE,
   PEOPLE_TABLE_COLUMNS
 } from '../../../../apps/constants/general/constants';
-import { InformationPegeable } from '../../../../apps/interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import { MatButtonModule } from '@angular/material/button';
-import { UserService } from '../../auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';

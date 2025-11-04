@@ -11,16 +11,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { TaskRetailExecuteResponseModel } from 'src/app/apps/interfaces/bpm/task-retail-execute-response.model';
+import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 import { DetailExecutedTasksComponent } from '../detail-executed-tasks/detail-executed-tasks.component';
 import {
   MODAL_SMALL,
   PAGE_OPTION_UNIQUE,
   PAGE_SIZE_OPTION
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TABLE_COLUMN_PROPERTIES_EXECUTED } from '../../constants';
-import { TasksPanelService } from 'src/app/apps/services/bpm/tasks-panel.service';
+import { TasksPanelService } from '@features/bpm-workflows/services';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

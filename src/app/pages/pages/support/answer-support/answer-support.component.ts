@@ -35,7 +35,7 @@ import { SupportLogs } from './model/supportLogs.model';
 // import { UserAuthData } from 'src/app/core/auth/authData.model';
 // import { AuthService } from 'src/app/core/auth/auth.service';
 import { AnswerSupportService } from './service/answer-support.service';
-import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
+import { PAGE_SIZE_OPTION } from '@shared/constants';
 
 @Component({
   selector: 'vex-answer-support',

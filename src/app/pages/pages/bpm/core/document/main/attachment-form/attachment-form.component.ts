@@ -39,11 +39,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
-import { AttachmentService } from '../../../../../../../apps/services/bpm/core/document/main/attachment.service';
-import { ComboboxCollectionComponent } from '../../../../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from '../../../../../../../apps/components/general-components/input/input.component';
-import Swal from 'sweetalert2';
-import { rejectedFileTypes } from 'src/app/apps/constants/general/constants';
+import { AttachmentService } from '@shared/services';
+import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
+import { InputComponent } from '@shared/ui/input/input.component';import Swal from 'sweetalert2';
+import { rejectedFileTypes } from '@shared/constants';
 
 @Component({
   selector: 'vex-attachment-form',
@@ -214,6 +213,7 @@ export class AttachmentFormComponent {
       'attachmentType',
       this.attachmentForm.get('attachmentType')?.value
     );
+    formData.append('description', this.attachmentForm.get('description')?.value);
 
     const description = this.attachmentForm.get('description')?.value;
     if (description) {

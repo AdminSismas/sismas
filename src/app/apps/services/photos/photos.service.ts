@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 
 export interface Photo {
   key: string;
@@ -14,7 +14,9 @@ export interface Photo {
 export class PhotosService {
   private base_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}${envi.baunit}/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
   listNamePhotos(baunitId: string, municipioId: string): Observable<{ url: string, name: string }[]> {
     const url = `${this.base_url}${baunitId}${envi.photos}`;

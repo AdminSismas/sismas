@@ -2,7 +2,7 @@ import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import {
   ADMIN_ROLE_LIST,
   MODIFY_PEOPLE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { RoleGuard } from 'src/app/guards/role.guard';
 
 

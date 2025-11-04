@@ -41,15 +41,15 @@ import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/ve
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { InfoTableService } from '../../../services/general/info-table.service';
-import { SearchData } from '../../../interfaces/general/search-data.model';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { PageSearchData } from '../../../interfaces/general/page-search-data.model';
+import { InfoTableService } from '@shared/services';
+import { SearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
 import { Observable } from 'rxjs';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { FilterCadastralSearchComponent } from './filter-cadastral-search/filter-cadastral-search.component';
+import { FilterCadastralSearchComponent } from 'src/app/apps/components/tables/table-cadastral-search/filter-cadastral-search/filter-cadastral-search.component';
 import {
   CAN_RESOLVE_LIST,
   INFORMATION_HISTORICAL,
@@ -65,17 +65,17 @@ import {
   TITULO_PAGE_AVANZADA,
   TITULO_PAGE_CADASTRAL_DA,
   TYPE_INFORMATION_VISUAL
-} from '../../../constants/general/constants';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from '../../information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from '../../../interfaces/general/content-info-schema';
-import { GeographicViewerComponent } from '../../geographics/geographic-viewer/geographic-viewer.component';
-import { environment as envi } from '../../../../../environments/environments';
-import { SendInformationRegisterService } from '../../../services/register-procedure/send-information-register.service';
-import { ValidateInformationBaunitService } from '../../../services/general/validate-information-baunit.service';
+} from '@shared/constants';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { ContentInfoSchema } from '@shared/models';
+import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
+import { environment as envi } from '@environments/environments';
+import { SendInformationRegisterService } from '@shared/services';
+import { ValidateInformationBaunitService } from '@shared/services';
 import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';
-import { BpmProcessService } from '../../../services/bpm/bpm-process.service';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { DecodeJwt } from '../../../interfaces/user-details/user.model';
+import { BpmProcessService } from '@shared/services';
+import { UserService } from '@shared/services';
+import { DecodeJwt } from '@shared/interfaces';
 import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
 
 @Component({

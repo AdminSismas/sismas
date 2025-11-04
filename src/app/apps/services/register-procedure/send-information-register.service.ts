@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,9 @@ export class SendInformationRegisterService {
 
   private _baunitHead = new BehaviorSubject<any>({});
 
-  constructor() {
-  }
+  constructor(
+    private http: HttpClient
+  ) {}
 
   get informationRegister$(): Observable<BaunitHead> {
     return this._baunitHead.asObservable();

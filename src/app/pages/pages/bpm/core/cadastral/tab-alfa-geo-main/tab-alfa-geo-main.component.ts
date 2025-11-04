@@ -7,27 +7,27 @@ import {
   OnInit,
   signal
 } from '@angular/core';
-import { ProFlow } from '../../../../../../apps/interfaces/bpm/pro-flow';
-import { SendInfoGeneralService } from '../../../../../../apps/services/general/send-info-general.service';
+import { ProFlow } from '@shared/interfaces';
+import { SendInfoGeneralService } from '@shared/services';
 import { Router } from '@angular/router';
 import { getRandomInt } from '../../../../../../apps/utils/general';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
-import { GeographicViewerEmbeddedComponent } from '../../../../../../apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
+import { GeographicViewerEmbeddedComponent } from 'src/app/apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
 import { FluidHeightDirective } from '../../../../../../apps/directives/fluid-height.directive';
-import { environment } from '../../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { LIST_BUTTON_GEO_MAIN } from '../../../../../../apps/constants/general/constants';
 import { filter } from 'rxjs/operators';
-import { AlfaMainInformationComponent } from '../../../../../../apps/components/bpm/alfa-main/alfa-main-information/alfa-main-information.component';
+import { AlfaMainInformationComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/alfa-main-information.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
+import { LoadingServiceService } from '@shared/services';
 
 @Component({
   selector: 'vex-tab-alfa-geo-main',

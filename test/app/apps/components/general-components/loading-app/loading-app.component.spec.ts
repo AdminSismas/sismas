@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoadingAppComponent } from '../../../../../../src/app/apps/components/general-components/loading-app/loading-app.component';
+import { LoadingAppComponent } from '../../../../../../src/app/shared/components/loading-app/loading-app.component';
 
 describe(LoadingAppComponent.name, () => {
   let component: LoadingAppComponent;

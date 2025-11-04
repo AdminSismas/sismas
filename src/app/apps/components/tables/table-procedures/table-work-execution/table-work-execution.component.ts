@@ -20,8 +20,8 @@ import { Observable } from 'rxjs';
 // recursos de vex
 // recursos de angular material
 // recursos de archivos locales
-import { contentInfoAttachment } from '../../../../interfaces/general/content-info-attachment.model';
-import { contentInfoProcedures } from '../../../../interfaces/general/content-info-procedures.model';
+import { contentInfoAttachment } from '@shared/interfaces';
+import { contentInfoProcedures } from '@shared/interfaces';
 import {
   MY_DATE_FORMATS,
   // PAGE,
@@ -29,11 +29,11 @@ import {
   // PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
 } from '../../../../constants/general/procedures.constant';
-import { ProceduresCollection } from '../../../../interfaces/tables/procedures-progress.model';
+import { ProceduresCollection } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { ProceduresService } from '../../../../services/general/procedures.service';
+import { ProceduresService } from '@shared/services';
 import { MatSort, MatSortModule } from '@angular/material/sort';
-import { InformationPegeable } from '../../../../interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -50,10 +50,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { TaskResponseModel } from '../../../../interfaces/bpm/task-response.model';
+import { TaskResponseModel } from '@shared/interfaces';
 import { MatDialog } from '@angular/material/dialog';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { MODAL_SMALL, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
+import { MODAL_SMALL, PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '@shared/constants';
 
 @Component({
   selector: 'vex-table-execution',

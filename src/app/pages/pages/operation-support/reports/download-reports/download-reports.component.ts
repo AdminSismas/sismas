@@ -23,8 +23,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/constant';
 // import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
 // import { Content } from 'src/app/apps/interfaces/users/user';
-import { DownloadReportsService } from '../../../../../apps/services/operation-support/reports/download-reports.service';
-import { DownloadReport } from '../../../../../apps/interfaces/operation-support/reports/report.interface';
+import { DownloadReportsService } from '@shared/services';
+import { DownloadReport } from '@shared/interfaces';
 import {
   MatDatepickerInputEvent,
   MatDatepickerModule
@@ -34,7 +34,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-import { PAGE_SIZE_OPTION } from 'src/app/apps/constants/general/constants';
+import { PAGE_SIZE_OPTION } from '@shared/constants';
 
 // import * as FileSaver from 'file-saver';
 

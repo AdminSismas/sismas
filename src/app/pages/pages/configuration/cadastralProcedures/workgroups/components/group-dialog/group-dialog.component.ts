@@ -10,8 +10,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
 @Component({
   selector: 'vex-group-dialog',
   standalone: true,

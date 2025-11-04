@@ -7,8 +7,7 @@ import {
   output,
   signal
 } from '@angular/core';
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
-import { CREATE_PERSON_FORM } from '../../constants';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { CREATE_PERSON_FORM } from '../../constants';
 import { FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CreatePersonService } from '../../services/create-person.service';

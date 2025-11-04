@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { filter, take } from 'rxjs/operators';
 import { animate, AnimationBuilder, style } from '@angular/animations';
-import { LoadingServiceService } from '../../app/apps/services/general/loading-service.service';
+import { LoadingServiceService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DateFormatService } from '../services/general/date-format.service';
+import { DateFormatService } from '@shared/services';
 
 
 @Pipe({

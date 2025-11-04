@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { User } from 'src/app/apps/interfaces/users/user';
 import { MatInputModule } from '@angular/material/input';

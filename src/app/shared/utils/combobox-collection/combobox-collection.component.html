@@ -1,0 +1,25 @@
+<mat-form-field
+  [ngClass]="cssClasses()"
+  [hideRequiredMarker]="hideRequiredMarker()"
+>
+  <mat-label>{{ label() }}</mat-label>
+  <mat-select
+    [formControlName]="formControlNameCombobox()"
+    placeholder="{{ placeholderDomainName() }}"
+    (selectionChange)="onSelectionChange($event.value)"
+    class="w-full h-auto"
+  >
+    @for (option of options; track option) {
+      <mat-option [value]="valueCode() ? option.code : option.dispname">
+        {{ option.dispname }}
+      </mat-option>
+    }
+    <!-- Mensaje de carga -->
+    @if (loading) {
+      <mat-option disabled> Cargando... </mat-option>
+    }
+  </mat-select>
+  @if (hintValue() && hintValue()!.length > 0) {
+    <mat-hint>{{ hintValue() }}</mat-hint>
+  }
+</mat-form-field>

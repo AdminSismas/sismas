@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Department } from '../../interfaces/territorial-organization/department.model';
-import { Municipality } from '../../interfaces/territorial-organization/municipality.model';
-import { Township } from '../../interfaces/territorial-organization/township.model';
-import { Zone } from '../../interfaces/territorial-organization/zone.model';
-import { Sector } from '../../interfaces/territorial-organization/sector.model';
-import { Commune } from '../../interfaces/territorial-organization/commune.model';
-import { Neighborhood } from '../../interfaces/territorial-organization/neighborhood.model';
-import { Block } from '../../interfaces/territorial-organization/block.model';
-import { Sidewalk } from '../../interfaces/territorial-organization/sidewalk.model';
+import { Department } from '@shared/interfaces';
+import { Municipality } from '@shared/interfaces';
+import { Township } from '@shared/interfaces';
+import { TerritorialZone as Zone } from '@shared/interfaces';
+import { Sector } from '@shared/interfaces';
+import { Commune } from '@shared/interfaces';
+import { Neighborhood } from '@shared/interfaces';
+import { Block } from '@shared/interfaces';
+import { Sidewalk } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -21,20 +20,19 @@ export class TerritorialOrganizationService {
   basic_url = `${environment.url}:${environment.port}`;
 
   constructor(
-    private http: HttpClient,
-    private requestsService: SendGeneralRequestsService
+    private http: HttpClient
   ) {}
 
   getDataDeparments(): Observable<Department[]> {
     const { value: qbaunit, ccdpto } = environment.qbaunit;
     const url = `${this.basic_url}${qbaunit}${ccdpto}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   getDataDepartments(): Observable<Department[]> {
     const { value: qbaunit, ccdpto } = environment.qbaunit;
     const url = `${this.basic_url}${qbaunit}${ccdpto}`;
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   getAllDataDepartments(): Observable<Department[]> {
@@ -153,6 +151,6 @@ export class TerritorialOrganizationService {
   }
 
   private getData(url: string, params: any): Observable<any[]> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.get<any>(url, { params: params  });
   }
 }

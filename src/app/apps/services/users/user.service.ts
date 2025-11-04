@@ -5,22 +5,24 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import {
   User,
   CreateOutput,
   CreateUserParams,
   InformationPageableUser
-} from '../../interfaces/users/user';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
+} from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class CadastralUserService {
   private base_url = `${envi.url}:${envi.port}${envi.bpmUser.value}`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
   getUsers(
     page = 0,

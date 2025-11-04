@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { UserService } from './user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt, UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
-import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from 'src/app/apps/constants/general/constants';
+import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from '@shared/constants';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -47,6 +47,7 @@ export class AuthService {
 
     // Do something when the user becomes active again
     idle.onIdleEnd.subscribe(() => {
+      // TODO
     });
 
     // Do something when the user has timed out

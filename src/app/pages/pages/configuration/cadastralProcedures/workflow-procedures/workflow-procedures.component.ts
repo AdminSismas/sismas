@@ -9,7 +9,7 @@ import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-tool
 import { MatIconModule } from '@angular/material/icon';
 
 // Custom
-import { TableWorkflowComponent } from '../../../../../apps/components/tables/table-workflow/table-workflow.component';
+import { TableWorkflowComponent } from 'src/app/apps/components/tables/table-workflow/table-workflow.component';
 
 @Component({
   selector: 'vex-workflow-procedures',

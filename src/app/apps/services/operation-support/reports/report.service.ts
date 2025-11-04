@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ReportCategory } from '../../../interfaces/operation-support/reports/report-category.interface';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { ReportCategory } from '@shared/interfaces';
 
 import { Observable, of } from 'rxjs';
-import { DownloadReport } from '../../../interfaces/operation-support/reports/report.interface';
+import { DownloadReport } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

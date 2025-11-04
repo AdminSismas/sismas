@@ -3,8 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ModalWindowComponent } from '../modal-window/modal-window.component';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'vex-document-viewer',
@@ -28,11 +27,11 @@ export class DocumentViewerComponent {
     return this._safePdfUrl();
   });
 
-  // Estado reactivo
+  /* ---- Signals ---- */
   isLoading = signal(true);
   error = signal(false);
 
-  // URL del blob para cleanup
+  /* ---- Private ---- */
   private blobUrl: string | null = null;
 
   constructor(private sanitizer: DomSanitizer) {

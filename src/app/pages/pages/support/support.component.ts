@@ -30,7 +30,7 @@ import { Link } from '@vex/interfaces/link.interface';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Modulo, Subvista, Vista } from './interfaces/module.model';
 import { MODULES } from './constants/modules.constant';
-import { UserService } from '../auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { SupportFormValues } from './support_logs/interfaces/form-values.interfaces';

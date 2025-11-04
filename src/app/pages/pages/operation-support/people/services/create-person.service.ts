@@ -7,7 +7,7 @@ import {
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { environment as envi } from 'src/environments/environments';
+import { environment as envi } from '@environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { InfoContact } from 'src/app/apps/interfaces/information-property/info-contact';
 

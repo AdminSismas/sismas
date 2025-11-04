@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SendInfoGeneralService } from 'src/app/apps/services/general/send-info-general.service';
+import { SendInfoGeneralService } from '@shared/services';
 
 
 describe(SendInfoGeneralService.name , () => {

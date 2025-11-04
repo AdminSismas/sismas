@@ -9,7 +9,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
-import { InformationGeographicService } from '../../../services/geographics/information-geographic.service';
+import { InformationGeographicService } from '@features/bpm-workflows/services';
 import { MatButton } from '@angular/material/button';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
@@ -20,7 +20,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { getRandomInt, validateVariable } from '../../../utils/general';
-import { LoadingServiceService } from '../../../services/general/loading-service.service';
+import { LoadingServiceService } from '@shared/services';
 
 @Component({
   selector: 'vex-geographic-viewer-embedded',

@@ -13,17 +13,17 @@ import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/p
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { PAGE, PAGE_SIZE_OPTION, PAGE_SIZE } from '../../../constants/general/constants';
+import { PAGE, PAGE_SIZE_OPTION, PAGE_SIZE } from '@shared/constants';
 
 // Custom
-import { CreateSignatureComponent } from './create-signature/create-signature.component';
+import { CreateSignatureComponent } from 'src/app/apps/components/configuration/digitalized-signatures/create-signature/create-signature.component';
 import { DIGITALIZED_SIGNATURES_COLUMNS } from '../../../constants/general/digitalized-signatures.constants';
 import { DigitalizedSignaturesService } from 'src/app/apps/services/users/digitalized-signatures.service';
-import { InformationPegeable } from '../../../interfaces/general/information-pegeable.model';
-import { PageSortByData } from '../../../interfaces/general/page-sortBy-data.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { PageSortByData } from '@shared/interfaces';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
-import { UsersSignatures } from '../../../interfaces/users/digitalized-signatures';
+import { UsersSignatures } from '@shared/interfaces';
 
 @Component({
   selector: 'table-digitalized-signatures',

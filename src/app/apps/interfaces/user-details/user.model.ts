@@ -1,4 +1,4 @@
-import { InfoPerson } from '../information-property/info-person';
+import { InfoPerson } from '@shared/interfaces';
 
 export class UserDetails {
   userId: number;

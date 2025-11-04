@@ -30,11 +30,11 @@ import {
   User,
   InformationPageableUser
 } from 'src/app/apps/interfaces/users/user';
-import { UserService } from 'src/app/apps/services/users/user.service';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
 import { PAGE_SIZE_OPTION } from '../../../../../apps/constants/general/constants';
 import { TitleCasePipe } from '@angular/common';
+import { CadastralUserService } from 'src/app/apps/services/users/user.service';
 
 @Component({
   selector: 'vex-users',
@@ -88,7 +88,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
   constructor(
-    private userService: UserService,
+    private cadastralUserService: CadastralUserService,
     private readonly layoutSerices: VexLayoutService,
     private dialog: MatDialog,
   ) {}
@@ -109,7 +109,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   getUsers(page = 0, size = 10): void {
-    this.userService
+    this.cadastralUserService
       .getUsers(page, size)
       .subscribe((data: InformationPageableUser) => {
         this.dataSourceFormat(data);
@@ -183,7 +183,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     }
 
     const pageConfig = { page, size};
-    this.userService.searchUser(this.searchCtrl.value, pageConfig).subscribe((res) => {
+    this.cadastralUserService.searchUser(this.searchCtrl.value, pageConfig).subscribe((res) => {
       this.dataSource.data = res.content as User[];
       this.totalElements = res.totalElements ?? 0;
       this.page = page;

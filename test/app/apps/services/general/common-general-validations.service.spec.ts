@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  CommonGeneralValidationsService
-} from '../../../../../src/app/apps/services/general/common-general-validations.service';
+import { CommonGeneralValidationsService } from '@shared/services';
 
 describe(CommonGeneralValidationsService.name, () => {
   let service: CommonGeneralValidationsService;

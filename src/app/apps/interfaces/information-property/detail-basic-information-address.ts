@@ -1,5 +1,5 @@
-import { BasicInformationAddress } from './basic-information-address';
-import { TypeOperation } from '../general/content-info';
+import { BasicInformationAddress } from '@shared/interfaces';
+import { TypeOperation } from '@shared/interfaces';
 
 export class DetailBasicInformationAddress {
   direccionId?: string;

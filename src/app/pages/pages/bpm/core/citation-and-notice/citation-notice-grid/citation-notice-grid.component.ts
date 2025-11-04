@@ -18,11 +18,11 @@ import {
 import { stagger20ms } from '@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
-import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
-import { ParticipantsProcessService } from '../../../../../../apps/services/bpm/core/participants-process.service';
+import { ProcessParticipant } from '@shared/interfaces';
+import { PageSearchData } from '@shared/interfaces';
+import { ParticipantsProcessService } from '@shared/services';
 import { filter } from 'rxjs/operators';
-import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -31,10 +31,10 @@ import { CitationNoticeCardComponent } from '../components/citation-notice-card/
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
-  PAGE} from 'src/app/apps/constants/general/constants';
+  PAGE} from '@shared/constants';
 import { validateVariable } from '../../../../../../apps/utils/general';
-import { TypeProcessParticipant } from '../../../../../../apps/interfaces/bpm/citation-and-notice/info-participants.interface';
-import { LoadingServiceService } from '../../../../../../apps/services/general/loading-service.service';
+import { TypeProcessParticipant } from '@shared/interfaces';
+import { LoadingServiceService } from '@shared/services';
 @Component({
   selector: 'vex-citation-notice-grid',
   templateUrl: './citation-notice-grid.component.html',

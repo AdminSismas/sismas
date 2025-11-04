@@ -1,4 +1,4 @@
-import { UserDetails } from "../user-details/user.model";
+import { UserDetails } from '@shared/interfaces';
 
 export interface UsersSignatures {
   content:          UserDetails[];

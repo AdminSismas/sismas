@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { DateFormatService } from '../../../../../src/app/apps/services/general/date-format.service';
+import { DateFormatService } from '@shared/services';
 
 describe(DateFormatService.name, () => {
   let service: DateFormatService;

@@ -19,9 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { Certificate, CertificateDialogData } from '../../interfaces';
-import {
-  ViewFileDocumentManagementComponent
-} from 'src/app/apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';

@@ -9,8 +9,7 @@ import {
   signal
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { DynamicFormsComponent } from 'src/app/apps/components/forms/dynamic-forms/dynamic-forms.component';
-import { SEARCH_PERSON_FORM } from '../../constants';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { SEARCH_PERSON_FORM } from '../../constants';
 import { MatIconModule } from '@angular/material/icon';
 import { FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';

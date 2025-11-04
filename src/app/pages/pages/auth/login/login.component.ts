@@ -21,16 +21,16 @@ import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { AuthService } from './services/auth.service';
-import { UserService } from './services/user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
 import { jwtDecode } from 'jwt-decode';
 import {
   ENVIRONMENT_RETIRO_IMG,
   NAME_LOGO_IMG_SAN_VICENTE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';

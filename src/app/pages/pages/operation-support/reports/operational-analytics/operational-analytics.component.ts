@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import {
-  InConstructionComponent
-} from '../../../../../apps/components/general-components/in-construction/in-construction.component';
+import { InConstructionComponent } from '@shared/utils/in-construction/in-construction.component';
 
 @Component({
   selector: 'vex-operational-analytics',

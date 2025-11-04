@@ -1,4 +1,4 @@
-import { TypeOperation } from '../general/content-info';
+import { TypeOperation } from '@shared/interfaces';
 
 export class InformationAdjacent {
   ccColindanteBaunitId?: number;

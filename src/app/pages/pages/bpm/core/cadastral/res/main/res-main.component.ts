@@ -1,7 +1,7 @@
 import { Component, OnInit, input } from '@angular/core';
 import { MatDialogTitle } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { environment } from 'src/environments/environments';
+import { environment } from '@environments/environments';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';

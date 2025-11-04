@@ -15,12 +15,11 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { XtfFiles } from '../services/xtf-service.service';
 import { XtfServiceService } from '../services/xtf-service.service';
-import { UserService } from '../../../auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { LoaderComponent } from 'src/app/apps/components/general-components/loader/loader.component';
-
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 @Component({
   selector: 'vex-download-xtf',
   standalone: true,

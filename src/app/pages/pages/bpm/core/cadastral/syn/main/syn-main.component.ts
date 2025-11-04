@@ -5,17 +5,17 @@ import { PAGE } from 'src/app/apps/constants/bpm/workflow.constant';
 import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   PAGE_OPTION_UNIQUE
-} from 'src/app/apps/constants/general/constants';
-import { Operation } from 'src/app/apps/interfaces/bpm/operation';
-import { OperationContentInformation } from 'src/app/apps/interfaces/bpm/operation-content-information';
+} from '@shared/constants';
+import { Operation } from '@shared/interfaces';
+import { OperationContentInformation } from '@shared/interfaces';
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import { Pegeable } from 'src/app/apps/interfaces/general/pegeable.model';
-import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
-import { SyncMainService } from 'src/app/apps/services/bpm/sync-main.service';
+import { AlfaMainService } from '@features/bpm-workflows/services';
+import { SyncMainService } from '@features/bpm-workflows/services/core/sync-main.service';
 import Swal from 'sweetalert2';
-import { LoaderComponent } from 'src/app/apps/components/general-components/loader/loader.component';
-import { TableAlfaMainComponent } from 'src/app/apps/components/bpm/table-alfa-main/table-alfa-main.component';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
+import { TableAlfaMainComponent } from '@features/bpm-workflows/components/table-alfa-main/table-alfa-main.component';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { stagger40ms } from '@vex/animations/stagger.animation';
@@ -121,7 +121,7 @@ export class SynMainComponent implements OnInit {
     ) {
       let data: Operation[] = this.contentInformations().content;
       data = data.map((item) => new Operation(item));
-      
+
       const indexOperation = this.indexArraylist(data);
       const result = Object.keys(indexOperation).map((key) => [
         key,

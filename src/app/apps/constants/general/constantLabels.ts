@@ -1,6 +1,3 @@
-import { throwError } from 'rxjs';
-
-
 export const CONSTANT_MSG_KEYWORD_DELETE_ALFA_MAIN = 'Si desea reiniciar el control de cambios ingrese la palabra para continuar';
 export const CONSTANT_KEYWORD_DELETE_ALFA_MAIN = 'borrar';
 export const CONSTANT_MSG_KEYWORD_DELETE_GEO_MAIN = 'Si desea borrar los cambios geo ingrese la palabra para continuar';

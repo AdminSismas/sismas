@@ -16,16 +16,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SearchData } from '../../../../interfaces/general/search-data.model';
-import { ComboboxCollectionComponent } from '../../../general-components/combobox-collection/combobox-collection.component';
-import { InputComponent } from '../../../general-components/input/input.component';
-import { MODAL_LARGE } from '../../../../constants/general/constants';
+import { SearchData } from '@shared/interfaces';
+import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
+import { InputComponent } from '@shared/ui/input/input.component';import { MODAL_LARGE } from '@shared/constants';
 
 import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
-import { InformationPersonService } from 'src/app/apps/services/bpm/information-person.service';
+import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from 'src/app/apps/services/bpm/core/alfa-main.service';
-import { PaymentValidationComponent } from '../../../general-components/payment-validation/payment-validation.component';
+import { AlfaMainService } from '@features/bpm-workflows/services';
+import { PaymentValidationComponent } from 'src/app/apps/components/general-components/payment-validation/payment-validation.component';
 import { DataViewCertificate } from 'src/app/apps/interfaces/document-management/view-certificate-management-data.interface';
 
 @Component({
@@ -105,7 +104,7 @@ export class FilterCertificateSearchComponent {
         this.form.get('individualNameNoExist')?.disable();
         return;
       }
-      
+
       this.dialog.closeAll();
       this.openViewCertificateManagement(data);
     });

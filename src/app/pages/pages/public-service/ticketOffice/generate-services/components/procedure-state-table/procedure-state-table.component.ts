@@ -29,7 +29,7 @@ import {
   MODAL_LARGE,
   PAGE_SIZE,
   PAGE_SIZE_OPTION
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewCertificateComponent } from '../view-certificate/view-certificate.component';
 import { MatTooltipModule } from '@angular/material/tooltip';

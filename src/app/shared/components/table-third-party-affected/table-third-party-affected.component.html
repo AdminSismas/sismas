@@ -1,0 +1,175 @@
+<div>
+  <div class="p-0 m-0 mt-0 mb-4 flex flex-col sm:flex-row items-center gap-3">
+    <h2
+      class="title flex flex-auto items-center cursor-pointer"
+      (click)="openThirdPartyAffected()"
+    >
+      <span
+        @scaleIn
+        class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10 transition ease-out"
+      >
+        <mat-icon
+          class="icon-sm"
+          svgIcon="mat:vertical_split"
+        ></mat-icon>
+      </span>
+      <span class="block"> Participantes </span>
+    </h2>
+    @if (!readOnly()) {
+      <button
+        color="accent"
+        mat-raised-button
+        type="button"
+        (click)="autoThirdPartyAffected()"
+      >
+        <mat-icon
+          class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
+          svgIcon="mat:autorenew"
+        ></mat-icon>
+        <span>Agregar automático</span>
+      </button>
+      <button
+        color="primary"
+        mat-raised-button
+        type="button"
+        (click)="openThirdPartyAffected()"
+      >
+        <mat-icon
+          class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-sm"
+          svgIcon="mat:add_circle_outline"
+        ></mat-icon>
+        <span>Agregar manual</span>
+      </button>
+    }
+  </div>
+  <div class="card h-full flex flex-col mat-elevation-z3">
+    <div
+      class="w-full flex flex-col justify-between py-0 overflow-auto"
+      vexMinFluidHeight
+      fluidHeight="710"
+    >
+      <table
+        @stagger
+        [dataSource]="dataSource()"
+        class="w-full"
+        mat-table
+        matSort
+      >
+        <!-- Text Columns -->
+        @for (column of columns; track column.property) {
+          @if (column.type === "text") {
+            <ng-container [matColumnDef]="column.property">
+              <th
+                *matHeaderCellDef
+                class="items-center"
+                mat-header-cell
+                mat-sort-header
+              >
+                {{ column.label }}
+              </th>
+              <td
+                *matCellDef="let row"
+                [ngClass]="column.cssClasses"
+                mat-cell
+                class="pl-2 pr-2"
+              >
+                {{ row[column.property] }}
+              </td>
+            </ng-container>
+          }
+        } @empty {
+          <ng-container>
+            <td
+              *matCellDef="let row"
+              class="w-10 text-secondary pl-2 pr-2"
+              mat-cell
+            >
+              <div
+                class="no-data-information text-gray-500 text-lg flex flex-col sm:flex-row w-full"
+              >
+                No hay información disponible
+              </div>
+            </td>
+          </ng-container>
+        }
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="actions">
+          <th
+            *matHeaderCellDef
+            mat-header-cell
+            mat-sort-header
+            class="items-center"
+          ></th>
+          <td
+            *matCellDef="let row"
+            class="w-10 text-secondary pl-2 pr-2"
+            mat-cell
+          >
+            <button
+              (click)="$event.stopPropagation()"
+              [matMenuTriggerData]="{ customer: row }"
+              [matMenuTriggerFor]="actionsMenu"
+              mat-icon-button
+              type="button"
+            >
+              <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="visibleColumns"
+          class="bg-app-bar border-b sticky"
+        ></tr>
+        <tr
+          *matRowDef="let row; columns: visibleColumns"
+          @fadeInUp
+          class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+          mat-row
+        ></tr>
+      </table>
+      @if (
+        dataSource().data.length <= 0 || dataSource().filteredData.length <= 0
+      ) {
+        <div
+          class="no-data-information items-center justify-center h-full w-full m-auto"
+        >
+          No hay información disponible
+        </div>
+      }
+    </div>
+    <div class="flex flex-col sm:flex-row w-full left-0">
+      <div class="flex-1"></div>
+      <mat-paginator
+        #paginatorBasicTable
+        [pageSizeOptions]="pageSizeOptions"
+        [length]="totalElements()"
+        [pageSize]="pageSize"
+        [pageIndex]="page()"
+        (page)="refreshInformationPaginator($event)"
+        class="sticky left-0"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>
+
+<mat-menu
+  #actionsMenu="matMenu"
+  xPosition="before"
+  yPosition="below"
+>
+  <ng-template
+    let-customer="customer"
+    matMenuContent
+  >
+    <button
+      (click)="deleteInformation(customer)"
+      mat-menu-item
+    >
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Retirar</span>
+    </button>
+  </ng-template>
+</mat-menu>

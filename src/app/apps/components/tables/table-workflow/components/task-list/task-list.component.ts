@@ -1,18 +1,17 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { taskListColumns } from '../../constants/task-list.constants';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { taskListColumns } from 'src/app/apps/components/tables/table-workflow/constants/task-list.constants';
 import {
   Proflow,
   TaskListData
-} from 'src/app/apps/interfaces/bpm/workflow.model';
-import { LaneNamesPipe } from '../../pipe/lane-names.pipe';
+} from '@shared/interfaces';
+import { LaneNamesPipe } from 'src/app/apps/components/tables/table-workflow/pipe/lane-names.pipe';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { WorkflowService } from 'src/app/apps/services/bpm/workflow.service';
-import { EditTaskComponent } from '../edit-task/edit-task.component';
-import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
+import { WorkflowService } from '@features/bpm-workflows/services/core/workflow.service';
+import { EditTaskComponent } from 'src/app/apps/components/tables/table-workflow/components/edit-task/edit-task.component';
+import { MODAL_SMALL_XS } from '@shared/constants';
 import Swal from 'sweetalert2';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';

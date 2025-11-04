@@ -23,10 +23,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
-import { environment } from '../../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
-import { InformationPegeable } from '../../../../../apps/interfaces/general/information-pegeable.model';
+import { InformationPegeable } from '@shared/interfaces';
 import {
   MODAL_SMALL,
   PAGE,
@@ -37,20 +37,20 @@ import {
   PANEL_DEVOLUTION_TASKS,
   PANEL_PRIORITIZED_TASKS
 } from '../../../../../apps/constants/general/constants';
-import { PageSearchData } from '../../../../../apps/interfaces/general/page-search-data.model';
-import { ProTaskE } from '../../../../../apps/interfaces/bpm/pro-task-e';
-import { SendInfoGeneralService } from '../../../../../apps/services/general/send-info-general.service';
+import { PageSearchData } from '@shared/interfaces';
+import { ProTaskE } from '@shared/interfaces';
+import { SendInfoGeneralService } from '@shared/services';
 import { TaskCardComponent } from '../components/task-card/task-card.component';
-import { TasksPanelService } from '../../../../../apps/services/bpm/tasks-panel.service';
-import { TaskResponseModel } from '../../../../../apps/interfaces/bpm/task-response.model';
-import { TaskRetailExecuteResponseModel } from '../../../../../apps/interfaces/bpm/task-retail-execute-response.model';
+import { TasksPanelService } from '@features/bpm-workflows/services';
+import { TaskResponseModel } from '@shared/interfaces';
+import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import {
   DetailInformationTasksComponent
 } from '../components/detail-information-tasks/detail-information-tasks.component';
-import { BpmProcessService, PermissionVailable } from 'src/app/apps/services/bpm/bpm-process.service';
-import { LoadingServiceService } from '../../../../../apps/services/general/loading-service.service';
+import { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/core/bpm-process.service';
+import { LoadingServiceService } from '@shared/services';
 
 @Component({
   selector: 'vex-assigned-tasks',

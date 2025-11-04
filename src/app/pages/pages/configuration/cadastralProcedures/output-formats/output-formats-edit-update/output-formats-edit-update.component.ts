@@ -4,7 +4,7 @@ import {
   FooterTemplateModel,
   HeaderTemplateModel,
   OutFormatModel
-} from '../../../../../../apps/interfaces/general/out-format.model';
+} from '@shared/interfaces';
 
 import { QuillEditorComponent } from 'ngx-quill';
 import { CommonModule } from '@angular/common';
@@ -20,9 +20,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormControl, Vali
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { InputComponent } from '../../../../../../apps/components/general-components/input/input.component';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { InputComponent } from '@shared/ui/input/input.component';import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { UserService } from '@shared/services';
 import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../apps/constants/general/constants';
 import { MatIconButton } from '@angular/material/button';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';

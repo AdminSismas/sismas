@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { environment } from '../../../../../environments/environments';
+import { environment } from '@environments/environments';
 import Swal from 'sweetalert2';
 import { ForgotPasswordService } from './services/forgot-password.service';
 import { catchError } from 'rxjs';

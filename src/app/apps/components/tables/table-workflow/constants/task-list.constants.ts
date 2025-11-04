@@ -1,5 +1,5 @@
 import { TableColumn } from "@vex/interfaces/table-column.interface";
-import { Proflow } from "src/app/apps/interfaces/bpm/workflow.model";
+import { Proflow } from '@shared/interfaces';
 
 
 export const taskListColumns: TableColumn<Proflow>[] = [

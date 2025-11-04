@@ -1,8 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ModalWindowComponent } from 'src/app/apps/components/general-components/modal-window/modal-window.component';
-import { Individual, User } from 'src/app/apps/interfaces/users/user';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { Individual, User } from 'src/app/apps/interfaces/users/user';
 import { groupMemberColumns } from '../../constants/group-member.constants';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -12,8 +11,8 @@ import Swal from 'sweetalert2';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { AddMemberGroupComponent } from '../add-member-group/add-member-group.component';
-import { MODAL_SMALL_XS } from 'src/app/apps/constants/general/constants';
-import { UserService } from 'src/app/apps/services/users/user.service';
+import { MODAL_SMALL_XS } from '@shared/constants';
+import { CadastralUserService } from 'src/app/apps/services/users/user.service';
 
 @Component({
   selector: 'group-member',
@@ -47,7 +46,7 @@ export class GroupMemberComponent {
     groupId: number;
   }>(MAT_DIALOG_DATA);
   workGroupService = inject(WorkgroupsService);
-  userService = inject(UserService);
+  cadastralUserService = inject(CadastralUserService);
   dialog = inject(MatDialog);
 
   // Signals
@@ -135,7 +134,7 @@ export class GroupMemberComponent {
   }
 
   addMember() {
-    this.userService.getUsers(0, 1000).subscribe((users) => {
+    this.cadastralUserService.getUsers(0, 1000).subscribe((users) => {
       this.dialog
         .open(AddMemberGroupComponent, {
           ...MODAL_SMALL_XS,

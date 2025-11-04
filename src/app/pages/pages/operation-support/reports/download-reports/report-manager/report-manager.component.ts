@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { ReportCategory } from '../../../../../../apps/interfaces/operation-support/reports/report-category.interface';
+import { ReportCategory } from '@shared/interfaces';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';

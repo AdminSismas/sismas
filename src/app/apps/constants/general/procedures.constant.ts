@@ -1,5 +1,5 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { contentInfoProcedures } from '../../interfaces/general/content-info-procedures.model';
+import { contentInfoProcedures } from '@shared/interfaces';
 
 export const USERS_ACTIONS_ENABLED = ['ADMIN', 'USER_LEAD', 'USER_COORD'];
 export const TABLE_COLUMN_PROPERTIES: TableColumn<contentInfoProcedures>[] = [

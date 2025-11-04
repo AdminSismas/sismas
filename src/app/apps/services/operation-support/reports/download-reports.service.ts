@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DownloadReport } from '../../../interfaces/operation-support/reports/report.interface';
+import { DownloadReport } from '@shared/interfaces';
 
 
 @Injectable({
@@ -11,7 +11,9 @@ export class DownloadReportsService {
 
   private apiUrl = 'https://dev.api.cic-ware.com/reportes/consultas.php';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getReports(startDate: string, endDate: string): Observable<DownloadReport[]> {
     const params = new HttpParams()

@@ -271,7 +271,7 @@ export class GeneralValidationsService {
   emailValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) return null;
-      
+
       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const valid = emailPattern.test(control.value);
       return valid ? null : { invalidEmail: true };

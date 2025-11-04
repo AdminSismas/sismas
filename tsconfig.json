@@ -24,6 +24,48 @@
     "paths": {
       "@vex/*": [
         "./src/@vex/*"
+      ],
+      "@features/*": [
+        "src/app/features/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@components/*": [
+        "src/app/shared/ui/components/*"
+      ],
+      "@services/*": [
+        "src/app/shared/services/*"
+      ],
+      "@models/*": [
+        "src/app/shared/models/*"
+      ],
+      "@pipes/*": [
+        "src/app/shared/pipes/*"
+      ],
+      "@shared/services": [
+        "src/app/shared/services"
+      ],
+      "@shared/components": [
+        "src/app/shared/components"
+      ],
+      "@shared/interfaces": [
+        "src/app/shared/interfaces"
+      ],
+      "@shared/constants": [
+        "src/app/shared/constants"
+      ],
+      "@core/guards": [
+        "src/app/core/guards"
+      ],
+      "@core/interceptors": [
+        "src/app/core/interceptors"
+      ],
+      "@environments/*":[
+        "src/environments/*"
       ]
     },
 

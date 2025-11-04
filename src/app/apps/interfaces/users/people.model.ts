@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TypeOperationPeople } from "../general/content-info";
+import { TypeOperationPeople } from '@shared/interfaces';
 
 export class People {
   companyName: string;

@@ -48,13 +48,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // Custom
 import {
   ComboboxCollectionComponent
-} from '../../../../../../apps/components/general-components/combobox-collection/combobox-collection.component';
+} from '@shared/utils/combobox-collection/combobox-collection.component';
 import {
   CreatePeopleComponent
 } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
-import { InfoPerson } from '../../../../../../apps/interfaces/information-property/info-person';
-import { InformationPersonService } from '../../../../../../apps/services/bpm/information-person.service';
+import { InfoPerson } from '@shared/interfaces';
+import { InformationPersonService } from '@shared/services';
 import {
   MODAL_SMALL_LARGE,
   PAGE,
@@ -62,7 +62,7 @@ import {
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_BASIC_PRINCIPALS
 } from '../../../../../../apps/constants/general/constants';
-import { ProcessParticipant } from '../../../../../../apps/interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 
 @Component({
   selector: 'vex-basic-participant-table',

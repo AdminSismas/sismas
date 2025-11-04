@@ -1,5 +1,5 @@
 import { Pipe, type PipeTransform } from '@angular/core';
-import { CONSTANTE_CITATION, CONSTANTE_CITED, CONSTANTE_NOTIFIED, LIST_NOTICE_NOTIFICATIONS } from 'src/app/apps/constants/general/constants';
+import { CONSTANTE_CITATION, CONSTANTE_CITED, CONSTANTE_NOTIFIED, LIST_NOTICE_NOTIFICATIONS } from '@shared/constants';
 
 @Pipe({
   name: 'citationNoticeClass',

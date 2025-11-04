@@ -11,8 +11,8 @@ const routes: VexRoutes = [
   {
     path: 'bpm-core/:id',
     loadComponent: () =>
-      import('./../bpm/bmp-core/bmp-core.component').then(
-        (m) => m.BmpCoreComponent
+      import('./../bpm/bpm-core/bpm-core.component').then(
+        (m) => m.BpmCoreComponent
       ),
     resolve: { proFlow: proFlowDataResolver, resources : resourcesDataResolver }
   },

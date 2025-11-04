@@ -1,4 +1,4 @@
-import { Component, computed, Input, OnInit } from '@angular/core';
+import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,13 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { getZoneParams } from '../../../../constants/economic-mod-land/zone-constants';
-import { Zone, ZoneServices } from 'src/app/apps/interfaces/economic-mod-land/zone-description';
-import { CreateZoneComponent } from '../create-zone/create-zone.component';
+import { Zone, ZoneServices } from '@features/economic-zones/models';
+import { CreateZoneComponent } from 'src/app/apps/components/configuration/economic-mod-land/create-zone/create-zone.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatMenuModule } from '@angular/material/menu';
-import { RefreshService } from 'src/app/apps/services/economic-mod-land/refresh-service.service';
-import { EconomicZoneComponent } from '../economic-zone/economic-zone.component';
-import { MODAL_SMALL } from '../../../../constants/general/constants';
+import { RefreshService } from '@features/economic-zones/services/refresh-service.service';
+import { EconomicZoneComponent } from 'src/app/apps/components/configuration/economic-mod-land/economic-zone/economic-zone.component';
+import { MODAL_SMALL } from '@shared/constants';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -41,6 +41,11 @@ import Swal from 'sweetalert2';
   styles: ``
 })
 export class ZoneManagerComponent implements OnInit {
+  /* ---- Injects ---- */
+  private dialog = inject(MatDialog);
+  private fb = inject(FormBuilder);
+  private snackbar = inject(MatSnackBar);
+  private refreshServices = inject(RefreshService);
 
   public form: FormGroup = this.fb.group({
     department: ['', Validators.required],
@@ -63,19 +68,12 @@ export class ZoneManagerComponent implements OnInit {
   public zonesCode = '';
 
   @Input({ required: true }) public typeZone: 'urbana' | 'rural' | 'geoeconómica' = 'urbana';
-  @Input({ required: true }) public service!: ZoneServices;
+  @Input({ required: true }) public service!: any;
   @Input({ required: true }) public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   @Input({ required: true }) public columns: { name: string, title: string }[] = [];
   @Input({ required: true }) public displayedColumns: string[] = [];
   @Input() public divpolLv1 = '';
   @Input() public divpolLv2 = '';
-
-  constructor(
-    private dialog: MatDialog,
-    private fb: FormBuilder,
-    private snackbar: MatSnackBar,
-    private refreshServices: RefreshService
-  ) { }
 
   ngOnInit(): void {
     this.displayedColumns = this.columns.map((column) => column.name);

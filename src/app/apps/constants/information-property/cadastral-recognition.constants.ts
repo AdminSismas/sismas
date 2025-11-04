@@ -1,6 +1,6 @@
-import { JSONInput } from '../../interfaces/forms/dynamic-forms';
+import { JSONInput } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
+import { ProcessParticipant } from '@shared/interfaces';
 
 export const INPUT_FORM_VISIT: JSONInput[] = [
   {

@@ -1,6 +1,6 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { contentInfoWorkflow } from '../../interfaces/general/content-info-workflow.model';
-import { JSONInput } from '../../interfaces/forms/dynamic-forms';
+import { contentInfoWorkflow } from '@shared/interfaces';
+import { JSONInput } from '@shared/interfaces';
 import { Validators } from '@angular/forms';
 
 export const PAGE = 0;

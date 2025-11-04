@@ -16,10 +16,10 @@ import {
   NAVIGATION_LOADER_PUBLIC_SERVICE,
   NAVIGATION_THEMATIC_MAP
 } from '../../layouts/constants/constant-loader';
-import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
-import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
+import { TasksPanelService } from '@features/bpm-workflows/services';
+import { ProTaskE } from '@shared/interfaces';
 import { filter } from 'rxjs/operators';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
+import { UserService } from '@shared/services';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import {
   ADMIN_ROLE_LIST,
@@ -27,7 +27,7 @@ import {
   EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM,
   MODIFY_PEOPLE,
   NOT_GUEST_USERS_ROLE_LIST
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({

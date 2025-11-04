@@ -67,7 +67,6 @@
         <mat-tab [label]="option.title">
           <ng-template matTabContent>
             <vex-cadastral-information-property
-              [id]="'CadastralInformation_' + option.schema"
               [label]="option.title"
               [schema]="option.schema"
               [typeInformation]="typeInformation"
@@ -99,7 +98,6 @@
     fluidHeight="105"
   >
     <vex-cadastral-information-property
-      [id]="'CadastralInformation_' + optionSchemas[0].schema"
       [label]="optionSchemas[0].title"
       [schema]="optionSchemas[0].schema"
       [typeInformation]="typeInformation"
@@ -123,7 +121,6 @@
     fluidHeight="105"
   >
     <vex-cadastral-information-property
-      [id]="'CadastralInformation_' + optionSchemas[0].schema"
       [label]="optionSchemas[0].title"
       [schema]="optionSchemas[0].schema"
       [typeInformation]="typeInformation"
@@ -139,24 +136,3 @@
     ></vex-cadastral-information-property>
   </vex-page-layout-content>
 }
-
-<mat-menu
-  #settingsMenu="matMenu"
-  xPosition="before"
-  yPosition="below"
->
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:print"></mat-icon>
-    <span>Imprimir</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:download"></mat-icon>
-    <span>Exportar</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon svgIcon="mat:delete"></mat-icon>
-    <span>Borrar</span>
-  </button>
-</mat-menu>

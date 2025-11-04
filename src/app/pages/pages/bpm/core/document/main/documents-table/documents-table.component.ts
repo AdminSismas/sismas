@@ -45,18 +45,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Custom
-import { AttachmentCollection } from '../../../../../../../apps/interfaces/document-management/attachment.model';
-import { AttachmentService } from '../../../../../../../apps/services/document-management/document-management.service';
-import { contentInfoAttachment } from '../../../../../../../apps/interfaces/general/content-info-attachment.model';
-import { InformationPegeable } from '../../../../../../../apps/interfaces/general/information-pegeable.model';
+import { AttachmentCollection } from '@shared/interfaces';
+import { AttachmentService } from '@shared/services';
+import { contentInfoAttachment } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
-import { ViewFileDocumentManagementComponent } from '../../../../../../../apps/components/general-components/view-file-document-management/view-file-document-management.component';
+import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import {PAGE,
 PAGE_SIZE,
 PAGE_SIZE_OPTION} from '../../../../../../../apps/constants/general/constants';
 import {
-  TABLE_COLUMN_PROPERTIES
-} from '../../../../../../../apps/constants/general/attachment.constant';
+  TABLE_COLUMN_ATTACHMENT
+} from '../../../../../../../features/bpm-workflows/constants/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
 import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constants';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -129,7 +129,7 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
   pageSize: number = PAGE_SIZE;
   totalElements = 0;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
-  columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_PROPERTIES;
+  columns: TableColumn<contentInfoAttachment>[] = TABLE_COLUMN_ATTACHMENT;
 
   @ViewChild(MatPaginator, { static: false }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;

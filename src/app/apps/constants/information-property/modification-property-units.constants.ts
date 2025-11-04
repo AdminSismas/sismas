@@ -1,5 +1,5 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { BaUnitHeadPercentage } from '../../interfaces/information-property/baunit-head-percentage.model';
+import { BaUnitHeadPercentage } from '@shared/interfaces';
 
 
 export const TABLE_COLUMN_UNITS_TABLE_COLUMNS: TableColumn<BaUnitHeadPercentage>[] = [

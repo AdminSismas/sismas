@@ -1,12 +1,12 @@
-import { BaunitHead } from '../../interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@shared/interfaces';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { BasicInformationAddress } from '../../interfaces/information-property/basic-information-address';
-import { ContentInformationConstruction } from '../../interfaces/information-property/content-information-construction';
-import { InfoAppraisal } from '../../interfaces/information-property/info-appraisal';
-import { BasicComponentTemplate } from '../../interfaces/bpm/render-template.types';
-import { ProcessParticipant } from '../../interfaces/bpm/process-participant';
-import { Operation } from '../../interfaces/bpm/operation';
-import { environment } from '../../../../environments/environments';
+import { BasicInformationAddress } from '@shared/interfaces';
+import { ContentInformationConstruction } from '@shared/interfaces';
+import { InfoAppraisal } from '@shared/interfaces';
+import { BasicComponentTemplate } from '@shared/interfaces';
+import { ProcessParticipant } from '@shared/interfaces';
+import { Operation } from '@shared/interfaces';
+import { environment } from '@environments/environments';
 import {
   CheckTypeQualificationMode, NavigationItemCadastralInfo,
   TypeButtonAlfaMain,
@@ -16,21 +16,21 @@ import {
   TypeOperationGeoMain,
   TypeQualificationMode,
   ValidateQualificationByDomBuiltType
-} from '../../interfaces/general/content-info';
-import { CadastralChangeLog } from '../../interfaces/bpm/cadastral-change-log';
-import { OutFormatModel } from '../../interfaces/general/out-format.model';
-import { DataFolio } from '../../interfaces/information-property/snr-folio-info';
-import { DataSource } from '../../interfaces/information-property/snr-source-info';
-import { DataPerson } from '../../interfaces/information-property/snr-person-info';
-import { InformationAdjacent } from '../../interfaces/information-property/information-adjacent';
-import { ZoneBAUnitFisica } from '../../interfaces/information-property/zone-baunit';
-import { ProcessParticipantTableMenu } from '../../interfaces/bpm/citation-and-notice/info-participants.interface';
+} from '@shared/interfaces';
+import { CadastreChangeLog as CadastralChangeLog } from '@shared/interfaces';
+import { OutFormatModel } from '@shared/interfaces';
+import { DataFolio } from '@shared/interfaces';
+import { DataSource } from '@shared/interfaces';
+import { DataPerson } from '@shared/interfaces';
+import { InformationAdjacent } from '@shared/interfaces';
+import { ZoneBAUnitFisica } from '@shared/interfaces';
+import { ProcessParticipantTableMenu } from '@shared/interfaces';
 import {
   CreateBasicInformationAddress,
   DetailBasicInformationAddress
-} from '../../interfaces/information-property/detail-basic-information-address';
-import { ModalSize } from '../../interfaces/general/modal-size.interface';
-import { People } from '../../interfaces/users/people.model';
+} from '@shared/interfaces';
+import { ModalSize } from '@shared/interfaces';
+import { People } from '@shared/interfaces';
 
 export const GUION = '-';
 export const SPACE = ' ';

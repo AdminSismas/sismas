@@ -6,13 +6,14 @@ import {
   HttpParams,
   HttpStatusCode
 } from '@angular/common/http';
-import { environment as envi } from '../../../../environments/environments';
-import { SendGeneralRequestsService } from '../general/send-general-requests.service';
+import { environment as envi } from '@environments/environments';
 import { Observable, throwError } from 'rxjs';
-import { InformationPegeable } from '../../interfaces/general/information-pegeable.model';
-import { InfoPerson } from '../../interfaces/information-property/info-person';
-import { InfoContact } from '../../interfaces/information-property/info-contact';
-import { People } from '../../interfaces/users/people.model';
+import { InformationPegeable } from '@shared/interfaces';
+import { InfoPerson } from '@shared/interfaces';
+
+// import { InfoContact } from '@shared/interfaces';
+import { People } from '@shared/interfaces';
+import { InfoContact } from '@shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,6 @@ export class PeopleService {
   private url_basic = `${envi.url}:${envi.port}`;
 
   constructor(
-    private requestsService: SendGeneralRequestsService,
     private http: HttpClient
   ) {}
 
@@ -63,9 +63,8 @@ export class PeopleService {
   }
 
   editPerson(id: string, body: any): Observable<People> {
-    return this.requestsService.sendRequestsUpdatePutBody(
-      `${envi.url}:${envi.port}${envi.individual.value}/${id}?baunitId=TESTS`,
-      body
+    return this.http.put<any>(
+      `${envi.url}:${envi.port}${envi.individual.value}/${id}?baunitId=TESTS`, body
     );
   }
 
@@ -88,19 +87,19 @@ export class PeopleService {
   }
 
   private getData(url: string, params: any): Observable<InfoPerson> {
-    return this.requestsService.sendRequestsGetOption(url, { params: params });
+    return this.http.get<any>(url, { params: params  });
   }
 
   private getDataFetch<T>(url: string): Observable<T> {
-    return this.requestsService.sendRequestsFetchGet(url);
+    return this.http.get<any>(url);
   }
 
   private fetchBody(url: any, body: any): Observable<People> {
-    return this.requestsService.sendRequestsFetchPostBody(url, body);
+    return this.http.post<any>(url, body);
   }
 
   private deleteBody(url: any): Observable<InformationPegeable> {
-    return this.requestsService.sendDeleteFetch(url);
+    return this.http.delete<any>(url);
   }
 
   errorNotFoundContact(error: HttpErrorResponse) {
@@ -113,5 +112,5 @@ export class PeopleService {
     return throwError(() => error);
   }
 
-  
+
 }
