@@ -56,10 +56,9 @@ export class ReportManagerService {
   private http = inject(HttpClient);
 
   getCategories(municipalities: string[]): Observable<ReportType[]> {
-    const categories: ReportType[] = municipalities.flatMap((municipality, index) => {
+    const categories: ReportType[] = municipalities.flatMap((municipality) => {
         return this.baseCategories.map((category) => ({
           ...category,
-          id: index + 1,
           municipality: municipality
         }));
       });
@@ -75,6 +74,16 @@ export class ReportManagerService {
 
   getExcelReport(urlEnd: string, municipality: string) {
     const url = `${this.base_url}${envi.export}${envi.proexecution}/${municipality}/${urlEnd}`;
+
+    return this.http.get(url, {
+      observe: 'response',
+      responseType: 'blob'
+    });
+  }
+
+  getUpdateReport(municipality: string, department: string, zoneType: 'rural' | 'urbano') {
+    const { export: exportPath, actualizacionesMultiples } = envi;
+    const url = `${this.base_url}${exportPath}${actualizacionesMultiples}/${department}${municipality}/${zoneType}`;
 
     return this.http.get(url, {
       observe: 'response',

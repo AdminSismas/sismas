@@ -70,8 +70,22 @@ export class ReportMasterComponent implements OnInit {
     this.dataSource().filter = filterValue;
   }
 
-  selectCategory(urlEnd: string, name: string, municipality: string) {
+  selectCategory(urlEnd: string, name: string, municipality: string, reportId: number) {
     const municipalityCodePipe = new MuncipalityCodePipe();
+
+    console.log(reportId);
+
+    if ([3, 4].includes(reportId)) {
+      const zoneType: 'rural' | 'urbano' = reportId === 3 ? 'urbano' : 'rural';
+      this.reportManagerService.getUpdateReport(municipality, environment.departments, zoneType)
+      .subscribe((response) => {
+        const nameMunicipality = municipalityCodePipe.transform(municipality);
+        const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
+        const type = response.headers.get('content-type') as string;
+        this.downloadFile(response.body!, type, filename);
+      });
+      return;
+    }
 
     this.reportManagerService.getExcelReport(urlEnd, municipality).subscribe({
       next: (response) => {
