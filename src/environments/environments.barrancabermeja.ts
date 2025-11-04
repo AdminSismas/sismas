@@ -164,7 +164,7 @@ export const environment = {
   logoGeogestion: "",
   logoMasora: "",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
-  municipalities: ["674"],
+  municipalities: ["081"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",
   myWork_cadastralSearchDa: "/openData/cadastralSearchDA",
   myWork_tasksPanel: "/myWork/tasks/tasksPanel/",

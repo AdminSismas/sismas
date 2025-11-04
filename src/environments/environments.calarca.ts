@@ -164,7 +164,7 @@ export const environment = {
   logoGeogestion: "",
   logoMasora: "assets/img/logo/logo_manizales_3.png",
   metrict_cadastral_change: "/metrict/CadastreChangeLog/",
-  municipalities: ["001", "674", "607"],
+  municipalities: ["130"],
   myWork_cadastralSearch: "/myWork/cadastralSearch",
   myWork_cadastralSearchDa: "/openData/cadastralSearchDA",
   myWork_tasksPanel: "/myWork/tasks/tasksPanel/",
