@@ -127,6 +127,7 @@ export const environment = {
   compare_temp: "/compare/temp/",
   contact: "/contact",
   copy: "/copy",
+  departments: ["05"],
   divpol: "/divpol",
   domain_domain: "/domain",
   domain_domainName: "/domain/name",
