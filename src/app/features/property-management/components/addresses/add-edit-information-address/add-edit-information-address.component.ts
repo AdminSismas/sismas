@@ -14,7 +14,8 @@ import {
   TYPE_CREATE
 } from '@shared/constants';
 import { environment } from '@environments/environments';
-import { InformationPropertyService, GeneralValidationsService } from '@shared/services';
+import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import {
   AddEditInformationDataI,
   CreateBasicInformationAddress,

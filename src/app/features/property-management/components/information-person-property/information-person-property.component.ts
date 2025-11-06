@@ -2,7 +2,7 @@
 import {
   ChangeDetectorRef,
   Component,
-  Inject,
+  inject,
   SimpleChanges,
   ViewChild,
   OnInit,
@@ -37,7 +37,7 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import {
   DataPerson,
   DialogPersonData
-} from 'src/app/apps/interfaces/information-property/snr-person-info';
+} from '@features/property-management/models';
 import {
   PAGE,
   PAGE_SIZE,
@@ -46,7 +46,7 @@ import {
   TABLE_COLUMN_PROPERTIES_PERSON,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { SnrService } from 'src/app/apps/services/snr/snr.service';
+import { SnrService } from '@features/property-management/services';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 
@@ -85,7 +85,13 @@ import { MatDividerModule } from '@angular/material/divider';
 export class InformationPersonPropertyComponent
   implements OnInit, AfterViewInit, OnChanges
 {
-  /* =========================== ATRIBUTES =========================== */
+  /* ---- Injects ---- */
+  private readonly layoutService = inject(VexLayoutService);
+  private snrService = inject(SnrService);
+  private cdr = inject(ChangeDetectorRef);
+  public data: DialogPersonData = inject(MAT_DIALOG_DATA);
+
+  /* ---- Attributes ---- */
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
 
   subject$: BehaviorSubject<DataPerson[]> = new BehaviorSubject<DataPerson[]>(
@@ -105,15 +111,7 @@ export class InformationPersonPropertyComponent
   @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
-  /* ========================== CONSTRUCTOR ========================== */
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DialogPersonData,
-    private readonly layoutService: VexLayoutService,
-    private snrService: SnrService,
-    private cdr: ChangeDetectorRef
-  ) {}
-
-  /* ============================ METHODS ============================ */
+  /* ---- Methods ---- */
   /* --------------------- Meth. Lifecycle Hooks --------------------- */
   ngOnInit(): void {
     this.data$.pipe(filter<DataPerson[]>(Boolean)).subscribe((personAllSnr) => {

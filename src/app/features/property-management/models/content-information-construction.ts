@@ -1,4 +1,4 @@
-import { NAME_NO_DISPONIBLE } from '../../constants/general/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants';
 import { TypeOperation } from '@shared/interfaces';
 
 export class ContentInformationConstruction {

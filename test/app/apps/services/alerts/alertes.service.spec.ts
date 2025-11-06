@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AlertsService } from '../../../../../src/app/apps/services/alerts/alertes.service';
+import { AlertsService } from '@features/property-management/services/alerts/alertes.service';
 import { HttpClient } from '@angular/common/http';
 
 

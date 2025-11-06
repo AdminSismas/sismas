@@ -12,7 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ComponentsServicesService } from '../components.services.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ContactsParamsComponent } from '../contacts-params/contacts-params.component';
-import { MODAL_SMALL } from '../../../../../../apps/constants/general/constants';
+import { MODAL_SMALL } from '../../../../../../shared/constants/general/constants';
 
 @Component({
   selector: 'vex-contacts-card',

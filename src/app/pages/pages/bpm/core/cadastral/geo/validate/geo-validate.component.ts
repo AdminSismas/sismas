@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import {
   CONSTANT_TEXT_ALFA_MAIN_GEO,
   CONSTANT_TEXT_GEO_MAIN_GEO
-} from 'src/app/apps/constants/general/constantLabels';
+} from '@shared/constants/general/constantLabels';
 import { LIST_BUTTON_GEO_MAIN } from '@shared/constants';
-import { SendInfoGeneralService } from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { environment } from '@environments/environments';
-import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
+import { TabAlfaGeoMainComponent } from '../../../../../../../features/bpm-workflows/components/geo-main/tab-alfa-geo-main/tab-alfa-geo-main.component';
 
 @Component({
   selector: 'vex-geo-validate',

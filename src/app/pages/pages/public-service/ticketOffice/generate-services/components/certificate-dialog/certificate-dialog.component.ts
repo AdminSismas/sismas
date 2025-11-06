@@ -22,7 +22,7 @@ import { Certificate, CertificateDialogData } from '../../interfaces';
 import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+} from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import {
   TableCertificateSearchComponent
 } from 'src/app/apps/components/tables/table-certificate-search/table-certificate-search.component';

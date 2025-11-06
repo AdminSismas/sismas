@@ -31,7 +31,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import {
   BasicInformationProperty,
   CrudBasicInformationProperty
@@ -57,9 +57,9 @@ import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { ContentInfoSchema } from '@shared/models';
 import { MatDividerModule } from '@angular/material/divider';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { BaunitHead } from '@shared/interfaces';
-import { AlfaMainService } from '@features/bpm-workflows/services';import Swal from 'sweetalert2';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({

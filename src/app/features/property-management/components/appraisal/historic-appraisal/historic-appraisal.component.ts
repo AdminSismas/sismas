@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
 import {
   PAGE,
@@ -19,7 +19,7 @@ import {
   TABLE_COLUMN_PROPERTIES_APPRAISALS
 } from '@shared/constants';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { InfoAppraisal } from 'src/app/apps/interfaces/information-property/info-appraisal';
+import { InfoAppraisal } from '@features/property-management/models/info-appraisal';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 

@@ -13,7 +13,7 @@ import {
   AdministrativeSource,
   DeleteAdministrativeSourceParams,
   UpdateAdministrativeSource
-} from 'src/app/apps/interfaces/information-property/administrative-source';
+} from '@features/property-management/models/administrative-source';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AdministrativeSourcesService } from '@features/property-management/services';
 import { MatButtonModule } from '@angular/material/button';

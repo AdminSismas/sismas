@@ -11,10 +11,9 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/d
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProcessParticipant } from '@shared/interfaces';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MODAL_SMALL_LARGE, NAME_NO_DISPONIBLE } from '../../../../../../../apps/constants/general/constants';
-import { getRandomInt } from 'src/app/apps/utils/general';
+import { MODAL_SMALL_LARGE, NAME_NO_DISPONIBLE } from '../../../../../../../shared/constants/general/constants';
 import { InfoPerson } from '@shared/interfaces';
-import { PeopleService } from '@shared/services';
+import { PeopleService } from 'src/app/apps/services/users/people.service';
 import { InfoContact } from '@shared/interfaces';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 
@@ -38,8 +37,6 @@ import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/peo
   ]
 })
 export class DetailsCitationNoticeComponent implements OnInit {
-
-  id: string = getRandomInt(5258445) + 'DetailsCitationNoticeComponent';
   participationId!: number;
   individualId!: number;
   contact!: InfoContact;

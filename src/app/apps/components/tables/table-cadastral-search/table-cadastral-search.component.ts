@@ -41,7 +41,7 @@ import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/ve
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { InfoTableService } from '@shared/services';
+import { InfoTableService } from '@shared/services/general/info-table.service';
 import { SearchData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
@@ -66,17 +66,17 @@ import {
   TITULO_PAGE_CADASTRAL_DA,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
 import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
 import { environment as envi } from '@environments/environments';
-import { SendInformationRegisterService } from '@shared/services';
-import { ValidateInformationBaunitService } from '@shared/services';
+import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
+import { ValidateInformationBaunitService } from '@shared/services/general/validate-information-baunit.service';
 import { CurrencyLandsPipe } from '../../../pipes/currency-lands.pipe';
-import { BpmProcessService } from '@shared/services';
-import { UserService } from '@shared/services';
+import { BpmProcessService } from '@features/bpm-workflows/services/core/bpm-process.service';
+import { UserService } from '@shared/services/auth/user.service';
 import { DecodeJwt } from '@shared/interfaces';
-import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@features/property-management/models/baunit-head.model';
 
 @Component({
   selector: 'vex-table-cadastral-search',

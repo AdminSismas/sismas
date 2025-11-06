@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TabAlfaGeoMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/tab-alfa-geo-main/tab-alfa-geo-main.component';
+import { TabAlfaGeoMainComponent } from '@features/bpm-workflows/components/geo-main/tab-alfa-geo-main/tab-alfa-geo-main.component';
 
 describe(TabAlfaGeoMainComponent.name, () => {
   let component: TabAlfaGeoMainComponent;

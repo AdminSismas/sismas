@@ -46,17 +46,17 @@ import {
 import { Observable, ReplaySubject } from 'rxjs';
 import { InfoPerson } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPersonService } from '@shared/services';
+import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { CreatePeopleComponent } from '../../../pages/pages/operation-support/people/components/create-people/create-people.component';
-import { ParticipantsService } from '@shared/services';
+import { ParticipantsService } from '@features/bpm-workflows/services/core/participants-service.service';
 import { InformationPegeable } from '@shared/interfaces';
 import { Pegeable } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { getRandomInt, validateVariable } from '../../../apps/utils/general';
+import { validateVariable } from '../../../apps/utils/general';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
@@ -102,7 +102,6 @@ export class ParticipantTableComponent
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   contentInformation!: InformationPegeable;
 
-  @Input({ required: true }) public id = '';
   @Input() form: FormGroup | null = null;
   @Input({ required: true }) executionId = '';
   @Input({ required: true }) thirdPartyAffected = false;
@@ -145,11 +144,6 @@ export class ParticipantTableComponent
     if (!this.executionId || this.executionId?.length <= 0) {
       return;
     }
-    this.id =
-      this.id +
-      getRandomInt(12340) +
-      this.executionId +
-      'ParticipantTableComponent1234';
 
     this.dataSource = new MatTableDataSource();
     this.searchCtrl.valueChanges

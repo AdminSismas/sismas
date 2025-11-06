@@ -11,6 +11,8 @@ import { AlertResponse } from '@shared/interfaces';
 export class AlertsService {
   basic_url = `${envi.url}:${envi.port}`;
 
+  private http = inject(HttpClient);
+
   reloadTable$ = new Subject<boolean>();
   reloadTableStarted$: Observable<boolean> = this.reloadTable$.asObservable();
 
@@ -18,9 +20,8 @@ export class AlertsService {
   showOptionsPersonStarted$: Observable<boolean> =
     this.showOptionsPerson$.asObservable();
 
-  constructor(
-    private http: HttpClient
-  ) {}
+
+
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);

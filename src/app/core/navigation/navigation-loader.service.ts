@@ -16,10 +16,10 @@ import {
   NAVIGATION_LOADER_PUBLIC_SERVICE,
   NAVIGATION_THEMATIC_MAP
 } from '../../layouts/constants/constant-loader';
-import { TasksPanelService } from '@features/bpm-workflows/services';
+import { TasksPanelService } from '@features/bpm-workflows/services/header-bpm-core/tasks-panel.service';
 import { ProTaskE } from '@shared/interfaces';
 import { filter } from 'rxjs/operators';
-import { UserService } from '@shared/services';
+import { UserService } from '@shared/services/auth/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import {
   ADMIN_ROLE_LIST,

@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { ContentInformationConstruction } from 'src/app/apps/interfaces/information-property/content-information-construction';
+import { ContentInformationConstruction } from '@features/property-management/models/content-information-construction';
 import { DetailInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/detail-information-constructions-property/detail-information-constructions-property.component';
 import { MODAL_SMALL } from '@shared/constants';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

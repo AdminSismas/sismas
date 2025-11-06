@@ -46,14 +46,14 @@ import {
   MY_DATE_FORMATS,
   TABLE_COLUMN_PROPERTIES,
   USERS_ACTIONS_ENABLED
-} from '../../../constants/general/procedures.constant';
+} from '../../../../shared/constants/general/procedures.constant';
 import {
   PAGE,
   PAGE_SIZE,
 } from '@shared/constants';
 import { ProceduresCollection } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { ProceduresService } from '@shared/services';
+import { ProceduresService } from '@shared/services/general/procedures.service';
 import { PageProceduresData } from '@shared/interfaces';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { InformationPegeable } from '@shared/interfaces';
@@ -70,7 +70,7 @@ import { environment } from '@environments/environments';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReassignProcedureComponent } from 'src/app/apps/components/procedures/reassign-procedure/reassign-procedure.component';
-import { AuthService } from 'src/app/pages/pages/auth/login/services/auth.service';
+import { AuthService } from '@core/auth/auth.service';
 import { ComponentType } from '@angular/cdk/overlay';
 import { MatDividerModule } from '@angular/material/divider';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';

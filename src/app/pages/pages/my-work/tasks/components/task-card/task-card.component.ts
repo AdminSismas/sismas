@@ -9,10 +9,10 @@ import {
   MODAL_SMALL,
   NAME_NO_DISPONIBLE,
   SPACE
-} from '../../../../../../apps/constants/general/constants';
+} from '../../../../../../shared/constants/general/constants';
 import { environment as envi } from '@environments/environments';
 import { MatDialog } from '@angular/material/dialog';
-import { TasksPanelService } from '@features/bpm-workflows/services';
+import { TasksPanelService } from '@features/bpm-workflows/services/header-bpm-core/tasks-panel.service';
 import { DetailInformationTasksComponent } from '../detail-information-tasks/detail-information-tasks.component';
 import { TaskResponseModel } from '@shared/interfaces';
 import { PAGE, PAGE_SIZE } from '@shared/constants';

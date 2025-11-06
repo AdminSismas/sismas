@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '@core/auth';
+import { AuthService } from '@core/auth/auth.service';
 import { catchError } from 'rxjs';
-import { CancellationService } from '@core/auth';
+import { CancellationService } from '@core/auth/cancellation.service';
 import Swal from 'sweetalert2';
 
 const unProtectedRoutes = [

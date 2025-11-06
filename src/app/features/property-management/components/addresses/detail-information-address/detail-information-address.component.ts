@@ -18,7 +18,7 @@ import {
   NAME_SI
 } from '@shared/constants';
 import { DetailBasicInformationAddress } from '@shared/interfaces';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { environment } from '@environments/environments';
 import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';

@@ -24,19 +24,18 @@ import { JSONInput } from '@shared/interfaces';
 import { ProcessParticipant } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RecognitionPropertyService } from '@shared/services';
+import { RecognitionPropertyService } from '@features/bpm-workflows/services/core/recognition-property.service';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { environment } from '@environments/environments';
 import { ProFlow } from '@shared/interfaces';
-import { SendInfoGeneralService } from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { Router } from '@angular/router';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
-import { LoadingServiceService } from '@shared/services';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
-import { getRandomInt } from '../../../../../../apps/utils/general';
 import {
   RecognitionProperty,
   RecognitionPropertyBasic
@@ -84,7 +83,6 @@ export class RecognitionPropertyInformationComponent implements OnInit, OnDestro
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   flowId!: number;
-  id: string = getRandomInt(13579).toString();
   schema = `${environment.schemas.temp}`;
   _infoFatherURL$: Observable<string> = this.infoGeneralService.infoFatherURL$;
   infoFatherURL!: string;
@@ -110,13 +108,6 @@ export class RecognitionPropertyInformationComponent implements OnInit, OnDestro
 
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id + getRandomInt(1345789) + 'RecognitionPropertyInformation' + getRandomInt(10);
-    } else {
-      this.id = getRandomInt(987541) + 'RecognitionPropertyInformation' + getRandomInt(10);
-    }
-
     this.loadingServiceService.activateLoading(true);
     this.getRecognitionProperty();
 

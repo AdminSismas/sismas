@@ -27,7 +27,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { Observable } from 'rxjs';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+} from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
   MODAL_LARGE,
@@ -41,7 +41,7 @@ import {
 import { TABLE_COLUMN_PROPERTIES } from '../../../../../../apps/constants/general/procedures.constant';
 import { ContentInfoSchema } from '../../../../../../apps/interfaces/general/content-info-schema';
 import { InformationPegeable } from '../../../../../../apps/interfaces/general/information-pegeable.model';
-import { BaunitHead } from 'src/app/apps/interfaces/information-property/baunit-head.model';
+import { BaunitHead } from '@features/property-management/models/baunit-head.model';
 import { PageSearchData } from '../../../../../../apps/interfaces/general/page-search-data.model';
 import { SearchData } from '../../../../../../apps/interfaces/general/search-data.model';
 import { InfoTableService, ValidateInformationBaunitService } from '@shared/services';

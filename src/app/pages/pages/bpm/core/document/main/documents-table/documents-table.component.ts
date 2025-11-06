@@ -46,19 +46,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 // Custom
 import { AttachmentCollection } from '@shared/interfaces';
-import { AttachmentService } from '@shared/services';
+import { AttachmentService } from '@shared/services/documents/attachment.service';
 import { contentInfoAttachment } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatDividerModule } from '@angular/material/divider';
 import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import {PAGE,
 PAGE_SIZE,
-PAGE_SIZE_OPTION} from '../../../../../../../apps/constants/general/constants';
+PAGE_SIZE_OPTION} from '../../../../../../../shared/constants/general/constants';
 import {
   TABLE_COLUMN_ATTACHMENT
 } from '../../../../../../../features/bpm-workflows/constants/attachment.constant';
 import { AttachmentFormComponent } from '../attachment-form/attachment-form.component';
-import { MODAL_LARGE } from '../../../../../../../apps/constants/general/constants';
+import { MODAL_LARGE } from '../../../../../../../shared/constants/general/constants';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

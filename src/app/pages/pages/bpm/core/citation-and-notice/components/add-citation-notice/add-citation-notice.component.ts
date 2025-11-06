@@ -22,24 +22,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ProcessParticipant } from '@shared/interfaces';
-import { getRandomInt } from '../../../../../../../apps/utils/general';
 import {
   CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED,
   CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED,
   MY_DATE_FORMATS,
   NAME_NO_DISPONIBLE
-} from '../../../../../../../apps/constants/general/constants';
+} from '../../../../../../../shared/constants/general/constants';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { ComboboxCollectionFormComponent } from '@shared/utils/combobox-collection-form/combobox-collection-form.component';
-import { ProceduresService } from '@shared/services';
+import { ProceduresService } from '@shared/services/general/procedures.service';
 import { ProceduresCollection } from '@shared/interfaces';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
-import { ParticipantsService } from '@shared/services';
+import { ParticipantsService } from '@features/bpm-workflows/services/core/participants-service.service';
 import Swal from 'sweetalert2';
 import { ProcessParticipantTableMenu } from '@shared/interfaces';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { InfoContact } from '@shared/interfaces';
-import { PeopleService } from '@shared/services';
+import { PeopleService } from 'src/app/apps/services/users/people.service';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 
@@ -75,7 +74,6 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 export class AddCitationNoticeComponent implements OnInit {
   labelCited = 'Datos de citacion';
   labelNotice = 'Datos de notificacion';
-  id: string = getRandomInt(5258445) + 'AddCitationNoticeComponent2555444';
   maxDate = signal<Date>(new Date()); // Fecha máxima permitida (hoy)
   minDate = signal<Date>(new Date(0)); // Fecha minima, fecha de la radicacion
   typeCategory = signal<ProcessParticipantTableMenu['id']>('citation');

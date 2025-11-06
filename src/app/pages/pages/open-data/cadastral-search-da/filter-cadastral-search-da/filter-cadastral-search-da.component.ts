@@ -36,8 +36,8 @@ import {
   LIST_ZONES_RURAL,
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
-} from '../../../../../apps/constants/general/constants';
-import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
+} from '../../../../../shared/constants/general/constants';
+import { CONSTANT_NAME_ID } from '../../../../../shared/constants/general/constantLabels';
 import { Sidewalk } from 'src/app/apps/interfaces/territorial-organization/sidewalk.model';
 import { Neighborhood } from 'src/app/apps/interfaces/territorial-organization/neighborhood.model';
 import { Commune } from 'src/app/apps/interfaces/territorial-organization/commune.model';

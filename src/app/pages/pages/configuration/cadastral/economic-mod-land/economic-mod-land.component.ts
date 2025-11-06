@@ -38,7 +38,7 @@ import {
   DIVPOLLVL_CODE,
   NAME_CODENAME,
   STRING_INFORMATION_NOT_FOUND
-} from '../../../../../apps/constants/general/constants';
+} from '../../../../../shared/constants/general/constants';
 import { RefreshService } from '@features/economic-zones/services/refresh-service.service';
 import { RuralZoneService } from '@features/economic-zones/services/rural-zone.service';
 import {

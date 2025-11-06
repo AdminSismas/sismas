@@ -35,13 +35,13 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_UNIQUE,
   TABLE_CITATION_NOTICE_COLUMN
-} from '../../../../../../apps/constants/general/constants';
+} from '../../../../../../shared/constants/general/constants';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UntypedFormControl } from '@angular/forms';
 import { filter } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ParticipantsProcessService } from '@shared/services';
+import { ParticipantsProcessService } from '@features/bpm-workflows/services/core/participants-process.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';

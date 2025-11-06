@@ -35,10 +35,10 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 
 import { Operation } from '@shared/interfaces';
-import { LayoutCardCadastralInformationPropertyComponentComponent } from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
 import { filter } from 'rxjs/operators';
-import { BpmCoreService } from '@features/bpm-workflows/services';
+import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
 import { DifferenceChanges } from '@shared/interfaces';
 import { ViewChangesBpmOperationComponent } from '@features/bpm-workflows/components/view-changes-bpm-operation/view-changes-bpm-operation.component';
 
@@ -46,7 +46,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
 import { ModificationPropertyUnitsComponent } from '@features/bpm-workflows/components/modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '@features/bpm-workflows/services';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE

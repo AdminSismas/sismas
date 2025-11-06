@@ -16,7 +16,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { Observable } from 'rxjs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { CommonModule } from '@angular/common';

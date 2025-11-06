@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { UserService } from '@shared/services';
+import { UserService } from '@shared/services/auth/user.service';
 
 @Directive({
   selector: '[vexHasRole]',

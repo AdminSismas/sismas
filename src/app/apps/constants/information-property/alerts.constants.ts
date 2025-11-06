@@ -1,5 +1,5 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { AlertResponse, EstadoProceso } from '@shared/interfaces';
+import { AlertResponse, EstadoProceso } from '@features/property-management/models';
 import { JSONInput } from '@shared/interfaces';
 import { Validators } from '@angular/forms';
 

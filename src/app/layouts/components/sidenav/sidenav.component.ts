@@ -19,12 +19,12 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
-import { UserService } from '@shared/services';
+import { UserService } from '@shared/services/auth/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { Router } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { STRING_INFORMATION_NOT_FOUND } from '../../../apps/constants/general/constants';
+import { STRING_INFORMATION_NOT_FOUND } from '../../../shared/constants/general/constants';
 import {
   FormBuilder,
   FormGroup,

@@ -15,7 +15,6 @@ import {
 } from '@shared/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { AlertsService } from '@shared/services';
 import { InfoOwners } from '@shared/models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,16 +27,17 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { InfoPerson } from '@features/property-management/models/info-person';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TypeInformation } from '@shared/interfaces';
 import { DetailAlertsComponent } from './detail-alerts/detail-alerts.component';
 import { DatePipe } from '@angular/common';
 import { CreateAlertComponent } from './create-alert/create-alert.component';
-import { AlertResponse } from 'src/app/apps/interfaces/information-property/alerts.interface';
+import { AlertResponse } from '@features/property-management/models/alerts.interface';
 import Swal from 'sweetalert2';
 import { ALERT_TABLE_COLUMNS } from 'src/app/apps/constants/information-property/alerts.constants';
 import { UpdateAlertComponent } from './update-alert/update-alert.component';
+import { AlertsService } from '@features/property-management/services/alerts/alertes.service';
 
 export type InfoOwnerRowT = Pick<
   InfoOwners,

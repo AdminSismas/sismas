@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment as envi } from '@environments/environments';
@@ -12,11 +12,8 @@ export interface Photo {
   providedIn: 'root'
 })
 export class PhotosService {
+  private http = inject(HttpClient);
   private base_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}${envi.baunit}/`;
-
-  constructor(
-    private http: HttpClient
-  ) {}
 
   listNamePhotos(baunitId: string, municipioId: string): Observable<{ url: string, name: string }[]> {
     const url = `${this.base_url}${baunitId}${envi.photos}`;

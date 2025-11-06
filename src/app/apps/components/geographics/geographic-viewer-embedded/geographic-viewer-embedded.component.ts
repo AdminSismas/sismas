@@ -3,13 +3,12 @@ import {
   inject,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgIf } from '@angular/common';
-import { InformationGeographicService } from '@features/bpm-workflows/services';
+import { InformationGeographicService } from '@features/bpm-workflows/services/alfa-main/information-geographic.service';
 import { MatButton } from '@angular/material/button';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
@@ -19,8 +18,8 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { getRandomInt, validateVariable } from '../../../utils/general';
-import { LoadingServiceService } from '@shared/services';
+import { validateVariable } from '../../../utils/general';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-geographic-viewer-embedded',
@@ -49,8 +48,7 @@ import { LoadingServiceService } from '@shared/services';
   templateUrl: './geographic-viewer-embedded.component.html',
   styleUrl: './geographic-viewer-embedded.component.scss'
 })
-export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
-  @Input({ required: false }) idComponent = 'GeneralMapContent1258446';
+export class GeographicViewerEmbeddedComponent implements OnChanges {
   @Input({ required: false }) executionId: string | null | undefined;
   @Input({ required: false }) ccZonaId: string | null | undefined;
   @Input({ required: false }) thematicMapValue: string | null | undefined;
@@ -70,19 +68,6 @@ export class GeographicViewerEmbeddedComponent implements OnInit, OnChanges {
     private geographicService: InformationGeographicService,
     private sanitizer: DomSanitizer
   ) {}
-
-  ngOnInit(): void {
-    if (this.idComponent != null && this.idComponent?.length > 0) {
-      this.idComponent =
-        this.idComponent +
-        getRandomInt(1000) +
-        'desdC2258446' +
-        getRandomInt(4321);
-    } else {
-      this.idComponent =
-        getRandomInt(10000) + 'desdC6558522' + getRandomInt(1234);
-    }
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.captureErrorResult();

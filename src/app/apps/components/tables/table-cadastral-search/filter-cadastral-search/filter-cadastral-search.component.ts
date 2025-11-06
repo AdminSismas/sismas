@@ -33,7 +33,7 @@ import {
 } from '@angular/material/snack-bar';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { InputComponent } from '@shared/ui/input/input.component';import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { TerritorialOrganizationService } from '@shared/services';
+import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { Department } from '@shared/interfaces';
 import { Municipality } from '@shared/interfaces';
 import {

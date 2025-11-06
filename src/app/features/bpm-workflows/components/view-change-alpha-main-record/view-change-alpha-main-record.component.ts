@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, DestroyRef, inject, Inject, OnInit, ViewChild, signal } from '@angular/core';
-import { AlfaMainService } from '@features/bpm-workflows/services';import {
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';import {
   MAT_DIALOG_DATA,
   MatDialogClose,
   MatDialogContent,

@@ -1,10 +1,9 @@
 import { Component, DestroyRef, inject, OnInit, input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LIST_BUTTON_GEO_MAIN } from '../../../../../../../apps/constants/general/constants';
-import { Observable } from 'rxjs';
-import { ProFlow } from '@shared/interfaces';
-import { SendInfoGeneralService } from '@shared/services';
 import { Router } from '@angular/router';
+import { LIST_BUTTON_GEO_MAIN } from '@shared/constants';
+import { Observable } from 'rxjs';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
@@ -12,12 +11,11 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { filter } from 'rxjs/operators';
 import { environment } from '@environments/environments';
-import { getRandomInt } from '../../../../../../../apps/utils/general';
-import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
+import { TabAlfaGeoMainComponent } from './tab-alfa-geo-main/tab-alfa-geo-main.component';
 import {
   CONSTANT_TEXT_ALFA_MAIN_GEO,
   CONSTANT_TEXT_GEO_MAIN_GEO
-} from '../../../../../../../apps/constants/general/constantLabels';
+} from '@shared/constants';
 
 @Component({
   selector: 'vex-geo-main',
@@ -40,7 +38,6 @@ import {
 })
 export class GeoMainComponent implements OnInit {
 
-  public id: string = getRandomInt(1234).toString();
   public schema = `${environment.schemas.temp}`;
   public enableRefreshButton = true;
 
@@ -55,25 +52,12 @@ export class GeoMainComponent implements OnInit {
   infoFatherURL!: string;
 
   constructor(
-    proFlow: ProFlow,
     private infoGeneralService: SendInfoGeneralService,
     private router: Router
   ) {
-    if (proFlow?.flowId) {
-      this.id += proFlow?.flowId;
-    }
   }
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id +
-        getRandomInt(104000) + 'GeoMainComponent' + getRandomInt(10);
-    } else {
-      this.id =
-        getRandomInt(10000) + 'GeoMainComponent' + getRandomInt(10);
-    }
-
     // Se sobre escribe los botones que se deben habilitar
     const resources = this.resources();
     if (resources && resources.length > 0) {

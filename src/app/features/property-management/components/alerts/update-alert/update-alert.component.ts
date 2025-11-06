@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { AlertResponse } from 'src/app/apps/interfaces/information-property/alerts.interface';
+import { AlertResponse } from '@features/property-management/models/alerts.interface';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { FormGroup } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';

@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { FormGroup } from '@angular/forms';
-import { RecognitionPropertyService } from '@shared/services';
+import { RecognitionPropertyService } from '@features/bpm-workflows/services/core/recognition-property.service';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {
   RecognitionProperty,
@@ -26,7 +26,7 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { FluidHeightDirective } from '../../../../../../../apps/directives/fluid-height.directive';
 import { FluidMaxHeightDirective } from '../../../../../../../apps/directives/fluid-max-height.directive';
 import { RES_VALIDATE_INPUTS } from '../../../../../../../apps/constants/information-property/cadastral-recognition.constants';
-import { LoadingServiceService } from '@shared/services';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
 import { TableThirdPartyAffectedComponent } from '@shared/components/table-third-party-affected/table-third-party-affected.component';
 import { ResService } from '@features/bpm-workflows/services/core/res.service';
 import { Observable } from 'rxjs';

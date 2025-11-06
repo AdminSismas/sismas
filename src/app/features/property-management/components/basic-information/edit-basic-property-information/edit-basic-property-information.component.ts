@@ -21,7 +21,7 @@ import {
   TypeOperation
 } from '@shared/interfaces';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';

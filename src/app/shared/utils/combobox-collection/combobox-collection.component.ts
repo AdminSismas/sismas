@@ -15,7 +15,7 @@ import {
   FormGroupDirective,
   ReactiveFormsModule
 } from '@angular/forms';
-import { CollectionServices } from '@shared/services';
+import { CollectionServices } from '@shared/services/general/collection.service';
 import { DomainCollection } from '@shared/interfaces';
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';

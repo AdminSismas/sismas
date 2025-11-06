@@ -34,7 +34,7 @@ import { ContentInfoSchema } from '@shared/models';
 import { environment } from '@environments/environments';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+} from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { TypeInformation } from '@shared/interfaces';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -45,9 +45,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {
   HeaderCadastralInformationPropertyComponent
 } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
-import {
-  UnitPropertyInformationService
-} from '@shared/services';
+import { UnitPropertyInformationService } from '@features/bpm-workflows/services/modification-property-units/baunit-children-information.service';
 import { PageSearchData } from '@shared/interfaces';
 import {
   TABLE_COLUMN_UNITS_TABLE_COLUMNS

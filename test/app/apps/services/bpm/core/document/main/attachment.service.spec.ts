@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AttachmentService } from '@shared/services';
+import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 
 describe(AttachmentService.name, () => {
   let service: AttachmentService;

@@ -31,8 +31,8 @@ import {
   InformationPageableUser
 } from 'src/app/apps/interfaces/users/user';
 import { CreateUsersComponent } from './create-users/create-users.component';
-import { USER_COLUMNS } from '../../../../../apps/constants/general/users.constants';
-import { PAGE_SIZE_OPTION } from '../../../../../apps/constants/general/constants';
+import { USER_COLUMNS } from '../../../../../shared/constants/general/users.constants';
+import { PAGE_SIZE_OPTION } from '../../../../../shared/constants/general/constants';
 import { TitleCasePipe } from '@angular/common';
 import { CadastralUserService } from 'src/app/apps/services/users/user.service';
 

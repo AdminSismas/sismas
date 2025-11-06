@@ -10,7 +10,7 @@ import {
   MatDialogRef} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
-import { TasksPanelService } from '@features/bpm-workflows/services';
+import { TasksPanelService } from '@features/bpm-workflows/services/header-bpm-core/tasks-panel.service';
 import { TaskResponseModel } from '@shared/interfaces';
 import { ActivatedRoute } from '@angular/router';
 import { TableThirdPartyAffectedComponent } from '@shared/components/table-third-party-affected/table-third-party-affected.component';

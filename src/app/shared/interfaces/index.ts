@@ -28,18 +28,18 @@ export * from '../../apps/interfaces/forms/dynamic-forms';
 export { Pageable as DigitalizedPageable, Sort as DigitalizedSort, UsersSignatures } from '../../apps/interfaces/users/digitalized-signatures';
 // User from user.model moved to line 71 to avoid duplication
 // Information property interfaces
-export * from '../../apps/interfaces/information-property/baunit-head.model';
-export * from '../../apps/interfaces/information-property/baunit-head-percentage.model';
-export * from '../../apps/interfaces/information-property/basic-information-property';
-export { InfoPerson } from '../../apps/interfaces/information-property/info-person';
-export * from '../../apps/interfaces/information-property/basic-information-address';
-export * from '../../apps/interfaces/information-property/detail-basic-information-address';
-export * from '../../apps/interfaces/information-property/information-adjacent';
-export * from '../../apps/interfaces/information-property/cc-calificacion-ub';
-export * from '../../apps/interfaces/information-property/content-information-construction';
-export * from '../../apps/interfaces/information-property/info-appraisal';
-export * from '../../apps/interfaces/information-property/zone-baunit';
-export * from '../../apps/interfaces/information-property/national-predial-number';
+export * from '@features/property-management/models/baunit-head.model';
+export * from '@features/property-management/models/baunit-head-percentage.model';
+export * from '@features/property-management/models/basic-information-property';
+export { InfoPerson } from '@features/property-management/models/info-person';
+export * from '@features/property-management/models/basic-information-address';
+export * from '@features/property-management/models/detail-basic-information-address';
+export * from '@features/property-management/models/information-adjacent';
+export * from '@features/property-management/models/cc-calificacion-ub';
+export * from '@features/property-management/models/content-information-construction';
+export * from '@features/property-management/models/info-appraisal';
+export * from '@features/property-management/models/zone-baunit';
+export * from '@features/property-management/models/national-predial-number';
 
 // Baunit ICA interfaces
 export * from './property-management/ica/baunit-ica.interface';
@@ -55,24 +55,24 @@ export * from '../../apps/interfaces/general/content-info-workflow.model';
 export * from '../../apps/interfaces/general/modal-size.interface';
 export * from '../../apps/interfaces/tables/procedures-progress.model';
 export * from '../../apps/interfaces/tables/procedures-progress-process.model';
-export * from '../../apps/interfaces/information-property/snr-folio-info';
-export * from '../../apps/interfaces/information-property/snr-source-info';
-export * from '../../apps/interfaces/information-property/administrative-source';
-export * from '../../apps/interfaces/information-property/alerts.interface';
+export * from '@features/property-management/models/snr-folio-info';
+export * from '@features/property-management/models/snr-source-info';
+export * from '@features/property-management/models/administrative-source';
+export * from '@features/property-management/models/alerts.interface';
 export { InformationPageableUser, User, Individual, Role, Authority, CreateUserParams, CreateOutput } from '../../apps/interfaces/users/user';
 export { Authority as UserAuthority, DecodeJwt, UserDetails } from '../../shared/models/user.model';
-export * from '../../apps/interfaces/information-property/snr-person-info';
-export * from '../../apps/interfaces/information-property/basic-detail-group';
-export * from '../../apps/interfaces/information-property/info-contact';
-export { GeoEconomicZone } from '../../apps/interfaces/information-property/geo-economic-zone';
-export * from '../../apps/interfaces/information-property/basic-master-group';
+export * from '@features/property-management/models/snr-person-info';
+export * from '@features/property-management/models/basic-detail-group';
+export * from '@features/property-management/models/info-contact';
+export { GeoEconomicZone } from '@features/property-management/models/geo-economic-zone';
+export * from '@features/property-management/models/basic-master-group';
 export * from '../../apps/interfaces/comments/comments.model';
 export * from '../../apps/interfaces/general/content-info-domainLadmCol.model';
 export * from '../../apps/interfaces/general/simple-response.interface';
-export * from '../../apps/interfaces/information-property/baunit-npnlike';
-export * from '../../apps/interfaces/information-property/rural-physical-zone';
-export * from '../../apps/interfaces/information-property/urban-physical-zone';
-export * from '../../apps/interfaces/information-property/types-qualification-ub';
+export * from '@features/property-management/models/baunit-npnlike';
+export * from '@features/property-management/models/rural-physical-zone';
+export * from '@features/property-management/models/urban-physical-zone';
+export * from '@features/property-management/models/types-qualification-ub';
 // Process participant interface - temporarily commented due to circular dependency
 // export * from '../../apps/interfaces/bpmprocess-participant';
 

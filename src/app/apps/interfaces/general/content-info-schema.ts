@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TypeInformation } from '@shared/interfaces';
-import { TYPE_INFORMATION_VISUAL } from '../../constants/general/constants';
+import { TYPE_INFORMATION_VISUAL } from '../../../shared/constants/general/constants';
 
 export class ContentInfoSchema {
   baunitIdE?: string | undefined | null = '';

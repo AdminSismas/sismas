@@ -54,14 +54,14 @@ import {
 } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
 import { FluidMinHeightDirective } from '../../../../../../apps/directives/fluid-min-height.directive';
 import { InfoPerson } from '@shared/interfaces';
-import { InformationPersonService } from '@shared/services';
+import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import {
   MODAL_SMALL_LARGE,
   PAGE,
   PAGE_SIZE_OPTION,
   PAGE_SIZE_TABLE_CADASTRAL,
   TABLE_COLUMN_BASIC_PRINCIPALS
-} from '../../../../../../apps/constants/general/constants';
+} from '../../../../../../shared/constants/general/constants';
 import { ProcessParticipant } from '@shared/interfaces';
 
 @Component({

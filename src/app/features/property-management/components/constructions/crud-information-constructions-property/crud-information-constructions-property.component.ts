@@ -36,7 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   ContentInformationConstruction,
   CrudInformationConstruction
-} from 'src/app/apps/interfaces/information-property/content-information-construction';
+} from '@features/property-management/models/content-information-construction';
 import { environment } from '@environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -45,7 +45,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { CustomSelectorComponent } from '@shared/utils/custom-selector/custom-selector.component';
 import { InputComponent } from '@shared/ui/input/input.component';
-import { CollectionServices } from '@shared/services';
+import { CollectionServices } from '@shared/services/general/collection.service';
 import { CcCalificacionUB } from '@shared/interfaces';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
 import {
@@ -53,14 +53,14 @@ import {
   CONSTANT_MSG_TYPE_AREA,
   CONSTANT_MSG_UNITBUILT_LABEL,
   CONSTANT_MSG_UNITBUILT_YEAR
-} from '../../../../../apps/constants/general/constantsAlertLabel';
-import { GeneralValidationsService } from '@shared/services';
+} from '../../../../../shared/constants/general/constantsAlertLabel';
+import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
 import {
   TypeOperation,
   TypeQualificationMode,
   ValidateQualificationByDomBuiltType
 } from '@shared/interfaces';
-import { CommonGeneralValidationsService } from '@shared/services';
+import { CommonGeneralValidationsService } from '@shared/services/general/common-general-validations.service';
 import { InformationConstructionsService } from '@features/property-management/services';
 import {
   validateIsNumber,
@@ -81,7 +81,7 @@ import {
 import { DomainCollection } from '@shared/interfaces';
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { TypesQualificationUB } from 'src/app/apps/interfaces/information-property/types-qualification-ub';
+import { TypesQualificationUB } from '@features/property-management/models/types-qualification-ub';
 
 @Component({
   selector: 'crud-information-constructions-property',

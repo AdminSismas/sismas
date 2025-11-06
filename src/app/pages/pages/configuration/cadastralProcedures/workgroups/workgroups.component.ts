@@ -22,10 +22,10 @@ import {
   MODAL_SMALL,
   MODAL_SMALL_XS,
   MODAL_LARGE
-} from '../../../../../apps/constants/general/constants';
+} from '../../../../../shared/constants/general/constants';
 import { GroupMemberComponent } from './components/group-member/group-member.component';
 import Swal from 'sweetalert2';
-import { UserService } from '@shared/services';
+import { UserService } from '@shared/services/auth/user.service';
 
 @Component({
   selector: 'vex-workgroups',

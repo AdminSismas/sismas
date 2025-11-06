@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   AdministrativeSource,
   CreateAdministrativeSourceParams
-} from 'src/app/apps/interfaces/information-property/administrative-source';
+} from '@features/property-management/models/administrative-source';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { JSONInput } from '@shared/interfaces';
 import {
   INPUTS_ADMINISTRATIVE_SOURCE

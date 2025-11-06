@@ -31,7 +31,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 
 // imports from service people
-import { PeopleService } from '@shared/services';
+import { PeopleService } from 'src/app/apps/services/users/people.service';
 import {
   MODAL_SMALL_LARGE,
   MODIFY_PEOPLE,
@@ -39,16 +39,16 @@ import {
   PAGE_SIZE_OPTION,
   PAGE_OPTION_UNIQUE,
   PEOPLE_TABLE_COLUMNS
-} from '../../../../apps/constants/general/constants';
+} from '../../../../shared/constants/general/constants';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatButtonModule } from '@angular/material/button';
-import { UserService } from '@shared/services';
+import { UserService } from '@shared/services/auth/user.service';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
-import { InfoContact } from 'src/app/apps/interfaces/information-property/info-contact';
+import { InfoContact } from '@features/property-management/models/info-contact';
 import { CreatePeopleComponent } from './components/create-people/create-people.component';
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { InfoPerson } from '@features/property-management/models/info-person';
 
 @Component({
   selector: 'vex-people',

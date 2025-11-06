@@ -53,7 +53,7 @@ import {
 } from '../../../constants/bpm/workflow.constant';
 import { PageSortByData } from '@shared/interfaces';
 import { WorkflowCollection } from '@shared/interfaces';
-import { WorkflowService } from '@shared/services';
+import { WorkflowService } from '@features/bpm-workflows/services/core/workflow.service';
 import { MODAL_LARGE, PAGE_SIZE_OPTION } from '@shared/constants';
 import Swal from 'sweetalert2';
 import { TaskListComponent } from 'src/app/apps/components/tables/table-workflow/components/task-list/task-list.component';

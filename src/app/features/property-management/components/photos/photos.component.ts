@@ -15,7 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
-import { PhotosService } from 'src/app/apps/services/photos/photos.service';
+import { PhotosService } from '@features/property-management/services';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { CarouselComponent } from '../../../../shared/utils/carousel/carousel.component';

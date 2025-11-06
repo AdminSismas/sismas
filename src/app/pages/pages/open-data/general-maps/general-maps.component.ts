@@ -28,8 +28,8 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { FluidHeightDirective } from '../../../../apps/directives/fluid-height.directive';
 import { TerritorialZone as Zone } from '@shared/interfaces';
 import { ComboboxComponent } from '@shared/utils/combobox/combobox.component';
-import { _filterInformationCode, getRandomInt } from '../../../../apps/utils/general';
-import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../apps/constants/general/constants';
+import { _filterInformationCode } from '../../../../apps/utils/general';
+import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../shared/constants/general/constants';
 
 @Component({
   selector: 'vex-general-maps',
@@ -63,7 +63,6 @@ import { DIVPOLLVL2_CODE, DIVPOLLVL_CODE } from '../../../../apps/constants/gene
 export class GeneralMapsComponent implements OnInit, OnDestroy {
 
   protected readonly STRING_INFORMATION_NOT_FOUND = STRING_INFORMATION_NOT_FOUND;
-  idGeneralMap = 'GeneralMapContent';
   optionsDeparments: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
   optionsZones: Zone[] = [];
@@ -90,7 +89,6 @@ export class GeneralMapsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.idGeneralMap = getRandomInt(10000) + 'GeneralMapViewer';
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))

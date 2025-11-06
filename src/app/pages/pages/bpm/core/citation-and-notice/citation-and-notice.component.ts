@@ -20,7 +20,7 @@ import { debounceTime, Observable } from 'rxjs';
 
 import { environment } from '@environments/environments';
 import { Router } from '@angular/router';
-import { SendInfoGeneralService } from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProcessParticipant } from '@shared/interfaces';
 import {
@@ -32,7 +32,7 @@ import { CitationNoticeGridComponent } from './citation-notice-grid/citation-not
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProFlow } from '@shared/interfaces';
-import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../apps/constants/general/constants';
+import { MODAL_SMALL_DETAIL_NOTIFICE } from '../../../../../shared/constants/general/constants';
 import { TableThirdPartyAffectedComponent } from '@shared/components/table-third-party-affected/table-third-party-affected.component';
 
 @Component({

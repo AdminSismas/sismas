@@ -1,7 +1,6 @@
 @if (showMap) {
   @if (!enableRefreshButton && urlIframe) {
     <iframe
-      [id]="idComponent"
       [src]="urlIframe"
       class="w-full h-full min-h-[700px]"
       width="100%"
@@ -42,7 +41,6 @@
         vexFluidHeight
         fluidHeight="269"
         *ngIf="urlIframe"
-        [id]="idComponent"
         [src]="urlIframe"
         class="w-full h-full min-h-[600px]"
         width="100%"

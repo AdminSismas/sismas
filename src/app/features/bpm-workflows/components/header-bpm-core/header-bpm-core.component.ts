@@ -17,7 +17,7 @@ import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-bre
 import { AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, ReplaySubject } from 'rxjs';
-import { BpmCoreService } from '@features/bpm-workflows/services';
+import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
 import {
   CONSTANT_NAME_RETURN,
   NAME_FILED,
@@ -38,9 +38,9 @@ import { DocumentTableComponent } from 'src/app/features/bpm-workflows/component
 import { CommentsComponent } from '@features/bpm-workflows/components/comments/comments.component';
 import { ComponentTemplate } from '@shared/interfaces';
 import { TypeButtonAlfaMain } from '@shared/interfaces';
-import { AlfaMainService } from '@features/bpm-workflows/services';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import { AttachmentExcelMassiveComponent } from '@features/bpm-workflows/components/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
-import { TasksPanelService } from '@features/bpm-workflows/services';
+import { TasksPanelService } from '@features/bpm-workflows/services/header-bpm-core/tasks-panel.service';
 import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 @Component({

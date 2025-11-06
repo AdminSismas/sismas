@@ -8,7 +8,7 @@ import { VexPageLayoutComponent } from "../../../../../@vex/components/vex-page-
 import { VexBreadcrumbsComponent } from "../../../../../@vex/components/vex-breadcrumbs/vex-breadcrumbs.component";
 import { VexPageLayoutContentDirective } from "../../../../../@vex/components/vex-page-layout/vex-page-layout-content.directive";
 import { MatIconModule } from '@angular/material/icon';
-import { MODAL_SMALL } from '../../../../apps/constants/general/constants';
+import { MODAL_SMALL } from '../../../../shared/constants/general/constants';
 
 @Component({
     selector: 'vex-asisstants',

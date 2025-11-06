@@ -30,8 +30,8 @@ import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from '@features/bpm-workflows/services/core/rrright.service';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { DialogsData } from '@shared/interfaces';
-import { PeopleService } from '@shared/services';
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { PeopleService } from 'src/app/apps/services/users/people.service';
+import { InfoPerson } from '@features/property-management/models/info-person';
 import { MatDividerModule } from '@angular/material/divider';
 import Swal from 'sweetalert2';
 import {

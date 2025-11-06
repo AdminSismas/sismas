@@ -19,7 +19,7 @@ import {
   TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
   TYPE_BUTTON_ONE,
   TYPE_OPERATION_CREATE
-} from '../../../apps/constants/general/constants';
+} from '../../constants/general/constants';
 import { ProcessParticipant } from '@shared/interfaces';
 import { ParticipantsService } from '@features/bpm-workflows/services/core/participants-service.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';

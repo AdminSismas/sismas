@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http'
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { VexConfigService } from '@vex/config/vex-config.service';
 import { faPaperPlane, faPaperclip, faSearch, faPhone, faEllipsisV, faUserCircle, faUsers, faPlus, faBan, faChevronLeft, faChevronRight, faVolumeUp, faVolumeMute, faMicrophone, faStop, faRobot, faUser } from '@fortawesome/free-solid-svg-icons';
-// import { AuthService } from '../../../../core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 
 @Component({
   selector: 'app-agent-chat',

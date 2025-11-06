@@ -30,8 +30,8 @@ import {
   TABLE_COLUMN_DOCUMENT_ASSOCIATION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '../../../../../apps/constants/general/constants';
-import { UserService } from '@shared/services';
+} from '../../../../../shared/constants/general/constants';
+import { UserService } from '@shared/services/auth/user.service';
 
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,7 +40,7 @@ import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 import { TypeInformation } from '@shared/interfaces';
 import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
-import { OutFormatService } from '@shared/services';
+import { OutFormatService } from '@shared/services/general/out-format.service';
 import { OutputFormatsEditUpdateComponent } from './output-formats-edit-update/output-formats-edit-update.component';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';

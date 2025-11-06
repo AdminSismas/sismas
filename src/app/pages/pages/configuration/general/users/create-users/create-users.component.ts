@@ -13,17 +13,17 @@ import { forkJoin, map, Observable } from 'rxjs';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import {
   CREATE_USER_INPUTS,
   SEARCH_INPUTS
-} from '../../../../../../apps/constants/general/users.constants';
+} from '../../../../../../shared/constants/general/users.constants';
 import { JSONInput } from '@shared/interfaces';
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { InfoPerson } from '@features/property-management/models/info-person';
 import {
   User,
   CreateUserParams
 } from 'src/app/apps/interfaces/users/user';
-import { PeopleService } from '@shared/services';
+import { PeopleService } from 'src/app/apps/services/users/people.service';
 import { CadastralUserService } from 'src/app/apps/services/users/user.service';
 import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
-import { MODAL_SMALL_LARGE } from '../../../../../../apps/constants/general/constants';
+import { MODAL_SMALL_LARGE } from '../../../../../../shared/constants/general/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 

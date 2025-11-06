@@ -20,10 +20,10 @@ import { SearchData } from '@shared/interfaces';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { InputComponent } from '@shared/ui/input/input.component';import { MODAL_LARGE } from '@shared/constants';
 
-import { InfoPerson } from 'src/app/apps/interfaces/information-property/info-person';
+import { InfoPerson } from '@features/property-management/models/info-person';
 import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import Swal from 'sweetalert2';
-import { AlfaMainService } from '@features/bpm-workflows/services';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import { PaymentValidationComponent } from 'src/app/apps/components/general-components/payment-validation/payment-validation.component';
 import { DataViewCertificate } from 'src/app/apps/interfaces/document-management/view-certificate-management-data.interface';
 

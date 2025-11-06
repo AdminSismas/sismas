@@ -1,7 +1,7 @@
 // Shared constants barrel exports
-export * from '../../apps/constants/general/constants';
-export * from '../../apps/constants/general/constantLabels';
-export * from '../../apps/constants/general/constantsAlertLabel';
+export * from './general/constants';
+export * from './general/constantLabels';
+export * from './general/constantsAlertLabel';
 export {
   CADASTRE_CHANGE_LOG_PARAMS,
   NO_DETAILS_DATA

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { OutFormatService } from '@shared/services';
+import { OutFormatService } from '@shared/services/general/out-format.service';
 
 describe(OutFormatService.name, () => {
   let service: OutFormatService;

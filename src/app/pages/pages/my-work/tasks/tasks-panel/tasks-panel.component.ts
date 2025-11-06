@@ -22,7 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
-import { CONSTANT_NAME_ID } from '../../../../../apps/constants/general/constantLabels';
+import { CONSTANT_NAME_ID } from '../../../../../shared/constants/general/constantLabels';
 import { environment } from '@environments/environments';
 import { FluidHeightDirective } from '../../../../../apps/directives/fluid-height.directive';
 import { HeaderTasksComponent } from '../components/header-tasks/header-tasks.component';
@@ -36,12 +36,12 @@ import {
   PANEL_ASSIGNED_TASKS,
   PANEL_DEVOLUTION_TASKS,
   PANEL_PRIORITIZED_TASKS
-} from '../../../../../apps/constants/general/constants';
+} from '../../../../../shared/constants/general/constants';
 import { PageSearchData } from '@shared/interfaces';
 import { ProTaskE } from '@shared/interfaces';
-import { SendInfoGeneralService } from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { TaskCardComponent } from '../components/task-card/task-card.component';
-import { TasksPanelService } from '@features/bpm-workflows/services';
+import { TasksPanelService } from '@features/bpm-workflows/services/header-bpm-core/tasks-panel.service';
 import { TaskResponseModel } from '@shared/interfaces';
 import { TaskRetailExecuteResponseModel } from '@shared/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
@@ -50,7 +50,7 @@ import {
   DetailInformationTasksComponent
 } from '../components/detail-information-tasks/detail-information-tasks.component';
 import { BpmProcessService, PermissionVailable } from '@features/bpm-workflows/services/core/bpm-process.service';
-import { LoadingServiceService } from '@shared/services';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-assigned-tasks',

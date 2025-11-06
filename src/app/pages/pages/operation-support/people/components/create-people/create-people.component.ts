@@ -7,7 +7,7 @@ import {
   signal
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PeopleService } from '@shared/services';
+import { PeopleService } from 'src/app/apps/services/users/people.service';
 import Swal from 'sweetalert2';
 import { InfoPerson } from '@shared/interfaces';
 import { catchError } from 'rxjs/operators';

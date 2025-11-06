@@ -50,7 +50,7 @@ import { HistoricalActiveProceduresPropertyComponent } from './historical/histor
 import { BaunitIcaComponent } from './ica/baunit-ica.component';
 
 /* ---- Shared services ---- */
-import { InformationPropertyService } from '@services/index';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 
 /* ---- Shared interfaces ---- */
 import { BaunitHead } from '@shared/interfaces';

@@ -28,12 +28,12 @@ import {
   TYPE_OPERATION_ADD
 } from '@shared/constants';
 import { Operation } from '@shared/interfaces';
-import { CollectionServices } from '@shared/services';
+import { CollectionServices } from '@shared/services/general/collection.service';
 import Swal from 'sweetalert2';
 import { BaunitHead } from '@shared/interfaces';
 import {
   UnitPropertyInformationService
-} from '@features/bpm-workflows/services';
+} from '@features/bpm-workflows/services/modification-property-units/baunit-children-information.service';
 
 @Component({
   selector: 'vex-crud-property-units',

@@ -9,7 +9,7 @@ import {
   ProcessParticipantTableMenu,
   TypeProcessParticipant
 } from '@shared/interfaces';
-import { LIST_CITATION_AND_NOTICE_TABLE_MENU } from '../../../../../../apps/constants/general/constants';
+import { LIST_CITATION_AND_NOTICE_TABLE_MENU } from '../../../../../../shared/constants/general/constants';
 
 @Component({
   selector: 'vex-citation-notice-table-menu',

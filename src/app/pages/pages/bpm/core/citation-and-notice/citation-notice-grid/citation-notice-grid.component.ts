@@ -20,7 +20,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { ProcessParticipant } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';
-import { ParticipantsProcessService } from '@shared/services';
+import { ParticipantsProcessService } from '@features/bpm-workflows/services/core/participants-process.service';
 import { filter } from 'rxjs/operators';
 import { InformationPegeable } from '@shared/interfaces';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,7 +34,7 @@ import {
   PAGE} from '@shared/constants';
 import { validateVariable } from '../../../../../../apps/utils/general';
 import { TypeProcessParticipant } from '@shared/interfaces';
-import { LoadingServiceService } from '@shared/services';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
 @Component({
   selector: 'vex-citation-notice-grid',
   templateUrl: './citation-notice-grid.component.html',

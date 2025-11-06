@@ -61,7 +61,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '@environments/environments';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { BasicInformationAddress } from '@shared/interfaces';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';

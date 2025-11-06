@@ -51,7 +51,7 @@ import { environment } from '@environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { InfoAppraisal } from '@shared/interfaces';
 import { BaunitHead } from '@shared/interfaces';
 import { PageSearchData } from '@shared/interfaces';

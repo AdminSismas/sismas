@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/general/constants';
+import { GUION } from '../../../shared/constants/general/constants';
 
 export class Sidewalk {
   id: string;

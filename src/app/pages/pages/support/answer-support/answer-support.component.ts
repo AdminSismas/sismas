@@ -33,7 +33,7 @@ import { ObservationsData } from './model/observations.model';
 import { StatusData } from './model/status.model';
 import { SupportLogs } from './model/supportLogs.model';
 // import { UserAuthData } from 'src/app/core/auth/authData.model';
-// import { AuthService } from 'src/app/core/auth/auth.service';
+// import { AuthService } from '@core/auth/auth.service';
 import { AnswerSupportService } from './service/answer-support.service';
 import { PAGE_SIZE_OPTION } from '@shared/constants';
 

@@ -12,12 +12,10 @@ import { VexPageLayoutHeaderDirective } from '@vex/components/vex-page-layout/ve
 import { Department } from '@shared/interfaces';
 import { Municipality } from '@shared/interfaces';
 import { Subject } from 'rxjs';
-import {
-  TerritorialOrganizationService
-} from '@shared/services';
+import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DIVPOLLVL_CODE, NAME_CODENAME } from '../../../../apps/constants/general/constants';
-import { _filterInformationCode, getRandomInt } from 'src/app/apps/utils/general';
+import { DIVPOLLVL_CODE, NAME_CODENAME } from '../../../../shared/constants/general/constants';
+import { _filterInformationCode } from 'src/app/apps/utils/general';
 
 @Component({
   selector: 'vex-map',
@@ -40,7 +38,6 @@ import { _filterInformationCode, getRandomInt } from 'src/app/apps/utils/general
 export class MapComponent implements OnInit, OnDestroy {
   titleArray: string[] = ['Mapa'];
   principalTitleMenu = 'Mapa temáticos';
-  idGeneralMap = 'ThematicGeneralMapContent';
   optionsDeparments: Department[] = [];
   optionsMunicipalities: Municipality[] = [];
   valueCodeMunicipality: string | null = null;
@@ -60,7 +57,6 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.idGeneralMap = getRandomInt(10000) + 'mapThematicMaps' + getRandomInt(82);
     this.loadDepartmentalInformation();
     this.searchCtrl.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }

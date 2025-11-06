@@ -23,7 +23,7 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { GeneralValidationsService } from '@shared/services';
+import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
 import {
   CrudInformationAdjacent,
   InformationAdjacent

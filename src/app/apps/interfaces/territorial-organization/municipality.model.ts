@@ -1,4 +1,4 @@
-import { GUION } from '../../constants/general/constants';
+import { GUION } from '../../../shared/constants/general/constants';
 
 export class Municipality {
   fkDivpolLvl1Code: string;

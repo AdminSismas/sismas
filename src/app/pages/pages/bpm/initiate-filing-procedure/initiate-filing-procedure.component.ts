@@ -33,11 +33,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
 import { BasicParticipantTableComponent } from './components/basic-participant-table/basic-participant-table.component';
 import { BaunitHead } from '@shared/interfaces';
-import { BpmCoreService } from '@features/bpm-workflows/services';
+import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
 import { BpmDocument } from '@shared/interfaces';
-import { BpmProcessService, PermissionVailable } from '@shared/services';
+import { PermissionVailable } from '@features/bpm-workflows/services/core/bpm-process.service';
+import { BpmProcessService } from '@features/bpm-workflows/services/core/bpm-process.service';
 import { BpmTypeProcess } from '@shared/interfaces';
-import { CollectionServices } from '@shared/services';
+import { CollectionServices } from '@shared/services/general/collection.service';
 import {
   CONSTANT_FILING_PROCEDURES,
   CONSTANT_NAME_BAUNITID,
@@ -50,7 +51,7 @@ import {
   CONSTANT_NAME_RETURN,
   CONSTANT_NAME_ROOTING,
   CONSTANT_NAME_SI_
-} from '../../../../apps/constants/general/constantLabels';
+} from '../../../../shared/constants/general/constantLabels';
 import { DomainCollection } from '@shared/interfaces';
 import {
   DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY,
@@ -62,7 +63,7 @@ import {
   PANEL_ASSIGNED_TASKS,
   SPACE,
   TABLE_COLUMN_PROPERTIES
-} from '../../../../apps/constants/general/constants';
+} from '../../../../shared/constants/general/constants';
 import { environment } from '@environments/environments';
 import { FluidMinHeightDirective } from '../../../../apps/directives/fluid-min-height.directive';
 import { MetadataBpm } from '@shared/interfaces';
@@ -70,10 +71,8 @@ import { ProcessCardComponent } from './components/process-card/process-card.com
 import { ProcessParticipant } from '@shared/interfaces';
 import { ProExecutionE } from '@shared/interfaces';
 import { ProTaskE } from '@shared/interfaces';
-import { SendInfoGeneralService } from '@shared/services';
-import {
-  SendInformationRegisterService
-} from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
+import { SendInformationRegisterService } from 'src/app/apps/services/register-procedure/send-information-register.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

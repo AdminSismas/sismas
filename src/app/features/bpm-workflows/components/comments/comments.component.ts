@@ -16,13 +16,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 // recursos de archivos locales
-import { CommentsService } from '@features/bpm-workflows/services';
+import { CommentsService } from '@features/bpm-workflows/services/comments/comments.service';
 import { PageCommentsData } from '@shared/interfaces';
 import { InformationPegeable } from '@shared/interfaces';
 import { contentInfoComments } from '@shared/interfaces';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
-import { UserService } from '@shared/services';
+import { UserService } from '@shared/services/auth/user.service';
 import { PAGE_SIZE_OPTION } from '@shared/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 

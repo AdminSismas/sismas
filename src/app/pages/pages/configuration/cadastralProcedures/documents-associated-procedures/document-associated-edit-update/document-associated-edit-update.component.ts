@@ -21,7 +21,7 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { InputComponent } from '@shared/ui/input/input.component';import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { UserService } from '@shared/services';
+import { UserService } from '@shared/services/auth/user.service';
 import { MatIconButton } from '@angular/material/button';
 
 export interface AddEditInformationDocumentAssociated {

@@ -36,7 +36,7 @@ import {
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { AlfaMainService } from '@features/bpm-workflows/services';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import { filter, map, startWith } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
 import { DataAlfaMain } from '@shared/interfaces';
@@ -57,7 +57,7 @@ import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
 import Swal from 'sweetalert2';
 import { Operation } from '@shared/interfaces';
 import { DomainCollection } from '@shared/interfaces';
-import { CollectionServices } from '@shared/services';
+import { CollectionServices } from '@shared/services/general/collection.service';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 
 

@@ -1,28 +1,25 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment as envi } from '@environments/environments';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { BasicInformationProperty } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
+  BasicInformationProperty,
   CreateBasicInformationAddress,
-  DetailBasicInformationAddress
-} from '@shared/interfaces';
-import { InfoOwners } from '@shared/models';
-import { PageSearchData } from '@shared/interfaces';
-import {
+  DetailBasicInformationAddress,
   CreateBaunitZone,
-  ZoneBAUnitResponse
-} from '@shared/interfaces';
-import { RuralPhysicalZone } from '@shared/interfaces';
-import { UrbanPhysicalZone } from '@shared/interfaces';
-import { GeoEconomicZone } from '@shared/interfaces';
-import { SimpleResponse } from '@shared/interfaces';
+  ZoneBAUnitResponse,
+  RuralPhysicalZone,
+  UrbanPhysicalZone
+} from '@features/property-management/models';
+import { GeoEconomicZone, InformationPegeable, PageSearchData, SimpleResponse } from '@shared/interfaces';
+import { InfoOwners } from '@shared/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InformationPropertyService {
+  private http = inject(HttpClient);
+
   basic_url = `${envi.url}:${envi.port}`;
 
   reloadTable$ = new Subject<boolean>();
@@ -34,10 +31,6 @@ export class InformationPropertyService {
 
   showRulePage$ = new BehaviorSubject<boolean>(false);
   showOptionsRulePage$: Observable<boolean> = this.showRulePage$.asObservable();
-
-  constructor(
-    private http: HttpClient
-  ) {}
 
   public reloadTableSet(value: boolean): void {
     this.reloadTable$.next(value);

@@ -28,10 +28,10 @@ import {
   // PAGE_SIZE,
   // PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES
-} from '../../../../constants/general/procedures.constant';
+} from '../../../../../shared/constants/general/procedures.constant';
 import { ProceduresCollection } from '@shared/interfaces';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { ProceduresService } from '@shared/services';
+import { ProceduresService } from '@shared/services/general/procedures.service';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { InformationPegeable } from '@shared/interfaces';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';

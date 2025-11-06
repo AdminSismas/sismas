@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TableCadastralSearchComponent } from 'src/app/apps/components/tables/table-cadastral-search/table-cadastral-search.component';
-import { LoadingServiceService } from '@shared/services';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-consult-properties',

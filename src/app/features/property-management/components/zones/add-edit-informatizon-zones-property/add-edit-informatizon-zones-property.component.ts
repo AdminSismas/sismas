@@ -30,7 +30,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
 import { GeoEconomicZone } from '@shared/interfaces';
-import { InformationPropertyService } from '@shared/services';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { RuralPhysicalZone } from '@shared/interfaces';
 import { UrbanPhysicalZone } from '@shared/interfaces';
 import {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AlfaMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/alf/main/alfa-main.component';
 import { AlfaValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
 import { EcoComiteComponent } from 'src/app/pages/pages/bpm/core/cadastral/eco/comite/eco-comite.component';
-import { GeoMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/geo/main/geo-main.component';
+import { GeoMainComponent } from '@features/bpm-workflows/components/geo-main/geo-main.component';
 import { GeoValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/geo/validate/geo-validate.component';
 import { ResMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/main/res-main.component';
 import { ResValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component';
@@ -13,7 +13,7 @@ import { ComponentTemplate } from '@shared/interfaces';
 import {
   COMPONENT_ALFA_MAIN,
   COMPONENT_ALFA_VALIDATE
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants/general/constants';
 import { CitationAndNoticeComponent } from 'src/app/pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
 import { RecognitionPropertyInformationComponent } from 'src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
 import { CompleteDocsComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/complete/complete-docs.component';
@@ -52,7 +52,7 @@ export class DynamicComponentsService {
       component: GeoMainComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/geo/main/geo-main.component'
+          '@features/bpm-workflows/components/geo-main/geo-main.component'
         ).then((m) => m.GeoMainComponent)
     },
     {

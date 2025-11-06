@@ -40,9 +40,9 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
-import { DataSource } from 'src/app/apps/interfaces/information-property/snr-source-info';
+import { DataSource } from '@features/property-management/models';
 import { environment } from '@environments/environments';
-import { SnrService } from 'src/app/apps/services/snr/snr.service';
+import { SnrService } from '@features/property-management/services';
 import { TypeInformation } from '@shared/interfaces';
 import {
   PAGE,
@@ -53,7 +53,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
-import { InformationPersonPropertyComponent } from 'src/app/apps/components/information-property/information-person-property/information-person-property.component';
+import { InformationPersonPropertyComponent } from '@features/property-management/components/information-person-property/information-person-property.component';
 
 @Component({
   selector: 'vex-information-source-property',

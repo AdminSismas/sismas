@@ -25,20 +25,20 @@ import {
   CONSTANT_VALIDATE_OTHER,
   LISTO_FORM_BPM_CORE,
   MODAL_SMALL
-} from '../../../../apps/constants/general/constants';
-import { GeneralValidationsService } from '@shared/services';
+} from '@shared/constants/general/constants';
+import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
 import {
   BasicComponentTemplate,
   ComponentTemplate
 } from '@shared/interfaces';
 import { ProFlow } from '@shared/interfaces';
-import { BpmCoreService } from '@features/bpm-workflows/services';
+import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
 import { ProTaskE } from '@shared/interfaces';
 import { MatOptionModule } from '@angular/material/core';
-import { DynamicComponentsService } from '@shared/services';
-import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLabels';
+import { DynamicComponentsService } from '@features/bpm-workflows/services/core/dynamic-components.service';
+import { CONSTANT_NAME_ID } from '@shared/constants/general/constantLabels';
 import { environment } from '@environments/environments';
-import { SendInfoGeneralService } from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowErrorValidateAlfaMainComponent } from '@features/bpm-workflows/components/show-error-validate-alfa-main/show-error-validate-alfa-main.component';
 import {
@@ -46,8 +46,8 @@ import {
   PermissionVailable
 } from '@features/bpm-workflows/services/core/bpm-process.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { LoadingServiceService } from '@shared/services';
-import { InformationPropertyService } from '@shared/services';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 
 @Component({

@@ -18,7 +18,7 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule
 } from '@angular/forms';
-import { CollectionServices } from '@shared/services';
+import { CollectionServices } from '@shared/services/general/collection.service';
 import { DomainCalificationCollection, DomainCollection } from '@shared/interfaces';
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogClose, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -22,12 +22,12 @@ import {
   CONSTANT_INFORMATION_PREDIAL_HIST,
   CONSTANT_INFORMATION_PREDIAL_MAIN,
   CONSTANT_INFORMATION_PREDIAL_TEMP
-} from '../../../constants/general/constantLabels';
-import { BaunitHead } from '@shared/interfaces';
+} from '@shared/constants/general/constantLabels';
+import { BaunitHead } from '@features/property-management/models';
 import {
   InformationPropertyService
-} from 'src/app/apps/services/territorial-organization/information-property.service';
-import { FluidHeightDirective } from '../../../directives/fluid-height.directive';
+} from '@features/property-management/services';
+import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -61,13 +61,12 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
   schemaTemp = `${envi.schemas.temp}`;
   schemaHist = `${envi.schemas.hist}`;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema,
-    private dialogRef: MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>,
-    private informationPropertyService: InformationPropertyService
-  ) {
+  private dialogRef = inject(MatDialogRef<LayoutCardCadastralInformationPropertyComponentComponent>);
+  private informationPropertyService = inject(InformationPropertyService);
 
-  }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public defaults: ContentInfoSchema
+  ) {}
 
   ngOnInit(): void {
     if (

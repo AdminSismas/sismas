@@ -2,8 +2,8 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, Router } from '@angular/router';
 import { catchError, EMPTY } from 'rxjs';
 import { environment } from '@environments/environments';
-import { CONSTANT_NAME_ID } from '../../../../apps/constants/general/constantLabels';
-import { TasksPanelService } from '@features/bpm-workflows/services';
+import { CONSTANT_NAME_ID } from '../../../../shared/constants/general/constantLabels';
+import { TasksPanelService } from '@features/bpm-workflows/services/header-bpm-core/tasks-panel.service';
 
 
 export const resourcesDataResolver: ResolveFn<string[]> = (

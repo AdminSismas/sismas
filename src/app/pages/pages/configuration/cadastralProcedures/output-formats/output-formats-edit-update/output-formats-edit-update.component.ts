@@ -21,8 +21,8 @@ import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/v
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { InputComponent } from '@shared/ui/input/input.component';import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { UserService } from '@shared/services';
-import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../apps/constants/general/constants';
+import { UserService } from '@shared/services/auth/user.service';
+import { STRUCTURE_HTML_FOOTER, STRUCTURE_HTML_HEADER } from '../../../../../../shared/constants/general/constants';
 import { MatIconButton } from '@angular/material/button';
 import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
 

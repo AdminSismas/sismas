@@ -31,7 +31,7 @@ import {
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants';
 import { environment } from '@environments/environments';
-import { TABLE_COLUMN_PROPERTIES_HISTORY } from 'src/app/apps/constants/general/procedures.constant';
+import { TABLE_COLUMN_PROPERTIES_HISTORY } from '@shared/constants/general/procedures.constant';
 
 // COMPONENT IMPORTS
 import {
@@ -44,7 +44,7 @@ import { ProceduresCollection } from 'src/app/apps/interfaces/tables/procedures-
 import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { PageProceduresData } from 'src/app/apps/interfaces/general/page-procedures-data.model';
-import { ProceduresService } from '@shared/services';
+import { ProceduresService } from '@shared/services/general/procedures.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -60,11 +60,11 @@ import {
 import { TaskResponseModel } from '@shared/interfaces';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
-} from 'src/app/apps/components/information-property/layout-card-cadastral-information-property-component/layout-card-cadastral-information-property-component.component';
+} from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
-import { AlfaMainService } from '@features/bpm-workflows/services';import { BaunitHead } from '@shared/interfaces';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';import { BaunitHead } from '@shared/interfaces';
 import Swal from 'sweetalert2';
-import { BpmCoreService } from '@features/bpm-workflows/services';
+import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
 import { DifferenceChanges } from '@shared/interfaces';
 import {
   ViewChangesBpmOperationComponent

@@ -39,10 +39,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
-import { AttachmentService } from '@shared/services';
+// import { TerritorialOrganizationService } from 'src/app/apps/services/territorial-organization/territorial-organization.service';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { InputComponent } from '@shared/ui/input/input.component';import Swal from 'sweetalert2';
 import { rejectedFileTypes } from '@shared/constants';
+import { AttachmentService } from '@shared/services/documents/attachment.service';
 
 @Component({
   selector: 'vex-attachment-form',

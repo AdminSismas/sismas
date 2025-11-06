@@ -4,7 +4,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { TruncatePipe } from '../../../../../../apps/pipes/truncate-pipe.pipe';
 import { BpmTypeProcess } from '@shared/interfaces';
 import { environment as envi } from '@environments/environments';
-import { NAME_NO_DISPONIBLE } from '../../../../../../apps/constants/general/constants';
+import { NAME_NO_DISPONIBLE } from '../../../../../../shared/constants/general/constants';
 import { SPACE } from '@angular/cdk/keycodes';
 import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SplashScreenService } from '@shared/services';
+import { SplashScreenService } from '@shared/services/core/splash-screen.service';
 
 describe('SplashScreenService', () => {
   let service: SplashScreenService;

@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProFlow } from '@shared/interfaces';
 import { filter, takeUntil } from 'rxjs/operators';
-import { SendInfoGeneralService } from '@shared/services';
+import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { environment } from '@environments/environments';
 import { Router } from '@angular/router';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -19,14 +19,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { getRandomInt } from 'src/app/apps/utils/general';
-import { TabAlfaGeoMainComponent } from '../../tab-alfa-geo-main/tab-alfa-geo-main.component';
-import { CONSTANT_ENABLE_TAB_GEOGRAFIC } from '../../../../../../../apps/constants/general/constants';
+import { TabAlfaGeoMainComponent } from '@features/bpm-workflows/components/geo-main/tab-alfa-geo-main/tab-alfa-geo-main.component';
+import { CONSTANT_ENABLE_TAB_GEOGRAFIC } from '@shared/constants/general/constants';
 import { AlfaMainInformationComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/alfa-main-information.component';
 import {
   CONSTANT_TEXT_ALFA_MAIN_ALFA,
   CONSTANT_TEXT_GEO_MAIN_ALFA
-} from '../../../../../../../apps/constants/general/constantLabels';
+} from '@shared/constants/general/constantLabels';
 
 @Component({
   selector: 'vex-alfa-main',
@@ -58,7 +57,6 @@ import {
 export class AlfaMainComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  id: string = getRandomInt(12324).toString();
   fluidHeight = '165';
   activateGeographicTab = signal<boolean>(false);
 
@@ -75,23 +73,12 @@ export class AlfaMainComponent implements OnInit, OnDestroy {
     private infoGeneralService: SendInfoGeneralService,
     private router: Router
   ) {
-    if (proFlow?.flowId) {
-      this.id += proFlow?.flowId;
-    }
-
     if (proFlow?.mode) {
       this.mode = proFlow?.mode;
     }
   }
 
   ngOnInit() {
-    if (this.id?.length > 0) {
-      this.id =
-        this.id + getRandomInt(100000) + 'AlfaMainComponent' + getRandomInt(10);
-    } else {
-      this.id = getRandomInt(10000) + 'AlfaMainComponent' + getRandomInt(10);
-    }
-
     this._infoFatherURL$
       .pipe(filter<string>(Boolean), takeUntil(this.destroy$))
       .subscribe((result: string) => {

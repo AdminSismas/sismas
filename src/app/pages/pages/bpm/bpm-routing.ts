@@ -11,7 +11,7 @@ const routes: VexRoutes = [
   {
     path: 'bpm-core/:id',
     loadComponent: () =>
-      import('./../bpm/bpm-core/bpm-core.component').then(
+      import('@pages/pages/bpm/bpm-core/bpm-core.component').then(
         (m) => m.BpmCoreComponent
       ),
     resolve: { proFlow: proFlowDataResolver, resources : resourcesDataResolver }
@@ -19,14 +19,14 @@ const routes: VexRoutes = [
   {
     path: 'initiateFilingProcedure/:id',
     loadComponent: () =>
-      import('./../bpm/initiate-filing-procedure/initiate-filing-procedure.component').then(
+      import('@pages/pages/bpm/initiate-filing-procedure/initiate-filing-procedure.component').then(
         (m) => m.InitiateFilingProcedureComponent
       )
   },
   {
     path: '**',
     loadComponent: () =>
-      import('../../pages/errors/error-404/error-404.component').then(
+      import('@pages/pages/errors/error-404/error-404.component').then(
         (m) => m.Error404Component
       )
   }
