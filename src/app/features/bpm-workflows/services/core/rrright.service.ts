@@ -3,8 +3,7 @@ import { environment as env } from '@environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { InfoOwners } from '@shared/models';
 import { catchError, Observable , EMPTY, throwError } from 'rxjs';
-import { DeleteParamsRrright, ParamsRrright } from '@shared/interfaces';
-import { InfoPerson } from '@shared/interfaces';
+import { DeleteParamsRrright, ParamsRrright } from '@features/property-management/models/changes-property-owner';
 
 @Injectable({
   providedIn: 'root'

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { 
-  TenantConfig, 
-  TenantType, 
+import {
+  TenantConfig,
+  TenantType,
   TenantDetectionResult,
-  TenantFeatures 
-} from '@features/tenant-configuration';
-import { TenantConfigFactory } from '@features/tenant-configuration';
+  TenantFeatures
+} from '@features/tenant-configuration/models';
+import { TenantConfigFactory } from '@features/tenant-configuration/factories';
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +28,10 @@ export class TenantConfigService {
     try {
       const detection = this.detectTenant();
       const config = this.configFactory.createConfig(detection.tenantId);
-      
+
       this.detectedTenant = detection.tenantId;
       this.currentTenantSubject.next(config);
-      
+
       console.log(`Tenant initialized: ${detection.tenantId}`, {
         municipality: config.municipalityName,
         source: detection.configSource,
@@ -92,9 +91,9 @@ export class TenantConfigService {
    */
   private detectFromHostname(): TenantType | null {
     if (typeof window === 'undefined') return null;
-    
+
     const hostname = window.location.hostname.toLowerCase();
-    
+
     const hostnameMap: Record<string, TenantType> = {
       'armenia.geogestion.com': 'armenia',
       'armenia-api.geogestion.com': 'armenia',
@@ -117,11 +116,11 @@ export class TenantConfigService {
    */
   private detectFromEnvironment(): TenantType | null {
     if (typeof window === 'undefined') return null;
-    
+
     // Check URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const tenantParam = urlParams.get('tenant') as TenantType;
-    
+
     if (tenantParam && this.isValidTenant(tenantParam)) {
       return tenantParam;
     }
@@ -134,7 +133,7 @@ export class TenantConfigService {
    */
   private detectFromStorage(): TenantType | null {
     if (typeof window === 'undefined') return null;
-    
+
     try {
       const storedTenant = localStorage.getItem('selectedTenant') as TenantType;
       return this.isValidTenant(storedTenant) ? storedTenant : null;
@@ -148,10 +147,10 @@ export class TenantConfigService {
    */
   private isProductionEnvironment(): boolean {
     if (typeof window === 'undefined') return false;
-    
+
     const hostname = window.location.hostname;
-    return !hostname.includes('localhost') && 
-           !hostname.includes('127.0.0.1') && 
+    return !hostname.includes('localhost') &&
+           !hostname.includes('127.0.0.1') &&
            !hostname.includes('test');
   }
 
@@ -160,7 +159,7 @@ export class TenantConfigService {
    */
   private isValidTenant(tenant: string): tenant is TenantType {
     const validTenants: TenantType[] = [
-      'armenia', 'barrancabermeja', 'calarca', 'filandia', 
+      'armenia', 'barrancabermeja', 'calarca', 'filandia',
       'manizales', 'masora', 'montenegro', 'quimbaya', 'test'
     ];
     return validTenants.includes(tenant as TenantType);
@@ -174,7 +173,7 @@ export class TenantConfigService {
       const config = this.configFactory.createConfig(tenantId);
       this.detectedTenant = tenantId;
       this.currentTenantSubject.next(config);
-      
+
       // Store in localStorage for persistence
       if (typeof window !== 'undefined') {
         localStorage.setItem('selectedTenant', tenantId);
@@ -204,17 +203,17 @@ export class TenantConfigService {
   isFeatureEnabled(feature: keyof TenantFeatures): boolean {
     const tenant = this.getCurrentTenant();
     const featureValue = tenant?.features[feature];
-    
+
     // Handle boolean features
     if (typeof featureValue === 'boolean') {
       return featureValue;
     }
-    
+
     // Handle array features (customFeatures)
     if (Array.isArray(featureValue)) {
       return featureValue.length > 0;
     }
-    
+
     return false;
   }
 
@@ -227,13 +226,13 @@ export class TenantConfigService {
 
     const baseUrl = `${tenant.apiConfig.baseUrl}:${tenant.apiConfig.port}`;
     const serviceConfig = tenant.apiConfig.endpoints[service];
-    
+
     if (!serviceConfig) return baseUrl;
-    
+
     if (endpoint && serviceConfig[endpoint]) {
       return `${baseUrl}${serviceConfig[endpoint]}`;
     }
-    
+
     return `${baseUrl}${serviceConfig.value}`;
   }
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HistoricalInformationComponent
-} from '../../../../../../src/app/pages/pages/operation-support/historical-information/historical-information.component';
+} from '@pages/operation-support/historical-information/historical-information.component';
 describe(HistoricalInformationComponent.name, () => {
   let component: HistoricalInformationComponent;
   let fixture: ComponentFixture<HistoricalInformationComponent>;

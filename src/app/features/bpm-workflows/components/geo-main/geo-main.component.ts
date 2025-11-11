@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LIST_BUTTON_GEO_MAIN } from '@shared/constants';
+import { LIST_BUTTON_GEO_MAIN } from '@shared/constants/constants';
 import { Observable } from 'rxjs';
 import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -15,7 +15,7 @@ import { TabAlfaGeoMainComponent } from './tab-alfa-geo-main/tab-alfa-geo-main.c
 import {
   CONSTANT_TEXT_ALFA_MAIN_GEO,
   CONSTANT_TEXT_GEO_MAIN_GEO
-} from '@shared/constants';
+} from '@shared/constants/constantLabels';
 
 @Component({
   selector: 'vex-geo-main',

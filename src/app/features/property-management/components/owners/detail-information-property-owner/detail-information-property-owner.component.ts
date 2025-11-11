@@ -10,7 +10,7 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from '@shared/constants';
+import { INDIVIDUAL_TYPE_NUMBER, NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 import { InfoOwners } from '@shared/models';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';

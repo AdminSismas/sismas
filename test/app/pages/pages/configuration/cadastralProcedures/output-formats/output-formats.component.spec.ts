@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   OutputFormatsComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastralProcedures/output-formats/output-formats.component';
+} from '@pages/configuration/cadastral-procedures/output-formats/output-formats.component';
 
 describe(OutputFormatsComponent.name, () => {
   let component: OutputFormatsComponent;

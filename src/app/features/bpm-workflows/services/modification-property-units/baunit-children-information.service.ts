@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment as envi } from '@environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Baunit } from '@shared/interfaces';
-import { PageSearchData } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
-import { SimpleResponse } from '@shared/interfaces';
+import { Baunit } from '@features/property-management/models/baunit-npnlike';
+import { PageSearchData } from '@shared/models/pageable';
+import { InformationPegeable } from '@shared/models/pageable';
+import { SimpleResponse } from '@shared/models';
 
 @Injectable({
   providedIn: 'root'

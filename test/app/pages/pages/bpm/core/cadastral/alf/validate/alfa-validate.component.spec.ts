@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   AlfaValidateComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
+} from '@pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
 
 describe(AlfaValidateComponent.name, () => {
   let component: AlfaValidateComponent;

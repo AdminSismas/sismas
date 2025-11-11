@@ -35,32 +35,30 @@ import {
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
-import { FluidMinHeightDirective } from '../../../apps/directives/fluid-min-height.directive';
+import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   MODAL_SMALL_LARGE,
   PAGE,
   PAGE_OPTION_UNIQUE,
   TABLE_COLUMN_PRINCIPANTS_TABLE
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InfoPerson } from '@shared/interfaces';
+import { InfoPerson } from '@features/property-management/models/info-person';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
-import { CreatePeopleComponent } from '../../../pages/pages/operation-support/people/components/create-people/create-people.component';
+import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';
 import { ParticipantsService } from '@features/bpm-workflows/services/core/participants-service.service';
-import { InformationPegeable } from '@shared/interfaces';
-import { Pegeable } from '@shared/interfaces';
-import { PageSearchData } from '@shared/interfaces';
+import { InformationPegeable, Pegeable, PageSearchData } from '@shared/models/pageable';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { validateVariable } from '../../../apps/utils/general';
+import { validateVariable } from '../../utils/functions/general';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { ProcessParticipant } from '@shared/interfaces';
+import { ProcessParticipant } from '@features/bpm-workflows/models/process-participant';
 
 @Component({
   selector: 'vex-participant-table',

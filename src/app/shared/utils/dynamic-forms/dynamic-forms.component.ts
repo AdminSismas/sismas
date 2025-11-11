@@ -22,14 +22,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 /* Components */
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
-import { JSONInput } from '@shared/interfaces';
+import { JSONInput } from '@shared/interfaces/forms';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { MY_DATE_FORMATS } from '@shared/constants';
+import { MY_DATE_FORMATS } from '@shared/constants/constants';
 import { output } from '@angular/core';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';

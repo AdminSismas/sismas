@@ -1,6 +1,6 @@
-import { InfoPerson } from '@shared/interfaces';
-import { GovernmentalChannel } from '@shared/interfaces';
-import { ProcessParticipantTableMenu } from '@shared/interfaces';
+import { InfoPerson } from '@features/property-management/models/info-person';
+import { GovernmentalChannel } from '@features/bpm-workflows/models/governmental-channel';
+import { ProcessParticipantTableMenu } from '@features/bpm-workflows/models/citation-and-notice/info-participants.interface';
 
 export class ProcessParticipant {
 

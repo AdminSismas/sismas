@@ -29,9 +29,9 @@ import {
   PAGE_SIZE_OPTION, PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { environment } from '@environments/environments';
-import { TABLE_COLUMN_PROPERTIES_HISTORY } from '@shared/constants/general/procedures.constant';
+import { TABLE_COLUMN_PROPERTIES_HISTORY } from '@shared/constants/procedures.constant';
 
 // COMPONENT IMPORTS
 import {
@@ -39,11 +39,11 @@ import {
 } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 
 // INTERFACES IMPORTS
-import { TypeInformation } from 'src/app/apps/interfaces/general/content-info';
-import { ProceduresCollection } from 'src/app/apps/interfaces/tables/procedures-progress.model';
-import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
+import { TypeInformation } from '@shared/interfaces';
+import { ProceduresCollection } from '@features/tasks/models/procedures-progress.model';
+import { InformationPegeable } from '@shared/models/pageable';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { PageProceduresData } from 'src/app/apps/interfaces/general/page-procedures-data.model';
+import { PageProceduresData } from '@features/property-management/models/page-procedures-data.model';
 import { ProceduresService } from '@shared/services/general/procedures.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
@@ -51,21 +51,21 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
-import { contentInfoProcedures } from 'src/app/apps/interfaces/general/content-info-procedures.model';
+import { contentInfoProcedures } from '@features/bpm-workflows/models/procedures/content-info-procedures.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import {
   DetailInformationTasksComponent
-} from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
-import { TaskResponseModel } from '@shared/interfaces';
+} from '@features/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { TaskResponseModel } from '@features/tasks/models';
 import {
   LayoutCardCadastralInformationPropertyComponentComponent
 } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
-import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';import { BaunitHead } from '@shared/interfaces';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';import { BaunitHead } from '@shared/models';
 import Swal from 'sweetalert2';
 import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
-import { DifferenceChanges } from '@shared/interfaces';
+import { DifferenceChanges } from '@features/bpm-workflows/models/difference-changes';
 import {
   ViewChangesBpmOperationComponent
 } from '@features/bpm-workflows/components/view-changes-bpm-operation/view-changes-bpm-operation.component';

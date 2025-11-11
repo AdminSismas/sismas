@@ -4,10 +4,10 @@ import { map, Observable } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
 import { environment as envi } from '@environments/environments';
-import { PageSearchData } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
-import { ProcessParticipant } from '@shared/interfaces';
-import { GovernmentalChannel } from '@shared/interfaces';
+import { PageSearchData } from '@shared/models/pageable';
+import { InformationPegeable } from '@shared/models/pageable';
+import { ProcessParticipant } from '@features/bpm-workflows/models/process-participant';
+import { GovernmentalChannel } from '@features/bpm-workflows/models/governmental-channel';
 
 @Injectable({
   providedIn: 'root'

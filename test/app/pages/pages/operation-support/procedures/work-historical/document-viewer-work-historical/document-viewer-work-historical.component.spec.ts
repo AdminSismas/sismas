@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DocumentViewerWorkHistoricalComponent
-} from '../../../../../../../../src/app/pages/pages/operation-support/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
+} from '@features/operation-support/components/procedures/work-historical/document-viewer-work-historical/document-viewer-work-historical.component';
 
 describe(DocumentViewerWorkHistoricalComponent.name, () => {
   let component: DocumentViewerWorkHistoricalComponent;

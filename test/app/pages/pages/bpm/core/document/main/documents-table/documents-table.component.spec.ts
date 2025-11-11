@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DocumentsMainTableComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/document/main/documents-table/documents-table.component';
+} from '@features/bpm-workflows/components/documents-main/documents-table/documents-table.component';
 
 
 describe(DocumentsMainTableComponent.name, () => {

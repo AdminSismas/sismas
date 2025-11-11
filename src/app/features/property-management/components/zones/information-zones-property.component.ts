@@ -7,7 +7,7 @@ import {
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   PAGE,
   TYPE_INFORMATION_EDITION
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { environment } from '@environments/environments';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -16,7 +16,9 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
 import { Observable } from 'rxjs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { CommonModule } from '@angular/common';
@@ -32,8 +34,8 @@ import {
   ZoneBAUnitFisica,
   ZoneBAUnitGeoeconomic,
   ZoneBAUnitResponse
-} from '@shared/interfaces';
-import { BasicInformationProperty } from '@shared/interfaces';
+} from '@features/property-management/models/zone-baunit';
+import { BasicInformationProperty } from '@features/property-management/models/basic-information-property';
 import { GeoEconomicZonesPropertyComponent } from './geo-economic-zones-property/geo-economic-zones-property.component';
 import { PhysicalZonesPropertyComponent } from './physical-zones-property/physical-zones-property.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

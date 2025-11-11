@@ -1,4 +1,4 @@
-import { ChatMessage } from '../app/pages/ia/asisstants/chat/chat.component';
+import { ChatMessage } from '@pages/ia/asisstants/chat/chat.component';
 
 export const chatMessages: ChatMessage[] = [
   {

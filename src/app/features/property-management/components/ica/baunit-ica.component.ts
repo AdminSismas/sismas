@@ -11,13 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { TABLE_ICA_COLUMNS } from '@features/property-management/constants';
+import { TABLE_ICA_COLUMNS } from '@features/property-management/constants/ica/baunit-ica.constant';
 import { BaunitIcaService } from '@features/property-management/services/baunit-ica.service';
 import { IcaTable } from '@shared/interfaces/property-management/ica/ica-table';
 import { map } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { IcaResponse } from '@shared/interfaces';
-import { MODAL_SMALL, NAME_NO_DISPONIBLE } from '@shared/constants';
+import { MODAL_SMALL, NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { IcaDetailsComponent } from '@features/property-management/components/ica/ica-details/ica-details.component';
 

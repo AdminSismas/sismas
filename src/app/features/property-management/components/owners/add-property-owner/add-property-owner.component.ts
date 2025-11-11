@@ -30,18 +30,18 @@ import {
   AddPropertyOwnerData,
   Owners,
   ParamsRrright
-} from '@shared/interfaces';
-import { PeopleService } from 'src/app/apps/services/users/people.service';
+} from '@features/property-management/models/changes-property-owner';
+import { PeopleService } from '@features/property-management/services/property/people.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RrrightService } from '@features/bpm-workflows/services/core/rrright.service';
 import { InfoPerson } from '@features/property-management/models/info-person';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CreatePeopleComponent } from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
+import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { Big } from 'big.js';
-import { MODAL_SMALL_LARGE } from '@shared/constants';
+import { MODAL_SMALL_LARGE } from '@shared/constants/constants';
 
 @Component({
   selector: 'vex-add-property-owner',

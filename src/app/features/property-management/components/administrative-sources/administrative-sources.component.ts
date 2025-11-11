@@ -15,7 +15,7 @@ import {
   UpdateAdministrativeSource
 } from '@features/property-management/models/administrative-source';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AdministrativeSourcesService } from '@features/property-management/services';
+import { AdministrativeSourcesService } from '@features/property-management/services/administrative-sources/administrative-sources.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -23,8 +23,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CreateAdministrativeSourceComponent } from './create-administrative-source/create-administrative-source.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { COLUMNS_ADMINISTRATIVE_SOURCES } from '../../../../apps/constants/information-property/administrative-source.constants';
-import { MODAL_MEDIUM } from '@shared/constants';
+import { COLUMNS_ADMINISTRATIVE_SOURCES } from '../../constants/administrative-sources/administrative-source.constants';
+import { MODAL_MEDIUM } from '@shared/constants/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { NgClass } from '@angular/common';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   WorkProgressComponent
-} from '../../../../../../../src/app/pages/pages/operation-support/procedures/work-progress/work-progress.component';
+} from '@pages/operation-support/procedures/work-progress/work-progress.component';
 
 describe(WorkProgressComponent.name, () => {
   let component: WorkProgressComponent;

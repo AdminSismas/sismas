@@ -99,7 +99,7 @@ import { TableAlfaMainComponent } from 'src/app/apps/components/bpm/table-alfa-m
 import { getRandomInt } from '../../../../utils/general';
 
 // Cross-boundary imports:
-import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { DetailInformationTasksComponent } from '@pages
 ```
 
 #### Impacto
@@ -403,7 +403,7 @@ import { Something } from '../../../../../../../somewhere';
       "@features/*": ["src/app/features/*"],
       "@shared/*": ["src/app/shared/*"],
       "@core/*": ["src/app/core/*"],
-      "@pages/*": ["src/app/pages/*"]
+      "@pages/*": ["@pages
     }
   }
 }

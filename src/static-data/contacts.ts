@@ -1,4 +1,4 @@
-import { Contact } from "src/app/pages/pages/ia/asisstants/interfaces/contact.interface";
+import { Contact } from "@pages/ia/asisstants/interfaces/contact.interface";
 
 export const contactsData: Contact[] = [
   {

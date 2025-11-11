@@ -1,5 +1,4 @@
-import { BasicDetailGroup } from '@shared/interfaces';
-import { BasicMasterGroup } from '@shared/interfaces';
+import { BasicDetailGroup, BasicMasterGroup } from '@features/property-management/models';
 import { TypeOperation } from '@shared/interfaces';
 
 export class BasicInformationProperty {

@@ -30,7 +30,7 @@ import {
   CONSTANT_ERR_ONLY_ONE_99,
   CONSTANT_ERR_ONLY_TEXT_NUMBER,
   CONSTANT_ERR_TEXT_ADDRESS_VALIDATOR
-} from '@shared/constants';
+} from '@shared/constants/constantsAlertLabel';
 
 @Component({
   selector: 'vex-input',

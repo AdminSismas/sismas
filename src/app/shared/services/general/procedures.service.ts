@@ -3,12 +3,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment as envi } from '@environments/environments';
-import {
-  PageProceduresData,
-  ProceduresCollection,
-  InformationPegeable,
-  ProTaskE
-} from '@shared/interfaces';
+import { ProTaskE, ProceduresCollection } from '@features/tasks/models';
+import { PageProceduresData } from '@features/property-management/models/page-procedures-data.model';
+import { InformationPegeable } from '@shared/models/pageable';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +36,7 @@ export class ProceduresService {
     url: string,
     params: any
   ): Observable<ProceduresCollection[]> {
-    return this.http.get<any>(url, { params: params  });
+    return this.http.get<any>(url, { params: params });
   }
 
   public getFilterTableEjecutionService(

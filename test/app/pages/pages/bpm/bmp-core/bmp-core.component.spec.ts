@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BmpCoreComponent } from '../../../../../../src/app/pages/pages/bpm/bmp-core/bmp-core.component';
+import { BmpCoreComponent } from '@pages/bpm/bmp-core/bmp-core.component';
 
 describe(BmpCoreComponent.name, () => {
   let component: BmpCoreComponent;

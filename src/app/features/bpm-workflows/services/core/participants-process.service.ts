@@ -3,14 +3,14 @@ import { environment as envi } from '@environments/environments';
 import {
   Observable,
   throwError} from 'rxjs';
-import { PageSearchData } from '@shared/interfaces';
+import { PageSearchData } from '@shared/models/pageable';
 import {
   HttpClient,
   HttpErrorResponse,
   HttpParams,
   HttpStatusCode
 } from '@angular/common/http';
-import { InformationPegeable } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/models/pageable';
 
 @Injectable({
   providedIn: 'root'

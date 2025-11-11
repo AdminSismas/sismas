@@ -16,10 +16,10 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CollectionServices } from '@shared/services/general/collection.service';
-import { DomainCollection } from '@shared/interfaces';
+import { DomainCollection } from '@shared/interfaces/forms';
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';
-import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants';
+import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants/constants';
 import { map } from 'rxjs';
 
 @Component({

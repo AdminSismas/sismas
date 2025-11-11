@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   AlphanumericComponent
-} from '../../../../../../../src/app/pages/pages/open-data/downloads/alphanumeric/alphanumeric.component';
+} from '@pages/open-data/downloads/alphanumeric/alphanumeric.component';
 
 describe(AlphanumericComponent.name, () => {
   let component: AlphanumericComponent;

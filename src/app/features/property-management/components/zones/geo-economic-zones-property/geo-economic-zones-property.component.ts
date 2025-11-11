@@ -34,10 +34,10 @@ import {
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC,
   TYPE_INFORMATION_EDITION
-} from '@shared/constants';
-import { ZoneBAUnitGeoeconomic } from '@shared/interfaces';
+} from '@shared/constants/constants';
+import { ZoneBAUnitGeoeconomic } from '@features/property-management/models/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../detail-information-property-zones/detail-information-property-zones.component';
-import { BasicInformationProperty } from '@shared/interfaces';
+import { BasicInformationProperty } from '@features/property-management/models/basic-information-property';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { TypeInformation } from '@shared/interfaces';
 import { environment } from '@environments/environments';

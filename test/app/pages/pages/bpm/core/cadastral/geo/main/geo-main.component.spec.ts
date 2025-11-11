@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GeoMainComponent
-} from '../../../../../../../../../src/app/features/bpm-workflows/components/geo-main/geo-main.component';
+} from '@features/bpm-workflows/components/geo-main/geo-main.component';
 
 describe(GeoMainComponent.name, () => {
   let component: GeoMainComponent;

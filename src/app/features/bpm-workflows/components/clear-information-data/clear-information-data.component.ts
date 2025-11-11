@@ -17,9 +17,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import {
   CONSTANT_MSG_ERROR_CLEAR_INFORMATION,
   CONSTANT_NAME_CONFIRMATION
-} from '@shared/constants';
+} from '@shared/constants/constantLabels';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { TWO_POINT_ } from '@shared/constants';
+import { TWO_POINT_ } from '@shared/constants/constants';
 
 @Component({
   selector: 'vex-clear-information-data',

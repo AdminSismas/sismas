@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { TypeOperationAlfaMain } from '@shared/interfaces';
+import { TypeOperationAlfaMain } from '@shared/interfaces/content-info';
 import {
   CONSTANT_TYPEDOMAIN_BAUNITCONDITION,
   CONSTANT_TYPEDOMAIN_DISPNAME_CO_,
@@ -26,12 +26,12 @@ import {
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_CREATE,
   TYPE_OPERATION_DELETE
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import {
   CONSTANT_NAME_ADD_LABEL,
   CONSTANT_NAME_CREATE_LABEL,
   CONSTANT_NAME_DELETE_LABEL
-} from '@shared/constants';
+} from '@shared/constants/constantLabels';
 
 import { AsyncPipe, NgClass } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -39,14 +39,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, UntypedFormControl } from 
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import { filter, map, startWith } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
-import { DataAlfaMain } from '@shared/interfaces';
+import { DataAlfaMain } from '@features/bpm-workflows/models/data-alfa-main.model';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BaunitHead } from '@shared/interfaces';
+import { BaunitHead } from '@shared/models';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -55,8 +55,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
 import Swal from 'sweetalert2';
-import { Operation } from '@shared/interfaces';
-import { DomainCollection } from '@shared/interfaces';
+import { Operation } from '@shared/models';
+import { DomainCollection } from '@shared/interfaces/forms';
 import { CollectionServices } from '@shared/services/general/collection.service';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 

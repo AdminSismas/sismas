@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { FormGroup } from '@angular/forms';
-import { inputsAddPhotos } from '@shared/constants/general/photos.constant';
+import { inputsAddPhotos } from '@shared/constants/photos.constant';
 import Swal from 'sweetalert2';
 
 @Component({

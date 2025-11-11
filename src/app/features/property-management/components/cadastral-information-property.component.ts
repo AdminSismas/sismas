@@ -50,10 +50,12 @@ import { HistoricalActiveProceduresPropertyComponent } from './historical/histor
 import { BaunitIcaComponent } from './ica/baunit-ica.component';
 
 /* ---- Shared services ---- */
-import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
 
 /* ---- Shared interfaces ---- */
-import { BaunitHead } from '@shared/interfaces';
+import { BaunitHead } from '@shared/models';
 import {
   NavigationItemCadastralInfo,
   TypeInformation
@@ -72,7 +74,7 @@ import {
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   REFERENCE_COMPONENTS,
   RULE_PAGE_CADASTRAL_DA
-} from '@shared/constants';
+} from '@shared/constants/constants';
 
 /* ---- Environments ---- */
 import { environment as envi } from '@environments/environments';

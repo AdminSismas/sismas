@@ -12,10 +12,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserDetails } from 'src/app/apps/interfaces/user-details/user.model';
-import { PasswordService } from 'src/app/apps/services/users/password.service';
+import { UserDetails } from '@features/configuration/interfaces/users/user-details.model';
+import { PasswordService } from 'src/app/layouts/services/change-password/password.service';
 // Custom
-import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
+import { GeneralValidationsService } from '@shared/services/general/validations/general-validations.service';
 import { UserService } from '@shared/services/auth/user.service';
 
 @Component({

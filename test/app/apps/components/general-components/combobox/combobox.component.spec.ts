@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ComboboxComponent } from '../../../../../../src/app/shared/utils/combobox/combobox.component';
+import { ComboboxComponent } from '@shared/utils/combobox/combobox.component';
 
 
 describe(ComboboxComponent.name, () => {

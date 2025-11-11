@@ -21,7 +21,7 @@ import {
   CONSTANT_ERR_ONLY_INVALID_NUMBER,
   CONSTANT_ERR_ONLY_ONE_99,
   CONSTANT_ERR_ONLY_TEXT_NUMBER
-} from '../../constants/general/constantsAlertLabel';
+} from '../../constants/constantsAlertLabel';
 
 @Component({
   selector: 'vex-text-area',

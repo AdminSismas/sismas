@@ -19,7 +19,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { CollectionServices } from '@shared/services/general/collection.service';
-import { DomainCalificationCollection, DomainCollection } from '@shared/interfaces';
+import { DomainCalificationCollection, DomainCollection } from '@shared/interfaces/forms';
 import { MatTableModule } from '@angular/material/table';
 import { HttpParams } from '@angular/common/http';
 import {
@@ -33,9 +33,9 @@ import {
   CONSTANT_ERR_ONLY_INVALID_NUMBER,
   CONSTANT_ERR_ONLY_ONE_99,
   CONSTANT_ERR_ONLY_TEXT_NUMBER
-} from '@shared/constants';
+} from '@shared/constants/constantsAlertLabel';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants';
+import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants/constants';
 
 @Component({
   selector: 'vex-combobox-collection-form',

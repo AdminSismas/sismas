@@ -12,9 +12,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 
 // recursos de archivos locales
-import { contentInfoAttachment } from '@shared/interfaces';
+import { contentInfoAttachment } from '@features/bpm-workflows/models/document-management/content-info-attachment.model';
 import { environment } from '@environments/environments';
-import { MODEL_METADATA_PROPERTIES } from '@features/bpm-workflows/constants/attachment.constant';
+import { MODEL_METADATA_PROPERTIES } from '@features/bpm-workflows/constants/documents-table/attachment.constant';
 import { DatePipe } from '@angular/common';
 
 @Component({

@@ -13,11 +13,11 @@ import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
-import { GeographicViewerEmbeddedComponent } from 'src/app/apps/components/geographics/geographic-viewer-embedded/geographic-viewer-embedded.component';
-import { FluidHeightDirective } from '@shared/directives';
+import { GeographicViewerEmbeddedComponent } from '@features/geographics/components/geographic-viewer-embedded/geographic-viewer-embedded.component';
+import { FluidHeightDirective } from '@shared/directives/fluid-height.directive';
 import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
-import { LIST_BUTTON_GEO_MAIN } from '@shared/constants/general/constants';
+import { LIST_BUTTON_GEO_MAIN } from '@shared/constants/constants';
 import { filter } from 'rxjs/operators';
 import { AlfaMainInformationComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/alfa-main-information.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';

@@ -5,7 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants';
+import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants/constants';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

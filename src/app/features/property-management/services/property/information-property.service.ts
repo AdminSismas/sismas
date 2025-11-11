@@ -11,7 +11,9 @@ import {
   RuralPhysicalZone,
   UrbanPhysicalZone
 } from '@features/property-management/models';
-import { GeoEconomicZone, InformationPegeable, PageSearchData, SimpleResponse } from '@shared/interfaces';
+import { InformationPegeable, PageSearchData } from '@shared/models/pageable';
+import { SimpleResponse } from '@shared/models';
+import { GeoEconomicZone } from '@features/property-management/models';
 import { InfoOwners } from '@shared/models';
 
 @Injectable({

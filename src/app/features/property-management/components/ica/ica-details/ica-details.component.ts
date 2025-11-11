@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { IcaDetails } from '@shared/interfaces/property-management/ica/ica-details';
 import { DatePipe } from '@angular/common';
-import { NAME_NO_DISPONIBLE } from '@shared/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 
 enum IcaDetailLabel {
   accion = 'Acción',

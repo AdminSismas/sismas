@@ -46,26 +46,26 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { CustomSelectorComponent } from '@shared/utils/custom-selector/custom-selector.component';
 import { InputComponent } from '@shared/ui/input/input.component';
 import { CollectionServices } from '@shared/services/general/collection.service';
-import { CcCalificacionUB } from '@shared/interfaces';
+import { CcCalificacionUB } from '@features/property-management/models/';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
 import {
   CONSTANT_MSG_ONLY_ONE_99,
   CONSTANT_MSG_TYPE_AREA,
   CONSTANT_MSG_UNITBUILT_LABEL,
   CONSTANT_MSG_UNITBUILT_YEAR
-} from '../../../../../shared/constants/general/constantsAlertLabel';
-import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
+} from '@shared/constants/constantsAlertLabel';
+import { GeneralValidationsService } from '@shared/services/general/validations/general-validations.service';
 import {
   TypeOperation,
   TypeQualificationMode,
   ValidateQualificationByDomBuiltType
 } from '@shared/interfaces';
 import { CommonGeneralValidationsService } from '@shared/services/general/common-general-validations.service';
-import { InformationConstructionsService } from '@features/property-management/services';
+import { InformationConstructionsService } from '@features/property-management/services/constructions/information-constructions.service';
 import {
   validateIsNumber,
   validateVariable
-} from '../../../../../apps/utils/general';
+} from '@shared/utils/functions/general';
 // Custom
 import {
   DOMAIN_NAME_BUILT_USE,
@@ -77,11 +77,11 @@ import {
   TYPE_CREATE,
   TYPE_TRADITIONAL,
   TYPE_TYPOLOGY
-} from '@shared/constants';
-import { DomainCollection } from '@shared/interfaces';
+} from '@shared/constants/constants';
+import { DomainCollection } from '@shared/interfaces/forms';
 import { ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { TypesQualificationUB } from '@features/property-management/models/types-qualification-ub';
+import { TypesQualificationUB } from '@features/property-management/models';
 
 @Component({
   selector: 'crud-information-constructions-property',

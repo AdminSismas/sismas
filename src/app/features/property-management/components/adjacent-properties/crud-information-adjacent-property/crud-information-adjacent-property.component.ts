@@ -23,17 +23,17 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
+import { GeneralValidationsService } from '@shared/services/general/validations/general-validations.service';
 import {
   CrudInformationAdjacent,
   InformationAdjacent
-} from '@shared/interfaces';
-import { validateVariable } from '../../../../../apps/utils/general';
+} from '@features/property-management/models/information-adjacent';
+import { validateVariable } from '@shared/utils/functions/general';
 import { TypeOperation } from '@shared/interfaces';
-import { TYPE_CREATE } from '@shared/constants';
+import { TYPE_CREATE } from '@shared/constants/constants';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
-import { InformationAdjacentPropertyService } from '@features/property-management/services';
+import { InformationAdjacentPropertyService } from '@features/property-management/services/adjacent/information-adjacent-property.service';
 
 @Component({
   selector: 'vex-crud-information-adjacent-property',

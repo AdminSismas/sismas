@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AdministrativeSourcesService } from '@features/property-management/services';
+import { AdministrativeSourcesService } from '@features/property-management/services/administrative-sources/administrative-sources.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,16 +13,16 @@ import {
   AdministrativeSource,
   CreateAdministrativeSourceParams
 } from '@features/property-management/models/administrative-source';
-import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { JSONInput } from '@shared/interfaces';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { JSONInput } from '@shared/interfaces/forms';
 import {
   INPUTS_ADMINISTRATIVE_SOURCE
-} from '../../../../../apps/constants/information-property/administrative-source.constants';
+} from '../../../constants/administrative-sources/administrative-source.constants';
 import { MatSelectModule } from '@angular/material/select';
 import {
   TerritorialOrganizationService
-} from 'src/app/apps/services/territorial-organization/territorial-organization.service';
-import { Department } from 'src/app/apps/interfaces/territorial-organization/department.model';
-import { Municipality } from 'src/app/apps/interfaces/territorial-organization/municipality.model';
+} from '@shared/services/general/territorial-organization/territorial-organization.service';
+import { Department } from '@shared/models/territorial-organization';
+import { Municipality } from '@shared/models/territorial-organization';
 import { MatIconModule } from '@angular/material/icon';
 import { map } from 'rxjs';
 

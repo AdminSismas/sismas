@@ -1,2 +1,2 @@
-// Economic Zones Models Barrel Export
+export * from './content-info-domainLadmCol.model';
 export * from './zone-description';

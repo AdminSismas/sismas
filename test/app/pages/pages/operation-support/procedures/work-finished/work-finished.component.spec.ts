@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   WorkFinishedComponent
-} from '../../../../../../../src/app/pages/pages/operation-support/procedures/work-finished/work-finished.component';
+} from '@pages/operation-support/procedures/work-finished/work-finished.component';
 
 describe(WorkFinishedComponent.name, () => {
   let component: WorkFinishedComponent;

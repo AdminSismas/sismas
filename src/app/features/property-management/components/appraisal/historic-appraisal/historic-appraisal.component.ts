@@ -11,13 +11,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
-import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
+import { PageSearchData } from '@shared/models/pageable';
 import {
   PAGE,
   PAGE_SIZE_OPTION,
   TABLE_COLUMN_PROPERTIES_APPRAISALS
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { InfoAppraisal } from '@features/property-management/models/info-appraisal';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';

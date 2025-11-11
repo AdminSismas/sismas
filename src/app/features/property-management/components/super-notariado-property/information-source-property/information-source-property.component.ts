@@ -40,9 +40,9 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Custom
-import { DataSource } from '@features/property-management/models';
+import { DataSource } from '@features/property-management/models/snr-source-info';
 import { environment } from '@environments/environments';
-import { SnrService } from '@features/property-management/services';
+import { SnrService } from '@features/property-management/services/snr/snr.service';
 import { TypeInformation } from '@shared/interfaces';
 import {
   PAGE,
@@ -52,7 +52,7 @@ import {
   TABLE_COLUMN_PROPERTIES_SOURCE,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { InformationPersonPropertyComponent } from '@features/property-management/components/information-person-property/information-person-property.component';
 
 @Component({

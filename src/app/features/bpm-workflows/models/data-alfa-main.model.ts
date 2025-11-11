@@ -1,5 +1,5 @@
-import { TypeOperationAlfaMain } from '@shared/interfaces';
-import { Operation } from '@shared/interfaces';
+import { TypeOperationAlfaMain } from '@shared/interfaces/content-info';
+import { Operation } from '@shared/models';
 
 export class DataAlfaMain {
   executionId?: string;

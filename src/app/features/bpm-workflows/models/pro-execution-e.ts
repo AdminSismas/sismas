@@ -1,5 +1,5 @@
-import { MetadataBpm } from '@shared/interfaces';
-import { ProcessParticipant } from '@shared/interfaces';
+import { ProcessParticipant } from '@features/bpm-workflows/models/process-participant';
+import { MetadataBpm } from '@features/tasks/models';
 
 export class ProExecutionE {
   processId:number;

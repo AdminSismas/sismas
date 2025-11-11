@@ -1,4 +1,4 @@
-import { NAME_NO_DISPONIBLE } from '@shared/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 
 export class BasicInformationConstruction {
     unitBuiltId?: number;

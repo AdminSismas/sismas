@@ -5,7 +5,7 @@ import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { formAlertUpdateInputsJson } from 'src/app/apps/constants/information-property/alerts.constants';
+import { formAlertUpdateInputsJson } from '@features/property-management/constants/alerts/alerts.constants';
 import Swal from 'sweetalert2';
 
 interface UpdateAlertData {

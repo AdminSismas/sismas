@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PeopleComponent } from '../../../../../../src/app/pages/pages/operation-support/people/people.component';
+import { PeopleComponent } from '@pages/operation-support/people/people.component';
 
 describe(PeopleComponent.name, () => {
   let component: PeopleComponent;

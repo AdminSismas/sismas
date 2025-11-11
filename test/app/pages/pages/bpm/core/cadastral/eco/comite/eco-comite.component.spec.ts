@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   EcoComiteComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/cadastral/eco/comite/eco-comite.component';
+} from '@pages/bpm/core/cadastral/eco/comite/eco-comite.component';
 
 describe(EcoComiteComponent.name, () => {
   let component: EcoComiteComponent;

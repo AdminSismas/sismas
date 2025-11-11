@@ -45,8 +45,8 @@ import {
   PAGE_SIZE_SORT,
   TABLE_COLUMN_PROPERTIES_PERSON,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
-import { SnrService } from '@features/property-management/services';
+} from '@shared/constants/constants';
+import { SnrService } from '@features/property-management/services/snr/snr.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 

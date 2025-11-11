@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '@environments/environments';
 import { Observable } from 'rxjs';
-import { InformationAdjacent } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
+import { InformationAdjacent } from '@features/property-management/models/information-adjacent';
+import { InformationPegeable } from '@shared/models/pageable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({

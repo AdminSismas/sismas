@@ -1,4 +1,4 @@
-import { InfoPerson } from '@shared/interfaces';
+import { InfoPerson } from '@features/property-management/models/info-person';
 
 export class InfoOwners {
   rightId?:number;

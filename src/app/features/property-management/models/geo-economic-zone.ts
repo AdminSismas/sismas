@@ -1,5 +1,5 @@
 import { GeoEconomicZoneDetails } from "@features/economic-zones/models";
-import { CadastreChangeLog } from "./zone-baunit";
+import { CadastralChangeLog } from '@features/property-management/models/zone-baunit';
 
 export class GeoEconomicZone {
   zonaHomoGeoEconomicaId?: number;
@@ -10,7 +10,7 @@ export class GeoEconomicZone {
   divpolLv2?: string;
   suelo?: string;
   valorLabel?: string;
-  cadastreChangeLog?: CadastreChangeLog;
+  cadastreChangeLog?: CadastralChangeLog;
   details?: GeoEconomicZoneDetails;
 
 

@@ -3,7 +3,7 @@ import { catchError, Observable, EMPTY, throwError } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environments';
-import { BpmTypeProcess } from '@shared/interfaces';
+import { BpmTypeProcess } from '@features/bpm-workflows/models/bpm-type-process';
 
 export interface PermissionVailable {
   executionId: string;

@@ -3,15 +3,15 @@ import { Observable } from 'rxjs';
 import {
   ContentInformationConstruction,
   CreateBasicInformationConstruction
-} from '@shared/interfaces';
+} from '@features/property-management/models';
 import { environment as envi } from '@environments/environments';
 import {
   HttpClient,
   HttpParams
 } from '@angular/common/http';
-import { PageSearchData } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
-import { CcCalificacionUB } from '@shared/interfaces';
+import { PageSearchData } from '@shared/models/pageable';
+import { InformationPegeable } from '@shared/models/pageable';
+import { CcCalificacionUB } from '@features/property-management/models/';
 @Injectable({
   providedIn: 'root'
 })

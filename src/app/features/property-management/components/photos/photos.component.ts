@@ -15,12 +15,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
-import { PhotosService } from '@features/property-management/services';
+import { PhotosService } from '@features/property-management/services/photos/photos.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { CarouselComponent } from '../../../../shared/utils/carousel/carousel.component';
+import { CarouselComponent } from '@shared/utils/carousel/carousel.component';
 import { AddPhotoComponent } from './add-photo/add-photo.component';
-import { MODAL_SMALL_XS } from '@shared/constants';
+import { MODAL_SMALL_XS } from '@shared/constants/constants';
 import Swal from 'sweetalert2';
 
 @Component({

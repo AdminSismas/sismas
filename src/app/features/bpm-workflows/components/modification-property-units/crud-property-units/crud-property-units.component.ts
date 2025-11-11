@@ -8,13 +8,13 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { DataAlfaMain } from '@shared/interfaces';
-import { TypeOperationAlfaMain } from '@shared/interfaces';
+import { DataAlfaMain } from '@features/bpm-workflows/models/data-alfa-main.model';
+import { TypeOperationAlfaMain } from '@shared/interfaces/content-info';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
 import { InputComponent } from '@shared/ui/input/input.component';import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
-import { DomainCollection } from '@shared/interfaces';
+import { DomainCollection } from '@shared/interfaces/forms';
 import {
   CONSTANT_TYPEDOMAIN_BAUNITCONDITION,
   CONSTANT_TYPEDOMAIN_DISPNAME_CO_,
@@ -26,11 +26,11 @@ import {
   CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ,
   CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ,
   TYPE_OPERATION_ADD
-} from '@shared/constants';
-import { Operation } from '@shared/interfaces';
+} from '@shared/constants/constants';
+import { Operation } from '@shared/models';
 import { CollectionServices } from '@shared/services/general/collection.service';
 import Swal from 'sweetalert2';
-import { BaunitHead } from '@shared/interfaces';
+import { BaunitHead } from '@shared/models';
 import {
   UnitPropertyInformationService
 } from '@features/bpm-workflows/services/modification-property-units/baunit-children-information.service';

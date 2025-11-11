@@ -1,4 +1,4 @@
-import { TypesQualificationUB } from '@shared/interfaces';
+import { TypesQualificationUB } from '@features/property-management/models';
 
 export class CcCalificacionUB {
   id?: number;

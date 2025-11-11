@@ -1,5 +1,3 @@
-import * as domain from 'domain';
-
 export class TypesQualificationUB {
   id?: number;
   domain? :string;

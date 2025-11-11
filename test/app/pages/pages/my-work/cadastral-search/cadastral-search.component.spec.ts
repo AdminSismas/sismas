@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   CadastralSearchComponent
-} from '../../../../../../src/app/pages/pages/my-work/cadastral-search/cadastral-search.component';
+} from '@pages/my-work/cadastral-search/cadastral-search.component';
 
 describe(CadastralSearchComponent.name, () => {
   let component: CadastralSearchComponent;

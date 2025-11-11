@@ -23,7 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { INFORMATION_NOT_FOUND } from '@shared/constants';
+import { INFORMATION_NOT_FOUND } from '@shared/constants/constants';
 
 @Component({
   selector: 'vex-combox-custom-selector',

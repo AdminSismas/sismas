@@ -31,11 +31,13 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
 import {
   BasicInformationProperty,
   CrudBasicInformationProperty
-} from '@shared/interfaces';
+} from '@features/property-management/models/basic-information-property';
 import {
   GUION,
   LIST_SCHEMAS_CONTROL_MAIN,
@@ -49,16 +51,16 @@ import {
   TYPE_INFORMATION_VISUAL,
   TYPE_UPDATE,
   TYPE_UPDATE_PROPERTY_UNIT
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { environment } from '@environments/environments';
 import { MatDialog } from '@angular/material/dialog';
 import { EditBasicPropertyInformationComponent } from './edit-basic-property-information/edit-basic-property-information.component';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { GeographicViewerComponent } from 'src/app/apps/components/geographics/geographic-viewer/geographic-viewer.component';
+import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
+import { GeographicViewerComponent } from '@features/geographics/components/geographic-viewer/geographic-viewer.component';
 import { ContentInfoSchema } from '@shared/models';
 import { MatDividerModule } from '@angular/material/divider';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
-import { BaunitHead } from '@shared/interfaces';
+import { BaunitHead } from '@shared/models';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
 

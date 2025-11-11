@@ -1,4 +1,4 @@
-import { Individual } from '@shared/interfaces';
+import { Individual } from '@features/bpm-workflows/models/individual';
 
 export interface GrantedAuthority {
   authority?:string;

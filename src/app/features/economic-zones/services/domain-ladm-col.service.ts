@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '@environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PageSortByData } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
+import { PageSortByData } from '@shared/models/pageable';
+import { InformationPegeable } from '@shared/models/pageable';
 
 
 @Injectable({

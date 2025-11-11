@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InformationAdjacentPropertyService } from './information-adjacent-property.service';
+import { InformationAdjacentPropertyService } from '@features/property-management/services/adjacent/information-adjacent-property.service';
 
 describe('InformationAdjacentPropertyService', () => {
   let service: InformationAdjacentPropertyService;

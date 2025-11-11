@@ -16,10 +16,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import {
   BasicInformationProperty,
-  CrudBasicInformationProperty,
-  EditBasicPropertyInputs,
-  TypeOperation
-} from '@shared/interfaces';
+  CrudBasicInformationProperty
+} from '@features/property-management/models/basic-information-property';
+import { EditBasicPropertyInputs, TypeOperation } from '@shared/interfaces';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -27,11 +26,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { environment } from '@environments/environments';
-import { TYPE_UPDATE_PROPERTY_UNIT, MY_DATE_FORMATS } from '@shared/constants';
+import {
+  TYPE_UPDATE_PROPERTY_UNIT,
+  MY_DATE_FORMATS
+} from '@shared/constants/constants';
 import { InputComponent } from '@shared/ui/input/input.component';
 import Swal from 'sweetalert2';
 import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
-import { FORM_INPUT_BASIC_PROPERTY } from 'src/app/apps/constants/information-property/basic-property-information.constants';
+import { FORM_INPUT_BASIC_PROPERTY } from '@features/property-management/constants/basic-information/basic-property-information.constants';
 import { Subscription } from 'rxjs';
 import Big from 'big.js';
 
@@ -175,7 +177,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     }
 
     if (this.isEditableBaunitCondition) {
-        enableInputs.push('domBaunitCondition');
+      enableInputs.push('domBaunitCondition');
     }
 
     Object.keys(this.form.controls).forEach((field) => {
@@ -410,23 +412,23 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   }
 
   refreshCadastralAreaGeoE(event: MouseEvent): void {
-      event.preventDefault();
-      if (!this.baunitIdE) return;
+    event.preventDefault();
+    if (!this.baunitIdE) return;
 
-      const executionId = this.executionId;
+    const executionId = this.executionId;
 
-      this.informationPropertyService
-        .refreshCadastralAreaGeoE(this.baunitIdE, executionId)
-        .subscribe((response) => {
-          this.form.patchValue({ cadastralAreaGeo: response.cadastralAreaGeo  });
-          Swal.fire({
-            icon: 'success',
-            text: 'Área catastral geográfica actualizada correctamente',
-            showConfirmButton: false,
-            timer: 10000
-          });
+    this.informationPropertyService
+      .refreshCadastralAreaGeoE(this.baunitIdE, executionId)
+      .subscribe((response) => {
+        this.form.patchValue({ cadastralAreaGeo: response.cadastralAreaGeo });
+        Swal.fire({
+          icon: 'success',
+          text: 'Área catastral geográfica actualizada correctamente',
+          showConfirmButton: false,
+          timer: 10000
         });
-    }
+      });
+  }
 
   getAlertSuccess(text: string, data: BasicInformationProperty) {
     Swal.fire({
@@ -471,7 +473,10 @@ export class EditBasicPropertyInformationComponent implements OnInit {
   }
 
   get isEditableBaunitCondition(): boolean {
-    const condition = this.dataBasicInformationProperty.contentInformation?.domBaunitCondition?.trim().toLowerCase() as string;
+    const condition =
+      this.dataBasicInformationProperty.contentInformation?.domBaunitCondition
+        ?.trim()
+        .toLowerCase() as string;
     if (condition.includes('matriz')) return false;
     if (condition.includes('unidad predial')) return false;
 

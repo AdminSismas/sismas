@@ -13,11 +13,11 @@ import {
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '@shared/constants';
+import { CONSTANT_TYPE_PARTICIPATION_THIRDPARTY } from '@shared/constants/constants';
 import { ThirdPartyAffectedParticipant } from '@shared/interfaces';
 import { ParticipantTableComponent } from '@shared/components/participant-table/participant-table.component';
-import { ProcessParticipant } from '@shared/interfaces';
-import { FluidMinHeightDirective } from '@shared/directives';
+import { ProcessParticipant } from '@features/bpm-workflows/models/process-participant';
+import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
 
 @Component({
   selector: 'vex-basic-participant-table-dialog',

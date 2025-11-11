@@ -1,4 +1,4 @@
-import { BasicInformationAddress } from '@shared/interfaces';
+import { BasicInformationAddress } from '@features/property-management/models/basic-information-address';
 import { TypeOperation } from '@shared/interfaces';
 
 export class DetailBasicInformationAddress {

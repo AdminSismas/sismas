@@ -4,8 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { NAME_NO_DISPONIBLE } from '@shared/constants';
-import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from '@shared/interfaces';
+import { NAME_NO_DISPONIBLE } from '@shared/constants/constants';
+import { ZoneBAUnitFisica, ZoneBAUnitGeoeconomic } from '@features/property-management/models/zone-baunit';
 import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
 type PropertyType = 'Urbano' | 'Rural' | 'Geoeconómica';
 

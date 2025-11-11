@@ -15,7 +15,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { ContentInformationConstruction } from '@features/property-management/models/content-information-construction';
 import { DetailInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/detail-information-constructions-property/detail-information-constructions-property.component';
-import { MODAL_SMALL } from '@shared/constants';
+import { MODAL_SMALL } from '@shared/constants/constants';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';

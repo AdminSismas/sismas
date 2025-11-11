@@ -1,4 +1,4 @@
-import { TruncatePipe } from '../../../../src/app/apps/pipes/truncate-pipe.pipe';
+import { TruncatePipe } from '@shared/pipes/truncate-pipe.pipe';
 
 
 describe('TruncatePipe', () => {

@@ -37,7 +37,7 @@ import {
   TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import {
   FormsModule,
   NG_VALUE_ACCESSOR,
@@ -55,14 +55,14 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '@environments/environments';
-import { InformationPegeable } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/models/pageable';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '@shared/interfaces';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { InformationAdjacent } from '@shared/interfaces';
+import { InformationAdjacent } from '@features/property-management/models/information-adjacent';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CrudInformationAdjacentPropertyComponent } from './crud-information-adjacent-property/crud-information-adjacent-property.component';
-import { InformationAdjacentPropertyService } from '@features/property-management/services';
+import { InformationAdjacentPropertyService } from '@features/property-management/services/adjacent/information-adjacent-property.service';
 import Swal from 'sweetalert2';
 import { MasiveDeleteAdjacentComponent } from './masive-delete-adjacent/masive-delete-adjacent.component';
 

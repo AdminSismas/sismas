@@ -22,7 +22,7 @@ import {
   CONSTANT_NAME_RETURN,
   NAME_FILED,
   NAME_VERSION
-} from '@shared/constants';
+} from '@shared/constants/constantLabels';
 import {
   LIST_COMPONENT_ACTIVE_MASIVE_EXCEL,
   MODAL_MEDIUM,
@@ -30,18 +30,18 @@ import {
   MODAL_SMALL_XS,
   TYPE_BUTTON_EIGHT,
   TYPE_BUTTON_SEVEN
-} from '@shared/constants';
-import { ProTaskE } from '@shared/interfaces';
+} from '@shared/constants/constants';
+import { ProTaskE } from '@features/tasks/models';
 import { filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentTableComponent } from 'src/app/features/bpm-workflows/components/document-table/document-table.component';
 import { CommentsComponent } from '@features/bpm-workflows/components/comments/comments.component';
-import { ComponentTemplate } from '@shared/interfaces';
+import { ComponentTemplate } from '@features/bpm-workflows/models/render-template.types';
 import { TypeButtonAlfaMain } from '@shared/interfaces';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import { AttachmentExcelMassiveComponent } from '@features/bpm-workflows/components/alfa-main/attachment-excel-massive/attachment-excel-massive.component';
-import { TasksPanelService } from '@features/bpm-workflows/services/header-bpm-core/tasks-panel.service';
-import { DetailInformationTasksComponent } from 'src/app/pages/pages/my-work/tasks/components/detail-information-tasks/detail-information-tasks.component';
+import { TasksPanelService } from '@features/tasks/services/tasks-panel.service';
+import { DetailInformationTasksComponent } from '@features/tasks/components/detail-information-tasks/detail-information-tasks.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 @Component({
   selector: 'vex-header-bpm-core',

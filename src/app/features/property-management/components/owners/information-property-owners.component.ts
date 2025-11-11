@@ -21,11 +21,13 @@ import {
   PAGE_SIZE,
   PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '@environments/environments';
-import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
 import { InfoOwners } from '@shared/models';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -55,10 +57,10 @@ import { CommonModule } from '@angular/common';
 import {
   FRACTION_DECIMALS,
   TABLE_COLUMNS
-} from '@shared/constants';
+} from '@features/property-management/constants/owners/information-property-owners.constants';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RrrightService } from '@features/bpm-workflows/services/core/rrright.service';
-import { DeleteParamsRrright } from '@shared/interfaces';
+import { DeleteParamsRrright } from '@features/property-management/models/changes-property-owner';
 import Big from 'big.js';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { input } from '@angular/core';

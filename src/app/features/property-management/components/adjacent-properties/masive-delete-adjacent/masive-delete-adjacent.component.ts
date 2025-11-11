@@ -3,9 +3,9 @@ import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.compo
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
-import { InformationAdjacent } from '@shared/interfaces';
+import { InformationAdjacent } from '@features/property-management/models/information-adjacent';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL } from '@shared/constants';
+import { TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL } from '@shared/constants/constants';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import Swal from 'sweetalert2';
 

@@ -1,4 +1,4 @@
-import { PreForm } from '@shared/interfaces';
+import { PreForm } from '@features/tasks/models/pre-form';
 
 export class ProFlow {
 

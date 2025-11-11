@@ -46,22 +46,22 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
-import { AttachmentCollection } from '@shared/interfaces';
-import { contentInfoAttachment } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
+import { AttachmentCollection } from '@features/bpm-workflows/models/document-management/attachment.model';
+import { contentInfoAttachment } from '@features/bpm-workflows/models/document-management/content-info-attachment.model';
+import { InformationPegeable } from '@shared/models/pageable';
 import { ViewFileDocumentManagementComponent } from '@shared/components/view-file-document-management/view-file-document-management.component';
 import {
   MODAL_LARGE,
   PAGE,
   PAGE_SIZE,
   PAGE_SIZE_OPTION
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { MatDividerModule } from '@angular/material/divider';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
-import { AttachmentFormComponent } from 'src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
+import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
+import { AttachmentFormComponent } from '@features/bpm-workflows/components/documents-main/attachment-form/attachment-form.component';
 import Swal from 'sweetalert2';
 import { UserService } from '@shared/services/auth/user.service';
-import { TABLE_COLUMN_ATTACHMENT } from '@features/bpm-workflows/constants/attachment.constant';
+import { TABLE_COLUMN_ATTACHMENT } from '@features/bpm-workflows/constants/documents-table/attachment.constant';
 import { AttachmentService } from '@shared/services/documents/attachment.service';
 
 @Component({

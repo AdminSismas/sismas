@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   OperationalAnalyticsComponent
-} from '../../../../../../../src/app/pages/pages/operation-support/reports/operational-analytics/operational-analytics.component';
+} from '@pages/operation-support/reports/operational-analytics/operational-analytics.component';
 
 describe(OperationalAnalyticsComponent.name, () => {
   let component: OperationalAnalyticsComponent;

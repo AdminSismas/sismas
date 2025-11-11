@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   CertificateGridComponent
-} from '../../../../../../../../src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-grid/certificate-grid.component';
+} from '@pages/public-service/ticket-office/generate-services/certificate-grid/certificate-grid.component';
 
 
 describe('CertificateGridComponent', () => {

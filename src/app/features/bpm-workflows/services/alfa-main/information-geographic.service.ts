@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment as envi } from '@environments/environments';
 import { catchError, Observable, throwError } from 'rxjs';
-import { QueryParametersGeographicVie } from '@shared/interfaces';
-import { ChangeControl } from '@shared/interfaces';
+import { QueryParametersGeographicVie } from '@features/geographics/models/query-parameters-geographic-vie';
+import { ChangeControl } from '@features/bpm-workflows/models/change-control';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { assistantData } from './assistantsData.model';
-import { env } from "../../../environments/enviromentsIA";
+import { env } from "@environments/enviromentsIA";
 
 
 @Injectable({

@@ -7,7 +7,7 @@ import {
   RecognitionPropertyBasic,
   RecognitionPropertyMapper,
   TagsRecognition
-} from '@shared/interfaces';
+} from '@features/bpm-workflows/models/recognitionProperty.interface';
 
 @Injectable({
   providedIn: 'root'

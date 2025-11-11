@@ -46,16 +46,12 @@ import { MatSelectModule } from '@angular/material/select';
 
 // recursos de archivos locales
 import { DomainLadmColService } from '@features/economic-zones/services/domain-ladm-col.service';
-import { DomainCollection } from '@shared/interfaces';
-import { PageSortByData } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
-import { contentInfoDomainLadmCol } from '@shared/interfaces';
-import {
-  PAGE,
-  PAGE_SIZE,
-  PAGE_SIZE_OPTION,
-  TABLE_COLUMN_PROPERTIES
-} from '@features/economic-zones/constants';
+import { DomainCollection } from '@shared/interfaces/forms';
+import { PageSortByData } from '@shared/models/pageable';
+import { InformationPegeable } from '@shared/models/pageable';
+import { contentInfoDomainLadmCol } from '@features/economic-zones/models/content-info-domainLadmCol.model';
+import { TABLE_COLUMN_PROPERTIES } from '@features/economic-zones/constants/domain-ladm-col.constant';
+import { PAGE, PAGE_SIZE, PAGE_SIZE_OPTION } from '@shared/constants/constants';
 
 @Component({
   templateUrl: './table-domain-ladm-col.component.html',
@@ -110,7 +106,6 @@ export class TableDomainLadmColComponent implements OnInit, AfterViewInit {
   // referencias a los elementos de la tabla
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
-
 
   /* ============== METHODS ============== */
   /* ------- Meth. Lifecycle Hooks ------- */

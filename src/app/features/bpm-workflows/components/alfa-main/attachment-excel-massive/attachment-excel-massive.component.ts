@@ -14,7 +14,7 @@ import { MatDivider } from '@angular/material/divider';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
-import { LIST_EXTENSION_MASIVE_EXCEL } from '@shared/constants';
+import { LIST_EXTENSION_MASIVE_EXCEL } from '@shared/constants/constants';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import { LoadingServiceService } from '@shared/services/general/loading-service.service';

@@ -4,7 +4,7 @@ import {
   DecodeJwt,
   UserDetails,
   UserRole
-} from 'src/app/apps/interfaces/user-details/user.model';
+} from '@features/tenant-configuration/models';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environments';

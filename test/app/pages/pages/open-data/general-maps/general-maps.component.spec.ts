@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GeneralMapsComponent
-} from '../../../../../../src/app/pages/pages/open-data/general-maps/general-maps.component';
+} from '@pages/open-data/general-maps/general-maps.component';
 
 describe(GeneralMapsComponent.name, () => {
   let component: GeneralMapsComponent;

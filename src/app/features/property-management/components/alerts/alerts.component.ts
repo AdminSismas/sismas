@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import {
   MODAL_SMALL,
   MODAL_SMALL_XS
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InfoOwners } from '@shared/models';
@@ -35,7 +35,7 @@ import { DatePipe } from '@angular/common';
 import { CreateAlertComponent } from './create-alert/create-alert.component';
 import { AlertResponse } from '@features/property-management/models/alerts.interface';
 import Swal from 'sweetalert2';
-import { ALERT_TABLE_COLUMNS } from 'src/app/apps/constants/information-property/alerts.constants';
+import { ALERT_TABLE_COLUMNS } from '@features/property-management/constants/alerts/alerts.constants';
 import { UpdateAlertComponent } from './update-alert/update-alert.component';
 import { AlertsService } from '@features/property-management/services/alerts/alertes.service';
 

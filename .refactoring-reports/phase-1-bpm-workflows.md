@@ -546,8 +546,8 @@ export { TaskResponseModel, ProcessModel } from './task-response.model';
 **Descripción**: Los servicios tenían diferentes formas de importar environments:
 ```typescript
 // Variaciones encontradas:
-from '../../../../../environments/environments'
-from '../../../../environments/environments'
+from '@environments/environments'
+from '@environments/environments'
 from 'src/environments/environments'
 ```
 

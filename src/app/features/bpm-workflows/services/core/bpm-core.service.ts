@@ -4,11 +4,11 @@ import { catchError, Observable, EMPTY, throwError } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
 import { environment as envi } from '@environments/environments';
-import { ProTaskE } from '@shared/interfaces';
-import { ProFlow } from '@shared/interfaces';
-import { ProExecutionE } from '@shared/interfaces';
-import { DifferenceChanges } from '@shared/interfaces';
-import { MetadataBpm } from '@shared/interfaces';
+import { ProTaskE } from '@features/tasks/models';
+import { ProFlow } from '@features/bpm-workflows/models/pro-flow';
+import { ProExecutionE } from '@features/bpm-workflows/models/pro-execution-e';
+import { DifferenceChanges } from '@features/bpm-workflows/models/difference-changes';
+import { MetadataBpm } from '@features/tasks/models';
 
 @Injectable({
   providedIn: 'root'

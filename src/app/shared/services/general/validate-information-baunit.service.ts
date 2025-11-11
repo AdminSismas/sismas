@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment as envi, environment } from '@environments/environments';
-import { InformationPegeable, PageSearchData } from '@shared/interfaces';
+import { InformationPegeable, PageSearchData } from '@shared/models/pageable';
 
 @Injectable({
   providedIn: 'root'

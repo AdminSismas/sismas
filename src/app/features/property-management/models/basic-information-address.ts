@@ -1,4 +1,4 @@
-import { NAME_NO, NAME_SI } from '@shared/constants';
+import { NAME_NO, NAME_SI } from '@shared/constants/constants';
 
 export class BasicInformationAddress {
   baunitId?: string | null;

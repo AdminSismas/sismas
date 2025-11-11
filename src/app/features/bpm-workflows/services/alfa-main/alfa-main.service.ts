@@ -5,10 +5,10 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { saveAs } from 'file-saver';
 
 import { environment as envi } from '@environments/environments';
-import { InformationPegeable } from '@shared/interfaces';
-import { PageSearchData } from '@shared/interfaces';
-import { ChangeControl } from '@shared/interfaces';
-import { BaunitHead } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/models/pageable';
+import { PageSearchData } from '@shared/models/pageable';
+import { ChangeControl } from '@features/bpm-workflows/models/change-control';
+import { BaunitHead } from '@shared/models';
 
 @Injectable({
   providedIn: 'root'

@@ -5,7 +5,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import Swal from 'sweetalert2';
-import { formAlertCreateInputsJson } from 'src/app/apps/constants/information-property/alerts.constants';
+import { formAlertCreateInputsJson } from '@features/property-management/constants/alerts/alerts.constants';
 
 @Component({
   selector: 'vex-create-alert',

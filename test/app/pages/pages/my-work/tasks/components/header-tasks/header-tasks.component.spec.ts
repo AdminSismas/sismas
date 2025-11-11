@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HeaderTasksComponent
-} from '../../../../../../../../src/app/pages/pages/my-work/tasks/components/header-tasks/header-tasks.component';
+} from '@features/tasks/components/header-tasks/header-tasks.component';
 
 describe(HeaderTasksComponent.name, () => {
   let component: HeaderTasksComponent;

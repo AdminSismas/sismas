@@ -31,10 +31,10 @@ import {
   NAVIGATION_ITEMS_INFORMATION_PROPERTIES,
   TABLE_COLUMN_PROPERTIES_PHYSICAL,
   TYPE_INFORMATION_EDITION
-} from '@shared/constants';
-import { ZoneBAUnitFisica } from '@shared/interfaces';
+} from '@shared/constants/constants';
+import { ZoneBAUnitFisica } from '@features/property-management/models/zone-baunit';
 import { DetailInformationPropertyZonesComponent } from '../detail-information-property-zones/detail-information-property-zones.component';
-import { BasicInformationProperty } from '@shared/interfaces';
+import { BasicInformationProperty } from '@features/property-management/models/basic-information-property';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { TypeInformation } from '@shared/interfaces';
 import { environment } from '@environments/environments';

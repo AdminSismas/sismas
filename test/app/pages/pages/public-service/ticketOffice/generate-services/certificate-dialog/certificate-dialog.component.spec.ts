@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CertificateDialogComponent } from 'src/app/pages/pages/public-service/ticketOffice/generate-services/certificate-dialog/certificate-dialog.component';
+import { CertificateDialogComponent } from '@pages
 
 describe('CertificateDialogComponent', () => {
   let component: CertificateDialogComponent;

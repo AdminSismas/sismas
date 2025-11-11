@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   EconomicModLandComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastral/economic-mod-land/economic-mod-land.component';
+} from '@pages/configuration/cadastral/economic-mod-land/economic-mod-land.component';
 
 describe(EconomicModLandComponent.name, () => {
   let component: EconomicModLandComponent;

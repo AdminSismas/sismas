@@ -3,7 +3,7 @@ import { environment } from '@environments/environments';
 import {
   ContentInformationConstruction,
   CrudInformationConstruction
-} from '@shared/interfaces';
+} from '@features/property-management/models/content-information-construction';
 import {
   MAT_DIALOG_DATA,
   MatDialogClose,
@@ -14,10 +14,10 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { NAME_NO_DISPONIBLE } from '@shared/constants';
+import { NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { CcCalificacionUB } from '@shared/interfaces';
+import { CcCalificacionUB } from '@features/property-management/models/';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -25,11 +25,11 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationConstructionsService } from '@features/property-management/services';
+import { InformationConstructionsService } from '@features/property-management/services/constructions/information-constructions.service';
 import {
   validateIsNumber,
   validateVariable
-} from '../../../../../apps/utils/general';
+} from '@shared/utils/functions/general';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 export interface Tile {

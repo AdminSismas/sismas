@@ -27,7 +27,7 @@ import {
   TABLE_COLUMN_PROPERTIES_APPRAISALS,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -51,13 +51,15 @@ import { environment } from '@environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
-import { InfoAppraisal } from '@shared/interfaces';
-import { BaunitHead } from '@shared/interfaces';
-import { PageSearchData } from '@shared/interfaces';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
+import { InfoAppraisal } from '@features/property-management/models/info-appraisal';
+import { BaunitHead } from '@shared/models';
+import { PageSearchData } from '@shared/models/pageable';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { InformationPegeable } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/models/pageable';
 import { Observable } from 'rxjs';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -67,7 +69,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatRippleModule } from '@angular/material/core';
 import { TypeInformation } from '@shared/interfaces';
-import { CurrencyFormatPipe } from 'src/app/apps/pipes/currencyFormat.pipe';
+import { CurrencyFormatPipe } from '@shared/pipes/currency-format.pipe';
 import { AutoAppraisalComponent } from './auto-appraisal/auto-appraisal.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { HistoricAppraisalComponent } from './historic-appraisal/historic-appraisal.component';

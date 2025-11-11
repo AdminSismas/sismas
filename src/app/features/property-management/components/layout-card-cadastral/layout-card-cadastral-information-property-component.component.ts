@@ -14,7 +14,7 @@ import {
   TWO_POINT_,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { environment as envi } from '@environments/environments';
 import { ObjectSchema, TypeInformation } from '@shared/interfaces';
 import {
@@ -22,12 +22,12 @@ import {
   CONSTANT_INFORMATION_PREDIAL_HIST,
   CONSTANT_INFORMATION_PREDIAL_MAIN,
   CONSTANT_INFORMATION_PREDIAL_TEMP
-} from '@shared/constants/general/constantLabels';
-import { BaunitHead } from '@features/property-management/models';
+} from '@shared/constants/constantLabels';
+import { BaunitHead } from '@shared/models';
 import {
   InformationPropertyService
-} from '@features/property-management/services';
-import { FluidHeightDirective } from 'src/app/apps/directives/fluid-height.directive';
+} from '@features/property-management/services/property/information-property.service';
+import { FluidHeightDirective } from '@shared/directives/fluid-height.directive';
 import Swal from 'sweetalert2';
 
 @Component({

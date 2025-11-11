@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { JSONInput } from 'src/app/apps/interfaces/forms/dynamic-forms';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { JSONInput } from '@shared/interfaces/forms';
 import { FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';

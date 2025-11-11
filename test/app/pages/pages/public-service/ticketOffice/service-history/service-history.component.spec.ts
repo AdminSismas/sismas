@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   ServiceHistoryComponent
-} from '../../../../../../../src/app/pages/pages/public-service/ticketOffice/service-history/service-history.component';
+} from '@pages/public-service/ticket-office/service-history/service-history.component';
 
 describe(ServiceHistoryComponent.name, () => {
   let component: ServiceHistoryComponent;

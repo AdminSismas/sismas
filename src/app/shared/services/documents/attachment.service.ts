@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environments';
 import { Observable, catchError } from 'rxjs';
-import { AttachmentCollection } from '@shared/interfaces';
+import { AttachmentCollection } from '@features/bpm-workflows/models/document-management/attachment.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({

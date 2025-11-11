@@ -16,8 +16,8 @@ import { NgClass, PercentPipe } from '@angular/common';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatInputModule } from '@angular/material/input';
-import { SearchData } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
+import { SearchData } from '@shared/models';
+import { InformationPegeable } from '@shared/models/pageable';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import {
@@ -29,7 +29,7 @@ import {
   PAGE_SIZE_SORT,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { ContentInfoSchema } from '@shared/models';
 import { environment } from '@environments/environments';
 import {
@@ -46,11 +46,11 @@ import {
   HeaderCadastralInformationPropertyComponent
 } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { UnitPropertyInformationService } from '@features/bpm-workflows/services/modification-property-units/baunit-children-information.service';
-import { PageSearchData } from '@shared/interfaces';
+import { PageSearchData } from '@shared/models/pageable';
 import {
   TABLE_COLUMN_UNITS_TABLE_COLUMNS
-} from '@shared/constants';
-import { BaUnitHeadPercentage } from '@shared/interfaces';
+} from '@features/property-management/constants/information-unit-properties/modification-property-units.constants';
+import { BaUnitHeadPercentage } from '@features/property-management/models';
 
 @Component({
   selector: 'vex-information-unit-property',

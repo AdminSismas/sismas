@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
-import { ProTaskE } from '@shared/interfaces';
+import { ProTaskE } from '@features/tasks/models';
 
 @Injectable({
   providedIn: 'root'

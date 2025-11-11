@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AlfaMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/alf/main/alfa-main.component';
-import { AlfaValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
-import { EcoComiteComponent } from 'src/app/pages/pages/bpm/core/cadastral/eco/comite/eco-comite.component';
+import { AlfaMainComponent } from '@pages/bpm/core/cadastral/alf/main/alfa-main.component';
+import { AlfaValidateComponent } from '@pages/bpm/core/cadastral/alf/validate/alfa-validate.component';
+import { EcoComiteComponent } from '@pages/bpm/core/cadastral/eco/comite/eco-comite.component';
 import { GeoMainComponent } from '@features/bpm-workflows/components/geo-main/geo-main.component';
-import { GeoValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/geo/validate/geo-validate.component';
-import { ResMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/main/res-main.component';
-import { ResValidateComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component';
-import { SynMainComponent } from 'src/app/pages/pages/bpm/core/cadastral/syn/main/syn-main.component';
-import { DocumentMainComponent } from 'src/app/pages/pages/bpm/core/document/main/document-main.component';
-import { DocumentValidateComponent } from 'src/app/pages/pages/bpm/core/document/validate/document-validate.component';
-import { ComponentTemplate } from '@shared/interfaces';
+import { GeoValidateComponent } from '@pages/bpm/core/cadastral/geo/validate/geo-validate.component';
+import { ResMainComponent } from '@pages/bpm/core/cadastral/res/main/res-main.component';
+import { ResValidateComponent } from '@pages/bpm/core/cadastral/res/validate/res-validate.component';
+import { SynMainComponent } from '@pages/bpm/core/cadastral/syn/main/syn-main.component';
+import { DocumentMainComponent } from '@pages/bpm/core/document/main/document-main.component';
+import { DocumentValidateComponent } from '@pages/bpm/core/document/validate/document-validate.component';
+import { ComponentTemplate } from '@features/bpm-workflows/models/render-template.types';
 import {
   COMPONENT_ALFA_MAIN,
   COMPONENT_ALFA_VALIDATE
-} from '@shared/constants/general/constants';
-import { CitationAndNoticeComponent } from 'src/app/pages/pages/bpm/core/citation-and-notice/citation-and-notice.component';
-import { RecognitionPropertyInformationComponent } from 'src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
-import { CompleteDocsComponent } from 'src/app/pages/pages/bpm/core/cadastral/res/complete/complete-docs.component';
+} from '@shared/constants/constants';
+import { CitationAndNoticeComponent } from '@pages/bpm/core/citation-and-notice/citation-and-notice.component';
+import { RecognitionPropertyInformationComponent } from '@pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
+import { CompleteDocsComponent } from '@pages/bpm/core/cadastral/res/complete/complete-docs.component';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class DynamicComponentsService {
       component: AlfaMainComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/alf/main/alfa-main.component'
+          '@pages/bpm/core/cadastral/alf/main/alfa-main.component'
         ).then((m) => m.AlfaMainComponent)
     },
     {
@@ -36,7 +36,7 @@ export class DynamicComponentsService {
       component: AlfaValidateComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/alf/validate/alfa-validate.component'
+          '@pages/bpm/core/cadastral/alf/validate/alfa-validate.component'
         ).then((m) => m.AlfaValidateComponent)
     },
     {
@@ -44,7 +44,7 @@ export class DynamicComponentsService {
       component: EcoComiteComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/eco/comite/eco-comite.component'
+          '@pages/bpm/core/cadastral/eco/comite/eco-comite.component'
         ).then((m) => m.EcoComiteComponent)
     },
     {
@@ -60,7 +60,7 @@ export class DynamicComponentsService {
       component: GeoValidateComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/geo/validate/geo-validate.component'
+          '@pages/bpm/core/cadastral/geo/validate/geo-validate.component'
         ).then((m) => m.GeoValidateComponent)
     },
     {
@@ -68,7 +68,7 @@ export class DynamicComponentsService {
       component: ResMainComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/res/main/res-main.component'
+          '@pages/bpm/core/cadastral/res/main/res-main.component'
         ).then((m) => m.ResMainComponent)
     },
     {
@@ -76,7 +76,7 @@ export class DynamicComponentsService {
       component: ResValidateComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component'
+          '@pages/bpm/core/cadastral/res/validate/res-validate.component'
         ).then((m) => m.ResValidateComponent)
     },
     {
@@ -84,7 +84,7 @@ export class DynamicComponentsService {
       component: SynMainComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/syn/main/syn-main.component'
+          '@pages/bpm/core/cadastral/syn/main/syn-main.component'
         ).then((m) => m.SynMainComponent)
     },
     {
@@ -92,7 +92,7 @@ export class DynamicComponentsService {
       component: RecognitionPropertyInformationComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component'
+          '@pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component'
         ).then((m) => m.RecognitionPropertyInformationComponent)
     },
     {
@@ -100,7 +100,7 @@ export class DynamicComponentsService {
       component: DocumentMainComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/document/main/document-main.component'
+          '@pages/bpm/core/document/main/document-main.component'
         ).then((m) => m.DocumentMainComponent)
     },
     {
@@ -108,7 +108,7 @@ export class DynamicComponentsService {
       component: DocumentValidateComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/document/validate/document-validate.component'
+          '@pages/bpm/core/document/validate/document-validate.component'
         ).then((m) => m.DocumentValidateComponent)
     },
     {
@@ -116,7 +116,7 @@ export class DynamicComponentsService {
       component: ResValidateComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component'
+          '@pages/bpm/core/cadastral/res/validate/res-validate.component'
         ).then((m) => m.ResValidateComponent)
     },
     {
@@ -124,7 +124,7 @@ export class DynamicComponentsService {
       component: ResValidateComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/res/validate/res-validate.component'
+          '@pages/bpm/core/cadastral/res/validate/res-validate.component'
         ).then((m) => m.ResValidateComponent)
     },
     {
@@ -132,7 +132,7 @@ export class DynamicComponentsService {
       component: CompleteDocsComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/cadastral/res/complete/complete-docs.component'
+          '@pages/bpm/core/cadastral/res/complete/complete-docs.component'
         ).then((m) => m.CompleteDocsComponent)
     },
     {
@@ -140,7 +140,7 @@ export class DynamicComponentsService {
       component: CitationAndNoticeComponent,
       loadComponent: () =>
         import(
-          '../../../../pages/pages/bpm/core/citation-and-notice/citation-and-notice.component'
+          '@pages/bpm/core/citation-and-notice/citation-and-notice.component'
         ).then((m) => m.CitationAndNoticeComponent)
     }
   ];

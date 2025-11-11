@@ -19,8 +19,8 @@ import {
   TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
   TYPE_BUTTON_ONE,
   TYPE_OPERATION_CREATE
-} from '../../constants/general/constants';
-import { ProcessParticipant } from '@shared/interfaces';
+} from '../../constants/constants';
+import { ProcessParticipant } from '@features/bpm-workflows/models/process-participant';
 import { ParticipantsService } from '@features/bpm-workflows/services/core/participants-service.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
@@ -41,9 +41,9 @@ import { NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, ReplaySubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { InformationPegeable } from '@shared/interfaces';
-import { Pegeable } from '@shared/interfaces';
-import { FluidMinHeightDirective } from '../../../apps/directives/fluid-min-height.directive';
+import { InformationPegeable } from '@shared/models/pageable';
+import { Pegeable } from '@shared/models/pageable';
+import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';

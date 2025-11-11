@@ -47,11 +47,11 @@ import {
   TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { MatCardModule } from '@angular/material/card';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { BaunitHead } from '@shared/interfaces';
+import { BaunitHead } from '@shared/models';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -61,16 +61,19 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { environment } from '@environments/environments';
-import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
-import { BasicInformationAddress } from '@shared/interfaces';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
+import { BasicInformationAddress } from '@features/property-management/models/basic-information-address';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DetailInformationAddressComponent } from './detail-information-address/detail-information-address.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AddEditInformationAddressComponent } from './add-edit-information-address/add-edit-information-address.component';
-import { TypeInformation, InformationPegeable } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/models/pageable';
+import { TypeInformation } from '@shared/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { DetailBasicInformationAddress } from '@shared/interfaces';
+import { DetailBasicInformationAddress } from '@features/property-management/models/detail-basic-information-address';
 
 @Component({
   selector: 'vex-information-addresses-property',

@@ -2,7 +2,7 @@ import { HttpParams, HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GeoEconomicZone } from '@features/property-management/models/geo-economic-zone';
-import { ZoneBAUnitFisica } from '@shared/interfaces';
+import { ZoneBAUnitFisica } from '@features/property-management/models/zone-baunit';
 import { environment as envi } from '@environments/environments';
 
 

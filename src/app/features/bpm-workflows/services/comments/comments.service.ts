@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 /* -------------- IMPORTACIONES ARCHIVOS LOCALES -------------- */
 import { environment } from '@environments/environments';
 
-import { PageCommentsData } from '@shared/interfaces';
-import { contentInfoComments } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
+import { PageCommentsData } from '@features/bpm-workflows/models/comments/page-comments-data.model';
+import { contentInfoComments } from '@features/bpm-workflows/models/comments/content-info-comments.model';
+import { InformationPegeable } from '@shared/models/pageable';
 
 @Injectable({
   providedIn: 'root'

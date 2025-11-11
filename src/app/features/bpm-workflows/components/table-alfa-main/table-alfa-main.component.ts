@@ -23,34 +23,34 @@ import {
   TABLE_ALFA_MAIN_OPERATION_COLUMN,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InformationPegeable } from '@shared/interfaces';
-import { SearchData } from '@shared/interfaces';
+import { InformationPegeable } from '@shared/models/pageable';
+import { SearchData } from '@shared/models';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 
-import { Operation } from '@shared/interfaces';
+import { Operation } from '@shared/models';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
 import { filter } from 'rxjs/operators';
 import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
-import { DifferenceChanges } from '@shared/interfaces';
+import { DifferenceChanges } from '@features/bpm-workflows/models/difference-changes';
 import { ViewChangesBpmOperationComponent } from '@features/bpm-workflows/components/view-changes-bpm-operation/view-changes-bpm-operation.component';
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { CurrencyLandsPipe } from 'src/app/apps/pipes/currency-lands.pipe';
+import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
 import { ModificationPropertyUnitsComponent } from '@features/bpm-workflows/components/modification-property-units/modification-property-units.component';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
-} from '@shared/constants';
+} from '@shared/constants/constantLabels';
 import { CreateMatrixFromNphComponent } from './create-matrix-from-nph/create-matrix-from-nph.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';

@@ -1,4 +1,4 @@
-import { GeoEconomicZone } from '@shared/interfaces';
+import { GeoEconomicZone } from '@features/property-management/models/geo-economic-zone';
 
 export class ZoneBAUnitFisica {
   baUnitZonaType: 'Urbana' | 'Rural' | 'Geoeconomica';
@@ -125,12 +125,12 @@ export interface CcZonaHomoFisica {
   normaUsoSuelo:                   string;
   domTipificacionConstruccionTipo: string;
   vigencia:                        number;
-  cadastreChangeLog:               CadastreChangeLog;
+  cadastreChangeLog:               CadastralChangeLog;
   divpolLv1:                       string;
   divpolLv2:                       string;
 }
 
-export interface CadastreChangeLog {
+export interface CadastralChangeLog {
   changeLogId:                      number;
   resolution:                       string;
   resolutionAt:                     Date;
@@ -148,7 +148,7 @@ export interface CcZonaHomoGeoEconomica {
   zonaHomoGeoEconomicaCode: string;
   zonaHomoGeoEconomicaObs:  string;
   vigencia:                 number;
-  cadastreChangeLog:        CadastreChangeLog;
+  cadastreChangeLog:        CadastralChangeLog;
 }
 
 export interface CreateBaunitZone {

@@ -40,7 +40,7 @@ import {
   TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION,
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import {
   FormsModule,
   NG_VALUE_ACCESSOR,
@@ -49,21 +49,21 @@ import {
 } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { BaunitHead } from '@shared/interfaces';
+import { BaunitHead } from '@shared/models';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { PageSearchData } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
-import { ContentInformationConstruction } from '@shared/interfaces';
+import { PageSearchData } from '@shared/models/pageable';
+import { InformationPegeable } from '@shared/models/pageable';
+import { ContentInformationConstruction } from '@features/property-management/models/content-information-construction';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeInformation } from '@shared/interfaces';
 import { CrudInformationConstructionsPropertyComponent } from '@features/property-management/components/constructions/crud-information-constructions-property/crud-information-constructions-property.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { InformationConstructionsService } from '@features/property-management/services';
+import { InformationConstructionsService } from '@features/property-management/services/constructions/information-constructions.service';
 import { filter } from 'rxjs/operators';
 import { EditConstructionsComponent } from '@features/property-management/components/constructions/edit-constructions/edit-constructions.component';
 import { TableConstructionsComponent } from '@features/property-management/components/constructions/table-constructions/table-constructions.component';

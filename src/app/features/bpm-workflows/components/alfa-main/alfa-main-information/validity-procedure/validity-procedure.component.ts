@@ -9,10 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
-import { ChangeControl } from '@shared/interfaces';
+import { ChangeControl } from '@features/bpm-workflows/models/change-control';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { MY_DATE_FORMATS } from '@shared/constants';
+import { MY_DATE_FORMATS } from '@shared/constants/constants';
 
 interface DialogDataValidity {
   executionId: string;

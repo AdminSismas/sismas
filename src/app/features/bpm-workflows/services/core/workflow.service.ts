@@ -3,9 +3,9 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { catchError, Observable } from 'rxjs';
 
 import { environment } from '@environments/environments';
-import { PageSortByData } from '@shared/interfaces';
-import { Proflow, WorkflowCollection } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
+import { PageSortByData } from '@shared/models/pageable';
+import { Proflow, WorkflowCollection } from '@features/bpm-workflows/models/workflow.model';
+import { InformationPegeable } from '@shared/models/pageable';
 
 @Injectable({
   providedIn: 'root'

@@ -29,17 +29,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RrrightService } from '@features/bpm-workflows/services/core/rrright.service';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
-import { DialogsData } from '@shared/interfaces';
-import { PeopleService } from 'src/app/apps/services/users/people.service';
+import { DialogsData } from '@features/property-management/models/changes-property-owner';
+import { PeopleService } from '@features/property-management/services/property/people.service';
 import { InfoPerson } from '@features/property-management/models/info-person';
 import { MatDividerModule } from '@angular/material/divider';
 import Swal from 'sweetalert2';
 import {
   CreatePeopleComponent,
   DefaultDataCreatePerson
-} from 'src/app/pages/pages/operation-support/people/components/create-people/create-people.component';
-import { MODAL_SMALL_LARGE } from '@shared/constants';
-import { People } from 'src/app/apps/interfaces/users/people.model';
+} from '@features/operation-support/components/people/create-people/create-people.component';
+import { MODAL_SMALL_LARGE } from '@shared/constants/constants';
+import { People } from '@features/configuration/interfaces/users/people.model';
 import { ModalResponse } from '@shared/ui/modal-window/modal-window.component';
 
 @Component({

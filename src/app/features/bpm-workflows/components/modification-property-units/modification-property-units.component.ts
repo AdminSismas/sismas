@@ -29,9 +29,9 @@ import { TableColumn } from '@vex/interfaces/table-column.interface';
 import {
   DataAlfaMain,
   ModificationUnitProperties
-} from '@shared/interfaces';
-import { InformationPegeable } from 'src/app/apps/interfaces/general/information-pegeable.model';
-import { Operation } from '@shared/interfaces';
+} from '@features/bpm-workflows/models/data-alfa-main.model';
+import { InformationPegeable } from '@shared/models/pageable';
+import { Operation } from '@shared/models';
 import {
   LIST_SCHEMAS_CONTROL_MAIN,
   LIST_SCHEMAS_CONTROL_TEMP,
@@ -46,14 +46,14 @@ import {
   TYPE_OPERATION_ADD,
   TYPE_OPERATION_DELETE,
   TYPE_UPDATE
-} from '@shared/constants';
-import { PageSearchData } from 'src/app/apps/interfaces/general/page-search-data.model';
-import { TypeOperationAlfaMain } from 'src/app/apps/interfaces/general/content-info';
+} from '@shared/constants/constants';
+import { PageSearchData } from '@shared/models/pageable';
+import { TypeOperationAlfaMain } from '@shared/interfaces/content-info';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
-import { ContentInfoSchema } from 'src/app/apps/interfaces/general/content-info-schema';
-import { MODIFYCATION_UNITS_TABLE_COLUMNS } from '@shared/constants';
-import { FluidHeightDirective } from '@shared/directives';
-import { FluidMinHeightDirective } from '@shared/directives';
+import { ContentInfoSchema } from '@features/bpm-workflows/interfaces/modification-property-units/content-info-schema';
+import { MODIFYCATION_UNITS_TABLE_COLUMNS } from '@features/property-management/constants/information-unit-properties/modification-property-units.constants';
+import { FluidHeightDirective } from '@shared/directives/fluid-height.directive';
+import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatFormField, MatPrefix } from '@angular/material/form-field';
@@ -62,19 +62,19 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { UnitPropertyInformationService } from '@features/bpm-workflows/services/modification-property-units/baunit-children-information.service';
-import { BaUnitHeadPercentage } from '@shared/interfaces';
+import { BaUnitHeadPercentage } from '@features/property-management/models';
 import { NgClass, PercentPipe } from '@angular/common';
 import { CrudPropertyUnitsComponent } from '@features/bpm-workflows/components/modification-property-units/crud-property-units/crud-property-units.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BpmCoreService } from '@features/bpm-workflows/services/core/bpm-core.service';
 import Swal from 'sweetalert2';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
-import { DifferenceChanges } from '@shared/interfaces';
+import { DifferenceChanges } from '@features/bpm-workflows/models/difference-changes';
 import {
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_NO_CHANGE,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_CHANGE_ERROR_THROWERROR,
   CONSTANT_TEXT_ALFA_MAIN_VIEW_NO_CHANGE
-} from '@shared/constants';
+} from '@shared/constants/constantLabels';
 import { ViewChangesBpmOperationComponent } from '@features/bpm-workflows/components/view-changes-bpm-operation/view-changes-bpm-operation.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 @Component({

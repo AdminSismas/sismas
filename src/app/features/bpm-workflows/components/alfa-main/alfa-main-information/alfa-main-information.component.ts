@@ -21,10 +21,10 @@ import { TableAlfaMainComponent } from '@features/bpm-workflows/components/table
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 import { Observable, ReplaySubject } from 'rxjs';
-import { ChangeControl } from '@shared/interfaces';
-import { InformationPegeable } from '@shared/interfaces';
-import { OperationContentInformation } from '@shared/interfaces';
-import { ProFlow } from '@shared/interfaces';
+import { ChangeControl } from '@features/bpm-workflows/models/change-control';
+import { InformationPegeable } from '@shared/models/pageable';
+import { OperationContentInformation } from '@features/bpm-workflows/models/operation-content-information';
+import { ProFlow } from '@features/bpm-workflows/models/pro-flow';
 import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 import { SendInfoGeneralService } from '@shared/services/general/send-info-general.service';
 import { InformationGeographicService } from '@features/bpm-workflows/services/alfa-main/information-geographic.service';
@@ -33,7 +33,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { filter, take } from 'rxjs/operators';
 import { environment } from '@environments/environments';
 import Swal from 'sweetalert2';
-import { Operation } from '@shared/interfaces';
+import { Operation } from '@shared/models';
 import {
   MAX_PAGE_SIZE_TABLE_UNIQUE,
   MODAL_MEDIUM,
@@ -56,9 +56,9 @@ import {
   TYPE_OPERATION_CREATE_GEO,
   TYPE_OPERATION_DELETE,
   TYPE_OPERATION_DELETE_GEO
-} from '@shared/constants';
-import { Pegeable } from '@shared/interfaces';
-import { PageSearchData } from '@shared/interfaces';
+} from '@shared/constants/constants';
+import { Pegeable } from '@shared/models/pageable';
+import { PageSearchData } from '@shared/models/pageable';
 import { ClearInformationDataComponent } from 'src/app/features/bpm-workflows/components/clear-information-data/clear-information-data.component';
 import {
   CONSTANT_KEYWORD_DELETE_ALFA_MAIN,
@@ -69,14 +69,14 @@ import {
   CONSTANT_TEXT_DELETE_GEO_MAIN,
   CONSTANT_TEXT_DELETE_GEO_MAIN_EMPTY,
   CONSTANT_TEXT_DELETE_GEO_MAIN_FAIL
-} from '@shared/constants';
+} from '@shared/constants/constantLabels';
 import { ViewChangeAlphaMainRecordComponent } from '@features/bpm-workflows/components/view-change-alpha-main-record/view-change-alpha-main-record.component';
 import {
   TypeButtonAlfaMain,
   TypeOperationAlfaMain,
   TypeOperationGeoMain
 } from '@shared/interfaces';
-import { DataAlfaMain } from '@shared/interfaces';
+import { DataAlfaMain } from '@features/bpm-workflows/models/data-alfa-main.model';
 import { CrudAlfaMainComponent } from '@features/bpm-workflows/components/alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
@@ -84,7 +84,7 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { LoadingServiceService } from '@shared/services/general/loading-service.service';
-import { TableProceduresComponent } from 'src/app/apps/components/tables/table-procedures/table-procedures.component';
+import { TableProceduresComponent } from '../../procedures/table-procedures.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { ViewChangesComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/view-changes/view-changes.component';

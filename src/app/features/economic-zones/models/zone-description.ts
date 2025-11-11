@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Observable } from "rxjs";
-import { CadastreChangeLog, JSONInput } from '@shared/interfaces';
+import { CadastralChangeLog } from '@features/property-management/models/zone-baunit';
+import { JSONInput } from '@shared/interfaces/forms';
 import { MatTableDataSource } from "@angular/material/table";
-import { GeoEconomicZone } from "@shared/interfaces";
+import { GeoEconomicZone } from '@features/property-management/models/geo-economic-zone';
 
 export interface UrbanZone {
   zonaHomoFisicaUrId: number;
@@ -16,7 +17,7 @@ export interface UrbanZone {
   vigencia: number;
   divpolLv1: string;
   divpolLv2: string;
-  cadastreChangeLog?: CadastreChangeLog;
+  cadastreChangeLog?: CadastralChangeLog;
 }
 
 export interface RuralZone {
@@ -29,7 +30,7 @@ export interface RuralZone {
   vigencia: number;
   divpolLv1: string;
   divpolLv2: string;
-  cadastreChangeLog?: CadastreChangeLog;
+  cadastreChangeLog?: CadastralChangeLog;
 }
 
 export type Zone = UrbanZone | RuralZone | GeoEconomicZone;

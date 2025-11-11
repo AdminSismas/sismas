@@ -1,7 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, Inject, OnInit, signal, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  OnInit,
+  signal,
+  ViewChild
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -12,25 +23,31 @@ import {
   PROCESO_ACTUALIZAR_DIRECCION,
   PROCESO_CREAR_DIRECCION,
   TYPE_CREATE
-} from '@shared/constants';
+} from '@shared/constants/constants';
 import { environment } from '@environments/environments';
-import { GeneralValidationsService } from 'src/app/apps/services/validations/general-validations.service';
+import { GeneralValidationsService } from '@shared/services/general/validations/general-validations.service';
 import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
+import { BasicInformationAddress } from '@features/property-management/models/basic-information-address';
 import {
   AddEditInformationDataI,
   CreateBasicInformationAddress,
-  DetailBasicInformationAddress,
-  TypeOperation,
-  BasicInformationAddress
-} from '@shared/interfaces';
+  DetailBasicInformationAddress
+} from '@features/property-management/models/detail-basic-information-address';
+import { TypeOperation } from '@shared/interfaces';
 import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { validateVariable } from 'src/app/apps/utils/general';
+import { validateVariable } from '@shared/utils/functions/general';
 import { fadeInRight400ms } from '@vex/animations/fade-in-right.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
@@ -45,13 +62,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
-import { InputComponent } from '@shared/ui/input/input.component';import {
-  HeaderCadastralInformationPropertyComponent
-} from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
+import { InputComponent } from '@shared/ui/input/input.component';
+import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { TextAreaComponent } from '@shared/utils/text-area/text-area.component';
-import {
-  ComboboxCollectionFormComponent
-} from '@shared/utils/combobox-collection-form/combobox-collection-form.component';
+import { ComboboxCollectionFormComponent } from '@shared/utils/combobox-collection-form/combobox-collection-form.component';
 
 @Component({
   selector: 'vex-edit-information-address',
@@ -95,8 +109,9 @@ import {
   templateUrl: './add-edit-information-address.component.html',
   styleUrl: './add-edit-information-address.component.scss'
 })
-export class AddEditInformationAddressComponent implements OnInit, AfterViewInit {
-
+export class AddEditInformationAddressComponent
+  implements OnInit, AfterViewInit
+{
   public procesoActual: string = PROCESO_CREAR_DIRECCION;
 
   typeCrud: TypeOperation | null = null;
@@ -105,23 +120,41 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
   direccionId: string | null | undefined;
   informationAddressData: BasicInformationAddress | null = null;
   formExpanded = true;
-  isCreateOrUpdateAddress = false;// Estado de carga
+  isCreateOrUpdateAddress = false; // Estado de carga
 
   schema = signal<string>(`${environment.schemas.temp}`);
   detailBasicInformation = signal<DetailBasicInformationAddress | null>(null);
 
   editForm: FormGroup = this.fb.group({
     domTipoDireccion: [null, [Validators.required]],
-    codigoPostal: [null, [Validators.required, this.generalValidations.onlyNumber()]],
-    nombrePredio: [null, [Validators.required, this.generalValidations.textAddressValidator()]],
+    codigoPostal: [
+      null,
+      [Validators.required, this.generalValidations.onlyNumber()]
+    ],
+    nombrePredio: [
+      null,
+      [Validators.required, this.generalValidations.textAddressValidator()]
+    ],
     esDireccionPrincipal: [false, [Validators.required]],
-    direccionTexto: [null, [Validators.required, this.generalValidations.textAddressValidator()]],
+    direccionTexto: [
+      null,
+      [Validators.required, this.generalValidations.textAddressValidator()]
+    ],
     domClaseViaPrincipal: [null, [Validators.required]],
     letraViaPrincipal: [null, [this.generalValidations.onlyLetters()]], // Solo letras
-    valorViaPrincipal: [null, [Validators.required, this.generalValidations.onlyNumber()]], // Solo números
+    valorViaPrincipal: [
+      null,
+      [Validators.required, this.generalValidations.onlyNumber()]
+    ], // Solo números
     domSectorCiudad: [null, []], // Aquí solo una validación básica de requerido
-    valorViaGeneradora: [null, [Validators.required, this.generalValidations.onlyNumber()]],
-    numeroPredio: [null, [Validators.required, this.generalValidations.onlyNumber()]],
+    valorViaGeneradora: [
+      null,
+      [Validators.required, this.generalValidations.onlyNumber()]
+    ],
+    numeroPredio: [
+      null,
+      [Validators.required, this.generalValidations.onlyNumber()]
+    ],
     letraViaGeneradora: [null, [this.generalValidations.onlyLetters()]],
     domSectorPredio: [null, []]
   });
@@ -129,33 +162,41 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
   @ViewChild('successDialog') private successDialog!: SwalComponent;
   @ViewChild('successCreate', { static: true }) successCreate!: SwalComponent;
   @ViewChild('errorSaveDialog') private errorSaveDialog!: SwalComponent;
-  @ViewChild('validationErrorDialog') private validationErrorDialog!: SwalComponent;
+  @ViewChild('validationErrorDialog')
+  private validationErrorDialog!: SwalComponent;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public addEditInformationData: AddEditInformationDataI | null,
+    @Inject(MAT_DIALOG_DATA)
+    public addEditInformationData: AddEditInformationDataI | null,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddEditInformationAddressComponent>,
     private generalValidations: GeneralValidationsService,
     private informationPropertyService: InformationPropertyService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.typeCrud = this.addEditInformationData?.type || TYPE_CREATE;
-    this.executionId = this.addEditInformationData?.basicInformationAddress?.executionId;
-    this.baUnitId = this.addEditInformationData?.basicInformationAddress?.baunitId;
-    this.direccionId = this.addEditInformationData?.basicInformationAddress?.direccionId;
+    this.executionId =
+      this.addEditInformationData?.basicInformationAddress?.executionId;
+    this.baUnitId =
+      this.addEditInformationData?.basicInformationAddress?.baunitId;
+    this.direccionId =
+      this.addEditInformationData?.basicInformationAddress?.direccionId;
 
-    if (!validateVariable(this.executionId) || !validateVariable(this.baUnitId) ||
+    if (
+      !validateVariable(this.executionId) ||
+      !validateVariable(this.baUnitId) ||
       !this.addEditInformationData ||
       !this.addEditInformationData?.basicInformationAddress ||
-      this.typeCrud === 'DELETE') {
+      this.typeCrud === 'DELETE'
+    ) {
       return;
     }
 
     if (this.typeCrud === 'UPDATE') {
       this.procesoActual = PROCESO_ACTUALIZAR_DIRECCION;
-      this.informationAddressData = this.addEditInformationData?.basicInformationAddress;
+      this.informationAddressData =
+        this.addEditInformationData?.basicInformationAddress;
       if (this.informationAddressData?.schema) {
         this.schema.set(this.informationAddressData?.schema);
       }
@@ -168,10 +209,10 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
       this.isCreateOrUpdateAddress = false;
     });
 
-    this.mainAddress?.setValue?.(false);//VALOR por defecto
-    this.complemento?.disable();//VALOR por defecto
+    this.mainAddress?.setValue?.(false); //VALOR por defecto
+    this.complemento?.disable(); //VALOR por defecto
 
-    this.editForm.get('domTipoDireccion')?.valueChanges.subscribe(value => {
+    this.editForm.get('domTipoDireccion')?.valueChanges.subscribe((value) => {
       this.validateTypeAddress(value);
     });
   }
@@ -188,15 +229,24 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     }
   }
 
-  loadDetailInformationAddress(basicInformationAddress: BasicInformationAddress) {
+  loadDetailInformationAddress(
+    basicInformationAddress: BasicInformationAddress
+  ) {
     if (!basicInformationAddress) {
       return;
     }
-    const { direccionId, baunitId, schema, executionId } = basicInformationAddress;
+    const { direccionId, baunitId, schema, executionId } =
+      basicInformationAddress;
     if (!executionId || !baunitId || !direccionId || !schema) {
       return;
     }
-    this.informationPropertyService.getDetailBasicInformationPropertyAddresses(direccionId, schema, baunitId, executionId)
+    this.informationPropertyService
+      .getDetailBasicInformationPropertyAddresses(
+        direccionId,
+        schema,
+        baunitId,
+        executionId
+      )
       .subscribe((result: DetailBasicInformationAddress) => {
         this.detailBasicInformation.set(result);
         this.changeDetailBasicInformationPropertyAddresses(result);
@@ -223,19 +273,26 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     }
     this.blockPrimaryAddressField();
     const value = this.editForm.value || {};
-    let createBasicInformationAddress: CreateBasicInformationAddress = CREATE_BASIC_MODEL_ADDRESS;
+    let createBasicInformationAddress: CreateBasicInformationAddress =
+      CREATE_BASIC_MODEL_ADDRESS;
     if (value?.domTipoDireccion === 'Estructurada') {
       createBasicInformationAddress = this.filterValueAddressStructured(value);
     } else if (value?.domTipoDireccion === 'No estructurada') {
       createBasicInformationAddress = this.filterValueAddressDontStructured();
     }
     createBasicInformationAddress.domTipoDireccion = value?.domTipoDireccion;
-    createBasicInformationAddress.esDireccionPrincipal = this.mainAddress?.value;
+    createBasicInformationAddress.esDireccionPrincipal =
+      this.mainAddress?.value;
     createBasicInformationAddress.codigoPostal = value?.codigoPostal;
     createBasicInformationAddress.nombrePredio = value?.nombrePredio;
     createBasicInformationAddress.complemento = '';
-    this.informationPropertyService.createBasicInformationPropertyAddress(
-      this.baUnitId, this.schema(), this.executionId, createBasicInformationAddress)
+    this.informationPropertyService
+      .createBasicInformationPropertyAddress(
+        this.baUnitId,
+        this.schema(),
+        this.executionId,
+        createBasicInformationAddress
+      )
       .subscribe({
         next: (result: DetailBasicInformationAddress) => {
           this.detailBasicInformation.set(result);
@@ -258,20 +315,29 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     const direccionId = this.informationAddressData?.direccionId;
     this.blockPrimaryAddressField();
     const value = this.editForm.value || {};
-    let detailBasicInformationAddress: DetailBasicInformationAddress = DETAIL_BASIC_MODEL_ADDRESS;
+    let detailBasicInformationAddress: DetailBasicInformationAddress =
+      DETAIL_BASIC_MODEL_ADDRESS;
     if (value?.domTipoDireccion === 'Estructurada') {
-      detailBasicInformationAddress = this.filterValueAddressStructuredModel(value);
+      detailBasicInformationAddress =
+        this.filterValueAddressStructuredModel(value);
     } else if (value?.domTipoDireccion === 'No estructurada') {
-      detailBasicInformationAddress = this.filterValueAddressDontStructuredModel(value);
+      detailBasicInformationAddress =
+        this.filterValueAddressDontStructuredModel(value);
     }
     detailBasicInformationAddress.domTipoDireccion = value?.domTipoDireccion;
-    detailBasicInformationAddress.esDireccionPrincipal = this.mainAddress?.value;
+    detailBasicInformationAddress.esDireccionPrincipal =
+      this.mainAddress?.value;
     detailBasicInformationAddress.codigoPostal = value?.codigoPostal;
     detailBasicInformationAddress.nombrePredio = value?.nombrePredio;
     detailBasicInformationAddress.complemento = '';
     detailBasicInformationAddress.direccionId = direccionId;
-    this.informationPropertyService.updateBasicInformationPropertyAddress(
-      this.baUnitId, this.schema(), this.executionId, detailBasicInformationAddress)
+    this.informationPropertyService
+      .updateBasicInformationPropertyAddress(
+        this.baUnitId,
+        this.schema(),
+        this.executionId,
+        detailBasicInformationAddress
+      )
       .subscribe({
         next: (result: DetailBasicInformationAddress) => {
           this.detailBasicInformation.set(result);
@@ -288,17 +354,23 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
 
   blockPrimaryAddressField() {
     if (this.addEditInformationData?.hasMainAddress) {
-      if (this.addEditInformationData &&
-        (this.addEditInformationData?.basicInformationAddress &&
-          this.addEditInformationData?.basicInformationAddress?.esDireccionPrincipal === true)) {
+      if (
+        this.addEditInformationData &&
+        this.addEditInformationData?.basicInformationAddress &&
+        this.addEditInformationData?.basicInformationAddress
+          ?.esDireccionPrincipal === true
+      ) {
         this.mainAddress?.enable();
-      } else if (this.addEditInformationData?.basicInformationAddress &&
-        this.addEditInformationData?.basicInformationAddress?.esDireccionPrincipal === false) {
+      } else if (
+        this.addEditInformationData?.basicInformationAddress &&
+        this.addEditInformationData?.basicInformationAddress
+          ?.esDireccionPrincipal === false
+      ) {
         this.mainAddress?.disable();
-        this.mainAddress?.setValue(false);//VALOR por defecto
+        this.mainAddress?.setValue(false); //VALOR por defecto
       } else {
         this.mainAddress?.disable();
-        this.mainAddress?.setValue(false);//VALOR por defecto
+        this.mainAddress?.setValue(false); //VALOR por defecto
       }
     } else {
       this.mainAddress?.enable();
@@ -391,7 +463,9 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     };
   }
 
-  filterValueAddressDontStructuredModel(value: any): DetailBasicInformationAddress {
+  filterValueAddressDontStructuredModel(
+    value: any
+  ): DetailBasicInformationAddress {
     return {
       // campos BASE Informacion permanente
       domTipoDireccion: '',
@@ -438,19 +512,23 @@ export class AddEditInformationAddressComponent implements OnInit, AfterViewInit
     };
   }
 
-  changeDetailBasicInformationAddress(basicInformationAddress: BasicInformationAddress | null) {
+  changeDetailBasicInformationAddress(
+    basicInformationAddress: BasicInformationAddress | null
+  ) {
     if (basicInformationAddress) {
       this.chargeInfoUpdate(basicInformationAddress);
     }
   }
 
-  changeDetailBasicInformationPropertyAddresses(detailBasicInformationAddress: DetailBasicInformationAddress | null) {
+  changeDetailBasicInformationPropertyAddresses(
+    detailBasicInformationAddress: DetailBasicInformationAddress | null
+  ) {
     if (detailBasicInformationAddress) {
       this.chargeInfoUpdate(detailBasicInformationAddress);
     }
   }
 
-  chargeInfoUpdate(object:any){
+  chargeInfoUpdate(object: any) {
     Object.entries(object).forEach(([key, value]) => {
       if (this.editForm.controls[key]) {
         this.editForm.controls[key].setValue(value);
