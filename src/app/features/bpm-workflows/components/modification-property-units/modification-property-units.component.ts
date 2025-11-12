@@ -455,7 +455,7 @@ export class ModificationPropertyUnitsComponent
       text: text,
       icon: 'error',
       showConfirmButton: false,
-      timer: 4000
+      timer: 30000
     }).then();
   }
 
@@ -475,7 +475,7 @@ export class ModificationPropertyUnitsComponent
             showConfirmButton: true,
             confirmButtonText: 'Aceptar',
             showCancelButton: false,
-            allowOutsideClick: false
+            timer: 30000
           });
         },
         error: () => {

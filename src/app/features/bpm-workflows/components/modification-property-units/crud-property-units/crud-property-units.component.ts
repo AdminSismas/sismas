@@ -149,7 +149,7 @@ export class CrudPropertyUnitsComponent implements OnInit {
       text: text,
       icon: 'success',
       showConfirmButton: false,
-      timer: 1000
+      timer: 30000
     }).then(() => this.dialogRef.close(data));
   }
 

@@ -239,7 +239,7 @@ export const environment = {
   urban_zones: "/ccZonaHomoFisicaUr",
   url: "https://barrancabermeja.api.sismas.com.co",
   url_domain_name: "https://barrancabermeja.map.sismas.com.co:5001/domain/name?",
-  url_viewer: "https://barrancabermeja.map.sismas.com.co:8081/mapstore/",
+  url_viewer: "https://country.geo.sismas.com.co:8081/mapstore/",
   user_exist: "/username/",
   v2: "/v2",
   validateParticipation: "validateParticipation",
