@@ -6,7 +6,7 @@ import {
   MODIFY_PEOPLE,
   NOT_USER_SERV_AND_USER_TRAM,
   TOP_ROLE_LIST
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants/constants';
 import {
   NavigationDropdown,
   NavigationLink
@@ -277,13 +277,13 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (
       {
         type: 'link',
         label: 'Generar servicios',
-        route: '/publicService/ticketOffice/generateServices',
+        route: '/publicService/ticket-office/generateServices',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
         label: 'Histórico de servicios',
-        route: '/publicService/ticketOffice/serviceHistory',
+        route: '/publicService/ticket-office/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
     ],
@@ -367,21 +367,21 @@ export const NAVIGATION_LOADER_CONFIGURATION: (
       {
         type: 'link',
         label: 'Documentos entrada',
-        route: '/configuration/cadastralProcedures/entryDocuments',
+        route: '/configuration/cadastral-procedures/entryDocuments',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Flujo de trabajo',
-        route: '/configuration/cadastralProcedures/workflowProcedures',
+        route: '/configuration/cadastral-procedures/workflowProcedures',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Grupos de trabajo',
-        route: '/configuration/cadastralProcedures/workgroups',
+        route: '/configuration/cadastral-procedures/workgroups',
         routerLinkActiveOptions: { exact: true },
         roles: MODIFY_PEOPLE
       },
@@ -389,21 +389,21 @@ export const NAVIGATION_LOADER_CONFIGURATION: (
         type: 'link',
         label: 'Documentos asociados a trámites',
         route:
-          '/configuration/cadastralProcedures/documentsAssociatedProcedures',
+          '/configuration/cadastral-procedures/documentsAssociatedProcedures',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Formatos de salida',
-        route: '/configuration/cadastralProcedures/outputFormats',
+        route: '/configuration/cadastral-procedures/outputFormats',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Firmas digitalizadas',
-        route: '/configuration/cadastralProcedures/digitalizedSignatures',
+        route: '/configuration/cadastral-procedures/digitalizedSignatures',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       }

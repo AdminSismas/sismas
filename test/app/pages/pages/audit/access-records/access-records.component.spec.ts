@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   AccessRecordsComponent
-} from '../../../../../../src/app/pages/pages/audit/access-records/access-records.component';
+} from '@pages/audit/access-records/access-records.component';
 
 describe(AccessRecordsComponent.name, () => {
   let component: AccessRecordsComponent;

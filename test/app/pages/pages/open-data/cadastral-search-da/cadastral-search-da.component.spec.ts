@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   CadastralSearchDAComponent
-} from '../../../../../../src/app/pages/pages/open-data/cadastral-search-da/cadastral-search-da.component';
+} from '@pages/open-data/cadastral-search-da/cadastral-search-da.component';
 describe(CadastralSearchDAComponent.name, () => {
   let component: CadastralSearchDAComponent;
   let fixture: ComponentFixture<CadastralSearchDAComponent>;

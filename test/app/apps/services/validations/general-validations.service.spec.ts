@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import {
   GeneralValidationsService
-} from '../../../../../src/app/apps/services/validations/general-validations.service';
+} from '../../../../../src/app/shared/services/general/validations/general-validations.service';
 
 describe(GeneralValidationsService.name, () => {
   let service: GeneralValidationsService;

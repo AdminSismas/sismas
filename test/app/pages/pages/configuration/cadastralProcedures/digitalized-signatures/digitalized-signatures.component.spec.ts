@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DigitalizedSignaturesComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastralProcedures/digitalized-signatures/digitalized-signatures.component';
+} from '@pages/configuration/cadastral-procedures/digitalized-signatures/digitalized-signatures.component';
 
 describe(DigitalizedSignaturesComponent.name, () => {
   let component: DigitalizedSignaturesComponent;

@@ -1,7 +1,6 @@
-
-import { InfoTableService } from '../../../../../src/app/apps/services/general/info-table.service';
-import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { InfoTableService } from '@shared/services/general/info-table.service';
 
 describe(InfoTableService.name, () => {
   let service: InfoTableService;

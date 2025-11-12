@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   EntryDocumentsComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastralProcedures/entry-documents/entry-documents.component';
+} from '@pages/configuration/cadastral-procedures/entry-documents/entry-documents.component';
 
 describe(EntryDocumentsComponent.name, () => {
   let component: EntryDocumentsComponent;

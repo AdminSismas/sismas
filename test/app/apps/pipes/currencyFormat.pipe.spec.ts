@@ -1,5 +1,5 @@
 
-import { CurrencyFormatPipe } from '../../../../src/app/apps/pipes/currencyFormat.pipe';
+import { CurrencyFormatPipe } from '@shared/pipes/currency-format.pipe';
 
 
 describe('CurrencyFormatPipe', () => {

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DownloadReportsComponent } from 'src/app/pages/pages/operation-support/reports/download-reports/download-reports.component';
+import { DownloadReportsComponent } from '@pages
 
 
 describe('DownloadReportsComponent', () => {

@@ -1,0 +1,60 @@
+<div class="card overflow-auto mt-8">
+  <div class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center">
+    <div class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center">
+      <span class="flex-1"></span>
+      <!-- Campo de búsqueda -->
+      <mat-form-field
+        subscriptSizing="dynamic"
+        class="pl-1 pr-1 pt-6 pb-6 flex flex-col"
+      >
+        <mat-icon
+          matIconPrefix
+          svgIcon="mat:search"
+        ></mat-icon>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Buscar reporte"
+          type="text"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-table
+    [dataSource]="dataSource()"
+    class="w-full"
+  >
+    @for (column of columns; track column.property) {
+      <ng-container [matColumnDef]="column.property">
+        <mat-header-cell *matHeaderCellDef>
+          {{ column.label }}
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let element; let i = index">
+            @if (column.type === "button") {
+            <button
+              (click)="
+                selectCategory(element.urlEnd, element.name, element.municipality, element.id)
+              "
+              mat-icon-button
+              title="Ejecutar reporte"
+              class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
+            >
+              <mat-icon
+                class="icon-sm"
+                svgIcon="mat:play_arrow"
+              ></mat-icon>
+            </button>
+          } @else if (column.property === 'municipality') {
+            {{ element[column.property] | muncipalityCode }}
+          } @else {
+            {{ element[column.property] }}
+          }
+          </mat-cell>
+      </ng-container>
+    }
+    <mat-header-row *matHeaderRowDef="displayedColumns()"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns()"></mat-row>
+  </mat-table>
+</div>

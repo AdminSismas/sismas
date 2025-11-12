@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GenerateServicesComponent
-} from '../../../../../../../src/app/pages/pages/public-service/ticketOffice/generate-services/generate-services.component';
+} from '@pages/public-service/ticket-office/generate-services/generate-services.component';
 
 describe(GenerateServicesComponent.name, () => {
   let component: GenerateServicesComponent;

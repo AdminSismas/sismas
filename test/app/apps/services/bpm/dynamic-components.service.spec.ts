@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { DynamicComponentsService } from '../../../../../src/app/apps/services/bpm/dynamic-components.service';
+import { DynamicComponentsService } from '@features/bpm-workflows/services/core/dynamic-components.service';
 
 describe(DynamicComponentsService.name, () => {
   let service: DynamicComponentsService;

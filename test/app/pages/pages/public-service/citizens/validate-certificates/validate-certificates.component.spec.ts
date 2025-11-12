@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   ValidateCertificatesComponent
-} from '../../../../../../../src/app/pages/pages/public-service/citizens/validate-certificates/validate-certificates.component';
+} from '@pages/public-service/citizens/validate-certificates/validate-certificates.component';
 
 describe(ValidateCertificatesComponent.name, () => {
   let component: ValidateCertificatesComponent;

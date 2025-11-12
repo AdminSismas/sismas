@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GroupDialogComponent
-} from '../../../../../../../../src/app/pages/pages/configuration/cadastralProcedures/workgroups/group-dialog/group-dialog.component';
+} from '@pages/configuration/cadastral-procedures/workgroups/group-dialog/group-dialog.component';
 
 describe('GroupDialogComponent', () => {
   let component: GroupDialogComponent;

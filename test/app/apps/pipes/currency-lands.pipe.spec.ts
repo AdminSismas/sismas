@@ -1,4 +1,4 @@
-import { CurrencyLandsPipe } from '../../../../src/app/apps/pipes/currency-lands.pipe';
+import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
 
 
 describe('CurrencyLandsPipe', () => {

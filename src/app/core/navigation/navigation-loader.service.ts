@@ -16,18 +16,18 @@ import {
   NAVIGATION_LOADER_PUBLIC_SERVICE,
   NAVIGATION_THEMATIC_MAP
 } from '../../layouts/constants/constant-loader';
-import { TasksPanelService } from '../../apps/services/bpm/tasks-panel.service';
-import { ProTaskE } from '../../apps/interfaces/bpm/pro-task-e';
+import { TasksPanelService } from '@features/tasks/services/tasks-panel.service';
+import { ProTaskE } from '@features/tasks/models';
 import { filter } from 'rxjs/operators';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
+import { UserService } from '@shared/services/auth/user.service';
+import { DecodeJwt } from '@features/configuration/interfaces/users/user-details.model';
 import {
   ADMIN_ROLE_LIST,
   BASIC_USERS_ROLE_LIST,
   EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM,
   MODIFY_PEOPLE,
   NOT_GUEST_USERS_ROLE_LIST
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants/constants';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({

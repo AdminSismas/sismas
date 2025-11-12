@@ -17,13 +17,13 @@ import { provideVex } from '@vex/vex.provider';
 import { provideNavigation } from './core/navigation/navigation.provider';
 import { vexConfigs } from '@vex/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
-import { COLOMBIA_DATE_FORMATS } from './helpers/colombia-date-formats';
-import { authInterceptor } from './pages/pages/auth/login/services/auth.interceptor';
+import { COLOMBIA_DATE_FORMATS } from './shared/constants/colombia-date-formats';
+import { authInterceptor } from '@core/interceptors';
 import {
   MatPaginatorIntl,
   MatPaginatorModule
 } from '@angular/material/paginator';
-import { PaginatorIntlEs } from './apps/interfaces/paginator/PaginatorIntlEs';
+import { PaginatorIntlEs } from '@shared/models/pageable';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { provideNgIdleKeepalive } from '@ng-idle/keepalive';
 

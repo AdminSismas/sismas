@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   WorkgroupsComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastralProcedures/workgroups/workgroups.component';
+} from '@pages/configuration/cadastral-procedures/workgroups/workgroups.component';
 
 describe(WorkgroupsComponent.name, () => {
   let component: WorkgroupsComponent;

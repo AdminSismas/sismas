@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   ResMainComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/cadastral/res/main/res-main.component';
+} from '@pages/bpm/core/cadastral/res/main/res-main.component';
 
 describe(ResMainComponent.name, () => {
   let component: ResMainComponent;

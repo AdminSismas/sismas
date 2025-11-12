@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SnrService } from 'src/app/apps/services/snr/snr.service';
+import { SnrService } from '@features/property-management/services/snr/snr.service';
 
 describe(SnrService.name, () => {
   let service: SnrService;

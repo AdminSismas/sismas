@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   AnalyticsComponent
-} from '../../../../../../../src/app/pages/pages/my-work/manage/analytics/analytics.component';
+} from '@pages/my-work/manage/analytics/analytics.component';
 
 
 describe(AnalyticsComponent.name, () => {

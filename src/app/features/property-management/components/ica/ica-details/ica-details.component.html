@@ -1,0 +1,18 @@
+<app-modal-window [title]="title">
+  <div class="h-full w-full overflow-y-auto grid grid-cols-4 gap-x-4 gap-y-2">
+    @for (label of labelsOrder; track $index) {
+      <span class="text-slate-700 font-semibold">{{ labelDetail(label) }}:</span>
+      @switch (label) {
+        @case ('fechaMatricula') {
+          <span>{{ icaDetails[label] | date:'dd/MM/yyyy' }}</span>
+        }
+        @case ('fechaInicioActividades') {
+          <span>{{ icaDetails[label] | date:'dd/MM/yyyy' }}</span>
+        }
+        @default {
+          <span>{{ icaDetails[label] || NoData }}</span>
+        }
+      }
+    }
+  </div>
+</app-modal-window>

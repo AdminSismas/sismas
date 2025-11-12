@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   CadastralManagementRecordsComponent
-} from '../../../../../../src/app/pages/pages/audit/cadastral-management-records/cadastral-management-records.component';
+} from '@pages/audit/cadastral-management-records/cadastral-management-records.component';
 
 describe(CadastralManagementRecordsComponent.name, () => {
   let component: CadastralManagementRecordsComponent;

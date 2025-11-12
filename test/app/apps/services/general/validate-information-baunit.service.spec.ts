@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ValidateInformationBaunitService } from 'src/app/apps/services/general/validate-information-baunit.service';
+import { ValidateInformationBaunitService } from '@shared/services/general/validate-information-baunit.service';
 
 
 describe(ValidateInformationBaunitService.name, () => {

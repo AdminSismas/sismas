@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   WorkAssignmentComponent
-} from '../../../../../../src/app/pages/pages/operation-support/work-assignment/work-assignment.component';
+} from '@pages/operation-support/work-assignment/work-assignment.component';
 
 describe(WorkAssignmentComponent.name, () => {
   let component: WorkAssignmentComponent;

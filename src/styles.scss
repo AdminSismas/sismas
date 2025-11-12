@@ -2,7 +2,7 @@
 @import "node_modules/highlight.js/styles/androidstudio.css";
 // Vex Core
 @import "./@vex/styles/core";
-@import "./app/apps/styles/core-global-geoGestion";
+@import "./app/shared/ui/styles/core-global-geoGestion.scss";
 @import 'quill/dist/quill.snow.css';
 
 /*

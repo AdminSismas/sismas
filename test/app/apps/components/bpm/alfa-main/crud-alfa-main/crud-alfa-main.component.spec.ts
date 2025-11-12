@@ -14,18 +14,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { provideIcons } from '../../../../../../../src/app/core/icons/icons.provider';
-import { CrudAlfaMainComponent } from 'src/app/apps/components/bpm/alfa-main/crud-alfa-main/crud-alfa-main.component';
+import { CrudAlfaMainComponent } from '@features/bpm-workflows/components/alfa-main/crud-alfa-main/crud-alfa-main.component';
 import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
-import { CurrencyLandsPipe } from '../../../../../../../src/app/apps/pipes/currency-lands.pipe';
-import { AlfaMainService } from '../../../../../../../src/app/apps/services/bpm/core/alfa-main.service';
-
+import { CurrencyLandsPipe } from '@shared/pipes/currency-lands.pipe';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
 describe(CrudAlfaMainComponent.name, () => {
   let component: CrudAlfaMainComponent;
   let fixture: ComponentFixture<CrudAlfaMainComponent>;
 
   const dialogMock = {
-    close: () => {
-    }
+    close: () => jest.fn()    
   };
 
   beforeEach(async () => {

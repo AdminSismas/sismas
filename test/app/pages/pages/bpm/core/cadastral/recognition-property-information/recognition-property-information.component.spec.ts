@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   RecognitionPropertyInformation
-} from '../../../../../../../../src/app/pages/pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
+} from '@pages/bpm/core/cadastral/recognition-property-information/recognition-property-information.component';
 
 describe(RecognitionPropertyInformation.name, () => {
   let component: RecognitionPropertyInformation;

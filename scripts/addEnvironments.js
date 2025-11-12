@@ -6,7 +6,7 @@ const ts = require('typescript');
 const IGNORED_FILES = require('./environments.constants').IGNORED_FILES;
 
 // Ruta a la carpeta environments
-const environmentsFolder = path.join(__dirname, '../src/environments');
+const environmentsFolder = path.join(__dirname, '@environments');
 
 // Función para leer y evaluar un archivo TypeScript
 function evaluateTypeScriptFile(filePath) {

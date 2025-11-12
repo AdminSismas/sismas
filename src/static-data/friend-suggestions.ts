@@ -1,4 +1,4 @@
-import { FriendSuggestion } from "src/app/pages/options/admin/admin.component";
+import { FriendSuggestion } from "@pages
 
 export const friendSuggestions: FriendSuggestion[] = [
   {

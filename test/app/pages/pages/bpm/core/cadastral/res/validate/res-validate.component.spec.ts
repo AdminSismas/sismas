@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   ResValidateComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/cadastral/res/validate/res-validate.component';
+} from '@pages/bpm/core/cadastral/res/validate/res-validate.component';
 
 describe(ResValidateComponent.name, () => {
   let component: ResValidateComponent;

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   IntegralEconomicModComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastral/integral-economic-mod/integral-economic-mod.component';
+} from '@pages/configuration/cadastral/integral-economic-mod/integral-economic-mod.component';
 
 describe(IntegralEconomicModComponent.name, () => {
   let component: IntegralEconomicModComponent;

@@ -10,7 +10,7 @@ import {
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { filter } from 'rxjs/operators';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
-import { SearchService } from '../../../../apps/services/general/search.service';
+import { SearchService } from '@shared/services/general/search.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

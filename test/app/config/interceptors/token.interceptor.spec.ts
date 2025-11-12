@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TokenInterceptor } from '../../../../src/app/config/interceptors/token.interceptor';
-import { AuthService } from '../../../../src/app/pages/pages/auth/login/services/auth.service';
+import { AuthService } from '@core/auth/auth.service';
 
 describe(TokenInterceptor.name, () => {
   let interceptor: TokenInterceptor;

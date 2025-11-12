@@ -1,16 +1,14 @@
-import { BpmProcessService } from '../../../../../src/app/apps/services/bpm/bpm-process.service';
-import { SendGeneralRequestsService } from '../../../../../src/app/apps/services/general/send-general-requests.service';
+import { BpmProcessService } from '@features/bpm-workflows/services/core/bpm-process.service';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../../../../../src/environments/environments';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '@environments/environments';
 
 describe(BpmProcessService.name, () => {
   let service: BpmProcessService;
-  let requestsService: SendGeneralRequestsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, environment],
+      imports: [HttpClient, environment],
       providers: [BpmProcessService]
     });
     service = TestBed.inject(BpmProcessService);
@@ -21,7 +19,7 @@ describe(BpmProcessService.name, () => {
   });
 
   test('#getValue should return real value from the real service', () => {
-    service = new BpmProcessService(requestsService);
+
     expect(service.getListDocumentsByProcessId('selectBpmProcess')).toBe('real value');
   });
 

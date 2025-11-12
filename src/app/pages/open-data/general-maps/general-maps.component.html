@@ -1,0 +1,83 @@
+<vex-page-layout>
+  <vex-page-layout-header class="pb-1 flex flex-col items-start justify-center">
+    <div class="w-full flex flex-col sm:flex-row justify-between px-6">
+      <div>
+        <h1 class="title mt-0 mb-1">{{ principalTitleMenu }}</h1>
+        <vex-breadcrumbs [crumbs]="titleArray">
+        </vex-breadcrumbs>
+      </div>
+    </div>
+  </vex-page-layout-header>
+  <vex-page-layout-content class="-mt-5 px-5">
+    <div class="card overflow-auto mat-elevation-z5 -mt-5">
+      <vex-page-layout-content class="w-full justify-between sm:px-1 xl:px-5 py-2 container vexP-0">
+        <form [formGroup]="form">
+          <div class="flex flex-col sm:flex-row">
+
+            <!-- Campo departamento -->
+            <vex-combox
+              idCombo="GeneralMapDepartment"
+              label="Departamentos"
+              placeholder="Seleccione un departamento"
+              [valueKey]="'codeName'"
+              [fielKey]="'codeName'"
+              [formControlNameCombobox]="'department'"
+              [options]="optionsDeparments"
+              (selectionChange)="loadMunicipalitiesInformation($event, true)"
+              cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
+              class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+            ></vex-combox>
+
+            <!-- Campo municipio -->
+            <vex-combox
+              idCombo="GeneralMapMunicipy"
+              label="Municipio"
+              placeholder="Seleccione un municipio"
+              [valueKey]="'codeName'"
+              [fielKey]="'codeName'"
+              [formControlNameCombobox]="'municipality'"
+              [options]="optionsMunicipalities"
+              (selectionChange)="loadZonesInformation($event, true)"
+              cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
+              class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+            ></vex-combox>
+
+            <!-- Campo zona -->
+            <vex-combox
+              idCombo="GeneralMapZona"
+              label="Zona"
+              placeholder="Seleccione una zona"
+              [valueKey]="'codeName'"
+              [fielKey]="'codeName'"
+              [formControlNameCombobox]="'zone'"
+              [options]="optionsZones"
+              cssClasses = "sm:ml-2 sm:mr-2 flex-1 my-form-field"
+              class="sm:ml-2 sm:mr-2 flex-1 my-form-field"
+            ></vex-combox>
+
+            <!-- Boton Buscar -->
+            <mat-dialog-actions align="center" class="sm:ml-2 sm:mr-2">
+              <button
+                (click)="searchccZoneBySelection()"
+                color="primary"
+                mat-flat-button
+                type="primary">
+                Buscar
+              </button>
+            </mat-dialog-actions>
+          </div>
+        </form>
+      </vex-page-layout-content>
+      <div class="h-full flex flex-col" vexFluidHeight fluidHeight=195>
+        <vex-geographic-viewer-embedded
+          idComponent="GeneralMapContent125844634534f4gfw"
+          [ccZonaId]="ccZonaId"
+          vexFluidHeight fluidHeight=200
+        ></vex-geographic-viewer-embedded>
+      </div>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+
+
+
