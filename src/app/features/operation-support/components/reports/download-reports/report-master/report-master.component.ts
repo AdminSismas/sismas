@@ -1,10 +1,9 @@
 import {
   Component,
   OnInit,
-  Output,
-  EventEmitter,
   inject,
-  computed
+  computed,
+  output
 } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +18,7 @@ import { environment } from '@environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { signal } from '@angular/core';
 import { MuncipalityCodePipe } from '@shared/pipes/muncipality-code.pipe';
+import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({
   selector: 'vex-report-master',
@@ -28,15 +28,20 @@ import { MuncipalityCodePipe } from '@shared/pipes/muncipality-code.pipe';
     MatFormField,
     MatIconModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    LoaderComponent
   ],
   templateUrl: './report-master.component.html'
 })
 export class ReportMasterComponent implements OnInit {
+  /* ---- Injects ---- */
   reportManagerService = inject(ReportManagerService);
 
+  /* ---- Signals ---- */
   dataSource = signal<MatTableDataSource<ReportType>>(new MatTableDataSource());
+  downloadLoading = signal<boolean>(false);
 
+  /* ---- Columns ---- */
   protected readonly columns: TableColumn<ReportType>[] = [
     { property: 'action', label: 'Accion', type: 'button' },
     { property: 'name', label: 'Nombre', type: 'text' },
@@ -44,17 +49,21 @@ export class ReportMasterComponent implements OnInit {
     { property: 'outputFormat', label: 'Tipo de archivo', type: 'text' }
   ];
 
+  /* ---- Computed ---- */
   displayedColumns = computed(() => {
     return this.columns.map((column) => column.property);
   });
 
-  @Output() viewDetail = new EventEmitter<boolean>();
-  @Output() selectedCategory = new EventEmitter<ReportCategory>();
+  /* ---- Outputs ---- */
+  viewDetail = output<boolean>();
+  selectedCategory = output<ReportCategory>();
 
+  /* ---- Lifecycle ---- */
   ngOnInit(): void {
     this.loadCategories();
   }
 
+  /* ---- Methods ---- */
   loadCategories() {
     this.reportManagerService
       .getCategories(environment.municipalities)
@@ -73,7 +82,7 @@ export class ReportMasterComponent implements OnInit {
   selectCategory(urlEnd: string, name: string, municipality: string, reportId: number) {
     const municipalityCodePipe = new MuncipalityCodePipe();
 
-    console.log(reportId);
+    this.downloadLoading.set(true);
 
     if ([3, 4].includes(reportId)) {
       const zoneType: 'rural' | 'urbano' = reportId === 3 ? 'urbano' : 'rural';
@@ -82,6 +91,9 @@ export class ReportMasterComponent implements OnInit {
         const nameMunicipality = municipalityCodePipe.transform(municipality);
         const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
         const type = response.headers.get('content-type') as string;
+
+        this.downloadLoading.set(false);
+
         this.downloadFile(response.body!, type, filename);
       });
       return;
@@ -92,6 +104,9 @@ export class ReportMasterComponent implements OnInit {
         const nameMunicipality = municipalityCodePipe.transform(municipality);
         const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
         const type = response.headers.get('content-type') as string;
+
+        this.downloadLoading.set(false);
+
         this.downloadFile(response.body!, type, filename);
       }
     });

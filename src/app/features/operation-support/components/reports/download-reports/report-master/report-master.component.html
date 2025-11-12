@@ -32,10 +32,15 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let element; let i = index">
-            @if (column.type === "button") {
+          @if (column.type === "button") {
             <button
               (click)="
-                selectCategory(element.urlEnd, element.name, element.municipality, element.id)
+                selectCategory(
+                  element.urlEnd,
+                  element.name,
+                  element.municipality,
+                  element.id
+                )
               "
               mat-icon-button
               title="Ejecutar reporte"
@@ -46,15 +51,21 @@
                 svgIcon="mat:play_arrow"
               ></mat-icon>
             </button>
-          } @else if (column.property === 'municipality') {
+          } @else if (column.property === "municipality") {
             {{ element[column.property] | muncipalityCode }}
           } @else {
             {{ element[column.property] }}
           }
-          </mat-cell>
+        </mat-cell>
       </ng-container>
     }
     <mat-header-row *matHeaderRowDef="displayedColumns()"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns()"></mat-row>
   </mat-table>
 </div>
+
+<app-loader
+  [isLoading]="downloadLoading()"
+  loaderTitle="Descargando reporte"
+  loaderMessage="Se está preparando la descarga del reporte, por favor espere..."
+></app-loader>
