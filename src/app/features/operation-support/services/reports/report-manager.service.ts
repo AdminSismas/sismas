@@ -20,8 +20,8 @@ export class ReportManagerService {
   private baseCategories: ReportType[] = [
     { id: 1, name: 'Procesos Activos', outputFormat: 'XLSX', urlEnd: 'PROCESOS_ACTIVOS' },
     { id: 2, name: 'Procesos Finalizados', outputFormat: 'XLSX', urlEnd: 'PROCESOS_FINALIZADOS' },
-    { id: 3, name: 'Actualización urbana', outputFormat: 'XLSX', urlEnd: 'ACTUALIZACION_URBANA' },
-    { id: 4, name: 'Actualización rural', outputFormat: 'XLSX', urlEnd: 'ACTUALIZACION_RURAL' },
+    // { id: 3, name: 'Actualización urbana', outputFormat: 'XLSX', urlEnd: 'ACTUALIZACION_URBANA' },
+    // { id: 4, name: 'Actualización rural', outputFormat: 'XLSX', urlEnd: 'ACTUALIZACION_RURAL' },
   ];
 
   private reports: DownloadReport[] = [
