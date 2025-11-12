@@ -56,7 +56,7 @@ export const TABLE_COLUMN_UNITS_TABLE_COLUMNS: TableColumn<BaUnitHeadPercentage>
 
 export const MODIFYCATION_UNITS_TABLE_COLUMNS: TableColumn<BaUnitHeadPercentage>[] = [
   {
-    label: '',
+    label: 'Operación',
     property: 'operationType',
     type: 'operationType',
     visible: true,
