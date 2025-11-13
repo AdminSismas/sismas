@@ -46,7 +46,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { contentInfoWorkflow } from '@features/bpm-workflows/models/content-info-workflow.model';
 import { CreateWorkflowComponent } from './create-workflow/create-workflow.component';
 import { InformationPegeable, PageSortByData } from '@shared/models/pageable';
-import { TABLE_COLUMN_PROPERTIES } from '@features/economic-zones/constants/domain-ladm-col.constant';
+import { TABLE_COLUMN_WORKFLOW } from '@features/bpm-workflows/constants/workflow/workflow.constant';
 import { PAGE, PAGE_SIZE } from '@shared/constants/constants';
 import { WorkflowCollection } from '@features/bpm-workflows/models/workflow.model';
 import { WorkflowService } from '@features/bpm-workflows/services/core/workflow.service';
@@ -120,7 +120,7 @@ export class TableWorkflowComponent implements OnInit {
   pageSize: number = PAGE_SIZE;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   totalElements = 0;
-  columns: TableColumn<contentInfoWorkflow>[] = TABLE_COLUMN_PROPERTIES;
+  columns: TableColumn<contentInfoWorkflow>[] = TABLE_COLUMN_WORKFLOW;
 
   isNotDesktop$: Observable<boolean> = this.layoutService.isDesktop$.pipe(
     map((isDesktop) => !isDesktop)
