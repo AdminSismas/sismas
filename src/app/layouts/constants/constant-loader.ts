@@ -277,13 +277,13 @@ export const NAVIGATION_LOADER_PUBLIC_SERVICE: (
       {
         type: 'link',
         label: 'Generar servicios',
-        route: '/publicService/ticket-office/generateServices',
+        route: '/publicService/ticketOffice/generateServices',
         routerLinkActiveOptions: { exact: true }
       },
       {
         type: 'link',
         label: 'Histórico de servicios',
-        route: '/publicService/ticket-office/serviceHistory',
+        route: '/publicService/ticketOffice/serviceHistory',
         routerLinkActiveOptions: { exact: true }
       }
     ],
