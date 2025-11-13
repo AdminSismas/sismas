@@ -367,21 +367,21 @@ export const NAVIGATION_LOADER_CONFIGURATION: (
       {
         type: 'link',
         label: 'Documentos entrada',
-        route: '/configuration/cadastral-procedures/entryDocuments',
+        route: '/configuration/cadastralProcedures/entryDocuments',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Flujo de trabajo',
-        route: '/configuration/cadastral-procedures/workflowProcedures',
+        route: '/configuration/cadastralProcedures/workflowProcedures',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Grupos de trabajo',
-        route: '/configuration/cadastral-procedures/workgroups',
+        route: '/configuration/cadastralProcedures/workgroups',
         routerLinkActiveOptions: { exact: true },
         roles: MODIFY_PEOPLE
       },
@@ -389,21 +389,21 @@ export const NAVIGATION_LOADER_CONFIGURATION: (
         type: 'link',
         label: 'Documentos asociados a trámites',
         route:
-          '/configuration/cadastral-procedures/documentsAssociatedProcedures',
+          '/configuration/cadastralProcedures/documentsAssociatedProcedures',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Formatos de salida',
-        route: '/configuration/cadastral-procedures/outputFormats',
+        route: '/configuration/cadastralProcedures/outputFormats',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       },
       {
         type: 'link',
         label: 'Firmas digitalizadas',
-        route: '/configuration/cadastral-procedures/digitalizedSignatures',
+        route: '/configuration/cadastralProcedures/digitalizedSignatures',
         routerLinkActiveOptions: { exact: true },
         roles: ADMIN_ROLE_LIST
       }
