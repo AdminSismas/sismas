@@ -84,11 +84,11 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { LoadingServiceService } from '@shared/services/general/loading-service.service';
-import { TableProceduresComponent } from '../../procedures/table-procedures.component';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { ViewChangesComponent } from '@features/bpm-workflows/components/alfa-main/alfa-main-information/view-changes/view-changes.component';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
+import { ValidityProcedureComponent } from './validity-procedure/validity-procedure.component';
 
 @Component({
   selector: 'vex-alfa-main-information',
@@ -561,7 +561,7 @@ export class AlfaMainInformationComponent implements OnInit, AfterViewInit {
     });
 
     this.dialog
-      .open(TableProceduresComponent, {
+      .open(ValidityProcedureComponent, {
         ...MODAL_SMALL_XS,
         data: {
           executionId: this.executionId(),
