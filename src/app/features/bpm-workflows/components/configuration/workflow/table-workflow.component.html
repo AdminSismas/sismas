@@ -54,27 +54,26 @@
             </td>
           </ng-container>
 
-          <!-- Text Columns -->
           @for (column of columns; track column.property) {
-            <ng-container
-              *ngIf="column.type === 'text'"
-              [matColumnDef]="column.property"
-            >
-              <th
-                *matHeaderCellDef
-                mat-header-cell
-                mat-sort-header
-              >
-                {{ column.label }}
-              </th>
-              <td
-                *matCellDef="let row"
-                [ngClass]="column.cssClasses"
-                mat-cell
-              >
-                {{ row[column.property] }}
-              </td>
-            </ng-container>
+            <!-- Text Columns -->
+            @if (column.type === "text") {
+              <ng-container [matColumnDef]="column.property">
+                <th
+                  *matHeaderCellDef
+                  mat-header-cell
+                  mat-sort-header
+                >
+                  {{ column.label }}
+                </th>
+                <td
+                  *matCellDef="let row"
+                  [ngClass]="column.cssClasses"
+                  mat-cell
+                >
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
+            }
           }
 
           <ng-container matColumnDef="actions">

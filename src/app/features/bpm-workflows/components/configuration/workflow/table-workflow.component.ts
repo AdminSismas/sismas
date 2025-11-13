@@ -1,4 +1,4 @@
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import {
   Component,
   computed,
@@ -78,17 +78,16 @@ import { TaskListComponent } from './task-list/task-list.component';
     CommonModule,
     FormsModule,
     NgClass,
-    NgIf
   ]
 })
 export class TableWorkflowComponent implements OnInit {
-  /* ============== INJECTS ============== */
+  /* ---- Injects ---- */
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
   private readonly layoutService = inject(VexLayoutService);
   private workflowService = inject(WorkflowService);
   private dialog = inject(MatDialog);
 
-  /* ============== COMPUTED ============== */
+  /* ---- Computed ---- */
   visibleColumns = computed(() => {
     const columns = [
       'icon',
@@ -101,7 +100,7 @@ export class TableWorkflowComponent implements OnInit {
     return columns;
   });
 
-  /* ============== ATTRIBUTES ============== */
+  /* ---- Attributes ---- */
   searchCtrl: UntypedFormControl = new UntypedFormControl();
   dataSource!: MatTableDataSource<WorkflowCollection>;
   actions = [
@@ -132,8 +131,8 @@ export class TableWorkflowComponent implements OnInit {
   @ViewChild(MatPaginator, { read: true }) paginator?: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort?: MatSort;
 
-  /* ============== METHODS ============== */
-  /* ------- Meth. Lifecycle Hooks ------- */
+
+  /* ------- Lifecycle Hooks ------- */
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
 
@@ -144,7 +143,7 @@ export class TableWorkflowComponent implements OnInit {
     this.getDataFromWorkflowService();
   }
 
-  /* ------- Meth. HTML ------- */
+  /* ---- Methods ---- */
   refreshInformationPaginator(event: PageEvent): void {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
@@ -152,7 +151,6 @@ export class TableWorkflowComponent implements OnInit {
     this.getDataFromWorkflowService();
   }
 
-  /* ------- Meth. Common ------- */
   onFilterChange(value: string) {
     if (!this.dataSource) {
       return;
@@ -167,7 +165,6 @@ export class TableWorkflowComponent implements OnInit {
     return new PageSortByData(this.page, this.pageSize, sortBy);
   }
 
-  /* ------- Meth. Services ------- */
   getDataFromWorkflowService() {
     const paramsWF: PageSortByData = this.generateObjectPageWorkflowData();
     this.workflowService.getDataPropertyByWorkflow(paramsWF).subscribe({

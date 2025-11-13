@@ -7,7 +7,7 @@ import {
   Proflow,
   TaskListData
 } from '@features/bpm-workflows/models/workflow.model';
-import { LaneNamesPipe } from '../pipe/lane-names.pipe';
+import { LaneNamesPipe } from '../../../../pipes/configuration/workflows/lane-names.pipe';
 import { MatIcon } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { WorkflowService } from '@features/bpm-workflows/services/core/workflow.service';
