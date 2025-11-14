@@ -3,12 +3,12 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { Group } from './interfaces/group.interface';
+import { Group } from '../../../../features/configuration/interfaces/cadastral-procedures/workgroup/group.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { WorkgroupsService } from './services/work-group.service';
-import { GroupDialogComponent } from './components/group-dialog/group-dialog.component';
+import { WorkgroupsService } from '../../../../features/configuration/services/cadastral-procedures/workgroups/work-group.service';
+import { GroupDialogComponent } from '../../../../features/configuration/components/cadastral-procedures/workgroup/group-dialog/group-dialog.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ import {
   MODAL_SMALL_XS,
   MODAL_LARGE
 } from '@shared/constants/constants';
-import { GroupMemberComponent } from './components/group-member/group-member.component';
+import { GroupMemberComponent } from '../../../../features/configuration/components/cadastral-procedures/workgroup/group-member/group-member.component';
 import Swal from 'sweetalert2';
 import { UserService } from '@shared/services/auth/user.service';
 

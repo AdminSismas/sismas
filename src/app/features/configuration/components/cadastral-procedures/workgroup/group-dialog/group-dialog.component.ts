@@ -1,5 +1,5 @@
 import { Component, Inject, signal } from '@angular/core';
-import { Group } from '../../interfaces/group.interface';
+import { Group } from '../../../../interfaces/cadastral-procedures/workgroup/group.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';

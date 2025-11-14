@@ -41,7 +41,7 @@ import { TypeInformation } from '@shared/interfaces';
 import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { OutFormatService } from '@shared/services/general/out-format.service';
-import { OutputFormatsEditUpdateComponent } from './output-formats-edit-update/output-formats-edit-update.component';
+import { OutputFormatsEditUpdateComponent } from '../../../../features/configuration/components/cadastral-procedures/output-formats/output-formats-edit-update/output-formats-edit-update.component';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 

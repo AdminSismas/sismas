@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Group } from '../interfaces/group.interface';
+import { Group } from '../../../interfaces/cadastral-procedures/workgroup/group.interface';
 import { environment } from '@environments/environments';
 import { InformationPegeable } from '@shared/models/pageable';
 import { User } from '@features/configuration/interfaces/users/user';
