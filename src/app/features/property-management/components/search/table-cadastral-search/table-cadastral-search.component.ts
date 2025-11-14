@@ -451,8 +451,9 @@ export class TableCadastralSearchComponent
     }
 
     if (
-      this.isValidateField(searchData?.firstName) &&
-      this.isValidateField(searchData?.lastName)
+      (this.isValidateField(searchData?.firstName) &&
+        this.isValidateField(searchData?.lastName)) ||
+      this.isValidateField(searchData?.companyName)
     ) {
       this.searchPropertiesByName(this.searchData);
       return true;
