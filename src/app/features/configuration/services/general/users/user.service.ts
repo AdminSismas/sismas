@@ -11,7 +11,7 @@ import {
   CreateOutput,
   CreateUserParams,
   InformationPageableUser
-} from '@features/tenant-configuration/models';
+} from '@features/configuration/interfaces/users/user';
 import { InformationPegeable } from '@shared/models/pageable';
 
 @Injectable({

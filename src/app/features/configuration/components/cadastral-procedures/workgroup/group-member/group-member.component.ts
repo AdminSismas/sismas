@@ -1,7 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { Individual, User } from '@features/tenant-configuration/models';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
+import { Individual, User } from '@features/configuration/interfaces/users/user';
 import { groupMemberColumns } from '../../../../constants/cadastral-procedures/workgroup/group-member.constants';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -12,7 +13,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { stagger40ms } from '@vex/animations/stagger.animation';
 import { AddMemberGroupComponent } from '../add-member-group/add-member-group.component';
 import { MODAL_SMALL_XS } from '@shared/constants/constants';
-import { CadastralUserService } from '@features/tenant-configuration/services/users/user.service';
+import { CadastralUserService } from '@features/configuration/services/general/users/user.service';
 
 @Component({
   selector: 'group-member',

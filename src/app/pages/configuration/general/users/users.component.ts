@@ -29,12 +29,12 @@ import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import {
   User,
   InformationPageableUser
-} from '@features/tenant-configuration/models';
+} from '@features/configuration/interfaces/users/user';
 import { CreateUsersComponent } from '@features/configuration/components/general/create-users/create-users.component';
 import { USER_COLUMNS } from '@shared/constants/users.constants';
 import { PAGE_SIZE_OPTION } from '@shared/constants/constants';
 import { TitleCasePipe } from '@angular/common';
-import { CadastralUserService } from '@features/tenant-configuration/services/users/user.service';
+import { CadastralUserService } from '@features/configuration/services/general/users/user.service';
 
 @Component({
   selector: 'vex-users',

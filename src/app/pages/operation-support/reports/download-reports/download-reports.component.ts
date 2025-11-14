@@ -22,7 +22,7 @@ import {
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 // import { PAGE_SIZE_OPTION } from '@shared/constants/general/constants';
 // import { USER_COLUMNS } from 'src/app/apps/constants/users.constants';
-// import { Content } from '@features/tenant-configuration/models';
+// import { Content } from '@shared/models/user.model';
 import { DownloadReportsService } from '@features/operation-support/services/reports/download-reports.service';
 import { DownloadReport } from '@features/operation-support/models/reports';
 import {

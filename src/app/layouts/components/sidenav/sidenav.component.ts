@@ -33,7 +33,7 @@ import {
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
-import type { UserRole } from '@features/tenant-configuration/models';
+import type { UserRole } from '@shared/models/user.model';
 
 @Component({
   selector: 'vex-sidenav',

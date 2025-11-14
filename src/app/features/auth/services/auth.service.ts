@@ -5,7 +5,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { UserService } from '@shared/services/auth/user.service';
-import { DecodeJwt, UserDetails } from '@features/tenant-configuration/models';
+import { DecodeJwt, UserDetails } from '@shared/models/user.model';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from '@shared/constants/constants';
 import Swal from 'sweetalert2';

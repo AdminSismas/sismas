@@ -19,9 +19,9 @@ import { InfoPerson } from '@features/property-management/models/info-person';
 import {
   User,
   CreateUserParams
-} from '@features/tenant-configuration/models';
+} from '@features/configuration/interfaces/users/user';
 import { PeopleService } from '@features/property-management/services/property/people.service';
-import { CadastralUserService } from '@features/tenant-configuration/services/users/user.service';
+import { CadastralUserService } from '@features/configuration/services/general/users/user.service';
 import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';
 import { MODAL_SMALL_LARGE } from '@shared/constants/constants';
 import { HttpErrorResponse } from '@angular/common/http';

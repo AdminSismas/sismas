@@ -1,5 +1,5 @@
 import { TableColumn } from '@vex/interfaces/table-column.interface';
-import { Individual, User } from '@features/tenant-configuration/models';
+import { Individual, User } from '@features/configuration/interfaces/users/user';
 
 export const groupMemberColumns: TableColumn<Individual & Partial<User>>[] = [
   {

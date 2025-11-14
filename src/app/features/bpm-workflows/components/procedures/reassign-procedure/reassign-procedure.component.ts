@@ -23,9 +23,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { TABLE_REASSIGN_PROCEDURE } from '@features/bpm-workflows/constants/procedures/procedures.constants';
-import { InformationPageableUser } from '@features/tenant-configuration/models';
+import { InformationPageableUser } from '@features/configuration/interfaces/users/user';
 import { ProceduresService } from '@shared/services/general/procedures.service';
-import { CadastralUserService } from '@features/tenant-configuration/services/users/user.service';
+import { CadastralUserService } from '@features/configuration/services/general/users/user.service';
 
 interface RowUserAssign {
   userId: number;
