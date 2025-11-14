@@ -20,7 +20,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { VexPageLayoutComponent } from '@vex/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
@@ -71,7 +70,6 @@ import { CharacterValidateService } from '@shared/utils/functions/character-vali
   styleUrl: './filter-cadastral-search.component.scss',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     // Vex
@@ -374,11 +372,11 @@ export class FilterCadastralSearchComponent implements OnInit {
       this.formNames.get('companyName')?.value?.length > 0
     ) {
       const searchData = {
-        firstName: (this.firstName?.value || '').toUpperCase(),
-        middleName: (this.middleName?.value || '').toUpperCase(),
-        lastName: (this.lastName?.value || '').toUpperCase(),
-        otherLastName: (this.otherLastName?.value || '').toUpperCase(),
-        companyName: (this.companyName?.value || '').toUpperCase()
+        firstName: (this.firstName?.value || '').trim().toLowerCase(),
+        middleName: (this.middleName?.value || '').trim().toLowerCase(),
+        lastName: (this.lastName?.value || '').trim().toLowerCase(),
+        otherLastName: (this.otherLastName?.value || '').trim().toLowerCase(),
+        companyName: (this.companyName?.value || '').trim().toLowerCase()
       };
 
       this.dialogRef.close(searchData);
