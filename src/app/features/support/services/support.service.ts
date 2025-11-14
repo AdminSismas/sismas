@@ -2,12 +2,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
-import { supportData } from '../model/support.model';
+import { supportData } from '../models/support.model';
 // import { env, env2 } from 'src/environments/environments';
-import { ModuloName } from '../model/modulos.model';
-import { SupportLogs } from '../support_logs/model/supportLogs.model';
+import { ModuloName } from '../models/modulos.model';
+import { SupportLogs } from '../models/supportLogs.model';
 import { env } from 'src/environments/environments.soporte';
-import { SupportFormValues } from '../support_logs/interfaces/form-values.interfaces';
+import { SupportFormValues } from '../interfaces/form-values.interfaces';
 @Injectable({
   providedIn: 'root'
 })

@@ -28,13 +28,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { VexConfigService } from '@vex/config/vex-config.service';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { SupportService } from '@pages/support/service/support.service';
-import { ObservationsData } from '@pages/support/answer-support/model/observations.model';
-import { StatusData } from '@pages/support/answer-support/model/status.model';
-import { SupportLogs } from '@pages/support/answer-support/model/supportLogs.model';
+import { SupportService } from '@features/support/services/support.service';
+import { ObservationsData } from '@features/support/models/answer-support/observations.model';
+import { StatusData } from '@features/support/models/answer-support/status.model';
+import { SupportLogs } from '@features/support/models/answer-support/supportLogs.model';
 // import { UserAuthData } from 'src/app/core/auth/authData.model';
 // import { AuthService } from '@core/auth/auth.service';
-import { AnswerSupportService } from '@pages/support/answer-support/service/answer-support.service';
+import { AnswerSupportService } from '@features/support/services/answer-support/answer-support.service';
 import { PAGE_SIZE_OPTION } from '@shared/constants/constants';
 
 @Component({

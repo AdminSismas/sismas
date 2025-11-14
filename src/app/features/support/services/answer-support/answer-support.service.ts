@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 // import { env, env2 } from 'src/environments/environments';
-import { SupportLogs } from '../model/supportLogs.model';
-import { ObservationsData } from '../model/observations.model';
-import { StatusData } from '../model/status.model';
+import { SupportLogs } from '../../models/answer-support/supportLogs.model';
+import { ObservationsData } from '../../models/answer-support/observations.model';
+import { StatusData } from '../../models/answer-support/status.model';
 
 @Injectable({
   providedIn: 'root'

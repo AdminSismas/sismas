@@ -16,24 +16,24 @@ import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms } from '@vex/animations/stagger.animation';
 import { BehaviorSubject } from 'rxjs';
 import Swal from 'sweetalert2';
-import { ModuloName } from '../../support/model/modulos.model';
-import { supportData } from '../../support/model/support.model';
-import { VistaName } from '../../support/model/vistas.model';
-import { SupportService } from '../../support/service/support.service';
-import { ObservationsData } from '../../support/support_logs/model/observations.model';
-import { StatusData } from '../../support/support_logs/model/status.model';
-import { SupportLogs } from '../../support/support_logs/model/supportLogs.model';
-import { SupportLogsService } from '../../support/support_logs/service/support-logs.service';
-import { SupportLogsComponent } from '../../support/support_logs/support-logs.component';
+import { ModuloName } from '../../../features/support/models/modulos.model';
+import { supportData } from '../../../features/support/models/support.model';
+import { VistaName } from '../../../features/support/models/vistas.model';
+import { SupportService } from '../../../features/support/services/support.service';
+import { ObservationsData } from '../../../features/support/models/observations.model';
+import { StatusData } from '../../../features/support/models/status.model';
+import { SupportLogs } from '../../../features/support/models/supportLogs.model';
+import { SupportLogsService } from '../../../features/support/services/support-logs/support-logs.service';
+import { SupportLogsComponent } from '../../../features/support/components/support_logs/support-logs.component';
 import { RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { Link } from '@vex/interfaces/link.interface';
 import { MatTabsModule } from '@angular/material/tabs';
-import { Modulo, Subvista, Vista } from '../../support/interfaces/module.model';
-import { MODULES } from '../../support/constants/modules.constant';
+import { Modulo, Subvista, Vista } from '../../../features/support/models/module.model';
+import { MODULES } from '../../../features/support/constants/modules.constant';
 import { UserService } from '@shared/services/auth/user.service';
 import { DecodeJwt } from '@features/configuration/interfaces/users/user-details.model';
 import { NgxDropzoneChangeEvent, NgxDropzoneModule } from 'ngx-dropzone';
-import { SupportFormValues } from '../../support/support_logs/interfaces/form-values.interfaces';
+import { SupportFormValues } from '../../../features/support/interfaces/form-values.interfaces';
 
 @Component({
   selector: 'vex-support',

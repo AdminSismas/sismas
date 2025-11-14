@@ -26,12 +26,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { VexPageLayoutContentDirective } from '@vex/components/vex-page-layout/vex-page-layout-content.directive';
 
 
-import { SupportService } from '../service/support.service';
+import { SupportService } from '../../services/support.service';
 
 
 import { env } from 'src/environments/environments.soporte';
-import { Ticket } from './model/ticket.model';
-
+import { Ticket } from '../../models/support-logs/ticket.model';
 import { UserService } from '@shared/services/auth/user.service';
 
 

@@ -1,4 +1,4 @@
-import { Modulo } from "../interfaces/module.model";
+import { Modulo } from "../models/module.model";
 
 
 export const MODULES: Modulo[] = [
