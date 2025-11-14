@@ -20,7 +20,7 @@
         <div class="w-full flex flex-col overflow-auto">
           <!-- Botones de edición: Se muestran SIEMPRE en modo edición -->
           @if (
-            typeInformation === "edition" ||
+            typeInformation === "edition" &&
             (dataSource && dataSource.data.length > 3)
           ) {
             <div class="px-4 h-16 border-b sticky left-0 flex items-center">
