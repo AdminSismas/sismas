@@ -60,6 +60,7 @@ export const environment = {
   bpmAttachment: {
     count: "/count",
     proExecution: "proExecution/",
+    proExecutionFile: "proExecutionFile",
     value: "/bpmAttachment/",
     xtf: "xtf"
   },

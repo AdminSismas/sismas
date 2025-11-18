@@ -9,8 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AttachmentService {
   /* -------------- ATRIBUTOS -------------- */
-  //basic_url:string = `${environment.url}:${environment.port}${environment.bpmAttachment}${environment.proExecution}`;
-  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}${environment.bpmAttachment.proExecution}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
   delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
 
   /* -------------- CONSTRUCTOR -------------- */
@@ -22,7 +21,7 @@ export class AttachmentService {
   getDataPropertyByAttachment(
     executionId: string
   ): Observable<AttachmentCollection[]> {
-    const url = `${this.basic_url}${executionId}`;
+    const url = `${this.basic_url}${environment.bpmAttachment.proExecution}${executionId}`;
     return this.getData(url);
   }
 
@@ -46,7 +45,7 @@ export class AttachmentService {
   }
 
   sendAttachment(formData: FormData): Observable<AttachmentCollection[]> {
-    const url = `${this.basic_url}`;
+    const url = `${this.basic_url}${environment.bpmAttachment.proExecutionFile}`;
 
     const headers = new HttpHeaders({
       'enctype': 'multipart/form-data'
