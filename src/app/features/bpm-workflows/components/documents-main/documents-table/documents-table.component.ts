@@ -352,8 +352,27 @@ export class DocumentsMainTableComponent implements AfterViewInit, OnInit {
     });
   }
 
+  disableDelete(row: AttachmentCollection): boolean {
+    if (!row || !row.originalFileName) return false;
+    
+    console.log(row.originalFileName);
+
+    return row.originalFileName.startsWith('CERT_RADI');
+  }
+
   onDelete(row: AttachmentCollection): void {
     // Muestra la alerta de confirmación de eliminación
+    if (this.disableDelete(row)) {
+      Swal.fire({
+        text: 'No se puede eliminar este archivo',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar',
+        timer: 30000
+      });
+      return;
+    }
+
     this.confirmDialog.fire().then((result) => {
       if (result.isConfirmed) {
         this.deleteFile(row);

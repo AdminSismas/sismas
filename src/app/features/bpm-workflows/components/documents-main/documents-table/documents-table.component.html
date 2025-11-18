@@ -71,65 +71,62 @@
 
   <!-- Text Columns -->
   @for (column of columns; track column.property) {
-    <ng-container
-      *ngIf="column.type === 'text'"
-      [matColumnDef]="column.property"
-    >
-      <th
-        *matHeaderCellDef
-        class="pl-1 pr-1"
-        mat-header-cell
-        mat-sort-header
-      >
-        {{ column.label }}
-      </th>
-      <td
-        *matCellDef="let row"
-        (click)="viewFile(row)"
-        class="uppeercase pl-1 pr-1"
-        [ngClass]="column.cssClasses"
-        mat-cell
-      >
-        <mat-icon
-          matIconPrefix
-          *ngIf="column.property === 'originalFileName'"
-          [svgIcon]="getFileTypeIcon(row)"
-          [ngClass]="getFileIconColor(row)"
-          class="w-5 h-5 p-0 items-center justify-center"
-        ></mat-icon>
-        {{ row[column.property] }}
-      </td>
-    </ng-container>
-
-    <ng-container
-      *ngIf="column.type === 'date'"
-      [matColumnDef]="column.property"
-    >
-      <th
-        *matHeaderCellDef
-        class="pl-1 pr-1"
-        mat-header-cell
-        mat-sort-header
-      >
-        {{ column.label }}
-      </th>
-      <td
-        *matCellDef="let row"
-        (click)="viewFile(row)"
-        class="uppeercase pl-1 pr-1"
-        [ngClass]="column.cssClasses"
-        mat-cell
-      >
-        <mat-icon
-          matIconPrefix
-          *ngIf="column.property === 'originalFileName'"
-          [svgIcon]="getFileTypeIcon(row)"
-          [ngClass]="getFileIconColor(row)"
-          class="w-5 h-5 p-0 items-center justify-center"
-        ></mat-icon>
-        {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
-      </td>
-    </ng-container>
+    @if (column.type === "text") {
+      <ng-container [matColumnDef]="column.property">
+        <th
+          *matHeaderCellDef
+          class="pl-1 pr-1"
+          mat-header-cell
+          mat-sort-header
+        >
+          {{ column.label }}
+        </th>
+        <td
+          *matCellDef="let row"
+          (click)="viewFile(row)"
+          class="uppeercase pl-1 pr-1"
+          [ngClass]="column.cssClasses"
+          mat-cell
+        >
+          <mat-icon
+            matIconPrefix
+            *ngIf="column.property === 'originalFileName'"
+            [svgIcon]="getFileTypeIcon(row)"
+            [ngClass]="getFileIconColor(row)"
+            class="w-5 h-5 p-0 items-center justify-center"
+          ></mat-icon>
+          {{ row[column.property] }}
+        </td>
+      </ng-container>
+    }
+    @if (column.type === "date") {
+      <ng-container [matColumnDef]="column.property">
+        <th
+          *matHeaderCellDef
+          class="pl-1 pr-1"
+          mat-header-cell
+          mat-sort-header
+        >
+          {{ column.label }}
+        </th>
+        <td
+          *matCellDef="let row"
+          (click)="viewFile(row)"
+          class="uppeercase pl-1 pr-1"
+          [ngClass]="column.cssClasses"
+          mat-cell
+        >
+          <mat-icon
+            matIconPrefix
+            *ngIf="column.property === 'originalFileName'"
+            [svgIcon]="getFileTypeIcon(row)"
+            [ngClass]="getFileIconColor(row)"
+            class="w-5 h-5 p-0 items-center justify-center"
+          ></mat-icon>
+          {{ row[column.property] | date: "dd/MM/yyyy hh:mm:ss a" }}
+        </td>
+      </ng-container>
+    }
   }
 
   <ng-container matColumnDef="delete">
@@ -148,6 +145,7 @@
         matTooltip="Eliminar archivo"
         (click)="onDelete(row)"
         class="text-red-600 hover:text-red-800 focus:outline-none"
+        [disabled]="disableDelete(row)"
       >
         <mat-icon svgIcon="mat:delete"></mat-icon>
       </button>
@@ -170,7 +168,7 @@
 <mat-paginator
   *ngIf="disablePaginator === true"
   #paginator
-  [class.hidden]="(isNotDesktop$ | async)"
+  [class.hidden]="isNotDesktop$ | async"
   [pageSizeOptions]="pageSizeOptions"
   [length]="totalElements"
   [pageSize]="pageSize"
