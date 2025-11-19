@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InitiateFilingProcedureComponent } from 'src/app/pages/pages/bpm/initiate-filing-procedure/initiate-filing-procedure.component';
+import { InitiateFilingProcedureComponent } from '@pages
 
 describe(InitiateFilingProcedureComponent.name, () => {
   let component: InitiateFilingProcedureComponent;

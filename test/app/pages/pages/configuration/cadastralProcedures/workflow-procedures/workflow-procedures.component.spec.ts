@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   WorkflowProceduresComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastralProcedures/workflow-procedures/workflow-procedures.component';
+} from '@pages/configuration/cadastral-procedures/workflow-procedures/workflow-procedures.component';
 
 describe(WorkflowProceduresComponent.name, () => {
   let component: WorkflowProceduresComponent;

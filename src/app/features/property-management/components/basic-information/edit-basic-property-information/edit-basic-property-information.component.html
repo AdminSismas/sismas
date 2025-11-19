@@ -1,0 +1,163 @@
+<form
+  (ngSubmit)="editBasicInformationProperty()"
+  [formGroup]="activeTypeCategoryForm"
+>
+  <div
+    class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
+    mat-dialog-title
+  >
+    @if (typeCategory() === TYPE_UPDATE_PROPERTY_COEFFICIENT) {
+      <h3 class="title m-0 flex-auto">Editar unidad predial</h3>
+    } @else {
+      <h2 class="headline m-0 flex-auto">Editar aspectos generales</h2>
+    }
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon
+        svgIcon="mat:close"
+        class="icon-xs"
+      ></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="text-border"></mat-divider>
+
+  <mat-dialog-content class="container-fluid p-2 h-full w-full">
+    @if (typeCategory() === TYPE_UPDATE_PROPERTY_COEFFICIENT) {
+      <div class="grid grid-flow-row grid-cols-2 gap-x-2 pb-5">
+        <vex-input
+          idComboInput="buildNumberDetailGruop456{{ executionId }}"
+          label="Número del edificio"
+          type="number"
+          formControlNameInput="buildNumber"
+          [formControlInput]="controlBuildNumber"
+        >
+        </vex-input>
+        <vex-input
+          idComboInput="floorNumberDetailGruop456456{{ executionId }}"
+          label="Número del piso"
+          type="number"
+          formControlNameInput="floorNumber"
+          [formControlInput]="controlFloorNumber"
+        >
+        </vex-input>
+      </div>
+      <div class="grid grid-flow-row grid-cols-2 gap-x-2 pb-5">
+        <vex-input
+          idComboInput="unitNumberDetailGruop4566{{ executionId }}"
+          label="Número de la unidad predial"
+          type="number"
+          formControlNameInput="unitNumber"
+          [formControlInput]="controlUnitNumber"
+        >
+        </vex-input>
+        <vex-input
+          idComboInput="percentageGroupDetailGruop8456{{ executionId }}"
+          label="Coeficiente copropiedad"
+          type="number"
+          formControlNameInput="percentageGroup"
+          [formControlInput]="controlPercentageGroup"
+        >
+        </vex-input>
+      </div>
+    } @else {
+      <div
+        class="grid grid-flow-row grid-cols-6 gap-x-4"
+        vexMinFluidHeight
+        [fluidHeight]="275"
+      >
+        <!-- Recorrer los grupos -->
+        @for (group of inputs; track $index) {
+          <!-- Título del grupo -->
+          <h3
+            class="col-span-full text-black text-center text-sm"
+            style="margin: 16px"
+          >
+            {{ group.groupName }}
+          </h3>
+          <!-- Recorrer los campos del grupo -->
+          @for (input of group.fields; track $index) {
+            @if (input.name === '(refresh geografic button)'){
+              <div class="w-full col-span-2 flex justify-start itemcs-center">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  aria-label="Cadastral Geographic Area Refresh"
+                  (click)="refreshCadastralAreaGeoE($event)"
+                >
+                  <mat-icon svgIcon="mat:refresh"></mat-icon>
+                  Refrescar área geográfica
+                </button>
+              </div>
+            } @else if (input.collection) {
+              <vex-combox-colletion
+                [label]="input.label"
+                [formControlNameCombobox]="input.name"
+                [typeDomainName]="input.type"
+                [placeholderDomainName]="input.placeholder"
+                [filterOptions]="isEditableBaunitCondition ? input.group : []"
+                cssClasses="w-full"
+                [class.col-span-3]="group.groupName !== 'Tamaños y áreas'"
+                [class.col-span-2]="group.groupName === 'Tamaños y áreas'"
+              ></vex-combox-colletion>
+            } @else if (input.type === "date") {
+              <mat-form-field
+                [class.col-span-3]="group.groupName !== 'Tamaños y áreas'"
+                [class.col-span-2]="group.groupName === 'Tamaños y áreas'"
+              >
+                <mat-label>{{ input.label }}</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="beginAt"
+                  [formControlName]="input.name"
+                  [max]="maxDate"
+                />
+                <mat-hint>Formato fecha: DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle
+                  matIconSuffix
+                  [for]="beginAt"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #beginAt></mat-datepicker>
+              </mat-form-field>
+            } @else {
+              <mat-form-field
+                [class.col-span-3]="group.groupName !== 'Tamaños y áreas'"
+                [class.col-span-2]="group.groupName === 'Tamaños y áreas'"
+              >
+                <mat-label>{{ input.label }}</mat-label>
+                <input
+                  matInput
+                  [type]="input.type"
+                  [placeholder]="input.placeholder"
+                  [formControlName]="input.name"
+                />
+              </mat-form-field>
+            }
+          }
+        }
+      </div>
+    }
+    <mat-dialog-actions
+      align="end"
+      class="pt-2"
+    >
+      <button
+        mat-button
+        mat-dialog-close
+        type="button"
+      >
+        Cancelar
+      </button>
+      <button
+        color="primary"
+        mat-flat-button
+        type="submit"
+      >
+        Aceptar
+      </button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+</form>

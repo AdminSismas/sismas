@@ -4,5 +4,6 @@ ignoredBuiltDependencies:
   - esbuild
   - lmdb
   - msgpackr-extract
+  - nice-napi
 
 minimumReleaseAge: 10080

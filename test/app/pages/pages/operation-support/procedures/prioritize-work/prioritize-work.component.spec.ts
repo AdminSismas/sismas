@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   PrioritizeWorkComponent
-} from '../../../../../../../src/app/pages/pages/operation-support/procedures/prioritize-work/prioritize-work.component';
+} from '@pages/operation-support/procedures/prioritize-work/prioritize-work.component';
 
 describe(PrioritizeWorkComponent.name, () => {
   let component: PrioritizeWorkComponent;

@@ -1,0 +1,185 @@
+{
+  "bundleAnalysis": {
+    "features": {
+      "count": 6,
+      "structure": [
+        {
+          "name": "bmp-workflows",
+          "path": "C:\\GeoGestionV2\\src\\app\\features\\bmp-workflows",
+          "files": 22
+        },
+        {
+          "name": "bpm-workflows",
+          "path": "C:\\GeoGestionV2\\src\\app\\features\\bpm-workflows",
+          "files": 0
+        },
+        {
+          "name": "geographic-viewer",
+          "path": "C:\\GeoGestionV2\\src\\app\\features\\geographic-viewer",
+          "files": 0
+        },
+        {
+          "name": "property-management",
+          "path": "C:\\GeoGestionV2\\src\\app\\features\\property-management",
+          "files": 0
+        },
+        {
+          "name": "tenant-configuration",
+          "path": "C:\\GeoGestionV2\\src\\app\\features\\tenant-configuration",
+          "files": 10
+        },
+        {
+          "name": "tenant-specific",
+          "path": "C:\\GeoGestionV2\\src\\app\\features\\tenant-specific",
+          "files": 0
+        }
+      ],
+      "avgSize": "5.3"
+    },
+    "shared": {
+      "count": 5,
+      "structure": [
+        {
+          "name": "directives",
+          "path": "C:\\GeoGestionV2\\src\\app\\shared\\directives",
+          "files": 4
+        },
+        {
+          "name": "models",
+          "path": "C:\\GeoGestionV2\\src\\app\\shared\\models",
+          "files": 8
+        },
+        {
+          "name": "pipes",
+          "path": "C:\\GeoGestionV2\\src\\app\\shared\\pipes",
+          "files": 6
+        },
+        {
+          "name": "ui",
+          "path": "C:\\GeoGestionV2\\src\\app\\shared\\ui",
+          "files": 5
+        },
+        {
+          "name": "utils",
+          "path": "C:\\GeoGestionV2\\src\\app\\shared\\utils",
+          "files": 0
+        }
+      ],
+      "avgSize": "4.6"
+    },
+    "core": {
+      "count": 9,
+      "structure": [
+        {
+          "name": "auth",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\auth",
+          "files": 4
+        },
+        {
+          "name": "config",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\config",
+          "files": 0
+        },
+        {
+          "name": "crud",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\crud",
+          "files": 2
+        },
+        {
+          "name": "guards",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\guards",
+          "files": 3
+        },
+        {
+          "name": "icons",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\icons",
+          "files": 2
+        },
+        {
+          "name": "interceptors",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\interceptors",
+          "files": 3
+        },
+        {
+          "name": "luxon",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\luxon",
+          "files": 2
+        },
+        {
+          "name": "navigation",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\navigation",
+          "files": 4
+        },
+        {
+          "name": "services",
+          "path": "C:\\GeoGestionV2\\src\\app\\core\\services",
+          "files": 2
+        }
+      ],
+      "avgSize": "2.4"
+    }
+  },
+  "importAnalysis": {
+    "totalFiles": 717,
+    "relativeImports": 1332,
+    "barrelImports": 0,
+    "externalImports": 1183,
+    "relativeImportPercentage": "100.00",
+    "circularDependencies": []
+  },
+  "dependencyAnalysis": {
+    "total": 96,
+    "production": 49,
+    "development": 47,
+    "angular": 12,
+    "material": 4,
+    "rxjs": 1,
+    "unusedDependencies": [
+      "moment"
+    ]
+  },
+  "lazyLoadingAnalysis": {
+    "routingFiles": 16,
+    "lazyRoutes": 13,
+    "eagerRoutes": 6,
+    "dynamicImports": 85,
+    "lazyLoadingPercentage": "68.42"
+  },
+  "recommendations": [
+    {
+      "category": "Imports",
+      "priority": "HIGH",
+      "issue": "100.00% de imports son relativos",
+      "solution": "Convertir imports relativos a barrel exports",
+      "impact": "Mejora mantenibilidad y tree shaking"
+    },
+    {
+      "category": "Lazy Loading",
+      "priority": "MEDIUM",
+      "issue": "Solo 68.42% de rutas son lazy",
+      "solution": "Convertir más rutas a lazy loading",
+      "impact": "Reduce bundle inicial y mejora tiempo de carga"
+    },
+    {
+      "category": "Dependencies",
+      "priority": "MEDIUM",
+      "issue": "1 dependencias no utilizadas",
+      "solution": "Remover dependencias no utilizadas",
+      "impact": "Reduce bundle size"
+    },
+    {
+      "category": "Multi-Tenant",
+      "priority": "LOW",
+      "issue": "Implementar preload de configuraciones de tenant",
+      "solution": "Crear service worker para cache de configuraciones",
+      "impact": "Mejora UX en switching de tenants"
+    },
+    {
+      "category": "Tree Shaking",
+      "priority": "MEDIUM",
+      "issue": "Optimizar tree shaking de barrel exports",
+      "solution": "Verificar que todos los exports son utilizados",
+      "impact": "Reduce bundle size final"
+    }
+  ]
+}

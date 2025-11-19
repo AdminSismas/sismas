@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   AlfaMainComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/cadastral/alf/main/alfa-main.component';
+} from '@pages/bpm/core/cadastral/alf/main/alfa-main.component';
 
 
 describe(AlfaMainComponent.name, () => {

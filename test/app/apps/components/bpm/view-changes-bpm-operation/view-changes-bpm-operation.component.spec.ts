@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ViewChangesBpmOperationComponent } from 'src/app/apps/components/bpm/view-changes-bpm-operation/view-changes-bpm-operation.component';
+import { ViewChangesBpmOperationComponent } from '@features/bpm-workflows/components/view-changes-bpm-operation/view-changes-bpm-operation.component';
 
 
 describe(ViewChangesBpmOperationComponent.name, () => {

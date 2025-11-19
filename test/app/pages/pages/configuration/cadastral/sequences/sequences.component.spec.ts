@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   SequencesComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastral/sequences/sequences.component';
+} from '@pages/configuration/cadastral/sequences/sequences.component';
 
 describe(SequencesComponent.name, () => {
   let component: SequencesComponent;

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';import { ReportMasterComponent } from 'src/app/pages/pages/operation-support/reports/download-reports/report-master/report-master.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';import { ReportMasterComponent } from '@pages
 1
 
 describe('ReportMasterComponent', () => {

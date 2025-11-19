@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DocumentMainComponent
-} from '../../../../../../../../src/app/pages/pages/bpm/core/document/main/document-main.component';
+} from '@pages/bpm/core/document/main/document-main.component';
 
 describe(DocumentMainComponent.name, () => {
   let component: DocumentMainComponent;

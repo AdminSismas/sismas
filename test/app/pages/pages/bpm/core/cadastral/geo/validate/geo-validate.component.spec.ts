@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GeoValidateComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/cadastral/geo/validate/geo-validate.component';
+} from '@pages/bpm/core/cadastral/geo/validate/geo-validate.component';
 
 describe(GeoValidateComponent.name, () => {
   let component: GeoValidateComponent;

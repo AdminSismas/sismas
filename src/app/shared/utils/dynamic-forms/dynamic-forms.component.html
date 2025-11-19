@@ -1,0 +1,174 @@
+@if (form()) {
+  <form
+    [formGroup]="form()"
+    [ngClass]="cssClassesForm(className())"
+    class="py-2"
+  >
+    @for (input of inputs(); track input.name) {
+      @switch (input.element) {
+        @case ("collection") {
+          @if (!input.noVisibleComponent) {
+            <vex-combox-colletion
+              [label]="input.label"
+              [formControlNameCombobox]="input.name"
+              [typeDomainName]="input.type"
+              [valueCode]="input.valueCode ?? false"
+              placeholderDomainName="{{ input.placeholder }}&hellip;"
+              [cssClasses]="cssClassesInput(input.cssClasses)"
+              [ngClass]="cssClassesInput(input.cssClasses)"
+            ></vex-combox-colletion>
+          }
+        }
+
+        @case ("date") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field
+              [ngClass]="cssClassesInput(input.cssClasses)"
+              [id]="input.name + $index"
+            >
+              <mat-label>{{ input.label }}</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="{{ input.placeholder }}&hellip;"
+                [formControlName]="input.name"
+                [matDatepickerFilter]="getDateFiler(input.name)"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          }
+        }
+
+        @case ("file") {
+          @if (!input.noVisibleComponent) {
+            <!-- <mat-form-field [ngClass]="cssClassesInput(input.cssClasses)"
+                            [id]="input.name + $index">
+              <mat-label>{{ input.label }}</mat-label>
+              <ngx-mat-file-input
+                [formControlName]="input.name"
+                [accept]="input.type"
+                [multiple]="input.multiple ?? false"
+                color="primary"
+              ></ngx-mat-file-input>
+            </mat-form-field> -->
+            <div [ngClass]="cssClassesInput(input.cssClasses)">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="multiple_files"
+                >{{ input.label }}</label
+              >
+              <input
+                class="block w-full text-sm text-gray-900 border border-gray-300 cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                id="multiple_files"
+                type="file"
+                [multiple]="input.multiple ?? false"
+                [formControlName]="input.name"
+                [accept]="input.type"
+                (change)="onFileSelected($event, input.name)"
+              />
+            </div>
+          }
+        }
+
+        @case ("select") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field
+              [ngClass]="cssClassesForm(input.cssClasses)"
+              [id]="input.name + $index"
+            >
+              <mat-label>{{ input.label }}</mat-label>
+              <mat-select
+                [formControlName]="input.name"
+                [id]="input.name"
+                placeholder="{{ input.placeholder }}&hellip;"
+              >
+                @for (option of input.options; track $index) {
+                  <mat-option [value]="option.value">{{
+                    option.label
+                  }}</mat-option>
+                } @empty {
+                  <mat-option disabled>No hay opciones</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
+        }
+
+        @case ("toggle") {
+          @if (!input.noVisibleComponent) {
+            <mat-slide-toggle
+              [id]="input.name + $index"
+              [formControlName]="input.name"
+              [labelPosition]="labelPositionToggle(input)"
+              [class]="input.cssClasses ?? ''"
+              >{{ input.label }}
+            </mat-slide-toggle>
+          }
+        }
+
+        @case ("checkbox") {
+          @if (!input.noVisibleComponent) {
+            <mat-checkbox
+              [formControlName]="input.name"
+              [id]="input.name + $index"
+              [ngClass]="cssClassesInput(input.cssClasses)"
+            >
+              {{ input.label }}
+            </mat-checkbox>
+          }
+        }
+
+        @case ("textarea") {
+          @if (!input.noVisibleComponent) {
+            <vex-text-area
+              [label]="input.label"
+              [formControlNameTextArea]="input.name"
+              [placeholder]="input.placeholder"
+              [cssClasses]="cssClassesInput(input.cssClasses)"
+              [ngClass]="cssClassesInput(input.cssClasses)"
+            >
+            </vex-text-area>
+          }
+        }
+
+        @case ("input") {
+          @if (!input.noVisibleComponent) {
+            <mat-form-field
+              [ngClass]="cssClassesInput(input.cssClasses)"
+              [id]="input.name + $index"
+            >
+              <mat-label>{{ input.label }}</mat-label>
+              <input
+                matInput
+                [type]="input.type"
+                placeholder="{{ input.placeholder }}&hellip;"
+                [formControlName]="input.name"
+              />
+            </mat-form-field>
+          }
+        }
+        @case ("autocomplete") {
+          <mat-form-field class="example-full-width">
+            <mat-label>{{ input.label }}</mat-label>
+            <input
+              [type]="input.type"
+              [placeholder]="input.placeholder"
+              matInput
+              [formControlName]="input.name"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete">
+              @for (option of input.options; track option) {
+                <mat-option [value]="option.label">{{ option.label }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        }
+      }
+    }
+  </form>
+}

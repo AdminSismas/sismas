@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   TaskCardComponent
-} from '../../../../../../../../src/app/pages/pages/my-work/tasks/components/task-card/task-card.component';
+} from '@features/tasks/components/task-card/task-card.component';
 
 describe(TaskCardComponent.name, () => {
   let component: TaskCardComponent;

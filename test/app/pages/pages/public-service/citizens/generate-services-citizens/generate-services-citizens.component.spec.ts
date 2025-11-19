@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GenerateServicesCitizensComponent
-} from '../../../../../../../src/app/pages/pages/public-service/citizens/generate-services-citizens/generate-services-citizens.component';
+} from '@pages/public-service/citizens/generate-services-citizens/generate-services-citizens.component';
 
 describe(GenerateServicesCitizensComponent.name, () => {
   let component: GenerateServicesCitizensComponent;

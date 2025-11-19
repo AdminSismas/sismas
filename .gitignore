@@ -59,8 +59,4 @@ GeoGestionV2.code-workspace
 # claude code
 CLAUDE.md
 src/claude/*
-
-# gemini CLI
-GEMINI.md
-.gemini
-
+.claude

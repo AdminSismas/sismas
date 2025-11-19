@@ -1,0 +1,375 @@
+<div
+  class="flex items-center"
+  mat-dialog-title
+>
+  @if (typeOperation === TYPEOPERATION_ADD) {
+    <h2 class="headline m-0 flex-auto">
+      {{ CONSTANT_NAME_ADD_LABEL }}
+    </h2>
+  } @else if (typeOperation === TYPEOPERATION_CREATE) {
+    <h2 class="headline m-0 flex-auto">
+      {{ CONSTANT_NAME_CREATE_LABEL }}
+    </h2>
+  } @else {
+    <h2 class="headline m-0 flex-auto">
+      {{ CONSTANT_NAME_DELETE_LABEL }}
+    </h2>
+  }
+
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
+    tabindex="-1"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+@if (typeOperation === TYPEOPERATION_ADD) {
+  <mat-dialog-content class="justify-center overflow-hidden">
+    <form
+      [formGroup]="formAdd"
+      (ngSubmit)="onSubmitFormAdd()"
+    >
+      <div class="px-2 py-2 flex flex-col">
+        <mat-form-field class="sm:ml-2 sm:mr-2">
+          <mat-label>Manzanas</mat-label>
+          <input
+            type="text"
+            aria-label="Number"
+            matInput
+            formControlName="addNpnLike"
+            placeholder="Seleccione una manzana"
+            [matAutocomplete]="autoAddNpnLike"
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #autoAddNpnLike="matAutocomplete"
+            [panelWidth]="350"
+          >
+            @if (optionsListNpnlike$ | async; as options) {
+              @for (option of options; track option) {
+                <mat-option [value]="option">
+                  {{ option }}
+                </mat-option>
+              }
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+        @if (
+          operationBaUnitHead === null ||
+          operationBaUnitHead.baunitHead === null
+        ) {
+          <vex-combox-colletion
+            label="Tipo de predio"
+            formControlNameCombobox="bAunitCondition"
+            typeDomainName="BaunitCondition"
+            placeholderDomainName="Seleccione un tipo de predio"
+            cssClasses="w-full sm:ml-0 sm:mr-2"
+            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2"
+          >
+          </vex-combox-colletion>
+        } @else {
+          <vex-combox-colletion
+            label="Tipo de predio"
+            formControlNameCombobox="bAunitCondition"
+            placeholderDomainName="Seleccione un tipo de predio"
+            [optionsExternal]="baunitConditionOptions"
+            cssClasses="w-full sm:ml-0 sm:mr-2"
+            class="min-w-[300px] max-w-[490px] sm:ml-2 sm:mr-2"
+          >
+          </vex-combox-colletion>
+        }
+      </div>
+      <mat-dialog-actions align="center">
+        <button
+          mat-button
+          mat-dialog-close
+          type="button"
+        >
+          Cerrar
+        </button>
+        <button
+          color="primary"
+          mat-flat-button
+          type="submit"
+        >
+          Crear
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </mat-dialog-content>
+}
+
+@if (typeOperation !== TYPEOPERATION_ADD) {
+  <div class="container-fluid overflow-x-hidden p-5">
+    <form [formGroup]="formCreateDelete">
+      <div class="flex py-2.5">
+        <div class="grow h-14 px-3">
+          <div class="flex flex-row items-start">
+            <mat-form-field class="sm:ml-2 sm:mr-2 basis-2/4 min-w-[200px]">
+              <mat-label>Manzanas</mat-label>
+              <input
+                type="text"
+                aria-label="Number"
+                matInput
+                formControlName="npnLike"
+                placeholder="Seleccione una manzana"
+                [matAutocomplete]="autoAddNpnLike"
+              />
+              <mat-autocomplete
+                autoActiveFirstOption
+                #autoAddNpnLike="matAutocomplete"
+                [panelWidth]="350"
+              >
+                @for (
+                  option of optionsListNpnlike$ | async;
+                  track option;
+                  let index = $index
+                ) {
+                  <mat-option [value]="option">
+                    {{ option }}
+                  </mat-option>
+                } @empty {
+                  <mat-option>
+                    {{ STRING_INFORMATION_NOT_FOUND }}
+                  </mat-option>
+                }
+              </mat-autocomplete>
+            </mat-form-field>
+            <div class="ml-2 pt-3">
+              <button
+                color="primary"
+                mat-raised-button
+                type="button"
+                (click)="loadPropertiesInformation()"
+              >
+                <mat-icon svgIcon="mat:search"></mat-icon>
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+        @if (isDesktop$) {
+          <div class="flex-none sm:w-44"></div>
+        }
+      </div>
+      <mat-divider class="text-border"></mat-divider>
+      <div class="card overflow-auto mat-elevation-z5">
+        <div
+          class="bg-app-bar px-4 h-16 border-b sticky left-0 flex items-center"
+        >
+          <span class="flex-1 sm:min-w-[100px]"></span>
+          <mat-form-field
+            subscriptSizing="dynamic"
+            class="pl-1 pr-1 pt-6 pb-6 flex flex-auto"
+          >
+            <mat-icon
+              matIconPrefix
+              svgIcon="mat:search"
+            ></mat-icon>
+            <input
+              matInput
+              [formControl]="searchCtrl"
+              placeholder="Filtrar información"
+              type="text"
+            />
+          </mat-form-field>
+          <span class="flex-1 sm:min-w-[100px]"></span>
+          <!-- <button
+            [matMenuTriggerFor]="columnFilterMenu"
+            class="ml-4 flex-none"
+            mat-icon-button
+            matTooltip="Filtrar columnas"
+            type="button">
+            <mat-icon svgIcon="mat:filter_list"></mat-icon>
+          </button> -->
+        </div>
+        <table
+          @stagger
+          [dataSource]="dataSource"
+          class="w-full"
+          mat-table
+          matSort
+        >
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="checkbox">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              class="py-2.5"
+            >
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                color="primary"
+              >
+              </mat-checkbox>
+            </th>
+            <td
+              *matCellDef="let row"
+              class="w-4 py-2.5"
+              mat-cell
+            >
+              <mat-checkbox
+                (change)="$event ? selection.toggle(row) : null"
+                (click)="$event.stopPropagation()"
+                [checked]="selection.isSelected(row)"
+                color="primary"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <!-- Image Column -->
+          <ng-container matColumnDef="image">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              class="py-2.5"
+            ></th>
+            <td
+              *matCellDef="let row"
+              class="w-8 min-w-8 py-2.5"
+              mat-cell
+            >
+              <img
+                [src]="row['imageSrc']"
+                class="avatar h-8 w-8 align-middle"
+                alt=""
+              />
+            </td>
+          </ng-container>
+
+          <!-- Text Columns -->
+          @for (column of columns; track column.property) {
+            @if (column.type === "text") {
+              <ng-container [matColumnDef]="column.property">
+                <th
+                  *matHeaderCellDef
+                  class="py-2.5"
+                  mat-header-cell
+                  mat-sort-header
+                >
+                  {{ column.label }}
+                </th>
+                <td
+                  *matCellDef="let row"
+                  [ngClass]="column.cssClasses"
+                  mat-cell
+                  class="py-2.5"
+                >
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
+            } @else if (column.type === "operationType") {
+              <ng-container [matColumnDef]="column.property">
+                <th
+                  *matHeaderCellDef
+                  class="py-2.5"
+                  mat-header-cell
+                  mat-sort-header
+                >
+                  {{ column.label }}
+                </th>
+                <td
+                  *matCellDef="let row"
+                  [ngClass]="column.cssClasses"
+                  mat-cell
+                  class="py-2.5"
+                >
+                  {{ row[column.property] | currencyLands }}
+                </td>
+              </ng-container>
+            }
+          }
+
+          <ng-container matColumnDef="actions">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              mat-sort-header
+              class="py-1"
+            ></th>
+            <td
+              *matCellDef="let row"
+              class="w-5 text-secondary py-1"
+              mat-cell
+            >
+              @if (typeOperation === TYPEOPERATION_CREATE) {
+                <button
+                  (click)="createBeaUnitHeadUpdate(row)"
+                  class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-primary-600 bg-primary-600/10"
+                  mat-icon-button
+                  title="Agregar unidad predial a modificar"
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:edit"
+                  ></mat-icon>
+                </button>
+              } @else {
+                <button
+                  (click)="createBeaUnitHeadDelete(row)"
+                  class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-red-600 bg-red-600/10"
+                  mat-icon-button
+                  title="Agregar unidad predial a Eliminar"
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:edit"
+                  ></mat-icon>
+                </button>
+              }
+            </td>
+          </ng-container>
+
+          <tr
+            *matHeaderRowDef="visibleColumns"
+            mat-header-row
+          ></tr>
+          <tr
+            *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer p-0 m-0 h-[32px] sm:h-[32px]"
+            mat-row
+          ></tr>
+        </table>
+        @if (
+          dataSource.data.length <= 0 || dataSource.filteredData.length <= 0
+        ) {
+          <div class="no-data-information">No hay información disponible</div>
+        }
+        <mat-paginator
+          [pageSizeOptions]="pageSizeOptions"
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="page"
+          class="sticky left-0"
+        ></mat-paginator>
+      </div>
+      <mat-dialog-actions
+        align="end"
+        class="px-2 py-3"
+      >
+        <button
+          color="primary"
+          mat-flat-button
+          mat-dialog-close
+          type="submit"
+        >
+          Cerrar
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>
+}
+
+<app-loader
+  [isLoading]="createBaunitHeadUpdateLoading()"
+  [loaderTitle]="'Cargando...'"
+  [loaderMessage]="'Por favor, espere mientras se procesa su solicitud.'"
+></app-loader>

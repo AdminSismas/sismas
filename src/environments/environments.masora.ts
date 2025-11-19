@@ -13,6 +13,7 @@ export const environment = {
     value: "/accessGeo/"
   },
   active: "active",
+  actualizacionesMultiples: "/actualizacionesMultiples",
   actualizarTercerosAfectados: "/actualizarTercerosAfectados",
   adjacent: "/colindante/",
   administrativeSource: "/fuenteadmin/",
@@ -59,6 +60,7 @@ export const environment = {
   bpmAttachment: {
     count: "/count",
     proExecution: "proExecution/",
+    proExecutionFile: "proExecutionFile",
     value: "/bpmAttachment/",
     xtf: "xtf"
   },
@@ -127,6 +129,7 @@ export const environment = {
   compare_temp: "/compare/temp/",
   contact: "/contact",
   copy: "/copy",
+  departments: "05",
   divpol: "/divpol",
   domain_domain: "/domain",
   domain_domainName: "/domain/name",

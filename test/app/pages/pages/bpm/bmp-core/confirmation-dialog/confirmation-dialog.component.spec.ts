@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ConfirmationDialogComponent } from 'src/app/pages/pages/bpm/bmp-core/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '@pages
 
 
 describe('ConfirmationDialogComponent', () => {

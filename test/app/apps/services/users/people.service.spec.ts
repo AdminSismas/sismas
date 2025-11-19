@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { PeopleService } from 'src/app/apps/services/users/people.service';
-import { SendGeneralRequestsService } from '../../../../../src/app/apps/services/general/send-general-requests.service';
 
 describe(PeopleService.name, () => {
   let service: PeopleService;
@@ -10,7 +9,6 @@ describe(PeopleService.name, () => {
       imports: [
         PeopleService
       ],
-      providers: [SendGeneralRequestsService]
     }).compileComponents();
   });
 

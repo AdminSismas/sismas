@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   EconomicModConstructionComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastral/economic-mod-construction/economic-mod-construction.component';
+} from '@pages/configuration/cadastral/economic-mod-construction/economic-mod-construction.component';
 
 describe(EconomicModConstructionComponent.name, () => {
   let component: EconomicModConstructionComponent;

@@ -1,0 +1,60 @@
+<form (ngSubmit)="addEditPropertyUnit()" [formGroup]="formDetailGroup">
+  <div class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar" mat-dialog-title>
+    @if (typeCategory() === TYPE_OPERATION_ADD) {
+      <h3 class="title m-0 flex-auto">
+        Agregar Unidad Predial
+      </h3>
+    } @else {
+      <h2 class="headline m-0 flex-auto">
+        Crear Unidad Predial
+      </h2>
+    }
+    <button
+      class="text-secondary"
+      mat-dialog-close
+      mat-icon-button
+      type="button">
+      <mat-icon svgIcon="mat:close" class="icon-xs"></mat-icon>
+    </button>
+  </div>
+  <mat-divider class="text-border"></mat-divider>
+
+  <mat-dialog-content class="container-fluid p-2 h-full w-full">
+    <div class="flex flex-row flex-cols-2 gap-x-2 pb-5 pr-2">
+      <vex-input
+        idComboInput="buildNumberDetailGruop456{{executionId}}"
+        label="Numero del edificio"
+        type="number"
+        formControlNameInput="buildNumber"
+        [formControlInput]="controlBuildNumber"
+        cssClasses="flex-col w-full sm:ml-0 sm:mr-2"
+        class="flex-col w-full">
+      </vex-input>
+      <vex-input
+        idComboInput="floorNumberDetailGruop456456{{executionId}}"
+        label="Numero del piso"
+        type="number"
+        formControlNameInput="floorNumber"
+        [formControlInput]="controlFloorNumber"
+        cssClasses="flex-col w-full sm:ml-0 sm:mr-2"
+        class="flex-col w-full">
+      </vex-input>
+    </div>
+    <div class="grid grid-flow-row grid-cols-1 gap-x-1">
+      <vex-combox-colletion
+        label="Tipo de predio"
+        formControlNameCombobox="domBaunitCondition"
+        placeholderDomainName="Seleccione un tipo de predio"
+        [optionsExternal]="baunitConditionOptions"
+        cssClasses="w-full max-w-[600px] sm:ml-0 sm:mr-2"
+        class="min-w-[300px] max-w-[600px] sm:ml-2 sm:mr-2">
+      </vex-combox-colletion>
+    </div>
+    <mat-dialog-actions align="end" class="pt-2">
+      <button mat-button mat-dialog-close type="button">Cancelar</button>
+      <button color="primary" mat-flat-button type="submit">
+        Aceptar
+      </button>
+    </mat-dialog-actions>
+  </mat-dialog-content>
+</form>

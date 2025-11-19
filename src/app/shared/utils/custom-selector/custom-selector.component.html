@@ -1,0 +1,43 @@
+<mat-form-field
+  [id]="idSelector"
+  [ngClass]="cssClasses"
+  [hideRequiredMarker]="hideRequiredMarker"
+  class="w-full sm:ml-2 sm:mr-2"
+>
+  <mat-label>{{ label }}</mat-label>
+  <mat-select
+    [formControlName]="formControlName"
+    [placeholder]="placeholder"
+    (selectionChange)="onSelectionChange($event.value)"
+    class="w-full h-auto"
+    [panelWidth]="500"
+  >
+    <!-- Opciones cargadas -->
+    @for (option of options; track option) {
+      @if (valueKey && valueKey !== null) {
+        <mat-option [value]="option[valueKey]">
+          {{ option[displayKey] }}
+        </mat-option>
+      } @else {
+        <mat-option [value]="option">
+          {{ option[displayKey] }}
+        </mat-option>
+      }
+    } @empty {
+      <mat-option disabled>
+        {{ INFORMATION_NOT_FOUND }}
+      </mat-option>
+    }
+    <!-- Mensaje de carga -->
+    @if (loading) {
+      <mat-option disabled> Cargando... </mat-option>
+    }
+  </mat-select>
+
+  <!-- Hint opcional -->
+  @if (hintValue && hintValue.length > 0) {
+    <mat-hint>
+      {{ hintValue }}
+    </mat-hint>
+  }
+</mat-form-field>

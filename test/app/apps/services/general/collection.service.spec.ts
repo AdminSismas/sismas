@@ -1,6 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { CollectionServices } from '../../../../../src/app/apps/services/general/collection.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CollectionServices } from '@shared/services/general/collection.service';
 
 describe(CollectionServices.name, () => {
   let service: CollectionServices;

@@ -1,0 +1,278 @@
+<div
+  class="flex items-center bg-app-bar focus-visible:bg-app-bar focus:bg-app-bar"
+  mat-dialog-title
+>
+  <h2 class="headline m-0 flex-auto">Unidades Prediales</h2>
+  <button
+    class="text-secondary"
+    mat-dialog-close
+    mat-icon-button
+    type="button"
+  >
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+<mat-divider class="text-border"></mat-divider>
+
+<vex-page-layout-content
+  class="container-fluid p-2 h-full w-full"
+  vexFluidHeight
+  fluidHeight="175"
+>
+  <div
+    class=""
+    vexMinFluidHeight
+    [fluidHeight]="250"
+  >
+    <div class="px-1 py-3 sm:min-w-full md:min-w-[300px]">
+      <div class="p-0 m-0 flex flex-col sm:flex-row items-center gap-3">
+        <div class="flex items-center gap-3">
+          <button
+            mat-raised-button
+            class="rounded-full ml-1 mr-1 py-2 px-3 title !text-white !bg-green-600 flex-auto"
+            (click)="openCrudAlfaMain(TYPE_OPERATION_ADD)"
+          >
+            <mat-icon
+              class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2 !icon-lg"
+              svgIcon="mat:add"
+            ></mat-icon>
+            Crear
+          </button>
+          <button
+            class="whitespace-nowrap"
+            mat-raised-button
+            color="accent"
+            (click)="onAssignZones()"
+          >
+            <mat-icon svgIcon="mat:assignment"></mat-icon>
+            Asignar zonas
+          </button>
+        </div>
+        @if (dataSource && dataSource.data.length > 0) {
+          <mat-form-field
+            subscriptSizing="dynamic"
+            class="w-full pl-1 pr-1 pt-1 pb-1 flex justify-center"
+          >
+            <mat-icon
+              matIconPrefix
+              svgIcon="mat:search"
+            ></mat-icon>
+            <input
+              matInput
+              [formControl]="searchCtrl"
+              placeholder="Filtrar unidades prediales"
+              type="text"
+            />
+          </mat-form-field>
+        }
+        <span class="flex-1"></span>
+      </div>
+    </div>
+    <div class="container-fluid overflow-hidden px-1 py-1">
+      <div
+        class="card overflow-auto w-full flex flex-col justify-between mat-elevation-z3 p-0"
+      >
+        <table
+          [@stagger]="dataSource.filteredData"
+          [dataSource]="dataSource"
+          class="w-full"
+          mat-table
+          matSort
+        >
+          <!-- Type Properties Column -->
+          <ng-container matColumnDef="operationType">
+            <th
+              *matHeaderCellDef
+              mat-header-cell
+              class="pl-1 pr-1"
+              mat-sort-header
+            >
+              Operación
+            </th>
+            <td
+              *matCellDef="let row"
+              mat-cell
+              class="px-3"
+            >
+              @switch (row["operationType"]) {
+                @case ("CREATE") {
+                  <div
+                    class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-green-600"
+                  >
+                    Creado
+                  </div>
+                }
+                @case ("UPDATE") {
+                  <div
+                    class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-primary-600"
+                  >
+                    Agregado
+                  </div>
+                }
+                @case ("DELETE") {
+                  <div
+                    class="font-medium text-xs flex-none px-3 py-2 rounded-xl !text-white inline-flex self-end min-h-[30px] min-w-[40px] !bg-red-600"
+                  >
+                    Borrado
+                  </div>
+                }
+              }
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="viewMap">
+            <th
+              *matHeaderCellDef
+              class="pl-1 pr-1"
+              mat-header-cell
+              mat-sort-header
+            ></th>
+            <td
+              *matCellDef="let row"
+              class="pl-1 pr-1"
+              mat-cell
+            >
+              <div class="flex">
+                <button
+                  (click)="openCadastralInformationProperty(row)"
+                  class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-teal-600 bg-teal/10"
+                  mat-icon-button
+                  title="Consultar información predial"
+                >
+                  <mat-icon
+                    class="icon-sm"
+                    svgIcon="mat:info"
+                  ></mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          @for (column of columns; track column.property) {
+            @switch (column.type) {
+              @case ("text") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    class="pl-1 pr-1"
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    [ngClass]="column.cssClasses"
+                    mat-cell
+                    class="pl-1 pr-1"
+                  >
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              }
+              @case ("percentage") {
+                <ng-container [matColumnDef]="column.property">
+                  <th
+                    *matHeaderCellDef
+                    class="pl-1 pr-1"
+                    mat-header-cell
+                    mat-sort-header
+                  >
+                    {{ column.label }}
+                  </th>
+                  <td
+                    *matCellDef="let row"
+                    mat-cell
+                    class="pl-1 pr-1"
+                  >
+                    {{ row[column.property] | percent: "1.1-15" }}
+                  </td>
+                </ng-container>
+              }
+            }
+          }
+          <!-- Action Column -->
+          <ng-container matColumnDef="actions">
+            <th
+              *matHeaderCellDef
+              class="pl-1 pr-1"
+              mat-header-cell
+              mat-sort-header
+            ></th>
+            <td
+              *matCellDef="let row"
+              class="w-10 text-secondary pl-1 pr-1"
+              mat-cell
+            >
+              <button
+                (click)="$event.stopPropagation()"
+                [matMenuTriggerData]="{ row: row }"
+                [matMenuTriggerFor]="actionsMenu"
+                mat-icon-button
+                type="button"
+              >
+                <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="visibleColumns"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: visibleColumns"
+          ></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <mat-paginator
+    #paginator
+    [pageSizeOptions]="pageSizeOptions"
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    [pageIndex]="page"
+    (page)="refreshPaginator($event)"
+    class="sticky left-0"
+    showFirstLastButtons
+  ></mat-paginator>
+</vex-page-layout-content>
+
+<mat-menu #actionsMenu="matMenu">
+  <ng-template
+    matMenuContent
+    let-row="row"
+  >
+    <button
+      (click)="viewChanges(row)"
+      mat-menu-item
+    >
+      <mat-icon svgIcon="mat:info"></mat-icon>
+      <span>Ver cambios</span>
+    </button>
+
+    @if (row["operationType"] !== TYPE_OPERATION_DELETE) {
+      <button
+        (click)="editPropertyUnit(row)"
+        mat-menu-item
+      >
+        <mat-icon svgIcon="mat:edit"></mat-icon>
+        <span>Editar</span>
+      </button>
+    }
+    <button
+      (click)="deletePropertyUnit(row)"
+      mat-menu-item
+    >
+      <mat-icon [svgIcon]="addRemoveIcon(row['operationType'])"></mat-icon>
+      <span>{{ addRemoveText(row["operationType"]) }}</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<app-loader
+  [isLoading]="isZonesAssigning()"
+  loaderTitle="Asignando zonas"
+  loaderMessage="Por favor espere mientras se asignan las zonas"
+></app-loader>

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   ServicesRatesComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastral/services-rates/services-rates.component';
+} from '@pages/configuration/cadastral/services-rates/services-rates.component';
 
 describe(ServicesRatesComponent.name, () => {
   let component: ServicesRatesComponent;

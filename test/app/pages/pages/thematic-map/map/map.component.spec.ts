@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MapComponent } from 'src/app/pages/pages/thematic-map/map/map.component';
+import { MapComponent } from '@pages
 
 
 describe(MapComponent.name, () => {

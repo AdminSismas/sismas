@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HeaderCadastralInformationPropertyComponent
-} from '../../../../../../src/app/apps/components/information-property/header-cadastral-information-property/header-cadastral-information-property.component';
+} from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 
 
 describe(HeaderCadastralInformationPropertyComponent.name, () => {

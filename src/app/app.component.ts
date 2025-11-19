@@ -1,9 +1,9 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TitleService } from './apps/services/general/tittle.service';
-import { SplashScreenService } from './apps/services/core/splash-screen.service';
-import { LoadingAppComponent } from './apps/components/general-components/loading-app/loading-app.component';
-import { LoadingServiceService } from './apps/services/general/loading-service.service';
+import { LoadingAppComponent } from '@shared/components/loading-app/loading-app.component';
+import { TitleService } from '@shared/services/general/tittle.service';
+import { SplashScreenService } from '@shared/services/core/splash-screen.service';
+import { LoadingServiceService } from '@shared/services/general/loading-service.service';
 
 @Component({
   selector: 'vex-root',

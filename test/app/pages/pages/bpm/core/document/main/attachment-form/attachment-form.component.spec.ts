@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   AttachmentFormComponent
-} from '../../../../../../../../../src/app/pages/pages/bpm/core/document/main/attachment-form/attachment-form.component';
+} from '@features/bpm-workflows/components/documents-main/attachment-form/attachment-form.component';
 
 describe(AttachmentFormComponent.name, () => {
   let component: AttachmentFormComponent;

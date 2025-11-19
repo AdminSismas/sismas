@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DocumentsAssociatedProceduresComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastralProcedures/documents-associated-procedures/documents-associated-procedures.component';
+} from '@pages/configuration/cadastral-procedures/documents-associated-procedures/documents-associated-procedures.component';
 
 describe(DocumentsAssociatedProceduresComponent.name, () => {
   let component: DocumentsAssociatedProceduresComponent;

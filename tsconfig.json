@@ -24,6 +24,33 @@
     "paths": {
       "@vex/*": [
         "./src/@vex/*"
+      ],
+      "@pages/*": [
+        "src/app/pages/*"
+      ],
+      "@features/*": [
+        "src/app/features/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@components/*": [
+        "src/app/shared/ui/components/*"
+      ],
+      "@services/*": [
+        "src/app/shared/services/*"
+      ],
+      "@models/*": [
+        "src/app/shared/models/*"
+      ],
+      "@pipes/*": [
+        "src/app/shared/pipes/*"
+      ],
+      "@environments/*":[
+        "src/environments/*"
       ]
     },
 

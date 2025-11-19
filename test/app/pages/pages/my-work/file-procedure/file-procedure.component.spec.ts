@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FileProcedureComponent
-} from '../../../../../../src/app/pages/pages/my-work/file-procedure/file-procedure.component';
+} from '@pages/my-work/file-procedure/file-procedure.component';
 
 describe(FileProcedureComponent.name, () => {
   let component: FileProcedureComponent;

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { TitleService } from 'src/app/apps/services/general/tittle.service';
+import { TitleService } from '@shared/services/general/tittle.service';
 
 
 describe(TitleService.name, () => {

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   TasksPanelComponent
-} from '../../../../../../../src/app/pages/pages/my-work/tasks/tasks-panel/tasks-panel.component';
+} from '@pages/my-work/tasks/tasks-panel.component';
 describe(TasksPanelComponent.name, () => {
   let component: TasksPanelComponent;
   let fixture: ComponentFixture<TasksPanelComponent>;

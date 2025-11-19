@@ -1,6 +1,6 @@
 
 import { TestBed } from '@angular/core/testing';
-import { PhotosService } from 'src/app/apps/services/photos/photos.service';
+import { PhotosService } from '@features/property-management/services/photos/photos.service';
 
 
 describe(PhotosService.name, () => {

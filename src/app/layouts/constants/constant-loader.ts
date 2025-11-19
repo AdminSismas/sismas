@@ -6,7 +6,7 @@ import {
   MODIFY_PEOPLE,
   NOT_USER_SERV_AND_USER_TRAM,
   TOP_ROLE_LIST
-} from 'src/app/apps/constants/general/constants';
+} from '@shared/constants/constants';
 import {
   NavigationDropdown,
   NavigationLink

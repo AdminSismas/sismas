@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   GeodatabaseComponent
-} from '../../../../../../../src/app/pages/pages/open-data/downloads/geodatabase/geodatabase.component';
+} from '@pages/open-data/downloads/geodatabase/geodatabase.component';
 
 describe(GeodatabaseComponent.name, () => {
   let component: GeodatabaseComponent;

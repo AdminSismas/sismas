@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { InformationPropertyService } from 'src/app/apps/services/territorial-organization/information-property.service';
+import {
+  InformationPropertyService
+} from '@features/property-management/services/property/information-property.service';
 
 
 describe(InformationPropertyService.name, () => {

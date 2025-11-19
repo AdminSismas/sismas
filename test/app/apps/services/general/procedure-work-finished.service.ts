@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  ProcedureWorkFinishedService
-} from '../../../../../src/app/apps/services/general/procedure-work-finished.service';
+import { ProcedureWorkFinishedService } from '@shared/services';
 
 
 describe(ProcedureWorkFinishedService.name, () => {

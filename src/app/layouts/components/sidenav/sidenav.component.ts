@@ -19,12 +19,12 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
-import { UserService } from 'src/app/pages/pages/auth/login/services/user.service';
-import { DecodeJwt } from 'src/app/apps/interfaces/user-details/user.model';
+import { UserService } from '@shared/services/auth/user.service';
+import { DecodeJwt } from '@features/configuration/interfaces/users/user-details.model';
 import { Router } from '@angular/router';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { STRING_INFORMATION_NOT_FOUND } from '../../../apps/constants/general/constants';
+import { STRING_INFORMATION_NOT_FOUND } from '@shared/constants/constants';
 import {
   FormBuilder,
   FormGroup,
@@ -33,7 +33,7 @@ import {
 } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { NavigationLoaderService } from 'src/app/core/navigation/navigation-loader.service';
-import type { UserRole } from 'src/app/apps/interfaces/user-details/user.model';
+import type { UserRole } from '@shared/models/user.model';
 
 @Component({
   selector: 'vex-sidenav',

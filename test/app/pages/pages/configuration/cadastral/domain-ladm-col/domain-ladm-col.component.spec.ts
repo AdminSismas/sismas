@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DomainLADMCOLComponent
-} from '../../../../../../../src/app/pages/pages/configuration/cadastral/domain-ladm-col/domain-ladm-col.component';
+} from '@pages/configuration/cadastral/domain-ladm-col/domain-ladm-col.component';
 
 
 describe(DomainLADMCOLComponent.name, () => {
