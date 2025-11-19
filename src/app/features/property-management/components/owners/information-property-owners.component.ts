@@ -5,11 +5,10 @@ import {
   computed,
   forwardRef,
   inject,
-  Input,
   OnInit,
   output,
   signal,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatCardModule } from '@angular/material/card';
@@ -24,7 +23,6 @@ import {
 } from '@shared/constants/constants';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { environment } from '@environments/environments';
 import {
   InformationPropertyService
 } from '@features/property-management/services/property/information-property.service';
@@ -105,13 +103,12 @@ import { input } from '@angular/core';
 export class InformationPropertyOwnersComponent
   implements OnInit, AfterViewInit
 {
-  @Input({ required: true }) schema = `${environment.schemas.main}`;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
-  @Input() editable? = true;
-
-  // Input signal
+  /* ---- Inputs ---- */
+  readonly schema = input.required<string>();
+  readonly baunitId = input.required<string | null | undefined>();
+  readonly executionId = input<string | null | undefined>(null);
+  readonly typeInformation = input<TypeInformation>(TYPE_INFORMATION_EDITION);
+  readonly editable = input<boolean | undefined>(true);
   expandedComponent = input.required<boolean>();
   showEditPerson = input(false, {
     transform: (value: boolean | string) => {
@@ -128,10 +125,10 @@ export class InformationPropertyOwnersComponent
   protected readonly TABLE_COLUMNS: TableColumn<InfoOwnerRowT>[] =
     TABLE_COLUMNS;
 
-  @ViewChild(MatPaginator, { static: true }) paginator?: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort?: MatSort;
-  @ViewChild('confirmDialog', { static: true }) confirmDialog!: SwalComponent;
-  @ViewChild('successEdit', { static: true }) successEdit!: SwalComponent;
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild(MatSort);
+  readonly confirmDialog = viewChild.required<SwalComponent>('confirmDialog');
+  readonly successEdit = viewChild.required<SwalComponent>('successEdit');
 
   fractions_sum = 0;
   fractions_decimals: number = FRACTION_DECIMALS;
@@ -181,13 +178,13 @@ export class InformationPropertyOwnersComponent
   ) {}
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator || null;
-    this.dataSource.sort = this.sort || null;
+    this.dataSource.paginator = this.paginator() || null;
+    this.dataSource.sort = this.sort() || null;
   }
 
   ngOnInit(): void {
     this.TABLE_COLUMNS.at(-1)!.visible =
-      this.typeInformation === 'edition' && this.editable;
+      this.typeInformation() === 'edition' && this.editable();
   }
 
   isExpandPanel(): void {
@@ -200,15 +197,17 @@ export class InformationPropertyOwnersComponent
    * @returns
    */
   async loadInformationPropertyOwners(): Promise<void> {
-    if (!this.schema || !this.baunitId) {
+    const schema = this.schema();
+    const baunitId = this.baunitId();
+    if (!schema || !baunitId) {
       return;
     }
     try {
       const infoOwners: InfoOwners[] = await lastValueFrom(
         this.informationPropertyService.getInformationPropertyOwners(
-          this.schema,
-          this.baunitId,
-          this.executionId
+          schema,
+          baunitId,
+          this.executionId()
         )
       );
       this.totalElements = infoOwners.length;
@@ -246,9 +245,9 @@ export class InformationPropertyOwnersComponent
         ...MODAL_MEDIUM,
         data: {
           ownersData: data.data,
-          baunitId: this.baunitId,
-          schema: this.schema,
-          executionId: this.executionId
+          baunitId: this.baunitId(),
+          schema: this.schema(),
+          executionId: this.executionId()
         }
       })
       .afterClosed()
@@ -260,11 +259,11 @@ export class InformationPropertyOwnersComponent
   onClickActionBtn(id: string, infoOwner: InfoOwners) {
     this.rightIdSelected = infoOwner.rightId;
     if (id === 'delete') {
-      this.confirmDialog.fire().then((result) => {
+      this.confirmDialog().fire().then((result) => {
         if (result.isConfirmed) {
           const parameters: DeleteParamsRrright = {
-            executionId: this.executionId!,
-            baunitId: this.baunitId!,
+            executionId: this.executionId()!,
+            baunitId: this.baunitId()!,
             rightId: this.rightIdSelected!
           };
 
@@ -281,9 +280,9 @@ export class InformationPropertyOwnersComponent
           data: {
             fractions_sum: fractions_sum.minus(infoOwner.fractionS!).toNumber(),
             rightId: this.rightIdSelected,
-            executionId: this.executionId,
-            baunitId: this.baunitId,
-            schema: this.schema,
+            executionId: this.executionId(),
+            baunitId: this.baunitId(),
+            schema: this.schema(),
             rrrightInfo: {
               fraction: infoOwner.fractionS,
               beginAt: infoOwner.beginAt,
@@ -296,7 +295,7 @@ export class InformationPropertyOwnersComponent
         .afterClosed()
         .subscribe((response: boolean) => {
           if (response) {
-            this.successEdit.fire();
+            this.successEdit().fire();
             setTimeout(() => this.loadInformationPropertyOwners(), 200);
           }
         });
