@@ -101,6 +101,7 @@
     "angular-eslint": "19.0.2",
     "autoprefixer": "^10.4.0",
     "babel-jest": "^29.7.0",
+    "baseline-browser-mapping": "^2.8.27",
     "big.js": "^6.2.2",
     "chroma-js": "^2.4.2",
     "eslint": "^9.16.0",

@@ -18,10 +18,30 @@ export interface ReportType {
 })
 export class ReportManagerService {
   private baseCategories: ReportType[] = [
-    { id: 1, name: 'Procesos Activos', outputFormat: 'XLSX', urlEnd: 'PROCESOS_ACTIVOS' },
-    { id: 2, name: 'Procesos Finalizados', outputFormat: 'XLSX', urlEnd: 'PROCESOS_FINALIZADOS' },
-    // { id: 3, name: 'Actualización urbana', outputFormat: 'XLSX', urlEnd: 'ACTUALIZACION_URBANA' },
-    // { id: 4, name: 'Actualización rural', outputFormat: 'XLSX', urlEnd: 'ACTUALIZACION_RURAL' },
+    {
+      id: 1,
+      name: 'Procesos Activos',
+      outputFormat: 'XLSX',
+      urlEnd: 'PROCESOS_ACTIVOS'
+    },
+    {
+      id: 2,
+      name: 'Procesos Finalizados',
+      outputFormat: 'XLSX',
+      urlEnd: 'PROCESOS_FINALIZADOS'
+    },
+    {
+      id: 3,
+      name: 'Actualización urbana',
+      outputFormat: 'XLSX',
+      urlEnd: 'ACTUALIZACION_URBANA'
+    },
+    {
+      id: 4,
+      name: 'Actualización rural',
+      outputFormat: 'XLSX',
+      urlEnd: 'ACTUALIZACION_RURAL'
+    }
   ];
 
   private reports: DownloadReport[] = [
@@ -57,11 +77,11 @@ export class ReportManagerService {
 
   getCategories(municipalities: string[]): Observable<ReportType[]> {
     const categories: ReportType[] = municipalities.flatMap((municipality) => {
-        return this.baseCategories.map((category) => ({
-          ...category,
-          municipality: municipality
-        }));
-      });
+      return this.baseCategories.map((category) => ({
+        ...category,
+        municipality: municipality
+      }));
+    });
 
     return of(categories);
   }
@@ -81,7 +101,11 @@ export class ReportManagerService {
     });
   }
 
-  getUpdateReport(municipality: string, department: string, zoneType: 'rural' | 'urbano') {
+  getUpdateReport(
+    municipality: string,
+    department: string,
+    zoneType: 'rural' | 'urbano'
+  ) {
     const { export: exportPath, actualizacionesMultiples } = envi;
     const url = `${this.base_url}${exportPath}${actualizacionesMultiples}/${department}${municipality}/${zoneType}`;
 
