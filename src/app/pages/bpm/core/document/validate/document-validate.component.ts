@@ -50,9 +50,10 @@ import {
   PAGE_SIZE_OPTION
 } from '@shared/constants/constants';
 import { AttachmentService } from '@shared/services/documents/attachment.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
-  selector: 'vex-documents-table',
+  selector: 'documents-validate',
   standalone: true,
   host: {
     class: '-mt-2 px-5'
@@ -110,6 +111,9 @@ export class DocumentValidateComponent implements AfterViewInit, OnInit {
   public readonly pageSizeOptions: number[] = PAGE_SIZE_OPTION;
   public readonly columns: TableColumn<contentInfoAttachment>[] =
     TABLE_COLUMN_ATTACHMENT_DOCUMENT_VALIDATE;
+
+  /* ---- Selection ---- */
+  public readonly selection = new SelectionModel<AttachmentCollection>(true);
 
   /* ---- View Child ---- */
   public readonly paginator? = viewChild.required(MatPaginator);
@@ -320,5 +324,23 @@ export class DocumentValidateComponent implements AfterViewInit, OnInit {
   // Función para obtener la extensión del archivo
   getFileExtension(fileName: string): string {
     return fileName.split('.').pop()?.toLowerCase() || '';
+  }
+
+  toggleSelectAll(checked: boolean): void {
+    if (checked) {
+      this.selection.select(...this.dataSource().data);
+    } else {
+      this.selection.clear();
+    }
+  }
+
+  toggleSelection(row: AttachmentCollection): void {
+    this.selection.toggle(row);
+  }
+
+  isAllSelected(): boolean {
+    const selected = this.selection.selected;
+    const total = this.dataSource().data.length;
+    return selected.length === total;
   }
 }
