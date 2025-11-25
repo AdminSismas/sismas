@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { IcaDetails } from '@shared/interfaces/property-management/ica/ica-details';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
+import { IcaDetails } from '@features/property-management/models/ica';
 import { DatePipe } from '@angular/common';
 import { NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 
 enum IcaDetailLabel {
-  accion = 'Acción',
   ciudadCamara = 'Ciudad Camara',
   direccionResidencia = 'Dirección Residencia',
   domActividadPrincipal = 'Actividad Principal',
@@ -25,7 +25,6 @@ enum IcaDetailLabel {
   nombresPersona = 'Nombre(s) de la Persona',
   apellidosPersona = 'Apellido(s) de la Persona',
   notificacionElectronica = 'Notificación Electrónica',
-  prediador = 'Prediador',
   regimenTributario = 'Régimen Tributario',
   telefono = 'Teléfono'
 }
@@ -63,7 +62,6 @@ export class IcaDetailsComponent {
     'estadoRegistroMercantil',
     'ciudadCamara',
     'matricula',
-    'prediador',
     'direccionResidencia',
     'domicilioNotificacion'
   ];

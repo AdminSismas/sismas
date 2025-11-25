@@ -15,7 +15,7 @@ import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms
   SEARCH_INPUTS
 } from '@shared/constants/users.constants';
 import { JSONInput } from '@shared/interfaces/forms';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import {
   User,
   CreateUserParams

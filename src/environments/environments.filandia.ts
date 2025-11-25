@@ -58,10 +58,11 @@ export const environment = {
   bpm_individual_exists: "/exists/individual/",
   bpm_username_exists: "/exists/username/",
   bpmAttachment: {
+    baunit: "/baunit",
     count: "/count",
     proExecution: "proExecution/",
     proExecutionFile: "proExecutionFile",
-    value: "/bpmAttachment/",
+    value: "/bpmAttachment",
     xtf: "xtf"
   },
   bpmGroup: {

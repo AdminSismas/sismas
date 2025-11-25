@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 // recursos de angular material
@@ -35,11 +41,16 @@ import { DatePipe } from '@angular/common';
 export class ViewFileDocumentManagementComponent implements OnInit {
   /* ---- Injects ---- */
   private readonly sanitizer = inject(DomSanitizer);
-  private readonly dialogRef = inject(MatDialogRef<ViewFileDocumentManagementComponent>);
-  private readonly data = inject<{ metaData: contentInfoAttachment; executionId: string }>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(
+    MatDialogRef<ViewFileDocumentManagementComponent>
+  );
+  private readonly data = inject<{
+    metaData: contentInfoAttachment;
+    executionId: string;
+  }>(MAT_DIALOG_DATA);
 
   /* ---- Properties ---- */
-  private readonly basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
+  private readonly basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}/`;
   public readonly properties = MODEL_METADATA_PROPERTIES;
   private originalFileName = this.data.metaData.originalFileName;
 
@@ -147,7 +158,7 @@ export class ViewFileDocumentManagementComponent implements OnInit {
   }
 
   switchViewDocMetaData(): void {
-    this.showMetadataView.update(value => !value);
+    this.showMetadataView.update((value) => !value);
     if (this.showMetadataView()) {
       this.dialogRef.updateSize('98%', 'auto');
       this.dialogRef.updatePosition({ top: '5%' });

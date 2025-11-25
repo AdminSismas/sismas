@@ -1,0 +1,33 @@
+export interface IcaResponse {
+  baunitId: string;
+  cadastralNumber: string;
+  ciudadCamara: string;
+  departamento: string;
+  direccionResidencia: string;
+  documentoIdentidad: string;
+  domActividadPrincipal: string;
+  domActividadSecundaria: string;
+  domicilioNotificacion: string;
+  domIndividualType: string;
+  domIndividualTypeNumber: string;
+  email: string;
+  escritura: string;
+  estadoRegistroMercantil: string;
+  fechaEdicion: Date;
+  fechaInicioActividades: Date;
+  fechaMatricula: Date;
+  granContribuyente: boolean;
+  inscritoCc: boolean;
+  matricula: string;
+  municipio: string;
+  nombreEstablecimiento: string;
+  notificacionElectronica: boolean;
+  npnFormat: string;
+  prIcaId: number;
+  primerApellido: string;
+  primerNombre: string;
+  regimenTributario: string;
+  segundoApellido: string;
+  segundoNombre: string;
+  telefono: string;
+}

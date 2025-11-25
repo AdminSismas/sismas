@@ -362,6 +362,7 @@
             "test": {
               "buildTarget": "geoGestion:build:test"
             }
+
           }
         },
         "extract-i18n": {

@@ -12,9 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProcessParticipant } from '@features/bpm-workflows/models/process-participant';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MODAL_SMALL_LARGE, NAME_NO_DISPONIBLE } from '@shared/constants/constants';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { PeopleService } from '@features/property-management/services/property/people.service';
-import { InfoContact } from '@features/property-management/models/info-contact';
+import { InfoContact } from '@features/property-management/models/owner/info-contact';
 import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';
 
 @Component({

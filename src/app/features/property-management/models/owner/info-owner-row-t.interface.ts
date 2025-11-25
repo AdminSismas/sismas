@@ -1,5 +1,5 @@
 import { InfoOwners } from '@shared/models';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 
 export type InfoOwnerRowT = Pick<
   InfoOwners,

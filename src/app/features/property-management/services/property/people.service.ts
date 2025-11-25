@@ -9,11 +9,11 @@ import {
 import { environment as envi } from '@environments/environments';
 import { Observable, throwError } from 'rxjs';
 import { InformationPegeable } from '@shared/models/pageable';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 
 // import { InfoContact } from '@features/property-management/models/info-contact';
 import { People } from '@features/configuration/interfaces/users/people.model';
-import { InfoContact } from '@features/property-management/models/info-contact';
+import { InfoContact } from '@features/property-management/models/owner/info-contact';
 
 @Injectable({
   providedIn: 'root'

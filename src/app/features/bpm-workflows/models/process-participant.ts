@@ -1,4 +1,4 @@
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { GovernmentalChannel } from '@features/bpm-workflows/models/governmental-channel';
 import { ProcessParticipantTableMenu } from '@features/bpm-workflows/models/citation-and-notice/info-participants.interface';
 

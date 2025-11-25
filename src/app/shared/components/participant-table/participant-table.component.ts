@@ -44,7 +44,7 @@ import {
   TABLE_COLUMN_PRINCIPANTS_TABLE
 } from '@shared/constants/constants';
 import { Observable, ReplaySubject } from 'rxjs';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import { MatDialog } from '@angular/material/dialog';

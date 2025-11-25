@@ -35,7 +35,7 @@ import { PeopleService } from '@features/property-management/services/property/p
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RrrightService } from '@features/bpm-workflows/services/core/rrright.service';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';

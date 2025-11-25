@@ -46,9 +46,9 @@ import { UserService } from '@shared/services/auth/user.service';
 import { DecodeJwt } from '@features/configuration/interfaces/users/user-details.model';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
-import { InfoContact } from '@features/property-management/models/info-contact';
+import { InfoContact } from '@features/property-management/models/owner/info-contact';
 import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 
 @Component({
   selector: 'vex-people',

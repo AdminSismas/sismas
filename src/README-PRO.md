@@ -8,11 +8,11 @@
 # Introduction
 
 Sistema catastral llamado GeoGestion actualmente está creado con el framework angular 17+ y con el template siguiente:
-https://vex.visurel.com/ui/components/overview, obtenido de la siguiente Url: https://themeforest.net/item/daxa-material-design-angular-admin-dashboard-template/50912112
+<https://vex.visurel.com/ui/components/overview>, obtenido de la siguiente Url: <https://themeforest.net/item/daxa-material-design-angular-admin-dashboard-template/50912112>
 
 # Getting Started
 
-> Actualmente, el código del sistema se encuentra en el repositorio https://github.com/agency-cic/GeoGestion.git, el cual es privado y para poder trabajar sobre este mismo
+> Actualmente, el código del sistema se encuentra en el repositorio <https://github.com/agency-cic/GeoGestion.git>, el cual es privado y para poder trabajar sobre este mismo
 > se debe solicitar permisos.
 >
 > En el momento de descarga del proyecto, se debe ejecutar el siguiente comando `npm install` dicho comando se encargará de instalar los paquetes necesarios para poder
@@ -595,5 +595,5 @@ Se agrega algunos ejemplos de búsqueda:
 | ------------------------------------------------------------------------: | --------------------------------------------- |
 |                                                               `matricula` | 420-116966                                    |
 |                                              `tipo documento / documento` | NIT / 860003293                               |
-| `nombre / otros nombres / apellidos / otros apellidos / nombre compañía ` | JORGE / ENRIQUE / HINCAPIE / SALAZAR / MUNICI |
+| `nombre / otros nombres / apellidos / otros apellidos / nombre compañía` | JORGE / ENRIQUE / HINCAPIE / SALAZAR / MUNICI |
 |                                                          `direccionTexto` | C 37 1 509 ESTE Ap 102 To A                   |

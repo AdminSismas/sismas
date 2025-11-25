@@ -1,5 +1,5 @@
 import { TypeOperationPeople } from '@shared/interfaces';
-import { InfoContact } from '@features/property-management/models/info-contact';
+import { InfoContact } from '@features/property-management/models/owner/info-contact';
 
 export class InfoPerson {
   companyName: string | null;

@@ -53,7 +53,7 @@ import {
   CreatePeopleComponent
 } from '@features/operation-support/components/people/create-people/create-people.component';
 import { FluidMinHeightDirective } from '@shared/directives/fluid-min-height.directive';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { InformationPersonService } from '@features/bpm-workflows/services/core/information-person.service';
 import {
   MODAL_SMALL_LARGE,

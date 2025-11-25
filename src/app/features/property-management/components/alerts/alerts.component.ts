@@ -27,7 +27,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { TypeInformation } from '@shared/interfaces';
 import { DetailAlertsComponent } from './detail-alerts/detail-alerts.component';

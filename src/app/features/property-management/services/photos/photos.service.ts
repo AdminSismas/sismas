@@ -13,9 +13,12 @@ export interface Photo {
 })
 export class PhotosService {
   private http = inject(HttpClient);
-  private base_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}${envi.baunit}/`;
+  private base_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}/${envi.baunit}/`;
 
-  listNamePhotos(baunitId: string, municipioId: string): Observable<{ url: string, name: string }[]> {
+  listNamePhotos(
+    baunitId: string,
+    municipioId: string
+  ): Observable<{ url: string; name: string }[]> {
     const url = `${this.base_url}${baunitId}${envi.photos}`;
     const params = new HttpParams().set('municipioId', municipioId);
 

@@ -9,13 +9,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AttachmentService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
-  delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}/`;
+  delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}/`;
 
   /* -------------- CONSTRUCTOR -------------- */
-  constructor(
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByAttachment(
@@ -48,7 +46,7 @@ export class AttachmentService {
     const url = `${this.basic_url}${environment.bpmAttachment.proExecutionFile}`;
 
     const headers = new HttpHeaders({
-      'enctype': 'multipart/form-data'
+      enctype: 'multipart/form-data'
     });
 
     return this.http.post<AttachmentCollection[]>(url, formData, {

@@ -11,7 +11,7 @@ import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms
 import { FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { CreatePersonService } from '../../../services/people/create-person.service';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 
 @Component({
   selector: 'create-person-form',

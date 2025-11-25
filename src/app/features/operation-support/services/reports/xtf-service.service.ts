@@ -10,13 +10,12 @@ export interface XtfFiles {
   type: '.XTF' | '.ZIP';
 }
 
-const baseUrl = `${envi.url}:${envi.port}${envi.bpmAttachment.value}`;
+const baseUrl = `${envi.url}:${envi.port}${envi.bpmAttachment.value}/`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class XtfServiceService {
-
   http = inject(HttpClient);
 
   userService = inject(UserService);
@@ -38,6 +37,6 @@ export class XtfServiceService {
 
   downloadXtfFile(fileName: string): Observable<Blob> {
     const url = `${baseUrl}${envi.bpmAttachment.xtf}/${fileName}`;
-    return this.http.get(url, { responseType: 'blob'});
+    return this.http.get(url, { responseType: 'blob' });
   }
 }
