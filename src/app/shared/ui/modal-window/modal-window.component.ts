@@ -19,10 +19,10 @@ export interface ModalResponse<T> {
   templateUrl: './modal-window.component.html'
 })
 export class ModalWindowComponent implements AfterViewInit {
-  // INJECTS
+  /* ---- INJECTS ---- */
   dialogRef = inject(MatDialogRef<ModalWindowComponent>);
 
-  // INPUTS
+  /* ---- INPUTS ---- */
   title = input<string>('Título ventana modal');
   actions = input(false, {
     transform: (value: boolean | string) => {
@@ -46,10 +46,11 @@ export class ModalWindowComponent implements AfterViewInit {
   });
   data = input<unknown | null>(null);
 
-  // OUTPUTS
+  /* ---- OUTPUTS ---- */
   dialog = output<MatDialogRef<ModalWindowComponent>>();
   accept = output<void>();
 
+  /* ---- Methods ---- */
   ngAfterViewInit(): void {
     this.dialog.emit(this.dialogRef);
   }

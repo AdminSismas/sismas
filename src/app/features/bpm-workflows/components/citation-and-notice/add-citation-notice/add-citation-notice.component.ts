@@ -37,7 +37,7 @@ import { ParticipantsService } from '@features/bpm-workflows/services/core/parti
 import Swal from 'sweetalert2';
 import { ProcessParticipantTableMenu } from '@features/bpm-workflows/models/citation-and-notice/info-participants.interface';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { InfoContact } from '@features/property-management/models/info-contact';
+import { InfoContact } from '@features/property-management/models/owner/info-contact';
 import { PeopleService } from '@features/property-management/services/property/people.service';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';

@@ -12,7 +12,7 @@ import {
 import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { CREATE_CONTACT_FORM } from '../../../constants/people';
 import { FormGroup } from '@angular/forms';
 import { TerritorialOrganizationService } from '@shared/services/general/territorial-organization/territorial-organization.service';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { CreatePersonService } from '../../../services/people/create-person.service';
 import { map, Subscription } from 'rxjs';
 import Swal from 'sweetalert2';

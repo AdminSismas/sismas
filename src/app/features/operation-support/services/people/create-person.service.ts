@@ -4,12 +4,12 @@ import {
   CREATE_CONTACT_FORM,
   SEARCH_PERSON_FORM
 } from '@features/operation-support/constants/people';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment as envi } from '@environments/environments';
 import { HttpClient } from '@angular/common/http';
-import { InfoContact } from '@features/property-management/models/info-contact';
+import { InfoContact } from '@features/property-management/models/owner/info-contact';
 
 @Injectable({
   providedIn: 'root'

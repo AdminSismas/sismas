@@ -40,6 +40,7 @@ La Fase 1 consistió en migrar completamente el dominio BPM (Business Process Ma
 **Método**: `git mv` para preservar historial
 
 **Modelos migrados**:
+
 ```
 ✅ bpm-document.ts
 ✅ bpm-type-process.ts
@@ -71,6 +72,7 @@ La Fase 1 consistió en migrar completamente el dominio BPM (Business Process Ma
 **Barrel Export Creado**: `src/app/features/bpm-workflows/models/index.ts`
 
 **Resolución de Conflictos**:
+
 - `GrantedAuthority`: Exportación explícita para evitar conflicto de nombres
 - `ProcessModel`: Exportación explícita desde múltiples archivos
 - `ProcessUser`: Exportación de tipo para evitar conflicto
@@ -87,9 +89,10 @@ La Fase 1 consistió en migrar completamente el dominio BPM (Business Process Ma
 **Destino**: `src/app/features/bpm-workflows/services/`
 **Método**: `git mv` + modernización
 
-#### Servicios Migrados y Modernizados:
+#### Servicios Migrados y Modernizados
 
 **Servicios Core**:
+
 ```typescript
 ✅ bpm-core.service.ts
    - Reemplazado: constructor(private http: HttpClient)
@@ -110,6 +113,7 @@ La Fase 1 consistió en migrar completamente el dominio BPM (Business Process Ma
 ```
 
 **Servicios de Alfa Main**:
+
 ```typescript
 ✅ alfa-main.service.ts
    - BehaviorSubject<boolean> → signal<boolean>
@@ -122,6 +126,7 @@ La Fase 1 consistió en migrar completamente el dominio BPM (Business Process Ma
 ```
 
 **Servicios de Participantes y Procesos**:
+
 ```typescript
 ✅ participants-process.service.ts
 ✅ participants-service.service.ts
@@ -134,6 +139,7 @@ La Fase 1 consistió en migrar completamente el dominio BPM (Business Process Ma
 ```
 
 **Otros Servicios**:
+
 ```typescript
 ✅ bpm-process.service.ts
    - BehaviorSubject<PermissionVailable> → signal<PermissionVailable>
@@ -155,6 +161,7 @@ La Fase 1 consistió en migrar completamente el dominio BPM (Business Process Ma
 Creado: `scripts/modernize-bpm-services.js`
 
 **Patrones aplicados automáticamente**:
+
 ```javascript
 1. Agregar import de inject y signal donde faltaba
 2. constructor(private http: HttpClient) {} → private http = inject(HttpClient);
@@ -170,6 +177,7 @@ Creado: `scripts/modernize-bpm-services.js`
 **Actualización de Imports**: Script `scripts/update-bpm-service-imports.js` actualizó 28 archivos
 
 **Commits**:
+
 - `dc025a8e` - "refactor(bpm): Migrate and modernize BPM services to Angular 18+"
 - `32a2bfab` - "fix: Corrección de algunos componentes, servicios, modelos e interfaces de BPM"
 
@@ -181,9 +189,10 @@ Creado: `scripts/modernize-bpm-services.js`
 **Destino**: `src/app/features/bpm-workflows/components/`
 **Método**: `git mv` preservando estructura de carpetas
 
-#### Componentes Migrados (con subcarpetas):
+#### Componentes Migrados (con subcarpetas)
 
 **Grupo Alfa Main** (5 componentes):
+
 ```
 ✅ alfa-main/
    ├── alfa-main-information/
@@ -199,6 +208,7 @@ Creado: `scripts/modernize-bpm-services.js`
 ```
 
 **Componentes de Gestión de Datos**:
+
 ```
 ✅ clear-information-data/
    └── clear-information-data.component.*
@@ -211,6 +221,7 @@ Creado: `scripts/modernize-bpm-services.js`
 ```
 
 **Componentes de UI/Visualización**:
+
 ```
 ✅ header-bpm-core/
    └── header-bpm-core.component.*
@@ -223,6 +234,7 @@ Creado: `scripts/modernize-bpm-services.js`
 ```
 
 **Componentes de Propiedad**:
+
 ```
 ✅ modification-property-units/
    ├── modification-property-units.component.*
@@ -231,6 +243,7 @@ Creado: `scripts/modernize-bpm-services.js`
 ```
 
 **Componentes de Tablas**:
+
 ```
 ✅ table-alfa-main/
    ├── table-alfa-main.component.*
@@ -239,6 +252,7 @@ Creado: `scripts/modernize-bpm-services.js`
 ```
 
 **Componentes de Cambios**:
+
 ```
 ✅ view-change-alpha-main-record/
    └── view-change-alpha-main-record.component.*
@@ -259,10 +273,12 @@ Creado: `scripts/modernize-bpm-services.js`
 ### 4. Corrección de Typos BPM (bmp → bpm)
 
 Durante la migración se descubrió una inconsistencia histórica:
+
 - Directorio creado: `bmp-workflows` (typo)
 - Directorio correcto: `bpm-workflows`
 
 **Acciones tomadas**:
+
 ```bash
 ✅ Movido contenido de bmp-workflows/ a bpm-workflows/
 ✅ Renombrados archivos:
@@ -296,6 +312,7 @@ export * from './attachment.constant';
 ### 6. Limpieza Final
 
 **Archivos duplicados eliminados**:
+
 ```bash
 ✅ src/app/apps/components/bpm/clear-information-data/* (duplicado)
 ✅ src/app/apps/services/bpm/bpm-core.service.ts (duplicado)
@@ -304,6 +321,7 @@ export * from './attachment.constant';
 ```
 
 **Directorios eliminados**:
+
 ```bash
 ✅ src/app/apps/components/bpm/ (completo con subdirectorios)
 ✅ src/app/apps/services/bpm/ (completo)
@@ -497,16 +515,19 @@ Leyenda: ✨ = Servicio modernizado con inject() y signal()
 ### Problema 1: Conflictos de Nombres en Barrel Exports
 
 **Descripción**: Al crear el barrel export de modelos, varios archivos exportaban tipos con el mismo nombre:
+
 - `GrantedAuthority` aparecía en múltiples archivos
 - `ProcessModel` aparecía en múltiples archivos
 
 **Error**:
+
 ```
 TS2308: Module './granted-authority' has already exported a member named 'GrantedAuthority'
 TS2308: Module './table-procedure-response.model' has already exported a member named 'ProcessModel'
 ```
 
 **Solución**:
+
 ```typescript
 // En lugar de export *
 export * from './granted-authority';
@@ -523,12 +544,14 @@ export { TaskResponseModel, ProcessModel } from './task-response.model';
 ### Problema 2: Typo Histórico (bmp vs bpm)
 
 **Descripción**: Se descubrió que existían dos directorios similares:
+
 - `src/app/features/bmp-workflows/` (typo)
 - `src/app/features/bpm-workflows/` (correcto)
 
 **Impacto**: Confusión en imports y archivos duplicados
 
 **Solución**:
+
 1. Consolidar todo en `bpm-workflows/`
 2. Renombrar archivos: `bmp-*.service.ts` → `bpm-*.service.ts`
 3. Actualizar imports en 10 archivos
@@ -544,6 +567,7 @@ export { TaskResponseModel, ProcessModel } from './task-response.model';
 ### Problema 3: Imports de Environments con Rutas Inconsistentes
 
 **Descripción**: Los servicios tenían diferentes formas de importar environments:
+
 ```typescript
 // Variaciones encontradas:
 from '@environments/environments'
@@ -552,6 +576,7 @@ from 'src/environments/environments'
 ```
 
 **Solución**:
+
 ```bash
 # Estandarizar a ruta absoluta
 for file in src/app/features/bpm-workflows/services/*.ts; do
@@ -566,12 +591,14 @@ done
 ### Problema 4: Permission Denied en Git Mv de Directorios
 
 **Descripción**: Al intentar mover directorio completo con git mv:
+
 ```bash
 git mv src/app/apps/components/bpm/ src/app/features/bpm-workflows/components/
 # Error: Permission denied
 ```
 
 **Solución**: Mover archivos individuales en lugar de directorios completos:
+
 ```bash
 git mv src/app/apps/components/bpm/comments/*.* src/app/features/bpm-workflows/components/comments/
 ```
@@ -585,6 +612,7 @@ git mv src/app/apps/components/bpm/comments/*.* src/app/features/bpm-workflows/c
 **Descripción**: Algunos servicios modernizados automáticamente tenían imports faltantes
 
 **Ejemplo**:
+
 ```typescript
 // Script agregó uso de inject() pero faltaba el import
 private http = inject(HttpClient);
@@ -592,6 +620,7 @@ private http = inject(HttpClient);
 ```
 
 **Solución**:
+
 ```typescript
 // Agregar imports manualmente después del script
 import { Injectable, inject } from '@angular/core';
@@ -608,6 +637,7 @@ import { Injectable, inject } from '@angular/core';
 **Aprendizaje**: Crear scripts para tareas repetitivas ahorra tiempo y reduce errores
 
 **Ejemplos exitosos**:
+
 - `modernize-bpm-services.js`: Modernizó 10 servicios automáticamente
 - `update-bpm-service-imports.js`: Actualizó 28 archivos de imports
 
@@ -620,6 +650,7 @@ import { Injectable, inject } from '@angular/core';
 **Aprendizaje**: Usar `git mv` en lugar de copiar/eliminar mantiene el historial de Git
 
 **Beneficio**:
+
 ```bash
 # Ver historial completo de un archivo movido
 git log --follow src/app/features/bpm-workflows/services/bpm-core.service.ts
@@ -633,6 +664,7 @@ git log --follow src/app/features/bpm-workflows/services/bpm-core.service.ts
 **Aprendizaje**: Hacer dos pasadas (mover + modernizar después) duplica trabajo
 
 **Estrategia aplicada**:
+
 1. Mover archivo con git mv
 2. Inmediatamente modernizar (inject, signals)
 3. Commit
@@ -647,6 +679,7 @@ git log --follow src/app/features/bpm-workflows/services/bpm-core.service.ts
 **Aprendizaje**: Ejecutar `pnpm build` después de cada grupo de cambios
 
 **Beneficios**:
+
 - Detectar errores inmediatamente
 - Identificar el cambio específico que causó el error
 - No acumular múltiples problemas
@@ -660,6 +693,7 @@ git log --follow src/app/features/bpm-workflows/services/bpm-core.service.ts
 **Aprendizaje**: Crear barrel exports para componentes/servicios dificulta tree-shaking
 
 **Decisión tomada**:
+
 ```typescript
 // ✅ CORRECTO: Barrel export para modelos
 src/app/features/bpm-workflows/models/index.ts
@@ -678,6 +712,7 @@ import { BpmCoreService } from '@features/bpm-workflows/services/bpm-core.servic
 **Aprendizaje**: No todos los Observables deben convertirse a signals
 
 **Patrón correcto**:
+
 ```typescript
 // ❌ NO convertir: HTTP requests son streams de un solo valor
 this.http.get<T>(url) // Mantener como Observable
@@ -689,6 +724,7 @@ private dataSignal = signal<T>()
 ```
 
 **Uso de toObservable()**:
+
 ```typescript
 // Para componentes que aún usan .subscribe()
 private stateSignal = signal<T>();
@@ -702,6 +738,7 @@ state$ = toObservable(this.stateSignal); // Mantener API compatible
 **Aprendizaje**: Mensajes de commit detallados ayudan a entender decisiones
 
 **Formato aplicado**:
+
 ```bash
 refactor(scope): Brief description
 

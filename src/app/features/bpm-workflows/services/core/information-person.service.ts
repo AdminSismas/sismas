@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpParams, HttpStatusCode, HttpClient } from '@angu
 import { catchError, Observable, throwError } from 'rxjs';
 
 import { environment as envi } from '@environments/environments';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 
 @Injectable({
   providedIn: 'root'

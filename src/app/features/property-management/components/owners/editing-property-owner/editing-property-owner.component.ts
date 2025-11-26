@@ -31,7 +31,7 @@ import { RrrightService } from '@features/bpm-workflows/services/core/rrright.se
 import { ComboboxCollectionComponent } from '@shared/utils/combobox-collection/combobox-collection.component';
 import { DialogsData } from '@features/property-management/models/changes-property-owner';
 import { PeopleService } from '@features/property-management/services/property/people.service';
-import { InfoPerson } from '@features/property-management/models/info-person';
+import { InfoPerson } from '@features/property-management/models/owner/info-person';
 import { MatDividerModule } from '@angular/material/divider';
 import Swal from 'sweetalert2';
 import {

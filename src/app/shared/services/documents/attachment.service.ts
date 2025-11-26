@@ -9,13 +9,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AttachmentService {
   /* -------------- ATRIBUTOS -------------- */
-  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
-  delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}`;
+  basic_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}/`;
+  delete_url = `${environment.url}:${environment.port}${environment.bpmAttachment.value}/`;
 
   /* -------------- CONSTRUCTOR -------------- */
-  constructor(
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   /* -------------- MÉTODOS -------------- */
   getDataPropertyByAttachment(
@@ -34,7 +32,9 @@ export class AttachmentService {
     attachmentId: string,
     originalFileName: string
   ): Observable<AttachmentCollection[]> {
-    const url = `${this.delete_url}${executionId}/${attachmentId}/${originalFileName}`;
+    const encodedOriginalFileName = encodeURI(originalFileName);
+
+    const url = `${this.delete_url}${executionId}/${attachmentId}/${encodedOriginalFileName}`;
 
     return this.http.delete<AttachmentCollection[]>(url).pipe(
       catchError((error) => {
@@ -48,7 +48,7 @@ export class AttachmentService {
     const url = `${this.basic_url}${environment.bpmAttachment.proExecutionFile}`;
 
     const headers = new HttpHeaders({
-      'enctype': 'multipart/form-data'
+      enctype: 'multipart/form-data'
     });
 
     return this.http.post<AttachmentCollection[]>(url, formData, {

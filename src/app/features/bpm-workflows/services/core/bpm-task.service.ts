@@ -16,7 +16,7 @@ export class BpmTaskService implements IBpmTaskService {
   getProTaskCountComment(id: string): Observable<number> {
     const url = `${this.basic_url}${envi.bpmOperation.comment}/${id}${envi.bpmOperation.count}`;
     return this.http.get<number>(url).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error getting task comment count:', error);
         throw error;
       })
@@ -24,10 +24,10 @@ export class BpmTaskService implements IBpmTaskService {
   }
 
   getProTaskCountAttachment(id: string): Observable<number> {
-    const basic_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}`;
+    const basic_url = `${envi.url}:${envi.port}${envi.bpmAttachment.value}/`;
     const url = `${basic_url}${envi.bpmAttachment.proExecution}${id}${envi.bpmAttachment.count}`;
     return this.http.get<number>(url).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error getting task attachment count:', error);
         throw error;
       })
@@ -37,7 +37,7 @@ export class BpmTaskService implements IBpmTaskService {
   getNextOperation(executionId: string, answer: boolean): Observable<ProTaskE> {
     const url = `${this.basic_url}${envi.bpmOperation.proExecution}${executionId}${envi.bpmOperation.next}`;
     return this.http.post<ProTaskE>(url, { answer }).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error getting next operation:', error);
         throw error;
       })
@@ -47,7 +47,7 @@ export class BpmTaskService implements IBpmTaskService {
   getPreviewOperation(executionId: string): Observable<ProTaskE> {
     const url = `${this.basic_url}${envi.bpmOperation.proExecution}${executionId}${envi.bpmOperation.prev}`;
     return this.http.post<ProTaskE>(url, {}).pipe(
-      catchError(error => {
+      catchError((error) => {
         console.error('Error getting preview operation:', error);
         throw error;
       })

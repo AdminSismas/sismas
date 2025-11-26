@@ -1,0 +1,11 @@
+<app-modal-window [title]="title">
+  @if (images().length > 0) {
+    <app-carousel [images]="images()"></app-carousel>
+  } @else {
+    <div class="w-full py-8">
+      <h2 class="text-center text-2xl text-slate-500 font-semibold">
+        No hay información
+      </h2>
+    </div>
+  }
+</app-modal-window>

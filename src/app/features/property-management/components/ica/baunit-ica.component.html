@@ -21,7 +21,7 @@
         <div class="flex flex-col w-full">
           <mat-table
             [dataSource]="icaTableList()"
-            class=" w-full"
+            class="w-full"
           >
             @for (column of columns; track column.property) {
               <ng-container [matColumnDef]="column.property">
@@ -33,10 +33,11 @@
                     @case ("button") {
                       <button
                         mat-icon-button
-                        aria-label="Ver detalles"
-                        (click)="viewIcaDetails(row.prIcaId)"
+                        aria-label="menuAction"
+                        [matMenuTriggerFor]="icaMenu"
+                        [matMenuTriggerData]="{ ica: row }"
                       >
-                        <mat-icon svgIcon="mat:visibility" class="text-green-500"></mat-icon>
+                        <mat-icon svgIcon="mat:more_horiz"></mat-icon>
                       </button>
                     }
                     @default {
@@ -68,3 +69,20 @@
     </mat-panel-description>
   </mat-expansion-panel>
 </mat-accordion>
+
+<mat-menu #icaMenu="matMenu">
+  <ng-template
+    let-ica="ica"
+    matMenuContent
+  >
+    @for (option of menuItems; track option.id) {
+      <button
+        mat-menu-item
+        (click)="menuAction(option.id, ica)"
+      >
+        <mat-icon [svgIcon]="option.icon"></mat-icon>
+        {{ option.label }}
+      </button>
+    }
+  </ng-template>
+</mat-menu>
