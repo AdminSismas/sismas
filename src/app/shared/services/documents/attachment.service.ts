@@ -32,7 +32,9 @@ export class AttachmentService {
     attachmentId: string,
     originalFileName: string
   ): Observable<AttachmentCollection[]> {
-    const url = `${this.delete_url}${executionId}/${attachmentId}/${originalFileName}`;
+    const encodedOriginalFileName = encodeURI(originalFileName);
+
+    const url = `${this.delete_url}${executionId}/${attachmentId}/${encodedOriginalFileName}`;
 
     return this.http.delete<AttachmentCollection[]>(url).pipe(
       catchError((error) => {
