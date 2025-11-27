@@ -30,9 +30,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 // Custom
 import { GeoEconomicZone } from '@features/property-management/models/geo-economic-zone';
-import {
-  InformationPropertyService
-} from '@features/property-management/services/property/information-property.service';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import { RuralPhysicalZone } from '@features/property-management/models/rural-physical-zone';
 import { UrbanPhysicalZone } from '@features/property-management/models/urban-physical-zone';
 import {
@@ -171,8 +169,12 @@ export class AddEditInformatizonZonesPropertyComponent implements OnInit {
   onSave(): void {
     if (this.zoneBAUnitForm.valid) {
       const formValue = this.zoneBAUnitForm.value;
+      console.log(formValue);
 
-      // formValue.baUnitZonaArea = `${formValue.baUnitZonaArea}`.replace(',', '.');
+      formValue.baUnitZonaArea = `${formValue.baUnitZonaArea}`.replace(
+        ',',
+        '.'
+      );
       formValue.baUnitZonaArea = Number(formValue.baUnitZonaArea);
 
       let selectedZone = null;
