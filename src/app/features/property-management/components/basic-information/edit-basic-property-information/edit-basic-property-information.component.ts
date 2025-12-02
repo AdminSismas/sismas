@@ -277,7 +277,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       basicInformation = this.contentInformation;
       if (!basicInformation) {
         this.getAlertError(
-          'Informacion no encontrada, consulte al administrador'
+          'Información no encontrada, consulte al administrador'
         );
         return;
       }
@@ -314,10 +314,8 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       return;
     }
 
-    if (!this.validationFormUnitEdit(buildNumber, floorNumber, unitNumber)) {
-      this.getAlertError('Informacion no encontrada');
+    if (!this.validationFormUnitEdit(buildNumber, floorNumber, unitNumber)) 
       return;
-    }
 
     const percentageCoefficient: number = Big(percentageGroup)
       .div(100)
@@ -360,8 +358,10 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       buildNumber === null ||
       floorNumber === undefined ||
       floorNumber === null
-    )
+    ){
+      this.getAlertError('Todos los campos son requeridos');
       return false;
+    }
 
     const numberCondition = this.contentInformation?.cadastralNumber?.slice(
       21,
@@ -370,13 +370,15 @@ export class EditBasicPropertyInformationComponent implements OnInit {
 
     if (numberCondition === '8') {
       if (parseFloat(floorNumber) < 0 || parseFloat(unitNumber) < 0) {
+        this.getAlertError('El número de piso no puede ser menor a cero (0)');
         return false;
       }
-
+      
       return true;
     }
-
+    
     if (parseFloat(floorNumber) <= 0 || parseFloat(unitNumber) <= 0) {
+      this.getAlertError('El número de piso debe ser mayor a cero (0)');
       return false;
     }
 
@@ -435,7 +437,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       text: text,
       icon: 'success',
       showConfirmButton: false,
-      timer: 1000
+      timer: 20000
     }).then(() => this.dialogRef.close(data));
   }
 
