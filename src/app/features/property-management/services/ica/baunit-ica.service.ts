@@ -40,4 +40,22 @@ export class BaunitIcaService {
 
     return this.http.get<string[]>(url, { params }).pipe(catchError(() => []));
   }
+
+  createBaunitIca(icaDetails: Partial<IcaResponse>): Observable<IcaResponse> {
+    const url = `${this.basicUrl}${envi.ica.value}`;
+
+    return this.http.post<IcaResponse>(url, icaDetails);
+  }
+
+  updateBaunitIca(icaId: number, newIcaResponse: Partial<IcaResponse>): Observable<IcaResponse> {
+    const url = `${this.basicUrl}${envi.ica.value}/${icaId}`;
+
+    return this.http.patch<IcaResponse>(url, newIcaResponse);
+  }
+
+  deleteBaunitIca(icaId: number): Observable<void> {
+    const url = `${this.basicUrl}${envi.ica.value}/${icaId}`;
+
+    return this.http.delete<void>(url);
+  }
 }

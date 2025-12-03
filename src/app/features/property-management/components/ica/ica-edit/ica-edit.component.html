@@ -1,0 +1,12 @@
+<app-modal-window
+  [title]="title()"
+  actions
+  showCancelButton
+  (accept)="sendEditIcaForm()"
+>
+  <app-dynamic-forms
+    [inputs]="inputs"
+    [initValues]="icaDetails"
+    (formReady)="editIcaForm.set($event)"
+  ></app-dynamic-forms>
+</app-modal-window>

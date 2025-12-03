@@ -77,7 +77,7 @@
         @case ("select") {
           @if (!input.noVisibleComponent) {
             <mat-form-field
-              [ngClass]="cssClassesForm(input.cssClasses)"
+              [ngClass]="cssClassesInput(input.cssClasses)"
               [id]="input.name + $index"
             >
               <mat-label>{{ input.label }}</mat-label>

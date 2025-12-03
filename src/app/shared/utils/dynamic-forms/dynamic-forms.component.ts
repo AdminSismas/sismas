@@ -57,7 +57,7 @@ import { Subscription } from 'rxjs';
   providers: [
     provideMomentDateAdapter(),
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
+  ],
 })
 export class DynamicFormsComponent implements OnInit, OnChanges, OnDestroy {
   private fb = inject(FormBuilder);
