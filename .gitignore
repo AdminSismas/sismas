@@ -62,3 +62,15 @@ GeoGestionV2.code-workspace
 CLAUDE.md
 src/claude/*
 .claude
+
+# gemini cli
+GEMINI.md
+.gemini/
+.github/commands/
+gha-creds-*.json
+.github/workflows/gemini-dispatch.yml
+.github/workflows/gemini-invoke.yml
+.gitignore
+.github/workflows/gemini-scheduled-triage.yml
+.github/workflows/gemini-review.yml
+.github/workflows/gemini-triage.yml
