@@ -116,25 +116,17 @@ export class BaunitIcaComponent {
     });
   }
 
-  public icaPhotos(ica: IcaTable): void {
-    this.baunitIcaService
-      .getBaunitIcaPhotos(
-        this.baunitId(),
-        ica.municipalityCode,
-        ica.prIcaId.toString()
-      )
-      .subscribe((photos) => {
-        const data: IcaDialogData = {
-          ica,
-          baunitId: this.baunitId(),
-          photos
-        };
+  private icaPhotos(ica: IcaTable): void {
+    const data: IcaDialogData = {
+      ica,
+      baunitId: this.baunitId(),
+      edition: this.typeInformation() === 'edition'
+    };
 
-        this.dialog.open(IcaPhotosComponent, {
-          ...MODAL_SMALL,
-          data: data
-        });
-      });
+    this.dialog.open(IcaPhotosComponent, {
+      ...MODAL_SMALL,
+      data: data
+    });
   }
 
   public createIca(): void {

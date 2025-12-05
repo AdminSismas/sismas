@@ -1,60 +1,53 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IcaResponse } from '@shared/interfaces';
-import { environment as envi } from '@environments/environments';
+import { environment } from '@environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaunitIcaService {
   /* ---- Properties ---- */
-  private readonly basicUrl = `${envi.url}:${envi.port}`;
+  private readonly basicUrl = `${environment.url}:${environment.port}`;
 
   /* ---- Injects ---- */
   http = inject(HttpClient);
 
-  getBaunitIcaList(baunitId: string): Observable<IcaResponse[]> {
-    const url = `${this.basicUrl}${envi.ica.value}${envi.ica.baunitId}/${baunitId}`;
+  getBaunitIcaList(baunitIdString: string): Observable<IcaResponse[]> {
+    const { value: ica, baunitId } = environment.ica;
+    const url = `${this.basicUrl}${ica}${baunitId}/${baunitIdString}`;
 
     return this.http.get<IcaResponse[]>(url);
   }
 
   getBaunitIcaDetail(icaId: number): Observable<IcaResponse> {
-    const url = `${this.basicUrl}${envi.ica.value}/${icaId}`;
+    const { value: ica } = environment.ica;
+    const url = `${this.basicUrl}${ica}/${icaId}`;
 
     return this.http.get<IcaResponse>(url);
   }
 
-  getBaunitIcaPhotos(
-    baunitId: string,
-    municipality: string,
-    icaId: string
-  ): Observable<string[]> {
-    const { value, baunit } = envi.bpmAttachment;
-    const url = `${this.basicUrl}${value}${baunit}/${baunitId}/photos`;
-
-    const params = new HttpParams()
-      .set('municipioId', municipality)
-      .set('icaId', icaId);
-
-    return this.http.get<string[]>(url, { params }).pipe(catchError(() => []));
-  }
-
   createBaunitIca(icaDetails: Partial<IcaResponse>): Observable<IcaResponse> {
-    const url = `${this.basicUrl}${envi.ica.value}`;
+    const { value: ica } = environment.ica;
+    const url = `${this.basicUrl}${ica}`;
 
     return this.http.post<IcaResponse>(url, icaDetails);
   }
 
-  updateBaunitIca(icaId: number, newIcaResponse: Partial<IcaResponse>): Observable<IcaResponse> {
-    const url = `${this.basicUrl}${envi.ica.value}/${icaId}`;
+  updateBaunitIca(
+    icaId: number,
+    newIcaResponse: Partial<IcaResponse>
+  ): Observable<IcaResponse> {
+    const { value: ica } = environment.ica;
+    const url = `${this.basicUrl}${ica}/${icaId}`;
 
     return this.http.patch<IcaResponse>(url, newIcaResponse);
   }
 
   deleteBaunitIca(icaId: number): Observable<void> {
-    const url = `${this.basicUrl}${envi.ica.value}/${icaId}`;
+    const { value: ica } = environment.ica;
+    const url = `${this.basicUrl}${ica}/${icaId}`;
 
     return this.http.delete<void>(url);
   }

@@ -1,4 +1,11 @@
-import { Component, effect, input, output, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  effect,
+  input,
+  output,
+  AfterViewInit,
+  OnDestroy
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -18,30 +25,26 @@ import { Navigation, Pagination } from 'swiper/modules';
 export class CarouselComponent implements AfterViewInit, OnDestroy {
   private swiper!: Swiper;
 
-  images = input.required<{ url: string, name: string }[]>();
-  deleteButton = input<boolean>(false);
-  resetCarousel = input<boolean>(false);
-  showNames = input<boolean>(false);
+  /* ---- Inputs ----- */
+  images = input.required<{ url: string; name: string }[]>();
+  deleteButton = input(false, { transform: this.initBooleanValueInput });
+  resetCarousel = input(false, { transform: this.initBooleanValueInput });
+  showNames = input(false, { transform: this.initBooleanValueInput });
 
+  /* ---- Outputs ----- */
   deleteImage = output<string>();
 
-  constructor () {
-    effect(() => {
-      if (this.resetCarousel()) {
-        this.resetSlider();
-      }
-    }, { allowSignalWrites: true});
-
-    effect(() => {
-      if (this.images().length > 0) {
-        this.swiper.destroy(true, true);
-        this.initSwiper();
-      } else {
-        if (this.swiper) {
-          this.swiper.destroy(true, true);
+  constructor() {
+    effect(
+      () => {
+        if (this.resetCarousel()) {
+          this.resetSlider();
         }
-      }
-    }, { allowSignalWrites: true});
+      },
+      { allowSignalWrites: true }
+    );
+
+    this.initSwiperEffect();
   }
 
   ngAfterViewInit(): void {
@@ -51,6 +54,19 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.swiper) {
       this.swiper.destroy(true, true);
+    }
+  }
+
+  initBooleanValueInput(value: string | boolean): boolean {
+    if (typeof value === 'boolean') return value;
+
+    switch (`${value}`.toLowerCase()) {
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+      default:
+        return false;
     }
   }
 
@@ -74,6 +90,22 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  private initSwiperEffect(): void {
+    effect(
+      () => {
+        if (this.images().length > 0) {
+          this.swiper.destroy(true, true);
+          this.initSwiper();
+        } else {
+          if (this.swiper) {
+            this.swiper.destroy(true, true);
+          }
+        }
+      },
+      { allowSignalWrites: true }
+    );
+  }
+
   resetSlider(): void {
     if (this.swiper) {
       this.swiper.slideTo(0, 0);
@@ -83,5 +115,4 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   onDeleteImage(urlFile: string): void {
     this.deleteImage.emit(urlFile);
   }
-
 }
