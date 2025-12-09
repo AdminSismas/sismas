@@ -23,7 +23,7 @@ import {
 import { map } from 'rxjs';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { IcaResponse } from '@shared/interfaces';
-import { MODAL_SMALL, NAME_NO_DISPONIBLE } from '@shared/constants/constants';
+import { MODAL_MEDIUM, MODAL_SMALL, NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 import { MatDialog } from '@angular/material/dialog';
 import { IcaDetailsComponent } from '@features/property-management/components/ica/ica-details/ica-details.component';
 import { MatMenuModule } from '@angular/material/menu';
@@ -110,7 +110,7 @@ export class BaunitIcaComponent {
   public icaDetails(icaId: number): void {
     this.baunitIcaService.getBaunitIcaDetail(icaId).subscribe((icaDetails) => {
       this.dialog.open(IcaDetailsComponent, {
-        ...MODAL_SMALL,
+        ...MODAL_MEDIUM,
         data: icaDetails
       });
     });
@@ -132,7 +132,7 @@ export class BaunitIcaComponent {
   public createIca(): void {
     this.dialog
       .open(IcaEditComponent, {
-        ...MODAL_SMALL,
+        ...MODAL_MEDIUM,
         // data: EXAMPLE_TEST_ICA_CREATE
       })
       .afterClosed()
@@ -164,7 +164,7 @@ export class BaunitIcaComponent {
       .subscribe((icaDetails) => {
         this.dialog
           .open(IcaEditComponent, {
-            ...MODAL_SMALL,
+            ...MODAL_MEDIUM,
             data: icaDetails
           })
           .afterClosed()

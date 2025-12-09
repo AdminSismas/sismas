@@ -217,6 +217,7 @@ export const environment = {
   serviciosTaquilla: {
     download: "/download",
     formato: "/formato",
+    retry: "/retry",
     solicitud: "/solicitud",
     value: "/serviciosTaquilla"
   },

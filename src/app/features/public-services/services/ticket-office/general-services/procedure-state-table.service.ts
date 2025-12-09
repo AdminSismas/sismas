@@ -56,4 +56,10 @@ export class ProcedureStateTableService {
 
     return this.http.get(url, { responseType: 'blob' });
   }
+
+  retryProcedure(procedureId: string): Observable<ProcedureQueryResponse> {
+    const url = `${this.baseUrl}/${procedureId}${envi.serviciosTaquilla.retry}`;
+
+    return this.http.post<ProcedureQueryResponse>(url, {});
+  }
 }

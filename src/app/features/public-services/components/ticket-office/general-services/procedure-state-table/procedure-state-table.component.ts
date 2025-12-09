@@ -39,6 +39,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ViewCertificateComponent } from '../view-certificate/view-certificate.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'procedure-state-table',
@@ -126,12 +127,27 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
   }
 
   /* ---- Methods ---- */
-  onViewDetails(row: ProcedureStateResponse) {
-    if (this.disabledViewButton(row.status) || row.status === 'FAILED') return;
+  onClickButtonAction(row: ProcedureStateResponse) {
+    if (this.disabledViewButton(row.status) || row.status === 'FAILED') {
+      this.retryProcedure(row.id);
+      return;
+    }
 
     this.dialog.open(ViewCertificateComponent, {
       ...MODAL_LARGE,
       data: { id: row.id }
+    });
+  }
+
+  private retryProcedure(id: string) {
+    this.procedureStateTableService.retryProcedure(id).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        text: `El proceso número ${id} se ha solicitado de nuevo correctamente`,
+        showConfirmButton: false,
+        timer: 20000
+      });
+      this.refreshServiceStates();
     });
   }
 

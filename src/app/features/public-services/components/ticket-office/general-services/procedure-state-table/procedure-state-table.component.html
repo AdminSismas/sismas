@@ -74,17 +74,17 @@
               @case ("button") {
                 <button
                   mat-mini-fab
-                  (click)="onViewDetails(row)"
+                  (click)="onClickButtonAction(row)"
                   class="rounded-md bg-green-400 text-slate-600"
                   [disabled]="disabledViewButton(row.status)"
                   [matTooltip]="row.errorMessage"
                   [matTooltipDisabled]="!row.errorMessage"
                   matTooltipPosition="left"
-                  [class.bg-red-400]="row.status === 'FAILED'"
-                  [class.text-white]="row.status === 'FAILED'"
+                  [class.!bg-red-500]="row.status === 'FAILED'"
+                  [class.!text-white]="row.status === 'FAILED'"
                 >
                   <mat-icon>{{
-                    row.status === "FAILED" ? "visibility_off" : "visibility"
+                    row.status === "FAILED" ? "refresh" : "visibility"
                   }}</mat-icon>
                 </button>
               }

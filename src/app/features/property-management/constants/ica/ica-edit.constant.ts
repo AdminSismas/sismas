@@ -203,15 +203,15 @@ export const ICA_EDIT_INPUTS: JSONInput[] = [
   }
 ];
 
-// export const EXAMPLE_TEST_ICA_CREATE: Partial<IcaResponse> = {
-//   nombreEstablecimiento: 'Nombre Establecimiento',
-//   primerNombre: 'Juan',
-//   primerApellido: 'Perez',
-//   domActividadPrincipal: 'Restaurante',
-//   domIndividualTypeNumber: 'Cédula de ciudadanía',
-//   domIndividualType: 'Persona natural',
-//   documentoIdentidad: '1020304050',
-//   inscritoCc: true,
-//   notificacionElectronica: true,
-//   granContribuyente: false,
-// };
+export const EXAMPLE_TEST_ICA_CREATE: Partial<IcaResponse> = {
+  nombreEstablecimiento: 'Nombre Establecimiento',
+  primerNombre: 'Juan',
+  primerApellido: 'Perez',
+  domActividadPrincipal: 'Restaurante',
+  domIndividualTypeNumber: 'Cédula de ciudadanía',
+  domIndividualType: 'Persona natural',
+  documentoIdentidad: '1020304050',
+  inscritoCc: true,
+  notificacionElectronica: true,
+  granContribuyente: false,
+};
