@@ -1,13 +1,24 @@
 <section class="w-full flex flex-col overflow-auto">
   <div class="p-6 pb-0 bg-foreground shadow-b flex-none border-b">
     <div class="container px-0">
-      <h1 class="display-1 font-bold mt-0 mb-4 flex items-center">
-        <span
-          class="w-12 h-12 rounded-full text-primary-600 ltr:mr-4 rtl:ml-4 flex items-center justify-center bg-primary-600/10"
+      <h1 class="display-1 font-bold mt-0 mb-4 flex items-center justify-between">
+        <div class="flex items-center">
+          <span
+            class="w-12 h-12 rounded-full text-primary-600 ltr:mr-4 rtl:ml-4 flex items-center justify-center bg-primary-600/10"
+          >
+            <mat-icon svgIcon="mat:content_paste_search"></mat-icon>
+          </span>
+          <span class="block">Estados certificados</span>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          class="w-fit justfy-self-end"
+          (click)="refreshServiceStates()"
         >
-          <mat-icon svgIcon="mat:content_paste_search"></mat-icon>
-        </span>
-        <span class="block">Estados certificados</span>
+          <mat-icon svgIcon="mat:refresh"></mat-icon>
+          Refrescar
+        </button>
       </h1>
     </div>
   </div>

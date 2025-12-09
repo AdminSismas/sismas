@@ -22,7 +22,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, map, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  debounceTime,
+  map,
+  Subscription,
+  switchMap
+} from 'rxjs';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import {
@@ -61,16 +67,19 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
   procedureStateTableService = inject(ProcedureStateTableService);
   dialog = inject(MatDialog);
 
+  /* ---- RxJs ---- */
+  private readonly refresh$ = new BehaviorSubject<void>(undefined);
+  private readonly data$ = this.refresh$.pipe(
+    switchMap(() => this.procedureStateTableService.getProcedureStateList())
+  );
+
   /* ---- Signals ---- */
   stateDataSource = toSignal<MatTableDataSource<ProcedureStateResponse>>(
-    this.procedureStateTableService.getProcedureStateList().pipe(
+    this.data$.pipe(
       map((data) => this.addFormattedStatus(data)),
       map((data) => new MatTableDataSource<ProcedureStateResponse>(data))
     )
   );
-  // procedureFile = toSignal<Blob | null>(
-  //   this.procedureStateTableService.viewProcedureFile()
-  // );
 
   /* ---- Controls ---- */
   searchInput = new FormControl('');
@@ -137,6 +146,10 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
 
   disabledViewButton(status: ProcedureState): boolean {
     return status === 'PENDING' || status === 'PROCESSING';
+  }
+
+  refreshServiceStates() {
+    this.refresh$.next(undefined);
   }
 
   /* ---- Getters ---- */
