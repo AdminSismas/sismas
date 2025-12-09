@@ -62,6 +62,7 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
+import { environment } from '@environments/environments';
 
 @Component({
   selector: 'table-alfa-main',
@@ -217,7 +218,7 @@ export class TableAlfaMainComponent
           operation?.baunitHead?.baunitIdE,
           operation?.baunitHead,
           this.executionId(),
-          LIST_SCHEMAS_CONTROL_CHANGES,
+          LIST_SCHEMAS_CONTROL_CHANGES as (keyof typeof environment.schemas)[],
           TYPE_INFORMATION_VISUAL
         )
       })
@@ -263,7 +264,7 @@ export class TableAlfaMainComponent
           operation?.baunitHead?.baunitIdE,
           operation?.baunitHead,
           this.executionId(),
-          LIST_SCHEMAS_CONTROL_TEMP,
+          LIST_SCHEMAS_CONTROL_TEMP as (keyof typeof environment.schemas)[],
           TYPE_INFORMATION_EDITION,
           '',
           this.resources()

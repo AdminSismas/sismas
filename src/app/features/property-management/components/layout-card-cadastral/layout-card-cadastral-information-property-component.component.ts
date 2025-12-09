@@ -15,7 +15,7 @@ import {
   TYPE_INFORMATION_EDITION,
   TYPE_INFORMATION_VISUAL
 } from '@shared/constants/constants';
-import { environment as envi } from '@environments/environments';
+import { environment as envi, environment } from '@environments/environments';
 import { ObjectSchema, TypeInformation } from '@shared/interfaces';
 import {
   CONSTANT_INFORMATION_PREDIAL,
@@ -83,7 +83,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
       this.baUnitHead = this.defaults.content;
     }
 
-    this.defaults.schemas.forEach((schema: string) =>
+    this.defaults.schemas.forEach((schema: keyof typeof environment.schemas) =>
       this.createObjectLayout(schema, this.defaults)
     );
     this.typeInformation = this.defaults.typeInformation;
@@ -107,7 +107,7 @@ export class LayoutCardCadastralInformationPropertyComponentComponent implements
     }
   }
 
-  createObjectLayout(schema: string, defaults: ContentInfoSchema): void {
+  createObjectLayout(schema: keyof typeof environment.schemas, defaults: ContentInfoSchema): void {
     const defaultObject: ContentInfoSchema = { ...defaults };
     let title = '';
     if (schema === `${envi.schemas.main}`) {

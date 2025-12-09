@@ -63,7 +63,7 @@ import {
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { ContentInfoSchema } from '@shared/models';
 import { GeographicViewerComponent } from '@features/geographics/components/geographic-viewer/geographic-viewer.component';
-import { environment as envi } from '@environments/environments';
+import { environment as envi, environment } from '@environments/environments';
 import { SendInformationRegisterService } from '@features/bpm-workflows/services/registration/send-information-register.service';
 import { ValidateInformationBaunitService } from '@shared/services/general/validate-information-baunit.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -162,7 +162,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
               this.dataSource.data[0].baunitIdE,
               this.dataSource.data[0],
               null,
-              LIST_SCHEMAS_CONTROL_MAIN
+              LIST_SCHEMAS_CONTROL_MAIN as (keyof typeof environment.schemas)[],
             )
           }
         );
@@ -199,7 +199,7 @@ export class TableCertificateSearchComponent implements OnInit, AfterViewInit {
           data.baunitIdE,
           data,
           null,
-          LIST_SCHEMAS_CONTROL_MAIN,
+          LIST_SCHEMAS_CONTROL_MAIN as (keyof typeof environment.schemas)[],
           TYPE_INFORMATION_VISUAL
         )
       })

@@ -1,3 +1,4 @@
+import { environment } from '@environments/environments';
 import { ContentInfoSchema } from '@shared/models';
 
 export type Element =
@@ -21,7 +22,7 @@ export type TypeQualificationMode = 'TRADITIONAL' | 'TYPOLOGY' | 'ANNEX' ;
 export type TypeOperationPeople = 'create' | 'update' | 'peopleUpdate' | 'peopleCreate';
 
 export interface ObjectSchema {
-  schema: string;
+  schema: keyof typeof environment.schemas;
   title: string;
   defaultObject: ContentInfoSchema;
 }

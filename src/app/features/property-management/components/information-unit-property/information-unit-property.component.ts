@@ -208,7 +208,7 @@ export class InformationUnitPropertyComponent implements OnInit, AfterViewInit {
         data: new ContentInfoSchema(
           data.baunitHead?.baunitIdE, data.baunitHead,
           this.executionId,
-          this.viewSchemas(),
+          this.viewSchemas() as (keyof typeof environment.schemas)[],
           TYPE_INFORMATION_VISUAL
         )
       })

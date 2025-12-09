@@ -77,7 +77,7 @@ import {
 } from '@shared/constants/constants';
 
 /* ---- Environments ---- */
-import { environment as envi } from '@environments/environments';
+import { environment as envi, environment } from '@environments/environments';
 
 /* ---- Directives ---- */
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -224,7 +224,7 @@ export class CadastralInformationPropertyComponent implements OnInit {
   public readonly typeInformation = input.required<TypeInformation>();
   public readonly showTittle = input.required<boolean>();
   public readonly label = input.required<string>();
-  public readonly schema = input.required<string>();
+  public readonly schema = input.required<keyof typeof environment.schemas>();
   public readonly contentInfoSchema = input.required<ContentInfoSchema>();
   public readonly baunitCondition = input.required<string | undefined>();
   public readonly cssClasses = input<string>();

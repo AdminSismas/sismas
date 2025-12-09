@@ -18,17 +18,17 @@
       <br />
       <div class="w-full flex flex-col pt-2">
         <div class="flex flex-col sm:flex-row items-center">
-          @if (typeInformation === "edition") {
+          @if (typeInformation() === "edition") {
             @if (existDetailGroup()) {
               <button
                 mat-raised-button
                 title="Editar unidad predial"
                 class="rounded-full ml-1 mr-1 py-2 px-3 title"
                 [ngClass]="
-                  !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+                  !editable() ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
                 "
-                [color]="editable ? 'primary' : ''"
-                [disabled]="!editable"
+                [color]="editable() ? 'primary' : ''"
+                [disabled]="!editable()"
                 (click)="editDetailGroupProperty()"
               >
                 Editar Unidad
@@ -40,28 +40,30 @@
               title="Editar aspectos generales"
               class="rounded-full ml-1 mr-1 py-2 px-3 title"
               [ngClass]="
-                !editable ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
+                !editable() ? '!bg-slate-400 !text-gray-100 opacity-60' : ''
               "
-              [color]="editable ? 'primary' : ''"
-              [disabled]="!editable"
+              [color]="editable() ? 'primary' : ''"
+              [disabled]="!editable()"
               (click)="editBasicInformationProperty()"
             >
               Editar
               <mat-icon svgIcon="mat:edit"></mat-icon>
             </button>
           }
-          <button
-            (click)="openGeographicViewerMain(data)"
-            class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-green-600 bg-green-600/10"
-            mat-icon-button
-            title="Ver mapa"
-          >
-            <mat-icon
-              class="icon-sm"
-              svgIcon="mat:map"
-            ></mat-icon>
-          </button>
-          <span class="ml-2">Ver mapa</span>
+          @if (this.schema() === "main") {
+            <button
+              (click)="openGeographicViewerMain(data)"
+              class="w-8 h-8 p-0 leading-none flex items-center justify-center ml-1 hover:bg-hover text-green-600 bg-green-600/10"
+              mat-icon-button
+              title="Ver mapa"
+            >
+              <mat-icon
+                class="icon-sm"
+                svgIcon="mat:map"
+              ></mat-icon>
+            </button>
+            <span class="ml-2">Ver mapa</span>
+          }
           <span class="sm:flex-auto"></span>
           <span class="sm:flex-auto xl:flex-1"></span>
         </div>
@@ -300,7 +302,10 @@
                   matTooltip="Refrescar área catastral geográfica"
                   (click)="refreshCadastralAreaGeoE()"
                 >
-                  <mat-icon svgIcon="mat:refresh" class="w-4 h-4"></mat-icon>
+                  <mat-icon
+                    svgIcon="mat:refresh"
+                    class="w-4 h-4"
+                  ></mat-icon>
                 </button>
               </div>
             } @else {
