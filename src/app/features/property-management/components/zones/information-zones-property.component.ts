@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, forwardRef, input, Input, output, ViewChild } from '@angular/core';
+import { Component, forwardRef, input, output, viewChild } from '@angular/core';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {
@@ -87,21 +87,20 @@ export class InformationZonesPropertyComponent {
   zoneBAUnitUrban: ZoneBAUnitFisica[] = [];
   zoneBAUnitGeoeconomic: ZoneBAUnitGeoeconomic[] = [];
 
-  @Input({ required: true }) schema = `${environment.schemas.main}`;
-  @Input({ required: true }) baunitId: string | null | undefined = null;
-  @Input({ required: true }) npn!: string;
-  @Input() editable?: boolean;
-  @Input() executionId: string | null | undefined = null;
-  @Input() typeInformation: TypeInformation = TYPE_INFORMATION_EDITION;
-
-  // Input signals
-  isMatriz = input(false);
-  expandedComponent = input.required<boolean>();
+  /* ---- Inputs ---- */
+  readonly schema = input.required<keyof typeof environment.schemas>();
+  readonly baunitId = input.required<string | null | undefined>();
+  readonly npn = input.required<string>();
+  readonly editable = input<boolean>();
+  readonly executionId = input<string | null | undefined>(null);
+  readonly typeInformation = input<TypeInformation>(TYPE_INFORMATION_EDITION);
+  readonly isMatriz = input(false);
+  readonly expandedComponent = input.required<boolean>();
 
   // Output signals
   emitExpandedComponent = output<number>();
 
-  @ViewChild('errorDelete') errorDelete!: SwalComponent;
+  readonly errorDelete = viewChild.required<SwalComponent>('errorDelete');
 
   dataBasicInformation!: BasicInformationProperty;
   page: number = PAGE;
@@ -125,23 +124,25 @@ export class InformationZonesPropertyComponent {
   ) {}
 
   get divPolLv1() {
-    return this.npn.substring(0, 2);
+    return this.npn().substring(0, 2);
   }
   get divPolLv2() {
-    return this.npn.substring(2, 5);
+    return this.npn().substring(2, 5);
   }
   get zoneType() {
-    if (this.npn.substring(5, 7) === '00') return 'Rural';
+    if (this.npn().substring(5, 7) === '00') return 'Rural';
     return 'Urbano';
   }
 
   searchBasicInformationProperty(): void {
-    if (!this.schema || !this.baunitId) {
+    const schema = this.schema();
+    const baunitId = this.baunitId();
+    if (!schema || !baunitId) {
       return;
     }
 
     this.informationPropertyService
-      .getBasicInformationProperty(this.schema, this.baunitId, this.executionId)
+      .getBasicInformationProperty(schema, baunitId, this.executionId())
       .subscribe({
         error: () => this.captureInformationSubscribeError(),
         next: (result: BasicInformationProperty) =>
@@ -163,10 +164,12 @@ export class InformationZonesPropertyComponent {
   }
 
   searchInformationPhysicalZonesProperty(): void {
-    if (!this.schema || !this.baunitId) return;
+    const schema = this.schema();
+    const baunitId = this.baunitId();
+    if (!schema || !baunitId) return;
 
     this.informationPropertyService
-      .getByBaunitFisica(this.baunitId, this.schema, this.executionId)
+      .getByBaunitFisica(baunitId, schema, this.executionId())
       .subscribe({
         next: (result: ZoneBAUnitResponse[]) => {
           this.zoneBAUnit = this.capturePhysicZoneInformation(result);
@@ -177,10 +180,12 @@ export class InformationZonesPropertyComponent {
   }
 
   searchInformationPhysicalZonesOrigin(): void {
-    if (!this.schema || !this.baunitId) return;
+    const schema = this.schema();
+    const baunitId = this.baunitId();
+    if (!schema || !baunitId) return;
 
     this.informationPropertyService
-      .getByBaunitFisicaOrigin(this.baunitId, this.schema, this.executionId)
+      .getByBaunitFisicaOrigin(baunitId, schema, this.executionId())
       .subscribe({
         next: (result: ZoneBAUnitResponse[]) => {
           this.zoneBAUnit = this.capturePhysicZoneInformation(result);
@@ -201,10 +206,12 @@ export class InformationZonesPropertyComponent {
   }
 
   searchInformationGeoeconomicZonesProperty(): void {
-    if (!this.schema || !this.baunitId) return;
+    const schema = this.schema();
+    const baunitId = this.baunitId();
+    if (!schema || !baunitId) return;
 
     this.informationPropertyService
-      .getByBaunitEcono(this.baunitId, this.schema, this.executionId)
+      .getByBaunitEcono(baunitId, schema, this.executionId())
       .subscribe({
         next: (result: ZoneBAUnitResponse[]) => {
           this.zoneBAUnitGeoeconomic =
@@ -216,10 +223,12 @@ export class InformationZonesPropertyComponent {
   }
 
   searchInformationGeoeconomicZonesOrigin(): void {
-    if (!this.schema || !this.baunitId) return;
+    const schema = this.schema();
+    const baunitId = this.baunitId();
+    if (!schema || !baunitId) return;
 
     this.informationPropertyService
-      .getByBaunitEconoOrigin(this.baunitId, this.schema, this.executionId)
+      .getByBaunitEconoOrigin(baunitId, schema, this.executionId())
       .subscribe({
         next: (result: ZoneBAUnitResponse[]) => {
           this.zoneBAUnitGeoeconomic =
@@ -263,28 +272,30 @@ export class InformationZonesPropertyComponent {
   }
 
   deleteZone(zone: ZoneBAUnitFisica | ZoneBAUnitGeoeconomic): void {
-    if (!this.schema || !this.baunitId) return;
+    const baunitIdValue = this.baunitId();
+    if (!this.schema() || !baunitIdValue) return;
 
-    const baunitId = Number(this.baunitId);
+    const baunitId = Number(baunitIdValue);
 
     this.informationPropertyService
-      .deleteBAUnitZones(this.executionId!, baunitId, zone.baUnitZonaId!)
+      .deleteBAUnitZones(this.executionId()!, baunitId, zone.baUnitZonaId!)
       .subscribe({
         next: () => {
           this.searchInformationPhysicalZonesProperty();
           this.searchInformationGeoeconomicZonesProperty();
         },
         error: () => {
-          this.errorDelete.fire();
+          this.errorDelete().fire();
         }
       });
   }
 
   assignamentZone(typeZone: 'physic' | 'geoeconomic') {
-    if (!this.schema || !this.baunitId) return;
+    const baunitId = this.baunitId();
+    if (!this.schema() || !baunitId) return;
 
     this.informationPropertyService
-      .assignamentZones(typeZone, this.executionId!, this.baunitId!)
+      .assignamentZones(typeZone, this.executionId()!, baunitId!)
       .subscribe((response) => {
         Swal.fire({
           title: 'Asignación de zona exitosa',

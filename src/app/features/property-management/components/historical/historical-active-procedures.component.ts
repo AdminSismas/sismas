@@ -344,7 +344,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
             data: new ContentInfoSchema(
               this.baunitId, result,
               executionId,
-              LIST_SCHEMAS_CONTROL_HISTORY,
+              LIST_SCHEMAS_CONTROL_HISTORY as (keyof typeof environment.schemas)[],
               TYPE_INFORMATION_VISUAL,
               '',
               []
@@ -372,7 +372,7 @@ export class HistoricalActiveProceduresPropertyComponent implements OnInit {
             data: new ContentInfoSchema(
               this.baunitId, result,
               executionId,
-              LIST_SCHEMAS_CONTROL_TEMP,
+              LIST_SCHEMAS_CONTROL_TEMP as (keyof typeof environment.schemas)[],
               TYPE_INFORMATION_VISUAL,
               '',
               []

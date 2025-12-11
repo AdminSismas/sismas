@@ -9,7 +9,6 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,11 +19,12 @@ import { CommentsService } from '@features/bpm-workflows/services/comments/comme
 import { PageCommentsData } from '@features/bpm-workflows/models/comments/page-comments-data.model';
 import { InformationPegeable } from '@shared/models/pageable';
 import { contentInfoComments } from '@features/bpm-workflows/models/comments/content-info-comments.model';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DecodeJwt } from '@features/configuration/interfaces/users/user-details.model';
 import { UserService } from '@shared/services/auth/user.service';
 import { PAGE_SIZE_OPTION } from '@shared/constants/constants';
 import { HttpErrorResponse } from '@angular/common/http';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 
 @Component({
@@ -74,10 +74,8 @@ export class CommentsComponent implements OnInit {
   /* ============== CONSTRUCTOR ============== */
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { executionId: string },
-    private dialog: MatDialog,
     private commentsService: CommentsService,
     private readonly layoutService: VexLayoutService,
-    private alertSnakbar: MatSnackBar,
     private userService: UserService,
     private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -113,6 +111,18 @@ export class CommentsComponent implements OnInit {
     return new PageCommentsData(this.NumPage, this.NumSize);
   }
 
+  private showAlert(message: string, icon: SweetAlertIcon, showCancelButton: boolean ): void {
+    Swal.fire({
+      icon: icon,
+      text: message,
+      confirmButtonText: 'Aceptar',
+      confirmButtonColor: '#3085d6',
+      showCancelButton,
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      timer: 20000,
+    });
+  }
 
 
   /* ------- Meth. Services ------- */
@@ -137,14 +147,9 @@ export class CommentsComponent implements OnInit {
     this.viewPaginator(this.totalElements);
   }
 
-
-
   postDataCommentService(): void {
     if (!this.form.get('newCommentText')?.value.trim()) {
-      this.alertSnakbar.open('El comentario está vacío', 'Close', {
-        duration: 10000,
-        horizontalPosition: 'center'
-      });
+      this.showAlert('El comentario está vacío', 'error', false);
       return;
     } else {
       this.body.commentText = this.form.get('newCommentText')?.value.trim();
@@ -152,10 +157,7 @@ export class CommentsComponent implements OnInit {
 
     this.commentsService.postDataPropertyByComments(this.executionId, this.body).subscribe({
       next: () => {
-        this.alertSnakbar.open('Comentario Enviado', 'Close', {
-          duration: 10000,
-          horizontalPosition: 'center'
-        });
+        this.showAlert('Comentario Enviado', 'success', false);
         this.getDataFromDocumentManagementService();
         this.form.reset();
       },
@@ -169,10 +171,7 @@ export class CommentsComponent implements OnInit {
   delelteDataCommentService(commentId: number): void {
     this.commentsService.deleteDataPropertyByComments(this.executionId, commentId).subscribe({
       next: () => {
-        this.alertSnakbar.open('Comentario Eliminado', 'Close', {
-          duration: 10000,
-          horizontalPosition: 'center'
-        });
+        this.showAlert('Comentario Eliminado', 'success', false);
         this.getDataFromDocumentManagementService();
       },
       error: (err: HttpErrorResponse) => {

@@ -1,6 +1,7 @@
 import { IcaResponse } from '@shared/interfaces';
 
 export class IcaDetails {
+<<<<<<<< HEAD:src/app/shared/interfaces/property-management/ica/ica-details.ts
   domIndividualType: string;
   domIndividualTypeNumber: string;
   nombresPersona: string;
@@ -30,6 +31,39 @@ export class IcaDetails {
       `${icaResponse.primerNombre} ${icaResponse.segundoNombre}`.trim();
     this.apellidosPersona =
       `${icaResponse.primerApellido} ${icaResponse.segundoApellido}`.trim();
+========
+  apellidosPersona: string;
+  ciudadCamara: string;
+  direccionResidencia: string;
+  domActividadPrincipal: string;
+  domActividadSecundaria: string;
+  domicilioNotificacion: string;
+  domIndividualType: string;
+  domIndividualTypeNumber: string;
+  email: string;
+  escritura: string;
+  estadoRegistroMercantil: string;
+  fechaInicioActividades: Date;
+  fechaMatricula: Date;
+  granContribuyente: boolean;
+  inscritoCc: boolean;
+  matricula: string;
+  nombreEstablecimiento: string;
+  nombresPersona: string;
+  notificacionElectronica: boolean;
+  regimenTributario: string;
+  telefono: string;
+  documentoIdentidad: string;
+
+  constructor(icaResponse: IcaResponse) {
+    this.documentoIdentidad = icaResponse.documentoIdentidad ?? '';
+    this.domIndividualType = icaResponse.domIndividualType ?? '';
+    this.domIndividualTypeNumber = icaResponse.domIndividualTypeNumber ?? '';
+    this.nombresPersona =
+      `${icaResponse.primerNombre} ${icaResponse.segundoNombre ?? ''}`.trim();
+    this.apellidosPersona =
+      `${icaResponse.primerApellido} ${icaResponse.segundoApellido ?? ''}`.trim();
+>>>>>>>> despliegue-desarrollo:src/app/features/property-management/models/ica/ica-details.ts
     this.direccionResidencia = icaResponse.direccionResidencia ?? '';
     this.nombreEstablecimiento = icaResponse.nombreEstablecimiento ?? '';
     this.domicilioNotificacion = icaResponse.domicilioNotificacion ?? '';

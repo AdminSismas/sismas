@@ -12,7 +12,7 @@ export interface JSONInput {
   cssClasses?: string;
   verticalComponent?: boolean | null;
   noVisibleComponent?: boolean | null;
-  options?: { value: string; label: string }[];
+  options?: { value: string | boolean | number; label: string }[];
   multiple?: boolean;
   valueCode?: boolean;
 }

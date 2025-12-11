@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { environment as envi } from '@environments/environments';
+import { environment as envi, environment } from '@environments/environments';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
@@ -201,7 +201,7 @@ export class InformationPropertyService {
 
   getByBaunitEconoOrigin(
     id: string,
-    schema: string,
+    schema: keyof typeof environment.schemas,
     executionId?: string | null
   ): Observable<ZoneBAUnitResponse[]> {
     let url;

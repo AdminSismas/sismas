@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
-import { IcaDetails } from '@features/property-management/models/ica';
+import { IcaDetails, IcaResponse } from '@features/property-management/models/ica';
 import { DatePipe } from '@angular/common';
 import { NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 
@@ -11,8 +11,9 @@ enum IcaDetailLabel {
   domActividadPrincipal = 'Actividad Principal',
   domActividadSecundaria = 'Actividad Secundaria',
   domicilioNotificacion = 'Domicilio Notificación',
-  domIndividualType = 'Tipo de documento',
-  domIndividualTypeNumber = 'Número de documento',
+  domIndividualType = 'Tipo de persona',
+  domIndividualTypeNumber = 'Tipo de documento',
+  documentoIdentidad = 'Número de documento',
   email = 'Email',
   escritura = 'Escritura',
   estadoRegistroMercantil = 'Estado Registro Mercantil',
@@ -37,7 +38,7 @@ enum IcaDetailLabel {
 })
 export class IcaDetailsComponent {
   /* ---- Injects ---- */
-  public readonly icaResponse = inject(MAT_DIALOG_DATA);
+  public readonly icaResponse: IcaResponse = inject(MAT_DIALOG_DATA);
 
   /* ---- Properties ---- */
   public readonly title = 'Detalles ICA';
@@ -50,6 +51,7 @@ export class IcaDetailsComponent {
     'nombreEstablecimiento',
     'domIndividualType',
     'domIndividualTypeNumber',
+    'documentoIdentidad',
     'inscritoCc',
     'regimenTributario',
     'telefono',
@@ -63,7 +65,7 @@ export class IcaDetailsComponent {
     'ciudadCamara',
     'matricula',
     'direccionResidencia',
-    'domicilioNotificacion'
+    'domicilioNotificacion',
   ];
 
   /* ---- Methods ---- */

@@ -22,7 +22,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, map, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  debounceTime,
+  map,
+  Subscription,
+  switchMap
+} from 'rxjs';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import {
@@ -33,6 +39,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { ViewCertificateComponent } from '../view-certificate/view-certificate.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'procedure-state-table',
@@ -61,16 +68,19 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
   procedureStateTableService = inject(ProcedureStateTableService);
   dialog = inject(MatDialog);
 
+  /* ---- RxJs ---- */
+  private readonly refresh$ = new BehaviorSubject<void>(undefined);
+  private readonly data$ = this.refresh$.pipe(
+    switchMap(() => this.procedureStateTableService.getProcedureStateList())
+  );
+
   /* ---- Signals ---- */
   stateDataSource = toSignal<MatTableDataSource<ProcedureStateResponse>>(
-    this.procedureStateTableService.getProcedureStateList().pipe(
+    this.data$.pipe(
       map((data) => this.addFormattedStatus(data)),
       map((data) => new MatTableDataSource<ProcedureStateResponse>(data))
     )
   );
-  // procedureFile = toSignal<Blob | null>(
-  //   this.procedureStateTableService.viewProcedureFile()
-  // );
 
   /* ---- Controls ---- */
   searchInput = new FormControl('');
@@ -117,12 +127,27 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
   }
 
   /* ---- Methods ---- */
-  onViewDetails(row: ProcedureStateResponse) {
-    if (this.disabledViewButton(row.status) || row.status === 'FAILED') return;
+  onClickButtonAction(row: ProcedureStateResponse) {
+    if (this.disabledViewButton(row.status) || row.status === 'FAILED') {
+      this.retryProcedure(row.id);
+      return;
+    }
 
     this.dialog.open(ViewCertificateComponent, {
       ...MODAL_LARGE,
       data: { id: row.id }
+    });
+  }
+
+  private retryProcedure(id: string) {
+    this.procedureStateTableService.retryProcedure(id).subscribe(() => {
+      Swal.fire({
+        icon: 'success',
+        text: `El proceso número ${id} se ha solicitado de nuevo correctamente`,
+        showConfirmButton: false,
+        timer: 20000
+      });
+      this.refreshServiceStates();
     });
   }
 
@@ -137,6 +162,10 @@ export class ProcedureStateTableComponent implements OnInit, OnDestroy {
 
   disabledViewButton(status: ProcedureState): boolean {
     return status === 'PENDING' || status === 'PROCESSING';
+  }
+
+  refreshServiceStates() {
+    this.refresh$.next(undefined);
   }
 
   /* ---- Getters ---- */

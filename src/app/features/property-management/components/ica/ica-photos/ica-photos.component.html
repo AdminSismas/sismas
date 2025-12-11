@@ -1,6 +1,22 @@
 <app-modal-window [title]="title">
+  @if (edition()) {
+    <div class="flex justify-start pl-2 pb-2 lg:pl-4">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addImage()"
+      >
+        <mat-icon svgIcon="mat:add"></mat-icon>
+        Agregar foto
+      </button>
+    </div>
+  }
   @if (images().length > 0) {
-    <app-carousel [images]="images()"></app-carousel>
+    <app-carousel
+      [images]="images()"
+      [deleteButton]="edition()"
+      (deleteImage)="deleteImage($event)"
+    ></app-carousel>
   } @else {
     <div class="w-full py-8">
       <h2 class="text-center text-2xl text-slate-500 font-semibold">

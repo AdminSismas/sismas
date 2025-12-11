@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TypeInformation } from '@shared/interfaces';
 import { TYPE_INFORMATION_VISUAL } from '@shared/constants/constants';
+import { environment } from '@environments/environments';
 
 export class ContentInfoSchema {
   baunitIdE?: string | undefined | null = '';
   executionId?: string | undefined | null = '';
-  schemas?: string[] = [];
+  schemas?: (keyof typeof environment.schemas)[] = [];
   content?: any;
   typeInformation?: TypeInformation;
   flagData?: string = '';
@@ -17,7 +18,7 @@ export class ContentInfoSchema {
     baunitIdE?: string | undefined | null,
     content: any = null,
     executionId: string | null = '',
-    schemas: string[] = [],
+    schemas: (keyof typeof environment.schemas)[] = [],
     typeInformation: TypeInformation = TYPE_INFORMATION_VISUAL,
     flagData = '',
     resources: string[] = [],

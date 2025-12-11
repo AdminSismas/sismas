@@ -219,8 +219,10 @@
     @if (showBaunitIca) {
       <baunit-ica
         #baunitIcaComponent
+        [typeInformation]="typeInformation()"
         [baunitId]="baunitId!"
         [expandedComponent]="activeComponent() === 14"
+        [cadastralNumber]="baunitHead.cadastralNumber!"
         (emitExpandedComponent)="activeComponent.set($event)"
       ></baunit-ica>
     }

@@ -30,6 +30,11 @@ export const TABLE_ICA_COLUMNS: TableColumn<IcaTable>[] = [
 
 export const ICA_MENU_ITEMS = [
   {
+    id: '0',
+    icon: 'mat:edit',
+    label: 'Editar',
+  },
+  {
     id: '1',
     icon: 'mat:visibility',
     label: 'Ver detalles',
@@ -38,5 +43,10 @@ export const ICA_MENU_ITEMS = [
     id: '2',
     icon: 'mat:photo',
     label: 'Fotos',
+  },
+  {
+    id: '3',
+    icon: 'mat:delete',
+    label: 'Eliminar',
   }
 ];
