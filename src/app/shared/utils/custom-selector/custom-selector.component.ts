@@ -134,12 +134,27 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
 
   onSelectionChange(value: any): void {
     this.value = value;
+    this.onChange(value);
+    this.onTouched();
     this.selectionChange.emit(value);
   }
 
   // Métodos de ControlValueAccessor
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onChange: (value: any) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  private onTouched: () => void = () => {};
+
   writeValue(value: any): void {
     this.value = value;
+  }
+
+  registerOnChange(fn: (value: any) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
