@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  inject,
   signal
 } from '@angular/core';
 import {
@@ -34,6 +35,9 @@ import {
 import Swal from 'sweetalert2';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { CollectionServices } from '@shared/services/general/collection.service';
+import { Observable, of, map, switchMap, catchError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'vex-login',
@@ -96,51 +100,117 @@ export class LoginComponent implements AfterViewInit {
     navigationLoaderService.stopCountLoop();
   }
 
+  /* ---- Signal injects ---- */
+  private readonly collectionService = inject(CollectionServices);
+
+  platformIsAvailable(access_token: string): Observable<string> {
+    const user: DecodeJwt = jwtDecode(access_token);
+
+    if (user.role === 'ADMIN') {
+      return of(access_token);
+    }
+
+    const workCyclesDomainName = 'workCycles';
+
+    return this.collectionService.getDataDomainName(workCyclesDomainName).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          throw new HttpErrorResponse({
+            error: 'La plataforma no está disponible'
+          });
+        }
+        throw new HttpErrorResponse({
+          error: 'No se pueden obtener las fechas disponibles de la plataforma'
+        });
+      }),
+      map((workCyclesDomain) => {
+        const aperturaIndex = workCyclesDomain.findIndex(
+          (workCycle) => workCycle.dispname === 'Fecha de apertura'
+        );
+        const cierreIndex = workCyclesDomain.findIndex(
+          (workCycle) => workCycle.dispname === 'Fecha de cierre'
+        );
+
+        const apertura = workCyclesDomain[aperturaIndex];
+        const cierre = workCyclesDomain[cierreIndex];
+
+        const fechaActual = new Date();
+        const fechaApertura = new Date(
+          `${apertura.code!}, ${fechaActual.getFullYear()}`
+        );
+        const fechaCierre = new Date(
+          `${cierre.code!}, ${fechaActual.getFullYear()}`
+        );
+
+        if (fechaActual >= fechaApertura && fechaActual <= fechaCierre) {
+          return access_token;
+        }
+
+        throw new HttpErrorResponse({
+          error: 'La plataforma no está disponible'
+        });
+      })
+    );
+  }
+
   send() {
     if (this.form.valid) {
       const { email, password } = this.form.value;
 
       this.loading.set(true);
-      this.authService.login(email, password).subscribe({
-        next: (response) => {
-          if (response && response.token) {
-            this.authService.saveToken(response.token);
+      this.authService
+        .login(email, password)
+        .pipe(
+          switchMap((loginResponse) =>
+            this.platformIsAvailable(loginResponse.token)
+          )
+        )
+        .subscribe({
+          next: (token) => {
+            if (token && token) {
+              this.authService.saveToken(token);
 
-            const user: DecodeJwt = jwtDecode(response.token);
-            this.userService.setUser(user);
+              const user: DecodeJwt = jwtDecode(token);
+              this.userService.setUser(user);
+              this.loading.set(false);
+
+              this.navigationLoaderService.refreshNavigation();
+
+              this.userService.getUserInfo(user.sub).subscribe({
+                next: (res) => this.userService.setUserData(res),
+                error: () => this.alertCredentialIncorrect()
+              });
+
+              const redirectRoute =
+                user.role === 'GUEST'
+                  ? environment.myWork_cadastralSearchDa
+                  : environment.myWork_cadastralSearch;
+
+              this.router.navigate([redirectRoute]).then(() => {
+                this.authService.resetIdle();
+                Swal.fire({
+                  position: 'center',
+                  text: `Bienvenido, ${email}`,
+                  icon: 'success',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then();
+              });
+            } else {
+              this.alertCredentialIncorrect();
+            }
+          },
+          error: (error) => {
+            if (error?.error) {
+              this.loading.set(false);
+              this.alertPlatformNotAvailable(error.error);
+              return;
+            }
+
             this.loading.set(false);
-
-            this.navigationLoaderService.refreshNavigation();
-
-            this.userService.getUserInfo(user.sub).subscribe({
-              next: (res) => this.userService.setUserData(res),
-              error: () => this.alertCredentialIncorrect()
-            });
-
-            const redirectRoute =
-              user.role === 'GUEST'
-                ? environment.myWork_cadastralSearchDa
-                : environment.myWork_cadastralSearch;
-
-            this.router.navigate([redirectRoute]).then(() => {
-              this.authService.resetIdle();
-              Swal.fire({
-                position: 'center',
-                text: `Bienvenido, ${email}`,
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 3000
-              }).then();
-            });
-          } else {
             this.alertCredentialIncorrect();
           }
-        },
-        error: () => {
-          this.loading.set(false);
-          this.alertCredentialIncorrect();
-        }
-      });
+        });
     } else {
       Swal.fire({
         title: '¡Error!',
@@ -160,6 +230,17 @@ export class LoginComponent implements AfterViewInit {
       showConfirmButton: false,
       timer: 5000
     }).then();
+  }
+
+  alertPlatformNotAvailable(message: string) {
+    Swal.fire({
+      text: message,
+      icon: 'error',
+      showConfirmButton: false,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Aceptar',
+      timer: 20000
+    });
   }
 
   toggleVisibility() {
