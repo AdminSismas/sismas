@@ -21,7 +21,7 @@ export class UserService {
     private http: HttpClient
   ) {
     const token = sessionStorage.getItem('token');
-    if (token) {
+    if (token && token !== 'null') {
       const savedUser: DecodeJwt = jwtDecode(token);
       this.currentUserSubject = new BehaviorSubject<DecodeJwt | null>(
         savedUser
