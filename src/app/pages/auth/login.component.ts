@@ -141,14 +141,21 @@ export class LoginComponent implements AfterViewInit {
         const fechaCierre = new Date(
           `${cierre.code!}, ${fechaActual.getFullYear()}`
         );
-
-        if (fechaActual >= fechaApertura && fechaActual <= fechaCierre) {
-          return access_token;
-        }
-
-        throw new HttpErrorResponse({
-          error: 'La plataforma no está disponible'
+        fechaCierre.setDate(fechaCierre.getDate() + 1);
+        console.table({
+          fechaActual,
+          fechaApertura,
+          fechaCierre,
+          message: cierre.description
         });
+
+        if (fechaActual < fechaCierre && fechaActual >= fechaApertura) {
+          return access_token;
+        } else {
+          throw new HttpErrorResponse({
+            error: cierre.description
+          });
+        }
       })
     );
   }

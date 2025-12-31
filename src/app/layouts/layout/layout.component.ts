@@ -21,6 +21,7 @@ import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { SearchComponent } from '../components/toolbar/search/search.component';
 import { VexProgressBarComponent } from '@vex/components/vex-progress-bar/vex-progress-bar.component';
 import { VexConfig } from '@vex/config/vex-config.interface';
+import { WikiButtonComponent } from "../components/wiki-button/wiki-button.component";
 
 @Component({
   selector: 'vex-layout',
@@ -41,8 +42,9 @@ import { VexConfig } from '@vex/config/vex-config.interface';
     RouterOutlet,
     SearchComponent,
     VexProgressBarComponent,
-    NgClass
-  ],
+    NgClass,
+    WikiButtonComponent
+],
   standalone: true
 })
 export class LayoutComponent {

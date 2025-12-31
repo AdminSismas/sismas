@@ -6,7 +6,7 @@ while [[ "$answer" != "Y" && "$answer" != "y" && "$answer" != "N" && "$answer" !
     read answer;
 done
 
-if [ "$answer" == "n" -o "$answer" == "N" ]
+if [[ "$answer" == "n" || "$answer" == "N" ]];
 then
   echo "Por favor, realiza el merge con la rama despliegue-desarrollo"
 else

@@ -43,13 +43,11 @@
           <router-outlet></router-outlet>
         </main>
         @if (config.footer.visible) {
-          <vex-footer
-            class="vex-footer"
-          ></vex-footer>
+          <vex-footer class="vex-footer"></vex-footer>
         }
       </mat-sidenav-content>
     </mat-sidenav-container>
-    
+
     @if (config.configPanelToggle.visible) {
       <vex-config-panel-toggle
         (openConfig)="configpanel.open()"
@@ -67,4 +65,5 @@
     </vex-sidebar>
     <!-- END CONFIGPANEL -->
   </vex-base-layout>
+  <wiki-button></wiki-button>
 }
