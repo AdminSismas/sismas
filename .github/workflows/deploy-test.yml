@@ -8,8 +8,6 @@ on:
         required: true
         default: 'test'
 
-
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -35,6 +33,9 @@ jobs:
 
       - name: Build Angular App
         run: pnpm run build --configuration=test
+
+      - name: Build React Wiki
+        run: pnpm run wiki:build
 
       - name: Install sshpass
         run: |

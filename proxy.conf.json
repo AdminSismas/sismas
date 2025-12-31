@@ -4,8 +4,13 @@
     "secure": false,
     "logLevel": "debug"
   },
+  "/wiki": {
+    "target": "http://localhost:5174",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
   "/baunit/*": {
-    "target": "https://prediosplus.api.cadastre4world.com:5001",
     "secure": false,
     "logLevel": "debug"
   }

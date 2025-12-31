@@ -12,6 +12,7 @@
     "preinstall": "npx only-allow pnpm",
     "ng": "ng",
     "start": "ng serve",
+    "start:all": "concurrently \"pnpm wiki:dev\" \"ng serve --proxy-config proxy.conf.json\"",
     "start-test": "ng serve --configuration=test",
     "start-p": "ng serve --proxy-config proxy.conf.json",
     "add-environments": "node scripts/addEnvironments.js",
@@ -25,7 +26,10 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "wiki:dev": "pnpm --filter wiki dev",
+    "wiki:build": "pnpm --filter wiki build",
+    "build:all": "pnpm run build && pnpm run wiki:build"
   },
   "dependencies": {
     "@angular-material-components/file-input": "^16.0.1",
@@ -104,6 +108,7 @@
     "baseline-browser-mapping": "^2.8.27",
     "big.js": "^6.2.2",
     "chroma-js": "^2.4.2",
+    "concurrently": "^9.2.1",
     "eslint": "^9.16.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.1.0",

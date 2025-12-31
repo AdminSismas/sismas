@@ -34,6 +34,9 @@ jobs:
       - name: Build Angular App
         run: pnpm run build --configuration=calarca
 
+      - name: Build React Wiki
+        run: pnpm run wiki:build
+
       - name: Install sshpass
         run: |
           sudo apt-get update
@@ -47,4 +50,3 @@ jobs:
           --exclude ".htaccess" \
           --rsh="sshpass -p $RSYNC_PASSWORD ssh -o StrictHostKeyChecking=no -p ${{ secrets.SFTP_PORT }}" \
           ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/calarca.sismas.com.co/
-

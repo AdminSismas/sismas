@@ -34,6 +34,9 @@ jobs:
       - name: Build Angular App
         run: pnpm run build --configuration=armenia
 
+      - name: Build React Wiki
+        run: pnpm run wiki:build
+
       - name: Install sshpass
         run: |
           sudo apt-get update

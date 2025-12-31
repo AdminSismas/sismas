@@ -1,4 +1,3 @@
-
 name: Deploy to Quimbaya
 
 on:
@@ -34,6 +33,9 @@ jobs:
 
       - name: Build Angular App
         run: pnpm run build --configuration=quimbaya
+
+      - name: Build React Wiki
+        run: pnpm run wiki:build
 
       - name: Install sshpass
         run: |

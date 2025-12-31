@@ -1,3 +1,6 @@
+packages:
+  - packages/*
+
 ignoredBuiltDependencies:
   - '@scarf/scarf'
   - aws-sdk
@@ -7,3 +10,6 @@ ignoredBuiltDependencies:
   - nice-napi
 
 minimumReleaseAge: 10080
+
+onlyBuiltDependencies:
+  - '@swc/core'
