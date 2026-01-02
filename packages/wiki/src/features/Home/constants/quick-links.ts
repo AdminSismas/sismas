@@ -1,7 +1,7 @@
 export const QUICK_LINKS = [
     {
         title: 'Guía de Inicio',
-        description: 'Primeros pasos con GeoGestión',
+        description: 'Primeros pasos con Sismas',
         icon: '🚀',
         path: '/guide'
     },

@@ -6,11 +6,11 @@ const Home: React.FC = () => {
   return (
     <div className="grid gap-8">
       <section className="text-center py-12">
-        <h2 className="text-4xl font-bold bg-linear-to-r from-(--color-primary) to-(--color-accent) bg-clip-text text-transparent mb-4">
+        <h2 className="text-base-300 text-4xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text mb-4">
           Bienvenido a la Wiki
         </h2>
         <div className="flex justify-center py-10">
-          <p className="text-(--color-text-muted) text-lg max-w-2xl mx-auto">
+          <p className="text-base-content/60 text-lg max-w-2xl mx-auto">
             Encuentra documentación, guías y tutoriales para aprovechar al
             máximo el Sistema Catastral GeoGestión.
           </p>

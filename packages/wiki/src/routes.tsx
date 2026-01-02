@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import Home from './pages/Home';
-import About from './pages/About';
+import FAQ from './pages/FAQ';
+import { FirstSteps } from './pages/FirstSteps';
 import { NotFound } from './pages/NotFound';
 
 interface RouteConfig {
@@ -14,8 +15,12 @@ export const routes: RouteConfig[] = [
     element: <Home />
   },
   {
-    path: '/about',
-    element: <About />
+    path: '/faq',
+    element: <FAQ />
+  },
+  {
+    path: '/guide',
+    element: <FirstSteps />
   },
   {
     path: '*',
