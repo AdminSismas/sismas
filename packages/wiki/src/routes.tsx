@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import FAQ from './pages/FAQ';
 import { FirstSteps } from './pages/FirstSteps';
 import { NotFound } from './pages/NotFound';
+import { Wiki } from './pages/Wiki';
 
 interface RouteConfig {
   path: string;
@@ -21,6 +22,10 @@ export const routes: RouteConfig[] = [
   {
     path: '/guide',
     element: <FirstSteps />
+  },
+  {
+    path: '/wikiPage',
+    element: <Wiki />
   },
   {
     path: '*',

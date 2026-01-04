@@ -1,6 +1,25 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 
 export function Header() {
+  const [pathLogo, setPathLogo] = useState<string>(
+    'src/assets/logos/logo_sismas.png'
+  );
+  const themeController = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const controller = themeController.current;
+    if (controller) {
+      controller.addEventListener('change', () => {
+        if (controller.checked) {
+          setPathLogo('src/assets/logos/logo_sismas_dark.png');
+        } else {
+          setPathLogo('src/assets/logos/logo_sismas.png');
+        }
+      });
+    }
+  }, [themeController]);
+
   return (
     <header className="bg-base-200 border-b border-base-300 sticky top-0 z-50">
       <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
@@ -8,26 +27,21 @@ export function Header() {
           to="/"
           className="flex items-center gap-3 hover:bg-base-300 hover:rounded-lg p-2 transition-colors"
         >
-          <div className="w-10 h-10 rounded-lg bg-linear-to-br from-accent/30 to-accent/60 flex items-center justify-center">
-            <span className="text-accent-content font-bold text-lg">S</span>
-          </div>
+          <img
+            src={pathLogo}
+            alt="Logo de Sismas"
+            width={180}
+          />
           <div>
-            <h1 className="text-xl font-semibold text-base-content">
-              Wiki Sismas
-            </h1>
-            <p className="text-xs text-base-content/70">
-              Documentación del Sistema Catastral
-            </p>
+            <h1 className="text-xl font-semibold text-base-content">Wiki</h1>
           </div>
         </Link>
         <label className="swap swap-rotate text-base-content">
-          {/* check for dark mode: corporate is light, black is dark. 
-              unchecked (default) = corporate
-              checked = black */}
           <input
             type="checkbox"
             className="theme-controller"
             value="black"
+            ref={themeController}
           />
 
           {/* sun icon */}

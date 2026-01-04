@@ -6,7 +6,7 @@ const Home: React.FC = () => {
   return (
     <div className="grid gap-8">
       <section className="text-center py-12">
-        <h2 className="text-base-300 text-4xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text mb-4">
+        <h2 className="text-primary-content text-4xl font-bold bg-linear-to-r from-primary to-accent bg-clip-text mb-4">
           Bienvenido a la Wiki
         </h2>
         <div className="flex justify-center py-10">
