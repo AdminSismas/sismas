@@ -56,7 +56,7 @@ export const RULE_PAGE_HISTORICAL = 'historicalInformation';
 export const INFORMATION_HISTORICAL = 'Información histórica';
 export const INFORMATION_NOT_FOUND = 'Información No disponible';
 
-export const MAX_PAGE_SIZE_TABLE_UNIQUE = 1000;
+export const MAX_PAGE_SIZE_TABLE_UNIQUE = 10000;
 export const PAGE_SIZE_TABLE_UNIQUE = 10;
 export const PAGE_SIZE_SORT = 10;
 export const NAME_CODENAME = 'codeName';
