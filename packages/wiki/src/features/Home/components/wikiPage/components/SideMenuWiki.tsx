@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom';
+
 export function SideMenuWiki() {
   return (
     <aside className="w-1/4 lg:w-1/6 border-r border-base-content/50">
@@ -9,20 +11,20 @@ export function SideMenuWiki() {
         </span>
         <ul className="flex flex-col gap-2 pl-2">
           <li className="border-b border-base-content hover:bg-accent">
-            <a
-              href="#"
+            <NavLink
+              to="/wikiPage/introduction"
               className="text-base-content hover:text-primary-content p-2"
             >
               Introducción
-            </a>
+            </NavLink>
           </li>
           <li className="border-b border-base-content hover:bg-accent">
-            <a
-              href="#"
+            <NavLink
+              to="/wikiPage/chapter1"
               className="text-base-content hover:text-primary-content p-2"
             >
               Capítulo 1
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>

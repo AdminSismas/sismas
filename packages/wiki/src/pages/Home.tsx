@@ -1,6 +1,6 @@
 import React from 'react';
-import { QuickLink } from '../features/Home/components/QuickLink';
-import { QUICK_LINKS } from '../features/Home/constants/quick-links';
+import { QuickLink } from '../features/Home/components/home/components/QuickLink';
+import { QUICK_LINKS } from '../features/Home/components/home/constants/quick-links';
 
 const Home: React.FC = () => {
   return (

@@ -2,12 +2,15 @@ import type { ReactNode } from 'react';
 import Home from './pages/Home';
 import FAQ from './pages/FAQ';
 import { FirstSteps } from './pages/FirstSteps';
-import { NotFound } from './pages/NotFound';
 import { Wiki } from './pages/Wiki';
 
-interface RouteConfig {
+import { wikiRoutes } from './features/Home/components/wikiPage/wiki-page.routes';
+import { NotFound } from './pages/NotFound';
+
+export interface RouteConfig {
   path: string;
-  element: ReactNode;
+  element?: ReactNode;
+  children?: RouteConfig[];
 }
 
 export const routes: RouteConfig[] = [
@@ -25,7 +28,8 @@ export const routes: RouteConfig[] = [
   },
   {
     path: '/wikiPage',
-    element: <Wiki />
+    element: <Wiki />,
+    children: wikiRoutes
   },
   {
     path: '*',

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import logoLight from '../../assets/logos/logo_sismas.png';
-import logoDark from '../../assets/logos/logo_sismas_dark.png';
+import logoLight from '@assets/logos/logo_sismas.png';
+import logoDark from '@assets/logos/logo_sismas_dark.png';
 
 export function Header() {
   // Estado para el tema. Inicialmente comprobamos preferencia de sistema

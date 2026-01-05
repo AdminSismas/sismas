@@ -13,5 +13,13 @@ export default defineConfig({
   server: {
     port: 5174,
     strictPort: true,
-  }
+  },
+  resolve: {
+    alias: {
+      '@': '/src',
+      '@assets': '/src/assets',
+      '@pages': '/src/pages',
+      '@features': '/src/features',
+    },
+  },
 })
