@@ -1,9 +1,12 @@
 export function Footer() {
   return (
-    <footer className="border-t border-base-300 py-6">
-      <p className="text-center text-sm text-base-content/60">
-        © {new Date().getFullYear()}
-      </p>
+    <footer className="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+      <aside>
+        <p>
+          Copyright © {new Date().getFullYear()} - Todos los derechos
+          reservados por Sismas
+        </p>
+      </aside>
     </footer>
   );
 }

@@ -9,7 +9,7 @@ function App() {
       <Header />
 
       {/* Main Content */}
-      <main className="flex-1 px-10 sm:px-12 lg:px-16 py-12">
+      <main className="flex-1">
         <Routes>
           {routes.map((route) => (
             <Route

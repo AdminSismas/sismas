@@ -1,24 +1,28 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect } from 'react';
+import logoLight from '../../assets/logos/logo_sismas.png';
+import logoDark from '../../assets/logos/logo_sismas_dark.png';
 
 export function Header() {
-  const [pathLogo, setPathLogo] = useState<string>(
-    'src/assets/logos/logo_sismas.png'
-  );
-  const themeController = useRef<HTMLInputElement>(null);
+  // Estado para el tema. Inicialmente comprobamos preferencia de sistema
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
 
   useEffect(() => {
-    const controller = themeController.current;
-    if (controller) {
-      controller.addEventListener('change', () => {
-        if (controller.checked) {
-          setPathLogo('src/assets/logos/logo_sismas_dark.png');
-        } else {
-          setPathLogo('src/assets/logos/logo_sismas.png');
-        }
-      });
-    }
-  }, [themeController]);
+    document.documentElement.setAttribute(
+      'data-theme',
+      isDark ? 'dark' : 'light'
+    );
+  }, [isDark]);
+
+  const onChangeTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsDark(event.target.checked);
+  };
+  const currentLogo = isDark ? logoDark : logoLight;
 
   return (
     <header className="bg-base-200 border-b border-base-300 sticky top-0 z-50">
@@ -28,20 +32,27 @@ export function Header() {
           className="flex items-center gap-3 hover:bg-base-300 hover:rounded-lg p-2 transition-colors"
         >
           <img
-            src={pathLogo}
+            src={currentLogo}
             alt="Logo de Sismas"
-            width={180}
+            width={150}
           />
           <div>
-            <h1 className="text-xl font-semibold text-base-content">Wiki</h1>
+            <h1
+              className="text-xl lg:text-3xl font-semibold text-base-content"
+              style={{ fontFamily: 'Times New Roman, Times, serif' }}
+            >
+              Wiki
+            </h1>
           </div>
         </Link>
-        <label className="swap swap-rotate text-base-content">
+        <label className="swap swap-rotate">
+          {/* this hidden checkbox controls the state */}
           <input
             type="checkbox"
             className="theme-controller"
-            value="black"
-            ref={themeController}
+            value="dark"
+            checked={isDark}
+            onChange={onChangeTheme}
           />
 
           {/* sun icon */}
