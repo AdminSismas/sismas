@@ -9,6 +9,7 @@ import { NotFound } from './pages/NotFound';
 
 export interface RouteConfig {
   path: string;
+  title?: string;
   element?: ReactNode;
   children?: RouteConfig[];
 }
