@@ -1,13 +1,13 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { wikiRoutes } from '../wiki-page.routes';
 import { WikiPageHeader } from '@layouts/WikiPageHeader';
 import { useDarkTheme } from '@layouts/hooks/useDarkTheme';
 import { AsideHeader } from '@/layouts/AsideHeader';
 import logoLight from '@assets/logos/logo_sismas.png';
 import logoDark from '@assets/logos/logo_sismas_dark.png';
 import { useRef } from 'react';
+import type { RouteConfig } from '@/routes';
 
-export function WikiPage() {
+export function WikiPage({ routes }: { routes: RouteConfig[] }) {
   const { isDark, onChangeDark } = useDarkTheme();
 
   const currentLogo = isDark ? logoDark : logoLight;
@@ -97,11 +97,12 @@ export function WikiPage() {
               </label>
             </header>
             <ul className="menu bg-base-200 flex-1 w-80 p-4">
-              {wikiRoutes.map((route) => (
+              {routes.map((route) => (
                 <li key={route.path}>
                   <NavLink
                     to={route.path}
                     onClick={handleDrawerToggle}
+                    className="text-lg lg:text-xl"
                   >
                     {route.title}
                   </NavLink>

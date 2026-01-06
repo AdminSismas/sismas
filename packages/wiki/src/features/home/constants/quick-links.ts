@@ -1,9 +1,9 @@
 export const QUICK_LINKS = [
     {
-        title: 'Guía de Inicio',
-        description: 'Primeros pasos con en el wiki de Sismas',
-        icon: '🚀',
-        path: '/guide'
+        title: 'Edición de wiki',
+        description: 'Edite la wiki de Sismas',
+        icon: '✍️',
+        path: '/wikiEdit'
     },
     {
         title: 'Manual de Usuario',

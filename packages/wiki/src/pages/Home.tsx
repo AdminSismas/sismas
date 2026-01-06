@@ -1,5 +1,5 @@
 import { Footer } from '@/layouts/Footer';
-import { HomeBody } from '@features/Home/components/home/components/HomeBody';
+import { HomeBody } from '@features/home/components/HomeBody';
 import { HomeHeader } from '@layouts/HomeHeader';
 
 export function Home() {

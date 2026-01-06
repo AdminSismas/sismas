@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
-import { Home } from './pages/Home';
-import FAQ from './pages/FAQ';
-import { FirstSteps } from './pages/FirstSteps';
-import { wikiRoutes } from './features/Home/components/wikiPage/wiki-page.routes';
-import { NotFound } from './pages/NotFound';
-import { WikiPage } from './features/Home/components/wikiPage/components/WikiPage';
+import { Home } from '@pages/Home';
+import FAQ from '@pages/FAQ';
+import { wikiRoutes } from '@features/wikiPage/wiki-page.routes';
+import { NotFound } from '@pages/NotFound';
+import { WikiPage } from '@/pages/WikiPage';
+import { wikiEditRoutes } from './features/wikiEdit/wiki-edit.routes';
 
 export interface RouteConfig {
   path: string;
@@ -23,12 +23,13 @@ export const routes: RouteConfig[] = [
     element: <FAQ />
   },
   {
-    path: '/guide',
-    element: <FirstSteps />
+    path: '/wikiEdit',
+    element: <WikiPage routes={wikiEditRoutes} />,
+    children: wikiEditRoutes
   },
   {
     path: '/wikiPage',
-    element: <WikiPage />,
+    element: <WikiPage routes={wikiRoutes} />,
     children: wikiRoutes
   },
   {
