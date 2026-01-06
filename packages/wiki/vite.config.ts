@@ -20,6 +20,7 @@ export default defineConfig({
       '@assets': '/src/assets',
       '@pages': '/src/pages',
       '@features': '/src/features',
+      '@layouts': '/src/layouts'
     },
   },
 })

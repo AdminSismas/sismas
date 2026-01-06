@@ -5,6 +5,12 @@
     dark --prefersdark;
 }
 
+@media (min-width: 1024px) {
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+
 body {
   font-family:
     "Inter",
@@ -16,7 +22,7 @@ body {
     sans-serif;
   /* background: linear-gradient(135deg, var(--color-background) 0%, #1a1a2e 100%); */
   /* color: var(--color-text); */
-  min-height: 100vh;
+  height: 100vh;
   line-height: 1.6;
 }
 

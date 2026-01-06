@@ -1,6 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { Footer } from './layouts/Footer';
-import { Header } from './layouts/Header';
 import { routes } from './routes';
 
 import type { RouteConfig } from './routes';
@@ -19,15 +17,8 @@ const renderRoutes = (routes: RouteConfig[]) => {
 
 function App() {
   return (
-    <div className="h-screen w-screen flex flex-col">
-      <Header />
-
-      {/* Main Content */}
-      <main className="flex-1">
-        <Routes>{renderRoutes(routes)}</Routes>
-      </main>
-
-      <Footer />
+    <div className="h-screen w-screen flex flex-col dvh xl:pl-16 xl:pr-12">
+      <Routes>{renderRoutes(routes)}</Routes>
     </div>
   );
 }

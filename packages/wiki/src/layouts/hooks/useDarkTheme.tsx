@@ -15,8 +15,12 @@ export function useDarkTheme() {
     );
   }, [isDark]);
 
+  const onChangeDark = (isLight: boolean) => {
+    setIsDark(!isLight);
+  };
+
   return {
     isDark,
-    setIsDark
+    onChangeDark
   };
 }

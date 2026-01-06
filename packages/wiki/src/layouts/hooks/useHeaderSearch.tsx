@@ -23,7 +23,7 @@ export function useHeaderSearch({
     return () => {
       window.document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [inputSearch]);
+  });
 
   return {
     search,
