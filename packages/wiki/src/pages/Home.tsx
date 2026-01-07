@@ -1,4 +1,4 @@
-import { Footer } from '@/layouts/Footer';
+import { Footer } from '@layouts/Footer';
 import { HomeBody } from '@features/home/components/HomeBody';
 import { HomeHeader } from '@layouts/HomeHeader';
 
