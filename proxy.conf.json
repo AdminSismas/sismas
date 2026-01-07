@@ -9,9 +9,5 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
-  },
-  "/baunit/*": {
-    "secure": false,
-    "logLevel": "debug"
   }
 }

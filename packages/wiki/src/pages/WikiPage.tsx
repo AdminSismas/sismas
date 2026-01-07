@@ -97,17 +97,20 @@ export function WikiPage({ routes }: { routes: RouteConfig[] }) {
               </label>
             </header>
             <ul className="menu bg-base-200 flex-1 w-80 p-4">
-              {routes.map((route) => (
-                <li key={route.path}>
-                  <NavLink
-                    to={route.path}
-                    onClick={handleDrawerToggle}
-                    className="text-lg lg:text-xl"
-                  >
-                    {route.title}
-                  </NavLink>
-                </li>
-              ))}
+              {routes.map(
+                (route) =>
+                  route.title && (
+                    <li key={route.path}>
+                      <NavLink
+                        to={route.path}
+                        onClick={handleDrawerToggle}
+                        className="text-lg lg:text-xl"
+                      >
+                        {route.title}
+                      </NavLink>
+                    </li>
+                  )
+              )}
             </ul>
           </div>
         </div>

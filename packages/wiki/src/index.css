@@ -8,6 +8,7 @@
 @media (min-width: 1024px) {
   html {
     scrollbar-gutter: stable;
+    overflow-x: hidden;
   }
 }
 

@@ -1,26 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 export function useDarkTheme() {
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      'data-theme',
-      isDark ? 'dark' : 'light'
-    );
-  }, [isDark]);
-
-  const onChangeDark = (isLight: boolean) => {
-    setIsDark(!isLight);
-  };
-
-  return {
-    isDark,
-    onChangeDark
-  };
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useDarkTheme must be used within a ThemeProvider');
+  }
+  return context;
 }

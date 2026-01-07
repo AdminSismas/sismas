@@ -4,7 +4,7 @@ import { Chapter1 } from './components/chapter1/Chapter1';
 
 export const wikiRoutes: RouteConfig[] = [
   {
-    path: '/wikiPage/introduction',
+    path: '/wikiPage',
     title: 'Introducción',
     element: <IntroWiki />
   },
