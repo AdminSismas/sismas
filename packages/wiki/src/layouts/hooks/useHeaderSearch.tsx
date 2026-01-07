@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export function useHeaderSearch({
   inputSearch
 }: {
-  inputSearch: HTMLInputElement;
+  inputSearch: React.RefObject<HTMLInputElement | null>;
 }) {
   const [search, setSearch] = useState('');
 
@@ -14,7 +14,7 @@ export function useHeaderSearch({
 
       if (isMetaKeyDown && isKKeyDown) {
         event.preventDefault();
-        inputSearch?.focus();
+        inputSearch.current?.focus();
       }
     };
 

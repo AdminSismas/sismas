@@ -10,7 +10,8 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { forkJoin, map, Observable } from 'rxjs';
-import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import {
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';
+import {
   CREATE_USER_INPUTS,
   SEARCH_INPUTS
 } from '@shared/constants/users.constants';
@@ -51,9 +52,9 @@ export class CreateUsersComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<CreateUsersComponent>);
   public data = inject(MAT_DIALOG_DATA);
 
+  /* ---- Forms properties ---- */
   public searchInputs: JSONInput[] = SEARCH_INPUTS;
   public createUserInputs: JSONInput[] = CREATE_USER_INPUTS;
-
   public searchForm?: FormGroup;
   public newUserForm?: FormGroup;
   public individualFound?: InfoPerson | undefined;
@@ -63,6 +64,9 @@ export class CreateUsersComponent implements OnInit {
     number: string;
     individualTypeNumber: string;
   };
+
+  /* ---- Component properties ---- */
+  private username = '';
 
   ngOnInit(): void {
     if (this.data.mode === 'edit') {
@@ -184,8 +188,8 @@ export class CreateUsersComponent implements OnInit {
 
   usernameAndEmailValidator(): Observable<boolean> {
     const { email } = this.newUserForm!.value;
-    const username: string =
-      `${this.individualFound!.firstName}.${this.individualFound!.lastName}`.toLowerCase();
+    const { firstName, lastName, otherLastName } = this.individualFound!;
+    const username = this.formatUsername(firstName, lastName);
 
     return forkJoin({
       usernameExists: this.cadastralUserService.existUserName(username),
@@ -193,16 +197,13 @@ export class CreateUsersComponent implements OnInit {
     }).pipe(
       map((result) => {
         if (result.usernameExists) {
-          this.newUserForm
-            ?.get('username')
-            ?.setErrors({ usernameExists: true });
-          Swal.fire({
-            text: 'El nombre de usuario ya existe',
-            icon: 'error',
-            confirmButtonText: 'Cerrar',
-            timer: 10000
-          });
-          return true;
+          this.username = this.formatUsername(
+            firstName,
+            lastName,
+            otherLastName
+          );
+        } else {
+          this.username = username;
         }
 
         if (result.emailExists) {
@@ -236,13 +237,8 @@ export class CreateUsersComponent implements OnInit {
   }
 
   createUserService(): void {
-    const username = this.formatUsername(
-      this.individualFound!.firstName,
-      this.individualFound!.lastName
-    );
-
     const params: CreateUserParams = {
-      username: username,
+      username: this.username,
       email: this.newUserForm!.value.email,
       individual: {
         individualId: this.individualFound!.individualId
@@ -252,18 +248,25 @@ export class CreateUsersComponent implements OnInit {
     this.cadastralUserService.createUser(params).subscribe({
       next: (result) => {
         Swal.fire({
-          text: 'Usuario creado exitosamente',
+          text: `Usuario ${this.username} creado exitosamente`,
           icon: 'success',
           confirmButtonText: 'Cerrar',
-          timer: 10000
+          timer: 30000
         });
         this.dialogRef.close(result);
       }
     });
   }
 
-  formatUsername(firstName: string, lastName: string): string {
-    let username = `${firstName}.${lastName}`;
+  formatUsername(
+    firstName: string,
+    lastName: string,
+    otherLastName?: string
+  ): string {
+    let username = otherLastName
+      ? `${firstName}.${lastName}.${otherLastName}`
+      : `${firstName}.${lastName}`;
+
     username = username.toLowerCase();
     username = username.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 

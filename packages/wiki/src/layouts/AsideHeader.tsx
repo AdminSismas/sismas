@@ -13,7 +13,7 @@ export function AsideHeader({ currentLogo }: { currentLogo: string }) {
           width={150}
         />
         <h1 className="text-xl hidden lg:block lg:text-3xl font-semibold text-base-content">
-          Wiki
+          Manual
         </h1>
       </Link>
     </div>

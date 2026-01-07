@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useHeaderSearch } from './hooks/useHeaderSearch';
 
 export interface WikiPageHeaderProps {
@@ -7,9 +8,7 @@ export interface WikiPageHeaderProps {
 
 export function WikiPageHeader({ isDark, onChangeDark }: WikiPageHeaderProps) {
   // inputSearch element and useHeaderSearch function
-  const inputSearch = document.querySelector(
-    'input[type="search"]'
-  ) as HTMLInputElement;
+  const inputSearch = useRef<HTMLInputElement>(null);
   useHeaderSearch({ inputSearch });
 
   const onChangeTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +38,7 @@ export function WikiPageHeader({ isDark, onChangeDark }: WikiPageHeaderProps) {
           </g>
         </svg>
         <input
+          ref={inputSearch}
           type="search"
           className="grow"
           placeholder="Search"
