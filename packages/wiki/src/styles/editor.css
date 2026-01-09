@@ -1,0 +1,89 @@
+/* Dark mode support for react-markdown-editor-lite */
+html.dark .rc-md-editor {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border-color: hsl(var(--border));
+}
+
+html.dark .rc-md-editor .rc-md-navigation {
+  background-color: hsl(var(--muted));
+  border-color: hsl(var(--border));
+}
+
+html.dark .rc-md-editor .editor-container .section {
+  border-color: hsl(var(--border));
+}
+
+html.dark .rc-md-editor .editor-container .input {
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+}
+
+html.dark .rc-md-editor .editor-container .sec-md .input {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+html.dark .rc-md-editor .rc-md-navigation .button-wrap .button {
+  color: hsl(var(--foreground));
+}
+
+html.dark .rc-md-editor .rc-md-navigation .button-wrap .button:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+/* Ensure Dropdown menus are visible in dark mode */
+html.dark .rc-md-editor .rc-md-navigation .button-wrap .drop-wrap {
+  background-color: hsl(var(--popover));
+  border-color: hsl(var(--border));
+}
+
+html.dark .rc-md-editor .rc-md-navigation .button-wrap .drop-wrap .item {
+  color: hsl(var(--popover-foreground));
+}
+
+html.dark .rc-md-editor .rc-md-navigation .button-wrap .drop-wrap .item:hover {
+  background-color: hsl(var(--accent));
+}
+
+/* 
+   -------------------------------------------------------------------------
+   WIKIEDITOR DARK MODE FIX (Google Antigravity Solution)
+   -------------------------------------------------------------------------
+*/
+
+/* Fix for Code block highlighting contrast in dark mode */
+html.dark .prose pre {
+  background-color: #282c34 !important;
+  color: #abb2bf !important;
+}
+
+/* Remove default light background from code inside pre */
+html.dark .prose pre code {
+    background-color: transparent !important;
+    color: inherit !important;
+    padding: 0;
+    border-radius: 0;
+    font-family: monospace;
+}
+
+/* Fix for syntax highlighting spans: Transparent bg, let colors flow from HLJS */
+html.dark .prose pre code span {
+    background-color: transparent !important;
+    /* No color: inherit here! to let highlight.js colors work */
+}
+
+/* Código en Línea: Fondo muted, texto claro para fragmentos que no son bloques */
+html.dark .prose :not(pre) > code {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+/* Optional: remove prose backticks for a cleaner look */
+html.dark .prose :not(pre) > code::before,
+html.dark .prose :not(pre) > code::after {
+  content: "" !important;
+}
