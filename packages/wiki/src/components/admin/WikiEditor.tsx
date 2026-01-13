@@ -7,6 +7,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 import '@/styles/editor.css'; // Custom dark mode overrides
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import type { IncomingHttpStatusHeader } from 'http2';
 
 // Initialize markdown parser with highlight.js
 const mdParser = markdownit({
@@ -66,19 +67,30 @@ export default function WikiEditor({
   }
 
   async function handleSave() {
-    if (!slug || !title) {
-      alert('Se requieren el Slug y el Título');
+    if (!slug || !title || !content) {
+      alert('Se requieren la Ruta, el Título y el Contenido');
       return;
     }
 
     setIsSaving(true);
     try {
-      console.log('Guardando artículo...', { slug, title, content });
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert('Artículo guardado exitosamente (Simulado)!');
+      const response = await fetch('/wiki/api/articles', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ slug, title, content })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al guardar el artículo');
+      }
+
+      alert('¡Artículo guardado exitosamente!');
     } catch (error) {
       console.error('Error guardando:', error);
-      alert('Error al guardar');
+      const { message = '' } = error;
+      alert(message);
     } finally {
       setIsSaving(false);
     }
@@ -92,7 +104,7 @@ export default function WikiEditor({
             htmlFor="slug"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            Slug (URL)
+            Ruta (URL)
           </label>
           <input
             id="slug"

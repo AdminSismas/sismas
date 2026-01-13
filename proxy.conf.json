@@ -5,7 +5,7 @@
     "logLevel": "debug"
   },
   "/wiki": {
-    "target": "http://localhost:5174",
+    "target": "http://localhost:4321",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

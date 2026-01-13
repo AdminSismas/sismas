@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -11,51 +11,86 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Sismas Manual" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/png" href="/Sismas_Favicon.png" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<script is:inline>
-			// Immediate theme application to prevent FOUC
-			const getTheme = () => {
-				if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-					return localStorage.getItem('theme');
-				}
-				if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-					return 'dark';
-				}
-				return 'light';
-			};
-			const theme = getTheme();
-			if (theme === 'dark') {
-				document.documentElement.classList.add('dark');
-			} else {
-				document.documentElement.classList.remove('dark');
-			}
-		</script>
-	</head>
-	<body class="min-h-screen bg-background font-sans antialiased text-foreground">
-		<header class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-			<div class="container flex h-14 max-w-screen-2xl items-center justify-between">
-				<div class="flex items-center">
-					<a class="mr-6 flex items-center space-x-2" href="/">
-						<span class="hidden font-bold sm:inline-block">Sismas Manual</span>
-					</a>
-					<nav class="flex items-center gap-4 text-sm lg:gap-6">
-						<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/manual/bienvenida">Manual</a>
-						<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/admin">Admin</a>
-					</nav>
-				</div>
-				<div>
-					<ThemeToggle client:only="react" />
-				</div>
-			</div>
-		</header>
-		<main class="container max-w-screen-2xl py-6 lg:py-10 min-h-[calc(100vh-3.5rem)]">
-			<slot />
-		</main>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Sismas Manual"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/wiki/Sismas_Favicon.png"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <title>{title}</title>
+    <script is:inline>
+      // Immediate theme application to prevent FOUC
+      const getTheme = () => {
+        if (
+          typeof localStorage !== 'undefined' &&
+          localStorage.getItem('theme')
+        ) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      };
+      const theme = getTheme();
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-background font-sans antialiased text-foreground"
+  >
+    <header
+      class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    >
+      <div
+        class="container flex h-14 max-w-screen-2xl items-center justify-between"
+      >
+        <div class="flex items-center">
+          <a
+            class="mr-6 flex items-center space-x-2"
+            href="/wiki/"
+          >
+            <span class="hidden font-bold sm:inline-block">Sismas Manual</span>
+          </a>
+          <nav class="flex items-center gap-4 text-sm lg:gap-6">
+            <a
+              class="transition-colors hover:text-foreground/80 text-foreground/60"
+              href="/wiki/manual/bienvenida"
+              >Manual</a
+            >
+            <a
+              class="transition-colors hover:text-foreground/80 text-foreground/60"
+              href="/wiki/admin"
+              >Admin</a
+            >
+          </nav>
+        </div>
+        <div>
+          <ThemeToggle client:only="react" />
+        </div>
+      </div>
+    </header>
+    <main
+      class="container max-w-screen-2xl py-6 lg:py-10 min-h-[calc(100vh-3.5rem)]"
+    >
+      <slot />
+    </main>
+  </body>
 </html>

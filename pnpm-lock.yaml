@@ -364,6 +364,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.7(@types/react@18.3.27)
+      baseline-browser-mapping:
+        specifier: ^2.9.11
+        version: 2.9.11
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -3355,6 +3358,10 @@ packages:
 
   baseline-browser-mapping@2.8.27:
     resolution: {integrity: sha512-2CXFpkjVnY2FT+B6GrSYxzYf65BJWEqz5tIRHCvNsZZ2F3CmsCB37h8SpYgKG7y9C4YAeTipIPWG7EmFmhAeXA==}
+    hasBin: true
+
+  baseline-browser-mapping@2.9.11:
+    resolution: {integrity: sha512-Sg0xJUNDU1sJNGdfGWhVHX0kkZ+HWcvmVymJbj6NSgZZmW/8S9Y2HQ5euytnIgakgxN6papOAWiwDo1ctFDcoQ==}
     hasBin: true
 
   basic-auth@2.0.1:
@@ -11720,6 +11727,8 @@ snapshots:
 
   baseline-browser-mapping@2.8.27: {}
 
+  baseline-browser-mapping@2.9.11: {}
+
   basic-auth@2.0.1:
     dependencies:
       safe-buffer: 5.1.2
@@ -11792,7 +11801,7 @@ snapshots:
 
   browserslist@4.26.2:
     dependencies:
-      baseline-browser-mapping: 2.8.27
+      baseline-browser-mapping: 2.9.11
       caniuse-lite: 1.0.30001743
       electron-to-chromium: 1.5.222
       node-releases: 2.0.21
