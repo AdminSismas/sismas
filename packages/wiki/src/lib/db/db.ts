@@ -1,3 +1,6 @@
+import { initDB } from './functions/file-system-manager';
+import { initPersistDb } from './functions/init-persist-db';
+
 export interface WikiArticle {
   slug: string;
   title: string;
@@ -14,25 +17,8 @@ export interface WikiRepository {
   deleteArticle(slug: string): Promise<void>;
 }
 
-// In-memory mock database
-const MOCK_DB: Record<string, WikiArticle> = {
-  bienvenida: {
-    slug: 'bienvenida',
-    title: 'Bienvenido a Sismas Manual',
-    content:
-      '# Bienvenido\n\nEste es el manual interno de Sismas.\n\n## Características\n- Renderizado SSR rápido\n- Editor interactivo\n- Integración con el ecosistema existente',
-    updatedAt: new Date().toISOString(),
-    author: 'Admin'
-  },
-  arquitectura: {
-    slug: 'arquitectura',
-    title: 'Arquitectura del Sistema',
-    content:
-      '# Arquitectura\n\nEl sistema se compone de:\n1. **Angular Monorepo**: Core del negocio\n2. **Manual Astro**: Documentación rápida\n3. **Nginx**: Gateway reverso',
-    updatedAt: new Date().toISOString(),
-    author: 'Architect'
-  }
-};
+const { MOCK_DB, DB_PATH } = initDB();
+const persistDb = () => initPersistDb({ MOCK_DB, DB_PATH });
 
 export const wikiRepository: WikiRepository = {
   async getArticle(slug: string) {
@@ -44,6 +30,7 @@ export const wikiRepository: WikiRepository = {
   async saveArticle(article: WikiArticle) {
     await new Promise((resolve) => setTimeout(resolve, 100));
     MOCK_DB[article.slug] = article;
+    await persistDb();
   },
 
   async listArticles() {
@@ -54,10 +41,12 @@ export const wikiRepository: WikiRepository = {
   async editArticle(article: WikiArticle) {
     await new Promise((resolve) => setTimeout(resolve, 100));
     MOCK_DB[article.slug] = article;
+    await persistDb();
   },
 
   async deleteArticle(slug: string) {
     await new Promise((resolve) => setTimeout(resolve, 100));
     delete MOCK_DB[slug];
+    await persistDb();
   }
 };

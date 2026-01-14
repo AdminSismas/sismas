@@ -1,4 +1,4 @@
-import type { WikiArticle } from '@lib/db';
+import type { WikiArticle } from '@lib/db/db';
 import { useState } from 'react';
 import {
   AlertDialog,
@@ -9,6 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
+import { ErrorAlert } from '@/components/ErrorAlert';
 
 export function useArticle() {
   const [isSaving, setIsSaving] = useState(false);
@@ -70,26 +71,7 @@ export function useArticle() {
     }
   }
 
-  const ArticleAlert = (
-    <AlertDialog
-      open={alertState.open}
-      onOpenChange={closeAlert}
-    >
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{alertState.title}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {alertState.description}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogAction onClick={() => closeAlert(false)}>
-            Aceptar
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
+  const ArticleAlert = <ErrorAlert error={alertState.description} />;
 
   return {
     createArticle,

@@ -1,12 +1,40 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { wikiRepository } from '@lib/db';
 import { stripMarkdown } from '@lib/strip-markdown';
+import { type WikiArticle, wikiRepository } from '@lib/db/db';
+import { ErrorAlert } from '@/components/ErrorAlert';
 
-const articles = await wikiRepository.listArticles();
+let articles: WikiArticle[] = [];
+let fetchError: string | null = null;
+
+try {
+  const response = await fetch(
+    new URL('/wiki/api/articles', Astro.url.origin),
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  articles = (await response.json()) as WikiArticle[];
+} catch (error) {
+  console.error('Error al obtener los artículos:', error);
+  fetchError =
+    error instanceof Error
+      ? error.message
+      : 'Ocurrió un error desconocido al cargar los artículos.';
+}
 ---
 
 <Layout title="Manual Sismas">
+  <ErrorAlert
+    client:load
+    error={fetchError}
+  />
   <div class="space-y-6">
     <div class="space-y-2">
       <h1 class="text-3xl font-extrabold tracking-tight lg:text-5xl">
@@ -19,23 +47,24 @@ const articles = await wikiRepository.listArticles();
 
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {
-        articles.map((article) => (
-          <a
-            href={`/wiki/manual/${article.slug}`}
-            class="group relative flex flex-col space-y-2 rounded-lg border p-5 hover:bg-accent hover:text-accent-foreground transition-colors"
-          >
-            <h2 class="font-semibold tracking-tight">{article.title}</h2>
-            <p class="text-sm text-muted-foreground line-clamp-3">
-              {stripMarkdown(article.content).substring(0, 150)}...
-            </p>
-            <div class="flex items-center text-xs text-muted-foreground mt-auto pt-2">
-              <span>
-                Actualizado:{' '}
-                {new Date(article.updatedAt ?? '').toLocaleDateString()}
-              </span>
-            </div>
-          </a>
-        ))
+        articles &&
+          articles.map((article: WikiArticle) => (
+            <a
+              href={`/wiki/manual/${article.slug}`}
+              class="group relative flex flex-col space-y-2 rounded-lg border p-5 hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              <h2 class="font-semibold tracking-tight">{article.title}</h2>
+              <p class="text-sm text-muted-foreground line-clamp-3">
+                {stripMarkdown(article.content).substring(0, 150)}...
+              </p>
+              <div class="flex items-center text-xs text-muted-foreground mt-auto pt-2">
+                <span>
+                  Actualizado:{' '}
+                  {new Date(article.updatedAt ?? '').toLocaleDateString()}
+                </span>
+              </div>
+            </a>
+          ))
       }
     </div>
   </div>

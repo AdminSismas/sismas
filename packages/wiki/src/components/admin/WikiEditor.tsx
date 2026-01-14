@@ -8,7 +8,7 @@ import '@/styles/editor.css'; // Custom dark mode overrides
 import { Button } from '@/components/ui/button';
 import { cn } from '@lib/utils';
 import { useArticle } from '@/hooks/useArticles';
-import type { WikiArticle } from '@lib/db';
+import type { WikiArticle } from '@lib/db/db';
 
 // Initialize markdown parser with highlight.js
 const mdParser = markdownit({

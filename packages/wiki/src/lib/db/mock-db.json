@@ -1,0 +1,23 @@
+{
+  "bienvenida": {
+    "slug": "bienvenida",
+    "title": "Bienvenido a Sismas Manual",
+    "content": "# Bienvenido\n\nEste es el manual interno de Sismas.\n\n## Características\n- Renderizado SSR rápido\n- Editor interactivo\n- Integración con el ecosistema existente",
+    "updatedAt": "2026-01-14T18:20:54.638Z",
+    "author": "Admin"
+  },
+  "arquitectura": {
+    "slug": "arquitectura",
+    "title": "Arquitectura del Sistema",
+    "content": "# Arquitectura\n\nEl sistema se compone de:\n1. **Angular Monorepo**: Core del negocio\n2. **Manual Astro**: Documentación rápida\n3. **Nginx**: Gateway reverso",
+    "updatedAt": "2026-01-14T18:20:54.638Z",
+    "author": "Architect"
+  },
+  "prueba": {
+    "slug": "prueba",
+    "title": "Prueba",
+    "content": "# Prueba\nEsto es una prueba",
+    "updatedAt": "2026-01-14T18:34:02.873Z",
+    "author": "Admin"
+  }
+}
