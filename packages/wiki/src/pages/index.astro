@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { wikiRepository } from '@/lib/db';
-import { stripMarkdown } from '@/lib/utils';
+import { wikiRepository } from '@lib/db';
+import { stripMarkdown } from '@lib/strip-markdown';
 
 const articles = await wikiRepository.listArticles();
 ---
@@ -30,7 +30,8 @@ const articles = await wikiRepository.listArticles();
             </p>
             <div class="flex items-center text-xs text-muted-foreground mt-auto pt-2">
               <span>
-                Actualizado: {new Date(article.updatedAt).toLocaleDateString()}
+                Actualizado:{' '}
+                {new Date(article.updatedAt ?? '').toLocaleDateString()}
               </span>
             </div>
           </a>

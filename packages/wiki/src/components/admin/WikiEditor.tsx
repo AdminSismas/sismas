@@ -6,8 +6,9 @@ import 'highlight.js/styles/atom-one-dark.css';
 import 'react-markdown-editor-lite/lib/index.css';
 import '@/styles/editor.css'; // Custom dark mode overrides
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import type { IncomingHttpStatusHeader } from 'http2';
+import { cn } from '@lib/utils';
+import { useArticle } from '@/hooks/useArticles';
+import type { WikiArticle } from '@lib/db';
 
 // Initialize markdown parser with highlight.js
 const mdParser = markdownit({
@@ -20,31 +21,6 @@ const mdParser = markdownit({
     return ''; // use external default escaping
   }
 });
-
-// Configure Spanish Locale
-MdEditor.addLocale('es-ES', {
-  clear: 'Limpiar',
-  bold: 'Negrita',
-  italic: 'Cursiva',
-  header: 'Encabezado',
-  underline: 'Subrayado',
-  strikethrough: 'Tachado',
-  mark: 'Resaltar',
-  quote: 'Cita',
-  list: 'Lista',
-  ordered: 'Lista numerada',
-  link: 'Enlace',
-  image: 'Imagen',
-  code: 'Código',
-  table: 'Tabla',
-  fullScreen: 'Pantalla completa',
-  menu: 'Menú',
-  html: 'HTML',
-  view: 'Vista',
-  both: 'Ambos',
-  preview: 'Previsualización'
-});
-MdEditor.useLocale('es-ES');
 
 interface WikiEditorProps {
   initialSlug?: string;
@@ -60,40 +36,15 @@ export default function WikiEditor({
   const [slug, setSlug] = useState(initialSlug);
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
-  const [isSaving, setIsSaving] = useState(false);
+  const { createArticle, isSaving, ArticleAlert } = useArticle();
 
   function handleEditorChange({ text }: { text: string }) {
     setContent(text);
   }
 
-  async function handleSave() {
-    if (!slug || !title || !content) {
-      alert('Se requieren la Ruta, el Título y el Contenido');
-      return;
-    }
-
-    setIsSaving(true);
-    try {
-      const response = await fetch('/wiki/api/articles', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ slug, title, content })
-      });
-
-      if (!response.ok) {
-        throw new Error('Error al guardar el artículo');
-      }
-
-      alert('¡Artículo guardado exitosamente!');
-    } catch (error) {
-      console.error('Error guardando:', error);
-      const { message = '' } = error;
-      alert(message);
-    } finally {
-      setIsSaving(false);
-    }
+  function handleSaveArticle() {
+    const article: WikiArticle = { slug, title, content };
+    createArticle(article);
   }
 
   return (
@@ -175,12 +126,13 @@ export default function WikiEditor({
 
       <div className="flex justify-end pt-4">
         <Button
-          onClick={handleSave}
+          onClick={handleSaveArticle}
           disabled={isSaving}
         >
           {isSaving ? 'Guardando...' : 'Guardar Artículo'}
         </Button>
       </div>
+      {ArticleAlert}
     </div>
   );
 }

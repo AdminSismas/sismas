@@ -2,8 +2,8 @@ export interface WikiArticle {
   slug: string;
   title: string;
   content: string; // Markdown content
-  updatedAt: string;
-  author: string;
+  updatedAt?: string;
+  author?: string;
 }
 
 export interface WikiRepository {

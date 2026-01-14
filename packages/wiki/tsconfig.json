@@ -3,8 +3,16 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "baseUrl": ".",
+    "outDir": "dist",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@lib/*": ["src/lib/*"]
     }
-  }
+  },
+  "include": [
+    "src",
+    "astro.config.mjs",
+    "tailwind.config.mjs",
+    "eslint.config.js"
+  ]
 }

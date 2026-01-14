@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { wikiRepository } from '@/lib/db';
+import { wikiRepository } from '@lib/db';
 
 export const POST: APIRoute = async ({ request }) => {
   try {

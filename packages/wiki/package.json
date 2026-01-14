@@ -17,6 +17,8 @@
     "@astrojs/node": "^9.0.0",
     "@astrojs/react": "^4.1.0",
     "@astrojs/tailwind": "^5.1.4",
+    "@radix-ui/react-alert-dialog": "^1.1.15",
+    "@radix-ui/react-slot": "^1.2.4",
     "@types/markdown-it": "^14.1.2",
     "astro": "^5.1.0",
     "class-variance-authority": "^0.7.1",
