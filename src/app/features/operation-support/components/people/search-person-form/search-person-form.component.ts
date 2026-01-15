@@ -9,7 +9,8 @@ import {
   signal
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { SEARCH_PERSON_FORM } from '../../../constants/people';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';
+import { SEARCH_PERSON_FORM } from '../../../constants/people';
 import { MatIconModule } from '@angular/material/icon';
 import { FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -118,9 +119,20 @@ export class SearchPersonFormComponent implements AfterViewInit, OnDestroy {
       this.searchForm()!.get('domIndividualTypeNumber')!.value === 'Secuencial'
     ) {
       this.createSecuentialPerson();
+      this.createPersonService.setInfoPersonData(this.searchForm()!.value);
+      this.search.emit();
+      return;
     }
 
-    this.createPersonService.setInfoPersonData(this.searchForm()!.value);
+    let number = this.searchForm()!.get('number')!.value;
+    number = number.replaceAll(' ', '');
+
+    const infoPersonData = {
+      ...this.searchForm()!.value,
+      number
+    };
+
+    this.createPersonService.setInfoPersonData(infoPersonData);
 
     this.search.emit();
   }
