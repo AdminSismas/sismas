@@ -1,0 +1,46 @@
+---
+import { ThemeToggle } from '@components/ThemeToggle';
+import ligthLogo from '@assets/logos/logo_sismas.webp';
+import darkLogo from '@assets/logos/logo_sismas_dark.webp';
+---
+
+<header
+  class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+>
+  <div
+    class="container flex h-14 max-w-screen-2xl items-center justify-between"
+  >
+    <div class="flex items-center">
+      <a
+        class="mr-6 flex items-center space-x-2"
+        href="/wiki/"
+      >
+        <img
+          src={ligthLogo.src}
+          alt="Sismas Logo"
+          class="h-10 w-auto dark:hidden"
+        />
+        <img
+          src={darkLogo.src}
+          alt="Sismas Logo"
+          class="h-10 w-auto hidden dark:block"
+        />
+      </a>
+      <nav class="flex items-center gap-4 text-sm lg:gap-6">
+        <a
+          class="transition-colors hover:text-foreground/80 text-foreground/60"
+          href="/wiki/manual/bienvenida"
+          >Manual</a
+        >
+        <a
+          class="transition-colors hover:text-foreground/80 text-foreground/60"
+          href="/wiki/admin"
+          >Admin</a
+        >
+      </nav>
+    </div>
+    <div>
+      <ThemeToggle client:only="react" />
+    </div>
+  </div>
+</header>

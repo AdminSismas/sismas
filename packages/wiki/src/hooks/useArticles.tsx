@@ -8,8 +8,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle
-} from '@/components/ui/alert-dialog';
-import { ErrorAlert } from '@/components/ErrorAlert';
+} from '@components/ui/alert-dialog';
+import { ErrorAlert } from '@components/ErrorAlert';
 
 export function useArticle() {
   const [isSaving, setIsSaving] = useState(false);

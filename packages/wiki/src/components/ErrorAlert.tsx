@@ -6,8 +6,8 @@ import {
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogAction,
-} from '@/components/ui/alert-dialog';
+  AlertDialogAction
+} from '@components/ui/alert-dialog';
 
 interface ErrorAlertProps {
   error: string | null;
@@ -29,13 +29,14 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({ error }) => {
   if (!error) return null;
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
+    <AlertDialog
+      open={open}
+      onOpenChange={setOpen}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Error</AlertDialogTitle>
-          <AlertDialogDescription>
-            {error}
-          </AlertDialogDescription>
+          <AlertDialogDescription>{error}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogAction onClick={handleClose}>Aceptar</AlertDialogAction>

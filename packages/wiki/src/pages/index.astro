@@ -2,7 +2,7 @@
 import Layout from '@/layouts/Layout.astro';
 import { stripMarkdown } from '@lib/strip-markdown';
 import { type WikiArticle, wikiRepository } from '@lib/db/db';
-import { ErrorAlert } from '@/components/ErrorAlert';
+import { ErrorAlert } from '@components/ErrorAlert';
 
 let articles: WikiArticle[] = [];
 let fetchError: string | null = null;

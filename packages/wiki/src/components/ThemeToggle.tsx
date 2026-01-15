@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Moon, Sun, Laptop } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@components/ui/button';
 
 export function ThemeToggle() {
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | undefined;
+    const savedTheme = localStorage.getItem('theme') as
+      | 'light'
+      | 'dark'
+      | undefined;
     if (savedTheme) {
       setTheme(savedTheme);
     }
@@ -14,10 +17,13 @@ export function ThemeToggle() {
 
   const updateTheme = (newTheme: 'light' | 'dark' | 'system') => {
     const root = window.document.documentElement;
-    
+
     if (newTheme === 'system') {
       localStorage.removeItem('theme');
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+        .matches
+        ? 'dark'
+        : 'light';
       root.classList.remove('light', 'dark');
       root.classList.add(systemTheme);
     } else {

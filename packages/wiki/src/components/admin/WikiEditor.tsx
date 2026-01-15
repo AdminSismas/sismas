@@ -5,7 +5,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 import 'react-markdown-editor-lite/lib/index.css';
 import '@/styles/editor.css'; // Custom dark mode overrides
-import { Button } from '@/components/ui/button';
+import { Button } from '@components/ui/button';
 import { cn } from '@lib/utils';
 import { useArticle } from '@/hooks/useArticles';
 import type { WikiArticle } from '@lib/db/db';
