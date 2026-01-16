@@ -84,6 +84,7 @@ import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { stagger80ms, stagger40ms } from '@vex/animations/stagger.animation';
 import { ReplaySubject, filter } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'crud-information-constructions-property',
@@ -446,15 +447,54 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
     const formValues: ContentInformationConstruction = this.processFormValues(
       this.editForm.value
     );
-    if (this.typeCrud === 'UPDATE' && this.executionId && this.baunitId) {
-      this.updateConstruction(this.executionId, this.baunitId, formValues);
-      return;
+    this.haveToCreateConstruction = true;
+    this.buildServiceRequest(this.executionId!, this.baunitId!, formValues);
+  }
+
+  private buildServiceRequest(
+    executionId: string,
+    baunitId: string,
+    formValues: ContentInformationConstruction
+  ): void {
+    const { unitBuiltArea = 0, unitBuiltPrivateArea = 0 } = formValues;
+
+    if (unitBuiltArea! > 1000 || unitBuiltPrivateArea! > 1000) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'El área de la construcción es mayor a 1000 m2',
+        text: '¿Desea continuar?',
+        showConfirmButton: true,
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#3085d6',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#d33'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (this.typeCrud === 'UPDATE' && executionId && baunitId) {
+            this.updateConstruction(executionId, baunitId, formValues);
+            return;
+          }
+          if (this.typeCrud === 'CREATE' && executionId && baunitId) {
+            this.createConstruction(executionId, baunitId, formValues);
+            return;
+          }
+          this.isCreateOrUpdateConstruction = false;
+        } else {
+          this.haveToCreateConstruction = false;
+        }
+      });
+    } else {
+      if (this.typeCrud === 'UPDATE' && executionId && baunitId) {
+        this.updateConstruction(executionId, baunitId, formValues);
+        return;
+      }
+      if (this.typeCrud === 'CREATE' && executionId && baunitId) {
+        this.createConstruction(executionId, baunitId, formValues);
+        return;
+      }
+      this.isCreateOrUpdateConstruction = false;
     }
-    if (this.typeCrud === 'CREATE' && this.executionId && this.baunitId) {
-      this.createConstruction(this.executionId, this.baunitId, formValues);
-      return;
-    }
-    this.isCreateOrUpdateConstruction = false;
   }
 
   handleDialogClose(): void {
@@ -843,6 +883,7 @@ export class CrudInformationConstructionsPropertyComponent implements OnInit {
           this.toggleKitchenAndBathFields(this.constructionData?.domBuiltType);
           this.updateInformationKitchenAndBathFields();
           this.isCreateOrUpdateConstruction = true;
+          this.haveToCreateConstruction = false;
           this.successDialog.fire().then(() => this.stepper.next());
           this.initFormQualification(this.isIndustrialConstruction());
         },
