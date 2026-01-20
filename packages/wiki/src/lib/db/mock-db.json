@@ -19,5 +19,12 @@
     "content": "# Prueba\nEsto es una prueba",
     "updatedAt": "2026-01-14T18:34:02.873Z",
     "author": "Admin"
+  },
+  "otra-prueba": {
+    "slug": "otra-prueba",
+    "title": "Otra prueba",
+    "content": "# Una prueba más\nEsto es una prueba",
+    "updatedAt": "2026-01-20T19:10:55.086Z",
+    "author": "Admin"
   }
 }

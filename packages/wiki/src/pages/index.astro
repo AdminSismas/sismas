@@ -1,32 +1,17 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import { stripMarkdown } from '@lib/strip-markdown';
-import { type WikiArticle, wikiRepository } from '@lib/db/db';
+import { wikiRepository, type WikiArticle } from '@lib/db/db';
 import { ErrorAlert } from '@components/ErrorAlert';
 
 let articles: WikiArticle[] = [];
 let fetchError: string | null = null;
 
 try {
-  const response = await fetch(
-    new URL('/wiki/api/articles', Astro.url.origin),
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  );
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  articles = (await response.json()) as WikiArticle[];
+  articles = await wikiRepository.listArticles();
 } catch (error) {
-  console.error('Error al obtener los artículos:', error);
-  fetchError =
-    error instanceof Error
-      ? error.message
-      : 'Ocurrió un error desconocido al cargar los artículos.';
+  console.error('Error fetching articles:', error);
+  fetchError = error instanceof Error ? error.message : 'Error desconocido';
 }
 ---
 

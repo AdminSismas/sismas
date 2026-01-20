@@ -74,3 +74,8 @@ gha-creds-*.json
 .github/workflows/gemini-scheduled-triage.yml
 .github/workflows/gemini-review.yml
 .github/workflows/gemini-triage.yml
+
+# Opencode
+.opencode/opencode.db
+.opencode/opencode.db-shm
+.opencode/opencode.db-wal

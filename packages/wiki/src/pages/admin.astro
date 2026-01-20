@@ -11,9 +11,5 @@ export const prerender = false; // SSR Mode
     <p class="text-muted-foreground">Crea o edita artículos del manual.</p>
   </div>
 
-  <!-- 
-		React Island: client:only ensures it renders only on the client.
-		This isolates the heavy editor logic from the server-rendered public pages.
-	-->
   <WikiEditor client:only="react" />
 </Layout>
