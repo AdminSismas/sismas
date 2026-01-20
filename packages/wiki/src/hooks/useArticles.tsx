@@ -1,14 +1,5 @@
 import type { WikiArticle } from '@lib/db/db';
 import { useState } from 'react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle
-} from '@components/ui/alert-dialog';
 import { ErrorAlert } from '@components/ErrorAlert';
 
 export function useArticle() {
@@ -19,9 +10,9 @@ export function useArticle() {
     description: ''
   });
 
-  const closeAlert = (isOpen: boolean) => {
-    setAlertState((prev) => ({ ...prev, open: isOpen }));
-  };
+  // const closeAlert = (isOpen: boolean) => {
+  //   setAlertState((prev) => ({ ...prev, open: isOpen }));
+  // };
 
   async function createArticle({ slug, title, content }: WikiArticle) {
     if (!slug || !title || !content) {

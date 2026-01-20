@@ -11,7 +11,9 @@ if (!slug) {
   return Astro.redirect('/404');
 }
 
-const article = await wikiRepository.getArticle(slug);
+const dbResponse = await wikiRepository.getArticle(slug);
+
+const article = dbResponse[0] ?? null;
 
 if (!article) {
   return Astro.redirect('/404');

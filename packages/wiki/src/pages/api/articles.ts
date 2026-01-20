@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
-import { wikiRepository } from '@lib/db/db';
+import { wikiRepository, type WikiArticle } from '@lib/db/db';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const body = await request.json();
+    const body = (await request.json()) as WikiArticle;
     const { slug, title, content } = body;
 
     if (!slug || !title || !content) {
@@ -13,7 +13,8 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const article = await wikiRepository.getArticle(slug);
+    const dbResponse = await wikiRepository.getArticle(slug);
+    const article = dbResponse[0] ?? null;
     if (article) {
       return new Response(
         JSON.stringify({ message: 'Ya existe un artículo con esa ruta' }),
@@ -25,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
       slug,
       title,
       content,
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date(),
       author: 'Admin'
     });
 
@@ -65,7 +66,7 @@ export const PUT: APIRoute = async ({ request }) => {
       slug,
       title,
       content,
-      updatedAt: new Date().toISOString(),
+      updatedAt: new Date(),
       author: 'Admin'
     });
 

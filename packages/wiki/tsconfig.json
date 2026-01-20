@@ -11,10 +11,18 @@
       "@assets/*": ["src/assets/*"]
     }
   },
+  "plugins": [
+    {
+      "name": "@astrojs/ts-plugin"
+    }
+  ],
+  "exclude": ["dist"],
   "include": [
+    "db/*",
     "src",
     "astro.config.mjs",
     "tailwind.config.mjs",
-    "eslint.config.js"
+    "eslint.config.js",
+    ".astro/types.d.ts"
   ]
 }

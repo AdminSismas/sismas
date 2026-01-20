@@ -1,52 +1,23 @@
-import { initDB } from './functions/file-system-manager';
-import { initPersistDb } from './functions/init-persist-db';
+import { db, Articles, eq } from 'astro:db';
+export type WikiArticle = typeof Articles.$inferSelect;
 
-export interface WikiArticle {
-  slug: string;
-  title: string;
-  content: string; // Markdown content
-  updatedAt?: string;
-  author?: string;
-}
-
-export interface WikiRepository {
-  getArticle(slug: string): Promise<WikiArticle | null>;
-  saveArticle(article: WikiArticle): Promise<void>;
-  listArticles(): Promise<WikiArticle[]>;
-  editArticle(article: WikiArticle): Promise<void>;
-  deleteArticle(slug: string): Promise<void>;
-}
-
-const { MOCK_DB, DB_PATH } = initDB();
-const persistDb = () => initPersistDb({ MOCK_DB, DB_PATH });
-
-export const wikiRepository: WikiRepository = {
-  async getArticle(slug: string) {
-    // Simulate latency
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    return MOCK_DB[slug] || null;
-  },
-
-  async saveArticle(article: WikiArticle) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    MOCK_DB[article.slug] = article;
-    await persistDb();
-  },
-
+export const wikiRepository = {
   async listArticles() {
-    await new Promise((resolve) => setTimeout(resolve, 50));
-    return Object.values(MOCK_DB);
+    return db.select().from(Articles);
   },
-
-  async editArticle(article: WikiArticle) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    MOCK_DB[article.slug] = article;
-    await persistDb();
+  async getArticle(slug: string) {
+    return db.select().from(Articles).where(eq(Articles.slug, slug));
   },
-
+  async saveArticle(article: typeof Articles.$inferInsert) {
+    return db.insert(Articles).values(article);
+  },
+  async editArticle(article: typeof Articles.$inferInsert) {
+    return db
+      .update(Articles)
+      .set(article)
+      .where(eq(Articles.slug, article.slug));
+  },
   async deleteArticle(slug: string) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    delete MOCK_DB[slug];
-    await persistDb();
+    return db.delete(Articles).where(eq(Articles.slug, slug));
   }
 };
