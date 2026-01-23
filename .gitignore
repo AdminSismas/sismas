@@ -79,3 +79,7 @@ gha-creds-*.json
 .opencode/opencode.db
 .opencode/opencode.db-shm
 .opencode/opencode.db-wal
+
+# Astro DB
+packages/wiki/.astro/content.db
+
