@@ -4,43 +4,80 @@ import ligthLogo from '@assets/logos/logo_sismas.webp';
 import darkLogo from '@assets/logos/logo_sismas_dark.webp';
 ---
 
-<header
-  class="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
->
-  <div
-    class="container flex h-14 max-w-screen-2xl items-center justify-between"
+<header class="flex h-14 items-center gap-4 border-b bg-muted/40 px-6">
+  <button
+    id="sidebar-toggle"
+    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 md:hidden"
   >
-    <div class="flex items-center">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-menu-2"
+      ><path
+        stroke="none"
+        d="M0 0h24v24H0z"
+        fill="none"
+      ></path><path d="M4 6l16 0"></path><path d="M4 12l16 0"></path><path
+        d="M4 18l16 0"></path></svg
+    >
+    <span class="sr-only">Toggle sidebar</span>
+  </button>
+
+  <div class="flex items-center">
+    <a
+      class="mr-6 flex items-center space-x-2"
+      href="/wiki/"
+    >
+      <img
+        src={ligthLogo.src}
+        alt="Sismas Logo"
+        class="h-10 w-auto dark:hidden"
+      />
+      <img
+        src={darkLogo.src}
+        alt="Sismas Logo"
+        class="h-10 w-auto hidden dark:block"
+      />
+    </a>
+    <nav class="flex items-center gap-4 text-sm lg:gap-6">
       <a
-        class="mr-6 flex items-center space-x-2"
-        href="/wiki/"
+        class="hidden md:block transition-colors hover:text-foreground/80 text-foreground/60"
+        href="/wiki/admin"
+        >Admin</a
       >
-        <img
-          src={ligthLogo.src}
-          alt="Sismas Logo"
-          class="h-10 w-auto dark:hidden"
-        />
-        <img
-          src={darkLogo.src}
-          alt="Sismas Logo"
-          class="h-10 w-auto hidden dark:block"
-        />
-      </a>
-      <nav class="flex items-center gap-4 text-sm lg:gap-6">
-        <a
-          class="transition-colors hover:text-foreground/80 text-foreground/60"
-          href="/wiki/manual/bienvenida"
-          >Manual</a
-        >
-        <a
-          class="transition-colors hover:text-foreground/80 text-foreground/60"
-          href="/wiki/admin"
-          >Admin</a
-        >
-      </nav>
-    </div>
-    <div>
-      <ThemeToggle client:only="react" />
-    </div>
+    </nav>
+  </div>
+
+  <div class="ml-auto">
+    <ThemeToggle client:load />
   </div>
 </header>
+
+<script is:inline>
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebar = document.getElementById('main-sidebar');
+
+  if (sidebarToggle && sidebar) {
+    sidebarToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      sidebar.classList.toggle('-translate-x-full');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (
+        !sidebar.classList.contains('-translate-x-full') &&
+        !sidebar.contains(e.target) &&
+        !sidebarToggle.contains(e.target)
+      ) {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+  }
+</script>

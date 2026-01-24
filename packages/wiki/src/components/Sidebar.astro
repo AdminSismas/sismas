@@ -1,0 +1,83 @@
+---
+import { wikiRepository } from '@/lib/db/db';
+
+const staticLinks = [
+  { href: '/wiki', text: 'Inicio' },
+  { href: '/wiki/admin', text: 'Admin' }
+];
+
+const pages = await wikiRepository.listArticles();
+
+const articleLinks = pages.map((page) => ({
+  href: `/wiki/manual/${page.slug}`,
+  text: page.title
+}));
+
+const { pathname } = Astro.url;
+
+function isActive(linkHref: string) {
+  if (linkHref === '/wiki') {
+    console.log(pathname);
+    return pathname === '/wiki/';
+  }
+  return pathname.startsWith(linkHref);
+}
+---
+
+<style>
+  .active {
+    @apply bg-primary text-primary-foreground;
+  }
+</style>
+
+<aside
+  id="main-sidebar"
+  class="fixed inset-y-0 left-0 z-50 w-64 -translate-x-full border-r bg-background md:bg-muted/40 p-4 transition-transform duration-300 ease-in-out md:static md:translate-x-0"
+>
+  <nav class="space-y-1">
+    <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Navegación</h2>
+    <ul class="space-y-1">
+      {
+        staticLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'block rounded-md p-2 hover:bg-accent',
+                {
+                  active: isActive(link.href)
+                }
+              ]}
+            >
+              {link.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <hr class="my-2 border-border/40" />
+
+    <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Artículos</h2>
+
+    <ul class="space-y-1">
+      {
+        articleLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'block rounded-md p-2 hover:bg-accent',
+                {
+                  active: isActive(link.href)
+                }
+              ]}
+            >
+              {link.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</aside>

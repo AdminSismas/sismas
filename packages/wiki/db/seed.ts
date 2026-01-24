@@ -9,14 +9,6 @@ export default async function () {
         '# Bienvenido\n\nEste es el manual interno de Sismas.\n\n## Características\n- Renderizado SSR rápido\n- Editor interactivo\n- Integración con el ecosistema existente',
       updatedAt: new Date(),
       author: 'Admin'
-    },
-    {
-      title: 'Bienvenido a Sismas Manual 2',
-      slug: 'bienvenida2',
-      content:
-        '# Bienvenido\n\nEste es el manual interno de Sismas.\n\n## Características\n- Renderizado SSR rápido\n- Editor interactivo\n- Integración con el ecosistema existente',
-      updatedAt: new Date(),
-      author: 'Admin'
     }
   ]);
 }
