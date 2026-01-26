@@ -16,11 +16,15 @@ const articleLinks = pages.map((page) => ({
 const { pathname } = Astro.url;
 
 function isActive(linkHref: string) {
+  console.log({ linkHref });
   if (linkHref === '/wiki') {
-    console.log(pathname);
-    return pathname === '/wiki/';
+    console.log({ pathname });
+    return pathname === '/wiki/' || pathname === '/wiki';
   }
-  return pathname.startsWith(linkHref);
+  const pathRoute = pathname.split('/').pop();
+  const linkRoute = linkHref.split('/').pop();
+
+  return pathRoute === linkRoute;
 }
 ---
 

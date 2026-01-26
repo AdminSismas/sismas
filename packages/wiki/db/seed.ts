@@ -9,6 +9,14 @@ export default async function () {
         '# Bienvenido\n\nEste es el manual interno de Sismas.\n\n## Características\n- Renderizado SSR rápido\n- Editor interactivo\n- Integración con el ecosistema existente',
       updatedAt: new Date(),
       author: 'Admin'
+    },
+    {
+      title: 'Prueba',
+      slug: 'prueba',
+      content:
+        '# Prueba\n\nEste es el manual interno de Sismas.\n\n## Características\n- Renderizado SSR rápido\n- Editor interactivo\n- Integración con el ecosistema existente',
+      updatedAt: new Date(),
+      author: 'Admin'
     }
   ]);
 }
