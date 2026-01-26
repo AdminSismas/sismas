@@ -7,23 +7,25 @@ import { jwtDecode } from 'jwt-decode';
 import { UserService } from '@shared/services/auth/user.service';
 import { DecodeJwt, UserDetails } from '@shared/models';
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
-import { IDLE_TIME_MINUTES, TIMEOUT_TIME_MINUTES } from '@shared/constants/constants';
+import {
+  IDLE_TIME_MINUTES,
+  TIMEOUT_TIME_MINUTES
+} from '@shared/constants/constants';
 import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-
   private _token: string | null = null;
   private urlEndpoint = `${environment.url}:${environment.port}/auth/login`;
   private userUrl = `${environment.url}:${environment.port}/bpmUser/username/`;
 
   constructor(
-    private http: HttpClient, private router: Router,
+    private http: HttpClient,
+    private router: Router,
     private userService: UserService,
-    private idle: Idle,
+    private idle: Idle
   ) {
     idle.setIdle(IDLE_TIME_MINUTES * 60);
     idle.setTimeout(TIMEOUT_TIME_MINUTES * 60);
@@ -46,8 +48,7 @@ export class AuthService {
     });
 
     // Do something when the user becomes active again
-    idle.onIdleEnd.subscribe(() => {
-    });
+    idle.onIdleEnd.subscribe(() => {});
 
     // Do something when the user has timed out
     idle.onTimeout.subscribe(() => {
@@ -78,11 +79,24 @@ export class AuthService {
     this._token = access_token;
     try {
       sessionStorage.setItem('token', this._token);
+      this.setCookie('token', this._token);
       const user: DecodeJwt = jwtDecode(this._token);
       this.userService.setUser(user);
     } catch (error) {
       console.error('Error al guardar el token', error);
     }
+  }
+
+  private setCookie(name: string, value: string) {
+    const cookie = document.cookie;
+    const cookies = cookie.split(';');
+    cookies.forEach((cookie) => {
+      const cookieName = cookie.split('=')[0];
+      if (cookieName === name) {
+        document.cookie = `${name}=${value}`;
+      }
+    });
+    document.cookie = `${name}=${value}`;
   }
 
   // Refrescar el token
@@ -100,7 +114,11 @@ export class AuthService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.http.post<{ token: string }>(this.urlEndpoint, body, httpOptions);
+    return this.http.post<{ token: string }>(
+      this.urlEndpoint,
+      body,
+      httpOptions
+    );
   }
 
   // Verificar si está autenticado
@@ -155,7 +173,7 @@ export class AuthService {
     if (decodedToken && decodedToken.sub) {
       const username = decodedToken.sub;
       return this.http.get<UserDetails>(`${this.userUrl}${username}`).pipe(
-        catchError(err => {
+        catchError((err) => {
           console.error('Error al obtener el usuario', err);
           return throwError(() => err);
         })
@@ -164,6 +182,4 @@ export class AuthService {
     console.error('Token no disponible o no decodificado');
     return null;
   }
-
-
 }
