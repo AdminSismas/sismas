@@ -1,15 +1,23 @@
-import { db, Articles, eq } from 'astro:db';
+import { db, Articles, eq, desc } from 'astro:db';
 export type WikiArticle = typeof Articles.$inferSelect;
 
 export const wikiRepository = {
   async listArticles() {
-    return db.select().from(Articles);
+    return db.select().from(Articles).orderBy(Articles.position);
   },
   async getArticle(slug: string) {
     return db.select().from(Articles).where(eq(Articles.slug, slug));
   },
   async saveArticle(article: typeof Articles.$inferInsert) {
-    return db.insert(Articles).values(article);
+    const position = await db
+      .select({ position: Articles.position })
+      .from(Articles)
+      .orderBy(desc(Articles.position))
+      .limit(1);
+    return db.insert(Articles).values({
+      ...article,
+      position: position[0].position + 1
+    });
   },
   async editArticle(article: typeof Articles.$inferInsert) {
     return db

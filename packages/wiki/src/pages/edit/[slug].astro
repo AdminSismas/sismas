@@ -1,0 +1,28 @@
+---
+import WikiEditor from '@components/admin/WikiEditor';
+import { wikiRepository } from '@/lib/db/db';
+import Layout from '@/layouts/Layout.astro';
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+const response = await wikiRepository.getArticle(slug);
+const article = response[0];
+---
+
+<Layout title={'Editando ' + slug}>
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold tracking-tight">Editor de Contenido</h1>
+    <p class="text-muted-foreground">Crea o edita artículos del manual.</p>
+  </div>
+
+  <WikiEditor
+    client:only="react"
+    initialSlug={slug}
+    initialTitle={article.title}
+    initialContent={article.content}
+  />
+</Layout>

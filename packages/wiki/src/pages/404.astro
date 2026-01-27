@@ -1,0 +1,39 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import ligthLogo from '@assets/logos/logo_sismas.webp';
+import darkLogo from '@assets/logos/logo_sismas_dark.webp';
+---
+
+<Layout title="404">
+  <h1
+    class="font-bold text-center text-red-400"
+    style={{
+      fontSize: '4rem',
+      fontFamily: 'Roboto, sans-serif',
+      color: '#f87171'
+    }}
+  >
+    404
+  </h1>
+  <div
+    class="flex justify-center items-center w-full h-10"
+    style={{ margin: '2rem 0', height: '10rem' }}
+  >
+    <img
+      src={ligthLogo.src}
+      alt="Sismas Logo"
+      class="w-auto dark:hidden"
+      style={{ height: '10rem' }}
+    />
+    <img
+      src={darkLogo.src}
+      alt="Sismas Logo"
+      class="w-auto hidden dark:block"
+      style={{ height: '10rem' }}
+    />
+  </div>
+
+  <p class="text-lg text-center">
+    Lo sentimos, la página que estás buscando no existe.
+  </p>
+</Layout>

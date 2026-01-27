@@ -1,4 +1,3 @@
-import type { WikiArticle } from '@lib/db/db';
 import { useState } from 'react';
 import { ErrorAlert } from '@components/ErrorAlert';
 
@@ -10,11 +9,15 @@ export function useArticle() {
     description: ''
   });
 
-  // const closeAlert = (isOpen: boolean) => {
-  //   setAlertState((prev) => ({ ...prev, open: isOpen }));
-  // };
-
-  async function createArticle({ slug, title, content }: WikiArticle) {
+  async function createArticle({
+    slug,
+    title,
+    content
+  }: {
+    slug: string;
+    title: string;
+    content: string;
+  }) {
     if (!slug || !title || !content) {
       setAlertState({
         open: true,
@@ -43,12 +46,72 @@ export function useArticle() {
         '/manual/' + slug
       );
 
+      window.location.assign(`/wiki/manual/${slug}`);
       setAlertState({
         open: true,
         title: 'Operación Exitosa',
         description:
           '¡Artículo guardado exitosamente en la ruta ' + urlArticle + '!'
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error('Error guardando:', error);
+      const message = error?.message || 'Error desconocido';
+      setAlertState({
+        open: true,
+        title: 'Error',
+        description: message
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }
+  async function editArticle({
+    slug,
+    title,
+    content
+  }: {
+    slug: string;
+    title: string;
+    content: string;
+  }) {
+    if (!slug || !title || !content) {
+      setAlertState({
+        open: true,
+        title: 'Campos Requeridos',
+        description: 'Se requieren la Ruta, el Título y el Contenido'
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const response = await fetch(`/wiki/api/articles/${slug}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ slug, title, content })
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Error al guardar');
+      }
+      const urlArticle = document.location.href.replace(
+        '/admin',
+        '/manual/' + slug
+      );
+
+      window.location.assign(`/wiki/manual/${slug}`);
+      setAlertState({
+        open: true,
+        title: 'Operación Exitosa',
+        description:
+          '¡Artículo guardado exitosamente en la ruta ' + urlArticle + '!'
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Error guardando:', error);
       const message = error?.message || 'Error desconocido';
@@ -66,6 +129,7 @@ export function useArticle() {
 
   return {
     createArticle,
+    editArticle,
     isSaving,
     ArticleAlert
   };

@@ -8,7 +8,6 @@ import '@/styles/editor.css'; // Custom dark mode overrides
 import { Button } from '@components/ui/button';
 import { cn } from '@lib/utils';
 import { useArticle } from '@/hooks/useArticles';
-import type { WikiArticle } from '@lib/db/db';
 
 // Initialize markdown parser with highlight.js
 const mdParser = markdownit({
@@ -16,7 +15,9 @@ const mdParser = markdownit({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value;
-      } catch (__) {}
+      } catch {
+        console.error('Error al procesar el código');
+      }
     }
     return ''; // use external default escaping
   }
@@ -36,15 +37,20 @@ export default function WikiEditor({
   const [slug, setSlug] = useState(initialSlug);
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
-  const { createArticle, isSaving, ArticleAlert } = useArticle();
+  const { createArticle, editArticle, isSaving, ArticleAlert } = useArticle();
 
   function handleEditorChange({ text }: { text: string }) {
     setContent(text);
   }
 
   function handleSaveArticle() {
-    const article: WikiArticle = { slug, title, content };
-    createArticle(article);
+    const article = { slug, title, content };
+
+    if (initialSlug && initialTitle && initialContent) {
+      editArticle(article);
+    } else {
+      createArticle(article);
+    }
   }
 
   return (

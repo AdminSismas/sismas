@@ -20,6 +20,7 @@
   "include": [
     "db/*",
     "src",
+    "src/env.d.ts",
     "astro.config.mjs",
     "tailwind.config.mjs",
     "eslint.config.js",

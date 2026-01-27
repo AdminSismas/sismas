@@ -137,6 +137,7 @@ export class AuthService {
     // Eliminar el token y el usuario del almacenamiento local
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
+    document.cookie = 'token=; path=/';
 
     // Detener la verificación de inactividad
     this.idle.stop();

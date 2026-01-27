@@ -6,7 +6,9 @@ import Header from './Header.astro';
 interface Props {
   title: string;
 }
+
 const { title } = Astro.props;
+const { role } = Astro.locals;
 ---
 
 <!doctype html>
@@ -58,15 +60,9 @@ const { title } = Astro.props;
     class="flex min-h-screen bg-background font-sans antialiased text-foreground"
   >
     <Sidebar />
-    <!-- línea 29: Un div que contendrá la cabecera y el contenido principal. Crece para ocupar el espacio disponible. -->
     <div class="flex flex-1 flex-col">
       <Header />
-      <!-- línea 31: La cabecera de la página. -->
-
-      <!-- línea 99: El contenedor principal del contenido de la página. -->
       <main class="flex-1 p-6">
-        <!-- línea 101: ¡Esta es la parte más importante de un layout! -->
-        <!-- '<slot />' es donde Astro inyectará el contenido de la página que está usando este layout. -->
         <slot />
       </main>
     </div>

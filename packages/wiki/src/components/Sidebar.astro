@@ -1,10 +1,17 @@
 ---
 import { wikiRepository } from '@/lib/db/db';
+import { DropDownMenu } from '@components/DropDownMenu';
 
-const staticLinks = [
+const { role } = Astro.locals;
+
+let staticLinks = [
   { href: '/wiki', text: 'Inicio' },
   { href: '/wiki/admin', text: 'Admin' }
 ];
+
+if (role !== 'ADMIN') {
+  staticLinks = staticLinks.filter((link) => link.href !== '/wiki/admin');
+}
 
 const pages = await wikiRepository.listArticles();
 
@@ -16,9 +23,7 @@ const articleLinks = pages.map((page) => ({
 const { pathname } = Astro.url;
 
 function isActive(linkHref: string) {
-  console.log({ linkHref });
   if (linkHref === '/wiki') {
-    console.log({ pathname });
     return pathname === '/wiki/' || pathname === '/wiki';
   }
   const pathRoute = pathname.split('/').pop();
@@ -38,12 +43,13 @@ function isActive(linkHref: string) {
   id="main-sidebar"
   class="fixed inset-y-0 left-0 z-50 w-64 -translate-x-full border-r bg-background md:bg-muted/40 p-4 transition-transform duration-300 ease-in-out md:static md:translate-x-0"
 >
-  <nav class="space-y-1">
+  <nav>
     <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Navegación</h2>
-    <ul class="space-y-1">
+    <hr class="my-2 dark:border-slate-400 border-slate-600" />
+    <ul>
       {
         staticLinks.map((link) => (
-          <li>
+          <li class="">
             <a
               href={link.href}
               class:list={[
@@ -60,18 +66,17 @@ function isActive(linkHref: string) {
       }
     </ul>
 
-    <hr class="my-2 border-border/40" />
+    <h2 class="my-2 px-4 text-lg font-semibold tracking-tight">Artículos</h2>
+    <hr class="mb-4 dark:border-slate-400 border-slate-600" />
 
-    <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Artículos</h2>
-
-    <ul class="space-y-1">
+    <ul class="flex flex-col">
       {
         articleLinks.map((link) => (
-          <li>
+          <li class="flex justify-between">
             <a
               href={link.href}
               class:list={[
-                'block rounded-md p-2 hover:bg-accent',
+                'block rounded-md p-2 hover:bg-accent w-full',
                 {
                   active: isActive(link.href)
                 }
@@ -79,6 +84,12 @@ function isActive(linkHref: string) {
             >
               {link.text}
             </a>
+            <div class="flex items-center justify-center">
+              <DropDownMenu
+                client:only="react"
+                slug={link.href.split('/').pop()!}
+              />
+            </div>
           </li>
         ))
       }

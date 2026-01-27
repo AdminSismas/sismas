@@ -3,6 +3,12 @@ import Layout from '@/layouts/Layout.astro';
 import WikiEditor from '@components/admin/WikiEditor';
 
 export const prerender = false; // SSR Mode
+
+const { role } = Astro.locals;
+
+if (role !== 'ADMIN') {
+  return Astro.redirect('/wiki');
+}
 ---
 
 <Layout title="Admin Editor">
