@@ -1,30 +1,46 @@
-
 <section class="h-full">
+  <ng-content></ng-content>
   <div class="swiper h-full">
     <div class="swiper-wrapper">
       @for (image of images(); let index = $index; track index) {
         <div class="swiper-slide relative">
-          @if (deleteButton()) {
-            <button
-              mat-mini-fab
-              aria-label="Eliminar imagen"
-              matTooltip="Eliminar imagen"
-              color="warn"
-              class="absolute z-10 top-4 right-4"
-              tabindex="-1"
-              (click)="onDeleteImage(image.url)"
-            >
-              <mat-icon svgIcon="mat:delete"></mat-icon>
-            </button>
-          }
-
+          <div class="flex justify-end gap-2 absolute z-10 top-4 right-4">
+            @if (rotateButton()) {
+              <button
+                mat-mini-fab
+                aria-label="Rotar imagen"
+                matTooltip="Rotar imagen"
+                color="accent"
+                tabindex="-1"
+                (click)="rotateImage(image.name)"
+              >
+                <mat-icon svgIcon="mat:rotate_right"></mat-icon>
+              </button>
+            }
+            @if (deleteButton()) {
+              <button
+                mat-mini-fab
+                aria-label="Eliminar imagen"
+                matTooltip="Eliminar imagen"
+                color="warn"
+                tabindex="-1"
+                (click)="onDeleteImage(image.url)"
+              >
+                <mat-icon svgIcon="mat:delete"></mat-icon>
+              </button>
+            }
+          </div>
           <img
+            [id]="image.name"
             [src]="image.url"
-            [alt]="'Imagen ' + (index + 1)"
+            [alt]="image.name"
             class="block h-full w-auto max-w-full object-contain shadow-md shadow-black"
+            data-rotate="0"
           />
           @if (showNames()) {
-            <div class="absolute bottom-8 left-2 right-2 text-center shadow-md shadow-black bg-slate-300 bg-opacity-80 p-2 rounded">
+            <div
+              class="absolute bottom-8 left-2 right-2 text-center shadow-md shadow-black bg-slate-300 bg-opacity-80 p-2 rounded"
+            >
               <h2 class="text-lg text-slate-700 truncate">{{ image.name }}</h2>
             </div>
           }
