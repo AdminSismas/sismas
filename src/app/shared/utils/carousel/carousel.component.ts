@@ -30,6 +30,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   deleteButton = input(false, { transform: this.initBooleanValueInput });
   resetCarousel = input(false, { transform: this.initBooleanValueInput });
   showNames = input(false, { transform: this.initBooleanValueInput });
+  rotateButton = input(false, { transform: this.initBooleanValueInput });
 
   /* ---- Outputs ----- */
   deleteImage = output<string>();
@@ -114,5 +115,25 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
 
   onDeleteImage(urlFile: string): void {
     this.deleteImage.emit(urlFile);
+  }
+
+  rotateImage(nameImage: string): void {
+    const image = document.getElementById(nameImage);
+    if (!image) return;
+
+    let rotate = Number(image.getAttribute('data-rotate'));
+    rotate = rotate === 270 ? 0 : rotate + 90;
+    image.setAttribute('data-rotate', `${rotate}`);
+
+    const style = {
+      transform: `rotate(${rotate}deg)`,
+      '-webkit-transform': `rotate(${rotate}deg)`,
+      '-moz-transform': `rotate(${rotate}deg)`,
+      '-ms-transform': `rotate(${rotate}deg)`,
+      '-o-transform': `rotate(${rotate}deg)`
+    };
+    Object.entries(style).forEach(([key, value]) => {
+      image.style.setProperty(key, value);
+    });
   }
 }
