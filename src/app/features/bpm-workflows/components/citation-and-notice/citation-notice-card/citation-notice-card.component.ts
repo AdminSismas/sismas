@@ -68,10 +68,9 @@ export class CitationNoticeCardComponent implements OnInit {
 
   // Computed
   isPrintDisabled = computed<boolean>(() => {
-    if (
-      !this.processParticipant()?.viaGubernativa?.domGuvState ||
-      !this.processParticipant()?.viaGubernativa?.domGuvState
-    )
+    if (!this.processParticipant()?.viaGubernativa?.domGuvState) return true;
+
+    if (this.processParticipant()?.viaGubernativa?.domGuvState === 'Citacion')
       return true;
 
     return !Object.values(GuvStateType).includes(
@@ -92,7 +91,8 @@ export class CitationNoticeCardComponent implements OnInit {
   expirationDays = computed(() => {
     if (!this.expirationDate()) return null;
 
-    const expirationDays = new Date().getTime() - new Date(this.expirationDate()!).getTime();
+    const expirationDays =
+      new Date().getTime() - new Date(this.expirationDate()!).getTime();
     const milisecondsInDay = 1000 * 3600 * 24;
     const days = Math.floor(expirationDays / milisecondsInDay);
 
@@ -126,10 +126,6 @@ export class CitationNoticeCardComponent implements OnInit {
     this.processParticipant()!.executionId = this.executionId();
     this.processParticipant()!.typeCategory = 'citation';
     this.openAddCitationNoticeComponent(this.processParticipant()!);
-  }
-
-  executeAdvertisement() {
-    console.log('Avisando participante');
   }
 
   openAddCitationNoticeComponent(processParticipant: ProcessParticipant) {
