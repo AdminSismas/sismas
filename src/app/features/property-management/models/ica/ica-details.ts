@@ -1,6 +1,11 @@
 import { IcaResponse } from '@shared/interfaces';
 
 export class IcaDetails {
+  cadastral_number: string;
+  baunit_id: string;
+  npn_format: string;
+  departamento: string;
+  municipio: string;
   apellidosPersona: string;
   ciudadCamara: string;
   direccionResidencia: string;
@@ -25,6 +30,11 @@ export class IcaDetails {
   documentoIdentidad: string;
 
   constructor(icaResponse: IcaResponse) {
+    this.cadastral_number = icaResponse.cadastralNumber ?? '';
+    this.baunit_id = icaResponse.baunitId ?? '';
+    this.npn_format = icaResponse.npnFormat ?? '';
+    this.departamento = icaResponse.departamento ?? '';
+    this.municipio = icaResponse.municipio ?? '';
     this.documentoIdentidad = icaResponse.documentoIdentidad ?? '';
     this.domIndividualType = icaResponse.domIndividualType ?? '';
     this.domIndividualTypeNumber = icaResponse.domIndividualTypeNumber ?? '';
