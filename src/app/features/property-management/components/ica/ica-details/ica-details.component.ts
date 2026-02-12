@@ -1,11 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
-import { IcaDetails, IcaResponse } from '@features/property-management/models/ica';
+import {
+  IcaDetails,
+  IcaResponse
+} from '@features/property-management/models/ica';
 import { DatePipe } from '@angular/common';
 import { NAME_NO_DISPONIBLE } from '@shared/constants/constants';
 
 enum IcaDetailLabel {
+  cadastral_number = 'NPN',
+  baunit_id = 'Número de ficha',
+  npn_format = 'Formato NPN',
+  departamento = 'Departamento',
+  municipio = 'Municipio',
   ciudadCamara = 'Ciudad Camara',
   direccionResidencia = 'Dirección Residencia',
   domActividadPrincipal = 'Actividad Principal',
@@ -44,6 +52,11 @@ export class IcaDetailsComponent {
   public readonly title = 'Detalles ICA';
   protected readonly icaDetails = IcaDetails.mapToIcaDetails(this.icaResponse);
   protected readonly labelsOrder: (keyof typeof IcaDetailLabel)[] = [
+    'cadastral_number',
+    'baunit_id',
+    'npn_format',
+    'departamento',
+    'municipio',
     'domActividadPrincipal',
     'domActividadSecundaria',
     'nombresPersona',
