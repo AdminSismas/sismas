@@ -164,6 +164,31 @@
         class="px-0 flex-auto w-full"
       >
       </vex-text-area>
+      <div class="flex flex-col">
+        <span class="text-black font-semibold text-lg">Citar a:</span>
+        <mat-radio-group formControlName="isCitationHire">
+          <mat-radio-button
+            value="false"
+            (change)="isHireCitation.set(false)"
+            >Tercero afectado</mat-radio-button
+          >
+          <mat-radio-button
+            value="true"
+            (change)="isHireCitation.set(true)"
+            >Heredero</mat-radio-button
+          >
+        </mat-radio-group>
+      </div>
+
+      @if (isHireCitation()) {
+        <mat-form-field class="mt-4">
+          <mat-label>Información de contacto heredero</mat-label>
+          <input
+            type="text"
+            matInput
+          />
+        </mat-form-field>
+      }
     } @else if (
       typeCategory() === CONSTANTE_TYPE_PROCESS_PARTICIPANT_NOTIFIED
     ) {

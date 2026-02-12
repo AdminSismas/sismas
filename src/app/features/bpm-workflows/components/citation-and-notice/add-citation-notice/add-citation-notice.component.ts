@@ -41,6 +41,7 @@ import { InfoContact } from '@features/property-management/models/owner/info-con
 import { PeopleService } from '@features/property-management/services/property/people.service';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'vex-add-citation-notice',
@@ -62,7 +63,8 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
     ComboboxCollectionFormComponent,
     DatePipe,
     TextAreaComponent,
-    MatSlideToggle
+    MatSlideToggle,
+    MatRadioModule
   ],
   templateUrl: './add-citation-notice.component.html',
   styleUrl: './add-citation-notice.component.scss',
@@ -77,6 +79,7 @@ export class AddCitationNoticeComponent implements OnInit {
   maxDate = signal<Date>(new Date()); // Fecha máxima permitida (hoy)
   minDate = signal<Date>(new Date(0)); // Fecha minima, fecha de la radicacion
   typeCategory = signal<ProcessParticipantTableMenu['id']>('citation');
+  isHireCitation = signal<boolean>(false);
 
   executionId!: string;
   participant?: ProcessParticipant;
@@ -98,7 +101,9 @@ export class AddCitationNoticeComponent implements OnInit {
     citationNote: [
       this.processParticipant?.viaGubernativa?.citationNote || false,
       Validators.required
-    ]
+    ],
+    isCitationHire: [false, Validators.required],
+    hireContact: ['', []]
   });
 
   formNotification: FormGroup = this.fb.group({
@@ -128,8 +133,7 @@ export class AddCitationNoticeComponent implements OnInit {
     private readonly procedureService: ProceduresService,
     private readonly participantsService: ParticipantsService,
     private peopleService: PeopleService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (
