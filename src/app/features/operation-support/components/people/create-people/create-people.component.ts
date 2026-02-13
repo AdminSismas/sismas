@@ -16,7 +16,8 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { CreatePersonFormComponent } from '../create-person-form/create-person-form.component';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
+import { CreatePersonFormComponent } from '../create-person-form/create-person-form.component';
 import { SearchPersonFormComponent } from '../search-person-form/search-person-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateContactFormComponent } from '../create-contact-form/create-contact-form.component';
@@ -24,7 +25,7 @@ import { CreatePersonService } from '../../../services/people/create-person.serv
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 export interface DefaultDataCreatePerson extends Partial<InfoPerson> {
-  mode: 'create' | 'update';
+  mode: 'create' | 'update' | 'contact';
 }
 
 @Component({
@@ -55,7 +56,7 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
   peopleService = inject(PeopleService);
   createPersonService = inject(CreatePersonService);
 
-  mode: 'create' | 'update' = 'create';
+  mode: DefaultDataCreatePerson['mode'] = 'create';
 
   /* ---- Signals ---- */
   loading = signal<boolean>(true);
@@ -86,6 +87,13 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
       this.enableCreatePersonForm.set(false);
       this.enableCreateContactForm.set(false);
     }
+
+    if (this.mode === 'contact') {
+      this.enableSearchForm.set(false);
+      this.enableCreatePersonForm.set(false);
+      this.enableCreateContactForm.set(true);
+    }
+
     this.createPersonService.initInfoPersonObject();
     this.createPersonService.setInfoPersonData(this.defaults ?? {});
     this.getContactInfo();
@@ -209,7 +217,9 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
           icon: 'success',
           showConfirmButton: false,
           timer: 10000
-        }).then(() => this.dialogRef.close(this.createPersonService.infoPersonData));
+        }).then(() =>
+          this.dialogRef.close(this.createPersonService.infoPersonData)
+        );
       });
   }
 

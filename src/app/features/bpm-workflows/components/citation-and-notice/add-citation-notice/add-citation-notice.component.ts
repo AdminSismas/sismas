@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, signal } from '@angular/core';
+import { Component, Inject, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -42,6 +43,7 @@ import { PeopleService } from '@features/property-management/services/property/p
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
+import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';
 
 @Component({
   selector: 'vex-add-citation-notice',
@@ -76,11 +78,17 @@ import { MatRadioModule } from '@angular/material/radio';
 export class AddCitationNoticeComponent implements OnInit {
   labelCited = 'Datos de citacion';
   labelNotice = 'Datos de notificacion';
+
+  /* ---- Injects ---- */
+  private readonly dialog = inject(MatDialog);
+
+  /* ---- Signals ---- */
   maxDate = signal<Date>(new Date()); // Fecha máxima permitida (hoy)
   minDate = signal<Date>(new Date(0)); // Fecha minima, fecha de la radicacion
   typeCategory = signal<ProcessParticipantTableMenu['id']>('citation');
   isHireCitation = signal<boolean>(false);
 
+  /* ---- Zone states ----- */
   executionId!: string;
   participant?: ProcessParticipant;
   participationId!: number;
@@ -364,6 +372,20 @@ export class AddCitationNoticeComponent implements OnInit {
       icon: 'error',
       showConfirmButton: true
     }).then(() => this.dialogRef.close(true));
+  }
+
+  editContactInformation() {
+    this.peopleService
+      .getPersonByIndividualId(`${this.individualId}`)
+      .subscribe((infoPerson) => {
+        this.dialog.open(CreatePeopleComponent, {
+          data: {
+            mode: 'contact',
+            infoPerson,
+            contact: this.contact
+          }
+        });
+      });
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

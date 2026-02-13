@@ -17,6 +17,16 @@
     </h2>
 
     <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="editContactInformation()"
+    >
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      Editar información de contacto
+    </button>
+
+    <button
       class="text-secondary"
       mat-dialog-close
       mat-icon-button
