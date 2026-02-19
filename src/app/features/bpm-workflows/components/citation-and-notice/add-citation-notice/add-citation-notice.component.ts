@@ -179,21 +179,43 @@ export class AddCitationNoticeComponent implements OnInit {
 
   contactParticipation(res: InfoContact) {
     this.contact = res;
-    if (!this.contact || !this.contact?.phoneNumber || !this.contact?.address) {
+
+    if (!this.contact) {
+      Swal.fire({
+        icon: 'error',
+        text: 'El participante no tiene información de contacto.',
+        timer: 20000
+      });
+      return;
+    }
+
+    const warningMessages: Record<'phoneNumber' | 'address' | 'email', string> =
+      {
+        phoneNumber: 'número de teléfono',
+        address: 'dirección',
+        email: 'correo electrónico'
+      };
+
+    const { phoneNumber, address, email } = this.contact;
+
+    const warningMessagesArray = [
+      !phoneNumber ? warningMessages.phoneNumber : '',
+      !address ? warningMessages.address : '',
+      !email ? warningMessages.email : ''
+    ].filter(Boolean);
+
+    if (warningMessagesArray.length > 0) {
       Swal.fire({
         icon: 'warning',
-        text: 'No se ha encontrado información de contacto para este participante.',
+        text:
+          'El participante no tiene información de: ' +
+          warningMessagesArray.join(', '),
         confirmButtonText: 'Continuar',
         confirmButtonColor: '#3085d6',
-        showCancelButton: true,
-        cancelButtonText: 'Cancelar',
-        cancelButtonColor: '#d33'
-      }).then((result) => {
-        if (result.isDismissed) {
-          this.dialogRef.close();
-        }
+        timer: 20000
       });
     }
+
     this.obtainProcedure();
   }
 
