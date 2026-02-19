@@ -403,8 +403,8 @@ export class AddCitationNoticeComponent implements OnInit {
         this.dialog.open(CreatePeopleComponent, {
           data: {
             mode: 'contact',
-            infoPerson,
-            contact: this.contact
+            ...infoPerson,
+            ...this.contact
           }
         });
       });

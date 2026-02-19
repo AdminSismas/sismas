@@ -71,9 +71,7 @@ export class CreatePersonService {
     );
   }
 
-  updateContact(
-    individualId: number,
-  ): Observable<InfoContact> {
+  updateContact(individualId: number): Observable<InfoContact> {
     const url = `${this.url_basic}${envi.contact}/${individualId}`;
     const body = new InfoContact(this._infoPersonObject);
 

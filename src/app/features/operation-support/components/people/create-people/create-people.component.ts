@@ -51,7 +51,9 @@ export interface DefaultDataCreatePerson extends Partial<InfoPerson> {
 })
 export class CreatePeopleComponent implements OnInit, OnDestroy {
   /* ---- Injects ---- */
-  defaults = inject<DefaultDataCreatePerson | undefined>(MAT_DIALOG_DATA);
+  createPeopleProps = inject<DefaultDataCreatePerson | undefined>(
+    MAT_DIALOG_DATA
+  );
   dialogRef = inject(MatDialogRef<CreatePeopleComponent>);
   peopleService = inject(PeopleService);
   createPersonService = inject(CreatePersonService);
@@ -66,12 +68,13 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
   enableCreatePersonForm = signal<boolean>(true);
   enableSearchForm = signal<boolean>(false);
   sendContactForm = signal<boolean>(false);
+  contactInfoData = signal<Partial<InfoPerson> | undefined>(undefined);
 
   /* ---- Computeds ---- */
   getCreatePersonFormValues = computed<boolean>(() => this.contactFormValid());
   modalTitle = computed<string>(() => {
     let title = 'Crear persona';
-    const { firstName, lastName } = this.defaults!;
+    const { firstName, lastName } = this.createPeopleProps!;
 
     if (firstName || lastName) {
       title = firstName + ' ' + lastName;
@@ -81,7 +84,7 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit() {
-    this.mode = this.defaults?.mode ?? 'create';
+    this.mode = this.createPeopleProps?.mode ?? 'create';
     if (this.mode === 'create') {
       this.enableSearchForm.set(true);
       this.enableCreatePersonForm.set(false);
@@ -95,7 +98,7 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
     }
 
     this.createPersonService.initInfoPersonObject();
-    this.createPersonService.setInfoPersonData(this.defaults ?? {});
+    this.createPersonService.setInfoPersonData(this.createPeopleProps ?? {});
     this.getContactInfo();
   }
 
@@ -197,7 +200,7 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
 
     const individualId = `${this.createPersonService.infoPersonData.individualId}`;
     const people = {
-      ...this.defaults,
+      ...this.createPeopleProps,
       ...this.createPersonService.infoPersonData
     };
     if (!individualId) {
@@ -224,18 +227,21 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
   }
 
   getContactInfo() {
-    if (!this.defaults?.individualId) {
+    if (!this.createPeopleProps?.individualId) {
+      this.contactInfoData.set(this.createPersonService.infoPersonData);
       this.loading.set(false);
       return;
     }
 
-    const { individualId } = this.defaults;
+    const { individualId } = this.createPeopleProps;
     this.peopleService.getContactByIndividualId(individualId).subscribe({
       next: (contact) => {
         this.createPersonService.setInfoPersonData(contact);
+        this.contactInfoData.set(this.createPersonService.infoPersonData);
         this.loading.set(false);
       },
       error: () => {
+        this.contactInfoData.set(this.createPersonService.infoPersonData);
         this.loading.set(false);
       }
     });
