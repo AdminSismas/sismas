@@ -3,13 +3,14 @@
     #bgVideo
     autoplay
     muted
-    loop
+    [loop]="!isMultipleVideos"
     playsinline
     id="bg-video"
     (loadedmetadata)="onVideoLoaded()"
+    (ended)="onVideoEnded()"
   >
     <source
-      [src]="videoPath"
+      [src]="currentVideo"
       type="video/mp4"
     />
     Tu navegador no soporta video HTML5.
@@ -125,7 +126,9 @@
               />
             </div>
           }
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center"
+          >
             @if (seeLogoRetiro) {
               <img
                 class="h-20 w-auto object-contain"
@@ -137,7 +140,9 @@
             <img
               class="h-20 w-auto object-contain"
               [attr.src]="logoPath"
-              [class.col-span-full]="!seeLogoRetiro && logoPathGeogestion === ''"
+              [class.col-span-full]="
+                !seeLogoRetiro && logoPathGeogestion === ''
+              "
               alt="logo principal"
             />
 
@@ -149,7 +154,6 @@
               />
             }
           </div>
-
         </div>
       </div>
     </div>
