@@ -3,9 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment as envi } from '@environments/environments';
 
-export interface Photo {
-  key: string;
-  url: string;
+interface Photo {
+  filename: string;
+  takenDate: Date;
 }
 
 @Injectable({
@@ -18,15 +18,19 @@ export class PhotosService {
   listNamePhotos(
     baunitId: string,
     municipioId: string
-  ): Observable<{ url: string; name: string }[]> {
+  ): Observable<{ url: string; name: string; date: Date }[]> {
     const url = `${this.base_url}${baunitId}${envi.photos}`;
     const params = new HttpParams().set('municipioId', municipioId);
 
-    return this.http.get<string[]>(url, { params }).pipe(
-      map((fileNames) => {
-        return fileNames.map((fileName: string) => {
-          const urlFile = `${this.base_url}${baunitId}${envi.photos}/${fileName}?municipioId=${municipioId}`;
-          return { url: urlFile, name: fileName };
+    return this.http.get<Photo[]>(url, { params }).pipe(
+      map((photos) => {
+        return photos.map((photo) => {
+          const urlFile = `${this.base_url}${baunitId}${envi.photos}/${photo.filename}?municipioId=${municipioId}`;
+          return {
+            url: urlFile,
+            name: photo.filename,
+            date: photo?.takenDate ?? undefined
+          };
         });
       })
     );

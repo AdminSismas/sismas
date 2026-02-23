@@ -36,12 +36,7 @@ export class IcaPhotosComponent implements OnInit {
   public readonly baunitId = this.icaDialogData.baunitId;
 
   /* ---- Signals ----- */
-  images = signal<{ url: string; name: string }[]>([]);
-  //   this.icaDialogData.photos.map((photo) => ({
-  //     url: this.createImageUrl(photo),
-  //     name: photo
-  //   }))
-  // );
+  images = signal<{ url: string; name: string; date?: Date }[]>([]);
   edition = signal(this.icaDialogData.edition);
 
   /* ---- Lifecycle ----- */
@@ -60,8 +55,9 @@ export class IcaPhotosComponent implements OnInit {
       .subscribe((images) => {
         this.images.set(
           images.map((image) => ({
-            url: this.createImageUrl(image),
-            name: image
+            url: this.createImageUrl(image.filename),
+            name: image.filename,
+            date: image?.takenDate ?? undefined
           }))
         );
       });
