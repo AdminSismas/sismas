@@ -3,13 +3,14 @@
     #bgVideo
     autoplay
     muted
-    loop
+    [loop]="!isMultipleVideos"
     playsinline
     id="bg-video"
     (loadedmetadata)="onVideoLoaded()"
+    (ended)="onVideoEnded()"
   >
     <source
-      [src]="videoPath"
+      [src]="currentVideo"
       type="video/mp4"
     />
     Tu navegador no soporta video HTML5.
@@ -114,7 +115,12 @@
           Ingresar
         </button>
       }
-      <div class="p-6 pb-0 flex flex-col items-center justify-center">
+      <div
+        class="flex flex-col items-center justify-center"
+        [class.p-6.pb-0]="
+          logoPathGeogestion !== 'assets/img/logo/QuindioBottom.png'
+        "
+      >
         <div class="fill-current text-center w-full max-w-4xl space-y-6">
           @if (logoPathMasora !== "") {
             <div class="flex justify-center">
@@ -125,7 +131,12 @@
               />
             </div>
           }
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center">
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center"
+            [class.gap-6]="
+              logoPathGeogestion !== 'assets/img/logo/QuindioBottom.png'
+            "
+          >
             @if (seeLogoRetiro) {
               <img
                 class="h-20 w-auto object-contain"
@@ -137,19 +148,28 @@
             <img
               class="h-20 w-auto object-contain"
               [attr.src]="logoPath"
-              [class.col-span-full]="!seeLogoRetiro && logoPathGeogestion === ''"
+              [class.h-20]="logoPath !== 'assets/img/logo/QuindioBottom.png'"
+              [class.col-span-full]="
+                !seeLogoRetiro &&
+                logoPathGeogestion !== 'assets/img/logo/logo_manizales_2.png'
+              "
               alt="logo principal"
             />
 
             @if (logoPathGeogestion !== "") {
               <img
-                class="h-20 w-auto object-contain"
+                class="w-auto object-contain"
+                [class.h-20]="
+                  logoPathGeogestion !== 'assets/img/logo/QuindioBottom.png'
+                "
+                [class.col-span-full]="
+                  logoPathGeogestion === 'assets/img/logo/QuindioBottom.png'
+                "
                 [attr.src]="logoPathGeogestion"
                 alt="logo geogestion"
               />
             }
           </div>
-
         </div>
       </div>
     </div>

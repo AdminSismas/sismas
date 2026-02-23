@@ -134,8 +134,6 @@ export class CustomSelectorComponent implements OnInit, OnChanges {
 
   onSelectionChange(value: any): void {
     this.value = value;
-    this.onChange(value);
-    this.onTouched();
     this.selectionChange.emit(value);
   }
 

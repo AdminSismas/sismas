@@ -1,0 +1,49 @@
+name: Deploy to Filandia
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select Environment'
+        required: true
+        default: 'quindio'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Angular App
+        run: pnpm run build --configuration=quindio
+
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      - name: Deploy to Quindio
+        env:
+          RSYNC_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
+        run: |
+          rsync -avz --delete --no-perms --no-owner --no-group --no-t \
+          --exclude ".htaccess" \
+          --rsh="sshpass -p $RSYNC_PASSWORD ssh -o StrictHostKeyChecking=no -p ${{ secrets.SFTP_PORT }}" \
+          ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/filandia.sismas.com.co/
