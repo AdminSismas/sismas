@@ -15,6 +15,7 @@ const emailValidator = (): ValidatorFn => {
 
 const min03Characters = (): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value: any = control.value;
     if (
       value !== null &&
