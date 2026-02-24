@@ -1,49 +1,52 @@
-name: Deploy to Armenia
+name: Deploy Armenia (SSM)
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Select Environment'
-        required: true
-        default: 'armenia'
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          ref: main
+          role-to-assume: arn:aws:iam::476114140163:role/GitHub-Portal-DeployRole
+          aws-region: us-east-1
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build Angular App
-        run: pnpm run build --configuration=armenia
-
-      - name: Install sshpass
+      - name: Deploy Armenia via SSM
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids "i-05e4578276976506e" \
+            --document-name "AWS-RunShellScript" \
+            --comment "Deploy Armenia from GitHub Actions" \
+            --parameters commands='[
+              "cd /opt/sismas-source",
+              "git pull origin main",
+              "/usr/bin/pnpm install --frozen-lockfile",
+              "/usr/bin/pnpm run build --configuration=armenia",
+              "rm -rf /usr/share/nginx/armenia.sismas.com.co/*",
+              "cp -r dist/* /usr/share/nginx/armenia.sismas.com.co/"
+            ]' \
+            --query "Command.CommandId" \
+            --output text)
 
-      - name: Deploy to Armenia
-        env:
-          RSYNC_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
-        run: |
-          rsync -avz --delete --no-perms --no-owner --no-group --no-t \
-          --exclude ".htaccess" \
-          --rsh="sshpass -p $RSYNC_PASSWORD ssh -o StrictHostKeyChecking=no -p ${{ secrets.SFTP_PORT }}" \
-          ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/armenia.sismas.com.co/
+          echo "Command ID: $COMMAND_ID"
+
+          aws ssm wait command-executed \
+            --command-id $COMMAND_ID \
+            --instance-id i-05e4578276976506e
+
+          aws ssm get-command-invocation \
+            --command-id $COMMAND_ID \
+            --instance-id i-05e4578276976506e
