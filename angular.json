@@ -73,31 +73,6 @@
             "browser": "src/main.ts"
           },
           "configurations": {
-            "production": {
-              "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": true
-                }
-              },
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.prod.ts"
-                }
-              ]
-            },
             "armenia": {
               "optimization": {
                 "scripts": true,
@@ -123,6 +98,31 @@
                 }
               ]
             },
+            "barrancabermeja": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.barrancabermeja.ts"
+                }
+              ]
+            },
             "calarca": {
               "optimization": {
                 "scripts": true,
@@ -145,6 +145,51 @@
                 {
                   "replace": "src/environments/environments.ts",
                   "with": "src/environments/environments.calarca.ts"
+                }
+              ]
+            },
+            "dev": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "8mb",
+                  "maximumError": "10mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.dev.ts"
+                }
+              ]
+            },
+            "filandia": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.filandia.ts"
                 }
               ]
             },
@@ -198,7 +243,7 @@
                 }
               ]
             },
-            "filandia": {
+            "montenegro": {
               "optimization": {
                 "scripts": true,
                 "styles": {
@@ -219,11 +264,11 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.filandia.ts"
+                  "with": "src/environments/environments.montenegro.ts"
                 }
               ]
             },
-            "barrancabermeja": {
+            "production": {
               "optimization": {
                 "scripts": true,
                 "styles": {
@@ -244,7 +289,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.barrancabermeja.ts"
+                  "with": "src/environments/environments.prod.ts"
                 }
               ]
             },
@@ -297,51 +342,6 @@
                   "with": "src/environments/environments.quindio.ts"
                 }
               ]
-            },
-            "montenegro": {
-              "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": true
-                }
-              },
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.montenegro.ts"
-                }
-              ]
-            },
-            "test": {
-              "optimization": false,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": true,
-              "extractLicenses": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "8mb",
-                  "maximumError": "10mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.test.ts"
-                }
-              ]
             }
           }
         },
@@ -360,6 +360,9 @@
             },
             "calarca": {
               "buildTarget": "geoGestion:build:calarca"
+            },
+            "dev": {
+              "buildTarget": "geoGestion:build:dev"
             },
             "filandia": {
               "buildTarget": "geoGestion:build:filandia"
@@ -381,9 +384,6 @@
             },
             "quindio": {
               "buildTarget": "geoGestion:build:quindio"
-            },
-            "test": {
-              "buildTarget": "geoGestion:build:test"
             }
           }
         },

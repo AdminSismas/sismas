@@ -1,4 +1,3 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -15,45 +14,21 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
-    "types": ["jest","node"],
+    "lib": ["es2020", "dom"],
+    "types": ["jest", "node"],
     "useDefineForClassFields": false,
     "paths": {
-      "@vex/*": [
-        "./src/@vex/*"
-      ],
-      "@pages/*": [
-        "src/app/pages/*"
-      ],
-      "@features/*": [
-        "src/app/features/*"
-      ],
-      "@shared/*": [
-        "src/app/shared/*"
-      ],
-      "@core/*": [
-        "src/app/core/*"
-      ],
-      "@components/*": [
-        "src/app/shared/ui/components/*"
-      ],
-      "@services/*": [
-        "src/app/shared/services/*"
-      ],
-      "@models/*": [
-        "src/app/shared/models/*"
-      ],
-      "@pipes/*": [
-        "src/app/shared/pipes/*"
-      ],
-      "@environments/*":[
-        "src/environments/*"
-      ]
-    },
-
+      "@vex/*": ["./src/@vex/*"],
+      "@pages/*": ["src/app/pages/*"],
+      "@features/*": ["src/app/features/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@core/*": ["src/app/core/*"],
+      "@components/*": ["src/app/shared/ui/components/*"],
+      "@services/*": ["src/app/shared/services/*"],
+      "@models/*": ["src/app/shared/models/*"],
+      "@pipes/*": ["src/app/shared/pipes/*"],
+      "@environments/*": ["src/environments/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

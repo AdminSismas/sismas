@@ -1,43 +1,43 @@
-name: Deploy to Test on Push to Despliegue-Desarrollo
+name: Deploy Desarrollo (SSM)
 
 on:
-  push:
-    branches:
-      - despliegue-desarrollo
+  workflow_dispatch:
+
+concurrency:
+  group: sismas-deploy
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
-          ref: despliegue-desarrollo
+          role-to-assume: arn:aws:iam::476114140163:role/GitHub-Portal-DeployRole
+          aws-region: us-east-1
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build Angular App
-        run: pnpm run build --configuration=test
-      - name: Install sshpass
+      - name: Deploy Desarrollo
         run: |
-          sudo apt-get update
-          sudo apt-get install -y sshpass
-      - name: Deploy to Test
-        env:
-          RSYNC_PASSWORD: ${{ secrets.SFTP_PASSWORD }}
-        run: |
-          rsync -avz --delete --no-perms --no-owner --no-group --no-t \
-          --exclude ".htaccess" \
-          --rsh="sshpass -p $RSYNC_PASSWORD ssh -o StrictHostKeyChecking=no -p ${{ secrets.SFTP_PORT }}" \
-          ./dist/ ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }}:/var/www/dev.sismas.com.co/
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids "i-05e4578276976506e" \
+            --document-name "AWS-RunShellScript" \
+            --parameters commands='[
+              "cd /opt/sismas-source",
+              "git pull origin despliegue-desarrollo",
+              "/usr/bin/pnpm install --frozen-lockfile",
+              "/usr/bin/pnpm run build --configuration=dev",
+              "rm -rf /usr/share/nginx/dev.sismas.com.co/*",
+              "cp -r dist/* /usr/share/nginx/dev.sismas.com.co/"
+            ]' \
+            --query "Command.CommandId" \
+            --output text)
+
+          aws ssm wait command-executed \
+            --command-id $COMMAND_ID \
+            --instance-id i-05e4578276976506e
