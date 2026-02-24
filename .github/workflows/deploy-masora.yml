@@ -1,10 +1,12 @@
 name: Deploy Masora (SSM)
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: sismas-deploy
+  cancel-in-progress: false
+  
 permissions:
   id-token: write
   contents: read
