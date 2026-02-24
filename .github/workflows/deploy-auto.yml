@@ -1,4 +1,4 @@
-name: Deploy Desarrollo (SSM)
+name: Deploy DEV (dev.sismas.com.co) - SSM
 
 on:
   workflow_dispatch:
@@ -23,60 +23,73 @@ jobs:
           role-to-assume: arn:aws:iam::476114140163:role/GitHub-Portal-DeployRole
           aws-region: us-east-1
 
-      - name: Deploy DEV via SSM (with logs)
+      - name: Deploy DEV via SSM (atomic swap)
         shell: bash
         run: |
           set -euo pipefail
 
+          REGION="us-east-1"
+          INSTANCE_ID="i-05e4578276976506e"
+
+          WORKDIR="/opt/sismas-source"
+          BRANCH="despliegue-desarrollo"
+          BUILD_CONFIG="dev"
+          TARGET_DIR="/usr/share/nginx/dev.sismas.com.co"
+          STAGE_DIR="/usr/share/nginx/.stage-dev.sismas.com.co"
+
           COMMAND_ID=$(aws ssm send-command \
-            --region us-east-1 \
-            --instance-ids "i-05e4578276976506e" \
+            --region "$REGION" \
+            --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
             --comment "Deploy DEV dev.sismas.com.co from GitHub Actions" \
-            --parameters commands='[
-              "set -e",
-              "cd /opt/sismas-source",
-              "git fetch --all --prune",
-              "git checkout despliegue-desarrollo",
-              "git reset --hard origin/despliegue-desarrollo",
-              "/usr/bin/pnpm install --frozen-lockfile",
-              "/usr/bin/pnpm run build --configuration=dev",
-              "rm -rf /usr/share/nginx/dev.sismas.com.co/*",
-              "cp -r dist/* /usr/share/nginx/dev.sismas.com.co/"
-            ]' \
+            --parameters commands="[
+              \"sudo -u ec2-user -H bash -lc 'set -e; cd $WORKDIR; git fetch --all --prune; git checkout $BRANCH; git reset --hard origin/$BRANCH; /usr/bin/pnpm install --frozen-lockfile; rm -rf dist; /usr/bin/pnpm run build --configuration=$BUILD_CONFIG'\",
+              \"rm -rf $STAGE_DIR && mkdir -p $STAGE_DIR\",
+              \"cp -r $WORKDIR/dist/* $STAGE_DIR/\",
+              \"rm -rf ${TARGET_DIR}.bak && mv $TARGET_DIR ${TARGET_DIR}.bak || true\",
+              \"mv $STAGE_DIR $TARGET_DIR\",
+              \"rm -rf ${TARGET_DIR}.bak || true\"
+            ]" \
             --query "Command.CommandId" \
             --output text)
 
           echo "✅ Command ID: $COMMAND_ID"
 
-          # Polling (hasta ~25 min)
-          for i in {1..150}; do
+          DEADLINE=$((SECONDS+1800))
+          while true; do
             STATUS=$(aws ssm get-command-invocation \
-              --region us-east-1 \
+              --region "$REGION" \
               --command-id "$COMMAND_ID" \
-              --instance-id "i-05e4578276976506e" \
-              --query "Status" --output text || true)
+              --instance-id "$INSTANCE_ID" \
+              --query "Status" \
+              --output text 2>/dev/null || true)
 
-            echo "[$i/150] Status: $STATUS"
+            echo "SSM Status: ${STATUS}"
 
-            if [[ "$STATUS" == "Success" || "$STATUS" == "Failed" || "$STATUS" == "Cancelled" || "$STATUS" == "TimedOut" ]]; then
-              break
+            case "$STATUS" in
+              Success) break ;;
+              Failed|Cancelled|TimedOut)
+                aws ssm get-command-invocation \
+                  --region "$REGION" \
+                  --command-id "$COMMAND_ID" \
+                  --instance-id "$INSTANCE_ID" \
+                  --query "{Status:Status,StdOut:StandardOutputContent,StdErr:StandardErrorContent}" \
+                  --output json
+                exit 1
+                ;;
+              Pending|InProgress|Delayed|"") ;;
+            esac
+
+            if [ $SECONDS -ge $DEADLINE ]; then
+              echo "❌ Timeout esperando ejecución SSM"
+              exit 1
             fi
-
             sleep 10
           done
 
           aws ssm get-command-invocation \
-            --region us-east-1 \
+            --region "$REGION" \
             --command-id "$COMMAND_ID" \
-            --instance-id "i-05e4578276976506e" \
+            --instance-id "$INSTANCE_ID" \
             --query "{Status:Status,StdOut:StandardOutputContent,StdErr:StandardErrorContent}" \
             --output json
-
-          FINAL=$(aws ssm get-command-invocation \
-            --region us-east-1 \
-            --command-id "$COMMAND_ID" \
-            --instance-id "i-05e4578276976506e" \
-            --query "Status" --output text)
-
-          [[ "$FINAL" == "Success" ]]
