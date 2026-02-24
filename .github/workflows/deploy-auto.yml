@@ -23,17 +23,19 @@ jobs:
           role-to-assume: arn:aws:iam::476114140163:role/GitHub-Portal-DeployRole
           aws-region: us-east-1
 
-      - name: Deploy DEV (fire-and-forget)
+      - name: Deploy DEV via SSM (with logs)
         shell: bash
         run: |
+          set -euo pipefail
+
           COMMAND_ID=$(aws ssm send-command \
             --region us-east-1 \
             --instance-ids "i-05e4578276976506e" \
             --document-name "AWS-RunShellScript" \
-            --comment "Deploy DEV dev.sismas.com.co" \
+            --comment "Deploy DEV dev.sismas.com.co from GitHub Actions" \
             --parameters commands='[
               "set -e",
-              "cd /opt/sismas-source-dev",
+              "cd /opt/sismas-source",
               "git fetch --all --prune",
               "git checkout despliegue-desarrollo",
               "git reset --hard origin/despliegue-desarrollo",
@@ -44,3 +46,37 @@ jobs:
             ]' \
             --query "Command.CommandId" \
             --output text)
+
+          echo "✅ Command ID: $COMMAND_ID"
+
+          # Polling (hasta ~25 min)
+          for i in {1..150}; do
+            STATUS=$(aws ssm get-command-invocation \
+              --region us-east-1 \
+              --command-id "$COMMAND_ID" \
+              --instance-id "i-05e4578276976506e" \
+              --query "Status" --output text || true)
+
+            echo "[$i/150] Status: $STATUS"
+
+            if [[ "$STATUS" == "Success" || "$STATUS" == "Failed" || "$STATUS" == "Cancelled" || "$STATUS" == "TimedOut" ]]; then
+              break
+            fi
+
+            sleep 10
+          done
+
+          aws ssm get-command-invocation \
+            --region us-east-1 \
+            --command-id "$COMMAND_ID" \
+            --instance-id "i-05e4578276976506e" \
+            --query "{Status:Status,StdOut:StandardOutputContent,StdErr:StandardErrorContent}" \
+            --output json
+
+          FINAL=$(aws ssm get-command-invocation \
+            --region us-east-1 \
+            --command-id "$COMMAND_ID" \
+            --instance-id "i-05e4578276976506e" \
+            --query "Status" --output text)
+
+          [[ "$FINAL" == "Success" ]]
