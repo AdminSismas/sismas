@@ -13,7 +13,9 @@
       ></vex-header-cadastral-information-property>
     </mat-expansion-panel-header>
     @if (expandedComponent()) {
-      <mat-panel-description class="flex flex-col items-start justify-start p-4">
+      <mat-panel-description
+        class="flex flex-col items-start justify-start p-4"
+      >
         @if (typeInformation() === "edition") {
           <button
             mat-flat-button
@@ -33,6 +35,7 @@
                   [deleteButton]="typeInformation() === 'edition'"
                   [resetCarousel]="resetCarousel()"
                   [showNames]="true"
+                  [showDateTaken]="true"
                   (deleteImage)="onDeleteImage($event)"
                 ></app-carousel>
               </div>

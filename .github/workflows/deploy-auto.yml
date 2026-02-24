@@ -29,7 +29,7 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters commands='[
               "cd /opt/sismas-source",
-              "git pull origin main",
+              "git pull origin despliegue-desarrollo",
               "/usr/bin/pnpm install --frozen-lockfile",
               "/usr/bin/pnpm run build --configuration=Desarrollo",
               "rm -rf /usr/share/nginx/dev.sismas.com.co/*",

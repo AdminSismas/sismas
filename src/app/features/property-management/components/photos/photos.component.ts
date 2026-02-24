@@ -54,7 +54,7 @@ export class PhotosComponent {
   dialog = inject(MatDialog);
 
   // Signals
-  images = signal<{ url: string, name: string }[]>([]);
+  images = signal<{ url: string; name: string; date?: Date }[]>([]);
   loading = signal(true);
   resetCarousel = signal(false);
 

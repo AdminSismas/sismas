@@ -4,6 +4,15 @@
     <div class="swiper-wrapper">
       @for (image of images(); let index = $index; track index) {
         <div class="swiper-slide relative">
+          @if (showDateTaken() && image.date) {
+            <div
+              class="absolute top-4 right-4 z-10 shadow-md shadow-black bg-slate-300 bg-opacity-80 px-3 py-1.5 rounded"
+            >
+              <span class="text-sm font-semibold text-slate-700">
+                {{ image.date | date: "dd/MM/yyyy HH:mm" }}
+              </span>
+            </div>
+          }
           <div class="flex justify-end gap-2 absolute z-10 top-4 right-4">
             @if (rotateButton()) {
               <button
