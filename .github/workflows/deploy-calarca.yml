@@ -1,4 +1,4 @@
-name: Deploy Barrancabermeja (SSM)
+name: Deploy Calarca (SSM)
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
           role-to-assume: arn:aws:iam::476114140163:role/GitHub-Portal-DeployRole
           aws-region: us-east-1
 
-      - name: Deploy Barrancabermeja
+      - name: Deploy Calarca
         run: |
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "i-05e4578276976506e" \
