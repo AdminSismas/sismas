@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: sismas-deploy
+  group: sismas-deploy-dev
   cancel-in-progress: false
 
 permissions:
@@ -17,19 +17,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::476114140163:role/GitHub-Portal-DeployRole
           aws-region: us-east-1
 
-      - name: Deploy Desarrollo
+      - name: Deploy DEV (fire-and-forget)
+        shell: bash
         run: |
           COMMAND_ID=$(aws ssm send-command \
+            --region us-east-1 \
             --instance-ids "i-05e4578276976506e" \
             --document-name "AWS-RunShellScript" \
+            --comment "Deploy DEV dev.sismas.com.co" \
             --parameters commands='[
-              "cd /opt/sismas-source",
-              "git pull origin despliegue-desarrollo",
+              "set -e",
+              "cd /opt/sismas-source-dev",
+              "git fetch --all --prune",
+              "git checkout despliegue-desarrollo",
+              "git reset --hard origin/despliegue-desarrollo",
               "/usr/bin/pnpm install --frozen-lockfile",
               "/usr/bin/pnpm run build --configuration=dev",
               "rm -rf /usr/share/nginx/dev.sismas.com.co/*",
@@ -37,7 +44,3 @@ jobs:
             ]' \
             --query "Command.CommandId" \
             --output text)
-
-          aws ssm wait command-executed \
-            --command-id $COMMAND_ID \
-            --instance-id i-05e4578276976506e
