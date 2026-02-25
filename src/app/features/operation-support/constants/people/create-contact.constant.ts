@@ -2,7 +2,7 @@ import { JSONInput } from '@shared/interfaces/forms';
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 // Validators directos sin instanciar el servicio
-const emailValidator = (): ValidatorFn => {
+export const emailValidator = (): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value) return null;
 
