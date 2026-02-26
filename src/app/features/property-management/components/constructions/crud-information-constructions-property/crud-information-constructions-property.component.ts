@@ -129,7 +129,8 @@ import Swal from 'sweetalert2';
   styleUrl: './crud-information-constructions-property.component.scss'
 })
 export class CrudInformationConstructionsPropertyComponent implements OnInit {
-  urlBasic = `${environment.getApiQualificationUrl}`;
+  // https://dev.api.sismas.com.co:5001/calificationUB/
+  urlBasic = `${environment.url}:${environment.port}${environment.calificationUB}/`;
   api_domainName = `${environment.url_domain_name}`;
   schema = `${environment.schemas.temp}`;
 
