@@ -146,7 +146,6 @@ export const environment = {
   geo: "/geo",
   geoeconomic_values: "/zonaGEcoValor",
   geoeconomic_zones: "/ccZonaHomoGeoEconomica",
-  getApiQualificationUrl: "https://prediosplus.api.cadastre4world.com:5001/calificationUB/",
   getByExecution: "/getByExecution",
   headBaunitByMaster: "/headBaunitByMaster",
   historicos: "/historicos",
