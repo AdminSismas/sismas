@@ -41,7 +41,6 @@ import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-physical-zones-property',
@@ -150,16 +149,8 @@ export class PhysicalZonesPropertyComponent {
   zonaHomoCode(zone: ZoneBAUnitFisica): string {
     if (zone.ccZonaHomoFisicaRu) {
       return zone.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode!;
-    } else if (zone.ccZonaHomoFisicaUr) {
-      return zone.ccZonaHomoFisicaUr.zonaHomoFisicaUrCode!;
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error en la base de datos',
-        text: 'El predio no tiene información de zona física de origen geográfico o alfanumérico',
-        timer: 20000
-      });
-      return '';
+      return zone.ccZonaHomoFisicaUr!.zonaHomoFisicaUrCode!;
     }
   }
 
