@@ -7,7 +7,8 @@ import {
   computed,
   Output,
   input,
-  output
+  output,
+  OnInit
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -68,13 +69,14 @@ import Swal from 'sweetalert2';
   templateUrl: './physical-zones-property.component.html',
   styleUrl: './physical-zones-property.component.scss'
 })
-export class PhysicalZonesPropertyComponent {
+export class PhysicalZonesPropertyComponent implements OnInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents = false;
 
   zoneBAUnit: ZoneBAUnitFisica[] = [];
   zoneBAUnitRural: ZoneBAUnitFisica[] = [];
   zoneBAUnitUrban: ZoneBAUnitFisica[] = [];
+  errorPhysicalZoneData = false;
 
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
@@ -107,6 +109,12 @@ export class PhysicalZonesPropertyComponent {
   @ViewChild('successDelete') successDelete!: SwalComponent;
 
   dataBasicInformation!: BasicInformationProperty;
+
+  ngOnInit(): void {
+    this.dataSource.data.forEach((zone) => {
+      if (!this.zonaHomoCode(zone)) this.errorPhysicalZoneData = true;
+    });
+  }
 
   actionBtns = computed(() => {
     return [
