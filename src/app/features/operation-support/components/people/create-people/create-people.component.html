@@ -25,11 +25,14 @@
         (createPerson)="createPerson($event)"
       ></create-person-form>
       <hr class="bg-slate-400 w-full mb-4" />
-      <h2 class="w-full text-lg font-bold">Información contacto <span class="text-base">(opcional)</span></h2>
+      <h2 class="w-full text-lg font-bold">
+        Información contacto <span class="text-base">(opcional)</span>
+      </h2>
       <create-contact-form
         [enableContactForm]="enableCreateContactForm()"
         [sendContactForm]="sendContactForm()"
         [contactFormIsValid]="validateContactForm()"
+        [infoContactInput]="contactInfoData()"
         (contactFormValid)="contactFormValid.set($event)"
       ></create-contact-form>
     </div>

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, signal } from '@angular/core';
+import { Component, Inject, OnInit, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {
   MAT_DIALOG_DATA,
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -41,6 +42,8 @@ import { InfoContact } from '@features/property-management/models/owner/info-con
 import { PeopleService } from '@features/property-management/services/property/people.service';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { CreatePeopleComponent } from '@features/operation-support/components/people/create-people/create-people.component';
 
 @Component({
   selector: 'vex-add-citation-notice',
@@ -62,7 +65,8 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
     ComboboxCollectionFormComponent,
     DatePipe,
     TextAreaComponent,
-    MatSlideToggle
+    MatSlideToggle,
+    MatRadioModule
   ],
   templateUrl: './add-citation-notice.component.html',
   styleUrl: './add-citation-notice.component.scss',
@@ -74,10 +78,17 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
 export class AddCitationNoticeComponent implements OnInit {
   labelCited = 'Datos de citacion';
   labelNotice = 'Datos de notificacion';
+
+  /* ---- Injects ---- */
+  private readonly dialog = inject(MatDialog);
+
+  /* ---- Signals ---- */
   maxDate = signal<Date>(new Date()); // Fecha máxima permitida (hoy)
   minDate = signal<Date>(new Date(0)); // Fecha minima, fecha de la radicacion
   typeCategory = signal<ProcessParticipantTableMenu['id']>('citation');
+  isHireCitation = signal<boolean>(false);
 
+  /* ---- Zone states ----- */
   executionId!: string;
   participant?: ProcessParticipant;
   participationId!: number;
@@ -98,7 +109,9 @@ export class AddCitationNoticeComponent implements OnInit {
     citationNote: [
       this.processParticipant?.viaGubernativa?.citationNote || false,
       Validators.required
-    ]
+    ],
+    isCitationHire: [false, Validators.required],
+    hireContact: ['', []]
   });
 
   formNotification: FormGroup = this.fb.group({
@@ -128,8 +141,7 @@ export class AddCitationNoticeComponent implements OnInit {
     private readonly procedureService: ProceduresService,
     private readonly participantsService: ParticipantsService,
     private peopleService: PeopleService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (
@@ -167,21 +179,43 @@ export class AddCitationNoticeComponent implements OnInit {
 
   contactParticipation(res: InfoContact) {
     this.contact = res;
-    if (!this.contact || !this.contact?.phoneNumber || !this.contact?.address) {
+
+    if (!this.contact) {
+      Swal.fire({
+        icon: 'error',
+        text: 'El participante no tiene información de contacto.',
+        timer: 20000
+      });
+      return;
+    }
+
+    const warningMessages: Record<'phoneNumber' | 'address' | 'email', string> =
+      {
+        phoneNumber: 'número de teléfono',
+        address: 'dirección',
+        email: 'correo electrónico'
+      };
+
+    const { phoneNumber, address, email } = this.contact;
+
+    const warningMessagesArray = [
+      !phoneNumber ? warningMessages.phoneNumber : '',
+      !address ? warningMessages.address : '',
+      !email ? warningMessages.email : ''
+    ].filter(Boolean);
+
+    if (warningMessagesArray.length > 0) {
       Swal.fire({
         icon: 'warning',
-        text: 'No se ha encontrado información de contacto para este participante.',
+        text:
+          'El participante no tiene información de: ' +
+          warningMessagesArray.join(', '),
         confirmButtonText: 'Continuar',
         confirmButtonColor: '#3085d6',
-        showCancelButton: true,
-        cancelButtonText: 'Cancelar',
-        cancelButtonColor: '#d33'
-      }).then((result) => {
-        if (result.isDismissed) {
-          this.dialogRef.close();
-        }
+        timer: 20000
       });
     }
+
     this.obtainProcedure();
   }
 
@@ -360,6 +394,20 @@ export class AddCitationNoticeComponent implements OnInit {
       icon: 'error',
       showConfirmButton: true
     }).then(() => this.dialogRef.close(true));
+  }
+
+  editContactInformation() {
+    this.peopleService
+      .getPersonByIndividualId(`${this.individualId}`)
+      .subscribe((infoPerson) => {
+        this.dialog.open(CreatePeopleComponent, {
+          data: {
+            mode: 'contact',
+            ...infoPerson,
+            ...this.contact
+          }
+        });
+      });
   }
 
   protected readonly NAME_NO_DISPONIBLE = NAME_NO_DISPONIBLE;

@@ -21,9 +21,7 @@ import { InfoContact } from '@features/property-management/models/owner/info-con
 export class PeopleService {
   private url_basic = `${envi.url}:${envi.port}`;
 
-  constructor(
-    private http: HttpClient
-  ) {}
+  constructor(private http: HttpClient) {}
 
   getAllPeople(params?: any) {
     let paramsR: HttpParams = new HttpParams();
@@ -57,14 +55,15 @@ export class PeopleService {
     return this.http.get<InfoPerson>(url, { params });
   }
 
-  getPersonByIndividualId(params: InfoPerson) {
-    const urlP = `${this.url_basic}${envi.individual.value}/${params.individualId}`;
+  getPersonByIndividualId(individualId: string) {
+    const urlP = `${this.url_basic}${envi.individual.value}/${individualId}`;
     return this.getDataFetch<People>(urlP);
   }
 
   editPerson(id: string, body: any): Observable<People> {
     return this.http.put<any>(
-      `${envi.url}:${envi.port}${envi.individual.value}/${id}?baunitId=TESTS`, body
+      `${envi.url}:${envi.port}${envi.individual.value}/${id}?baunitId=TESTS`,
+      body
     );
   }
 
@@ -87,7 +86,7 @@ export class PeopleService {
   }
 
   private getData(url: string, params: any): Observable<InfoPerson> {
-    return this.http.get<any>(url, { params: params  });
+    return this.http.get<any>(url, { params: params });
   }
 
   private getDataFetch<T>(url: string): Observable<T> {
@@ -111,6 +110,4 @@ export class PeopleService {
     }
     return throwError(() => error);
   }
-
-
 }
