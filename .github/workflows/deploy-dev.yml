@@ -1,4 +1,4 @@
-name: Deploy Masora (SSM)
+name: Deploy DEV (SSM)
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
 concurrency:
   group: sismas-deploy
   cancel-in-progress: false
-  
+
 permissions:
   id-token: write
   contents: read
@@ -22,18 +22,18 @@ jobs:
           role-to-assume: arn:aws:iam::476114140163:role/GitHub-Portal-DeployRole
           aws-region: us-east-1
 
-      - name: Deploy Masora
+      - name: Deploy DEV
         run: |
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "i-05e4578276976506e" \
             --document-name "AWS-RunShellScript" \
             --parameters commands='[
-              "cd /opt/sismas-source",
-              "git pull origin main",
+              "cd /opt/sismas-source-dev",
+              "git pull origin despliegue-desarrollo",
               "/usr/bin/pnpm install --frozen-lockfile",
-              "/usr/bin/pnpm run build --configuration=masora",
-              "rm -rf /usr/share/nginx/masora.sismas.com.co/*",
-              "cp -r dist/* /usr/share/nginx/masora.sismas.com.co/"
+              "/usr/bin/pnpm run build --configuration=dev",
+              "rm -rf /usr/share/nginx/dev.sismas.com.co/*",
+              "cp -r dist/* /usr/share/nginx/dev.sismas.com.co/"
             ]' \
             --query "Command.CommandId" \
             --output text)

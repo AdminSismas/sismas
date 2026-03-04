@@ -78,7 +78,7 @@ export class IcaDetailsComponent {
     'ciudadCamara',
     'matricula',
     'direccionResidencia',
-    'domicilioNotificacion'
+    'domicilioNotificacion',
   ];
 
   /* ---- Methods ---- */

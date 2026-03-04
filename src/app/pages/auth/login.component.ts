@@ -67,8 +67,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class LoginComponent implements AfterViewInit {
   @ViewChild('bgVideo') bgVideoRef!: ElementRef<HTMLVideoElement>;
   videoPlayed = false;
-  videoPath: string = environment.video;
-  videoPathWebm: string = environment.videoWebm;
+  videoPath: string | string[] = environment.video;
+  videoPathWebm: string | string[] = environment.videoWebm;
+  currentVideoIndex = 0;
+
+  get currentVideo(): string {
+    return Array.isArray(this.videoPath)
+      ? this.videoPath[this.currentVideoIndex]
+      : this.videoPath;
+  }
+
+  get isMultipleVideos(): boolean {
+    return Array.isArray(this.videoPath) && this.videoPath.length > 1;
+  }
   logoPath: string = environment.logo;
   logoPathMasora: string = environment.logoMasora;
   logoPathGeogestion: string = environment.logoGeogestion;
@@ -297,6 +308,23 @@ export class LoginComponent implements AfterViewInit {
 
   onVideoLoaded() {
     this.forceVideoPlay();
+  }
+
+  onVideoEnded() {
+    if (this.isMultipleVideos) {
+      const length = Array.isArray(this.videoPath) ? this.videoPath.length : 1;
+      this.currentVideoIndex = (this.currentVideoIndex + 1) % length;
+
+      const videoEl = this.bgVideoRef?.nativeElement;
+      if (videoEl) {
+        setTimeout(() => {
+          videoEl.load();
+          videoEl.play().catch((err) => {
+            console.warn('Autoplay bloqueado por el navegador:', err);
+          });
+        }, 0);
+      }
+    }
   }
 
   private forceVideoPlay() {

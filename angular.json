@@ -23,9 +23,7 @@
               "browser": ""
             },
             "index": "src/index.html",
-            "polyfills": [
-              "src/polyfills.ts"
-            ],
+            "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
@@ -39,10 +37,7 @@
                 "output": "assets/img/icons/material-design-icons/"
               }
             ],
-            "styles": [
-              "src/styles.scss",
-              "src/@vex/styles/tailwind.scss"
-            ],
+            "styles": ["src/styles.scss", "src/@vex/styles/tailwind.scss"],
 
             "scripts": [],
             "allowedCommonJsDependencies": [
@@ -78,31 +73,6 @@
             "browser": "src/main.ts"
           },
           "configurations": {
-            "production": {
-              "optimization": {
-                "scripts": true,
-                "styles": {
-                  "minify": true
-                }
-              },
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.prod.ts"
-                }
-              ]
-            },
             "armenia": {
               "optimization": {
                 "scripts": true,
@@ -128,6 +98,31 @@
                 }
               ]
             },
+            "barrancabermeja": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.barrancabermeja.ts"
+                }
+              ]
+            },
             "calarca": {
               "optimization": {
                 "scripts": true,
@@ -150,6 +145,51 @@
                 {
                   "replace": "src/environments/environments.ts",
                   "with": "src/environments/environments.calarca.ts"
+                }
+              ]
+            },
+            "dev": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "8mb",
+                  "maximumError": "10mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.dev.ts"
+                }
+              ]
+            },
+            "filandia": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true
+                }
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environments.ts",
+                  "with": "src/environments/environments.filandia.ts"
                 }
               ]
             },
@@ -203,7 +243,7 @@
                 }
               ]
             },
-            "filandia": {
+            "montenegro": {
               "optimization": {
                 "scripts": true,
                 "styles": {
@@ -224,11 +264,11 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.filandia.ts"
+                  "with": "src/environments/environments.montenegro.ts"
                 }
               ]
             },
-            "barrancabermeja": {
+            "production": {
               "optimization": {
                 "scripts": true,
                 "styles": {
@@ -249,7 +289,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.barrancabermeja.ts"
+                  "with": "src/environments/environments.prod.ts"
                 }
               ]
             },
@@ -278,7 +318,7 @@
                 }
               ]
             },
-            "montenegro": {
+            "quindio": {
               "optimization": {
                 "scripts": true,
                 "styles": {
@@ -299,27 +339,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.montenegro.ts"
-                }
-              ]
-            },
-            "test": {
-              "optimization": false,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": true,
-              "extractLicenses": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "8mb",
-                  "maximumError": "10mb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.test.ts"
+                  "with": "src/environments/environments.quindio.ts"
                 }
               ]
             }
@@ -332,14 +352,20 @@
             "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
-            "production": {
-              "buildTarget": "geoGestion:build:production"
-            },
             "armenia": {
               "buildTarget": "geoGestion:build:armenia"
             },
+            "barrancabermeja": {
+              "buildTarget": "geoGestion:build:barrancabermeja"
+            },
             "calarca": {
               "buildTarget": "geoGestion:build:calarca"
+            },
+            "dev": {
+              "buildTarget": "geoGestion:build:dev"
+            },
+            "filandia": {
+              "buildTarget": "geoGestion:build:filandia"
             },
             "manizales": {
               "buildTarget": "geoGestion:build:manizales"
@@ -347,20 +373,17 @@
             "masora": {
               "buildTarget": "geoGestion:build:masora"
             },
-            "filandia": {
-              "buildTarget": "geoGestion:build:filandia"
+            "montenegro": {
+              "buildTarget": "geoGestion:build:montenegro"
             },
-            "barrancabermeja": {
-              "buildTarget": "geoGestion:build:barrancabermeja"
+            "production": {
+              "buildTarget": "geoGestion:build:production"
             },
             "quimbaya": {
               "buildTarget": "geoGestion:build:quimbaya"
             },
-            "montenegro": {
-              "buildTarget": "geoGestion:build:montenegro"
-            },
-            "test": {
-              "buildTarget": "geoGestion:build:test"
+            "quindio": {
+              "buildTarget": "geoGestion:build:quindio"
             }
           }
         },
@@ -374,19 +397,13 @@
           "builder": "@angular-devkit/build-angular:jest",
           "options": {
             "tsConfig": "tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "polyfills": ["zone.js", "zone.js/testing"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -394,8 +411,6 @@
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": [
-      "angular-eslint"
-    ]
+    "schematicCollections": ["angular-eslint"]
   }
 }

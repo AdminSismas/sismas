@@ -18,7 +18,7 @@ export class IcaPhotosService {
     baunitId: string,
     municipality: string,
     icaId: number
-  ): Observable<string[]> {
+  ): Observable<{ filename: string; takenDate: Date }[]> {
     const { value: bpmAttachment, baunit } = environment.bpmAttachment;
     const photos = environment.photos;
 
@@ -28,7 +28,9 @@ export class IcaPhotosService {
       .set('municipioId', municipality)
       .set('icaId', `${icaId}`);
 
-    return this.http.get<string[]>(url, { params }).pipe(catchError(() => []));
+    return this.http
+      .get<{ filename: string; takenDate: Date }[]>(url, { params })
+      .pipe(catchError(() => []));
   }
 
   addIcaPhoto(

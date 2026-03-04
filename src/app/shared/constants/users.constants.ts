@@ -1,4 +1,5 @@
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
+import { emailValidator } from '@features/operation-support/constants/people';
 import { JSONInput } from '@shared/interfaces/forms';
 
 export const USER_COLUMNS: { name: string; label: string }[] = [
@@ -8,19 +9,19 @@ export const USER_COLUMNS: { name: string; label: string }[] = [
   },
   {
     name: 'username',
-    label: 'Usuario',
+    label: 'Usuario'
   },
   {
     name: 'email',
-    label: 'Correo electrónico',
+    label: 'Correo electrónico'
   },
   {
     name: 'role',
-    label: 'Rol',
+    label: 'Rol'
   },
   {
     name: 'enabled',
-    label: 'Estado',
+    label: 'Estado'
   }
 ];
 
@@ -49,7 +50,7 @@ export const CREATE_USER_INPUTS: JSONInput[] = [
     label: 'Correo electrónico',
     element: 'input',
     type: 'text',
-    validators: [Validators.required, Validators.email],
+    validators: [Validators.required, emailValidator()],
     placeholder: 'Escribir correo electrónico'
   }
 ];

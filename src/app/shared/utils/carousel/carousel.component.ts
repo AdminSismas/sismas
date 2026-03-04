@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   OnDestroy
 } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -15,7 +16,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 @Component({
   selector: 'app-carousel',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatTooltip],
+  imports: [MatButtonModule, MatIconModule, MatTooltip, DatePipe],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   host: {
@@ -26,11 +27,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   private swiper!: Swiper;
 
   /* ---- Inputs ----- */
-  images = input.required<{ url: string; name: string }[]>();
+  images = input.required<{ url: string; name: string; date?: Date }[]>();
   deleteButton = input(false, { transform: this.initBooleanValueInput });
   resetCarousel = input(false, { transform: this.initBooleanValueInput });
   showNames = input(false, { transform: this.initBooleanValueInput });
   rotateButton = input(false, { transform: this.initBooleanValueInput });
+  showDateTaken = input(false, { transform: this.initBooleanValueInput });
 
   /* ---- Outputs ----- */
   deleteImage = output<string>();

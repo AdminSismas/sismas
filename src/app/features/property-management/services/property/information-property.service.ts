@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment as envi, environment } from '@environments/environments';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   BasicInformationProperty,
@@ -81,8 +81,7 @@ export class InformationPropertyService {
     }
     // const url = `${this.basic_url}${envi.basicAddress}`;
 
-    return this.http
-      .get<InformationPegeable>(url, { params });
+    return this.http.get<InformationPegeable>(url, { params });
   }
 
   // {{url}}:{{port}}/ccDireccion/temp/{{executionId}}/{{baunitId}}/{{direccionId}}
@@ -136,8 +135,7 @@ export class InformationPropertyService {
   executeAppraisalProcess(executionId: string): Observable<unknown> {
     const url = `${this.basic_url}${envi.temporal}${executionId}${envi.valuation}`;
 
-    return this.http
-      .post(url, {});
+    return this.http.post(url, {});
   }
 
   getBasicInformationPropertyZones(
@@ -163,8 +161,7 @@ export class InformationPropertyService {
       url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdFisicas}/${schema}/${id}`;
     }
 
-    return this.http
-      .get<ZoneBAUnitResponse[]>(url);
+    return this.http.get<ZoneBAUnitResponse[]>(url);
   }
 
   getByBaunitFisicaOrigin(
@@ -179,8 +176,19 @@ export class InformationPropertyService {
       url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdFisicas}/${schema}${envi.geo}/${id}`;
     }
 
-    return this.http
-      .get<ZoneBAUnitResponse[]>(url);
+    return this.http.get<ZoneBAUnitResponse[]>(url).pipe(
+      map((zoneBAUnitResponse) => {
+        return zoneBAUnitResponse.map((zone) => {
+          if (!zone.ccZonaHomoFisicaRu && !zone.ccZonaHomoFisicaUr) {
+            return {
+              ...zone,
+              ccZonaHomoFisicaRu: []
+            } as unknown as ZoneBAUnitResponse;
+          }
+          return zone;
+        });
+      })
+    );
   }
 
   getByBaunitEcono(
@@ -195,8 +203,7 @@ export class InformationPropertyService {
       url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}/${schema}/${id}`;
     }
 
-    return this.http
-      .get<ZoneBAUnitResponse[]>(url);
+    return this.http.get<ZoneBAUnitResponse[]>(url);
   }
 
   getByBaunitEconoOrigin(
@@ -211,8 +218,7 @@ export class InformationPropertyService {
       url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}/${schema}${envi.geo}/${id}`;
     }
 
-    return this.http
-      .get<ZoneBAUnitResponse[]>(url);
+    return this.http.get<ZoneBAUnitResponse[]>(url);
   }
 
   getByDivPolUrbana(
@@ -240,8 +246,7 @@ export class InformationPropertyService {
   getByDivPolGeoeconomica(npn: string): Observable<GeoEconomicZone[]> {
     // {{url}}:{{port}}/baUnitZona/baunitIdEcono/divpol/{{npn}}
     const url = `${this.basic_url}${envi.baUnitZona}${envi.baunitIdEcono}${envi.divpol}/${npn}`;
-    return this.http
-      .get<GeoEconomicZone[]>(url);
+    return this.http.get<GeoEconomicZone[]>(url);
   }
 
   createBAUnitZones(
@@ -317,8 +322,7 @@ export class InformationPropertyService {
     body: BasicInformationProperty
   ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http
-      .put<BasicInformationProperty>(url, body);
+    return this.http.put<BasicInformationProperty>(url, body);
   }
 
   updateBasicCoefficientInformationProperty(
@@ -327,8 +331,7 @@ export class InformationPropertyService {
     body: BasicInformationProperty
   ): Observable<BasicInformationProperty> {
     const url = `${this.basic_url}/${envi.baunit}/${envi.schemas.temp}/${executionId}/${baunitId}`;
-    return this.http
-      .put<BasicInformationProperty>(url, body);
+    return this.http.put<BasicInformationProperty>(url, body);
   }
 
   /**
@@ -377,8 +380,10 @@ export class InformationPropertyService {
     return this.http.get<InformationPegeable>(url, { params });
   }
 
-  refreshCadastralAreaGeoE(baunitId: string, executionId = ''): Observable<BasicInformationProperty> {
-
+  refreshCadastralAreaGeoE(
+    baunitId: string,
+    executionId = ''
+  ): Observable<BasicInformationProperty> {
     let url = `${this.basic_url}/${envi.baunit}/`;
 
     if (executionId) {
