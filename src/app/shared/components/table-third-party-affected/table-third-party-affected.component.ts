@@ -6,7 +6,7 @@ import {
   input,
   OnInit,
   signal,
-  viewChild,
+  viewChild
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
@@ -217,6 +217,7 @@ export class TableThirdPartyAffectedComponent implements OnInit, AfterViewInit {
           .subscribe((response: boolean) => {
             this.participantsService.changeInfoParticipants(response);
             this.existThirdPartyAffected.set(response);
+            this.obtainInformationThirdPartyAffected();
           });
       });
   }

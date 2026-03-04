@@ -7,9 +7,11 @@ import {
   OnDestroy,
   OnInit,
   output,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
-import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';import { CREATE_CONTACT_FORM } from '../../../constants/people';
+import { DynamicFormsComponent } from '@shared/utils/dynamic-forms/dynamic-forms.component';
+import { CREATE_CONTACT_FORM } from '../../../constants/people';
 import { FormGroup } from '@angular/forms';
 import { TerritorialOrganizationService } from '@shared/services/general/territorial-organization/territorial-organization.service';
 import { InfoPerson } from '@features/property-management/models/owner/info-person';
@@ -36,6 +38,7 @@ export class CreateContactFormComponent
   enableContactForm = input.required<boolean>();
   sendContactForm = input.required<boolean>();
   contactFormIsValid = input.required<boolean>();
+  infoContactInput = input<Partial<InfoPerson> | undefined>(undefined);
 
   /* ---- Outputs ---- */
   contactFormValid = output<boolean>();
@@ -43,9 +46,7 @@ export class CreateContactFormComponent
   /* ---- Signals ---- */
   contactForm = signal<FormGroup | undefined>(undefined);
   departmentSelected = signal<string | undefined>(undefined);
-  infoContact = signal<Partial<InfoPerson>>(
-    this.createPersonService.infoPersonData
-  );
+  infoContact = signal<Partial<InfoPerson>>({});
   private departmentChange = signal<Subscription | undefined>(undefined);
 
   /* ---- Constructor ---- */
@@ -53,6 +54,7 @@ export class CreateContactFormComponent
     this.enableContactFormEffect();
     this.sendContactFormEffect();
     this.validContactFormEffect();
+    this.infoContactInputEffect();
   }
 
   /* ---- Effects ---- */
@@ -100,10 +102,33 @@ export class CreateContactFormComponent
     });
   }
 
+  /**
+   * Watches for changes in the infoContactInput from the parent.
+   * When the parent finishes loading async data, this effect updates
+   * the local infoContact signal and patches the form with the new values.
+   */
+  infoContactInputEffect() {
+    effect(() => {
+      const data = this.infoContactInput();
+      if (!data) return;
+
+      untracked(() => {
+        this.infoContact.set(data);
+        if (this.contactForm()) {
+          this.contactForm()!.patchValue(data);
+
+          // If divpolLv1 is present, trigger municipality loading
+          if (data.divpolLv1) {
+            this.getMunicipalityOptions(data.divpolLv1);
+          }
+        }
+      });
+    });
+  }
+
   /* ---- Lifecycle Hooks ---- */
   ngOnInit(): void {
     this.getDepartmentOptions();
-    this.infoContact.set(this.createPersonService.infoPersonData);
   }
 
   ngAfterViewInit(): void {

@@ -16,7 +16,8 @@ import { stagger40ms, stagger80ms } from '@vex/animations/stagger.animation';
 import { scaleIn400ms } from '@vex/animations/scale-in.animation';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
-import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';import { CreatePersonFormComponent } from '../create-person-form/create-person-form.component';
+import { ModalWindowComponent } from '@shared/ui/modal-window/modal-window.component';
+import { CreatePersonFormComponent } from '../create-person-form/create-person-form.component';
 import { SearchPersonFormComponent } from '../search-person-form/search-person-form.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CreateContactFormComponent } from '../create-contact-form/create-contact-form.component';
@@ -24,7 +25,7 @@ import { CreatePersonService } from '../../../services/people/create-person.serv
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 export interface DefaultDataCreatePerson extends Partial<InfoPerson> {
-  mode: 'create' | 'update';
+  mode: 'create' | 'update' | 'contact';
 }
 
 @Component({
@@ -50,12 +51,14 @@ export interface DefaultDataCreatePerson extends Partial<InfoPerson> {
 })
 export class CreatePeopleComponent implements OnInit, OnDestroy {
   /* ---- Injects ---- */
-  defaults = inject<DefaultDataCreatePerson | undefined>(MAT_DIALOG_DATA);
+  createPeopleProps = inject<DefaultDataCreatePerson | undefined>(
+    MAT_DIALOG_DATA
+  );
   dialogRef = inject(MatDialogRef<CreatePeopleComponent>);
   peopleService = inject(PeopleService);
   createPersonService = inject(CreatePersonService);
 
-  mode: 'create' | 'update' = 'create';
+  mode: DefaultDataCreatePerson['mode'] = 'create';
 
   /* ---- Signals ---- */
   loading = signal<boolean>(true);
@@ -65,12 +68,13 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
   enableCreatePersonForm = signal<boolean>(true);
   enableSearchForm = signal<boolean>(false);
   sendContactForm = signal<boolean>(false);
+  contactInfoData = signal<Partial<InfoPerson> | undefined>(undefined);
 
   /* ---- Computeds ---- */
   getCreatePersonFormValues = computed<boolean>(() => this.contactFormValid());
   modalTitle = computed<string>(() => {
     let title = 'Crear persona';
-    const { firstName, lastName } = this.defaults!;
+    const { firstName, lastName } = this.createPeopleProps!;
 
     if (firstName || lastName) {
       title = firstName + ' ' + lastName;
@@ -80,14 +84,21 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit() {
-    this.mode = this.defaults?.mode ?? 'create';
+    this.mode = this.createPeopleProps?.mode ?? 'create';
     if (this.mode === 'create') {
       this.enableSearchForm.set(true);
       this.enableCreatePersonForm.set(false);
       this.enableCreateContactForm.set(false);
     }
+
+    if (this.mode === 'contact') {
+      this.enableSearchForm.set(false);
+      this.enableCreatePersonForm.set(false);
+      this.enableCreateContactForm.set(true);
+    }
+
     this.createPersonService.initInfoPersonObject();
-    this.createPersonService.setInfoPersonData(this.defaults ?? {});
+    this.createPersonService.setInfoPersonData(this.createPeopleProps ?? {});
     this.getContactInfo();
   }
 
@@ -189,7 +200,7 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
 
     const individualId = `${this.createPersonService.infoPersonData.individualId}`;
     const people = {
-      ...this.defaults,
+      ...this.createPeopleProps,
       ...this.createPersonService.infoPersonData
     };
     if (!individualId) {
@@ -209,23 +220,28 @@ export class CreatePeopleComponent implements OnInit, OnDestroy {
           icon: 'success',
           showConfirmButton: false,
           timer: 10000
-        }).then(() => this.dialogRef.close(this.createPersonService.infoPersonData));
+        }).then(() =>
+          this.dialogRef.close(this.createPersonService.infoPersonData)
+        );
       });
   }
 
   getContactInfo() {
-    if (!this.defaults?.individualId) {
+    if (!this.createPeopleProps?.individualId) {
+      this.contactInfoData.set(this.createPersonService.infoPersonData);
       this.loading.set(false);
       return;
     }
 
-    const { individualId } = this.defaults;
+    const { individualId } = this.createPeopleProps;
     this.peopleService.getContactByIndividualId(individualId).subscribe({
       next: (contact) => {
         this.createPersonService.setInfoPersonData(contact);
+        this.contactInfoData.set(this.createPersonService.infoPersonData);
         this.loading.set(false);
       },
       error: () => {
+        this.contactInfoData.set(this.createPersonService.infoPersonData);
         this.loading.set(false);
       }
     });
