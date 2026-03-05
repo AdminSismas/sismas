@@ -8,7 +8,8 @@ import { ProcessParticipant } from '@features/bpm-workflows/models/process-parti
 import { Operation } from '@shared/models';
 import { environment } from '@environments/environments';
 import {
-  CheckTypeQualificationMode, NavigationItemCadastralInfo,
+  CheckTypeQualificationMode,
+  NavigationItemCadastralInfo,
   TypeButtonAlfaMain,
   TypeInformation,
   TypeOperation,
@@ -77,18 +78,17 @@ export const PAGE_SIZE_OPTION_UNIQUE: number[] = [PAGE_OPTION_UNIQUE];
 export const PAGE_SIZE_SORT_FOLIO = 1;
 export const MY_DATE_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'DD/MM/YYYY'
   },
   display: {
     dateInput: 'DD/MM/YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
+    monthYearA11yLabel: 'MMMM YYYY'
+  }
 };
 
-export const STRUCTURE_HTML_HEADER =
-  `<html>
+export const STRUCTURE_HTML_HEADER = `<html>
   <head>
      {style}
   </head>
@@ -127,7 +127,8 @@ export const TYPE_OPERATION_DELETE: TypeOperationAlfaMain = 'DELETE';
 
 export const CONSTANT_TYPEDOMAIN_BAUNITCONDITION = 'BaunitCondition';
 
-export const CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ = '(Propiedad horizontal) Matriz';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATRIZ =
+  '(Propiedad horizontal) Matriz';
 export const CONSTANT_TYPEDOMAIN_DISPNAME_PH_ = 'PH.';
 export const CONSTANT_TYPEDOMAIN_DISPNAME_PH_MATZ = 'PH.Matriz';
 
@@ -135,24 +136,74 @@ export const CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATRIZ = '(Condominio) Matriz';
 export const CONSTANT_TYPEDOMAIN_DISPNAME_CO_ = 'Condominio.';
 export const CONSTANT_TYPEDOMAIN_DISPNAME_CO_MATZ = 'Condominio.Matriz';
 
-export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATRIZ = '(Parque cementerio) Matriz';
+export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATRIZ =
+  '(Parque cementerio) Matriz';
 export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_ = 'Parque_Cementerio.';
 export const CONSTANT_TYPEDOMAIN_DISPNAME_PC_MATZ = 'Parque_Cementerio.Matriz';
 
 export const TYPE_OPERATION_CREATE_GEO: TypeOperationGeoMain = 'CREATE';
 export const TYPE_OPERATION_DELETE_GEO: TypeOperationGeoMain = 'DELETE';
-export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain = 'CAL_BOUND';
+export const TYPE_OPERATION_CALCULATE_BOUNDARIES: TypeOperationGeoMain =
+  'CAL_BOUND';
 
 export const ADMIN_ROLE_LIST: string[] = ['ADMIN'];
 export const TOP_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD'];
 export const MODIFY_PEOPLE: string[] = ['ADMIN', 'USER_LEAD'];
-export const EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER', 'USER_TRAM'];
-export const CAN_RESOLVE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_TRAM', 'USER_SERV', 'USER'];
-export const EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER'];
-export const CERTIFICATE_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_TRAM', 'USER_SERV'];
-export const NOT_USER_SERV_AND_USER_TRAM: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER', 'USER_READ', 'GUEST'];
-export const NOT_GUEST_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_TRAM', 'USER_SERV', 'USER', 'USER_READ'];
-export const BASIC_USERS_ROLE_LIST: string[] = ['ADMIN', 'USER_LEAD', 'USER_COORD', 'USER_TRAM', 'USER_SERV', 'USER', 'USER_READ', 'GUEST'];
+export const EXECUTIONERS_ROLE_LIST_WITH_USER_TRAM: string[] = [
+  'ADMIN',
+  'USER_LEAD',
+  'USER_COORD',
+  'USER',
+  'USER_TRAM'
+];
+export const CAN_RESOLVE_LIST: string[] = [
+  'ADMIN',
+  'USER_LEAD',
+  'USER_COORD',
+  'USER_TRAM',
+  'USER_SERV',
+  'USER'
+];
+export const EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM: string[] = [
+  'ADMIN',
+  'USER_LEAD',
+  'USER_COORD',
+  'USER'
+];
+export const CERTIFICATE_USERS_ROLE_LIST: string[] = [
+  'ADMIN',
+  'USER_LEAD',
+  'USER_COORD',
+  'USER_TRAM',
+  'USER_SERV'
+];
+export const NOT_USER_SERV_AND_USER_TRAM: string[] = [
+  'ADMIN',
+  'USER_LEAD',
+  'USER_COORD',
+  'USER',
+  'USER_READ',
+  'GUEST'
+];
+export const NOT_GUEST_USERS_ROLE_LIST: string[] = [
+  'ADMIN',
+  'USER_LEAD',
+  'USER_COORD',
+  'USER_TRAM',
+  'USER_SERV',
+  'USER',
+  'USER_READ'
+];
+export const BASIC_USERS_ROLE_LIST: string[] = [
+  'ADMIN',
+  'USER_LEAD',
+  'USER_COORD',
+  'USER_TRAM',
+  'USER_SERV',
+  'USER',
+  'USER_READ',
+  'GUEST'
+];
 
 export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   {
@@ -214,249 +265,265 @@ export const TABLE_COLUMN_PROPERTIES: TableColumn<BaunitHead>[] = [
   // { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
-export const TABLE_COLUMN_DOCUMENT_ASSOCIATION: TableColumn<OutFormatModel>[] = [
-  {
-    label: 'ID',
-    property: 'outTemplateId',
-    type: 'text',
-    visible: true
-  },
+export const TABLE_COLUMN_DOCUMENT_ASSOCIATION: TableColumn<OutFormatModel>[] =
+  [
+    {
+      label: 'ID',
+      property: 'outTemplateId',
+      type: 'text',
+      visible: true
+    },
 
-  {
-    label: 'Codigo Template',
-    property: 'templateCode',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Header',
-    property: 'headerTemplate',
-    type: 'operationType',
-    visible: true
-  },
-  {
-    label: 'Footer',
-    property: 'footerTemplate',
-    type: 'operationType',
-    visible: true
-  },
-  {
-    label: 'Firmado',
-    property: 'isSinged',
-    type: 'text',
-    visible: true
-  },
+    {
+      label: 'Codigo Template',
+      property: 'templateCode',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Header',
+      property: 'headerTemplate',
+      type: 'operationType',
+      visible: true
+    },
+    {
+      label: 'Footer',
+      property: 'footerTemplate',
+      type: 'operationType',
+      visible: true
+    },
+    {
+      label: 'Firmado',
+      property: 'isSinged',
+      type: 'text',
+      visible: true
+    },
 
+    {
+      label: 'Acciones',
+      property: 'actions',
+      type: 'button',
+      visible: true
+    }
+  ];
+export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] =
+  [
+    {
+      label: 'Matrícula inmobiliaria',
+      property: 'registration',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Número predial',
+      property: 'cadastralNumber',
+      type: 'text',
+      visible: true,
+      cssClasses: ['font-medium']
+    },
+    {
+      label: 'Área terreno',
+      property: 'cadastralAreaE',
+      type: 'text',
+      visible: true,
+      cssClasses: ['font-medium']
+    },
+    {
+      label: 'Condición',
+      property: 'domBaunitCondition',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  ];
 
-  {
-    label: 'Acciones',
-    property: 'actions',
-    type: 'button',
-    visible: true
-  }
-];
-export const TABLE_COLUMN_PROPERTIES_CRUD_ALFA_MAIN: TableColumn<BaunitHead>[] = [
-  {
-    label: 'Matrícula inmobiliaria',
-    property: 'registration',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Número predial',
-    property: 'cadastralNumber',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
-  },
-  {
-    label: 'Área terreno',
-    property: 'cadastralAreaE',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
-  },
-  {
-    label: 'Condición',
-    property: 'domBaunitCondition',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-];
+export const TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL: TableColumn<BasicInformationAddress>[] =
+  [
+    {
+      label: 'Detalle',
+      property: 'detailDirection',
+      type: 'button',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Es principal',
+      property: 'isMainAddress',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Dirección',
+      property: 'nombrePredio',
+      type: 'text',
+      visible: true
+    }
+  ];
+export const TABLE_COLUMN_PROPERTIES_ADDRESS: TableColumn<BasicInformationAddress>[] =
+  TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL;
+export const TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION: TableColumn<BasicInformationAddress>[] =
+  [
+    ...TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL,
+    { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  ];
 
-export const TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL: TableColumn<BasicInformationAddress>[] = [
-  {
-    label: 'Detalle',
-    property: 'detailDirection',
-    type: 'button',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Es principal',
-    property: 'isMainAddress',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Dirección',
-    property: 'nombrePredio',
-    type: 'text',
-    visible: true
-  }
-];
-export const TABLE_COLUMN_PROPERTIES_ADDRESS: TableColumn<BasicInformationAddress>[] = TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL;
-export const TABLE_COLUMN_PROPERTIES_ADDRESS_EDITION: TableColumn<BasicInformationAddress>[] = [
-  ...TABLE_COLUMN_PROPERTIES_ADDRESS_GENERAL,
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-];
+export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentInformationConstruction>[] =
+  [
+    {
+      label: 'Detalle',
+      property: 'viewDetail',
+      type: 'button',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'ID',
+      property: 'unitBuiltLabel',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Tipo',
+      property: 'domBuiltType',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Uso',
+      property: 'domBuiltUse',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Área (mts2)',
+      property: 'unitBuiltArea',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Tipología',
+      property: 'domTipologiaTipo',
+      type: 'text',
+      visible: true
+    }
+  ];
 
-export const TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL: TableColumn<ContentInformationConstruction>[] = [
-  {
-    label: 'Detalle',
-    property: 'viewDetail',
-    type: 'button',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'ID',
-    property: 'unitBuiltLabel',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Tipo',
-    property: 'domBuiltType',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Uso',
-    property: 'domBuiltUse',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Área (mts2)',
-    property: 'unitBuiltArea',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Tipología',
-    property: 'domTipologiaTipo',
-    type: 'text',
-    visible: true
-  }
-];
+export const TABLE_COLUMN_PROPERTIES_PHYSICAL: TableColumn<ZoneBAUnitFisica>[] =
+  [
+    {
+      label: 'Detalle',
+      property: 'details',
+      type: 'image',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Código',
+      property: 'zonaHomoCode',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Area',
+      property: 'baUnitZonaAreaE',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Vigencia',
+      property: 'vigencia',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Común',
+      property: 'esComun',
+      type: 'operationType',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    }
+  ];
 
-export const TABLE_COLUMN_PROPERTIES_PHYSICAL: TableColumn<ZoneBAUnitFisica>[] = [
-  {
-    label: 'Detalle',
-    property: 'details',
-    type: 'image',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Código',
-    property: 'zonaHomoCode',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Area',
-    property: 'baUnitZonaAreaE',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Vigencia',
-    property: 'vigencia',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Común',
-    property: 'esComun',
-    type: 'operationType',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  }
-];
+export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformationConstruction>[] =
+  [
+    {
+      label: 'Detalle',
+      property: 'viewDetailEcono',
+      type: 'button',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Código',
+      property: 'zonaHomoGeoEconomicaCode',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Área',
+      property: 'baUnitZonaAreaE',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Vigencia',
+      property: 'getZonevalidity',
+      type: 'progress',
+      visible: true
+    },
+    {
+      label: 'Común',
+      property: 'esComun',
+      type: 'operationType',
+      visible: true
+    }
+  ];
 
-export const TABLE_COLUMN_PROPERTIES_GEO_ECONOMIC: TableColumn<ContentInformationConstruction>[] = [
-  {
-    label: 'Detalle',
-    property: 'viewDetailEcono',
-    type: 'button',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Código',
-    property: 'zonaHomoGeoEconomicaCode',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Área',
-    property: 'baUnitZonaAreaE',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Vigencia',
-    property: 'getZonevalidity',
-    type: 'progress',
-    visible: true
-  },
-  {
-    label: 'Común',
-    property: 'esComun',
-    type: 'operationType',
-    visible: true
-  }
-];
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<InformationAdjacent>[] =
+  [
+    // {
+    //   label: 'Ficha',
+    //   property: 'ccColindanteBaunitId',
+    //   type: 'text',
+    //   visible: true
+    // },
+    {
+      label: 'Punto cardinal',
+      property: 'domPuntoCardinal',
+      type: 'text',
+      visible: true
+    },
+    {
+      label: 'Colindante',
+      property: 'colindante',
+      type: 'text',
+      visible: true
+    }
+  ];
 
-export const TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL: TableColumn<InformationAdjacent>[] = [
-  // {
-  //   label: 'Ficha',
-  //   property: 'ccColindanteBaunitId',
-  //   type: 'text',
-  //   visible: true
-  // },
-  {
-    label: 'Punto cardinal',
-    property: 'domPuntoCardinal',
-    type: 'text',
-    visible: true
-  },
-  {
-    label: 'Colindante',
-    property: 'colindante',
-    type: 'text',
-    visible: true
-  }
-];
+export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<InformationAdjacent>[] =
+  [
+    ...TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
+    { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  ];
 
-export const TABLE_COLUMN_PROPERTIES_ADJACENT_EDITION: TableColumn<InformationAdjacent>[] = [
-  ...TABLE_COLUMN_PROPERTIES_ADJACENT_GENERAL,
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-];
-
-export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] = [
-  ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,
-  { label: 'Acciones', property: 'actions', type: 'operationType', visible: true }
-];
-export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] = TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
+export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS_EDITION: TableColumn<ContentInformationConstruction>[] =
+  [
+    ...TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL,
+    {
+      label: 'Acciones',
+      property: 'actions',
+      type: 'operationType',
+      visible: true
+    }
+  ];
+export const TABLE_COLUMN_PROPERTIES_CONSTRUCTIONS: TableColumn<ContentInformationConstruction>[] =
+  TABLE_COLUMN_PROPERTIES_CONSTRUCTION_GENERAL;
 
 export const COMPONENT_ALFA_MAIN = 'cadAlfaMainComponent';
 export const COMPONENT_PATH_FORM_ALFA_MAIN = '/core/cadastral/alf/main.html';
@@ -558,32 +625,33 @@ export const LISTO_FORM_BPM_CORE: BasicComponentTemplate[] = [
     pathForm: '/core/cadastral/notificacion.html',
     serviceValidation: 'checkStatusBpmOperation',
     mode: 1
-  },
-];
-
-export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>[] = [
-  {
-    label: 'Cambio',
-    property: 'detail',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Antes',
-    property: 'valueBefore',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
-  },
-  {
-    label: 'Después',
-    property: 'valueAfter',
-    type: 'text',
-    visible: true,
-    cssClasses: ['font-medium']
   }
 ];
+
+export const TABLE_COLUMN_CHANGES_BPM_OPERATION: TableColumn<CadastralChangeLog>[] =
+  [
+    {
+      label: 'Cambio',
+      property: 'detail',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Antes',
+      property: 'valueBefore',
+      type: 'text',
+      visible: true,
+      cssClasses: ['font-medium']
+    },
+    {
+      label: 'Después',
+      property: 'valueAfter',
+      type: 'text',
+      visible: true,
+      cssClasses: ['font-medium']
+    }
+  ];
 
 export const NAME_VALIDITY_VALUATION = 'validityValuation';
 export const NAME_CADASTRAL_VALUATION_AT = 'cadastralValuationAt';
@@ -597,133 +665,172 @@ export const NAME_SELF_VALUATION_VALUE = 'selfValuationValue';
 export const DOMAIN_COLLECTION_BPM_PROCESS_CATEGORY = 'BpmProcessCategory';
 
 export const LIST_GRID_APPRAISAL_1: string[] = [
-  'validityValuation', 'cadastralValuationAt'
+  'validityValuation',
+  'cadastralValuationAt'
 ];
 export const LIST_GRID_APPRAISAL_2: string[] = [
-  'cadastralValuation', 'cadastralValuationLand', 'cadastralValuationUnits'
+  'cadastralValuation',
+  'cadastralValuationLand',
+  'cadastralValuationUnits'
 ];
 export const LIST_GRID_APPRAISAL_3: string[] = [
-  'commercialValuation', 'commercialValuationLand', 'commercialValuationUnits'
+  'commercialValuation',
+  'commercialValuationLand',
+  'commercialValuationUnits'
 ];
 
-export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] = [
-  {
-    label: 'Vigencia',
-    property: 'validityValuation',
-    type: 'text',
-    visible: true,
-    cssClassesHead: ['pr-1'],
-    cssClasses: ['font-medium', 'pr-1']
-  },
-  {
-    label: 'Desde',
-    property: 'cadastralValuationAt',
-    type: 'date',
-    visible: true,
-    cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium', 'pl-1 pr-1']
-  },
-  {
-    label: 'Total',
-    property: 'cadastralValuation',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium', 'pl-1 pr-1']
-  },
-  {
-    label: 'Terreno',
-    property: 'cadastralValuationLand',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium', 'pl-1 pr-1']
-  },
-  {
-    label: 'Construcciones',
-    property: 'cadastralValuationUnits',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium', 'pl-1 pr-1']
-  },
-  {
-    label: 'Total',
-    property: 'commercialValuation',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium', 'pl-1 pr-1']
-  },
-  {
-    label: 'Terreno',
-    property: 'commercialValuationLand',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium', 'pl-1 pr-1']
-  },
-  {
-    label: 'Construcciones',
-    property: 'commercialValuationUnits',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1 pr-1'],
-    cssClasses: ['font-medium', 'pl-1 pr-1']
-  },
-  {
-    label: 'Total',
-    property: 'selfValuationValue',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1'],
-    cssClasses: ['font-medium', 'pl-1']
-  },
-  {
-    label: 'Terrreno',
-    property: 'selfValuationValueLand',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1'],
-    cssClasses: ['font-medium', 'pl-1']
-  },
-  {
-    label: 'Construcciones',
-    property: 'selfValuationValueUnits',
-    type: 'currency',
-    visible: true,
-    cssClassesHead: ['pl-1'],
-    cssClasses: ['font-medium', 'pl-1']
-  }
-];
+export const TABLE_COLUMN_PROPERTIES_APPRAISALS: TableColumn<InfoAppraisal>[] =
+  [
+    {
+      label: 'Vigencia',
+      property: 'validityValuation',
+      type: 'text',
+      visible: true,
+      cssClassesHead: ['pr-1'],
+      cssClasses: ['font-medium', 'pr-1']
+    },
+    {
+      label: 'Desde',
+      property: 'cadastralValuationAt',
+      type: 'date',
+      visible: true,
+      cssClassesHead: ['pl-1 pr-1'],
+      cssClasses: ['font-medium', 'pl-1 pr-1']
+    },
+    {
+      label: 'Total',
+      property: 'cadastralValuation',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1 pr-1'],
+      cssClasses: ['font-medium', 'pl-1 pr-1']
+    },
+    {
+      label: 'Terreno',
+      property: 'cadastralValuationLand',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1 pr-1'],
+      cssClasses: ['font-medium', 'pl-1 pr-1']
+    },
+    {
+      label: 'Construcciones',
+      property: 'cadastralValuationUnits',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1 pr-1'],
+      cssClasses: ['font-medium', 'pl-1 pr-1']
+    },
+    {
+      label: 'Total',
+      property: 'commercialValuation',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1 pr-1'],
+      cssClasses: ['font-medium', 'pl-1 pr-1']
+    },
+    {
+      label: 'Terreno',
+      property: 'commercialValuationLand',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1 pr-1'],
+      cssClasses: ['font-medium', 'pl-1 pr-1']
+    },
+    {
+      label: 'Construcciones',
+      property: 'commercialValuationUnits',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1 pr-1'],
+      cssClasses: ['font-medium', 'pl-1 pr-1']
+    },
+    {
+      label: 'Total',
+      property: 'selfValuationValue',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1'],
+      cssClasses: ['font-medium', 'pl-1']
+    },
+    {
+      label: 'Terrreno',
+      property: 'selfValuationValueLand',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1'],
+      cssClasses: ['font-medium', 'pl-1']
+    },
+    {
+      label: 'Construcciones',
+      property: 'selfValuationValueUnits',
+      type: 'currency',
+      visible: true,
+      cssClassesHead: ['pl-1'],
+      cssClasses: ['font-medium', 'pl-1']
+    }
+  ];
 
-export const LIST_SCHEMAS_CONTROL_MAIN: string[] = [`${environment.schemas.main}`];
-export const LIST_SCHEMAS_CONTROL_TEMP: string[] = [`${environment.schemas.temp}`];
-export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [`${environment.schemas.hist}`];
-export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [`${environment.schemas.temp}`, `${environment.schemas.main}`];
-export const LIST_SCHEMAS_CONTROL_HISTORY_PRIME: string[] = [`${environment.schemas.hist}`, `${environment.schemas.main}`];
+export const LIST_SCHEMAS_CONTROL_MAIN: string[] = [
+  `${environment.schemas.main}`
+];
+export const LIST_SCHEMAS_CONTROL_TEMP: string[] = [
+  `${environment.schemas.temp}`
+];
+export const LIST_SCHEMAS_CONTROL_HISTORY: string[] = [
+  `${environment.schemas.hist}`
+];
+export const LIST_SCHEMAS_CONTROL_CHANGES: string[] = [
+  `${environment.schemas.temp}`,
+  `${environment.schemas.main}`
+];
+export const LIST_SCHEMAS_CONTROL_HISTORY_PRIME: string[] = [
+  `${environment.schemas.hist}`,
+  `${environment.schemas.main}`
+];
 
 export const LIST_ZONES_RURAL: string[] = ['00'];
 export const LIST_FORM_CADASTRAL_0: string[] = [
-  'municipality', 'zone', 'sector', 'community', 'neighborhood', 'block', 'sidewalk'
+  'municipality',
+  'zone',
+  'sector',
+  'community',
+  'neighborhood',
+  'block',
+  'sidewalk'
 ];
 export const LIST_FORM_CADASTRAL_1: string[] = [
-  'zone', 'sector', 'community', 'neighborhood', 'block', 'sidewalk'
+  'zone',
+  'sector',
+  'community',
+  'neighborhood',
+  'block',
+  'sidewalk'
 ];
 export const LIST_FORM_CADASTRAL_2: string[] = [
-  'sector', 'community', 'neighborhood', 'block', 'sidewalk'
+  'sector',
+  'community',
+  'neighborhood',
+  'block',
+  'sidewalk'
 ];
 export const LIST_FORM_CADASTRAL_3: string[] = [
-  'community', 'neighborhood', 'block', 'sidewalk'
+  'community',
+  'neighborhood',
+  'block',
+  'sidewalk'
 ];
 export const LIST_FORM_CADASTRAL_4: string[] = [
-  'neighborhood', 'block', 'sidewalk'
+  'neighborhood',
+  'block',
+  'sidewalk'
 ];
-export const LIST_FORM_CADASTRAL_5: string[] = [
-  'block', 'sidewalk'
-];
+export const LIST_FORM_CADASTRAL_5: string[] = ['block', 'sidewalk'];
 export const LIST_EXTRA_COLUMNS_APPRAISAL: string[] = [
-  'header-row-first-group', 'header-row-second-group', 'header-row-third-group', 'header-row-quartet-group'
+  'header-row-first-group',
+  'header-row-second-group',
+  'header-row-third-group',
+  'header-row-quartet-group'
 ];
 export const PEOPLE_TABLE_COLUMNS: TableColumn<People>[] = [
   {
@@ -759,134 +866,146 @@ export const PEOPLE_TABLE_COLUMNS: TableColumn<People>[] = [
   { label: 'Acciones', property: 'actions', type: 'button', visible: true }
 ];
 
-export const FRAGMENT_INFORMATION_PROPERTY_OWNERS = 'informationPropertyOwnersComponent';
+export const FRAGMENT_INFORMATION_PROPERTY_OWNERS =
+  'informationPropertyOwnersComponent';
 export const FRAGMENT_PHOTOS = 'photosComponent';
 export const FRAGMENT_ALERTS = 'alertsComponent';
-export const FRAGMENT_SUPER_NOTARIADO_PROPERTY = 'superNotariadoPropertyComponent';
-export const FRAGMENT_BASIC_PROPERTY_INFORMATION = 'basicPropertyInformationComponent';
-export const FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY = 'historicalProceduresPropertyComponent';
-export const FRAGMENT_ACTIVE_PROCEDURES_PROPERTY = 'activeProceduresPropertyComponent';
-export const FRAGMENT_INFORMATION_UNIT_PROPERTY = 'informationUnitPropertyComponent';
+export const FRAGMENT_SUPER_NOTARIADO_PROPERTY =
+  'superNotariadoPropertyComponent';
+export const FRAGMENT_BASIC_PROPERTY_INFORMATION =
+  'basicPropertyInformationComponent';
+export const FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY =
+  'historicalProceduresPropertyComponent';
+export const FRAGMENT_ACTIVE_PROCEDURES_PROPERTY =
+  'activeProceduresPropertyComponent';
+export const FRAGMENT_INFORMATION_UNIT_PROPERTY =
+  'informationUnitPropertyComponent';
 
 export const LIST_FRAGMENT_COMPONENTS_RULE_PAGE: string[] = [
-  FRAGMENT_PHOTOS, FRAGMENT_ALERTS, FRAGMENT_SUPER_NOTARIADO_PROPERTY,
+  FRAGMENT_PHOTOS,
+  FRAGMENT_ALERTS,
+  FRAGMENT_SUPER_NOTARIADO_PROPERTY,
   FRAGMENT_INFORMATION_PROPERTY_OWNERS
 ];
 
-export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: NavigationItemCadastralInfo[] = [
-  {
-    label: 'Aspectos generales',
-    fragment: FRAGMENT_BASIC_PROPERTY_INFORMATION
-  },
-  {
-    label: 'Información de unidad predial',
-    fragment: FRAGMENT_INFORMATION_UNIT_PROPERTY
-  },
-  {
-    label: 'Fuentes administrativas',
-    fragment: 'administrativeSourcesComponent'
-  },
-  {
-    label: 'Propietarios',
-    fragment: FRAGMENT_INFORMATION_PROPERTY_OWNERS
-  },
-  {
-    label: 'Super notariado',
-    fragment: FRAGMENT_SUPER_NOTARIADO_PROPERTY
-  },
-  {
-    label: 'Direcciones',
-    fragment: 'informationAddressesPropertyComponent'
-  },
-  {
-    label: 'Construcciones',
-    fragment: 'informationConstructionsPropertyComponent'
-  },
-  {
-    label: 'Colindantes',
-    fragment: 'informationAdjacentPropertyComponent'
-  },
-  {
-    label: 'Avalúos',
-    fragment: 'propertyAppraisalInformationComponent'
-  },
-  {
-    label: 'Zonas',
-    fragment: 'informationZonesPropertyComponent'
-  },
-  {
-    label: 'Trámites Históricos',
-    fragment: FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY
-  },
-  {
-    label: 'Trámites Activos',
-    fragment: FRAGMENT_ACTIVE_PROCEDURES_PROPERTY
-  },
-  {
-    label: 'Fotos',
-    fragment: FRAGMENT_PHOTOS
-  },
-  {
-    label: 'Alertas',
-    fragment: FRAGMENT_ALERTS
-  },
-  {
-    label: 'ICA',
-    fragment: 'baunitIcaComponent'
-  }
-];
+export const NAVIGATION_ITEMS_INFORMATION_PROPERTIES: NavigationItemCadastralInfo[] =
+  [
+    {
+      label: 'Aspectos generales',
+      fragment: FRAGMENT_BASIC_PROPERTY_INFORMATION
+    },
+    {
+      label: 'Información de unidad predial',
+      fragment: FRAGMENT_INFORMATION_UNIT_PROPERTY
+    },
+    {
+      label: 'Fuentes administrativas',
+      fragment: 'administrativeSourcesComponent'
+    },
+    {
+      label: 'Propietarios',
+      fragment: FRAGMENT_INFORMATION_PROPERTY_OWNERS
+    },
+    {
+      label: 'Super notariado',
+      fragment: FRAGMENT_SUPER_NOTARIADO_PROPERTY
+    },
+    {
+      label: 'Direcciones',
+      fragment: 'informationAddressesPropertyComponent'
+    },
+    {
+      label: 'Construcciones',
+      fragment: 'informationConstructionsPropertyComponent'
+    },
+    {
+      label: 'Colindantes',
+      fragment: 'informationAdjacentPropertyComponent'
+    },
+    {
+      label: 'Avalúos',
+      fragment: 'propertyAppraisalInformationComponent'
+    },
+    {
+      label: 'Zonas',
+      fragment: 'informationZonesPropertyComponent'
+    },
+    {
+      label: 'Trámites Históricos',
+      fragment: FRAGMENT_HISTORICAL_PROCEDURES_PROPERTY
+    },
+    {
+      label: 'Trámites Activos',
+      fragment: FRAGMENT_ACTIVE_PROCEDURES_PROPERTY
+    },
+    {
+      label: 'Fotos',
+      fragment: FRAGMENT_PHOTOS
+    },
+    {
+      label: 'Alertas',
+      fragment: FRAGMENT_ALERTS
+    },
+    {
+      label: 'ICA',
+      fragment: 'baunitIcaComponent'
+    }
+  ];
 
-export const TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY: TableColumn<ProcessParticipant>[] = [
-  {
-    label: 'Documento',
-    property: 'individualNumber',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Nombre participante',
-    property: 'fullName',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Participación',
-    property: 'bpmParticipation',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  }
-];
-export const TABLE_COLUMN_PRINCIPANTS_TABLE: TableColumn<ProcessParticipant>[] = [
-  ...TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-];
-export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] = [
-  {
-    label: 'Documento',
-    property: 'individualNumber',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Nombre participante',
-    property: 'fullName',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  {
-    label: 'Participación',
-    property: 'bpmParticipation',
-    type: 'text',
-    visible: true,
-    cssClasses: ['text-secondary', 'font-medium']
-  },
-  { label: 'Acciones', property: 'actions', type: 'button', visible: true }
-];
+export const TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY: TableColumn<ProcessParticipant>[] =
+  [
+    {
+      label: 'Documento',
+      property: 'individualNumber',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Nombre participante',
+      property: 'fullName',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Participación',
+      property: 'bpmParticipation',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    }
+  ];
+export const TABLE_COLUMN_PRINCIPANTS_TABLE: TableColumn<ProcessParticipant>[] =
+  [
+    ...TABLE_COLUMN_PRINCIPANTS_TABLE_READONLY,
+    { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  ];
+export const TABLE_COLUMN_BASIC_PRINCIPALS: TableColumn<ProcessParticipant>[] =
+  [
+    {
+      label: 'Documento',
+      property: 'individualNumber',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Nombre participante',
+      property: 'fullName',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    {
+      label: 'Participación',
+      property: 'bpmParticipation',
+      type: 'text',
+      visible: true,
+      cssClasses: ['text-secondary', 'font-medium']
+    },
+    { label: 'Acciones', property: 'actions', type: 'button', visible: true }
+  ];
 export const TABLE_ALFA_MAIN_OPERATION_COLUMN: TableColumn<Operation>[] = [
   {
     label: 'Operación',
@@ -1122,30 +1241,105 @@ export const TYPE_BUTTON_TREE: TypeButtonAlfaMain = 'BRR';
 export const TYPE_BUTTON_FOUR: TypeButtonAlfaMain = 'CRE_GEO';
 export const TYPE_BUTTON_FIVE: TypeButtonAlfaMain = 'DEL_GEO';
 export const TYPE_BUTTON_SIX: TypeButtonAlfaMain = 'CAL_BOU';
-export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD';  // Excel Download
+export const TYPE_BUTTON_SEVEN: TypeButtonAlfaMain = 'EXD'; // Excel Download
 export const TYPE_BUTTON_EIGHT: TypeButtonAlfaMain = 'EXL'; // Excel Load
 export const TYPE_BUTTON_NINE: TypeButtonAlfaMain = 'VIGEN';
 export const TYPE_BUTTON_TEN: TypeButtonAlfaMain = 'RESET';
 export const TYPE_BUTTON_ELEVEN: TypeButtonAlfaMain = 'CHANGES';
 
-export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = ['CRE_GEO', 'DEL_GEO', 'CAL_BOU'];
+export const LIST_BUTTON_GEO_MAIN: TypeButtonAlfaMain[] = [
+  'CRE_GEO',
+  'DEL_GEO',
+  'CAL_BOU'
+];
 
-export const REFERENCE_COMPONENTS: string[] = ['GNR', 'FNA', 'PRO', 'CNS', 'DIR', 'ZON', 'CLN', 'AUTAVAL', 'NPN', 'AREA', 'PPL', 'CON'];
+export const REFERENCE_COMPONENTS: string[] = [
+  'GNR',
+  'FNA',
+  'PRO',
+  'CNS',
+  'DIR',
+  'ZON',
+  'CLN',
+  'AUTAVAL',
+  'NPN',
+  'AREA',
+  'PPL',
+  'CON'
+];
 
-export const MODAL_LARGE: ModalSize = { maxWidth: '100%', width: '98%', minHeight: '100%', height: '98%' };
-export const MODAL_MEDIUM: ModalSize = { maxWidth: '100%', width: '80%', minHeight: '80%', height: '80%' };
-export const MODAL_MEDIUM_H90: ModalSize = { maxWidth: '100%', width: '80%', minHeight: '90%', height: '90%' };
-export const MODAL_MEDIUM_SMALL: ModalSize = { maxWidth: '100%', width: '60%', minHeight: '80%', height: '80%' };
-export const MODAL_SMALL: ModalSize = { maxWidth: '100%', width: '60%', minHeight: '60%', height: '60%' };
-export const MODAL_SMALL_LARGE: ModalSize = { minWidth: '30%', minHeight: '30%' };
-export const MODAL_DYNAMIC_HEIGHT: ModalSize = { maxWidth: '100%', minWidth: '60%', minHeight: '40%' };
-export const MODAL_DINAMIC_HEIGHT_AUTO: ModalSize = { maxWidth: '100%', minWidth: '60%' };
-export const MODAL_SMALL_XS: ModalSize = { maxWidth: '100%', minWidth: '30%', minHeight: '30%' };
-export const MODAL_MIN_MEDIUM_ALL: ModalSize = { maxWidth: '100%', minWidth: '50%', minHeight: '50%' };
-export const MODAL_SMALL_DETAIL_NOTIFICE: ModalSize = { minWidth: '40%', minHeight: '30%' };
-export const MODAL_MIN_SMALL_40_25: ModalSize = { maxWidth: '100%', minWidth: '40%', minHeight: '25%'};
-export const MODAL_MIN_SMALL_35_25: ModalSize = { maxWidth: '100%', minWidth: '35%', minHeight: '25%'};
-export const MODAL_MIN_SMALL_25: ModalSize = { maxWidth: '100%', minWidth: '25%', minHeight: '25%'};
+export const MODAL_LARGE: ModalSize = {
+  maxWidth: '100%',
+  width: '98%',
+  minHeight: '100%',
+  height: '98%'
+};
+export const MODAL_MEDIUM: ModalSize = {
+  maxWidth: '100%',
+  width: '80%',
+  minHeight: '80%',
+  height: '80%'
+};
+export const MODAL_MEDIUM_H90: ModalSize = {
+  maxWidth: '100%',
+  width: '80%',
+  minHeight: '90%',
+  height: '90%'
+};
+export const MODAL_MEDIUM_SMALL: ModalSize = {
+  maxWidth: '100%',
+  width: '60%',
+  minHeight: '80%',
+  height: '80%'
+};
+export const MODAL_SMALL: ModalSize = {
+  maxWidth: '100%',
+  width: '60%',
+  minHeight: '60%',
+  height: '60%'
+};
+export const MODAL_SMALL_LARGE: ModalSize = {
+  minWidth: '30%',
+  minHeight: '30%'
+};
+export const MODAL_DYNAMIC_HEIGHT: ModalSize = {
+  maxWidth: '100%',
+  minWidth: '60%',
+  minHeight: '40%'
+};
+export const MODAL_DINAMIC_HEIGHT_AUTO: ModalSize = {
+  maxWidth: '100%',
+  minWidth: '60%'
+};
+export const MODAL_SMALL_XS: ModalSize = {
+  maxWidth: '100%',
+  minWidth: '30%',
+  minHeight: '30%'
+};
+export const MODAL_MIN_MEDIUM_ALL: ModalSize = {
+  maxWidth: '100%',
+  minWidth: '50%',
+  minHeight: '50%'
+};
+export const MODAL_SMALL_DETAIL_NOTIFICE: ModalSize = {
+  minWidth: '40%',
+  minHeight: '30%'
+};
+export const MODAL_MIN_SMALL_40_25: ModalSize = {
+  maxWidth: '100%',
+  minWidth: '40%',
+  minHeight: '25%'
+};
+export const MODAL_MIN_SMALL_35_25: ModalSize = {
+  maxWidth: '100%',
+  minWidth: '35%',
+  minHeight: '25%'
+};
+export const MODAL_MIN_SMALL_25: ModalSize = {
+  maxWidth: '100%',
+  minWidth: '25%',
+  minHeight: '25%'
+};
 export const IDLE_TIME_MINUTES = 10;
 export const TIMEOUT_TIME_MINUTES = 15;
 
@@ -1158,10 +1352,11 @@ export const TYPE_READ_ONLY: TypeOperation = 'READ_ONLY';
 export const TYPE_UPDATE_PROPERTY_UNIT: TypeOperation = 'UPDATE_UND';
 export const TYPE_UPDATE: TypeOperation = 'UPDATE';
 
-export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode = {
-  label: 'Tradicional',
-  type: TYPE_TRADITIONAL
-};
+export const CHECK_TYPE_QUALIFICATION_TRADITIONAL: CheckTypeQualificationMode =
+  {
+    label: 'Tradicional',
+    type: TYPE_TRADITIONAL
+  };
 
 export const CHECK_TYPE_QUALIFICATION_MODE: CheckTypeQualificationMode[] = [
   {
@@ -1177,39 +1372,76 @@ export const CHECK_TYPE_QUALIFICATION_MODE: CheckTypeQualificationMode[] = [
 export const CONSTRUCTION_TYPE = 'domBuiltType';
 export const CONSTRUCTION_USE = 'domBuiltUse';
 
-export const QUALIFICATIONS_DOMBUILT_TYPE_ANEXX: ValidateQualificationByDomBuiltType = {
-  domBuiltType: 'Anexo',
-  list: [],
-  shouldDisable: false
-};
-
-export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualificationByDomBuiltType[] = [
-  {
-    domBuiltType: 'Institucional',
-    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
-    shouldDisable: true
-  },
-  {
-    domBuiltType: 'Comercial',
-    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
-    shouldDisable: true
-  },
-  {
-    domBuiltType: 'Industrial',
-    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
-    shouldDisable: false
-  },
+export const QUALIFICATIONS_DOMBUILT_TYPE_ANEXX: ValidateQualificationByDomBuiltType =
   {
     domBuiltType: 'Anexo',
-    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
+    list: [],
     shouldDisable: false
-  },
-  {
-    domBuiltType: 'Residencial',
-    list: ['kitchenConservation', 'kitchenEnchapes', 'kitchenSize', 'bathConservation', 'bathEnchapes', 'bathSize'],
-    shouldDisable: false
-  }
-];
+  };
+
+export const QUALIFICATIONS_DISABLE_BATH_KITCHEN_BY_DOMBUILTTYPE: ValidateQualificationByDomBuiltType[] =
+  [
+    {
+      domBuiltType: 'Institucional',
+      list: [
+        'kitchenConservation',
+        'kitchenEnchapes',
+        'kitchenSize',
+        'bathConservation',
+        'bathEnchapes',
+        'bathSize'
+      ],
+      shouldDisable: true
+    },
+    {
+      domBuiltType: 'Comercial',
+      list: [
+        'kitchenConservation',
+        'kitchenEnchapes',
+        'kitchenSize',
+        'bathConservation',
+        'bathEnchapes',
+        'bathSize'
+      ],
+      shouldDisable: true
+    },
+    {
+      domBuiltType: 'Industrial',
+      list: [
+        'kitchenConservation',
+        'kitchenEnchapes',
+        'kitchenSize',
+        'bathConservation',
+        'bathEnchapes',
+        'bathSize'
+      ],
+      shouldDisable: false
+    },
+    {
+      domBuiltType: 'Anexo',
+      list: [
+        'kitchenConservation',
+        'kitchenEnchapes',
+        'kitchenSize',
+        'bathConservation',
+        'bathEnchapes',
+        'bathSize'
+      ],
+      shouldDisable: false
+    },
+    {
+      domBuiltType: 'Residencial',
+      list: [
+        'kitchenConservation',
+        'kitchenEnchapes',
+        'kitchenSize',
+        'bathConservation',
+        'bathEnchapes',
+        'bathSize'
+      ],
+      shouldDisable: false
+    }
+  ];
 
 export const DETAIL_BASIC_MODEL_ADDRESS: DetailBasicInformationAddress = {
   // campos BASE
@@ -1253,7 +1485,9 @@ export const CREATE_BASIC_MODEL_ADDRESS: CreateBasicInformationAddress = {
 
 export const LIST_EXTENSION_MASIVE_EXCEL: string[] = ['xlsx', 'xls'];
 
-export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [COMPONENT_PATH_FORM_ALFA_MAIN];
+export const LIST_COMPONENT_ACTIVE_MASIVE_EXCEL: string[] = [
+  COMPONENT_PATH_FORM_ALFA_MAIN
+];
 
 export const CONSTANTE_TYPE_PROCESS_PARTICIPANT_ALL = 'all';
 export const CONSTANTE_TYPE_PROCESS_PARTICIPANT_CITED = 'citation';
@@ -1267,55 +1501,63 @@ export const CONSTANTE_ADVERTISEMENT = 'Aviso';
 export const CONSTANTE_UNPIN_NOTICE = 'Desfijar Aviso';
 export const CONSTANTE_PIN_NOTICE = 'Fijar Aviso';
 
-export const LIST_NOTIFICATIONS: string[] = [CONSTANTE_ADVERTISEMENT, CONSTANTE_UNPIN_NOTICE, CONSTANTE_PIN_NOTICE];
-
-export const LIST_NOTICE_NOTIFICATIONS: string[] = [CONSTANTE_UNPIN_NOTICE, CONSTANTE_PIN_NOTICE];
-
-export const LIST_CITATION_AND_NOTICE_TABLE_MENU: ProcessParticipantTableMenu[] = [
-  {
-    type: 'link',
-    id: 'participants',
-    icon: 'mat:people',
-    label: 'Participantes'
-  },
-  {
-    type: 'link',
-    id: 'all',
-    icon: 'mat:view_headline',
-    label: 'Consolidado'
-  },
-  {
-    type: 'subheading',
-    label: 'Acciones'
-  },
-  {
-    type: 'link',
-    id: 'citation',
-    icon: 'mat:label',
-    label: 'Citar',
-    classes: {
-      icon: 'text-primary-600'
-    }
-  },
-  {
-    type: 'link',
-    id: 'notification',
-    icon: 'mat:label',
-    label: 'Notificar',
-    classes: {
-      icon: 'text-green-600'
-    }
-  },
-  {
-    type: 'link',
-    id: 'notice',
-    icon: 'mat:label',
-    label: 'Avisos',
-    classes: {
-      icon: 'text-amber-600'
-    }
-  }
+export const LIST_NOTIFICATIONS: string[] = [
+  CONSTANTE_ADVERTISEMENT,
+  CONSTANTE_UNPIN_NOTICE,
+  CONSTANTE_PIN_NOTICE
 ];
+
+export const LIST_NOTICE_NOTIFICATIONS: string[] = [
+  CONSTANTE_UNPIN_NOTICE,
+  CONSTANTE_PIN_NOTICE
+];
+
+export const LIST_CITATION_AND_NOTICE_TABLE_MENU: ProcessParticipantTableMenu[] =
+  [
+    {
+      type: 'link',
+      id: 'participants',
+      icon: 'mat:people',
+      label: 'Participantes'
+    },
+    {
+      type: 'link',
+      id: 'all',
+      icon: 'mat:view_headline',
+      label: 'Consolidado'
+    },
+    {
+      type: 'subheading',
+      label: 'Acciones'
+    },
+    {
+      type: 'link',
+      id: 'citation',
+      icon: 'mat:label',
+      label: 'Citar',
+      classes: {
+        icon: 'text-primary-600'
+      }
+    },
+    {
+      type: 'link',
+      id: 'notification',
+      icon: 'mat:label',
+      label: 'Notificar',
+      classes: {
+        icon: 'text-green-600'
+      }
+    }
+    // {
+    //   type: 'link',
+    //   id: 'notice',
+    //   icon: 'mat:label',
+    //   label: 'Avisos',
+    //   classes: {
+    //     icon: 'text-amber-600'
+    //   }
+    // }
+  ];
 
 export const TABLE_CITATION_NOTICE_COLUMN: TableColumn<ProcessParticipant>[] = [
   {
@@ -1385,29 +1627,78 @@ export enum BaunitCondition {
 
 export const rejectedFileTypes: string[] = [
   // Ejecutables y scripts de shell
-  'exe', 'msi', 'bat', 'cmd', 'sh', 'ps1', 'psm1',
+  'exe',
+  'msi',
+  'bat',
+  'cmd',
+  'sh',
+  'ps1',
+  'psm1',
   // Scripts de JavaScript y TypeScript
-  'js', 'jsx', 'ts', 'tsx',
+  'js',
+  'jsx',
+  'ts',
+  'tsx',
   // Archivos de backend
-  'php', 'py', 'rb', 'pl', 'cgi', 'pyc', 'pyo',
+  'php',
+  'py',
+  'rb',
+  'pl',
+  'cgi',
+  'pyc',
+  'pyo',
   // Archivos potencialmente peligrosos
-  'html', 'htm', 'svg',
+  'html',
+  'htm',
+  'svg',
   // Otros tipos de ejecutables o scripts
-  'jar', 'class', 'vb', 'vbs', 'wsf', 'scr',
+  'jar',
+  'class',
+  'vb',
+  'vbs',
+  'wsf',
+  'scr',
   // Componentes ejecutables de Windows
-  'dll', 'com', 'pif', 'cpl', 'msc', 'msp',
+  'dll',
+  'com',
+  'pif',
+  'cpl',
+  'msc',
+  'msp',
   // Archivos de configuración y sistema
-  'ini', 'cfg', 'conf', 'config', 'reg',
+  'ini',
+  'cfg',
+  'conf',
+  'config',
+  'reg',
   // Archivos de base de datos
-  'db', 'sqlite', 'mdb', 'accdb', 'sql',
+  'db',
+  'sqlite',
+  'mdb',
+  'accdb',
+  'sql',
   // Archivos de desarrollo y código fuente
-  'cs', 'cpp', 'c', 'h', 'go', 'rs', 'swift',
+  'cs',
+  'cpp',
+  'c',
+  'h',
+  'go',
+  'rs',
+  'swift',
   // Documentos con macros habilitadas
-  'xlsm', 'docm', 'pptm',
+  'xlsm',
+  'docm',
+  'pptm',
   // Paquetes de aplicaciones
-  'app', 'deb', 'rpm',
+  'app',
+  'deb',
+  'rpm',
   // Archivos comprimidos potencialmente peligrosos
-  'ace', 'arj', 'cab',
+  'ace',
+  'arj',
+  'cab',
   // Imágenes de disco
-  'iso', 'img', 'dmg'
+  'iso',
+  'img',
+  'dmg'
 ];
