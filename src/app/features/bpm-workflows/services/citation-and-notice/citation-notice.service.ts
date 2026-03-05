@@ -8,6 +8,7 @@ const basic_url = `${envi.url}:${envi.port}${envi.bpmParticipation.value}`;
 export enum GuvStateType {
   Citacion = 'Citacion',
   Citado = 'Citado',
+  Notificado = 'Notificado',
   FijarAviso = 'Fijar Aviso'
 }
 
@@ -15,20 +16,19 @@ export enum GuvStateType {
   providedIn: 'root'
 })
 export class CitationNoticeService {
-
   http = inject(HttpClient);
 
-  executePrint(participationId: string, guvStateType: GuvStateType ): Observable<Blob> {
+  executePrint(
+    participationId: string,
+    guvStateType: GuvStateType
+  ): Observable<Blob> {
     let url = `${basic_url}/${participationId}`;
     switch (guvStateType) {
-      case GuvStateType.Citacion:
+      case GuvStateType.Citado:
         url += envi.generateCitacion;
         break;
-      case GuvStateType.Citado:
+      case GuvStateType.Notificado:
         url += envi.generateNotificacion;
-        break;
-      case GuvStateType.FijarAviso:
-        url += envi.generateAviso;
         break;
     }
 
