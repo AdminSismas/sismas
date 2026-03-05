@@ -28,8 +28,11 @@ jobs:
             --instance-ids "i-05e4578276976506e" \
             --document-name "AWS-RunShellScript" \
             --parameters commands='[
+              "set -e",
               "cd /opt/sismas-source",
-              "git pull origin main",
+              "git fetch origin main",
+              "git reset --hard origin/main",
+              "git clean -fd",
               "/usr/bin/pnpm install --frozen-lockfile",
               "/usr/bin/pnpm run build --configuration=manizales",
               "rm -rf /usr/share/nginx/manizales.sismas.com.co/*",
