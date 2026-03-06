@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  inject,
-  computed,
-  output
-} from '@angular/core';
+import { Component, OnInit, inject, computed, output } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -17,14 +11,12 @@ import {
 import { environment } from '@environments/environments';
 import { TableColumn } from '@vex/interfaces/table-column.interface';
 import { signal } from '@angular/core';
-import { MuncipalityCodePipe } from '@shared/pipes/muncipality-code.pipe';
 import { LoaderComponent } from '@shared/ui/loader/loader.component';
 
 @Component({
   selector: 'vex-report-master',
   standalone: true,
   imports: [
-    MuncipalityCodePipe,
     MatFormField,
     MatIconModule,
     MatInputModule,
@@ -79,30 +71,32 @@ export class ReportMasterComponent implements OnInit {
     this.dataSource().filter = filterValue;
   }
 
-  selectCategory(urlEnd: string, name: string, municipality: string, reportId: number) {
-    const municipalityCodePipe = new MuncipalityCodePipe();
-
+  selectCategory(
+    urlEnd: string,
+    name: string,
+    municipality: string,
+    reportId: number
+  ) {
     this.downloadLoading.set(true);
 
     if ([3, 4].includes(reportId)) {
       const zoneType: 'rural' | 'urbano' = reportId === 3 ? 'urbano' : 'rural';
-      this.reportManagerService.getUpdateReport(municipality, environment.departments, zoneType)
-      .subscribe((response) => {
-        const nameMunicipality = municipalityCodePipe.transform(municipality);
-        const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
-        const type = response.headers.get('content-type') as string;
+      this.reportManagerService
+        .getUpdateReport(municipality, environment.departments, zoneType)
+        .subscribe((response) => {
+          const filename = `${name.toUpperCase()} ${municipality.toUpperCase()}.xlsx`;
+          const type = response.headers.get('content-type') as string;
 
-        this.downloadLoading.set(false);
+          this.downloadLoading.set(false);
 
-        this.downloadFile(response.body!, type, filename);
-      });
+          this.downloadFile(response.body!, type, filename);
+        });
       return;
     }
 
     this.reportManagerService.getExcelReport(urlEnd, municipality).subscribe({
       next: (response) => {
-        const nameMunicipality = municipalityCodePipe.transform(municipality);
-        const filename = `${name.toUpperCase()} ${nameMunicipality.toUpperCase()}.xlsx`;
+        const filename = `${name.toUpperCase()} ${municipality.toUpperCase()}.xlsx`;
         const type = response.headers.get('content-type') as string;
 
         this.downloadLoading.set(false);

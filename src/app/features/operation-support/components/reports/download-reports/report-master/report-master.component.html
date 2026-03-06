@@ -52,7 +52,7 @@
               ></mat-icon>
             </button>
           } @else if (column.property === "municipality") {
-            {{ element[column.property] | muncipalityCode }}
+            {{ element[column.property] }}
           } @else {
             {{ element[column.property] }}
           }

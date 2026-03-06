@@ -73,13 +73,24 @@ export class ReportManagerService {
 
   private readonly base_url = `${envi.url}:${envi.port}`;
 
+  private readonly municipalities = [
+    { code: '17001', name: 'Manizales' },
+    { code: '05674', name: 'San Vicente' },
+    { code: '05607', name: 'El Retiro' },
+    { code: '63272', name: 'Filandia' },
+    { code: '63470', name: 'Montenegro' },
+    { code: '63594', name: 'Quimbaya' }
+  ];
+
   private http = inject(HttpClient);
 
   getCategories(municipalities: string[]): Observable<ReportType[]> {
     const categories: ReportType[] = municipalities.flatMap((municipality) => {
       return this.baseCategories.map((category) => ({
         ...category,
-        municipality: municipality
+        municipality:
+          this.municipalities.find((m) => m.code === municipality)?.name ??
+          'No se encuentra el municipio'
       }));
     });
 
