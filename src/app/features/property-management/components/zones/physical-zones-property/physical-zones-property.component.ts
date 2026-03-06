@@ -7,7 +7,8 @@ import {
   computed,
   Output,
   input,
-  output
+  output,
+  OnInit
 } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
@@ -41,6 +42,7 @@ import { environment } from '@environments/environments';
 import { Observable } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'vex-physical-zones-property',
@@ -67,13 +69,14 @@ import { SwalComponent, SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   templateUrl: './physical-zones-property.component.html',
   styleUrl: './physical-zones-property.component.scss'
 })
-export class PhysicalZonesPropertyComponent {
+export class PhysicalZonesPropertyComponent implements OnInit {
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
   seeAcctionsComponents = false;
 
   zoneBAUnit: ZoneBAUnitFisica[] = [];
   zoneBAUnitRural: ZoneBAUnitFisica[] = [];
   zoneBAUnitUrban: ZoneBAUnitFisica[] = [];
+  errorPhysicalZoneData = false;
 
   @Input({ required: true }) schema = `${environment.schemas.main}`;
   @Input({ required: true }) baunitId: string | null | undefined = null;
@@ -106,6 +109,12 @@ export class PhysicalZonesPropertyComponent {
   @ViewChild('successDelete') successDelete!: SwalComponent;
 
   dataBasicInformation!: BasicInformationProperty;
+
+  ngOnInit(): void {
+    this.dataSource.data.forEach((zone) => {
+      if (!this.zonaHomoCode(zone)) this.errorPhysicalZoneData = true;
+    });
+  }
 
   actionBtns = computed(() => {
     return [
@@ -149,8 +158,16 @@ export class PhysicalZonesPropertyComponent {
   zonaHomoCode(zone: ZoneBAUnitFisica): string {
     if (zone.ccZonaHomoFisicaRu) {
       return zone.ccZonaHomoFisicaRu.zonaHomoFisicaRuCode!;
+    } else if (zone.ccZonaHomoFisicaUr) {
+      return zone.ccZonaHomoFisicaUr.zonaHomoFisicaUrCode!;
     } else {
-      return zone.ccZonaHomoFisicaUr!.zonaHomoFisicaUrCode!;
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la base de datos',
+        text: 'El predio no tiene información de zona física de origen geográfico o alfanumérico',
+        timer: 20000
+      });
+      return '';
     }
   }
 

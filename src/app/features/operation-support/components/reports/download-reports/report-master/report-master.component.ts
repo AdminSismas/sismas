@@ -74,7 +74,7 @@ export class ReportMasterComponent implements OnInit {
   selectCategory(
     urlEnd: string,
     name: string,
-    municipality: string,
+    municipalityCode: string,
     reportId: number
   ) {
     this.downloadLoading.set(true);
@@ -82,9 +82,9 @@ export class ReportMasterComponent implements OnInit {
     if ([3, 4].includes(reportId)) {
       const zoneType: 'rural' | 'urbano' = reportId === 3 ? 'urbano' : 'rural';
       this.reportManagerService
-        .getUpdateReport(municipality, environment.departments, zoneType)
+        .getUpdateReport(municipalityCode, environment.departments, zoneType)
         .subscribe((response) => {
-          const filename = `${name.toUpperCase()} ${municipality.toUpperCase()}.xlsx`;
+          const filename = `${name.toUpperCase()} ${municipalityCode.toUpperCase()}.xlsx`;
           const type = response.headers.get('content-type') as string;
 
           this.downloadLoading.set(false);
@@ -94,16 +94,18 @@ export class ReportMasterComponent implements OnInit {
       return;
     }
 
-    this.reportManagerService.getExcelReport(urlEnd, municipality).subscribe({
-      next: (response) => {
-        const filename = `${name.toUpperCase()} ${municipality.toUpperCase()}.xlsx`;
-        const type = response.headers.get('content-type') as string;
+    this.reportManagerService
+      .getExcelReport(urlEnd, municipalityCode)
+      .subscribe({
+        next: (response) => {
+          const filename = `${name.toUpperCase()} ${municipalityCode.toUpperCase()}.xlsx`;
+          const type = response.headers.get('content-type') as string;
 
-        this.downloadLoading.set(false);
+          this.downloadLoading.set(false);
 
-        this.downloadFile(response.body!, type, filename);
-      }
-    });
+          this.downloadFile(response.body!, type, filename);
+        }
+      });
   }
 
   downloadFile(data: Blob, type: string, filename: string) {
