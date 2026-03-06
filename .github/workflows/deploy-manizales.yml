@@ -28,6 +28,7 @@ jobs:
             --instance-ids "i-05e4578276976506e" \
             --document-name "AWS-RunShellScript" \
             --parameters commands='[
+              "set -e",
               "cd /opt/sismas-source",
               "git fetch origin main",
               "git reset --hard origin/main",

@@ -173,15 +173,14 @@
     ></tr>
   </table>
 
-  <div
-    *ngIf="dataSource?.data?.length === 0"
-    class="text-center text-gray-500 py-4"
-  >
-    <mat-icon class="text-gray-400">info</mat-icon>
-    <p class="mt-2">
-      No hay reportes disponibles para el periodo seleccionado.
-    </p>
-  </div>
+  @if (dataSource.data.length === 0) {
+    <div class="text-center text-gray-500 py-4">
+      <mat-icon class="text-gray-400">info</mat-icon>
+      <p class="mt-2">
+        No hay reportes disponibles para el periodo seleccionado.
+      </p>
+    </div>
+  }
 
   <!-- Paginador -->
   <mat-paginator

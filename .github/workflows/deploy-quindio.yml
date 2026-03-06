@@ -29,7 +29,9 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters commands='[
               "cd /opt/sismas-source",
-              "git pull origin main",
+              "git fetch origin main",
+              "git reset --hard origin/main",
+              "git clean -fd",
               "/usr/bin/pnpm install --frozen-lockfile",
               "/usr/bin/pnpm run build --configuration=quindio",
               "rm -rf /usr/share/nginx/quindio.sismas.com.co/*",
