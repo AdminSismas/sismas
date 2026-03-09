@@ -34,4 +34,9 @@ export class CitationNoticeService {
 
     return this.http.get(url, { responseType: 'blob' });
   }
+
+  executePrintResignationTerms(participationId: string): Observable<Blob> {
+    const url = `${basic_url}/${participationId}/generateRenunciaTerminos`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
 }

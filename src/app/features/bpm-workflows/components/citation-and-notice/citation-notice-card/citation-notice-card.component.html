@@ -87,6 +87,17 @@
         type="button"
         mat-icon-button
         class="my-1 p-0 w-8 h-8 rounded-md"
+        matTooltip="Generar renuncia a términos"
+        matTooltipPosition="below"
+        [disabled]="isResignationTermsDisabled()"
+        (click)="onPrintResignationTerms()"
+      >
+        <mat-icon svgIcon="mat:gavel"></mat-icon>
+      </button>
+      <button
+        type="button"
+        mat-icon-button
+        class="my-1 p-0 w-8 h-8 rounded-md"
         matTooltip="Imprimir"
         matTooltipPosition="below"
         [disabled]="isPrintDisabled()"
