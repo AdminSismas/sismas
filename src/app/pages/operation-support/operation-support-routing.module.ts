@@ -18,13 +18,13 @@ const routes: VexRoutes = [
       },
       {
         path: 'procedures',
-        children:[
+        children: [
           {
             path: 'prioritizeWork',
             loadComponent: () =>
-              import('./procedures/prioritize-work/prioritize-work.component').then(
-                (m) => m.PrioritizeWorkComponent
-              )
+              import(
+                './procedures/prioritize-work/prioritize-work.component'
+              ).then((m) => m.PrioritizeWorkComponent)
           },
           {
             path: 'workProgress',
@@ -39,49 +39,58 @@ const routes: VexRoutes = [
               import('./procedures/work-finished/work-finished.component').then(
                 (m) => m.WorkFinishedComponent
               )
-          },
-          // {
-          //   path: 'workHistorical',
-          //   loadComponent: () =>
-          //     import('./procedures/work-historical/work-historical.component').then(
-          //       (m) => m.WorkHistoricalComponent
-          //     )
-          // }
+          }
         ]
       },
       {
         path: 'workAssignment',
-        loadComponent: () =>
-          import('./work-assignment/work-assignment.component').then(
-            (m) => m.WorkAssignmentComponent
-          )
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./work-assignment/work-assignment.component').then(
+                (m) => m.WorkAssignmentComponent
+              )
+          },
+          {
+            path: 'workDistribution',
+            loadComponent: () =>
+              import(
+                './work-assignment/work-distribution/work-distribution.component'
+              ).then((m) => m.WorkDistributionComponent)
+          }
+        ]
       },
       {
-      path: 'reports',
-      canActivate: [RoleGuard],
-      data: { operationSupportReportsRoles: EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM, parameter: 'operationSupportReportsRoles' },
-      children: [
-        {
-          path: 'operationalAnalytics',
-          loadComponent: () =>
-            import('./reports/operational-analytics/operational-analytics.component').then(
-              (m) => m.OperationalAnalyticsComponent
-            )
+        path: 'reports',
+        canActivate: [RoleGuard],
+        data: {
+          operationSupportReportsRoles:
+            EXECUTIONERS_ROLE_LIST_WITHOUT_USER_TRAM,
+          parameter: 'operationSupportReportsRoles'
         },
-        {
-          path: 'downloadReports',
-          loadComponent: () =>
-            import('@features/operation-support/components/reports/download-reports/report-manager/report-manager.component').then(
-              (m) => m.ReportManagerComponent
-            )
-        },
-        {
-          path: 'downloadXTF',
-          loadComponent: () =>
-            import('./reports/download-xtf/download-xtf.component').then(
-              (m) => m.DownloadXtfComponent
-            )
-        }
+        children: [
+          {
+            path: 'operationalAnalytics',
+            loadComponent: () =>
+              import(
+                './reports/operational-analytics/operational-analytics.component'
+              ).then((m) => m.OperationalAnalyticsComponent)
+          },
+          {
+            path: 'downloadReports',
+            loadComponent: () =>
+              import(
+                '@features/operation-support/components/reports/download-reports/report-manager/report-manager.component'
+              ).then((m) => m.ReportManagerComponent)
+          },
+          {
+            path: 'downloadXTF',
+            loadComponent: () =>
+              import('./reports/download-xtf/download-xtf.component').then(
+                (m) => m.DownloadXtfComponent
+              )
+          }
         ]
       },
 
@@ -91,9 +100,9 @@ const routes: VexRoutes = [
           import('@pages/errors/error-404/error-404.component').then(
             (m) => m.Error404Component
           )
-      },
+      }
     ]
-  },
+  }
 ];
 
 export default routes;

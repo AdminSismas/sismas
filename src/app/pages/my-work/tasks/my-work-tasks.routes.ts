@@ -12,9 +12,7 @@ const routes: VexRoutes = [
       {
         path: ':id',
         loadComponent: () =>
-          import('./tasks-panel.component').then(
-            (m) => m.TasksPanelComponent
-          ),
+          import('./tasks-panel.component').then((m) => m.TasksPanelComponent),
         data: {
           scrollDisabled: true,
           toolbarShadowEnabled: false
@@ -28,7 +26,7 @@ const routes: VexRoutes = [
       import('@pages/errors/error-404/error-404.component').then(
         (m) => m.Error404Component
       )
-  },
+  }
 ];
 
 export default routes;
