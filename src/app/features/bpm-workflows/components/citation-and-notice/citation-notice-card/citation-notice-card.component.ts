@@ -78,6 +78,10 @@ export class CitationNoticeCardComponent implements OnInit {
     );
   });
 
+  isResignationTermsDisabled = computed<boolean>(() => {
+    return !this.processParticipant()?.viaGubernativa?.resignationTerms;
+  });
+
   badgeColor = computed<ThemePalette>(() => {
     if (!this.expirationDate()) return;
 
@@ -163,6 +167,22 @@ export class CitationNoticeCardComponent implements OnInit {
         participationId.toString(),
         viaGubernativa!.domGuvState as GuvStateType
       )
+      .subscribe((response) => {
+        this.dialog.open(DocumentViewerComponent, {
+          ...MODAL_MEDIUM,
+          data: {
+            pdfBlob: response
+          } as { pdfBlob: Blob }
+        });
+      });
+  }
+
+  onPrintResignationTerms() {
+    if (this.isResignationTermsDisabled()) return;
+
+    const { participationId } = this.processParticipant();
+    this.citationNoticeService
+      .executePrintResignationTerms(participationId.toString())
       .subscribe((response) => {
         this.dialog.open(DocumentViewerComponent, {
           ...MODAL_MEDIUM,

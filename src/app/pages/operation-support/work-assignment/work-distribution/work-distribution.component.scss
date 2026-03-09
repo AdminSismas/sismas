@@ -1,0 +1,115 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.icon-sm {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-xs {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+::ng-deep .work-dist-tabs {
+  .mat-mdc-tab-header {
+    border-bottom: none;
+    background: transparent;
+  }
+
+  .mdc-tab {
+    height: 48px;
+    padding: 0 16px;
+    margin-right: 4px;
+    border-radius: 8px 8px 0 0;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid transparent;
+    border-bottom: none;
+
+    &.mdc-tab--active {
+      background-color: #7b7de5; /* Indigoish purple color from mockup */
+      color: white;
+
+      .mdc-tab__text-label {
+        color: white;
+      }
+      .mdc-tab-indicator__content--underline {
+        border-color: transparent !important;
+      }
+      .mat-icon {
+        color: white;
+      }
+    }
+
+    &:not(.mdc-tab--active) {
+      color: #64748b; /* slate-500 */
+      background-color: transparent;
+
+      .mdc-tab__text-label {
+        color: #64748b;
+      }
+      .mat-icon {
+        color: #64748b;
+      }
+
+      &:hover {
+        background-color: rgba(241, 245, 249, 0.5); /* slate-100 w/ opacity */
+      }
+    }
+  }
+
+  .mat-mdc-tab-list {
+    padding-top: 8px;
+  }
+}
+
+/* Custom form field styling to match the screenshot select boxes */
+::ng-deep .vex-dense-form-field {
+  .mat-mdc-text-field-wrapper {
+    padding: 0 8px !important;
+    background-color: white !important;
+  }
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: #e2e8f0 !important; /* slate-200 */
+  }
+  .mat-mdc-form-field-flex {
+    height: 36px !important;
+    align-items: center;
+  }
+  .mat-mdc-form-field-infix {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+  }
+  .mat-mdc-select-value {
+    color: #475569; /* slate-600 */
+  }
+  .mat-mdc-select-arrow {
+    color: #94a3b8; /* slate-400 */
+  }
+}
+
+/* Scrollbar styling for table */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

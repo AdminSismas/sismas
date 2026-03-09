@@ -151,7 +151,7 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (
         label: 'Trabajo finalizado',
         route: '/operationSupport/procedures/workFinished',
         routerLinkActiveOptions: { exact: true }
-      },
+      }
       // {
       //   type: 'link',
       //   label: 'Trabajo histórico',
@@ -161,10 +161,23 @@ export const NAVIGATION_LOADER_OPERATION_SUPPORT: (
     ]
   },
   {
-    type: 'link',
+    type: 'dropdown',
     label: 'Asignación de trabajo',
-    route: '/operationSupport/workAssignment',
-    icon: 'mat:assignment_turned_in'
+    icon: 'mat:assignment_turned_in',
+    children: [
+      {
+        type: 'link',
+        label: 'Panel de asignación',
+        route: '/operationSupport/workAssignment',
+        routerLinkActiveOptions: { exact: true }
+      },
+      {
+        type: 'link',
+        label: 'Distribución del trabajo',
+        route: '/operationSupport/workAssignment/workDistribution',
+        routerLinkActiveOptions: { exact: true }
+      }
+    ]
   },
   {
     type: 'dropdown',

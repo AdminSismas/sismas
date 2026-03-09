@@ -155,21 +155,27 @@ export class NavigationLoaderService {
     items: (NavigationLink | NavigationDropdown)[],
     role: string
   ): (NavigationLink | NavigationDropdown)[] {
-    return items.reduce((acc, item) => {
-      if (item.roles && !item.roles.includes(role)) {
-        return acc;
-      }
-
-      if (item.type === 'dropdown' && item.children) {
-        const children = this.filterNavigationItemsByRole(item.children, role);
-        if (children.length > 0) {
-          acc.push({ ...item, children });
+    return items.reduce(
+      (acc, item) => {
+        if (item.roles && !item.roles.includes(role)) {
+          return acc;
         }
-      } else {
-        acc.push({ ...item });
-      }
-      return acc;
-    }, [] as (NavigationLink | NavigationDropdown)[]);
+
+        if (item.type === 'dropdown' && item.children) {
+          const children = this.filterNavigationItemsByRole(
+            item.children,
+            role
+          );
+          if (children.length > 0) {
+            acc.push({ ...item, children });
+          }
+        } else {
+          acc.push({ ...item });
+        }
+        return acc;
+      },
+      [] as (NavigationLink | NavigationDropdown)[]
+    );
   }
 
   loadInformationNavigation(role: string): void {

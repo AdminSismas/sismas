@@ -176,26 +176,27 @@
       </vex-text-area>
       <div class="flex flex-col">
         <span class="text-black font-semibold text-lg">Citar a:</span>
-        <mat-radio-group formControlName="isCitationHire">
+        <mat-radio-group formControlName="isHeir">
           <mat-radio-button
             value="false"
-            (change)="isHireCitation.set(false)"
+            (change)="isHeirCitation.set(false)"
             >Tercero afectado</mat-radio-button
           >
           <mat-radio-button
             value="true"
-            (change)="isHireCitation.set(true)"
+            (change)="isHeirCitation.set(true)"
             >Heredero</mat-radio-button
           >
         </mat-radio-group>
       </div>
 
-      @if (isHireCitation()) {
+      @if (isHeirCitation()) {
         <mat-form-field class="mt-4">
           <mat-label>Información de contacto heredero</mat-label>
           <input
             type="text"
             matInput
+            formControlName="heirContact"
           />
         </mat-form-field>
       }

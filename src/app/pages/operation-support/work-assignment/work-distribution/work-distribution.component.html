@@ -1,0 +1,226 @@
+<div class="w-full h-full flex flex-col bg-slate-50 overflow-hidden">
+  <!-- Encabezado -->
+  <div class="px-6 py-4 flex flex-col gap-2 bg-slate-50">
+    <div class="flex items-center gap-2 text-sm text-gray-500">
+      <mat-icon class="icon-sm">home</mat-icon>
+      <span>•</span>
+      <span>Mi trabajo</span>
+      <span>•</span>
+      <span class="text-gray-900 font-medium">Distribución del trabajo</span>
+    </div>
+    <h1 class="text-2xl font-semibold m-0 text-slate-800">
+      Distribución del trabajo
+    </h1>
+  </div>
+
+  <div class="px-6 flex-1 flex flex-col min-h-0">
+    <!-- Tabs -->
+    <mat-tab-group
+      animationDuration="0ms"
+      class="work-dist-tabs bg-transparent"
+    >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="mr-2 icon-sm">view_list</mat-icon>
+          Tareas activas por persona
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="mr-2 icon-sm">filter_alt</mat-icon>
+          Trámites finalizados por persona
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Porcentaje de finalización"></mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Ver más... <mat-icon class="ml-1 icon-sm">chevron_right</mat-icon>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- Contenido principal: Tabla -->
+    <div
+      class="bg-white rounded-b-lg rounded-tr-lg shadow-sm flex-1 flex flex-col min-h-0 border border-gray-200"
+    >
+      <!-- Toolbar de la tabla -->
+      <div
+        class="flex justify-between items-center p-4 border-b border-gray-100"
+      >
+        <h2 class="text-lg font-medium m-0 text-slate-800">
+          Tareas activas por persona
+        </h2>
+        <div class="flex items-center gap-3">
+          <mat-form-field
+            appearance="outline"
+            class="vex-dense-form-field no-subscript h-10 w-36"
+          >
+            <mat-icon
+              matPrefix
+              class="icon-sm text-gray-500 mx-2"
+              >view_list</mat-icon
+            >
+            <mat-select
+              [value]="selectedView()"
+              (selectionChange)="selectedView.set($event.value)"
+              class="text-sm"
+            >
+              <mat-option value="tabla">Ver tabla</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field
+            appearance="outline"
+            class="vex-dense-form-field no-subscript h-10 w-36"
+          >
+            <mat-select
+              [value]="selectedRange()"
+              (selectionChange)="selectedRange.set($event.value)"
+              class="text-sm"
+            >
+              <mat-option value="rango1">1-0 1-6 de 6</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Cabecera de tabla simulada -->
+      <div
+        class="grid grid-cols-12 gap-4 px-6 py-3 text-sm font-medium text-gray-500 border-b border-gray-100"
+      >
+        <div class="col-span-4">Usuario</div>
+        <div class="col-span-5"># de Tareas Activas</div>
+        <div class="col-span-3">% del Total</div>
+      </div>
+
+      <!-- Filas de datos -->
+      <div class="flex flex-col overflow-y-auto flex-1">
+        @for (user of users(); track user.id) {
+          <div
+            class="grid grid-cols-12 gap-4 px-6 py-3 items-center border-b border-gray-50 last:border-0 hover:bg-slate-50/50 transition-colors"
+          >
+            <!-- Usuario -->
+            <div class="col-span-4 flex items-center gap-3">
+              <div
+                class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden flex-shrink-0 flex items-center justify-center"
+              >
+                <!-- Placeholder Avatar si falla la imagen o no hay -->
+                @if (!user.avatar) {
+                  <mat-icon class="text-slate-400 text-sm">person</mat-icon>
+                }
+                @if (user.avatar) {
+                  <img
+                    [src]="user.avatar"
+                    alt="Avatar"
+                    class="w-full h-full object-cover"
+                    onerror="this.style.display='none'; this.previousElementSibling.style.display='block';"
+                  />
+                }
+              </div>
+              <span class="text-sm text-slate-800">{{ user.name }}</span>
+            </div>
+
+            <!-- # Tareas Activas (Barra de Progreso) -->
+            <div class="col-span-5 flex items-center h-full pr-8">
+              <div class="w-full h-6 bg-transparent flex items-center">
+                <div
+                  [ngClass]="user.colorClass"
+                  [style.width.%]="(user.activeTasks / maxTasks()) * 100"
+                  class="h-full flex items-center justify-end px-3 rounded-l-sm transition-all duration-500"
+                >
+                  <span class="text-white text-xs font-medium">{{
+                    user.activeTasks
+                  }}</span>
+                </div>
+                <!-- Parte restante de la barra con color pastel suave (opacidad) -->
+                <div
+                  [ngClass]="user.colorClass"
+                  [style.width.%]="100 - (user.activeTasks / maxTasks()) * 100"
+                  class="h-full opacity-20 rounded-r-sm"
+                ></div>
+              </div>
+            </div>
+
+            <!-- % del Total -->
+            <div
+              class="col-span-3 flex items-center justify-between text-sm text-slate-700"
+            >
+              <span>{{ user.percentage }}%</span>
+              <!-- Gráfico de barras miniatura a la derecha -->
+              <div
+                class="w-16 h-6 flex rounded overflow-hidden bg-slate-100/50"
+              >
+                <div
+                  [ngClass]="user.colorClass"
+                  class="w-1/2 h-full"
+                ></div>
+                <div
+                  class="w-1/2 h-full flex items-center justify-center bg-slate-100"
+                >
+                  <mat-icon class="text-slate-300 icon-xs">bar_chart</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Footer de tabla / Paginación -->
+      <div
+        class="flex justify-end items-center px-6 py-3 border-t border-gray-100 gap-4 mt-auto"
+      >
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500">Ordenar por:</span>
+          <mat-form-field
+            appearance="outline"
+            class="vex-dense-form-field no-subscript h-8 w-32"
+          >
+            <mat-select
+              [value]="selectedOrder()"
+              (selectionChange)="selectedOrder.set($event.value)"
+              class="text-sm"
+            >
+              <mat-option value="mas-tareas">Más tareas</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="flex items-center gap-1 text-sm text-gray-600">
+          <span class="mr-2">1-6 de 6</span>
+          <button
+            mat-icon-button
+            class="text-gray-400 w-8 h-8 p-0 flex items-center justify-center disabled:opacity-50"
+          >
+            <mat-icon class="icon-sm">chevron_left</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            class="text-gray-400 w-8 h-8 p-0 flex items-center justify-center disabled:opacity-50"
+          >
+            <mat-icon class="icon-sm">chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer global con botones grandes -->
+  <div class="px-6 py-4 flex gap-4 mt-2 bg-slate-50">
+    <button
+      mat-flat-button
+      class="!bg-emerald-500 !text-white flex-1 py-1 rounded-lg"
+    >
+      <div class="flex items-center justify-center gap-2">
+        <mat-icon class="icon-sm">people</mat-icon>
+        <span class="font-medium">Tareas activas por persona</span>
+      </div>
+    </button>
+    <button
+      mat-flat-button
+      class="!bg-indigo-500 !text-white flex-1 py-1 rounded-lg"
+    >
+      <div class="flex items-center justify-center gap-2">
+        <mat-icon class="icon-sm">view_carousel</mat-icon>
+        <span class="font-medium">Trámites finalizados por persona</span>
+      </div>
+    </button>
+  </div>
+</div>
