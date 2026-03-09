@@ -86,7 +86,7 @@ export class AddCitationNoticeComponent implements OnInit {
   maxDate = signal<Date>(new Date()); // Fecha máxima permitida (hoy)
   minDate = signal<Date>(new Date(0)); // Fecha minima, fecha de la radicacion
   typeCategory = signal<ProcessParticipantTableMenu['id']>('citation');
-  isHireCitation = signal<boolean>(false);
+  isHeirCitation = signal<boolean>(false);
 
   /* ---- Zone states ----- */
   executionId!: string;
@@ -110,8 +110,8 @@ export class AddCitationNoticeComponent implements OnInit {
       this.processParticipant?.viaGubernativa?.citationNote || false,
       Validators.required
     ],
-    isCitationHire: [false, Validators.required],
-    hireContact: ['', []]
+    isHeir: [false, Validators.required],
+    heirContact: ['', []]
   });
 
   formNotification: FormGroup = this.fb.group({
