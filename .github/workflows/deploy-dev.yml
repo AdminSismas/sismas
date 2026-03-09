@@ -29,7 +29,9 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters commands='[
               "cd /opt/sismas-source-dev",
-              "git pull origin despliegue-desarrollo",
+              "git fetch origin despliegue-desarrollo",
+              "git reset --hard origin despliegue-desarrollo",
+              "git clean -fd",
               "/usr/bin/pnpm install --frozen-lockfile",
               "/usr/bin/pnpm run build --configuration=dev",
               "rm -rf /usr/share/nginx/dev.sismas.com.co/*",

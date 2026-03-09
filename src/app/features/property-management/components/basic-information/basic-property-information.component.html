@@ -175,6 +175,9 @@
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-black text-sm">Destino económico</span>
+            <span class="text-black text-sm"
+              >Procedimiento Catastral Registral</span
+            >
             <span class="text-black text-sm">Tipo</span>
             <span class="text-black text-sm">Condición propiedad</span>
             <span class="text-black text-sm">Incripción catastral</span>
@@ -189,6 +192,17 @@
             ) {
               <span class="text-sm">{{ data.domBaunitEconoDesti }}</span>
             } @else {
+              <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
+            }
+            @if (
+              data !== null &&
+              data !== undefined &&
+              data.domBaunitProcessType !== null &&
+              data.domBaunitProcessType
+            ) {
+              <span class="text-sm">{{ data.domBaunitProcessType }}</span>
+            } @else {
+              <!-- <span class="text-sm">{{ data.domBaunitProcessType }}</span> -->
               <span class="text-sm">{{ NAME_NO_DISPONIBLE }}</span>
             }
             @if (
