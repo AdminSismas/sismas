@@ -43,6 +43,7 @@ import { map } from 'rxjs';
 export class ComboboxCollectionComponent implements OnInit, OnChanges {
   options: DomainCollection[] = [];
 
+  /* ---- Inputs ---- */
   public readonly label = input('');
   public readonly formControlNameCombobox = input('');
   public readonly typeDomainName = input('');
@@ -67,9 +68,20 @@ export class ComboboxCollectionComponent implements OnInit, OnChanges {
     }
   });
   readonly filterOptions = input<string[]>([]);
+  readonly canBeEmpty = input(false, {
+    transform: (value: string | boolean /*T:VAE*/) => {
+      if (typeof value === 'boolean') return value;
+      if (value === '') return true;
+      if (value === 'true') return true;
+      if (value === 'false') return false;
+      return false;
+    }
+  });
 
+  /* ---- Outputs ---- */
   selectionChange = output();
 
+  /* ---- Variables ---- */
   loading = false; // Indicador de carga
 
   constructor(private collectionServicesService: CollectionServices) {}

@@ -80,7 +80,7 @@
           </h3>
           <!-- Recorrer los campos del grupo -->
           @for (input of group.fields; track $index) {
-            @if (input.name === '(refresh geografic button)'){
+            @if (input.name === "(refresh geografic button)") {
               <div class="w-full col-span-2 flex justify-start itemcs-center">
                 <button
                   mat-flat-button
@@ -94,6 +94,7 @@
               </div>
             } @else if (input.collection) {
               <vex-combox-colletion
+                canBeEmpty
                 [label]="input.label"
                 [formControlNameCombobox]="input.name"
                 [typeDomainName]="input.type"

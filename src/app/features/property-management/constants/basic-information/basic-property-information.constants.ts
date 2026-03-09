@@ -68,6 +68,16 @@ export const FORM_INPUT_BASIC_PROPERTY: EditBasicPropertyInputs[] = [
         group: [],
         groupName: 'Propiedad y uso'
       },
+      {
+        // DEBE SER LISTA TIPO
+        name: 'domBaunitProcessType',
+        label: 'Procedimiento Catastral Registral',
+        collection: true,
+        type: 'BaunitProcessType',
+        placeholder: 'Procedimiento Catastral Registral',
+        group: [],
+        groupName: 'Propiedad y uso'
+      },
       // DEBE SER LISTA TIPO
       {
         name: 'domBaunitType',

@@ -82,6 +82,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
     // *****GRUPO "Propiedad y uso" ****
 
     domBaunitEconoDesti: ['', [Validators.required]],
+    domBaunitProcessType: [''],
     domBaunitType: ['', [Validators.required]],
     domBaunitCondition: ['', [Validators.required]],
     cadastralCreatedAt: [''],
@@ -168,6 +169,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       'propertyRegistryOffice',
       'propertyRegistryNumber',
       'domBaunitEconoDesti',
+      'domBaunitProcessType',
       'domBaunitType',
       'cadastralCreatedAt',
       ...this.areasEnabledByBaunitConditions
@@ -314,7 +316,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       return;
     }
 
-    if (!this.validationFormUnitEdit(buildNumber, floorNumber, unitNumber)) 
+    if (!this.validationFormUnitEdit(buildNumber, floorNumber, unitNumber))
       return;
 
     const percentageCoefficient: number = Big(percentageGroup)
@@ -358,7 +360,7 @@ export class EditBasicPropertyInformationComponent implements OnInit {
       buildNumber === null ||
       floorNumber === undefined ||
       floorNumber === null
-    ){
+    ) {
       this.getAlertError('Todos los campos son requeridos');
       return false;
     }
