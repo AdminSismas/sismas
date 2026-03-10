@@ -28,9 +28,7 @@ import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '@vex/animations/scale-fade-in.animation';
 import { HeaderCadastralInformationPropertyComponent } from '@features/property-management/components/shared/header-cadastral-information/header-cadastral-information-property.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import {
-  InformationPropertyService
-} from '@features/property-management/services/property/information-property.service';
+import { InformationPropertyService } from '@features/property-management/services/property/information-property.service';
 import {
   BasicInformationProperty,
   CrudBasicInformationProperty
@@ -58,7 +56,8 @@ import { ContentInfoSchema } from '@shared/models';
 import { MatDividerModule } from '@angular/material/divider';
 import { LayoutCardCadastralInformationPropertyComponentComponent } from '@features/property-management/components/layout-card-cadastral/layout-card-cadastral-information-property-component.component';
 import { BaunitHead } from '@shared/models';
-import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';import Swal from 'sweetalert2';
+import { AlfaMainService } from '@features/bpm-workflows/services/alfa-main/alfa-main.service';
+import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
@@ -132,6 +131,10 @@ export class BasicPropertyInformationComponent {
   /* ---- Signals ---- */
   readonly existDetailGroup = signal<boolean>(false);
   readonly existMasterGroup = signal<boolean>(false);
+  readonly isInformality = signal<boolean>(false);
+  readonly informalAreaData = signal<{ npn: string; areaInformal: string }[]>(
+    []
+  );
 
   isExpandPanel(): void {
     this.emitExpandedComponent.emit(0);
@@ -168,6 +171,21 @@ export class BasicPropertyInformationComponent {
     this.data = result;
     this.propertyRegistryOffice.emit(this.data.propertyRegistryOffice!);
     this.propertyRegistryNumber.emit(this.data.propertyRegistryNumber!);
+    if (
+      result.domBaunitCondition === 'Informal' &&
+      environment.areaInformalEnabled
+    ) {
+      this.isInformality.set(true);
+      this.alfaMainService
+        .getAreaInformal({
+          executionId: this.executionId()!,
+          baunitId: this.baunitId()!,
+          schema: this.schema()!
+        })
+        .subscribe((informalAreaData) => {
+          this.informalAreaData.set(informalAreaData);
+        });
+    }
     this.isMatriz.emit(this.existMasterGroup());
   }
 

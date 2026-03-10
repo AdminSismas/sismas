@@ -270,7 +270,10 @@ export class TableAlfaMainComponent
           this.resources()
         )
       })
-      .afterClosed();
+      .afterClosed()
+      .subscribe(() => {
+        this.refreshData.emit();
+      });
   }
 
   removeInformation(operation: Operation): void {
