@@ -28,8 +28,15 @@ jobs:
             --instance-ids "i-05e4578276976506e" \
             --document-name "AWS-RunShellScript" \
             --parameters commands='[
+              "exec > /opt/deploy_logs/barrancabermeja.txt 2>&1",
+              "set -e",
+              "export CI=true",
               "cd /opt/sismas-source",
-              "git pull origin main",
+              "source /home/ec2-user/.bashrc",
+              "fnm install",
+              "git -c safe.directory=/opt/sismas-source fetch origin main",
+              "git -c safe.directory=/opt/sismas-source reset --hard origin/main",
+              "git -c safe.directory=/opt/sismas-source clean -fd",
               "/usr/bin/pnpm install --frozen-lockfile",
               "/usr/bin/pnpm run build --configuration=barrancabermeja",
               "rm -rf /usr/share/nginx/barrancabermeja.sismas.com.co/*",
