@@ -18,6 +18,8 @@ export const environment = {
   adjacent: '/colindante/',
   administrativeSource: '/fuenteadmin/',
   apiUrlToken: '/token/authenticate',
+  areaInformalEnabled: true,
+  areaInformalGeo: '/areaInformalGeo',
   asignacionZonas: '/asignacionZonas',
   auth: {
     forgotPassword: '/forgot-password',

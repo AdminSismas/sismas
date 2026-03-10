@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { saveAs } from 'file-saver';
 
@@ -209,11 +209,10 @@ export class AlfaMainService {
 
   //{{url}}:{{port}}/temporal/{{executionId}}/excel/load
   loadingExcelMassive(executionId: string, formData: FormData) {
-    return this.http
-      .post(
-        `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.load}`,
-        formData
-      );
+    return this.http.post(
+      `${this.basic_url}${envi.temporal}${executionId}${envi.excel}${envi.load}`,
+      formData
+    );
   }
 
   getValidityOptions(executionId: string): Observable<string[]> {
@@ -251,5 +250,34 @@ export class AlfaMainService {
       .set('selfValuationValueUnits', parameters.selfValuationValueUnits ?? 0);
 
     return this.http.put<void>(url, {}, { params });
+  }
+
+  getAreaInformal({
+    schema,
+    executionId,
+    baunitId
+  }: {
+    schema: keyof typeof envi.schemas;
+    executionId: string;
+    baunitId: string;
+  }): Observable<{ npn: string; areaInformal: string }[]> {
+    const { baunit, areaInformalGeo } = envi;
+    let url = `${this.basic_url}/${baunit}/${schema}`;
+
+    url += executionId
+      ? `/${executionId}/${baunitId}${areaInformalGeo}`
+      : `/${baunitId}${areaInformalGeo}`;
+
+    return this.http.get<string[]>(url).pipe(
+      map((informalAreaDataList) => {
+        return informalAreaDataList.map((item) => {
+          const [npn, areaInformal] = item.split('|');
+          return {
+            npn,
+            areaInformal
+          };
+        });
+      })
+    );
   }
 }

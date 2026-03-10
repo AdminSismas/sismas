@@ -57,7 +57,12 @@ const routes: VexRoutes = [
             loadComponent: () =>
               import(
                 './work-assignment/work-distribution/work-distribution.component'
-              ).then((m) => m.WorkDistributionComponent)
+              ).then((m) => m.WorkDistributionComponent),
+            canActivate: [RoleGuard],
+            data: {
+              operationSupportWorkDistributionRoles: ['ADMIN'],
+              parameter: 'operationSupportWorkDistributionRoles'
+            }
           }
         ]
       },
