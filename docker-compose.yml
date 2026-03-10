@@ -1,0 +1,7 @@
+services:
+  sismas:
+    build: .
+    ports:
+      - '4200:80'
+    restart: unless-stopped
+    container_name: sismas-app
