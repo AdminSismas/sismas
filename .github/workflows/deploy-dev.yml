@@ -33,7 +33,7 @@ jobs:
               "export CI=true",
               "cd /opt/sismas-source-dev",
               "source /home/ec2-user/.bashrc",
-              "fnm install",
+              "fnm use",
               "git -c safe.directory=/opt/sismas-source-dev fetch origin",
               "git -c safe.directory=/opt/sismas-source-dev reset --hard origin/despliegue-desarrollo",
               "git -c safe.directory=/opt/sismas-source-dev clean -fd",
