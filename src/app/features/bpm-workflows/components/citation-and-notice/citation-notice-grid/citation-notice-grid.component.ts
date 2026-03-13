@@ -330,6 +330,18 @@ export class CitationNoticeGridComponent implements OnInit, OnDestroy {
     this.changePageSearchData.emit(this.generateObjectPageSearchData());
   }
 
+  proccessDate(participant: ProcessParticipant): string | null {
+    if (participant.viaGubernativa?.citationDate) {
+      return participant.viaGubernativa?.citationDate;
+    }
+
+    if (participant.viaGubernativa?.notificationDate) {
+      return participant.viaGubernativa?.notificationDate;
+    }
+
+    return null;
+  }
+
   ngOnDestroy(): void {
     this._dataContentInformations$.unsubscribe();
     this._listParticipantsCards$.unsubscribe();

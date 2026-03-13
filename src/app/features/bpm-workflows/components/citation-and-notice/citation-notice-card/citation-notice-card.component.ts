@@ -61,7 +61,7 @@ export class CitationNoticeCardComponent implements OnInit {
   // Input signals
   executionId = input.required<string>();
   processParticipant = input.required<ProcessParticipant>();
-  expirationDate = input.required<string | null>();
+  proccessDate = input.required<string | null>();
 
   // Signals
   imageSrc = signal('assets/img/icons/people/teacher.svg');
@@ -83,20 +83,20 @@ export class CitationNoticeCardComponent implements OnInit {
   });
 
   badgeColor = computed<ThemePalette>(() => {
-    if (!this.expirationDate()) return;
+    if (!this.proccessDate()) return;
 
-    const expirationDays = +this.expirationDate()!;
+    const expirationDays = +this.proccessDate()!;
 
     if (expirationDays > 30) return 'primary';
     if (expirationDays <= 30 && expirationDays >= 15) return 'accent';
     return 'warn';
   });
 
-  expirationDays = computed(() => {
-    if (!this.expirationDate()) return null;
+  proccessDays = computed(() => {
+    if (!this.proccessDate()) return null;
 
     const expirationDays =
-      new Date().getTime() - new Date(this.expirationDate()!).getTime();
+      new Date().getTime() - new Date(this.proccessDate()!).getTime();
     const milisecondsInDay = 1000 * 3600 * 24;
     const days = Math.floor(expirationDays / milisecondsInDay);
 
